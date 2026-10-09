@@ -1,0 +1,9005 @@
+{
+ "key": "drop1m",
+ "which": "F1",
+ "nJump": 110,
+ "dt": 0.004166666666666667,
+ "cacheDecodedBeforeJump": 6,
+ "steps": [
+  {
+   "n": 108,
+   "t": 0.45,
+   "dE": -151.96931,
+   "dKE": -140.16625,
+   "dPE": -11.80312,
+   "dU": 0.00005,
+   "contactWorkSum": -152.0291,
+   "manifolds": [
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.499,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.97367,
+       "meff": 0.0594,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4131,
+       "vnPost": -4.01381,
+       "meff": 0.0519,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41359,
+       "vnPost": -3.93379,
+       "meff": 0.1026,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.89615,
+       "meff": 0.1324,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.313,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.97367,
+       "meff": 0.0594,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.89615,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41361,
+       "vnPost": -3.85814,
+       "meff": 0.0998,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41312,
+       "vnPost": -3.93352,
+       "meff": 0.0509,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.111,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.111,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.89615,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.111,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41359,
+       "vnPost": -3.93379,
+       "meff": 0.1026,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.111,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41409,
+       "vnPost": -3.85377,
+       "meff": 0.2348,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.111,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.81863,
+       "meff": 0.4359,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.935,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.89615,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.81863,
+       "meff": 0.4359,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41411,
+       "vnPost": -3.78276,
+       "meff": 0.2254,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41361,
+       "vnPost": -3.85814,
+       "meff": 0.0998,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.722,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.81863,
+       "meff": 0.4359,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41409,
+       "vnPost": -3.85377,
+       "meff": 0.2348,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41459,
+       "vnPost": -3.77374,
+       "meff": 0.354,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74111,
+       "meff": 0.9278,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.559,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41411,
+       "vnPost": -3.78276,
+       "meff": 0.2254,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.81863,
+       "meff": 0.4359,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74111,
+       "meff": 0.9278,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41461,
+       "vnPost": -3.70782,
+       "meff": 0.3486,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.334,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74111,
+       "meff": 0.9278,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41459,
+       "vnPost": -3.77374,
+       "meff": 0.354,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.69372,
+       "meff": 0.1837,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.6636,
+       "meff": 0.2563,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.186,
+     "friction": [
+      0.10007,
+      -0.17349
+     ],
+     "angFriction": 0.002258,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.186,
+       "lamSolved": 9.055593490600586,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74111,
+       "meff": 0.9278,
+       "W": -36.9274
+      },
+      {
+       "k": 1,
+       "sepMm": 15.186,
+       "lamSolved": 7.634133338928223,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.6636,
+       "meff": 0.2563,
+       "W": -30.8369
+      },
+      {
+       "k": 2,
+       "sepMm": 15.186,
+       "lamSolved": 0.43361809849739075,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.63334,
+       "meff": 0.1877,
+       "W": -1.74497
+      },
+      {
+       "k": 3,
+       "sepMm": 15.186,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41461,
+       "vnPost": -3.70782,
+       "meff": 0.3486,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -14.946,
+     "friction": [
+      -1.88089,
+      -0.07696
+     ],
+     "angFriction": 0.034715,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 14.946,
+       "lamSolved": 1.5718945264816284,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41559,
+       "vnPost": -3.58608,
+       "meff": 0.0929,
+       "W": -6.28889
+      },
+      {
+       "k": 1,
+       "sepMm": 14.946,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.6636,
+       "meff": 0.2563,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 14.946,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.69372,
+       "meff": 0.1837,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 14.946,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41547,
+       "vnPost": -3.62687,
+       "meff": 0.1012,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -14.917,
+     "friction": [
+      -0.00275,
+      -0.00016
+     ],
+     "angFriction": -0.000077,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 14.917,
+       "lamSolved": 0.001141487155109644,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41559,
+       "vnPost": -3.58608,
+       "meff": 0.0929,
+       "W": -0.00457
+      },
+      {
+       "k": 1,
+       "sepMm": 14.917,
+       "lamSolved": 0.0012883252929896116,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41549,
+       "vnPost": -3.57972,
+       "meff": 0.1029,
+       "W": -0.00515
+      },
+      {
+       "k": 2,
+       "sepMm": 14.917,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.63334,
+       "meff": 0.1877,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 14.917,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.6636,
+       "meff": 0.2563,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.313,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.99696,
+       "meff": 0.0594,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41312,
+       "vnPost": -3.92119,
+       "meff": 0.0509,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41361,
+       "vnPost": -3.84001,
+       "meff": 0.0998,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.313,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.91175,
+       "meff": 0.1324,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.499,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.99696,
+       "meff": 0.0594,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.91175,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41359,
+       "vnPost": -3.98279,
+       "meff": 0.1026,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.499,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4131,
+       "vnPost": -4.07273,
+       "meff": 0.0519,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.935,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.91175,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41361,
+       "vnPost": -3.84001,
+       "meff": 0.0998,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41411,
+       "vnPost": -3.75883,
+       "meff": 0.2254,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.935,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.82654,
+       "meff": 0.4359,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.11,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.11,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4136,
+       "vnPost": -3.91175,
+       "meff": 0.1324,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.11,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.82654,
+       "meff": 0.4359,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 16.11,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41409,
+       "vnPost": -3.89285,
+       "meff": 0.2348,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 16.11,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41359,
+       "vnPost": -3.98279,
+       "meff": 0.1026,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.559,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41411,
+       "vnPost": -3.75883,
+       "meff": 0.2254,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41461,
+       "vnPost": -3.6785,
+       "meff": 0.3486,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74133,
+       "meff": 0.9278,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.559,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.82654,
+       "meff": 0.4359,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.722,
+     "friction": [
+      -1.54166,
+      0.46191
+     ],
+     "angFriction": -0.04282,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4141,
+       "vnPost": -3.82654,
+       "meff": 0.4359,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74133,
+       "meff": 0.9278,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.722,
+       "lamSolved": 1.4094634056091309,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41459,
+       "vnPost": -3.80291,
+       "meff": 0.354,
+       "W": -5.79114
+      },
+      {
+       "k": 3,
+       "sepMm": 15.722,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41409,
+       "vnPost": -3.89285,
+       "meff": 0.2348,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.185,
+     "friction": [
+      2.30602,
+      -0.05697
+     ],
+     "angFriction": -0.041894,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.185,
+       "lamSolved": 8.651349067687988,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74133,
+       "meff": 0.9278,
+       "W": -35.27991
+      },
+      {
+       "k": 1,
+       "sepMm": 15.185,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41461,
+       "vnPost": -3.6785,
+       "meff": 0.3486,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.185,
+       "lamSolved": 2.95038104057312,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.59902,
+       "meff": 0.1877,
+       "W": -11.82236
+      },
+      {
+       "k": 3,
+       "sepMm": 15.185,
+       "lamSolved": 2.997129440307617,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.65613,
+       "meff": 0.2563,
+       "W": -12.09525
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -15.334,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4146,
+       "vnPost": -3.74133,
+       "meff": 0.9278,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.65613,
+       "meff": 0.2563,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.71297,
+       "meff": 0.1837,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 15.334,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41459,
+       "vnPost": -3.80291,
+       "meff": 0.354,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -14.916,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 14.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41559,
+       "vnPost": -3.57092,
+       "meff": 0.0929,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 14.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.65613,
+       "meff": 0.2563,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 14.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.59902,
+       "meff": 0.1877,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 14.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41549,
+       "vnPost": -3.54534,
+       "meff": 0.1029,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -14.945,
+     "friction": [
+      -2.6275,
+      0.10481
+     ],
+     "angFriction": -0.033646,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 14.945,
+       "lamSolved": 2.264529228210449,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41559,
+       "vnPost": -3.57092,
+       "meff": 0.0929,
+       "W": -9.04284
+      },
+      {
+       "k": 1,
+       "sepMm": 14.945,
+       "lamSolved": 0.5440411567687988,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41548,
+       "vnPost": -3.63434,
+       "meff": 0.1012,
+       "W": -2.18972
+      },
+      {
+       "k": 2,
+       "sepMm": 14.945,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41509,
+       "vnPost": -3.71297,
+       "meff": 0.1837,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 14.945,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4151,
+       "vnPost": -3.65613,
+       "meff": 0.2563,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.887,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.887,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.86084,
+       "meff": 0.156,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.887,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4131,
+       "vnPost": -3.90028,
+       "meff": 0.0526,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.69,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.69,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.86084,
+       "meff": 0.156,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.69,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41312,
+       "vnPost": -3.8214,
+       "meff": 0.0544,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.69,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.69,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41312,
+       "vnPost": -3.81051,
+       "meff": 0.0544,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.69,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.89406,
+       "meff": 0.156,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -16.887,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 16.887,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.41311,
+       "vnPost": -3.89406,
+       "meff": 0.156,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 16.887,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.4131,
+       "vnPost": -3.97761,
+       "meff": 0.0526,
+       "W": 0
+      }
+     ]
+    }
+   ],
+   "perBody": [
+    {
+     "body": "pelvis",
+     "dKE": -16.6602,
+     "dPE": -1.3058
+    },
+    {
+     "body": "abdomen",
+     "dKE": -18.852,
+     "dPE": -1.9425
+    },
+    {
+     "body": "thorax",
+     "dKE": -19.3147,
+     "dPE": -1.9289
+    },
+    {
+     "body": "head",
+     "dKE": -9.1981,
+     "dPE": -0.8147
+    },
+    {
+     "body": "upperArm_L",
+     "dKE": -3.2052,
+     "dPE": -0.3222
+    },
+    {
+     "body": "forearm_L",
+     "dKE": -2.5268,
+     "dPE": -0.2663
+    },
+    {
+     "body": "upperArm_R",
+     "dKE": -3.2075,
+     "dPE": -0.3222
+    },
+    {
+     "body": "forearm_R",
+     "dKE": -2.5287,
+     "dPE": -0.2663
+    },
+    {
+     "body": "thigh_L",
+     "dKE": -21.7333,
+     "dPE": -1.6321
+    },
+    {
+     "body": "shank_L",
+     "dKE": -7.4727,
+     "dPE": -0.5019
+    },
+    {
+     "body": "foot_L",
+     "dKE": -2.5099,
+     "dPE": -0.1542
+    },
+    {
+     "body": "thigh_R",
+     "dKE": -22.1484,
+     "dPE": -1.6276
+    },
+    {
+     "body": "shank_R",
+     "dKE": -7.544,
+     "dPE": -0.5008
+    },
+    {
+     "body": "foot_R",
+     "dKE": -2.4954,
+     "dPE": -0.1543
+    },
+    {
+     "body": "toe_L",
+     "dKE": -0.3987,
+     "dPE": -0.0315
+    },
+    {
+     "body": "toe_R",
+     "dKE": -0.3707,
+     "dPE": -0.0318
+    }
+   ],
+   "jointLambdasBefore": {
+    "ankle_L": {
+     "pos": [
+      -0.000013487389878719114,
+      -0.000005848032742505893,
+      -0.000020111616322537884
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.0000026805482775671408,
+      -0.0000018104024093190674,
+      5.993003355797555e-7
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.000013562080312112812,
+      -0.0000054326956160366535,
+      -0.000020019913790747523
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.0000026784937290358357,
+      -0.0000018202880482931505,
+      -5.988424049974128e-7
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      -0.000010447627573739737,
+      -0.000002966515239677392,
+      -0.0000031021033919387264
+     ],
+     "rot": [
+      -6.780395978012166e-8,
+      0,
+      2.7548267667043547e-7
+     ],
+     "motRot": [
+      6.396028151556266e-11,
+      -9.454554827925676e-8,
+      -4.1079799284471363e-11
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      0.000010417794328532182,
+      -0.0000032283671771438094,
+      -0.0000030163064366206527
+     ],
+     "rot": [
+      6.676344810330193e-8,
+      0,
+      -2.7462664320410113e-7
+     ],
+     "motRot": [
+      4.831174696406926e-11,
+      -8.502875203930671e-8,
+      -3.171079718256031e-11
+     ]
+    }
+   },
+   "jointLambdasAfter": {
+    "ankle_L": {
+     "pos": [
+      -0.2077038437128067,
+      -17.933805465698242,
+      -1.76046621799469
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.00005178111314307898,
+      0.000004239716872689314,
+      -0.0007663872675038874
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.41221046447753906,
+      -18.06244659423828,
+      -1.8021913766860962
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.00013252839562483132,
+      0.00022801679733674973,
+      0.0014409450814127922
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.004660617560148239,
+      0.10476719588041306,
+      0.0003942968905903399
+     ],
+     "rot": [
+      -0.00020891551685053855,
+      0,
+      -0.00008532321953680366
+     ],
+     "motRot": [
+      6.703130566165783e-7,
+      0.0014474339550361037,
+      -4.81936638152547e-7
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      -0.009639608673751354,
+      0.09772218018770218,
+      0.0065414137206971645
+     ],
+     "rot": [
+      0.0003805583983194083,
+      0,
+      0.0001402913621859625
+     ],
+     "motRot": [
+      -0.000010617571206239518,
+      0.0013437820598483086,
+      -0.0000033846522455860395
+     ]
+    }
+   }
+  },
+  {
+   "n": 109,
+   "t": 0.45417,
+   "dE": -398.61197,
+   "dKE": -394.98198,
+   "dPE": -3.65804,
+   "dU": 0.02805,
+   "contactWorkSum": -368.84457,
+   "manifolds": [
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.398,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.398,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": -4.01443,
+       "vnPost": 0.17963,
+       "meff": 0.0595,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.398,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -4.05458,
+       "vnPost": 0.08762,
+       "meff": 0.052,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.398,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.97455,
+       "vnPost": 0.06728,
+       "meff": 0.103,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.398,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.93691,
+       "vnPost": 0.15354,
+       "meff": 0.1329,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.37,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.37,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": -4.01443,
+       "vnPost": 0.17963,
+       "meff": 0.0595,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.37,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.93691,
+       "vnPost": 0.15354,
+       "meff": 0.1329,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.37,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": -3.8989,
+       "vnPost": 0.24065,
+       "meff": 0.0998,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.37,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": -3.97429,
+       "vnPost": 0.27163,
+       "meff": 0.0509,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.242,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.242,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.93691,
+       "vnPost": 0.15354,
+       "meff": 0.1329,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.242,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.97455,
+       "vnPost": 0.06728,
+       "meff": 0.103,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.242,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.89452,
+       "vnPost": 0.04694,
+       "meff": 0.2359,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.242,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.85939,
+       "vnPost": 0.12745,
+       "meff": 0.4381,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.215,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.215,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.93691,
+       "vnPost": 0.15354,
+       "meff": 0.1329,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.215,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.85939,
+       "vnPost": 0.12745,
+       "meff": 0.4381,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.215,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.82352,
+       "vnPost": 0.20967,
+       "meff": 0.225,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.215,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": -3.8989,
+       "vnPost": 0.24065,
+       "meff": 0.0998,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.086,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.85939,
+       "vnPost": 0.12745,
+       "meff": 0.4381,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.89452,
+       "vnPost": 0.04694,
+       "meff": 0.2359,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.8145,
+       "vnPost": 0.02659,
+       "meff": 0.3542,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.78187,
+       "vnPost": 0.10136,
+       "meff": 0.9252,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.061,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.061,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.82352,
+       "vnPost": 0.20967,
+       "meff": 0.225,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.061,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.85939,
+       "vnPost": 0.12745,
+       "meff": 0.4381,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.061,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.78187,
+       "vnPost": 0.10136,
+       "meff": 0.9252,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.061,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.74858,
+       "vnPost": 0.17766,
+       "meff": 0.3465,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.07,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.07,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.78187,
+       "vnPost": 0.10136,
+       "meff": 0.9252,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.07,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.8145,
+       "vnPost": 0.02659,
+       "meff": 0.3542,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.07,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.73447,
+       "vnPost": 0.00625,
+       "meff": 0.1832,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.07,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.70435,
+       "vnPost": 0.07528,
+       "meff": 0.2551,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.092,
+     "friction": [
+      2.09722,
+      -0.02979
+     ],
+     "angFriction": 0.065995,
+     "frictionInherited": [
+      0.10007,
+      -0.17349
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.092,
+       "lamSolved": 54.06949234008789,
+       "lamInherited": 9.055593490600586,
+       "matchDistMm": 0.09,
+       "vnPre": -3.78187,
+       "vnPost": 0.10136,
+       "meff": 0.9252,
+       "W": -99.50158
+      },
+      {
+       "k": 1,
+       "sepMm": -0.092,
+       "lamSolved": 37.201210021972656,
+       "lamInherited": 7.634133338928223,
+       "matchDistMm": 0.091,
+       "vnPre": -3.70435,
+       "vnPost": 0.07528,
+       "meff": 0.2551,
+       "W": -67.50298
+      },
+      {
+       "k": 2,
+       "sepMm": -0.092,
+       "lamSolved": 0,
+       "lamInherited": 0.43361809849739075,
+       "matchDistMm": 0.091,
+       "vnPre": -3.67409,
+       "vnPost": 0.14462,
+       "meff": 0.1867,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.092,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.74858,
+       "vnPost": 0.17766,
+       "meff": 0.3465,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.226,
+     "friction": [
+      -11.48625,
+      -0.31325
+     ],
+     "angFriction": 0.167875,
+     "frictionInherited": [
+      -1.88089,
+      -0.07696
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.226,
+       "lamSolved": 8.97158145904541,
+       "lamInherited": 1.5718945264816284,
+       "matchDistMm": 0.092,
+       "vnPre": -3.62683,
+       "vnPost": 0.04919,
+       "meff": 0.0926,
+       "W": -16.04855
+      },
+      {
+       "k": 1,
+       "sepMm": -0.226,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.70435,
+       "vnPost": 0.07528,
+       "meff": 0.2551,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.226,
+       "lamSolved": 0.11570055037736893,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.73447,
+       "vnPost": 0.00625,
+       "meff": 0.1832,
+       "W": -0.21568
+      },
+      {
+       "k": 3,
+       "sepMm": -0.226,
+       "lamSolved": 0.511518120765686,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.66762,
+       "vnPost": 0.00095,
+       "meff": 0.1009,
+       "W": -0.93778
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.226,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      -0.00275,
+      -0.00016
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.226,
+       "lamSolved": 0,
+       "lamInherited": 0.001141487155109644,
+       "matchDistMm": 0.092,
+       "vnPre": -3.62683,
+       "vnPost": 0.04919,
+       "meff": 0.0926,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.226,
+       "lamSolved": 0,
+       "lamInherited": 0.0012883252929896116,
+       "matchDistMm": 0.092,
+       "vnPre": -3.62047,
+       "vnPost": 0.10901,
+       "meff": 0.1026,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.226,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.67409,
+       "vnPost": 0.14462,
+       "meff": 0.1867,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.226,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.091,
+       "vnPre": -3.70435,
+       "vnPost": 0.07528,
+       "meff": 0.2551,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.319,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.319,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.079,
+       "vnPre": -4.03798,
+       "vnPost": 0.19314,
+       "meff": 0.0595,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.319,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.076,
+       "vnPre": -3.9622,
+       "vnPost": 0.29655,
+       "meff": 0.0508,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.319,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.081,
+       "vnPre": -3.88103,
+       "vnPost": 0.2636,
+       "meff": 0.0997,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.319,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.083,
+       "vnPre": -3.95278,
+       "vnPost": 0.16569,
+       "meff": 0.133,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.196,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.196,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.079,
+       "vnPre": -4.03798,
+       "vnPost": 0.19314,
+       "meff": 0.0595,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.196,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.083,
+       "vnPre": -3.95278,
+       "vnPost": 0.16569,
+       "meff": 0.133,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.196,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.086,
+       "vnPre": -4.02383,
+       "vnPost": 0.06874,
+       "meff": 0.1033,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.196,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.082,
+       "vnPre": -4.11376,
+       "vnPost": 0.08973,
+       "meff": 0.0521,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.203,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.203,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.083,
+       "vnPre": -3.95278,
+       "vnPost": 0.16569,
+       "meff": 0.133,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.203,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.081,
+       "vnPre": -3.88103,
+       "vnPost": 0.2636,
+       "meff": 0.0997,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.203,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.085,
+       "vnPre": -3.79985,
+       "vnPost": 0.23065,
+       "meff": 0.2244,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.203,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.087,
+       "vnPre": -3.86758,
+       "vnPost": 0.13824,
+       "meff": 0.4385,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.087,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.087,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.083,
+       "vnPre": -3.95278,
+       "vnPost": 0.16569,
+       "meff": 0.133,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.087,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.087,
+       "vnPre": -3.86758,
+       "vnPost": 0.13824,
+       "meff": 0.4385,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.087,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.9339,
+       "vnPost": 0.04774,
+       "meff": 0.2368,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.087,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.086,
+       "vnPre": -4.02383,
+       "vnPost": 0.06874,
+       "meff": 0.1033,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.086,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.085,
+       "vnPre": -3.79985,
+       "vnPost": 0.23065,
+       "meff": 0.2244,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.71953,
+       "vnPost": 0.19654,
+       "meff": 0.3452,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.78237,
+       "vnPost": 0.11079,
+       "meff": 0.9248,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.086,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.087,
+       "vnPre": -3.86758,
+       "vnPost": 0.13824,
+       "meff": 0.4385,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.021,
+     "friction": [
+      -10.91536,
+      3.61097
+     ],
+     "angFriction": -0.316363,
+     "frictionInherited": [
+      -1.54166,
+      0.46191
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.021,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.087,
+       "vnPre": -3.86758,
+       "vnPost": 0.13824,
+       "meff": 0.4385,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.021,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.78237,
+       "vnPost": 0.11079,
+       "meff": 0.9248,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.021,
+       "lamSolved": 10.063823699951172,
+       "lamInherited": 1.4094634056091309,
+       "matchDistMm": 0.094,
+       "vnPre": -3.84396,
+       "vnPost": 0.02675,
+       "meff": 0.3553,
+       "W": -19.20788
+      },
+      {
+       "k": 3,
+       "sepMm": -0.021,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.089,
+       "vnPre": -3.9339,
+       "vnPost": 0.04774,
+       "meff": 0.2368,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.031,
+     "friction": [
+      15.54333,
+      -3.49986
+     ],
+     "angFriction": -0.296278,
+     "frictionInherited": [
+      2.30602,
+      -0.05697
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.031,
+       "lamSolved": 48.165061950683594,
+       "lamInherited": 8.651349067687988,
+       "matchDistMm": 0.092,
+       "vnPre": -3.78237,
+       "vnPost": 0.11079,
+       "meff": 0.9248,
+       "W": -88.42101
+      },
+      {
+       "k": 1,
+       "sepMm": -0.031,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.09,
+       "vnPre": -3.71953,
+       "vnPost": 0.19654,
+       "meff": 0.3452,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.031,
+       "lamSolved": 11.898689270019531,
+       "lamInherited": 2.95038104057312,
+       "matchDistMm": 0.095,
+       "vnPre": -3.64005,
+       "vnPost": 0.16128,
+       "meff": 0.1864,
+       "W": -20.69644
+      },
+      {
+       "k": 3,
+       "sepMm": -0.031,
+       "lamSolved": 17.41983413696289,
+       "lamInherited": 2.997129440307617,
+       "matchDistMm": 0.096,
+       "vnPre": -3.69717,
+       "vnPost": 0.08334,
+       "meff": 0.255,
+       "W": -31.47617
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.13,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.13,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": -3.78237,
+       "vnPost": 0.11079,
+       "meff": 0.9248,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.13,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.096,
+       "vnPre": -3.69717,
+       "vnPost": 0.08334,
+       "meff": 0.255,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.13,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.098,
+       "vnPre": -3.75403,
+       "vnPost": 0.00575,
+       "meff": 0.1833,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.13,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.094,
+       "vnPre": -3.84396,
+       "vnPost": 0.02675,
+       "meff": 0.3553,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.148,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.148,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.101,
+       "vnPre": -3.61197,
+       "vnPost": 0.05589,
+       "meff": 0.0926,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.148,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.096,
+       "vnPre": -3.69717,
+       "vnPost": 0.08334,
+       "meff": 0.255,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.148,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.095,
+       "vnPre": -3.64005,
+       "vnPost": 0.16128,
+       "meff": 0.1864,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.148,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.099,
+       "vnPre": -3.58639,
+       "vnPost": 0.12271,
+       "meff": 0.1025,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.199,
+     "friction": [
+      -14.10964,
+      0.1949
+     ],
+     "angFriction": -0.052879,
+     "frictionInherited": [
+      -2.6275,
+      0.10481
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.199,
+       "lamSolved": 10.95842456817627,
+       "lamInherited": 2.264529228210449,
+       "matchDistMm": 0.101,
+       "vnPre": -3.61197,
+       "vnPost": 0.05589,
+       "meff": 0.0926,
+       "W": -19.48451
+      },
+      {
+       "k": 1,
+       "sepMm": -0.199,
+       "lamSolved": 2.913330554962158,
+       "lamInherited": 0.5440411567687988,
+       "matchDistMm": 0.101,
+       "vnPre": -3.67539,
+       "vnPost": 0.00126,
+       "meff": 0.1009,
+       "W": -5.35198
+      },
+      {
+       "k": 2,
+       "sepMm": -0.199,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.098,
+       "vnPre": -3.75403,
+       "vnPost": 0.00575,
+       "meff": 0.1833,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.199,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.096,
+       "vnPre": -3.69717,
+       "vnPost": 0.08334,
+       "meff": 0.255,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.853,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.853,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.0481,
+       "vnPost": 0.23352,
+       "meff": 0.0267,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.853,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.00829,
+       "vnPost": 0.35092,
+       "meff": 0.0507,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.853,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -3.96991,
+       "vnPost": 0.45299,
+       "meff": 0.1,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.829,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.829,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.01048,
+       "vnPost": 0.3351,
+       "meff": 0.0325,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.829,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.03242,
+       "vnPost": 0.27584,
+       "meff": 0.0298,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.829,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -3.96991,
+       "vnPost": 0.45299,
+       "meff": 0.1,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 6.829,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -3.94034,
+       "vnPost": 0.53051,
+       "meff": 0.0599,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.764,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.764,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.111,
+       "vnPre": -3.90158,
+       "vnPost": 0.64662,
+       "meff": 0.1554,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.764,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 47.726,
+       "vnPre": -3.96991,
+       "vnPost": 0.45299,
+       "meff": 0.1,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.764,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 48.747,
+       "vnPre": -4.00218,
+       "vnPost": 0.3684,
+       "meff": 0.0542,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.764,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.113,
+       "vnPre": -3.94102,
+       "vnPost": 0.54323,
+       "meff": 0.0526,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.732,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.732,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 49.643,
+       "vnPre": -3.94034,
+       "vnPost": 0.53051,
+       "meff": 0.0599,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.732,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 47.726,
+       "vnPre": -3.96991,
+       "vnPost": 0.45299,
+       "meff": 0.1,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.732,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.111,
+       "vnPre": -3.90158,
+       "vnPost": 0.64662,
+       "meff": 0.1554,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.685,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.685,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.04155,
+       "vnPost": 0.27967,
+       "meff": 0.0325,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.685,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -3.94798,
+       "vnPost": 0.50385,
+       "meff": 0.0599,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.685,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.01064,
+       "vnPost": 0.39842,
+       "meff": 0.1001,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 6.685,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.07981,
+       "vnPost": 0.20531,
+       "meff": 0.0298,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "added",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.565,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": null,
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.565,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.10714,
+       "vnPost": 0.15219,
+       "meff": 0.0267,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.565,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.01064,
+       "vnPost": 0.39842,
+       "meff": 0.1001,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.565,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": null,
+       "vnPre": -4.08506,
+       "vnPost": 0.26483,
+       "meff": 0.0508,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.627,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.627,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 49.643,
+       "vnPre": -3.94798,
+       "vnPost": 0.50385,
+       "meff": 0.0599,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.627,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.051,
+       "vnPre": -3.85146,
+       "vnPost": 0.75011,
+       "meff": 0.0542,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.627,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 47.726,
+       "vnPre": -4.01064,
+       "vnPost": 0.39842,
+       "meff": 0.1001,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.482,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.482,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 48.747,
+       "vnPre": -4.07902,
+       "vnPost": 0.28338,
+       "meff": 0.0543,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.482,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 47.726,
+       "vnPre": -4.01064,
+       "vnPost": 0.39842,
+       "meff": 0.1001,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.482,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.052,
+       "vnPre": -3.93503,
+       "vnPost": 0.6095,
+       "meff": 0.1554,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.482,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.056,
+       "vnPre": -4.0186,
+       "vnPost": 0.46889,
+       "meff": 0.0527,
+       "W": 0
+      }
+     ]
+    }
+   ],
+   "perBody": [
+    {
+     "body": "pelvis",
+     "dKE": -44.4855,
+     "dPE": -0.3506
+    },
+    {
+     "body": "abdomen",
+     "dKE": -58.4139,
+     "dPE": -0.8649
+    },
+    {
+     "body": "thorax",
+     "dKE": -73.8898,
+     "dPE": -0.8383
+    },
+    {
+     "body": "head",
+     "dKE": -32.0112,
+     "dPE": -0.296
+    },
+    {
+     "body": "upperArm_L",
+     "dKE": -12.5112,
+     "dPE": -0.1413
+    },
+    {
+     "body": "forearm_L",
+     "dKE": -10.0431,
+     "dPE": -0.123
+    },
+    {
+     "body": "upperArm_R",
+     "dKE": -12.5103,
+     "dPE": -0.1413
+    },
+    {
+     "body": "forearm_R",
+     "dKE": -10.0426,
+     "dPE": -0.123
+    },
+    {
+     "body": "thigh_L",
+     "dKE": -49.2836,
+     "dPE": -0.3621
+    },
+    {
+     "body": "shank_L",
+     "dKE": -12.8755,
+     "dPE": -0.0474
+    },
+    {
+     "body": "foot_L",
+     "dKE": -7.0503,
+     "dPE": 0.0035
+    },
+    {
+     "body": "thigh_R",
+     "dKE": -49.2498,
+     "dPE": -0.3434
+    },
+    {
+     "body": "shank_R",
+     "dKE": -12.6025,
+     "dPE": -0.0426
+    },
+    {
+     "body": "foot_R",
+     "dKE": -7.0676,
+     "dPE": 0.004
+    },
+    {
+     "body": "toe_L",
+     "dKE": -1.4555,
+     "dPE": 0.0044
+    },
+    {
+     "body": "toe_R",
+     "dKE": -1.4896,
+     "dPE": 0.0041
+    }
+   ],
+   "jointLambdasBefore": {
+    "ankle_L": {
+     "pos": [
+      -0.2077038437128067,
+      -17.933805465698242,
+      -1.76046621799469
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.00005178111314307898,
+      0.000004239716872689314,
+      -0.0007663872675038874
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.41221046447753906,
+      -18.06244659423828,
+      -1.8021913766860962
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.00013252839562483132,
+      0.00022801679733674973,
+      0.0014409450814127922
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.004660617560148239,
+      0.10476719588041306,
+      0.0003942968905903399
+     ],
+     "rot": [
+      -0.00020891551685053855,
+      0,
+      -0.00008532321953680366
+     ],
+     "motRot": [
+      6.703130566165783e-7,
+      0.0014474339550361037,
+      -4.81936638152547e-7
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      -0.009639608673751354,
+      0.09772218018770218,
+      0.0065414137206971645
+     ],
+     "rot": [
+      0.0003805583983194083,
+      0,
+      0.0001402913621859625
+     ],
+     "motRot": [
+      -0.000010617571206239518,
+      0.0013437820598483086,
+      -0.0000033846522455860395
+     ]
+    }
+   },
+   "jointLambdasAfter": {
+    "ankle_L": {
+     "pos": [
+      -0.30558720231056213,
+      -96.06555938720703,
+      -9.611434936523438
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.00015365575382020324,
+      -0.010346068069338799,
+      -0.0022791947703808546
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.27438950538635254,
+      -96.60538482666016,
+      -9.657501220703125
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.0001423835929017514,
+      -0.010150079615414143,
+      0.0026424964889883995
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.0023021982051432133,
+      0.8926271200180054,
+      -0.03180450201034546
+     ],
+     "rot": [
+      -0.000836914055980742,
+      0,
+      -0.000051572533266153187
+     ],
+     "motRot": [
+      0.000022020303731551394,
+      0.013940194621682167,
+      6.003594990033889e-7
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      0.003652242012321949,
+      0.8909407258033752,
+      -0.023596331477165222
+     ],
+     "rot": [
+      0.0009015100658871233,
+      0,
+      -0.00017887487774714828
+     ],
+     "motRot": [
+      -0.00005578434866038151,
+      0.01391803752630949,
+      -0.000007891962013673037
+     ]
+    }
+   }
+  },
+  {
+   "n": 110,
+   "t": 0.45833,
+   "dE": 3.60668,
+   "dKE": 6.6107,
+   "dPE": -3.02012,
+   "dU": 0.0161,
+   "contactWorkSum": 0.07726,
+   "manifolds": [
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.269,
+     "friction": [
+      -0.4818,
+      -0.0211
+     ],
+     "angFriction": 0.015579,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.269,
+       "lamSolved": 0.309029757976532,
+       "lamInherited": 0,
+       "matchDistMm": 0.318,
+       "vnPre": 0.13851,
+       "vnPost": 0.67266,
+       "meff": 0.0592,
+       "W": 0.12534
+      },
+      {
+       "k": 1,
+       "sepMm": 1.269,
+       "lamSolved": 0.09428442269563675,
+       "lamInherited": 0,
+       "matchDistMm": 0.321,
+       "vnPre": 0.04651,
+       "vnPost": 0.69999,
+       "meff": 0.052,
+       "W": 0.03519
+      },
+      {
+       "k": 2,
+       "sepMm": 1.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.316,
+       "vnPre": 0.02618,
+       "vnPost": 0.56328,
+       "meff": 0.1031,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.314,
+       "vnPre": 0.11243,
+       "vnPost": 0.53766,
+       "meff": 0.1319,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.619,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.619,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.318,
+       "vnPre": 0.13851,
+       "vnPost": 0.67266,
+       "meff": 0.0592,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.619,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.314,
+       "vnPre": 0.11243,
+       "vnPost": 0.53766,
+       "meff": 0.1319,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.619,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.311,
+       "vnPre": 0.19954,
+       "vnPost": 0.51179,
+       "meff": 0.0989,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.619,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.315,
+       "vnPre": 0.23051,
+       "vnPost": 0.64534,
+       "meff": 0.0505,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.658,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.658,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.314,
+       "vnPre": 0.11243,
+       "vnPost": 0.53766,
+       "meff": 0.1319,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.658,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.316,
+       "vnPre": 0.02618,
+       "vnPost": 0.56328,
+       "meff": 0.1031,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.658,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.312,
+       "vnPre": 0.00585,
+       "vnPost": 0.42657,
+       "meff": 0.2371,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.658,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.309,
+       "vnPre": 0.08636,
+       "vnPost": 0.40266,
+       "meff": 0.4333,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.985,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.985,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.314,
+       "vnPre": 0.11243,
+       "vnPost": 0.53766,
+       "meff": 0.1319,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.985,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.309,
+       "vnPre": 0.08636,
+       "vnPost": 0.40266,
+       "meff": 0.4333,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.985,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.306,
+       "vnPre": 0.16858,
+       "vnPost": 0.37824,
+       "meff": 0.2225,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.985,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.311,
+       "vnPre": 0.19954,
+       "vnPost": 0.51179,
+       "meff": 0.0989,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.048,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.048,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.309,
+       "vnPre": 0.08636,
+       "vnPost": 0.40266,
+       "meff": 0.4333,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.048,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.312,
+       "vnPre": 0.00585,
+       "vnPost": 0.42657,
+       "meff": 0.2371,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.048,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.307,
+       "vnPre": -0.01448,
+       "vnPost": 0.28987,
+       "meff": 0.3593,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.048,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.305,
+       "vnPre": 0.06029,
+       "vnPost": 0.26766,
+       "meff": 0.9305,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.351,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.351,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.306,
+       "vnPre": 0.16858,
+       "vnPost": 0.37824,
+       "meff": 0.2225,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.351,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.309,
+       "vnPre": 0.08636,
+       "vnPost": 0.40266,
+       "meff": 0.4333,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.351,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.305,
+       "vnPre": 0.06029,
+       "vnPost": 0.26766,
+       "meff": 0.9305,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.351,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.302,
+       "vnPre": 0.13658,
+       "vnPost": 0.245,
+       "meff": 0.3454,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.563,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.563,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.305,
+       "vnPre": 0.06029,
+       "vnPost": 0.26766,
+       "meff": 0.9305,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.563,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.307,
+       "vnPre": -0.01448,
+       "vnPost": 0.28987,
+       "meff": 0.3593,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.563,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.303,
+       "vnPre": -0.03481,
+       "vnPost": 0.15316,
+       "meff": 0.1853,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.563,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.3,
+       "vnPre": 0.03422,
+       "vnPost": 0.13266,
+       "meff": 0.2577,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.282,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      2.09722,
+      -0.02979
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.282,
+       "lamSolved": 0,
+       "lamInherited": 54.06949234008789,
+       "matchDistMm": 0.305,
+       "vnPre": 0.06029,
+       "vnPost": 0.26766,
+       "meff": 0.9305,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.282,
+       "lamSolved": 0,
+       "lamInherited": 37.201210021972656,
+       "matchDistMm": 0.3,
+       "vnPre": 0.03422,
+       "vnPost": 0.13266,
+       "meff": 0.2577,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.282,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.298,
+       "vnPre": 0.10356,
+       "vnPost": 0.11207,
+       "meff": 0.1878,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.282,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.302,
+       "vnPre": 0.13658,
+       "vnPost": 0.245,
+       "meff": 0.3454,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.995,
+     "friction": [
+      -2.20865,
+      0.52473
+     ],
+     "angFriction": 0.016564,
+     "frictionInherited": [
+      -11.48625,
+      -0.31325
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.995,
+       "lamSolved": 6.0386061668396,
+       "lamInherited": 8.97158145904541,
+       "matchDistMm": 0.296,
+       "vnPre": 0.00814,
+       "vnPost": -0.00234,
+       "meff": 0.0932,
+       "W": 0.01752
+      },
+      {
+       "k": 1,
+       "sepMm": -0.995,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.3,
+       "vnPre": 0.03422,
+       "vnPost": 0.13266,
+       "meff": 0.2577,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.995,
+       "lamSolved": 0,
+       "lamInherited": 0.11570055037736893,
+       "matchDistMm": 0.303,
+       "vnPre": -0.03481,
+       "vnPost": 0.15316,
+       "meff": 0.1853,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.995,
+       "lamSolved": 0.46518105268478394,
+       "lamInherited": 0.511518120765686,
+       "matchDistMm": 0.299,
+       "vnPre": -0.0401,
+       "vnPost": 0.04369,
+       "meff": 0.1017,
+       "W": 0.00084
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.916,
+     "friction": [
+      0.66888,
+      -0.03006
+     ],
+     "angFriction": 0.018084,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.916,
+       "lamSolved": 0.5615060925483704,
+       "lamInherited": 0,
+       "matchDistMm": 0.296,
+       "vnPre": 0.00814,
+       "vnPost": -0.00234,
+       "meff": 0.0932,
+       "W": 0.00163
+      },
+      {
+       "k": 1,
+       "sepMm": -0.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.295,
+       "vnPre": 0.06796,
+       "vnPost": 0.0116,
+       "meff": 0.1032,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.298,
+       "vnPre": 0.10356,
+       "vnPost": 0.11207,
+       "meff": 0.1878,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.916,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.3,
+       "vnPre": 0.03421,
+       "vnPost": 0.13266,
+       "meff": 0.2577,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.524,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.524,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.056,
+       "vnPre": 0.15216,
+       "vnPost": 0.69181,
+       "meff": 0.0592,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.524,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.092,
+       "vnPre": 0.25554,
+       "vnPost": 0.60298,
+       "meff": 0.0505,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.524,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.113,
+       "vnPre": 0.22252,
+       "vnPost": 0.47333,
+       "meff": 0.0987,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.524,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": 0.12464,
+       "vnPost": 0.55744,
+       "meff": 0.1321,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.933,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.933,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.056,
+       "vnPre": 0.15216,
+       "vnPost": 0.69181,
+       "meff": 0.0592,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.933,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": 0.12464,
+       "vnPost": 0.55744,
+       "meff": 0.1321,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.933,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.081,
+       "vnPre": 0.02772,
+       "vnPost": 0.64072,
+       "meff": 0.1034,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.933,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.044,
+       "vnPre": 0.04879,
+       "vnPost": 0.78064,
+       "meff": 0.0521,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.966,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.966,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": 0.12464,
+       "vnPost": 0.55744,
+       "meff": 0.1321,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.966,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.113,
+       "vnPre": 0.22252,
+       "vnPost": 0.47333,
+       "meff": 0.0987,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.966,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.141,
+       "vnPre": 0.1895,
+       "vnPost": 0.34369,
+       "meff": 0.2215,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.966,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.124,
+       "vnPre": 0.09712,
+       "vnPost": 0.42307,
+       "meff": 0.434,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.414,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.414,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.088,
+       "vnPre": 0.12464,
+       "vnPost": 0.55744,
+       "meff": 0.1321,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.414,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.124,
+       "vnPre": 0.09712,
+       "vnPost": 0.42307,
+       "meff": 0.434,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.414,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.119,
+       "vnPre": 0.00665,
+       "vnPost": 0.50081,
+       "meff": 0.2384,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.414,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.081,
+       "vnPre": 0.02772,
+       "vnPost": 0.64073,
+       "meff": 0.1034,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.408,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.408,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.141,
+       "vnPre": 0.1895,
+       "vnPost": 0.34369,
+       "meff": 0.2215,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.408,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.173,
+       "vnPre": 0.15533,
+       "vnPost": 0.21504,
+       "meff": 0.3433,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.408,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.161,
+       "vnPre": 0.0696,
+       "vnPost": 0.2887,
+       "meff": 0.9296,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.408,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.124,
+       "vnPre": 0.09712,
+       "vnPost": 0.42307,
+       "meff": 0.434,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.104,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      -10.91536,
+      3.61097
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.104,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.124,
+       "vnPre": 0.09712,
+       "vnPost": 0.42307,
+       "meff": 0.434,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.104,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.161,
+       "vnPre": 0.0696,
+       "vnPost": 0.2887,
+       "meff": 0.9296,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.104,
+       "lamSolved": 0,
+       "lamInherited": 10.063823699951172,
+       "matchDistMm": 0.157,
+       "vnPre": -0.01442,
+       "vnPost": 0.3609,
+       "meff": 0.3609,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.104,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.119,
+       "vnPre": 0.00665,
+       "vnPost": 0.50081,
+       "meff": 0.2384,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.149,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      15.54333,
+      -3.49986
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.149,
+       "lamSolved": 0,
+       "lamInherited": 48.165061950683594,
+       "matchDistMm": 0.161,
+       "vnPre": 0.0696,
+       "vnPost": 0.2887,
+       "meff": 0.9296,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.149,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.173,
+       "vnPre": 0.15533,
+       "vnPost": 0.21504,
+       "meff": 0.3433,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.149,
+       "lamSolved": 0,
+       "lamInherited": 11.898689270019531,
+       "matchDistMm": 0.207,
+       "vnPre": 0.12,
+       "vnPost": 0.08739,
+       "meff": 0.1872,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.149,
+       "lamSolved": 0,
+       "lamInherited": 17.41983413696289,
+       "matchDistMm": 0.198,
+       "vnPre": 0.04208,
+       "vnPost": 0.15434,
+       "meff": 0.2573,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.622,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.622,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.161,
+       "vnPre": 0.0696,
+       "vnPost": 0.2887,
+       "meff": 0.9296,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": -0.622,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.198,
+       "vnPre": 0.04208,
+       "vnPost": 0.15434,
+       "meff": 0.2573,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.622,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.195,
+       "vnPre": -0.03548,
+       "vnPost": 0.22099,
+       "meff": 0.1853,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.622,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.157,
+       "vnPre": -0.01442,
+       "vnPost": 0.3609,
+       "meff": 0.3609,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.707,
+     "friction": [
+      1.28855,
+      -0.04549
+     ],
+     "angFriction": -0.039951,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.707,
+       "lamSolved": 0.7846546173095703,
+       "lamInherited": 0,
+       "matchDistMm": 0.235,
+       "vnPre": 0.01456,
+       "vnPost": 0.01997,
+       "meff": 0.0931,
+       "W": 0.01355
+      },
+      {
+       "k": 1,
+       "sepMm": -0.707,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.198,
+       "vnPre": 0.04208,
+       "vnPost": 0.15434,
+       "meff": 0.2573,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": -0.707,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.207,
+       "vnPre": 0.12,
+       "vnPost": 0.08739,
+       "meff": 0.1872,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.707,
+       "lamSolved": 0.29748207330703735,
+       "lamInherited": 0,
+       "matchDistMm": 0.233,
+       "vnPre": 0.08138,
+       "vnPost": -0.00236,
+       "meff": 0.1031,
+       "W": 0.01175
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": 0.953,
+     "friction": [
+      -3.6661,
+      -1.14742
+     ],
+     "angFriction": 0.060935,
+     "frictionInherited": [
+      -14.10964,
+      0.1949
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": -0.953,
+       "lamSolved": 4.090054512023926,
+       "lamInherited": 10.95842456817627,
+       "matchDistMm": 0.235,
+       "vnPre": 0.01456,
+       "vnPost": 0.01997,
+       "meff": 0.0931,
+       "W": 0.07061
+      },
+      {
+       "k": 1,
+       "sepMm": -0.953,
+       "lamSolved": 2.352673292160034,
+       "lamInherited": 2.913330554962158,
+       "matchDistMm": 0.224,
+       "vnPre": -0.04004,
+       "vnPost": 0.10198,
+       "meff": 0.1016,
+       "W": 0.07286
+      },
+      {
+       "k": 2,
+       "sepMm": -0.953,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.195,
+       "vnPre": -0.03548,
+       "vnPost": 0.22099,
+       "meff": 0.1853,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": -0.953,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.198,
+       "vnPre": 0.04208,
+       "vnPost": 0.15434,
+       "meff": 0.2573,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -8.361,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 8.361,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.827,
+       "vnPre": 0.19582,
+       "vnPost": -0.4604,
+       "meff": 0.0268,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 8.361,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.899,
+       "vnPre": 0.3136,
+       "vnPost": -0.55069,
+       "meff": 0.0511,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 8.361,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 5.735,
+       "vnPre": 0.33113,
+       "vnPost": -0.564,
+       "meff": 0.0546,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 8.361,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.908,
+       "vnPre": 0.41572,
+       "vnPost": -0.62653,
+       "meff": 0.1009,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -8.684,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 8.684,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.844,
+       "vnPre": 0.2975,
+       "vnPost": -0.53629,
+       "meff": 0.0327,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 8.684,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.834,
+       "vnPre": 0.23819,
+       "vnPost": -0.49202,
+       "meff": 0.03,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 8.684,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.908,
+       "vnPre": 0.41572,
+       "vnPost": -0.62653,
+       "meff": 0.1009,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 8.684,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.91,
+       "vnPre": 0.49325,
+       "vnPost": -0.68384,
+       "meff": 0.0601,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.9,
+     "friction": [
+      -0.20944,
+      0.12968
+     ],
+     "angFriction": 0.009396,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.9,
+       "lamSolved": 0.7033792734146118,
+       "lamInherited": 0,
+       "matchDistMm": 0.992,
+       "vnPre": 0.60978,
+       "vnPost": -0.77356,
+       "meff": 0.154,
+       "W": -0.0576
+      },
+      {
+       "k": 1,
+       "sepMm": 2.9,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.908,
+       "vnPre": 0.41572,
+       "vnPost": -0.62653,
+       "meff": 0.1009,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.9,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.907,
+       "vnPre": 0.33113,
+       "vnPost": -0.564,
+       "meff": 0.0546,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.9,
+       "lamSolved": 0.8832281231880188,
+       "lamInherited": 0,
+       "matchDistMm": 0.99,
+       "vnPre": 0.50638,
+       "vnPost": -0.69713,
+       "meff": 0.0527,
+       "W": -0.08424
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -3.295,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 3.295,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.91,
+       "vnPre": 0.49325,
+       "vnPost": -0.68384,
+       "meff": 0.0601,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 3.295,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.908,
+       "vnPre": 0.41572,
+       "vnPost": -0.62653,
+       "meff": 0.1009,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 3.295,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.992,
+       "vnPre": 0.60978,
+       "vnPost": -0.77356,
+       "meff": 0.154,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -8.293,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 8.293,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.598,
+       "vnPre": 0.24161,
+       "vnPost": -0.87247,
+       "meff": 0.0327,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 8.293,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.698,
+       "vnPre": 0.46623,
+       "vnPost": -0.87944,
+       "meff": 0.06,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 8.293,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.648,
+       "vnPre": 0.36059,
+       "vnPost": -0.76831,
+       "meff": 0.1011,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 8.293,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.564,
+       "vnPre": 0.1671,
+       "vnPost": -0.82843,
+       "meff": 0.03,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -7.718,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 7.718,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.54,
+       "vnPre": 0.11388,
+       "vnPost": -0.79697,
+       "meff": 0.0268,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 7.718,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.648,
+       "vnPre": 0.36059,
+       "vnPost": -0.76831,
+       "meff": 0.1011,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 7.718,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 5.404,
+       "vnPre": 0.24531,
+       "vnPost": -0.64704,
+       "meff": 0.0548,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 7.718,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.586,
+       "vnPre": 0.22672,
+       "vnPost": -0.65631,
+       "meff": 0.0512,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -3.018,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 3.018,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.698,
+       "vnPre": 0.46623,
+       "vnPost": -0.87944,
+       "meff": 0.06,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 3.018,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 48.079,
+       "vnPre": 0.57207,
+       "vnPost": -0.7026,
+       "meff": 0.1538,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 3.018,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.648,
+       "vnPre": 0.36059,
+       "vnPost": -0.76831,
+       "meff": 0.1011,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.316,
+     "friction": [
+      0.11075,
+      0.10056
+     ],
+     "angFriction": -0.001152,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.316,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.594,
+       "vnPre": 0.24531,
+       "vnPost": -0.64704,
+       "meff": 0.0548,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.316,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.648,
+       "vnPre": 0.36059,
+       "vnPost": -0.76831,
+       "meff": 0.1011,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.316,
+       "lamSolved": 1.1157851219177246,
+       "lamInherited": 0,
+       "matchDistMm": 0.741,
+       "vnPre": 0.57207,
+       "vnPost": -0.7026,
+       "meff": 0.1538,
+       "W": -0.07283
+      },
+      {
+       "k": 3,
+       "sepMm": 2.316,
+       "lamSolved": 0.9310846328735352,
+       "lamInherited": 0,
+       "matchDistMm": 0.675,
+       "vnPre": 0.43117,
+       "vnPost": -0.55439,
+       "meff": 0.0528,
+       "W": -0.05736
+      }
+     ]
+    }
+   ],
+   "perBody": [
+    {
+     "body": "pelvis",
+     "dKE": -0.5363,
+     "dPE": -0.2824
+    },
+    {
+     "body": "abdomen",
+     "dKE": -1.7344,
+     "dPE": -0.7954
+    },
+    {
+     "body": "thorax",
+     "dKE": -1.378,
+     "dPE": -0.8013
+    },
+    {
+     "body": "head",
+     "dKE": -0.1598,
+     "dPE": -0.2857
+    },
+    {
+     "body": "upperArm_L",
+     "dKE": -0.2599,
+     "dPE": -0.1352
+    },
+    {
+     "body": "forearm_L",
+     "dKE": -0.2278,
+     "dPE": -0.1175
+    },
+    {
+     "body": "upperArm_R",
+     "dKE": -0.2504,
+     "dPE": -0.1354
+    },
+    {
+     "body": "forearm_R",
+     "dKE": -0.2198,
+     "dPE": -0.1177
+    },
+    {
+     "body": "thigh_L",
+     "dKE": 1.8277,
+     "dPE": -0.225
+    },
+    {
+     "body": "shank_L",
+     "dKE": 3.4863,
+     "dPE": 0.0228
+    },
+    {
+     "body": "foot_L",
+     "dKE": 0.0553,
+     "dPE": 0.0131
+    },
+    {
+     "body": "thigh_R",
+     "dKE": 2.1104,
+     "dPE": -0.1952
+    },
+    {
+     "body": "shank_R",
+     "dKE": 3.7823,
+     "dPE": 0.0311
+    },
+    {
+     "body": "foot_R",
+     "dKE": 0.0768,
+     "dPE": 0.0142
+    },
+    {
+     "body": "toe_L",
+     "dKE": 0.0148,
+     "dPE": -0.0052
+    },
+    {
+     "body": "toe_R",
+     "dKE": 0.0233,
+     "dPE": -0.0052
+    }
+   ],
+   "jointLambdasBefore": {
+    "ankle_L": {
+     "pos": [
+      -0.30558720231056213,
+      -96.06555938720703,
+      -9.611434936523438
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.00015365575382020324,
+      -0.010346068069338799,
+      -0.0022791947703808546
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.27438950538635254,
+      -96.60538482666016,
+      -9.657501220703125
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.0001423835929017514,
+      -0.010150079615414143,
+      0.0026424964889883995
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.0023021982051432133,
+      0.8926271200180054,
+      -0.03180450201034546
+     ],
+     "rot": [
+      -0.000836914055980742,
+      0,
+      -0.000051572533266153187
+     ],
+     "motRot": [
+      0.000022020303731551394,
+      0.013940194621682167,
+      6.003594990033889e-7
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      0.003652242012321949,
+      0.8909407258033752,
+      -0.023596331477165222
+     ],
+     "rot": [
+      0.0009015100658871233,
+      0,
+      -0.00017887487774714828
+     ],
+     "motRot": [
+      -0.00005578434866038151,
+      0.01391803752630949,
+      -0.000007891962013673037
+     ]
+    }
+   },
+   "jointLambdasAfter": {
+    "ankle_L": {
+     "pos": [
+      0.46919989585876465,
+      -9.073060035705566,
+      -1.7798216342926025
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.00038668880006298423,
+      -0.011596562340855598,
+      -0.00025132144219242036
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      -0.8875423073768616,
+      -9.56940746307373,
+      -1.8488445281982422
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.0007117394707165658,
+      -0.01134360209107399,
+      -0.0008696352015249431
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.11835463345050812,
+      -1.8368067741394043,
+      -0.16651174426078796
+     ],
+     "rot": [
+      -0.041507091373205185,
+      0,
+      0.0015927170170471072
+     ],
+     "motRot": [
+      -0.000952206552028656,
+      -0.008052386343479156,
+      0.00020166566537227482
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      0.11524119973182678,
+      -2.2897112369537354,
+      0.15459582209587097
+     ],
+     "rot": [
+      0.05118691176176071,
+      0,
+      -0.006989585235714912
+     ],
+     "motRot": [
+      0.0007691169157624245,
+      0.0010759418364614248,
+      -0.00009562491322867572
+     ]
+    }
+   }
+  },
+  {
+   "n": 111,
+   "t": 0.4625,
+   "dE": -4.95534,
+   "dKE": -1.83966,
+   "dPE": -3.1241,
+   "dU": 0.00842,
+   "contactWorkSum": -0.21447,
+   "manifolds": [
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.623,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      -0.4818,
+      -0.0211
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.623,
+       "lamSolved": 0,
+       "lamInherited": 0.309029757976532,
+       "matchDistMm": 0.927,
+       "vnPre": 0.63407,
+       "vnPost": -0.12771,
+       "meff": 0.0592,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.623,
+       "lamSolved": 0,
+       "lamInherited": 0.09428442269563675,
+       "matchDistMm": 0.922,
+       "vnPre": 0.66138,
+       "vnPost": -0.08962,
+       "meff": 0.052,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.623,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.52467,
+       "vnPost": 0.19153,
+       "meff": 0.103,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.623,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.49907,
+       "vnPost": 0.15583,
+       "meff": 0.132,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.849,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.849,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.927,
+       "vnPre": 0.63407,
+       "vnPost": -0.12771,
+       "meff": 0.0592,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.849,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.927,
+       "vnPre": 0.49907,
+       "vnPost": 0.15582,
+       "meff": 0.132,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.849,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.931,
+       "vnPre": 0.47321,
+       "vnPost": 0.11976,
+       "meff": 0.0991,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.849,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.932,
+       "vnPre": 0.60676,
+       "vnPost": -0.1658,
+       "meff": 0.0506,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.058,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.058,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.49907,
+       "vnPost": 0.15583,
+       "meff": 0.132,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.058,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.52467,
+       "vnPost": 0.19153,
+       "meff": 0.103,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.058,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.38797,
+       "vnPost": 0.47269,
+       "meff": 0.2365,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.058,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.36406,
+       "vnPost": 0.43936,
+       "meff": 0.4339,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.269,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.927,
+       "vnPre": 0.49907,
+       "vnPost": 0.15583,
+       "meff": 0.132,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.36406,
+       "vnPost": 0.43936,
+       "meff": 0.4339,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.931,
+       "vnPre": 0.33966,
+       "vnPost": 0.40532,
+       "meff": 0.2232,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.269,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.931,
+       "vnPre": 0.47321,
+       "vnPost": 0.11976,
+       "meff": 0.0991,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.494,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.494,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.36406,
+       "vnPost": 0.43936,
+       "meff": 0.4339,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.494,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.38797,
+       "vnPost": 0.47269,
+       "meff": 0.2365,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.494,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.25126,
+       "vnPost": 0.75385,
+       "meff": 0.358,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.494,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.22906,
+       "vnPost": 0.7229,
+       "meff": 0.9299,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.689,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.689,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.931,
+       "vnPre": 0.33966,
+       "vnPost": 0.40532,
+       "meff": 0.2232,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.689,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.36406,
+       "vnPost": 0.43936,
+       "meff": 0.4339,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.689,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.22906,
+       "vnPost": 0.7229,
+       "meff": 0.9299,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.689,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.93,
+       "vnPre": 0.20641,
+       "vnPost": 0.69131,
+       "meff": 0.3461,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.929,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.929,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.22906,
+       "vnPost": 0.7229,
+       "meff": 0.9299,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.929,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.25126,
+       "vnPost": 0.75385,
+       "meff": 0.358,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.929,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.11455,
+       "vnPost": 1.03501,
+       "meff": 0.1849,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.929,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.09406,
+       "vnPost": 1.00643,
+       "meff": 0.2574,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.109,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.109,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.22906,
+       "vnPost": 0.7229,
+       "meff": 0.9299,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.109,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.09406,
+       "vnPost": 1.00643,
+       "meff": 0.2574,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.109,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.93,
+       "vnPre": 0.07347,
+       "vnPost": 0.97772,
+       "meff": 0.1878,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.109,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.93,
+       "vnPre": 0.20641,
+       "vnPost": 0.69131,
+       "meff": 0.3461,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.517,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      -2.20865,
+      0.52473
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.517,
+       "lamSolved": 0,
+       "lamInherited": 6.0386061668396,
+       "matchDistMm": 0.926,
+       "vnPre": -0.04095,
+       "vnPost": 1.28997,
+       "meff": 0.0931,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.517,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.09406,
+       "vnPost": 1.00643,
+       "meff": 0.2574,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.517,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.922,
+       "vnPre": 0.11455,
+       "vnPost": 1.03501,
+       "meff": 0.1849,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.517,
+       "lamSolved": 0,
+       "lamInherited": 0.46518105268478394,
+       "matchDistMm": 0.923,
+       "vnPre": 0.00507,
+       "vnPost": 1.24936,
+       "meff": 0.1016,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.53,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0.66888,
+      -0.03006
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.53,
+       "lamSolved": 0,
+       "lamInherited": 0.5615060925483704,
+       "matchDistMm": 0.926,
+       "vnPre": -0.04095,
+       "vnPost": 1.28997,
+       "meff": 0.0931,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.53,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.929,
+       "vnPre": -0.027,
+       "vnPost": 1.20463,
+       "meff": 0.1031,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.53,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.93,
+       "vnPre": 0.07347,
+       "vnPost": 0.97772,
+       "meff": 0.1878,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.53,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.926,
+       "vnPre": 0.09406,
+       "vnPost": 1.00643,
+       "meff": 0.2574,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 9,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.786,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.786,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.066,
+       "vnPre": 0.65338,
+       "vnPost": -0.12763,
+       "meff": 0.0593,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.786,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.028,
+       "vnPre": 0.56444,
+       "vnPost": -0.22962,
+       "meff": 0.0507,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.786,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.023,
+       "vnPre": 0.43487,
+       "vnPost": 0.07821,
+       "meff": 0.0992,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.786,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.06,
+       "vnPre": 0.51908,
+       "vnPost": 0.17478,
+       "meff": 0.1323,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 8,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.545,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.545,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.066,
+       "vnPre": 0.65338,
+       "vnPost": -0.12763,
+       "meff": 0.0593,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.545,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.06,
+       "vnPre": 0.51908,
+       "vnPost": 0.17478,
+       "meff": 0.1323,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.545,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.095,
+       "vnPre": 0.60246,
+       "vnPost": 0.2704,
+       "meff": 0.1031,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.545,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.104,
+       "vnPre": 0.74231,
+       "vnPost": -0.02564,
+       "meff": 0.052,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 7,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.328,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.328,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.06,
+       "vnPre": 0.51908,
+       "vnPost": 0.17478,
+       "meff": 0.1323,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.328,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.023,
+       "vnPre": 0.43487,
+       "vnPost": 0.07821,
+       "meff": 0.0992,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.328,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.02,
+       "vnPre": 0.3053,
+       "vnPost": 0.38605,
+       "meff": 0.2233,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.328,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.055,
+       "vnPre": 0.38477,
+       "vnPost": 0.47719,
+       "meff": 0.4351,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 6,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -2.103,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 2.103,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.06,
+       "vnPre": 0.51908,
+       "vnPost": 0.17478,
+       "meff": 0.1323,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 2.103,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.055,
+       "vnPre": 0.38477,
+       "vnPost": 0.47719,
+       "meff": 0.4351,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 2.103,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.088,
+       "vnPre": 0.4626,
+       "vnPost": 0.56645,
+       "meff": 0.2368,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 2.103,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.095,
+       "vnPre": 0.60246,
+       "vnPost": 0.2704,
+       "meff": 0.1031,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 5,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.871,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.871,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.02,
+       "vnPre": 0.3053,
+       "vnPost": 0.38605,
+       "meff": 0.2233,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.871,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.019,
+       "vnPre": 0.17672,
+       "vnPost": 0.69502,
+       "meff": 0.3456,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.871,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.051,
+       "vnPre": 0.25047,
+       "vnPost": 0.7796,
+       "meff": 0.9286,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.871,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.055,
+       "vnPre": 0.38477,
+       "vnPost": 0.47719,
+       "meff": 0.4351,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 4,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.662,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.662,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.055,
+       "vnPre": 0.38477,
+       "vnPost": 0.47719,
+       "meff": 0.4351,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.662,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.051,
+       "vnPre": 0.25047,
+       "vnPost": 0.7796,
+       "meff": 0.9286,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.662,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.083,
+       "vnPre": 0.32275,
+       "vnPost": 0.86249,
+       "meff": 0.3576,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.662,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.088,
+       "vnPre": 0.4626,
+       "vnPost": 0.56645,
+       "meff": 0.2368,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.413,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.413,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.051,
+       "vnPre": 0.25047,
+       "vnPost": 0.7796,
+       "meff": 0.9286,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.413,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.019,
+       "vnPre": 0.17672,
+       "vnPost": 0.69502,
+       "meff": 0.3456,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.413,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.021,
+       "vnPre": 0.04914,
+       "vnPost": 1.00514,
+       "meff": 0.1874,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.413,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.05,
+       "vnPre": 0.11617,
+       "vnPost": 1.08201,
+       "meff": 0.2567,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -1.221,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 1.221,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.051,
+       "vnPre": 0.25047,
+       "vnPost": 0.7796,
+       "meff": 0.9286,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 1.221,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.05,
+       "vnPre": 0.11617,
+       "vnPost": 1.08201,
+       "meff": 0.2567,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 1.221,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.079,
+       "vnPre": 0.1829,
+       "vnPost": 1.15853,
+       "meff": 0.1845,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 1.221,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.083,
+       "vnPre": 0.32275,
+       "vnPost": 0.86249,
+       "meff": 0.3576,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.956,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      1.28855,
+      -0.04549
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.956,
+       "lamSolved": 0,
+       "lamInherited": 0.29748207330703735,
+       "matchDistMm": 1.027,
+       "vnPre": -0.04054,
+       "vnPost": 1.25736,
+       "meff": 0.103,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.956,
+       "lamSolved": 0,
+       "lamInherited": 0.7846546173095703,
+       "matchDistMm": 1.05,
+       "vnPre": -0.01813,
+       "vnPost": 1.38442,
+       "meff": 0.093,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.956,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.05,
+       "vnPre": 0.11617,
+       "vnPost": 1.08201,
+       "meff": 0.2567,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.956,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.021,
+       "vnPre": 0.04914,
+       "vnPost": 1.00514,
+       "meff": 0.1874,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔foot_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.906,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      -3.6661,
+      -1.14742
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.906,
+       "lamSolved": 0,
+       "lamInherited": 4.090054512023926,
+       "matchDistMm": 1.05,
+       "vnPre": -0.01813,
+       "vnPost": 1.38442,
+       "meff": 0.093,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.906,
+       "lamSolved": 0,
+       "lamInherited": 2.352673292160034,
+       "matchDistMm": 1.073,
+       "vnPre": 0.06392,
+       "vnPost": 1.37715,
+       "meff": 0.1014,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.906,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.079,
+       "vnPre": 0.1829,
+       "vnPost": 1.15853,
+       "meff": 0.1845,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.906,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 1.05,
+       "vnPre": 0.11617,
+       "vnPost": 1.08201,
+       "meff": 0.2567,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.12,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.12,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.47,
+       "vnPre": -0.49988,
+       "vnPost": -0.71117,
+       "meff": 0.0267,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.12,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.497,
+       "vnPre": -0.59005,
+       "vnPost": -0.4269,
+       "meff": 0.0509,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.12,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.503,
+       "vnPre": -0.66587,
+       "vnPost": -0.42263,
+       "meff": 0.1005,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -6.218,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 6.218,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.478,
+       "vnPre": -0.57573,
+       "vnPost": -0.66965,
+       "meff": 0.0326,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 6.218,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.473,
+       "vnPre": -0.53148,
+       "vnPost": -0.69387,
+       "meff": 0.0299,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 6.218,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.503,
+       "vnPre": -0.66587,
+       "vnPost": -0.42263,
+       "meff": 0.1005,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 6.218,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.505,
+       "vnPre": -0.72317,
+       "vnPost": -0.44641,
+       "meff": 0.06,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.423,
+     "friction": [
+      -0.01693,
+      0.0629
+     ],
+     "angFriction": 0.001102,
+     "frictionInherited": [
+      -0.20944,
+      0.12968
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.423,
+       "lamSolved": 0.036956556141376495,
+       "lamInherited": 0.7033792734146118,
+       "matchDistMm": 0.536,
+       "vnPre": -0.81276,
+       "vnPost": -0.12617,
+       "meff": 0.1546,
+       "W": -0.01735
+      },
+      {
+       "k": 1,
+       "sepMm": 0.423,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.503,
+       "vnPre": -0.66587,
+       "vnPost": -0.42263,
+       "meff": 0.1005,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.423,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.501,
+       "vnPre": -0.60335,
+       "vnPost": -0.39668,
+       "meff": 0.0544,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 0.423,
+       "lamSolved": 0.016871506348252296,
+       "lamInherited": 0.8832281231880188,
+       "matchDistMm": 0.534,
+       "vnPre": -0.73634,
+       "vnPost": -0.09445,
+       "meff": 0.0526,
+       "W": -0.00701
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_L",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.542,
+     "friction": [
+      0.16975,
+      -0.03983
+     ],
+     "angFriction": 0.004152,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.542,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.505,
+       "vnPre": -0.72317,
+       "vnPost": -0.44641,
+       "meff": 0.06,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.542,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.503,
+       "vnPre": -0.66587,
+       "vnPost": -0.42263,
+       "meff": 0.1005,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.542,
+       "lamSolved": 0.17023968696594238,
+       "lamInherited": 0,
+       "matchDistMm": 0.536,
+       "vnPre": -0.81276,
+       "vnPost": -0.12617,
+       "meff": 0.1546,
+       "W": -0.07992
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 3,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -5.243,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 5.243,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.445,
+       "vnPre": -0.91413,
+       "vnPost": -0.70725,
+       "meff": 0.0328,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 5.243,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.395,
+       "vnPre": -0.92092,
+       "vnPost": -0.50542,
+       "meff": 0.0605,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 5.243,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.393,
+       "vnPre": -0.80978,
+       "vnPost": -0.42842,
+       "meff": 0.1018,
+       "W": 0
+      },
+      {
+       "k": 3,
+       "sepMm": 5.243,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.452,
+       "vnPre": -0.87011,
+       "vnPost": -0.70767,
+       "meff": 0.0301,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 2,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -5.135,
+     "friction": [
+      0,
+      0
+     ],
+     "angFriction": 0,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 5.135,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.457,
+       "vnPre": -0.83866,
+       "vnPost": -0.70797,
+       "meff": 0.0269,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 5.135,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.393,
+       "vnPre": -0.80978,
+       "vnPost": -0.42842,
+       "meff": 0.1018,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 5.135,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.398,
+       "vnPre": -0.69779,
+       "vnPost": -0.37679,
+       "meff": 0.0513,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 1,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.531,
+     "friction": [
+      0.21655,
+      0.05287
+     ],
+     "angFriction": -0.001165,
+     "frictionInherited": [
+      0,
+      0
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.531,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.395,
+       "vnPre": -0.92092,
+       "vnPost": -0.50542,
+       "meff": 0.0605,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.531,
+       "lamSolved": 0.18575948476791382,
+       "lamInherited": 0,
+       "matchDistMm": 0.336,
+       "vnPre": -0.74384,
+       "vnPost": -0.12321,
+       "meff": 0.1526,
+       "W": -0.08053
+      },
+      {
+       "k": 2,
+       "sepMm": 0.531,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.393,
+       "vnPre": -0.80978,
+       "vnPost": -0.42842,
+       "meff": 0.1018,
+       "W": 0
+      }
+     ]
+    },
+    {
+     "pair": "turf↔toe_R",
+     "piece1": 0,
+     "piece2": 0,
+     "kind": "persisted",
+     "normal": [
+      0,
+      1,
+      0
+     ],
+     "depthMm": -0.4,
+     "friction": [
+      0.00211,
+      -0.0621
+     ],
+     "angFriction": 0.000405,
+     "frictionInherited": [
+      0.11075,
+      0.10056
+     ],
+     "points": [
+      {
+       "k": 0,
+       "sepMm": 0.4,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.392,
+       "vnPre": -0.6885,
+       "vnPost": -0.3444,
+       "meff": 0.0548,
+       "W": 0
+      },
+      {
+       "k": 1,
+       "sepMm": 0.4,
+       "lamSolved": 0,
+       "lamInherited": 0,
+       "matchDistMm": 0.393,
+       "vnPre": -0.80978,
+       "vnPost": -0.42842,
+       "meff": 0.1018,
+       "W": 0
+      },
+      {
+       "k": 2,
+       "sepMm": 0.4,
+       "lamSolved": 0.06840638816356659,
+       "lamInherited": 1.1157851219177246,
+       "matchDistMm": 0.336,
+       "vnPre": -0.74384,
+       "vnPost": -0.12321,
+       "meff": 0.1526,
+       "W": -0.02966
+      },
+      {
+       "k": 3,
+       "sepMm": 0.4,
+       "lamSolved": 0,
+       "lamInherited": 0.9310846328735352,
+       "matchDistMm": 0.335,
+       "vnPre": -0.59561,
+       "vnPost": -0.02051,
+       "meff": 0.0524,
+       "W": 0
+      }
+     ]
+    }
+   ],
+   "perBody": [
+    {
+     "body": "pelvis",
+     "dKE": -2.1542,
+     "dPE": -0.3184
+    },
+    {
+     "body": "abdomen",
+     "dKE": -2.183,
+     "dPE": -0.8367
+    },
+    {
+     "body": "thorax",
+     "dKE": 3.3986,
+     "dPE": -0.8909
+    },
+    {
+     "body": "head",
+     "dKE": 1.5667,
+     "dPE": -0.3363
+    },
+    {
+     "body": "upperArm_L",
+     "dKE": 0.6467,
+     "dPE": -0.1512
+    },
+    {
+     "body": "forearm_L",
+     "dKE": 0.5325,
+     "dPE": -0.1298
+    },
+    {
+     "body": "upperArm_R",
+     "dKE": 0.6461,
+     "dPE": -0.1514
+    },
+    {
+     "body": "forearm_R",
+     "dKE": 0.5319,
+     "dPE": -0.1299
+    },
+    {
+     "body": "thigh_L",
+     "dKE": -2.4734,
+     "dPE": -0.2013
+    },
+    {
+     "body": "shank_L",
+     "dKE": -0.1473,
+     "dPE": 0.065
+    },
+    {
+     "body": "foot_L",
+     "dKE": 0.1927,
+     "dPE": 0.0283
+    },
+    {
+     "body": "thigh_R",
+     "dKE": -2.3121,
+     "dPE": -0.1731
+    },
+    {
+     "body": "shank_R",
+     "dKE": -0.2209,
+     "dPE": 0.0742
+    },
+    {
+     "body": "foot_R",
+     "dKE": 0.2211,
+     "dPE": 0.0306
+    },
+    {
+     "body": "toe_L",
+     "dKE": -0.0418,
+     "dPE": -0.0015
+    },
+    {
+     "body": "toe_R",
+     "dKE": -0.0432,
+     "dPE": -0.0016
+    }
+   ],
+   "jointLambdasBefore": {
+    "ankle_L": {
+     "pos": [
+      0.46919989585876465,
+      -9.073060035705566,
+      -1.7798216342926025
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.00038668880006298423,
+      -0.011596562340855598,
+      -0.00025132144219242036
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      -0.8875423073768616,
+      -9.56940746307373,
+      -1.8488445281982422
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.0007117394707165658,
+      -0.01134360209107399,
+      -0.0008696352015249431
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.11835463345050812,
+      -1.8368067741394043,
+      -0.16651174426078796
+     ],
+     "rot": [
+      -0.041507091373205185,
+      0,
+      0.0015927170170471072
+     ],
+     "motRot": [
+      -0.000952206552028656,
+      -0.008052386343479156,
+      0.00020166566537227482
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      0.11524119973182678,
+      -2.2897112369537354,
+      0.15459582209587097
+     ],
+     "rot": [
+      0.05118691176176071,
+      0,
+      -0.006989585235714912
+     ],
+     "motRot": [
+      0.0007691169157624245,
+      0.0010759418364614248,
+      -0.00009562491322867572
+     ]
+    }
+   },
+   "jointLambdasAfter": {
+    "ankle_L": {
+     "pos": [
+      0.02619815245270729,
+      0.2876828908920288,
+      0.1760055273771286
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      -0.0002970448404084891,
+      -0.003998113330453634,
+      0.00002065289118036162
+     ]
+    },
+    "ankle_R": {
+     "pos": [
+      0.0011076221708208323,
+      0.2876065671443939,
+      0.21385973691940308
+     ],
+     "rot": [
+      0,
+      0,
+      0
+     ],
+     "motRot": [
+      0.000567339884582907,
+      -0.0036813237238675356,
+      -0.0010762151796370745
+     ]
+    },
+    "mtp_L": {
+     "pos": [
+      0.026547608897089958,
+      -0.11952810734510422,
+      0.16884469985961914
+     ],
+     "rot": [
+      -0.0008593793609179556,
+      0,
+      0.0029801942873746157
+     ],
+     "motRot": [
+      0.00011863899999298155,
+      0.004559221677482128,
+      -0.00022178926155902445
+     ]
+    },
+    "mtp_R": {
+     "pos": [
+      -0.010976027697324753,
+      -0.14906315505504608,
+      0.22168469429016113
+     ],
+     "rot": [
+      0.0004042512155137956,
+      0,
+      0.0011635029222816229
+     ],
+     "motRot": [
+      0.000013510630196833517,
+      0.007464710623025894,
+      0.00009803446300793439
+     ]
+    }
+   }
+  }
+ ],
+ "counterfactuals": [
+  {
+   "label": "C0 full restore (must equal the original step)",
+   "dE": 3.60668,
+   "dKE": 6.6107,
+   "maxStateDiffFromOriginal": 0,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8187
+    ],
+    [
+     "abdomen",
+     -2.5298
+    ],
+    [
+     "thorax",
+     -2.1792
+    ],
+    [
+     "head",
+     -0.4455
+    ],
+    [
+     "upperArm_L",
+     -0.3951
+    ],
+    [
+     "forearm_L",
+     -0.3453
+    ],
+    [
+     "upperArm_R",
+     -0.3858
+    ],
+    [
+     "forearm_R",
+     -0.3375
+    ],
+    [
+     "thigh_L",
+     1.6027
+    ],
+    [
+     "shank_L",
+     3.509
+    ],
+    [
+     "foot_L",
+     0.0684
+    ],
+    [
+     "thigh_R",
+     1.9151
+    ],
+    [
+     "shank_R",
+     3.8134
+    ],
+    [
+     "foot_R",
+     0.091
+    ]
+   ]
+  },
+  {
+   "label": "C1 contact cache dropped entirely",
+   "dE": -4.28766,
+   "dKE": -0.49578,
+   "maxStateDiffFromOriginal": 4.160939812660217,
+   "perBody": [
+    [
+     "pelvis",
+     -1.7828
+    ],
+    [
+     "abdomen",
+     -2.3095
+    ],
+    [
+     "thorax",
+     2.0109
+    ],
+    [
+     "head",
+     1.0387
+    ],
+    [
+     "upperArm_L",
+     0.3641
+    ],
+    [
+     "forearm_L",
+     0.2877
+    ],
+    [
+     "upperArm_R",
+     0.3689
+    ],
+    [
+     "forearm_R",
+     0.2917
+    ],
+    [
+     "thigh_L",
+     -2.0561
+    ],
+    [
+     "shank_L",
+     -0.2397
+    ],
+    [
+     "thigh_R",
+     -2.0085
+    ],
+    [
+     "shank_R",
+     -0.2142
+    ]
+   ]
+  },
+  {
+   "label": "C2 toe↔turf cached lambdas zeroed (normal + friction)",
+   "dE": 3.60668,
+   "dKE": 6.6107,
+   "maxStateDiffFromOriginal": 0,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8187
+    ],
+    [
+     "abdomen",
+     -2.5298
+    ],
+    [
+     "thorax",
+     -2.1792
+    ],
+    [
+     "head",
+     -0.4455
+    ],
+    [
+     "upperArm_L",
+     -0.3951
+    ],
+    [
+     "forearm_L",
+     -0.3453
+    ],
+    [
+     "upperArm_R",
+     -0.3858
+    ],
+    [
+     "forearm_R",
+     -0.3375
+    ],
+    [
+     "thigh_L",
+     1.6027
+    ],
+    [
+     "shank_L",
+     3.509
+    ],
+    [
+     "foot_L",
+     0.0684
+    ],
+    [
+     "thigh_R",
+     1.9151
+    ],
+    [
+     "shank_R",
+     3.8134
+    ],
+    [
+     "foot_R",
+     0.091
+    ]
+   ]
+  },
+  {
+   "label": "C2n toe↔turf normal lambdas only zeroed",
+   "dE": 3.60668,
+   "dKE": 6.6107,
+   "maxStateDiffFromOriginal": 0,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8187
+    ],
+    [
+     "abdomen",
+     -2.5298
+    ],
+    [
+     "thorax",
+     -2.1792
+    ],
+    [
+     "head",
+     -0.4455
+    ],
+    [
+     "upperArm_L",
+     -0.3951
+    ],
+    [
+     "forearm_L",
+     -0.3453
+    ],
+    [
+     "upperArm_R",
+     -0.3858
+    ],
+    [
+     "forearm_R",
+     -0.3375
+    ],
+    [
+     "thigh_L",
+     1.6027
+    ],
+    [
+     "shank_L",
+     3.509
+    ],
+    [
+     "foot_L",
+     0.0684
+    ],
+    [
+     "thigh_R",
+     1.9151
+    ],
+    [
+     "shank_R",
+     3.8134
+    ],
+    [
+     "foot_R",
+     0.091
+    ]
+   ]
+  },
+  {
+   "label": "C2f toe↔turf friction lambdas only zeroed",
+   "dE": 3.60668,
+   "dKE": 6.6107,
+   "maxStateDiffFromOriginal": 0,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8187
+    ],
+    [
+     "abdomen",
+     -2.5298
+    ],
+    [
+     "thorax",
+     -2.1792
+    ],
+    [
+     "head",
+     -0.4455
+    ],
+    [
+     "upperArm_L",
+     -0.3951
+    ],
+    [
+     "forearm_L",
+     -0.3453
+    ],
+    [
+     "upperArm_R",
+     -0.3858
+    ],
+    [
+     "forearm_R",
+     -0.3375
+    ],
+    [
+     "thigh_L",
+     1.6027
+    ],
+    [
+     "shank_L",
+     3.509
+    ],
+    [
+     "foot_L",
+     0.0684
+    ],
+    [
+     "thigh_R",
+     1.9151
+    ],
+    [
+     "shank_R",
+     3.8134
+    ],
+    [
+     "foot_R",
+     0.091
+    ]
+   ]
+  },
+  {
+   "label": "C3 foot↔turf cached lambdas zeroed (normal + friction)",
+   "dE": -4.28766,
+   "dKE": -0.49578,
+   "maxStateDiffFromOriginal": 4.160939812660217,
+   "perBody": [
+    [
+     "pelvis",
+     -1.7828
+    ],
+    [
+     "abdomen",
+     -2.3095
+    ],
+    [
+     "thorax",
+     2.0109
+    ],
+    [
+     "head",
+     1.0387
+    ],
+    [
+     "upperArm_L",
+     0.3641
+    ],
+    [
+     "forearm_L",
+     0.2877
+    ],
+    [
+     "upperArm_R",
+     0.3689
+    ],
+    [
+     "forearm_R",
+     0.2917
+    ],
+    [
+     "thigh_L",
+     -2.0561
+    ],
+    [
+     "shank_L",
+     -0.2397
+    ],
+    [
+     "thigh_R",
+     -2.0085
+    ],
+    [
+     "shank_R",
+     -0.2142
+    ]
+   ]
+  },
+  {
+   "label": "C3n foot↔turf normal lambdas only zeroed",
+   "dE": -4.09766,
+   "dKE": -0.35415,
+   "maxStateDiffFromOriginal": 4.360004305839539,
+   "perBody": [
+    [
+     "pelvis",
+     -1.7346
+    ],
+    [
+     "abdomen",
+     -2.3642
+    ],
+    [
+     "thorax",
+     1.6312
+    ],
+    [
+     "head",
+     0.9007
+    ],
+    [
+     "upperArm_L",
+     0.2924
+    ],
+    [
+     "forearm_L",
+     0.2282
+    ],
+    [
+     "upperArm_R",
+     0.2998
+    ],
+    [
+     "forearm_R",
+     0.2343
+    ],
+    [
+     "thigh_L",
+     -2.0181
+    ],
+    [
+     "shank_L",
+     0.108
+    ],
+    [
+     "thigh_R",
+     -2.0474
+    ],
+    [
+     "shank_R",
+     0.4319
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_L piece 1 point 0 (cached λn 8.9716) zeroed",
+   "dE": 2.79637,
+   "dKE": 5.86742,
+   "maxStateDiffFromOriginal": 3.626404047012329,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8503
+    ],
+    [
+     "abdomen",
+     -2.5238
+    ],
+    [
+     "thorax",
+     -2.0155
+    ],
+    [
+     "head",
+     -0.388
+    ],
+    [
+     "upperArm_L",
+     -0.3699
+    ],
+    [
+     "forearm_L",
+     -0.3242
+    ],
+    [
+     "upperArm_R",
+     -0.3582
+    ],
+    [
+     "forearm_R",
+     -0.3144
+    ],
+    [
+     "thigh_L",
+     1.3251
+    ],
+    [
+     "shank_L",
+     2.98
+    ],
+    [
+     "thigh_R",
+     1.7611
+    ],
+    [
+     "shank_R",
+     3.7475
+    ],
+    [
+     "foot_R",
+     0.0895
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_L piece 1 point 2 (cached λn 0.1157) zeroed",
+   "dE": 3.59186,
+   "dKE": 6.59686,
+   "maxStateDiffFromOriginal": 0.014375567436218262,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8206
+    ],
+    [
+     "abdomen",
+     -2.5302
+    ],
+    [
+     "thorax",
+     -2.1745
+    ],
+    [
+     "head",
+     -0.4439
+    ],
+    [
+     "upperArm_L",
+     -0.3942
+    ],
+    [
+     "forearm_L",
+     -0.3446
+    ],
+    [
+     "upperArm_R",
+     -0.3849
+    ],
+    [
+     "forearm_R",
+     -0.3367
+    ],
+    [
+     "thigh_L",
+     1.5926
+    ],
+    [
+     "shank_L",
+     3.5014
+    ],
+    [
+     "foot_L",
+     0.0679
+    ],
+    [
+     "thigh_R",
+     1.9121
+    ],
+    [
+     "shank_R",
+     3.8125
+    ],
+    [
+     "foot_R",
+     0.0911
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_L piece 1 point 3 (cached λn 0.5115) zeroed",
+   "dE": 3.52679,
+   "dKE": 6.53606,
+   "maxStateDiffFromOriginal": 0.22834253311157227,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8299
+    ],
+    [
+     "abdomen",
+     -2.5322
+    ],
+    [
+     "thorax",
+     -2.1524
+    ],
+    [
+     "head",
+     -0.4365
+    ],
+    [
+     "upperArm_L",
+     -0.3902
+    ],
+    [
+     "forearm_L",
+     -0.3413
+    ],
+    [
+     "upperArm_R",
+     -0.3807
+    ],
+    [
+     "forearm_R",
+     -0.3332
+    ],
+    [
+     "thigh_L",
+     1.5315
+    ],
+    [
+     "shank_L",
+     3.4845
+    ],
+    [
+     "foot_L",
+     0.0654
+    ],
+    [
+     "thigh_R",
+     1.8976
+    ],
+    [
+     "shank_R",
+     3.8082
+    ],
+    [
+     "foot_R",
+     0.0913
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_L piece 2 point 0 (cached λn 54.0695) zeroed",
+   "dE": 2.0494,
+   "dKE": 5.16255,
+   "maxStateDiffFromOriginal": 2.358751058578491,
+   "perBody": [
+    [
+     "pelvis",
+     -1.0167
+    ],
+    [
+     "abdomen",
+     -2.5574
+    ],
+    [
+     "thorax",
+     -1.6401
+    ],
+    [
+     "head",
+     -0.2617
+    ],
+    [
+     "upperArm_L",
+     -0.2987
+    ],
+    [
+     "forearm_L",
+     -0.2646
+    ],
+    [
+     "upperArm_R",
+     -0.2867
+    ],
+    [
+     "forearm_R",
+     -0.2545
+    ],
+    [
+     "thigh_L",
+     0.6395
+    ],
+    [
+     "shank_L",
+     2.937
+    ],
+    [
+     "thigh_R",
+     1.3619
+    ],
+    [
+     "shank_R",
+     3.5155
+    ],
+    [
+     "foot_R",
+     0.0827
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_L piece 2 point 1 (cached λn 37.2012) zeroed",
+   "dE": 0.98854,
+   "dKE": 4.1765,
+   "maxStateDiffFromOriginal": 6.009787559509277,
+   "perBody": [
+    [
+     "pelvis",
+     -1.1531
+    ],
+    [
+     "abdomen",
+     -2.5602
+    ],
+    [
+     "thorax",
+     -1.2023
+    ],
+    [
+     "head",
+     -0.1104
+    ],
+    [
+     "upperArm_L",
+     -0.2213
+    ],
+    [
+     "forearm_L",
+     -0.1997
+    ],
+    [
+     "upperArm_R",
+     -0.2065
+    ],
+    [
+     "forearm_R",
+     -0.1874
+    ],
+    [
+     "shank_L",
+     2.4251
+    ],
+    [
+     "thigh_R",
+     0.9494
+    ],
+    [
+     "shank_R",
+     3.2954
+    ],
+    [
+     "foot_R",
+     0.0774
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 0 point 0 (cached λn 10.9584) zeroed",
+   "dE": 1.80073,
+   "dKE": 4.94174,
+   "maxStateDiffFromOriginal": 2.903042793273926,
+   "perBody": [
+    [
+     "pelvis",
+     -0.9785
+    ],
+    [
+     "abdomen",
+     -2.5425
+    ],
+    [
+     "thorax",
+     -1.6803
+    ],
+    [
+     "head",
+     -0.2735
+    ],
+    [
+     "upperArm_L",
+     -0.3054
+    ],
+    [
+     "forearm_L",
+     -0.2702
+    ],
+    [
+     "upperArm_R",
+     -0.301
+    ],
+    [
+     "forearm_R",
+     -0.2664
+    ],
+    [
+     "thigh_L",
+     1.1996
+    ],
+    [
+     "shank_L",
+     3.4523
+    ],
+    [
+     "foot_L",
+     0.0698
+    ],
+    [
+     "thigh_R",
+     0.9513
+    ],
+    [
+     "shank_R",
+     2.7396
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 0 point 1 (cached λn 2.9133) zeroed",
+   "dE": 2.81056,
+   "dKE": 5.87076,
+   "maxStateDiffFromOriginal": 1.3396428227424622,
+   "perBody": [
+    [
+     "pelvis",
+     -0.9075
+    ],
+    [
+     "abdomen",
+     -2.5455
+    ],
+    [
+     "thorax",
+     -1.9452
+    ],
+    [
+     "head",
+     -0.366
+    ],
+    [
+     "upperArm_L",
+     -0.3513
+    ],
+    [
+     "forearm_L",
+     -0.3087
+    ],
+    [
+     "upperArm_R",
+     -0.3447
+    ],
+    [
+     "forearm_R",
+     -0.303
+    ],
+    [
+     "thigh_L",
+     1.4152
+    ],
+    [
+     "shank_L",
+     3.4848
+    ],
+    [
+     "foot_L",
+     0.0689
+    ],
+    [
+     "thigh_R",
+     1.4707
+    ],
+    [
+     "shank_R",
+     3.3393
+    ],
+    [
+     "foot_R",
+     0.0717
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 3 point 0 (cached λn 48.1651) zeroed",
+   "dE": 2.14598,
+   "dKE": 5.24235,
+   "maxStateDiffFromOriginal": 1.8048043251037598,
+   "perBody": [
+    [
+     "pelvis",
+     -0.9988
+    ],
+    [
+     "abdomen",
+     -2.5599
+    ],
+    [
+     "thorax",
+     -1.7049
+    ],
+    [
+     "head",
+     -0.2839
+    ],
+    [
+     "upperArm_L",
+     -0.3076
+    ],
+    [
+     "forearm_L",
+     -0.2721
+    ],
+    [
+     "upperArm_R",
+     -0.3015
+    ],
+    [
+     "forearm_R",
+     -0.2668
+    ],
+    [
+     "thigh_L",
+     1.042
+    ],
+    [
+     "shank_L",
+     3.3948
+    ],
+    [
+     "foot_L",
+     0.0596
+    ],
+    [
+     "thigh_R",
+     1.067
+    ],
+    [
+     "shank_R",
+     3.1564
+    ],
+    [
+     "foot_R",
+     0.0589
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 3 point 2 (cached λn 11.8987) zeroed",
+   "dE": 2.57393,
+   "dKE": 5.63635,
+   "maxStateDiffFromOriginal": 1.6663124561309814,
+   "perBody": [
+    [
+     "pelvis",
+     -0.944
+    ],
+    [
+     "abdomen",
+     -2.5525
+    ],
+    [
+     "thorax",
+     -1.8558
+    ],
+    [
+     "head",
+     -0.3355
+    ],
+    [
+     "upperArm_L",
+     -0.3353
+    ],
+    [
+     "forearm_L",
+     -0.2952
+    ],
+    [
+     "upperArm_R",
+     -0.3285
+    ],
+    [
+     "forearm_R",
+     -0.2895
+    ],
+    [
+     "thigh_L",
+     1.2237
+    ],
+    [
+     "shank_L",
+     3.451
+    ],
+    [
+     "foot_L",
+     0.0623
+    ],
+    [
+     "thigh_R",
+     1.3006
+    ],
+    [
+     "shank_R",
+     3.3419
+    ],
+    [
+     "foot_R",
+     0.0674
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 3 point 3 (cached λn 17.4198) zeroed",
+   "dE": 2.3447,
+   "dKE": 5.4276,
+   "maxStateDiffFromOriginal": 1.8580634593963623,
+   "perBody": [
+    [
+     "pelvis",
+     -0.9789
+    ],
+    [
+     "abdomen",
+     -2.5578
+    ],
+    [
+     "thorax",
+     -1.7639
+    ],
+    [
+     "head",
+     -0.3041
+    ],
+    [
+     "upperArm_L",
+     -0.3185
+    ],
+    [
+     "forearm_L",
+     -0.2812
+    ],
+    [
+     "upperArm_R",
+     -0.3118
+    ],
+    [
+     "forearm_R",
+     -0.2755
+    ],
+    [
+     "thigh_L",
+     1.1088
+    ],
+    [
+     "shank_L",
+     3.4141
+    ],
+    [
+     "foot_L",
+     0.0611
+    ],
+    [
+     "thigh_R",
+     1.1445
+    ],
+    [
+     "shank_R",
+     3.2794
+    ],
+    [
+     "foot_R",
+     0.0624
+    ]
+   ]
+  },
+  {
+   "label": "C4 foot_R piece 4 point 2 (cached λn 10.0638) zeroed",
+   "dE": 3.02915,
+   "dKE": 6.08351,
+   "maxStateDiffFromOriginal": 3.0667827129364014,
+   "perBody": [
+    [
+     "pelvis",
+     -0.8836
+    ],
+    [
+     "abdomen",
+     -2.5407
+    ],
+    [
+     "thorax",
+     -2.0038
+    ],
+    [
+     "head",
+     -0.386
+    ],
+    [
+     "upperArm_L",
+     -0.3625
+    ],
+    [
+     "forearm_L",
+     -0.318
+    ],
+    [
+     "upperArm_R",
+     -0.3547
+    ],
+    [
+     "forearm_R",
+     -0.3115
+    ],
+    [
+     "thigh_L",
+     1.4545
+    ],
+    [
+     "shank_L",
+     3.487
+    ],
+    [
+     "foot_L",
+     0.0696
+    ],
+    [
+     "thigh_R",
+     1.6634
+    ],
+    [
+     "shank_R",
+     3.4096
+    ],
+    [
+     "foot_R",
+     0.0843
+    ]
+   ]
+  }
+ ]
+}
