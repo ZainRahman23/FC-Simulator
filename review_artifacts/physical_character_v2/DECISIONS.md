@@ -2805,3 +2805,53 @@ Not pushed.
   - (3) revisit the fixed CG-1 / CG-4 anatomical-correspondence limit (not changed post hoc);
   - (4) operational promotion / demotion timing rule (works around C, does not resolve it).
 - **Awaiting user.**
+
+## 2026-10-09 — Option 1 + Option 2 correction approved; correction design FROZEN (7c090de) before any corrected code or outcome (`sources/2026-10-09_user_decision_option1_option2_correction.md`; `pi1/CORRECTION_DESIGN_FROZEN.md`)
+
+**The user accepted the compatibility-gate result** and approved a principled correction before PI-1:
+- Option 1: character-derived runner gameplay collision geometry, as a new simulation baseline;
+- Option 2: the smallest separate V2 toe body.
+
+**Constraints:** the 30 mm adjacency criterion stays unchanged; no convenient-frame promotion; no tuning to outcomes.
+
+**Frozen at 7c090de** (each § refers to `pi1/CORRECTION_DESIGN_FROZEN.md`):
+- CHARCOLLIDE-1 (§1);
+- D-1F1 (§2): the V2 spec §12.3 toe body with record dimensions and a passive MTP hinge;
+- PM-1 promotion mapping (§3);
+- promotion tolerances (§4);
+- rebaseline / gate plan (§5);
+- stop points (§6).
+
+## 2026-10-09 — D-1F1 toe body: regression FAILS on energy passivity; toe work STOPPED under the overnight hard stop (`pi1/f1/F1_TOE_FAILURE_REPORT.md`; instruction `sources/2026-10-09_user_instruction_overnight_autonomy.md`)
+
+**Built as a default-off leaf extension.**
+- Construction is exact: mass / COM / inertia closure, record heel / tip / hinge, 10 + 4 pieces.
+- Every existing spec hash is unchanged. Deterministic.
+
+**G1 ESSENTIAL, F1 vs F0, accepted configuration — new failures:**
+- drop1m 1.2a / 1.2b, +3.607 J in one landing step;
+- leanF 1.2a / 1.2b, +0.741 J;
+- singleLeg 1.4f: the raised foot's record-length toe touches at release. The same fault occurs with the boot as one rigid body, so it is explained by the intended change. Flagged.
+- MTP within hard limits everywhere (minimum margin 4.9°). isoSelfCol improved (24.59 → 13.84 mm).
+
+**Measurement corrections, disclosed separately (no physics or F0 hash change):**
+- M1: `firstNonFoot` treats the toe as boot.
+- M2: 1.4f gives toe bodies their own plantar outline.
+- M3: F1 construction checks replace G0's single-boot `g0Body` for F1; G0 itself is not edited.
+- M4: the regression tool's MTP angle display.
+
+**Diagnosis.** The rise requires both:
+- a separate light (0.198 kg) body carrying turf contacts. It persists with the toe locked and vanishes with the same geometry as one rigid body, or with the toe's turf contact removed;
+- contact-lambda warm starting. Joint warm start is not responsible.
+
+**Leaf-local probes:** none fixes it (passive law, lock, one hull, inertia ×4, mass 18 %, hinge-line gaps).
+
+**Global alternatives** (exploratory, D4a ensembles):
+- **480 Hz:** fixes energy, but F1 awkward reaches the hip emergency stop in 5 / 5 members (1.3b). CPU ≈ 1.85×.
+- **Contact warm start off:** F0 / F1 resting penetration up to 5 mm (1.4b / 1.4e), and F1 awkward 1.3b in 4 / 5.
+
+**Outcome:**
+- Not adopted. No criterion changed.
+- CHARCOLLIDE-1, PM-1, the rebaseline, the gate rerun and PI-1 are **not started**.
+- Options 1 – 4 are in the report.
+- **Awaiting user.**

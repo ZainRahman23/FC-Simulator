@@ -1,0 +1,114 @@
+{
+ "drop1m": {
+  "F1 frozen": {
+   "maxRiseJ": 3.6067,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "3334b509"
+  },
+  "T1 toe collider = one hull (4 pieces merged)": {
+   "maxRiseJ": 3.2609,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "f410d2e7"
+  },
+  "T2 toe body kept, turf contact removed (5 mm hull at the hinge)": {
+   "maxRiseJ": 0,
+   "maxRiseAt": 7.570833333333333,
+   "pass12ab": true,
+   "hash": "521f02e3"
+  },
+  "T3 toe inertia x4": {
+   "maxRiseJ": 3.7964,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "b219e67c"
+  },
+  "T4 toe mass 18 % (spec upper bound; crude)": {
+   "maxRiseJ": 3.6005,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "868dc513"
+  },
+  "T5a toe collider starts 10 mm ahead of the hinge": {
+   "maxRiseJ": 3.8586,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "45924c3e"
+  },
+  "T5b toe collider starts 20 mm ahead of the hinge": {
+   "maxRiseJ": 3.962,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "ac26a9ae"
+  },
+  "T5c rear collider ends 10 mm behind the hinge": {
+   "maxRiseJ": 3.5938,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "c81d5044"
+  },
+  "T5d rear collider ends 20 mm behind the hinge": {
+   "maxRiseJ": 3.5779,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "hash": "22785971"
+  }
+ },
+ "leanF": {
+  "F1 frozen": {
+   "maxRiseJ": 0.741,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "hash": "ff679626"
+  },
+  "T1 toe collider = one hull (4 pieces merged)": {
+   "maxRiseJ": 0.1331,
+   "maxRiseAt": 0.06666666666666667,
+   "pass12ab": true,
+   "hash": "67dddfa4"
+  },
+  "T2 toe body kept, turf contact removed (5 mm hull at the hinge)": {
+   "maxRiseJ": 0.1018,
+   "maxRiseAt": 0.06666666666666667,
+   "pass12ab": true,
+   "hash": "c7168726"
+  },
+  "T3 toe inertia x4": {
+   "maxRiseJ": 1.9084,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "hash": "3b8c081b"
+  },
+  "T4 toe mass 18 % (spec upper bound; crude)": {
+   "maxRiseJ": 0.1303,
+   "maxRiseAt": 0.06666666666666667,
+   "pass12ab": true,
+   "hash": "35cfe339"
+  },
+  "T5a toe collider starts 10 mm ahead of the hinge": {
+   "maxRiseJ": 0.0309,
+   "maxRiseAt": 0.07083333333333333,
+   "pass12ab": true,
+   "hash": "8d22ee91"
+  },
+  "T5b toe collider starts 20 mm ahead of the hinge": {
+   "maxRiseJ": 0.0909,
+   "maxRiseAt": 0.07083333333333333,
+   "pass12ab": true,
+   "hash": "7cc8bdd5"
+  },
+  "T5c rear collider ends 10 mm behind the hinge": {
+   "maxRiseJ": 1.4044,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "hash": "c3dbe498"
+  },
+  "T5d rear collider ends 20 mm behind the hinge": {
+   "maxRiseJ": 0.5514,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "hash": "da270972"
+  }
+ }
+}

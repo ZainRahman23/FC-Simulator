@@ -1,0 +1,721 @@
+{
+ "localisation": {
+  "drop1m": {
+   "F0": {
+    "hash": "de04a8b1",
+    "maxRiseJ": 0,
+    "maxRiseAt": 9.779166666666667,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1 frozen": {
+    "hash": "3334b509",
+    "maxRiseJ": 3.6067,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.6067,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.607 J at t = 0.458 s",
+     "1.2b=3.607 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, MTP elastic terms off": {
+    "hash": "315dd76a",
+    "maxRiseJ": 3.5903,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.5903,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.590 J at t = 0.458 s",
+     "1.2b=3.590 J above the running minimum (t = 0.458 s)",
+     "1.3b=49 engine-stop ticks (mtp_R.df:49); largest anatomical overshoot 19.30° (neck.flex)"
+    ]
+   },
+   "F1, MTP damping off": {
+    "hash": "0c2ba7d7",
+    "maxRiseJ": 3.6638,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.6638,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.664 J at t = 0.458 s",
+     "1.2b=3.664 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, toe engine-locked at 0°": {
+    "hash": "eac9130d",
+    "maxRiseJ": 3.4286,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.4286,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.429 J at t = 0.458 s",
+     "1.2b=3.429 J above the running minimum (t = 0.458 s)",
+     "1.3b=4802 engine-stop ticks (mtp_L.df:2401, mtp_R.df:2401); largest anatomical overshoot 19.26°"
+    ]
+   },
+   "record-length boot as one rigid body": {
+    "hash": "58ab7ec2",
+    "maxRiseJ": 0,
+    "maxRiseAt": null,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, MTP-only joint warm-start reset": {
+    "hash": "3538c34f",
+    "maxRiseJ": 3.3553,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.3553,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.355 J at t = 0.458 s",
+     "1.2b=3.355 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, joint warm start off (all joints)": {
+    "hash": "0864e701",
+    "maxRiseJ": 1.3645,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 1.3645,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=1.365 J at t = 0.458 s",
+     "1.2b=1.365 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, contact warm start off": {
+    "hash": "d92393d8",
+    "maxRiseJ": 0,
+    "maxRiseAt": null,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, all warm start off": {
+    "hash": "44b1b203",
+    "maxRiseJ": 0,
+    "maxRiseAt": null,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, 600 velocity iterations": {
+    "hash": "a6d74b8a",
+    "maxRiseJ": 0,
+    "maxRiseAt": 6.5375,
+    "monoViolJ": 0.0004,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, 10 position iterations": {
+    "hash": "b0cafed5",
+    "maxRiseJ": 3.1022,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 3.1022,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=3.102 J at t = 0.458 s",
+     "1.2b=3.102 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, 480 Hz": {
+    "hash": "cab69e72",
+    "maxRiseJ": 0,
+    "maxRiseAt": 8.441666666666666,
+    "monoViolJ": 0.0015,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   }
+  },
+  "leanF": {
+   "F0": {
+    "hash": "56c0bdc8",
+    "maxRiseJ": 0,
+    "maxRiseAt": 2.35,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1 frozen": {
+    "hash": "ff679626",
+    "maxRiseJ": 0.741,
+    "maxRiseAt": 0.4666666666666667,
+    "monoViolJ": 0.741,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=0.741 J at t = 0.467 s",
+     "1.2b=0.741 J above the running minimum (t = 0.467 s)"
+    ]
+   },
+   "F1, MTP elastic terms off": {
+    "hash": "0c39327b",
+    "maxRiseJ": 0.1308,
+    "maxRiseAt": 0.06666666666666667,
+    "monoViolJ": 0.1308,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, MTP damping off": {
+    "hash": "06b8d3d1",
+    "maxRiseJ": 0.131,
+    "maxRiseAt": 0.06666666666666667,
+    "monoViolJ": 0.131,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, toe engine-locked at 0°": {
+    "hash": "f3544532",
+    "maxRiseJ": 0.1258,
+    "maxRiseAt": 0.06666666666666667,
+    "monoViolJ": 0.1258,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": [
+     "1.3b=4802 engine-stop ticks (mtp_L.df:2401, mtp_R.df:2401); largest anatomical overshoot 13.43°"
+    ]
+   },
+   "record-length boot as one rigid body": {
+    "hash": "261f1f5f",
+    "maxRiseJ": 0.0052,
+    "maxRiseAt": 0.06666666666666667,
+    "monoViolJ": 0.0052,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, MTP-only joint warm-start reset": {
+    "hash": "84f9ba2b",
+    "maxRiseJ": 5.7817,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 5.7817,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=5.782 J at t = 0.458 s",
+     "1.2b=5.782 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, joint warm start off (all joints)": {
+    "hash": "a08616b7",
+    "maxRiseJ": 5.2059,
+    "maxRiseAt": 0.4666666666666667,
+    "monoViolJ": 5.2059,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=5.206 J at t = 0.467 s",
+     "1.2b=5.206 J above the running minimum (t = 0.467 s)"
+    ]
+   },
+   "F1, contact warm start off": {
+    "hash": "5ce40b88",
+    "maxRiseJ": 0.0535,
+    "maxRiseAt": 0.46249999999999997,
+    "monoViolJ": 0.0535,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, all warm start off": {
+    "hash": "44434bd8",
+    "maxRiseJ": 0,
+    "maxRiseAt": null,
+    "monoViolJ": 0,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": [
+     "1.3a=6.35 mm (elbow_R @ 1.321 s)",
+     "1.4b=5.0328 mm (foot_R)"
+    ]
+   },
+   "F1, 600 velocity iterations": {
+    "hash": "8d66803c",
+    "maxRiseJ": 5.9042,
+    "maxRiseAt": 0.4583333333333333,
+    "monoViolJ": 5.9042,
+    "e12": [
+     false,
+     false
+    ],
+    "r14f": null,
+    "failed": [
+     "1.2a=5.904 J at t = 0.458 s",
+     "1.2b=5.904 J above the running minimum (t = 0.458 s)"
+    ]
+   },
+   "F1, 10 position iterations": {
+    "hash": "ee172763",
+    "maxRiseJ": 0.1374,
+    "maxRiseAt": 0.06666666666666667,
+    "monoViolJ": 0.1374,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   },
+   "F1, 480 Hz": {
+    "hash": "6fbf3009",
+    "maxRiseJ": 0.078,
+    "maxRiseAt": 0.06458333333333333,
+    "monoViolJ": 0.078,
+    "e12": [
+     true,
+     true
+    ],
+    "r14f": null,
+    "failed": []
+   }
+  }
+ },
+ "singleLeg14f": {
+  "F0": {
+   "pass": true,
+   "value": "8 manifolds; non-boot 0; outside outline 0.00 mm; above sole 0.00 mm; normal 0.00°"
+  },
+  "F1 frozen": {
+   "pass": false,
+   "value": "1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+  },
+  "record-length boot as one rigid body": {
+   "pass": false,
+   "value": "1 manifolds; non-boot 0; outside outline 47.03 mm; above sole 12.00 mm; normal 0.00°"
+  }
+ },
+ "alternatives": {
+  "accepted (240 Hz, contact warm start on)": {
+   "F0": {
+    "upright": {
+     "hash": "8affd7f9",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanF": {
+     "hash": "56c0bdc8",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanL": {
+     "hash": "f539512f",
+     "failed": [],
+     "maxRiseJ": 0.0001
+    },
+    "singleLeg": {
+     "hash": "c79175e6",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "drop1m": {
+     "hash": "de04a8b1",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "sideFirst": {
+     "hash": "7da45f1e",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "6a6b55ab",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "67df0256",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "90282f6b",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "ec629b1f",
+     "failed": [
+      "1.4d=24.59 mm"
+     ],
+     "maxRiseJ": 0
+    }
+   },
+   "F1": {
+    "upright": {
+     "hash": "10e1026f",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanF": {
+     "hash": "ff679626",
+     "failed": [
+      "1.2a=0.741 J at t = 0.467 s",
+      "1.2b=0.741 J above the running minimum (t = 0.467 s)"
+     ],
+     "maxRiseJ": 0.741
+    },
+    "leanL": {
+     "hash": "d22d170b",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "singleLeg": {
+     "hash": "c3de8700",
+     "failed": [
+      "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+     ],
+     "maxRiseJ": 0
+    },
+    "drop1m": {
+     "hash": "3334b509",
+     "failed": [
+      "1.2a=3.607 J at t = 0.458 s",
+      "1.2b=3.607 J above the running minimum (t = 0.458 s)"
+     ],
+     "maxRiseJ": 3.6067
+    },
+    "sideFirst": {
+     "hash": "d529ae52",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "d5abd5b0",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "d936ef45",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "a84452ba",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "3b3a30b6",
+     "failed": [
+      "1.4d=13.84 mm"
+     ],
+     "maxRiseJ": 0
+    }
+   }
+  },
+  "contact warm start off": {
+   "F0": {
+    "upright": {
+     "hash": "c70dd10e",
+     "failed": [],
+     "maxRiseJ": 0.0001
+    },
+    "leanF": {
+     "hash": "82cbcc5e",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanL": {
+     "hash": "5a90f022",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "singleLeg": {
+     "hash": "ccef48ff",
+     "failed": [
+      "1.4b=5.0449 mm (forearm_R)",
+      "1.4e=5.0607 mm"
+     ],
+     "maxRiseJ": 0.0003
+    },
+    "drop1m": {
+     "hash": "88b08512",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "sideFirst": {
+     "hash": "53477a8f",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "ee3381cb",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "d7a7f9cc",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "90282f6b",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "588f3c72",
+     "failed": [
+      "1.4d=24.59 mm"
+     ],
+     "maxRiseJ": 0
+    }
+   },
+   "F1": {
+    "upright": {
+     "hash": "e4a8dffe",
+     "failed": [],
+     "maxRiseJ": 0.0001
+    },
+    "leanF": {
+     "hash": "5ce40b88",
+     "failed": [],
+     "maxRiseJ": 0.0535
+    },
+    "leanL": {
+     "hash": "80a628de",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "singleLeg": {
+     "hash": "58c199f6",
+     "failed": [
+      "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+     ],
+     "maxRiseJ": 0
+    },
+    "drop1m": {
+     "hash": "d92393d8",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "sideFirst": {
+     "hash": "55d7c198",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "a1742d2f",
+     "failed": [
+      "1.3b=1 engine-stop ticks (hip_L.rot:1); largest anatomical overshoot 16.75° (knee_R.rot)"
+     ],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "90ab6d52",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "a84452ba",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "04a84f27",
+     "failed": [
+      "1.4d=13.84 mm"
+     ],
+     "maxRiseJ": 0
+    }
+   }
+  },
+  "480 Hz": {
+   "F0": {
+    "upright": {
+     "hash": "437f0c70",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanF": {
+     "hash": "d8ba9a90",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanL": {
+     "hash": "278940f5",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "singleLeg": {
+     "hash": "cb00ea51",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "drop1m": {
+     "hash": "a9215908",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "sideFirst": {
+     "hash": "6fc85942",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "af32e86f",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "4c47325e",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "c5db06f6",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "837a6d88",
+     "failed": [],
+     "maxRiseJ": 0
+    }
+   },
+   "F1": {
+    "upright": {
+     "hash": "1af77146",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "leanF": {
+     "hash": "6fbf3009",
+     "failed": [],
+     "maxRiseJ": 0.078
+    },
+    "leanL": {
+     "hash": "ae4e13d1",
+     "failed": [],
+     "maxRiseJ": 0.0001
+    },
+    "singleLeg": {
+     "hash": "aa6553f2",
+     "failed": [
+      "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+     ],
+     "maxRiseJ": 0
+    },
+    "drop1m": {
+     "hash": "cab69e72",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "sideFirst": {
+     "hash": "1ff6164c",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "awkward": {
+     "hash": "30bf5e41",
+     "failed": [
+      "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.77° (knee_R.rot)"
+     ],
+     "maxRiseJ": 0
+    },
+    "flatSupine": {
+     "hash": "1044b740",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoMomentum": {
+     "hash": "0c17411e",
+     "failed": [],
+     "maxRiseJ": 0
+    },
+    "isoSelfCol": {
+     "hash": "52577f59",
+     "failed": [],
+     "maxRiseJ": 0
+    }
+   }
+  }
+ }
+}

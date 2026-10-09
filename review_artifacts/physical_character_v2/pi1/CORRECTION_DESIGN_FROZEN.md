@@ -171,3 +171,10 @@ Otherwise: freeze the baseline, amend and refreeze PI-1, and stop for review bef
 ## 7. Amendments
 
 None at freezing.
+
+**Status, 2026-10-09 (added, design text unchanged):**
+- No amendment.
+- The §2 regression **failed** on energy passivity (G1 1.2a / 1.2b in drop1m and leanF). No principled fix was found inside the foot / toe leaf. Both global solver alternatives fail other integrity rows.
+- The toe work is **stopped** under the overnight instruction (`../sources/2026-10-09_user_instruction_overnight_autonomy.md` §0 / §6).
+- Nothing here was implemented beyond the default-off F1 code.
+- See `f1/F1_TOE_FAILURE_REPORT.md`.

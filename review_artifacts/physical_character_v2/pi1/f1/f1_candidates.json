@@ -1,0 +1,863 @@
+{
+ "eps": [
+  0,
+  0.000001,
+  -0.000001,
+  0.00001,
+  -0.00001
+ ],
+ "runs": [
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "drop1m",
+   "failed": [
+    "1.2a=3.607 J at t = 0.458 s",
+    "1.2b=3.607 J above the running minimum (t = 0.458 s)"
+   ],
+   "maxRiseJ": 3.6067,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.898,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 137.1
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "drop1m@0.000001",
+   "failed": [
+    "1.2a=3.608 J at t = 0.458 s",
+    "1.2b=3.608 J above the running minimum (t = 0.458 s)"
+   ],
+   "maxRiseJ": 3.6081,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.825,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 127.6
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "drop1m@-0.000001",
+   "failed": [
+    "1.2a=3.606 J at t = 0.458 s",
+    "1.2b=3.606 J above the running minimum (t = 0.458 s)"
+   ],
+   "maxRiseJ": 3.6058,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.62,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 122.8
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "drop1m@0.00001",
+   "failed": [
+    "1.2a=3.616 J at t = 0.458 s",
+    "1.2b=3.616 J above the running minimum (t = 0.458 s)"
+   ],
+   "maxRiseJ": 3.6161,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.723,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 123.2
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "drop1m@-0.00001",
+   "failed": [
+    "1.2a=3.597 J at t = 0.458 s",
+    "1.2b=3.597 J above the running minimum (t = 0.458 s)"
+   ],
+   "maxRiseJ": 3.5969,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.545,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 120.4
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "leanF",
+   "failed": [
+    "1.2a=0.741 J at t = 0.467 s",
+    "1.2b=0.741 J above the running minimum (t = 0.467 s)"
+   ],
+   "maxRiseJ": 0.741,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.059,
+   "selfPenRestMm": 0.57,
+   "cpuMsPerSimS": 147.6
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "leanF@0.000001",
+   "failed": [],
+   "maxRiseJ": 0.306,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.031,
+   "selfPenRestMm": 0.628,
+   "cpuMsPerSimS": 147.3
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "leanF@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0.1303,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0,
+   "selfPenRestMm": 0.558,
+   "cpuMsPerSimS": 148.9
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "leanF@0.00001",
+   "failed": [
+    "1.2a=1.387 J at t = 0.467 s",
+    "1.2b=1.387 J above the running minimum (t = 0.467 s)"
+   ],
+   "maxRiseJ": 1.3871,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.018,
+   "selfPenRestMm": 0.614,
+   "cpuMsPerSimS": 161.1
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "leanF@-0.00001",
+   "failed": [
+    "1.2a=2.074 J at t = 0.467 s",
+    "1.2b=2.074 J above the running minimum (t = 0.467 s)"
+   ],
+   "maxRiseJ": 2.0743,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.004,
+   "selfPenRestMm": 0.558,
+   "cpuMsPerSimS": 143.3
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "awkward",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.591,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 128.5
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "awkward@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.471,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 125.9
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "awkward@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.425,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 130.5
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "awkward@0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.539,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 129.3
+  },
+  {
+   "body": "F1",
+   "cfg": "accepted 240 Hz",
+   "key": "awkward@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.493,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 126.7
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "drop1m",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.12,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 250.5
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "drop1m@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.114,
+   "selfPenRestMm": 0.007,
+   "cpuMsPerSimS": 257.4
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "drop1m@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.092,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 250.2
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "drop1m@0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.107,
+   "selfPenRestMm": 0.002,
+   "cpuMsPerSimS": 250.1
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "drop1m@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.221,
+   "selfPenRestMm": 0.002,
+   "cpuMsPerSimS": 251.9
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "leanF",
+   "failed": [],
+   "maxRiseJ": 0.078,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.008,
+   "selfPenRestMm": 0.019,
+   "cpuMsPerSimS": 293.1
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "leanF@0.000001",
+   "failed": [],
+   "maxRiseJ": 0.08,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.002,
+   "selfPenRestMm": 0.377,
+   "cpuMsPerSimS": 271.2
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "leanF@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0.0799,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.006,
+   "selfPenRestMm": 0.197,
+   "cpuMsPerSimS": 272.7
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "leanF@0.00001",
+   "failed": [],
+   "maxRiseJ": 0.0806,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.001,
+   "selfPenRestMm": 0.272,
+   "cpuMsPerSimS": 285.5
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "leanF@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0.0776,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.005,
+   "selfPenRestMm": 0.493,
+   "cpuMsPerSimS": 273.5
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "awkward",
+   "failed": [
+    "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.77° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 2,
+   "engineAxes": [
+    "hip_L.rot:2"
+   ],
+   "turfPenRestMm": 0.755,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 230.1
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "awkward@0.000001",
+   "failed": [
+    "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.78° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 2,
+   "engineAxes": [
+    "hip_L.rot:2"
+   ],
+   "turfPenRestMm": 0.738,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 231.4
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "awkward@-0.000001",
+   "failed": [
+    "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.87° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 2,
+   "engineAxes": [
+    "hip_L.rot:2"
+   ],
+   "turfPenRestMm": 0.702,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 229.9
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "awkward@0.00001",
+   "failed": [
+    "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.77° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 2,
+   "engineAxes": [
+    "hip_L.rot:2"
+   ],
+   "turfPenRestMm": 0.754,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 232.1
+  },
+  {
+   "body": "F1",
+   "cfg": "480 Hz",
+   "key": "awkward@-0.00001",
+   "failed": [
+    "1.3b=2 engine-stop ticks (hip_L.rot:2); largest anatomical overshoot 17.87° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 2,
+   "engineAxes": [
+    "hip_L.rot:2"
+   ],
+   "turfPenRestMm": 0.736,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 234.4
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "drop1m",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 4.734,
+   "selfPenRestMm": 2.892,
+   "cpuMsPerSimS": 135.6
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "drop1m@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 4.156,
+   "selfPenRestMm": 1.968,
+   "cpuMsPerSimS": 125.9
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "drop1m@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 4.526,
+   "selfPenRestMm": 2.131,
+   "cpuMsPerSimS": 125
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "drop1m@0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.729,
+   "selfPenRestMm": 2.033,
+   "cpuMsPerSimS": 125
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "drop1m@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 4.299,
+   "selfPenRestMm": 2.036,
+   "cpuMsPerSimS": 128.2
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "leanF",
+   "failed": [],
+   "maxRiseJ": 0.0535,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.517,
+   "selfPenRestMm": 3.845,
+   "cpuMsPerSimS": 154.7
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "leanF@0.000001",
+   "failed": [
+    "1.4e=5.0233 mm"
+   ],
+   "maxRiseJ": 0.0049,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.881,
+   "selfPenRestMm": 5.023,
+   "cpuMsPerSimS": 147.7
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "leanF@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0.0034,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.486,
+   "selfPenRestMm": 1.921,
+   "cpuMsPerSimS": 142.2
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "leanF@0.00001",
+   "failed": [
+    "1.2a=0.811 J at t = 0.462 s",
+    "1.2b=0.811 J above the running minimum (t = 0.462 s)",
+    "1.4b=5.0407 mm (foot_L)"
+   ],
+   "maxRiseJ": 0.8107,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 5.041,
+   "selfPenRestMm": 4.27,
+   "cpuMsPerSimS": 148.7
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "leanF@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.366,
+   "selfPenRestMm": 3.232,
+   "cpuMsPerSimS": 155.1
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "awkward",
+   "failed": [
+    "1.3b=1 engine-stop ticks (hip_L.rot:1); largest anatomical overshoot 16.75° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 1,
+   "engineAxes": [
+    "hip_L.rot:1"
+   ],
+   "turfPenRestMm": 1.259,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 129
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "awkward@0.000001",
+   "failed": [
+    "1.3b=1 engine-stop ticks (hip_L.rot:1); largest anatomical overshoot 16.93° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 1,
+   "engineAxes": [
+    "hip_L.rot:1"
+   ],
+   "turfPenRestMm": 1.411,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 122.8
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "awkward@-0.000001",
+   "failed": [
+    "1.3b=1 engine-stop ticks (hip_L.rot:1); largest anatomical overshoot 16.85° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 1,
+   "engineAxes": [
+    "hip_L.rot:1"
+   ],
+   "turfPenRestMm": 1.392,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 118.5
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "awkward@0.00001",
+   "failed": [
+    "1.3b=1 engine-stop ticks (hip_L.rot:1); largest anatomical overshoot 16.95° (knee_R.r"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 1,
+   "engineAxes": [
+    "hip_L.rot:1"
+   ],
+   "turfPenRestMm": 1.397,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 117.7
+  },
+  {
+   "body": "F1",
+   "cfg": "contact warm start off",
+   "key": "awkward@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.893,
+   "selfPenRestMm": 0.045,
+   "cpuMsPerSimS": 118.2
+  },
+  {
+   "body": "F0",
+   "cfg": "480 Hz",
+   "key": "awkward",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.552,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 209.2
+  },
+  {
+   "body": "F0",
+   "cfg": "480 Hz",
+   "key": "awkward@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.567,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 207.8
+  },
+  {
+   "body": "F0",
+   "cfg": "480 Hz",
+   "key": "awkward@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.507,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 210.1
+  },
+  {
+   "body": "F0",
+   "cfg": "480 Hz",
+   "key": "awkward@0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.54,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 207.7
+  },
+  {
+   "body": "F0",
+   "cfg": "480 Hz",
+   "key": "awkward@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 0.568,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 209
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "awkward",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.646,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 108.1
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "awkward@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.64,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 107.3
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "awkward@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.647,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 107.9
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "awkward@0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.634,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 107.1
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "awkward@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 1.566,
+   "selfPenRestMm": 0,
+   "cpuMsPerSimS": 108.8
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "singleLeg",
+   "failed": [
+    "1.4b=5.0449 mm (forearm_R)",
+    "1.4e=5.0607 mm"
+   ],
+   "maxRiseJ": 0.0003,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 5.045,
+   "selfPenRestMm": 5.061,
+   "cpuMsPerSimS": 121.1
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "singleLeg@0.000001",
+   "failed": [
+    "1.4b=5.0443 mm (forearm_R)",
+    "1.4e=5.0601 mm"
+   ],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 5.044,
+   "selfPenRestMm": 5.06,
+   "cpuMsPerSimS": 121.2
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "singleLeg@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.998,
+   "selfPenRestMm": 2.866,
+   "cpuMsPerSimS": 120.2
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "singleLeg@0.00001",
+   "failed": [],
+   "maxRiseJ": 0.0002,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.656,
+   "selfPenRestMm": 0.774,
+   "cpuMsPerSimS": 119
+  },
+  {
+   "body": "F0",
+   "cfg": "contact warm start off",
+   "key": "singleLeg@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 2.675,
+   "selfPenRestMm": 4.155,
+   "cpuMsPerSimS": 115.5
+  },
+  {
+   "body": "F0",
+   "cfg": "accepted 240 Hz",
+   "key": "singleLeg",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 2.487,
+   "selfPenRestMm": 0.265,
+   "cpuMsPerSimS": 114.5
+  },
+  {
+   "body": "F0",
+   "cfg": "accepted 240 Hz",
+   "key": "singleLeg@0.000001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.522,
+   "selfPenRestMm": 0.192,
+   "cpuMsPerSimS": 117.8
+  },
+  {
+   "body": "F0",
+   "cfg": "accepted 240 Hz",
+   "key": "singleLeg@-0.000001",
+   "failed": [],
+   "maxRiseJ": 0.0033,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.44,
+   "selfPenRestMm": 0.364,
+   "cpuMsPerSimS": 119.8
+  },
+  {
+   "body": "F0",
+   "cfg": "accepted 240 Hz",
+   "key": "singleLeg@0.00001",
+   "failed": [],
+   "maxRiseJ": 0.0038,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 3.129,
+   "selfPenRestMm": 0.502,
+   "cpuMsPerSimS": 119.6
+  },
+  {
+   "body": "F0",
+   "cfg": "accepted 240 Hz",
+   "key": "singleLeg@-0.00001",
+   "failed": [],
+   "maxRiseJ": 0,
+   "engineTicks": 0,
+   "engineAxes": [],
+   "turfPenRestMm": 2.019,
+   "selfPenRestMm": 0.149,
+   "cpuMsPerSimS": 118.8
+  }
+ ]
+}
