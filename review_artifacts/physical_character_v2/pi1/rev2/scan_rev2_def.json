@@ -1,0 +1,411 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6)",
+ "cases": {
+  "sl_win": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 64,
+   "windowEnd": 71,
+   "hg": [
+    {
+     "k": 71,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 70,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 69,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 68,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 67,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [64, 71]: P14_bodyVel+P15_angVel+P16_comVel+P17_angMom+HGA_comVsAuth+HGT_extension"
+   ]
+  },
+  "sl_early": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": -1,
+   "windowEnd": 104,
+   "hg": [],
+   "pass": false,
+   "reasons": [
+    "predictor never fires",
+    "no valid predictive promotion frame in W = [-1, 104]: "
+   ]
+  },
+  "sl_late": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": -1,
+   "windowEnd": 157,
+   "hg": [],
+   "pass": false,
+   "reasons": [
+    "predictor never fires",
+    "no valid predictive promotion frame in W = [-1, 157]: "
+   ]
+  },
+  "sl_from_behind": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 75,
+   "windowEnd": 85,
+   "hg": [
+    {
+     "k": 85,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 84,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 83,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 82,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 81,
+     "pass": false,
+     "fails": [
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 80,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 79,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 78,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 77,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 76,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 75,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [75, 85]: P17_angMom+HGT_extension+HGA_comVsAuth+P15_angVel+P9_footContact_R+P11_renderedBootPenMm+P7_twistDeg"
+   ]
+  },
+  "sl_left": {
+   "cat": "other",
+   "finalClass": "NEGLIGIBLE",
+   "trigger": 64,
+   "windowEnd": 73,
+   "hg": [
+    {
+     "k": 73,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 72,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 71,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 70,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 69,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 68,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 67,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [64, 73]: P5_footDeg+P14_bodyVel+P15_angVel+P16_comVel+P17_angMom+HGA_comVsAuth+HGT_extension"
+   ]
+  },
+  "sl_loose": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 135,
+   "windowEnd": 144,
+   "hg": [
+    {
+     "k": 144,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 143,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 142,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 141,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 140,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 139,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 138,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 137,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 136,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 135,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [135, 144]: P15_angVel+HGA_comVsAuth+P17_angMom"
+   ]
+  }
+ }
+}

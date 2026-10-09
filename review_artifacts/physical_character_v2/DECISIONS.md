@@ -2955,3 +2955,41 @@ Not pushed.
   - (2) PI-1's rigid stand-in tackler vs the swept slide leg.
 
 **Awaiting user.**
+
+## 2026-10-09 — PI-1 Revision 2 (strict handoff, causal physics, PS-2 selector, articulated stand-in): HARD STOP — NEAR MISS 0, RECOVERABLE 1, PLANTED-LEG FALL 0; PI-1 not run (`pi1/rev2/PI1_REV2_RESULTS.md`; source `sources/2026-10-09_user_decision_pi1_revision2.md` 7f76e82; prereg f8cd44a; A1 f2016c6; A2 cf1d412; post-scan E1)
+
+**Valid promotion frames: 3 / 26, all standing runners.** No moving runner obtains one.
+
+| candidate | class | result |
+|---|---|---|
+| **rx_behind_standing** | RECOVERABLE | **PASSES** end to end at the handoff and contact level (details below) |
+| rx_facing_front | PLANTED-LEG FALL | fails CG-1: the F0 boot is struck 93 mm from the ankle, before the shin; V1.3's foot capsule is inscribed in the boot |
+| rx_side_standing | PLANTED-LEG FALL | fails the retained 10 mm criterion at 10.8 mm: the simulation's own `SLIDER_BLOCKED_BY_FALLER` stop, 3.0 → 0.4 m/s in one sub-step |
+
+rx_behind_standing in detail:
+- zero handoff discontinuity;
+- AST-1 stand-in tracking 0.05 mm;
+- the physical contact is on the same segment at the same sub-step as gameplay, 37 mm apart.
+
+rx_side_standing's CG-6 failure as run (74.3°) was my measurement error, corrected by **E1**: post-impulse velocity; the approach value is 0.0°. No count changes.
+
+**Smallest remaining blocker: HG-A.** The running presentation's whole-body momentum is not coherent with the authoritative motion.
+- The pelvis tracks the root at exactly 3.00 m/s.
+- The mapped COM velocity swings 2.2 – 4.0 m/s frame to frame. It is the same without RF-1, so the presentation causes it.
+- 48 window frames fail only HG-A.
+
+**Non-gating diagnostic** (HG-A waived; the shift is then a visible pop). rx_airborne (NEAR MISS) and rx_glancing (PLANTED-LEG FALL) would pass every downstream criterion.
+
+**Second-order blockers:**
+- inscribed boot-vs-capsule correspondence (front strikes, near-miss boot touches);
+- the slider-blocking stop;
+- HG-T (sl_from_behind: the leg still extends at contact);
+- lead-time drift of the non-locomoting causal body at leads > ≈ 1 tick;
+- standing-pose P-5 / P-17.
+
+**Architectural answer:**
+- Demonstrated for a standing footballer up to and through the contact.
+- Hand-back (DG) not tested.
+- Not demonstrated for a moving footballer.
+
+**Process:** no Revision 3. No criterion, threshold, geometry or animation was changed. Post-scan diagnostics are labelled. **Awaiting user.**

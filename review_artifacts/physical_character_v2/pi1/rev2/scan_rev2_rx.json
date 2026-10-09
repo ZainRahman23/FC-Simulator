@@ -1,0 +1,2357 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6)",
+ "cases": {
+  "rx_miss": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 51,
+   "windowEnd": 59,
+   "hg": [
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [51, 59]: P15_angVel+P17_angMom+HGA_comVsAuth+P9_footContact_L+P11_renderedBootPenMm+P14_bodyVel+P5_footDeg+P9_footContact_R"
+   ]
+  },
+  "rx_free_leg": {
+   "cat": "RECOVERABLE",
+   "finalClass": "STUMBLE",
+   "trigger": 41,
+   "windowEnd": 49,
+   "hg": [
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [41, 49]: P5_footDeg+P14_bodyVel+P15_angVel+P17_angMom+HGA_comVsAuth+HGT_extension"
+   ]
+  },
+  "rx_planted_leg": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 39,
+   "windowEnd": 47,
+   "hg": [
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 39,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+P5_footDeg+P17_angMom"
+   ]
+  },
+  "rx_jog": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 39,
+   "windowEnd": 47,
+   "hg": [
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 39,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+P5_footDeg+P17_angMom"
+   ]
+  },
+  "rx_sprint": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 51,
+   "windowEnd": 66,
+   "hg": [
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 63,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 62,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 61,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg"
+   ]
+  },
+  "rx_square": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 50,
+   "windowEnd": 60,
+   "hg": [
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [50, 60]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom"
+   ]
+  },
+  "rx_glancing": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 55,
+   "windowEnd": 64,
+   "hg": [
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 63,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 62,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 61,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [55, 64]: HGA_comVsAuth+P9_footContact_R+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom"
+   ]
+  },
+  "rx_lateral": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 41,
+   "windowEnd": 48,
+   "hg": [
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [41, 48]: HGA_comVsAuth+P9_footContact_R+P15_angVel+P17_angMom+HGT_extension"
+   ]
+  },
+  "rx_rear_diag": {
+   "cat": "RECOVERABLE",
+   "finalClass": "CORRECTION",
+   "trigger": 38,
+   "windowEnd": 43,
+   "hg": [
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 39,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 38,
+     "pass": false,
+     "fails": [
+      "P10_nonContact",
+      "P11_renderedBootPenMm",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [38, 43]: HGA_comVsAuth+HGT_extension+P14_bodyVel+P15_angVel+P17_angMom+P5_footDeg+P10_nonContact+P11_renderedBootPenMm"
+   ]
+  },
+  "rx_front_diag": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 49,
+   "windowEnd": 55,
+   "hg": [
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [49, 55]: HGA_comVsAuth+P9_footContact_R+P15_angVel+P17_angMom"
+   ]
+  },
+  "rx_rear": {
+   "cat": "other",
+   "finalClass": "NEGLIGIBLE",
+   "trigger": 30,
+   "windowEnd": 51,
+   "hg": [
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 39,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 38,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 37,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 36,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 35,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 34,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 33,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 32,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 31,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 30,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [30, 51]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom+HGT_extension+P11_renderedBootPenMm+P9_footContact_L"
+   ]
+  },
+  "rx_standing": {
+   "cat": "RECOVERABLE",
+   "finalClass": "STUMBLE",
+   "trigger": 40,
+   "windowEnd": 50,
+   "hg": [
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [40, 50]: P5_footDeg+HGA_comVsAuth+HGT_extension"
+   ]
+  },
+  "rx_airborne": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 50,
+   "windowEnd": 60,
+   "hg": [
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P4_kneeMm",
+      "P4_ankleMm",
+      "P12_clamp",
+      "P14_bodyVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [50, 60]: HGA_comVsAuth+P15_angVel+P16_comVel+P9_footContact_R+P14_bodyVel+P17_angMom+P4_kneeMm+P4_ankleMm+P12_clamp"
+   ]
+  },
+  "rx_early_stance": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 45,
+   "windowEnd": 56,
+   "hg": [
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [45, 56]: P15_angVel+P16_comVel+HGA_comVsAuth"
+   ]
+  },
+  "rx_late_stance": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 48,
+   "windowEnd": 54,
+   "hg": [
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [48, 54]: P15_angVel+P16_comVel+HGA_comVsAuth+P14_bodyVel"
+   ]
+  },
+  "rx_facing_front": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 39,
+   "windowEnd": 51,
+   "hg": [
+    {
+     "k": 51,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "CG-1"
+   ],
+   "handoff": {
+    "k": 51,
+    "pass": true,
+    "fails": [],
+    "P5": 0,
+    "HGA": 0,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -3.9,
+      "contact": true,
+      "mode": "ankle"
+     },
+     "R": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -3.9,
+      "contact": true,
+      "mode": "ankle"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.0011,
+    "P9": {
+     "L": -3.9,
+     "R": -3.9
+    },
+    "P11": 0,
+    "P13": 92.9,
+    "P14": 0,
+    "P15": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "kp": 51,
+   "leadTicks": 0.25,
+   "leadS": 0.0042,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0,
+    "shiftMs": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "promotionWrites": 28,
+   "standIn": {
+    "trackErrBeforeContactMm": 0,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 4.4,
+    "discontinuityPass": true
+   },
+   "CG8": {
+    "minSepMm": 92.3,
+    "pair": "forearm_R↔thigh_R",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 52.25,
+     "body": "foot_L",
+     "seg": "LEG"
+    },
+    "gameplayFirst": {
+     "tau": 52.25,
+     "seg": "shin_L",
+     "prim": "LEG"
+    },
+    "fallTau": 53,
+    "Breleased": 52
+   },
+   "decisive": {
+    "tSim": 52.25,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "mapped": "shank_L",
+    "segPlanted": true,
+    "J": 75.42,
+    "physical": {
+     "tau": 52.25,
+     "body": "foot_L",
+     "seg": "LEG",
+     "depthMm": -2.1,
+     "impulseNs": 3.3438
+    },
+    "physicalImpulseTotalNs": 21.002
+   },
+   "criteria": {
+    "CG-1": {
+     "mapped": "shank_L",
+     "physical": "foot_L",
+     "adjacency": {
+      "body": "foot_L",
+      "joint": "ankle",
+      "distMm": 93
+     },
+     "pass": false
+    },
+    "CG-3": {
+     "tSim": 52.25,
+     "tPhys": 52.25,
+     "dTicks": 0,
+     "pass": true
+    },
+    "CG-4": {
+     "horizDistM": 0.085,
+     "sSim": 0.876,
+     "sPhys": 1.044,
+     "pass": true
+    },
+    "CG-5": {
+     "region": [
+      "shank_L"
+     ],
+     "simMaxMm": 107,
+     "physMaxMm": 79.6,
+     "ratio": 0.744,
+     "pass": true
+    },
+    "CG-6": {
+     "normalAngleDeg": 23.7,
+     "relVelAngleDeg": 3.9,
+     "pass": true
+    },
+    "CG-2": {
+     "L": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -3.9,
+      "phys": true,
+      "agree": true
+     },
+     "R": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -3.9,
+      "phys": true,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-8": {
+     "minSepMm": 92.3,
+     "pair": "forearm_R↔thigh_R",
+     "pass": true
+    }
+   },
+   "cpuMs": 204
+  },
+  "rx_side_standing": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 41,
+   "windowEnd": 59,
+   "hg": [
+    {
+     "k": 59,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "CG-6",
+    "tackler discontinuity 10.8 mm"
+   ],
+   "handoff": {
+    "k": 59,
+    "pass": true,
+    "fails": [],
+    "P5": 0,
+    "HGA": 0,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -1.5,
+      "contact": true,
+      "mode": "ankle"
+     },
+     "R": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -1.5,
+      "contact": true,
+      "mode": "ankle"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.0006,
+    "P9": {
+     "L": -1.5,
+     "R": -1.5
+    },
+    "P11": 0.0417,
+    "P13": 94.2,
+    "P14": 0,
+    "P15": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "kp": 59,
+   "leadTicks": 0.5,
+   "leadS": 0.0083,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0,
+    "shiftMs": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "promotionWrites": 28,
+   "standIn": {
+    "trackErrBeforeContactMm": 0,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 10.8,
+    "discontinuityPass": false
+   },
+   "CG8": {
+    "minSepMm": 81.5,
+    "pair": "forearm_R↔thigh_R",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 60.25,
+     "body": "shank_R",
+     "seg": "LEG"
+    },
+    "gameplayFirst": {
+     "tau": 60.5,
+     "seg": "shin_R",
+     "prim": "THIGH"
+    },
+    "fallTau": 61,
+    "Breleased": 60
+   },
+   "decisive": {
+    "tSim": 60.5,
+    "seg": "shin_R",
+    "prim": "THIGH",
+    "mapped": "shank_R",
+    "segPlanted": true,
+    "J": 49,
+    "physical": {
+     "tau": 60.25,
+     "body": "shank_R",
+     "seg": "LEG",
+     "depthMm": 9.8,
+     "impulseNs": 16.9952
+    },
+    "physicalImpulseTotalNs": 31.563
+   },
+   "criteria": {
+    "CG-1": {
+     "mapped": "shank_R",
+     "physical": "shank_R",
+     "adjacency": null,
+     "pass": true
+    },
+    "CG-3": {
+     "tSim": 60.5,
+     "tPhys": 60.25,
+     "dTicks": -0.25,
+     "pass": true
+    },
+    "CG-4": {
+     "horizDistM": 0.065,
+     "sSim": 0.856,
+     "sPhys": 0.883,
+     "pass": true
+    },
+    "CG-5": {
+     "region": [
+      "shank_R"
+     ],
+     "simMaxMm": 42.2,
+     "physMaxMm": 60,
+     "ratio": 1.419,
+     "pass": true
+    },
+    "CG-6": {
+     "normalAngleDeg": 14.9,
+     "relVelAngleDeg": 74.3,
+     "pass": false
+    },
+    "CG-2": {
+     "L": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -1.5,
+      "phys": true,
+      "agree": true
+     },
+     "R": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": 0.2,
+      "phys": true,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-8": {
+     "minSepMm": 81.5,
+     "pair": "forearm_R↔thigh_R",
+     "pass": true
+    }
+   },
+   "cpuMs": 172
+  },
+  "rx_behind_standing": {
+   "cat": "RECOVERABLE",
+   "finalClass": "STUMBLE",
+   "trigger": 40,
+   "windowEnd": 50,
+   "hg": [
+    {
+     "k": 50,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": true,
+   "reasons": [],
+   "handoff": {
+    "k": 50,
+    "pass": true,
+    "fails": [],
+    "P5": 0,
+    "HGA": 0,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -3.9,
+      "contact": true,
+      "mode": "ankle"
+     },
+     "R": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -3.9,
+      "contact": true,
+      "mode": "ankle"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.0011,
+    "P9": {
+     "L": -3.9,
+     "R": -3.9
+    },
+    "P11": 0,
+    "P13": 92.9,
+    "P14": 0,
+    "P15": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "kp": 50,
+   "leadTicks": 0.5,
+   "leadS": 0.0083,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0,
+    "shiftMs": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "promotionWrites": 28,
+   "standIn": {
+    "trackErrBeforeContactMm": 0.05,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 4.4,
+    "discontinuityPass": true
+   },
+   "CG8": {
+    "minSepMm": 85.9,
+    "pair": "forearm_R↔thigh_R",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 51.5,
+     "body": "shank_R",
+     "seg": "LEG"
+    },
+    "gameplayFirst": {
+     "tau": 51.5,
+     "seg": "shin_R",
+     "prim": "LEG"
+    },
+    "fallTau": null,
+    "Breleased": null
+   },
+   "decisive": {
+    "tSim": 51.5,
+    "seg": "shin_R",
+    "prim": "LEG",
+    "mapped": "shank_R",
+    "segPlanted": true,
+    "J": 75.64,
+    "physical": {
+     "tau": 51.5,
+     "body": "shank_R",
+     "seg": "LEG",
+     "depthMm": -6.7,
+     "impulseNs": 7.4714
+    },
+    "physicalImpulseTotalNs": 19.943
+   },
+   "criteria": {
+    "CG-1": {
+     "mapped": "shank_R",
+     "physical": "shank_R",
+     "adjacency": null,
+     "pass": true
+    },
+    "CG-3": {
+     "tSim": 51.5,
+     "tPhys": 51.5,
+     "dTicks": 0,
+     "pass": true
+    },
+    "CG-4": {
+     "horizDistM": 0.037,
+     "sSim": 0.911,
+     "sPhys": 0.892,
+     "pass": true
+    },
+    "CG-5": {
+     "region": [
+      "shank_R"
+     ],
+     "simMaxMm": 106.8,
+     "physMaxMm": 79.4,
+     "ratio": 0.744,
+     "pass": true
+    },
+    "CG-6": {
+     "normalAngleDeg": 5.5,
+     "relVelAngleDeg": 18.1,
+     "pass": true
+    },
+    "CG-2": {
+     "L": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -3.9,
+      "phys": true,
+      "agree": true
+     },
+     "R": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -3.9,
+      "phys": true,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-8": {
+     "minSepMm": 85.9,
+     "pair": "forearm_R↔thigh_R",
+     "pass": true
+    }
+   },
+   "cpuMs": 164
+  },
+  "rx_heavy": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 51,
+   "windowEnd": 66,
+   "hg": [
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 63,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 62,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 61,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg"
+   ]
+  },
+  "rx_light": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 51,
+   "windowEnd": 66,
+   "hg": [
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 63,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 62,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 61,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGA_comVsAuth"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg"
+   ]
+  }
+ }
+}

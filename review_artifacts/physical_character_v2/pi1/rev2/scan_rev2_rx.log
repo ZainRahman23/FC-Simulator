@@ -1,0 +1,20 @@
+rx_miss            NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 59]: P15_angVel+P17_angMom+HGA_comVsAuth+P9_footContact_L+P11_renderedBootPenMm+P14_bodyVel+P5_footDeg+P9_footCo
+rx_free_leg        RECOVERABLE       NO PROMOTION FRAME no valid predictive promotion frame in W = [41, 49]: P5_footDeg+P14_bodyVel+P15_angVel+P17_angMom+HGA_comVsAuth+HGT_extension
+rx_planted_leg     PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+
+rx_jog             PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+
+rx_sprint          NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg
+rx_square          other             NO PROMOTION FRAME no valid predictive promotion frame in W = [50, 60]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom
+rx_glancing        PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [55, 64]: HGA_comVsAuth+P9_footContact_R+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom
+rx_lateral         PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [41, 48]: HGA_comVsAuth+P9_footContact_R+P15_angVel+P17_angMom+HGT_extension
+rx_rear_diag       RECOVERABLE       NO PROMOTION FRAME no valid predictive promotion frame in W = [38, 43]: HGA_comVsAuth+HGT_extension+P14_bodyVel+P15_angVel+P17_angMom+P5_footDeg+P10_nonContact+P11_renderedBootPen
+rx_front_diag      PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [49, 55]: HGA_comVsAuth+P9_footContact_R+P15_angVel+P17_angMom
+rx_rear            other             NO PROMOTION FRAME no valid predictive promotion frame in W = [30, 51]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom+HGT_extension+P11_renderedBootP
+rx_standing        RECOVERABLE       NO PROMOTION FRAME no valid predictive promotion frame in W = [40, 50]: P5_footDeg+HGA_comVsAuth+HGT_extension
+rx_airborne        NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [50, 60]: HGA_comVsAuth+P15_angVel+P16_comVel+P9_footContact_R+P14_bodyVel+P17_angMom+P4_kneeMm+P4_ankleMm+P12_clamp
+rx_early_stance    other             NO PROMOTION FRAME no valid predictive promotion frame in W = [45, 56]: P15_angVel+P16_comVel+HGA_comVsAuth
+rx_late_stance     other             NO PROMOTION FRAME no valid predictive promotion frame in W = [48, 54]: P15_angVel+P16_comVel+HGA_comVsAuth+P14_bodyVel
+rx_facing_front    PLANTED-LEG FALL  kp 51 lead 0.25 ticks fail: CG-1
+rx_side_standing   PLANTED-LEG FALL  kp 59 lead 0.5 ticks fail: CG-6, tackler discontinuity 10.8 mm
+rx_behind_standing RECOVERABLE       kp 50 lead 0.5 ticks PASS
+rx_heavy           NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg
+rx_light           NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg

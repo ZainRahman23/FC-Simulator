@@ -234,3 +234,25 @@ Preregistered separately before it runs: small timing / location / body-geometry
 - AST-C1 is evaluated before the first such contact.
 - NM requires no such contact.
 - The smoke-test outputs (rx_behind_standing, rx_miss) were made with the defective detector and are superseded.
+
+### E1 (POST-SCAN erratum; it changes no class count and re-gates nothing): CG-6 relative velocity is the approach velocity
+
+**The defect, a measurement one.** The scan evaluated CG-6's physical relative velocity (stand-in point − runner point) from the state **after** the first contact step. By then Jolt had already applied that step's contact impulse, so the relative velocity was largely arrested.
+- rx_side_standing: 0.32 m/s, mostly tangential, after a 17 N·s impulse.
+- Its direction does not describe the approach.
+
+**The correct reading.** PI1_COMPAT_GATE CG-6 is an "approach direction" criterion, and the simulation's own relative velocity is the approach velocity. So the physical value is read from the state **before** the first contact step: the previous step's state, or the promoted state if contact occurs in the first step.
+
+**Values.**
+
+| case | as run (post-impulse) | approach |
+|---|---|---|
+| rx_behind_standing | 18.1° | 0.8° |
+| rx_facing_front | 3.9° | 0.0° |
+| rx_side_standing | **74.3° (fail)** | 0.0° |
+
+Source: `diagnostics/cg6_prestep_and_discontinuity_location.json`.
+
+**Effect.** No class count or representative changes. rx_side_standing still fails the retained 10 mm criterion (10.8 mm), and the other two keep their verdicts.
+
+**Records.** The as-run values stay in `scan_rev2_rx.json`. This erratum was written after the scan results were seen and is labelled as such. Reported in `PI1_REV2_RESULTS.md` §5.2.

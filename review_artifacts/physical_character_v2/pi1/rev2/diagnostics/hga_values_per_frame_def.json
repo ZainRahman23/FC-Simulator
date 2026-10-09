@@ -1,0 +1,631 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6)",
+ "cases": {
+  "sl_win": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 64,
+   "windowEnd": 71,
+   "hg": [
+    {
+     "k": 71,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.1898,
+     "P5": 3.75,
+     "P14": 0.304,
+     "P15": 3.931,
+     "P16": 0.0626,
+     "P17": 1.563
+    },
+    {
+     "k": 70,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.2816,
+     "P5": 0,
+     "P14": 0.192,
+     "P15": 1.448,
+     "P16": 0.0608,
+     "P17": 1.589
+    },
+    {
+     "k": 69,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.4929,
+     "P5": 0,
+     "P14": 0.19,
+     "P15": 1.468,
+     "P16": 0.0604,
+     "P17": 1.565
+    },
+    {
+     "k": 68,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.2649,
+     "P5": 0,
+     "P14": 0.098,
+     "P15": 1.288,
+     "P16": 0.0188,
+     "P17": 0.56
+    },
+    {
+     "k": 67,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ],
+     "HGA": 0.0407,
+     "P5": 0,
+     "P14": 0.091,
+     "P15": 1.203,
+     "P16": 0.0206,
+     "P17": 0.594
+    },
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ],
+     "HGA": 0.0426,
+     "P5": 0,
+     "P14": 0.084,
+     "P15": 1.14,
+     "P16": 0.0221,
+     "P17": 0.626
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.0505,
+     "P5": 0,
+     "P14": 0.075,
+     "P15": 1.16,
+     "P16": 0.0228,
+     "P17": 0.642
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.0823,
+     "P5": 0,
+     "P14": 0.066,
+     "P15": 1.097,
+     "P16": 0.0228,
+     "P17": 0.636
+    }
+   ],
+   "pass": false,
+   "reasons": []
+  },
+  "sl_early": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": -1,
+   "windowEnd": 104,
+   "hg": [],
+   "pass": false,
+   "reasons": []
+  },
+  "sl_late": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": -1,
+   "windowEnd": 157,
+   "hg": [],
+   "pass": false,
+   "reasons": []
+  },
+  "sl_from_behind": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 75,
+   "windowEnd": 85,
+   "hg": [
+    {
+     "k": 85,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ],
+     "HGA": 0.0411,
+     "P5": 0,
+     "P14": 0.086,
+     "P15": 1.101,
+     "P16": 0.0217,
+     "P17": 0.618
+    },
+    {
+     "k": 84,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ],
+     "HGA": 0.0472,
+     "P5": 0,
+     "P14": 0.078,
+     "P15": 1.141,
+     "P16": 0.0226,
+     "P17": 0.638
+    },
+    {
+     "k": 83,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.0632,
+     "P5": 0,
+     "P14": 0.069,
+     "P15": 1.096,
+     "P16": 0.0228,
+     "P17": 0.638
+    },
+    {
+     "k": 82,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.1048,
+     "P5": 0,
+     "P14": 0.061,
+     "P15": 1,
+     "P16": 0.0226,
+     "P17": 0.626
+    },
+    {
+     "k": 81,
+     "pass": false,
+     "fails": [
+      "HGT_extension"
+     ],
+     "HGA": 0.0293,
+     "P5": 0,
+     "P14": 0.054,
+     "P15": 0.655,
+     "P16": 0.0216,
+     "P17": 0.6
+    },
+    {
+     "k": 80,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.3367,
+     "P5": 0,
+     "P14": 0.045,
+     "P15": 5.362,
+     "P16": 0.0203,
+     "P17": 0.464
+    },
+    {
+     "k": 79,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.4219,
+     "P5": 0,
+     "P14": 0.041,
+     "P15": 0.783,
+     "P16": 0.0179,
+     "P17": 0.544
+    },
+    {
+     "k": 78,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.3204,
+     "P5": 0,
+     "P14": 0.036,
+     "P15": 9.467,
+     "P16": 0.0158,
+     "P17": 0.744
+    },
+    {
+     "k": 77,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.2129,
+     "P5": 0,
+     "P14": 0.029,
+     "P15": 0.45,
+     "P16": 0.0124,
+     "P17": 0.554
+    },
+    {
+     "k": 76,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.594,
+     "P5": 0,
+     "P14": 0.031,
+     "P15": 0.924,
+     "P16": 0.009,
+     "P17": 0.742
+    },
+    {
+     "k": 75,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "P15_angVel",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 1.0706,
+     "P5": 0,
+     "P14": 0.037,
+     "P15": 2.992,
+     "P16": 0.0055,
+     "P17": 0.382
+    }
+   ],
+   "pass": false,
+   "reasons": []
+  },
+  "sl_left": {
+   "cat": "other",
+   "finalClass": "NEGLIGIBLE",
+   "trigger": 64,
+   "windowEnd": 73,
+   "hg": [
+    {
+     "k": 73,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.479,
+     "P5": 5.34,
+     "P14": 0.659,
+     "P15": 8.713,
+     "P16": 0.0636,
+     "P17": 1.65
+    },
+    {
+     "k": 72,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.4544,
+     "P5": 2.98,
+     "P14": 0.188,
+     "P15": 1.783,
+     "P16": 0.0559,
+     "P17": 1.317
+    },
+    {
+     "k": 71,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.4877,
+     "P5": 4.69,
+     "P14": 0.379,
+     "P15": 4.908,
+     "P16": 0.0499,
+     "P17": 1.18
+    },
+    {
+     "k": 70,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.4087,
+     "P5": 0,
+     "P14": 0.157,
+     "P15": 0.919,
+     "P16": 0.0412,
+     "P17": 0.997
+    },
+    {
+     "k": 69,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.7117,
+     "P5": 0,
+     "P14": 0.146,
+     "P15": 1.12,
+     "P16": 0.0349,
+     "P17": 0.79
+    },
+    {
+     "k": 68,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.265,
+     "P5": 0,
+     "P14": 0.097,
+     "P15": 1.289,
+     "P16": 0.0188,
+     "P17": 0.56
+    },
+    {
+     "k": 67,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ],
+     "HGA": 0.0409,
+     "P5": 0,
+     "P14": 0.091,
+     "P15": 1.203,
+     "P16": 0.0206,
+     "P17": 0.594
+    },
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ],
+     "HGA": 0.0424,
+     "P5": 0,
+     "P14": 0.084,
+     "P15": 1.138,
+     "P16": 0.0221,
+     "P17": 0.626
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.0505,
+     "P5": 0,
+     "P14": 0.075,
+     "P15": 1.164,
+     "P16": 0.0228,
+     "P17": 0.643
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGA_comVsAuth",
+      "HGT_extension"
+     ],
+     "HGA": 0.0823,
+     "P5": 0,
+     "P14": 0.066,
+     "P15": 1.095,
+     "P16": 0.0228,
+     "P17": 0.636
+    }
+   ],
+   "pass": false,
+   "reasons": []
+  },
+  "sl_loose": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 135,
+   "windowEnd": 144,
+   "hg": [
+    {
+     "k": 144,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.2025,
+     "P5": 0,
+     "P14": 0.141,
+     "P15": 8.629,
+     "P16": 0.0191,
+     "P17": 0.854
+    },
+    {
+     "k": 143,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.1128,
+     "P5": 0,
+     "P14": 0.172,
+     "P15": 2.75,
+     "P16": 0.0288,
+     "P17": 0.834
+    },
+    {
+     "k": 142,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.5587,
+     "P5": 0,
+     "P14": 0.175,
+     "P15": 6.723,
+     "P16": 0.0359,
+     "P17": 1.272
+    },
+    {
+     "k": 141,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.0533,
+     "P5": 0,
+     "P14": 0.171,
+     "P15": 2.361,
+     "P16": 0.0416,
+     "P17": 1.219
+    },
+    {
+     "k": 140,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.1371,
+     "P5": 0,
+     "P14": 0.159,
+     "P15": 2.522,
+     "P16": 0.0445,
+     "P17": 1.351
+    },
+    {
+     "k": 139,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.0649,
+     "P5": 0,
+     "P14": 0.138,
+     "P15": 2.475,
+     "P16": 0.0441,
+     "P17": 1.361
+    },
+    {
+     "k": 138,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.4611,
+     "P5": 0,
+     "P14": 0.111,
+     "P15": 2.374,
+     "P16": 0.0413,
+     "P17": 1.307
+    },
+    {
+     "k": 137,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.717,
+     "P5": 0,
+     "P14": 0.081,
+     "P15": 7.261,
+     "P16": 0.0359,
+     "P17": 0.757
+    },
+    {
+     "k": 136,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.3037,
+     "P5": 0,
+     "P14": 0.066,
+     "P15": 6.032,
+     "P16": 0.0276,
+     "P17": 0.995
+    },
+    {
+     "k": 135,
+     "pass": false,
+     "fails": [
+      "HGA_comVsAuth"
+     ],
+     "HGA": 0.0876,
+     "P5": 0,
+     "P14": 0.047,
+     "P15": 0.64,
+     "P16": 0.0184,
+     "P17": 0.828
+    }
+   ],
+   "pass": false,
+   "reasons": []
+  }
+ }
+}
