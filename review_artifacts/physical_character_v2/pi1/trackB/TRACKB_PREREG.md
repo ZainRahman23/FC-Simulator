@@ -182,4 +182,19 @@ Preregistered separately before it runs, under the earlier approval: small varia
 
 ## 9. Amendments
 
-None at freezing.
+### A1 (before any v1.3 code or fixture run): inscribed foot / toe capsule placement
+
+**The finding** (the first profile run, `charcollide_profile.mjs` before A1). The §2.3 placement fails inscription:
+- **Heel:** the heel-end sphere sits r ahead of the rig's heel point (footwear minimum z) and r above the stud plane. It protrudes **3.8 mm** at the V2 boot's rounded back (lateral-posterior, mid-height).
+- **Toe:** the tip-end sphere sits on the stud plane, under the toe box. The V2 boot's toe spring lifts the toe-box bottom by ≈ 10 mm at the tip, so the sphere protrudes **10.0 mm**.
+- **Bisection:** §2.3's bisection is ill-posed with that placement. Shrinking r moves the centre into the rounded corner, so the bisection returned r = 0 for the heel and toe.
+
+No fixture had been run and no outcome seen.
+
+**The amended rule.** CORRECTION §1 requires the capsules to be inscribed in the physical colliders. Under A1, for each capsule end:
+1. the end plane is unchanged: heel-end z = −heelBack + r_h,design; MTP-end z = z_MTP; tip-end z = tip − r_t,design, with the §2.3 design radii from the sections;
+2. the centre lies on the foot's centre line (x = 0) in that plane, at the height y that maximises the inscribed radius. A concentric sphere is inscribed (all 2,000 samples inside the boot pieces' union, tolerance 0.5 mm), so for a fixed centre the radius bisection is monotone. y is searched on a 0.5 mm grid over the section;
+3. the end radius = that maximum, capped at the design radius;
+4. if the cone band between the two end spheres protrudes, both end radii are scaled by one common factor, by monotone bisection with the centres fixed.
+
+**Effect.** Where a section's bottom is flat at the sole, this reproduces the frozen "r above the sole". At the toe it places the centre above the physical (sprung) toe-box bottom, as the frozen text says ("r_t above the toe sole"). Thigh / shank are unchanged.
