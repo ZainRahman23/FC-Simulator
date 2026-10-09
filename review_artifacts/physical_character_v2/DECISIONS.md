@@ -2855,3 +2855,22 @@ Not pushed.
 - CHARCOLLIDE-1, PM-1, the rebaseline, the gate rerun and PI-1 are **not started**.
 - Options 1 – 4 are in the report.
 - **Awaiting user.**
+
+## 2026-10-09 — Option 1 (Track A: time-boxed toe / contact-solver investigation) + Option 4 (Track B: character-derived colliders + pose-compatible F0 promotion for PI-1) approved (`sources/2026-10-09_user_decision_trackA_toe_solver_trackB_pose_compatible_pi1.md`)
+
+**Not allowed:** adopting F1; weakening any frozen energy / integrity criterion; changing global Jolt settings to make the toe pass.
+
+**Track A.** A preregistered, time-boxed investigation.
+- **Aim:** find the exact contact-impulse mechanism by which contact-lambda warm starting injects energy on the separate light toe.
+- **Fixes:** only mechanism-driven candidates, preferably local, for example invalidating stale contact warm-start data when the toe's manifold topology changes. A global or out-of-leaf change is a new versioned engine configuration with its own preregistration.
+- **Close-out:** if no clean local fix emerges, close Track A as an engine / configuration limitation and keep the rigid foot.
+
+**Track B.**
+- CHARCOLLIDE-1 as approved.
+- A preregistered pose-compatibility gate for the rigid F0 foot, frozen before any case selection.
+- A rebaseline with a natural search for near miss / recoverable / fall cases. The gate is reported on each candidate's predicted promotion frame, with no geometry or timing moved to reach a compatible pose.
+- Then the existing compatibility gate. PI-1 runs with F0 only under that restriction, then the robustness check, then a stop.
+
+**Separation:** the tracks must not contaminate each other. F1 never enters a running PI-1 battery.
+
+**Conclusions to report separately:** A (toe fixable?), B (PI-1 with pose-compatible F0?), C (what stays blocked if A fails and B passes).
