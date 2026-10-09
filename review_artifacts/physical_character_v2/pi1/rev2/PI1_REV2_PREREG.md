@@ -208,4 +208,13 @@ Preregistered separately before it runs: small timing / location / body-geometry
 
 ## 11. Amendments
 
-None at freezing.
+### A1 (before any scan output): which contacts the correspondence criteria compare
+
+**The question.** Several candidates have more than one gameplay contact. rx_free_leg, for example: a CORRECTION on foot_L at 50.25, then the class-deciding STUMBLE on toe_R at 59.75.
+
+**The decision.** As in PI1_COMPAT_GATE §1, the criteria apply to the **decisive** gameplay contact: the first contact whose reaction equals the case's final class.
+
+**Mechanics.**
+- **The physical counterpart:** the first physical runner ↔ stand-in contact at or after t_dec − 1 tick. If there is none, CG-1 / 3 / 4 / 6 fail.
+- **The selector window (§3) is unchanged.** It ends before the **first** predicted contact, so promotion always precedes the first interaction.
+- **Also reported, not gating:** the earliest gameplay contact vs the earliest physical contact.
