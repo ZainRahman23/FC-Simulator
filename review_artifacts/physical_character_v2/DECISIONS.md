@@ -2715,3 +2715,30 @@ Not pushed.
 - **V2:** preserved; nothing deleted, simplified or rewritten.
 - **Next slice designed:** PI-1, one runner promoted into the Tackled-Player V1 slide-contact pair (`rx_free_leg` CORRECTION, `rx_planted_leg` FALL SIDE) plus a miss control. Tackler = dynamic proxy. Offline record-driven V2 consumer. Decisions D-1 … D-5 awaiting the user.
 - **Not done:** no slide-tackle implementation, no gait experiment, no TD2C / E2.
+
+## 2026-10-09 — PI-1 approved with D-1 … D-5 (D-2 modified: no B tether in the fall); preregistration FROZEN (6ef7e1e); STOPPED at the D-1 body check before any PI-1 physics (`pi1/PI1_STOP_D1_BODY_CHECK.md`; approval `sources/2026-10-09_user_approval_pi1_with_decisions.md`)
+
+- **Frozen protocol** (`pi1/PI1_PREREGISTRATION.md`):
+  - baseline f5f6076; cases near miss → recover → fall;
+  - V2 runner body from the Vinícius record;
+  - AIR export with OFF / FULL / LOCO presentation modes;
+  - predictor δ 0.25 m within 0.10 s on the current state; one declared state write at promotion;
+  - dynamic 78 kg slide proxy;
+  - B at 2 Hz for recover, fully released at the authoritative fall transition;
+  - reconciliation without cross-fade (10 mm / 0.20 m/s compatibility); fall handoff state; fall sensitivity tests;
+  - the user's stop conditions.
+- **Ran:**
+  - AIR export: 3 cases × 4 modes.
+  - Baseline reproduces: CORRECTION J 4.26 / FALL SIDE J 116.93, both at tick 50, foot_L.
+  - `rx_miss` off = +0.91 m (minimum surface distance 0.108 m).
+  - Gameplay hashes identical across modes (NT-1, NT-4); export repeat identical (DT-4).
+- **D-1 body check FAILED:**
+  - G0 0.6a / 0.6b / 0.10a: the record's hip (0.305 m) and shoulder (0.494 m) joint spacing is outside anatomical bands.
+  - G0 0.4c / 0.6e: these checks do not recognise profile overrides. Realised geometry = record within 1e-7 m.
+  - **G1 isoSelfCol 1.4d:** boot↔boot transient self-penetration 24.6 mm vs ≤ 10 mm (V2-REF 3.0 mm) in the 13 m/s leg-into-leg swing. A genuine integrity failure of this variant.
+- **Record finding:** at the fall case's contact tick, the presentation's left foot is already lifting off, while the simulation's contact model calls it weight-bearing (its stride model uses LEG_REF 0.865, not the character's legs).
+- **No PI-1 physics code written or run.**
+- **Awaiting user:**
+  - (1) accept the record body with recorded exceptions (amendment 1; self-penetration > 10 mm in any PI-1 run reported as an integrity failure) — recommended; or
+  - (2) anatomical joint spacing (expected promotion pop vs the rig); or
+  - (3) fix the rig spacing first (out of scope).

@@ -1,0 +1,229 @@
+{
+ "runner": {
+  "id": "PI1-runner-vinicius",
+  "H": 1.76,
+  "M": 73,
+  "kind": "morphology-variant",
+  "overrides": {
+   "ankleH": 0.0386364,
+   "kneeH": 0.2651623,
+   "hipH": 0.5122814,
+   "hipHalf": 0.0866456,
+   "shoulderHalf": 0.1403375,
+   "sjcH": 0.8175175,
+   "armScale": 1.0578941
+  },
+  "record": "assets/characters/outfield/vinicius/rig.json @ f5f6076 (identity 176 cm / 73 kg)"
+ },
+ "g0": {
+  "runner": {
+   "pass": false,
+   "failed": [
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "value": "stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H",
+     "limit": "exact"
+    },
+    {
+     "id": "0.6a",
+     "name": "inter-HJC distance",
+     "value": "0.1733 H = 0.305 m",
+     "limit": "0.09–0.11 H"
+    },
+    {
+     "id": "0.6b",
+     "name": "inter-SJC distance within ±10 % of the spec value",
+     "value": "0.2807 H = 0.494 m",
+     "limit": "0.218 H ± 10 %"
+    },
+    {
+     "id": "0.6e",
+     "name": "segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm)",
+     "value": "leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876",
+     "limit": "exact"
+    },
+    {
+     "id": "0.10a",
+     "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
+     "value": "bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
+     "limit": "within tolerance"
+    }
+   ],
+   "n": 47,
+   "totals": {
+    "mass": 73.91
+   },
+   "landmarks": {
+    "legLength": 0.8336151999999999,
+    "segLen": {
+     "head": 0.2455508328546812,
+     "UPT": 0.1725628948879954,
+     "MPT": 0.21785180930499712,
+     "LPT": 0.14729006318207924,
+     "upperArm": 0.3012610175917289,
+     "forearm": 0.2875721960611142,
+     "hand": 0.09218565749523261,
+     "thigh": 0.43492961599999996,
+     "shank": 0.398685584,
+     "foot": 0.2609167145318782
+    },
+    "hipHalf": 0.152496256,
+    "shoulderHalf": 0.24699400000000002,
+    "yA": 0.088000064,
+    "yK": 0.48668564799999997,
+    "yH": 0.9216152639999999,
+    "ySJC": 1.4588308
+   }
+  },
+  "V2-REF": {
+   "pass": true,
+   "failed": [],
+   "n": 47,
+   "totals": {
+    "mass": 78.91000000000001
+   },
+   "landmarks": {
+    "legLength": 0.86632,
+    "segLen": {
+     "head": 0.25392188397472715,
+     "UPT": 0.17844572085008614,
+     "MPT": 0.22527857553130384,
+     "LPT": 0.15231131533601378,
+     "upperArm": 0.2944824813325675,
+     "forearm": 0.2811016657093624,
+     "hand": 0.09011143021252153,
+     "thigh": 0.42769999999999997,
+     "shank": 0.43862000000000007,
+     "foot": 0.26981160252728315
+    },
+    "hipHalf": 0.09100000000000001,
+    "shoulderHalf": 0.19838,
+    "yA": 0.09098,
+    "yK": 0.5296000000000001,
+    "yH": 0.9573,
+    "ySJC": 1.4723600000000001
+   }
+  }
+ },
+ "g1": {
+  "runner": {
+   "upright": {
+    "hash": "8affd7f9",
+    "pass": true,
+    "failed": []
+   },
+   "leanF": {
+    "hash": "56c0bdc8",
+    "pass": true,
+    "failed": []
+   },
+   "leanL": {
+    "hash": "f539512f",
+    "pass": true,
+    "failed": []
+   },
+   "singleLeg": {
+    "hash": "c79175e6",
+    "pass": true,
+    "failed": []
+   },
+   "drop1m": {
+    "hash": "de04a8b1",
+    "pass": true,
+    "failed": []
+   },
+   "sideFirst": {
+    "hash": "7da45f1e",
+    "pass": true,
+    "failed": []
+   },
+   "awkward": {
+    "hash": "6a6b55ab",
+    "pass": true,
+    "failed": []
+   },
+   "flatSupine": {
+    "hash": "67df0256",
+    "pass": true,
+    "failed": []
+   },
+   "isoMomentum": {
+    "hash": "90282f6b",
+    "pass": true,
+    "failed": []
+   },
+   "isoSelfCol": {
+    "hash": "ec629b1f",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.4d",
+      "name": "self-penetration between allowed pairs (transient)",
+      "value": "24.59 mm",
+      "limit": "≤ 10 mm"
+     }
+    ]
+   }
+  },
+  "V2-REF": {
+   "upright": {
+    "hash": "c3316738",
+    "pass": true,
+    "failed": []
+   },
+   "leanF": {
+    "hash": "4e16b54a",
+    "pass": true,
+    "failed": []
+   },
+   "leanL": {
+    "hash": "7cf326fb",
+    "pass": true,
+    "failed": []
+   },
+   "singleLeg": {
+    "hash": "b9159e28",
+    "pass": true,
+    "failed": []
+   },
+   "drop1m": {
+    "hash": "492b326f",
+    "pass": true,
+    "failed": []
+   },
+   "sideFirst": {
+    "hash": "cb3d0d14",
+    "pass": true,
+    "failed": []
+   },
+   "awkward": {
+    "hash": "ac12adca",
+    "pass": true,
+    "failed": []
+   },
+   "flatSupine": {
+    "hash": "00d782d4",
+    "pass": true,
+    "failed": []
+   },
+   "isoMomentum": {
+    "hash": "a52c081d",
+    "pass": true,
+    "failed": []
+   },
+   "isoSelfCol": {
+    "hash": "739e16f1",
+    "pass": true,
+    "failed": []
+   }
+  }
+ },
+ "verdict": {
+  "g0": false,
+  "g1": false,
+  "g1NewFailuresVsRef": [
+   "isoSelfCol:1.4d"
+  ]
+ }
+}

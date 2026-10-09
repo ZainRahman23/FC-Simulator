@@ -1,0 +1,169 @@
+{
+ "summary": {
+  "rx_miss": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0,
+    "off": 0.91
+   },
+   "OFFNP": {
+    "gameplayHash": "7c1a7ecc",
+    "contact": null,
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "feac3774e118f84f"
+   },
+   "OFF": {
+    "gameplayHash": "7c1a7ecc",
+    "contact": null,
+    "firstPredTick": 44,
+    "minSurfM": 0.1078,
+    "sha256": "16fe874e91cf7ef8"
+   },
+   "FULL": {
+    "gameplayHash": "7c1a7ecc",
+    "contact": null,
+    "firstPredTick": 44,
+    "minSurfM": 0.1078,
+    "sha256": "605186223f04776c"
+   },
+   "LOCO": {
+    "gameplayHash": "7c1a7ecc",
+    "contact": null,
+    "firstPredTick": 44,
+    "minSurfM": 0.1078,
+    "sha256": "7725fa58dcd08f5a"
+   }
+  },
+  "rx_free_leg": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0,
+    "off": 0
+   },
+   "OFFNP": {
+    "gameplayHash": "d3703246",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 4.26,
+     "family": null
+    },
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "02ce88ae35a330df"
+   },
+   "OFF": {
+    "gameplayHash": "d3703246",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 4.26,
+     "family": null
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.1077,
+    "sha256": "a842b6fa83faf797"
+   },
+   "FULL": {
+    "gameplayHash": "d3703246",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 4.26,
+     "family": null
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.1077,
+    "sha256": "086e16a680903907"
+   },
+   "LOCO": {
+    "gameplayHash": "d3703246",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 4.26,
+     "family": null
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.1077,
+    "sha256": "285e13b1a2a52db2"
+   }
+  },
+  "rx_planted_leg": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0
+   },
+   "OFFNP": {
+    "gameplayHash": "7f691b4f",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 116.93,
+     "family": "SIDE"
+    },
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "da616fda01e6dc45"
+   },
+   "OFF": {
+    "gameplayHash": "7f691b4f",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 116.93,
+     "family": "SIDE"
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.128,
+    "sha256": "301d664970237672"
+   },
+   "FULL": {
+    "gameplayHash": "7f691b4f",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 116.93,
+     "family": "SIDE"
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.128,
+    "sha256": "97d26e8a8487622f"
+   },
+   "LOCO": {
+    "gameplayHash": "7f691b4f",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 116.93,
+     "family": "SIDE"
+    },
+    "firstPredTick": 41,
+    "minSurfM": -0.128,
+    "sha256": "e8521ec3ac16af0a"
+   }
+  }
+ },
+ "errors": []
+}
