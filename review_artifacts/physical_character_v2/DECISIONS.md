@@ -3099,3 +3099,37 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 **New measured cost:** the presented legs depart further from the simulation's collision legs (p50 63 – 112 mm vs 21 – 93), because the shared law's vertical path is not physically realisable.
 
 **No V2 body limitation beyond B7.** No PI-1 revision. **Awaiting user.**
+
+## 2026-10-10 — Promotion locomotion-carrier investigation (read-only; `promotion_carrier/PROMOTION_CARRIER_INVESTIGATION.md`; source d91080d; NOT implemented, awaiting approval)
+
+**Preserved unchanged:** LC-1, its evidence, defects and replay; V1.3, V2, Jolt, collision geometry, PI-1 / REV2 criteria and gameplay. No physics was stepped. Three read-only scripts read LC-1's official exports and drift series.
+
+**Diagnosis: the 1 – 6 ticks are not a translation failure.**
+- At the first incoherent tick (3 m/s, 30 REV2-plant promotions), the body is still on the track: root ≤ 9.5 mm, COM ≤ 16.9 mm, |Δv| ≤ 0.25 m/s, tilt ≤ 3.3°.
+- The legs are not: legs vs gameplay legs 107 – 207 mm, slip to 39 mm.
+- B's torque axis runs at 0.95 – 1.0 of its cap.
+- **Counterfactual: a perfect translation carrier with the current legs** fails NM-2 at t = 1 in 33 / 33 promotions and CG-4 at t = 1 – 3, because a carried planted foot slides 50 mm per tick.
+- The LC-1 presented legs exceed 0.10 m from the gameplay legs within 1 – 6 ticks in every window. So the reference must be the simulation's own leg law.
+- The authoritative acceleration is exactly 0 before contact in rx_miss, rx_free_leg and rx_planted_leg. At contact it carries the simulation's own response (14.9 / 65.9 m/s²).
+
+**Options:**
+- **1. SLP-2 A field.** The correct translation term, reusable with two adaptations: 2-D, and gated to ordinary locomotion so the simulation's contact ΔV is never applied twice. It applies nothing in the PI-1 cases.
+- **2. Finite root / COM servo** and **3. capped velocity tracking.** Both read physical state. Each is a second recovery authority that erases collision momentum at its cap (27.5 N·s per 0.1 s at 275 N vs 20 – 32 N·s REV2 exchanges). **Reject.**
+- **4a–4e.** No carrier, late promotion, global gravity, kinematic root / partial promotion, foot weld or frictionless stance: each fails or is rejected.
+- **4f.** Configuration feed-forward along the simulation's leg law: the missing piece.
+
+**Recommended: authoritative-trajectory feed-forward.**
+- A, gated.
+- Posture targets on the simulation's law, with the promotion offset decaying over 0.10 s.
+- The target rate, plus target inverse dynamics for unsupported limbs.
+- B unchanged in caps / gains / release; retargeted to the reference pelvis; vertical released.
+- Every carrier term is blind to the physical state.
+
+**Proposed slice (3 cases, 3 m/s, LC-1 exports):**
+- Cases and promotion frames: rx_miss k47 (lead 12.5 ticks), rx_free_leg k39 (10.25), rx_planted_leg k38 (9.75).
+- Criteria: existing frozen criteria, plus K0 law integrity, K1 blindness, K2 retained cancellation test, K4 determinism, K5 CPU; K3 reported.
+- Stop rules: no added gait or contact control.
+
+**Main risk:** within-stance contact non-neutrality (the SLP-2 mode), bounded by SLP-2's first-stance evidence.
+
+**Decisions D-1 … D-8 requested. Awaiting user.**
