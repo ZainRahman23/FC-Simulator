@@ -1,0 +1,242 @@
+{
+ "what": "dev",
+ "modes": [
+  "identity",
+  "cold",
+  "topology"
+ ],
+ "runs": [
+  {
+   "body": "F1",
+   "key": "drop1m",
+   "mode": "none",
+   "hash": "3334b509",
+   "maxRiseJ": 3.6067,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=3.607 J at t = 0.458 s",
+    "1.2b=3.607 J above the running minimum (t = 0.458 s)"
+   ],
+   "turfPenRestMm": 0.898,
+   "turfPenMaxMm": 1.174,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 0,
+   "wallMs": 1467
+  },
+  {
+   "body": "F1",
+   "key": "drop1m",
+   "mode": "identity",
+   "hash": "3334b509",
+   "maxRiseJ": 3.6067,
+   "maxRiseAt": 0.4583333333333333,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=3.607 J at t = 0.458 s",
+    "1.2b=3.607 J above the running minimum (t = 0.458 s)"
+   ],
+   "turfPenRestMm": 0.898,
+   "turfPenMaxMm": 1.174,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 2400,
+   "wallMs": 1856
+  },
+  {
+   "body": "F1",
+   "key": "drop1m",
+   "mode": "cold",
+   "hash": "bb2297d9",
+   "maxRiseJ": 0,
+   "maxRiseAt": null,
+   "pass12ab": true,
+   "failed": [],
+   "turfPenRestMm": 0.691,
+   "turfPenMaxMm": 1.458,
+   "selfPenRestMm": 0.174,
+   "engineTicks": 0,
+   "fires": 2400,
+   "filterSteps": 2400,
+   "wallMs": 1871
+  },
+  {
+   "body": "F1",
+   "key": "drop1m",
+   "mode": "topology",
+   "hash": "6dee6903",
+   "maxRiseJ": 0.0001,
+   "maxRiseAt": 4.545833333333333,
+   "pass12ab": true,
+   "failed": [],
+   "turfPenRestMm": 0.661,
+   "turfPenMaxMm": 1.458,
+   "selfPenRestMm": 0.038,
+   "engineTicks": 0,
+   "fires": 615,
+   "filterSteps": 2400,
+   "wallMs": 1709
+  },
+  {
+   "body": "F1",
+   "key": "leanF",
+   "mode": "none",
+   "hash": "ff679626",
+   "maxRiseJ": 0.741,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=0.741 J at t = 0.467 s",
+    "1.2b=0.741 J above the running minimum (t = 0.467 s)"
+   ],
+   "turfPenRestMm": 0.059,
+   "turfPenMaxMm": 1.326,
+   "selfPenRestMm": 0.57,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 0,
+   "wallMs": 1585
+  },
+  {
+   "body": "F1",
+   "key": "leanF",
+   "mode": "identity",
+   "hash": "ff679626",
+   "maxRiseJ": 0.741,
+   "maxRiseAt": 0.4666666666666667,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=0.741 J at t = 0.467 s",
+    "1.2b=0.741 J above the running minimum (t = 0.467 s)"
+   ],
+   "turfPenRestMm": 0.059,
+   "turfPenMaxMm": 1.326,
+   "selfPenRestMm": 0.57,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 2400,
+   "wallMs": 2281
+  },
+  {
+   "body": "F1",
+   "key": "leanF",
+   "mode": "cold",
+   "hash": "e8e60e60",
+   "maxRiseJ": 0.5693,
+   "maxRiseAt": 0.46249999999999997,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=0.569 J at t = 0.462 s",
+    "1.2b=0.569 J above the running minimum (t = 0.462 s)"
+   ],
+   "turfPenRestMm": 3.494,
+   "turfPenMaxMm": 3.494,
+   "selfPenRestMm": 2.898,
+   "engineTicks": 0,
+   "fires": 2400,
+   "filterSteps": 2400,
+   "wallMs": 2286
+  },
+  {
+   "body": "F1",
+   "key": "leanF",
+   "mode": "topology",
+   "hash": "bb3374b0",
+   "maxRiseJ": 1.6107,
+   "maxRiseAt": 0.46249999999999997,
+   "pass12ab": false,
+   "failed": [
+    "1.2a=1.611 J at t = 0.462 s",
+    "1.2b=1.611 J above the running minimum (t = 0.462 s)",
+    "1.4b=5.0743 mm (foot_L)",
+    "1.4e=5.0305 mm"
+   ],
+   "turfPenRestMm": 5.074,
+   "turfPenMaxMm": 5.088,
+   "selfPenRestMm": 5.03,
+   "engineTicks": 0,
+   "fires": 1463,
+   "filterSteps": 2400,
+   "wallMs": 2062
+  },
+  {
+   "body": "F1",
+   "key": "singleLeg",
+   "mode": "none",
+   "hash": "c3de8700",
+   "maxRiseJ": 0,
+   "maxRiseAt": 4.541666666666667,
+   "pass12ab": true,
+   "failed": [
+    "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+   ],
+   "turfPenRestMm": 0.346,
+   "turfPenMaxMm": 1.85,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 0,
+   "wallMs": 1390
+  },
+  {
+   "body": "F1",
+   "key": "singleLeg",
+   "mode": "identity",
+   "hash": "c3de8700",
+   "maxRiseJ": 0,
+   "maxRiseAt": 4.541666666666667,
+   "pass12ab": true,
+   "failed": [
+    "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+   ],
+   "turfPenRestMm": 0.346,
+   "turfPenMaxMm": 1.85,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 0,
+   "filterSteps": 2400,
+   "wallMs": 1843
+  },
+  {
+   "body": "F1",
+   "key": "singleLeg",
+   "mode": "cold",
+   "hash": "d894599d",
+   "maxRiseJ": 0.0001,
+   "maxRiseAt": 5.629166666666666,
+   "pass12ab": true,
+   "failed": [
+    "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+   ],
+   "turfPenRestMm": 0.391,
+   "turfPenMaxMm": 2.013,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 2400,
+   "filterSteps": 2400,
+   "wallMs": 1890
+  },
+  {
+   "body": "F1",
+   "key": "singleLeg",
+   "mode": "topology",
+   "hash": "a9c8c5d2",
+   "maxRiseJ": 0.0001,
+   "maxRiseAt": 4.754166666666666,
+   "pass12ab": true,
+   "failed": [
+    "1.4f=1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°"
+   ],
+   "turfPenRestMm": 0.423,
+   "turfPenMaxMm": 1.92,
+   "selfPenRestMm": 0,
+   "engineTicks": 0,
+   "fires": 655,
+   "filterSteps": 2400,
+   "wallMs": 1637
+  }
+ ]
+}
