@@ -42,7 +42,7 @@ export class SLPSim extends G2Sim {
       dist.J = C === "D1" ? d.impulses.small : C === "D3" ? d.impulses.large : d.impulses.moderate;
       if (C === "D2c") { dist.vi = 1.5 * d.impulses.moderate / 20; dist.ts = dist.td - 0.20 / dist.vi; } }
     this.S = { o, d, g, traj, sched, sup, drv, auth: new Authority(d.omega, d.R), p0, com0, c0p0: V.sub(com0, p0), points, dist, M, pel, caps,
-      Wsup: 0, Wpulse: 0, Jpulse: [0, 0, 0], pulseLast: null, imp: null, impLog: [], fallT: null, fallWhy: null, alphaMin: 1, alphaLog: [], supImpulse: [0, 0, 0], supT: [0, 0, 0],
+      Wsup: 0, Wpulse: 0, Jpulse: [0, 0, 0], WA: 0, JA: [0, 0, 0], pulseLast: null, imp: null, impLog: [], fallT: null, fallWhy: null, alphaMin: 1, alphaLog: [], supImpulse: [0, 0, 0], supT: [0, 0, 0],
       E0: this.A.E[this.A.E.length - 1], resPrev: 0, sumPos: 0, res: 0, satTicks: 0, ticks: 0, fz20: { on: [true, true], ev: [[], []] }, trace: [], hashes: {}, cpuSupport: 0, maxCapExcess: 0, stPrev: null, last: null, q0: Q.norm(st[pel].rot) };
     this.cpu2.slp = 0;
   }
@@ -50,6 +50,8 @@ export class SLPSim extends G2Sim {
     this.aplan = this.act.compute(this.st, this.up.ev, cmd, this.dt, init); const t2 = now(); this.cpu2.act += t2 - t1; (this.cpuSamples || (this.cpuSamples = [])).push(t2 - t0); }
   _disturb() { const S = this.S, t = this.n * this.dt, dt = this.dt, t0 = now();
     S.sup.setAlpha(S.auth.alpha);
+    S.Alast = null; if (S.drv.v2) { const aT = S.traj.az(t + dt / 2), al = S.auth.alpha;   // SLP-2 A: uniform whole-body field α·m_i·a_T (horizontal), state-independent, before every step
+      if (aT !== 0 && al > 0) { const per = []; for (let i = 0; i < this.spec.bodies.length; i++) { const F = [0, 0, al * this.spec.bodies[i].mass * aT]; this.w.addForceAt(i, F, this.st[i].com); per.push(F); } S.Alast = { aT, al, per, Fz: al * S.M * aT }; } }
     if (S.drv.v1b) { const r = S.drv.ref1b(this.n + 1), ffY = S.auth.alpha * (S.M * (G + r.ay) - r.sumFy);   // SLP-1b B4: track the scheduled-force motion; vertical feed-forward = the scheduled residual
       S.sup.setTargets(V.add(V.sub(S.traj.pos(t + dt), S.p0), r.dx), V.add(S.traj.vel(t + dt), r.dv), ffY); S.ffY = ffY; }
     else { const sh = S.drv.shares, ffY = S.auth.alpha * Math.max(0, 1 - sh[0] - sh[1]) * S.M * G; S.sup.setTargets(V.sub(S.traj.pos(t + dt), S.p0), S.traj.vel(t + dt), ffY); S.ffY = ffY; }
@@ -82,6 +84,7 @@ export class SLPSim extends G2Sim {
     let sat = false; const tol = 1e-6; for (let i = 0; i < 3; i++) { if (S.sup.alpha > 0.01 && (F[i] >= L.lin[i][1] - tol || F[i] <= L.lin[i][0] + tol || Math.abs(T[i]) >= L.rot[i][1] - tol)) sat = true;   // at a limit (per axis)
       S.maxCapExcess = Math.max(S.maxCapExcess, F[i] - L.lin[i][1], L.lin[i][0] - F[i], Math.abs(T[i]) - L.rot[i][1]); }
     if (prev) { const vm = V.sc(V.add(prev[pel].v, st[pel].v), 0.5), wm = V.sc(V.add(prev[pel].w, st[pel].w), 0.5); S.Wsup += (V.dot(F, vm) + V.dot(T, wm)) * dt; S.supImpulse = V.add(S.supImpulse, lam.lin); }
+    if (S.Alast && prev) { for (let i = 0; i < st.length; i++) { const vm = V.sc(V.add(prev[i].v, st[i].v), 0.5); S.WA += V.dot(S.Alast.per[i], vm) * dt; } S.JA = V.add(S.JA, [0, 0, S.Alast.Fz * dt]); }
     if (S.pulseLast && prev) { const P = S.pulseLast, b0 = prev[P.body], b1 = st[P.body], at = P.at, vp = (b) => V.add(b.v, V.cross(b.w, V.sub(at, b.com))), vm = V.sc(V.add(vp(b0), vp(b1)), 0.5); S.Wpulse += V.dot(P.F, vm) * dt; S.Jpulse = V.add(S.Jpulse, V.sc(P.F, dt)); }
     // whole-body COM, DCM error, FALLEN, authority (α for the NEXT step)
     let c = [0, 0, 0], v = [0, 0, 0]; st.forEach((b, i) => { c = V.add(c, V.sc(b.com, B[i].mass)); v = V.add(v, V.sc(b.v, B[i].mass)); }); c = V.sc(c, 1 / S.M); v = V.sc(v, 1 / S.M);
@@ -98,14 +101,18 @@ export class SLPSim extends G2Sim {
     if (S.imp) { const r = this._impRead(); S.imp.vLast = r.v; for (const ct of this.lastContacts || []) if (ct.a === IMP_IDX || ct.b === IMP_IDX) { const bi = ct.a === IMP_IDX ? ct.b : ct.a; if (bi >= 0) S.imp.contacts.push({ t: +t.toFixed(5), body: B[bi].name, depthMm: +(ct.depth * 1000).toFixed(3), pt: (ct.a === IMP_IDX ? ct.pts2 : ct.pts)[0].map(x => +x.toFixed(4)) }); } }
     // energy ledger: E (+ impactor KE) − E0 vs W_act + W_support + W_pulse − passive damping; Σ+ of the residual's positive increments
     let E = this.A.E[this.A.E.length - 1]; if (S.imp) { const r = this._impRead(); E += 0.5 * S.imp.mass * V.dot(r.v, r.v); } else if (S.dist && S.dist.impactor) { const ve = S.dist.impactor.vEnd; E += 0.5 * S.dist.impactor.massKg * V.dot(ve, ve); }
-    const res = E - S.E0 - (this.ledger.Wact + S.Wsup + S.Wpulse - this.ledger.damping); if (S.ticks > 0 && res > S.resPrev) S.sumPos += res - S.resPrev; S.resPrev = res; S.res = res;
+    const res = E - S.E0 - (this.ledger.Wact + S.Wsup + S.Wpulse + S.WA - this.ledger.damping); if (S.ticks > 0 && res > S.resPrev) S.sumPos += res - S.resPrev; S.resPrev = res; S.res = res;
     const hm = this._hardMin(), satAct = (this.actRes || []).filter(r => r.sat).length;
-    S.ticks++; if (sat) S.satTicks++; S.last = { t, alpha, mhat: S.auth.mhat, xiErr, F, T, sat, c, v, Fz, hm, satAct, Fg, pitchDeg, rollDeg, pe1b };
+    let D2 = null; if (S.drv.v2) { const r2 = S.drv.ref1b(this.n), cR = V.add(V.add(pr, S.c0p0), r2.dx), vR = V.add(vr, r2.dv), Lw = this.A.L[this.A.L.length - 1], Pw = this.A.P[this.A.P.length - 1];   // SLP-2 D = S − R (report-only)
+      D2 = { Dx: V.sub(c, cR), Dv: V.sub(v, vR), L: Lw, P: Pw, wPel: st[pel].w.slice(), yawDeg: rvec[1] * R2D, AFz: S.Alast ? S.Alast.Fz : 0 }; }
+    S.ticks++; if (sat) S.satTicks++; S.last = { t, alpha, mhat: S.auth.mhat, xiErr, F, T, sat, c, v, Fz, hm, satAct, Fg, pitchDeg, rollDeg, pe1b, D2 };
     if (this.n % 4 === 0) { const pe = V.sub(st[pel].com, pr), qr = S.q0, qd = Q.mul(Q.conj(qr), Q.norm(st[pel].rot)), angR = 2 * Math.atan2(Math.hypot(qd[0], qd[1], qd[2]), Math.abs(qd[3])) * R2D;
       const r5 = (x) => +x.toFixed(5), ph = S.drv.legs.map(l => (l.phase ? (l.phase.stance ? "S" : "W") : "-"));
-      S.trace.push([r5(t), r5(alpha), r5(S.auth.mhat), r5(xiErr), F.map(r5), T.map(r5), sat ? 1 : 0, pe.map(r5), r5(angR), c.map(r5), v.map(r5), Fz.map(x => +x.toFixed(2)), ph.join(""), S.drv.legs.map(l => +l.ikErr.toExponential(2)), satAct, +hm.m.toFixed(3), r5(res), +S.drv.dTau0.toFixed(3), S.drv.shares.map(r5), r5(S.ffY || 0), st[S.points["thorax-left"].body].com.map(r5), Fg.map(f => f.map(x => +x.toFixed(2))), +pitchDeg.toFixed(3), +rollDeg.toFixed(3), pe1b ? pe1b.map(r5) : null]); }
+      S.trace.push([r5(t), r5(alpha), r5(S.auth.mhat), r5(xiErr), F.map(r5), T.map(r5), sat ? 1 : 0, pe.map(r5), r5(angR), c.map(r5), v.map(r5), Fz.map(x => +x.toFixed(2)), ph.join(""), S.drv.legs.map(l => +l.ikErr.toExponential(2)), satAct, +hm.m.toFixed(3), r5(res), +S.drv.dTau0.toFixed(3), S.drv.shares.map(r5), r5(S.ffY || 0), st[S.points["thorax-left"].body].com.map(r5), Fg.map(f => f.map(x => +x.toFixed(2))), +pitchDeg.toFixed(3), +rollDeg.toFixed(3), pe1b ? pe1b.map(r5) : null,
+      D2 ? [+D2.AFz.toFixed(3), D2.Dx.map(r5), D2.Dv.map(r5), D2.L.map(r5), D2.wPel.map(r5), +D2.yawDeg.toFixed(3), D2.P.map(r5)] : null]); }
     if (this.n % 240 === 0) S.hashes[String(Math.round(t))] = (this.h >>> 0).toString(16).padStart(8, "0");
     S.stPrev = st.map(b => ({ pos: b.pos.slice(), rot: b.rot.slice(), com: b.com.slice(), v: b.v.slice(), w: b.w.slice() })); }
 }
 export const SLP_TRACE_COLS = ["t", "alpha", "mhat", "xiErrM", "supF_N[x,y,z]", "supT_Nm[x,y,z]", "supSat", "pelvisPosErrM[x,y,z]", "pelvisRotFromInitialDeg", "com", "comV", "footFzN[L,R]", "phase[LR]", "ikErr[L,R]", "actSatAxes", "legHardMarginMinDeg", "energyResidualJ", "dTau0Nm", "shares[L,R]", "supFFyN", "thoraxCom",
-  "groundF_N[L[x,y,z],R[x,y,z]]", "pelvisPitchDeg(about +x, world, vs q0)", "pelvisRollDeg(about +z)", "pelvisErrVsScheduledRefM[x,y,z] (1b: p_ref + δx)"];
+  "groundF_N[L[x,y,z],R[x,y,z]]", "pelvisPitchDeg(about +x, world, vs q0)", "pelvisRollDeg(about +z)", "pelvisErrVsScheduledRefM[x,y,z] (1b: p_ref + δx)",
+  "slp2[AFzN, Dx_com_vs_R[x,y,z], Dv_com_vs_R[x,y,z], L_aboutCom[x,y,z], omegaPelvis[x,y,z], pelvisYawDeg, P_linear[x,y,z]]"];

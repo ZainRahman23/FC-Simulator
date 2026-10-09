@@ -82,7 +82,7 @@ export class SupportedDriver {
     this.legs = [0, 1].map(n => ({ prevStance: true, planted: { ...this.foot0[n] }, seg: null, segT0: 0, tTD: -Infinity, tLO: null, prevT: null, prevOK: false, ikErr: 0, phaseKey: null }));
     this.tauPrev = null; this.dTau0 = 0; this.fallen = false; this.events = []; this.shares = [0.5, 0.5]; this.wSt = [1, 1]; this.target = [null, null];
     // SLP-1b (review_artifacts/physical_character_v2/slp1/SLP1b_AMENDMENT.md, frozen 1137244): version "1b" only; version "1" (SLP-1) is untouched by everything below
-    this.v1b = cfg.version === "1b";
+    this.v1b = cfg.version === "1b" || cfg.version === "2"; this.v2 = cfg.version === "2";   // SLP-2 (slp2/SLP2_PREREGISTRATION.md, frozen 03455b8): 1b's B1 / B3 / B4 legs and reference, WITHOUT B2 and without the −a_T term (A carries a_T)
     if (this.v1b) { const S = cfg.sched; this.flight = S.tc < S.T / 2 - 1e-12; this.Fpk = Math.PI * this.M * G * (S.T / 2) / (2 * S.tc);
       let c0 = [0, 0, 0]; st0.forEach((b, i) => { c0 = V.add(c0, V.sc(b.com, B[i].mass)); }); c0 = V.sc(c0, 1 / this.M); this.c0p0 = V.sub(c0, st0[C.pelvis].com); this._precompute1b(); }
   }
@@ -103,7 +103,7 @@ export class SupportedDriver {
         if (ph[n].initial) cp = V.add(this.foot0[n].pos, Q.rot(this.foot0[n].rot, this.sole[n].c));
         else { const fl = this.tdTarget(n, ph[n].tTD).flat, u = (t - ph[n].tTD) / S.tc; cp = V.add(fl.pos, Q.rot(fl.rot, this.sole[n][u < 0.2 ? "heel" : u <= 0.6 ? "c" : "toe"])); }
         const h = xc[1] - cp[1]; Fs = V.add(Fs, V.sc([(xc[0] - cp[0]) / h, 1, (xc[2] - cp[2]) / h], fy[n])); }
-      sumFy[i] = fy[0] + fy[1]; const a = [Fs[0] / M, Fs[1] / M - G - traj.ah(t), Fs[2] / M - traj.az(t)]; for (let k = 0; k < 3; k++) da[k][i] = a[k]; }
+      sumFy[i] = fy[0] + fy[1]; const a = [Fs[0] / M, Fs[1] / M - G - traj.ah(t), Fs[2] / M - (this.v2 ? 0 : traj.az(t))]; for (let k = 0; k < 3; k++) da[k][i] = a[k]; }
     const hw = Math.max(1, Math.round(S.T / 4 / dt)), detrend = (f) => { const P = new Float64Array(f.length + 1); for (let i = 0; i < f.length; i++) P[i + 1] = P[i] + f[i];
       const out = new Float64Array(f.length); for (let i = 0; i < f.length; i++) { const a = Math.max(0, i - hw), b = Math.min(f.length - 1, i + hw); out[i] = f[i] - (P[b + 1] - P[a]) / (b - a + 1); } return out; };
     const integ = (f) => { const o = new Float64Array(f.length); for (let i = 1; i < f.length; i++) o[i] = o[i - 1] + f[i - 1] * dt; return o; };
@@ -116,7 +116,7 @@ export class SupportedDriver {
   pitched(n, pose, th, pivot) { if (!(th > 1e-9)) return { pos: pose.pos.slice(), rot: pose.rot.slice() }; const pw = V.add(pose.pos, Q.rot(pose.rot, this.sole[n][pivot])), a = Q.rot(pose.rot, [1, 0, 0]), other = pivot === "heel" ? "toe" : "heel";
     const cand = [1, -1].map(sg => { const q = Q.axis(a, sg * th), p2 = V.add(pw, Q.rot(q, V.sub(pose.pos, pw))), r2 = Q.norm(Q.mul(q, pose.rot)); return { pos: p2, rot: r2, oy: V.add(p2, Q.rot(r2, this.sole[n][other]))[1] }; });
     const b = cand[0].oy >= cand[1].oy ? cand[0] : cand[1]; return { pos: b.pos, rot: b.rot }; }   // the sign that raises the other sole edge (the pivot stays on the turf)
-  tdTarget(n, tTD) { const { traj, sched } = this.cfg, tm = tTD + sched.tc / 2, zc = this.hip0z + traj.s(tm) - (this.v1b ? traj.az(tm) / (this.cfg.omega * this.cfg.omega) : 0);   // 1b B2: shift back by a_ref / ω²
+  tdTarget(n, tTD) { const { traj, sched } = this.cfg, tm = tTD + sched.tc / 2, zc = this.hip0z + traj.s(tm) - (this.v1b && !this.v2 ? traj.az(tm) / (this.cfg.omega * this.cfg.omega) : 0);   // 1b B2: shift back by a_ref / ω² (not in SLP-2)
     const flat = this.flatAt(n, zc); return { flat, pose: this.pitched(n, flat, this.cfg.pitchTD, "heel") }; }
   stancePose(n, t) { const L = this.legs[n]; if (!isFinite(L.tTD)) return { pose: { pos: L.planted.pos.slice(), rot: L.planted.rot.slice() }, cp: V.add(L.planted.pos, Q.rot(L.planted.rot, this.sole[n].c)) };
     const u = (t - L.tTD) / this.cfg.sched.tc, P = L.planted; let pose, cp;

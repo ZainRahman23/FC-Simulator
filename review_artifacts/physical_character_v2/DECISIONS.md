@@ -2675,3 +2675,16 @@ Not pushed.
   - The legs explain the motion: plants, leg motion, pelvis orientation, contacts. They are not required to generate the net forward impulse.
   - A collision must not silently change a decided football outcome, and the locomotion authority must not erase a collision response.
 - **Next:** the SLP-2 architecture draft only (`slp2/SLP2_ARCHITECTURE_DRAFT.md`), then stop for approval. No TD2C / E2, autonomous gait, polish, tackles, recovery or running development.
+
+## 2026-10-09 — SLP-2 STOPPED at calibration (user stop rules: support budget exceeded; B carrying ordinary locomotion); matrix not run (`slp2/SLP2_RESULTS.md`; approval `sources/2026-10-09_user_approval_slp2.md`)
+
+- **Frozen:** 03455b8; no amendments. Production-contract clarification recorded in §0 (calibration experiment; D report-only; not the gameplay contract).
+- **A** (uniform whole-body field α·m_i·a_T) delivered exactly the authoritative momentum in every run (94.69 / 236.7 / 473.46 N·s = M·v). It read no state, applied no torque, wrote nothing, and cost ≈ 3 – 7 µs per step.
+- **Legs (C) braked net −202 to −369 N·s:**
+  - impulsive braking at touchdown;
+  - stance braking growing with the lag (inverted-pendulum positive feedback);
+  - no flight launch in jog / run (B carried 300 – 650 N in flights).
+- **B** absorbed the braking (+216 … +395 N·s) until its forward cap, then pitch collapse.
+- **A9** (mean |B| ≤ 25 % of caps) and **A10** failed at all speeds and frequencies. Walk falls or is dragged; jog falls at 2.38 – 2.60 s; run at 2.85 – 2.93 s. 9 / 9 deterministic pairs.
+- **Classification:** A / B separation validated for translation; failure = C contact realisation under decision 3; no V2 body limit. SLP-1 / 1b preserved (hashes reproduced). CPU 819 – 944 vs 892 µs per step.
+- **Awaiting user:** C contact quality (LOC-1-type), a restricted refinement of decision 3, or ending the SLP series.
