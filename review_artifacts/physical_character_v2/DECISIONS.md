@@ -2874,3 +2874,23 @@ Not pushed.
 **Separation:** the tracks must not contaminate each other. F1 never enters a running PI-1 battery.
 
 **Conclusions to report separately:** A (toe fixable?), B (PI-1 with pose-compatible F0?), C (what stays blocked if A fails and B passes).
+
+## 2026-10-09 — Track A CLOSED as an engine-solver limitation; rigid foot (F0) retained; nothing adopted (`pi1/track_a/TRACK_A_RESULTS.md`; prereg 34cb41a, mechanism + frozen candidates c94ff5d, results dc9b35f)
+
+**Method.** Instrumented with Jolt's own contact cache (StateRecorder decoding) and single-step replays from saved state, which reproduce each event step bit-for-bit.
+
+**Mechanism.**
+- **Root cause:** the separate 0.198 kg toe makes the foot's support subsystem ill-conditioned for the sequential-impulse solver. Toe contact effective mass is 0.027 – 0.155 kg, coupled to a 1 kg foot that carries body weight.
+- **Effect:** at 150 iterations, rapid load-path changes do not converge. Warm starting is the carrier: the non-converged remainder of a stale initial iterate appears as positive work.
+- **drop1m:** the stale impulse is the rear foot's previous landing impulse (202 N·s offered vs ≈ 15 needed).
+- **leanF:** the step is unconverged even at 4,800 iterations.
+
+**Candidates.**
+- Cold-start the foot / toe contacts every step: fails leanF and resting contact.
+- Reset on a change of the loaded contact set (the user's suggestion): fails leanF (+1.611 J) and resting 1.4b / 1.4e.
+- More iterations: excluded.
+- None frozen, so no validation battery ran.
+
+**Conclusion A.** Not fixable by any warm-start policy within the accepted Jolt configuration. The remaining routes are model-level versioned designs: a compliant toe joint, a direct / reduced-coordinate foot-chain solve, or a non-physiological toe mass. This is a solver-class limitation with light articulated contact links, not evidence against V2's anatomy, joint ranges or toe geometry.
+
+**Unchanged:** every criterion, F1, the accepted Jolt configuration and F0.
