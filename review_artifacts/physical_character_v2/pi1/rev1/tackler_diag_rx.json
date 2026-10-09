@@ -1,0 +1,604 @@
+{
+ "rx_free_leg": {
+  "finalClass": "STUMBLE",
+  "kp": 41,
+  "decisive": {
+   "t": 59.75,
+   "prim": "LEG",
+   "seg": "toe_R"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.004680502673054143,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 50.25,
+   "point": [
+    52.588129521349074,
+    33.87371399232786,
+    0.18568278823391848
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.001619633929106759,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 50.75,
+   "point": [
+    52.83481671460182,
+    33.87996250261133,
+    0.13718539140902763
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 112,
+   "b": 271
+  },
+  "sameSegment": true,
+  "dTicks": 0.5
+ },
+ "rx_planted_leg": {
+  "finalClass": "FALL",
+  "kp": 39,
+  "decisive": {
+   "t": 48.75,
+   "prim": "LEG",
+   "seg": "shin_L"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.0027159010632590297,
+   "prim": "LEG",
+   "seg": "shin_L",
+   "t": 48.75,
+   "point": [
+    52.59229183541494,
+    33.79926243382563,
+    0.11153561166822157
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.0019015418998657996,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 56.25,
+   "point": [
+    52.85428550469151,
+    33.8450729631683,
+    0.052928726926113875
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 129,
+   "b": 385
+  },
+  "sameSegment": false,
+  "dTicks": 7.5
+ },
+ "rx_square": {
+  "finalClass": "FALL",
+  "kp": 50,
+  "decisive": {
+   "t": 66,
+   "prim": "TUCK",
+   "seg": "foot_R"
+  },
+  "jump": {
+   "mm": 0.7,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 66.25
+  },
+  "gameplayFirst": {
+   "pen": 0.008149050911658642,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 61.5,
+   "point": [
+    53.47329477003766,
+    33.877603596045326,
+    0.11255185700514514
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.008149050911658642,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 61.5,
+   "point": [
+    53.47329477003766,
+    33.877603596045326,
+    0.11255185700514514
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 0
+  },
+  "sameSegment": true,
+  "dTicks": 0
+ },
+ "rx_glancing": {
+  "finalClass": "FALL",
+  "kp": 55,
+  "decisive": {
+   "t": 65.75,
+   "prim": "LEG",
+   "seg": "shin_L"
+  },
+  "jump": {
+   "mm": 4.6,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 66.25
+  },
+  "gameplayFirst": {
+   "pen": 0.013807050719580174,
+   "prim": "LEG",
+   "seg": "shin_L",
+   "t": 65.75,
+   "point": [
+    53.56702828805339,
+    33.832111516092226,
+    0.12558636307541637
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.013807050719580174,
+   "prim": "LEG",
+   "seg": "shin_L",
+   "t": 65.75,
+   "point": [
+    53.56702828805339,
+    33.832111516092226,
+    0.12558636307541637
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 0
+  },
+  "sameSegment": true,
+  "dTicks": 0
+ },
+ "rx_lateral": {
+  "finalClass": "FALL",
+  "kp": 41,
+  "decisive": {
+   "t": 57.25,
+   "prim": "THIGH",
+   "seg": "foot_L"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.0028233209550090066,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 50,
+   "point": [
+    54.93804708771544,
+    33.872548792700954,
+    0.07576458479337014
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.023319234870565184,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 51,
+   "point": [
+    55.17768829867449,
+    33.867877852390464,
+    0.10328152203314736
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 112
+  },
+  "sameSegment": true,
+  "dTicks": 1
+ },
+ "rx_rear_diag": {
+  "finalClass": "CORRECTION",
+  "kp": 38,
+  "decisive": {
+   "t": 45,
+   "prim": "LEG",
+   "seg": "toe_L"
+  },
+  "jump": {
+   "mm": 19.6,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.06318493923233454,
+   "prim": "LEG",
+   "seg": "toe_L",
+   "t": 45,
+   "point": [
+    54.10887108413604,
+    33.88919888848788,
+    0.13537134564133346
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.014882708943094167,
+   "prim": "LEG",
+   "seg": "shin_L",
+   "t": 52.75,
+   "point": [
+    55.05078887978557,
+    33.82792605043837,
+    0.120558577316489
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 347,
+   "b": 761
+  },
+  "sameSegment": false,
+  "dTicks": 7.75
+ },
+ "rx_front_diag": {
+  "finalClass": "FALL",
+  "kp": 49,
+  "decisive": {
+   "t": 61,
+   "prim": "TUCK",
+   "seg": "foot_L"
+  },
+  "jump": {
+   "mm": 12,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 59.25
+  },
+  "gameplayFirst": {
+   "pen": 0.0004500931805961894,
+   "prim": "TUCKSHIN",
+   "seg": "toe_L",
+   "t": 56.5,
+   "point": [
+    55.727951778436136,
+    33.88849485267296,
+    0.06774177735161904
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.0009273051236450003,
+   "prim": "TUCKSHIN",
+   "seg": "toe_L",
+   "t": 56.5,
+   "point": [
+    55.727951778436136,
+    33.88849485267296,
+    0.06774177735161904
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 1
+  },
+  "sameSegment": true,
+  "dTicks": 0
+ },
+ "rx_rear": {
+  "finalClass": "NEGLIGIBLE",
+  "kp": 30,
+  "decisive": {
+   "t": 52.75,
+   "prim": "TUCKSHIN",
+   "seg": "foot_R"
+  },
+  "jump": {
+   "mm": 21.8,
+   "prim": "LEG",
+   "end": "b",
+   "t": 36.25
+  },
+  "gameplayFirst": {
+   "pen": 0.05874703903640013,
+   "prim": "TUCKSHIN",
+   "seg": "toe_R",
+   "t": 52.25,
+   "point": [
+    52.01993532600201,
+    34.26632938528243,
+    0.07376989856196316
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.02407899557284289,
+   "prim": "TUCK",
+   "seg": "foot_R",
+   "t": 51.5,
+   "point": [
+    52.216615036789705,
+    34.22728088028837,
+    0.11891093424162344
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 175,
+   "b": 28
+  },
+  "sameSegment": false,
+  "dTicks": -0.75
+ },
+ "rx_standing": {
+  "finalClass": "STUMBLE",
+  "kp": 40,
+  "decisive": {
+   "t": 51.5,
+   "prim": "LEG",
+   "seg": "shin_R"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.009242163094222017,
+   "prim": "LEG",
+   "seg": "shin_R",
+   "t": 51.5,
+   "point": [
+    49.79200671499889,
+    33.96957527557004,
+    0.10804119243397065
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.005406196433473495,
+   "prim": "TUCK",
+   "seg": "foot_R",
+   "t": 63.5,
+   "point": [
+    49.78460531367442,
+    33.98308905699565,
+    0.018484137464459746
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 126,
+   "b": 331
+  },
+  "sameSegment": false,
+  "dTicks": 12
+ },
+ "rx_early_stance": {
+  "finalClass": "FALL",
+  "kp": 45,
+  "decisive": {
+   "t": 62.5,
+   "prim": "LEG",
+   "seg": "toe_R"
+  },
+  "jump": {
+   "mm": 0.9,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 63.25
+  },
+  "gameplayFirst": {
+   "pen": 0.011558762673136977,
+   "prim": "LEG",
+   "seg": "toe_L",
+   "t": 57.5,
+   "point": [
+    57.16716135965969,
+    33.88335247536647,
+    0.18787053793193495
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.0004466323476186307,
+   "prim": "LEG",
+   "seg": "toe_L",
+   "t": 57.25,
+   "point": [
+    57.107161343141705,
+    33.88393917796992,
+    0.19892720128225663
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 44,
+   "b": 102
+  },
+  "sameSegment": true,
+  "dTicks": -0.25
+ },
+ "rx_late_stance": {
+  "finalClass": "FALL",
+  "kp": 48,
+  "decisive": {
+   "t": 60.5,
+   "prim": "LEG",
+   "seg": "toe_R"
+  },
+  "jump": {
+   "mm": 1,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 61.25
+  },
+  "gameplayFirst": {
+   "pen": 0.02597163835764727,
+   "prim": "LEG",
+   "seg": "toe_L",
+   "t": 55.75,
+   "point": [
+    57.00466187323045,
+    33.88247203318275,
+    0.17344878344473003
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.025103657056104234,
+   "prim": "LEG",
+   "seg": "toe_L",
+   "t": 55.75,
+   "point": [
+    57.00466187323045,
+    33.88247203318275,
+    0.17344878344473003
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 5,
+   "b": 13
+  },
+  "sameSegment": true,
+  "dTicks": 0
+ },
+ "rx_facing_front": {
+  "finalClass": "FALL",
+  "kp": 39,
+  "decisive": {
+   "t": 52.25,
+   "prim": "LEG",
+   "seg": "shin_L"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.007765679259944092,
+   "prim": "LEG",
+   "seg": "shin_L",
+   "t": 52.25,
+   "point": [
+    49.97105818151993,
+    33.79298855082544,
+    0.1221101245768707
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.001119560264485439,
+   "prim": "TUCK",
+   "seg": "foot_R",
+   "t": 60.5,
+   "point": [
+    50.11046367179392,
+    33.78202455579074,
+    0.038644640482108125
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 136,
+   "b": 395
+  },
+  "sameSegment": false,
+  "dTicks": 8.25
+ },
+ "rx_side_standing": {
+  "finalClass": "FALL",
+  "kp": 41,
+  "decisive": {
+   "t": 60.5,
+   "prim": "THIGH",
+   "seg": "shin_R"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.00832092106171084,
+   "prim": "THIGH",
+   "seg": "shin_R",
+   "t": 60.5,
+   "point": [
+    49.79356419745294,
+    33.97192760366349,
+    0.1303586862217767
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.017385118846443795,
+   "prim": "LEG",
+   "seg": "shin_R",
+   "t": 52,
+   "point": [
+    49.792313604938236,
+    33.970038783729656,
+    0.11243868294633669
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 112
+  },
+  "sameSegment": false,
+  "dTicks": -8.5
+ },
+ "rx_behind_standing": {
+  "finalClass": "STUMBLE",
+  "kp": 40,
+  "decisive": {
+   "t": 51.5,
+   "prim": "LEG",
+   "seg": "shin_R"
+  },
+  "jump": {
+   "mm": 17.9,
+   "prim": "LEG",
+   "end": "b",
+   "t": 43.5
+  },
+  "gameplayFirst": {
+   "pen": 0.00924216309429933,
+   "prim": "LEG",
+   "seg": "shin_R",
+   "t": 51.5,
+   "point": [
+    49.96957527557004,
+    34.2079932850011,
+    0.10804119243398314
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.005406196433780555,
+   "prim": "TUCK",
+   "seg": "foot_R",
+   "t": 63.5,
+   "point": [
+    49.98308905699557,
+    34.21539468632558,
+    0.018484137464459746
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 126,
+   "b": 331
+  },
+  "sameSegment": false,
+  "dTicks": 12
+ }
+}

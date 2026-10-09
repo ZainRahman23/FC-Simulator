@@ -1,0 +1,144 @@
+{
+ "sl_win": {
+  "finalClass": "FALL",
+  "kp": 64,
+  "decisive": {
+   "t": 72.75,
+   "prim": "LEG",
+   "seg": "foot_R"
+  },
+  "jump": {
+   "mm": 19.6,
+   "prim": "LEG",
+   "end": "b",
+   "t": 66.5
+  },
+  "gameplayFirst": {
+   "pen": 0.014729224464804708,
+   "prim": "LEG",
+   "seg": "foot_R",
+   "t": 72.75,
+   "point": [
+    61.96544562011104,
+    29.36348458376732,
+    0.04607690100372325
+   ]
+  },
+  "rigidStandInFirst": null,
+  "legEndpointDiffAtContactMm": {
+   "a": 465,
+   "b": 1040
+  },
+  "sameSegment": false,
+  "dTicks": null
+ },
+ "sl_from_behind": {
+  "finalClass": "FALL",
+  "kp": 75,
+  "decisive": {
+   "t": 86.25,
+   "prim": "LEG",
+   "seg": "foot_R"
+  },
+  "jump": {
+   "mm": 21.3,
+   "prim": "LEG",
+   "end": "b",
+   "t": 79.25
+  },
+  "gameplayFirst": {
+   "pen": 0.018170258866382946,
+   "prim": "LEG",
+   "seg": "foot_R",
+   "t": 86.25,
+   "point": [
+    63.783725709484806,
+    34.27243505519646,
+    0.07252416761722669
+   ]
+  },
+  "rigidStandInFirst": null,
+  "legEndpointDiffAtContactMm": {
+   "a": 222,
+   "b": 725
+  },
+  "sameSegment": false,
+  "dTicks": null
+ },
+ "sl_left": {
+  "finalClass": "NEGLIGIBLE",
+  "kp": 64,
+  "decisive": {
+   "t": 74.5,
+   "prim": "LEG",
+   "seg": "foot_L"
+  },
+  "jump": {
+   "mm": 19.6,
+   "prim": "LEG",
+   "end": "b",
+   "t": 66.5
+  },
+  "gameplayFirst": {
+   "pen": 0.0001702237840354448,
+   "prim": "LEG",
+   "seg": "foot_L",
+   "t": 74.5,
+   "point": [
+    61.84368453291393,
+    38.68875820058484,
+    0.025843013660955993
+   ]
+  },
+  "rigidStandInFirst": null,
+  "legEndpointDiffAtContactMm": {
+   "a": 470,
+   "b": 1050
+  },
+  "sameSegment": false,
+  "dTicks": null
+ },
+ "sl_loose": {
+  "finalClass": "FALL",
+  "kp": 135,
+  "decisive": {
+   "t": 145.25,
+   "prim": "TRUNK",
+   "seg": "pelvis"
+  },
+  "jump": {
+   "mm": 3.7,
+   "prim": "TRUNK",
+   "end": "b",
+   "t": 146.25
+  },
+  "gameplayFirst": {
+   "pen": 0.044447409992891374,
+   "prim": "TRUNK",
+   "seg": "thigh_R",
+   "t": 145.25,
+   "point": [
+    62.62422649288061,
+    29.386076937268054,
+    0.8785311579704285
+   ]
+  },
+  "rigidStandInFirst": {
+   "pen": 0.044447409992891374,
+   "prim": "TRUNK",
+   "seg": "thigh_R",
+   "t": 145.25,
+   "point": [
+    62.62422649288061,
+    29.386076937268054,
+    0.8785311579704285
+   ]
+  },
+  "legEndpointDiffAtContactMm": {
+   "a": 0,
+   "b": 0
+  },
+  "sameSegment": true,
+  "dTicks": 0
+ }
+}
