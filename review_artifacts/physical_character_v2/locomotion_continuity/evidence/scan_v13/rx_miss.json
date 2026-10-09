@@ -1,0 +1,184 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_miss": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": 51,
+   "windowEnd": 59,
+   "hg": [
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "NM"
+   ],
+   "handoff": {
+    "k": 54,
+    "pass": true,
+    "fails": [],
+    "P5": 0,
+    "HGA": 0.1278,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": 0,
+      "physLowestMm": 30.5,
+      "contact": false,
+      "mode": "swing"
+     },
+     "R": {
+      "physVsPresDeg": 0,
+      "pitchDeg": 0,
+      "physLowestMm": 75.7,
+      "contact": false,
+      "mode": "release"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.0025,
+    "P9": {
+     "L": 30.5,
+     "R": 75.7
+    },
+    "P11": 0,
+    "P13": 62.9,
+    "P14": 0.029,
+    "P15": 0.079,
+    "P16": 0.011,
+    "P17": 0.393
+   },
+   "kp": 54,
+   "leadTicks": 5.5,
+   "leadS": 0.0917,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0.1278,
+    "shiftMs": 0.1278,
+    "P16": 0.011,
+    "P17": 0.393
+   },
+   "AH1": {
+    "omegaAuthRadS": 0,
+    "omegaRootPresRadS": 0,
+    "correctionRadS": 0,
+    "visibleMs": 0,
+    "withinVisibility": true,
+    "applied": false
+   },
+   "promotionWrites": 28,
+   "PR2v2": {
+    "mm": 60.18,
+    "joint": "ankle_R",
+    "velocityPartMm": 59.93,
+    "velocityPartJoint": "ankle_R",
+    "pass": false
+   },
+   "standIn": {
+    "trackErrBeforeContactMm": 8.67,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 0.4,
+    "discontinuityPass": true
+   },
+   "CG8": {
+    "minSepMm": 0,
+    "pair": "forearm_L↔thigh_L",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 64,
+     "body": "foot_R",
+     "seg": "LEG"
+    },
+    "gameplayFirst": null,
+    "fallTau": null,
+    "Breleased": null
+   },
+   "criteria": {
+    "NM": {
+     "physicalContacts": 4,
+     "simContact": false,
+     "predictorFires": true,
+     "pass": false
+    },
+    "CG-8": {
+     "minSepMm": 0,
+     "pair": "forearm_L↔thigh_L",
+     "pass": true
+    }
+   },
+   "wouldPassPR2v2": false,
+   "cpuMs": 365
+  }
+ }
+}

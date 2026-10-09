@@ -1,0 +1,531 @@
+{
+ "summary": {
+  "sl_win": {
+   "params": {
+    "def": "sl_win"
+   },
+   "OFFNP": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "d035c4d52e215b1b"
+   },
+   "OFF": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "790facca78d7588a"
+   },
+   "FULL": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "4356d95d18248bd6"
+   },
+   "LOCO": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "04337b4faff152a5"
+   }
+  },
+  "sl_early": {
+   "params": {
+    "def": "sl_early"
+   },
+   "OFFNP": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "0cc64e3cce72f32d"
+   },
+   "OFF": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "8c69f9b39c5432e4"
+   },
+   "FULL": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "78f8c437ba88f2b4"
+   },
+   "LOCO": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "d17c05660dc71f99"
+   }
+  },
+  "sl_late": {
+   "params": {
+    "def": "sl_late"
+   },
+   "OFFNP": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "000e7878a7eb6da4"
+   },
+   "OFF": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "8e8bdaff2053128c"
+   },
+   "FULL": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "ac42cdb7c0ea68e6"
+   },
+   "LOCO": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "9b27e081308c8c63"
+   }
+  },
+  "sl_from_behind": {
+   "params": {
+    "def": "sl_from_behind"
+   },
+   "OFFNP": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "5ed5d2fde2f6c242"
+   },
+   "OFF": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "f668aefa09393462"
+   },
+   "FULL": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "271b9955450f4b87"
+   },
+   "LOCO": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "26f3daf70666d6d0"
+   }
+  },
+  "sl_left": {
+   "params": {
+    "def": "sl_left"
+   },
+   "OFFNP": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "af50bcfc42f96779"
+   },
+   "OFF": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "3d7cecde0bce5ad8"
+   },
+   "FULL": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "87871a212fe51d93"
+   },
+   "LOCO": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "88b57a36ac005aac"
+   }
+  },
+  "sl_loose": {
+   "params": {
+    "def": "sl_loose"
+   },
+   "OFFNP": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "878b8247c3f385ce"
+   },
+   "OFF": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "885387b4484c116d"
+   },
+   "FULL": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "49f9162e91264a54"
+   },
+   "LOCO": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "684a9dcbb380026c"
+   }
+  }
+ },
+ "errors": []
+}

@@ -1,0 +1,764 @@
+{
+ "prereg": "LC1_PREREG.md §4 (313280f)",
+ "limits": {
+  "v": 0.18,
+  "pos": 0.003,
+  "slip": 0.01,
+  "F": [
+   0,
+   4
+  ]
+ },
+ "records": {
+  "off/def/sl_win": {
+   "set": "def",
+   "cont": false,
+   "speed": 2.42,
+   "frames": [
+    10,
+    71
+   ],
+   "gameplayHash": "b8145794",
+   "LC1b": {
+    "h": {
+     "n": 62,
+     "p50": 0.1855,
+     "p90": 0.609,
+     "max": 1.2087,
+     "min": 0.0007
+    },
+    "v": {
+     "n": 62,
+     "p50": 0.4337,
+     "p90": 2.3746,
+     "max": 6.5672,
+     "min": 0.0016
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 54,
+     "p50": 0,
+     "p90": 0,
+     "max": 3.2,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 3,
+    "evaluated": 2,
+    "shortFlights": 1,
+    "maxResidMm": 12.68,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 62,
+     "p50": 0.1157,
+     "p90": 11.8608,
+     "max": 45.2828,
+     "min": -35.0502
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 0,
+    "maxMs": null,
+    "pass": null
+   },
+   "LC5a": {
+    "e": {
+     "n": 62,
+     "p50": 0.6249,
+     "p90": 1.8862,
+     "max": 3.3365,
+     "min": 0.0037
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 62,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    },
+    "pass": true
+   },
+   "LC5c": {
+    "flights": 2,
+    "maxDispMm": 58.47,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 62,
+     "p50": 91.2895,
+     "p90": 209.5842,
+     "max": 278.3444,
+     "min": 20.1256
+    },
+    "contactAgreement": 1,
+    "peakFbw": 45.2828,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -62.6,
+      71.8
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 62,
+     "p50": 0.3,
+     "p90": 0.4,
+     "max": 1.7,
+     "min": 0.1
+    }
+   }
+  },
+  "off/def/sl_early": {
+   "set": "def",
+   "cont": false,
+   "speed": 3,
+   "frames": [
+    10,
+    104
+   ],
+   "gameplayHash": "b8ba1e18",
+   "LC1b": {
+    "h": {
+     "n": 95,
+     "p50": 0.1855,
+     "p90": 0.669,
+     "max": 1.4184,
+     "min": 0.0007
+    },
+    "v": {
+     "n": 95,
+     "p50": 0.3759,
+     "p90": 2.2479,
+     "max": 6.5672,
+     "min": 0.0016
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 81,
+     "p50": 0,
+     "p90": 0,
+     "max": 3.2,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 5,
+    "evaluated": 4,
+    "shortFlights": 1,
+    "maxResidMm": 12.68,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 95,
+     "p50": 0.0971,
+     "p90": 13.9612,
+     "max": 45.2828,
+     "min": -35.0502
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 1,
+    "maxMs": 0.0143,
+    "pass": false
+   },
+   "LC5a": {
+    "e": {
+     "n": 95,
+     "p50": 0.6183,
+     "p90": 2.0524,
+     "max": 4.1516,
+     "min": 0.0021
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 95,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    },
+    "pass": true
+   },
+   "LC5c": {
+    "flights": 4,
+    "maxDispMm": 58.47,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 95,
+     "p50": 94.4454,
+     "p90": 237.9067,
+     "max": 301.805,
+     "min": 19.9494
+    },
+    "contactAgreement": 1,
+    "peakFbw": 45.2828,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -62.6,
+      72.3
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 95,
+     "p50": 0.3,
+     "p90": 0.4,
+     "max": 0.4,
+     "min": 0.1
+    }
+   }
+  },
+  "off/def/sl_late": {
+   "set": "def",
+   "cont": false,
+   "speed": 3,
+   "frames": [
+    10,
+    157
+   ],
+   "gameplayHash": "9f28be40",
+   "LC1b": {
+    "h": {
+     "n": 148,
+     "p50": 0.2096,
+     "p90": 0.669,
+     "max": 1.5459,
+     "min": 0.0007
+    },
+    "v": {
+     "n": 148,
+     "p50": 0.3871,
+     "p90": 2.1695,
+     "max": 6.5672,
+     "min": 0.0016
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 126,
+     "p50": 0,
+     "p90": 0,
+     "max": 3.2,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 8,
+    "evaluated": 6,
+    "shortFlights": 2,
+    "maxResidMm": 12.68,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 148,
+     "p50": 0.0846,
+     "p90": 13.9612,
+     "max": 45.2828,
+     "min": -35.0502
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 3,
+    "maxMs": 0.023,
+    "pass": false
+   },
+   "LC5a": {
+    "e": {
+     "n": 148,
+     "p50": 0.6564,
+     "p90": 2.1515,
+     "max": 4.9643,
+     "min": 0.0021
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 148,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    },
+    "pass": true
+   },
+   "LC5c": {
+    "flights": 6,
+    "maxDispMm": 58.47,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 148,
+     "p50": 95.6493,
+     "p90": 244.65,
+     "max": 322.6451,
+     "min": 19.9494
+    },
+    "contactAgreement": 1,
+    "peakFbw": 45.2828,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -62.6,
+      72.4
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 148,
+     "p50": 0.3,
+     "p90": 0.3,
+     "max": 1.3,
+     "min": 0.1
+    }
+   }
+  },
+  "off/def/sl_from_behind": {
+   "set": "def",
+   "cont": false,
+   "speed": 3,
+   "frames": [
+    10,
+    85
+   ],
+   "gameplayHash": "44054073",
+   "LC1b": {
+    "h": {
+     "n": 76,
+     "p50": 0.1855,
+     "p90": 0.6691,
+     "max": 1.2089,
+     "min": 0.0007
+    },
+    "v": {
+     "n": 76,
+     "p50": 0.3781,
+     "p90": 2.2478,
+     "max": 6.5672,
+     "min": 0.0016
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 65,
+     "p50": 0,
+     "p90": 0,
+     "max": 3.2,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 4,
+    "evaluated": 3,
+    "shortFlights": 1,
+    "maxResidMm": 12.68,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 76,
+     "p50": 0.1156,
+     "p90": 12.567,
+     "max": 45.2819,
+     "min": -35.0503
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 1,
+    "maxMs": 0.0143,
+    "pass": false
+   },
+   "LC5a": {
+    "e": {
+     "n": 76,
+     "p50": 0.6295,
+     "p90": 2.0341,
+     "max": 3.3364,
+     "min": 0.0039
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 76,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    },
+    "pass": true
+   },
+   "LC5c": {
+    "flights": 3,
+    "maxDispMm": 58.47,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 76,
+     "p50": 95.2698,
+     "p90": 234.049,
+     "max": 294.4029,
+     "min": 19.9455
+    },
+    "contactAgreement": 1,
+    "peakFbw": 45.2819,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -62.6,
+      71.8
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 76,
+     "p50": 0.3,
+     "p90": 0.4,
+     "max": 1.7,
+     "min": 0.1
+    }
+   }
+  },
+  "off/def/sl_left": {
+   "set": "def",
+   "cont": false,
+   "speed": 2.03,
+   "frames": [
+    10,
+    73
+   ],
+   "gameplayHash": "9bf15806",
+   "LC1b": {
+    "h": {
+     "n": 64,
+     "p50": 0.1855,
+     "p90": 0.6088,
+     "max": 1.2089,
+     "min": 0.0007
+    },
+    "v": {
+     "n": 64,
+     "p50": 0.6359,
+     "p90": 2.43,
+     "max": 6.5672,
+     "min": 0.0016
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 55,
+     "p50": 0,
+     "p90": 0,
+     "max": 3.2,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 3,
+    "evaluated": 2,
+    "shortFlights": 1,
+    "maxResidMm": 12.68,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 64,
+     "p50": 0.1082,
+     "p90": 12.5671,
+     "max": 45.282,
+     "min": -35.0503
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 0,
+    "maxMs": null,
+    "pass": null
+   },
+   "LC5a": {
+    "e": {
+     "n": 64,
+     "p50": 0.591,
+     "p90": 1.8862,
+     "max": 3.3365,
+     "min": 0.0039
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 64,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    },
+    "pass": true
+   },
+   "LC5c": {
+    "flights": 2,
+    "maxDispMm": 58.47,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 64,
+     "p50": 95.2698,
+     "p90": 209.5838,
+     "max": 278.351,
+     "min": 20.1218
+    },
+    "contactAgreement": 0.992,
+    "peakFbw": 45.282,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -62.6,
+      71.8
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 64,
+     "p50": 0.1,
+     "p90": 0.2,
+     "max": 0.3,
+     "min": 0.1
+    }
+   }
+  },
+  "off/def/sl_loose": {
+   "set": "def",
+   "cont": false,
+   "speed": 6,
+   "frames": [
+    10,
+    144
+   ],
+   "gameplayHash": "5f414c8a",
+   "LC1b": {
+    "h": {
+     "n": 135,
+     "p50": 0.2255,
+     "p90": 0.9269,
+     "max": 1.4622,
+     "min": 0.0014
+    },
+    "v": {
+     "n": 135,
+     "p50": 1.0422,
+     "p90": 3.5672,
+     "max": 8.0107,
+     "min": 0.0179
+    },
+    "pass": false
+   },
+   "LC3": {
+    "stances": 0,
+    "maxMm": null,
+    "pass": null,
+    "engageTravelMm": {
+     "n": 0,
+     "p50": null,
+     "p90": null,
+     "max": null,
+     "min": null
+    },
+    "v13LockedSlideMm": {
+     "n": 30,
+     "p50": 0,
+     "p90": 0,
+     "max": 0,
+     "min": 0
+    }
+   },
+   "LC4a": {
+    "flights": 10,
+    "evaluated": 9,
+    "shortFlights": 1,
+    "maxResidMm": 19.16,
+    "pass": false
+   },
+   "LC4b": {
+    "F": {
+     "n": 135,
+     "p50": -0.4073,
+     "p90": 22.83,
+     "max": 54.4135,
+     "min": -43.5769
+    },
+    "pass": false
+   },
+   "LC4c": {
+    "cycles": 4,
+    "maxMs": 0.1329,
+    "pass": false
+   },
+   "LC5a": {
+    "e": {
+     "n": 135,
+     "p50": 0.857,
+     "p90": 3.3617,
+     "max": 4.6221,
+     "min": 0.0487
+    },
+    "pass": false
+   },
+   "LC5b": {
+    "e": {
+     "n": 135,
+     "p50": 0,
+     "p90": 0,
+     "max": 2.2457,
+     "min": 0
+    },
+    "pass": false
+   },
+   "LC5c": {
+    "flights": 9,
+    "maxDispMm": 89.42,
+    "pass": false
+   },
+   "reported": {
+    "legVsSimMm": {
+     "n": 135,
+     "p50": 49.4178,
+     "p90": 218.4219,
+     "max": 366.0249,
+     "min": 11.7776
+    },
+    "contactAgreement": 0.741,
+    "peakFbw": 54.4135,
+    "pelvisOffsetMm": {
+     "x": [
+      0,
+      0
+     ],
+     "y": [
+      -77.9,
+      57.1
+     ],
+     "z": [
+      0,
+      0
+     ]
+    },
+    "cpuMs": {
+     "n": 135,
+     "p50": 0.2,
+     "p90": 0.2,
+     "max": 1.2,
+     "min": 0
+    }
+   }
+  }
+ }
+}

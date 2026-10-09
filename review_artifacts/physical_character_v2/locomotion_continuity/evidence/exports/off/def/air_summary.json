@@ -1,0 +1,283 @@
+{
+ "summary": {
+  "sl_win": {
+   "params": {
+    "def": "sl_win"
+   },
+   "OFF": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "06f82a8b33760b81"
+   },
+   "LOCO": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "f010e40862a30bec"
+   }
+  },
+  "sl_early": {
+   "params": {
+    "def": "sl_early"
+   },
+   "OFF": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "67451b8829597fee"
+   },
+   "LOCO": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "fb261cbb30c29a5a"
+   }
+  },
+  "sl_late": {
+   "params": {
+    "def": "sl_late"
+   },
+   "OFF": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "ea90cd38b03aa161"
+   },
+   "LOCO": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "7ebff83b1afc9576"
+   }
+  },
+  "sl_from_behind": {
+   "params": {
+    "def": "sl_from_behind"
+   },
+   "OFF": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "33f026445fb32e83"
+   },
+   "LOCO": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "cbb726c1437c20d6"
+   }
+  },
+  "sl_left": {
+   "params": {
+    "def": "sl_left"
+   },
+   "OFF": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "0bbcebc14732ccdc"
+   },
+   "LOCO": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "0385760b30e4a162"
+   }
+  },
+  "sl_loose": {
+   "params": {
+    "def": "sl_loose"
+   },
+   "OFF": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "30d22a24083f72cf"
+   },
+   "LOCO": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "11b2ee14658ba22d"
+   }
+  }
+ },
+ "errors": []
+}

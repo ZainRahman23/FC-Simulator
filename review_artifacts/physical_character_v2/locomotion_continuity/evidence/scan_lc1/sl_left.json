@@ -1,0 +1,115 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "sl_left": {
+   "cat": "other",
+   "finalClass": "NEGLIGIBLE",
+   "trigger": 64,
+   "windowEnd": 73,
+   "hg": [
+    {
+     "k": 73,
+     "pass": false,
+     "fails": [
+      "P12_clamp",
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 72,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 71,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P16_comVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 70,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 69,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 68,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 67,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 66,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 65,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 64,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [64, 73]: P12_clamp+P5_footDeg+P14_bodyVel+P15_angVel+P16_comVel+P17_angMom+HGAv2_shift+P9_footContact_L+P11_renderedBootPenMm+HGT_extension"
+   ]
+  }
+ }
+}

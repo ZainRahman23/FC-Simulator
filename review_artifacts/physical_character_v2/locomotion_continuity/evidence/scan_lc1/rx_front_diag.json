@@ -1,0 +1,79 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_front_diag": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 49,
+   "windowEnd": 55,
+   "hg": [
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [49, 55]: P14_bodyVel+P15_angVel+P17_angMom+HGAv2_shift+P5_footDeg"
+   ]
+  }
+ }
+}

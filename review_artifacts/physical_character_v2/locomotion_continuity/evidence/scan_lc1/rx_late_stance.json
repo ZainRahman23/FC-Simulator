@@ -1,0 +1,226 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_late_stance": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 48,
+   "windowEnd": 54,
+   "hg": [
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P16_comVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "P16_comVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "CG-4",
+    "CG-6"
+   ],
+   "handoff": {
+    "k": 52,
+    "pass": true,
+    "fails": [],
+    "P5": 0.88,
+    "HGA": 0.1186,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": 0,
+      "physLowestMm": 260,
+      "contact": false,
+      "mode": "swing"
+     },
+     "R": {
+      "physVsPresDeg": 0.88,
+      "pitchDeg": -0.88,
+      "physLowestMm": 0,
+      "contact": false,
+      "mode": "engage"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.0013,
+    "P9": {
+     "L": 260,
+     "R": 0
+    },
+    "P11": 0,
+    "P13": 55,
+    "P14": 0.148,
+    "P15": 1.531,
+    "P16": 0.0499,
+    "P17": 1.477
+   },
+   "kp": 52,
+   "leadTicks": 2.75,
+   "leadS": 0.0458,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0.1186,
+    "shiftMs": 0.1186,
+    "P16": 0.0499,
+    "P17": 1.477
+   },
+   "AH1": {
+    "omegaAuthRadS": 0,
+    "omegaRootPresRadS": 0,
+    "correctionRadS": 0,
+    "visibleMs": 0,
+    "withinVisibility": true,
+    "applied": false
+   },
+   "promotionWrites": 28,
+   "PR2v2": {
+    "mm": 41.08,
+    "joint": "knee_R",
+    "velocityPartMm": 20.83,
+    "velocityPartJoint": "knee_R",
+    "pass": false
+   },
+   "standIn": {
+    "trackErrBeforeContactMm": 3.02,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 1,
+    "discontinuityPass": true
+   },
+   "CG8": {
+    "minSepMm": 62.4,
+    "pair": "forearm_R↔thigh_R",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 56.75,
+     "body": "foot_L",
+     "seg": "LEG"
+    },
+    "gameplayFirst": {
+     "tau": 55.75,
+     "seg": "toe_L",
+     "prim": "LEG"
+    },
+    "fallTau": 61,
+    "Breleased": 60
+   },
+   "decisive": {
+    "tSim": 60.5,
+    "seg": "toe_R",
+    "prim": "LEG",
+    "mapped": "foot_R",
+    "segPlanted": false,
+    "J": 12.27,
+    "physical": {
+     "tau": 59.5,
+     "body": "foot_R",
+     "seg": "LEG",
+     "depthMm": 0.3,
+     "impulseNs": 1.6596
+    },
+    "physicalImpulseTotalNs": 6.074
+   },
+   "criteria": {
+    "CG-1": {
+     "mapped": "foot_R",
+     "physical": "foot_R",
+     "adjacency": null,
+     "pass": true
+    },
+    "CG-3": {
+     "tSim": 60.5,
+     "tPhys": 59.5,
+     "dTicks": -1,
+     "pass": true
+    },
+    "CG-4": {
+     "horizDistM": 0.08,
+     "sSim": 0.999,
+     "sPhys": -0.743,
+     "pass": false
+    },
+    "CG-5": {
+     "region": [
+      "foot_R"
+     ],
+     "simMaxMm": 42.3,
+     "physMaxMm": 85.3,
+     "ratio": 2.016,
+     "pass": true
+    },
+    "CG-6": {
+     "normalAngleDeg": 0.2,
+     "relVelAngleDeg": 116.2,
+     "pass": false
+    },
+    "CG-2": {
+     "L": {
+      "sim": false,
+      "presentation": [
+       false,
+       false
+      ],
+      "physLowestMm": 187,
+      "phys": false,
+      "agree": true
+     },
+     "R": {
+      "sim": false,
+      "presentation": [
+       false,
+       false
+      ],
+      "physLowestMm": 142.2,
+      "phys": false,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-8": {
+     "minSepMm": 62.4,
+     "pair": "forearm_R↔thigh_R",
+     "pass": true
+    }
+   },
+   "wouldPassPR2v2": false,
+   "cpuMs": 478
+  }
+ }
+}

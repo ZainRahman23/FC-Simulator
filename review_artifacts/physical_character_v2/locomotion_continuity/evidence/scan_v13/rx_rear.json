@@ -1,0 +1,210 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_rear": {
+   "cat": "other",
+   "finalClass": "NEGLIGIBLE",
+   "trigger": 30,
+   "windowEnd": 51,
+   "hg": [
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 39,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 38,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 37,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 36,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 35,
+     "pass": false,
+     "fails": [
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 34,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 33,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 32,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 31,
+     "pass": false,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 30,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [30, 51]: P9_footContact_R+HGAv2_shift+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom+HGT_extension+P11_renderedBootPenMm+P9_footContact_L"
+   ]
+  }
+ }
+}

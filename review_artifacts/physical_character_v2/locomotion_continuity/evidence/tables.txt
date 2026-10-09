@@ -1,0 +1,80 @@
+== fine-rate construction (3840 Hz), worst per-step velocity change (m/s); limit 0.18
+run | pelvis on/off | COM on/off | worst joint on (bone) / off | joint steps over limit on | LC-6c
+1.45 | 0.0342 / 96.5792 | 0.0445 / 103.7729 | 0.1478 (toe_L) / 480.3582 | 0 of 211156 | true
+2.2 | 0.0582 / 83.6073 | 0.0523 / 78.336 | 0.406 (shin_R) / 218.1235 | 13 of 211156 | true
+3 | 0.0463 / 46.1185 | 0.0541 / 45.0443 | 0.1673 (toe_L) / 322.469 | 0 of 211156 | true
+4.2 | 0.0463 / 112.4252 | 0.0523 / 115.46 | 0.235 (toe_L) / 412.4043 | 57 of 211156 | true
+5.5 | 0.0606 / 53.5263 | 0.1033 / 63.7042 | 0.2583 (toe_R) / 637.646 | 176 of 211156 | true
+6.5 | 0.0891 / 73.3575 | 0.0986 / 70.1128 | 0.3756 (shin_R) / 696.6523 | 777 of 211156 | true
+7.5 | 0.0604 / 94.5589 | 0.085 / 86.6665 | 0.3113 (toe_R) / 756.1368 | 970 of 211156 | true
+8.2 | 0.0893 / 109.5289 | 0.1082 / 101.6464 | 0.5701 (shin_L) / 797.4693 | 2388 of 211156 | true
+ramp | 0.0464 / 178.952 | 0.1421 / 164.0288 | 1.5574 (toe_L) / 796.8968 | 405 of 211156 | true
+
+== 60 Hz criteria, speed fixtures (LC-1 / V1.3)
+speed | 1b COM v h,v max | 3 slip max mm | 4a flight resid mm | 4b F min..max | 4c | 5a | 5c mm | legVsSim p50 mm | contact agree
+1.45 | 0.0903,0.2957 FAIL / 0.7978,2.3567 | 1.97 pass / – | null – / null | -0.7001..4.1724 FAIL / -11.6828..19.0992 | 0.0043 / 0.012 | 0.3237 / 1.9827 | null / null | 81.24 / 76.1945 | 0.948 / 0.95
+2.2 | 0.1566,0.5868 FAIL / 0.3405,3.8327 | 3.55 pass / – | null – / null | -2.2602..5.6989 FAIL / -14.0687..32.8143 | 0.0015 / 0.0118 | 0.5628 / 1.1111 | null / null | 81.3352 / 74.6321 | 0.956 / 0.978
+3 | 0.1678,0.0895 pass / 0.7057,3.5706 | 0.01 pass / – | 0.45 pass / 13.84 | 0.0105..1.941 pass / -20.496..30.1424 | 0.0038 / 0.023 | 0.472 / 2.1857 | 14.78 / 21.42 | 111.9192 / 93.2572 | 0.983 / 1
+4.2 | 0.3556,0.1346 FAIL / 0.9832,5.3299 | 0.01 pass / – | 0.67 pass / 19.03 | -0.3225..2.7831 FAIL / -29.1498..37.1095 | 0.0039 / 0.0413 | 1.1704 / 3.694 | 38.86 / 52.72 | 88.7415 / 76.9169 | 0.987 / 0.895
+5.5 | 0.5298,0.1666 FAIL / 1.0313,4.0484 | 10.2 FAIL / – | 0.78 pass / 16.91 | -0.7981..2.9995 FAIL / -25.7945..37.8595 | 0.0004 / 0.0104 | 2.0334 / 3.5524 | 84.62 / 76.95 | 63.2708 / 45.2632 | 0.945 / 0.771
+6.5 | 0.7108,0.3161 FAIL / 1.7657,8.7215 | 32.77 FAIL / – | 1.19 pass / 18.1 | -1.0118..3.5567 FAIL / -47.4583..59.2264 | 0.0061 / 0.1533 | 2.0747 / 6.4151 | 118.75 / 95.6 | 77.0948 / 54.0947 | 0.934 / 0.751
+7.5 | 0.9411,0.2446 FAIL / 0.4263,3.6884 | 0.01 pass / – | 1.39 pass / 17.08 | -1.4295..3.041 FAIL / -16.7338..36.6002 | 0.0005 / 0.0069 | 2.8459 / 1.9719 | 136.34 / 87.49 | 92.5761 / 31.3485 | 0.978 / 0.725
+8.2 | 0.9796,0.3926 FAIL / 0.4217,8.3057 | 68.71 FAIL / – | 1.54 pass / 24.35 | -2.1654..4.7136 FAIL / -37.8331..63.7661 | 0.0002 / 0.0028 | 3.186 / 2.3466 | 182.35 / 187.04 | 70.6351 / 21.5733 | 0.856 / 0.736
+
+== valid promotion frames, speed fixtures (of 228): LC-1 / V1.3
+1.45: 99 / 84
+2.2: 28 / 16
+3: 30 / 15
+4.2: 22 / 22
+5.5: 45 / 41
+6.5: 20 / 19
+7.5: 30 / 5
+8.2: 11 / 0
+
+== coherence of promoted unobstructed runners (speed fixtures, LC-1, all valid frames, horizon 30 ticks)
+lc_v1.45: runs 99, coherent p50/p90/max 6/7/12, through 0, first fail {"CG4sim":66,"CG2len":30,"NM2slip":8}, PR-2 v2 p50 14.1 (min 4.5) pass 0/99
+lc_v2.2: runs 27, coherent p50/p90/max 6/6/6, through 1, first fail {"CG4sim":16,"NM2slip":20,"CG2len":2,"(none)":1}, PR-2 v2 p50 20.8 (min 12.2) pass 0/27
+lc_v3: runs 30, coherent p50/p90/max 4/4/4, through 0, first fail {"NM2slip":12,"CG4sim":25}, PR-2 v2 p50 27.2 (min 17.9) pass 0/30
+lc_v4.2: runs 22, coherent p50/p90/max 2/3/4, through 0, first fail {"CG2len":11,"CG4sim":4,"NM2slip":12,"P12":2}, PR-2 v2 p50 32.1 (min 15.2) pass 0/22
+lc_v5.5: runs 45, coherent p50/p90/max 2/3/4, through 0, first fail {"NM2slip":32,"CG2len":8,"CG4sim":13,"P12":2}, PR-2 v2 p50 34.1 (min 12.5) pass 0/45
+lc_v6.5: runs 20, coherent p50/p90/max 2/3/3, through 0, first fail {"CG2len":5,"CG4sim":11,"NM2slip":10}, PR-2 v2 p50 61.7 (min 23.2) pass 0/20
+lc_v7.5: runs 30, coherent p50/p90/max 2/2/2, through 0, first fail {"CG4sim":26,"CG2len":7,"NM2slip":6}, PR-2 v2 p50 60.8 (min 34.3) pass 0/30
+lc_v8.2: runs 11, coherent p50/p90/max 2/2/2, through 0, first fail {"CG4sim":11}, PR-2 v2 p50 89.8 (min 83) pass 0/11
+
+== PI-1 records, 60 Hz criteria pass counts (LC-1 / V1.3)
+LC1b: 8/26 / 2/26
+LC3: 14/22 / 0/0
+LC4a: 22/22 / 0/22
+LC4b: 9/26 / 2/26
+LC4c: 12/13 / 8/13
+LC5a: 2/26 / 2/26
+LC5b: 24/26 / 24/26
+LC5c: 0/22 / 0/22
+
+== PI-1 records, valid frames in the pre-contact window (LC-1 / V1.3)
+rx_airborne (7.5 m/s): 8 / 0; latest lead 6.5 / –
+rx_behind_standing (0.0 m/s): 43 / 43; latest lead 0.5 / 0.5
+rx_early_stance (7.5 m/s): 3 / 4; latest lead 6.5 / 8.5
+rx_facing_front (0.0 m/s): 44 / 44; latest lead 0.25 / 0.25
+rx_free_leg (3.0 m/s): 5 / 2; latest lead 2.25 / 14.25
+rx_front_diag (5.5 m/s): 9 / 10; latest lead 10.5 / 6.5
+rx_glancing (3.0 m/s): 6 / 5; latest lead 16.75 / 1.75
+rx_heavy (7.5 m/s): 0 / 0; latest lead – / –
+rx_jog (3.0 m/s): 5 / 3; latest lead 9.75 / 21.75
+rx_late_stance (7.5 m/s): 5 / 0; latest lead 2.75 / –
+rx_lateral (5.5 m/s): 2 / 9; latest lead 8 / 6
+rx_light (7.5 m/s): 0 / 0; latest lead – / –
+rx_miss (3.0 m/s): 6 / 3; latest lead 2.5 / 5.5
+rx_planted_leg (3.0 m/s): 5 / 3; latest lead 9.75 / 21.75
+rx_rear_diag (5.5 m/s): 2 / 9; latest lead 3 / 1
+rx_rear (3.0 m/s): 5 / 2; latest lead 4.75 / 16.75
+rx_side_standing (0.0 m/s): 3 / 3; latest lead 0.5 / 0.5
+rx_sprint (7.5 m/s): 0 / 0; latest lead – / –
+rx_square (3.0 m/s): 6 / 4; latest lead 12.5 / 11.5
+rx_standing (0.0 m/s): 0 / 0; latest lead – / –
+sl_win (2.4 m/s): 0 / 0; latest lead – / –
+sl_early (3.0 m/s): 1 / 1; latest lead 34.5 / 23.5
+sl_late (3.0 m/s): 2 / 2; latest lead 40.5 / 20.5
+sl_from_behind (3.0 m/s): 1 / 1; latest lead 15.25 / 4.25
+sl_left (2.0 m/s): 0 / 0; latest lead – / –
+sl_loose (6.0 m/s): 11 / 20; latest lead 28.25 / 9.25

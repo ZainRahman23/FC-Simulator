@@ -1,0 +1,17 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "sl_early": {
+   "cat": "NEAR MISS",
+   "finalClass": "NO_CONTACT",
+   "trigger": -1,
+   "windowEnd": 104,
+   "hg": [],
+   "pass": false,
+   "reasons": [
+    "predictor never fires",
+    "no valid predictive promotion frame in W = [-1, 104]: "
+   ]
+  }
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_lateral": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 41,
+   "windowEnd": 48,
+   "hg": [
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [41, 48]: P14_bodyVel+P15_angVel+P17_angMom+HGAv2_shift+P5_footDeg+HGT_extension"
+   ]
+  }
+ }
+}

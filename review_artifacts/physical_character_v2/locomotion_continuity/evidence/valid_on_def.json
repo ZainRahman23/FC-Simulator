@@ -1,0 +1,5437 @@
+{
+ "sl_win": {
+  "trigger": 64,
+  "kend": 71,
+  "tRef": 72.75,
+  "speed": 2.416037681669138,
+  "frames": 64,
+  "valid": [],
+  "failCounts": {
+   "HGAv2_shift": 37,
+   "P14_bodyVel": 22,
+   "P15_angVel": 38,
+   "P17_angMom": 29,
+   "P5_footDeg": 17,
+   "P9_footContact_R": 9,
+   "P7_twistDeg": 8,
+   "P9_footContact_L": 9,
+   "P11_renderedBootPenMm": 7,
+   "P12_clamp": 2,
+   "P16_comVel": 3
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "P9_footContact_L"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 36,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 0,
+    "f": [
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   }
+  ]
+ },
+ "sl_early": {
+  "trigger": -1,
+  "kend": 104,
+  "tRef": 105.5,
+  "speed": 3,
+  "frames": 97,
+  "valid": [
+   {
+    "k": 70,
+    "lead": 34.5,
+    "s": 0.067,
+    "vY": 0.4,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 52,
+   "P14_bodyVel": 28,
+   "P15_angVel": 56,
+   "P17_angMom": 42,
+   "P5_footDeg": 22,
+   "P9_footContact_R": 16,
+   "P7_twistDeg": 17,
+   "P9_footContact_L": 15,
+   "P11_renderedBootPenMm": 11,
+   "P12_clamp": 4
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "P9_footContact_L"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 36,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 72,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 73,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 74,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 75,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 76,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 77,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 78,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 79,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 80,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 81,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 82,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 83,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 84,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 85,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 86,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 87,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 88,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 89,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 90,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 91,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 92,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 93,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 94,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 95,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 96,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 97,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 98,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 99,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 100,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 101,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 102,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 103,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 104,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   }
+  ]
+ },
+ "sl_late": {
+  "trigger": -1,
+  "kend": 157,
+  "tRef": 158.5,
+  "speed": 3,
+  "frames": 150,
+  "valid": [
+   {
+    "k": 70,
+    "lead": 87.5,
+    "s": 0.067,
+    "vY": 0.4,
+    "hgt": true
+   },
+   {
+    "k": 117,
+    "lead": 40.5,
+    "s": 0.118,
+    "vY": -0.462,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 79,
+   "P14_bodyVel": 43,
+   "P15_angVel": 91,
+   "P17_angMom": 67,
+   "P5_footDeg": 34,
+   "P9_footContact_R": 23,
+   "P7_twistDeg": 30,
+   "P9_footContact_L": 25,
+   "P11_renderedBootPenMm": 15,
+   "P12_clamp": 7
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "P9_footContact_L"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 36,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 72,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 73,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 74,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 75,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 76,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 77,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 78,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 79,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 80,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 81,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 82,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 83,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 84,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 85,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 86,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 87,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 88,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 89,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 90,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 91,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 92,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 93,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 94,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 95,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 96,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 97,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 98,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 99,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 100,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 101,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 102,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 103,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 104,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 105,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 106,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 107,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 108,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 109,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 110,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 111,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 112,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 113,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 114,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 115,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 116,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 117,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 118,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 119,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 120,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 121,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 122,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 123,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 124,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 125,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 126,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 127,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 128,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 129,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 130,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 131,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 132,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 133,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 134,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 135,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 136,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 137,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 138,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 139,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 140,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 141,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 142,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 143,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 144,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 145,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 146,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 147,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 148,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 149,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 150,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 151,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 152,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 153,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 154,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 155,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 156,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 157,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   }
+  ]
+ },
+ "sl_from_behind": {
+  "trigger": 75,
+  "kend": 85,
+  "tRef": 86.25,
+  "speed": 3,
+  "frames": 78,
+  "valid": [
+   {
+    "k": 70,
+    "lead": 15.25,
+    "s": 0.067,
+    "vY": 0.4,
+    "hgt": false
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 43,
+   "P14_bodyVel": 23,
+   "P15_angVel": 44,
+   "P17_angMom": 33,
+   "P5_footDeg": 18,
+   "P9_footContact_R": 13,
+   "P7_twistDeg": 12,
+   "P9_footContact_L": 11,
+   "P11_renderedBootPenMm": 9,
+   "P12_clamp": 3
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "P9_footContact_L"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 36,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 72,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 73,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 74,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 75,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 76,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 77,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 78,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 79,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 80,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 81,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 82,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 83,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 84,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 85,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   }
+  ]
+ },
+ "sl_left": {
+  "trigger": 64,
+  "kend": 73,
+  "tRef": 74.5,
+  "speed": 2.0291525441894094,
+  "frames": 66,
+  "valid": [],
+  "failCounts": {
+   "HGAv2_shift": 39,
+   "P14_bodyVel": 24,
+   "P15_angVel": 40,
+   "P17_angMom": 29,
+   "P5_footDeg": 18,
+   "P9_footContact_R": 9,
+   "P7_twistDeg": 8,
+   "P9_footContact_L": 9,
+   "P11_renderedBootPenMm": 7,
+   "P12_clamp": 3,
+   "P16_comVel": 3
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "P9_footContact_L"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 36,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 72,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 73,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   }
+  ]
+ },
+ "sl_loose": {
+  "trigger": 135,
+  "kend": 144,
+  "tRef": 145.25,
+  "speed": 5.999999999999999,
+  "frames": 137,
+  "valid": [
+   {
+    "k": 28,
+    "lead": 116.25,
+    "s": 0.117,
+    "vY": -0.026,
+    "hgt": false
+   },
+   {
+    "k": 30,
+    "lead": 114.25,
+    "s": 0.034,
+    "vY": 0.489,
+    "hgt": false
+   },
+   {
+    "k": 35,
+    "lead": 109.25,
+    "s": 0.055,
+    "vY": 0.109,
+    "hgt": false
+   },
+   {
+    "k": 36,
+    "lead": 108.25,
+    "s": 0.017,
+    "vY": -0.05,
+    "hgt": false
+   },
+   {
+    "k": 39,
+    "lead": 105.25,
+    "s": 0.078,
+    "vY": -0.515,
+    "hgt": false
+   },
+   {
+    "k": 61,
+    "lead": 83.25,
+    "s": 0.167,
+    "vY": -0.197,
+    "hgt": false
+   },
+   {
+    "k": 73,
+    "lead": 71.25,
+    "s": 0.089,
+    "vY": -0.199,
+    "hgt": false
+   },
+   {
+    "k": 74,
+    "lead": 70.25,
+    "s": 0.178,
+    "vY": -0.203,
+    "hgt": false
+   },
+   {
+    "k": 77,
+    "lead": 67.25,
+    "s": 0.15,
+    "vY": -0.363,
+    "hgt": false
+   },
+   {
+    "k": 80,
+    "lead": 64.25,
+    "s": 0.052,
+    "vY": 0.368,
+    "hgt": true
+   },
+   {
+    "k": 116,
+    "lead": 28.25,
+    "s": 0.083,
+    "vY": 0.251,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "P12_clamp": 19,
+   "P5_footDeg": 34,
+   "P14_bodyVel": 45,
+   "P15_angVel": 86,
+   "HGAv2_shift": 110,
+   "P17_angMom": 44,
+   "P9_footContact_R": 13,
+   "P4_kneeMm": 3,
+   "P4_ankleMm": 3,
+   "P16_comVel": 10,
+   "P6_limbSwingDeg": 2,
+   "P7_twistDeg": 9,
+   "P11_renderedBootPenMm": 8,
+   "P9_footContact_L": 9
+  },
+  "all": [
+   {
+    "k": 8,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 9,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 10,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 11,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 12,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 13,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 14,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 15,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 16,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 17,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 18,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 19,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 20,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 21,
+    "v": 0,
+    "f": [
+     "P12_clamp",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 22,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 23,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 24,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 25,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 26,
+    "v": 0,
+    "f": [
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 27,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 28,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 29,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 30,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 31,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 32,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 33,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 34,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 35,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 36,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 37,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 38,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 39,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 40,
+    "v": 0,
+    "f": [
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 41,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 42,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 43,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 44,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 45,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 46,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 47,
+    "v": 0,
+    "f": [
+     "P4_kneeMm",
+     "P4_ankleMm",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 48,
+    "v": 0,
+    "f": [
+     "P4_kneeMm",
+     "P4_ankleMm",
+     "P6_limbSwingDeg",
+     "P12_clamp",
+     "P14_bodyVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 49,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 50,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 51,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 52,
+    "v": 0,
+    "f": [
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 53,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 54,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 55,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 56,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 57,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 58,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 59,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 60,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 61,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 62,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 63,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 64,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 65,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 66,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 67,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 68,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 69,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 70,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 71,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 72,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 73,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 74,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 75,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 76,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 77,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 78,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 79,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 80,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 81,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 82,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 83,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 84,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 85,
+    "v": 0,
+    "f": [
+     "P4_kneeMm",
+     "P4_ankleMm",
+     "P6_limbSwingDeg",
+     "P7_twistDeg",
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 86,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 87,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P12_clamp",
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 88,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 89,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 90,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 91,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 92,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 93,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 94,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 95,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 96,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 97,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 98,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 99,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 100,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P16_comVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 101,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 102,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P16_comVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 103,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P16_comVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 104,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 105,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 106,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 107,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 108,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 109,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 110,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 111,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 112,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 113,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel"
+    ]
+   },
+   {
+    "k": 114,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 115,
+    "v": 0,
+    "f": [
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 116,
+    "v": 1,
+    "f": []
+   },
+   {
+    "k": 117,
+    "v": 0,
+    "f": [
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 118,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 119,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P7_twistDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 120,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 121,
+    "v": 0,
+    "f": [
+     "P7_twistDeg"
+    ]
+   },
+   {
+    "k": 122,
+    "v": 0,
+    "f": [
+     "P7_twistDeg",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 123,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 124,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 125,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 126,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 127,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 128,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 129,
+    "v": 0,
+    "f": [
+     "P5_footDeg",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 130,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "P14_bodyVel",
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 131,
+    "v": 0,
+    "f": [
+     "P9_footContact_L",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 132,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 133,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 134,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 135,
+    "v": 0,
+    "f": [
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 136,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 137,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 138,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P11_renderedBootPenMm",
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 139,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom"
+    ]
+   },
+   {
+    "k": 140,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 141,
+    "v": 0,
+    "f": [
+     "P9_footContact_R",
+     "P15_angVel",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 142,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 143,
+    "v": 0,
+    "f": [
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   },
+   {
+    "k": 144,
+    "v": 0,
+    "f": [
+     "P15_angVel",
+     "P17_angMom",
+     "HGAv2_shift"
+    ]
+   }
+  ]
+ }
+}

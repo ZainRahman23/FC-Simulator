@@ -3062,3 +3062,40 @@ rx_side_standing's CG-6 failure as run (74.3°) was my measurement error, correc
 **Recommended next change** (not implemented): a general locomotion-presentation continuity correction (pelvis-height path, plant transitions, root-bone bug), then rerun this investigation.
 
 **Before moving PI-1 runs:** correct the PR-2 reference and the B / DG(c) semantics. **Awaiting user.**
+
+## 2026-10-09 — LC-1 locomotion-presentation continuity slice (source df28867; prereg 313280f; freeze f3cc1f6 / branch `prototype/locomotion-continuity-v1` 9d57d46; results `locomotion_continuity/LC1_RESULTS.md`)
+
+**Scope held.**
+- Presentation only. The shared law used by the simulation's CHARCOLLIDE legs is byte-identical, and no simulation file changed.
+- Gameplay hashes are identical in every mode, with the layer on or off, and equal to the V1.3 baseline (26 / 26 PI-1 records, 8 / 8 speed fixtures).
+- With `OF_CONT.on = false`, the presentation reproduces V1.3 bit for bit.
+
+**Built:**
+- a C1 copy of the gait channels (one-frame corner rounding);
+- a spring-mass vertical COM (Morin 2005) with ballistic flight, and an anticipatory walking grounding;
+- the horizontal COM on the authoritative root;
+- continuous locomotion plants: a rolling sole, C1 engagement, rotation-vector release, a hinge-plane knee pole, a reach clamp and saturation;
+- the root-bone ground-clamp fix;
+- PR-2 v2 (the PI-1 original reading plus the genuine-continuation rule) and AH-1 (whole-body rotation from the authority).
+
+Design changes made during development, and the defect behind each, are recorded before the evaluation.
+
+**Verdict: the locomotion did not become continuous by the preregistered criteria.**
+- **Pass everywhere:** pelvis / COM C1 at all speeds and in the ramp; ballistic flight ≤ 1.5 mm; no net drift; determinism; neutrality.
+- **Joint continuity:** passes at 1.45 and 3 m/s only.
+- **60 Hz COM velocity and vertical force:** pass at 3 m/s only.
+- **Planted slip:** fails at 5.5, 6.5 and 8.2 m/s.
+- **Angular rows:** fail.
+
+Three defects were found in the official run and not fixed: the walk / run-blend re-engagement, the 60 Hz engagement-onset at sprint, and the overlay hand-over.
+
+**Promotion:**
+- Valid frames rise at 7 of 8 speeds (7.5 m/s: 30 vs 5 of 228).
+- A promoted unobstructed runner stays coherent 2 – 6 ticks (about 1 – 2 under V1.3).
+- PR-2 v2 fails in every promotion; the velocity part, 20 – 49 mm, comes from the PI-1 §6.2 60 Hz backward differences.
+- The instructed scan gives 0 / 0 / 0. The V1.3 control gives 0 / 1 / 0: rx_behind_standing's REV2 pass depended on the 12 mm root-bone bug and now fails CG-1 (B1).
+- rx_miss now fails only stand-in tracking (10.39 vs 10 mm).
+
+**New measured cost:** the presented legs depart further from the simulation's collision legs (p50 63 – 112 mm vs 21 – 93), because the shared law's vertical path is not physically realisable.
+
+**No V2 body limitation beyond B7.** No PI-1 revision. **Awaiting user.**

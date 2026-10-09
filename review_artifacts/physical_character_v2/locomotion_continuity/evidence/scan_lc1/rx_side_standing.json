@@ -1,0 +1,207 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_side_standing": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 41,
+   "windowEnd": 59,
+   "hg": [
+    {
+     "k": 59,
+     "pass": true,
+     "fails": []
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "tackler discontinuity 10.8 mm"
+   ],
+   "handoff": {
+    "k": 59,
+    "pass": true,
+    "fails": [],
+    "P5": 0,
+    "HGA": 0,
+    "foot": {
+     "L": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -1.7,
+      "contact": true,
+      "mode": "ankle"
+     },
+     "R": {
+      "physVsPresDeg": 0,
+      "pitchDeg": null,
+      "physLowestMm": -1.7,
+      "contact": true,
+      "mode": "ankle"
+     }
+    },
+    "P1": 0,
+    "P4ankle": 0.002,
+    "P9": {
+     "L": -1.7,
+     "R": -1.7
+    },
+    "P11": 0.0272,
+    "P13": 91.9,
+    "P14": 0,
+    "P15": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "kp": 59,
+   "leadTicks": 0.5,
+   "leadS": 0.0083,
+   "HGD": true,
+   "momentum": {
+    "HGA_ms": 0,
+    "shiftMs": 0,
+    "P16": 0,
+    "P17": 0
+   },
+   "AH1": {
+    "omegaAuthRadS": 0,
+    "omegaRootPresRadS": 0,
+    "correctionRadS": 0,
+    "visibleMs": 0,
+    "withinVisibility": true,
+    "applied": false
+   },
+   "promotionWrites": 28,
+   "PR2v2": {
+    "mm": 35.52,
+    "joint": "ankle_R",
+    "velocityPartMm": 0,
+    "pass": false
+   },
+   "standIn": {
+    "trackErrBeforeContactMm": 0,
+    "ASTC1": true,
+    "segments": [
+     {
+      "name": "TORSO",
+      "prims": [
+       "TUCK",
+       "TUCKSHIN",
+       "BODY",
+       "TRUNK"
+      ],
+      "massKg": 59.55
+     },
+     {
+      "name": "LEG",
+      "prims": [
+       "LEG",
+       "THIGH"
+      ],
+      "massKg": 18.45
+     }
+    ],
+    "discontinuityMm": 10.8,
+    "discontinuityPass": false
+   },
+   "CG8": {
+    "minSepMm": 79,
+    "pair": "forearm_R↔thigh_R",
+    "pass": true
+   },
+   "physical": {
+    "firstContact": {
+     "tau": 60.25,
+     "body": "shank_R",
+     "seg": "LEG"
+    },
+    "gameplayFirst": {
+     "tau": 60.5,
+     "seg": "shin_R",
+     "prim": "THIGH"
+    },
+    "fallTau": 61,
+    "Breleased": 60
+   },
+   "decisive": {
+    "tSim": 60.5,
+    "seg": "shin_R",
+    "prim": "THIGH",
+    "mapped": "shank_R",
+    "segPlanted": true,
+    "J": 49,
+    "physical": {
+     "tau": 60.25,
+     "body": "shank_R",
+     "seg": "LEG",
+     "depthMm": 8.4,
+     "impulseNs": 9.298
+    },
+    "physicalImpulseTotalNs": 30.112
+   },
+   "criteria": {
+    "CG-1": {
+     "mapped": "shank_R",
+     "physical": "shank_R",
+     "adjacency": null,
+     "pass": true
+    },
+    "CG-3": {
+     "tSim": 60.5,
+     "tPhys": 60.25,
+     "dTicks": -0.25,
+     "pass": true
+    },
+    "CG-4": {
+     "horizDistM": 0.066,
+     "sSim": 0.856,
+     "sPhys": 0.884,
+     "pass": true
+    },
+    "CG-5": {
+     "region": [
+      "shank_R"
+     ],
+     "simMaxMm": 42.2,
+     "physMaxMm": 59.4,
+     "ratio": 1.406,
+     "pass": true
+    },
+    "CG-6": {
+     "normalAngleDeg": 14.9,
+     "relVelAngleDeg": 16.6,
+     "pass": true
+    },
+    "CG-2": {
+     "L": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -1.7,
+      "phys": true,
+      "agree": true
+     },
+     "R": {
+      "sim": true,
+      "presentation": [
+       true,
+       true
+      ],
+      "physLowestMm": -0.5,
+      "phys": true,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-8": {
+     "minSepMm": 79,
+     "pair": "forearm_R↔thigh_R",
+     "pass": true
+    }
+   },
+   "wouldPassPR2v2": false,
+   "cpuMs": 462
+  }
+ }
+}

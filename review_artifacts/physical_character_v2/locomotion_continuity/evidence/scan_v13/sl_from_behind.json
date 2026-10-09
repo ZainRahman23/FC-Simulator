@@ -1,0 +1,113 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "sl_from_behind": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 75,
+   "windowEnd": 85,
+   "hg": [
+    {
+     "k": 85,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 84,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 83,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 82,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 81,
+     "pass": false,
+     "fails": [
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 80,
+     "pass": false,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 79,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 78,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P11_renderedBootPenMm",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 77,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 76,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 75,
+     "pass": false,
+     "fails": [
+      "P7_twistDeg",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [75, 85]: P17_angMom+HGT_extension+P15_angVel+HGAv2_shift+P9_footContact_R+P11_renderedBootPenMm+P7_twistDeg"
+   ]
+  }
+ }
+}

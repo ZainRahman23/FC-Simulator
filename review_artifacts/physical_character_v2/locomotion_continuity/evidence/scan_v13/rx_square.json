@@ -1,0 +1,107 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_square": {
+   "cat": "other",
+   "finalClass": "FALL",
+   "trigger": 50,
+   "windowEnd": 60,
+   "hg": [
+    {
+     "k": 60,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 59,
+     "pass": false,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 58,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 57,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 56,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 55,
+     "pass": false,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 54,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 53,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 52,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 51,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P17_angMom"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [50, 60]: P9_footContact_R+HGAv2_shift+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom"
+   ]
+  }
+ }
+}

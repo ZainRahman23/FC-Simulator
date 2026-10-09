@@ -1,0 +1,99 @@
+{
+ "prereg": "PI1_REV2_PREREG.md (f8cd44a) + A1 (f2016c6) + A2 (cf1d412); HG-A v2 (cf144e8); PR-2 v2 + AH-1 reported (LC1_PREREG §3.6 / §3.7, 313280f)",
+ "cases": {
+  "rx_standing": {
+   "cat": "RECOVERABLE",
+   "finalClass": "STUMBLE",
+   "trigger": 40,
+   "windowEnd": 50,
+   "hg": [
+    {
+     "k": 50,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 49,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 48,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 47,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 46,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 45,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 44,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 43,
+     "pass": false,
+     "fails": [
+      "P5_footDeg"
+     ]
+    },
+    {
+     "k": 42,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 41,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGT_extension"
+     ]
+    },
+    {
+     "k": 40,
+     "pass": false,
+     "fails": [
+      "P5_footDeg",
+      "HGT_extension"
+     ]
+    }
+   ],
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [40, 50]: P5_footDeg+HGAv2_shift+HGT_extension"
+   ]
+  }
+ }
+}

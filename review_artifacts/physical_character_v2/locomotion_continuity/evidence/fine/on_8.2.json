@@ -1,0 +1,153 @@
+{
+ "prereg": "LC1_PREREG.md §4 LC-1a / LC-2 / LC-6c",
+ "dt": 0.00026041666666666666,
+ "limit": 0.18,
+ "mode": "on",
+ "runs": {
+  "8.2": {
+   "steps": 9598,
+   "LC1a": {
+    "pelvis": {
+     "max": 0.0893,
+     "atS": 1.7635,
+     "stepsOver": 0
+    },
+    "com": {
+     "max": 0.1082,
+     "atS": 1.8982,
+     "stepsOver": 0
+    },
+    "pass": true
+   },
+   "LC2": {
+    "worst": {
+     "max": 0.5701,
+     "atS": 1.8982,
+     "stepsOver": 497,
+     "bone": "shin_L"
+    },
+    "jointStepsOver": 2388,
+    "pass": false,
+    "perJoint": {
+     "pelvis": {
+      "max": 0.0893,
+      "atS": 1.7635,
+      "stepsOver": 0
+     },
+     "spine": {
+      "max": 0.1181,
+      "atS": 2.0786,
+      "stepsOver": 0
+     },
+     "chest": {
+      "max": 0.1252,
+      "atS": 2.2763,
+      "stepsOver": 0
+     },
+     "neck": {
+      "max": 0.1495,
+      "atS": 1.8638,
+      "stepsOver": 0
+     },
+     "head": {
+      "max": 0.1578,
+      "atS": 2.4826,
+      "stepsOver": 0
+     },
+     "hair": {
+      "max": 0.1853,
+      "atS": 1.8638,
+      "stepsOver": 2
+     },
+     "clavicle_R": {
+      "max": 0.153,
+      "atS": 2.0297,
+      "stepsOver": 0
+     },
+     "upperArm_R": {
+      "max": 0.1782,
+      "atS": 2.8891,
+      "stepsOver": 0
+     },
+     "foreArm_R": {
+      "max": 0.2083,
+      "atS": 2.8891,
+      "stepsOver": 5
+     },
+     "hand_R": {
+      "max": 0.2385,
+      "atS": 2.8891,
+      "stepsOver": 16
+     },
+     "clavicle_L": {
+      "max": 0.1529,
+      "atS": 1.7271,
+      "stepsOver": 0
+     },
+     "upperArm_L": {
+      "max": 0.1764,
+      "atS": 1.9128,
+      "stepsOver": 0
+     },
+     "foreArm_L": {
+      "max": 0.2079,
+      "atS": 2.7547,
+      "stepsOver": 5
+     },
+     "hand_L": {
+      "max": 0.2365,
+      "atS": 2.7193,
+      "stepsOver": 17
+     },
+     "thigh_R": {
+      "max": 0.1208,
+      "atS": 2.513,
+      "stepsOver": 0
+     },
+     "shin_R": {
+      "max": 0.5538,
+      "atS": 1.7229,
+      "stepsOver": 510
+     },
+     "foot_R": {
+      "max": 0.3256,
+      "atS": 1.8234,
+      "stepsOver": 353
+     },
+     "toe_R": {
+      "max": 0.3617,
+      "atS": 2.4102,
+      "stepsOver": 324
+     },
+     "thigh_L": {
+      "max": 0.1182,
+      "atS": 2.181,
+      "stepsOver": 0
+     },
+     "shin_L": {
+      "max": 0.5701,
+      "atS": 1.8982,
+      "stepsOver": 497
+     },
+     "foot_L": {
+      "max": 0.3252,
+      "atS": 2.6971,
+      "stepsOver": 348
+     },
+     "toe_L": {
+      "max": 0.3927,
+      "atS": 2.9331,
+      "stepsOver": 311
+     }
+    }
+   },
+   "LC6c": {
+    "hashes": [
+     "d633c06992de7e2b",
+     "d633c06992de7e2b"
+    ],
+    "identical": true
+   }
+  }
+ }
+}
