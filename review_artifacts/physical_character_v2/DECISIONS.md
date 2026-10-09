@@ -3026,3 +3026,17 @@ rx_side_standing's CG-6 failure as run (74.3°) was my measurement error, correc
 - **N4:** "angular motion" was implemented as linear only.
 
 **Blockers B1 – B7 recorded unchanged.** Nothing modified. **Awaiting user.**
+
+## 2026-10-09 — HG-A v2 ADOPTED; HG-A v1 superseded (`pi1/hga/HGA_V2_ADOPTED.md`; user decision f6265b5; proposal text 192816b unchanged)
+
+**Why v1 was replaced:**
+- **It conserved the wrong thing.** It required the presentation's instantaneous COM velocity to equal v_auth, a non-physical, jitter-dominated quantity whose gait-cycle mean already matches the authority (≤ 0.015 m/s).
+- **Its 0.05 m/s was a borrowed fidelity number** (P-16), not a visibility number.
+
+**What v2 does:**
+- **The momentum is exact:** total horizontal momentum = M·v_auth, written as one uniform shift. Relative velocities and L about the COM are unchanged, and pose and position are untouched.
+- **The only bound is on the visible cost:** \|s\| ≤ 0.180 m/s, from PR-2's 3 mm per frame. It is not fitted.
+
+**This is a correction, not a relaxation:** v1 tolerated up to 3.7 N·s of momentum error; v2 tolerates none.
+
+**Not covered:** vertical, angular and internal-velocity inheritance and PR-2's reference stay open (investigation in progress). Blockers B1 – B7 are unaffected. REV2's results remain as recorded under v1.

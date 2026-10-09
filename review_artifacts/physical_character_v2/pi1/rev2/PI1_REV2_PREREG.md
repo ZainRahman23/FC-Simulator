@@ -256,3 +256,9 @@ Source: `diagnostics/cg6_prestep_and_discontinuity_location.json`.
 **Effect.** No class count or representative changes. rx_side_standing still fails the retained 10 mm criterion (10.8 mm), and the other two keep their verdicts.
 
 **Records.** The as-run values stay in `scan_rev2_rx.json`. This erratum was written after the scan results were seen and is labelled as such. Reported in `PI1_REV2_RESULTS.md` §5.2.
+
+## 12. Criterion versioning (after REV2)
+
+**HG-A v1 (§2) is superseded by HG-A v2.** v2 was adopted on 9 Oct 2026 by user decision `sources/2026-10-09_user_decision_adopt_hga_v2_investigate_moving_handoff.md` (f6265b5). Its text is in `pi1/hga/HGA_V2_ADOPTED.md` (proposal 192816b, unchanged).
+
+**Scope.** The REV2 scan results above were produced under v1 and stay as recorded. Future scans and PI-1 runs use v2.
