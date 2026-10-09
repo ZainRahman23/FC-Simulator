@@ -210,3 +210,47 @@ No fixture had been run and no outcome seen.
 **Results:** 0 in float64 (exact algebraic identity); 3.7e-6 m against the float32 reference.
 
 **Effect:** none on geometry. The simulation's own FK (`skelFK` / M4) also runs in float32, deterministically, in the browser and in Node alike.
+
+### A2 (before any v1.3 gate evaluation): operational definitions for the PCG-F0 rows and the gate
+
+Frozen while the V1.3 export was still running. No V1.3 fixture outcome had been read and no gate had been evaluated.
+
+**Rows.** All PCG rows are evaluated on integer AIR rows (60 Hz presentation frames), with the F0 body posed by PM-1-F0 from the LOCO stream. That is `rawRotations(…, { rk: true })` + `project`, with no `bootPitchFix`.
+
+| row | definition |
+|---|---|
+| P-4 | Hip centre = the V2 thigh body origin (hip joint) vs the rig thigh joint; knee = shank origin vs the rig shin joint; ankle = foot origin vs the rig foot joint. |
+| P-9 | Contact flag = `pres[k].feet[n].contact`, any mode. Measure = `bodyLowest(foot_X)`. |
+| P-10 | Every V2 body except a foot that P-9 treats as in contact: `bodyLowest` ≥ −5 mm. |
+| P-11 | As in the v1.2 gate: the rendered rig toe-tip sole's added penetration when the rig foot is rendered with the V2 foot rotation. |
+| P-12 | The maximum `project` clamp over all joints ≤ 1e-6° (no hard-ROM clamp needed). |
+| P-13 | Minimum separation over `SELF_PAIRS` at the row ≥ −10 mm. CG-8 additionally checks sub-steps, as in v1.2. |
+| P-14 | As in the v1.2 gate: per body, the V2 COM velocity (60 Hz backward difference) vs the presentation's material point (the same COM offset carried rigidly by the rig bone, anchored at the rig joint). |
+| P-15 | Per mapped body, the angular velocity from consecutive PM-1-F0 rotations vs that from consecutive rig-bone world rotations (60 Hz): \|Δω\| ≤ 2.0 rad/s. |
+| P-16 | Σ m_i v_i / M with the V2 masses: V2 COM velocities vs the P-14 material-point velocities, ≤ 0.05 m/s. |
+| P-17 | Angular momentum about the whole-body COM, with the V2 masses and inertias. L_V2 uses the V2 COM velocities and ω_V2; L_ref uses the P-14 material-point velocities and ω_rig. Pass if \|L_V2 − L_ref\| ≤ 0.10 · max(\|L_ref\|, 1 kg·m²/s). |
+
+**The P-17 floor.** The floor of 1 kg·m²/s avoids a relative test on a near-zero reference. It corresponds to a 73 kg body with a 0.37 m radius of gyration rotating at about 0.1 rad/s, which is below a visible rotation. It was chosen now, from no data.
+
+**Frames.**
+- PCG at k_p = the trigger row (first `pred` ≤ 0.25).
+- CG-7 window: rows k_p … decisive-contact row (contact tick − 1).
+- Near miss: k_p … the first row k > k_p with `pred[k]` > 0.25 and `dnow[k]` > `dnow[k − 1]` (the envelope has passed), capped at k_p + 60.
+- The v1.2 "reconciliation (FULL)" pose rows are kept as report-only.
+
+**Segment mapping.**
+- foot_X and toe_X → F0 foot_X (one rigid boot);
+- shin_X → shank_X;
+- thigh_X → thigh_X;
+- pelvis → pelvis;
+- torso → abdomen.
+
+**Adjacency (CG-1):** foot ↔ shank at the ankle; shank ↔ thigh at the knee.
+
+**CG-4 axes on F0.**
+- foot_X: the profile's foot capsule endpoints (foot frame) on the F0 foot body;
+- toe_X: the profile's toe capsule endpoints at bind (foot frame: MTP-end, and MTP + bToe) on the F0 foot body;
+- shin_X: shank origin → foot origin;
+- thigh_X: thigh origin → shank origin.
+
+**Simulation overlaps** (CG-5 and series) use the tapered radius r(t) at the closest axis parameter, the simulation's own `ptRxSegR`. They come from the vm-loaded V1.3 model (`charcollide_sim.mjs`).
