@@ -80,3 +80,12 @@
 - the f5f6076 detached worktree, plus the restored corner-flags file;
 - the puppeteer-core install;
 - the scratch servers (stopped).
+
+## Erratum (added 2026-10-09 by D-1A, `PI1_D1A_INVESTIGATION.md`)
+
+§3's finding ("at the simulation's contact tick (50) the presentation's left foot is already lifting off") is **wrong**. It came from a row / tick off-by-one:
+- AIR row k is the state after squad tick k + 1.
+- At the authoritative contact instant (squad 49.5) both the simulation and the presentation have the left foot planted, flat and in early stance.
+- The "release" in the FULL row of squad tick 50 is the Tackled-Player V1 reaction overlay responding to the authoritative FALL in that tick.
+
+The body-check result in §2 is unaffected.

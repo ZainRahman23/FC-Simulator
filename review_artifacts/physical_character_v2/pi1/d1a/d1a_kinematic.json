@@ -1,0 +1,5293 @@
+{
+ "body": "spec/v2_pi1_runner.js (D-1, unchanged)",
+ "mapping": "PI1_PREREGISTRATION.md §5",
+ "sampleHz": 240,
+ "cases": {
+  "rx_miss": {
+   "FULL": {
+    "stream": "FULL",
+    "predTick": 44,
+    "contactTick": null,
+    "react": null,
+    "windows": {
+     "promotion": [
+      44,
+      80
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 208.56,
+       "tick": 45,
+       "sub": 4,
+       "relSpeedMs": 6.72,
+       "approachMs": 0.344
+      },
+      "anyAllowedPair": {
+       "minSepMm": 56.2,
+       "pair": "forearm_R↔thigh_R",
+       "tick": 74,
+       "sub": 4,
+       "relSpeedMs": 0.342,
+       "approachMs": 0.289
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "thoracic": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "neck": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "knee_L": {
+      "maxResidualDeg": 6.464,
+      "maxClampDeg": 0
+     },
+     "knee_R": {
+      "maxResidualDeg": 6.96,
+      "maxClampDeg": 0
+     },
+     "ankle_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "ankle_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     }
+    },
+    "feet": [
+     {
+      "tick": 42,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1256,
+        "anklePos": [
+         51.9222,
+         0.3572,
+         -33.8789
+        ],
+        "ankleV": [
+         5.04,
+         -0.63,
+         -0.037
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0011,
+        "anklePos": [
+         52.1663,
+         0.0882,
+         -34.1802
+        ],
+        "ankleV": [
+         -0.01,
+         -0.004,
+         0.073
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 43,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1085,
+        "anklePos": [
+         52.0071,
+         0.3371,
+         -33.879
+        ],
+        "ankleV": [
+         5.094,
+         -1.204,
+         -0.01
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0012,
+        "anklePos": [
+         52.1661,
+         0.0881,
+         -34.1786
+        ],
+        "ankleV": [
+         -0.01,
+         -0.003,
+         0.092
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0842,
+        "anklePos": [
+         52.0943,
+         0.308,
+         -33.8789
+        ],
+        "ankleV": [
+         5.231,
+         -1.743,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0015,
+        "anklePos": [
+         52.166,
+         0.0881,
+         -34.1768
+        ],
+        "ankleV": [
+         -0.008,
+         -0.003,
+         0.108
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0552,
+        "anklePos": [
+         52.1852,
+         0.2712,
+         -33.8785
+        ],
+        "ankleV": [
+         5.457,
+         -2.208,
+         0.024
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0019,
+        "anklePos": [
+         52.1659,
+         0.088,
+         -34.1749
+        ],
+        "ankleV": [
+         -0.004,
+         -0.003,
+         0.118
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0402,
+        "anklePos": [
+         52.2812,
+         0.2522,
+         -33.8762
+        ],
+        "ankleV": [
+         5.758,
+         -1.144,
+         0.139
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0029,
+        "anklePos": [
+         52.1659,
+         0.0879,
+         -34.1723
+        ],
+        "ankleV": [
+         0,
+         -0.004,
+         0.152
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0348,
+        "anklePos": [
+         52.383,
+         0.2303,
+         -33.8757
+        ],
+        "ankleV": [
+         6.107,
+         -1.313,
+         0.03
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0211,
+        "anklePos": [
+         52.1853,
+         0.1381,
+         -34.1663
+        ],
+        "ankleV": [
+         1.164,
+         3.011,
+         0.365
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0567,
+        "anklePos": [
+         52.4902,
+         0.2238,
+         -33.8756
+        ],
+        "ankleV": [
+         6.432,
+         -0.39,
+         0.005
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0241,
+        "anklePos": [
+         52.2006,
+         0.1634,
+         -34.1614
+        ],
+        "ankleV": [
+         0.917,
+         1.519,
+         0.293
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0882,
+        "anklePos": [
+         52.6014,
+         0.2298,
+         -33.8739
+        ],
+        "ankleV": [
+         6.672,
+         0.36,
+         0.103
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.028,
+        "anklePos": [
+         52.2306,
+         0.2004,
+         -34.1544
+        ],
+        "ankleV": [
+         1.8,
+         2.218,
+         0.419
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1292,
+        "anklePos": [
+         52.7098,
+         0.243,
+         -33.8714
+        ],
+        "ankleV": [
+         6.508,
+         0.794,
+         0.149
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0399,
+        "anklePos": [
+         52.3024,
+         0.2553,
+         -34.1422
+        ],
+        "ankleV": [
+         4.308,
+         3.294,
+         0.733
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     }
+    ],
+    "contactC": null,
+    "tacklerSepSeries": [
+     {
+      "tick": 42,
+      "sub": 1,
+      "d": 0.7528,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 2,
+      "d": 0.7059,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 3,
+      "d": 0.6592,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 4,
+      "d": 0.6128,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 1,
+      "d": 0.5822,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 2,
+      "d": 0.552,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 3,
+      "d": 0.5222,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 4,
+      "d": 0.4932,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 1,
+      "d": 0.4688,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 2,
+      "d": 0.4456,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 3,
+      "d": 0.4237,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 4,
+      "d": 0.4032,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 1,
+      "d": 0.3847,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 2,
+      "d": 0.3683,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 3,
+      "d": 0.353,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 4,
+      "d": 0.338,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.3243,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.3122,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.3017,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.2922,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.2862,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.2822,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.2802,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.2819,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.2894,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.3004,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.3147,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.332,
+      "body": "foot_L",
+      "prim": "LEG"
+     }
+    ],
+    "minTacklerSepM": 0.2568
+   },
+   "LOCO": {
+    "stream": "LOCO",
+    "predTick": 44,
+    "contactTick": null,
+    "react": null,
+    "windows": {
+     "promotion": [
+      44,
+      80
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 208.56,
+       "tick": 45,
+       "sub": 4,
+       "relSpeedMs": 6.72,
+       "approachMs": 0.344
+      },
+      "anyAllowedPair": {
+       "minSepMm": 56.2,
+       "pair": "forearm_R↔thigh_R",
+       "tick": 74,
+       "sub": 4,
+       "relSpeedMs": 0.342,
+       "approachMs": 0.289
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "thoracic": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "neck": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "knee_L": {
+      "maxResidualDeg": 6.464,
+      "maxClampDeg": 0
+     },
+     "knee_R": {
+      "maxResidualDeg": 6.96,
+      "maxClampDeg": 0
+     },
+     "ankle_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "ankle_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     }
+    },
+    "feet": [
+     {
+      "tick": 42,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1256,
+        "anklePos": [
+         51.9222,
+         0.3572,
+         -33.8789
+        ],
+        "ankleV": [
+         5.04,
+         -0.63,
+         -0.037
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0011,
+        "anklePos": [
+         52.1663,
+         0.0882,
+         -34.1802
+        ],
+        "ankleV": [
+         -0.01,
+         -0.004,
+         0.073
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 43,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1085,
+        "anklePos": [
+         52.0071,
+         0.3371,
+         -33.879
+        ],
+        "ankleV": [
+         5.094,
+         -1.204,
+         -0.01
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0012,
+        "anklePos": [
+         52.1661,
+         0.0881,
+         -34.1786
+        ],
+        "ankleV": [
+         -0.01,
+         -0.003,
+         0.092
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0842,
+        "anklePos": [
+         52.0943,
+         0.308,
+         -33.8789
+        ],
+        "ankleV": [
+         5.231,
+         -1.743,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0015,
+        "anklePos": [
+         52.166,
+         0.0881,
+         -34.1768
+        ],
+        "ankleV": [
+         -0.008,
+         -0.003,
+         0.108
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0552,
+        "anklePos": [
+         52.1852,
+         0.2712,
+         -33.8785
+        ],
+        "ankleV": [
+         5.457,
+         -2.208,
+         0.024
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0019,
+        "anklePos": [
+         52.1659,
+         0.088,
+         -34.1749
+        ],
+        "ankleV": [
+         -0.004,
+         -0.003,
+         0.118
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0402,
+        "anklePos": [
+         52.2812,
+         0.2522,
+         -33.8762
+        ],
+        "ankleV": [
+         5.758,
+         -1.144,
+         0.139
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0029,
+        "anklePos": [
+         52.1659,
+         0.0879,
+         -34.1723
+        ],
+        "ankleV": [
+         0,
+         -0.004,
+         0.152
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0348,
+        "anklePos": [
+         52.383,
+         0.2303,
+         -33.8757
+        ],
+        "ankleV": [
+         6.107,
+         -1.313,
+         0.03
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0211,
+        "anklePos": [
+         52.1853,
+         0.1381,
+         -34.1663
+        ],
+        "ankleV": [
+         1.164,
+         3.011,
+         0.365
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0567,
+        "anklePos": [
+         52.4902,
+         0.2238,
+         -33.8756
+        ],
+        "ankleV": [
+         6.432,
+         -0.39,
+         0.005
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0241,
+        "anklePos": [
+         52.2006,
+         0.1634,
+         -34.1614
+        ],
+        "ankleV": [
+         0.917,
+         1.519,
+         0.293
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0882,
+        "anklePos": [
+         52.6014,
+         0.2298,
+         -33.8739
+        ],
+        "ankleV": [
+         6.672,
+         0.36,
+         0.103
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.028,
+        "anklePos": [
+         52.2306,
+         0.2004,
+         -34.1544
+        ],
+        "ankleV": [
+         1.8,
+         2.218,
+         0.419
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1292,
+        "anklePos": [
+         52.7098,
+         0.243,
+         -33.8714
+        ],
+        "ankleV": [
+         6.508,
+         0.794,
+         0.149
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0399,
+        "anklePos": [
+         52.3024,
+         0.2553,
+         -34.1422
+        ],
+        "ankleV": [
+         4.308,
+         3.294,
+         0.733
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     }
+    ],
+    "contactC": null,
+    "tacklerSepSeries": [
+     {
+      "tick": 42,
+      "sub": 1,
+      "d": 0.7528,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 2,
+      "d": 0.7059,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 3,
+      "d": 0.6592,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 42,
+      "sub": 4,
+      "d": 0.6128,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 1,
+      "d": 0.5822,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 2,
+      "d": 0.552,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 3,
+      "d": 0.5222,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 43,
+      "sub": 4,
+      "d": 0.4932,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 1,
+      "d": 0.4688,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 2,
+      "d": 0.4456,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 3,
+      "d": 0.4237,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 44,
+      "sub": 4,
+      "d": 0.4032,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 1,
+      "d": 0.3847,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 2,
+      "d": 0.3683,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 3,
+      "d": 0.353,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 45,
+      "sub": 4,
+      "d": 0.338,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.3243,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.3122,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.3017,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.2922,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.2862,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.2822,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.2802,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.2819,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.2894,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.3004,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.3147,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.332,
+      "body": "foot_L",
+      "prim": "LEG"
+     }
+    ],
+    "minTacklerSepM": 0.2568
+   }
+  },
+  "rx_free_leg": {
+   "FULL": {
+    "stream": "FULL",
+    "predTick": 41,
+    "contactTick": 50,
+    "react": "CORRECTION",
+    "windows": {
+     "promotion": [
+      41,
+      49
+     ],
+     "contact": [
+      49,
+      51
+     ],
+     "recovery": [
+      51,
+      69
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 208.56,
+       "tick": 45,
+       "sub": 4,
+       "relSpeedMs": 6.72,
+       "approachMs": 0.344
+      },
+      "anyAllowedPair": {
+       "minSepMm": 80.05,
+       "pair": "forearm_R↔thigh_R",
+       "tick": 41,
+       "sub": 1,
+       "relSpeedMs": 1.958,
+       "approachMs": -0.954
+      }
+     },
+     "contact": {
+      "bootToBoot": {
+       "minSepMm": 266.44,
+       "tick": 49,
+       "sub": 1,
+       "relSpeedMs": 6.575,
+       "approachMs": -2.427
+      },
+      "anyAllowedPair": {
+       "minSepMm": 97.06,
+       "pair": "abdomen↔upperArm_R",
+       "tick": 49,
+       "sub": 4,
+       "relSpeedMs": 0.99,
+       "approachMs": 0.069
+      }
+     },
+     "recovery": {
+      "bootToBoot": {
+       "minSepMm": 418.91,
+       "tick": 64,
+       "sub": 4,
+       "relSpeedMs": 6.86,
+       "approachMs": -0.095
+      },
+      "anyAllowedPair": {
+       "minSepMm": 123.61,
+       "pair": "abdomen↔upperArm_L",
+       "tick": 69,
+       "sub": 4,
+       "relSpeedMs": 0.012,
+       "approachMs": 0.009
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "thoracic": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "neck": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "knee_L": {
+      "maxResidualDeg": 5.19,
+      "maxClampDeg": 0
+     },
+     "knee_R": {
+      "maxResidualDeg": 7.096,
+      "maxClampDeg": 0
+     },
+     "ankle_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "ankle_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     }
+    },
+    "feet": [
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0842,
+        "anklePos": [
+         52.0943,
+         0.308,
+         -33.8789
+        ],
+        "ankleV": [
+         5.231,
+         -1.743,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0015,
+        "anklePos": [
+         52.166,
+         0.0881,
+         -34.1768
+        ],
+        "ankleV": [
+         -0.008,
+         -0.003,
+         0.108
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0552,
+        "anklePos": [
+         52.1852,
+         0.2712,
+         -33.8785
+        ],
+        "ankleV": [
+         5.457,
+         -2.208,
+         0.024
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0019,
+        "anklePos": [
+         52.1659,
+         0.088,
+         -34.1749
+        ],
+        "ankleV": [
+         -0.004,
+         -0.003,
+         0.118
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0402,
+        "anklePos": [
+         52.2812,
+         0.2522,
+         -33.8762
+        ],
+        "ankleV": [
+         5.758,
+         -1.144,
+         0.139
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0029,
+        "anklePos": [
+         52.1659,
+         0.0879,
+         -34.1723
+        ],
+        "ankleV": [
+         0,
+         -0.004,
+         0.152
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0348,
+        "anklePos": [
+         52.383,
+         0.2303,
+         -33.8757
+        ],
+        "ankleV": [
+         6.107,
+         -1.313,
+         0.03
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0211,
+        "anklePos": [
+         52.1853,
+         0.1381,
+         -34.1663
+        ],
+        "ankleV": [
+         1.164,
+         3.011,
+         0.365
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0567,
+        "anklePos": [
+         52.4902,
+         0.2238,
+         -33.8756
+        ],
+        "ankleV": [
+         6.432,
+         -0.39,
+         0.005
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0241,
+        "anklePos": [
+         52.2006,
+         0.1634,
+         -34.1614
+        ],
+        "ankleV": [
+         0.917,
+         1.519,
+         0.293
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0882,
+        "anklePos": [
+         52.6014,
+         0.2298,
+         -33.8739
+        ],
+        "ankleV": [
+         6.672,
+         0.36,
+         0.103
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.028,
+        "anklePos": [
+         52.2306,
+         0.2004,
+         -34.1544
+        ],
+        "ankleV": [
+         1.8,
+         2.218,
+         0.419
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1164,
+        "anklePos": [
+         52.6735,
+         0.2548,
+         -33.7077
+        ],
+        "ankleV": [
+         4.325,
+         1.499,
+         9.972
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0279,
+        "anklePos": [
+         52.2332,
+         0.2031,
+         -34.1543
+        ],
+        "ankleV": [
+         0.155,
+         0.158,
+         0.005
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 51,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.2,
+        "anklePos": [
+         52.73,
+         0.3318,
+         -33.6003
+        ],
+        "ankleV": [
+         3.391,
+         4.622,
+         6.443
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0403,
+        "anklePos": [
+         52.3061,
+         0.2574,
+         -34.1428
+        ],
+        "ankleV": [
+         4.376,
+         3.261,
+         0.687
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 52,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1896,
+        "anklePos": [
+         52.8272,
+         0.3068,
+         -33.5904
+        ],
+        "ankleV": [
+         5.831,
+         -1.503,
+         0.594
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0525,
+        "anklePos": [
+         52.388,
+         0.2853,
+         -34.1375
+        ],
+        "ankleV": [
+         4.914,
+         1.676,
+         0.318
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 53,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1382,
+        "anklePos": [
+         52.9234,
+         0.2393,
+         -33.581
+        ],
+        "ankleV": [
+         5.776,
+         -4.049,
+         0.566
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.062,
+        "anklePos": [
+         52.4608,
+         0.2887,
+         -34.1365
+        ],
+        "ankleV": [
+         4.366,
+         0.204,
+         0.061
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 54,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1389,
+        "anklePos": [
+         53.0137,
+         0.2377,
+         -33.5746
+        ],
+        "ankleV": [
+         5.414,
+         -0.095,
+         0.381
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0685,
+        "anklePos": [
+         52.461,
+         0.3003,
+         -34.1345
+        ],
+        "ankleV": [
+         0.016,
+         0.696,
+         0.12
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 55,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0812,
+        "anklePos": [
+         53.0576,
+         0.18,
+         -33.5772
+        ],
+        "ankleV": [
+         2.637,
+         -3.462,
+         -0.158
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0377,
+        "anklePos": [
+         52.5075,
+         0.2687,
+         -34.1214
+        ],
+        "ankleV": [
+         2.791,
+         -1.898,
+         0.787
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 56,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0717,
+        "anklePos": [
+         53.0611,
+         0.1685,
+         -33.5801
+        ],
+        "ankleV": [
+         0.21,
+         -0.69,
+         -0.169
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0683,
+        "anklePos": [
+         52.5232,
+         0.2966,
+         -34.1084
+        ],
+        "ankleV": [
+         0.938,
+         1.672,
+         0.782
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     }
+    ],
+    "contactC": {
+     "tick": 50,
+     "sub": 1,
+     "d": -0.0684,
+     "prim": "LEG",
+     "body": "foot_L",
+     "piece": 8,
+     "pA": null,
+     "pB": null,
+     "feet": [
+      {
+       "foot": "foot_L",
+       "soleLowestY": 0.0941,
+       "ankleV": [
+        4.325,
+        1.499,
+        9.972
+       ]
+      },
+      {
+       "foot": "foot_R",
+       "soleLowestY": 0.028,
+       "ankleV": [
+        0.155,
+        0.158,
+        0.005
+       ]
+      }
+     ],
+     "presentationFeet": [
+      {
+       "contact": false,
+       "mode": "swing"
+      },
+      {
+       "contact": true,
+       "mode": "toe"
+      }
+     ]
+    },
+    "tacklerSepSeries": [
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.4694,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.4468,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.4248,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.4027,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.3859,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.3591,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.3223,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.2857,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.2466,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.2081,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.1703,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.1335,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 1,
+      "d": 0.0983,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 2,
+      "d": 0.0653,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 3,
+      "d": 0.035,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 4,
+      "d": 0.0054,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 1,
+      "d": -0.0684,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 2,
+      "d": -0.0784,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 3,
+      "d": -0.0685,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 4,
+      "d": -0.0595,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 1,
+      "d": -0.0408,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 2,
+      "d": -0.0194,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 3,
+      "d": 0.0092,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 4,
+      "d": -0.0328,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 52,
+      "sub": 1,
+      "d": -0.0698,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 52,
+      "sub": 2,
+      "d": -0.068,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 52,
+      "sub": 3,
+      "d": -0.0684,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 52,
+      "sub": 4,
+      "d": -0.074,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 53,
+      "sub": 1,
+      "d": -0.0855,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 53,
+      "sub": 2,
+      "d": -0.1023,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 53,
+      "sub": 3,
+      "d": -0.1213,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 53,
+      "sub": 4,
+      "d": -0.123,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 54,
+      "sub": 1,
+      "d": -0.1227,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 54,
+      "sub": 2,
+      "d": -0.118,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 54,
+      "sub": 3,
+      "d": -0.1036,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 54,
+      "sub": 4,
+      "d": -0.0895,
+      "body": "foot_L",
+      "prim": "BODY"
+     }
+    ],
+    "minTacklerSepM": -0.1241
+   },
+   "LOCO": {
+    "stream": "LOCO",
+    "predTick": 41,
+    "contactTick": 50,
+    "react": "CORRECTION",
+    "windows": {
+     "promotion": [
+      41,
+      49
+     ],
+     "contact": [
+      49,
+      51
+     ],
+     "recovery": [
+      51,
+      69
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 208.56,
+       "tick": 45,
+       "sub": 4,
+       "relSpeedMs": 6.72,
+       "approachMs": 0.344
+      },
+      "anyAllowedPair": {
+       "minSepMm": 80.05,
+       "pair": "forearm_R↔thigh_R",
+       "tick": 41,
+       "sub": 1,
+       "relSpeedMs": 1.958,
+       "approachMs": -0.954
+      }
+     },
+     "contact": {
+      "bootToBoot": {
+       "minSepMm": 266.44,
+       "tick": 49,
+       "sub": 1,
+       "relSpeedMs": 6.575,
+       "approachMs": -2.427
+      },
+      "anyAllowedPair": {
+       "minSepMm": 85.85,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 51,
+       "sub": 4,
+       "relSpeedMs": 2.09,
+       "approachMs": 0.945
+      }
+     },
+     "recovery": {
+      "bootToBoot": {
+       "minSepMm": 205.36,
+       "tick": 65,
+       "sub": 2,
+       "relSpeedMs": 5.84,
+       "approachMs": 0.065
+      },
+      "anyAllowedPair": {
+       "minSepMm": 50.22,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 56,
+       "sub": 4,
+       "relSpeedMs": 0.292,
+       "approachMs": 0.205
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "thoracic": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "neck": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "knee_L": {
+      "maxResidualDeg": 1.902,
+      "maxClampDeg": 0
+     },
+     "knee_R": {
+      "maxResidualDeg": 6.752,
+      "maxClampDeg": 0
+     },
+     "ankle_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "ankle_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     }
+    },
+    "feet": [
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0842,
+        "anklePos": [
+         52.0943,
+         0.308,
+         -33.8789
+        ],
+        "ankleV": [
+         5.231,
+         -1.743,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0015,
+        "anklePos": [
+         52.166,
+         0.0881,
+         -34.1768
+        ],
+        "ankleV": [
+         -0.008,
+         -0.003,
+         0.108
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0552,
+        "anklePos": [
+         52.1852,
+         0.2712,
+         -33.8785
+        ],
+        "ankleV": [
+         5.457,
+         -2.208,
+         0.024
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0019,
+        "anklePos": [
+         52.1659,
+         0.088,
+         -34.1749
+        ],
+        "ankleV": [
+         -0.004,
+         -0.003,
+         0.118
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0402,
+        "anklePos": [
+         52.2812,
+         0.2522,
+         -33.8762
+        ],
+        "ankleV": [
+         5.758,
+         -1.144,
+         0.139
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": -0.0029,
+        "anklePos": [
+         52.1659,
+         0.0879,
+         -34.1723
+        ],
+        "ankleV": [
+         0,
+         -0.004,
+         0.152
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "ankle"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0348,
+        "anklePos": [
+         52.383,
+         0.2303,
+         -33.8757
+        ],
+        "ankleV": [
+         6.107,
+         -1.313,
+         0.03
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0211,
+        "anklePos": [
+         52.1853,
+         0.1381,
+         -34.1663
+        ],
+        "ankleV": [
+         1.164,
+         3.011,
+         0.365
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0567,
+        "anklePos": [
+         52.4902,
+         0.2238,
+         -33.8756
+        ],
+        "ankleV": [
+         6.432,
+         -0.39,
+         0.005
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0241,
+        "anklePos": [
+         52.2006,
+         0.1634,
+         -34.1614
+        ],
+        "ankleV": [
+         0.917,
+         1.519,
+         0.293
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0882,
+        "anklePos": [
+         52.6014,
+         0.2298,
+         -33.8739
+        ],
+        "ankleV": [
+         6.672,
+         0.36,
+         0.103
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.028,
+        "anklePos": [
+         52.2306,
+         0.2004,
+         -34.1544
+        ],
+        "ankleV": [
+         1.8,
+         2.218,
+         0.419
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.084,
+        "anklePos": [
+         52.7065,
+         0.1937,
+         -33.8678
+        ],
+        "ankleV": [
+         6.306,
+         -2.163,
+         0.365
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0264,
+        "anklePos": [
+         52.2276,
+         0.1972,
+         -34.1567
+        ],
+        "ankleV": [
+         -0.176,
+         -0.195,
+         -0.142
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 51,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.1292,
+        "anklePos": [
+         52.8032,
+         0.2206,
+         -33.8638
+        ],
+        "ankleV": [
+         5.803,
+         1.61,
+         0.242
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0376,
+        "anklePos": [
+         52.2933,
+         0.2501,
+         -34.1448
+        ],
+        "ankleV": [
+         3.942,
+         3.173,
+         0.718
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 52,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.117,
+        "anklePos": [
+         52.8944,
+         0.2111,
+         -33.8588
+        ],
+        "ankleV": [
+         5.475,
+         -0.571,
+         0.299
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0491,
+        "anklePos": [
+         52.3685,
+         0.2807,
+         -34.1384
+        ],
+        "ankleV": [
+         4.509,
+         1.842,
+         0.385
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 53,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0574,
+        "anklePos": [
+         52.9819,
+         0.1575,
+         -33.8529
+        ],
+        "ankleV": [
+         5.248,
+         -3.214,
+         0.35
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.059,
+        "anklePos": [
+         52.4389,
+         0.2893,
+         -34.1361
+        ],
+        "ankleV": [
+         4.223,
+         0.512,
+         0.137
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": true,
+        "mode": "toe"
+       }
+      ]
+     },
+     {
+      "tick": 54,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0661,
+        "anklePos": [
+         53.0617,
+         0.1701,
+         -33.8461
+        ],
+        "ankleV": [
+         4.787,
+         0.756,
+         0.411
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0691,
+        "anklePos": [
+         52.4391,
+         0.3009,
+         -34.1345
+        ],
+        "ankleV": [
+         0.013,
+         0.699,
+         0.093
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 55,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0115,
+        "anklePos": [
+         53.0988,
+         0.115,
+         -33.8352
+        ],
+        "ankleV": [
+         2.224,
+         -3.306,
+         0.656
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0339,
+        "anklePos": [
+         52.4858,
+         0.265,
+         -34.1213
+        ],
+        "ankleV": [
+         2.804,
+         -2.155,
+         0.793
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 56,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0105,
+        "anklePos": [
+         53.097,
+         0.0884,
+         -33.8121
+        ],
+        "ankleV": [
+         -0.104,
+         -1.596,
+         1.387
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0425,
+        "anklePos": [
+         52.5031,
+         0.2718,
+         -34.1084
+        ],
+        "ankleV": [
+         1.034,
+         0.409,
+         0.775
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     }
+    ],
+    "contactC": {
+     "tick": 50,
+     "sub": 1,
+     "d": -0.0266,
+     "prim": "LEG",
+     "body": "foot_L",
+     "piece": 4,
+     "pA": null,
+     "pB": null,
+     "feet": [
+      {
+       "foot": "foot_L",
+       "soleLowestY": 0.0869,
+       "ankleV": [
+        6.306,
+        -2.163,
+        0.365
+       ]
+      },
+      {
+       "foot": "foot_R",
+       "soleLowestY": 0.0276,
+       "ankleV": [
+        -0.176,
+        -0.195,
+        -0.142
+       ]
+      }
+     ],
+     "presentationFeet": [
+      {
+       "contact": false,
+       "mode": "swing"
+      },
+      {
+       "contact": true,
+       "mode": "toe"
+      }
+     ]
+    },
+    "tacklerSepSeries": [
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.4694,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.4468,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.4248,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.4027,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.3859,
+      "body": "shank_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.3591,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.3223,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.2857,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.2466,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.2081,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.1703,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.1335,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 1,
+      "d": 0.0983,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 2,
+      "d": 0.0653,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 3,
+      "d": 0.035,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 4,
+      "d": 0.0054,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 1,
+      "d": -0.0266,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 2,
+      "d": -0.0492,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 3,
+      "d": -0.071,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 4,
+      "d": -0.0792,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 1,
+      "d": -0.0816,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 2,
+      "d": -0.0716,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 3,
+      "d": -0.0633,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 4,
+      "d": -0.0566,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 1,
+      "d": -0.0602,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 2,
+      "d": -0.0445,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 3,
+      "d": -0.0246,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 4,
+      "d": 0.0145,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 1,
+      "d": 0.038,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 2,
+      "d": 0.0603,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 3,
+      "d": 0.0816,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 4,
+      "d": 0.104,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 1,
+      "d": 0.1249,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 2,
+      "d": 0.146,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 3,
+      "d": 0.1512,
+      "body": "foot_L",
+      "prim": "BODY"
+     },
+     {
+      "tick": 54,
+      "sub": 4,
+      "d": 0.1458,
+      "body": "shank_L",
+      "prim": "BODY"
+     }
+    ],
+    "minTacklerSepM": -0.1522
+   }
+  },
+  "rx_planted_leg": {
+   "FULL": {
+    "stream": "FULL",
+    "predTick": 41,
+    "contactTick": 50,
+    "react": "FALL",
+    "windows": {
+     "promotion": [
+      41,
+      49
+     ],
+     "contact": [
+      49,
+      51
+     ],
+     "fall": [
+      51,
+      179
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 348.43,
+       "tick": 41,
+       "sub": 1,
+       "relSpeedMs": 5.682,
+       "approachMs": -2.76
+      },
+      "anyAllowedPair": {
+       "minSepMm": 56.18,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 46,
+       "sub": 4,
+       "relSpeedMs": 0.33,
+       "approachMs": 0.282
+      }
+     },
+     "contact": {
+      "bootToBoot": {
+       "minSepMm": 264.92,
+       "tick": 51,
+       "sub": 4,
+       "relSpeedMs": 9.935,
+       "approachMs": 5.296
+      },
+      "anyAllowedPair": {
+       "minSepMm": 63.95,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 49,
+       "sub": 1,
+       "relSpeedMs": 1.374,
+       "approachMs": -0.442
+      }
+     },
+     "fall": {
+      "bootToBoot": {
+       "minSepMm": -20.5,
+       "tick": 67,
+       "sub": 2,
+       "relSpeedMs": 6.989,
+       "approachMs": null
+      },
+      "anyAllowedPair": {
+       "minSepMm": -134.18,
+       "pair": "thigh_L↔thigh_R",
+       "tick": 64,
+       "sub": 1,
+       "relSpeedMs": 1.993,
+       "approachMs": null
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 14.886,
+      "maxClampDeg": 14.886
+     },
+     "thoracic": {
+      "maxResidualDeg": 4.788,
+      "maxClampDeg": 4.788
+     },
+     "neck": {
+      "maxResidualDeg": 29.393,
+      "maxClampDeg": 30.352
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 50.8,
+      "maxClampDeg": 57.68
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 14.214,
+      "maxClampDeg": 14.541
+     },
+     "elbow_L": {
+      "maxResidualDeg": 78.175,
+      "maxClampDeg": 9.699
+     },
+     "elbow_R": {
+      "maxResidualDeg": 13.016,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 29.684,
+      "maxClampDeg": 32.275
+     },
+     "hip_R": {
+      "maxResidualDeg": 45.762,
+      "maxClampDeg": 41.971
+     },
+     "knee_L": {
+      "maxResidualDeg": 69.762,
+      "maxClampDeg": 32.691
+     },
+     "knee_R": {
+      "maxResidualDeg": 45.453,
+      "maxClampDeg": 4.842
+     },
+     "ankle_L": {
+      "maxResidualDeg": 26.47,
+      "maxClampDeg": 24.307
+     },
+     "ankle_R": {
+      "maxResidualDeg": 14.317,
+      "maxClampDeg": 14.327
+     }
+    },
+    "feet": [
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0747,
+        "anklePos": [
+         52.5667,
+         0.1763,
+         -33.8557
+        ],
+        "ankleV": [
+         5.567,
+         -0.387,
+         0.344
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0774,
+        "anklePos": [
+         51.9781,
+         0.3103,
+         -34.1256
+        ],
+        "ankleV": [
+         2.499,
+         0.624,
+         0.903
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0255,
+        "anklePos": [
+         52.6186,
+         0.1278,
+         -33.8458
+        ],
+        "ankleV": [
+         3.118,
+         -2.912,
+         0.592
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0648,
+        "anklePos": [
+         51.9829,
+         0.2956,
+         -34.1124
+        ],
+        "ankleV": [
+         0.292,
+         -0.882,
+         0.792
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0107,
+        "anklePos": [
+         52.644,
+         0.0884,
+         -33.8243
+        ],
+        "ankleV": [
+         1.524,
+         -2.365,
+         1.291
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.068,
+        "anklePos": [
+         51.9872,
+         0.294,
+         -34.1021
+        ],
+        "ankleV": [
+         0.258,
+         -0.095,
+         0.619
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0059,
+        "anklePos": [
+         52.6441,
+         0.0884,
+         -33.8236
+        ],
+        "ankleV": [
+         0.007,
+         0,
+         0.038
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1084,
+        "anklePos": [
+         52.027,
+         0.3327,
+         -34.0959
+        ],
+        "ankleV": [
+         2.382,
+         2.321,
+         0.374
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0017,
+        "anklePos": [
+         52.6442,
+         0.0884,
+         -33.8235
+        ],
+        "ankleV": [
+         0.003,
+         -0.002,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1259,
+        "anklePos": [
+         52.1077,
+         0.3534,
+         -34.1265
+        ],
+        "ankleV": [
+         4.846,
+         1.245,
+         -1.838
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0453,
+        "anklePos": [
+         52.638,
+         0.1419,
+         -33.8187
+        ],
+        "ankleV": [
+         -0.369,
+         3.211,
+         0.285
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1771,
+        "anklePos": [
+         52.1924,
+         0.4078,
+         -34.1237
+        ],
+        "ankleV": [
+         5.079,
+         3.26,
+         0.165
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "release"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0647,
+        "anklePos": [
+         52.5953,
+         0.1553,
+         -33.8198
+        ],
+        "ankleV": [
+         -2.562,
+         0.805,
+         -0.064
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.2107,
+        "anklePos": [
+         52.2978,
+         0.4426,
+         -34.1395
+        ],
+        "ankleV": [
+         6.326,
+         2.091,
+         -0.947
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "release"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 51,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0497,
+        "anklePos": [
+         52.5799,
+         0.1525,
+         -33.8325
+        ],
+        "ankleV": [
+         -0.925,
+         -0.169,
+         -0.759
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1823,
+        "anklePos": [
+         52.4255,
+         0.4122,
+         -34.1464
+        ],
+        "ankleV": [
+         7.662,
+         -1.828,
+         -0.415
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "release"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 52,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0297,
+        "anklePos": [
+         52.5902,
+         0.154,
+         -33.8711
+        ],
+        "ankleV": [
+         0.619,
+         0.094,
+         -2.317
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.148,
+        "anklePos": [
+         52.5563,
+         0.3697,
+         -34.1284
+        ],
+        "ankleV": [
+         7.85,
+         -2.548,
+         1.08
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "release"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 53,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0172,
+        "anklePos": [
+         52.6411,
+         0.1454,
+         -33.9281
+        ],
+        "ankleV": [
+         3.054,
+         -0.516,
+         -3.425
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1241,
+        "anklePos": [
+         52.6664,
+         0.3338,
+         -34.0782
+        ],
+        "ankleV": [
+         6.602,
+         -2.152,
+         3.014
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "release"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 54,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0051,
+        "anklePos": [
+         52.7146,
+         0.1332,
+         -33.9414
+        ],
+        "ankleV": [
+         4.407,
+         -0.731,
+         -0.793
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0983,
+        "anklePos": [
+         52.7324,
+         0.2909,
+         -34.0101
+        ],
+        "ankleV": [
+         3.961,
+         -2.574,
+         4.088
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 55,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0043,
+        "anklePos": [
+         52.7892,
+         0.1191,
+         -33.9459
+        ],
+        "ankleV": [
+         4.479,
+         -0.848,
+         -0.275
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0811,
+        "anklePos": [
+         52.7791,
+         0.2524,
+         -33.969
+        ],
+        "ankleV": [
+         2.805,
+         -2.311,
+         2.466
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 56,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0043,
+        "anklePos": [
+         52.8501,
+         0.1163,
+         -33.9458
+        ],
+        "ankleV": [
+         3.651,
+         -0.169,
+         0.011
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0403,
+        "anklePos": [
+         52.8311,
+         0.1903,
+         -33.9531
+        ],
+        "ankleV": [
+         3.118,
+         -3.727,
+         0.953
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     }
+    ],
+    "contactC": {
+     "tick": 49,
+     "sub": 3,
+     "d": -0.0224,
+     "prim": "LEG",
+     "body": "foot_L",
+     "piece": 6,
+     "pA": null,
+     "pB": null,
+     "feet": [
+      {
+       "foot": "foot_L",
+       "soleLowestY": 0.0336,
+       "ankleV": [
+        -0.369,
+        3.211,
+        0.285
+       ]
+      },
+      {
+       "foot": "foot_R",
+       "soleLowestY": 0.1641,
+       "ankleV": [
+        5.079,
+        3.26,
+        0.165
+       ]
+      }
+     ],
+     "presentationFeet": [
+      {
+       "contact": false,
+       "mode": "release"
+      },
+      {
+       "contact": false,
+       "mode": "swing"
+      }
+     ]
+    },
+    "tacklerSepSeries": [
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.2624,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.2391,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.2166,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.195,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.1764,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.1581,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.1399,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.1217,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.1037,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.0862,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.0695,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.0539,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 1,
+      "d": 0.0286,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 2,
+      "d": 0.0031,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 3,
+      "d": -0.0224,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 4,
+      "d": -0.048,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 1,
+      "d": -0.0578,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 2,
+      "d": -0.0662,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 3,
+      "d": -0.0692,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 4,
+      "d": -0.0695,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 1,
+      "d": -0.0659,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 2,
+      "d": -0.0578,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 3,
+      "d": -0.0534,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 4,
+      "d": -0.0489,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 1,
+      "d": -0.0425,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 2,
+      "d": -0.0373,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 3,
+      "d": -0.0338,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 4,
+      "d": -0.0304,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 1,
+      "d": -0.0327,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 2,
+      "d": -0.035,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 3,
+      "d": -0.0373,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 4,
+      "d": -0.0396,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 1,
+      "d": -0.0452,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 2,
+      "d": -0.0475,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 3,
+      "d": -0.0537,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 4,
+      "d": -0.0624,
+      "body": "foot_R",
+      "prim": "LEG"
+     }
+    ],
+    "minTacklerSepM": -0.119
+   },
+   "LOCO": {
+    "stream": "LOCO",
+    "predTick": 41,
+    "contactTick": 50,
+    "react": "FALL",
+    "windows": {
+     "promotion": [
+      41,
+      49
+     ],
+     "contact": [
+      49,
+      51
+     ],
+     "fall": [
+      51,
+      179
+     ]
+    },
+    "perWindow": {
+     "promotion": {
+      "bootToBoot": {
+       "minSepMm": 348.43,
+       "tick": 41,
+       "sub": 1,
+       "relSpeedMs": 5.682,
+       "approachMs": -2.76
+      },
+      "anyAllowedPair": {
+       "minSepMm": 56.18,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 46,
+       "sub": 4,
+       "relSpeedMs": 0.33,
+       "approachMs": 0.282
+      }
+     },
+     "contact": {
+      "bootToBoot": {
+       "minSepMm": 333.29,
+       "tick": 51,
+       "sub": 4,
+       "relSpeedMs": 6.917,
+       "approachMs": 4.149
+      },
+      "anyAllowedPair": {
+       "minSepMm": 64.59,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 49,
+       "sub": 1,
+       "relSpeedMs": 1.492,
+       "approachMs": -0.6
+      }
+     },
+     "fall": {
+      "bootToBoot": {
+       "minSepMm": 209.32,
+       "tick": 71,
+       "sub": 4,
+       "relSpeedMs": 7.682,
+       "approachMs": 0.476
+      },
+      "anyAllowedPair": {
+       "minSepMm": 45.17,
+       "pair": "forearm_L↔thigh_L",
+       "tick": 89,
+       "sub": 3,
+       "relSpeedMs": 1.474,
+       "approachMs": -0.025
+      }
+     }
+    },
+    "projection": {
+     "lumbar": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "thoracic": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "neck": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "shoulder_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "elbow_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "hip_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "knee_L": {
+      "maxResidualDeg": 10.259,
+      "maxClampDeg": 0
+     },
+     "knee_R": {
+      "maxResidualDeg": 6.48,
+      "maxClampDeg": 0
+     },
+     "ankle_L": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     },
+     "ankle_R": {
+      "maxResidualDeg": 0,
+      "maxClampDeg": 0
+     }
+    },
+    "feet": [
+     {
+      "tick": 44,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0747,
+        "anklePos": [
+         52.5667,
+         0.1763,
+         -33.8557
+        ],
+        "ankleV": [
+         5.567,
+         -0.387,
+         0.344
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0774,
+        "anklePos": [
+         51.9781,
+         0.3103,
+         -34.1256
+        ],
+        "ankleV": [
+         2.499,
+         0.624,
+         0.903
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 45,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0255,
+        "anklePos": [
+         52.6186,
+         0.1278,
+         -33.8458
+        ],
+        "ankleV": [
+         3.118,
+         -2.912,
+         0.592
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0648,
+        "anklePos": [
+         51.9829,
+         0.2956,
+         -34.1124
+        ],
+        "ankleV": [
+         0.292,
+         -0.882,
+         0.792
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": false,
+        "mode": "swing"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 46,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0107,
+        "anklePos": [
+         52.644,
+         0.0884,
+         -33.8243
+        ],
+        "ankleV": [
+         1.524,
+         -2.365,
+         1.291
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.068,
+        "anklePos": [
+         51.9872,
+         0.294,
+         -34.1021
+        ],
+        "ankleV": [
+         0.258,
+         -0.095,
+         0.619
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 47,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0059,
+        "anklePos": [
+         52.6441,
+         0.0884,
+         -33.8236
+        ],
+        "ankleV": [
+         0.007,
+         0,
+         0.038
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1084,
+        "anklePos": [
+         52.027,
+         0.3327,
+         -34.0959
+        ],
+        "ankleV": [
+         2.382,
+         2.321,
+         0.374
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "release"
+       }
+      ]
+     },
+     {
+      "tick": 48,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0017,
+        "anklePos": [
+         52.6442,
+         0.0884,
+         -33.8235
+        ],
+        "ankleV": [
+         0.003,
+         -0.002,
+         0.009
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1259,
+        "anklePos": [
+         52.1077,
+         0.3534,
+         -34.1265
+        ],
+        "ankleV": [
+         4.846,
+         1.245,
+         -1.838
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 49,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0009,
+        "anklePos": [
+         52.644,
+         0.0882,
+         -33.8256
+        ],
+        "ankleV": [
+         -0.013,
+         -0.008,
+         -0.125
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1371,
+        "anklePos": [
+         52.1924,
+         0.3678,
+         -34.1237
+        ],
+        "ankleV": [
+         5.079,
+         0.86,
+         0.165
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 50,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0019,
+        "anklePos": [
+         52.6446,
+         0.0883,
+         -33.8266
+        ],
+        "ankleV": [
+         0.04,
+         0.003,
+         -0.064
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1599,
+        "anklePos": [
+         52.2685,
+         0.3921,
+         -34.0946
+        ],
+        "ankleV": [
+         4.565,
+         1.46,
+         1.747
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 51,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0021,
+        "anklePos": [
+         52.6442,
+         0.0882,
+         -33.8284
+        ],
+        "ankleV": [
+         -0.025,
+         -0.006,
+         -0.106
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1475,
+        "anklePos": [
+         52.3611,
+         0.38,
+         -34.106
+        ],
+        "ankleV": [
+         5.556,
+         -0.728,
+         -0.685
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 52,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0024,
+        "anklePos": [
+         52.6437,
+         0.0881,
+         -33.8304
+        ],
+        "ankleV": [
+         -0.03,
+         -0.006,
+         -0.121
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.1256,
+        "anklePos": [
+         52.4552,
+         0.356,
+         -34.1218
+        ],
+        "ankleV": [
+         5.648,
+         -1.439,
+         -0.946
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 53,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0029,
+        "anklePos": [
+         52.6433,
+         0.088,
+         -33.8327
+        ],
+        "ankleV": [
+         -0.027,
+         -0.006,
+         -0.139
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0948,
+        "anklePos": [
+         52.5515,
+         0.3208,
+         -34.1378
+        ],
+        "ankleV": [
+         5.781,
+         -2.109,
+         -0.957
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 54,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": -0.0036,
+        "anklePos": [
+         52.6429,
+         0.0879,
+         -33.8352
+        ],
+        "ankleV": [
+         -0.022,
+         -0.008,
+         -0.15
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.058,
+        "anklePos": [
+         52.6523,
+         0.276,
+         -34.1542
+        ],
+        "ankleV": [
+         6.045,
+         -2.688,
+         -0.987
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "ankle"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 55,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0228,
+        "anklePos": [
+         52.6648,
+         0.1469,
+         -33.8539
+        ],
+        "ankleV": [
+         1.315,
+         3.545,
+         -1.12
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0443,
+        "anklePos": [
+         52.7591,
+         0.2534,
+         -34.1722
+        ],
+        "ankleV": [
+         6.412,
+         -1.359,
+         -1.078
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "toe"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     },
+     {
+      "tick": 56,
+      "feet": [
+       {
+        "foot": "foot_L",
+        "soleLowestY": 0.0233,
+        "anklePos": [
+         52.6692,
+         0.1541,
+         -33.8578
+        ],
+        "ankleV": [
+         0.265,
+         0.429,
+         -0.237
+        ]
+       },
+       {
+        "foot": "foot_R",
+        "soleLowestY": 0.0537,
+        "anklePos": [
+         52.8734,
+         0.2405,
+         -34.1897
+        ],
+        "ankleV": [
+         6.852,
+         -0.774,
+         -1.051
+        ]
+       }
+      ],
+      "presentation": [
+       {
+        "contact": true,
+        "mode": "toe"
+       },
+       {
+        "contact": false,
+        "mode": "swing"
+       }
+      ]
+     }
+    ],
+    "contactC": {
+     "tick": 50,
+     "sub": 2,
+     "d": -0.0025,
+     "prim": "LEG",
+     "body": "foot_L",
+     "piece": 4,
+     "pA": null,
+     "pB": null,
+     "feet": [
+      {
+       "foot": "foot_L",
+       "soleLowestY": -0.0013,
+       "ankleV": [
+        0.04,
+        0.003,
+        -0.064
+       ]
+      },
+      {
+       "foot": "foot_R",
+       "soleLowestY": 0.1484,
+       "ankleV": [
+        4.565,
+        1.46,
+        1.747
+       ]
+      }
+     ],
+     "presentationFeet": [
+      {
+       "contact": true,
+       "mode": "ankle"
+      },
+      {
+       "contact": false,
+       "mode": "swing"
+      }
+     ]
+    },
+    "tacklerSepSeries": [
+     {
+      "tick": 46,
+      "sub": 1,
+      "d": 0.2624,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 2,
+      "d": 0.2391,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 3,
+      "d": 0.2166,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 46,
+      "sub": 4,
+      "d": 0.195,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 1,
+      "d": 0.1764,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 2,
+      "d": 0.1581,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 3,
+      "d": 0.1399,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 47,
+      "sub": 4,
+      "d": 0.1217,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 1,
+      "d": 0.1037,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 2,
+      "d": 0.0862,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 3,
+      "d": 0.0695,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 48,
+      "sub": 4,
+      "d": 0.0539,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 1,
+      "d": 0.039,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 2,
+      "d": 0.0254,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 3,
+      "d": 0.0131,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 49,
+      "sub": 4,
+      "d": 0.0039,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 1,
+      "d": 0.0001,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 2,
+      "d": -0.0025,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 3,
+      "d": -0.0044,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 50,
+      "sub": 4,
+      "d": -0.0061,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 1,
+      "d": -0.0079,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 2,
+      "d": -0.0097,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 3,
+      "d": -0.0115,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 51,
+      "sub": 4,
+      "d": -0.0134,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 1,
+      "d": -0.0152,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 2,
+      "d": -0.0171,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 3,
+      "d": -0.0154,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 52,
+      "sub": 4,
+      "d": -0.0173,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 1,
+      "d": -0.0154,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 2,
+      "d": -0.0172,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 3,
+      "d": -0.0153,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 53,
+      "sub": 4,
+      "d": -0.0171,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 1,
+      "d": -0.0151,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 2,
+      "d": -0.0167,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 3,
+      "d": -0.0148,
+      "body": "foot_L",
+      "prim": "LEG"
+     },
+     {
+      "tick": 54,
+      "sub": 4,
+      "d": -0.0164,
+      "body": "foot_L",
+      "prim": "LEG"
+     }
+    ],
+    "minTacklerSepM": -0.0902
+   }
+  }
+ }
+}

@@ -2742,3 +2742,25 @@ Not pushed.
   - (1) accept the record body with recorded exceptions (amendment 1; self-penetration > 10 mm in any PI-1 run reported as an integrity failure) — recommended; or
   - (2) anatomical joint spacing (expected promotion pop vs the rig); or
   - (3) fix the rig spacing first (out of scope).
+
+## 2026-10-09 — D-1A read-only investigation (`pi1/PI1_D1A_INVESTIGATION.md`; instruction `sources/2026-10-09_user_instruction_d1a_investigation.md`): recommendation D1C (replace / re-record the fall case); nothing changed
+
+- **A, self-collision.** On the exact D-1 body and the recorded motion (240 Hz):
+  - closest boot↔boot approach 205 mm;
+  - closest allowed pair 50 mm (forearm↔thigh) in every promotion / contact / correction window.
+  - The 24.6 mm isoSelfCol penetration is not reachable.
+  - The only recorded fall motion (the authored overlay) is not V2-representable (thighs interpenetrate 134 mm, joint projections up to 70°), so the physical fall's self-contact is only measurable in a PI-1 run.
+  - Proposed (not applied): a PI-1-scoped exception for the G1 isoSelfCol stress case only, with the 10 mm limit active in every PI-1 run.
+- **B, the weight-bearing "mismatch" does not exist.**
+  - AIR row k = state after squad tick k + 1. At the authoritative contact (squad 49.5) the simulation and the presentation both have L planted, single support, early stance; positions agree within 14 mm.
+  - The FULL "release" is the reaction overlay's response in the contact tick.
+  - Cause (3), a sample-alignment error. Erratum appended to the stop report.
+- **C, the recorded collision is not representable by the promoted body.**
+  - The simulation's V1 contact capsules (foot r 0.05, ankle 0.08 m; slide leg r 0.07 at 0.12 m) give a 33 – 64 mm sweep of the planted foot.
+  - With the actual D-1 boot, the same recorded slide path only grazes the forefoot top (≤ 9.5 mm), 12 – 17 ms later. The solid slide-body contact comes ≈ 0.2 s later, at toe-off.
+  - The recover clip is representable (48 – 82 mm vs 39 – 75 mm); the miss stays a miss.
+- **Also found:**
+  - presentation knee varus 6 – 8° (V2 knee has no varus axis; mapped ankle up to 36 mm off);
+  - toe-pivot boot length (V2 boot 21 – 28 mm above the pitch).
+- **Recommendation D1C:** re-record the three cases on a geometry-consistent baseline (candidate: the accepted slide-contact V1.2, d539e7a / e2c98ec), gated by this kinematic representability check before freezing PI-1; carry the isoSelfCol exception.
+- **Awaiting user.**
