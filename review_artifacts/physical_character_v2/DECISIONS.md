@@ -2928,3 +2928,30 @@ Not pushed.
 **CPU:** CHARCOLLIDE body 67 µs vs 3 µs per call.
 
 **Stop:** per TRACKB_PREREG §6 and the user's hard stop. No criterion or geometry was changed after seeing results. **Awaiting user.**
+
+## 2026-10-09 — PI-1 REV1 (knee PM-2, rigid-foot RF-1, tackler criterion): HARD STOP — three classes still not representable; PI-1 not run (`pi1/rev1/PI1_REV1_RESULTS.md`; prereg c437d0c; source `sources/2026-10-09_user_decision_pi1_compat_revision_knee_rigidfoot_tackler.md`)
+
+**Tackler: RETAINED as gating.** A rigid stand-in frozen at k_p diverges where the far-rule leg still extends and sweeps after promotion: first contact on a different segment, +7.5 to +12 ticks, or absent; leg endpoints at contact differ by 112 – 1,050 mm.
+
+**Knee: PM-2 tested and not adopted.** It is worse than R-K on the position, direction and angular-velocity rows, though its peak spin is lower.
+- The R-K spin is caused by the presentation's plant-IK on/off steps (≈ 4.5° knee-plane jump in one frame) meeting V2's hinge knee.
+- No causal mapping can absorb these within P-4 + P-14 + P-15.
+
+**Rigid foot: RF-1.**
+- Eligible promotion frames improve to 10 / 26 (from 6).
+- At toe pivot the rigid boot cannot reach the turf (≥ 22.9 mm): a genuine limit, which would cause a drop pop.
+- Heel strike: the y = 0 target-spec gap is disclosed.
+- TR-1 and P-17 fail where the contact flag changes.
+
+**Gate rerun: 0 / 26.**
+- Near miss 0 / 5: runner lead-in pose.
+- Recoverable 0 / 4: all fail the tackler step; rx_behind_standing fails only that.
+- Planted-leg FALL 0 / 8.
+
+**Architectural answer: not yet demonstrated.**
+- Simulation authority holds throughout: presentation never changed a hash.
+- Smallest blockers:
+  - (1) the lead-in definition: the physical body must match every presentation frame, which conflicts with the presentation's plant-IK steps and toe pivot under rendered-follows-physics;
+  - (2) PI-1's rigid stand-in tackler vs the swept slide leg.
+
+**Awaiting user.**

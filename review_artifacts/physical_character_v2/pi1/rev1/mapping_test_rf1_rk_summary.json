@@ -1,0 +1,155 @@
+{
+ "determinism": true,
+ "byClass": {
+  "jog": {
+   "frames": 1273,
+   "RK": {
+    "MC1": 0,
+    "MC2": 119,
+    "MC3": 299,
+    "MC4": 7,
+    "MC6": 438,
+    "allMC": 509,
+    "maxP15": 16.075
+   },
+   "PM2": {
+    "MC1": 270,
+    "MC2": 192,
+    "MC3": 536,
+    "MC4": 0,
+    "MC6": 539,
+    "allMC": 492,
+    "maxP15": 8.323,
+    "maxAnkleMm": 37.3278,
+    "maxTwistDeg": 12.9134
+   },
+   "RF1": {
+    "promotionsWithCleanTransition": 3,
+    "items": {
+     "P17_angMom": 1050,
+     "TR1_footInc": 385,
+     "TR1_footAngVel": 529,
+     "P9_footContact_R": 564,
+     "P9_footContact_L": 537,
+     "P11_renderedBootPenMm": 432,
+     "P16_comVel": 38,
+     "P10_nonContact": 9
+    },
+    "maxFootIncDeg": 23.76,
+    "maxFootAngVel": 24.88
+   }
+  },
+  "run": {
+   "frames": 261,
+   "RK": {
+    "MC1": 0,
+    "MC2": 1,
+    "MC3": 95,
+    "MC4": 0,
+    "MC6": 52,
+    "allMC": 129,
+    "maxP15": 8.629
+   },
+   "PM2": {
+    "MC1": 109,
+    "MC2": 64,
+    "MC3": 183,
+    "MC4": 0,
+    "MC6": 76,
+    "allMC": 31,
+    "maxP15": 8.616,
+    "maxAnkleMm": 27.6281,
+    "maxTwistDeg": 8.9092
+   },
+   "RF1": {
+    "promotionsWithCleanTransition": 9,
+    "items": {
+     "P17_angMom": 211,
+     "P9_footContact_L": 106,
+     "P10_nonContact": 63,
+     "P11_renderedBootPenMm": 49,
+     "TR1_footInc": 19,
+     "TR1_footAngVel": 38,
+     "P9_footContact_R": 96,
+     "P16_comVel": 20
+    },
+    "maxFootIncDeg": 6.31,
+    "maxFootAngVel": 6.611
+   }
+  },
+  "sprint": {
+   "frames": 864,
+   "RK": {
+    "MC1": 6,
+    "MC2": 2,
+    "MC3": 397,
+    "MC4": 25,
+    "MC6": 233,
+    "allMC": 386,
+    "maxP15": 7.688
+   },
+   "PM2": {
+    "MC1": 209,
+    "MC2": 116,
+    "MC3": 447,
+    "MC4": 25,
+    "MC6": 432,
+    "allMC": 229,
+    "maxP15": 8.654,
+    "maxAnkleMm": 25.7874,
+    "maxTwistDeg": 8.2225
+   },
+   "RF1": {
+    "promotionsWithCleanTransition": 52,
+    "items": {
+     "TR1_footAngVel": 103,
+     "P16_comVel": 702,
+     "TR1_footInc": 38,
+     "P10_nonContact": 202,
+     "P17_angMom": 262,
+     "P9_footContact_R": 130,
+     "P9_footContact_L": 119,
+     "P11_renderedBootPenMm": 118
+    },
+    "maxFootIncDeg": 7.22,
+    "maxFootAngVel": 7.566
+   }
+  },
+  "standing": {
+   "frames": 206,
+   "RK": {
+    "MC1": 0,
+    "MC2": 0,
+    "MC3": 22,
+    "MC4": 0,
+    "MC6": 24,
+    "allMC": 182,
+    "maxP15": 1.356
+   },
+   "PM2": {
+    "MC1": 0,
+    "MC2": 0,
+    "MC3": 22,
+    "MC4": 0,
+    "MC6": 22,
+    "allMC": 184,
+    "maxP15": 0.793,
+    "maxAnkleMm": 5.4177,
+    "maxTwistDeg": 2.5748
+   },
+   "RF1": {
+    "promotionsWithCleanTransition": 89,
+    "items": {
+     "P16_comVel": 42,
+     "P17_angMom": 76,
+     "P10_nonContact": 8,
+     "P9_footContact_L": 40,
+     "TR1_footAngVel": 96,
+     "TR1_footInc": 32
+    },
+    "maxFootIncDeg": 21.03,
+    "maxFootAngVel": 22.029
+   }
+  }
+ }
+}

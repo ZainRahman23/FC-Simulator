@@ -1,0 +1,4 @@
+process.env.V13_WT = "/Users/zainrahman/Downloads/FC Simulator worktrees/slide-contact-v1.3-charcollide";
+const M = await import(process.cwd() + "/review_artifacts/physical_character_v2/pi1/rev1/scripts/pcg_rev1.mjs");
+const { loadAir, makeMapper, bodyLowest, B, bi } = M; const [dir, cs, r0, r1] = process.argv.slice(2), R = loadAir(dir, `${cs}_LOCO.json.gz`), m = makeMapper(R, { knee: "RK", rf1: true });
+for (let k = +r0; k <= +r1; k++) { const P = m.poseAt(k); console.log(k, JSON.stringify(Object.fromEntries(Object.entries(P.foot).map(([s, f]) => [s, { c: f.contact ? f.mode : "-", pitch: +(+f.pitchDeg).toFixed(1), lo0: +f.lowest0Mm.toFixed(1), lo: +f.lowestMm.toFixed(1) }]))), "ankleClamp", JSON.stringify({ L: +(P.clamp.ankle_L || 0).toFixed(2), R: +(P.clamp.ankle_R || 0).toFixed(2) })); }
