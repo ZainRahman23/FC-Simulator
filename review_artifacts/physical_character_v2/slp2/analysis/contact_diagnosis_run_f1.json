@@ -1,0 +1,196 @@
+{
+ "speed": "run",
+ "f": 1,
+ "regenerated": "b9939a2e",
+ "evidence": "b9939a2e",
+ "identical": true,
+ "window": "[0.5 s, FALLEN − 0.3 s]",
+ "touchdowns": [
+  {
+   "t": 0.9875,
+   "foot": "L",
+   "vFwd": -0.006,
+   "vLat": 0.112,
+   "vDown": 0.651,
+   "footAheadOfComM": -0.026,
+   "schedPhase": "stance"
+  },
+  {
+   "t": 1.2958,
+   "foot": "R",
+   "vFwd": 0.103,
+   "vLat": -0.055,
+   "vDown": 0.541,
+   "footAheadOfComM": 0.001,
+   "schedPhase": "stance"
+  },
+  {
+   "t": 1.5458,
+   "foot": "L",
+   "vFwd": 0.277,
+   "vLat": 0.089,
+   "vDown": 0.936,
+   "footAheadOfComM": 0.179,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 1.8667,
+   "foot": "R",
+   "vFwd": 0.834,
+   "vLat": -0.26,
+   "vDown": 0.951,
+   "footAheadOfComM": 0.352,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 2.2,
+   "foot": "L",
+   "vFwd": 0.778,
+   "vLat": -0.194,
+   "vDown": 1.144,
+   "footAheadOfComM": 0.478,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 2.3333,
+   "foot": "R",
+   "vFwd": 5.302,
+   "vLat": -1.183,
+   "vDown": 0.321,
+   "footAheadOfComM": -0.115,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 2.4333,
+   "foot": "L",
+   "vFwd": 2.447,
+   "vLat": -0.63,
+   "vDown": 0.714,
+   "footAheadOfComM": -0.257,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 2.5625,
+   "foot": "L",
+   "vFwd": 4.395,
+   "vLat": 0.853,
+   "vDown": -0.726,
+   "footAheadOfComM": -0.345,
+   "schedPhase": "swing"
+  }
+ ],
+ "damp": {
+  "hip.x": {
+   "meanAbsNm": 35,
+   "maxAbsNm": 466.2
+  },
+  "hip.y": {
+   "meanAbsNm": 60.4,
+   "maxAbsNm": 822.5
+  },
+  "hip.z": {
+   "meanAbsNm": 43.3,
+   "maxAbsNm": 517.1
+  },
+  "knee.x": {
+   "meanAbsNm": 81.3,
+   "maxAbsNm": 585
+  },
+  "knee.y": {
+   "meanAbsNm": 167.4,
+   "maxAbsNm": 771.6
+  },
+  "ankle.x": {
+   "meanAbsNm": 172.5,
+   "maxAbsNm": 2548.7
+  },
+  "ankle.y": {
+   "meanAbsNm": 334.1,
+   "maxAbsNm": 2928.4
+  },
+  "ankle.z": {
+   "meanAbsNm": 147.2,
+   "maxAbsNm": 2690.7
+  }
+ },
+ "sat": {
+  "stance": {
+   "ankle.x": 162,
+   "ankle.y": 153,
+   "hip.x": 165,
+   "knee.x": 137,
+   "ankle.z": 66,
+   "hip.y": 41,
+   "hip.z": 130,
+   "knee.y": 155
+  },
+  "swing": {
+   "knee.y": 198,
+   "ankle.x": 35,
+   "ankle.y": 54,
+   "hip.z": 149,
+   "ankle.z": 30,
+   "hip.y": 354,
+   "hip.x": 122,
+   "knee.x": 42
+  }
+ },
+ "stanceImpulse": [
+  {
+   "foot": "L",
+   "t0": 0.9875,
+   "JzNs": 4.78,
+   "JyNs": 175.6,
+   "schedJyNs": 236.25
+  },
+  {
+   "foot": "R",
+   "t0": 1.2958,
+   "JzNs": 3.76,
+   "JyNs": 172.94,
+   "schedJyNs": 240.83
+  },
+  {
+   "foot": "L",
+   "t0": 1.5458,
+   "JzNs": -8.99,
+   "JyNs": 190.53,
+   "schedJyNs": 240.83
+  },
+  {
+   "foot": "R",
+   "t0": 1.8667,
+   "JzNs": -37.25,
+   "JyNs": 198.92,
+   "schedJyNs": 241.75
+  },
+  {
+   "foot": "L",
+   "t0": 2.2,
+   "JzNs": -80.61,
+   "JyNs": 197.02,
+   "schedJyNs": 240.83
+  },
+  {
+   "foot": "L",
+   "t0": 2.4333,
+   "JzNs": -1.86,
+   "JyNs": 1.42,
+   "schedJyNs": 0
+  },
+  {
+   "foot": "R",
+   "t0": 2.3333,
+   "JzNs": -29.26,
+   "JyNs": 85.23,
+   "schedJyNs": 160.31
+  },
+  {
+   "foot": "L",
+   "t0": 2.5625,
+   "JzNs": -34.41,
+   "JyNs": 19.46,
+   "schedJyNs": 0
+  }
+ ]
+}

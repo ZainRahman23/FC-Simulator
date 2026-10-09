@@ -1,0 +1,148 @@
+{
+ "speed": "jog",
+ "f": 1,
+ "regenerated": "e07e8f6c",
+ "evidence": "e07e8f6c",
+ "identical": true,
+ "window": "[0.5 s, FALLEN − 0.3 s]",
+ "touchdowns": [
+  {
+   "t": 0.9083,
+   "foot": "L",
+   "vFwd": 0.163,
+   "vLat": 0.121,
+   "vDown": 0.363,
+   "footAheadOfComM": 0.117,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 1.275,
+   "foot": "R",
+   "vFwd": 0.011,
+   "vLat": -0.099,
+   "vDown": 0.528,
+   "footAheadOfComM": 0.352,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 1.7042,
+   "foot": "L",
+   "vFwd": 0.922,
+   "vLat": 0.206,
+   "vDown": 2.342,
+   "footAheadOfComM": 0.435,
+   "schedPhase": "stance"
+  },
+  {
+   "t": 1.8208,
+   "foot": "R",
+   "vFwd": 5.17,
+   "vLat": 0.077,
+   "vDown": 2.611,
+   "footAheadOfComM": -0.266,
+   "schedPhase": "swing"
+  },
+  {
+   "t": 2.1417,
+   "foot": "L",
+   "vFwd": 3.116,
+   "vLat": 1.326,
+   "vDown": 0.841,
+   "footAheadOfComM": -0.425,
+   "schedPhase": "swing"
+  }
+ ],
+ "damp": {
+  "hip.x": {
+   "meanAbsNm": 27,
+   "maxAbsNm": 408.9
+  },
+  "hip.y": {
+   "meanAbsNm": 36.5,
+   "maxAbsNm": 451
+  },
+  "hip.z": {
+   "meanAbsNm": 19.6,
+   "maxAbsNm": 252.6
+  },
+  "knee.x": {
+   "meanAbsNm": 26,
+   "maxAbsNm": 303.7
+  },
+  "knee.y": {
+   "meanAbsNm": 107.6,
+   "maxAbsNm": 452.5
+  },
+  "ankle.x": {
+   "meanAbsNm": 81.2,
+   "maxAbsNm": 556
+  },
+  "ankle.y": {
+   "meanAbsNm": 277.9,
+   "maxAbsNm": 5295.4
+  },
+  "ankle.z": {
+   "meanAbsNm": 98.8,
+   "maxAbsNm": 1933.1
+  }
+ },
+ "sat": {
+  "stance": {
+   "ankle.x": 152,
+   "knee.x": 35,
+   "ankle.y": 73,
+   "hip.x": 16,
+   "ankle.z": 88,
+   "hip.y": 40,
+   "knee.y": 39,
+   "hip.z": 66
+  },
+  "swing": {
+   "knee.y": 114,
+   "ankle.x": 52,
+   "ankle.y": 48,
+   "hip.z": 127,
+   "ankle.z": 27,
+   "hip.y": 289,
+   "hip.x": 71,
+   "knee.x": 29
+  }
+ },
+ "stanceImpulse": [
+  {
+   "foot": "L",
+   "t0": 0.9083,
+   "JzNs": -17.36,
+   "JyNs": 237.69,
+   "schedJyNs": 265.59
+  },
+  {
+   "foot": "R",
+   "t0": 1.275,
+   "JzNs": -69.53,
+   "JyNs": 287.57,
+   "schedJyNs": 275.26
+  },
+  {
+   "foot": "L",
+   "t0": 1.7042,
+   "JzNs": -90.63,
+   "JyNs": 274.54,
+   "schedJyNs": 265.29
+  },
+  {
+   "foot": "R",
+   "t0": 1.8208,
+   "JzNs": -35.69,
+   "JyNs": 29.84,
+   "schedJyNs": 0
+  },
+  {
+   "foot": "L",
+   "t0": 2.1417,
+   "JzNs": -14.33,
+   "JyNs": 48.94,
+   "schedJyNs": 0
+  }
+ ]
+}
