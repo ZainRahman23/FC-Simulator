@@ -2894,3 +2894,37 @@ Not pushed.
 **Conclusion A.** Not fixable by any warm-start policy within the accepted Jolt configuration. The remaining routes are model-level versioned designs: a compliant toe joint, a direct / reduced-coordinate foot-chain solve, or a non-physiological toe mass. This is a solver-class limitation with light articulated contact links, not evidence against V2's anatomy, joint ranges or toe geometry.
 
 **Unchanged:** every criterion, F1, the accepted Jolt configuration and F0.
+
+## 2026-10-09 — Track B: CHARCOLLIDE-1 baseline V1.3 built and neutral; no fixture passes the compatibility gate with pose-compatible F0; all three PI-1 classes BLOCKED; PI-1 not run (`pi1/trackB/TRACKB_RESULTS.md`)
+
+**Preregistration chain:** dd88ee9, A1 469d7ef, E1 0a60763, A2 6802742.
+
+**What was built:**
+- Profile 3e28e02 (vinicius; inscribed V2 radii; foot / toe from the record-length boot).
+- V1.3 = **5042230** on `prototype/slide-contact-v1.3-charcollide` (from e2c98ec; local).
+
+**Neutrality: PASS.**
+- Profiles removed: V1.2 hashes reproduced 19 / 19.
+- OFFNP / OFF / FULL / LOCO identical: 20 / 20 rx and 6 / 6 defending.
+- Export twice identical: 20 / 20.
+
+**The rebaseline supplies all three classes naturally.**
+- Near miss at off +1.13 m.
+- rx_free_leg: STUMBLE via a toe_R contact.
+- rx_planted_leg: FALL SIDE on the planted shin_L, J 144.
+
+**Gate (thresholds unchanged, PCG-F0 per A2):** 0 / 26 candidates pass. Blockers:
+- the rigid F0 boot vs the presentation's toe pivot / heel strike (P-9);
+- frozen R-K long-axis twist rates (P-15 / P-17);
+- contact-location correspondence (CG-1 / CG-4);
+- for the standing STUMBLE rx_behind_standing, only the CG-7 tackler-primitive continuity sub-item (17.9 vs 10 mm).
+
+**Running-pose scan:** F0 is compatible only in pre-heel-strike windows of ≤ 7 consecutive frames; no running promotion window fits.
+
+**Tooling:**
+- The gate's fails-overwrite bug was fixed before any reported result; the pre-fix output is kept.
+- A1 / E1 disclosed.
+
+**CPU:** CHARCOLLIDE body 67 µs vs 3 µs per call.
+
+**Stop:** per TRACKB_PREREG §6 and the user's hard stop. No criterion or geometry was changed after seeing results. **Awaiting user.**

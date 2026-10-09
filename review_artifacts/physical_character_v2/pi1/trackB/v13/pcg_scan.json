@@ -1,0 +1,356 @@
+{
+ "note": "pre-contact LOCO frames of every distinct V1.3 record; PCG-F0 rows per TRACKB_PREREG §3 / A2",
+ "classes": {
+  "jog (≈3 m/s)": {
+   "frames": 524,
+   "eligible": 111,
+   "geometricOK": 323,
+   "kinematicOK": 286,
+   "longestEligibleRunFrames": 7,
+   "failItems": {
+    "P17_angMom": 186,
+    "P9_footContact_R": 108,
+    "P9_footContact_L": 90,
+    "P15_angVel": 59,
+    "P10_nonContact": 3
+   },
+   "byPhase": [
+    {
+     "phase": "0.0–0.1",
+     "frames": 52,
+     "eligible": 9,
+     "geomOK": 29,
+     "kinOK": 19
+    },
+    {
+     "phase": "0.1–0.2",
+     "frames": 58,
+     "eligible": 0,
+     "geomOK": 58,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.2–0.3",
+     "frames": 61,
+     "eligible": 0,
+     "geomOK": 44,
+     "kinOK": 17
+    },
+    {
+     "phase": "0.3–0.4",
+     "frames": 60,
+     "eligible": 3,
+     "geomOK": 3,
+     "kinOK": 60
+    },
+    {
+     "phase": "0.4–0.5",
+     "frames": 54,
+     "eligible": 41,
+     "geomOK": 41,
+     "kinOK": 54
+    },
+    {
+     "phase": "0.5–0.6",
+     "frames": 46,
+     "eligible": 10,
+     "geomOK": 24,
+     "kinOK": 19
+    },
+    {
+     "phase": "0.6–0.7",
+     "frames": 45,
+     "eligible": 0,
+     "geomOK": 45,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.7–0.8",
+     "frames": 44,
+     "eligible": 0,
+     "geomOK": 31,
+     "kinOK": 13
+    },
+    {
+     "phase": "0.8–0.9",
+     "frames": 50,
+     "eligible": 6,
+     "geomOK": 6,
+     "kinOK": 50
+    },
+    {
+     "phase": "0.9–1.0",
+     "frames": 54,
+     "eligible": 42,
+     "geomOK": 42,
+     "kinOK": 54
+    }
+   ]
+  },
+  "sprint (≈7.5 m/s)": {
+   "frames": 882,
+   "eligible": 362,
+   "geometricOK": 765,
+   "kinematicOK": 396,
+   "longestEligibleRunFrames": 5,
+   "failItems": {
+    "P15_angVel": 391,
+    "P16_comVel": 231,
+    "P17_angMom": 44,
+    "P9_footContact_L": 31,
+    "P9_footContact_R": 31,
+    "P10_nonContact": 30,
+    "P14_bodyVel": 26,
+    "P12_clamp": 25,
+    "P4_kneeMm": 6,
+    "P4_ankleMm": 6,
+    "P6_limbSwingDeg": 2
+   },
+   "byPhase": [
+    {
+     "phase": "0.0–0.1",
+     "frames": 90,
+     "eligible": 40,
+     "geomOK": 71,
+     "kinOK": 40
+    },
+    {
+     "phase": "0.1–0.2",
+     "frames": 89,
+     "eligible": 0,
+     "geomOK": 89,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.2–0.3",
+     "frames": 83,
+     "eligible": 32,
+     "geomOK": 83,
+     "kinOK": 32
+    },
+    {
+     "phase": "0.3–0.4",
+     "frames": 93,
+     "eligible": 41,
+     "geomOK": 70,
+     "kinOK": 43
+    },
+    {
+     "phase": "0.4–0.5",
+     "frames": 80,
+     "eligible": 64,
+     "geomOK": 66,
+     "kinOK": 78
+    },
+    {
+     "phase": "0.5–0.6",
+     "frames": 84,
+     "eligible": 37,
+     "geomOK": 65,
+     "kinOK": 37
+    },
+    {
+     "phase": "0.6–0.7",
+     "frames": 87,
+     "eligible": 0,
+     "geomOK": 87,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.7–0.8",
+     "frames": 90,
+     "eligible": 36,
+     "geomOK": 90,
+     "kinOK": 36
+    },
+    {
+     "phase": "0.8–0.9",
+     "frames": 96,
+     "eligible": 44,
+     "geomOK": 70,
+     "kinOK": 46
+    },
+    {
+     "phase": "0.9–1.0",
+     "frames": 90,
+     "eligible": 68,
+     "geomOK": 74,
+     "kinOK": 84
+    }
+   ]
+  },
+  "run (≈5.5 m/s)": {
+   "frames": 143,
+   "eligible": 65,
+   "geometricOK": 107,
+   "kinematicOK": 82,
+   "longestEligibleRunFrames": 4,
+   "failItems": {
+    "P15_angVel": 38,
+    "P17_angMom": 31,
+    "P9_footContact_L": 15,
+    "P9_footContact_R": 15,
+    "P10_nonContact": 6
+   },
+   "byPhase": [
+    {
+     "phase": "0.0–0.1",
+     "frames": 14,
+     "eligible": 0,
+     "geomOK": 9,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.1–0.2",
+     "frames": 16,
+     "eligible": 14,
+     "geomOK": 16,
+     "kinOK": 14
+    },
+    {
+     "phase": "0.2–0.3",
+     "frames": 12,
+     "eligible": 0,
+     "geomOK": 10,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.3–0.4",
+     "frames": 15,
+     "eligible": 7,
+     "geomOK": 7,
+     "kinOK": 12
+    },
+    {
+     "phase": "0.4–0.5",
+     "frames": 12,
+     "eligible": 10,
+     "geomOK": 10,
+     "kinOK": 12
+    },
+    {
+     "phase": "0.5–0.6",
+     "frames": 10,
+     "eligible": 0,
+     "geomOK": 7,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.6–0.7",
+     "frames": 16,
+     "eligible": 14,
+     "geomOK": 16,
+     "kinOK": 14
+    },
+    {
+     "phase": "0.7–0.8",
+     "frames": 14,
+     "eligible": 0,
+     "geomOK": 12,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.8–0.9",
+     "frames": 16,
+     "eligible": 6,
+     "geomOK": 6,
+     "kinOK": 12
+    },
+    {
+     "phase": "0.9–1.0",
+     "frames": 18,
+     "eligible": 14,
+     "geomOK": 14,
+     "kinOK": 18
+    }
+   ]
+  },
+  "standing": {
+   "frames": 206,
+   "eligible": 104,
+   "geometricOK": 120,
+   "kinematicOK": 182,
+   "longestEligibleRunFrames": 50,
+   "failItems": {
+    "P9_footContact_L": 54,
+    "P9_footContact_R": 35,
+    "P17_angMom": 24,
+    "P14_bodyVel": 22,
+    "P16_comVel": 22,
+    "P10_nonContact": 2
+   },
+   "byPhase": [
+    {
+     "phase": "0.0–0.1",
+     "frames": 148,
+     "eligible": 99,
+     "geomOK": 107,
+     "kinOK": 136
+    },
+    {
+     "phase": "0.1–0.2",
+     "frames": 5,
+     "eligible": 0,
+     "geomOK": 4,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.2–0.3",
+     "frames": 7,
+     "eligible": 0,
+     "geomOK": 4,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.3–0.4",
+     "frames": 8,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 8
+    },
+    {
+     "phase": "0.4–0.5",
+     "frames": 7,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 7
+    },
+    {
+     "phase": "0.5–0.6",
+     "frames": 31,
+     "eligible": 5,
+     "geomOK": 5,
+     "kinOK": 31
+    },
+    {
+     "phase": "0.6–0.7",
+     "frames": 0,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.7–0.8",
+     "frames": 0,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.8–0.9",
+     "frames": 0,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 0
+    },
+    {
+     "phase": "0.9–1.0",
+     "frames": 0,
+     "eligible": 0,
+     "geomOK": 0,
+     "kinOK": 0
+    }
+   ]
+  }
+ }
+}

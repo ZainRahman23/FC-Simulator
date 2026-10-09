@@ -1,0 +1,884 @@
+{
+ "summary": {
+  "sl_win": {
+   "params": {
+    "ticks": 260,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": 0,
+     "active": 1,
+     "autoSwitch": false,
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 62,
+       "y": 26,
+       "facing": 1.5707963267948966,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": 1.5707963267948966,
+          "gear": "jog"
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 67.5,
+       "y": 31,
+       "facing": 3.141592653589793,
+       "char": "gabriel",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 200,
+      "keys": {
+       "left": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 5,
+      "do": "slideWhen",
+      "d": 3.2
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "fb44c05fcf4c40be"
+   },
+   "OFF": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "3f8eb2128846b026"
+   },
+   "FULL": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "502df23014eeab60"
+   },
+   "LOCO": {
+    "gameplayHash": "b8145794",
+    "contact": {
+     "tick": 73,
+     "seg": "foot_R",
+     "segPlanted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 73,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 9.32,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0712,
+    "sha256": "7c745ded415b4a16"
+   }
+  },
+  "sl_early": {
+   "params": {
+    "ticks": 260,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": 0,
+     "active": 1,
+     "autoSwitch": false,
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 62,
+       "y": 26,
+       "facing": 1.5707963267948966,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": 1.5707963267948966,
+          "gear": "jog"
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 70.5,
+       "y": 31,
+       "facing": 3.141592653589793,
+       "char": "osimhen",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 18,
+      "keys": {
+       "left": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 18,
+      "do": "slide",
+      "dir": 3.141592653589793
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "e5867640ea752f08"
+   },
+   "OFF": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "d5b23edad1483484"
+   },
+   "FULL": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "4fc6a0852f70471f"
+   },
+   "LOCO": {
+    "gameplayHash": "b8ba1e18",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 5.5391,
+    "sha256": "af1fb2a1c51ed34e"
+   }
+  },
+  "sl_late": {
+   "params": {
+    "ticks": 260,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": 0,
+     "active": 1,
+     "autoSwitch": false,
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 62,
+       "y": 26,
+       "facing": 1.5707963267948966,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": 1.5707963267948966,
+          "gear": "jog"
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 67.5,
+       "y": 33.5,
+       "facing": 3.141592653589793,
+       "char": "cucurella",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 40,
+      "keys": {
+       "left": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 40,
+      "do": "slide",
+      "dir": 3.141592653589793
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "b71830344c423989"
+   },
+   "OFF": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "49d96c42ac8f5b3e"
+   },
+   "FULL": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "0e60deee7d5bb898"
+   },
+   "LOCO": {
+    "gameplayHash": "9f28be40",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": -1,
+    "minSurfM": 0.5031,
+    "sha256": "6377df38cd3be976"
+   }
+  },
+  "sl_from_behind": {
+   "params": {
+    "ticks": 260,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": 0,
+     "active": 1,
+     "autoSwitch": false,
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 60,
+       "y": 34,
+       "facing": 0,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": 0,
+          "gear": "jog"
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 55,
+       "y": 34.4,
+       "facing": 0,
+       "char": "vinicius",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 200,
+      "keys": {
+       "right": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 5,
+      "do": "slideWhen",
+      "d": 2.6
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "e1b55d6fc0633c9e"
+   },
+   "OFF": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "c075de6dd5cbdcfb"
+   },
+   "FULL": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "7531dcd86e276663"
+   },
+   "LOCO": {
+    "gameplayHash": "44054073",
+    "contact": {
+     "tick": 87,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 87,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 122.78,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 75,
+    "minSurfM": -0.0803,
+    "sha256": "0964ac237e0b1d98"
+   }
+  },
+  "sl_left": {
+   "params": {
+    "ticks": 260,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": 0,
+     "active": 1,
+     "autoSwitch": false,
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 62,
+       "y": 42,
+       "facing": -1.5707963267948966,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": -1.5707963267948966,
+          "gear": "jog"
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 67.5,
+       "y": 37,
+       "facing": 3.141592653589793,
+       "char": "gabriel",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 200,
+      "keys": {
+       "left": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 5,
+      "do": "slideWhen",
+      "d": 3.2
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "857fe1690b88a818"
+   },
+   "OFF": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "24460d0fe6f541f0"
+   },
+   "FULL": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "6b84bea3351ab2ad"
+   },
+   "LOCO": {
+    "gameplayHash": "9bf15806",
+    "contact": {
+     "tick": 75,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 75,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "NEGLIGIBLE",
+      "J": 0,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 64,
+    "minSurfM": -0.0156,
+    "sha256": "73917b2237add2fc"
+   }
+  },
+  "sl_loose": {
+   "params": {
+    "ticks": 240,
+    "drill": {
+     "defending": true,
+     "center": [
+      62,
+      34
+     ],
+     "owner": null,
+     "active": 1,
+     "autoSwitch": false,
+     "ball": {
+      "x": 62,
+      "y": 30,
+      "vx": 0,
+      "vy": 3
+     },
+     "players": [
+      {
+       "name": "A",
+       "team": 0,
+       "x": 56,
+       "y": 40,
+       "facing": 0,
+       "char": "vinicius",
+       "ai": {
+        "mode": "DRIBBLE",
+        "dirs": [
+         {
+          "t": 0,
+          "dir": null
+         }
+        ]
+       }
+      },
+      {
+       "name": "D",
+       "team": 1,
+       "x": 68,
+       "y": 34,
+       "facing": 3.141592653589793,
+       "char": "osimhen",
+       "ai": {
+        "mode": "HOLD"
+       }
+      }
+     ]
+    },
+    "keys": [
+     {
+      "from": 0,
+      "to": 200,
+      "keys": {
+       "left": true,
+       "sprint": true
+      }
+     }
+    ],
+    "cmds": [
+     {
+      "at": 5,
+      "do": "slideWhen",
+      "d": 3
+     }
+    ]
+   },
+   "OFFNP": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": null,
+    "minSurfM": null,
+    "sha256": "32acf808a913e815"
+   },
+   "OFF": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "216c860a1c3c6c70"
+   },
+   "FULL": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "f2cf8413c9ab97f5"
+   },
+   "LOCO": {
+    "gameplayHash": "5f414c8a",
+    "contact": {
+     "tick": 146,
+     "seg": "pelvis",
+     "segPlanted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 146,
+      "sub": 1,
+      "prim": "TRUNK",
+      "seg": "pelvis",
+      "segPlanted": null,
+      "react": "FALL",
+      "J": 118.03,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 135,
+    "minSurfM": -0.1612,
+    "sha256": "0fdf26b590558d52"
+   }
+  }
+ },
+ "errors": []
+}
