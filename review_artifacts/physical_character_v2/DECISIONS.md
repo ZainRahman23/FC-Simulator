@@ -2698,3 +2698,20 @@ Not pushed.
 - **Verdict:** C physically real (planted flat-phase slip 0.0 mm, legs 102 % of weight pre-collapse, no writes); not mechanically neutral.
 - **Classification:** same family (contact forces against A absorbed by B), mechanism moved to stance propulsion plus swing-foot drag. No prohibited measure shown to be required; no V2 body limit shown.
 - **Awaiting user:** (1) read-only swing-feasibility diagnosis (recommended first), (2) a new SLP-2C amendment (full-T_sw horizontal swing, swing inertial feed-forward and clearance, stance feed-forward from the authoritative sweep rate), or (3) end the SLP series.
+
+## 2026-10-09 — SLP SERIES ENDED (option 3); ARCHITECTURE PIVOT: cheap authoritative locomotion + promotion into V2 physics for meaningful interaction; PI-1 designed, not implemented (`PHYSICAL_CHARACTER_ARCHITECTURE_PIVOT.md`, `pi1/PI1_DESIGN.md`; decision `sources/2026-10-09_user_decision_end_slp_series_pivot_promotion.md`)
+
+- **Ended:** the SLP series. No swing-feasibility diagnostic, no further SLP-2C amendment. SLP-1 (627d935), SLP-1b (e4f572f), SLP-2 (e3c99e1) and SLP-2C (e63be8b) are preserved exactly as failed / diagnostic architectural evidence (code paths "1" / "1b" / "2" / "2c" and evidence untouched).
+- **Adopted conclusion:**
+  - Fully physical foot-ground contacts are not required during ordinary unobstructed locomotion.
+  - SLP-2 validated A, the authoritative whole-body translation mechanism.
+  - SLP-2C showed that keeping continuously physical contacts mechanically neutral needs ever more sophisticated gait / contact control.
+  - **No V2 body limit was demonstrated.** The failure is the requirement that continuously physical leg contacts stay mechanically neutral under an external authoritative trajectory.
+- **Production direction (conceptual, not implemented):**
+  - Ordinary locomotion: the simulation owns position / velocity / acceleration / facing; presentation is procedural skeletal locomotion + terrain / foot IK; ground queries allowed; no rigid-body foot forces; no autonomous balance; no V2 stack per tick.
+  - Meaningful interaction: promote the player into V2 physics from a state consistent with the authoritative pose / position / velocity / momentum; real colliders / masses / joints / contacts; the simulation stays authoritative over the outcome, which physics explains; deterministic reconciliation back into locomotion without visible teleport.
+- **A:** retained as a validated experimental mechanism (exact momentum, no torque, no writes, negligible cost); not automatically the production implementation.
+- **B / recoverability:** retained as research; a candidate stumble / fall-severity mechanism; not responsible for ordinary locomotion.
+- **V2:** preserved; nothing deleted, simplified or rewritten.
+- **Next slice designed:** PI-1, one runner promoted into the Tackled-Player V1 slide-contact pair (`rx_free_leg` CORRECTION, `rx_planted_leg` FALL SIDE) plus a miss control. Tackler = dynamic proxy. Offline record-driven V2 consumer. Decisions D-1 … D-5 awaiting the user.
+- **Not done:** no slide-tackle implementation, no gait experiment, no TD2C / E2.
