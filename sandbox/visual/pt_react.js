@@ -54,8 +54,50 @@ const ptRxNow = () => (typeof performance !== "undefined" ? performance.now() : 
 const ptRxAttrs = (c) => Object.assign({}, PT_REACT.ref, c.attrs || {});
 const ptRxK = (c, attr, k) => 1 + k * (Math.max(0, Math.min(1, ptRxAttrs(c)[attr] / 100)) - 0.6);   // attribute hook, exactly 1 at the reference
 const ptRxMass = (c) => c.massKg || PT_REACT.massRef;
+// ── CHARCOLLIDE-1 (slide-contact V1.3; physical-character-v2 CORRECTION_DESIGN_FROZEN §1 + TRACKB_PREREG §2 / A1) ────────────────────
+// For a player whose character has a FROZEN collision profile (pt_charcollide.js), the leg / foot / toe segments come from that character's
+// own skeleton (rig record → ofCharSkeleton logic, simulation-owned) posed by the SHARED PURE locomotion law (ofLocoCycle, lean / roll / twist 0)
+// at the simulation's own stride clock, on the gkRootMatrix basis at the authoritative root advanced by dt. The capsules are inscribed in the
+// character's V2 physical colliders (radii from the profile). Pure in (authoritative state, frozen data): no presentation state is read.
+const PT_RX_CHAR_SKEL = {};                                                                          // simulation-owned skeletons, built once per profile
+function ptRxCharProfile(c) { return (typeof PT_CHARCOLLIDE !== "undefined" && c && c.char && PT_CHARCOLLIDE.profiles[c.char]) || null; }
+function ptRxCharSkel(prof) { if (!PT_RX_CHAR_SKEL[prof.id]) PT_RX_CHAR_SKEL[prof.id] = ofCharSkeleton({ rig: Object.assign({ ground: null, feet: null, identity: null }, prof.rig), skel: null }); return PT_RX_CHAR_SKEL[prof.id]; }
+// flight bob: the cycle's _bob at the end of the most recent stance (pure in the phase; TRACKB_PREREG §2.6)
+function ptRxCharBob(skel, P, u) {
+  const S = P.stance, phR = ((u % 1) + 1) % 1, phL = (((u + 0.5) % 1) + 1) % 1; if (phR < S || phL < S) return null;   // not a flight phase
+  const back = Math.min(phR - S, phL - S), uTO = u - back - 1e-6; return ofLocoCycle(skel, P, uTO, { lean: 0, turnRoll: 0, twist: 0 })._bob;
+}
+function ptRxBodyChar(c, dt, prof) {
+  const R = PT_REACT, p = c.p, leg = p.legLen || PT.LEG_REF, v = Math.hypot(p.vx, p.vy), skel = ptRxCharSkel(prof);
+  const G = ofLocoParams(v), step = G.step * leg, cad = step > 1e-6 ? v / step : 0;                    // the simulation's stride clock (unchanged law)
+  const phase = ((((p.gaitPhase != null ? p.gaitPhase : 0.08) + (v > PT.IDLE_V ? dt * cad / 2 : 0)) % 1) + 1) % 1;
+  const dir = v > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing, fx = Math.cos(dir), fy = Math.sin(dir), x = p.x + p.vx * dt, y = p.y + p.vy * dt;
+  // pose: the shared pure law; below the idle-blend speed the presentation's idle blend (ofLocoTick's formula, lean / twist / roll 0)
+  const cyc = ofLocoCycle(skel, G, phase, { lean: 0, turnRoll: 0, twist: 0, lastBob: ptRxCharBob(skel, G, phase) });
+  const L0 = OF_LOCO, wGait = smooth01(clamp01((v - L0.idleV * 0.5) / (L0.idleBlendV - L0.idleV * 0.5)));
+  const idle = Object.assign({}, OF_IDLE, { _pelvis: V3.scale(OF_IDLE._pelvis, skel.legLen / OF_REF_LEG), pelvis: [OF_IDLE.pelvis[0], 0, 0], spine: [OF_IDLE.spine[0], 0, 0], chest: [OF_IDLE.chest[0], 0, 0] });
+  const pose = wGait >= 1 ? cyc : wGait <= 0 ? idle : ofPoseLerp(idle, cyc, wGait);
+  // FK in the character frame with the pose's pelvis offset (as the presentation applies it), then the gkRootMatrix basis in pitch coordinates:
+  // local (x right, y up, z forward) → pitch (x + fx·z − fy·x, y + fy·z + fx·x, height y)  [gkRootMatrix + pitchW, written out]
+  const pel = skel.byName.pelvis, saved = pel.off.slice(), pd = pose._pelvis || [0, 0, 0]; pel.off = [saved[0] + pd[0], saved[1] + pd[1], saved[2] + pd[2]];
+  const fk = skelFK(skel, pose, M4.ident()); pel.off = saved;
+  const toP = (l) => [x + fx * l[2] - fy * l[0], y + fy * l[2] + fx * l[0], l[1]];
+  const out = { x, y, dir, fx, fy, v, phase, stance: G.stance, cad, leg, legs: {}, char: prof.id, prof };
+  for (const sd of ["R", "L"]) {
+    const p0 = sd === "R" ? 0 : 0.5, up = (((phase - p0) % 1) + 1) % 1, planted = up < G.stance || v <= PT.IDLE_V;   // the stride law's planted rule (unchanged)
+    const sw = planted ? 0 : (up - G.stance) / (1 - G.stance), b = (n) => skel.byName[n + "_" + sd].idx, wF = fk.world[b("foot")], wT = fk.world[b("toe")];
+    const hip = toP(fk.joint[b("thigh")]), knee = toP(fk.joint[b("shin")]), ankle = toP(fk.joint[b("foot")]), mtp = toP(fk.joint[b("toe")]), tip = toP(fk.tip[b("toe")]);
+    const footA = toP(M4.transformPoint(wF, prof.foot.a)), footB = toP(M4.transformPoint(wF, prof.foot.b)), toeB = toP(M4.transformPoint(wT, prof.toe.bToe));
+    out.legs[sd] = { planted, up, sw, ankle, knee, hip, toe: tip, mtp, footA, footB, toeA: footB, toeB };
+  }
+  const hipH = R.hipH * leg; out.pelvis = [x, y, hipH]; out.com = [x, y, R.comH * leg]; out.neck = [x, y, hipH + 0.55 * leg];   // pelvis / torso: unchanged (CORRECTION §1 scope)
+  return out;
+}
+// radius of a (possibly tapered) segment at axis parameter t ∈ [0, 1] (TRACKB_PREREG §2.4); constant segments: r
+const ptRxSegR = (sg, t) => (sg.ra != null ? sg.ra + (sg.rb - sg.ra) * Math.max(0, Math.min(1, t)) : sg.r);
 // ── 1. BODY: the attacker's segments at time offset dt (s) from now (stride clock + root advanced at constant velocity) ─────────────
 function ptRxBody(c, dt, footLen) {                                                                // footLen: V1.2 slide contacts use the rendered boot's length (PT_REACT.footLenV12)
+  const prof = ptRxCharProfile(c); if (prof) return ptRxBodyChar(c, dt, prof);                    // V1.3: a profiled character's own geometry (footLen n/a)
   const R = PT_REACT, p = c.p, leg = p.legLen || PT.LEG_REF, v = Math.hypot(p.vx, p.vy);
   const G = typeof ofLocoParams === "function" ? ofLocoParams(v) : { step: 1, stance: 0.45 }, step = G.step * leg, cad = step > 1e-6 ? v / step : 0;
   const phase = ((((p.gaitPhase != null ? p.gaitPhase : 0.08) + (v > PT.IDLE_V ? dt * cad / 2 : 0)) % 1) + 1) % 1;
@@ -81,6 +123,14 @@ function ptRxBody(c, dt, footLen) {                                             
 }
 function ptRxSegments(B) {
   const R = PT_REACT.rad, s = [];
+  if (B.prof) { const F = B.prof, K = F.kinds;                                                          // V1.3 CHARCOLLIDE-1: proximal → distal, tapered where the V2 collider is
+    for (const sd of ["R", "L"]) { const L = B.legs[sd];
+      s.push({ name: "foot_" + sd, seg: K.foot, sd, a: L.footA, b: L.footB, r: Math.max(F.foot.ra, F.foot.rb), ra: F.foot.ra, rb: F.foot.rb, planted: L.planted },
+             { name: "toe_" + sd, seg: K.toe, sd, a: L.toeA, b: L.toeB, r: F.toe.r, planted: L.planted },
+             { name: "shin_" + sd, seg: K.shin, sd, a: L.knee, b: L.ankle, r: F.radii.shin[0], ra: F.radii.shin[0], rb: F.radii.shin[1], planted: L.planted },
+             { name: "thigh_" + sd, seg: K.thigh, sd, a: L.hip, b: L.knee, r: F.radii.thigh[0], ra: F.radii.thigh[0], rb: F.radii.thigh[1], planted: L.planted }); }
+    s.push({ name: "pelvis", seg: "pelvis", a: B.pelvis, b: [B.pelvis[0], B.pelvis[1], B.pelvis[2] + 0.1], r: R.pelvis }, { name: "torso", seg: "torso", a: [B.pelvis[0], B.pelvis[1], B.pelvis[2] + 0.1], b: B.neck, r: R.torso });
+    return s; }
   for (const sd of ["R", "L"]) { const L = B.legs[sd]; s.push({ name: "foot_" + sd, seg: "foot", sd, a: L.ankle, b: L.toe, r: R.foot, planted: L.planted }, { name: "shin_" + sd, seg: "shin", sd, a: L.knee, b: L.ankle, r: R.shin, planted: L.planted }, { name: "thigh_" + sd, seg: "thigh", sd, a: L.hip, b: L.knee, r: R.thigh, planted: L.planted }); }
   s.push({ name: "pelvis", seg: "pelvis", a: B.pelvis, b: [B.pelvis[0], B.pelvis[1], B.pelvis[2] + 0.1], r: R.pelvis }, { name: "torso", seg: "torso", a: [B.pelvis[0], B.pelvis[1], B.pelvis[2] + 0.1], b: B.neck, r: R.torso });
   return s;
@@ -129,7 +179,7 @@ function ptRxDetect(t, ci, ai, standSweep) {
     const dt = -PT_DT * (1 - n / SUB);                                                             // state at sub-step n (the tick's end is dt = 0)
     const B = ptRxBody(a, dt, c.def && c.def.kind === "SLIDE" && c.def.rule === "far" ? PT_REACT.footLenV12 : null), segs = ptRxSegments(B), prims = ptRxTacklerPrims(c, dt, standSweep); B.dtSub = dt;
     let best = null;
-    for (const pr of prims) for (const sg of segs) { const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b); const pen = pr.r + sg.r - cc.d; if (pen > 0 && (!best || pen > best.pen)) best = { pr, sg, cc, pen }; }
+    for (const pr of prims) for (const sg of segs) { const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b); const pen = pr.r + ptRxSegR(sg, cc.t) - cc.d; if (pen > 0 && (!best || pen > best.pen)) best = { pr, sg, cc, pen }; }
     if (best) return { sub: n, B, ...best };
   }
   return null;
@@ -263,12 +313,12 @@ function ptRxNonPen(t, c, d, a, j, V) {
   // reaction model's (sweep, trip, the foot lifted over), not a wall
   const BODYP = { BODY: 1, TRUNK: 1, TUCK: 1, TUCKSHIN: 1 };
   let best = null; for (const pr of prims) for (const sg of segs) { const rigid = !sg.sd || (BODYP[pr.prim] && (sg.planted || sg.seg === "thigh")); if (!rigid) continue;   // a thigh is heavy and on his pelvis
-    const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + sg.r - cc.d; if (pen > R.slop && (!best || pen > best.pen)) best = { pen, pr, sg, cc }; }
+    const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + ptRxSegR(sg, cc.t) - cc.d; if (pen > R.slop && (!best || pen > best.pen)) best = { pen, pr, sg, cc }; }
   // OVERRUN: the slider's body UNDER him — a weight-bearing leg it sits on cannot be pushed clear (the foot is planted: moving his body does not move
   // it), and a slider travelling with him keeps its body under his; held there (> overrunPen for overrunTicks) his support is gone: that contact is
   // re-resolved with the support LOST, through the same balance law (normally he goes over the slider). Once per victim.
   // trapped: any RIGID part of him (a planted leg, a thigh, pelvis, trunk) held on the slider's body; a planted leg is preferred as the one carried away
-  let trapped = null; for (const pr of prims) { if (!BODYP[pr.prim]) continue; for (const sg of segs) { if (sg.sd && !sg.planted && sg.seg !== "thigh") continue; const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + sg.r - cc.d;
+  let trapped = null; for (const pr of prims) { if (!BODYP[pr.prim]) continue; for (const sg of segs) { if (sg.sd && !sg.planted && sg.seg !== "thigh") continue; const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + ptRxSegR(sg, cc.t) - cc.d;
     if (pen > R.overrunPen && (!trapped || (sg.planted && !trapped.sg.planted) || (!!sg.planted === !!trapped.sg.planted && pen > trapped.pen))) trapped = { pen, pr, sg, cc }; } }
   V.np = V.np || { n: 0, max: 0, trap: 0 }; V.np.trap = trapped ? V.np.trap + 1 : 0;
   if (trapped && V.np.trap >= R.overrunTicks && !V.overrun && !(a.react && a.react.kind === "FALL")) { V.overrun = t.squad.tick;
