@@ -1,0 +1,1490 @@
+{
+ "summary": {
+  "rx_miss": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0,
+    "off": 1.01
+   },
+   "OFF": {
+    "gameplayHash": "baa3f6f6",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 50,
+    "minSurfM": 0.109,
+    "sha256": "485a1786b288d140"
+   },
+   "FULL": {
+    "gameplayHash": "baa3f6f6",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 50,
+    "minSurfM": 0.109,
+    "sha256": "7cf41672705dd880"
+   },
+   "LOCO": {
+    "gameplayHash": "baa3f6f6",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 50,
+    "minSurfM": 0.109,
+    "sha256": "ebf74243af15cd0e"
+   }
+  },
+  "rx_free_leg": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "e34c34af",
+    "contact": {
+     "tick": 50,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 10.41,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 10.41,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.1198,
+    "sha256": "6ee68caee93e1a01"
+   },
+   "FULL": {
+    "gameplayHash": "e34c34af",
+    "contact": {
+     "tick": 50,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 10.41,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 10.41,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.1198,
+    "sha256": "2699adba03d6ff3a"
+   },
+   "LOCO": {
+    "gameplayHash": "e34c34af",
+    "contact": {
+     "tick": 50,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 10.41,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 10.41,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.1198,
+    "sha256": "9855ee66d37d0600"
+   }
+  },
+  "rx_planted_leg": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "8e68edce0a867bca"
+   },
+   "FULL": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "c5e2b65b67e51f05"
+   },
+   "LOCO": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "750ad4a4e84a53c3"
+   }
+  },
+  "rx_jog": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "2066e45967765580"
+   },
+   "FULL": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "82a9d6a3df4320e2"
+   },
+   "LOCO": {
+    "gameplayHash": "e4139c52",
+    "contact": {
+     "tick": 49,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 49,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 101.3,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 39,
+    "minSurfM": -0.0912,
+    "sha256": "358f588ce9e3ce02"
+   }
+  },
+  "rx_sprint": {
+   "params": {
+    "v": 7.5,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0.5
+   },
+   "OFF": {
+    "gameplayHash": "5e3f29f5",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0726,
+    "sha256": "f84c93ce554d4dcf"
+   },
+   "FULL": {
+    "gameplayHash": "5e3f29f5",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0726,
+    "sha256": "5df7d9f90fe753a6"
+   },
+   "LOCO": {
+    "gameplayHash": "5e3f29f5",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0726,
+    "sha256": "bbb18593c67156bb"
+   }
+  },
+  "rx_square": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0.75,
+    "off": 0.35
+   },
+   "OFF": {
+    "gameplayHash": "8ff92529",
+    "contact": {
+     "tick": 61,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 5.19,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 61,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 5.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 66,
+      "sub": 1,
+      "prim": "TUCK",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "STUMBLE",
+      "J": 3.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 70,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 3.88,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 49,
+    "minSurfM": -0.1129,
+    "sha256": "6fad7292d1e4de95"
+   },
+   "FULL": {
+    "gameplayHash": "8ff92529",
+    "contact": {
+     "tick": 61,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 5.19,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 61,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 5.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 66,
+      "sub": 1,
+      "prim": "TUCK",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "STUMBLE",
+      "J": 3.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 70,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 3.88,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 49,
+    "minSurfM": -0.1129,
+    "sha256": "80c8667d710fd108"
+   },
+   "LOCO": {
+    "gameplayHash": "8ff92529",
+    "contact": {
+     "tick": 61,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 5.19,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 61,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 5.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 66,
+      "sub": 1,
+      "prim": "TUCK",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "STUMBLE",
+      "J": 3.19,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 70,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": false,
+      "react": "FALL",
+      "J": 3.88,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 49,
+    "minSurfM": -0.1129,
+    "sha256": "ff8e174887c36065"
+   }
+  },
+  "rx_glancing": {
+   "params": {
+    "v": 3,
+    "ang": 90,
+    "ph": 0.75,
+    "off": 0.35,
+    "short": 0.3
+   },
+   "OFF": {
+    "gameplayHash": "2254319f",
+    "contact": {
+     "tick": 65,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 14.23,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 65,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 14.23,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 54,
+    "minSurfM": -0.1025,
+    "sha256": "d13c38e89c08e392"
+   },
+   "FULL": {
+    "gameplayHash": "2254319f",
+    "contact": {
+     "tick": 65,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 14.23,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 65,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 14.23,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 54,
+    "minSurfM": -0.1025,
+    "sha256": "f40f019ddc0ee193"
+   },
+   "LOCO": {
+    "gameplayHash": "2254319f",
+    "contact": {
+     "tick": 65,
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 14.23,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 65,
+      "sub": 4,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 14.23,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 54,
+    "minSurfM": -0.1025,
+    "sha256": "95d4d3ee82cf4c49"
+   }
+  },
+  "rx_lateral": {
+   "params": {
+    "v": 5.5,
+    "ang": 90,
+    "ph": 0.5,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "ff5a691c",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 3.97,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 3.97,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.1307,
+    "sha256": "b7213d6107f3a4fd"
+   },
+   "FULL": {
+    "gameplayHash": "ff5a691c",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 3.97,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 3.97,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.1307,
+    "sha256": "4938a7207b9c96d0"
+   },
+   "LOCO": {
+    "gameplayHash": "ff5a691c",
+    "contact": {
+     "tick": 50,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 3.97,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 50,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 3.97,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.1307,
+    "sha256": "dd73d6cffe577741"
+   }
+  },
+  "rx_rear_diag": {
+   "params": {
+    "v": 5.5,
+    "ang": 45,
+    "ph": 0.5,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "b64f4258",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 36,
+    "minSurfM": 0.0493,
+    "sha256": "f03968194b90245c"
+   },
+   "FULL": {
+    "gameplayHash": "b64f4258",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 36,
+    "minSurfM": 0.0493,
+    "sha256": "e69010da1bc67bae"
+   },
+   "LOCO": {
+    "gameplayHash": "b64f4258",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 36,
+    "minSurfM": 0.0493,
+    "sha256": "b7942df2d9849721"
+   }
+  },
+  "rx_front_diag": {
+   "params": {
+    "v": 5.5,
+    "ang": 135,
+    "ph": 0.25,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "4cb8165f",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 11.4,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "TUCKSHIN",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 11.4,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 61,
+      "sub": 4,
+      "prim": "TUCK",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 0,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 48,
+    "minSurfM": -0.1162,
+    "sha256": "29c7184bfa3233b2"
+   },
+   "FULL": {
+    "gameplayHash": "4cb8165f",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 11.4,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "TUCKSHIN",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 11.4,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 61,
+      "sub": 4,
+      "prim": "TUCK",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 0,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 48,
+    "minSurfM": -0.1162,
+    "sha256": "259d847154f755c7"
+   },
+   "LOCO": {
+    "gameplayHash": "4cb8165f",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 11.4,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "TUCKSHIN",
+      "seg": "foot_L",
+      "segPlanted": false,
+      "react": "CORRECTION",
+      "J": 11.4,
+      "family": null,
+      "tag": null
+     },
+     {
+      "tick": 61,
+      "sub": 4,
+      "prim": "TUCK",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 0,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 48,
+    "minSurfM": -0.1162,
+    "sha256": "93851ed5eee6f539"
+   }
+  },
+  "rx_rear": {
+   "params": {
+    "v": 3,
+    "ang": 0,
+    "ph": 0,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "27cc6c38",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 30,
+    "minSurfM": 0.0081,
+    "sha256": "456898552acd8cc7"
+   },
+   "FULL": {
+    "gameplayHash": "27cc6c38",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 30,
+    "minSurfM": 0.0081,
+    "sha256": "2cc5ce043af2fe0f"
+   },
+   "LOCO": {
+    "gameplayHash": "27cc6c38",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 30,
+    "minSurfM": 0.0081,
+    "sha256": "1a5e16d51b93a108"
+   }
+  },
+  "rx_standing": {
+   "params": {
+    "v": 0,
+    "ang": 90,
+    "ph": 0.08,
+    "off": 0
+   },
+   "OFF": {
+    "gameplayHash": "08b157b4",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "af6153c31edc3719"
+   },
+   "FULL": {
+    "gameplayHash": "08b157b4",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "280f48e68bb99f3a"
+   },
+   "LOCO": {
+    "gameplayHash": "08b157b4",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "a1569d73edd64e17"
+   }
+  },
+  "rx_airborne": {
+   "params": {
+    "v": 7.5,
+    "ang": -45,
+    "ph": 0.5,
+    "off": 0.2
+   },
+   "OFF": {
+    "gameplayHash": "dafa0a26",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 52,
+    "minSurfM": 0.1284,
+    "sha256": "161651bf2ede070f"
+   },
+   "FULL": {
+    "gameplayHash": "dafa0a26",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 52,
+    "minSurfM": 0.1284,
+    "sha256": "e915fa60c1139820"
+   },
+   "LOCO": {
+    "gameplayHash": "dafa0a26",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 52,
+    "minSurfM": 0.1284,
+    "sha256": "707f5cbc2a49bfeb"
+   }
+  },
+  "rx_early_stance": {
+   "params": {
+    "v": 7.5,
+    "ang": 90,
+    "ph": 0.6,
+    "off": 0.1
+   },
+   "OFF": {
+    "gameplayHash": "fee65b5b",
+    "contact": {
+     "tick": 56,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 57.62,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 56,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 57.62,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 45,
+    "minSurfM": -0.1135,
+    "sha256": "b960a76d694dcf59"
+   },
+   "FULL": {
+    "gameplayHash": "fee65b5b",
+    "contact": {
+     "tick": 56,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 57.62,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 56,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 57.62,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 45,
+    "minSurfM": -0.1135,
+    "sha256": "acd9a57ab2c10dfe"
+   },
+   "LOCO": {
+    "gameplayHash": "fee65b5b",
+    "contact": {
+     "tick": 56,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 57.62,
+     "family": "FRONT"
+    },
+    "contacts": [
+     {
+      "tick": 56,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 57.62,
+      "family": "FRONT",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 45,
+    "minSurfM": -0.1135,
+    "sha256": "b80135ea8f5ea996"
+   }
+  },
+  "rx_late_stance": {
+   "params": {
+    "v": 7.5,
+    "ang": 90,
+    "ph": 0.7,
+    "off": 0.3
+   },
+   "OFF": {
+    "gameplayHash": "13ddf214",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "CORRECTION",
+     "J": 56.94,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "CORRECTION",
+      "J": 56.94,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 44,
+    "minSurfM": -0.1143,
+    "sha256": "954060f5450e98d2"
+   },
+   "FULL": {
+    "gameplayHash": "13ddf214",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "CORRECTION",
+     "J": 56.94,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "CORRECTION",
+      "J": 56.94,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 44,
+    "minSurfM": -0.1143,
+    "sha256": "1cfa444a837d7e77"
+   },
+   "LOCO": {
+    "gameplayHash": "13ddf214",
+    "contact": {
+     "tick": 57,
+     "seg": "foot_R",
+     "segPlanted": true,
+     "react": "CORRECTION",
+     "J": 56.94,
+     "family": null
+    },
+    "contacts": [
+     {
+      "tick": 57,
+      "sub": 2,
+      "prim": "LEG",
+      "seg": "foot_R",
+      "segPlanted": true,
+      "react": "CORRECTION",
+      "J": 56.94,
+      "family": null,
+      "tag": null
+     }
+    ],
+    "firstPredTick": 44,
+    "minSurfM": -0.1143,
+    "sha256": "ba20c837f9d9787c"
+   }
+  },
+  "rx_facing_front": {
+   "params": {
+    "v": 0,
+    "ang": 180,
+    "ph": 0.08,
+    "off": 0,
+    "ballAhead": true
+   },
+   "OFF": {
+    "gameplayHash": "0e214a70",
+    "contact": {
+     "tick": 51,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 33.98,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 51,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 33.98,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 38,
+    "minSurfM": -0.1399,
+    "sha256": "3f56e862f7a60c64"
+   },
+   "FULL": {
+    "gameplayHash": "0e214a70",
+    "contact": {
+     "tick": 51,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 33.98,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 51,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 33.98,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 38,
+    "minSurfM": -0.1399,
+    "sha256": "9c58885ca0dd9d51"
+   },
+   "LOCO": {
+    "gameplayHash": "0e214a70",
+    "contact": {
+     "tick": 51,
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 33.98,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 51,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "foot_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 33.98,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 38,
+    "minSurfM": -0.1399,
+    "sha256": "508ae77125f5cda3"
+   }
+  },
+  "rx_side_standing": {
+   "params": {
+    "v": 0,
+    "ang": 90,
+    "ph": 0.1,
+    "off": 0.2
+   },
+   "OFF": {
+    "gameplayHash": "dc57bfae",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 77.31,
+     "family": "BACK"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 77.31,
+      "family": "BACK",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.118,
+    "sha256": "b32829847da9e6d4"
+   },
+   "FULL": {
+    "gameplayHash": "dc57bfae",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 77.31,
+     "family": "BACK"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 77.31,
+      "family": "BACK",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.118,
+    "sha256": "fe76d153c4143c42"
+   },
+   "LOCO": {
+    "gameplayHash": "dc57bfae",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 77.31,
+     "family": "BACK"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 1,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 77.31,
+      "family": "BACK",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.118,
+    "sha256": "85347869c88b8d8f"
+   }
+  },
+  "rx_behind_standing": {
+   "params": {
+    "v": 0,
+    "ang": 0,
+    "ph": 0.08,
+    "off": 0,
+    "ballAhead": true
+   },
+   "OFF": {
+    "gameplayHash": "df30d126",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "0dc3b3abaf09d2c7"
+   },
+   "FULL": {
+    "gameplayHash": "df30d126",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "0093509c1cdc4c81"
+   },
+   "LOCO": {
+    "gameplayHash": "df30d126",
+    "contact": {
+     "tick": 53,
+     "seg": "shin_R",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 42.65,
+     "family": "SIDE"
+    },
+    "contacts": [
+     {
+      "tick": 53,
+      "sub": 3,
+      "prim": "LEG",
+      "seg": "shin_R",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 42.65,
+      "family": "SIDE",
+      "tag": null
+     }
+    ],
+    "firstPredTick": 41,
+    "minSurfM": -0.14,
+    "sha256": "374ee7f84d08ec5f"
+   }
+  },
+  "rx_heavy": {
+   "params": {
+    "v": 7.5,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0.45,
+    "dchar": "james"
+   },
+   "OFF": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "b13ceaadbcd01209"
+   },
+   "FULL": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "30ab5707d223df22"
+   },
+   "LOCO": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "41d4b562248878cb"
+   }
+  },
+  "rx_light": {
+   "params": {
+    "v": 7.5,
+    "ang": 90,
+    "ph": 0.25,
+    "off": 0.45,
+    "dchar": "cucurella"
+   },
+   "OFF": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "e2821fd3ba1b699a"
+   },
+   "FULL": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "7c9122ef8d03c04a"
+   },
+   "LOCO": {
+    "gameplayHash": "eb9a52a8",
+    "contact": null,
+    "contacts": [],
+    "firstPredTick": 49,
+    "minSurfM": 0.0699,
+    "sha256": "74eb9cf8a9e30fbc"
+   }
+  }
+ },
+ "errors": []
+}

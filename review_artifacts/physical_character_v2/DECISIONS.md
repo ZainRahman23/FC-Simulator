@@ -2781,3 +2781,27 @@ Not pushed.
   - resolve the knee-bend and boot-length issues (A / B / C) with proposed promotion tolerances.
   - Only if all three hold: amend and refreeze PI-1, implement the offline slice, run near miss → recover → fall.
   - Otherwise stop for review.
+
+## 2026-10-09 — PI-1 replacement cases on slide-contact V1.2: compatibility gate FAILS → STOPPED for review (`pi1/PI1_V12_GATE_RESULTS.md`); preregistration not amended, nothing implemented or changed
+
+- **Gate thresholds** fixed before any V1.2 record (`pi1/PI1_COMPAT_GATE.md`, ab9a626).
+- **Baseline:** e2c98ec (simulation byte-identical to d539e7a).
+- **V1.2 supplies the three categories by its own rules:**
+  - near miss: off +1.01 m, closest 0.109 m;
+  - rx_free_leg: swinging shin_L → CORRECTION;
+  - rx_planted_leg: weight-bearing shin_L → FALL SIDE.
+  - Gameplay hashes identical across OFF / FULL / LOCO.
+- **Gate:**
+  - near miss passes;
+  - both contact cases fail CG-1 / CG-5 (segment / region) and CG-7 (pose continuity), while timing, support state, approach direction and self-collision pass.
+  - The simulation's runner capsules (`ptRxBody`: default 0.865 m leg, own swing law, foot capsule to 0.27 m) are not derived from the rendered / physical leg. It strikes the ankle or lower shin where the promoted body is struck at the forefoot (124 mm from the ankle) or instep (65 mm, though deep: 91 vs 109 mm).
+  - None of the other 16 fixtures passes. rx_lateral passes every contact criterion and fails only toe-pivot pose frames.
+- **Pose compatibility:**
+  - **knee = B:** the R-K retarget makes knee / ankle centres exact (≤ 0.004 mm, was 37.6 mm); twist ≤ 6.5° (≤ 8.6° in rx_lateral; limit 10°).
+  - **boot / foot = C:** a rigid, shorter V2 boot (≈ 0.22 m ankle→toe) against the presentation's foot + toe bone (0.27 m). Toe-pivot frames need 5.8 – 15.6° extra pitch (or are unreachable at 40°), with 25 – 42 mm rendered toe penetration. At heel strike the V2 heel is 6 – 11 mm below the pitch.
+- **Options for the user:**
+  - (1) map the runner's gameplay contact segments to the rendered / physical leg (§5.2a; new baseline);
+  - (2) D-1 foot from the rendered boot / V2-F1 toe body;
+  - (3) revisit the fixed CG-1 / CG-4 anatomical-correspondence limit (not changed post hoc);
+  - (4) operational promotion / demotion timing rule (works around C, does not resolve it).
+- **Awaiting user.**

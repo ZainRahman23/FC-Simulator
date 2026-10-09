@@ -1,0 +1,6457 @@
+{
+ "gate": "PI1_COMPAT_GATE.md (ab9a626)",
+ "airDir": "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/air_v12_all",
+ "cases": {
+  "rx_miss": {
+   "finalClass": "NO_CONTACT",
+   "trigger": 50,
+   "contacts": [],
+   "criteria": {
+    "CG-8 self-collision": {
+     "minSepMm": 56.8,
+     "pair": "forearm_R↔thigh_R",
+     "at": 75,
+     "pass": true
+    },
+    "NM": {
+     "simContact": false,
+     "predictorFires": true,
+     "minD1DistM": 0.0998,
+     "closest": {
+      "d": 0.09984920359930116,
+      "prim": "LEG",
+      "body": "foot_L",
+      "t": 61.75
+     },
+     "pass": true
+    }
+   },
+   "pose": {
+    "promotion (LOCO) A": {
+     "frames": 7,
+     "failingFrames": 7,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.004,
+      "ankleMm": 37.63,
+      "footDeg": 0,
+      "limbSwingDeg": 5.41,
+      "twistDeg": 4.381,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "footContact_R",
+      "ankleMm",
+      "limbSwingDeg",
+      "footContact_L"
+     ],
+     "failRows": [
+      {
+       "row": 50,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 39.9
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 51,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 52.4
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 52,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 62.3
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 53,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 54,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 55,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 56,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -7.5
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "promotion (LOCO) B": {
+     "frames": 7,
+     "failingFrames": 4,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.002,
+      "ankleMm": 0.003,
+      "footDeg": 0,
+      "limbSwingDeg": 0,
+      "twistDeg": 6.525,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "footContact_R",
+      "footContact_L"
+     ],
+     "failRows": [
+      {
+       "row": 50,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 40.3
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": null
+       }
+      },
+      {
+       "row": 51,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 53.2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": null
+       }
+      },
+      {
+       "row": 52,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 63.9
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": null
+       }
+      },
+      {
+       "row": 56,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -7.9
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "reconciliation (FULL) A": {
+     "frames": 25,
+     "failingFrames": 11,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.006,
+      "ankleMm": 36.164,
+      "footDeg": 0,
+      "limbSwingDeg": 5.199,
+      "twistDeg": 4.101,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "ankleMm",
+      "limbSwingDeg",
+      "footContact_L",
+      "footContact_R"
+     ],
+     "failRows": [
+      {
+       "row": 57,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -3.8
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 66,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 20.5
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 67,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 25.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 68,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 31.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 69,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 43.6
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 70,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 55.5
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 71,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 72,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 73,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 74,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "ankle",
+         "lowestMm": -10.8
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 75,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "ankle",
+         "lowestMm": -6
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "reconciliation (FULL) B": {
+     "frames": 25,
+     "failingFrames": 7,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.003,
+      "ankleMm": 0.912,
+      "footDeg": 15.026,
+      "limbSwingDeg": 0.131,
+      "twistDeg": 6.218,
+      "armMm": 0,
+      "bootPenAddedMm": 40.994
+     },
+     "failItems": [
+      "footDeg",
+      "bootPenAddedMm",
+      "footContact_L",
+      "footContact_R"
+     ],
+     "failRows": [
+      {
+       "row": 66,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": 5.66
+       }
+      },
+      {
+       "row": 67,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": 8.03
+       }
+      },
+      {
+       "row": 68,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": 15.03
+       }
+      },
+      {
+       "row": 69,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 44.4
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": null
+       }
+      },
+      {
+       "row": 70,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 57
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": null
+       }
+      },
+      {
+       "row": 74,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "ankle",
+         "lowestMm": -11.2
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 75,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "ankle",
+         "lowestMm": -6.4
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "velocityCheck": {
+     "maxBodyVelDiffMs": 0.869,
+     "body": "foot_R",
+     "row": 50,
+     "limit": 0.25,
+     "pass": false
+    }
+   },
+   "poseClass": {
+    "promotion": "C",
+    "reconciliation": "C"
+   },
+   "pass": true
+  },
+  "rx_free_leg": {
+   "finalClass": "CORRECTION",
+   "trigger": 39,
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": false,
+     "react": "CORRECTION",
+     "J": 10.41
+    }
+   ],
+   "criteria": {
+    "CG-8 self-collision": {
+     "minSepMm": 52.9,
+     "pair": "forearm_L↔thigh_L",
+     "at": 56,
+     "pass": true
+    },
+    "CG-1 segment": {
+     "sim": "shin_L",
+     "mapped": "shank_L",
+     "d1First": "foot_L",
+     "adjacency": {
+      "body": "foot_L",
+      "joint": "ankle",
+      "distMm": 124.1
+     },
+     "pass": false
+    },
+    "CG-2 support": {
+     "L": {
+      "sim": false,
+      "up": 0.825,
+      "presentation": [
+       false,
+       false
+      ],
+      "presModes": [
+       "swing",
+       "swing"
+      ],
+      "d1LowestMm": 72,
+      "d1": false,
+      "agree": true
+     },
+     "R": {
+      "sim": true,
+      "up": 0.325,
+      "presentation": [
+       true,
+       true
+      ],
+      "presModes": [
+       "toe",
+       "toe"
+      ],
+      "d1LowestMm": 0.5,
+      "d1": true,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-3 timing": {
+     "tSim": 49.5,
+     "tD1": 49.75,
+     "dTicks": 0.25,
+     "pass": true
+    },
+    "CG-4 location": {
+     "horizDistM": 0.021,
+     "sSim": 1.001,
+     "sD1": 1.21,
+     "simPoint": [
+      52.599,
+      0.206,
+      -33.829
+     ],
+     "d1Point": [
+      52.57774614485986,
+      0.11645600856008588,
+      -33.82783237476498
+     ],
+     "pass": true
+    },
+    "CG-5 overlap": {
+     "region": [
+      "shank_L"
+     ],
+     "simMaxUnperturbedMm": 16.8,
+     "d1MaxMm": -1000000000,
+     "ratio": -59523809.524,
+     "pass": false
+    },
+    "CG-6 approach": {
+     "simNormal": [
+      0.305,
+      0.952
+     ],
+     "d1Normal": [
+      0.0003,
+      0.0065
+     ],
+     "normalAngleDeg": 15.5,
+     "simRelVel": [
+      -6.171,
+      4.571
+     ],
+     "d1RelVel": [
+      -8.205,
+      4.686
+     ],
+     "relVelAngleDeg": 6.8,
+     "pass": true
+    },
+    "CG-7 pose continuity": {
+     "poseFailingFrames": 3,
+     "poseFailItems": [
+      "footDeg",
+      "bootPenAddedMm"
+     ],
+     "primitiveMaxDisplacementChangeMm": 17.9,
+     "velocity": {
+      "maxBodyVelDiffMs": 0.465,
+      "body": "foot_R",
+      "row": 47,
+      "limit": 0.25,
+      "pass": false
+     },
+     "pass": false
+    }
+   },
+   "pose": {
+    "promotion (LOCO) A": {
+     "frames": 11,
+     "failingFrames": 3,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.005,
+      "ankleMm": 8.065,
+      "footDeg": 0,
+      "limbSwingDeg": 1.159,
+      "twistDeg": 0.302,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "footContact_R"
+     ],
+     "failRows": [
+      {
+       "row": 47,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 21.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 48,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 24.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 49,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 28
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "promotion (LOCO) B": {
+     "frames": 11,
+     "failingFrames": 3,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.002,
+      "ankleMm": 0.002,
+      "footDeg": 10.745,
+      "limbSwingDeg": 0.001,
+      "twistDeg": 5.056,
+      "armMm": 0,
+      "bootPenAddedMm": 35.04
+     },
+     "failItems": [
+      "footDeg",
+      "bootPenAddedMm"
+     ],
+     "failRows": [
+      {
+       "row": 47,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": 5.75
+       }
+      },
+      {
+       "row": 48,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": 7.19
+       }
+      },
+      {
+       "row": 49,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": 10.75
+       }
+      }
+     ]
+    },
+    "reconciliation (FULL) A": {
+     "frames": 25,
+     "failingFrames": 9,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.004,
+      "ankleMm": 37.17,
+      "footDeg": 0,
+      "limbSwingDeg": 5.343,
+      "twistDeg": 4.07,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "ankleMm",
+      "limbSwingDeg",
+      "footContact_L"
+     ],
+     "failRows": [
+      {
+       "row": 56,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 57,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 58,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 62,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": 29.8
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 63,
+       "fails": [
+        "footContact_L",
+        "ankleMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": 39.6
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 64,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 70,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 20
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 71,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 21.3
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 76,
+       "fails": [
+        "ankleMm"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "reconciliation (FULL) B": {
+     "frames": 25,
+     "failingFrames": 4,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.003,
+      "ankleMm": 0.003,
+      "footDeg": 6.218,
+      "limbSwingDeg": 0.001,
+      "twistDeg": 6.532,
+      "armMm": 0,
+      "bootPenAddedMm": 24.611
+     },
+     "failItems": [
+      "footContact_L",
+      "footDeg",
+      "bootPenAddedMm"
+     ],
+     "failRows": [
+      {
+       "row": 62,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": 32.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 63,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": 40.7
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 70,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": 5.6
+       }
+      },
+      {
+       "row": 71,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "L": 6.22
+       }
+      }
+     ]
+    },
+    "velocityCheck": {
+     "maxBodyVelDiffMs": 0.465,
+     "body": "foot_R",
+     "row": 47,
+     "limit": 0.25,
+     "pass": false
+    }
+   },
+   "poseClass": {
+    "promotion": "C",
+    "reconciliation": "C"
+   },
+   "decisive": {
+    "tick": 50,
+    "sub": 2,
+    "tSim": 49.5,
+    "prim": "LEG",
+    "seg": "shin_L",
+    "mappedBody": "shank_L",
+    "segPlanted": false,
+    "react": "CORRECTION",
+    "J": 10.41,
+    "point": [
+     52.599,
+     33.829,
+     0.206
+    ],
+    "normal": [
+     0.305,
+     0.952
+    ],
+    "vn": 2.471,
+    "vt": 7.274,
+    "support": {
+     "R": true,
+     "L": false
+    }
+   },
+   "geometry": {
+    "simPrimitive": {
+     "prim": "LEG",
+     "a": [
+      52.76096826377475,
+      33.13904869364244,
+      0.12
+     ],
+     "b": [
+      52.574748940992194,
+      33.75146225801083,
+      0.12
+     ],
+     "r": 0.07,
+     "v": [
+      -0.4766703720942503,
+      4.571723381529855
+     ]
+    },
+    "simSegment": {
+     "name": "shin_L",
+     "seg": "shin",
+     "sd": "L",
+     "a": [
+      52.756995023266164,
+      33.874252911207456,
+      0.5972255271176354
+     ],
+     "b": [
+      52.59949548349826,
+      33.82873,
+      0.2063670079216275
+     ],
+     "r": 0.06,
+     "planted": false
+    }
+   },
+   "series": [
+    {
+     "t": 43.25,
+     "simOverlapUnperturbedMm": -732.5,
+     "simOverlapRecordedMm": -732.5,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.84877069196377,
+       0.12,
+       -32.63585459291885
+      ],
+      [
+       52.78015407745448,
+       0.12,
+       -33.27226622874371
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.2919854336267,
+       33.8631601434646,
+       0.5154963532252618
+      ],
+      "b": [
+       51.98141609585651,
+       33.82873,
+       0.2291223422570986
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43.5,
+     "simOverlapUnperturbedMm": -701.5,
+     "simOverlapRecordedMm": -701.5,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.84444902121065,
+       0.12,
+       -32.657313181388105
+      ],
+      [
+       52.770043954202784,
+       0.12,
+       -33.29307406096749
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.31504910828259,
+       33.863460902427846,
+       0.5188740334588059
+      ],
+      "b": [
+       52.00627016686106,
+       33.82873,
+       0.23060653225351074
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43.75,
+     "simOverlapUnperturbedMm": -671.4,
+     "simOverlapRecordedMm": -671.4,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.840076388333884,
+       0.12,
+       -32.67872544408299
+      ],
+      [
+       52.75981461008011,
+       0.12,
+       -33.313773518602986
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.33781590204028,
+       33.86379937077965,
+       0.5224375690414744
+      ],
+      "b": [
+       52.03121714472442,
+       33.82873,
+       0.2318929704933526
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44,
+     "simOverlapUnperturbedMm": -641.4,
+     "simOverlapRecordedMm": -641.4,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.83566876701333,
+       0.12,
+       -32.70009198338326
+      ],
+      [
+       52.749503413937866,
+       0.12,
+       -33.334366010858275
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.36027459130684,
+       33.86417298384625,
+       0.526165414016474
+      ],
+      "b": [
+       52.05624348838352,
+       33.82873,
+       0.23297996783726305
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.25,
+     "simOverlapUnperturbedMm": -611.5,
+     "simOverlapRecordedMm": -611.5,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.83124208014188,
+       0.12,
+       -32.721032024227156
+      ],
+      [
+       52.739147615816314,
+       0.12,
+       -33.354472328944645
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.3824133450792,
+       33.86457893018309,
+       0.5300348028442845
+      ],
+      "b": [
+       52.08133565677526,
+       33.82873,
+       0.2338660970189016
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.5,
+     "simOverlapUnperturbedMm": -581.4,
+     "simOverlapRecordedMm": -581.4,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.82681218540257,
+       0.12,
+       -32.74192925654058
+      ],
+      [
+       52.72878431320375,
+       0.12,
+       -33.374478500688554
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.404220036037614,
+       33.865014158650816,
+       0.5340217592480978
+      ],
+      "b": [
+       52.10648010883653,
+       33.82873,
+       0.23455019451899994
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.75,
+     "simOverlapUnperturbedMm": -551,
+     "simOverlapRecordedMm": -551,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.82239486111093,
+       0.12,
+       -32.76278600567759
+      ],
+      [
+       52.71845041791592,
+       0.12,
+       -33.39438996602686
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.42568252278877,
+       33.8654753925483,
+       0.5381011516099639
+      ],
+      "b": [
+       52.13166330350425,
+       33.82873,
+       0.2350313620931042
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45,
+     "simOverlapUnperturbedMm": -520.3,
+     "simOverlapRecordedMm": -520.3,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.81800579265285,
+       0.12,
+       -32.78360517535294
+      ],
+      [
+       52.708182624368874,
+       0.12,
+       -33.41421351791437
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.44678890375505,
+       33.86595915036593,
+       0.5422467917277599
+      ],
+      "b": [
+       52.15687169971531,
+       33.82873,
+       0.2353089679510021
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.25,
+     "simOverlapUnperturbedMm": -489.6,
+     "simOverlapRecordedMm": -489.6,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.81366055984955,
+       0.12,
+       -32.804008296448956
+      ],
+      [
+       52.6980173800205,
+       0.12,
+       -33.43357534209146
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.46752774168814,
+       33.866461772594974,
+       0.5464315732285606
+      ],
+      "b": [
+       52.18209175640663,
+       33.82873,
+       0.23538264758628602
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.5,
+     "simOverlapUnperturbedMm": -458.4,
+     "simOverlapRecordedMm": -458.4,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.80937462557727,
+       0.12,
+       -32.82438134842401
+      ],
+      [
+       52.68799085874741,
+       0.12,
+       -33.45286682252043
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.487888256882094,
+       33.86697945387801,
+       0.550627645195644
+      ],
+      "b": [
+       52.20730993251511,
+       33.82873,
+       0.23525230425496296
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.75,
+     "simOverlapUnperturbedMm": -426.8,
+     "simOverlapRecordedMm": -426.8,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.805163325960734,
+       0.12,
+       -32.84472890894987
+      ],
+      [
+       52.67813893790354,
+       0.12,
+       -33.47209866821365
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.507860486776565,
+       33.867508279632425,
+       0.5548066157335291
+      ],
+      "b": [
+       52.232512686977635,
+       33.82873,
+       0.2349181091024829
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46,
+     "simOverlapUnperturbedMm": -394.8,
+     "simOverlapRecordedMm": -394.8,
+     "d1MappedPenMm": -429.7,
+     "d1AnyPenMm": -429.7,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.801041862446056,
+       0.12,
+       -32.86505607630284
+      ],
+      [
+       52.66849717977546,
+       0.12,
+       -33.49128280608667
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.52743540969113,
+       33.86804426613664,
+       0.558939779383011
+      ],
+      "b": [
+       52.257686478731145,
+       33.82873,
+       0.23438050093901858
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.25,
+     "simOverlapUnperturbedMm": -362.6,
+     "simOverlapRecordedMm": -362.6,
+     "d1MappedPenMm": -406,
+     "d1AnyPenMm": -406,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.79702529604073,
+       0.12,
+       -32.88498649793054
+      ],
+      [
+       52.65910081810741,
+       0.12,
+       -33.51005037337594
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.54660503083545,
+       33.86858340295459,
+       0.5629983616047362
+      ],
+      "b": [
+       52.28281776671251,
+       33.82873,
+       0.2336401856632922
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.5,
+     "simOverlapUnperturbedMm": -329.9,
+     "simOverlapRecordedMm": -329.9,
+     "d1MappedPenMm": -381.7,
+     "d1AnyPenMm": -381.7,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.793128543985766,
+       0.12,
+       -32.90490817195346
+      ],
+      [
+       52.64998475031616,
+       0.12,
+       -33.528797476505055
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.56536242941388,
+       33.86912169649696,
+       0.5669537730562983
+      ],
+      "b": [
+       52.30789300985867,
+       33.82873,
+       0.23269813533570516
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.75,
+     "simOverlapUnperturbedMm": -296.8,
+     "simOverlapRecordedMm": -296.8,
+     "d1MappedPenMm": -357,
+     "d1AnyPenMm": -357,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.78936637909836,
+       0.12,
+       -32.92482757725273
+      ],
+      [
+       52.64118353595306,
+       0.12,
+       -33.54753927217854
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.58370176649321,
+       33.86965521348767,
+       0.5707778661511638
+      ],
+      "b": [
+       52.3328986671065,
+       33.82873,
+       0.23155558690198796
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 47,
+     "simOverlapUnperturbedMm": -263.4,
+     "simOverlapRecordedMm": -263.4,
+     "d1MappedPenMm": -331.7,
+     "d1AnyPenMm": -322,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.785753431991985,
+       0.12,
+       -32.944751576682876
+      ],
+      [
+       52.63273140189797,
+       0.12,
+       -33.56629181536892
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.601618254236385,
+       33.870180123123376,
+       0.57444318644068
+      ],
+      "b": [
+       52.35782119739291,
+       33.82873,
+       0.23021404056904632
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 47.25,
+     "simOverlapUnperturbedMm": -229.8,
+     "simOverlapRecordedMm": -229.8,
+     "d1MappedPenMm": -309.3,
+     "d1AnyPenMm": -282.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.78230419634604,
+       0.12,
+       -32.9643054268341
+      ],
+      [
+       52.62466225468692,
+       0.12,
+       -33.58469000774335
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.619108088024696,
+       33.870692736783546,
+       0.5779232117073059
+      ],
+      "b": [
+       52.38264705965482,
+       33.82873,
+       0.22867525783513593
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 47.5,
+     "simOverlapUnperturbedMm": -196,
+     "simOverlapRecordedMm": -196,
+     "d1MappedPenMm": -285.1,
+     "d1AnyPenMm": -244.3,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.77903303735762,
+       0.12,
+       -32.983878561094365
+      ],
+      [
+       52.61700970028421,
+       0.12,
+       -33.60313331339231
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.636168343808464,
+       33.871189544263174,
+       0.5811925722769958
+      ],
+      "b": [
+       52.40736271282911,
+       33.82873,
+       0.2269412591769523
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 47.75,
+     "simOverlapUnperturbedMm": -162.5,
+     "simOverlapRecordedMm": -162.5,
+     "d1MappedPenMm": -259.2,
+     "d1AnyPenMm": -208,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.775954203465105,
+       0.12,
+       -33.00347870164008
+      ],
+      [
+       52.60980707150867,
+       0.12,
+       -33.62163979758728
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.652796843659374,
+       33.87166724565253,
+       0.584227246906273
+      ],
+      "b": [
+       52.43195461585272,
+       33.82873,
+       0.2250143213966726
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 48,
+     "simOverlapUnperturbedMm": -130.1,
+     "simOverlapRecordedMm": -130.1,
+     "d1MappedPenMm": -231.9,
+     "d1AnyPenMm": -174.3,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.77308184138648,
+       0.12,
+       -33.02311374485887
+      ],
+      [
+       52.603087463214244,
+       0.12,
+       -33.64022793314968
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.66899199287913,
+       33.87212277816738,
+       0.587004729611337
+      ],
+      "b": [
+       52.45640922766252,
+       33.82873,
+       0.22289697463243352
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 48.25,
+     "simOverlapUnperturbedMm": -99.3,
+     "simOverlapRecordedMm": -99.3,
+     "d1MappedPenMm": -204.7,
+     "d1AnyPenMm": -141,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.770430014464665,
+       0.12,
+       -33.042409753579115
+      ],
+      [
+       52.596883775207154,
+       0.12,
+       -33.65853450786154
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.68475259209799,
+       33.87255333742595,
+       0.5895041639069403
+      ],
+      "b": [
+       52.480713007195426,
+       33.82873,
+       0.22059199903616877
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 48.5,
+     "simOverlapUnperturbedMm": -70.3,
+     "simOverlapRecordedMm": -70.3,
+     "d1MappedPenMm": -177.2,
+     "d1AnyPenMm": -109.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.76801272425808,
+       0.12,
+       -33.0617567227935
+      ],
+      [
+       52.59122876275483,
+       0.12,
+       -33.67696029963227
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.70007762753186,
+       33.872956392863735,
+       0.5917064420288378
+      ],
+      "b": [
+       52.50485241338835,
+       33.82873,
+       0.21810242112317074
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 48.75,
+     "simOverlapUnperturbedMm": -43.6,
+     "simOverlapRecordedMm": -43.6,
+     "d1MappedPenMm": -151.8,
+     "d1AnyPenMm": -79.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.76584393525657,
+       0.12,
+       -33.08116267442831
+      ],
+      [
+       52.58615509440646,
+       0.12,
+       -33.6955240749687
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71496604192844,
+       33.87332969715978,
+       0.593594267743171
+      ],
+      "b": [
+       52.52881390517819,
+       33.82873,
+       0.21543150979816805
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 49,
+     "simOverlapUnperturbedMm": -20.1,
+     "simOverlapRecordedMm": -20.1,
+     "d1MappedPenMm": -129.4,
+     "d1AnyPenMm": -49.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -49.9
+     },
+     "primAxis": [
+      [
+       52.76393760254141,
+       0.12,
+       -33.100635525572635
+      ],
+      [
+       52.58169541670077,
+       0.12,
+       -33.71424435512125
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.72941648769253,
+       33.87367128970791,
+       0.5951521822191407
+      ],
+      "b": [
+       52.55258394150185,
+       33.82873,
+       0.2125827720631363
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 49.25,
+     "simOverlapUnperturbedMm": -1.3,
+     "simOverlapRecordedMm": -1.3,
+     "d1MappedPenMm": -110.8,
+     "d1AnyPenMm": -25.7,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -25.7
+     },
+     "primAxis": [
+      [
+       52.76230770214229,
+       0.12,
+       -33.11980106344058
+      ],
+      [
+       52.57788242518326,
+       0.12,
+       -33.73275728309953
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.74342706219445,
+       33.87397949429189,
+       0.596366553083781
+      ],
+      "b": [
+       52.57614898129624,
+       33.82873,
+       0.20955994841247955
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 49.5,
+     "simOverlapUnperturbedMm": 11.5,
+     "simOverlapRecordedMm": 11.5,
+     "d1MappedPenMm": -96.8,
+     "d1AnyPenMm": -6.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -6.5
+     },
+     "primAxis": [
+      [
+       52.76096826377475,
+       0.12,
+       -33.13904869364244
+      ],
+      [
+       52.574748940992194,
+       0.12,
+       -33.75146225801083
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.756995023266164,
+       33.874252911207456,
+       0.5972255271176354
+      ],
+      "b": [
+       52.59949548349826,
+       33.82873,
+       0.2063670079216275
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 49.75,
+     "simOverlapUnperturbedMm": 16.8,
+     "simOverlapRecordedMm": 16.8,
+     "d1MappedPenMm": -88.1,
+     "d1AnyPenMm": 9.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 9.9
+     },
+     "primAxis": [
+      [
+       52.75993340556756,
+       0.12,
+       -33.158385517196294
+      ],
+      [
+       52.57232799209987,
+       0.12,
+       -33.77037589198794
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.77011648025075,
+       33.87449040410535,
+       0.5977189470137501
+      ],
+      "b": [
+       52.62260990704482,
+       33.82873,
+       0.20300814303549752
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 50,
+     "simOverlapUnperturbedMm": 14,
+     "simOverlapRecordedMm": 14,
+     "d1MappedPenMm": -85.5,
+     "d1AnyPenMm": 21.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 21.4
+     },
+     "primAxis": [
+      [
+       52.75921737031105,
+       0.12,
+       -33.177818180568565
+      ],
+      [
+       52.57065289811205,
+       0.12,
+       -33.78951373378464
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.78278605247918,
+       33.87469108180243,
+       0.5978382321197985
+      ],
+      "b": [
+       52.64547871087281,
+       33.82873,
+       0.1994877640636653
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 50.25,
+     "simOverlapUnperturbedMm": 4.4,
+     "simOverlapRecordedMm": 16,
+     "d1MappedPenMm": -77,
+     "d1AnyPenMm": 34.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 34.1
+     },
+     "primAxis": [
+      [
+       52.758834562674046,
+       0.12,
+       -33.19641482618816
+      ],
+      [
+       52.56975735733331,
+       0.12,
+       -33.80795208623086
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.79499648233803,
+       33.874854275207795,
+       0.5975762219898251
+      ],
+      "b": [
+       52.66808835391916,
+       33.82873,
+       0.19581049338946993
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 50.5,
+     "simOverlapUnperturbedMm": -6.6,
+     "simOverlapRecordedMm": 5.8,
+     "d1MappedPenMm": -74.1,
+     "d1AnyPenMm": 43.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 43.6
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.215109963421504
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.82662085011081
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.80673818355157,
+       33.874979509320575,
+       0.5969269796933075
+      ],
+      "b": [
+       52.690425295120754,
+       33.82873,
+       0.19198115940066007
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 50.75,
+     "simOverlapUnperturbedMm": -18.1,
+     "simOverlapRecordedMm": -5.1,
+     "d1MappedPenMm": -77.2,
+     "d1AnyPenMm": 30.3,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 30.3
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.23382479105571
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.84533567774501
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.81799869590662,
+       33.87506646994507,
+       0.5958855488423171
+      ],
+      "b": [
+       52.71247599341449,
+       33.82873,
+       0.1880047901495484
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 51,
+     "simOverlapUnperturbedMm": -30.1,
+     "simOverlapRecordedMm": -16.5,
+     "d1MappedPenMm": -83.5,
+     "d1AnyPenMm": 9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": 9
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.252539618689916
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.86405050537922
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.82876200365328,
+       33.87511496428101,
+       0.5944476536475667
+      ],
+      "b": [
+       52.7342269077373,
+       33.82873,
+       0.18388660675099894
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 51.25,
+     "simOverlapUnperturbedMm": -42.5,
+     "simOverlapRecordedMm": -28.3,
+     "d1MappedPenMm": -99.1,
+     "d1AnyPenMm": -10.7,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -10.7
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.27087250187967
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.882383388568975
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.839007653191686,
+       33.87512487378633,
+       0.592609324022987
+      ],
+      "b": [
+       52.75566449702607,
+       33.82873,
+       0.17963201652691707
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 51.5,
+     "simOverlapUnperturbedMm": -55.1,
+     "simOverlapRecordedMm": -40.3,
+     "d1MappedPenMm": -115.2,
+     "d1AnyPenMm": -30.7,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -30.7
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.28920538506944
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.90071627175874
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.84870957097934,
+       33.875096096495504,
+       0.5903664160529895
+      ],
+      "b": [
+       52.7767752202177,
+       33.82873,
+       0.17524660590624258
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 51.75,
+     "simOverlapUnperturbedMm": -67.7,
+     "simOverlapRecordedMm": -52.4,
+     "d1MappedPenMm": -131.7,
+     "d1AnyPenMm": -51,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "foot_L": -51
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.307538268259194
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.919049154948496
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.85783442478898,
+       33.875028473973735,
+       0.5877139786959003
+      ],
+      "b": [
+       52.79754553624912,
+       33.82873,
+       0.17073613308976873
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 52,
+     "simOverlapUnperturbedMm": -80.3,
+     "simOverlapRecordedMm": -64.5,
+     "d1MappedPenMm": -148.6,
+     "d1AnyPenMm": -71.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.32587115144896
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.93738203813826
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.866339270944614,
+       33.87492169463262,
+       0.5846453839417967
+      ],
+      "b": [
+       52.8179619040572,
+       33.82873,
+       0.16610652048941954
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 52.25,
+     "simOverlapUnperturbedMm": -92.9,
+     "simOverlapRecordedMm": -76.7,
+     "d1MappedPenMm": -158.2,
+     "d1AnyPenMm": -89.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.34382209019427
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.955332976883575
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.87416804693052,
+       33.874775158869944,
+       0.5811510764852144
+      ],
+      "b": [
+       52.83801078257887,
+       33.82873,
+       0.16136384695191078
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 52.5,
+     "simOverlapUnperturbedMm": -105.3,
+     "simOverlapRecordedMm": -88.7,
+     "d1MappedPenMm": -168.5,
+     "d1AnyPenMm": -108.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.361773028939595
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.9732839156289
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.8812461156934,
+       33.874587779460754,
+       0.5772166813635736
+      ],
+      "b": [
+       52.857678630751025,
+       33.82873,
+       0.15651433977700696
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 52.75,
+     "simOverlapUnperturbedMm": -117.6,
+     "simOverlapRecordedMm": -100.5,
+     "d1MappedPenMm": -179.3,
+     "d1AnyPenMm": -127.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.37972396768491
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.99123485437421
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.88747134085916,
+       33.87435766585752,
+       0.5728199660649681
+      ],
+      "b": [
+       52.87695190751057,
+       33.82873,
+       0.15156436654085534
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 53,
+     "simOverlapUnperturbedMm": -129.7,
+     "simOverlapRecordedMm": -112.1,
+     "d1MappedPenMm": -190.8,
+     "d1AnyPenMm": -146.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.397674906430225
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.00918579311953
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89269854657686,
+       33.874081585656064,
+       0.567925612962053
+      ],
+      "b": [
+       52.89581707179442,
+       33.82873,
+       0.14652042673512977
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 53.25,
+     "simOverlapUnperturbedMm": -141.6,
+     "simOverlapRecordedMm": -123.6,
+     "d1MappedPenMm": -196,
+     "d1AnyPenMm": -139.4,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.4152439007311
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.0267547874204
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89671017965202,
+       33.873753958773904,
+       0.5624754158598644
+      ],
+      "b": [
+       52.91426058253946,
+       33.82873,
+       0.14138914323296634
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 53.5,
+     "simOverlapUnperturbedMm": -153.2,
+     "simOverlapRecordedMm": -134.8,
+     "d1MappedPenMm": -202.6,
+     "d1AnyPenMm": -124.9,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.432812895031965
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.04432378172127
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89915446314105,
+       33.87336474603257,
+       0.5563676819767073
+      ],
+      "b": [
+       52.932268898682615,
+       33.82873,
+       0.13617725359289498
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 53.75,
+     "simOverlapUnperturbedMm": -164.2,
+     "simOverlapRecordedMm": -145.7,
+     "d1MappedPenMm": -210.3,
+     "d1AnyPenMm": -111.1,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.45038188933284
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.06189277602214
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89939211588656,
+       33.872894218217134,
+       0.5494062575731556
+      ],
+      "b": [
+       52.949828479160765,
+       33.82873,
+       0.13089160121218352
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 54,
+     "simOverlapUnperturbedMm": -173.6,
+     "simOverlapRecordedMm": -155.7,
+     "d1MappedPenMm": -219.1,
+     "d1AnyPenMm": -97.7,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.46795088363371
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.079461770323014
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89599947504645,
+       33.87229597403492,
+       0.5411354295720218
+      ],
+      "b": [
+       52.96692578291084,
+       33.82873,
+       0.12553912634121372
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 54.25,
+     "simOverlapUnperturbedMm": -180.1,
+     "simOverlapRecordedMm": -164.1,
+     "d1MappedPenMm": -231.5,
+     "d1AnyPenMm": -88.3,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.485137933490144
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.096648820179446
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.88382572014927,
+       33.8713961499257,
+       0.529863400216837
+      ],
+      "b": [
+       52.98354726886974,
+       33.82873,
+       0.12012685697068325
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 54.5,
+     "simOverlapUnperturbedMm": -183.6,
+     "simOverlapRecordedMm": -168.9,
+     "d1MappedPenMm": -243.9,
+     "d1AnyPenMm": -79.5,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.50232498334657
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.11383587003587
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.87074529161081,
+       33.87065983642531,
+       0.520030526404789
+      ],
+      "b": [
+       52.999679395974354,
+       33.82873,
+       0.11466189960360375
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 54.75,
+     "simOverlapUnperturbedMm": -191.5,
+     "simOverlapRecordedMm": -173.2,
+     "d1MappedPenMm": -256.4,
+     "d1AnyPenMm": -71.5,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.519512033203
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.1310229198923
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.88383304037217,
+       33.87096404012433,
+       0.5202064542618412
+      ],
+      "b": [
+       53.0153086231616,
+       33.82873,
+       0.10915142992420901
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 55,
+     "simOverlapUnperturbedMm": -198.9,
+     "simOverlapRecordedMm": -180.3,
+     "d1MappedPenMm": -268.5,
+     "d1AnyPenMm": -64.4,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.536699083059425
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.14820996974873
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.89667525085994,
+       33.87125749256638,
+       0.5202975189119389
+      ],
+      "b": [
+       53.03042140936837,
+       33.82873,
+       0.10360268337602375
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 55.25,
+     "simOverlapUnperturbedMm": -207.4,
+     "simOverlapRecordedMm": -188.4,
+     "d1MappedPenMm": -268.3,
+     "d1AnyPenMm": -52,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -52
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.54871945335034
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.16023034003964
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.90927237619251,
+       33.871539950928465,
+       0.5203032177357753
+      ],
+      "b": [
+       53.04500421353159,
+       33.82873,
+       0.09802294566146912
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 55.5,
+     "simOverlapUnperturbedMm": -215.4,
+     "simOverlapRecordedMm": -196.1,
+     "d1MappedPenMm": -268.1,
+     "d1AnyPenMm": -41.3,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -41.3
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.56073982364125
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.17225071033055
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.92162450013307,
+       33.871811224728056,
+       0.5202234010514438
+      ],
+      "b": [
+       53.05904349458815,
+       33.82873,
+       0.09241954317547463
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 55.75,
+     "simOverlapUnperturbedMm": -223,
+     "simOverlapRecordedMm": -203.3,
+     "d1MappedPenMm": -268,
+     "d1AnyPenMm": -32.7,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -32.7
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.57276019393216
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.184271080621464
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.933731310915555,
+       33.87207117281183,
+       0.5200582628064524
+      ],
+      "b": [
+       53.07252571147495,
+       33.82873,
+       0.08679983338565989
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 56,
+     "simOverlapUnperturbedMm": -230.1,
+     "simOverlapRecordedMm": -210,
+     "d1MappedPenMm": -268,
+     "d1AnyPenMm": -26.7,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -26.7
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.584780564223074
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.196291450912376
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.94559207834443,
+       33.872319700742736,
+       0.5198083348130791
+      ],
+      "b": [
+       53.08543732312891,
+       33.82873,
+       0.08117119517171732
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 56.25,
+     "simOverlapUnperturbedMm": -230.8,
+     "simOverlapRecordedMm": -216.4,
+     "d1MappedPenMm": -264.9,
+     "d1AnyPenMm": -29.1,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -29.1
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.596418990069544
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.20792987675885
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.953855770207134,
+       33.872231728592446,
+       0.5183529145176805
+      ],
+      "b": [
+       53.08867420634906,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56.5,
+     "simOverlapUnperturbedMm": -229.9,
+     "simOverlapRecordedMm": -217.4,
+     "d1MappedPenMm": -261.8,
+     "d1AnyPenMm": -31.9,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -31.9
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.608057415916015
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.21956830260532
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.96115782980473,
+       33.87206163644254,
+       0.5166389506808533
+      ],
+      "b": [
+       53.089462345678875,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56.75,
+     "simOverlapUnperturbedMm": -228.9,
+     "simOverlapRecordedMm": -216.5,
+     "d1MappedPenMm": -258.8,
+     "d1AnyPenMm": -34.8,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -34.8
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.61969584176248
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.23120672845178
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.96839860896603,
+       33.87189669209642,
+       0.5149768596055265
+      ],
+      "b": [
+       53.09025048500868,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 57,
+     "simOverlapUnperturbedMm": -227.8,
+     "simOverlapRecordedMm": -215.5,
+     "d1MappedPenMm": -255.8,
+     "d1AnyPenMm": -37.9,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -37.9
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.63133426760895
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.24284515429825
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.97557965585845,
+       33.871737105737544,
+       0.513368759242781
+      ],
+      "b": [
+       53.09103862433848,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 57.25,
+     "simOverlapUnperturbedMm": -226.8,
+     "simOverlapRecordedMm": -214.6,
+     "d1MappedPenMm": -254.1,
+     "d1AnyPenMm": -40.3,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -40.3
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.64259074901097
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.25410163570027
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.98270264224148,
+       33.871583084677376,
+       0.5118167386034674
+      ],
+      "b": [
+       53.091826763668294,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 57.5,
+     "simOverlapUnperturbedMm": -225.7,
+     "simOverlapRecordedMm": -213.7,
+     "d1MappedPenMm": -252.3,
+     "d1AnyPenMm": -42.9,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -42.9
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.65384723041299
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.265358117102295
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.98976936318748,
+       33.871434832681466,
+       0.5103228509674382
+      ],
+      "b": [
+       53.09261490299809,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 57.75,
+     "simOverlapUnperturbedMm": -224.5,
+     "simOverlapRecordedMm": -212.7,
+     "d1MappedPenMm": -250.4,
+     "d1AnyPenMm": -45.6,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -45.6
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.66510371181502
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.276614598504324
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.99678173627158,
+       33.87129254928435,
+       0.5088891069799357
+      ],
+      "b": [
+       53.0934030423279,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 58,
+     "simOverlapUnperturbedMm": -223.3,
+     "simOverlapRecordedMm": -211.6,
+     "d1MappedPenMm": -248.5,
+     "d1AnyPenMm": -48.6,
+     "d1AnyBody": "foot_R",
+     "d1Pens": {
+      "foot_R": -48.6
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.67636019321704
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.287871079906346
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       53.00374180021042,
+       33.87115642909706,
+       0.5075174676738436
+      ],
+      "b": [
+       53.09419118165771,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    }
+   ],
+   "pass": false
+  },
+  "rx_planted_leg": {
+   "finalClass": "FALL",
+   "trigger": 39,
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 101.3
+    }
+   ],
+   "criteria": {
+    "CG-8 self-collision": {
+     "minSepMm": 56.8,
+     "pair": "forearm_L↔thigh_L",
+     "at": 47,
+     "pass": true
+    },
+    "CG-1 segment": {
+     "sim": "shin_L",
+     "mapped": "shank_L",
+     "d1First": "foot_L",
+     "adjacency": {
+      "body": "foot_L",
+      "joint": "ankle",
+      "distMm": 65.4
+     },
+     "pass": false
+    },
+    "CG-2 support": {
+     "L": {
+      "sim": true,
+      "up": 0.061,
+      "presentation": [
+       true,
+       true
+      ],
+      "presModes": [
+       "ankle",
+       "ankle"
+      ],
+      "d1LowestMm": -2,
+      "d1": true,
+      "agree": true
+     },
+     "R": {
+      "sim": false,
+      "up": 0.561,
+      "presentation": [
+       false,
+       false
+      ],
+      "presModes": [
+       "release",
+       "swing"
+      ],
+      "d1LowestMm": 125.9,
+      "d1": false,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-3 timing": {
+     "tSim": 49,
+     "tD1": 49.75,
+     "dTicks": 0.75,
+     "pass": true
+    },
+    "CG-4 location": {
+     "horizDistM": 0.042,
+     "sSim": 0.915,
+     "sD1": 1.088,
+     "simPoint": [
+      52.621,
+      0.116,
+      -33.832
+     ],
+     "d1Point": [
+      52.5994498740025,
+      0.06677348600614248,
+      -33.79609188728015
+     ],
+     "pass": true
+    },
+    "CG-5 overlap": {
+     "region": [
+      "shank_L"
+     ],
+     "simMaxUnperturbedMm": 108.6,
+     "d1MaxMm": 5,
+     "ratio": 0.046,
+     "pass": false
+    },
+    "CG-6 approach": {
+     "simNormal": [
+      0.318,
+      0.948
+     ],
+     "d1Normal": [
+      0.0033,
+      0.0074
+     ],
+     "normalAngleDeg": 5.5,
+     "simRelVel": [
+      -0.897,
+      4.598
+     ],
+     "d1RelVel": [
+      -0.335,
+      3.675
+     ],
+     "relVelAngleDeg": 5.8,
+     "pass": true
+    },
+    "CG-7 pose continuity": {
+     "poseFailingFrames": 6,
+     "poseFailItems": [
+      "footDeg",
+      "bootPenAddedMm",
+      "footContact_R",
+      "footContact_L"
+     ],
+     "primitiveMaxDisplacementChangeMm": 17.9,
+     "velocity": {
+      "maxBodyVelDiffMs": 1.259,
+      "body": "foot_R",
+      "row": 41,
+      "limit": 0.25,
+      "pass": false
+     },
+     "pass": false
+    }
+   },
+   "pose": {
+    "promotion (LOCO) A": {
+     "frames": 10,
+     "failingFrames": 9,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.006,
+      "ankleMm": 36.326,
+      "footDeg": 0,
+      "limbSwingDeg": 5.222,
+      "twistDeg": 3.997,
+      "armMm": 0,
+      "bootPenAddedMm": 0
+     },
+     "failItems": [
+      "footContact_R",
+      "ankleMm",
+      "limbSwingDeg",
+      "footContact_L"
+     ],
+     "failRows": [
+      {
+       "row": 39,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 25.2
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 40,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 31.4
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 41,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 43.9
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 42,
+       "fails": [
+        "footContact_R",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 55.7
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 43,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 44,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 45,
+       "fails": [
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 46,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -10.7
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 47,
+       "fails": [
+        "footContact_L",
+        "ankleMm",
+        "limbSwingDeg"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -5.9
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "promotion (LOCO) B": {
+     "frames": 10,
+     "failingFrames": 6,
+     "worst": {
+      "pelvisMm": 0,
+      "pelvisDeg": 0,
+      "trunkDeg": 0,
+      "kneeMm": 0.002,
+      "ankleMm": 0.004,
+      "footDeg": 15.599,
+      "limbSwingDeg": 0.001,
+      "twistDeg": 6.212,
+      "armMm": 0,
+      "bootPenAddedMm": 41.654
+     },
+     "failItems": [
+      "footDeg",
+      "bootPenAddedMm",
+      "footContact_R",
+      "footContact_L"
+     ],
+     "failRows": [
+      {
+       "row": 39,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": 8.11
+       }
+      },
+      {
+       "row": 40,
+       "fails": [
+        "footDeg",
+        "bootPenAddedMm"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 2
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": 15.6
+       }
+      },
+      {
+       "row": 41,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 44.8
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": null
+       }
+      },
+      {
+       "row": 42,
+       "fails": [
+        "footContact_R"
+       ],
+       "footContact": [
+        {
+         "foot": "R",
+         "mode": "toe",
+         "lowestMm": 57.3
+        }
+       ],
+       "bootPitchFixDeg": {
+        "R": null
+       }
+      },
+      {
+       "row": 46,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -11.1
+        }
+       ],
+       "bootPitchFixDeg": {}
+      },
+      {
+       "row": 47,
+       "fails": [
+        "footContact_L"
+       ],
+       "footContact": [
+        {
+         "foot": "L",
+         "mode": "ankle",
+         "lowestMm": -6.3
+        }
+       ],
+       "bootPitchFixDeg": {}
+      }
+     ]
+    },
+    "reconciliation (FULL) A": {
+     "frames": 0,
+     "failingFrames": 0,
+     "worst": {
+      "pelvisMm": null,
+      "pelvisDeg": null,
+      "trunkDeg": null,
+      "kneeMm": null,
+      "ankleMm": null,
+      "footDeg": null,
+      "limbSwingDeg": null,
+      "twistDeg": null,
+      "armMm": null,
+      "bootPenAddedMm": null
+     },
+     "failItems": [],
+     "failRows": []
+    },
+    "reconciliation (FULL) B": {
+     "frames": 0,
+     "failingFrames": 0,
+     "worst": {
+      "pelvisMm": null,
+      "pelvisDeg": null,
+      "trunkDeg": null,
+      "kneeMm": null,
+      "ankleMm": null,
+      "footDeg": null,
+      "limbSwingDeg": null,
+      "twistDeg": null,
+      "armMm": null,
+      "bootPenAddedMm": null
+     },
+     "failItems": [],
+     "failRows": []
+    },
+    "velocityCheck": {
+     "maxBodyVelDiffMs": 1.259,
+     "body": "foot_R",
+     "row": 41,
+     "limit": 0.25,
+     "pass": false
+    }
+   },
+   "poseClass": {
+    "promotion": "C",
+    "reconciliation": null
+   },
+   "decisive": {
+    "tick": 49,
+    "sub": 4,
+    "tSim": 49,
+    "prim": "LEG",
+    "seg": "shin_L",
+    "mappedBody": "shank_L",
+    "segPlanted": true,
+    "react": "FALL",
+    "J": 101.3,
+    "point": [
+     52.621,
+     33.832,
+     0.116
+    ],
+    "normal": [
+     0.318,
+     0.948
+    ],
+    "vn": 4.074,
+    "vt": 2.313,
+    "support": {
+     "R": false,
+     "L": true
+    }
+   },
+   "geometry": {
+    "simPrimitive": {
+     "prim": "LEG",
+     "a": [
+      52.76393760254141,
+      33.100635525572635,
+      0.12
+     ],
+     "b": [
+      52.58169541670077,
+      33.71424435512125,
+      0.12
+     ],
+     "r": 0.07,
+     "v": [
+      -0.7094689127273516,
+      4.5976206460069005
+     ]
+    },
+    "simSegment": {
+     "name": "shin_L",
+     "seg": "shin",
+     "sd": "L",
+     "a": [
+      52.54608238548813,
+      33.87098054192631,
+      0.5057451092775301
+     ],
+     "b": [
+      52.628169356260884,
+      33.82873,
+      0.08
+     ],
+     "r": 0.06,
+     "planted": true
+    }
+   },
+   "series": [
+    {
+     "t": 42.25,
+     "simOverlapUnperturbedMm": -757.5,
+     "simOverlapRecordedMm": -757.5,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.86522729418558,
+       0.12,
+       -32.54841798682962
+      ],
+      [
+       52.824797940009084,
+       0.12,
+       -33.102587546424886
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.3850366625476,
+       33.87507574068243,
+       0.5894382469541686
+      ],
+      "b": [
+       52.317358999831505,
+       33.82873,
+       0.17360098456672599
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 42.5,
+     "simOverlapUnperturbedMm": -703.6,
+     "simOverlapRecordedMm": -703.6,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.86126973161309,
+       0.12,
+       -32.57043912447023
+      ],
+      [
+       52.81443779002723,
+       0.12,
+       -33.1464063621486
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.39393895181375,
+       33.87499375653215,
+       0.5866335575587862
+      ],
+      "b": [
+       52.33800063757988,
+       33.82873,
+       0.1690459711386359
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 42.75,
+     "simOverlapUnperturbedMm": -649.7,
+     "simOverlapRecordedMm": -649.7,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.85719708425494,
+       0.12,
+       -32.59241682770624
+      ],
+      [
+       52.80344993585489,
+       0.12,
+       -33.19009881072725
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.40220236400693,
+       33.874872437211074,
+       0.5834096176032566
+      ],
+      "b": [
+       52.35828334399371,
+       33.82873,
+       0.16437403716968535
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43,
+     "simOverlapUnperturbedMm": -595.8,
+     "simOverlapRecordedMm": -595.8,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.853025390490174,
+       0.12,
+       -32.61434962885737
+      ],
+      [
+       52.791855244239606,
+       0.12,
+       -33.23365545326186
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.40976477582032,
+       33.87471103155961,
+       0.5797553644498546
+      ],
+      "b": [
+       52.378193578009906,
+       33.82873,
+       0.159591317076059
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43.25,
+     "simOverlapUnperturbedMm": -546.1,
+     "simOverlapRecordedMm": -546.1,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.84877069196377,
+       0.12,
+       -32.63585459291885
+      ],
+      [
+       52.78015407745448,
+       0.12,
+       -33.27226622874371
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.416542725831846,
+       33.87450820209026,
+       0.5756539699736949
+      ],
+      "b": [
+       52.39771779856537,
+       33.82873,
+       0.15470409074008024
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43.5,
+     "simOverlapUnperturbedMm": -512.3,
+     "simOverlapRecordedMm": -512.3,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.84444902121065,
+       0.12,
+       -32.657313181388105
+      ],
+      [
+       52.770043954202784,
+       0.12,
+       -33.29307406096749
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.4224205569935,
+       33.8742616443301,
+       0.5710791634713356
+      ],
+      "b": [
+       52.416842464596996,
+       33.82873,
+       0.14971877526450156
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 43.75,
+     "simOverlapUnperturbedMm": -479,
+     "simOverlapRecordedMm": -479,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.840076388333884,
+       0.12,
+       -32.67872544408299
+      ],
+      [
+       52.75981461008011,
+       0.12,
+       -33.313773518602986
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.42723099053836,
+       33.87396741691888,
+       0.565988716155568
+      ],
+      "b": [
+       52.43555403504171,
+       33.82873,
+       0.1446419165466201
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44,
+     "simOverlapUnperturbedMm": -446.4,
+     "simOverlapRecordedMm": -446.4,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.83566876701333,
+       0.12,
+       -32.70009198338326
+      ],
+      [
+       52.749503413937866,
+       0.12,
+       -33.334366010858275
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.4307170943707,
+       33.87361864053582,
+       0.5603117519466987
+      ],
+      "b": [
+       52.4538389688364,
+       33.82873,
+       0.13948018068327953
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.25,
+     "simOverlapUnperturbedMm": -414.7,
+     "simOverlapRecordedMm": -414.7,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.83124208014188,
+       0.12,
+       -32.721032024227156
+      ],
+      [
+       52.739147615816314,
+       0.12,
+       -33.354472328944645
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.43244784920964,
+       33.87320261670055,
+       0.5539206460676414
+      ],
+      "b": [
+       52.47168372491798,
+       33.82873,
+       0.13424034521804756
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.5,
+     "simOverlapUnperturbedMm": -383.7,
+     "simOverlapRecordedMm": -383.7,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.82681218540257,
+       0.12,
+       -32.74192925654058
+      ],
+      [
+       52.72878431320375,
+       0.12,
+       -33.374478500688554
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.43159116846068,
+       33.872693078521145,
+       0.5465555665646481
+      ],
+      "b": [
+       52.48907476222335,
+       33.82873,
+       0.128929290242059
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 44.75,
+     "simOverlapUnperturbedMm": -353.5,
+     "simOverlapRecordedMm": -353.5,
+     "d1MappedPenMm": null,
+     "d1AnyPenMm": null,
+     "d1AnyBody": null,
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.82239486111093,
+       0.12,
+       -32.76278600567759
+      ],
+      [
+       52.71845041791592,
+       0.12,
+       -33.39438996602686
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.42605511141125,
+       33.87202081747509,
+       0.5375392256881172
+      ],
+      "b": [
+       52.505998539689415,
+       33.82873,
+       0.12355398936020985
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45,
+     "simOverlapUnperturbedMm": -324.2,
+     "simOverlapRecordedMm": -324.2,
+     "d1MappedPenMm": -377.4,
+     "d1AnyPenMm": -325.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.81800579265285,
+       0.12,
+       -32.78360517535294
+      ],
+      [
+       52.708182624368874,
+       0.12,
+       -33.41421351791437
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.402620872846725,
+       33.87073543490923,
+       0.5225066873945373
+      ],
+      "b": [
+       52.52244151625308,
+       33.82873,
+       0.11812150053456619
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.25,
+     "simOverlapUnperturbedMm": -296.2,
+     "simOverlapRecordedMm": -296.2,
+     "d1MappedPenMm": -347.3,
+     "d1AnyPenMm": -304.2,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.81366055984955,
+       0.12,
+       -32.804008296448956
+      ],
+      [
+       52.6980173800205,
+       0.12,
+       -33.43357534209146
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.40849017947617,
+       33.87077301598904,
+       0.520105089582349
+      ],
+      "b": [
+       52.53839015085124,
+       33.82873,
+       0.11263895681700639
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.5,
+     "simOverlapUnperturbedMm": -269.3,
+     "simOverlapRecordedMm": -269.3,
+     "d1MappedPenMm": -317.8,
+     "d1AnyPenMm": -283.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.80937462557727,
+       0.12,
+       -32.82438134842401
+      ],
+      [
+       52.68799085874741,
+       0.12,
+       -33.45286682252043
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.42148749528954,
+       33.87107329491074,
+       0.5202498690433507
+      ],
+      "b": [
+       52.55383090242083,
+       33.82873,
+       0.10711355698327002
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 45.75,
+     "simOverlapUnperturbedMm": -243.5,
+     "simOverlapRecordedMm": -243.5,
+     "d1MappedPenMm": -289,
+     "d1AnyPenMm": -263.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.805163325960734,
+       0.12,
+       -32.84472890894987
+      ],
+      [
+       52.67813893790354,
+       0.12,
+       -33.47209866821365
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.434239480728586,
+       33.87136272692378,
+       0.5203095585626957
+      ],
+      "b": [
+       52.56875022989872,
+       33.82873,
+       0.10155255608070837
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46,
+     "simOverlapUnperturbedMm": -218.9,
+     "simOverlapRecordedMm": -218.9,
+     "d1MappedPenMm": -261.2,
+     "d1AnyPenMm": -245.3,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.801041862446056,
+       0.12,
+       -32.86505607630284
+      ],
+      [
+       52.66849717977546,
+       0.12,
+       -33.49128280608667
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.44674645625045,
+       33.87164108884073,
+       0.5202837866977725
+      ],
+      "b": [
+       52.583134592221825,
+       33.82873,
+       0.09596325590214734
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.25,
+     "simOverlapUnperturbedMm": -196,
+     "simOverlapRecordedMm": -196,
+     "d1MappedPenMm": -235.2,
+     "d1AnyPenMm": -225.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.79702529604073,
+       0.12,
+       -32.88498649793054
+      ],
+      [
+       52.65910081810741,
+       0.12,
+       -33.51005037337594
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.459008362928444,
+       33.871908208661786,
+       0.5201725311223082
+      ],
+      "b": [
+       52.59697044832706,
+       33.82873,
+       0.09035299539837346
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.5,
+     "simOverlapUnperturbedMm": -174.6,
+     "simOverlapRecordedMm": -174.6,
+     "d1MappedPenMm": -210,
+     "d1AnyPenMm": -206.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.793128543985766,
+       0.12,
+       -32.90490817195346
+      ],
+      [
+       52.64998475031616,
+       0.12,
+       -33.528797476505055
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.4710247375111,
+       33.872163962707184,
+       0.5199761105927131
+      ],
+      "b": [
+       52.61024425715132,
+       33.82873,
+       0.0847291410418286
+      ],
+      "r": 0.06,
+      "planted": false
+     }
+    },
+    {
+     "t": 46.75,
+     "simOverlapUnperturbedMm": -154.7,
+     "simOverlapRecordedMm": -154.7,
+     "d1MappedPenMm": -185.6,
+     "d1AnyPenMm": -185.6,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.78936637909836,
+       0.12,
+       -32.92482757725273
+      ],
+      [
+       52.64118353595306,
+       0.12,
+       -33.54753927217854
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.482108615713486,
+       33.87234178558896,
+       0.5194619234409686
+      ],
+      "b": [
+       52.62107610229263,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 47,
+     "simOverlapUnperturbedMm": -135.5,
+     "simOverlapRecordedMm": -135.5,
+     "d1MappedPenMm": -162.1,
+     "d1AnyPenMm": -162.1,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.785753431991985,
+       0.12,
+       -32.944751576682876
+      ],
+      [
+       52.63273140189797,
+       0.12,
+       -33.56629181536892
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.48945014711552,
+       33.87216854944932,
+       0.5177162786316852
+      ],
+      "b": [
+       52.62186424162244,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 47.25,
+     "simOverlapUnperturbedMm": -116.9,
+     "simOverlapRecordedMm": -116.9,
+     "d1MappedPenMm": -143.6,
+     "d1AnyPenMm": -143.6,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.78230419634604,
+       0.12,
+       -32.9643054268341
+      ],
+      [
+       52.62466225468692,
+       0.12,
+       -33.58469000774335
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.49672948329383,
+       33.87200032709534,
+       0.5160211561264237
+      ],
+      "b": [
+       52.622652380952246,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 47.5,
+     "simOverlapUnperturbedMm": -98.4,
+     "simOverlapRecordedMm": -98.4,
+     "d1MappedPenMm": -125.4,
+     "d1AnyPenMm": -125.4,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.77903303735762,
+       0.12,
+       -32.983878561094365
+      ],
+      [
+       52.61700970028421,
+       0.12,
+       -33.60313331339231
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.503948094392996,
+       33.871837330184576,
+       0.5143786887302747
+      ],
+      "b": [
+       52.62344052028205,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 47.75,
+     "simOverlapUnperturbedMm": -80.2,
+     "simOverlapRecordedMm": -80.2,
+     "d1MappedPenMm": -107.4,
+     "d1AnyPenMm": -107.4,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.775954203465105,
+       0.12,
+       -33.00347870164008
+      ],
+      [
+       52.60980707150867,
+       0.12,
+       -33.62163979758728
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.51110757406205,
+       33.87167976792111,
+       0.5127909845253344
+      ],
+      "b": [
+       52.62422865961185,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 48,
+     "simOverlapUnperturbedMm": -62.2,
+     "simOverlapRecordedMm": -62.2,
+     "d1MappedPenMm": -89.8,
+     "d1AnyPenMm": -89.8,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.77308184138648,
+       0.12,
+       -33.02311374485887
+      ],
+      [
+       52.603087463214244,
+       0.12,
+       -33.64022793314968
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.51820963949979,
+       33.87152784639054,
+       0.5112601201699213
+      ],
+      "b": [
+       52.625016798941665,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 48.25,
+     "simOverlapUnperturbedMm": -44.8,
+     "simOverlapRecordedMm": -44.8,
+     "d1MappedPenMm": -72.8,
+     "d1AnyPenMm": -72.8,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {},
+     "primAxis": [
+      [
+       52.770430014464665,
+       0.12,
+       -33.042409753579115
+      ],
+      [
+       52.596883775207154,
+       0.12,
+       -33.65853450786154
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.52525613098265,
+       33.871381767881566,
+       0.5097881340619556
+      ],
+      "b": [
+       52.62580493827147,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 48.5,
+     "simOverlapUnperturbedMm": -27.7,
+     "simOverlapRecordedMm": -27.7,
+     "d1MappedPenMm": -56.2,
+     "d1AnyPenMm": -56.2,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {
+      "shank_L": -56.2
+     },
+     "primAxis": [
+      [
+       52.76801272425808,
+       0.12,
+       -33.0617567227935
+      ],
+      [
+       52.59122876275483,
+       0.12,
+       -33.67696029963227
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.53224901085382,
+       33.871241730197646,
+       0.5083770194034161
+      ],
+      "b": [
+       52.62659307760127,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 48.75,
+     "simOverlapUnperturbedMm": -10.9,
+     "simOverlapRecordedMm": -10.9,
+     "d1MappedPenMm": -40,
+     "d1AnyPenMm": -40,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {
+      "shank_L": -40,
+      "foot_L": -50.3
+     },
+     "primAxis": [
+      [
+       52.76584393525657,
+       0.12,
+       -33.08116267442831
+      ],
+      [
+       52.58615509440646,
+       0.12,
+       -33.6955240749687
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.539190361955285,
+       33.87110792596291,
+       0.5070287172056043
+      ],
+      "b": [
+       52.627381216931084,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 49,
+     "simOverlapUnperturbedMm": 5.4,
+     "simOverlapRecordedMm": 5.4,
+     "d1MappedPenMm": -24.4,
+     "d1AnyPenMm": -24.4,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {
+      "shank_L": -24.4,
+      "foot_L": -34.9
+     },
+     "primAxis": [
+      [
+       52.76393760254141,
+       0.12,
+       -33.100635525572635
+      ],
+      [
+       52.58169541670077,
+       0.12,
+       -33.71424435512125
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.54608238548813,
+       33.87098054192631,
+       0.5057451092775301
+      ],
+      "b": [
+       52.628169356260884,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 49.25,
+     "simOverlapUnperturbedMm": 15.9,
+     "simOverlapRecordedMm": -33.8,
+     "d1MappedPenMm": -17.4,
+     "d1AnyPenMm": -17.4,
+     "d1AnyBody": "shank_L",
+     "d1Pens": {
+      "shank_L": -17.4,
+      "foot_L": -22.5
+     },
+     "primAxis": [
+      [
+       52.76230770214229,
+       0.12,
+       -33.11438983088234
+      ],
+      [
+       52.57788242518326,
+       0.12,
+       -33.727346050541286
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.55292739829143,
+       33.87085975826853,
+       0.504528011241947
+      ],
+      "b": [
+       52.62895749559069,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 49.5,
+     "simOverlapUnperturbedMm": 26,
+     "simOverlapRecordedMm": -24.9,
+     "d1MappedPenMm": -10.9,
+     "d1AnyPenMm": -10.7,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -10.9,
+      "foot_L": -10.7
+     },
+     "primAxis": [
+      [
+       52.76096826377475,
+       0.12,
+       -33.128226228525946
+      ],
+      [
+       52.574748940992194,
+       0.12,
+       -33.74063979289434
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.55972782953364,
+       33.87074574791625,
+       0.5033791656253672
+      ],
+      "b": [
+       52.6297456349205,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 49.75,
+     "simOverlapUnperturbedMm": 35.7,
+     "simOverlapRecordedMm": -16.1,
+     "d1MappedPenMm": -5.5,
+     "d1AnyPenMm": 0.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -5.5,
+      "foot_L": 0.1
+     },
+     "primAxis": [
+      [
+       52.75993340556756,
+       0.12,
+       -33.14215181952155
+      ],
+      [
+       52.57232799209987,
+       0.12,
+       -33.7541421943132
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.56648621681599,
+       33.87063867586849,
+       0.502300235069792
+      ],
+      "b": [
+       52.6305337742503,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 50,
+     "simOverlapUnperturbedMm": 44.9,
+     "simOverlapRecordedMm": -7.6,
+     "d1MappedPenMm": -1.7,
+     "d1AnyPenMm": 9.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -1.7,
+      "foot_L": 9.6
+     },
+     "primAxis": [
+      [
+       52.75921737031105,
+       0.12,
+       -33.15617325033557
+      ],
+      [
+       52.57065289811205,
+       0.12,
+       -33.76786880355164
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.57320520169215,
+       33.87053869853985,
+       0.5012927957147828
+      ],
+      "b": [
+       52.63132191358011,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 50.25,
+     "simOverlapUnperturbedMm": 53.1,
+     "simOverlapRecordedMm": 0.5,
+     "d1MappedPenMm": 3.1,
+     "d1AnyPenMm": 23.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 3.1,
+      "foot_L": 23.5
+     },
+     "primAxis": [
+      [
+       52.758834562674046,
+       0.12,
+       -33.169914669096045
+      ],
+      [
+       52.56975735733331,
+       0.12,
+       -33.78145192913875
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.57988752461361,
+       33.87044596312552,
+       0.5003583307988478
+      ],
+      "b": [
+       52.632110052909916,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 50.5,
+     "simOverlapUnperturbedMm": 60.3,
+     "simOverlapRecordedMm": 6.8,
+     "d1MappedPenMm": 5,
+     "d1AnyPenMm": 37.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 5,
+      "foot_L": 37.4
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.18375457947026
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.79526546615956
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.586536019316135,
+       33.87036060699288,
+       0.4994982245289473
+      ],
+      "b": [
+       52.63289819223972,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 50.75,
+     "simOverlapUnperturbedMm": 63.9,
+     "simOverlapRecordedMm": 12.9,
+     "d1MappedPenMm": 3.3,
+     "d1AnyPenMm": 50.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 3.3,
+      "foot_L": 50.4
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.197614180245345
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.80912506693465
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.60948344464538,
+       33.87051856976186,
+       0.5010899644990302
+      ],
+      "b": [
+       52.63368633156953,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 51,
+     "simOverlapUnperturbedMm": 66,
+     "simOverlapRecordedMm": 18,
+     "d1MappedPenMm": 0.1,
+     "d1AnyPenMm": 62,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 0.1,
+      "foot_L": 62
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.21147378102043
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.82298466770973
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.625502300835585,
+       33.87057748769791,
+       0.5016836615731283
+      ],
+      "b": [
+       52.634474470899335,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 51.25,
+     "simOverlapUnperturbedMm": 68.1,
+     "simOverlapRecordedMm": 21.6,
+     "d1MappedPenMm": -1.4,
+     "d1AnyPenMm": 74.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -1.4,
+      "foot_L": 74.5
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.22495143735107
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.836462324040376
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.638477309659265,
+       33.87058566276155,
+       0.5017660390576337
+      ],
+      "b": [
+       52.63526261022914,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 51.5,
+     "simOverlapUnperturbedMm": 70.5,
+     "simOverlapRecordedMm": 23.9,
+     "d1MappedPenMm": -4.5,
+     "d1AnyPenMm": 84.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -4.5,
+      "foot_L": 84.1
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.23842909368171
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.84993998037101
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.64976733600279,
+       33.87056494276738,
+       0.5015572503468277
+      ],
+      "b": [
+       52.63605074955894,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 51.75,
+     "simOverlapUnperturbedMm": 72.9,
+     "simOverlapRecordedMm": 26,
+     "d1MappedPenMm": -9.1,
+     "d1AnyPenMm": 87.9,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -9.1,
+      "foot_L": 87.9
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.25190675001235
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.863417636701655
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.659875820963244,
+       33.870524996315204,
+       0.5011547228081473
+      ],
+      "b": [
+       52.636838888888754,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 52,
+     "simOverlapUnperturbedMm": 75.5,
+     "simOverlapRecordedMm": 28.2,
+     "d1MappedPenMm": -15.1,
+     "d1AnyPenMm": 80.7,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -15.1,
+      "foot_L": 80.7
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.26538440634299
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.87689529303229
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.669050831219344,
+       33.870471673219306,
+       0.5006174031371267
+      ],
+      "b": [
+       52.63762702821856,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 52.25,
+     "simOverlapUnperturbedMm": 78,
+     "simOverlapRecordedMm": 30.3,
+     "d1MappedPenMm": -15.2,
+     "d1AnyPenMm": 76,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -15.2,
+      "foot_L": 76
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.27848011822918
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.889991004918485
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.677430547181224,
+       33.870409158710046,
+       0.4999874645526065
+      ],
+      "b": [
+       52.63841516754837,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 52.5,
+     "simOverlapUnperturbedMm": 80.6,
+     "simOverlapRecordedMm": 32.5,
+     "d1MappedPenMm": -15.7,
+     "d1AnyPenMm": 84.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -15.7,
+      "foot_L": 84.1
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.29157583011538
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.90308671680468
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.68509485879346,
+       33.870340798039535,
+       0.4992986160832386
+      ],
+      "b": [
+       52.63920330687817,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 52.75,
+     "simOverlapUnperturbedMm": 83.2,
+     "simOverlapRecordedMm": 34.8,
+     "d1MappedPenMm": -16.5,
+     "d1AnyPenMm": 90.5,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -16.5,
+      "foot_L": 90.5
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.30467154200157
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.916182428690874
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.69208725725185,
+       33.87026949545591,
+       0.498580122902354
+      ],
+      "b": [
+       52.63999144620797,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 53,
+     "simOverlapUnperturbedMm": 85.8,
+     "simOverlapRecordedMm": 37.1,
+     "d1MappedPenMm": -17.8,
+     "d1AnyPenMm": 90,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -17.8,
+      "foot_L": 90
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.317767253887766
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.92927814057707
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.698424558770796,
+       33.870197949104906,
+       0.49785917335628593
+      ],
+      "b": [
+       52.640779585537786,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 53.25,
+     "simOverlapUnperturbedMm": 88.4,
+     "simOverlapRecordedMm": 39.4,
+     "d1MappedPenMm": -16.6,
+     "d1AnyPenMm": 91.2,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -16.6,
+      "foot_L": 91.2
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.33048102132952
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.94199190801882
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.70410026178105,
+       33.870128822653136,
+       0.49716260835566456
+      ],
+      "b": [
+       52.64156772486759,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 53.5,
+     "simOverlapUnperturbedMm": 91.1,
+     "simOverlapRecordedMm": 41.7,
+     "d1MappedPenMm": -15.3,
+     "d1AnyPenMm": 90.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -15.3,
+      "foot_L": 90.1
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.34319478877127
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.95470567546057
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.70908323617282,
+       33.87006490730112,
+       0.4965185539296665
+      ],
+      "b": [
+       52.64235586419739,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 53.75,
+     "simOverlapUnperturbedMm": 93.8,
+     "simOverlapRecordedMm": 44.1,
+     "d1MappedPenMm": -14.1,
+     "d1AnyPenMm": 90.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -14.1,
+      "foot_L": 90.6
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.355908556213016
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.96741944290232
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.713311100986694,
+       33.87000932149753,
+       0.4959584336815573
+      ],
+      "b": [
+       52.643144003527205,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 54,
+     "simOverlapUnperturbedMm": 96.5,
+     "simOverlapRecordedMm": 46.7,
+     "d1MappedPenMm": -12.9,
+     "d1AnyPenMm": 90.2,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -12.9,
+      "foot_L": 90.2
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.36862232365477
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.98013321034407
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71667466640246,
+       33.86996582182834,
+       0.49552010151902326
+      ],
+      "b": [
+       52.643932142857004,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 54.25,
+     "simOverlapUnperturbedMm": 99.2,
+     "simOverlapRecordedMm": 49.8,
+     "d1MappedPenMm": -10.2,
+     "d1AnyPenMm": 90.8,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -10.2,
+      "foot_L": 90.8
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.38095414665207
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -33.992465033341375
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71898262049352,
+       33.869939393727606,
+       0.4952537940559042
+      ],
+      "b": [
+       52.64472028218681,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 54.5,
+     "simOverlapUnperturbedMm": 102.1,
+     "simOverlapRecordedMm": 52,
+     "d1MappedPenMm": -7.9,
+     "d1AnyPenMm": 86.1,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -7.9,
+      "foot_L": 86.1
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.39328596964938
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.00479685633868
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71987078814113,
+       33.869937634564636,
+       0.4952360675369969
+      ],
+      "b": [
+       52.645508421516624,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 54.75,
+     "simOverlapUnperturbedMm": 105.1,
+     "simOverlapRecordedMm": 53.9,
+     "d1MappedPenMm": -6,
+     "d1AnyPenMm": 78.8,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -6,
+      "foot_L": 78.8
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.40561779264669
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.01712867933599
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71849580161844,
+       33.86997513236804,
+       0.49561392083024375
+      ],
+      "b": [
+       52.64629656084642,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 55,
+     "simOverlapUnperturbedMm": 108.6,
+     "simOverlapRecordedMm": 55.9,
+     "d1MappedPenMm": -4.7,
+     "d1AnyPenMm": 77.6,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -4.7,
+      "foot_L": 77.6
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.41794961564399
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.02946050233329
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.711461516305526,
+       33.870101245079915,
+       0.4968847180283681
+      ],
+      "b": [
+       52.64708470017623,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 55.25,
+     "simOverlapUnperturbedMm": 111.4,
+     "simOverlapRecordedMm": 57.7,
+     "d1MappedPenMm": 0.5,
+     "d1AnyPenMm": 76.2,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 0.5,
+      "foot_L": 76.2
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.42989949419685
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.041410380886155
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.71063230734849,
+       33.870236852456344,
+       0.49825118990455
+      ],
+      "b": [
+       52.647872839506036,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 55.5,
+     "simOverlapUnperturbedMm": 113.7,
+     "simOverlapRecordedMm": 59.6,
+     "d1MappedPenMm": 5.6,
+     "d1AnyPenMm": 80.3,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 5.6,
+      "foot_L": 80.3
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.441849372749715
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.05336025943902
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.717275431555564,
+       33.87030925776647,
+       0.4989807949053301
+      ],
+      "b": [
+       52.64866097883584,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 55.75,
+     "simOverlapUnperturbedMm": 116,
+     "simOverlapRecordedMm": 61.4,
+     "d1MappedPenMm": 10.5,
+     "d1AnyPenMm": 84.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 10.5,
+      "foot_L": 84.4
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.45379925130258
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.06531013799188
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.7239518036852,
+       33.87038906581973,
+       0.49978499496534745
+      ],
+      "b": [
+       52.64944911816565,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56,
+     "simOverlapUnperturbedMm": 118.2,
+     "simOverlapRecordedMm": 63.3,
+     "d1MappedPenMm": 15.2,
+     "d1AnyPenMm": 85,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 15.2,
+      "foot_L": 85
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.46574912985544
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.07726001654474
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.73066424654486,
+       33.87047614177821,
+       0.5006624313666238
+      ],
+      "b": [
+       52.650237257495455,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56.25,
+     "simOverlapUnperturbedMm": 120.3,
+     "simOverlapRecordedMm": 65,
+     "d1MappedPenMm": 10.8,
+     "d1AnyPenMm": 88,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 10.8,
+      "foot_L": 88
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.47731706396385
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.088827950653155
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.73741548926984,
+       33.8705703410422,
+       0.5016116470243336
+      ],
+      "b": [
+       52.65102539682526,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56.5,
+     "simOverlapUnperturbedMm": 122.4,
+     "simOverlapRecordedMm": 66.8,
+     "d1MappedPenMm": 6.3,
+     "d1AnyPenMm": 89.2,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 6.3,
+      "foot_L": 89.2
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.48888499807227
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.100395884761575
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.74420816184259,
+       33.87067150985855,
+       0.502631092617442
+      ],
+      "b": [
+       52.65181353615506,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 56.75,
+     "simOverlapUnperturbedMm": 124.5,
+     "simOverlapRecordedMm": 68.5,
+     "d1MappedPenMm": 1.7,
+     "d1AnyPenMm": 88.8,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": 1.7,
+      "foot_L": 88.8
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.500452932180686
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.11196381886999
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.75104479017322,
+       33.87077948595458,
+       0.5037191329762439
+      ],
+      "b": [
+       52.652601675484874,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    },
+    {
+     "t": 57,
+     "simOverlapUnperturbedMm": 126.6,
+     "simOverlapRecordedMm": 70.2,
+     "d1MappedPenMm": -2.9,
+     "d1AnyPenMm": 88.4,
+     "d1AnyBody": "foot_L",
+     "d1Pens": {
+      "shank_L": -2.9,
+      "foot_L": 88.4
+     },
+     "primAxis": [
+      [
+       52.758770893236544,
+       0.12,
+       -33.512020866289106
+      ],
+      [
+       52.56960840895262,
+       0.12,
+       -34.12353175297841
+      ]
+     ],
+     "primR": 0.07,
+     "simSegUnperturbed": {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       52.757927791754,
+       33.87089409919258,
+       0.5048740536781894
+      ],
+      "b": [
+       52.65338981481468,
+       33.82873,
+       0.08
+      ],
+      "r": 0.06,
+      "planted": true
+     }
+    }
+   ],
+   "pass": false
+  }
+ }
+}
