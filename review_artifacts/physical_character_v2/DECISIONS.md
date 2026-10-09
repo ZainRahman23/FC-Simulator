@@ -2667,3 +2667,11 @@ Not pushed.
 - **CPU:** 827 – 951 µs per step vs 892 autonomous; no saving.
 - **Matrix / impactor:** not run.
 - **Awaiting user decision:** separate the ordinary-stabilisation caps from the recoverability bound (option B), and / or the authoring items.
+
+## 2026-10-09 — Architecture clarification: separate A (locomotion authority), B (physical support / recoverability) and C (leg / skeletal locomotion); SLP-1 / SLP-1b preserved as failed experiments; design SLP-2 first (`sources/2026-10-09_user_decision_slp2_separation_design.md`)
+
+- **Not adopted:** option B "as currently framed" (raising the recovery caps until they propel the body). The caps stay conceptually tied to disturbance recovery.
+- **Clarified:** authoritative football locomotion may supply ordinary translation directly.
+  - The legs explain the motion: plants, leg motion, pelvis orientation, contacts. They are not required to generate the net forward impulse.
+  - A collision must not silently change a decided football outcome, and the locomotion authority must not erase a collision response.
+- **Next:** the SLP-2 architecture draft only (`slp2/SLP2_ARCHITECTURE_DRAFT.md`), then stop for approval. No TD2C / E2, autonomous gait, polish, tackles, recovery or running development.
