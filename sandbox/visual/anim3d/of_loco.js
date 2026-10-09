@@ -176,12 +176,15 @@ function ofLocoTick(skel, L, sim, dt, now) {
   L.idleW = 1 - wGait;
   const cyc = ofLocoCycle(skel, P, L.phase, { lean: L.lean, turnRoll: L.roll, twist: L.twist, reverse, lastBob: L.lastBob }); if (!cyc._flight) L.lastBob = cyc._bob;
   const idle = Object.assign({}, OF_IDLE, { _pelvis: V3.scale(OF_IDLE._pelvis, skel.legLen / OF_REF_LEG), pelvis: [OF_IDLE.pelvis[0] + L.lean * 0.45, L.twist * 0.3, L.roll * 0.4], spine: [OF_IDLE.spine[0] + L.lean * 0.35, L.twist * 0.4, 0], chest: [OF_IDLE.chest[0] + L.lean * 0.2, L.twist * 0.3, 0] });
-  let pose = wGait >= 1 ? cyc : wGait <= 0 ? idle : ofPoseLerp(idle, cyc, wGait); pose._legs = cyc._legs; pose.name = wGait > 0.5 ? P.gait : "IDLE";
+  // LC-1 (anim3d/of_loco_cont.js, presentation only): the C1 gait with the physical pelvis / COM path replaces the law's pose here; the law itself
+  // (cyc, which the simulation's runner legs also use) is untouched. Off: exactly the V1.3 line below.
+  const contOn = typeof ofContOn === "function" && ofContOn(), gp = contOn ? ofContCycle(skel, L, P, v, sim, dt, { lean: L.lean, turnRoll: L.roll, twist: L.twist, reverse }, wGait, idle) : cyc;
+  let pose = wGait >= 1 ? gp : wGait <= 0 ? idle : ofPoseLerp(idle, gp, wGait); pose._legs = cyc._legs; pose.name = wGait > 0.5 ? P.gait : "IDLE"; if (contOn) { pose._flight = cyc._flight; pose._bob = cyc._bob; }
   // plant requests: from the cycle's contact phases while moving; the idle stance points while standing (the solve steps the feet to them)
   const plants = {};
   for (const sd of ["R", "L"]) {
     const lg = cyc._legs[sd]; const inStance = lg.st && (wGait > 0 || L.settled);
-    if (wGait > 0.02 && !L.settled) plants[sd] = { want: inStance, mode: inStance && lg.s > 0.64 ? "toe" : "ankle", s: inStance ? lg.s : null };
+    if (wGait > 0.02 && !L.settled) plants[sd] = { want: inStance, mode: inStance && lg.s > 0.64 ? "toe" : "ankle", s: inStance ? lg.s : null }, contOn && (plants[sd].loco = true);
     else plants[sd] = { want: true, mode: "ankle", s: 0.3, stance: [(sd === "R" ? 1 : -1) * G.stanceW * skel.byName.thigh_R.off[0], G.stanceZ * skel.legLen] };   // idle: a stance point in the leg frame; a foot turned out of it by the facing (or left behind by the stop) steps to it
   }
   L.diag = { v: +v.toFixed(3), gait: P.gait, gaitIdx: +P.idx.toFixed(2), lo: P.lo, hi: P.hi, t: +P.t.toFixed(2), phase: +L.phase.toFixed(3), cadence: +cadence.toFixed(2), step: +step.toFixed(3), lean: +L.lean.toFixed(1), roll: +L.roll.toFixed(1), twist: +L.twist.toFixed(1), aPar: +aPar.toFixed(2), aLat: +aLat.toFixed(2), wGait: +wGait.toFixed(2), settled: L.settled, reverse, legYaw: +(legYaw / DEG).toFixed(1), facing: +(sim.facing / DEG).toFixed(1) };

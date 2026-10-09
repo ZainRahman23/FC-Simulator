@@ -95,8 +95,14 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     if (st.mode === "toe" && st.T) { const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd]; const d = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]); const P = V3.sub(st.T, d); if (P[1] < ankleH) P[1] = ankleH; return P; }
     if (st.yT != null && now - st.yT < OF_GAIT.settleT) return [st.P[0], lerp(st.y0, st.P[1], smooth01((now - st.yT) / OF_GAIT.settleT)), st.P[2]];   // heel strike: the plant's XZ is pinned at once, its HEIGHT settles from where the authored foot was (a landing, not a teleport)
     return st.P; };
+  const contP = typeof ofContOn === "function" && ofContOn() && opts.cont, contRes = {};             // LC-1 D4: the locomotion plant layer (anim3d/of_loco_cont.js)
   for (const sd of ["R", "L"]) {                                                                 // plant state: lock weight blends in at the stance start and out at its end (never a cut)
     const st = state.feet[sd] || (state.feet[sd] = { locked: false, P: null, mem: {}, w: 0, mode: "ankle", T: null, step: null }); const req = plants[sd]; const want = req && typeof req === "object" ? !!req.want : !!req; const mode = req && typeof req === "object" && req.mode ? req.mode : "ankle";
+    if (contP && req && typeof req === "object" && req.loco) {                                    // LC-1: a V1.3 lock handed to the layer becomes its presented starting state
+      if (st.locked) { const A0 = st.lastA || fk.joint[skel.byName["foot_" + sd].idx]; st.c = { mode: "handover", A0: A0.slice() }; st.locked = false; st.P = null; st.rel = null; st.relOff = null; st.step = null; st.T = null; st.mode = "ankle"; st.w = 0; }
+      contRes[sd] = ofContPlantStep(skel, sd, st, want, opts.cont, now); st.s = req.s; continue; }
+    if (st.c && st.c.mode !== "swing") {                                                          // LC-1: a layer foot handed back to the V1.3 path keeps where it is (a lock there)
+      const A0 = st.lastA || fk.joint[skel.byName["foot_" + sd].idx]; st.locked = true; st.P = [A0[0], ankleH, A0[2]]; st.mode = "ankle"; st.T = null; st.rel = null; st.step = null; st.t0 = now - TB; st.w = 1; st.yT = null; st.c.mode = "swing"; st.c.last = null; }
     const ankle = fk.joint[skel.byName["foot_" + sd].idx], toeTip = fk.tip[skel.byName["toe_" + sd].idx];
     const other = state.feet[sd === "R" ? "L" : "R"];
     if (req && typeof req === "object" && req.stance) {                                          // STANCE point (idle / stop / standing turn): a foot far from it STEPS there (one foot at a time, a lifted arc), never slides
@@ -151,8 +157,12 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
         if (V3.len(v) > 1e-5) aimToe(sd, V3.add(a2, M4.transformDir(M4.axisAngle(st.relAx, st.relAng * (1 - relK(st))), v)), 1); } }
     else if (st.mode === "toe") { if (!st.step) aimToe(sd, st.T, 1); } else if (!st.step) flatten(sd, st.w * kS);
     return { r, rel, Pe }; };
+  const contApply = (sd) => { const st = state.feet[sd], res = contRes[sd], o = ofContApplyLeg(skel, fk, sd, st, res); return o; };
   for (const sd of ["R", "L"]) {
     const st = state.feet[sd]; const ankle = fk.joint[skel.byName["foot_" + sd].idx];
+    if (sd in contRes) { const res = contRes[sd], o = contApply(sd), a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx];
+      const lk = !!res && res.mode !== "swing"; diag.feet[sd] = { locked: lk, contact: !!(res && res.contact), w: lk ? 1 : 0, mode: res ? res.mode : "swing", s: st.s, slide: null, residual: o.r ? +o.r.residual.toFixed(4) : 0, overReach: o.r && !o.r.reached ? +o.r.residual.toFixed(4) : 0,
+        soleY: +(a2[1] - ankleH).toFixed(4), toeY: +t2[1].toFixed(4), P: res && res.anchor ? res.anchor.slice() : null, ankle: a2.slice(), toe: t2.slice(), cont: true, lift: +(o.lift || 0).toFixed(5) }; continue; }
     if (st.locked && st.w > 0) { const { r, rel } = applyLeg(sd);
       const a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx];
       const ref = st.mode === "toe" ? [st.T[0], 0, st.T[2]] : [st.P[0], 0, st.P[2]], cur = st.mode === "toe" ? [t2[0], 0, t2[2]] : [a2[0], 0, a2[2]];
@@ -237,15 +247,17 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
   // penetration reads better than a pop. The lift also decays back to zero once nothing is under the pitch.
   const slewLift = (want) => { const dt2 = Math.max(1 / 240, Math.min(0.1, opts.dt || 1 / 60)), gl = OF_GAIT.groundRate * dt2, g0 = state.groundPrev || 0;
     const v = Math.max(0, Math.max(g0 - gl, Math.min(g0 + gl, want))); state.groundPrev = v; return v; };
-  let minY = 1e9, minB = null; for (const b of skel.bones) { if (!b.part || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const mm = /^(foot|toe)_([RL])$/.exec(b.name); const stt = mm && state.feet[mm[2]]; const tol = mm ? (stt && stt.locked && stt.mode === "toe" ? -0.04 : 0.01) : b.rad * 0.6; const v = Math.min(fk.joint[b.idx][1], fk.tip[b.idx][1]) - tol; if (v < minY) { minY = v; minB = b.name; } }   // a pivoting toe sits at ground level by design (its own margin); other feet 1 cm
+  const rootFix = typeof ofContOn === "function" && ofContOn();                                  // LC-1 D5: the rig root (part "shirt" on every real rig, length to the pelvis, joint on the pitch) is not body
+  let minY = 1e9, minB = null; for (const b of skel.bones) { if (!b.part || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name) || (rootFix && !b.parent)) continue; { const ml = /^(thigh|shin|foot|toe)_([RL])$/.exec(b.name); if (ml && ml[2] in contRes) continue; } const mm = /^(foot|toe)_([RL])$/.exec(b.name); const stt = mm && state.feet[mm[2]]; const tol = mm ? (stt && stt.locked && stt.mode === "toe" ? -0.04 : 0.01) : b.rad * 0.6; const v = Math.min(fk.joint[b.idx][1], fk.tip[b.idx][1]) - tol; if (v < minY) { minY = v; minB = b.name; } }   // a pivoting toe sits at ground level by design (its own margin); other feet 1 cm
   // SHOOTING V1.1. The STRIKING leg is exempt from the leg-floor re-solve. Its pose is an authored strike whose boot legitimately grazes
   // the turf at contact, and its placement has just been solved against the ball; re-solving that leg to lift its ankle discards the contact
   // placement wholesale — on real boots (longer toe, 88 mm ankle) that cost up to 26 cm of boot-to-ball. The body-wide slewed lift below
   // still applies, so nothing is left under the pitch; only the leg that is mid-strike keeps the placement it was given.
   if (minY < 0) { const m = /^(shin|foot|toe)_([RL])$/.exec(minB); if (m && !(state.feet[m[2]] && state.feet[m[2]].locked)) { const sd = m[2], ankle = fk.joint[skel.byName["foot_" + sd].idx]; lockLeg(sd, [ankle[0], ankle[1] - minY, ankle[2]], 1, true); diag.legFloor = (diag.legFloor || "") + sd + ":" + (-minY).toFixed(3) + " "; } else { const lift = slewLift(-minY);
-      pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } }
-  if (!(minY < 0) && (state.groundPrev || 0) > 1e-6) { const lift = slewLift(0); if (lift > 1e-6) { pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } else state.groundPrev = 0; }
-  for (const sd of ["R", "L"]) { const f = diag.feet[sd]; const a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx]; f.soleY = +(a2[1] - ankleH).toFixed(4); f.toeY = +t2[1].toFixed(4); f.ankle = a2.slice(); f.toe = t2.slice(); if (f.locked && f.P) { const st = state.feet[sd]; const ref = st.mode === "toe" ? [st.T[0], 0, st.T[2]] : [st.P[0], 0, st.P[2]], cur = st.mode === "toe" ? [t2[0], 0, t2[2]] : [a2[0], 0, a2[2]]; f.slide = +V3.dist(cur, ref).toFixed(4); } state.feet[sd].lastA = a2.slice(); state.feet[sd].lastT = t2.slice(); }   // the foot facts are the FINAL ones (after the ground clamp / leg floor); lastA/lastT are what the release hands to the swing
+      pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (sd in contRes) contApply(sd); else if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } }
+  if (!(minY < 0) && (state.groundPrev || 0) > 1e-6) { const lift = slewLift(0); if (lift > 1e-6) { pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (sd in contRes) contApply(sd); else if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } else state.groundPrev = 0; }
+  for (const sd of ["R", "L"]) { const f = diag.feet[sd]; const a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx]; f.soleY = +(a2[1] - ankleH).toFixed(4); f.toeY = +t2[1].toFixed(4); f.ankle = a2.slice(); f.toe = t2.slice(); if (f.cont) { const sl = ofContSlip(skel, fk, sd, contRes[sd]); if (sl) { f.slide = +sl.slip.toFixed(5); f.gLift = +sl.lift.toFixed(5); f.gRef = sl.g.slice(); } }
+    else if (f.locked && f.P) { const st = state.feet[sd]; const ref = st.mode === "toe" ? [st.T[0], 0, st.T[2]] : [st.P[0], 0, st.P[2]], cur = st.mode === "toe" ? [t2[0], 0, t2[2]] : [a2[0], 0, a2[2]]; f.slide = +V3.dist(cur, ref).toFixed(4); } state.feet[sd].lastA = a2.slice(); state.feet[sd].lastT = t2.slice(); }   // the foot facts are the FINAL ones (after the ground clamp / leg floor); lastA/lastT are what the release hands to the swing
   // joint diagnostics: knee / elbow included angles (limits), and the per-tick joint jump (discontinuity detector: max joint displacement vs last tick)
   for (const sd of ["R", "L"]) { const J = (n) => fk.joint[skel.byName[n].idx]; const ang = (a, b, c) => Math.acos(Math.max(-1, Math.min(1, V3.dot(V3.norm(V3.sub(a, b)), V3.norm(V3.sub(c, b)))))) / DEG; diag.knee[sd] = +ang(J("thigh_" + sd), J("shin_" + sd), J("foot_" + sd)).toFixed(1); diag.elbow[sd] = +ang(J("upperArm_" + sd), J("foreArm_" + sd), J("hand_" + sd)).toFixed(1); }
   // POP detector (diag.jerk): the change in a joint's per-tick displacement — a fast swing foot has a large displacement but a small CHANGE in it; a real discontinuity spikes here
@@ -327,7 +339,12 @@ function ofActorTick(a, dt, now) {
     if (a.kickW > 0 && a.kick && a.kick.aim) { const d = Math.atan2(Math.sin(sim.facing - a.legYaw), Math.cos(sim.facing - a.legYaw)); a.legYaw += d * a.kickW; }
   }
   if (a.legYaw != null && a.motion !== "LOCO_V0") { const rm = gkRootMatrix(a.x, a.y, a.legYaw, 0); for (let i = 0; i < 16; i++) rootM[i] = rm[i]; }   // the legs play along the movement direction; the trunk twist toward the facing is in the pose
-  const sol = ofSolve(a.skel, pose, rootM, plants, a.state, { now, dt, stanceT: a.gait && a.gait.cadence > 0 ? (a.gait.stanceFrac || OF_GAIT.stanceFrac) * 2 / a.gait.cadence : null }); a.pose = pose; a.rootM = rootM; a.sol = sol;
+  let cont = null;                                                                                // LC-1: the authored foot at the tick and ±dAuth (pure locomotion only; any kick / touch / reception / defending / reaction overlay keeps the V1.3 path)
+  if (typeof ofContOn === "function" && ofContOn() && a.loco && a.loco.cont && a.motion !== "LOCO_V0" && !a.kickW && !a.touch && !a.recv && !a.recvPrev && !a.defA && !a.jockeyOn && !a.jkW && !a.rx && a.defYaw == null) {
+    const s = a.sim || {}, vx = s.vx || 0, vy = s.vy || 0, ly = a.legYaw != null ? a.legYaw : a.facing, py = a._contYaw != null ? a._contYaw : ly, yr = dt > 0 ? Math.atan2(Math.sin(ly - py), Math.cos(ly - py)) / dt : 0;
+    cont = ofContAuthoredFeet(a, (d) => gkRootMatrix(a.x + vx * d, a.y + vy * d, ly + yr * d, 0)); }
+  a._contYaw = a.legYaw != null ? a.legYaw : a.facing;
+  const sol = ofSolve(a.skel, pose, rootM, plants, a.state, { now, dt, stanceT: a.gait && a.gait.cadence > 0 ? (a.gait.stanceFrac || OF_GAIT.stanceFrac) * 2 / a.gait.cadence : null, cont }); a.pose = pose; a.rootM = rootM; a.sol = sol;
   a.skinMats = new Float32Array(a.skel.bones.length * 16); skelSkinMatrices(a.skel, sol.fk, a.skel.invBind).forEach((m, i) => a.skinMats.set(m, i * 16));
   return sol;
 }
