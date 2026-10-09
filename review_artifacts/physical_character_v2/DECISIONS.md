@@ -2993,3 +2993,36 @@ rx_side_standing's CG-6 failure as run (74.3°) was my measurement error, correc
 - Not demonstrated for a moving footballer.
 
 **Process:** no Revision 3. No criterion, threshold, geometry or animation was changed. Post-scan diagnostics are labelled. **Awaiting user.**
+
+## 2026-10-09 — HG-A / promotion-momentum investigation (read-only; `pi1/hga/HGA_INVESTIGATION.md`; source `sources/2026-10-09_user_instruction_hga_momentum_investigation.md` b13cafd; proposal HG-A v2 frozen 192816b, NOT adopted)
+
+**What HG-A protected.**
+- **Primarily: total linear momentum vs the authoritative footballer.** Without it, the promoted body carries 6.5 – 89.5 N·s the simulation never had.
+- **Secondarily: a visible velocity pop.** It capped the correction at 0.05 m/s, a number borrowed from P-16, which is a mapping-fidelity tolerance (basis "—"), not a visibility tolerance.
+- **Not:** angular momentum; positions.
+
+**The presentation's whole-body motion** (22 moving candidates, 1,166 frames):
+- **Correct on average:** the cycle-mean COM velocity equals the authority within ≤ 0.015 m/s.
+- **Non-physical frame to frame** (in flight, where all three should be zero):
+  - implied horizontal force median 0.7 BW;
+  - implied torque about the COM median 871 N·m;
+  - pelvis height jumps up to 72 mm in one frame.
+- So the 2.2 – 4.0 m/s is jitter, not a legitimate gait oscillation.
+
+**A / B / C:**
+- **A (REV2 velocities)** imports a momentum error (median 37.7 N·s on the 48 frames).
+- **B (all bodies at v_auth)** destroys the internal motion: L 100 % lost; segment jumps up to 14 m/s.
+- **C (uniform shift to M·v_auth)** gives exact momentum and preserves L and all relative velocities exactly. Its only cost is a uniform \|s\| of 0.09 – 1.21 m/s.
+- **C matches the architecture.** By conservation, the presentation cannot supply COM momentum.
+
+**HG-A is conceptually wrong.** **HG-A v2** (proposed): exact momentum by construction, \|s\| ≤ 0.180 m/s from PR-2's 3 mm per frame.
+
+**Diagnostic count** (every other gate unchanged): 10 / 26 promotable, but representatives are unchanged at 0 / 1 / 0. The admissible frames have 1 – 9.25-tick leads, so the long-lead drift of the non-locomoting body takes over as the binding failure.
+
+**New findings, not acted on:**
+- **N1:** the presentation's vertical COM velocity (up to 10 m/s) and its non-conserved angular momentum are imported at promotion, and no row bounds them.
+- **N2:** PR-2 (REV2 reading) would fail every moving promotion under A, B or C, because the presentation's own one-frame jitter is 8 – 199 mm.
+- **N3:** contact-flagged presentation feet are not stationary.
+- **N4:** "angular motion" was implemented as linear only.
+
+**Blockers B1 – B7 recorded unchanged.** Nothing modified. **Awaiting user.**

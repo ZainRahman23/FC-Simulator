@@ -1,0 +1,26 @@
+rx_miss            NEAR MISS         kp 54 lead 5.5 ticks fail: NM
+rx_free_leg        RECOVERABLE       NO PROMOTION FRAME no valid predictive promotion frame in W = [41, 49]: P5_footDeg+P14_bodyVel+P15_angVel+P17_angMom+HGA_comVsAuth+HGT_extension
+rx_planted_leg     PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+
+rx_jog             PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [39, 47]: P9_footContact_L+HGA_comVsAuth+P11_renderedBootPenMm+P15_angVel+P9_footContact_R+HGT_extension+P14_bodyVel+
+rx_sprint          NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg
+rx_square          other             NO PROMOTION FRAME no valid predictive promotion frame in W = [50, 60]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom
+rx_glancing        PLANTED-LEG FALL  kp 63 lead 1.75 ticks fail: CG-1, CG-3, CG-4, CG-5, CG-6, CG-2
+rx_lateral         PLANTED-LEG FALL  kp 43 lead 6 ticks fail: CG-4, CG-5, CG-6, CG-2, AST-C1 (stand-in tracking 14.19 mm)
+rx_rear_diag       RECOVERABLE       kp 43 lead 1 ticks fail: CG-4, CG-5, CG-6, CG-2
+rx_front_diag      PLANTED-LEG FALL  kp 49 lead 6.5 ticks fail: CG-1, CG-4, CG-5, CG-6, CG-2, AST-C1 (stand-in tracking 10.52 mm), tackler discontinuity 12 mm
+rx_rear            other             NO PROMOTION FRAME no valid predictive promotion frame in W = [30, 51]: P9_footContact_R+HGA_comVsAuth+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom+HGT_extension+P11_renderedBootP
+rx_standing        RECOVERABLE       NO PROMOTION FRAME no valid predictive promotion frame in W = [40, 50]: P5_footDeg+HGA_comVsAuth+HGT_extension
+rx_airborne        NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [50, 60]: HGA_comVsAuth+P15_angVel+P16_comVel+P9_footContact_R+P14_bodyVel+P17_angMom+P4_kneeMm+P4_ankleMm+P12_clamp
+rx_early_stance    other             kp 48 lead 8.5 ticks fail: CG-1, CG-3, CG-4, CG-5, CG-6, AST-C1 (stand-in tracking 13.87 mm)
+rx_late_stance     other             NO PROMOTION FRAME no valid predictive promotion frame in W = [48, 54]: P15_angVel+P16_comVel+HGA_comVsAuth+P14_bodyVel
+rx_facing_front    PLANTED-LEG FALL  kp 51 lead 0.25 ticks fail: CG-1
+rx_side_standing   PLANTED-LEG FALL  kp 59 lead 0.5 ticks fail: CG-6, tackler discontinuity 10.8 mm
+rx_behind_standing RECOVERABLE       kp 50 lead 0.5 ticks PASS
+rx_heavy           NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg
+rx_light           NEAR MISS         NO PROMOTION FRAME no valid predictive promotion frame in W = [51, 66]: HGA_comVsAuth+P15_angVel+P16_comVel+P14_bodyVel+P5_footDeg
+sl_win             other             NO PROMOTION FRAME no valid predictive promotion frame in W = [64, 71]: P14_bodyVel+P15_angVel+P16_comVel+P17_angMom+HGA_comVsAuth+HGT_extension
+sl_early           NEAR MISS         NO PROMOTION FRAME predictor never fires
+sl_late            NEAR MISS         NO PROMOTION FRAME predictor never fires
+sl_from_behind     PLANTED-LEG FALL  NO PROMOTION FRAME no valid predictive promotion frame in W = [75, 85]: P17_angMom+HGT_extension+HGA_comVsAuth+P15_angVel+P9_footContact_R+P11_renderedBootPenMm+P7_twistDeg
+sl_left            other             NO PROMOTION FRAME no valid predictive promotion frame in W = [64, 73]: P5_footDeg+P14_bodyVel+P15_angVel+P16_comVel+P17_angMom+HGA_comVsAuth+HGT_extension
+sl_loose           other             kp 135 lead 9.25 ticks fail: CG-4, CG-5, CG-6, CG-2
