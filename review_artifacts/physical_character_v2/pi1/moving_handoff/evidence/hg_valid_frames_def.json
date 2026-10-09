@@ -1,0 +1,297 @@
+{
+ "sl_win": {
+  "trigger": 64,
+  "kend": 71,
+  "tRef": 72.75,
+  "speed": 2.416037681669138,
+  "frames": 64,
+  "valid": [],
+  "failCounts": {
+   "HGAv2_shift": 45,
+   "P14_bodyVel": 12,
+   "P15_angVel": 28,
+   "P9_footContact_R": 9,
+   "P17_angMom": 28,
+   "P5_footDeg": 9,
+   "P7_twistDeg": 7,
+   "P9_footContact_L": 6,
+   "P11_renderedBootPenMm": 3,
+   "P12_clamp": 1,
+   "P16_comVel": 3
+  }
+ },
+ "sl_early": {
+  "trigger": -1,
+  "kend": 104,
+  "tRef": 105.5,
+  "speed": 3,
+  "frames": 97,
+  "valid": [
+   {
+    "k": 81,
+    "lead": 23.5,
+    "s": 0.03,
+    "vY": 0.411,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 66,
+   "P14_bodyVel": 19,
+   "P15_angVel": 43,
+   "P9_footContact_R": 14,
+   "P17_angMom": 39,
+   "P5_footDeg": 16,
+   "P7_twistDeg": 15,
+   "P9_footContact_L": 10,
+   "P11_renderedBootPenMm": 5,
+   "P12_clamp": 1
+  }
+ },
+ "sl_late": {
+  "trigger": -1,
+  "kend": 157,
+  "tRef": 158.5,
+  "speed": 3,
+  "frames": 150,
+  "valid": [
+   {
+    "k": 81,
+    "lead": 76.5,
+    "s": 0.03,
+    "vY": 0.411,
+    "hgt": true
+   },
+   {
+    "k": 137,
+    "lead": 20.5,
+    "s": 0.045,
+    "vY": 0.461,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 105,
+   "P14_bodyVel": 31,
+   "P15_angVel": 67,
+   "P9_footContact_R": 20,
+   "P17_angMom": 56,
+   "P5_footDeg": 25,
+   "P7_twistDeg": 27,
+   "P9_footContact_L": 18,
+   "P11_renderedBootPenMm": 8,
+   "P12_clamp": 2
+  }
+ },
+ "sl_from_behind": {
+  "trigger": 75,
+  "kend": 85,
+  "tRef": 86.25,
+  "speed": 3,
+  "frames": 78,
+  "valid": [
+   {
+    "k": 81,
+    "lead": 4.25,
+    "s": 0.029,
+    "vY": 0.411,
+    "hgt": false
+   }
+  ],
+  "failCounts": {
+   "HGAv2_shift": 54,
+   "P14_bodyVel": 16,
+   "P15_angVel": 35,
+   "P9_footContact_R": 11,
+   "P17_angMom": 31,
+   "P5_footDeg": 13,
+   "P7_twistDeg": 11,
+   "P9_footContact_L": 8,
+   "P11_renderedBootPenMm": 4,
+   "P12_clamp": 1
+  }
+ },
+ "sl_left": {
+  "trigger": 64,
+  "kend": 73,
+  "tRef": 74.5,
+  "speed": 2.0291525441894094,
+  "frames": 66,
+  "valid": [],
+  "failCounts": {
+   "HGAv2_shift": 47,
+   "P14_bodyVel": 13,
+   "P15_angVel": 29,
+   "P9_footContact_R": 9,
+   "P17_angMom": 28,
+   "P5_footDeg": 10,
+   "P7_twistDeg": 7,
+   "P9_footContact_L": 6,
+   "P11_renderedBootPenMm": 3,
+   "P12_clamp": 1,
+   "P16_comVel": 2
+  }
+ },
+ "sl_loose": {
+  "trigger": 135,
+  "kend": 144,
+  "tRef": 145.25,
+  "speed": 5.999999999999999,
+  "frames": 137,
+  "valid": [
+   {
+    "k": 16,
+    "lead": 128.25,
+    "s": 0.009,
+    "vY": 2.882,
+    "hgt": false
+   },
+   {
+    "k": 17,
+    "lead": 127.25,
+    "s": 0.096,
+    "vY": 2.355,
+    "hgt": false
+   },
+   {
+    "k": 24,
+    "lead": 120.25,
+    "s": 0.134,
+    "vY": 1.17,
+    "hgt": false
+   },
+   {
+    "k": 27,
+    "lead": 117.25,
+    "s": 0.093,
+    "vY": -0.919,
+    "hgt": false
+   },
+   {
+    "k": 28,
+    "lead": 116.25,
+    "s": 0.058,
+    "vY": -0.811,
+    "hgt": false
+   },
+   {
+    "k": 35,
+    "lead": 109.25,
+    "s": 0.136,
+    "vY": -3.685,
+    "hgt": false
+   },
+   {
+    "k": 40,
+    "lead": 104.25,
+    "s": 0.085,
+    "vY": -1.702,
+    "hgt": false
+   },
+   {
+    "k": 41,
+    "lead": 103.25,
+    "s": 0.147,
+    "vY": -1.027,
+    "hgt": false
+   },
+   {
+    "k": 48,
+    "lead": 96.25,
+    "s": 0.166,
+    "vY": -2.161,
+    "hgt": false
+   },
+   {
+    "k": 60,
+    "lead": 84.25,
+    "s": 0.115,
+    "vY": -3.011,
+    "hgt": false
+   },
+   {
+    "k": 72,
+    "lead": 72.25,
+    "s": 0.154,
+    "vY": -3.498,
+    "hgt": false
+   },
+   {
+    "k": 73,
+    "lead": 71.25,
+    "s": 0.086,
+    "vY": -4.138,
+    "hgt": false
+   },
+   {
+    "k": 85,
+    "lead": 59.25,
+    "s": 0.132,
+    "vY": -2.692,
+    "hgt": true
+   },
+   {
+    "k": 91,
+    "lead": 53.25,
+    "s": 0.109,
+    "vY": -0.937,
+    "hgt": true
+   },
+   {
+    "k": 97,
+    "lead": 47.25,
+    "s": 0.105,
+    "vY": -3.341,
+    "hgt": true
+   },
+   {
+    "k": 98,
+    "lead": 46.25,
+    "s": 0.173,
+    "vY": -3.661,
+    "hgt": true
+   },
+   {
+    "k": 110,
+    "lead": 34.25,
+    "s": 0.152,
+    "vY": -2.147,
+    "hgt": true
+   },
+   {
+    "k": 122,
+    "lead": 22.25,
+    "s": 0.116,
+    "vY": -3.028,
+    "hgt": true
+   },
+   {
+    "k": 134,
+    "lead": 10.25,
+    "s": 0.164,
+    "vY": -3.488,
+    "hgt": true
+   },
+   {
+    "k": 135,
+    "lead": 9.25,
+    "s": 0.088,
+    "vY": -4.021,
+    "hgt": true
+   }
+  ],
+  "failCounts": {
+   "P15_angVel": 66,
+   "HGAv2_shift": 92,
+   "P17_angMom": 24,
+   "P9_footContact_R": 11,
+   "P10_nonContact": 4,
+   "P11_renderedBootPenMm": 2,
+   "P5_footDeg": 5,
+   "P14_bodyVel": 10,
+   "P9_footContact_L": 11,
+   "P16_comVel": 5,
+   "P7_twistDeg": 1
+  }
+ }
+}

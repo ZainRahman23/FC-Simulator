@@ -1,0 +1,367 @@
+{
+ "base": {
+  "rx_miss": {
+   "gameplayHash": "3c502075",
+   "contacts": []
+  },
+  "rx_sprint": {
+   "gameplayHash": "5e3f29f5",
+   "contacts": []
+  },
+  "rx_planted_leg": {
+   "gameplayHash": "18d95b1d",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  },
+  "rx_airborne": {
+   "gameplayHash": "dafa0a26",
+   "contacts": []
+  },
+  "rx_lateral": {
+   "gameplayHash": "1e1ef730",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null,
+     "tag": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT",
+     "tag": null
+    }
+   ]
+  },
+  "rx_glancing": {
+   "gameplayHash": "b85dde0f",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  }
+ },
+ "noGround": {
+  "rx_miss": {
+   "gameplayHash": "3c502075",
+   "contacts": []
+  },
+  "rx_sprint": {
+   "gameplayHash": "5e3f29f5",
+   "contacts": []
+  },
+  "rx_planted_leg": {
+   "gameplayHash": "18d95b1d",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  },
+  "rx_airborne": {
+   "gameplayHash": "dafa0a26",
+   "contacts": []
+  },
+  "rx_lateral": {
+   "gameplayHash": "1e1ef730",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null,
+     "tag": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT",
+     "tag": null
+    }
+   ]
+  },
+  "rx_glancing": {
+   "gameplayHash": "b85dde0f",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  }
+ },
+ "noDrop": {
+  "rx_miss": {
+   "gameplayHash": "3c502075",
+   "contacts": []
+  },
+  "rx_sprint": {
+   "gameplayHash": "5e3f29f5",
+   "contacts": []
+  },
+  "rx_planted_leg": {
+   "gameplayHash": "18d95b1d",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  },
+  "rx_airborne": {
+   "gameplayHash": "dafa0a26",
+   "contacts": []
+  },
+  "rx_lateral": {
+   "gameplayHash": "1e1ef730",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null,
+     "tag": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT",
+     "tag": null
+    }
+   ]
+  },
+  "rx_glancing": {
+   "gameplayHash": "b85dde0f",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  }
+ },
+ "noPlant": {
+  "rx_miss": {
+   "gameplayHash": "3c502075",
+   "contacts": []
+  },
+  "rx_sprint": {
+   "gameplayHash": "5e3f29f5",
+   "contacts": []
+  },
+  "rx_planted_leg": {
+   "gameplayHash": "18d95b1d",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  },
+  "rx_airborne": {
+   "gameplayHash": "dafa0a26",
+   "contacts": []
+  },
+  "rx_lateral": {
+   "gameplayHash": "1e1ef730",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null,
+     "tag": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT",
+     "tag": null
+    }
+   ]
+  },
+  "rx_glancing": {
+   "gameplayHash": "b85dde0f",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  }
+ },
+ "procOnly": {
+  "rx_miss": {
+   "gameplayHash": "3c502075",
+   "contacts": []
+  },
+  "rx_sprint": {
+   "gameplayHash": "5e3f29f5",
+   "contacts": []
+  },
+  "rx_planted_leg": {
+   "gameplayHash": "18d95b1d",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  },
+  "rx_airborne": {
+   "gameplayHash": "dafa0a26",
+   "contacts": []
+  },
+  "rx_lateral": {
+   "gameplayHash": "1e1ef730",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "segPlanted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null,
+     "tag": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT",
+     "tag": null
+    }
+   ]
+  },
+  "rx_glancing": {
+   "gameplayHash": "b85dde0f",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "segPlanted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE",
+     "tag": null
+    }
+   ]
+  }
+ }
+}

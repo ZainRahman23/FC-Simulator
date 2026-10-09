@@ -1,0 +1,30 @@
+runs 462 moving 390
+
+== variant v2 ==
+L1    n 22 lead med 0.75 | coherent through contact/horizon 1/22 | t_coh (ticks) p10/p50/p90 1 1 5 | first-to-fail {"CG4sim":11,"P12":4,"CG2len":13,"(none)":1,"RC4_h":3,"NM2slip":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 47.4 | peak rootDh p50 3.1
+L2    n 22 lead med 1.75 | coherent through contact/horizon 3/22 | t_coh (ticks) p10/p50/p90 1 1 2 | first-to-fail {"CG2len":13,"CG4sim":10,"(none)":3,"NM2slip":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 59.9 | peak rootDh p50 6.4
+L4    n 22 lead med 3.75 | coherent through contact/horizon 1/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG2len":14,"CG4sim":11,"(none)":1,"NM2slip":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 133.4 | peak rootDh p50 10.7
+L8    n 22 lead med 7.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 3 | first-to-fail {"RC4_h":4,"CG4sim":15,"CG2len":9,"P12":2,"NM2slip":3} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 163.6 | peak rootDh p50 20.6
+L12   n 22 lead med 11.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG4sim":10,"P12":5,"CG2len":13,"RC4_h":1,"NM2slip":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 173.1 | peak rootDh p50 17.9
+trig  n 20 lead med 9.5 | coherent through contact/horizon 0/20 | t_coh (ticks) p10/p50/p90 1 1 3 | first-to-fail {"CG4sim":10,"P12":1,"CG2len":11,"RC4_h":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 142.7 | peak rootDh p50 18.5
+
+== variant smooth ==
+L1    n 22 lead med 0.75 | coherent through contact/horizon 3/22 | t_coh (ticks) p10/p50/p90 1 1 5 | first-to-fail {"CG4sim":11,"CG2len":7,"(none)":3,"P12":3,"NM2slip":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 26 | peak rootDh p50 2.6
+L2    n 22 lead med 1.75 | coherent through contact/horizon 3/22 | t_coh (ticks) p10/p50/p90 1 1 5 | first-to-fail {"CG2len":11,"CG4sim":13,"(none)":3,"NM2slip":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 34.4 | peak rootDh p50 3.6
+L4    n 22 lead med 3.75 | coherent through contact/horizon 2/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG2len":12,"CG4sim":11,"(none)":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 58.2 | peak rootDh p50 10.3
+L8    n 22 lead med 7.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG2len":5,"CG4sim":13,"NM2slip":5} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 110.8 | peak rootDh p50 19.9
+L12   n 22 lead med 11.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG4sim":11,"CG2len":7,"P12":3,"NM2slip":2} | Bmean p50 0.908 Bsat p50 0.745 | peak |pelDy| p50 102.2 | peak rootDh p50 14.1
+trig  n 20 lead med 9.5 | coherent through contact/horizon 0/20 | t_coh (ticks) p10/p50/p90 1 1 3 | first-to-fail {"P12":1,"CG2len":11,"CG4sim":9} | Bmean p50 0.901 Bsat p50 1 | peak |pelDy| p50 85.3 | peak rootDh p50 11.1
+
+== variant vert0 ==
+L1    n 22 lead med 0.75 | coherent through contact/horizon 4/22 | t_coh (ticks) p10/p50/p90 1 1 5 | first-to-fail {"CG4sim":14,"P12":4,"CG2len":6,"(none)":4,"NM2slip":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 35.1 | peak rootDh p50 2.8
+L2    n 22 lead med 1.75 | coherent through contact/horizon 1/22 | t_coh (ticks) p10/p50/p90 1 1 5 | first-to-fail {"CG2len":10,"NM2slip":4,"CG4sim":11,"(none)":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 41.1 | peak rootDh p50 4.1
+L4    n 22 lead med 3.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG2len":12,"CG4sim":13,"NM2slip":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 71.9 | peak rootDh p50 10.8
+L8    n 22 lead med 7.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 3 | first-to-fail {"CG2len":7,"CG4sim":12,"NM2slip":5,"P12":1} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 86.9 | peak rootDh p50 24.2
+L12   n 22 lead med 11.75 | coherent through contact/horizon 0/22 | t_coh (ticks) p10/p50/p90 1 1 4 | first-to-fail {"CG4sim":15,"P12":5,"CG2len":6,"NM2slip":3} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 95.1 | peak rootDh p50 15.9
+trig  n 20 lead med 9.5 | coherent through contact/horizon 0/20 | t_coh (ticks) p10/p50/p90 1 1 2 | first-to-fail {"CG4sim":9,"P12":1,"CG2len":10,"NM2slip":2} | Bmean p50 1 Bsat p50 1 | peak |pelDy| p50 83.1 | peak rootDh p50 15.7
+
+== near-miss free evolution (30-tick horizon) ==
+v2     n 40 t_coh p10/p50/p90/max 1 1 5 6 {"CG4sim":17,"P12":10,"CG2len":22,"RC4_h":7,"NM2slip":5}
+smooth n 40 t_coh p10/p50/p90/max 1 1 6 6 {"CG4sim":19,"CG2len":15,"P12":7,"NM2slip":3}
+vert0  n 40 t_coh p10/p50/p90/max 1 1 6 6 {"CG4sim":23,"P12":9,"CG2len":14,"NM2slip":5}

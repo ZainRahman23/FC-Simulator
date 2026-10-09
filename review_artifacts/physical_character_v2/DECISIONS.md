@@ -3040,3 +3040,25 @@ rx_side_standing's CG-6 failure as run (74.3°) was my measurement error, correc
 **This is a correction, not a relaxation:** v1 tolerated up to 3.7 N·s of momentum error; v2 tolerates none.
 
 **Not covered:** vertical, angular and internal-velocity inheritance and PR-2's reference stay open (investigation in progress). Blockers B1 – B7 are unaffected. REV2's results remain as recorded under v1.
+
+## 2026-10-09 — Moving-runner handoff investigation (read-only; `pi1/moving_handoff/MOVING_HANDOFF_INVESTIGATION.md`; source f6265b5)
+
+**Presentation sources** (procedural running; presentation-only switches; gameplay hashes identical):
+- **The pelvis-height pose term:** unblended stance / flight / heel-toe switches and the flight "bob". It is the vertical defect at every speed (flight −6 … −9 BW extra) and the only blocker of valid frames at 7.5 m/s.
+- **Plant-IK transitions:** immediate lock, toe-pivot switch, releases, drop. They are the main source of horizontal-momentum, internal-velocity and leg-vs-simulation errors at 3 – 5.5 m/s. With locks off, valid frames go from 20 to 75 of 302, and legs vs the simulation from 82 – 92 to 13 – 16 mm at jog.
+- **Root-bone ground-clamp bug:** 12 mm single-tick drops.
+- **Stride clock 0.865 m vs rig 0.834 m.**
+- **Not sources:** clips, interpolation, mapping, rounding noise.
+
+**What promotion must inherit:** vertical and angular motion from the genuine gait (conservation-consistent), whole-body yaw rate from the authoritative facing rate, and internal velocities from the gait's continuous derivative. The presentation's current values cannot be copied.
+
+**PR-2:** its REV2 reading (vs the last frame) was my error; it tests limb acceleration (3 mm ↔ 1.1 g). 0 / 208 moving runs pass, and the presentation fails it against itself. Compare with the genuine continuation over the same frame; 3 mm kept.
+
+**Long-lead drift** (732 runs, no tackle):
+- From fully valid frames, coherence holds 1 – 2 ticks typically, ≤ 6; 0 / 78 coherent through 30 ticks.
+- Causes: A, missing locomotion (frozen posture; primary); B, the B pelvis tether at a fixed height (saturated); D, imported vertical and IK artefacts. C, V2 body limitation: none.
+- The required lead (to the latest valid frame) is 1 – 22 ticks, with none at 7.5 m/s, so the interval is insufficient. A plants-off diagnostic shows short-lead (0.75 – 1.75 tick) promotions staying coherent through contact.
+
+**Recommended next change** (not implemented): a general locomotion-presentation continuity correction (pelvis-height path, plant transitions, root-bone bug), then rerun this investigation.
+
+**Before moving PI-1 runs:** correct the PR-2 reference and the B / DG(c) semantics. **Awaiting user.**
