@@ -10,3 +10,8 @@ export const PI1_RUNNER = Object.freeze({ id: "PI1-runner-vinicius", H: 1.76, M:
   record: "assets/characters/outfield/vinicius/rig.json @ f5f6076 (identity 176 cm / 73 kg)" });
 // the accepted E1a / SLP configuration: ankle neutral K 0.13 (v2k knee is selected by the passive options / env, as in SLP)
 export const pi1RunnerSpec = () => { setAnkleNeutralKOverride(0.13); return generateSpec(PI1_RUNNER); };
+// D-1F1 (CORRECTION_DESIGN_FROZEN.md §2, 7c090de): the same runner with the V2-F1 toe body; boot heel / tip and the MTP hinge from the record
+// (rig.json footwear min / max z, toe bone bind origin), forefoot mass fraction / MTP range / passive stiffness from V2 spec §12.3
+export const PI1_RUNNER_F1 = Object.freeze({ ...PI1_RUNNER, id: "PI1-runner-vinicius-F1", f1: Object.freeze({ heelBehindAJC: 0.08076356756756757, tipAheadAJC: 0.2751943783783784,
+  mtpAheadAJC: 0.1805, mtpAboveStud: 0.030999999999999972, forefootMassFrac: 0.165, neutralKPerDeg: 0.75, dfActive: Object.freeze([-30, 60]), dfHard: Object.freeze([-35, 70]), centreDeg: 15 }) });
+export const pi1RunnerF1Spec = () => { setAnkleNeutralKOverride(0.13); return generateSpec(PI1_RUNNER_F1); };

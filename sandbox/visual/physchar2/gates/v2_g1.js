@@ -150,7 +150,8 @@ export class G1Sim {
     this.nb = spec.bodies.length; this.M = spec.bodies.reduce((s, b) => s + b.mass, 0); this.g = -init.gravity;
     this.disabled = new Set(spec.disabledPairs.map(([a, b]) => Math.min(a, b) + "-" + Math.max(a, b)));
     this.anchors = spec.joints.map(j => ({ p: V.sub(j.at, spec.bodies[j.parentIndex].origin), c: V.sub(j.at, spec.bodies[j.childIndex].origin) }));
-    this.sole = ["foot_L", "foot_R"].map(n => { const i = spec.bodies.findIndex(b => b.name === n), s = bootSole(spec.bodies[i]); return { i, y0: s.y0, poly: hull2(s.pts) }; });
+    // toe_: the V2-F1 forefoot carries the front of the boot sole (its own plantar outline); absent on every F0 spec, so nothing else changes
+    this.sole = ["foot_L", "foot_R", "toe_L", "toe_R"].map(n => spec.bodies.findIndex(b => b.name === n)).filter(i => i >= 0).map(i => { const s = bootSole(spec.bodies[i]); return { i, y0: s.y0, poly: hull2(s.pts) }; });
     this.n = 0; this.h = 2166136261; this.hashAt = {}; this.cpu = { step: 0, passive: 0, measure: 0 };
     this.series = opts.series ? { t: [], E: [], KE: [], PE: [], U: [], D: [], comY: [], turfPen: [], selfPen: [], sep: [], hardExc: [], P: [], L: [] } : null;
     this.A = this._acc(); this.prevQ = null; this.prevAt = null; this.Dcum = 0;
@@ -314,7 +315,7 @@ export class G1Sim {
         softLo: j.limits.soft.lo[i] * D, softHi: j.limits.soft.hi[i] * D, marginMinDeg: X.marginMin * D, marginAt: X.marginAt, softExcMaxDeg: X.softExcMax * D, hardSteps: X.hardSteps, chatterPer05s: chat, restMarginMinDeg: X.restMarginMin * D,
         overLoDeg: X.overLo * D, overHiDeg: X.overHi * D, engineTicks: X.engineTicks, engineLo: (j.limits.engine || j.limits.hard).lo[i] * D, engineHi: (j.limits.engine || j.limits.hard).hi[i] * D, sign: j.def.axes[KEYS[i]].s, key: j.def.axes[KEYS[i]].key }); }));
     const thorax = this.st[spec.bodies.findIndex(b => b.name === "thorax")], ant = Q.rot(thorax.rot, [0, 0, 1]), posture = ant[1] > 0.5 ? "supine" : ant[1] < -0.5 ? "prone" : (Q.rot(thorax.rot, [1, 0, 0])[1] > 0 ? "on left side" : "on right side");
-    const firstNonFoot = A.seq.find(s => !/^foot_/.test(s.who)) || null;
+    const firstNonFoot = A.seq.find(s => !/^(foot|toe)_/.test(s.who)) || null;   // toe_: V2-F1 forefoot (boot)
     const restJitter = A.restW.length ? Math.max(...A.restW) : 0;
     return { key: this.key, human: spec.human.id, cfg: this.cfg, seconds: N * dt, ticks: N, hash: this.h.toString(16).padStart(8, "0"), hashAt: this.hashAt,
       finite: A.finite, firstNaN: A.firstNaN, maxSpeed: A.maxSpeed, maxW: A.maxW, initMaxSpeed: A.initMaxSpeed || 0, initComY: A.com[0][1],

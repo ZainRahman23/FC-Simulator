@@ -1,0 +1,542 @@
+{
+ "g0": {
+  "F0": {
+   "n": 47,
+   "failed": [
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "value": "stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H",
+     "limit": "exact"
+    },
+    {
+     "id": "0.6a",
+     "name": "inter-HJC distance",
+     "value": "0.1733 H = 0.305 m",
+     "limit": "0.09–0.11 H"
+    },
+    {
+     "id": "0.6b",
+     "name": "inter-SJC distance within ±10 % of the spec value",
+     "value": "0.2807 H = 0.494 m",
+     "limit": "0.218 H ± 10 %"
+    },
+    {
+     "id": "0.6e",
+     "name": "segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm)",
+     "value": "leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876",
+     "limit": "exact"
+    },
+    {
+     "id": "0.10a",
+     "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
+     "value": "bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between th",
+     "limit": "within tolerance"
+    }
+   ]
+  }
+ },
+ "g1": {
+  "F0": {
+   "upright": {
+    "hash": "8affd7f9",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.36,
+    "turfPenMaxMm": 2.97,
+    "firstNonFootT": 0.44166666666666665,
+    "mtp": null
+   },
+   "leanF": {
+    "hash": "56c0bdc8",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 1.16,
+    "turfPenMaxMm": 2.26,
+    "firstNonFootT": 0.4458333333333333,
+    "mtp": null
+   },
+   "leanL": {
+    "hash": "f539512f",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.43,
+    "turfPenMaxMm": 2.63,
+    "firstNonFootT": 0.44166666666666665,
+    "mtp": null
+   },
+   "singleLeg": {
+    "hash": "c79175e6",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 4.31,
+    "turfPenMaxMm": 3.54,
+    "firstNonFootT": 0.4791666666666667,
+    "mtp": null
+   },
+   "drop1m": {
+    "hash": "de04a8b1",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.05,
+    "turfPenMaxMm": 1.61,
+    "firstNonFootT": 0.6833333333333333,
+    "mtp": null
+   },
+   "sideFirst": {
+    "hash": "7da45f1e",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0.99,
+    "firstNonFootT": 0.1875,
+    "mtp": null
+   },
+   "awkward": {
+    "hash": "6a6b55ab",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 1.12,
+    "turfPenMaxMm": 2.44,
+    "firstNonFootT": 0.4083333333333333,
+    "mtp": null
+   },
+   "flatSupine": {
+    "hash": "67df0256",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0.35,
+    "firstNonFootT": 0.2875,
+    "mtp": null
+   },
+   "isoMomentum": {
+    "hash": "90282f6b",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0,
+    "firstNonFootT": null,
+    "mtp": null
+   },
+   "isoSelfCol": {
+    "hash": "ec629b1f",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.4d",
+      "name": "self-penetration between allowed pairs (transient)",
+      "value": "24.59 mm",
+      "limit": "≤ 10 mm"
+     }
+    ],
+    "selfPenMaxMm": 24.59,
+    "turfPenMaxMm": 0,
+    "firstNonFootT": null,
+    "mtp": null
+   }
+  },
+  "F1": {
+   "upright": {
+    "hash": "10e1026f",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.57,
+    "turfPenMaxMm": 2.23,
+    "firstNonFootT": 0.44166666666666665,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -6.75,
+      "dfMaxDeg": 13.09,
+      "hardMarginMinDeg": 28.25,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -6.58,
+      "dfMaxDeg": 12.93,
+      "hardMarginMinDeg": 28.42,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "leanF": {
+    "hash": "ff679626",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.2a",
+      "name": "no step with net mechanical-energy increase > 0.5 J",
+      "value": "0.741 J at t = 0.467 s",
+      "limit": "≤ 0.5 J"
+     },
+     {
+      "id": "1.2b",
+      "name": "energy monotonically non-increasing after first contact",
+      "value": "0.741 J above the running minimum (t = 0.467 s)",
+      "limit": "≤ 0.5 J"
+     }
+    ],
+    "selfPenMaxMm": 1.58,
+    "turfPenMaxMm": 1.33,
+    "firstNonFootT": 0.45416666666666666,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -0.35,
+      "dfMaxDeg": 34.33,
+      "hardMarginMinDeg": 34.65,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -0.27,
+      "dfMaxDeg": 33.58,
+      "hardMarginMinDeg": 34.73,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "leanL": {
+    "hash": "d22d170b",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.12,
+    "turfPenMaxMm": 1.78,
+    "firstNonFootT": 0.44166666666666665,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -2.7,
+      "dfMaxDeg": 6.79,
+      "hardMarginMinDeg": 32.3,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -2.54,
+      "dfMaxDeg": 12.21,
+      "hardMarginMinDeg": 32.46,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "singleLeg": {
+    "hash": "c3de8700",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.4f",
+      "name": "standing release: only boot soles touch at t = 0, inside the plantar outline, on the sole plane, normal +Y",
+      "value": "1 manifolds; non-boot 0; outside outline 94.69 mm; above sole 12.00 mm; normal 0.00°",
+      "limit": "0 / ≤ 2 / ≤ 2 mm / ≤ 2°"
+     }
+    ],
+    "selfPenMaxMm": 2.77,
+    "turfPenMaxMm": 1.85,
+    "firstNonFootT": 0.4791666666666667,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -0.6,
+      "dfMaxDeg": 1.04,
+      "hardMarginMinDeg": 34.4,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -2.28,
+      "dfMaxDeg": 22.35,
+      "hardMarginMinDeg": 32.72,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "drop1m": {
+    "hash": "3334b509",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.2a",
+      "name": "no step with net mechanical-energy increase > 0.5 J",
+      "value": "3.607 J at t = 0.458 s",
+      "limit": "≤ 0.5 J"
+     },
+     {
+      "id": "1.2b",
+      "name": "energy monotonically non-increasing after first contact",
+      "value": "3.607 J above the running minimum (t = 0.458 s)",
+      "limit": "≤ 0.5 J"
+     }
+    ],
+    "selfPenMaxMm": 0.07,
+    "turfPenMaxMm": 1.17,
+    "firstNonFootT": 0.6916666666666667,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -30.13,
+      "dfMaxDeg": 2.14,
+      "hardMarginMinDeg": 4.87,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -30.06,
+      "dfMaxDeg": 2.08,
+      "hardMarginMinDeg": 4.94,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "sideFirst": {
+    "hash": "d529ae52",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0.95,
+    "firstNonFootT": 0.1875,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -7.39,
+      "dfMaxDeg": 2.39,
+      "hardMarginMinDeg": 27.61,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -0.24,
+      "dfMaxDeg": 0.5,
+      "hardMarginMinDeg": 34.76,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "awkward": {
+    "hash": "d5abd5b0",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0.5,
+    "turfPenMaxMm": 1.95,
+    "firstNonFootT": 0.4166666666666667,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -3.34,
+      "dfMaxDeg": 2.32,
+      "hardMarginMinDeg": 31.66,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -12.45,
+      "dfMaxDeg": 34.81,
+      "hardMarginMinDeg": 22.55,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "flatSupine": {
+    "hash": "d936ef45",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0.34,
+    "firstNonFootT": 0.2875,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -0.97,
+      "dfMaxDeg": 0.42,
+      "hardMarginMinDeg": 34.03,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -0.48,
+      "dfMaxDeg": 0.28,
+      "hardMarginMinDeg": 34.52,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "isoMomentum": {
+    "hash": "a84452ba",
+    "pass": true,
+    "failed": [],
+    "selfPenMaxMm": 0,
+    "turfPenMaxMm": 0,
+    "firstNonFootT": null,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -0.23,
+      "dfMaxDeg": 0.1,
+      "hardMarginMinDeg": 34.77,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -0.23,
+      "dfMaxDeg": 0.1,
+      "hardMarginMinDeg": 34.77,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   },
+   "isoSelfCol": {
+    "hash": "3b3a30b6",
+    "pass": false,
+    "failed": [
+     {
+      "id": "1.4d",
+      "name": "self-penetration between allowed pairs (transient)",
+      "value": "13.84 mm",
+      "limit": "≤ 10 mm"
+     }
+    ],
+    "selfPenMaxMm": 13.84,
+    "turfPenMaxMm": 0,
+    "firstNonFootT": null,
+    "mtp": [
+     {
+      "joint": "mtp_L",
+      "axis": "y",
+      "dfMinDeg": -0.17,
+      "dfMaxDeg": 2.2,
+      "hardMarginMinDeg": 34.83,
+      "hardSteps": 0,
+      "engineTicks": 0
+     },
+     {
+      "joint": "mtp_R",
+      "axis": "y",
+      "dfMinDeg": -0.08,
+      "dfMaxDeg": 2.34,
+      "hardMarginMinDeg": 34.92,
+      "hardSteps": 0,
+      "engineTicks": 0
+     }
+    ]
+   }
+  }
+ },
+ "determinism": {
+  "upright": {
+   "a": "10e1026f",
+   "b": "10e1026f",
+   "identical": true
+  },
+  "drop1m": {
+   "a": "3334b509",
+   "b": "3334b509",
+   "identical": true
+  },
+  "awkward": {
+   "a": "d5abd5b0",
+   "b": "d5abd5b0",
+   "identical": true
+  }
+ },
+ "mtp": {},
+ "f1Construction": [
+  {
+   "id": "F1.1",
+   "name": "spec generation deterministic ×3",
+   "pass": true,
+   "value": "df4942bd df4942bd df4942bd"
+  },
+  {
+   "id": "F1.2L",
+   "name": "foot_L + toe_L = the F0 foot (mass, COM, inertia)",
+   "pass": true,
+   "value": "Δm 0.0e+0 ΔCOM 0.0e+0 ΔI 8.7e-19"
+  },
+  {
+   "id": "F1.3L",
+   "name": "boot heel / tip / MTP hinge = the record (0.0808 / 0.2752 / 0.1805 ahead, 0.031 above the studs)",
+   "pass": true,
+   "value": "heel 0.0808 tip 0.2752 hinge 0.0000,-0.0570,0.1805 h 0.0310"
+  },
+  {
+   "id": "F1.4L",
+   "name": "the 10 rear + 4 front pieces carry every boot-hull vertex (D1a tiling)",
+   "pass": true,
+   "value": "missing 0, pieces 10+4"
+  },
+  {
+   "id": "F1.2R",
+   "name": "foot_R + toe_R = the F0 foot (mass, COM, inertia)",
+   "pass": true,
+   "value": "Δm 0.0e+0 ΔCOM 0.0e+0 ΔI 8.7e-19"
+  },
+  {
+   "id": "F1.3R",
+   "name": "boot heel / tip / MTP hinge = the record (0.0808 / 0.2752 / 0.1805 ahead, 0.031 above the studs)",
+   "pass": true,
+   "value": "heel 0.0808 tip 0.2752 hinge 0.0000,-0.0570,0.1805 h 0.0310"
+  },
+  {
+   "id": "F1.4R",
+   "name": "the 10 rear + 4 front pieces carry every boot-hull vertex (D1a tiling)",
+   "pass": true,
+   "value": "missing 0, pieces 10+4"
+  },
+  {
+   "id": "F1.5",
+   "name": "Jolt build of 16 bodies / 15 joints; mass readback exact",
+   "pass": true,
+   "value": "max |Δmass| 4.4e-7"
+  }
+ ],
+ "verdict": {
+  "f1ConstructionPass": true,
+  "g1NewFailures": [
+   "leanF:1.2a",
+   "leanF:1.2b",
+   "singleLeg:1.4f",
+   "drop1m:1.2a",
+   "drop1m:1.2b"
+  ],
+  "g1Fixed": [],
+  "deterministic": true
+ }
+}

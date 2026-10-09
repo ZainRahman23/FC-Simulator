@@ -142,12 +142,12 @@ function horizAddDir(def, c) {
 function swingTo(from, to) { const ax = V.cross(from, to), s = V.len(ax), c = V.dot(from, to); return s < 1e-12 ? Q.id() : Q.axis(V.sc(ax, 1 / s), datan2(s, c)); }
 
 // build the joint table for a body set (positions from the child body's origin)
-export function buildJoints(bodies, margin = ENGINE_MARGIN) {
-  const J = buildJointsAnatomical(bodies); if (margin) for (const j of J) j.limits.engine = engineLimits(j, margin); return J;
+export function buildJoints(bodies, margin = ENGINE_MARGIN, extraDefs = null) {   // extraDefs: V2-F1 MTP hinges (spec/v2_f1.js); null → exactly the 13 core joints
+  const J = buildJointsAnatomical(bodies, extraDefs); if (margin) for (const j of J) j.limits.engine = engineLimits(j, margin); return J;
 }
-function buildJointsAnatomical(bodies) {
+function buildJointsAnatomical(bodies, extraDefs = null) {
   const byName = Object.fromEntries(bodies.map(b => [b.name, b]));
-  return JOINT_DEFS.map((def, k) => {
+  return (extraDefs ? JOINT_DEFS.concat(extraDefs) : JOINT_DEFS).map((def, k) => {
     const child = byName[def.child], parent = byName[def.parent];
     const A = frameQ(def.frame.X, def.frame.Y), Rz = def.zeroFromCanonical ? axisAngleDeg(def.zeroFromCanonical.axis, def.zeroFromCanonical.deg) : Q.id();
     const cA = centreAnat(def), Cm = anatToFrameQ(def, cA);
@@ -212,6 +212,8 @@ export function passiveParams(j, capOpp) {
     const d = PASSIVE.endStopDeg * Math.PI / 180, f = PASSIVE.endStopTorqueFrac / PASSIVE.endRangeFracOfOpposingCapacity;
     const kStop = (t, A, softEx) => Math.max(0, (f * t - A * (dexp(B * (softEx + d)) - 1)) / d);
     const neutral = /^ankle_/.test(j.name) && j.def.axes[KEYS[i]] && j.def.axes[KEYS[i]].key === "fabd" && ankleNeutralKPerDeg() > 0 ? { kN: ankleNeutralKPerDeg() * 180 / Math.PI, c0: (lo + hi) / 2, zN: (hi - lo) / 2 } : {};
+    // V2-F1 (spec/v2_f1.js; absent on every core joint): a neutral spring about the ANATOMICAL zero (constraint angle −s·centre), linear over the soft half-range
+    if (j.def.neutralKPerDeg && j.def.axes[KEYS[i]] && !j.def.axes[KEYS[i]].locked) { const ax = j.def.axes[KEYS[i]], cen = (j.def.centre && j.def.centre[ax.key]) || 0; Object.assign(neutral, { kN: j.def.neutralKPerDeg * 180 / Math.PI, c0: -ax.s * cen * Math.PI / 180, zN: (hi - lo) / 2 }); }
     return { soft: [lo, hi], hard: [hlo, hhi], A: [A_lo, A_hi], B, tauAtHard: [tLo, tHi], kStop: [kStop(tLo, A_lo, ex(lo, hlo)), kStop(tHi, A_hi, ex(hi, hhi))], ...neutral };
   });
 }

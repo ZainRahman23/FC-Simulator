@@ -7,13 +7,14 @@ import { buildJoints, passiveParams, COUPLINGS, PASSIVE } from "./v2_joints.js";
 import { buildColliders, disabledPairs, CONTACT } from "./v2_colliders.js";
 import { BONES, skeletonPositions, skeletonFrames } from "./v2_skeleton.js";
 import { jointAxisCapacities, ACTIVATION, FATIGUE } from "./v2_actuators.js";
+import { f1Bodies, f1JointDefs, f1Colliders } from "./v2_f1.js";   // V2-F1 toe body (default off: only when human.f1)
 
 export const SPEC_VERSION = "touchline.physchar-v2.spec/0.1 (G0)";
 export function generateSpec(human = V2_REF) {
   const Lm = humanLandmarks(human);
-  const bodies = buildBodies(Lm);
-  const joints = buildJoints(bodies);
-  const colliders = buildColliders(Lm, bodies);
+  const bodies = human.f1 ? f1Bodies(Lm, buildBodies(Lm), human.f1) : buildBodies(Lm);
+  const joints = human.f1 ? buildJoints(bodies, undefined, f1JointDefs(bodies, human.f1)) : buildJoints(bodies);
+  const colliders = human.f1 ? f1Colliders(Lm, bodies, buildColliders(Lm, bodies), human.f1) : buildColliders(Lm, bodies);
   for (const b of bodies) b.shapes = colliders[b.name];
   const positions = skeletonPositions(Lm), frames = skeletonFrames(positions);
   for (const j of joints) {
@@ -25,7 +26,7 @@ export function generateSpec(human = V2_REF) {
   const wb = wholeBody(bodies);
   return {
     version: SPEC_VERSION,
-    human: { id: human.id || null, H: human.H, M: human.M, overrides: human.overrides || {} },
+    human: { id: human.id || null, H: human.H, M: human.M, overrides: human.overrides || {}, ...(human.f1 ? { f1: human.f1 } : {}) },
     coordinate: "CCS +X anatomical right, +Y up, +Z anatomical forward (LEFT-handed, Unity numeric); metres, kg, s, rad; ground = stud-tip plane y = 0",
     landmarks: { yA: Lm.yA, yK: Lm.yK, yH: Lm.yH, yOMPH: Lm.yOMPH, yXYPH: Lm.yXYPH, ySUPR: Lm.ySUPR, yCERV: Lm.yCERV, yVERT: Lm.yVERT, ySJC: Lm.ySJC,
       hipHalf: Lm.hx, shoulderHalf: Lm.sx, footLength: Lm.fl, sole: Lm.sole, closure: Lm.closure, legLength: Lm.legLen, segLen: Lm.Ls, spineAP: Lm.ap },
