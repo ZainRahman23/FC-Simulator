@@ -198,3 +198,15 @@ No fixture had been run and no outcome seen.
 4. if the cone band between the two end spheres protrudes, both end radii are scaled by one common factor, by monotone bisection with the centres fixed.
 
 **Effect.** Where a section's bottom is flat at the sole, this reproduces the frozen "r above the sole". At the toe it places the centre above the physical (sprung) toe-box bottom, as the frozen text says ("r_t above the toe sole"). Thigh / shank are unchanged.
+
+### E1 (erratum, before any fixture run): the §2.5 root-basis tolerance
+
+**What happened.** §2.5 required equality with `gkRootMatrix` to 1e-12. `gkRootMatrix` stores its matrix in a `Float32Array` (M4). Its outputs therefore carry float32 rounding: 3.7e-6 m measured at pitch coordinates ≈ 50 m, where one float32 step is ≈ 3.8e-6 m.
+
+**The restated check:**
+- the same `gkRootMatrix` formula evaluated in float64 must equal the simulation's pitch-coordinate formula to 1e-12;
+- the difference from the float32 reference must stay within float32 precision (≤ 1e-5 m).
+
+**Results:** 0 in float64 (exact algebraic identity); 3.7e-6 m against the float32 reference.
+
+**Effect:** none on geometry. The simulation's own FK (`skelFK` / M4) also runs in float32, deterministically, in the browser and in Node alike.
