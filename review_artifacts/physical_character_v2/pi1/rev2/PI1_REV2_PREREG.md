@@ -218,3 +218,19 @@ Preregistered separately before it runs: small timing / location / body-geometry
 - **The physical counterpart:** the first physical runner ↔ stand-in contact at or after t_dec − 1 tick. If there is none, CG-1 / 3 / 4 / 6 fail.
 - **The selector window (§3) is unchanged.** It ends before the **first** predicted contact, so promotion always precedes the first interaction.
 - **Also reported, not gating:** the earliest gameplay contact vs the earliest physical contact.
+
+### A2 (before the full scan; found in a 2-case smoke test): the definition of a physical contact
+
+**The defect, a tooling one.** My first scan counted a stand-in ↔ runner contact only when a manifold's depth exceeded −0.5 mm, the G1 "touching" convention.
+- Jolt resolves fast closing contacts through **speculative contacts**. The impulse is applied while the bodies are still millimetres apart: about 19 mm of closing per step at 4.5 m/s.
+- So that test missed real collisions. In rx_behind_standing it missed a 7.47 N·s impulse on the slide leg from the runner's shank_R, at the gameplay contact time.
+- It also wrongly attributed the post-impact deflection to AST-C1 tracking error.
+
+**The definition (measurement only; no physics change).** A physical contact occurs in a step when a stand-in segment receives a contact impulse ≥ 1e-3 N·s (linear) or ≥ 1e-3 N·m·s (yaw).
+- **The impulse:** the segment's momentum balance, m·Δv − F_ff·dt − (the tether motor impulse read back from the constraint), and the yaw equivalent. The no-contact floor measured 0 to printed precision.
+- **Attribution:** to the deepest stand-in ↔ runner manifold of that segment in that step, speculative included. Its runner body, points and normal are the contact's.
+
+**Consequences.**
+- AST-C1 is evaluated before the first such contact.
+- NM requires no such contact.
+- The smoke-test outputs (rx_behind_standing, rx_miss) were made with the defective detector and are superseded.
