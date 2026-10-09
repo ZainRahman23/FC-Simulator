@@ -2764,3 +2764,20 @@ Not pushed.
   - toe-pivot boot length (V2 boot 21 – 28 mm above the pitch).
 - **Recommendation D1C:** re-record the three cases on a geometry-consistent baseline (candidate: the accepted slide-contact V1.2, d539e7a / e2c98ec), gated by this kinematic representability check before freezing PI-1; carry the isoSelfCol exception.
 - **Awaiting user.**
+
+## 2026-10-09 — D1C accepted; D-1A conclusions recorded; PI-1 cases to be replaced on slide-contact V1.2 behind a permanent simulation ↔ physical-contact compatibility gate (`sources/2026-10-09_user_decision_d1c_replace_cases_compat_gate.md`)
+
+- **Fall case withdrawn:** the Tackled-Player V1 (f5f6076) fall case is unsuitable as the authoritative PI-1 fall case. Its gameplay collision geometry cannot be faithfully represented by the exact promoted D-1 body. Physical geometry is not to be tuned to reproduce the old outcome.
+- **Recorded conclusions:**
+  - (1) the previously reported weight-bearing mismatch is **withdrawn**: a one-tick record-reading error;
+  - (2) the authoritative contact state and the presentation agree that the left foot is planted and weight-bearing;
+  - (3) the artificial G1 isoSelfCol failure is not reached by the actual PI-1 pre-contact / contact / recovery trajectories;
+  - (4) a **PI-1-scoped exception for the isoSelfCol stress test only** is permitted, with the 10 mm self-penetration criterion retained in every actual PI-1 state, including any physical fall;
+  - (5) the cheap authored fall is **not** a physical-fall reference: it violates D-1 geometry / joint constraints and was never meant to bound articulated physics.
+- **Architectural rule** (pivot §5.2a; PI-1 design): gameplay collision primitives that drive physical presentation need an explicit mapping to the rendered / physical geometry. They may be simplified, but they may not claim an interaction the physical character cannot plausibly reproduce.
+- **Next, in order:**
+  - investigate slide-contact V1.2 as one consistent baseline for near miss / recoverable swing-foot clip / planted-leg fall, produced by the existing simulation rules, no collider moving;
+  - the compatibility gate (segment, support state, timing ± 1 tick, location, overlap order, approach direction, no pose discontinuity, self-collision ≤ 10 mm), both geometries recorded;
+  - resolve the knee-bend and boot-length issues (A / B / C) with proposed promotion tolerances.
+  - Only if all three hold: amend and refreeze PI-1, implement the offline slice, run near miss → recover → fall.
+  - Otherwise stop for review.

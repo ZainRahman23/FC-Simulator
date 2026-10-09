@@ -401,3 +401,12 @@ The same configuration is used for all three cases. No per-case tuning.
    - NT checks;
    - CPU × 3.
 6. `PI1_RESULTS.md` with review media, then stop for review.
+
+## Architectural rule (added 2026-10-09 after D-1A, user decision)
+
+- **Explicit mapping required.** Gameplay collision primitives intended to drive physical presentation must have an explicit mapping to the rendered / physical character geometry.
+- **No impossible claims.** A gameplay collision may be simplified, but it cannot claim an interaction that the corresponding physical character cannot plausibly reproduce.
+- **Gated.** Every PI case passes the simulation ↔ physical-contact compatibility gate (preregistration amendment 1) before use.
+- **Recorded.** Both geometries are recorded side by side.
+
+See `../PHYSICAL_CHARACTER_ARCHITECTURE_PIVOT.md` §5.2a.

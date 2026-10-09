@@ -149,6 +149,13 @@ All four used the same body, rate and evidence discipline:
   - Promotion is triggered by the interaction event, not by the size of an impulse.
   - The promoted body is a powered articulated body, not a limp ragdoll.
 
+### 5.2a Rule: gameplay collision primitives must map to the character's geometry (added 2026-10-09 after D-1A, user decision)
+
+- **Explicit mapping required.** Any gameplay collision primitive meant to drive physical presentation must have an explicit, recorded mapping to the rendered / physical character geometry it stands for.
+- **Simplification is allowed; false claims are not.** A gameplay collision may be simplified (capsules for boots, for example). It must not claim an interaction that the corresponding physical character cannot plausibly reproduce. Example: a deep sweep of a planted foot that the promoted body would only graze.
+- **Enforced by a gate.** Every promoted interaction case passes the simulation ↔ physical-contact compatibility gate (`pi1/PI1_PREREGISTRATION.md` amendment 1) before it is used.
+- **Differences are recorded.** Both geometries are recorded and their differences reported, never hidden.
+
 ### 5.3 Boundary rules
 
 | | owner | rule |
