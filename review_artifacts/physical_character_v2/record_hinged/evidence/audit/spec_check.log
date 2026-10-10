@@ -1,0 +1,15 @@
+PASS N1    the 20 existing spec hashes unchanged: 20 / 20 identical
+PASS R1    RH1 record values = rig.json bindOrigin (exact): spine, chest, upperArm_L, foreArm_L, upperArm_R, foreArm_R
+PASS D1    RH1 generation deterministic: e2892d27 / e2892d27
+PASS H1    moved joint centres = RH1_PREREG §1.2: lumbar (0.000000, 1.029058, 0.000000) Δ 49.830 mm · thoracic (0.000000, 1.243945, 0.000000) Δ 57.725 mm · elbow_L (-0.559812, 1.458831, 0.000000) Δ 11.557 mm · elbow_R (0.559812, 1.458831, 0.000000) Δ 11.557 mm
+PASS H2    every joint identical except the moved centres (frames A / Rz / Cm / F1 / F2 / axes, ranges, passive, capacities, locked axes): identical
+PASS H3    masses identical (body, equipment): 14 / 14 bit-identical
+PASS H4    world COM at the canonical pose identical: max 0.00e+0 m
+PASS H5    inertia tensors (canonical frame, about the COM) identical: max 0.00e+0
+PASS H6    collider world placement identical; collider shapes otherwise identical; unmoved bodies identical: max 0.00e+0 m; other fields identical
+PASS H7    whole-body mass / COM / inertia about the COM identical (recomputed): ΔCOM 0.00e+0 m, ΔI 0.00e+0
+PASS H8    lower body (pelvis, thighs, shanks, feet) and hip / knee / ankle / neck / shoulder joints byte-identical: identical
+PASS H9    disabled pairs, landmarks, passive law, contact, equipment identical: identical
+PASS H10   bind pose (anatomical zero): every body COM and rotation identical: ΔCOM 1.11e-16 m, Δrot 0
+report: {"upperArm":0.31281764324324324,"forearmToWrist":0.2760155704095998,"staticMomentNm":{"lumbar":[10.581311014560002,0],"thoracic":[9.165388510080001,0]},"specHash":"e2892d27"}
+13/13 PASS

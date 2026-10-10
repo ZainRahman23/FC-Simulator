@@ -1,0 +1,109 @@
+{
+ "tool": "rh1_audit_g3_body.mjs",
+ "body": "PI1-runner-vinicius-RH1",
+ "input": "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/rh1_audit/tree/review_artifacts/physical_character_v2/record_hinged/evidence/battery/q3/g3_results_rh1.json.gz",
+ "rows": [
+  {
+   "id": "rows-id",
+   "pass": true,
+   "value": "non-T9 jobs run on PI1-runner-vinicius-RH1; 338 jobs, 0 errors"
+  },
+  {
+   "id": "run",
+   "pass": true,
+   "value": "311 ok / 0 errors"
+  },
+  {
+   "id": "A",
+   "pass": true,
+   "value": "stood; hold mean load_R 0.500; slip 0.37 mm; contact loss 0.00 s"
+  },
+  {
+   "id": "B",
+   "pass": true,
+   "value": "T1: stood; holds R 0.832/0.844; RMS 0.020; end 0.503; slip 0.27 mm; roll 0.0°; lean 0.5° · T2: stood; holds L 0.832/0.844; RMS 0.020; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°"
+  },
+  {
+   "id": "C",
+   "pass": true,
+   "value": "stood; holds R 0.832/0.842, L 0.831/0.842; RMS 0.022; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°"
+  },
+  {
+   "id": "D",
+   "pass": true,
+   "value": "stood; pelvis drift cycle 1 → 5: 9.5 → 9.5 mm (Δ 0.03); yaw -0.73 → -0.73° (Δ 0.00); slip 0.55 mm; hold means R 0.863 → 0.860, L 0.855 → 0.856; end 0.499"
+  },
+  {
+   "id": "E2",
+   "pass": true,
+   "value": "T5 stood; R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.504 · T6 stood; L: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.496"
+  },
+  {
+   "id": "F2",
+   "pass": true,
+   "value": "U:R stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7° · U:L stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7°"
+  },
+  {
+   "id": "G",
+   "pass": false,
+   "value": "T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort 2.34"
+  },
+  {
+   "id": "H",
+   "pass": false,
+   "value": "H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6"
+  },
+  {
+   "id": "K′",
+   "pass": false,
+   "value": "[original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood"
+  },
+  {
+   "id": "L",
+   "pass": true,
+   "value": "155/155 runs; energy residual max -0.257 J, min -581.358 J"
+  },
+  {
+   "id": "M",
+   "pass": true,
+   "value": "max per-tick per-foot CoP change 4.407 mm over 9 runs; seam crossings per run (L+R) 2–60"
+  },
+  {
+   "id": "N",
+   "pass": true,
+   "value": "T5 ×3 8115d72c; T3 ×3 ba777e55; U:R ×3 58fb5adb; T8:hold:R:R:10 ×3 69150ac5 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact"
+  },
+  {
+   "id": "Q",
+   "pass": true,
+   "value": "residual max 3.94e-6 of M·g·dt over 9 runs"
+  }
+ ],
+ "Kprime": [
+  {
+   "key": "T11:over:1.4",
+   "lam": 1.4,
+   "marginCm": -7.38,
+   "excessive": true,
+   "outcome": "step required → fell"
+  },
+  {
+   "key": "T11:over:1.2",
+   "lam": 1.2,
+   "marginCm": -1.42,
+   "excessive": true,
+   "outcome": "step required → fell"
+  },
+  {
+   "key": "T11:over:1.4:sup",
+   "lam": 1.4,
+   "marginCm": -7.38,
+   "excessive": true,
+   "outcome": "stood"
+  }
+ ],
+ "selfCheck": {
+  "compared": 15,
+  "mismatched": []
+ }
+}

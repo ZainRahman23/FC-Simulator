@@ -1,0 +1,40 @@
+RH1 audit verification — commit ff5be5e35bd6297e24b275a6fc72c09c00661167 — 2026-10-11 00:21:19 BST — node v22.19.0
+clean tree from git archive ff5be5e35bd6297e24b275a6fc72c09c00661167; LV2 = archive of 4a226b1f43ddf5b918acab2807041334ff637405; V1.3 = archive of 5042230b5bc162247e151c10bef8634539a92be0
+A. RH1 specification
+  rh1_spec_check: 13/13 PASS
+  spec check vs committed: SAME 13 rows + report identical (13/13 PASS)
+  hashes: V2-REF 7df7ab64, R0 62d5d797, RH1 e2892d27 (ankle K 0.13)
+  spec diff vs committed: SAME identical
+B. Qualification evaluation from the committed raw battery outputs
+  RH1 gating rows: 50/54 pass; FAILING: G1 1.S, G3 G, G3 H, G3 K′
+  R0 failing rows: G1 1.S′
+  —    G1     6       body variants row: not an RH1 row (VARS = [] in the substituted run; the 4 variants ran in the 8-body regression run): 0/0 runs; failing criteria: none
+8-body regression: all identical
+  gate evaluation vs committed (rows, regression, replaced, summary): SAME identical (keys rows, regression, replaced, summary)
+C. The four failing rows re-run from committed code
+  G1 diag: 8 runs equal the battery hashes, 0 differ
+  G1 diag vs committed: SAME identical
+  G3 diag: RH1 11 / 11 jobs equal the battery hashes
+  G3 diag RH1 vs committed: SAME identical
+  G3 diag R0 vs committed: SAME identical
+  G3 diag trunk vs committed: SAME identical
+  G3 diag elbow vs committed: SAME identical
+D. R0 in V2-REF's G3 rows, frozen runner, the identical harness to RH1's battery run
+  substitutions in g3_run_r0.js: 2 (RH1's battery copy: 2)
+  338 jobs in 338 s → review_artifacts/physical_character_v2/g3/json/g3_results_auditr0.json (0 errors)
+  evaluator self-check against the committed gate_eval.json (RH1 G3 rows): 15/15 identical
+  R0 PASS G3 rows-id [PI1-runner-vinicius] non-T9 jobs run on PI1-runner-vinicius; 338 jobs, 0 errors
+  R0 PASS G3 run     [PI1-runner-vinicius] 311 ok / 0 errors
+  R0 FAIL G3 G       [PI1-runner-vinicius] T7:R:2 stood hold mean 0.606 slip 0.26 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.26 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.26 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.26 abort 2.34
+  R0 FAIL G3 H       [PI1-runner-vinicius] H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6
+  R0 FAIL G3 K′      [PI1-runner-vinicius] [original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood
+E. Handoff evaluation and instantiation (0 Jolt steps)
+  handoff evaluation vs committed: SAME identical (ignoring keys /^([cC][pP][uU].*|wallS|date|generated)$/)
+  instantiation vs committed: SAME identical (ignoring keys /^([cC][pP][uU].*|wallS|date|generated)$/)
+  Jolt steps taken: 0
+F. Motivating RUN-1 handoff measurements (R2 6a0cf340; upper-body study edfa2b8f)
+  R2 lv2_handoff_probe vs recorded determinism hash: SAME sha256 57fb7b12574cdfc9c17f0b505977cec405fca466b21a0e4fec3b67f5c303804b = recorded
+  R2 committed lv2_handoff_probe.json.gz: SAME sha256 57fb7b12574cdfc9c17f0b505977cec405fca466b21a0e4fec3b67f5c303804b = recorded
+  upper-body study vs recorded determinism hash (timing fields removed): SAME sha256 ecd3f64e7a1c055bdde50bbf1902a7a5b78a33da93c35368e7203a487b5e9a71 = recorded
+  upper-body study committed .json.gz: SAME sha256 ecd3f64e7a1c055bdde50bbf1902a7a5b78a33da93c35368e7203a487b5e9a71 = recorded
+RESULT: 0 comparison(s) differ — 00:33:08

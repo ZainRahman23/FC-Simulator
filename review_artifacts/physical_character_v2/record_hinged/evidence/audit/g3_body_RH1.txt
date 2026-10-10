@@ -1,0 +1,17 @@
+PASS G3 rows-id [PI1-runner-vinicius-RH1] non-T9 jobs run on PI1-runner-vinicius-RH1; 338 jobs, 0 errors
+PASS G3 run     [PI1-runner-vinicius-RH1] 311 ok / 0 errors
+PASS G3 A       [PI1-runner-vinicius-RH1] stood; hold mean load_R 0.500; slip 0.37 mm; contact loss 0.00 s
+PASS G3 B       [PI1-runner-vinicius-RH1] T1: stood; holds R 0.832/0.844; RMS 0.020; end 0.503; slip 0.27 mm; roll 0.0°; lean 0.5° · T2: stood; holds L 0.832/0.844; RMS 0.020; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°
+PASS G3 C       [PI1-runner-vinicius-RH1] stood; holds R 0.832/0.842, L 0.831/0.842; RMS 0.022; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°
+PASS G3 D       [PI1-runner-vinicius-RH1] stood; pelvis drift cycle 1 → 5: 9.5 → 9.5 mm (Δ 0.03); yaw -0.73 → -0.73° (Δ 0.00); slip 0.55 mm; hold means R 0.863 → 0.860, L 0.855 → 0.856; end 0.499
+PASS G3 E2      [PI1-runner-vinicius-RH1] T5 stood; R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.504 · T6 stood; L: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 
+PASS G3 F2      [PI1-runner-vinicius-RH1] U:R stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7° · U:L stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM
+FAIL G3 G       [PI1-runner-vinicius-RH1] T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort 2.34
+FAIL G3 H       [PI1-runner-vinicius-RH1] H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6
+FAIL G3 K′      [PI1-runner-vinicius-RH1] [original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood
+PASS G3 L       [PI1-runner-vinicius-RH1] 155/155 runs; energy residual max -0.257 J, min -581.358 J
+PASS G3 M       [PI1-runner-vinicius-RH1] max per-tick per-foot CoP change 4.407 mm over 9 runs; seam crossings per run (L+R) 2–60
+PASS G3 N       [PI1-runner-vinicius-RH1] T5 ×3 8115d72c; T3 ×3 ba777e55; U:R ×3 58fb5adb; T8:hold:R:R:10 ×3 69150ac5 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact
+PASS G3 Q       [PI1-runner-vinicius-RH1] residual max 3.94e-6 of M·g·dt over 9 runs
+not evaluated here: P2 / S2 / O (replaced or declared in the battery), I2 (per body from the 10-body run), J2a / J2b (need the mirror run)
+self-check against the committed gate_eval.json (RH1 G3 rows): 15/15 identical

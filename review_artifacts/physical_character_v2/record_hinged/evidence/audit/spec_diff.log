@@ -1,0 +1,17 @@
+hashes: V2-REF 7df7ab64, R0 62d5d797, RH1 e2892d27 (ankle K 0.13)
+RH1 vs R0: 101 differing leaves (every one listed in the JSON); by section {"bodies.abdomen":8,"bodies.forearm_L":5,"bodies.forearm_R":5,"bodies.thorax":10,"bodies.upperArm_L":1,"bodies.upperArm_R":1,"hinges":34,"human":1,"joints.elbow_L":1,"joints.elbow_R":1,"joints.lumbar":2,"joints.thoracic":2,"skeleton":30}; moved joint centres:
+   bodies.abdomen.origin.1: 1.0689053271820792 → 1.029058373428653 (Δ -39.846954 mm)
+   bodies.abdomen.origin.2: -0.029920000000000002 → 0 (Δ 29.920000 mm)
+   bodies.forearm_L.origin.0: -0.5482550175917289 → -0.5598116432432433 (Δ -11.556626 mm)
+   bodies.forearm_R.origin.0: 0.5482550175917289 → 0.5598116432432433 (Δ 11.556626 mm)
+   bodies.thorax.origin.1: 1.2867571364870762 → 1.2439445905306439 (Δ -42.812546 mm)
+   bodies.thorax.origin.2: -0.03872 → 0 (Δ 38.720000 mm)
+   bodies.upperArm_L.distal.0: -0.5482550175917289 → -0.5598116432432433 (Δ -11.556626 mm)
+   bodies.upperArm_R.distal.0: 0.5482550175917289 → 0.5598116432432433 (Δ 11.556626 mm)
+   joints.elbow_L.at.0: -0.5482550175917289 → -0.5598116432432433 (Δ -11.556626 mm)
+   joints.elbow_R.at.0: 0.5482550175917289 → 0.5598116432432433 (Δ 11.556626 mm)
+   joints.lumbar.at.1: 1.0689053271820792 → 1.029058373428653 (Δ -39.846954 mm)
+   joints.lumbar.at.2: -0.029920000000000002 → 0 (Δ 29.920000 mm)
+   joints.thoracic.at.1: 1.2867571364870762 → 1.2439445905306439 (Δ -42.812546 mm)
+   joints.thoracic.at.2: -0.03872 → 0 (Δ 38.720000 mm)
+R0 vs V2-REF: 1962 differing leaves (the record overrides {"ankleH":0.0386364,"kneeH":0.2651623,"hipH":0.5122814,"hipHalf":0.0866456,"shoulderHalf":0.1403375,"sjcH":0.8175175,"armScale":1.0578941}, H 1.76 / M 73); RH1 vs V2-REF: 2002

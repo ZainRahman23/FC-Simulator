@@ -1,0 +1,119 @@
+rep  G0     rows    [RH1] 42/47 rows pass; spec 687ec6a1; failing: 0.4c (stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H); 0.6a (0.1733 H = 0.305 m); 0.6b (0.2807 H = 0.494 m); 0.6e (leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876); 0.10a (bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.)
+rep  G0     rows    [R0] 42/47 rows pass; spec 2a894c69; failing: 0.4c (stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H); 0.6a (0.1733 H = 0.305 m); 0.6b (0.2807 H = 0.494 m); 0.6e (leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876); 0.10a (bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.)
+PASS G0     class   [RH1] RH1 failing rows 0.4c, 0.6a, 0.6b, 0.6e, 0.10a; recorded R0 exceptions 0.6a, 0.6b, 0.10a, 0.4c, 0.6e; R0 failing 0.4c, 0.6a, 0.6b, 0.6e, 0.10a; 0.4c: recorded, identical value to R0; 0.6a: recorded, identical value to R0; 0.6b: recorded, identical value to R0; 0.6e: recorded, identical value to R0; 0.10a: recorded, identical value to R0
+rep  G0     global  [RH1] 0.1b pass, 0.12 pass, 0.E pass, 0.V1 FAIL (0.V1 needs the git checkout; scratch-tree artefact as in the qualification, worktree guard_v1 run separately in Q0)
+SAME regression G0 V2-REF: spec ceda2998 / ceda2998; 48 rows identical
+SAME regression G0 V2-165-62: spec 13fa5bfa / 13fa5bfa; 47 rows identical
+SAME regression G0 V2-198-92: spec f86d3971 / f86d3971; 47 rows identical
+SAME regression G0 V2-175-70: spec 0ca23788 / 0ca23788; 47 rows identical
+SAME regression G0 V2-190-85: spec 9044adba / 9044adba; 47 rows identical
+SAME regression G0 V2-short-legs: spec 5b56bcc8 / 5b56bcc8; 47 rows identical
+SAME regression G0 V2-long-legs: spec d5920ded / d5920ded; 47 rows identical
+SAME regression G0 V1-matched: spec dd54edaa / dd54edaa; 48 rows identical
+rep  G1     1.5     [RH1] 10 it: 6/17 pass, 15 it: 9/17 pass, 20 it: 8/17 pass, 30 it: 11/17 pass, 60 it: 13/17 pass, 150 it: 15/17 pass → none of 10/15/20/30 qualifies
+FAIL G1     1.S     [RH1] V2-REF: every scenario passes every criterion — 14/17 scenarios; failing: 1.3d, 1.R, 1.4d
+FAIL G1     1.S′    [R0] V1-matched instance: every scenario passes every criterion — 16/17 scenarios
+—    G1     6       body variants row: not an RH1 row (VARS = [] in the substituted run; the 4 variants ran in the 8-body regression run): 0/0 runs; failing criteria: none
+PASS G1     1.6a    [RH1] determinism: ×3 runs (two processes) — identical per-tick hash, contac — 17/17 scenarios
+PASS G1     1.6b    [RH1] snapshot / restore bit-exact (Jolt SaveState / RestoreState; passive l — upright ✓, awkward ✓, drop1m ✓, isoSelfCol ✓
+PASS G1     5       [RH1] passive joint rig: applied torque = spec law (sign + magnitude), resto — 34/34 tests
+PASS G1     5c      [RH1] pose-dependent passive limits (couplings) as specified — hip-flexion soft limit knee 0/45/90°: 80.0 / 100.0 / 120.0°; ankle-DF soft limit knee 0/45/90°: 20.0 / 27.5 / 35.0°; hamstring: hip 100° knee straight → hip extension torque, knee flexion cross torque: -0.87 / +0.057 N·m; knee axial zero-torque range at 0/30/60° (v2k spec: θ0(φ) ∓ slack·f): [-0.50,1.00] [7.66,9.63] [12.18,14.18] vs [-0.50,1.
+PASS G1     8       [RH1] timestep 180/240/360/720 Hz (D4a, v3.1): physical invariants hold for  — upright: invariants ok; leanF: invariants ok [reported: 180 Hz: COM Δ 0.153 m (spread 0.096); 240 Hz: COM Δ 0.154 m (spread 0.096)]; leanB: invariants ok [reported: 180 Hz: COM Δ 0.182 m (spread 0.140)]; flatSupine: invariants ok; drop1m: invariants ok [reported: 180 Hz: timing Δ 69.4 ms (spread 5.6), COM Δ 0.304 m (spread 0.
+PASS G1     7.HS    [RH1] C7 high-speed envelope (V2-REF, baseline): finite, no missed turf coll — 8/8 envelope scenarios
+rep  G1     1.1f    [RH1] ΔL/L 1.51e-3 at 1 rad/s, 5.55e-3 at 3 rad/s, 1.29e-2 at 6 rad/s; linear 0.0e+0
+—    G1     1.V1    V1 frozen: needs the git checkout (scratch-tree artefact, as the qualification); worktree guard_v1 OK in Q0: guard_v1: FAIL — V1 files differ from checkpoint/physchar-v1-final-research:
+PASS G1     1.E     [RH1] vendored Jolt = V1's pinned build — 011233a5fff762d6…
+rep  G1     runs    [RH1] 17 scenario runs (the gate is 1.S / 1.S′); failing criteria: leanL 1.3d 1.74° (shoulder_L.abd) (limit ≤ 1.5°); dropA 1.R KE 0.002 J, joint ω RMS 0.094 rad/s (final 0.5 s) (limit ≤ 0.1 J, ≤ 0.05 rad/s); isoSelfCol 1.4d 24.60 mm (limit ≤ 10 mm)
+rep  G1     1.4d    [RH1] isoSelfCol 1.4d: 24.60 mm (limit ≤ 10 mm); selfCol {"minDxFeetM":-1.738904893398285,"legContact":true,"missedSteps":0,"passedThrough":false}
+rep  G1     runs    [R0] 17 scenario runs (the gate is 1.S / 1.S′); failing criteria: isoSelfCol 1.4d 24.59 mm (limit ≤ 10 mm)
+rep  G1     1.4d    [R0] isoSelfCol 1.4d: 24.59 mm (limit ≤ 10 mm); selfCol {"minDxFeetM":-1.7746876776218414,"legContact":true,"missedSteps":0,"passedThrough":false}
+PASS G1     1.4d-cls [RH1] RH1 fails (24.60 mm); R0 fails (24.59 mm); cause (rh1_g1_diag, hashes reproduced): RH1 foot_L ↔ foot_R 24.60 mm (first 0.017 s, 20 steps) / R0 foot_L ↔ foot_R 24.59 mm (first 0.017 s, 20 steps) → identical in cause (boot ↔ boot, same first contact and duration): the recorded R0 exception
+SAME regression G1 8-body runs: 74/74 run hashes identical to the official qualification run (official 74)
+SAME regression G1 8-body gate: 1.5 pass, 1.S pass, 1.S′ FAIL, 6 pass, 1.6a pass, 1.6b pass, 5 pass, 5c pass, 8 pass, 7.HS pass, 1.1f pass, 1.V1 FAIL, 1.E pass
+PASS G1     pert    [RH1] 4/150 = 2.7 % (≤ 8.1 %); systematic scenarios (≥ 5 / 15): none; per scenario leanL 4/15 [1.3d]; invalid manifolds 0; >1 J rises 0
+PASS G1     pert    [R0] 3/150 = 2.0 % (≤ 8.1 %); systematic scenarios (≥ 5 / 15): none; per scenario perturb 3/15 [1.R]; invalid manifolds 0; >1 J rises 0
+SAME regression G1 perturbed (V2-REF / V1-matched): 300/300 run hashes identical (official 300)
+PASS G2     run     [RH1] 702 ok / 0 errors (10-body run)
+PASS G2     2.1     [RH1] a✓ b✓ c✓ d✓ e✓ f✓ g✓ · slip 0.26 mm tilt 0.17° COM ahead 4.00 cm knee 4.0–4.0° peak ankle_L.y 7.3 % T_iso sat 0 range 0.20 mm sep 0.00 mm turf 0.00 mm eng 0
+PASS G2     2.2a    [RH1] 8/8 (expected 8: 10 N·s × 8 directions) · F10 recovered slip 0.3 tilt 0.2, B10 recovered slip 0.3 tilt 0.2, L10 recovered slip 0.3 tilt 0.2, R10 recovered slip 0.3 tilt 0.2, FL10 recovered slip 0.3 tilt 0.2, FR10 recovered slip 0.3 tilt 0.2, BL10 recovered slip 0.3 tilt 0.2, BR10 recovered slip 0.3 tilt 0.2
+PASS G2     2.2b    [RH1] 4 sweeps, 0 inversions, symmetry 1/1 · boundaries (N·s recovered / first fail): F 15/20, B 15/20, L 30/35, R 30/35
+PASS G2     2.3     [RH1] 0 ticks over 41 runs
+PASS G2     2.4     [RH1] 18 non-recoveries, 16 falls (16 step-required), ledger exact
+PASS G2     E       [RH1] max residual -0.333 J, min -626.20 J over 41 runs (≤ +0.5 J)
+PASS G2     F(ii)   [RH1] turf penetration max 0.01 mm (≤ 10), rest max 0.00 mm (≤ 5) over 9 runs (2.1 + 2.2a)
+rep  G2     2.1c-cap [RH1] quiet stance peak isometric fraction ankle_L.y 7.3 %, ankle_R.y 7.3 %, neck.y 3.6 %, lumbar.y 3.0 %; sat ticks after 1 s 0; controller cost in run mean 0.545 ms (9-worker run; reported)
+PASS G2     2.1     [R0] a✓ b✓ c✓ d✓ e✓ f✓ g✓ · slip 1.48 mm tilt 0.16° COM ahead 4.00 cm knee 3.9–4.1° peak lumbar.y 7.5 % T_iso sat 0 range 0.59 mm sep 0.00 mm turf 0.00 mm eng 0
+PASS G2     2.2a    [R0] 8/8 (expected 8: 10 N·s × 8 directions) · F10 recovered slip 0.3 tilt 0.2, B10 recovered slip 0.3 tilt 0.2, L10 recovered slip 0.3 tilt 0.2, R10 recovered slip 0.3 tilt 0.2, FL10 recovered slip 0.3 tilt 0.2, BL10 recovered slip 0.3 tilt 0.2, FR10 recovered slip 0.3 tilt 0.2, BR10 recovered slip 0.3 tilt 0.2
+PASS G2     2.2b    [R0] 4 sweeps, 0 inversions, symmetry 1/1 · boundaries (N·s recovered / first fail): F 15/20, B 15/20, L 25/30, R 25/30
+PASS G2     2.3     [R0] 0 ticks over 41 runs
+PASS G2     2.4     [R0] 20 non-recoveries, 16 falls (16 step-required), ledger exact
+PASS G2     E       [R0] max residual -0.330 J, min -649.62 J over 41 runs (≤ +0.5 J)
+PASS G2     F(ii)   [R0] turf penetration max 0.01 mm (≤ 10), rest max 0.00 mm (≤ 5) over 9 runs (2.1 + 2.2a)
+rep  G2     2.1c-cap [R0] quiet stance peak isometric fraction lumbar.y 7.5 %, ankle_L.y 7.3 %, ankle_R.y 7.3 %, thoracic.y 5.3 %; sat ticks after 1 s 0; controller cost in run mean 0.609 ms (9-worker run; reported)
+PASS G2     rows-id [RH1] S4 / S5 / copSweep / determinism / snapshot run on PI1-runner-vinicius-RH1; 49 jobs, 0 errors
+PASS G2     S4      [RH1] 6/6
+PASS G2     S5      [RH1] 10/10
+PASS G2     F(i)    [RH1] CoP sweeps 6/6, max jump 0.65 mm, max track 1.92 mm; S4 / S5 penetration ok (max 0.86 mm)
+PASS G2     D       [RH1] ×3 6/6, snapshot 3/3 (browser = Node: not re-run, body-independent, declared in the prereg)
+PASS G2     2.3/E-r [RH1] V2-REF-role rows: capacity ticks over 0; energy residual max -0.300 J
+—    G2     2.5     controller cost: not a body-validity row (RATE_PERFORMANCE.md §2); the isolated RH1 vs R0 step cost is measured separately (CPU item)
+—    G2     R       earlier gates: replaced by this battery's G0 / G1 (as the qualification)
+SAME regression G2 8-body jobs: 617/617 official jobs found with identical result hash
+SAME regression G2 snapshot jobs: 3/3 official snapshot jobs identical (hashA / hashB / exact)
+PASS G3     I2      [RH1] PI1-runner-vinicius-RH1: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.70 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.30 % / mean 96.39 % (v1 window min 94.46 %); U:R ✓ ( unloaded foot ≤ 0.07 % 
+PASS G3     I2      [R0] PI1-runner-vinicius: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.71 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.29 % / mean 96.39 % (v1 window min 94.47 %); U:R ✓ ( unloaded foot ≤ 0.07 % BW (
+PASS G3     rows-id [RH1] non-T9 jobs run on PI1-runner-vinicius-RH1; 338 jobs, 0 errors
+PASS G3     run     [RH1] 311 ok / 0 errors
+PASS G3     A       [RH1] stood; hold mean load_R 0.500; slip 0.37 mm; contact loss 0.00 s
+PASS G3     B       [RH1] T1: stood; holds R 0.832/0.844; RMS 0.020; end 0.503; slip 0.27 mm; roll 0.0°; lean 0.5° · T2: stood; holds L 0.832/0.844; RMS 0.020; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°
+PASS G3     C       [RH1] stood; holds R 0.832/0.842, L 0.831/0.842; RMS 0.022; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°
+PASS G3     D       [RH1] stood; pelvis drift cycle 1 → 5: 9.5 → 9.5 mm (Δ 0.03); yaw -0.73 → -0.73° (Δ 0.00); slip 0.55 mm; hold means R 0.863 → 0.860, L 0.855 → 0.856; end 0.499
+PASS G3     E2      [RH1] T5 stood; R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.504 · T6 stood; L: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.
+PASS G3     F2      [RH1] U:R stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7° · U:L stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7°
+FAIL G3     G       [RH1] T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort 2.34
+FAIL G3     H       [RH1] H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6
+—    G3     I2      per body from the 10-body run (rows above)
+PASS G3     J2a     [RH1] 81/81 pairs; 462966 ticks probed (both directions, up to each fall) · worst: lam 1.11e-16, copMm 1.33e-12, share 1.44e-15, footCopMm 1.14e-12, forceN 1.24e-12, g3OutS 0.00e+0, ikResM 1.75e-15, cmdTauNm 3.33e-11, cmdGain 5.68e-14, actTauNm 3.33e-11, actGain 5.68e-14, actBoundNm 9.49e-12, actCapNm 3.69e-13, activation 9.44e-14, holdMm 0.00e+0, holdRad 0.00e+0 · post-fall ticks (reported, not gated):
+rep  G3     J2b     [RH1] 81 pairs · A (no meaningful slide) n 56: median 0.0334 / p99 0.3596 / max 0.5841 mm · B (slide + recovery) n 17: median 0.175 / max 2.528 mm · C (failure through the common abort) n 8: median 0.028 / max 0.441 mm; abort Δ ticks {"0":8} · class mismatches 0; failures without a common abort 0; above the v3.2 reference values (A 0.5 / B 10 / C 2 mm, 5 ticks) 1
+FAIL G3     K′      [RH1] [original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood
+PASS G3     L       [RH1] 155/155 runs; energy residual max -0.257 J, min -581.358 J
+PASS G3     M       [RH1] max per-tick per-foot CoP change 4.407 mm over 9 runs; seam crossings per run (L+R) 2–60
+PASS G3     N       [RH1] T5 ×3 8115d72c; T3 ×3 ba777e55; U:R ×3 58fb5adb; T8:hold:R:R:10 ×3 69150ac5 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact
+—    G3     O       browser = Node: not re-run (body-independent, declared in the prereg)
+—    G3     P2      earlier gates valid: replaced by this battery's G0 / G1 / G2 rows on RH1 (as the qualification's Q3a–d)
+PASS G3     Q       [RH1] residual max 3.94e-6 of M·g·dt over 9 runs
+—    G3     S2      controller cost: not a body-validity row; isolated RH1 vs R0 step cost measured separately (CPU item)
+PASS G3     J2a-n   [RH1] mirror pairs evaluated: 74 RH1 + 7 U pairs of V2-165-62, V2-175-70, V2-190-85, V2-198-92, V2-long-legs, V2-short-legs, R0
+PASS G3     J2a     [R0] R0 U:R / U:L pair probed; within every J2a tolerance
+SAME regression G3 8-body jobs: 332/332 official jobs found with identical result
+SAME regression J2a mirror 8-body pairs: 81/81 official pairs identical (j2a + j2b)
+SAME regression K′ margins 8 bodies: 8/8 identical; RH1 {"1":4.19,"1.1":1.55,"1.2":-1.42,"1.3":-4.4,"1.4":-7.38}, R0 {"1":4.19,"1.1":1.55,"1.2":-1.42,"1.3":-4.4,"1.4":-7.38}
+PASS KV6c   Q2a     [RH1] stood slip 0.256 mm, |θ−θ0| 1.39° (from 1 s 0.10°), flexion 3.7–28.8°; hard margins (°, tw / sy / sz) hip_L 35.2/27.6/42.5; hip_R 35.2/27.6/42.5; knee_L —/8.7/—; knee_R —/8.7/—
+PASS KV6c   Q2a     [R0] stood slip 0.251 mm, |θ−θ0| 1.39° (from 1 s 0.10°), flexion 3.7–28.8°; hard margins (°, tw / sy / sz) hip_L 35.2/27.6/42.5; hip_R 35.2/27.6/42.5; knee_L —/8.7/—; knee_R —/8.7/—
+PASS KV6c   Q2b     [RH1] RH1 run twice: byte-identical (13456 bytes)
+PASS Q6b    180Hz   [RH1] stood slip 0.195 dev 1.39° flex max 28.83° (240 Hz 28.83°)
+PASS Q6b    480Hz   [RH1] stood slip 0.217 dev 1.41° flex max 28.83° (240 Hz 28.83°)
+PASS Q6b    180Hz   [R0] stood slip 0.188 dev 1.39° flex max 28.83° (240 Hz 28.83°)
+PASS Q6b    480Hz   [R0] stood slip 0.221 dev 1.41° flex max 28.83° (240 Hz 28.83°)
+PASS Q6c    180Hz   [RH1] stood, chatter 0, closure max/tick 5.71e-5 J, Σ+ 0.005 J
+PASS Q6c    240Hz   [RH1] stood, chatter 0, closure max/tick 4.38e-5 J, Σ+ 0.005 J
+PASS Q6c    480Hz   [RH1] stood, chatter 0, closure max/tick 3.35e-5 J, Σ+ 0.025 J
+PASS Q6c    180Hz   [R0] stood, chatter 0, closure max/tick 6.31e-5 J, Σ+ 0.006 J
+PASS Q6c    240Hz   [R0] stood, chatter 0, closure max/tick 7.20e-5 J, Σ+ 0.006 J
+PASS Q6c    480Hz   [R0] stood, chatter 0, closure max/tick 3.09e-5 J, Σ+ 0.017 J
+PASS Q6d    180Hz   [RH1] recovered DECAYING (ratio 3.3e-5), hip work 12–20 s -5.7e-7 J
+PASS Q6d    480Hz   [RH1] recovered DECAYING (ratio 0.0e+0), hip work 12–20 s 1.8e-7 J
+PASS Q6d    180Hz   [R0] recovered DECAYING (ratio 1.1e-4), hip work 12–20 s -3.2e-7 J
+PASS Q6d    480Hz   [R0] recovered DECAYING (ratio 0.0e+0), hip work 12–20 s 1.8e-6 J
+PASS Q7     yaw     [RH1] 3 stance-leg decompositions; telescoping max 0.0e+0°; A closure max 0.015° (≤ 0.3); flags none; A pelvis 7.71/7.71° = ankle 7.13/7.11 + knee 0.13/0.16 + hip 0.45/0.44
+PASS Q7     yaw     [R0] 3 stance-leg decompositions; telescoping max 0.0e+0°; A closure max 0.014° (≤ 0.3); flags none; A pelvis 7.57/7.57° = ankle 6.99/6.97 + knee 0.13/0.16 + hip 0.45/0.43
+SAME regression KV6c 8 bodies: 8/8 byte-identical
+PASS twist  ref     [RH1] reference: C1′ ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✓ C5 ✓ C6 ✓ C7′ ✓ (frozen C1 ✓, C7 ✓); HO3 recovered; HO1 slip 0.3/0.3 mm
+rep  twist  current [RH1] current (reported): C1 ✓ C1q ✓ C2 ✓ C3 ✗ C4 ✗ C5 ✓ C6 ✓ C7 ✓; C1′ ✓, C7′ ✓
+PASS twist  ref     [R0] reference: C1′ ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✓ C5 ✓ C6 ✓ C7′ ✓ (frozen C1 ✓, C7 ✓); HO3 recovered; HO1 slip 0.3/0.3 mm
+rep  twist  current [R0] current (reported): C1 ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✗ C5 ✓ C6 ✓ C7 ✓; C1′ ✓, C7′ ✓
+SAME regression twist battery 8 bodies: 192/192 r_ files byte-identical to the official (expected 192)
+
+RH1 gating rows: 50/54 pass; FAILING: G1 1.S, G3 G, G3 H, G3 K′
+R0 failing rows: G1 1.S′
+8-body regression: all identical

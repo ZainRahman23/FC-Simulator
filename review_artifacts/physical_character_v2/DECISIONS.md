@@ -3466,3 +3466,39 @@ Per the frozen rule, no struck run (A / B / C).
 - (ii) RH1's leanL prone shoulder end-range rest.
 
 The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle, PI-1 or bridge work; **nothing pushed.**
+
+## 2026-10-11: HOLD — RH1 evidence consolidated for independent architecture review; facts-only audit handoff (`record_hinged/RH1_AUDIT_HANDOFF.md`; instruction `sources/2026-10-11_user_instruction_hold_rh1_audit_handoff.md`, 36ec2e91)
+
+**Nothing modified:** RH1, V2, RUN-1, the criteria, the collision architecture and the simulation. RH1 is held, not adopted.
+
+**Added (documentation only):**
+- `evidence/spec_diff.json`: exact RH1 vs R0 differences, 101 leaves, all from the four moved joint centres and their bookkeeping.
+- The audit tools: `rh1_audit_verify.sh`, `rh1_audit_g3_body.mjs`, `rh1_audit_compare.mjs`, `rh1_spec_diff.mjs`.
+- `evidence/audit/`, `SHA256SUMS`.
+
+**Reproducibility:** clean tree from `git archive` of ff5be5e3 only. 0 / 14 comparisons differ:
+- the spec check and the spec diff;
+- the gate evaluation from the committed raw battery outputs (50 / 54);
+- the failing-row diagnostics (battery hashes reproduced);
+- the handoff evaluation and instantiation (excluding CPU fields);
+- the R2 and upper-body probes against their recorded determinism hashes.
+
+**R0 on the same tests and harness:**
+- G1: R0 passes leanL and dropA in the same battery run. Its row 1.S′ fails only on isoSelfCol 1.4d.
+- G3: R0, through the frozen `g3_run.js` substituted exactly as for RH1, fails G, H (H3 = 6) and K′ identically. A–F2, L, M, N and Q pass, as for RH1.
+
+**Classification (facts):**
+- **RH1-introduced:** G1 leanL 1.3d and dropA 1.R.
+- **Shared with R0:** G3 G, H and K′.
+- **Recorded / accepted exceptions:**
+  - isoSelfCol 1.4d: user-permitted, PI-1-scoped (D1C);
+  - G0 0.4c / 0.6a / 0.6b / 0.6e / 0.10a: recorded, never waived by the user; exempted only by RH1_PREREG §6;
+  - KC-4: not an RH1 row.
+- **Rigid-foot / promotion, unresolved:**
+  - RF-1 invalid instants 6 / 12 / 16 / 22;
+  - P-9 0 / 10 / 12 / 8;
+  - stance contact 16 / 42 / 50 / 40;
+  - HG-A v_auth open;
+  - R2 clock / turning questions open.
+
+**Stopped:** waiting for the user. Nothing pushed.
