@@ -1,0 +1,46 @@
+{
+ "prereg": "PCS1_PREREG.md 8585adc",
+ "cases": {
+  "rx_miss": {
+   "rows": [
+    45,
+    198
+   ],
+   "segmentsCompared": 4928,
+   "segMaxM": 0,
+   "segWorst": null,
+   "bindMax": 0,
+   "sameBones": true,
+   "pass": true
+  },
+  "rx_free_leg": {
+   "rows": [
+    37,
+    190
+   ],
+   "segmentsCompared": 4928,
+   "segMaxM": 0,
+   "segWorst": null,
+   "bindMax": 0,
+   "sameBones": true,
+   "pass": true
+  },
+  "rx_planted_leg": {
+   "rows": [
+    36,
+    189
+   ],
+   "segmentsCompared": 4928,
+   "segMaxM": 7.105427357601002e-15,
+   "segWorst": {
+    "r": 62,
+    "s": 4,
+    "seg": "shin_R"
+   },
+   "bindMax": 0,
+   "sameBones": true,
+   "pass": true
+  }
+ },
+ "pass": true
+}

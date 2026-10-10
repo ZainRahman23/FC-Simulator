@@ -3133,3 +3133,31 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 **Main risk:** within-stance contact non-neutrality (the SLP-2 mode), bounded by SLP-2's first-stance evidence.
 
 **Decisions D-1 … D-8 requested. Awaiting user.**
+
+## 2026-10-10: PCS-1 promotion-carrier slice. Approved (2c39acf), preregistered (8585adc), built, STOPPED at the preregistered promotion-frame re-check (`promotion_carrier/slice/PCS1_STOP_KP_RECHECK.md`); no carrier run
+
+**Built:**
+- the law provider: the simulation's own `ptRxBodyChar` pose via a vm-captured FK, mapped to V2;
+- `PI1CarrierSim`: C-Q / C-V / C-ID / C-T, B retargeted with the vertical axis released;
+- the run harness.
+
+**Integrity checks:**
+- K0 passes in all three cases: 4,928 segments each, bit-exact against the recorded `simBody`.
+- K4b passes for rx_miss: carrier off + probes = REV2, 92 / 92 steps bit-identical.
+
+**The stop.** The harness's D-5 re-derivation found no valid frame for rx_free_leg or rx_planted_leg.
+- The preregistered k39 / k38 fail **HG-T**: the slide leg is still extending, and it first reaches full extension at frame 43 in all three records.
+- My investigation had taken the frames from `valid_on_rx.json`, whose "valid" flag excludes HG-T. An erratum is appended to the investigation report.
+
+**Under the full gate:**
+- rx_miss k47 (12.5 ticks) is valid;
+- rx_free_leg's latest valid frame is k45 (4.25 ticks);
+- rx_planted_leg has no valid frame with either presentation (HG-T alone caps its lead at 4.75 ticks).
+
+**Decision needed.** D-5 (≥ 6 ticks) and D-4 (existing physical compatibility) conflict for the contact cases.
+- **A:** relax the lead to the latest fully valid frame (rx_miss + rx_free_leg; the planted case stays open).
+- **B:** waive HG-T (not recommended).
+- **C:** give the stand-in an extending slide leg first.
+- **D:** promote planted at an invalid frame (not recommended).
+
+**Recommended:** A now, C next. **Awaiting user.**

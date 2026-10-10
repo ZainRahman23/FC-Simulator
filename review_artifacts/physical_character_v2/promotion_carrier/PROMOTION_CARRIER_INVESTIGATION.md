@@ -453,3 +453,21 @@ This is the boundary to SLP-2C and CF.
 ```
 PCV2="$PWD" V13_WT=<V1.3 worktree> V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 node review_artifacts/physical_character_v2/promotion_carrier/scripts/cf_frozen_perfect_root.mjs <records dir> <case> <k_p list> <ticks>
 ```
+
+---
+
+## Erratum (10 Oct 2026, appended after the PCS-1 promotion-frame re-check; the text above is unchanged)
+
+**The error.** §6.2 / §6.3 (and D-6 in §8) said the slice's promotion frames k39 (rx_free_leg) and k38 (rx_planted_leg) pass the full REV2 handoff gate. **They do not.**
+- They were taken from `locomotion_continuity/evidence/valid_on_rx.json`. Its "valid" flag (from `lc_valid.mjs` / `hg_valid_frames.mjs`) records HG-T, the slide-leg-extension row, separately and does not count it.
+- Both frames fail HG-T: the slide leg first reaches full extension at frame 43 in all three records.
+
+**Correct values under the full gate (LC-1 presentation):**
+
+| case | latest fully valid frame | lead |
+|---|---|---|
+| rx_miss | 47 | 12.5 ticks (unchanged) |
+| rx_free_leg | 45 | 4.25 ticks |
+| rx_planted_leg | none | — |
+
+**How it was caught.** The preregistered PCS-1 re-check caught it before any carrier run. See `slice/PCS1_STOP_KP_RECHECK.md`.
