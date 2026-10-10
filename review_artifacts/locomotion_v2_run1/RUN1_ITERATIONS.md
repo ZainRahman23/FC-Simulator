@@ -1,0 +1,9 @@
+# RUN-1 iteration log
+
+Each row: the iteration, the largest visible (or measured) problem, the one change made, and the result.
+
+| # | problem | change | result |
+|---|---|---|---|
+| 0 | First cycle: the plant / pelvis-height Newton solve diverged. At tc 0.175 s the stance leg over-reaches, the knee pins at 0° and the Jacobian is zero. The knee is locked straight through late stance. | Replaced it with a nested bisection: pelvis height ↔ toe-off, plant distance ↔ touchdown knee. Both relations are monotone. | The solve converges. A scan showed tc 0.175 s infeasible for a 0.834 m leg at 5.5 m/s (contact length 0.96 m) unless the pelvis sinks. Chose tc 0.160 s (contact length 0.88 m). |
+| 1 | The stance knee was still **extending** at toe-off. The swing Hermite continued that extension, so the knee dipped to 4° and the swing foot scraped 7 cm *through* the turf. Separately, the Hermite slope limiter clipped the fixed boundary slopes, which broke C1 at touchdown (knee slope 147 vs 1115 °/cycle). | (a) Late stance is now **knee-driven**. From the heel-rise onset, a prescribed knee curve continues C1 from the flat-foot IK knee, reaches its extension minimum at 86 % of stance, and is already flexing at toe-off (320 °/s). The heel rise about the MTP joint is solved from it (bisection), and the toe stays on the turf. (b) The limiter never touches a fixed (boundary) slope. | Every channel is C0 + C1 at both joins (value Δ < 0.003°, slopes equal). Minimum swing boot height is +3.1 cm. Flat-foot plant slip is 0.000 mm. The stance knee runs 20° → 48° (35 % stance) → 18° → 23° at toe-off. |
+| 2 | Early stance: the hip *flexes* for about 0.03 s after touchdown, because the rapid knee collapse under the spring-mass pelvis drags the thigh forward. The touchdown knee rate is about 1160 °/s. | (pending: the research numbers for touchdown geometry and contact time) | — |
