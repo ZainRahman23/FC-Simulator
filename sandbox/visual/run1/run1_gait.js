@@ -144,8 +144,8 @@ const RUN1 = {
     thoraxYaw: 13, thoraxYawPh: 0.86,
     // arms (deg): contralateral to the legs, each arm most forward near its own leg's toe-off; elbow closes in the forward swing
     armFwd: 33, armBack: 45, armPh: -0.14,
-    elbow: 84, elbowAmp: 12, elbowPh: 0.05,
-    armAbd: 12, armAbdAmp: 3, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
+    elbow: 84, elbowAmp: 12, elbowPh: 0.11,
+    armAbd: 12, armAbdAmp: 3, armAbdPh: 0.12, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
     clavProt: 5,
     asymArm: 0.06, asymElbow: 3,   // a deterministic dominant-side asymmetry: the right arm swings 6 % wider, the left elbow sits 3° more open
     gazeDown: 6, headNod: 1.2, headYawFollow: 0.22, headRollFollow: 0.15,
@@ -358,7 +358,7 @@ function r1Pose(G, u, plants) {
     const flex = (mid + amp * cA) * D;
     const ce = Math.cos(R1_TAU * (ua - p.elbowPh));
     const elbow = (p.elbow - (sd === "L" ? p.asymElbow : 0) + p.elbowAmp * ce) * D;
-    const abd = (p.armAbd - p.armAbdAmp * cA) * D;                                         // comes across the body in the forward swing
+    const abd = (p.armAbd - p.armAbdAmp * Math.cos(R1_TAU * (ua - p.armAbdPh))) * D;          // comes across the body in the forward swing (lagging: the hand path opens into an ellipse)
     rot["clavicle_" + sd] = R3.y(-side * p.clavProt * cA * D);
     rot["upperArm_" + sd] = R3.mul3(R3.z(side * abd), R3.x(-flex), R3.y(-side * p.armRot * D));
     rot["foreArm_" + sd] = R3.x(-elbow);
