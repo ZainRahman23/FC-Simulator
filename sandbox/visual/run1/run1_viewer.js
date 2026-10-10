@@ -271,6 +271,11 @@ function rv1Boot() {
   document.getElementById("bPlay").onclick = () => rv1SetPlaying(!RV1.playing);
   document.getElementById("bRestart").onclick = () => { rv1Reset(); rv1Update(0); };
   document.getElementById("bStep").onclick = () => { rv1SetPlaying(false); RV1.t += 1 / 60; rv1Update(RV1.t); };
+  document.getElementById("bExport").onclick = () => {                 // the explicit continuous state (r1Kinematics) at the current time
+    const lane = rv1Lane("run1"), K = r1Kinematics(RV1.run1.A, rv1V, (tt) => rv1Sim(lane, tt), RV1.t);
+    const blob = new Blob([JSON.stringify(K, null, 1)], { type: "application/json" }), a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = `run1_state_t${RV1.t.toFixed(3)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
   const selV1 = document.getElementById("selV1"); selV1.value = RV1.v1Mode; selV1.onchange = (e) => { RV1.v1Mode = e.target.value; rv1Reset(); rv1Update(0); };
   const selDir = document.getElementById("selDir"); selDir.value = RV1.dir; selDir.onchange = (e) => { RV1.dir = e.target.value; rv1Reset(); rv1Update(0); };
   const selV = document.getElementById("selV"); selV.value = RV1.speedMode === "ramp" ? "ramp" : RV1.v.toFixed(1); selV.onchange = (e) => { if (e.target.value === "ramp") RV1.speedMode = "ramp"; else { RV1.speedMode = "const"; RV1.v = +e.target.value; } rv1Reset(); rv1Update(0); };
