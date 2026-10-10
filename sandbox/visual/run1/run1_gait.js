@@ -190,7 +190,15 @@ const RUN1 = {
 RUN1.jog11 = { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
   kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
   tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 };
-RUN1.regimes = { RUN: { v: 5.5, id: "RUN" }, SPRINT: null };                       // overrides on RUN1.ref (the RUN-1.1 5.5 m/s set); SPRINT set below
+RUN1.regimes = { SPRINT: null };                                                   // overrides on RUN1.ref (the RUN-1.1 5.5 m/s set); SPRINT set below
+// RUN — a 5.5 m/s football run (RUN1_2_REGIMES.md §2). RUN-1.1's timing already matches the overground data (DSP12 / CL20); what changes is
+// the body: R1 a stiffer stance on a clear fore-foot landing and an earlier unfolding of the lower leg, so the foot is swept under the body
+// instead of being placed at the last instant.
+RUN1.regimes.RUN = { v: 5.5, id: "RUN",
+  kneeTD: 24, kneePkExtra: 0, kneeTO: 16,       // stance knee 24 → ~46 → 16 (real ≈45° peak at 4.5–5 m/s; RUN-1.1: 28 → 54, deeper than its own jog)
+  strikeToeUp: -10, flatS: 0.14, heelRiseTO: 78,   // fore-foot landing (7 of 9 runners at 5.2 m/s, DSP12), heel lowering over 14 % of stance; higher on the toes at toe-off
+  kneeExt: 21, kneeExtW: 0.85,                  // the lower leg finishes unfolding by 85 % of the swing (RUN-1.1: 92 %), then the leg sweeps back into the contact
+};
 RUN1.anchors11 = [                                                                   // RUN-1.1's anchors, verbatim (the jog source)
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
     kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
