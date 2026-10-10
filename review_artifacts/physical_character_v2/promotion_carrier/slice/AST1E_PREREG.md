@@ -114,3 +114,21 @@ All are run with the REV2 runner plant (carrier off) and AST-1E, so no carrier p
 ## 6. Amendments
 
 None at freezing.
+
+### A1 (before any AST-1E output; implementation of §2's geometry update only; every preregistered property unchanged)
+
+**Why.** The preregistered mechanism cannot run in this Jolt build.
+- §2's mechanism was `SetShape` inside an `OffsetCenterOfMassShape`.
+- `OffsetCenterOfMassShape` constructs, but its `GetCenterOfMass` aborts the wasm module ("RuntimeError: null function or function signature mismatch"; probe `scripts/jolt_probe.mjs`, reproduced on the harness's first AST-1E construction, which produced no output). `SetShape` calls that method internally.
+
+**Replacement, with the same properties:**
+- **Shape.** The LEG segment's shape is a `MutableCompoundShape`:
+  - sub-shape 0 = the THIGH capsule (k_p, fixed);
+  - sub-shapes 1 … K (K = 8) = collinear capsules of radius r_LEG, each with axis length ℓ = L_ext / K.
+- **Mass properties.** It is built in the fully extended layout (the K axis segments tiling [knee, knee + L_ext]), so mass, inertia and COM are those of the fully extended leg, as §2 requires.
+- **Update.** Before each prescribed step, piece i is moved with `ModifyShape` and **no** `AdjustCenterOfMass`. It goes to the axis segment [s_i, s_i + ℓ] along the recorded LEG axis (knee → toe, body-local by the inverse fit), with s_i = min(i·ℓ, L(τ) − ℓ), clamped at 0. Then `BodyInterface.NotifyShapeChanged(updateMassProperties = false)` updates the bounds.
+- **Exact geometry.** The union of equal-radius collinear capsules whose axis segments cover [0, L(τ)] is exactly the recorded LEG capsule whenever L(τ) ≥ ℓ = 0.080 m. That holds at every k_p used (L ≥ 0.267 m).
+- **No state change.** A geometry update changes no COM, mass, inertia, position or velocity (probe `scripts/jolt_probe2.mjs`: COM identical after `ModifyShape`).
+- **Release.** Release freezes the pieces.
+
+Everything else in §2 – §5 is unchanged.
