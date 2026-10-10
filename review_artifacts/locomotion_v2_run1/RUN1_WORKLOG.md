@@ -21,13 +21,19 @@ No existing file is modified.
 
 ## Log
 
-- **04:44–05:15 Orientation.** I read the memory, the repo history, the V1 gait (`of_loco.js`), the rig hierarchy (`skeleton.js`, `of_rig.js`, `of_character.js`), the renderers (`gl_renderer.js`, `of_char_gl.js`), CAMERA_V1 (`match.js buildFrozenBasis`), and the V2 spec (via a read-only agent).
+- **04:44–04:55 Orientation.** (An earlier version of this log said 04:44–05:15 / 05:15–05:55. Those times were wrong; the correct ones are given here.) I read the memory, the repo history, the V1 gait (`of_loco.js`), the rig hierarchy (`skeleton.js`, `of_rig.js`, `of_character.js`), the renderers (`gl_renderer.js`, `of_char_gl.js`), CAMERA_V1 (`match.js buildFrozenBasis`), and the V2 spec (via a read-only agent).
   - What the simulation consumes from anim3d was mapped by a read-only agent. Those pieces stay frozen.
   - A biomechanics research agent was started.
-- **05:15–05:55 Gait core v0 (`run1/run1_gait.js`).** It has:
+- **04:55–05:07 Gait core v0 (`run1/run1_gait.js`).** It has:
   - a spring-mass pelvis;
   - a foot-space stance (fixed plant, heel→flat→MTP roll, analytic leg IK);
   - joint-space swing Hermite curves whose ends match the stance's values and slopes;
   - trunk counter-rotation, arms and a head stabiliser.
 - **Tools.** `run1/tools/run1_load.cjs` loads the page's globals in a node vm. `run1/tools/run1_report.cjs` gives a numeric cycle table, join continuity, slip and reach.
 - **Iterations 0–2 (numeric, before any render).** See `RUN1_ITERATIONS.md`.
+- **05:07–05:20 Viewer (`run1.html`, `run1/run1_viewer.js`) and capture tool (`run1/tools/run1_capture.cjs`).**
+  - It renders on one WebGL2 canvas with three viewports. The real Vinícius mesh draws via `ofCharDraw`.
+  - V1 runs through its own unmodified `ofActorTick` on a parallel lane.
+  - It is served by `python3 -m http.server 8317` from the worktree root.
+- **05:10–05:30 Iterations 3–6** (posture, camera handedness, arms, labels) and the research write-up (`RUN1_RESEARCH.md`).
+- **05:30 Continuity diagnostics** (`run1/tools/run1_continuity.cjs`): RUN-1 vs V1.3 vs V1+LC-1.
