@@ -7,12 +7,15 @@ import fs from "fs"; import path from "path"; import zlib from "zlib"; import cr
 const here = path.dirname(fileURLToPath(import.meta.url)), P2 = path.resolve(here, "../../../../../sandbox/visual/physchar2") + "/", ROOT = path.resolve(here, "../../..");
 const M = await import(path.join(ROOT, "pi1/rev1/scripts/pcg_rev1.mjs")), M0 = await import(path.join(ROOT, "pi1/trackB/scripts/pcg_f0.mjs"));
 const SIM = await import(path.join(ROOT, "pi1/rev2/scripts/pi1_rev2_sim.mjs")), CS = await import(path.join(here, "pi1_carrier_sim.mjs")), LP = await import(path.join(here, "law_provider.mjs")), SE = await import(path.join(here, "stand_in_e.mjs"));
-const TACKLER = process.env.TACKLER || "ast1";   // AST1E_PREREG.md (7b77dc5): "ast1e" = the extending slide-leg stand-in; HG-T evaluated for the stand-in in use
+const TACKLER = process.env.TACKLER || "ast1";
+// LEG-LAW INVESTIGATION switches (prediction only; leg_law/): REFERENCE=pres uses the LC-1 presentation as the gait reference (leg_law/scripts/pres_reference.mjs),
+// KP=<k> promotes at an explicit frame (gate recorded, not required), RECDIR=<dir> reads other records. Defaults reproduce PCS-1 exactly.
+const REFERENCE = process.env.REFERENCE || "law", KP_OVR = process.env.KP ? +process.env.KP : null, PR = REFERENCE === "pres" ? await import(path.resolve(here, "../../leg_law/scripts/pres_reference.mjs")) : null;   // AST1E_PREREG.md (7b77dc5): "ast1e" = the extending slide-leg stand-in; HG-T evaluated for the stand-in in use
 const { loadJolt } = await import(P2 + "core/v2_jolt.js"), { pi1RunnerSpec } = await import(P2 + "spec/v2_pi1_runner.js"), { bootSole } = await import(P2 + "sim/v2_geom.js"), { unitEv } = await import(P2 + "core/v2_math.js");
 const { L, makeMapper, geomRowsRev1, rigGeom, angVel, SEGMAP, ADJ, AXES, relRot } = M; const { V, Q, B, NB, bi, loadAir, bodySep, bodyLowest, capsulePen, SELF_PAIRS, Z0 } = L;
 const [CASE, VARIANT, MODE, OUT, STEPS] = process.argv.slice(2), J = await loadJolt(P2 + "vendor/jolt-physics.wasm-compat.js"), RANK = { NEGLIGIBLE: 0, CORRECTION: 1, STUMBLE: 2, FALL: 3 };
-const PREREG_KP = { rx_miss: 47, rx_free_leg: 39, rx_planted_leg: 38 }, RECS = path.join(ROOT, "promotion_carrier/evidence/records/on_rx");
-if (!(CASE in PREREG_KP) || !["contact", "free"].includes(VARIANT) || !["carrier", "off", "rev2"].includes(MODE)) { console.error("bad args"); process.exit(9); }
+const PREREG_KP = { rx_miss: 47, rx_free_leg: 39, rx_planted_leg: 38 }, RECS = process.env.RECDIR || path.join(ROOT, "promotion_carrier/evidence/records/on_rx");
+if ((!(CASE in PREREG_KP) && KP_OVR == null) || !["contact", "free"].includes(VARIANT) || !["carrier", "off", "rev2"].includes(MODE)) { console.error("bad args"); process.exit(9); }
 const segR = (g, t) => (g.ra != null ? g.ra + (g.rb - g.ra) * Math.max(0, Math.min(1, t)) : g.r), sim2r = (p) => [p[0], p[2], -p[1]];
 const comW = (S, i) => V.add(S[i].pos, Q.rot(S[i].rot, B[i].comLocal)), hl = (v) => Math.hypot(v[0], v[2]), D2R = Math.PI / 180, R2D = 180 / Math.PI;
 const Mtot = B.reduce((s, b) => s + b.mass, 0), comVel = (v) => V.sc(v.reduce((s, x, i) => V.add(s, V.sc(x, B[i].mass)), [0, 0, 0]), 1 / Mtot), comOf = (S) => V.sc(S.reduce((s, x, i) => V.add(s, V.sc(comW(S, i), B[i].mass)), [0, 0, 0]), 1 / Mtot);
@@ -41,7 +44,8 @@ const res = { prereg: "PCS1_PREREG.md 8585adc" + (TACKLER === "ast1e" ? " + AST1
 // D-5: the latest HG-valid frame with lead >= 6 ticks (re-derived; must equal the preregistered frame)
 let kp = null; const kLim = Math.floor(tRef - 7 + 1e-9), hgScan = []; for (let k = kLim; k >= 2; k--) { const h = handoff(R, k, mapper, G); hgScan.push({ k, pass: h.pass, fails: h.fails }); if (h.pass) { kp = k; break; } }
 res.kpRule = { kLim, scanned: hgScan, kp, preregistered: PREREG_KP[CASE], match: kp === PREREG_KP[CASE] };
-if (kp !== PREREG_KP[CASE]) { res.reasons.push("k_p re-check mismatch"); fs.writeFileSync(OUT, zlib.gzipSync(JSON.stringify(res))); console.log(CASE, "STOP: k_p re-check", kp, "vs", PREREG_KP[CASE]); process.exit(2); }
+if (KP_OVR != null) { const h = handoff(R, KP_OVR, mapper, G); kp = KP_OVR; res.kpRule = { override: KP_OVR, hgPass: h.pass, hgFails: h.fails }; res.reference = REFERENCE; }
+else if (kp !== PREREG_KP[CASE]) { res.reasons.push("k_p re-check mismatch"); fs.writeFileSync(OUT, zlib.gzipSync(JSON.stringify(res))); console.log(CASE, "STOP: k_p re-check", kp, "vs", PREREG_KP[CASE]); process.exit(2); }
 res.kp = kp; res.tauP = kp + 1; res.leadTicks = +(tRef - (kp + 1)).toFixed(2); res.leadS = +(res.leadTicks / 60).toFixed(4);
 { const m2 = makeMapper(R, { knee: "RK", rf1: true }), a = JSON.stringify(initVel(mapper, kp)), b = JSON.stringify(initVel(m2, kp)); res.HGD = a === b; }
 const H = handoff(R, kp, mapper, G), row = R.rows[kp], va = [row[10], 0, -row[11]], shift = [va[0] - H.vc[0], 0, va[2] - H.vc[2]], off = [Math.round(H.iv.S[0].pos[0]), 0, Math.round(H.iv.S[0].pos[2])];
@@ -58,7 +62,7 @@ const Ipel = (() => { const c0 = comW(Z0, 0); let I = [[0, 0, 0], [0, 0, 0], [0,
 // slide end: first row whose primitive set lacks the stand-in's primitives (horizon cap)
 const prim0 = Object.keys(samples(kp + 1)); let slideEnd = R.prims.length - 1; for (let k = kp; k < R.prims.length; k++) { const names = (R.prims[k][3] || []).map(p => p.prim); if (!prim0.every(n => names.includes(n))) { slideEnd = k - 1; break; } }
 const tauCap = Math.min(slideEnd, kp + 1 + 150), scanEnd = dec ? dec.tick - 1 + dec.sub / 4 + 6 : kend + 12;
-const law = MODE === "carrier" ? LP.makeLaw(R) : null;
+const law = MODE === "carrier" ? (REFERENCE === "pres" ? PR.makePresRef(R) : LP.makeLaw(R)) : null;
 const auth = { tauP: kp + 1, rootAt, fallTau, samples, mT: R.mass[1] || 75, legFrac: 0.0145 + 0.061 + 0.161, isLeg: (n) => n === "LEG" || n === "THIGH" };
 const maxSteps = STEPS ? +STEPS : Math.ceil((tauCap - (kp + 1)) * 4), simOpts = { seconds: maxSteps / 240 + 0.05, Ipel };
 const sim = MODE === "rev2" ? new SIM.PI1Sim(J, spec, { S: hS, vel: hV }, auth, simOpts)
@@ -143,7 +147,9 @@ for (let s = 0; s < maxSteps; s++) {
       const dOK = [0, 1].every(n => !R.pres[r].feet[n].contact || (sim.probeRows && sim.probeRows[n].JyN >= 20)); let jMax = 0; for (const i of JPTS) jMax = Math.max(jMax, V.dist(S[i].pos, Pp[i].pos));
       dgRow = { a, bPosMm: r7(bPos * 1000), bRotDeg: r7(bRot), cComMs: r7(cV), cPelMs: r7(cP), d: dOK, pass: a && bPos <= 0.010 && bRot <= 2 && cV <= 0.05 && cP <= 0.25 && dOK, jointMaxMm: r7(jMax * 1000) };
       if (dgRow.pass && dgTau == null) { dgTau = tau; res.DG = { tau, row: dgRow, blendNeeded: jMax > 0.010 }; } if (dgTau == null && recEntry != null && tau - recEntry >= 30 - 1e-9) dgFail = true; }
-    ticks.push({ tau, r, state, pelHratio: r7(pelH / pelHP), tiltDeg: r7(tilt), legSimMm: lvs ? r7(lvs.d * 1000) : null, legSimWho: lvs ? lvs.who : null, presLegSimMm: lvp ? r7(lvp.d * 1000) : null, marginDeg: r7(mMin * R2D), marginWho: mWho,
+    let refRow = null; if (REFERENCE === "pres" && law) { const o = law.at(tau), Sr = o.S; let lr = 0, lw = null; for (const nm of ["thigh_L", "thigh_R", "shank_L", "shank_R", "foot_L", "foot_R"]) { const i = bi(nm), d = hl(V.sub(comW(S, i), comW(Sr, i))); if (d > lr) { lr = d; lw = nm; } }
+      refRow = { legRefMm: r7(lr * 1000), legRefWho: lw, cg2ref: ["L", "R"].every(sd => fs2[sd].phys === "trans" || (fs2[sd].phys === "planted") === o.planted[sd]), refPlanted: o.planted }; }
+    ticks.push({ tau, r, state, ref: refRow, pelHratio: r7(pelH / pelHP), tiltDeg: r7(tilt), legSimMm: lvs ? r7(lvs.d * 1000) : null, legSimWho: lvs ? lvs.who : null, presLegSimMm: lvp ? r7(lvp.d * 1000) : null, marginDeg: r7(mMin * R2D), marginWho: mWho,
       feet: fs2, slipMm: r7(slipNew * 1000), slipOldMm: r7(Math.max(slipOld.L, slipOld.R) * 1000), B: Bfr ? { h: r7(Bfr.h), v: r7(Bfr.v), T: r7(Bfr.T) } : null, pelDyMm: r7((pelH - pelHP) * 1000), DG: dgRow });
     // near-miss envelope passed → RECONCILE (no contact so far)
     if (state === "PRE" && firstA2 == null && !first && r >= 1 && R.pred[r] != null && R.pred[r] > 0.25 && R.dnow[r] != null && R.dnow[r - 1] != null && R.dnow[r] > R.dnow[r - 1] && r >= kt) { state = "RECONCILE"; recEntry = tau; smEvents.push({ tau, state }); } } }

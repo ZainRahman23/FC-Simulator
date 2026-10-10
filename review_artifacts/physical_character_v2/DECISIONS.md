@@ -3217,3 +3217,33 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 3. A ≈ 3-tick lead (conflicts with D-5).
 
 **Recommended:** investigate option 1 read-only first. **Awaiting user.**
+
+## 2026-10-10: Leg-law investigation (read-only; `promotion_carrier/leg_law/LEG_LAW_INVESTIGATION.md`; source f7e78c91). No code changed, no PI-1 run
+
+**What the law does.** The shared leg law's pelvis vertical is a geometric by-product of the authored angles: stance grounding with a hard heel → toe switch at s = 0.62, and a smoothstep plus sine "bob" in flight. At jog and above:
+- two thirds of stance needs a pulling ground force;
+- flight is non-ballistic (−11 … +419 BW);
+- take-off is −4.3 … −14.7 m/s;
+- the touchdown step is 3 – 28 mm;
+- the stance foot skates (the grounded point slides at a mean 3 – 8 m/s);
+- the joints have C0 cusps.
+
+**A spring-mass vertical** for the same stride timing:
+- sits 117 – 140 mm below the law's stance vault;
+- needs a swing-clearance correction at jog (−20 mm) and a reach limit at sprint (+15 / +35 mm).
+
+**Prediction P1, collision legs.** Physically realisable legs (LC-1 proxy) would change 12 / 26 first contacts (5 class, 7 segment; rx_planted_leg shin → foot), and shift 7 more by ≤ 1 tick.
+
+**Prediction P2, promoted runner (no tackler).** With the physical proxy reference the vertical mismatch and the ID spikes vanish, but the frozen carrier still holds coherence for only 0 – 6 ticks at every speed: its actuation law (standing-sized posture gains plus the (D + dt·K)·ω* feed-forward) asks 1.4 – 4.5 kN·m and saturates the actuators and B.
+
+**V2.**
+- No limitation at 3 m/s.
+- From 4.2 m/s the swing needs hip torque above V2's modelled capacity (Hill w0 15 rad/s). This is a candidate model limit, not an observed failure.
+
+**Options:**
+- **A:** physical shared law (a gameplay change).
+- **B:** presentation and reference only.
+- **C:** carrier actuation redesign (the binding blocker).
+- **D:** a V2 velocity-model check.
+
+**Recommended:** C first, read-only design, tested on the unobstructed-runner gate against the proxy; D in parallel. **Awaiting user.**

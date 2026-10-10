@@ -1,0 +1,919 @@
+{
+ "note": "first-contact re-detection, current law legs vs LC-1-proxy legs",
+ "cases": {
+  "rx_airborne": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 18.3,
+    "at": {
+     "tau": 61.75,
+     "seg": "foot_R",
+     "prim": "TUCKSHIN"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 88.2,
+    "at": {
+     "tau": 63,
+     "seg": "foot_R",
+     "prim": "TUCKSHIN"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": false,
+   "segmentChange": null
+  },
+  "rx_behind_standing": {
+   "recorded": {
+    "t": 51.5,
+    "seg": "shin_R",
+    "prim": "LEG",
+    "react": "STUMBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 51.5,
+     "seg": "shin_R",
+     "prim": "LEG",
+     "penMm": 9.2
+    },
+    "dmin": -107.6,
+    "at": {
+     "tau": 58,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 51.5,
+     "seg": "shin_R",
+     "prim": "LEG",
+     "penMm": 8.3
+    },
+    "dmin": -106.1,
+    "at": {
+     "tau": 56.75,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_early_stance": {
+   "recorded": {
+    "t": 57.5,
+    "seg": "toe_L",
+    "prim": "LEG",
+    "react": "STUMBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 57.5,
+     "seg": "toe_L",
+     "prim": "LEG",
+     "penMm": 11.6
+    },
+    "dmin": -61.2,
+    "at": {
+     "tau": 62.75,
+     "seg": "toe_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 57.25,
+     "seg": "toe_L",
+     "prim": "LEG",
+     "penMm": 21.6
+    },
+    "dmin": -84,
+    "at": {
+     "tau": 62.75,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": -0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_facing_front": {
+   "recorded": {
+    "t": 52.25,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 52.25,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 7.8
+    },
+    "dmin": -105.2,
+    "at": {
+     "tau": 54.5,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 52.25,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 11.2
+    },
+    "dmin": -94.8,
+    "at": {
+     "tau": 57.25,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_free_leg": {
+   "recorded": {
+    "t": 50.25,
+    "seg": "foot_L",
+    "prim": "LEG",
+    "react": "CORRECTION"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 50.25,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 4.7
+    },
+    "dmin": -24.5,
+    "at": {
+     "tau": 60,
+     "seg": "toe_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 50,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 14.9
+    },
+    "dmin": -46.9,
+    "at": {
+     "tau": 50.5,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": -0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_front_diag": {
+   "recorded": {
+    "t": 56.5,
+    "seg": "toe_L",
+    "prim": "TUCKSHIN",
+    "react": "CORRECTION"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 56.5,
+     "seg": "toe_L",
+     "prim": "TUCKSHIN",
+     "penMm": 0.5
+    },
+    "dmin": -113.9,
+    "at": {
+     "tau": 59.75,
+     "seg": "shin_L",
+     "prim": "TUCK"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 56.75,
+     "seg": "toe_L",
+     "prim": "TUCK",
+     "penMm": 21.6
+    },
+    "dmin": -102.7,
+    "at": {
+     "tau": 63,
+     "seg": "shin_L",
+     "prim": "BODY"
+    }
+   },
+   "firstContactShiftTicks": 0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_glancing": {
+   "recorded": {
+    "t": 65.75,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 65.75,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 13.8
+    },
+    "dmin": -91.2,
+    "at": {
+     "tau": 67.75,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 65.5,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 2.7
+    },
+    "dmin": -71.7,
+    "at": {
+     "tau": 67.25,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": -0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_heavy": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 29.8,
+    "at": {
+     "tau": 67.5,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 60,
+     "seg": "toe_L",
+     "prim": "TUCK",
+     "penMm": 23.9
+    },
+    "dmin": -31,
+    "at": {
+     "tau": 60.25,
+     "seg": "toe_L",
+     "prim": "TUCK"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": true,
+   "segmentChange": null
+  },
+  "rx_jog": {
+   "recorded": {
+    "t": 48.75,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 48.75,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 2.7
+    },
+    "dmin": -98.3,
+    "at": {
+     "tau": 51.5,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 49.5,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 12.8
+    },
+    "dmin": -91.6,
+    "at": {
+     "tau": 58,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0.75,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "rx_late_stance": {
+   "recorded": {
+    "t": 55.75,
+    "seg": "toe_L",
+    "prim": "LEG",
+    "react": "CORRECTION"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 55.75,
+     "seg": "toe_L",
+     "prim": "LEG",
+     "penMm": 26
+    },
+    "dmin": -42.3,
+    "at": {
+     "tau": 60.75,
+     "seg": "toe_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 55.5,
+     "seg": "toe_L",
+     "prim": "LEG",
+     "penMm": 21.5
+    },
+    "dmin": -75.5,
+    "at": {
+     "tau": 55.75,
+     "seg": "toe_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": -0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_lateral": {
+   "recorded": {
+    "t": 50,
+    "seg": "foot_L",
+    "prim": "LEG",
+    "react": "STUMBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 50,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 2.8
+    },
+    "dmin": -105.2,
+    "at": {
+     "tau": 58.5,
+     "seg": "foot_L",
+     "prim": "THIGH"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 50,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 4.2
+    },
+    "dmin": -102.8,
+    "at": {
+     "tau": 54.25,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "rx_light": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 29.8,
+    "at": {
+     "tau": 67.5,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 60,
+     "seg": "toe_L",
+     "prim": "TUCK",
+     "penMm": 23.9
+    },
+    "dmin": -31,
+    "at": {
+     "tau": 60.25,
+     "seg": "toe_L",
+     "prim": "TUCK"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": true,
+   "segmentChange": null
+  },
+  "rx_miss": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 105.6,
+    "at": {
+     "tau": 60.75,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 162,
+    "at": {
+     "tau": 60.75,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": false,
+   "segmentChange": null
+  },
+  "rx_planted_leg": {
+   "recorded": {
+    "t": 48.75,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 48.75,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 2.7
+    },
+    "dmin": -98.3,
+    "at": {
+     "tau": 51.5,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 49.5,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 12.8
+    },
+    "dmin": -91.6,
+    "at": {
+     "tau": 58,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0.75,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "rx_rear_diag": {
+   "recorded": {
+    "t": 45,
+    "seg": "toe_L",
+    "prim": "LEG",
+    "react": "CORRECTION"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 45,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 3.9
+    },
+    "dmin": -63.2,
+    "at": {
+     "tau": 45,
+     "seg": "toe_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 45,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 62.1
+    },
+    "dmin": -62.1,
+    "at": {
+     "tau": 45,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "rx_rear": {
+   "recorded": {
+    "t": 52.75,
+    "seg": "foot_R",
+    "prim": "TUCKSHIN",
+    "react": "NEGLIGIBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 52.25,
+     "seg": "foot_R",
+     "prim": "TUCK",
+     "penMm": 24.4
+    },
+    "dmin": -68.9,
+    "at": {
+     "tau": 52.5,
+     "seg": "toe_R",
+     "prim": "TUCKSHIN"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 65.1,
+    "at": {
+     "tau": 40,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": true,
+   "segmentChange": null
+  },
+  "rx_side_standing": {
+   "recorded": {
+    "t": 60.5,
+    "seg": "shin_R",
+    "prim": "THIGH",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 60.5,
+     "seg": "shin_R",
+     "prim": "THIGH",
+     "penMm": 8.3
+    },
+    "dmin": -93.7,
+    "at": {
+     "tau": 62.5,
+     "seg": "toe_R",
+     "prim": "THIGH"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 52,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 2.7
+    },
+    "dmin": -58.1,
+    "at": {
+     "tau": 62.5,
+     "seg": "foot_R",
+     "prim": "THIGH"
+    }
+   },
+   "firstContactShiftTicks": -8.5,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "rx_sprint": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 58.9,
+    "at": {
+     "tau": 67.5,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 59.75,
+     "seg": "toe_L",
+     "prim": "TUCK",
+     "penMm": 24.5
+    },
+    "dmin": -34.5,
+    "at": {
+     "tau": 60,
+     "seg": "toe_L",
+     "prim": "TUCK"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": true,
+   "segmentChange": null
+  },
+  "rx_square": {
+   "recorded": {
+    "t": 61.5,
+    "seg": "foot_L",
+    "prim": "LEG",
+    "react": "CORRECTION"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 61.5,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 8.1
+    },
+    "dmin": -90,
+    "at": {
+     "tau": 62.75,
+     "seg": "foot_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 61.75,
+     "seg": "shin_L",
+     "prim": "LEG",
+     "penMm": 9.8
+    },
+    "dmin": -96.9,
+    "at": {
+     "tau": 62.75,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0.25,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "rx_standing": {
+   "recorded": {
+    "t": 51.5,
+    "seg": "shin_R",
+    "prim": "LEG",
+    "react": "STUMBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 51.5,
+     "seg": "shin_R",
+     "prim": "LEG",
+     "penMm": 9.2
+    },
+    "dmin": -107.6,
+    "at": {
+     "tau": 58,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 52.5,
+     "seg": "shin_R",
+     "prim": "LEG",
+     "penMm": 1.7
+    },
+    "dmin": -106.2,
+    "at": {
+     "tau": 59.5,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 1,
+   "contactClassChange": false,
+   "segmentChange": false
+  },
+  "sl_early": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 5539.1,
+    "at": {
+     "tau": 106,
+     "seg": "shin_L",
+     "prim": "TUCK"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 5624.9,
+    "at": {
+     "tau": 107,
+     "seg": "thigh_L",
+     "prim": "TUCK"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": false,
+   "segmentChange": null
+  },
+  "sl_from_behind": {
+   "recorded": {
+    "t": 86.25,
+    "seg": "foot_R",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 86.25,
+     "seg": "foot_R",
+     "prim": "LEG",
+     "penMm": 18.2
+    },
+    "dmin": -80.3,
+    "at": {
+     "tau": 87,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 86.75,
+     "seg": "shin_R",
+     "prim": "LEG",
+     "penMm": 2.4
+    },
+    "dmin": -104.7,
+    "at": {
+     "tau": 87.75,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": 0.5,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "sl_late": {
+   "recorded": null,
+   "lawLegs": {
+    "first": null,
+    "dmin": 503.1,
+    "at": {
+     "tau": 158.5,
+     "seg": "thigh_R",
+     "prim": "TRUNK"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 506.4,
+    "at": {
+     "tau": 158.5,
+     "seg": "thigh_R",
+     "prim": "TRUNK"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": false,
+   "segmentChange": null
+  },
+  "sl_left": {
+   "recorded": {
+    "t": 74.5,
+    "seg": "foot_L",
+    "prim": "LEG",
+    "react": "NEGLIGIBLE"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 74.5,
+     "seg": "foot_L",
+     "prim": "LEG",
+     "penMm": 0.2
+    },
+    "dmin": -15.6,
+    "at": {
+     "tau": 75.25,
+     "seg": "shin_L",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": null,
+    "dmin": 97.5,
+    "at": {
+     "tau": 75,
+     "seg": "toe_L",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": null,
+   "contactClassChange": true,
+   "segmentChange": null
+  },
+  "sl_loose": {
+   "recorded": {
+    "t": 145.25,
+    "seg": "pelvis",
+    "prim": "TRUNK",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 145.25,
+     "seg": "thigh_R",
+     "prim": "TRUNK",
+     "penMm": 44.4
+    },
+    "dmin": -161.2,
+    "at": {
+     "tau": 146.75,
+     "seg": "thigh_R",
+     "prim": "TRUNK"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 145.25,
+     "seg": "foot_L",
+     "prim": "THIGH",
+     "penMm": 9.6
+    },
+    "dmin": -142.1,
+    "at": {
+     "tau": 147,
+     "seg": "thigh_R",
+     "prim": "TRUNK"
+    }
+   },
+   "firstContactShiftTicks": 0,
+   "contactClassChange": false,
+   "segmentChange": true
+  },
+  "sl_win": {
+   "recorded": {
+    "t": 72.75,
+    "seg": "foot_R",
+    "prim": "LEG",
+    "react": "FALL"
+   },
+   "lawLegs": {
+    "first": {
+     "tau": 72.75,
+     "seg": "foot_R",
+     "prim": "LEG",
+     "penMm": 14.7
+    },
+    "dmin": -71.2,
+    "at": {
+     "tau": 73.25,
+     "seg": "foot_R",
+     "prim": "LEG"
+    }
+   },
+   "lc1Legs": {
+    "first": {
+     "tau": 72.5,
+     "seg": "foot_R",
+     "prim": "LEG",
+     "penMm": 16.6
+    },
+    "dmin": -36.8,
+    "at": {
+     "tau": 73.5,
+     "seg": "shin_R",
+     "prim": "LEG"
+    }
+   },
+   "firstContactShiftTicks": -0.25,
+   "contactClassChange": false,
+   "segmentChange": false
+  }
+ }
+}

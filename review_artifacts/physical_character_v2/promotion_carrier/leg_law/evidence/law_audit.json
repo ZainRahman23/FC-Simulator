@@ -1,0 +1,2096 @@
+{
+ "note": "read-only audit of the shared leg law (V1.3 ptRxBodyChar) at constant speed",
+ "V2": {
+  "massKg": 73.91,
+  "thighM": 0.435,
+  "shankM": 0.399,
+  "ankleHm": 0.088
+ },
+ "speeds": {
+  "3": {
+   "gait": "JOG",
+   "stance": 0.42,
+   "cycleS": 0.6228,
+   "contactS": 0.2616,
+   "flightS": 0.0498,
+   "comRangeMm": 129.1,
+   "pelvisRangeMm": 135.5,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 3.16,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 3.16,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5,
+     "mm": 3.16,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 3.16,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 29,
+   "kinkList": [
+    {
+     "phase0": 0.42,
+     "phase1": 0.42,
+     "dVms": 6.723,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.92,
+     "phase1": 0.92,
+     "dVms": 6.723,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.42,
+     "phase1": 0.42,
+     "dVms": 6.703,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.92,
+     "phase1": 0.92,
+     "dVms": 6.703,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 3.18,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 3.18,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.0525,
+     "phase1": 0.053,
+     "dVms": 2.302,
+     "events": []
+    },
+    {
+     "phase0": 0.5525,
+     "phase1": 0.553,
+     "dVms": 2.302,
+     "events": []
+    },
+    {
+     "phase0": 0.0525,
+     "phase1": 0.053,
+     "dVms": 2.302,
+     "events": []
+    },
+    {
+     "phase0": 0.5525,
+     "phase1": 0.553,
+     "dVms": 2.302,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -16.43,
+     "p50": -0.59,
+     "p99": 70.53,
+     "min": -16.45,
+     "max": 162.33,
+     "fracNegative": 0.674
+    },
+    "flight": {
+     "min": -11.56,
+     "p50": -8.78,
+     "max": 162.29
+    }
+   },
+   "takeoffVms": [
+    -4.28,
+    -4.28,
+    -4.78,
+    -4.78
+   ],
+   "flight": [
+    {
+     "riseMm": 15.9,
+     "durS": 0.0495
+    },
+    {
+     "riseMm": 15.9,
+     "durS": 0.0495
+    },
+    {
+     "riseMm": 16.5,
+     "durS": 0.0498
+    },
+    {
+     "riseMm": 16.5,
+     "durS": 0.0498
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 776,
+     "meanMs": 2.96
+    },
+    {
+     "mm": 775,
+     "meanMs": 2.96
+    },
+    {
+     "mm": 776,
+     "meanMs": 2.96
+    },
+    {
+     "mm": 775,
+     "meanMs": 2.96
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    133,
+    133,
+    133,
+    133
+   ],
+   "impliedBW240pelvis": {
+    "p1": -16.77,
+    "p50": -0.57,
+    "p99": 73.25,
+    "fracNegative": 0.672
+   },
+   "swingClearanceMinMm": 15.4,
+   "swingFootPeakMs": 7.54,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -17,
+      36
+     ],
+     "peakRateDegS": 320,
+     "maxSlopeJumpDegS": 492,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      10,
+      92
+     ],
+     "peakRateDegS": 613,
+     "maxSlopeJumpDegS": 411,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -26,
+      8
+     ],
+     "peakRateDegS": 513,
+     "maxSlopeJumpDegS": 66,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 3364,
+     "swingP95Nm": 683.48,
+     "swingP50Nm": 48.13,
+     "ratioToCapacityP50": 0.49,
+     "ratioToCapacityP95": 3.91,
+     "worstVsCapacity": {
+      "ratio": 16.01,
+      "torqueNm": 3364,
+      "capNm": 210,
+      "phase": 0.92
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 1032,
+     "swingP95Nm": 240.35,
+     "swingP50Nm": 31.7,
+     "ratioToCapacityP50": 0.15,
+     "ratioToCapacityP95": 3.2,
+     "worstVsCapacity": {
+      "ratio": 20.31,
+      "torqueNm": 1032,
+      "capNm": 51,
+      "phase": 0.5
+     }
+    }
+   },
+   "maxClampDeg": 0,
+   "springMass": {
+    "FmaxBW": 1.87,
+    "landingVms": -0.244,
+    "flightRiseMm": 3,
+    "stanceDropMm": -43.3,
+    "correctionVsLawMm": [
+     -139.8,
+     3.2
+    ],
+    "swingClearanceWithModelMm": -20.4,
+    "stanceReachExcessMm": -3.6
+   }
+  },
+  "1.45": {
+   "gait": "WALK",
+   "stance": 0.62,
+   "cycleS": 0.9545,
+   "contactS": 0.5918,
+   "flightS": 0,
+   "comRangeMm": 101,
+   "pelvisRangeMm": 101.5,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.3845,
+     "mm": -1.8,
+     "events": [
+      "heel→toe_R"
+     ]
+    },
+    {
+     "phase": 0.8845,
+     "mm": -1.8,
+     "events": [
+      "heel→toe_L"
+     ]
+    },
+    {
+     "phase": 0.3845,
+     "mm": -1.8,
+     "events": [
+      "heel→toe_R"
+     ]
+    },
+    {
+     "phase": 0.8845,
+     "mm": -1.8,
+     "events": [
+      "heel→toe_L"
+     ]
+    }
+   ],
+   "kinkEvents": 16,
+   "kinkList": [
+    {
+     "phase0": 0.4705,
+     "phase1": 0.471,
+     "dVms": 0.719,
+     "events": []
+    },
+    {
+     "phase0": 0.9705,
+     "phase1": 0.971,
+     "dVms": 0.719,
+     "events": []
+    },
+    {
+     "phase0": 0.4705,
+     "phase1": 0.471,
+     "dVms": 0.719,
+     "events": []
+    },
+    {
+     "phase0": 0.9705,
+     "phase1": 0.971,
+     "dVms": 0.719,
+     "events": []
+    },
+    {
+     "phase0": 0.434,
+     "phase1": 0.434,
+     "dVms": 0.412,
+     "events": []
+    },
+    {
+     "phase0": 0.934,
+     "phase1": 0.934,
+     "dVms": 0.412,
+     "events": []
+    },
+    {
+     "phase0": 0.434,
+     "phase1": 0.434,
+     "dVms": 0.412,
+     "events": []
+    },
+    {
+     "phase0": 0.934,
+     "phase1": 0.934,
+     "dVms": 0.412,
+     "events": []
+    },
+    {
+     "phase0": 0.15,
+     "phase1": 0.15,
+     "dVms": 0.243,
+     "events": []
+    },
+    {
+     "phase0": 0.65,
+     "phase1": 0.65,
+     "dVms": 0.243,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -14.55,
+     "p50": 0.8,
+     "p99": 13.16,
+     "min": -15.52,
+     "max": 16.95,
+     "fracNegative": 0.14
+    },
+    "flight": null
+   },
+   "takeoffVms": [],
+   "flight": [],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 287,
+     "meanMs": 2.51
+    },
+    {
+     "mm": 676,
+     "meanMs": 1.14
+    },
+    {
+     "mm": 676,
+     "meanMs": 1.14
+    },
+    {
+     "mm": 676,
+     "meanMs": 1.14
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    99,
+    199,
+    199,
+    199
+   ],
+   "impliedBW240pelvis": {
+    "p1": -14.45,
+    "p50": 0.77,
+    "p99": 13.11,
+    "fracNegative": 0.127
+   },
+   "swingClearanceMinMm": 18.8,
+   "swingFootPeakMs": 4.6,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -14,
+      28
+     ],
+     "peakRateDegS": 253,
+     "maxSlopeJumpDegS": 318,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      4,
+      60
+     ],
+     "peakRateDegS": 352,
+     "maxSlopeJumpDegS": 247,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -22,
+      8
+     ],
+     "peakRateDegS": 257,
+     "maxSlopeJumpDegS": 76,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 3088,
+     "swingP95Nm": 202.86,
+     "swingP50Nm": 11.13,
+     "ratioToCapacityP50": 0.05,
+     "ratioToCapacityP95": 0.91,
+     "worstVsCapacity": {
+      "ratio": 20.46,
+      "torqueNm": 3088,
+      "capNm": 151,
+      "phase": 0.62
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 906,
+     "swingP95Nm": 53.67,
+     "swingP50Nm": 4.87,
+     "ratioToCapacityP50": 0.03,
+     "ratioToCapacityP95": 0.69,
+     "worstVsCapacity": {
+      "ratio": 3.17,
+      "torqueNm": -906,
+      "capNm": 286,
+      "phase": 0.62
+     }
+    }
+   },
+   "maxClampDeg": 0,
+   "springMass": null
+  },
+  "2.2": {
+   "gait": "WALK",
+   "stance": 0.523,
+   "cycleS": 0.7356,
+   "contactS": 0.3849,
+   "flightS": 0,
+   "comRangeMm": 123.1,
+   "pelvisRangeMm": 128.1,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.0235,
+     "mm": -20.83,
+     "events": [
+      "toe-off_L"
+     ]
+    },
+    {
+     "phase": 0.5235,
+     "mm": -20.83,
+     "events": [
+      "toe-off_R"
+     ]
+    },
+    {
+     "phase": 0.0235,
+     "mm": -20.83,
+     "events": [
+      "toe-off_L"
+     ]
+    },
+    {
+     "phase": 0.5235,
+     "mm": -20.83,
+     "events": [
+      "toe-off_R"
+     ]
+    }
+   ],
+   "kinkEvents": 24,
+   "kinkList": [
+    {
+     "phase0": 0.023,
+     "phase1": 0.0235,
+     "dVms": 3.542,
+     "events": [
+      "toe-off_L"
+     ]
+    },
+    {
+     "phase0": 0.523,
+     "phase1": 0.5235,
+     "dVms": 3.542,
+     "events": [
+      "toe-off_R"
+     ]
+    },
+    {
+     "phase0": 0.023,
+     "phase1": 0.0235,
+     "dVms": 3.542,
+     "events": [
+      "toe-off_L"
+     ]
+    },
+    {
+     "phase0": 0.523,
+     "phase1": 0.5235,
+     "dVms": 3.542,
+     "events": [
+      "toe-off_R"
+     ]
+    },
+    {
+     "phase0": 0.0935,
+     "phase1": 0.094,
+     "dVms": 1.422,
+     "events": []
+    },
+    {
+     "phase0": 0.5935,
+     "phase1": 0.594,
+     "dVms": 1.422,
+     "events": []
+    },
+    {
+     "phase0": 0.0935,
+     "phase1": 0.094,
+     "dVms": 1.422,
+     "events": []
+    },
+    {
+     "phase0": 0.5935,
+     "phase1": 0.594,
+     "dVms": 1.422,
+     "events": []
+    },
+    {
+     "phase0": 0.4085,
+     "phase1": 0.409,
+     "dVms": 0.877,
+     "events": []
+    },
+    {
+     "phase0": 0.9085,
+     "phase1": 0.909,
+     "dVms": 0.877,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -15.44,
+     "p50": 0.25,
+     "p99": 54.97,
+     "min": -20.71,
+     "max": 93.41,
+     "fracNegative": 0.415
+    },
+    "flight": null
+   },
+   "takeoffVms": [],
+   "flight": [],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 60,
+     "meanMs": 3.44
+    },
+    {
+     "mm": 731,
+     "meanMs": 1.9
+    },
+    {
+     "mm": 731,
+     "meanMs": 1.9
+    },
+    {
+     "mm": 731,
+     "meanMs": 1.9
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    17,
+    166,
+    166,
+    166
+   ],
+   "impliedBW240pelvis": {
+    "p1": -14.13,
+    "p50": 0.24,
+    "p99": 57.62,
+    "fracNegative": 0.437
+   },
+   "swingClearanceMinMm": 35.9,
+   "swingFootPeakMs": 6.04,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -15.4,
+      31.9
+     ],
+     "peakRateDegS": 294,
+     "maxSlopeJumpDegS": 221,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      6.9,
+      75.5
+     ],
+     "peakRateDegS": 484,
+     "maxSlopeJumpDegS": 389,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -23.9,
+      8
+     ],
+     "peakRateDegS": 328,
+     "maxSlopeJumpDegS": 79,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 2398,
+     "swingP95Nm": 247.51,
+     "swingP50Nm": 17.28,
+     "ratioToCapacityP50": 0.16,
+     "ratioToCapacityP95": 1.33,
+     "worstVsCapacity": {
+      "ratio": 16.97,
+      "torqueNm": -2398,
+      "capNm": 141,
+      "phase": 0.528
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 1190,
+     "swingP95Nm": 125.14,
+     "swingP50Nm": 12.2,
+     "ratioToCapacityP50": 0.04,
+     "ratioToCapacityP95": 1.03,
+     "worstVsCapacity": {
+      "ratio": 18.81,
+      "torqueNm": 1190,
+      "capNm": 63,
+      "phase": 0.528
+     }
+    }
+   },
+   "maxClampDeg": 0,
+   "springMass": null
+  },
+  "4.2": {
+   "gait": "JOG",
+   "stance": 0.391,
+   "cycleS": 0.5042,
+   "contactS": 0.1972,
+   "flightS": 0.0549,
+   "comRangeMm": 130.5,
+   "pelvisRangeMm": 136.9,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 8.04,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 8.04,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5,
+     "mm": 8.04,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 8.04,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 21,
+   "kinkList": [
+    {
+     "phase0": 0.391,
+     "phase1": 0.3915,
+     "dVms": 8.571,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.891,
+     "phase1": 0.8915,
+     "dVms": 8.571,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.391,
+     "phase1": 0.3915,
+     "dVms": 8.571,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.891,
+     "phase1": 0.8915,
+     "dVms": 8.571,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 3.994,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 3.994,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.0385,
+     "phase1": 0.039,
+     "dVms": 3.169,
+     "events": []
+    },
+    {
+     "phase0": 0.5385,
+     "phase1": 0.539,
+     "dVms": 3.169,
+     "events": []
+    },
+    {
+     "phase0": 0.0385,
+     "phase1": 0.039,
+     "dVms": 3.169,
+     "events": []
+    },
+    {
+     "phase0": 0.5385,
+     "phase1": 0.539,
+     "dVms": 3.169,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -28.55,
+     "p50": -1.82,
+     "p99": 91.23,
+     "min": -28.58,
+     "max": 190.59,
+     "fracNegative": 0.777
+    },
+    "flight": {
+     "min": -11.08,
+     "p50": -8.34,
+     "max": 188.66
+    }
+   },
+   "takeoffVms": [
+    -6.05,
+    -6.05,
+    -6.05,
+    -6.05
+   ],
+   "flight": [
+    {
+     "riseMm": 23,
+     "durS": 0.0547
+    },
+    {
+     "riseMm": 23,
+     "durS": 0.0547
+    },
+    {
+     "riseMm": 23,
+     "durS": 0.0547
+    },
+    {
+     "riseMm": 23,
+     "durS": 0.0547
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 778,
+     "meanMs": 3.94
+    },
+    {
+     "mm": 778,
+     "meanMs": 3.94
+    },
+    {
+     "mm": 778,
+     "meanMs": 3.94
+    },
+    {
+     "mm": 778,
+     "meanMs": 3.94
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    153,
+    153,
+    153,
+    153
+   ],
+   "impliedBW240pelvis": {
+    "p1": -29.04,
+    "p50": -1.75,
+    "p99": 94.84,
+    "fracNegative": 0.78
+   },
+   "swingClearanceMinMm": 14,
+   "swingFootPeakMs": 10.89,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -19.8,
+      40.8
+     ],
+     "peakRateDegS": 431,
+     "maxSlopeJumpDegS": 411,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      11.9,
+      101.6
+     ],
+     "peakRateDegS": 817,
+     "maxSlopeJumpDegS": 557,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -27.9,
+      8
+     ],
+     "peakRateDegS": 719,
+     "maxSlopeJumpDegS": 96,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 4085,
+     "swingP95Nm": 1114.19,
+     "swingP50Nm": 143.75,
+     "ratioToCapacityP50": 1.13,
+     "ratioToCapacityP95": 6.63,
+     "worstVsCapacity": {
+      "ratio": 20.46,
+      "torqueNm": 4085,
+      "capNm": 200,
+      "phase": 0.891
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 1469,
+     "swingP95Nm": 397.52,
+     "swingP50Nm": 56.32,
+     "ratioToCapacityP50": 0.35,
+     "ratioToCapacityP95": 3.64,
+     "worstVsCapacity": {
+      "ratio": 42.37,
+      "torqueNm": 1469,
+      "capNm": 35,
+      "phase": 0.5
+     }
+    }
+   },
+   "maxClampDeg": 0,
+   "springMass": {
+    "FmaxBW": 2.01,
+    "landingVms": -0.269,
+    "flightRiseMm": 3.7,
+    "stanceDropMm": -29.9,
+    "correctionVsLawMm": [
+     -132.9,
+     8.1
+    ],
+    "swingClearanceWithModelMm": -7.5,
+    "stanceReachExcessMm": -4.9
+   }
+  },
+  "5.5": {
+   "gait": "RUN",
+   "stance": 0.36,
+   "cycleS": 0.4341,
+   "contactS": 0.1563,
+   "flightS": 0.0608,
+   "comRangeMm": 127.7,
+   "pelvisRangeMm": 133.1,
+   "jumps": 3,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 13.42,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 1,
+     "mm": 13.42,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5005,
+     "mm": 14.47,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 23,
+   "kinkList": [
+    {
+     "phase0": 0.36,
+     "phase1": 0.36,
+     "dVms": 9.897,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.86,
+     "phase1": 0.86,
+     "dVms": 9.897,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.36,
+     "phase1": 0.36,
+     "dVms": 9.897,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.86,
+     "phase1": 0.86,
+     "dVms": 9.897,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 4.828,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.9995,
+     "phase1": 1,
+     "dVms": 4.828,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.5,
+     "phase1": 0.5005,
+     "dVms": 4.784,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.0245,
+     "phase1": 0.025,
+     "dVms": 4.135,
+     "events": []
+    },
+    {
+     "phase0": 0.5245,
+     "phase1": 0.525,
+     "dVms": 4.135,
+     "events": []
+    },
+    {
+     "phase0": 0.0245,
+     "phase1": 0.025,
+     "dVms": 4.135,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -56.64,
+     "p50": -2.88,
+     "p99": 136.88,
+     "min": -59.73,
+     "max": 232.95,
+     "fracNegative": 0.713
+    },
+    "flight": {
+     "min": -10.54,
+     "p50": -8.23,
+     "max": 220.87
+    }
+   },
+   "takeoffVms": [
+    -6.92,
+    -6.92,
+    -6.92,
+    -6.92
+   ],
+   "flight": [
+    {
+     "riseMm": 28,
+     "durS": 0.0606
+    },
+    {
+     "riseMm": 28,
+     "durS": 0.0606
+    },
+    {
+     "riseMm": 28,
+     "durS": 0.0608
+    },
+    {
+     "riseMm": 28,
+     "durS": 0.0608
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 771,
+     "meanMs": 4.93
+    },
+    {
+     "mm": 770,
+     "meanMs": 4.93
+    },
+    {
+     "mm": 771,
+     "meanMs": 4.93
+    },
+    {
+     "mm": 771,
+     "meanMs": 4.93
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    177,
+    176,
+    177,
+    177
+   ],
+   "impliedBW240pelvis": {
+    "p1": -59.08,
+    "p50": -2.83,
+    "p99": 144.33,
+    "fracNegative": 0.685
+   },
+   "swingClearanceMinMm": 19.6,
+   "swingFootPeakMs": 14.57,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -23,
+      45.9
+     ],
+     "peakRateDegS": 541,
+     "maxSlopeJumpDegS": 894,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      14,
+      112
+     ],
+     "peakRateDegS": 1031,
+     "maxSlopeJumpDegS": 761,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -30,
+      8
+     ],
+     "peakRateDegS": 960,
+     "maxSlopeJumpDegS": 175,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 5102,
+     "swingP95Nm": 1416.7,
+     "swingP50Nm": 179.57,
+     "ratioToCapacityP50": 1.67,
+     "ratioToCapacityP95": 9.92,
+     "worstVsCapacity": {
+      "ratio": 27.4,
+      "torqueNm": 5102,
+      "capNm": 186,
+      "phase": 0.86
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 2180,
+     "swingP95Nm": 601.49,
+     "swingP50Nm": 90.62,
+     "ratioToCapacityP50": 0.72,
+     "ratioToCapacityP95": 11.45,
+     "worstVsCapacity": {
+      "ratio": 96.76,
+      "torqueNm": 2180,
+      "capNm": 23,
+      "phase": 0.5
+     }
+    }
+   },
+   "maxClampDeg": 0,
+   "springMass": {
+    "FmaxBW": 2.18,
+    "landingVms": -0.298,
+    "flightRiseMm": 4.5,
+    "stanceDropMm": -23,
+    "correctionVsLawMm": [
+     -121.5,
+     13.9
+    ],
+    "swingClearanceWithModelMm": 0,
+    "stanceReachExcessMm": -6.6
+   }
+  },
+  "6.5": {
+   "gait": "RUN",
+   "stance": 0.338,
+   "cycleS": 0.3949,
+   "contactS": 0.1334,
+   "flightS": 0.0641,
+   "comRangeMm": 122.6,
+   "pelvisRangeMm": 129.1,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 18.59,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 18.59,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5,
+     "mm": 18.59,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 18.59,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 37,
+   "kinkList": [
+    {
+     "phase0": 0.3375,
+     "phase1": 0.338,
+     "dVms": 12.774,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8375,
+     "phase1": 0.838,
+     "dVms": 12.774,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.3375,
+     "phase1": 0.338,
+     "dVms": 12.774,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8375,
+     "phase1": 0.838,
+     "dVms": 12.774,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 5.618,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 5.618,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.02,
+     "phase1": 0.02,
+     "dVms": 4.797,
+     "events": []
+    },
+    {
+     "phase0": 0.52,
+     "phase1": 0.52,
+     "dVms": 4.797,
+     "events": []
+    },
+    {
+     "phase0": 0.02,
+     "phase1": 0.02,
+     "dVms": 4.797,
+     "events": []
+    },
+    {
+     "phase0": 0.52,
+     "phase1": 0.52,
+     "dVms": 4.797,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -90.23,
+     "p50": -3.97,
+     "p99": 187.57,
+     "min": -95.21,
+     "max": 284.48,
+     "fracNegative": 0.685
+    },
+    "flight": {
+     "min": -9.69,
+     "p50": -7.1,
+     "max": 287.3
+    }
+   },
+   "takeoffVms": [
+    -9.52,
+    -9.52,
+    -9.52,
+    -9.52
+   ],
+   "flight": [
+    {
+     "riseMm": 40.7,
+     "durS": 0.064
+    },
+    {
+     "riseMm": 40.7,
+     "durS": 0.064
+    },
+    {
+     "riseMm": 40.7,
+     "durS": 0.064
+    },
+    {
+     "riseMm": 40.7,
+     "durS": 0.064
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 792,
+     "meanMs": 5.93
+    },
+    {
+     "mm": 792,
+     "meanMs": 5.93
+    },
+    {
+     "mm": 792,
+     "meanMs": 5.93
+    },
+    {
+     "mm": 792,
+     "meanMs": 5.93
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    197,
+    197,
+    197,
+    197
+   ],
+   "impliedBW240pelvis": {
+    "p1": -93.94,
+    "p50": -4.01,
+    "p99": 198.4,
+    "fracNegative": 0.667
+   },
+   "swingClearanceMinMm": 9.3,
+   "swingFootPeakMs": 18.33,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -25,
+      49.6
+     ],
+     "peakRateDegS": 627,
+     "maxSlopeJumpDegS": 586,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      14.7,
+      117.9
+     ],
+     "peakRateDegS": 1350,
+     "maxSlopeJumpDegS": 915,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -31.5,
+      8
+     ],
+     "peakRateDegS": 1168,
+     "maxSlopeJumpDegS": 255,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 6336,
+     "swingP95Nm": 1766.36,
+     "swingP50Nm": 194.62,
+     "ratioToCapacityP50": 2.21,
+     "ratioToCapacityP95": 14.45,
+     "worstVsCapacity": {
+      "ratio": 36.03,
+      "torqueNm": 6336,
+      "capNm": 176,
+      "phase": 0.838
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 2623,
+     "swingP95Nm": 895.35,
+     "swingP50Nm": 100.19,
+     "ratioToCapacityP50": 1.11,
+     "ratioToCapacityP95": 29.48,
+     "worstVsCapacity": {
+      "ratio": 151.22,
+      "torqueNm": 2623,
+      "capNm": 17,
+      "phase": 0.5
+     }
+    }
+   },
+   "maxClampDeg": 0.51,
+   "springMass": {
+    "FmaxBW": 2.33,
+    "landingVms": -0.314,
+    "flightRiseMm": 5,
+    "stanceDropMm": -19.3,
+    "correctionVsLawMm": [
+     -117.3,
+     18.8
+    ],
+    "swingClearanceWithModelMm": 4.6,
+    "stanceReachExcessMm": -7.3
+   }
+  },
+  "7.5": {
+   "gait": "SPRINT",
+   "stance": 0.316,
+   "cycleS": 0.3662,
+   "contactS": 0.1155,
+   "flightS": 0.0675,
+   "comRangeMm": 151.2,
+   "pelvisRangeMm": 153.2,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 24.03,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 24.03,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5,
+     "mm": 24.03,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 24.03,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 37,
+   "kinkList": [
+    {
+     "phase0": 0.3155,
+     "phase1": 0.316,
+     "dVms": 15.654,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8155,
+     "phase1": 0.816,
+     "dVms": 15.654,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.3155,
+     "phase1": 0.316,
+     "dVms": 15.654,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8155,
+     "phase1": 0.816,
+     "dVms": 15.654,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 6.498,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 6.498,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.0155,
+     "phase1": 0.016,
+     "dVms": 5.736,
+     "events": []
+    },
+    {
+     "phase0": 0.5155,
+     "phase1": 0.516,
+     "dVms": 5.736,
+     "events": []
+    },
+    {
+     "phase0": 0.0155,
+     "phase1": 0.016,
+     "dVms": 5.736,
+     "events": []
+    },
+    {
+     "phase0": 0.5155,
+     "phase1": 0.516,
+     "dVms": 5.736,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -126.44,
+     "p50": -6.08,
+     "p99": 254.41,
+     "min": -137.01,
+     "max": 363.1,
+     "fracNegative": 0.666
+    },
+    "flight": {
+     "min": -9.9,
+     "p50": -6.48,
+     "max": 351.8
+    }
+   },
+   "takeoffVms": [
+    -12,
+    -12,
+    -12,
+    -12
+   ],
+   "flight": [
+    {
+     "riseMm": 57.7,
+     "durS": 0.0674
+    },
+    {
+     "riseMm": 57.7,
+     "durS": 0.0674
+    },
+    {
+     "riseMm": 57.7,
+     "durS": 0.0674
+    },
+    {
+     "riseMm": 57.7,
+     "durS": 0.0674
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 814,
+     "meanMs": 7.04
+    },
+    {
+     "mm": 814,
+     "meanMs": 7.04
+    },
+    {
+     "mm": 814,
+     "meanMs": 7.04
+    },
+    {
+     "mm": 814,
+     "meanMs": 7.04
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    219,
+    219,
+    219,
+    219
+   ],
+   "impliedBW240pelvis": {
+    "p1": -131.19,
+    "p50": -5.8,
+    "p99": 258.3,
+    "fracNegative": 0.65
+   },
+   "swingClearanceMinMm": 3.9,
+   "swingFootPeakMs": 22.18,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -25,
+      53.3
+     ],
+     "peakRateDegS": 709,
+     "maxSlopeJumpDegS": 551,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      15.5,
+      123.9
+     ],
+     "peakRateDegS": 1559,
+     "maxSlopeJumpDegS": 1083,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -33,
+      8
+     ],
+     "peakRateDegS": 1399,
+     "maxSlopeJumpDegS": 353,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 7830,
+     "swingP95Nm": 2777.1,
+     "swingP50Nm": 194.02,
+     "ratioToCapacityP50": 2.68,
+     "ratioToCapacityP95": 24.56,
+     "worstVsCapacity": {
+      "ratio": 94.96,
+      "torqueNm": -6494,
+      "capNm": 68,
+      "phase": 0.316
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 3077,
+     "swingP95Nm": 1136.87,
+     "swingP50Nm": 109.61,
+     "ratioToCapacityP50": 1.69,
+     "ratioToCapacityP95": 98.16,
+     "worstVsCapacity": {
+      "ratio": 233.97,
+      "torqueNm": 3077,
+      "capNm": 13,
+      "phase": 0.5
+     }
+    }
+   },
+   "maxClampDeg": 3.13,
+   "springMass": {
+    "FmaxBW": 2.49,
+    "landingVms": -0.331,
+    "flightRiseMm": 5.6,
+    "stanceDropMm": -16.7,
+    "correctionVsLawMm": [
+     -119.9,
+     43.8
+    ],
+    "swingClearanceWithModelMm": 8.4,
+    "stanceReachExcessMm": 15.1
+   }
+  },
+  "8.2": {
+   "gait": "SPRINT",
+   "stance": 0.3,
+   "cycleS": 0.3502,
+   "contactS": 0.1051,
+   "flightS": 0.07,
+   "comRangeMm": 177.9,
+   "pelvisRangeMm": 179.2,
+   "jumps": 4,
+   "jumpList": [
+    {
+     "phase": 0.5,
+     "mm": 27.96,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 27.96,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0.5,
+     "mm": 27.96,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase": 0,
+     "mm": 27.96,
+     "events": [
+      "touchdown_R",
+      "flight-end"
+     ]
+    }
+   ],
+   "kinkEvents": 33,
+   "kinkList": [
+    {
+     "phase0": 0.3,
+     "phase1": 0.3,
+     "dVms": 17.813,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8,
+     "phase1": 0.8,
+     "dVms": 17.813,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.3,
+     "phase1": 0.3,
+     "dVms": 17.813,
+     "events": [
+      "toe-off_R",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.8,
+     "phase1": 0.8,
+     "dVms": 17.813,
+     "events": [
+      "toe-off_L",
+      "flight-start"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 7.174,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.4995,
+     "phase1": 0.5,
+     "dVms": 7.174,
+     "events": [
+      "touchdown_L",
+      "flight-end"
+     ]
+    },
+    {
+     "phase0": 0.0125,
+     "phase1": 0.013,
+     "dVms": 6.357,
+     "events": []
+    },
+    {
+     "phase0": 0.5125,
+     "phase1": 0.513,
+     "dVms": 6.357,
+     "events": []
+    },
+    {
+     "phase0": 0.0125,
+     "phase1": 0.013,
+     "dVms": 6.357,
+     "events": []
+    },
+    {
+     "phase0": 0.5125,
+     "phase1": 0.513,
+     "dVms": 6.357,
+     "events": []
+    }
+   ],
+   "impliedBW240": {
+    "stance": {
+     "p1": -162.99,
+     "p50": -9.09,
+     "p99": 279.31,
+     "min": -171.46,
+     "max": 398.92,
+     "fracNegative": 0.663
+    },
+    "flight": {
+     "min": -10.64,
+     "p50": -6.49,
+     "max": 418.77
+    }
+   },
+   "takeoffVms": [
+    -14.65,
+    -14.65,
+    -14.65,
+    -14.65
+   ],
+   "flight": [
+    {
+     "riseMm": 72.3,
+     "durS": 0.07
+    },
+    {
+     "riseMm": 72.3,
+     "durS": 0.07
+    },
+    {
+     "riseMm": 72.3,
+     "durS": 0.07
+    },
+    {
+     "riseMm": 72.3,
+     "durS": 0.07
+    }
+   ],
+   "stanceGroundedPointSlip": [
+    {
+     "mm": 829,
+     "meanMs": 7.89
+    },
+    {
+     "mm": 829,
+     "meanMs": 7.89
+    },
+    {
+     "mm": 829,
+     "meanMs": 7.89
+    },
+    {
+     "mm": 829,
+     "meanMs": 7.89
+    }
+   ],
+   "stanceAnkleExcursionMm": [
+    236,
+    236,
+    236,
+    236
+   ],
+   "impliedBW240pelvis": {
+    "p1": -163.49,
+    "p50": -9.33,
+    "p99": 282.89,
+    "fracNegative": 0.653
+   },
+   "swingClearanceMinMm": -0.6,
+   "swingFootPeakMs": 24.69,
+   "joints": {
+    "hip_R": {
+     "range": [
+      -25,
+      55.9
+     ],
+     "peakRateDegS": 763,
+     "maxSlopeJumpDegS": 755,
+     "romHard": [
+      -25,
+      140
+     ]
+    },
+    "knee_R": {
+     "range": [
+      16,
+      128
+     ],
+     "peakRateDegS": 1707,
+     "maxSlopeJumpDegS": 1212,
+     "romHard": [
+      -5,
+      155
+     ]
+    },
+    "ankle_R": {
+     "range": [
+      -34,
+      8
+     ],
+     "peakRateDegS": 1578,
+     "maxSlopeJumpDegS": 433,
+     "romHard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "swingTorque": {
+    "hip_R": {
+     "swingPeakNm": 9397,
+     "swingP95Nm": 3470.3,
+     "swingP50Nm": 214.35,
+     "ratioToCapacityP50": 2.72,
+     "ratioToCapacityP95": 35.01,
+     "worstVsCapacity": {
+      "ratio": 116.14,
+      "torqueNm": -7943,
+      "capNm": 68,
+      "phase": 0.3
+     }
+    },
+    "knee_R": {
+     "swingPeakNm": 3447,
+     "swingP95Nm": 1382.95,
+     "swingP50Nm": 120.83,
+     "ratioToCapacityP50": 2.31,
+     "ratioToCapacityP95": 141.76,
+     "worstVsCapacity": {
+      "ratio": 400.37,
+      "torqueNm": -422,
+      "capNm": 1,
+      "phase": 0.788
+     }
+    }
+   },
+   "maxClampDeg": 4.948,
+   "springMass": {
+    "FmaxBW": 2.62,
+    "landingVms": -0.344,
+    "flightRiseMm": 6,
+    "stanceDropMm": -15.2,
+    "correctionVsLawMm": [
+     -121.8,
+     67.3
+    ],
+    "swingClearanceWithModelMm": 10.8,
+    "stanceReachExcessMm": 34.7
+   }
+  }
+ }
+}
