@@ -57,7 +57,7 @@ function rv1GameCam(travelX, zoom, vw, vh) {
   return { view, proj: rv1Persp(fy, vw / vh, 1.0, 400), eye: C };
 }
 // close views: orbit about the runner's pelvis, angles relative to the direction of travel
-const RV1_ANGLES = { side: [90, 4, 5.2], front34: [35, 10, 5.4], rear34: [145, 10, 5.4], front: [0, 6, 6.0], rear: [180, 8, 6.0], top: [90, 70, 6.0], sideR: [-90, 4, 5.2] };   // side = camera on the runner's LEFT
+const RV1_ANGLES = { zoomFront: [0, 4, 2.0], zoomSide: [90, 4, 2.9], zoom34: [40, 12, 3.0], zoomRear34: [140, 12, 3.0], side: [90, 4, 5.2], front34: [35, 10, 5.4], rear34: [145, 10, 5.4], front: [0, 6, 6.0], rear: [180, 8, 6.0], top: [90, 70, 6.0], sideR: [-90, 4, 5.2] };   // side = camera on the runner's LEFT
 function rv1CloseCam(subj, angle, vw, vh) {
   const a = RV1_ANGLES[angle] || RV1_ANGLES.side, hd = subj.sim.heading;
   const tgt = [subj.sim.x, 0.95, -subj.sim.y], fwdG = [Math.cos(hd), 0, -Math.sin(hd)], leftG = [-Math.sin(hd) * -1, 0, -Math.cos(hd) * -1];
@@ -251,7 +251,7 @@ function rv1Frame(now) {
 function rv1SetPlaying(on) { RV1.playing = on; const b = document.getElementById("bPlay"); b.textContent = on ? "❚❚ Pause" : "▶ Play"; b.classList.toggle("on", on); }
 function rv1Group(attr, fn) { document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener("click", () => { document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.toggle("on", x === b)); fn(b.dataset[attr]); })); }
 function rv1Views() {
-  const opts = []; for (const w of ["run1", "v1"]) for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top"]) opts.push([`${w}:${a}`, `${w === "run1" ? "RUN-1" : "V1"} · ${a}`]);
+  const opts = []; for (const w of ["run1", "v1"]) for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top", "zoomFront", "zoomSide", "zoom34", "zoomRear34"]) opts.push([`${w}:${a}`, `${w === "run1" ? "RUN-1" : "V1"} · ${a}`]);
   for (const id of ["selA", "selB"]) { const s = document.getElementById(id); s.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join(""); }
   const fix = () => { if (RV1.cmp === "run1") { RV1.viewA = "run1:side"; RV1.viewB = "run1:front34"; } else if (RV1.cmp === "v1") { RV1.viewA = "v1:side"; RV1.viewB = "v1:front34"; } else { RV1.viewA = "run1:side"; RV1.viewB = "v1:side"; } document.getElementById("selA").value = RV1.viewA; document.getElementById("selB").value = RV1.viewB; };
   RV1.fixViews = fix; fix();
