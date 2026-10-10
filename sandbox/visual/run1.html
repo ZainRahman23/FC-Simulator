@@ -36,8 +36,8 @@
 </div>
 <div id="wrap"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
 <div id="hud"></div>
-<div id="notes">Top: the actual Touchline gameplay camera (CAMERA_V1: 30 m high, 43 m behind the touchline, 22° pitch, 28° FOV), rail-following the runner like the match camera. Bottom: close side / ¾ views for inspection.
-<span class="tag t-run1">RUN-1</span> is evaluated in continuous time (the pose is a closed-form function of the gait phase); <span class="tag t-v1">V1</span> is the unmodified Locomotion V1 runtime (ofActorTick, 60 Hz ticks, as in the match), shown on the parallel lane. Both are driven by the same authoritative straight-line mover at the selected speed. Keys: Space play/pause, R restart, 1–4 speed, . frame step, S skeleton, C contacts.</div>
+<div id="notes">Large view: the actual Touchline gameplay camera (CAMERA_V1: 30 m high, 43 m behind the touchline, 22° pitch, 28° FOV), rail-following the runner like the match camera; zoom &gt; 1 keeps the same camera and centres the subject. The two close views are for inspection (choose subject and angle above).
+<span class="tag t-run1">RUN-1</span> is the new straight-line run, evaluated on its own deterministic 1/240 s clock; <span class="tag t-v1">V1</span> is the unmodified Locomotion V1 runtime (ofActorTick, 60 Hz ticks, as in the match) on the far lane. Both are driven by the same authoritative straight-line mover at the selected speed (or the 3 → 7.8 → 3 m/s ramp). Keys: Space play/pause, R restart, 1–4 speed, . frame step, S skeleton, C contacts.</div>
 
 <script src="anim3d/m4.js"></script>
 <script src="anim3d/skeleton.js"></script>

@@ -13,11 +13,12 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
   const logs = []; page.on("console", m => logs.push(m.type() + ": " + m.text())); page.on("pageerror", e => logs.push("PAGEERROR " + e.message));
   await page.goto(`http://127.0.0.1:${port}/sandbox/visual/run1.html?external=1&paused=1&${q}`, { waitUntil: "load" });
   await page.waitForFunction(() => window.RUN1V && window.RUN1V.state.ready, { timeout: 30000 }).catch(() => {});
+  if (!arg("liveLayout")) await page.evaluate(() => { const W = Math.min(window.innerWidth - 8, 1500), topH = Math.round(W * 9 / 16 * 0.78), botH = Math.round(W / 2 * 0.62);   // the capture framing (stable across layout changes)
+    window.RUN1V.state.fixedLayout = { W, H: topH + botH + 4, views: [{ id: "game", x: 0, y: 0, w: W, h: topH }, { id: "A", x: 0, y: topH + 4, w: Math.floor(W / 2) - 2, h: botH }, { id: "B", x: Math.floor(W / 2) + 2, y: topH + 4, w: W - Math.floor(W / 2) - 2, h: botH }] }; });
   const ready = await page.evaluate(() => !!(window.RUN1V && window.RUN1V.state.ready));
   if (!ready) { console.log("NOT READY", logs.join("\n")); await browser.close(); process.exit(1); }
-  const clipOf = async (which) => page.evaluate((w) => { const c = document.getElementById("gl"), r = c.getBoundingClientRect(); const W = r.width, topH = Math.round(W * 9 / 16 * 0.78), botH = Math.round(W / 2 * 0.62);
-    if (w === "game") return { x: r.left, y: r.top, width: W, height: topH }; if (w === "A") return { x: r.left, y: r.top + topH + 4, width: Math.floor(W / 2) - 2, height: botH };
-    if (w === "B") return { x: r.left + Math.floor(W / 2) + 2, y: r.top + topH + 4, width: W - Math.floor(W / 2) - 2, height: botH }; return { x: r.left, y: r.top, width: W, height: r.height }; }, which);
+  const clipOf = async (which) => page.evaluate((w) => { const c = document.getElementById("gl"), r = c.getBoundingClientRect(), L = window.RUN1V.layout(), v = L.views.find(x => x.id === w);
+    return v ? { x: r.left + v.x, y: r.top + v.y, width: v.w, height: v.h } : { x: r.left, y: r.top, width: r.width, height: r.height }; }, which);
   const opts = JSON.parse(arg("opts", "{}"));
   const clipName = arg("clip", "all"), shots = [];
   const times = arg("times") ? arg("times").split(",").map(Number) : [];
@@ -33,8 +34,8 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
     const [t0, dt, n] = arg("sheet").split(":").map(Number), cols = +arg("cols", 6), scale = +arg("scale", 0.5);
     const data = await page.evaluate(async (t0, dt, n, cols, scale, which, o, crop) => {
       const g = document.getElementById("gl"), ov = document.getElementById("ov"), dpr = g.width / g.getBoundingClientRect().width, W = g.width / dpr;
-      const topH = Math.round(W * 9 / 16 * 0.78), botH = Math.round(W / 2 * 0.62);
-      let r = which === "game" ? [0, 0, W, topH] : which === "A" ? [0, topH + 4, Math.floor(W / 2) - 2, botH] : which === "B" ? [Math.floor(W / 2) + 2, topH + 4, W - Math.floor(W / 2) - 2, botH] : [0, 0, W, g.height / dpr];
+      const L = window.RUN1V.layout(), vv = L.views.find(x => x.id === which);
+      let r = vv ? [vv.x, vv.y, vv.w, vv.h] : [0, 0, W, g.height / dpr];
       if (crop) { const c = crop.split(",").map(Number); r = [r[0] + c[0] * r[2], r[1] + c[1] * r[3], c[2] * r[2], c[3] * r[3]]; }
       const fw = Math.round(r[2] * dpr * scale), fh = Math.round(r[3] * dpr * scale), rows = Math.ceil(n / cols);
       const S = document.createElement("canvas"); S.width = fw * cols; S.height = fh * rows; const c = S.getContext("2d"); c.fillStyle = "#000"; c.fillRect(0, 0, S.width, S.height);

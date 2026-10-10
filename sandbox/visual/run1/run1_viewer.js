@@ -151,9 +151,16 @@ const RV1_MASS = { pelvis: 0.1116, spine: 0.1614, chest: 0.1603, head: 0.0686, u
 function rv1COM(fk) { const B = RV1.entry.skel.byName; let c = [0, 0, 0], m = 0; for (const k in RV1_MASS) { const i = B[k].idx, p = V3.lerp(fk.joint[i], fk.tip[i], 0.5); c = V3.add(c, V3.scale(p, RV1_MASS[k])); m += RV1_MASS[k]; } return V3.scale(c, 1 / m); }
 
 // ── rendering ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-function rv1Layout() {
-  const W = Math.min(window.innerWidth - 8, 1500), topH = Math.round(W * 9 / 16 * 0.78), botH = Math.round(W / 2 * 0.62);
-  return { W, H: topH + botH + 4, views: [{ id: "game", x: 0, y: 0, w: W, h: topH }, { id: "A", x: 0, y: topH + 4, w: Math.floor(W / 2) - 2, h: botH }, { id: "B", x: Math.floor(W / 2) + 2, y: topH + 4, w: W - Math.floor(W / 2) - 2, h: botH }] };
+function rv1Layout() {                                                   // fit the window: wide screens put the close views in a right-hand column
+  if (RV1.fixedLayout) return RV1.fixedLayout;
+  const bar = document.getElementById("bar"), top = bar ? bar.getBoundingClientRect().height : 60;
+  const W = Math.max(640, Math.min(window.innerWidth - 8, 2400)), Hav = Math.max(420, window.innerHeight - top - 46);
+  if (W / Hav > 1.35) {
+    const gw = Math.round(W * 0.64), cw = W - gw - 4, ch = Math.floor((Hav - 4) / 2);
+    return { W, H: Hav, views: [{ id: "game", x: 0, y: 0, w: gw, h: Hav }, { id: "A", x: gw + 4, y: 0, w: cw, h: ch }, { id: "B", x: gw + 4, y: ch + 4, w: cw, h: Hav - ch - 4 }] };
+  }
+  const topH = Math.round(Hav * 0.58), botH = Hav - topH - 4;
+  return { W, H: Hav, views: [{ id: "game", x: 0, y: 0, w: W, h: topH }, { id: "A", x: 0, y: topH + 4, w: Math.floor(W / 2) - 2, h: botH }, { id: "B", x: Math.floor(W / 2) + 2, y: topH + 4, w: W - Math.floor(W / 2) - 2, h: botH }] };
 }
 function rv1Subjects() { const s = []; if (RV1.cmp !== "v1") s.push({ who: "run1", o: RV1.run1 }); if (RV1.cmp !== "run1") s.push({ who: "v1", o: RV1.v1 }); return s; }
 function rv1Render() {
@@ -287,6 +294,7 @@ function rv1Boot() {
 // capture / test API (tools/run1_capture.cjs drives this; deterministic)
 window.RUN1V = {
   state: RV1,
+  layout() { return rv1Layout(); },
   set(t, opts) { if (opts) { Object.assign(RV1, opts.top || {}); Object.assign(RV1.ov, opts.ov || {}); if (opts.reset) rv1Reset(); if (RV1.fixViews && opts.fixViews) RV1.fixViews(); if (opts.viewA) RV1.viewA = opts.viewA; if (opts.viewB) RV1.viewB = opts.viewB; }
     if (t < RV1.t - 1e-9 || (opts && opts.reset)) rv1Reset(); RV1.t = t; rv1Update(t); rv1Render(); rv1Hud(); return true; },
   report() { const r = RV1.run1; return r && r.G ? { p: Object.assign({}, r.G.p, { swing: undefined, late: undefined }), phase: r.A.phase } : null; },
