@@ -9,7 +9,8 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
   fs.mkdirSync(out, { recursive: true });
   const browser = await puppeteer.launch({ userDataDir: process.env.RUN1_PROFILE || undefined, executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new",
     args: ["--enable-webgl", "--ignore-gpu-blocklist", "--use-angle=metal", "--enable-unsafe-swiftshader", "--window-size=" + W + "," + H] });
-  const page = await browser.newPage(); await page.setViewport({ width: W, height: H, deviceScaleFactor: +arg("dpr", 2) });
+  const page = await browser.newPage(); await page.setCacheEnabled(false);              // never a stale run1_gait.js from the persistent profile
+  await page.setViewport({ width: W, height: H, deviceScaleFactor: +arg("dpr", 2) });
   const logs = []; page.on("console", m => logs.push(m.type() + ": " + m.text())); page.on("pageerror", e => logs.push("PAGEERROR " + e.message));
   await page.goto(`http://127.0.0.1:${port}/sandbox/visual/run1.html?external=1&paused=1&${q}`, { waitUntil: "load" });
   await page.waitForFunction(() => window.RUN1V && window.RUN1V.state.ready, { timeout: 30000 }).catch(() => {});

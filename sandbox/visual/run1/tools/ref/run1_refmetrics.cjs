@@ -69,7 +69,9 @@ function metrics(S) {
   let iHR = 0; for (let i = 0; i <= iTO; i++) if (at("footR", i) - nz.footR > -4) iHR = i; m.heelRise4deg_atStance_pct = pc(iHR, 0, iTO);      // last stance frame with the heel < 4° up
   m.footTO_heelUp = -(at("footR", iTO) - nz.footR);
   const iDF = argmax("ankleR", 0, iTO, -1); m.ankleDFpeak = nz.ankleR - at("ankleR", iDF); m.ankleDF_atStance_pct = pc(iDF, 0, iTO); m.anklePF_TO = nz.ankleR - at("ankleR", iTO);
-  m.thighTD = at("thighR", 0); m.thighTO = at("thighR", iTO);
+  for (const [nm, f] of [["TD", 0], ["MS", 0.5], ["LS", 0.8]]) { const i = Math.round(iTO * f);                  // posture at touchdown, mid-stance, late stance
+    m["thigh" + nm] = at("thighR", i); m["shank" + nm] = at("shankR", i); m["heelUp" + nm] = -(at("footR", i) - nz.footR); m["knee" + nm + "_"] = at("kneeR", i); m["ankleDF" + nm] = nz.ankleR - at("ankleR", i); m["hipH" + nm + "_cm"] = at("hipH", i) * 100; }
+  m.thighTO = at("thighR", iTO);
   const iTh = argmax("thighR", iTO, N); m.thighMax = at("thighR", iTh); m.thighMax_atStride_pct = iTh / N * 100; m.thighRetract = m.thighMax - at("thighR", N);
   const iKs = argmax("kneeR", iTO, N); m.kneeSwingMax = at("kneeR", iKs); m.kneeSwingMax_atStride_pct = iKs / N * 100;
   // contralateral (left) thigh at the right toe-off: how far the drive knee is through

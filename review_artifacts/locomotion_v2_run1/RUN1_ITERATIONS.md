@@ -43,3 +43,5 @@ The measure is the second difference of joint world positions, p99, in cm per ti
   - LC-1: 0.
 - **Penetration:** 0 for RUN-1.
 - **Determinism** (`run1_determinism.cjs`): bit-identical joint matrices across fresh loads at every 60 Hz tick, at constant speed and on the ramp. No RNG or clock in the pose path.
+
+**Iterations 16 onward** belong to the RUN-1.1 effort pass, logged in `RUN1_1_EFFORT.md`. RUN-1.0, the state after iteration 15, is frozen in `run1_gait_orig.js`.
