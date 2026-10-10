@@ -142,8 +142,11 @@ const RUN1 = {
                               // the recovery — the small flexion keeps the toe clear of the turf while the hip is still extending
     // swing keys (w = swing fraction 0 at toe-off … 1 at touchdown); scissor timing: the rear thigh's peak extension and the front
     // thigh's peak flexion both fall ~0.03–0.04 s after the other foot's toe-off (Clark 2025)
-    kneeMax: 115, kneeMaxW: 0.42, kneeHold: 104, kneeHoldW: 0.58, kneeExt: 16, kneeExtW: 0.92,
-    hipMax: 62, hipMaxW: 0.76, hipExtMinW: 0.055,
+    // E4: the recovery is a sequence — heel recovery (knee peak at 62 % of the stride, real 64.6 %), knee drive (the thigh peaks at 78 %, real 77 %,
+    // RUN-1.0 83 %), then the lower leg unfolds and the foot comes DOWN onto the turf, settling back ~20° (real 15°) instead of reaching far ahead
+    // low and pawing back 29° (RUN-1.0). The knee stays a little flexed into the contact (21° before re-flexing to the touchdown 26°).
+    kneeMax: 115, kneeMaxW: 0.46, kneeHold: 100, kneeHoldW: 0.62, kneeExt: 21, kneeExtW: 0.92,
+    hipMax: 58, hipMaxW: 0.70, hipExtMinW: 0.055,
     anklePFMaxW: 0.07, anklePFExtra: 6, ankleDFSwing: -6, ankleDFW: 0.60,
     swingAbd: 8.0,            // extra abduction at mid swing (deg): the recovering leg passes outside the stance leg
     psiSwing: 8, psiSwingW: 0.48,   // mid-swing hip internal rotation (deg) — the recovering heel passes lateral of the stance calf
@@ -178,12 +181,12 @@ const RUN1 = {
 // (Siegel 2023; Clark 2025); more knee recovery, hip drive, arm range and trunk lean with speed (Fukuchi 2017; Miyashiro 2019; Romero 2022).
 RUN1.anchors = [
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
-    kneeMax: 100, kneeMaxW: 0.45, kneeHold: 94, kneeHoldW: 0.62, kneeExt: 10, kneeExtW: 0.92, hipMax: 50, hipMaxW: 0.78, ankleDFSwing: -12,
+    kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
     tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
   { v: 5.5, id: "RUN" },
   { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kneeTD: 30, kneeTO: 22, kneeTOrate: 120, footW: 0.02, strikeToeUp: -5, flatS: 0.14, heelRiseTO: 80, heelRiseS: 0.16,   // the heel leaves early at a sprint
-    kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
-    tilt: 10.5, lean: 15, leanAmp: 2.8, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 60, elbow: 96, elbowAmp: 22, armAbd: 8 },
+    kneeMax: 132, kneeMaxW: 0.44, kneeHold: 116, kneeHoldW: 0.60, kneeExt: 24, kneeExtW: 0.90, hipMax: 70, hipMaxW: 0.68,
+    tilt: 10.5, lean: 15, leanAmp: 2.8, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 56, elbow: 96, elbowAmp: 22, armAbd: 8 },
 ];
 function r1ParamsAt(v, base) {
   const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
@@ -246,8 +249,8 @@ function r1Pelvis(G, u) {
 // ── stance leg at stance fraction s (0 touchdown … 1 toe-off; analytic continuation outside) ──────────────────────────────────
 // early stance foot pitch beta (deg, + = toes up): the rear-foot contact rolls flat (slope 0 at flat), then the foot is flat
 function r1FootPitch(p, s) {
-  if (s <= p.flatS) { const t = s / p.flatS; return p.strikeToeUp * (1 - t) * (1 - t) * (1 + 0.6 * t); }
-  return 0;
+  if (s <= p.flatS) { const t = s / p.flatS; return p.strikeToeUp * (1 - t) * (1 - t) * (1 + 0.6 * t); }   // the heel lowers at once: it takes the
+  return 0;                                                                                                   // first of the landing (mid-foot strike)
 }
 // the stance geometry shared by both phases: pelvis, hip, the plant (flat-foot ankle point), foot yaw, leg-plane yaw
 function r1StanceBase(G, sd, s, pl) {
@@ -340,7 +343,11 @@ function r1SwingKnots(G, sd) {
   K.h = [K.h[0], knot(p.hipExtMinW, hExtMin), knot(p.hipMaxW, p.hipMax * D), K.h[1]];
   // ankle pitch (+ = plantar-flexion): the push-off carries on briefly, then dorsiflexion for clearance, then the strike angle
   const pfMax = TO.c.fp + Math.min(p.anklePFExtra * D, Math.max(0, TO.m.fp) * p.anklePFMaxW * 0.5);   // the push-off plantar-flexion carries on a few degrees
-  K.fp = [K.fp[0], knot(p.anklePFMaxW, pfMax), knot(p.ankleDFW, p.ankleDFSwing * D), K.fp[1]];
+  // pre-contact: a mid-foot landing dorsiflexes the ankle fast from the first instant (the heel lowers, the shank rolls over). Real ankles reverse
+  // at the impact; C1 places that reversal in the last ~12 ms of the swing instead, through a key just above the touchdown value with zero slope —
+  // otherwise the Hermite would bulge into a 30° plantar-flexion (toes into the turf) a few frames before contact
+  const pcW = Math.min(0.06, 0.012 / ((1 - p.D) * p.T)), pcV = TD.c.fp - TD.m.fp * pcW / 3;
+  K.fp = [K.fp[0], knot(p.anklePFMaxW, pfMax), knot(p.ankleDFW, p.ankleDFSwing * D), knot(1 - pcW, Math.max(pcV, TD.c.fp)), K.fp[1]];
   // hip adduction: a little abduction at mid swing (the swing knee passes outside the stance knee)
   K.a = [K.a[0], knot(0.45, (TO.c.a + TD.c.a) / 2 + side * p.swingAbd * D), K.a[1]];   // + side = abduction (Rz(a) moves the leg toward +x: lateral for R, medial for L)
   // leg yaw: the stance toe-out (hip external rotation) would carry the tucked heel MEDIALLY across the stance leg; through mid-swing the
