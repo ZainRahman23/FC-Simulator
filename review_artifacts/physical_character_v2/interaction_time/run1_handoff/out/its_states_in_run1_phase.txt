@@ -1,0 +1,6 @@
+RUN-1 at 3.0 m/s: {"D":0.3713,"flatS":0.14,"heelRiseS":0.3,"stepsPerS":2.7506}
+S-A rx_free_leg tau0 59.5 simPhase 0.5825 {"L":{"simPlanted":true,"up":0.0825,"run1":"stance s=0.222 flat"},"R":{"simPlanted":false,"up":0.5825,"run1":"swing"}}
+S-A2 rx_free_leg tau0 50 simPhase 0.3380 {"L":{"simPlanted":false,"up":0.838,"run1":"swing"},"R":{"simPlanted":true,"up":0.338,"run1":"stance s=0.911 heelUp(MTP)"}}
+S-B rx_planted_leg tau0 48.5 simPhase 0.5479 {"L":{"simPlanted":true,"up":0.0479,"run1":"stance s=0.129 heelRoll"},"R":{"simPlanted":false,"up":0.5479,"run1":"swing"}}
+S-B2 rx_glancing tau0 65.5 simPhase 0.5028 {"L":{"simPlanted":true,"up":0.0028,"run1":"stance s=0.008 heelRoll"},"R":{"simPlanted":false,"up":0.5028,"run1":"swing"}}
+simulation (rx_miss, 3.0 m/s): 3.2113 steps/s, stride 0.6228 s, stride clock legLen 0.865; R planted for up < 0.4191…0.4215 (duty ≈ 0.420)

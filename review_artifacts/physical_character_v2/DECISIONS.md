@@ -3325,3 +3325,33 @@ Per the frozen rule, no struck run (A / B / C).
 - optionally, A alone on S-A.
 
 **Awaiting user.**
+
+## 2026-10-10: ITS-1 amendment A1 PAUSED by the user (sequencing); RUN-1 → V2 handoff contract DRAFTED, read-only (`interaction_time/run1_handoff/`; source `sources/2026-10-10_user_decision_pause_its1_amendment_run1_handoff_contract.md`, 4da41c4f)
+
+**Decision recorded (user):**
+- No stance-aware controller, no activation-threshold change, no further collision slice.
+- The ITS-1 stop (c647f4c9) stays as evidence, unchanged.
+- The production animation → physics handoff is not to be optimised around V1.3 / LC-1, which Locomotion V2 / RUN-1 will replace.
+- The next physical-interaction experiment runs against a frozen, versioned RUN-1 baseline after RUN-1's visual-quality pass.
+
+**Done (read-only):** `RUN1_TO_V2_HANDOFF_CONTRACT_DRAFT.md`:
+- the minimum interface, split into RUN-1-exposed (R-0…R-8), V2-derived (V-a…V-g) and simulation-authoritative (S-a…S-g) quantities;
+- hard preconditions H-1…H-5;
+- which ITS-1 tests are reused unchanged and which are retired;
+- proposed handoff checks HT-1…HT-7;
+- five open decisions.
+
+**Evidence:**
+- RUN-1 commit 949bd763, probed from a `git archive` copy. The RUN-1 worktree carried another session's uncommitted edits, which were not probed.
+- Probes and outputs: `run1_handoff/probe/`, `run1_handoff/out/`; repeat-identical.
+
+**Main findings:**
+- **Stride clock:** RUN-1's clock and duty factor differ from the simulation's (3.0 m/s: 2.75 vs 3.21 steps/s, 0.371 vs 0.420). The authoritative support state therefore cannot be assumed in RUN-1's pose.
+- **Export:** `r1Kinematics` replays the actor from t = 0, mutating it, and exports float32 world matrices (12 mm/s velocity quantization at x = 100 m).
+- **Vertical:** RUN-1's vertical is physical in magnitude, so ITS-1's c3 = 0 is no longer needed by default.
+- **Foot:** RUN-1's heel-up / MTP stance (56–62 % of stance with MTP extension > 5°) makes the rigid-F0-foot mismatch central for planted-leg states.
+- **Momentum:** imposing M·v_auth on RUN-1's pose corrects COM velocity by up to 0.39 m/s at 5.5 m/s (est.).
+
+**Nothing modified:** no RUN-1, V2, simulation or ITS-1 code or evidence; no physics run.
+
+**Awaiting user review.**
