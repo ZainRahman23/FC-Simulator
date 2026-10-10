@@ -29,4 +29,4 @@ for (let f = 0; f < n; f++) { const t = 2 + f / n * G.p.T, rs = E.r1Replay(A, ()
       bd = Math.sqrt(bd); if (bd < dm) dm = bd; if (bd < 0.03) { const b = Bd[bi], nn = Bn[bi], sdist = (h[0] - b[0]) * nn[0] + (h[1] - b[1]) * nn[1] + (h[2] - b[2]) * nn[2]; if (sdist < -0.002) { nPen++; pen = Math.max(pen, -sdist); } } }
     if (dm < res[sd].d) { res[sd].d = dm; res[sd].ph = A.phase; } if (pen > res[sd].pen) { res[sd].pen = pen; res[sd].nPen = nPen; res[sd].phPen = A.phase; } } }
 const f = (r) => `closest ${(r.d * 100).toFixed(1)} cm @${r.ph.toFixed(2)}, deepest penetration ${(r.pen * 1000).toFixed(1)} mm (${r.nPen} hand verts > 2 mm inside) @${r.phPen.toFixed(2)}`;
-console.log(`${arg("orig") ? "RUN-1.0" : "RUN-1.1"} ${v} m/s — hand vs pelvis / thigh / spine skin: R ${f(res.R)} | L ${f(res.L)}`);
+console.log(`${arg("orig") ? "RUN-1.0" : X.RUN1.id} ${v} m/s — hand vs pelvis / thigh / spine skin: R ${f(res.R)} | L ${f(res.L)}`);

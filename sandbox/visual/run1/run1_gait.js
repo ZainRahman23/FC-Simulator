@@ -201,6 +201,10 @@ RUN1.regimes.RUN = { v: 5.5, id: "RUN",
   // R2 the recovery is front-loaded: the heel snaps up earlier and higher and stays folded while the knee drives (peak swing knee 125° at 59 % of
   // the stride, real ≈116° at 4.5 / ≈128° at 5.0 m/s; RUN-1.1 115° at 61 %), the thigh peaks ≈51° at the opposite toe-off (CL20 ≈46–49°)
   kneeMax: 125, kneeMaxW: 0.43, kneeHold: 110, kneeHoldW: 0.60, hipMax: 61,
+  // R3 the arms drive: arm action grows continuously with speed (HD13: arm angular momentum doubles 2 → 5 m/s; 200 m sprinters' shoulder range
+  // 118–135°). Upper arm ≈56° behind → ≈22° in front of the trunk (RUN-1.1: 50 / 5 — the 3.6 m/s jog carriage), the elbow opening to ≈70° in the
+  // drive back and closing to ≈122° in front, so the hand comes up to chest–chin height instead of staying at the waist
+  armFwd: 20, armBack: 56, elbow: 96, elbowAmp: 26, armAbdAmp: 4,
 };
 RUN1.anchors11 = [                                                                   // RUN-1.1's anchors, verbatim (the jog source)
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
