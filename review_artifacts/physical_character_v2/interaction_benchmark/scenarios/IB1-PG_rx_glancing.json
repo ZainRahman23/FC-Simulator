@@ -1,0 +1,4741 @@
+{
+ "id": "IB1-PG",
+ "role": "planted / weight-bearing-leg sweep, fall outcome (alternate: passes the contact-correspondence rows CG-1 … CG-6)",
+ "case": "rx_glancing",
+ "provenance": {
+  "simulation": {
+   "commit": "5042230",
+   "branch": "prototype/slide-contact-v1.3-charcollide (local)",
+   "lineage": "slide-contact V1.2 e2c98ec + CHARCOLLIDE-1 (profile 3e28e02; prereg dd88ee9, A1 469d7ef, E1 0a60763, A2 6802742)",
+   "charcollide": true,
+   "profileSha": "b8e67cff7849198b225725a5b52b67ff48ebefd9bc160955a57ad9c76da68a2e"
+  },
+  "exporter": {
+   "script": "pi1/trackB/scripts/air_export_v13.cjs",
+   "schema": "pi1.air/3-v13",
+   "ticks": 260
+  },
+  "records": {
+   "off": {
+    "path": "records/v13/rx_glancing_OFF.json.gz",
+    "bytes": 358212,
+    "sha256": "3bffb2359b5a95f17f94b15e5731278bf68b3d062cb133640c5a59d11d8b248f",
+    "contentHashExclCpu": "20ecce279b3b1d97cee3611f62cc84dc31c5f51dcb1df44d8c2c735d2c64a15d",
+    "schema": "pi1.air/3-v13",
+    "mode": "OFF",
+    "gameplayHash": "b85dde0f",
+    "gameplayHashRecomputed": "b85dde0f"
+   },
+   "v13loco": {
+    "path": "records/v13/rx_glancing_LOCO.json.gz",
+    "bytes": 623895,
+    "sha256": "8b5365624c4e6dc66840ff07e8387a10214461d29cbe56efa2ceb7814ba9cee4",
+    "contentHashExclCpu": "0351bf2b9ff91258d6df6f134a03906e0617160200a8fc20bba222ea7754d9aa",
+    "schema": "pi1.air/3-v13",
+    "mode": "LOCO",
+    "gameplayHash": "b85dde0f",
+    "gameplayHashRecomputed": "b85dde0f"
+   },
+   "lc1loco": {
+    "path": "records/lc1/rx_glancing_LOCO.json.gz",
+    "bytes": 653649,
+    "sha256": "71e02a10c98400729a681575c1fc91eba58d40103205776e60b78327b5c950e4",
+    "contentHashExclCpu": "880e56916eddef9a65c8292a592542c530b7532c8bea8c1a510e9cc74e63af40",
+    "schema": "pi1.air/3-v13+presdiag+lc1",
+    "mode": "LOCO",
+    "gameplayHash": "b85dde0f",
+    "gameplayHashRecomputed": "b85dde0f"
+   }
+  },
+  "committedSummaries": {
+   "v13": {
+    "file": "pi1/trackB/v13/air/air_summary.json (e48fa5d9)",
+    "OFF": {
+     "gameplayHash": "b85dde0f",
+     "contact": {
+      "tick": 66,
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 79.28,
+      "family": "SIDE"
+     },
+     "contacts": [
+      {
+       "tick": 66,
+       "sub": 3,
+       "prim": "LEG",
+       "seg": "shin_L",
+       "segPlanted": true,
+       "react": "FALL",
+       "J": 79.28,
+       "family": "SIDE",
+       "tag": null
+      }
+     ],
+     "firstPredTick": 55,
+     "minSurfM": -0.0912,
+     "sha256": "3bffb2359b5a95f1"
+    },
+    "LOCO": {
+     "gameplayHash": "b85dde0f",
+     "contact": {
+      "tick": 66,
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 79.28,
+      "family": "SIDE"
+     },
+     "contacts": [
+      {
+       "tick": 66,
+       "sub": 3,
+       "prim": "LEG",
+       "seg": "shin_L",
+       "segPlanted": true,
+       "react": "FALL",
+       "J": 79.28,
+       "family": "SIDE",
+       "tag": null
+      }
+     ],
+     "firstPredTick": 55,
+     "minSurfM": -0.0912,
+     "sha256": "271eb0176de0febe"
+    }
+   },
+   "lc1": {
+    "file": "locomotion_continuity/evidence/exports/on/rx/air_summary.json (19ff19d2)",
+    "LOCO": {
+     "gameplayHash": "b85dde0f",
+     "contact": {
+      "tick": 66,
+      "seg": "shin_L",
+      "segPlanted": true,
+      "react": "FALL",
+      "J": 79.28,
+      "family": "SIDE"
+     },
+     "contacts": [
+      {
+       "tick": 66,
+       "sub": 3,
+       "prim": "LEG",
+       "seg": "shin_L",
+       "segPlanted": true,
+       "react": "FALL",
+       "J": 79.28,
+       "family": "SIDE",
+       "tag": null
+      }
+     ],
+     "firstPredTick": 55,
+     "minSurfM": -0.0912,
+     "sha256": "71e02a10c9840072"
+    }
+   }
+  }
+ },
+ "authoritativeInputs": {
+  "params": {
+   "v": 3,
+   "ang": 90,
+   "ph": 0.75,
+   "off": 0.35,
+   "short": 0.3
+  },
+  "scenario": {
+   "ticks": 260,
+   "cmds": [
+    {
+     "at": 0,
+     "do": "humanAi"
+    },
+    {
+     "at": 30,
+     "do": "slide",
+     "dir": 1.5707963267948966
+    }
+   ],
+   "drill": {
+    "defending": true,
+    "center": [
+     55,
+     34
+    ],
+    "owner": null,
+    "active": 1,
+    "autoSwitch": false,
+    "ball": {
+     "x": 52.85,
+     "y": 39
+    },
+    "players": [
+     {
+      "name": "A",
+      "team": 0,
+      "x": 50,
+      "y": 34,
+      "vx": 3,
+      "vy": 0,
+      "facing": 0,
+      "gaitPhase": 0.75,
+      "char": "vinicius",
+      "ai": {
+       "mode": "SCRIPT",
+       "path": [
+        {
+         "t": 0,
+         "x": 200,
+         "y": 34,
+         "v": 3
+        }
+       ]
+      }
+     },
+     {
+      "name": "D",
+      "team": 1,
+      "x": 52.5,
+      "y": 28.244875,
+      "vx": 3.061616997868383e-16,
+      "vy": 5,
+      "facing": 1.5707963267948966,
+      "char": "gabriel",
+      "ai": {
+       "mode": "SCRIPT",
+       "path": [
+        {
+         "t": 0,
+         "x": 52.50000000000001,
+         "y": 128.244875,
+         "v": 5
+        }
+       ]
+      }
+     }
+    ]
+   }
+  },
+  "characters": [
+   "vinicius",
+   "gabriel"
+  ],
+  "massKg": [
+   73,
+   78
+  ],
+  "legLenM": [
+   0.865,
+   0.865
+  ],
+  "LEG_REF": 0.865,
+  "slideConstants": {
+   "windT": 0.1,
+   "vAdd": 1,
+   "vMin": 4.2,
+   "vMax": 7.5,
+   "decel": 5.5,
+   "reachAhead": 1.12,
+   "legFrom": 0.46,
+   "legLat": 0.11,
+   "extT": 0.12,
+   "footR": 0.08,
+   "sub": 4,
+   "planTicks": 12,
+   "zMax": 0.4,
+   "groundT": 0.25,
+   "getupT": 0.85,
+   "recoverV": 1.2,
+   "recoverT": 0.35,
+   "contactVmin": 1,
+   "rule": "far",
+   "sweep": {
+    "hipF": -0.08,
+    "hipLat": 0.05,
+    "th0": 0,
+    "th1": 1.31,
+    "block1": 0.3,
+    "sweepLat": 0.35,
+    "t0": 0.04,
+    "T": 0.2,
+    "pelvisK": 0.3
+   },
+   "ccd": {
+    "minSub": 4,
+    "maxSub": 32,
+    "step": 0.035
+   },
+   "footR12": 0.05,
+   "reachAhead12": 1.2,
+   "ball": {
+    "mBall": 0.43,
+    "legMassFrac": 0.0755,
+    "e": {
+     "WON": 0.15,
+     "POKE": 0.5
+    },
+    "muT": 0.3,
+    "glanceV": 1
+   }
+  },
+  "reactionConstants": {
+   "g": 9.81,
+   "massRef": 75,
+   "hipH": 1.08,
+   "comH": 1.13,
+   "hipW": 0.1,
+   "lat": 0.198,
+   "ankleH": 0.08,
+   "footLen": 0.2,
+   "thighK": 0.51,
+   "footLenV12": 0.27,
+   "rad": {
+    "foot": 0.05,
+    "shin": 0.06,
+    "thigh": 0.08,
+    "pelvis": 0.15,
+    "torso": 0.17
+   },
+   "liftWalk": 0.1,
+   "liftSprint": 0.34,
+   "mFrac": {
+    "foot": 0.0145,
+    "shin": 0.061,
+    "thigh": 0.161,
+    "pelvis": 1,
+    "torso": 1
+   },
+   "xmit": {
+    "foot": 0.12,
+    "shin": 0.25,
+    "thigh": 0.55,
+    "pelvis": 1,
+    "torso": 1
+   },
+   "mu": 0.65,
+   "contactT": 0.05,
+   "Iz": 0.1,
+   "Ip": 0.16,
+   "tipMax": 7,
+   "step": {
+    "fwd": 0.42,
+    "back": 0.2,
+    "out": 0.3,
+    "cross": 0.12,
+    "tMin": 0.16,
+    "tMax": 0.32
+   },
+   "sweepLost": 0.18,
+   "obstacleH": 0.3,
+   "dropCap": 0.14,
+   "neg": 0.03,
+   "maxSteps": 4,
+   "fallTheta": 1.25,
+   "groundMu": 0.9,
+   "restT": 0.35,
+   "recoverT": {
+    "FRONT": 1.15,
+    "SIDE": 1.05,
+    "BACK": 1.3
+   },
+   "stumbleBrake": 0.72,
+   "slop": 0.01,
+   "biasK": 12,
+   "biasMax": 2.5,
+   "pushT": 0.12,
+   "latMax": 2,
+   "getupOut": 1,
+   "overrunPen": 0.04,
+   "overrunTicks": 3,
+   "turnMax": 0.1,
+   "ref": {
+    "balance": 60,
+    "strength": 60,
+    "agility": 60,
+    "reactions": 60
+   }
+  }
+ },
+ "authoritativeOutcome": {
+  "gameplayHash": "b85dde0f",
+  "finalClass": "FALL",
+  "contacts": [
+   {
+    "tick": 66,
+    "sub": 3,
+    "row": 65,
+    "slot": 2,
+    "tau": 65.75,
+    "prim": "LEG",
+    "seg": "shin_L",
+    "segPlanted": true,
+    "cls": "FALL",
+    "family": "SIDE",
+    "J": 79.28,
+    "decisive": true
+   }
+  ],
+  "events": [
+   {
+    "kind": "TACKLE_START",
+    "pid": 1,
+    "type": "SLIDE",
+    "foot": "R",
+    "v0": 6,
+    "dir": 1.5708,
+    "tuck": "L",
+    "tech": "SWEEP",
+    "geo": {
+     "ballLat": -0.35,
+     "ballFwd": 8.255,
+     "side": null,
+     "approach": null
+    },
+    "tick": 30,
+    "t": 0.5
+   },
+   {
+    "kind": "TACKLE_BODY_CONTACT",
+    "pid": 1,
+    "type": "SLIDE",
+    "on": 0,
+    "order": "NO_BALL",
+    "ballFirst": false,
+    "seg": "shin_L",
+    "prim": "LEG",
+    "tick": 66,
+    "seq": 1,
+    "took": "REACTION",
+    "behind": true,
+    "relV": 4.423,
+    "attacker": [
+     53.3,
+     34
+    ],
+    "t": 1.1
+   },
+   {
+    "kind": "PLAYER_CONTACT",
+    "react": "FALL",
+    "az": 0.475,
+    "azHead": -1.811,
+    "family": "SIDE",
+    "tGround": 1.451,
+    "tUp": 3.249,
+    "slide": 0.699,
+    "tick": 66,
+    "sub": 3,
+    "tackler": 1,
+    "attacker": 0,
+    "type": "SLIDE",
+    "prim": "LEG",
+    "seg": "shin_L",
+    "segKind": "shin",
+    "segPlanted": true,
+    "point": [
+     53.567,
+     33.832,
+     0.126
+    ],
+    "normal": [
+     0.393,
+     0.92
+    ],
+    "pen": 0.014,
+    "vn": 3.188,
+    "vt": 2.899,
+    "phase": 0.51,
+    "support": {
+     "R": false,
+     "L": true
+    },
+    "stride": "SINGLE_L",
+    "vA": [
+     3,
+     0
+    ],
+    "vT": [
+     0,
+     3.25
+    ],
+    "massA": 73,
+    "massT": 78,
+    "J": 79.28,
+    "Jfric": 23.27,
+    "sweep": 0.8,
+    "supportLost": true,
+    "blockedT": 0,
+    "landShift": [
+     0,
+     0
+    ],
+    "dvCom": 0.272,
+    "spin": 0.877,
+    "dvTackler": 1.016,
+    "tSup": 0.305,
+    "e0": 0.226,
+    "rc": 0.278,
+    "steps": 1,
+    "obstacle": 0,
+    "drop": 0.914,
+    "dropCap": 0.121,
+    "collapse": true,
+    "gStep": 2.682,
+    "errTrace": [
+     0.226,
+     0
+    ],
+    "cls": "FALL",
+    "order": "NO_BALL",
+    "tip": 5.782,
+    "seq": 1,
+    "took": "REACTION",
+    "t": 1.1
+   },
+   {
+    "kind": "TACKLE",
+    "pid": 1,
+    "type": "SLIDE",
+    "foot": "R",
+    "out": "MISS",
+    "carrier": null,
+    "contactTick": null,
+    "minGap": 4.693,
+    "minGapTick": 90,
+    "slideV0": 6,
+    "dir": 1.571,
+    "slideDist": 3.241,
+    "tech": "SWEEP",
+    "tuck": "L",
+    "tick": 90,
+    "t": 1.5
+   },
+   {
+    "kind": "HANDOFF_START",
+    "pid": 1,
+    "v": 5,
+    "push": 4.6,
+    "tick": 238,
+    "t": 3.9667
+   },
+   {
+    "kind": "RECEPTION",
+    "pid": 1,
+    "outcome": "CLEAN",
+    "style": "RUNNING",
+    "hostile": false,
+    "foot": "L",
+    "stretch": false,
+    "planted": false,
+    "d": 0.2678,
+    "gap": -0.0152,
+    "point": [
+     52.85,
+     39,
+     0
+    ],
+    "boot": [
+     52.6713,
+     38.8005
+    ],
+    "vIn": [
+     0,
+     0
+    ],
+    "rv": 5,
+    "vOut": [
+     0,
+     4.6
+    ],
+    "dir": 1.5708,
+    "q": 0.43,
+    "pv": [
+     0,
+     5
+    ],
+    "facing": 1.5708,
+    "from": null,
+    "tick": 238,
+    "t": 3.9667
+   },
+   {
+    "kind": "POSSESSION",
+    "pid": 1,
+    "team": 1,
+    "tick": 238,
+    "t": 3.9667
+   }
+  ],
+  "reactionTimeline": [
+   {
+    "row": 65,
+    "kind": "FALL"
+   },
+   {
+    "row": 194,
+    "kind": null
+   }
+  ],
+  "reactionStates": [
+   {
+    "row": 65,
+    "state": {
+     "kind": "FALL",
+     "t0": 1.100000000000001,
+     "tFall": 1.100000000000001,
+     "tGround": 1.4514986119602615,
+     "tStop": 1.8493630752800323,
+     "tRec": 2.1993630752800324,
+     "tUp": 3.2493630752800327,
+     "az": 0.47522033550777476,
+     "azHead": -1.8106712146956974,
+     "v": [
+      3.455509509757256,
+      0.6315329749032905
+     ],
+     "vg": 3.512745346650257,
+     "spin": 0.8769831278206707,
+     "family": "SIDE",
+     "rel": -1.9648003907664642,
+     "facing0": 0,
+     "rec": {
+      "tick": 66,
+      "sub": 3,
+      "tackler": 1,
+      "attacker": 0,
+      "type": "SLIDE",
+      "prim": "LEG",
+      "seg": "shin_L",
+      "segKind": "shin",
+      "segPlanted": true,
+      "point": [
+       53.567,
+       33.832,
+       0.126
+      ],
+      "normal": [
+       0.393,
+       0.92
+      ],
+      "pen": 0.014,
+      "vn": 3.188,
+      "vt": 2.899,
+      "phase": 0.51,
+      "support": {
+       "R": false,
+       "L": true
+      },
+      "stride": "SINGLE_L",
+      "vA": [
+       3,
+       0
+      ],
+      "vT": [
+       0,
+       3.25
+      ],
+      "massA": 73,
+      "massT": 78,
+      "J": 79.28,
+      "Jfric": 23.27,
+      "sweep": 0.8,
+      "supportLost": true,
+      "blockedT": 0,
+      "landShift": [
+       0,
+       0
+      ],
+      "dvCom": 0.272,
+      "spin": 0.877,
+      "dvTackler": 1.016,
+      "tSup": 0.305,
+      "e0": 0.226,
+      "rc": 0.278,
+      "steps": 1,
+      "obstacle": 0,
+      "drop": 0.914,
+      "dropCap": 0.121,
+      "collapse": true,
+      "gStep": 2.682,
+      "errTrace": [
+       0.226,
+       0
+      ],
+      "cls": "FALL",
+      "order": "NO_BALL",
+      "tip": 5.782,
+      "seq": 1,
+      "took": "REACTION"
+     },
+     "th0": 1.294,
+     "byTackler": 1
+    }
+   }
+  ],
+  "reactionWindowRows": [
+   65,
+   194
+  ]
+ },
+ "contacts": [
+  {
+   "event": {
+    "kind": "PLAYER_CONTACT",
+    "react": "FALL",
+    "az": 0.475,
+    "azHead": -1.811,
+    "family": "SIDE",
+    "tGround": 1.451,
+    "tUp": 3.249,
+    "slide": 0.699,
+    "tick": 66,
+    "sub": 3,
+    "tackler": 1,
+    "attacker": 0,
+    "type": "SLIDE",
+    "prim": "LEG",
+    "seg": "shin_L",
+    "segKind": "shin",
+    "segPlanted": true,
+    "point": [
+     53.567,
+     33.832,
+     0.126
+    ],
+    "normal": [
+     0.393,
+     0.92
+    ],
+    "pen": 0.014,
+    "vn": 3.188,
+    "vt": 2.899,
+    "phase": 0.51,
+    "support": {
+     "R": false,
+     "L": true
+    },
+    "stride": "SINGLE_L",
+    "vA": [
+     3,
+     0
+    ],
+    "vT": [
+     0,
+     3.25
+    ],
+    "massA": 73,
+    "massT": 78,
+    "J": 79.28,
+    "Jfric": 23.27,
+    "sweep": 0.8,
+    "supportLost": true,
+    "blockedT": 0,
+    "landShift": [
+     0,
+     0
+    ],
+    "dvCom": 0.272,
+    "spin": 0.877,
+    "dvTackler": 1.016,
+    "tSup": 0.305,
+    "e0": 0.226,
+    "rc": 0.278,
+    "steps": 1,
+    "obstacle": 0,
+    "drop": 0.914,
+    "dropCap": 0.121,
+    "collapse": true,
+    "gStep": 2.682,
+    "errTrace": [
+     0.226,
+     0
+    ],
+    "cls": "FALL",
+    "order": "NO_BALL",
+    "tip": 5.782,
+    "seq": 1,
+    "took": "REACTION",
+    "t": 1.1
+   },
+   "row": 65,
+   "slot": 2,
+   "tau": 65.75,
+   "decisive": true,
+   "geometry": {
+    "tacklerPrimitives": [
+     {
+      "prim": "LEG",
+      "a": [
+       52.911739788375726,
+       33.58080986388065,
+       0.12
+      ],
+      "b": [
+       53.53019477590304,
+       33.745859669704814,
+       0.12
+      ],
+      "r": 0.07,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     },
+     {
+      "prim": "THIGH",
+      "a": [
+       52.45,
+       33.45758333333329,
+       0.17
+      ],
+      "b": [
+       52.911739788375726,
+       33.58080986388065,
+       0.13
+      ],
+      "r": 0.085,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     },
+     {
+      "prim": "TUCK",
+      "a": [
+       52.664932010802325,
+       33.36095538590508,
+       0.14
+      ],
+      "b": [
+       52.86722878258818,
+       33.79670303779207,
+       0.08
+      ],
+      "r": 0.08,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     },
+     {
+      "prim": "TUCKSHIN",
+      "a": [
+       52.86722878258818,
+       33.79670303779207,
+       0.08
+      ],
+      "b": [
+       52.47295985465295,
+       33.60291962140975,
+       0.06
+      ],
+      "r": 0.06,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     },
+     {
+      "prim": "BODY",
+      "a": [
+       52.520286546917646,
+       33.37761941235684,
+       0.22
+      ],
+      "b": [
+       52.62617017719998,
+       33.5285785354274,
+       0.17
+      ],
+      "r": 0.16,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     },
+     {
+      "prim": "TRUNK",
+      "a": [
+       52.54484264735176,
+       33.41074037145331,
+       0.36
+      ],
+      "b": [
+       52.56197236467646,
+       33.29538625239215,
+       0.86
+      ],
+      "r": 0.15,
+      "v": [
+       1.990051048614447e-16,
+       3.2499999999999964
+      ]
+     }
+    ],
+    "runnerSegments": [
+     {
+      "name": "foot_R",
+      "seg": "foot",
+      "sd": "R",
+      "a": [
+       52.819677709835915,
+       34.128159928142345,
+       0.3586757371312934
+      ],
+      "b": [
+       52.817169993052026,
+       34.138325520145386,
+       0.1302946139776598
+      ],
+      "r": 0.02950902959627824,
+      "ra": 0.02950902959627824,
+      "rb": 0.024807657664812025,
+      "planted": false
+     },
+     {
+      "name": "toe_R",
+      "seg": "foot",
+      "sd": "R",
+      "a": [
+       52.817169993052026,
+       34.138325520145386,
+       0.1302946139776598
+      ],
+      "b": [
+       52.824182945770914,
+       34.14267403980507,
+       0.05094554934970172
+      ],
+      "r": 0.009429369651061947,
+      "ra": null,
+      "rb": null,
+      "planted": false
+     },
+     {
+      "name": "shin_R",
+      "seg": "shin",
+      "sd": "R",
+      "a": [
+       53.256395541503835,
+       34.16991272568703,
+       0.43486300110816956
+      ],
+      "b": [
+       52.87877628803234,
+       34.13643699884415,
+       0.3114398717880249
+      ],
+      "r": 0.05363769612902886,
+      "ra": 0.05363769612902886,
+      "rb": 0.03606048008898542,
+      "planted": false
+     },
+     {
+      "name": "thigh_R",
+      "seg": "thigh",
+      "sd": "R",
+      "a": [
+       53.27155736871045,
+       34.15165859460831,
+       0.869144856929779
+      ],
+      "b": [
+       53.256395541503835,
+       34.16991272568703,
+       0.43486300110816956
+      ],
+      "r": 0.08448,
+      "ra": 0.08448,
+      "rb": 0.059840000000000004,
+      "planted": false
+     },
+     {
+      "name": "foot_L",
+      "seg": "foot",
+      "sd": "L",
+      "a": [
+       53.541943618167224,
+       33.82458854450141,
+       0.020018725992449832
+      ],
+      "b": [
+       53.76501814411507,
+       33.845588711177314,
+       0.0654534899599972
+      ],
+      "r": 0.02950902959627824,
+      "ra": 0.02950902959627824,
+      "rb": 0.024807657664812025,
+      "planted": true
+     },
+     {
+      "name": "toe_L",
+      "seg": "foot",
+      "sd": "L",
+      "a": [
+       53.76501814411507,
+       33.845588711177314,
+       0.0654534899599972
+      ],
+      "b": [
+       53.84261706205624,
+       33.85268472802554,
+       0.07718841014972795
+      ],
+      "r": 0.009429369651061947,
+      "ra": null,
+      "rb": null,
+      "planted": true
+     },
+     {
+      "name": "shin_L",
+      "seg": "shin",
+      "sd": "L",
+      "a": [
+       53.487208968400765,
+       33.84346579015255,
+       0.4765658378601074
+      ],
+      "b": [
+       53.575576132535744,
+       33.83089558780193,
+       0.08799999952316284
+      ],
+      "r": 0.05363769612902886,
+      "ra": 0.05363769612902886,
+      "rb": 0.03606048008898542,
+      "planted": true
+     },
+     {
+      "name": "thigh_L",
+      "seg": "thigh",
+      "sd": "L",
+      "a": [
+       53.30344263128917,
+       33.84834140539169,
+       0.8707358241081238
+      ],
+      "b": [
+       53.487208968400765,
+       33.84346579015255,
+       0.4765658378601074
+      ],
+      "r": 0.08448,
+      "ra": 0.08448,
+      "rb": 0.059840000000000004,
+      "planted": true
+     },
+     {
+      "name": "pelvis",
+      "seg": "pelvis",
+      "sd": null,
+      "a": [
+       53.28749999999981,
+       34,
+       0.9342
+      ],
+      "b": [
+       53.28749999999981,
+       34,
+       1.0342
+      ],
+      "r": 0.15,
+      "ra": null,
+      "rb": null
+     },
+     {
+      "name": "torso",
+      "seg": "torso",
+      "sd": null,
+      "a": [
+       53.28749999999981,
+       34,
+       1.0342
+      ],
+      "b": [
+       53.28749999999981,
+       34,
+       1.40995
+      ],
+      "r": 0.17,
+      "ra": null,
+      "rb": null
+     }
+    ],
+    "derivedSurfaceDistance": {
+     "formula": "segseg(prim, seg).d − prim.r − seg.r(t)",
+     "pairsBelow50mm": [
+      {
+       "prim": "LEG",
+       "seg": "shin_L",
+       "dM": -0.013807
+      },
+      {
+       "prim": "LEG",
+       "seg": "foot_L",
+       "dM": 0.028308
+      }
+     ]
+    }
+   },
+   "support": {
+    "authoritative": {
+     "eventSupport": {
+      "R": false,
+      "L": true
+     },
+     "stride": "SINGLE_L",
+     "segPlanted": true,
+     "gaitPhaseAtContact": 0.51,
+     "simBodyPhase": 0.5095268679083707,
+     "simBodyLegs": {
+      "L": {
+       "planted": true,
+       "up": 0.009526867908370651
+      },
+      "R": {
+       "planted": false,
+       "up": 0.5095268679083707
+      }
+     },
+     "supportLost": true,
+     "collapse": true
+    },
+    "presentation_nonAuthoritative": {
+     "v13LocoFeet": [
+      {
+       "contact": true,
+       "mode": "ankle"
+      },
+      {
+       "contact": false,
+       "mode": "release"
+      }
+     ],
+     "lc1LocoFeet": [
+      {
+       "contact": false,
+       "mode": "engage"
+      },
+      {
+       "contact": false,
+       "mode": "release"
+      }
+     ]
+    }
+   },
+   "kinematics": {
+    "preContactRow": {
+     "row": 64,
+     "runner": {
+      "x": 53.249999999999815,
+      "y": 34,
+      "vx": 3,
+      "vy": 0,
+      "facing": 0,
+      "gaitPhase": 0.48945621922500515
+     },
+     "tackler": {
+      "x": 52.5,
+      "y": 33.49695833333329,
+      "vx": 2.0461806935753673e-16,
+      "vy": 3.3416666666666632,
+      "facing": 1.5707963267948966,
+      "gaitPhase": 0.40464006125821267
+     }
+    },
+    "contactRow": {
+     "row": 65,
+     "runner": {
+      "x": 53.29999999999981,
+      "y": 34,
+      "vx": 3,
+      "vy": 0,
+      "facing": 0,
+      "gaitPhase": 0.5162170841361591
+     },
+     "tackler": {
+      "x": 52.5,
+      "y": 33.551124999999956,
+      "vx": 1.990051048614447e-16,
+      "vy": 3.2499999999999964,
+      "facing": 1.5707963267948966,
+      "gaitPhase": 0.43284745940780733
+     }
+    },
+    "eventVelocities": {
+     "runner_vA": [
+      3,
+      0
+     ],
+     "tackler_vT": [
+      0,
+      3.25
+     ],
+     "massA": 73,
+     "massT": 78
+    }
+   },
+   "tacklerState": {
+    "kind": "SLIDE",
+    "dir": 1.5707963267948966,
+    "foot": "R",
+    "tuck": "L",
+    "tech": "SWEEP",
+    "th1": 1.31,
+    "rule": "far",
+    "launchT": 0.500000000000001,
+    "launchAt": 0.6,
+    "vNow": 2.141918023191598,
+    "stopAt": null,
+    "contact": null,
+    "manifold": [
+     {
+      "kind": "BODY",
+      "tick": 66,
+      "sub": 3,
+      "on": 0,
+      "prim": "LEG",
+      "seg": "shin_L",
+      "planted": true,
+      "pen": 0.014,
+      "vn": 3.188,
+      "J": 79.28,
+      "cls": "FALL",
+      "took": "REACTION",
+      "order": "NO_BALL",
+      "n": 1
+     }
+    ]
+   }
+  }
+ ],
+ "nearMissAndOverlap": {
+  "recordedMinDNowM": -0.091164,
+  "derivedClosest": {
+   "prim": "LEG",
+   "seg": "shin_L",
+   "dM": -0.091164,
+   "row": 67,
+   "slot": 2,
+   "tau": 67.75
+  },
+  "derivedVsRecordedDNowMaxAbsM": 0,
+  "firstGeometricOverlap": {
+   "row": 65,
+   "slot": 2,
+   "tau": 65.75,
+   "overlappingPairs": [
+    {
+     "prim": "LEG",
+     "seg": "shin_L",
+     "dM": -0.013807
+    }
+   ]
+  },
+  "note": "derived = the exporter's surface-distance formula on the recorded primitives / segments; overlap is geometric only — the gameplay contact is the PLAYER_CONTACT event"
+ },
+ "predictorReference_architectureSpecific": {
+  "rule": "PI-1 predictor: d_pred ≤ 0.25 m within 0.10 s on the current state (PI1_PREREGISTRATION.md)",
+  "firstPredRow": 55,
+  "exporterFieldName": "firstPredTick (it is a row index)"
+ },
+ "kinematicsWindow": [
+  {
+   "row": 43,
+   "runner": {
+    "x": 52.199999999999875,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.9274780560907727
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.00654166666662,
+    "vx": 3.2249032377546964e-16,
+    "vy": 5.266666666666666,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7076946810704401
+   },
+   "react": null,
+   "dNowRecorded": 1.215177,
+   "dPredRecorded": 1.022401
+  },
+  {
+   "row": 44,
+   "runner": {
+    "x": 52.24999999999987,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.9542389210019266
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.09279166666662,
+    "vx": 3.168773592793776e-16,
+    "vy": 5.174999999999999,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7448725269537211
+   },
+   "react": null,
+   "dNowRecorded": 1.237175,
+   "dPredRecorded": 0.945416
+  },
+  {
+   "row": 45,
+   "runner": {
+    "x": 52.29999999999987,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.9809997859130806
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.177513888888846,
+    "vx": 3.112643947832855e-16,
+    "vy": 5.083333333333332,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.781693867395384
+   },
+   "react": null,
+   "dNowRecorded": 1.284221,
+   "dPredRecorded": 0.87311
+  },
+  {
+   "row": 46,
+   "runner": {
+    "x": 52.349999999999866,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.007760650824234494
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.26070833333329,
+    "vx": 3.056514302871935e-16,
+    "vy": 4.991666666666665,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8181527561333246
+   },
+   "react": null,
+   "dNowRecorded": 1.292399,
+   "dPredRecorded": 0.80735
+  },
+  {
+   "row": 47,
+   "runner": {
+    "x": 52.399999999999864,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.03452151573538842
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.342374999999954,
+    "vx": 3.0003846579110144e-16,
+    "vy": 4.899999999999999,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8542430968850643
+   },
+   "react": null,
+   "dNowRecorded": 1.208225,
+   "dPredRecorded": 0.742878
+  },
+  {
+   "row": 48,
+   "runner": {
+    "x": 52.44999999999986,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.061282380646542345
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.422513888888844,
+    "vx": 2.944255012950094e-16,
+    "vy": 4.808333333333332,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.889958638258393
+   },
+   "react": null,
+   "dNowRecorded": 1.126505,
+   "dPredRecorded": 0.642351
+  },
+  {
+   "row": 49,
+   "runner": {
+    "x": 52.49999999999986,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.08804324555769627
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.50112499999995,
+    "vx": 2.8881253679891736e-16,
+    "vy": 4.716666666666665,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.925292968444349
+   },
+   "react": null,
+   "dNowRecorded": 1.051324,
+   "dPredRecorded": 0.551105
+  },
+  {
+   "row": 50,
+   "runner": {
+    "x": 52.549999999999855,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.1148041104688502
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.578208333333286,
+    "vx": 2.8319957230282533e-16,
+    "vy": 4.624999999999998,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9602395096812677
+   },
+   "react": null,
+   "dNowRecorded": 0.974216,
+   "dPredRecorded": 0.477823
+  },
+  {
+   "row": 51,
+   "runner": {
+    "x": 52.59999999999985,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.14156497538000412
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.65376388888884,
+    "vx": 2.775866078067333e-16,
+    "vy": 4.533333333333331,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9947915124779474
+   },
+   "react": null,
+   "dNowRecorded": 0.901681,
+   "dPredRecorded": 0.413378
+  },
+  {
+   "row": 52,
+   "runner": {
+    "x": 52.64999999999985,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.16832584029115805
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.72779166666662,
+    "vx": 2.7197364331064125e-16,
+    "vy": 4.441666666666665,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.028942049583242868
+   },
+   "react": null,
+   "dNowRecorded": 0.835524,
+   "dPredRecorded": 0.358711
+  },
+  {
+   "row": 53,
+   "runner": {
+    "x": 52.69999999999985,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.19508670520231197
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.80029166666662,
+    "vx": 2.663606788145492e-16,
+    "vy": 4.349999999999998,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.06268400968861085
+   },
+   "react": null,
+   "dNowRecorded": 0.77346,
+   "dPredRecorded": 0.337306
+  },
+  {
+   "row": 54,
+   "runner": {
+    "x": 52.749999999999844,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.2218475701134659
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.87126388888884,
+    "vx": 2.6074771431845713e-16,
+    "vy": 4.258333333333331,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.09601009084929238
+   },
+   "react": null,
+   "dNowRecorded": 0.673349,
+   "dPredRecorded": 0.294887
+  },
+  {
+   "row": 55,
+   "runner": {
+    "x": 52.79999999999984,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.24860843502461982
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 32.94070833333328,
+    "vx": 2.551347498223651e-16,
+    "vy": 4.166666666666664,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.12891279360890784
+   },
+   "react": null,
+   "dNowRecorded": 0.582969,
+   "dPredRecorded": 0.216808
+  },
+  {
+   "row": 56,
+   "runner": {
+    "x": 52.84999999999984,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.27536929993577375
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.00862499999995,
+    "vx": 2.4952178532627305e-16,
+    "vy": 4.0749999999999975,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.16138441381127575
+   },
+   "react": null,
+   "dNowRecorded": 0.509825,
+   "dPredRecorded": 0.145132
+  },
+  {
+   "row": 57,
+   "runner": {
+    "x": 52.899999999999835,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.3021301648469277
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.07501388888884,
+    "vx": 2.43908820830181e-16,
+    "vy": 3.9833333333333307,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.1934170350822229
+   },
+   "react": null,
+   "dNowRecorded": 0.444913,
+   "dPredRecorded": 0.066076
+  },
+  {
+   "row": 58,
+   "runner": {
+    "x": 52.94999999999983,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.3288910297580816
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.139874999999954,
+    "vx": 2.38295856334089e-16,
+    "vy": 3.891666666666664,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.22500252096303727
+   },
+   "react": null,
+   "dNowRecorded": 0.389206,
+   "dPredRecorded": 0.001822
+  },
+  {
+   "row": 59,
+   "runner": {
+    "x": 52.99999999999983,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.3556518946692355
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.203208333333286,
+    "vx": 2.3268289183799694e-16,
+    "vy": 3.799999999999997,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.25613250667601223
+   },
+   "react": null,
+   "dNowRecorded": 0.364699,
+   "dPredRecorded": -0.060071
+  },
+  {
+   "row": 60,
+   "runner": {
+    "x": 53.04999999999983,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.38241275958038945
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.265013888888845,
+    "vx": 2.270699273419049e-16,
+    "vy": 3.7083333333333304,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.2867983905012401
+   },
+   "react": null,
+   "dNowRecorded": 0.325877,
+   "dPredRecorded": -0.088059
+  },
+  {
+   "row": 61,
+   "runner": {
+    "x": 53.099999999999824,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.4091736244915434
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.32529166666662,
+    "vx": 2.2145696284581284e-16,
+    "vy": 3.6166666666666636,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.3169913247424207
+   },
+   "react": null,
+   "dNowRecorded": 0.248641,
+   "dPredRecorded": -0.093004
+  },
+  {
+   "row": 62,
+   "runner": {
+    "x": 53.14999999999982,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.4359344894026973
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.384041666666626,
+    "vx": 2.158439983497208e-16,
+    "vy": 3.524999999999997,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.3467022062579538
+   },
+   "react": null,
+   "dNowRecorded": 0.176126,
+   "dPredRecorded": -0.094743
+  },
+  {
+   "row": 63,
+   "runner": {
+    "x": 53.19999999999982,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.4626953543138512
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.44126388888885,
+    "vx": 2.1023103385362876e-16,
+    "vy": 3.43333333333333,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.3759216665319699
+   },
+   "react": null,
+   "dNowRecorded": 0.098116,
+   "dPredRecorded": -0.09338
+  },
+  {
+   "row": 64,
+   "runner": {
+    "x": 53.249999999999815,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.48945621922500515
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.49695833333329,
+    "vx": 2.0461806935753673e-16,
+    "vy": 3.3416666666666632,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.40464006125821267
+   },
+   "react": null,
+   "dNowRecorded": 0.033048,
+   "dPredRecorded": -0.096762
+  },
+  {
+   "row": 65,
+   "runner": {
+    "x": 53.29999999999981,
+    "y": 34,
+    "vx": 3,
+    "vy": 0,
+    "facing": 0,
+    "gaitPhase": 0.5162170841361591
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.551124999999956,
+    "vx": 1.990051048614447e-16,
+    "vy": 3.2499999999999964,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.43284745940780733
+   },
+   "react": "FALL",
+   "dNowRecorded": -0.032814,
+   "dPredRecorded": -0.09893
+  },
+  {
+   "row": 66,
+   "runner": {
+    "x": 53.35759182516243,
+    "y": 34.01052554958172,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.007308192731839469,
+    "gaitPhase": 0.54586281739089
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.58682363371982,
+    "vx": 1.3115465255688084e-16,
+    "vy": 2.141918023191598,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.4551558213820927
+   },
+   "react": "FALL",
+   "dNowRecorded": -0.044206,
+   "dPredRecorded": -0.091495
+  },
+  {
+   "row": 67,
+   "runner": {
+    "x": 53.41518365032505,
+    "y": 34.021051099163444,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.014616385463677162,
+    "gaitPhase": 0.575508550645621
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.620994489661896,
+    "vx": 1.255416880607888e-16,
+    "vy": 2.050251356524931,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.4768987024252118
+   },
+   "react": "FALL",
+   "dNowRecorded": -0.091164,
+   "dPredRecorded": -0.090877
+  },
+  {
+   "row": 68,
+   "runner": {
+    "x": 53.472775475487666,
+    "y": 34.031576648745165,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.02192457819551663,
+    "gaitPhase": 0.605154283900352
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.6536375678262,
+    "vx": 1.1992872356469676e-16,
+    "vy": 1.9585846898582646,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.49805510431439015
+   },
+   "react": "FALL",
+   "dNowRecorded": -0.076945,
+   "dPredRecorded": -0.03633
+  },
+  {
+   "row": 69,
+   "runner": {
+    "x": 53.53036730065028,
+    "y": 34.04210219832689,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.0292327709273561,
+    "gaitPhase": 0.6348000171550829
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.684752868212726,
+    "vx": 1.1431575906860472e-16,
+    "vy": 1.866918023191598,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5186028370976543
+   },
+   "react": "FALL",
+   "dNowRecorded": -0.024288,
+   "dPredRecorded": 0.008149
+  },
+  {
+   "row": 70,
+   "runner": {
+    "x": 53.5879591258129,
+    "y": 34.05262774790861,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.03654096365919379,
+    "gaitPhase": 0.6644457504098139
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.71434039082148,
+    "vx": 1.087027945725127e-16,
+    "vy": 1.7752513565249315,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.538518427174677
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.018219,
+   "dPredRecorded": 0.046674
+  },
+  {
+   "row": 71,
+   "runner": {
+    "x": 53.64555095097552,
+    "y": 34.06315329749033,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.04384915639103326,
+    "gaitPhase": 0.6940914836645449
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.742400135652446,
+    "vx": 1.0308983007642067e-16,
+    "vy": 1.683584689858265,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5577770163411138
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.054922,
+   "dPredRecorded": 0.078168
+  },
+  {
+   "row": 72,
+   "runner": {
+    "x": 53.70314277613814,
+    "y": 34.07367884707205,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.05115734912287273,
+    "gaitPhase": 0.7237372169192758
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.76893210270564,
+    "vx": 9.747686558032865e-17,
+    "vy": 1.5919180231915984,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5763522507090031
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.085157,
+   "dPredRecorded": 0.105733
+  },
+  {
+   "row": 73,
+   "runner": {
+    "x": 53.760734601300754,
+    "y": 34.084204396653774,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.05846554185471042,
+    "gaitPhase": 0.7533829501740068
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.793936291981055,
+    "vx": 9.186390108423661e-17,
+    "vy": 1.5002513565249318,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5942161582600093
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.11263,
+   "dPredRecorded": 0.135486
+  },
+  {
+   "row": 74,
+   "runner": {
+    "x": 53.81832642646337,
+    "y": 34.094729946235496,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.06577373458654989,
+    "gaitPhase": 0.7830286834287378
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.817412703478695,
+    "vx": 8.625093658814459e-17,
+    "vy": 1.4085846898582652,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6114871959962095
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.143772,
+   "dPredRecorded": 0.163167
+  },
+  {
+   "row": 75,
+   "runner": {
+    "x": 53.87591825162599,
+    "y": 34.10525549581722,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.07308192731838936,
+    "gaitPhase": 0.8126744166834687
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.839361337198554,
+    "vx": 8.063797209205256e-17,
+    "vy": 1.3169180231915987,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6283111038891892
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.165725,
+   "dPredRecorded": 0.163451
+  },
+  {
+   "row": 76,
+   "runner": {
+    "x": 53.93351007678861,
+    "y": 34.11578104539894,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.08039012005022705,
+    "gaitPhase": 0.8423201499381997
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.85978219314064,
+    "vx": 7.502500759596052e-17,
+    "vy": 1.2252513565249321,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6446487583252898
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.17316,
+   "dPredRecorded": 0.158691
+  },
+  {
+   "row": 77,
+   "runner": {
+    "x": 53.991101901951225,
+    "y": 34.12630659498066,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.08769831278206652,
+    "gaitPhase": 0.8719658831929307
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.87867527130494,
+    "vx": 6.94120430998685e-17,
+    "vy": 1.1335846898582655,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6604556658186378
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.178188,
+   "dPredRecorded": 0.155395
+  },
+  {
+   "row": 78,
+   "runner": {
+    "x": 54.04869372711384,
+    "y": 34.13683214456238,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.09500650551390599,
+    "gaitPhase": 0.9016116164476616
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.89604057169147,
+    "vx": 6.379907860377647e-17,
+    "vy": 1.041918023191599,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6756809331797811
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.157675,
+   "dPredRecorded": 0.153565
+  },
+  {
+   "row": 79,
+   "runner": {
+    "x": 54.10628555227646,
+    "y": 34.147357694144105,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.10231469824574368,
+    "gaitPhase": 0.9312573497023926
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.91187809430022,
+    "vx": 5.818611410768444e-17,
+    "vy": 0.9502513565249323,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6902659783761583
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.153198,
+   "dPredRecorded": 0.157998
+  },
+  {
+   "row": 80,
+   "runner": {
+    "x": 54.16387737743908,
+    "y": 34.15788324372583,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.10962289097758315,
+    "gaitPhase": 0.9609030829571236
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.926187839131195,
+    "vx": 5.25731496115924e-17,
+    "vy": 0.8585846898582656,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7041428995778916
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.159424,
+   "dPredRecorded": 0.172714
+  },
+  {
+   "row": 81,
+   "runner": {
+    "x": 54.221469202601696,
+    "y": 34.16840879330755,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.11693108370942262,
+    "gaitPhase": 0.9905488162118545
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.93896980618439,
+    "vx": 4.696018511550036e-17,
+    "vy": 0.766918023191599,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7172323875400999
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.180384,
+   "dPredRecorded": 0.214904
+  },
+  {
+   "row": 82,
+   "runner": {
+    "x": 54.279061027764314,
+    "y": 34.17893434288927,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.12423927644126209,
+    "gaitPhase": 0.020194549466585388
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.9502239954598,
+    "vx": 4.134722061940833e-17,
+    "vy": 0.6752513565249323,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7294410187818913
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.229912,
+   "dPredRecorded": 0.286562
+  },
+  {
+   "row": 83,
+   "runner": {
+    "x": 54.33665285292693,
+    "y": 34.18945989247099,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.13154746917309978,
+    "gaitPhase": 0.049840282721316305
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.95995040695744,
+    "vx": 3.573425612331629e-17,
+    "vy": 0.5835846898582656,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7406576952710219
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.307821,
+   "dPredRecorded": 0.377327
+  },
+  {
+   "row": 84,
+   "runner": {
+    "x": 54.39424467808955,
+    "y": 34.199985442052714,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.13885566190493925,
+    "gaitPhase": 0.07948601597604722
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.9681490406773,
+    "vx": 3.0121291627224255e-17,
+    "vy": 0.49191802319159894,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7507488859371744
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.402971,
+   "dPredRecorded": 0.482243
+  },
+  {
+   "row": 85,
+   "runner": {
+    "x": 54.45183650325217,
+    "y": 34.210510991634436,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.14616385463677872,
+    "gaitPhase": 0.10913174923077815
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.97481989661938,
+    "vx": 2.450832713113222e-17,
+    "vy": 0.40025135652493227,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7595521512234169
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.508929,
+   "dPredRecorded": 0.587861
+  },
+  {
+   "row": 86,
+   "runner": {
+    "x": 54.509428328414785,
+    "y": 34.22103654121616,
+    "vx": 3.455509509757256,
+    "vy": 0.6315329749032905,
+    "facing": 0.15347204736861642,
+    "gaitPhase": 0.13877748248550906
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.97996297478368,
+    "vx": 1.8895362635040183e-17,
+    "vy": 0.3085846898582656,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7668671494360085
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.612835,
+   "dPredRecorded": 0.681764
+  },
+  {
+   "row": 87,
+   "runner": {
+    "x": 54.564824541666205,
+    "y": 34.231160818187256,
+    "vx": 3.323772795085218,
+    "vy": 0.6074566182658977,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.16770018014722426
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98357827517021,
+    "vx": 1.3282398138948147e-17,
+    "vy": 0.21691802319159892,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7724428506373818
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.697876,
+   "dPredRecorded": 0.751146
+  },
+  {
+   "row": 88,
+   "runner": {
+    "x": 54.6178082153691,
+    "y": 34.24084417659805,
+    "vx": 3.179020422173911,
+    "vy": 0.5810015046478164,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.19580421732196515
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98566579777896,
+    "vx": 7.669433642856111e-18,
+    "vy": 0.12525135652493224,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7857761839707151
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.764166,
+   "dPredRecorded": 0.796
+  },
+  {
+   "row": 89,
+   "runner": {
+    "x": 54.66837934952348,
+    "y": 34.25008661644855,
+    "vx": 3.034268049262603,
+    "vy": 0.5545463910297351,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.2230630728939767
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 2.056469146764076e-18,
+    "vy": 0.033584689858265585,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7991095173040484
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.808661,
+   "dPredRecorded": 0.834167
+  },
+  {
+   "row": 90,
+   "runner": {
+    "x": 54.71653794412933,
+    "y": 34.258888137738744,
+    "vx": 2.8895156763512952,
+    "vy": 0.5280912774116538,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.2495426834463308
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8124428506373818
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.851648,
+   "dPredRecorded": 0.87491
+  },
+  {
+   "row": 91,
+   "runner": {
+    "x": 54.762283999186664,
+    "y": 34.26724874046864,
+    "vx": 2.744763303439988,
+    "vy": 0.5016361637935726,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.27533738177672573
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8257761839707151
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.901296,
+   "dPredRecorded": 0.89874
+  },
+  {
+   "row": 92,
+   "runner": {
+    "x": 54.80561751469548,
+    "y": 34.27516842463823,
+    "vx": 2.60001093052868,
+    "vy": 0.4751810501754913,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.300411311910864
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8391095173040484
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.950525,
+   "dPredRecorded": 0.924015
+  },
+  {
+   "row": 93,
+   "runner": {
+    "x": 54.84653849065577,
+    "y": 34.28264719024752,
+    "vx": 2.4552585576173724,
+    "vy": 0.44872593655741,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.32472572653723414
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8524428506373817
+   },
+   "react": "FALL",
+   "dNowRecorded": 0.998086,
+   "dPredRecorded": 0.950208
+  },
+  {
+   "row": 94,
+   "runner": {
+    "x": 54.885046927067535,
+    "y": 34.289685037296515,
+    "vx": 2.310506184706065,
+    "vy": 0.4222708229393287,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.3482386675534017
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.865776183970715
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.04274,
+   "dPredRecorded": 0.976919
+  },
+  {
+   "row": 95,
+   "runner": {
+    "x": 54.92114282393078,
+    "y": 34.296281965785205,
+    "vx": 2.1657538117947577,
+    "vy": 0.39581570932124743,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.3709046012398908
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8791095173040483
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.08484,
+   "dPredRecorded": 1.003458
+  },
+  {
+   "row": 96,
+   "runner": {
+    "x": 54.9548261812455,
+    "y": 34.302437975713595,
+    "vx": 2.0210014388834496,
+    "vy": 0.36936059570316615,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.392674000102403
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8924428506373816
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.124636,
+   "dPredRecorded": 1.027512
+  },
+  {
+   "row": 97,
+   "runner": {
+    "x": 54.9860969990117,
+    "y": 34.308153067081676,
+    "vx": 1.8762490659721418,
+    "vy": 0.3429054820850848,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.41349286174514455
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9057761839707149
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.156836,
+   "dPredRecorded": 1.051545
+  },
+  {
+   "row": 98,
+   "runner": {
+    "x": 55.01495527722938,
+    "y": 34.31342723988946,
+    "vx": 1.7314966930608342,
+    "vy": 0.31645036846700353,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.4333021530432088
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9191095173040482
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.185881,
+   "dPredRecorded": 1.07694
+  },
+  {
+   "row": 99,
+   "runner": {
+    "x": 55.04140101589854,
+    "y": 34.318260494136936,
+    "vx": 1.5867443201495268,
+    "vy": 0.28999525484892225,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.45203716525007
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9324428506373815
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.215031,
+   "dPredRecorded": 1.104138
+  },
+  {
+   "row": 100,
+   "runner": {
+    "x": 55.06543421501918,
+    "y": 34.322652829824115,
+    "vx": 1.4419919472382192,
+    "vy": 0.263540141230841,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.4696267623472388
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9457761839707148
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.244035,
+   "dPredRecorded": 1.133175
+  },
+  {
+   "row": 101,
+   "runner": {
+    "x": 55.087054874591296,
+    "y": 34.32660424695099,
+    "vx": 1.2972395743269114,
+    "vy": 0.23708502761275965,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.48645985421813354
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9591095173040481
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.272799,
+   "dPredRecorded": 1.177622
+  },
+  {
+   "row": 102,
+   "runner": {
+    "x": 55.10626299461489,
+    "y": 34.33011474551757,
+    "vx": 1.152487201415604,
+    "vy": 0.2106299139946784,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.5024925168004511
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9724428506373815
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.300814,
+   "dPredRecorded": 1.225096
+  },
+  {
+   "row": 103,
+   "runner": {
+    "x": 55.123058575089956,
+    "y": 34.333184325523845,
+    "vx": 1.0077348285042964,
+    "vy": 0.18417480037659711,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.5176004030539492
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9857761839707148
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.327775,
+   "dPredRecorded": 1.272621
+  },
+  {
+   "row": 104,
+   "runner": {
+    "x": 55.13744161601651,
+    "y": 34.33581298696982,
+    "vx": 0.8629824555929886,
+    "vy": 0.15771968675851578,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.5316277496181655
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.9991095173040481
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.353613,
+   "dPredRecorded": 1.318849
+  },
+  {
+   "row": 105,
+   "runner": {
+    "x": 55.14941211739454,
+    "y": 34.338000729855494,
+    "vx": 0.7182300826816811,
+    "vy": 0.13126457314043452,
+    "facing": 0.1807661645360863,
+    "gaitPhase": 0.5443758204479551
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.012442850637381486
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.377855,
+   "dPredRecorded": 1.36245
+  },
+  {
+   "row": 106,
+   "runner": {
+    "x": 55.15897007922405,
+    "y": 34.33974755418087,
+    "vx": 0.5734777097703736,
+    "vy": 0.10480945952235325,
+    "facing": 0.2945179482445159,
+    "gaitPhase": 0.5555854986030958
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.025776183970714822
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.401628,
+   "dPredRecorded": 1.404932
+  },
+  {
+   "row": 107,
+   "runner": {
+    "x": 55.16611550150503,
+    "y": 34.34105345994594,
+    "vx": 0.4287253368590657,
+    "vy": 0.07835434590427193,
+    "facing": 0.40900548195294545,
+    "gaitPhase": 0.5649100696216178
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.03910951730404816
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.429445,
+   "dPredRecorded": 1.432932
+  },
+  {
+   "row": 108,
+   "runner": {
+    "x": 55.170848384237495,
+    "y": 34.34191844715071,
+    "vx": 0.28397296394775823,
+    "vy": 0.05189923228619066,
+    "facing": 0.524228765661375,
+    "gaitPhase": 0.5718707225615325
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.052442850637381494
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.387574,
+   "dPredRecorded": 1.39077
+  },
+  {
+   "row": 109,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0.13922059103645038,
+    "vy": 0.025444118668109323,
+    "facing": 0.6401877993698045,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.06577618397071483
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.373947,
+   "dPredRecorded": 1.375712
+  },
+  {
+   "row": 110,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 0.7568544660364712,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.07910951730404817
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.35882,
+   "dPredRecorded": 1.35882
+  },
+  {
+   "row": 111,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 0.8735211327031379,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.345063,
+   "dPredRecorded": 1.345063
+  },
+  {
+   "row": 112,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 0.9901877993698046,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.334489,
+   "dPredRecorded": 1.334489
+  },
+  {
+   "row": 113,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.1068544660364712,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.327312,
+   "dPredRecorded": 1.327312
+  },
+  {
+   "row": 114,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.223521132703138,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.323681,
+   "dPredRecorded": 1.323681
+  },
+  {
+   "row": 115,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.3401877993698046,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.323675,
+   "dPredRecorded": 1.323675
+  },
+  {
+   "row": 116,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.4568544660364713,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.327292,
+   "dPredRecorded": 1.327292
+  },
+  {
+   "row": 117,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.573521132703138,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.331798,
+   "dPredRecorded": 1.331798
+  },
+  {
+   "row": 118,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.6901877993698047,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.335548,
+   "dPredRecorded": 1.335548
+  },
+  {
+   "row": 119,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.8068544660364714,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.329844,
+   "dPredRecorded": 1.329844
+  },
+  {
+   "row": 120,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.923521132703138,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.316825,
+   "dPredRecorded": 1.316825
+  },
+  {
+   "row": 121,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 122,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 123,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 124,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 125,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 126,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 127,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 128,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 129,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 130,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 131,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 132,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 133,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 134,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 135,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 136,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 137,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 138,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 139,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 140,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 141,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 142,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 143,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 144,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 145,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 146,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 147,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 148,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 149,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 150,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 151,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 152,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 153,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 154,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 155,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98622554260993,
+    "vx": 0,
+    "vy": 0,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299986,
+   "dPredRecorded": 1.299986
+  },
+  {
+   "row": 156,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.98886443149882,
+    "vx": 1.1935520026683566e-17,
+    "vy": 0.15833333333333333,
+    "facing": 1.5010651198784686,
+    "gaitPhase": 0.08
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.299512,
+   "dPredRecorded": 1.296772
+  },
+  {
+   "row": 157,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 33.994142209276596,
+    "vx": 2.3871425004742246e-17,
+    "vy": 0.31666666666666665,
+    "facing": 1.5009918393122863,
+    "gaitPhase": 0.08745545669069732
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.298579,
+   "dPredRecorded": 1.293394
+  },
+  {
+   "row": 158,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.00205887594326,
+    "vx": 3.5808237963247664e-17,
+    "vy": 0.475,
+    "facing": 1.5008816296887826,
+    "gaitPhase": 0.09732215773860901
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.297217,
+   "dPredRecorded": 1.289972
+  },
+  {
+   "row": 159,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.01261443149882,
+    "vx": 4.774671056661935e-17,
+    "vy": 0.6333333333333333,
+    "facing": 1.500734141928671,
+    "gaitPhase": 0.1090921913611733
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.295468,
+   "dPredRecorded": 1.286645
+  },
+  {
+   "row": 160,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.02553109816549,
+    "vx": 5.844345445338597e-17,
+    "vy": 0.7749999999999999,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.12225463257674452
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.293436,
+   "dPredRecorded": 1.283753
+  },
+  {
+   "row": 161,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.04080887594326,
+    "vx": 6.912999060393892e-17,
+    "vy": 0.9166666666666665,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.1365886704797152
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.291186,
+   "dPredRecorded": 1.281213
+  },
+  {
+   "row": 162,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.05844776483215,
+    "vx": 7.982736547233705e-17,
+    "vy": 1.0583333333333331,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.1519221603537
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.288796,
+   "dPredRecorded": 1.279182
+  },
+  {
+   "row": 163,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.078447764832156,
+    "vx": 9.052804187838993e-17,
+    "vy": 1.1999999999999997,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.16811830120427662
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.286356,
+   "dPredRecorded": 1.277827
+  },
+  {
+   "row": 164,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.09844776483216,
+    "vx": 9.054726912201305e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.18431444205485326
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.284205,
+   "dPredRecorded": 1.277433
+  },
+  {
+   "row": 165,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.11844776483216,
+    "vx": 9.056650453471667e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.2005105829054299
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.282344,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 166,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.138447764832165,
+    "vx": 9.05857481217081e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.21670672375600653
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.280776,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 167,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.15844776483217,
+    "vx": 9.060499988819913e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.23290286460658316
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.279499,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 168,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.17844776483217,
+    "vx": 9.062425983940586e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.2490990054571598
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.278516,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 169,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.198447764832174,
+    "vx": 9.064352798054889e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.26529514630773643
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.277827,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 170,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.21844776483218,
+    "vx": 9.066280431685328e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.28149128715831306
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.277433,
+   "dPredRecorded": 1.277331
+  },
+  {
+   "row": 171,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.23844776483218,
+    "vx": 9.068208885354849e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.2976874280088897
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.277331,
+   "dPredRecorded": 1.277333
+  },
+  {
+   "row": 172,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.258447764832184,
+    "vx": 9.070138159586849e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.31388356885946633
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.277355,
+   "dPredRecorded": 1.277529
+  },
+  {
+   "row": 173,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.27844776483219,
+    "vx": 9.072068254905165e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.33007970971004297
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.277623,
+   "dPredRecorded": 1.278018
+  },
+  {
+   "row": 174,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.29844776483219,
+    "vx": 9.073999171834079e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.3462758505606196
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.278187,
+   "dPredRecorded": 1.278802
+  },
+  {
+   "row": 175,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.31844776483219,
+    "vx": 9.075930910898328e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.36247199141119624
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.279044,
+   "dPredRecorded": 1.279881
+  },
+  {
+   "row": 176,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.338447764832196,
+    "vx": 9.077863472623087e-17,
+    "vy": 1.2,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.37866813226177287
+   },
+   "react": "FALL",
+   "dNowRecorded": 1.280196,
+   "dPredRecorded": 1.281252
+  },
+  {
+   "row": 177,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.360808875943306,
+    "vx": 1.0157611458603156e-16,
+    "vy": 1.3416666666666666,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.3956164111529801
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 178,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.38553109816553,
+    "vx": 1.1217199411905678e-16,
+    "vy": 1.4833333333333332,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.4133458411585527
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 179,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.41261443149886,
+    "vx": 1.2329185526325754e-16,
+    "vy": 1.6249999999999998,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.43217083282510727
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 180,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.4420588759433,
+    "vx": 1.3330472500702981e-16,
+    "vy": 1.7666666666666664,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.45202597128176725
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 181,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.47386443149886,
+    "vx": 1.4545948391816564e-16,
+    "vy": 1.908333333333333,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.4728515306001416
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 182,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.508031098165524,
+    "vx": 1.5401245034306958e-16,
+    "vy": 2.05,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.49459283271084403
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 183,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.5445588759433,
+    "vx": 1.6802477713253446e-16,
+    "vy": 2.1916666666666664,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5171996941497773
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 184,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.583447764832194,
+    "vx": 1.747162708566445e-16,
+    "vy": 2.333333333333333,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5406259465798462
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 185,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.62469776483219,
+    "vx": 1.90246528494042e-16,
+    "vy": 2.4749999999999996,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5648290195893741
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 186,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.6683088759433,
+    "vx": 1.9628126207047076e-16,
+    "vy": 2.6166666666666663,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.5897695763064651
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 187,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.71428109816553,
+    "vx": 2.1150669741158135e-16,
+    "vy": 2.758333333333333,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6154111940039143
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 188,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.76261443149886,
+    "vx": 2.1881884227544462e-16,
+    "vy": 2.8999999999999995,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6417200831893513
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 189,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.81330887594331,
+    "vx": 2.3227588385358005e-16,
+    "vy": 3.041666666666666,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.668727592016737
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 190,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.86636443149886,
+    "vx": 2.4151852765103964e-16,
+    "vy": 3.1833333333333327,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.6965569488118208
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 191,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.921781098165525,
+    "vx": 2.533819954332495e-16,
+    "vy": 3.3249999999999993,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7251831823226799
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 192,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 34.979558875943304,
+    "vx": 2.6384182143936515e-16,
+    "vy": 3.466666666666666,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.7545824423659194
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 193,
+   "runner": {
+    "x": 55.173168727421434,
+    "y": 34.34234251579518,
+    "vx": 0,
+    "vy": 0,
+    "facing": 2.033471298286546,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 35.03969776483219,
+    "vx": 2.7500822616249795e-16,
+    "vy": 3.6083333333333325,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.784731933709882
+   },
+   "react": "FALL",
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 194,
+   "runner": {
+    "x": 55.17580760893785,
+    "y": 34.34233627799153,
+    "vx": 0.15833289098524203,
+    "vy": -0.00037426821920169215,
+    "facing": 2.0339243555691215,
+    "gaitPhase": 0.58
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 35.10219776483219,
+    "vx": 2.85902842219407e-16,
+    "vy": 3.749999999999999,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8156098547612135
+   },
+   "react": null,
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  },
+  {
+   "row": 195,
+   "runner": {
+    "x": 55.181085371970696,
+    "y": 34.34232380238422,
+    "vx": 0.31666578197048406,
+    "vy": -0.0007485364384033845,
+    "facing": 2.0348298517463412,
+    "gaitPhase": 0.5874554566906973
+   },
+   "tackler": {
+    "x": 52.5,
+    "y": 35.167058875943304,
+    "vx": 2.9692687857718226e-16,
+    "vy": 3.8916666666666657,
+    "facing": 1.5707963267948966,
+    "gaitPhase": 0.8471953406420278
+   },
+   "react": null,
+   "dNowRecorded": null,
+   "dPredRecorded": null
+  }
+ ],
+ "existingEvidence": {
+  "compatGateV13": {
+   "finalClass": "FALL",
+   "trigger": 55,
+   "criteria": {
+    "CG-8 self-collision": {
+     "minSepMm": 47.3,
+     "pair": "forearm_L↔thigh_L",
+     "at": 67,
+     "pass": true
+    },
+    "CG-1 segment": {
+     "sim": "shin_L",
+     "mapped": "shank_L",
+     "d1First": "shank_L",
+     "adjacency": null,
+     "pass": true
+    },
+    "CG-2 support": {
+     "L": {
+      "sim": true,
+      "up": 0.01,
+      "presentation": [
+       false,
+       true
+      ],
+      "presModes": [
+       "swing",
+       "ankle"
+      ],
+      "d1LowestMm": -5.2,
+      "d1": true,
+      "agree": true
+     },
+     "R": {
+      "sim": false,
+      "up": 0.51,
+      "presentation": [
+       false,
+       false
+      ],
+      "presModes": [
+       "release",
+       "release"
+      ],
+      "d1LowestMm": 79.1,
+      "d1": false,
+      "agree": true
+     },
+     "pass": true
+    },
+    "CG-3 timing": {
+     "tSim": 65.75,
+     "tD1": 65.75,
+     "dTicks": 0,
+     "pass": true
+    },
+    "CG-4 location": {
+     "horizDistM": 0.041,
+     "sSim": 0.902,
+     "sD1": 0.882,
+     "simPoint": [
+      53.567,
+      0.126,
+      -33.832
+     ],
+     "d1Point": [
+      53.540102346795734,
+      0.1420296809032706,
+      -33.80055957769475
+     ],
+     "pass": true
+    },
+    "CG-5 overlap": {
+     "region": [
+      "shank_L"
+     ],
+     "simMaxUnperturbedMm": 106.7,
+     "d1MaxMm": 59.3,
+     "ratio": 0.556,
+     "pass": true
+    },
+    "CG-6 approach": {
+     "simNormal": [
+      0.393,
+      0.92
+     ],
+     "d1Normal": [
+      0.0003,
+      0.0023
+     ],
+     "normalAngleDeg": 14.9,
+     "simRelVel": [
+      -1.414,
+      4.072
+     ],
+     "d1RelVel": [
+      -0.202,
+      4.134
+     ],
+     "relVelAngleDeg": 16.4,
+     "pass": true
+    },
+    "CG-7 pose continuity (PCG-F0 window)": {
+     "failingFrames": 8,
+     "failItems": [
+      "P17_angMom",
+      "P9_footContact_R",
+      "P9_footContact_L",
+      "P15_angVel"
+     ],
+     "primitiveMaxDisplacementChangeMm": 4.6,
+     "pass": false
+    }
+   }
+  },
+  "rev2Scan": {
+   "cat": "PLANTED-LEG FALL",
+   "finalClass": "FALL",
+   "trigger": 55,
+   "pass": false,
+   "reasons": [
+    "no valid predictive promotion frame in W = [55, 64]: HGA_comVsAuth+P9_footContact_R+P14_bodyVel+P15_angVel+P5_footDeg+P17_angMom"
+   ],
+   "kp": null,
+   "leadTicks": null
+  }
+ }
+}

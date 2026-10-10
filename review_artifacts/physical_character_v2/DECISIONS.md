@@ -3247,3 +3247,34 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 - **D:** a V2 velocity-model check.
 
 **Recommended:** C first, read-only design, tested on the unobstructed-runner gate against the proxy; D in parallel. **Awaiting user.**
+
+## 2026-10-10: PI-1 architecture development PAUSED for an external architecture review; architecture-neutral consolidation (`consolidation/`, `interaction_benchmark/`; source `sources/2026-10-10_user_instruction_pause_consolidate.md` 71129acf)
+
+**Paused:** carriers, gait laws, promotion rules, recovery, physics handoff, collision architecture and presentation locomotion fixes. V2, Jolt settings, gameplay collision geometry, simulation outcomes and frozen criteria are unchanged. No new slice was started.
+
+**Delivered:**
+- **`consolidation/CANONICAL_EVIDENCE.md`:** CF-0 … CF-6, SLP-1 / 1b / 2 / 2C, PI-1 and its revisions, HG-A, moving handoff, LC-1, the promotion carrier (investigation, PCS-1, AST-1E) and the leg law.
+  - Per experiment: question, demonstrated, failed, failure class, relevance, commits.
+  - It also lists 11 contradictions / unresolved questions and 8 questions for the review.
+- **`interaction_benchmark/` (IB-1):** five frozen scenarios from existing V1.3 records:
+  - IB1-NM rx_miss;
+  - IB1-FL rx_free_leg;
+  - IB1-PL rx_planted_leg;
+  - IB1-PG rx_glancing;
+  - IB1-SR rx_behind_standing (anchor).
+  - Not frozen: minor body bump, torso collision. No trustworthy case exists; sl_loose (TRUNK→pelvis) fails CG-2 / CG-4.
+  - Contents: manifest, per-scenario files, record copies with checksums, a read-only extractor and verifier (V1 – V6: 59 pass, 1 note, 0 fail; both tools repeatable).
+- **`interaction_benchmark/METRICS.md`:** hard requirements H1 – H8 and quality metrics Q1 – Q8. Thresholds only from existing frozen criteria; otherwise marked for the review.
+- **`consolidation/COMPONENT_AUDIT.md`:** classification only; nothing changed.
+
+**Tooling:** no existing tool modified. Issues found are listed in `consolidation/README.md`, left in place because each sits in frozen tooling.
+
+**Facts newly recorded:**
+- rx_planted_leg (the PI-1 planted-leg representative) fails the V1.3 CG-1 / CG-3 / CG-5 rows.
+- rx_jog ≡ rx_planted_leg.
+- FULL / LOCO record bytes are not reproducible (wall-clock `cpu` field).
+- PCS-1's rx_miss τ_ref 60.5 vs the simulation's closest sub-step 60.75.
+- J = 0 contacts with a non-negligible class.
+- Event `vT` is the striking primitive's velocity.
+
+**Awaiting:** the external review. Nothing is recommended or started.
