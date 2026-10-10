@@ -18,7 +18,7 @@
   #gl, #ov { position: absolute; left: 0; top: 0; display: block; }
   #hud { padding: 6px 12px; color: var(--dim); font: 12px/1.4 Menlo, monospace; white-space: pre-wrap; }
   .tag { display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 600; }
-  .t-run1 { background: var(--run1); color: #06222b; } .t-v1 { background: var(--v1); color: #2b0e06; }
+  .t-run1 { background: var(--run1); color: #06222b; } .t-v1 { background: var(--v1); color: #2b0e06; } .t-orig { background: #c79bff; color: #1d0b33; }
   #notes { padding: 4px 12px 14px; color: var(--dim); max-width: 1100px; }
 </style>
 </head>
@@ -26,7 +26,7 @@
 <div id="bar">
   <div class="grp"><button id="bPlay" class="on">❚❚ Pause</button><button id="bRestart">⟲ Restart</button><button id="bStep" title="one 60 Hz frame">▸| Frame</button></div>
   <div class="grp"><span class="lab">Speed</span><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button data-rate="0.1">0.1×</button></div>
-  <div class="grp"><span class="lab">Show</span><button data-cmp="run1">RUN-1</button><button data-cmp="both" class="on">RUN-1 + V1</button><button data-cmp="v1">V1 only</button>
+  <div class="grp"><span class="lab">Show</span><button data-show="run1" class="on" title="RUN-1.1: the current run (run1_gait.js)">RUN-1.1 new</button><button data-show="orig" class="on" title="RUN-1.0: the original RUN-1, frozen at 3caa5d58 (run1_gait_orig.js)">RUN-1.0 original</button><button data-show="v1" class="on" title="Locomotion V1 (unmodified ofActorTick)">V1</button>
     <select id="selV1" title="which old locomotion"><option value="v13">V1 (V1.3 presentation)</option><option value="lc1">V1 + LC-1 continuity</option></select></div>
   <div class="grp"><span class="lab">Run</span><select id="selDir"><option value="across">across →</option><option value="toward">toward camera ↓</option><option value="away">away ↑</option><option value="diag">diagonal ↘</option></select>
     <select id="selV"><option value="3.0">3.0 m/s jog</option><option value="4.2">4.2 m/s</option><option value="5.5" selected>5.5 m/s run (RUN-1 target)</option><option value="7.0">7.0 m/s</option><option value="7.8">7.8 m/s sprint</option><option value="ramp">ramp 3 → 7.8 → 3 m/s</option></select></div>
@@ -38,7 +38,7 @@
 <div id="wrap"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
 <div id="hud"></div>
 <div id="notes">Large view: the actual Touchline gameplay camera (CAMERA_V1: 30 m high, 43 m behind the touchline, 22° pitch, 28° FOV), rail-following the runner like the match camera; zoom &gt; 1 keeps the same camera and centres the subject. The two close views are for inspection (choose subject and angle above).
-<span class="tag t-run1">RUN-1</span> is the new straight-line run, evaluated on its own deterministic 1/240 s clock; <span class="tag t-v1">V1</span> is the unmodified Locomotion V1 runtime (ofActorTick, 60 Hz ticks, as in the match) on the far lane. Both are driven by the same authoritative straight-line mover at the selected speed (or the 3 → 7.8 → 3 m/s ramp). Keys: Space play/pause, R restart, 1–4 speed, . frame step, S skeleton, C contacts.</div>
+<span class="tag t-run1">RUN-1.1</span> is the current straight-line run (run1_gait.js), nearest the camera; <span class="tag t-orig">RUN-1.0</span> is the original RUN-1, frozen at commit 3caa5d58 (run1_gait_orig.js), on the middle lane; both are evaluated on their own deterministic 1/240 s clocks. <span class="tag t-v1">V1</span> is the unmodified Locomotion V1 runtime (ofActorTick, 60 Hz ticks, as in the match) on the far lane. Both are driven by the same authoritative straight-line mover at the selected speed (or the 3 → 7.8 → 3 m/s ramp). Keys: Space play/pause, R restart, 1–4 speed, . frame step, S skeleton, C contacts.</div>
 
 <script src="anim3d/m4.js"></script>
 <script src="anim3d/skeleton.js"></script>
@@ -50,6 +50,7 @@
 <script src="anim3d/of_character.js"></script>
 <script src="anim3d/of_char_gl.js"></script>
 <script src="run1/run1_gait.js"></script>
+<script src="run1/run1_gait_orig.js"></script>
 <script src="run1/run1_viewer.js"></script>
 </body>
 </html>
