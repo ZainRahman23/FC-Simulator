@@ -198,6 +198,9 @@ RUN1.regimes.RUN = { v: 5.5, id: "RUN",
   kneeTD: 24, kneePkExtra: 0, kneeTO: 16,       // stance knee 24 → ~46 → 16 (real ≈45° peak at 4.5–5 m/s; RUN-1.1: 28 → 54, deeper than its own jog)
   strikeToeUp: -10, flatS: 0.14, heelRiseTO: 78,   // fore-foot landing (7 of 9 runners at 5.2 m/s, DSP12), heel lowering over 14 % of stance; higher on the toes at toe-off
   kneeExt: 21, kneeExtW: 0.85,                  // the lower leg finishes unfolding by 85 % of the swing (RUN-1.1: 92 %), then the leg sweeps back into the contact
+  // R2 the recovery is front-loaded: the heel snaps up earlier and higher and stays folded while the knee drives (peak swing knee 125° at 59 % of
+  // the stride, real ≈116° at 4.5 / ≈128° at 5.0 m/s; RUN-1.1 115° at 61 %), the thigh peaks ≈51° at the opposite toe-off (CL20 ≈46–49°)
+  kneeMax: 125, kneeMaxW: 0.43, kneeHold: 110, kneeHoldW: 0.60, hipMax: 61,
 };
 RUN1.anchors11 = [                                                                   // RUN-1.1's anchors, verbatim (the jog source)
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
