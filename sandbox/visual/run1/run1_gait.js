@@ -157,11 +157,11 @@ const RUN1 = {
 // contact time halves while swing time barely changes (Weyand 2000; Hamner & Delp 2013); rear-foot strike at the jog, flat at the sprint
 // (Siegel 2023; Clark 2025); more knee recovery, hip drive, arm range and trunk lean with speed (Fukuchi 2017; Miyashiro 2019; Romero 2022).
 RUN1.anchors = [
-  { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kv: 0.75, kneeTD: 17, kneeTO: 18, footW: 0.04, strikeToeUp: 13, heelRiseTO: 60, kneeTOrate: 260,
+  { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kv: 0.75, kneeTD: 17, kneeTO: 18, footW: 0.04, strikeToeUp: 13, heelRiseTO: 60, kneeTOrate: 260, heelRiseS: 0.50,
     kneeMax: 100, kneeMaxW: 0.45, kneeHold: 90, kneeHoldW: 0.60, kneeExt: 10, kneeExtW: 0.92, hipMax: 50, hipMaxW: 0.78,
     tilt: 5, lean: 5, leanAmp: 0.8, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 24, armBack: 32, elbow: 90, elbowAmp: 8, armAbd: 12 },
   { v: 5.5, id: "RUN" },
-  { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kv: 0.6, kneeTD: 28, kneeTO: 26, footW: 0.02, strikeToeUp: 2, heelRiseTO: 80, kneeTOrate: 420,
+  { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kv: 0.6, kneeTD: 28, kneeTO: 26, footW: 0.02, strikeToeUp: 2, heelRiseTO: 80, kneeTOrate: 420, heelRiseS: 0.28, kneeMinS: 0.82,   // the heel leaves early at a sprint
     kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
     tilt: 8, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 45, armBack: 55, elbow: 88, elbowAmp: 18, armAbd: 11 },
 ];
