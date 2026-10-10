@@ -183,7 +183,15 @@ const RUN1 = {
 // JOG 3.0 m/s and SPRINT 7.8 m/s are footballer variants of the same construction (provenance: RUN1_RESEARCH.md §speed scaling):
 // contact time halves while swing time barely changes (Weyand 2000; Hamner & Delp 2013); rear-foot strike at the jog, flat at the sprint
 // (Siegel 2023; Clark 2025); more knee recovery, hip drive, arm range and trunk lean with speed (Fukuchi 2017; Miyashiro 2019; Romero 2022).
-RUN1.anchors = [
+// RUN-1.2 REGIMES. RUN-1.1 is one gait stretched across speed: its 5.5 m/s limb waveforms are those of real 3.6–4.1 m/s joggers (review_artifacts/
+// locomotion_v2_run1/RUN1_2_REGIMES.md). RUN-1.2 keeps RUN-1.1 EXACTLY up to 4.0 m/s (the JOG regime: the 3.0 anchor below is RUN-1.1's, the 4.0
+// anchor is RUN-1.1's own blend at 4.0, so the linear blend between them reproduces RUN-1.1), then blends into regimes fitted at their own speeds:
+// RUN at 5.5 m/s and SPRINT at 7.8 m/s (RUN1.regimes). Every speed is still one continuous construction (one solve per speed-grid cell).
+RUN1.jog11 = { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
+  kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
+  tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 };
+RUN1.regimes = { RUN: { v: 5.5, id: "RUN" }, SPRINT: null };                       // overrides on RUN1.ref (the RUN-1.1 5.5 m/s set); SPRINT set below
+RUN1.anchors11 = [                                                                   // RUN-1.1's anchors, verbatim (the jog source)
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
     kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
     tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
@@ -192,8 +200,14 @@ RUN1.anchors = [
     kneeMax: 132, kneeMaxW: 0.44, kneeHold: 116, kneeHoldW: 0.60, kneeExt: 24, kneeExtW: 0.90, hipMax: 70, hipMaxW: 0.68,
     tilt: 10.5, lean: 15, leanAmp: 2.8, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 56, elbow: 96, elbowAmp: 22, armAbd: 8 },
 ];
+if (!RUN1.regimes.SPRINT) RUN1.regimes.SPRINT = Object.assign({}, RUN1.anchors11[2]);   // until the regime design: RUN-1.1's sprint anchor
+function r1Anchors(ref) {                                                           // the RUN-1.2 anchor list: JOG 3.0 · JOG 4.0 (= RUN-1.1 at 4.0) · RUN · SPRINT
+  const J = Object.assign({}, ref, RUN1.jog11), R11 = Object.assign({}, ref, RUN1.anchors11[1]), t = (4.0 - 3.0) / (5.5 - 3.0), J4 = { v: 4.0, id: "JOG" };
+  for (const k in ref) if (typeof ref[k] === "number") J4[k] = J[k] + (R11[k] - J[k]) * t;
+  return [J, Object.assign({}, ref, J4, { v: 4.0, id: "JOG" }), Object.assign({}, ref, RUN1.regimes.RUN), Object.assign({}, ref, RUN1.regimes.SPRINT)];
+}
 function r1ParamsAt(v, base) {
-  const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
+  const ref = base || RUN1.ref, A = r1Anchors(ref);
   let i = 0; while (i < A.length - 2 && v > A[i + 1].v) i++;
   const a = A[i], b = A[i + 1], t = Math.max(0, Math.min(1, (v - a.v) / (b.v - a.v))), P = {};
   for (const k in ref) P[k] = typeof ref[k] === "number" ? a[k] + (b[k] - a[k]) * t : ref[k];
