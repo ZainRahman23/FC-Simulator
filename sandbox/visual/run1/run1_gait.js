@@ -154,13 +154,17 @@ const RUN1 = {
     // pelvis (deg): tilt peaks near each toe-off; the swing-side hip drops in early stance; axial rotation follows the thigh scissor
     tilt: 8.5, tiltAmp: 2.2, tiltPh: 0.29,   // anterior tilt, peaking at each toe-off (Ota 2024: 6.6 → 9.2° touchdown → toe-off in sprinting): the push-off thigh
                                               // sweeps back with the pelvis tilting over it, not by hyper-extending the hip (RUN-1.0: 6°)
-    obliq: 3.5, obliqPh: 0.09,
-    pelvisYaw: 6, pelvisYawPh: 0.38,
+    // E5 — real strides (3 subjects, 9 strides): the pelvis turns WITH the thorax (right hip furthest back at the right touchdown, 4 % of the
+    // stride; shoulders at 98 %) — the arms and shoulders counter the LEGS, not the pelvis; the swing-side drop builds through the stance and
+    // peaks around toe-off (31 %). RUN-1.0 counter-rotated pelvis and thorax (39 % vs 86 %: a ±19° spine wring) and dropped the swing side just
+    // after touchdown (9 %). Amplitudes stay below the skin-marker values (obliquity overstated up to 4×, MacWilliams 2014)
+    obliq: 4.0, obliqPh: 0.30,
+    pelvisYaw: 6, pelvisYawPh: 0.04,
     sway: 0.012, swayPh: 0.12,
     // trunk (deg): constant-speed lean 5–8° (Preece 2016b), thorax counter-rotates the pelvis (Preece 2016a; Pontzer 2009: ~24° shoulder range at 3 m/s)
     lean: 12.5, leanAmp: 3.0, leanPh: 0.16, // the trunk DIPS INTO EVERY STANCE: real strides lean 12.6° (pelvis → neck, relative to standing) and pitch 6.2° per
                                             // step, most forward at ~60 % of stance, most upright in flight (RUN-1.0: 8° ± 1°, a rigid, upright trunk)
-    thoraxYaw: 13, thoraxYawPh: 0.86,
+    thoraxYaw: 10.5, thoraxYawPh: 0.03,
     // arms (deg): contralateral to the legs. The work is the ELBOW DRIVING BACK: real strides swing the upper arm from ~42° behind the trunk
     // to about level with it (+1.5°, range −10…+16 at 3.6 m/s) with the elbow flexed 94–124°, so the hand comes forward only to the front of
     // the trunk (≈ 20 cm ahead of the hips). RUN-1.0 swung it 33° in FRONT with a 72–96° elbow: the hand reached ~50 cm ahead, a pendulum.

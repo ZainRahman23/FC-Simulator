@@ -84,7 +84,7 @@ function metrics(S) {
   m.armFwd = af; m.armBack = -ab; m.armFwd_atStride_pct = iAf / N * 100; m.elbowMin = emin; m.elbowMax = emax; m.elbowMaxLag_pct = (((iEmax - iAf) / N * 100) + 150) % 100 - 50; m.wristLatMin_cm = wl * 100;
   let wfmax = -1e9; for (const r of C) wfmax = Math.max(wfmax, r.wristFR); m.wristFwdMax_cm = wfmax * 100;
   const amp = (k) => { let a = 1e9, b = -1e9, ib = 0; for (let i = 0; i <= N; i++) { if (C[i][k] < a) a = C[i][k]; if (C[i][k] > b) { b = C[i][k]; ib = i; } } return [(b - a) / 2, ib / N * 100]; };
-  [m.pelYawAmp, m.pelYawRbackMax_pct] = amp("pelYaw");   // (yaw / roll extreme phases are circular: 0 % = 100 %) [m.shYawAmp, m.shYawRbackMax_pct] = amp("shYaw"); [m.pelRollAmp, m.pelRollRupMax_pct] = amp("pelRoll");
+  [m.pelYawAmp, m.pelYawRbackMax_pct] = amp("pelYaw"); [m.shYawAmp, m.shYawRbackMax_pct] = amp("shYaw"); [m.pelRollAmp, m.pelRollRupMax_pct] = amp("pelRoll");   // phases circular
   return m;
 }
 const cols = arg("cols", "").split(",").filter(Boolean).map(c => c.startsWith("ref:") ? refStride(c) : run1Stride(c.split(":")[0], +c.split(":")[1]));
