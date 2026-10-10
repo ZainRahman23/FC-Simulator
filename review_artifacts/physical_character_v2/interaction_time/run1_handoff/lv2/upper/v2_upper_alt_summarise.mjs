@@ -1,0 +1,35 @@
+// Tables for V2_UPPER_BODY_REPRESENTATION.md from v2_upper_alt_probe.mjs output (read-only; text out).
+// usage: node v2_upper_alt_summarise.mjs <probe.json> [velocity field: k | m | kPL]
+import fs from "fs";
+const o = JSON.parse(fs.readFileSync(process.argv[2])), FN = process.argv[3] || "k", f = (x, n = 2) => (x == null || !Number.isFinite(x) ? "—" : x.toFixed(n));
+const L = [], P = (s) => L.push(s), sp = Object.keys(o.speeds), alts = o.alts;
+const cell = (fn) => sp.map(v => fn(o.speeds[v].aggregate[alts[0]] ? v : v)).join(" | ");
+const tab = (title, get, n = 1) => { P(`\n${title}`); P(`alt | ${sp.map(v => v + " m/s").join(" | ")}`); for (const a of alts) P(`${a} | ${sp.map(v => { const g = o.speeds[v].aggregate[a]; const x = get(g, a); return x == null ? "—" : x; }).join(" | ")}`); };
+const pm = (st, n = 1) => (st ? `${f(st.p50, n)} / ${f(st.max, n)}` : "—"), fld = (g, a) => (g.vel[FN] ? FN : "m");
+P(`velocity field: ${FN} (C has no KKT: its own mapping derivative is shown); instants per speed: ${sp.map(v => o.speeds[v].rows.filter(r => r.rfOK).length).join(" / ")}`);
+tab("POSE — shoulder (mm, p50 / max)", (g) => pm(g.pos.shoulder));
+tab("POSE — elbow, upper-arm side (mm)", (g) => pm(g.pos.elbowU));
+tab("POSE — elbow, forearm side (mm)", (g) => pm(g.pos.elbowF));
+tab("POSE — wrist (mm)", (g) => pm(g.pos.wrist));
+tab("POSE — hand tip (mm; includes the static 10° wrist flexion V2's rigid wrist cannot carry)", (g) => pm(g.pos.handTip));
+tab("POSE — trunk / head points (mm, max)", (g) => `${f(g.pos.trunk.max)} / ${f(g.pos.head.max)}`);
+tab("POSE — upper-body COM (mm) and orientation (°), max", (g) => `${f(g.bodyComMm.max)} mm, ${f(g.bodyRotDeg.max)}°`);
+tab("LOWER BODY — hip / knee / ankle position (mm) and velocity (m/s), max", (g, a) => `${f(g.pos.hipKneeAnkle.max, 4)} mm, ${f(g.vel[fld(g, a)].pt.hipKneeAnkle.max, 4)} m/s`);
+tab("VELOCITY — per-body COM error vs the rig material (m/s, p50 / max; P-14 scale 0.25)", (g, a) => pm(g.vel[fld(g, a)].bodyV, 3));
+tab("VELOCITY — per-body angular velocity error (rad/s, p50 / max; P-15 scale 2)", (g, a) => pm(g.vel[fld(g, a)].bodyW, 2));
+tab("MOMENTUM — |ΔP| (N·s, p50 / max; ÷ 73.9 kg = COM velocity error)", (g, a) => pm(g.vel[fld(g, a)].dP, 2));
+tab("MOMENTUM — |ΔL| about the COM relative to max(|L|, 1) (p50 / max; P-17 scale 0.10)", (g, a) => pm(g.vel[fld(g, a)].dLrel, 3));
+tab("ENERGY — unrepresented kinetic energy (J, p50 / max)", (g, a) => pm(g.vel[fld(g, a)].keResidualJ, 3));
+tab("VISIBLE (rotation retarget, held local rotations for unmapped bones) — shoulder / elbow / wrist / hand tip velocity pop (m/s, max)", (g, a) => { const r = g.vel[fld(g, a)].ret; return `${f(r.shoulder.max)} / ${f(r.elbowF.max)} / ${f(r.wrist.max)} / ${f(r.handTip.max)}`; });
+tab("VISIBLE (rotation retarget) — instants with any arm / head point > 0.18 m/s (PR-2 scale)", (g, a) => { const x = g.vel[fld(g, a)]; return `${x.retOverPR2}`; });
+tab("VISIBLE (rotation retarget, unmapped local motion CONTINUED by the render) — shoulder / elbow / wrist / hand tip / head velocity pop (m/s, p50 / max)", (g, a) => { const r = g.vel[fld(g, a)].ret2; return `${f(r.shoulder.p50)}/${f(r.shoulder.max)} · ${f(r.elbowF.p50)}/${f(r.elbowF.max)} · ${f(r.wrist.p50)}/${f(r.wrist.max)} · ${f(r.handTip.p50)}/${f(r.handTip.max)} · ${f(r.head.p50)}/${f(r.head.max)}`; });
+tab("VISIBLE (rotation retarget, continued) — instants with any arm / head point > 0.18 m/s", (g, a) => `${g.vel[fld(g, a)].ret2OverPR2}`);
+tab("VISIBLE (position-carried / world-held offsets) — shoulder / elbow(U) / wrist velocity pop (m/s, max)", (g, a) => { const r = g.vel[fld(g, a)].pt; return `${f(r.shoulder.max)} / ${f(r.elbowU.max)} / ${f(r.wrist.max)}`; });
+tab("ROM — minimum margin to V2's hard range (°; < 0 = beyond; copy mappings are clamped AT the limit, margin 0)", (g) => `${f(g.rom.minHard.min)} (${g.rom.minHardWho})`);
+tab("ROM — largest active-range exceedance (°)", (g) => f(g.rom.activeExc.max));
+tab("SELF-COLLISION — minimum body separation (mm; P-13 limit −10; 0 = touching, depth ≤ resolution)", (g) => f(g.self.min));
+tab("FROZEN PCG P-14…P-17 pass share (rig-joint-anchored reference; see note) and failures", (g, a) => { const k = g.pcgKin[fld(g, a)]; return k ? `${f(k.passShare * 100, 0)} % ${JSON.stringify(k.fails)}` : "—"; });
+tab("ONE-SHOT MAPPING COST (ms per handoff, p50): pose fit + V-d projection", (g) => `${f(g.fitMs.p50, 2)} + ${f(g.kktMs.p50, 2)}`);
+tab("FROZEN PCG GEOMETRIC ROWS P-1…P-13 — failing instants per row (P-12 counted for copy mappings only)", (g) => JSON.stringify(g.pcgGeomFailCounts));
+const a0 = sp.map(v => o.speeds[v].aggregate.A0.rawShoulderBeyondHard); P(`\nA0 raw shoulder angle beyond V2's hard range (clamped by the frozen projection), max: ${sp.map((v, i) => `${v}: ${f(a0[i].max)}°`).join(" · ")}`);
+console.log(L.join("\n"));

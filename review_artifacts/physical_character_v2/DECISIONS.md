@@ -3393,3 +3393,30 @@ Per the frozen rule, no struck run (A / B / C).
 **Nothing modified:** no RUN-1 / LV2, V2, simulation or ITS-1 code or evidence. R1 gained only a one-line pointer to R2.
 
 **Awaiting user review.**
+
+## 2026-10-10: Verdict B accepted; V2 UPPER-BODY REPRESENTATION investigated, read-only (`interaction_time/run1_handoff/V2_UPPER_BODY_REPRESENTATION.md`; source `sources/2026-10-10_user_instruction_v2_upper_body_mapping_anatomy.md`, a7a5bfb3)
+
+**Done (read-only):**
+- 14 upper-body alternatives evaluated kinematically against one reference: the rig's material carried with V2's masses. They cover mapping fits, in-memory hinge relocations, and a kinematic clavicle ceiling.
+- Speeds: LOW / JOG / FAST RUN / ALL-OUT, 240 instants per stride.
+- Lower body = the frozen mapping in every alternative; it stays exact (≤ 0.0002 mm, ≤ 0.0001 m/s).
+- The frozen V2 spec, LV2, RUN-1, the simulation and the gait clocks are untouched; no physics stepped.
+- The probe is deterministic.
+
+**Proposed classification: D.**
+- **Physics is mainly a mapping problem.** The V-d reference must be the rig material's velocities, not a differenced copied pose. With V2 unchanged, ALL-OUT per-body velocity error falls from 0.52 to 0.14 m/s, |ΔP| from 4.9 to 1.8 N·s, and |ΔL| from 30 % to 4 %.
+- **Visible continuity (PR-2) and the frozen pose rows need a small body-spec change at FAST RUN / ALL-OUT:** the lumbar and thoracic hinges at the rig's spine and chest joints, and the elbow at the rig's elbow.
+- **A clavicle is not justified:** it buys only a 0.17 → 0 m/s shoulder pop at ALL-OUT, with no momentum or inertia gain, at +2 bodies.
+- **The ALL-OUT shoulder-range exceedance (≤ 1.34°) is a copy-mapping artefact.** The fits stay ≥ 1.0° inside the hard range.
+
+**Recommendation (not adopted):** the record-hinged runner D12n.
+- Changes: three joint anchors from `rig.json`; mass, COM, inertia, colliders and ranges unchanged; kinetic-energy-metric pose fit plus the material-velocity projection.
+- ALL-OUT handoff errors: shoulder / elbow / wrist ≤ 6.5 / 5.4 / 2.6 mm; per-body velocity ≤ 0.093 m/s; |ΔP| ≤ 0.47 N·s; visible pop ≤ 0.17 m/s; 0 instants over 0.18.
+- Needs a new spec id and a re-run of the V2 gates: the quiet-stance gravity moment shifts by 10.6 / 9.2 N·m.
+
+**Frozen-tool findings, reported:**
+- The PCG P-14…P-17 reference attaches V2's COM to the rig's joints, 50–60 mm off for the trunk; even the exact-arm ceiling passes it at only 45 % of ALL-OUT instants.
+- P-17 swaps the arm inertia axes.
+- `bodySep` reports isolated false overlaps.
+
+**Awaiting user review.** Stopped before modifying the V2 body specification or implementing the handoff.
