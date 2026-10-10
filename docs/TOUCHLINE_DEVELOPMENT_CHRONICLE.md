@@ -2398,6 +2398,267 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 
 # Part V — The present
 
+## Friday 9 October 2026 — Track A closes, PI-1 hard stops, and the interaction-time pivot
+
+**Evidence:** [FC-Sim Git] 48 commits on `prototype/physical-character-v2`, `7111a04` (13:26) → `c647f4c` (05:09, 10 Oct); `5042230` (13:46) on the new branch `prototype/slide-contact-v1.3-charcollide`; `9d57d46` (23:28) on the new branch `prototype/locomotion-continuity-v1`; 21 RUN-1 commits on the new branch `prototype/locomotion-v2-run1` (from `9d57d46`), `8e3f4949` (05:07) → `affc30b0` (05:52, 10 Oct), covered in their own paragraph. The morning housekeeping commit `bb96657` (06:00) on `touchline-current` and the 06:01 pushes are in the remote-tracking reflog. None of the later commits was pushed by 06:00 on 10 Oct. [Doc] `DECISIONS.md`, the sections dated 2026-10-09 from Track A / B onward and those dated 2026-10-10; `pi1/track_a/`, `pi1/trackB/`, `pi1/rev1/`, `pi1/rev2/`, `pi1/hga/`, `pi1/moving_handoff/`, `locomotion_continuity/`, `promotion_carrier/` (with `slice/` and `leg_law/`), `consolidation/`, `interaction_benchmark/`, `interaction_time/`. 13 user decisions and instructions saved verbatim in `sources/` (6 dated 9 Oct, 7 dated 10 Oct). [Session] the times of the user's messages, from the Claude Code session record (UTC + 1 h). Four owner screenshots.
+
+**Publication housekeeping, 06:00** (`bb96657`).
+- This ran under the overnight instruction (04:57; 8 Oct entry): "At the start of the new development day under the existing 06:00 rule, before continuing new work, perform the established daily publication housekeeping".
+- `bb96657` added the 8 Oct entry, the 7 Oct catch-up notes, the Part V state and one owner screenshot.
+- **Pushed at 06:01, unchanged:**
+  - `prototype/physical-character-v2` `21b6f06` → `0ddba2b`: 36 commits, 4 from the 7 Oct day and 32 from 8 Oct;
+  - `touchline-current` `39770e5` → `bb96657`.
+- No further commit until 13:26.
+
+**Track A: the toe and contact warm start, early afternoon** (`7111a04` 13:26, `34cb41a` 13:32, `c94ff5d` 13:43, `dc9b35f` 13:46, `24a8803` 13:47).
+- User (13:23), answering the toe report (8 Oct entry): "Approve Option 1, with Option 4 in parallel." And: "If no clean local/principled solution emerges, close Track A as an engine/configuration limitation and retain the rigid-foot fallback. Do not spend the day tuning Jolt."
+- **Preregistered and frozen** before any instrumented run: Jolt v5.6.0 source facts, decoding of the contact cache through the state recorder, per-contact work attribution, single-step counterfactual restores, hypotheses H1 – H5, at most 3 mechanism-driven fixes.
+- **Mechanism** (frozen with the candidates, before any candidate ran).
+  - The separate 0.198 kg toe makes the foot's support subsystem ill-conditioned for the sequential-impulse solver. The toe contacts' effective mass is 0.027 – 0.155 kg, coupled to a 1 kg foot that carries body weight.
+  - At 150 iterations the solve does not converge, and warm starting carries the unconverged remainder in as positive work.
+  - drop1m: the stale impulses are the rear foot's landing impulses (202 N·s offered vs ≈ 15 needed): +3.607 J. With 300 iterations, or cold, the step gives −4.287 J. F0 converges at 150.
+  - leanF: the toe carries load with no topology change, and the solve is unconverged even at 4,800 iterations.
+- **Candidates.** Cold leaf contacts, and a reset when the loaded contact set changes (the user's suggestion), both fix drop1m but fail leanF (+0.569 / +1.611 J) and resting contact (penetration 3.5 / 5.1 mm). More iterations was excluded by the evidence. No candidate was frozen, so no battery ran.
+- **CLOSED as an engine-solver limitation. F0 retained; nothing adopted.** The toe is not fixable by any warm-start policy within the accepted Jolt configuration. The routes left are versioned model-level designs: a compliant toe joint, a reduced-coordinate foot-chain solve, or a non-physiological toe mass. The record calls this a solver-class limitation, not evidence against V2's anatomy.
+
+**Track B: CHARCOLLIDE-1 and slide-contact V1.3** (`dd88ee9` 13:33, `469d7ef` 13:38, `3e28e02` 13:43, `0a60763` and `5042230` 13:46, `6802742` 13:51, `e48fa5d` 14:18).
+- **Frozen before any V1.3 code:** CHARCOLLIDE-1's operational details and PCG-F0, a pose-compatibility gate for the rigid F0 foot (rows P-1 … P-17).
+- **Amendment A1** (before any code or fixture). The frozen capsule placement protruded 3.8 mm at the rounded heel and 10.0 mm at the toe spring, so A1 takes the largest inscribed sphere at each end.
+- **The vinicius profile** (`3e28e02`): thigh 84.5 → 59.8 mm, shin 53.6 → 36.1, foot 29.5 → 24.8, toe 9.4 mm.
+- **V1.3, a new simulation baseline** (`5042230`, branched from `e2c98ec`; local).
+  - The profiled runner's leg, foot and toe contact segments come from the character's own skeleton, posed by the shared locomotion law at the simulation's stride clock.
+  - The legacy path is byte-identical (480 / 480 unit cases).
+  - The commit: "Gameplay outcomes for the profiled runner are expected to change; nothing was tuned to preserve or obtain any outcome."
+- **Amendment A2** (before any gate evaluation) fixed the operational gate definitions. Its P-17 floor of 1 kg·m²/s was "chosen from no data".
+- **Neutral:** with the profiles removed, V1.2 hashes reproduce 19 / 19; modes are identical 26 / 26; export twice 20 / 20.
+- **The rebaseline supplies all three classes naturally:** a near miss at +1.13 m; rx_free_leg, a STUMBLE through a toe_R contact; rx_planted_leg, a FALL SIDE on the planted shin_L (J 144).
+- **0 / 26 pass the unchanged gate. All three PI-1 classes BLOCKED; PI-1 not run.**
+  - The blockers: the rigid F0 boot against the presentation's toe pivot / heel strike (P-9); the frozen R-K retarget's long-axis twist rates (P-15 / P-17); contact location (CG-1 / CG-4).
+  - rx_behind_standing fails only CG-7's tackler-primitive continuity, 17.9 vs 10 mm.
+  - F0 is compatible with ordinary running only in pre-heel-strike windows of ≤ 7 frames.
+- No V2 body or joint limit: the pose rows pass almost exactly (pelvis 0 mm, knee / ankle ≤ 3 µm). The runner body model costs 67.4 µs per call with CHARCOLLIDE-1, against 2.98 µs for the legacy model (unoptimised).
+
+**PI-1 Revision 1, mid-afternoon** (`ebfb90b` 15:42, `c437d0c` 15:53, `d7d49e0` 16:03).
+- User (15:40): "Knee mapping: fix the mapping, not the body." And on the tackler: "Do not simply raise 10 mm to 17.9+ mm after seeing the result."
+- **Frozen:**
+  - PM-2, a minimum inertia-weighted-displacement knee retarget;
+  - RF-1, a rigid-foot reconciliation (the physical foot pitched to the turf; the rendered foot blends to physics over 0.10 s);
+  - the tackler criterion retained as gating.
+- **HARD STOP.**
+  - The tackler: a rigid stand-in frozen at k_p diverges wherever the far-rule leg still extends or sweeps. First contact lands on a different segment, 7.5 – 12 ticks late, or never; the leg endpoints at contact differ by 112 – 1,050 mm.
+  - PM-2 is worse than R-K on MC-1 / 2 / 3 and was not adopted. The spin comes from the presentation's plant-IK on / off steps (a ≈ 4.5° knee-plane jump in one frame), which no causal hinge mapping can absorb.
+  - RF-1 raises the eligible promotion frames from 6 to 10 of 26. At toe pivot the rigid boot cannot reach the turf (≥ 22.9 mm).
+  - The gate rerun gives 0 / 26: near miss 0 / 5, recoverable 0 / 4, planted-leg FALL 0 / 8.
+- Architectural answer: not yet demonstrated. Simulation authority held throughout.
+
+**PI-1 Revision 2, late afternoon** (`7f76e82` 17:08, `f8cd44a` 17:13, `f2016c6` 17:18, `cf1d412` 17:24, `881f5b3` 17:39).
+- User (17:03): "After promotion: stop requiring the physical body to reproduce future authored/presentation poses." And: "If Revision 2 still produces zero representatives in any class, stop and identify the smallest remaining blocker. Do not introduce Revision 3 automatically."
+- **Frozen:**
+  - a strict handoff gate at k_p, including HG-A (the authoritative COM velocity) and HG-T (the stand-in can be instantiated);
+  - no presentation targets after promotion;
+  - PS-2, an outcome-neutral latest-clean-frame selector;
+  - AST-1, a two-segment stand-in tackler (torso plus slide leg);
+  - a demotion gate.
+- **Amendments before the scan:** A1 compares the decisive gameplay contact with the first physical contact. A2 detects physical contact from the stand-in's contact impulse, because a 2-case smoke test showed that the touching-depth test missed Jolt's speculative-contact collisions (smoke outputs superseded).
+- **HARD STOP: NEAR MISS 0 of 7, RECOVERABLE 1 of 4, PLANTED-LEG FALL 0 of 8.**
+  - Only 3 of 26 candidates reach a valid promotion frame, all standing runners.
+  - rx_behind_standing passes end to end: zero handoff discontinuity, stand-in tracking 0.05 mm, physical contact on the same segment and sub-step as gameplay, 37 mm apart.
+  - rx_facing_front fails CG-1: the F0 boot is struck 93 mm from the ankle, before the shin.
+  - rx_side_standing fails the retained 10 mm criterion at 10.8 mm. The cause is the simulation's own `SLIDER_BLOCKED_BY_FALLER` stop (3.0 → 0.4 m/s in one sub-step).
+  - The smallest remaining blocker is HG-A. The pelvis moves at exactly 3.00 m/s, but the mapped COM velocity swings 2.2 – 4.0 m/s from frame to frame, and 48 window frames fail on HG-A alone.
+- Architectural answer: demonstrated for a standing footballer up to and through the contact. Hand-back was not tested. Not demonstrated for a moving footballer.
+- **Owner screenshot** (18:02): [the end of the REV2 report in the session](../review_artifacts/chronicle_screens/2026-10-09_physical_character/Screenshot_2026-10-09_at_6.02.32_PM.png). It recommends a separately approved presentation task, "mainly by smoothing the stance-leg switching".
+
+**HG-A, early evening** (`b13cafd` 18:07, `192816b` 18:17, `09d67d9` 18:22; `f6265b5` 19:45, `cf144e8` 19:46).
+- User (18:03): "Do not smooth or modify the running animation yet. Do not create Revision 3 yet." And: "I do not want to repair the animation merely to force instantaneous whole-body COM velocity to equal a constant gameplay trajectory velocity."
+- A read-only investigation. The replacement criterion was frozen as a proposal (`192816b`) before any count.
+- **What HG-A protected:** mainly total linear momentum, since without it the promoted body carries 6.5 – 89.5 N·s that the simulation never had. Its 0.05 m/s cap came from P-16, a mapping-fidelity tolerance rather than a visibility one.
+- **The presentation** (22 moving candidates, 1,166 frames):
+  - its COM velocity matches the authority over a gait cycle (≤ 0.015 m/s);
+  - frame to frame it is non-physical: in flight it implies a 0.7 BW horizontal force and an 871 N·m torque (medians), and the pelvis height jumps by up to 72 mm in one frame.
+- **Three handoffs:** A (REV2's velocities) imports the momentum error; B (every body at the authoritative velocity) destroys the internal motion, with segment jumps up to 14 m/s; C (a uniform shift to M·v_auth) is exact and preserves angular momentum and all relative velocities. C matches the architecture.
+- **HG-A v2** (proposed): exact momentum through the one shift, |s| ≤ 0.180 m/s, from PR-2's 3 mm per 60 Hz frame.
+  - Diagnostic count: 10 / 26 promotable, but the representatives stay 0 / 1 / 0. The admissible frames lie 1 – 9.25 ticks before contact, where the drift of the non-locomoting body binds.
+  - New findings, not acted on (N1 – N4): unbounded vertical and angular imports; PR-2 would fail every moving promotion; contact-flagged feet move; "angular motion" was implemented as linear only.
+- **Owner screenshots** (19:39, three): [the HG-A report in the session](../review_artifacts/chronicle_screens/2026-10-09_physical_character/), answers 1 – 6, including the A / B / C table.
+- User (19:44): "Adopt HG-A v2 as the replacement for HG-A." And: "This is a correction of what the handoff should conserve, not a relaxation intended to make PI-1 pass." Versioned in `cf144e8`: v1 tolerated up to 3.7 N·s of momentum error, v2 none, and REV2's results stay as recorded under v1.
+
+**The moving handoff, evening** (`1846be4` 20:17; read-only).
+- **Presentation defects, by source:**
+  - the pelvis-height pose term (unblended stance / flight / heel-toe switches and the flight bob): the vertical defect at every speed, and the only blocker of valid frames at 7.5 m/s;
+  - plant-IK transitions: the main horizontal and leg error at 3 – 5.5 m/s. With the locks off, valid frames go from 20 to 75 of 302;
+  - a ground-clamp root-bone bug (12 mm single-tick drops);
+  - a stride clock built on a 0.865 m leg, against the rig's 0.834 m.
+- **PR-2:** its REV2 reading tested limb acceleration and was the session's own error (0 / 208 moving runs pass). It should compare against the genuine continuation over the same frame, with the 3 mm kept.
+- **Long-lead drift** (732 runs, no tackle). From fully valid frames, coherence lasts typically 1 – 2 ticks and at most 6, against required leads of 1 – 22 ticks (none at 7.5 m/s).
+  - The causes: A, missing locomotion (primary); B, the pelvis tether at a fixed height; D, presentation artefacts.
+  - No V2 body limitation.
+- **Recommended, not implemented:** a general locomotion-presentation continuity correction.
+
+**LC-1, the locomotion-continuity slice, late evening** (`df28867` 22:09, `313280f` 22:38, `f3cc1f6` and `9d57d46` 23:28, `19ff19d` 23:53).
+- User (22:07): "Treat this as a small general locomotion-development slice, not as tuning the animation to make PI-1 pass."
+- **Preregistered** before any implementation: criteria LC-1 … LC-8, design D1 – D7.
+- **Implementation freeze** on `prototype/locomotion-continuity-v1` (`9d57d46`, from V1.3). Presentation only.
+  - The build: a spring-mass vertical COM with ballistic flight (Morin 2005); continuous plants with a rolling sole; the root-bone fix; PR-2 v2; an angular handoff state, AH-1.
+  - With `OF_CONT.on = false` it reproduces V1.3 bit for bit. The shared law, which the simulation's CHARCOLLIDE legs also use, is untouched.
+  - Design changes made during development were recorded before the evaluation, each with the defect behind it.
+- **Result (one evaluation on the frozen code): NOT continuous by the preregistered verdict.**
+  - Pass: pelvis / COM C1 at every speed, ballistic flight ≤ 1.5 mm, no net drift, determinism, gameplay neutrality, V1.3 reproduction.
+  - Fail: joint continuity except at 1.45 / 3 m/s; 60 Hz COM velocity and vertical force except at 3 m/s; planted slip at 5.5 / 6.5 / 8.2 m/s; the angular rows.
+  - Three defects found after the freeze were recorded and not fixed.
+- **Promotion:**
+  - valid frames rise at 7 of 8 speeds (7.5 m/s: 30 vs 5 of 228);
+  - a promoted unobstructed runner stays coherent for 2 – 6 ticks (about 1 – 2 under V1.3);
+  - the REV2 scan with HG-A v2 gives 0 / 0 / 0, against the V1.3 control's 0 / 1 / 0, because rx_behind_standing's REV2 pass had relied on the 12 mm root-bone bug.
+- CPU 154 → 694 µs per actor tick (Node, prototype). Browser replay: `locomotion_continuity/stride_replay.html`.
+
+**The promotion carrier, after midnight** (`d91080d` 00:04, `da6b226` 00:29, `2c39acf` 00:38, `8585adc` 00:52, `fbdb6f5` 02:07).
+- User (00:03): "I do not want to restart autonomous V2 walking/balance work."
+- **Investigation (read-only):** the 1 – 6 ticks are not a translation failure.
+  - At the first incoherent tick the root is within 9.5 mm and |Δv| ≤ 0.25 m/s, but the legs are 107 – 207 mm from the gameplay legs and B is at its torque cap.
+  - A perfect translation carrier with the current legs fails NM-2 at t = 1 in 33 / 33 promotions.
+  - Servos that read physical state would be a second recovery authority, and were rejected.
+  - Recommended: feed-forward along the authoritative trajectory, with posture targets on the simulation's own leg law.
+- User (00:35) approved D-1 … D-8, with one added criterion: "The locomotion gait driver itself must not erase the collision."
+- **PCS-1** was preregistered and built: K0 passes in all three cases (bit-exact against the recorded `simBody`), and K4b passes for rx_miss.
+- **STOPPED at the promotion-frame re-check.**
+  - The preregistered frames k39 / k38 fail HG-T: the slide leg first reaches full extension at frame 43.
+  - The investigation had taken them from `valid_on_rx.json`, whose "valid" flag leaves out HG-T. An erratum was appended.
+  - Under the full gate: rx_miss k47 is valid; rx_free_leg's latest valid frame is k45 (4.25 ticks); rx_planted_leg has none.
+  - No carrier run.
+
+**AST-1E and the PCS-1 run, small hours** (`3ec464e` 02:18, `7b77dc5` 02:23, `bc12611` 02:27, `5e990e0` 02:35, `2306cc0` and `2a3f24c` 03:02, `badd7e9` 03:11).
+- User (02:11): "Choose C, but constrain it very tightly." And: "At the physical collision itself, the contact response must be solved physically and must not be overwritten or cancelled by that prescription."
+- **AST-1E**, an extending stand-in slide leg, following the record (it grows 0.0889 m per tick to 0.6401 m and is rigid after frame 43).
+  - A1: it uses a MutableCompoundShape of 8 pieces, because OffsetCenterOfMassShape aborts this Jolt wasm build.
+  - The gate gives frames 47 / 39 / 38, with hashes, the near miss and the contact regions all holding.
+  - **STOPPED on item 2:** slide-leg tracking 12.99 / 13.23 / 12.24 mm against 10 mm. The tether's spring target, inherited from REV2's AST-1, is the end-of-step pose, while Jolt evaluates spring error at the start of the step (AST-1 itself: 14.45 mm).
+- User (03:00): "Approve the one-line stand-in timing correction." With A2, checks 2 – 6 pass: 0.24 / 0.11 / 0.11 mm, frames 47 / 39 / 38.
+- **PCS-1 STOPPED at case 1**, rx_miss, on pre-contact coherence. Runs were deterministic, and the driver commands were identical with and without the tackler.
+  - Coherent for 3 ticks. Then the swing foot struck the turf 6 ticks early, with the pelvis 102 – 137 mm below the law's pelvis, and slid 141 mm.
+  - B was saturated on 87 % of pre-contact steps, and feed-forward requests reached 3,198 N·m. The runner fell, and the dragging foot was struck at 59.75 (18.75 N·s).
+  - rx_free_leg and rx_planted_leg were not run.
+  - Attribution: the temporary gait driver plus the source law's non-physical vertical. No V2 body failure.
+  - The core architecture is not yet demonstrated.
+
+**The leg law** (`f7e78c9` 03:19, `ed582f8` 03:41; read-only).
+- User (03:16): "Our next gate should be simpler: a promoted unobstructed runner must remain physically coherent for at least the entire longest required pre-contact window with no tackler."
+- **The shared law's pelvis vertical is a geometric by-product.** At jog and above:
+  - two thirds of stance needs a pulling ground force;
+  - flight is non-ballistic;
+  - take-off is −4.3 … −14.7 m/s;
+  - the stance foot skates;
+  - a spring-mass vertical sits 117 – 140 mm below the law's vault.
+- **Predictions:** physical collision legs would change 12 / 26 first contacts, so this is a gameplay change. Even with a physical reference, the frozen carrier holds coherence for only 0 – 6 ticks (1.4 – 4.5 kN·m feed-forward): the carrier is the binding blocker.
+- From 4.2 m/s the swing needs more hip torque than V2's modelled capacity: a candidate model limit, not an observed failure.
+- Options A – D were put to the user. The recommendation was C, a read-only redesign of the carrier's actuation; it was not started.
+
+**The pause and the consolidation** (`71129ac` 03:48, `15b0d5c` 04:12).
+- User (03:47): "Pause all further PI-1 architecture development while an external architecture review is underway." And: "Then stop. Do not recommend or implement the next architecture."
+- **Delivered, architecture-neutral:**
+  - `consolidation/CANONICAL_EVIDENCE.md`: every experiment from CF-0 to the leg law, with 11 contradictions / open facts and 8 questions for the review;
+  - the IB-1 interaction benchmark: five frozen scenarios from existing records (rx_miss, rx_free_leg, rx_planted_leg, rx_glancing, rx_behind_standing). The body bump and torso collision were not frozen, because no trustworthy case exists;
+  - metrics H1 – H8 (hard) and Q1 – Q8 (quality);
+  - a component audit (classification only);
+  - a read-only extractor and verifier: 59 pass, 1 note, 0 fail.
+- **Newly recorded:** rx_planted_leg fails V1.3's CG-1 / CG-3 / CG-5 rows; FULL / LOCO record bytes are not reproducible (a wall-clock `cpu` field).
+- No existing tool, simulation, V2, Jolt setting or criterion changed.
+
+**The interaction-time pivot and ITS-1, before dawn** (`2c6900d` 04:45, `cb886b1` 04:56, `c647f4c` 05:09).
+- User (04:42): "Architecture decision: adopt the interaction-time physics pivot." And: "I am ending the attempt to make sustained autonomous V2 locomotion or pre-contact physical running a production prerequisite." And: "The objective is NOT to prove that V2 can run."
+- *Transition:* the decision cites Astra's architecture review as complete. The review itself is not among the committed sources.
+- **The architecture:** the simulation stays authoritative; ordinary locomotion is animation-driven, a separate effort outside this session; V2 is the interaction body, activated only for meaningful interactions. All CF, SLP, PI-1, PCS, LC-1 and V1.3 work is kept as evidence.
+- **ITS-1, contract and preregistration** (frozen before any code).
+  - V2 is initialized from the simulation's own collision-skeleton pose at τ_c − 0.25. Velocities come from a KE-metric projection: stance foot fixed, M·v_auth, vertical COM velocity 0, angular momentum from the authority.
+  - The authoritative impulse is applied once, over one step, at the mapped point.
+  - REV2's posture tone is frozen at initialization; there is no B, carrier or stand-in.
+  - PI-1's locomotion gates are listed as not applicable.
+- **STOPPED at PF-0, activation validity, before any struck run.** Four control runs (no impulse):
+  - S-A (rx_free_leg, early stance) passes;
+  - S-A2 (rx_free_leg, late stance) fails on slip, 18.8 mm;
+  - S-B (rx_planted_leg, early stance) fails on activation load, 8.80 vs 6.04 N·s per step, with Σ+ 0.5115 vs 0.5 J;
+  - S-B2 (rx_glancing, touchdown) fails on a 17.9 N·s-per-step slap and 12 mm of slip.
+- **Attribution** (STOP diagnostics on the controls; the default path re-ran bit-identically):
+  - the binding element is the frozen-target posture tone acting against the initialized stance-leg rates. With it off the impact vanishes, but the body falls freely;
+  - also the rigid boot at heel strike, and a toe-edge support in late stance.
+- Neutrality and determinism held. Physics costs 643 – 683 µs per step, ≈ 24 ms per 0.15 s interaction.
+
+**RUN-1, a fresh production-locomotion track, before dawn** (`8e3f4949` 05:07 → `affc30b0` 05:52; branch `prototype/locomotion-v2-run1` from `9d57d46`, local).
+- User (04:44), the overnight mission: "Make the footballer run beautifully." And: "Not: Make physics discover how to run." Ordinary locomotion is simulation-authoritative and animation-driven; the first target is one V2 player straight ahead at about 5 – 6 m/s, judged on the actual gameplay camera. [Session]
+- **Construction**, presentation only, in new files (`sandbox/visual/run1/`, `run1.html`). No existing file was modified; Locomotion V1 and the shared law the simulation consumes are untouched.
+  - A spring-mass pelvis: a half-sine stance force and ballistic flight (Morin 2005), scaled × 0.6.
+  - A foot-space stance: a fixed plant that rolls heel → flat → MTP → toe pad, an analytic two-bone leg IK, and a knee-driven late stance.
+  - A joint-space swing: Hermite curves matched in value and slope to the stance at toe-off and touchdown, so every leg channel is C1 through both contacts by construction.
+  - A counter-rotating thorax, contralateral shoulder-driven arms and a stabilised head.
+  - It runs on the real Vinícius mesh. The PI-1 V2 runner body was generated from the same rig, so the V2 proportions and joint ranges apply.
+- **Research** (a read-only agent; `review_artifacts/locomotion_v2_run1/RUN1_RESEARCH.md`, measured vs design vs Touchline choices):
+  - 192 spm, 0.175 s contact and toe-off at 28 % at 5.5 m/s;
+  - stance knee 22 → 40 → 23°; peak swing knee 115° and hip 62°;
+  - the wrist kept lateral of the midline (Hild 2005).
+- **Viewer** `sandbox/visual/run1.html`:
+  - the exact CAMERA_V1 gameplay camera plus close side / front / rear / ¾ views;
+  - V1 driven by its own unmodified `ofActorTick` on a parallel lane;
+  - playback at 1× – 0.1×, frame step, and skeleton / contact / COM / trail overlays.
+- **Iterations 0 – 13** (`RUN1_ITERATIONS.md`):
+  - an infeasible contact time for this leg;
+  - a knee still extending at toe-off, which dragged the swing foot 7 cm through the turf (fixed by the knee-driven late stance);
+  - a mirror-handed close camera that culled the real mesh's front faces;
+  - "hands on hips" arms;
+  - 74° of MTP extension at toe-off, replaced by a 52° cap and a toe-pad roll;
+  - a swing foot passing through the stance calf at mid-swing (a sign error in the mid-swing abduction), now clearing it by 11 cm;
+  - a gyroscope head and a pendulum hand path (found with a new motion-path plot).
+- **Measured** (5.5 m/s, 60 Hz):
+  - contact slip 0.000 cm, and C0 / C1 at both joins;
+  - joint second difference p99, pelvis 0.29 and knees 2.96 cm per tick², against V1.3 12.0 / 21.7 and LC-1 0.58 / 11.1;
+  - swing foot ≥ 11 cm from the stance leg, and every joint inside V2's planning box (hard − 5°) except 0.9° of sprint hip extension;
+  - bit-identical across runs;
+  - 24 µs per rig and 0.52 ms for 22 rigs, against V1.3's 2.86 ms (Node).
+- **Generalisation:** jog (3.0 m/s) and sprint (7.8 m/s) anchors, a speed-grid cache of the solved gait, plants carried back by the root's own travel, and an acceleration lean. On the 3 → 7.8 → 3 m/s ramp, slip stays at 0.01 mm per tick.
+- **Known deviations:** peak stance dorsiflexion is ≈ 32° (≈ 27° measured); the touchdown knee rate is ≈ 850 °/s.
+- The work continues into the 10 Oct day.
+- RUN-1 commits before 06:00: `8e3f4949`, `0dec5bd5`, `5daa2a0d`, `3a589a38`, `e2dfc0a8`, `c315e4c7`, `f89710fb`, `87840d6d`, `7ed8bb41`, `40158535`, `71f3b07f`, `ed98bfe3`, `a84dbf47`, `839cc357`, `694fe5a2`, `41110a54`, `a2373467`, `b35c974a`, `aad9da8d`, `6c6301d6`, `affc30b0`.
+
+**Parallel work outside this repository** ([Local], file times only; not investigated). In the user's Codex workspace and `~/Downloads`, 10 Oct 03:06 – 04:58:
+- `TOUCHLINE_PORTFOLIO_REV8.html` (03:06);
+- `Touchline_Playable_Calendar.html` and `Touchline_Calendar_Source.zip` in `~/Documents/Codex/2026-10-05/new-chat-5/` (03:10);
+- `2026-27-ratings-updated-ranked-2026-10-09.xlsx` (03:23) and `…-2026-10-10.xlsx` (03:44);
+- a statistics build in `~/Documents/Codex/2026-10-10/new-chat/` (`Touchline_Playable_Statistics.html`, `build_statistics.py` and others, 03:09 – 04:58);
+- `Touchline_Liverpool_2027_Fronts_and_Backs.zip` (04:51, 120.5 MB).
+
+What was done is not reconstructed here.
+
+**Corrections and process errors.**
+- **Track B.** E1: a 10⁻¹² tolerance overlooked `gkRootMatrix`'s Float32Array storage (3.7 · 10⁻⁶ m). A gate bug that overwrote the fails list was fixed before any reported result; the pre-fix output and the failed pre-A1 profile are kept.
+- **REV1.** PM-2 was called "free of constants", but it implicitly fixes a one-frame time scale. CG-7's implemented tackler metric differs from its text; this is disclosed and kept for comparability.
+- **REV2.** Post-scan E1: CG-6 had been read after the contact impulse (74.3°); measured before contact it is 0.0°, and no count changes.
+- **HG-A.** The report discloses that the 0.18 m/s tolerance, derived from PR-2, was written when the HG-A values were already known (screenshot, 19:39).
+- **Moving handoff.** PR-2's REV2 reading was the session's own error.
+- **LC-1.** The lead-drift harness copy (it holds the far stand-in) is disclosed.
+- **PCS-1.** k39 / k38 were described as passing the full gate although HG-T had been left out. The original evidence is kept, with an erratum.
+- **AST-1E.** A1 (MutableCompoundShape) and a harness logging fix are disclosed.
+- **ITS-1.** V-3's 2·M·g·dt row is PI-1's PR-4 value, while running stance loads are about 2 – 3 BW. It was noted and not changed.
+
+**Adopted / not adopted.**
+- **Adopted:** HG-A v2 (`cf144e8`), a criterion correction.
+- **Kept frozen as the gameplay-collision baseline for this work:** V1.3 (`5042230`), on its own branch and not merged (user, 15:40: "Keep V1.3 frozen.").
+- **Corrected inside an experiment:** AST-1E A2, the stand-in's drive timing.
+- **Decided (architecture):** PI-1 development paused; the interaction-time physics pivot (`2c6900d`).
+- **Not adopted, kept as evidence:** the F1 toe, PM-2, LC-1 (on its branch) and the PCS-1 carrier.
+- **Unchanged:** V2 and its adopted configuration PSTAR5CHABV, the Jolt settings and every frozen criterion.
+- **Never run:** a PI-1 qualifying run, and an ITS-1 struck run.
+
+**End-of-day state** (06:00, 10 Oct).
+- **ITS-1 stopped at PF-0** (`c647f4c`). Decisions requested in `ITS1_STOP_PF0.md` §7:
+  1. V-3 rows for running stance;
+  2. an interaction-time stance tone;
+  3. the treatment of touchdown states;
+  4. a single-state C design;
+  5. optionally, A alone on S-A.
+
+  The recommendation is 1, 2 and 4 together, as amendment ITS-1 A1, not started.
+- **E2:** unchanged since the 8 Oct entry.
+- **Publication:** 48 V2 commits above the published `0ddba2b`, plus the local branches `prototype/slide-contact-v1.3-charcollide`, `prototype/locomotion-continuity-v1` and `prototype/locomotion-v2-run1`. Pushed in the 10 Oct housekeeping.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -2411,7 +2672,7 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `0ddba2b`, 9 Oct 05:11; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `c647f4c`, 10 Oct 05:09, pushed in the 10 Oct housekeeping; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -2423,18 +2684,30 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
   - The decisions in `e2/TD2C_RESULTS.md` §4 have not been taken. E2 integration, PG-1 and official E2 have not run.
   - Debts TD-15 (180 Hz end-range integration) and TD-17 (bounded-IK fold) gate later certification.
 - **Locomotion evidence** (8 Oct; counterfactual diagnostics CF-1 … CF-6, not adopted). With harness-only gait layers, V2-REF walked 59 consecutive continuous steps at 0.10 m/s. Every failure at higher speed lay in the gait / planning / control layer; no body limit was found. Autonomous V2 walking is no longer pursued.
-- **Architecture** (decided 9 Oct, ≈ 02:00; conceptual, not implemented).
-  - The supported-locomotion series (SLP-1, 1b, 2, 2C) is ended and kept as failed evidence.
-  - Ordinary movement will be simulation-authoritative procedural skeletal locomotion with foot IK. A player is promoted into V2 physics only for a meaningful interaction, and the simulation stays authoritative over the outcome (`PHYSICAL_CHARACTER_ARCHITECTURE_PIVOT.md`).
-  - Gameplay collision primitives must map to the rendered / physical geometry.
-- **PI-1, the first promotion slice, is blocked.**
-  - Preregistered (`6ef7e1e`) on the slide-contact pair. It stopped at the body check; the old fall case was withdrawn (D1C).
-  - The slide-contact V1.2 replacement cases fail the compatibility gate, because the runner's gameplay capsules do not map to the rendered leg and the rigid V2 boot cannot follow toe-pivot poses.
-  - A correction (character-derived colliders plus a toe body) was frozen (`7c090de`). The toe body breaks energy passivity through contact-lambda warm starting on a light body with turf contacts, and the toe work stopped on 9 Oct at 05:11.
-  - Options 1 – 4 in `pi1/f1/F1_TOE_FAILURE_REPORT.md` §8 await the user. CHARCOLLIDE-1, PM-1, the rebaseline and PI-1 itself have not started.
+- **Architecture** (decided 10 Oct 04:42, after Astra's review, `2c6900d`): interaction-time physics.
+  - The simulation is authoritative.
+  - Ordinary locomotion is animation-driven, a separate effort (RUN-1, below).
+  - V2 is activated only at a meaningful interaction, initialized at the interaction state.
+  - Sustained or pre-contact V2 locomotion is no longer a prerequisite.
+  - The 9 Oct promotion design (PI-1) is paused and kept as evidence.
+- **The PI-1 / PCS line is paused and superseded.**
+  - Track A closed the F1 toe as an engine-solver limitation; F0 is retained.
+  - V1.3 (`5042230`, CHARCOLLIDE-1) is the character-derived gameplay-collision baseline, on its own branch.
+  - REV1 and REV2 hard-stopped (REV2: 0 / 1 / 0, standing runners only). HG-A v2 was adopted.
+  - LC-1 was not continuous by its preregistration.
+  - PCS-1 stopped at case 1 on pre-contact coherence.
+  - No PI-1 qualifying run has ever run.
+- **ITS-1**, the first interaction-time slice (`cb886b1`), stopped at PF-0 activation validity (`c647f4c`).
+  - 1 of 4 control states is valid, and no struck run has been made.
+  - The recommended next step, amendment A1, is not started: an interaction-time stance tone, running-stance V-3 rows and a single-state C design.
+- **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
 **Touchline material that exists but is *not* in `touchline-current`** (nothing here should be assumed integrated):
+- **Locomotion and collision branches of 9 – 10 Oct** (pushed in the 10 Oct housekeeping, not merged):
+  - `prototype/slide-contact-v1.3-charcollide` (`5042230`);
+  - `prototype/locomotion-continuity-v1` (`9d57d46`, LC-1);
+  - `prototype/locomotion-v2-run1` (RUN-1, the straight-line run with its viewer `sandbox/visual/run1.html`).
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -2463,12 +2736,15 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
   - Reconciling the two is the largest open architectural task.
 - **Contact physics.** No limb-level collision in the playable game: residual limb brushes and leg–leg tangles in slide pile-ups; arms posed rather than collided. The game has no general rigid-body system, by design. The physical-character branches (Part IV) are the attempt to change that, and are not integrated. Since 9 Oct the intended route is promotion into V2 physics for meaningful interactions only, not continuous physical locomotion.
 - **Physical character.**
-  - **PI-1 (promotion into physics) is blocked by the toe finding.**
-    - A light articulated toe body with turf contacts gains energy under Jolt's contact-lambda warm starting (drop1m +3.607 J).
-    - No local fix was found, and both global alternatives (480 Hz; warm start off) fail other integrity rows.
-    - Options 1 – 4 await the user (`pi1/f1/F1_TOE_FAILURE_REPORT.md` §8).
-  - **Gameplay vs physical geometry.** The runner's gameplay contact capsules (`ptRxBody`, a default 0.865 m leg) do not match the rendered / physical leg, so slide-contact outcomes cannot yet be promoted faithfully. The correction (CHARCOLLIDE-1, a new simulation baseline) has not started.
-  - **The promotion architecture is decided but unbuilt.** Promotion without a pose pop, reconciliation, and the return to cheap locomotion are all unproven.
+  - **Interaction-time activation is not yet valid.**
+    - ITS-1's frozen-target posture tone opposes the initialized stance-leg rates: activation load 8.80 vs 6.04 N·s per step, slips of 12 – 18.8 mm.
+    - The touchdown and late-stance states also fail, so no struck response has been observed.
+  - **Gameplay vs physical geometry.**
+    - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
+    - The shared leg law's pelvis vertical is not physically realisable. A physical law would change 12 / 26 first contacts, a gameplay change that is undecided.
+  - **The interaction-time architecture is decided, but its later stages are untested:** hand-back / reconciliation, recovery and broader tackle coverage. The articulated toe (F1) is closed at the solver, and toe-pivot geometry remains a rigid-boot limitation.
+  - **A candidate V2 model limit:** from 4.2 m/s the swing hip torque exceeds the modelled capacity (Hill w0 15 rad/s). This is not an observed failure.
+  - **Production locomotion (RUN-1)** covers straight-line running only (3.0 – 7.8 m/s, with acceleration). Turning, cutting, stop / start, walking and integration into the match runtime are not started.
   - **E2 touchdown** is blocked at TD2C (U-1, the +20 mm obstacle at 180 / 240 Hz). The recovery-step touchdown (R-4 / R-5) is unsolved. TD-15 and TD-17 are open.
   - **CPU.** Continuous V2 locomotion for 22 players measured 4.3 – 5.1 s CPU per simulated second (SLP-2, unoptimised, one core). Promotion is estimated at roughly 18 – 38× less on average, but the interaction rates behind that estimate are assumed, not measured.
 - **Sprint dribbling** still loses the ball (not hidden). The Dribbling V1 boot-plan lateral mirror is recorded and unfixed.
