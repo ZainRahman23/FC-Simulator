@@ -1,0 +1,432 @@
+{
+ "run1": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 0.65,
+    "accMaxCm": 0.67,
+    "jerkP99cm": 0.07,
+    "jerkMaxCm": 0.08
+   },
+   "spine": {
+    "accP99cm": 0.64,
+    "accMaxCm": 0.67,
+    "jerkP99cm": 0.31,
+    "jerkMaxCm": 0.34
+   },
+   "head": {
+    "accP99cm": 0.64,
+    "accMaxCm": 0.67,
+    "jerkP99cm": 0.4,
+    "jerkMaxCm": 0.47
+   },
+   "hands": {
+    "accP99cm": 4.25,
+    "accMaxCm": 4.55,
+    "jerkP99cm": 3.46,
+    "jerkMaxCm": 3.64
+   },
+   "elbows": {
+    "accP99cm": 2.11,
+    "accMaxCm": 2.2,
+    "jerkP99cm": 1.78,
+    "jerkMaxCm": 1.82
+   },
+   "knees": {
+    "accP99cm": 4.14,
+    "accMaxCm": 4.69,
+    "jerkP99cm": 3.33,
+    "jerkMaxCm": 3.84
+   },
+   "ankles": {
+    "accP99cm": 9.74,
+    "accMaxCm": 11.18,
+    "jerkP99cm": 7.36,
+    "jerkMaxCm": 10.7
+   },
+   "toes": {
+    "accP99cm": 11.53,
+    "accMaxCm": 13.34,
+    "jerkP99cm": 9,
+    "jerkMaxCm": 10.68
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   },
+   "L": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   }
+  },
+  "pen": {
+   "R": 0,
+   "L": 0
+  },
+  "clear": {
+   "R": 2.1,
+   "L": 1.9
+  },
+  "channelRateMaxDegS": {
+   "psi": 104,
+   "a": 69,
+   "h": 445,
+   "k": 1093,
+   "fy": 127,
+   "fp": 1317,
+   "fr": 116,
+   "toe": 1105
+  }
+ },
+ "v12": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 0.63,
+    "accMaxCm": 0.64,
+    "jerkP99cm": 0.07,
+    "jerkMaxCm": 0.08
+   },
+   "spine": {
+    "accP99cm": 0.62,
+    "accMaxCm": 0.63,
+    "jerkP99cm": 0.27,
+    "jerkMaxCm": 0.28
+   },
+   "head": {
+    "accP99cm": 0.63,
+    "accMaxCm": 0.64,
+    "jerkP99cm": 0.37,
+    "jerkMaxCm": 0.38
+   },
+   "hands": {
+    "accP99cm": 2.76,
+    "accMaxCm": 2.89,
+    "jerkP99cm": 2.35,
+    "jerkMaxCm": 2.44
+   },
+   "elbows": {
+    "accP99cm": 1.62,
+    "accMaxCm": 1.7,
+    "jerkP99cm": 1.44,
+    "jerkMaxCm": 1.48
+   },
+   "knees": {
+    "accP99cm": 4.02,
+    "accMaxCm": 6.07,
+    "jerkP99cm": 3.51,
+    "jerkMaxCm": 4.71
+   },
+   "ankles": {
+    "accP99cm": 7.71,
+    "accMaxCm": 8.78,
+    "jerkP99cm": 6.89,
+    "jerkMaxCm": 7.72
+   },
+   "toes": {
+    "accP99cm": 8.99,
+    "accMaxCm": 9.93,
+    "jerkP99cm": 7.36,
+    "jerkMaxCm": 8.64
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   },
+   "L": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   }
+  },
+  "pen": {
+   "R": 0,
+   "L": 0
+  },
+  "clear": {
+   "R": 1.6,
+   "L": 2.1
+  }
+ },
+ "v11": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 0.6,
+    "accMaxCm": 0.62,
+    "jerkP99cm": 0.07,
+    "jerkMaxCm": 0.08
+   },
+   "spine": {
+    "accP99cm": 0.59,
+    "accMaxCm": 0.61,
+    "jerkP99cm": 0.24,
+    "jerkMaxCm": 0.26
+   },
+   "head": {
+    "accP99cm": 0.67,
+    "accMaxCm": 0.72,
+    "jerkP99cm": 0.42,
+    "jerkMaxCm": 0.44
+   },
+   "hands": {
+    "accP99cm": 2.15,
+    "accMaxCm": 2.19,
+    "jerkP99cm": 1.92,
+    "jerkMaxCm": 2
+   },
+   "elbows": {
+    "accP99cm": 1.43,
+    "accMaxCm": 1.5,
+    "jerkP99cm": 1.36,
+    "jerkMaxCm": 1.43
+   },
+   "knees": {
+    "accP99cm": 4.4,
+    "accMaxCm": 12.91,
+    "jerkP99cm": 3.7,
+    "jerkMaxCm": 9.27
+   },
+   "ankles": {
+    "accP99cm": 8.26,
+    "accMaxCm": 13.05,
+    "jerkP99cm": 6.74,
+    "jerkMaxCm": 11.76
+   },
+   "toes": {
+    "accP99cm": 8.69,
+    "accMaxCm": 12.45,
+    "jerkP99cm": 8.38,
+    "jerkMaxCm": 12.29
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   },
+   "L": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   }
+  },
+  "pen": {
+   "R": 0,
+   "L": 0
+  },
+  "clear": {
+   "R": 1.8,
+   "L": 1.6
+  }
+ },
+ "orig": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 0.35,
+    "accMaxCm": 0.41,
+    "jerkP99cm": 0.05,
+    "jerkMaxCm": 0.05
+   },
+   "spine": {
+    "accP99cm": 0.34,
+    "accMaxCm": 0.41,
+    "jerkP99cm": 0.21,
+    "jerkMaxCm": 0.24
+   },
+   "head": {
+    "accP99cm": 0.42,
+    "accMaxCm": 0.48,
+    "jerkP99cm": 0.32,
+    "jerkMaxCm": 0.34
+   },
+   "hands": {
+    "accP99cm": 3.34,
+    "accMaxCm": 3.46,
+    "jerkP99cm": 2.75,
+    "jerkMaxCm": 2.82
+   },
+   "elbows": {
+    "accP99cm": 2.04,
+    "accMaxCm": 2.16,
+    "jerkP99cm": 1.74,
+    "jerkMaxCm": 1.83
+   },
+   "knees": {
+    "accP99cm": 4.59,
+    "accMaxCm": 9.06,
+    "jerkP99cm": 3.94,
+    "jerkMaxCm": 7.19
+   },
+   "ankles": {
+    "accP99cm": 8.67,
+    "accMaxCm": 9.46,
+    "jerkP99cm": 7.83,
+    "jerkMaxCm": 9.43
+   },
+   "toes": {
+    "accP99cm": 10.24,
+    "accMaxCm": 10.68,
+    "jerkP99cm": 9.05,
+    "jerkMaxCm": 10.13
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   },
+   "L": {
+    "stanceCm": 0,
+    "tickMm": 0.01
+   }
+  },
+  "pen": {
+   "R": 0,
+   "L": 0
+  },
+  "clear": {
+   "R": 0.3,
+   "L": 0.2
+  }
+ },
+ "v13": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 17.5,
+    "accMaxCm": 21.23,
+    "jerkP99cm": 5.37,
+    "jerkMaxCm": 7.22
+   },
+   "spine": {
+    "accP99cm": 17.51,
+    "accMaxCm": 21.25,
+    "jerkP99cm": 5.34,
+    "jerkMaxCm": 7.2
+   },
+   "head": {
+    "accP99cm": 17.52,
+    "accMaxCm": 21.27,
+    "jerkP99cm": 5.29,
+    "jerkMaxCm": 7.16
+   },
+   "hands": {
+    "accP99cm": 18.38,
+    "accMaxCm": 26.65,
+    "jerkP99cm": 10.81,
+    "jerkMaxCm": 16.45
+   },
+   "elbows": {
+    "accP99cm": 17.49,
+    "accMaxCm": 24.77,
+    "jerkP99cm": 5.77,
+    "jerkMaxCm": 7.29
+   },
+   "knees": {
+    "accP99cm": 27.07,
+    "accMaxCm": 36.38,
+    "jerkP99cm": 22.57,
+    "jerkMaxCm": 27.23
+   },
+   "ankles": {
+    "accP99cm": 23.9,
+    "accMaxCm": 32.35,
+    "jerkP99cm": 14.47,
+    "jerkMaxCm": 16.64
+   },
+   "toes": {
+    "accP99cm": 30.5,
+    "accMaxCm": 36.05,
+    "jerkP99cm": 13.46,
+    "jerkMaxCm": 17.58
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0.33,
+    "tickMm": 3.32
+   },
+   "L": {
+    "stanceCm": 0.33,
+    "tickMm": 3.29
+   }
+  },
+  "pen": {
+   "R": 1.35,
+   "L": 1.35
+  },
+  "clear": {
+   "R": -1.8,
+   "L": -1.8
+  }
+ },
+ "lc1": {
+  "groups": {
+   "pelvis": {
+    "accP99cm": 0.94,
+    "accMaxCm": 1.02,
+    "jerkP99cm": 0.93,
+    "jerkMaxCm": 1.01
+   },
+   "spine": {
+    "accP99cm": 1,
+    "accMaxCm": 1.09,
+    "jerkP99cm": 0.98,
+    "jerkMaxCm": 1.07
+   },
+   "head": {
+    "accP99cm": 1.09,
+    "accMaxCm": 1.3,
+    "jerkP99cm": 1.05,
+    "jerkMaxCm": 1.27
+   },
+   "hands": {
+    "accP99cm": 6.81,
+    "accMaxCm": 7.27,
+    "jerkP99cm": 6.16,
+    "jerkMaxCm": 6.81
+   },
+   "elbows": {
+    "accP99cm": 4.26,
+    "accMaxCm": 4.42,
+    "jerkP99cm": 3.32,
+    "jerkMaxCm": 3.62
+   },
+   "knees": {
+    "accP99cm": 17.63,
+    "accMaxCm": 21.5,
+    "jerkP99cm": 16.44,
+    "jerkMaxCm": 20.88
+   },
+   "ankles": {
+    "accP99cm": 14.82,
+    "accMaxCm": 17.54,
+    "jerkP99cm": 11.93,
+    "jerkMaxCm": 14.63
+   },
+   "toes": {
+    "accP99cm": 15.82,
+    "accMaxCm": 18.11,
+    "jerkP99cm": 11.76,
+    "jerkMaxCm": 13.66
+   }
+  },
+  "slip": {
+   "R": {
+    "stanceCm": 0,
+    "tickMm": 0
+   },
+   "L": {
+    "stanceCm": 0,
+    "tickMm": 0
+   }
+  },
+  "pen": {
+   "R": 0.33,
+   "L": 0.04
+  },
+  "clear": {
+   "R": 0.2,
+   "L": 0.2
+  }
+ }
+}

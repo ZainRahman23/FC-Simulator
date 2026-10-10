@@ -164,6 +164,8 @@ What was wrong is the *data*, not the construction. RUN-1.1's "RUN" anchor was R
 
 **State.** `run1_gait.js` = **RUN-1.2** (`RUN1.id`). RUN-1.1 stays frozen in `run1_gait_v11.js` and RUN-1.0 in `run1_gait_orig.js`; both are byte- and pose-identical to their commits (`regimes/final/frozen_check.txt`). RUN-1.2 is identical to RUN-1.1 at every speed ≤ 4.0 m/s (checked at 3.0 / 3.25 / 3.5 / 3.75 / 4.0), so the approved jog is untouched.
 
+> **Erratum (10 Oct, RUN-1.3 session).** That check sampled only speed-grid points. Bit-for-bit identity holds at 3.0 / 3.5 / 4.0 m/s, with floating-point noise (< 1 µm) at 3.25 / 3.75. *Between* grid cells RUN-1.2 differs from RUN-1.1 by up to 0.12 mm (3.1 / 3.6 / 3.9 m/s and a 3 → 4 m/s ramp, `allout/final/frozen_and_identity.txt`): the always-present hip knot is lerped between cells, and lerping five knots is not exactly lerping four. Invisible; not fixed (RUN-1.2 is frozen as `run1_gait_v12.js`). Also: `run1_limits.cjs` capped the elbow reading at 90° (an arcsine); RUN-1.2's elbow maximum was really 125°, inside the 145° box.
+
 **One addition beyond §4.** The sprint's "knee still folded when the other foot lands" could not be reached by the existing swing knots without bending the whole thigh curve. RUN-1.2 adds **one hip knot at the opposite touchdown** (`hipOpp`, `hipOppK`). It is present in every regime. At `hipOppK = 0` it sits exactly on the curve with the curve's own slope (`r1HermD`, the exact Hermite derivative), so the curve is unchanged. Only SPRINT sets it. It is a knot in an existing channel, not a new motion construct.
 
 ### Iterations
