@@ -37,3 +37,13 @@ No existing file is modified.
   - It is served by `python3 -m http.server 8317` from the worktree root.
 - **05:10–05:30 Iterations 3–6** (posture, camera handedness, arms, labels) and the research write-up (`RUN1_RESEARCH.md`).
 - **05:30 Continuity diagnostics** (`run1/tools/run1_continuity.cjs`): RUN-1 vs V1.3 vs V1+LC-1.
+- **05:25–05:31 Generalisation.**
+  - Jog / run / sprint anchors, the speed grid, travel-tracked plants, acceleration lean and the deterministic replay.
+  - In the viewer: a speed menu and the ramp.
+  - The ramp continuity check.
+- **05:31–05:37 Evidence captures** (`captures/`) and viewer fixes (zoomed overlay projection, lanes, window-fitting layout).
+  - The iteration log was rewritten: two earlier edits to it had silently failed to apply.
+- **05:33 Iteration 7.** MTP cap and toe-pad roll.
+- **05:38–05:42 Iteration 11.** Swing-foot / stance-calf clipping caused by a sign error, found with a new clearance diagnostic.
+- **05:43–05:46 Continuous state export** (`r1Kinematics`) with its consistency check, then iteration 12 (residual head motion) and the subtle arm asymmetry.
+- **9 Oct chronicle.** A background agent drafted the entry from the commits and committed sources (draft only). I reviewed it, added the RUN-1 and parallel-work paragraphs, and prepared the archive of the four owner screenshots. All of it is applied and pushed at the 06:00 boundary under the daily rule.
