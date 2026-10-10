@@ -205,6 +205,11 @@ RUN1.regimes.RUN = { v: 5.5, id: "RUN",
   // 118–135°). Upper arm ≈56° behind → ≈22° in front of the trunk (RUN-1.1: 50 / 5 — the 3.6 m/s jog carriage), the elbow opening to ≈70° in the
   // drive back and closing to ≈122° in front, so the hand comes up to chest–chin height instead of staying at the waist
   armFwd: 20, armBack: 56, elbow: 96, elbowAmp: 26, armAbdAmp: 4,
+  // R4 the pelvis drives, the shoulders counter: marker-based pelvis data (Fukuchi 2017, CC BY; tools/ref/fuk_pelvis.py) put "right hip back" at
+  // ≈20 % of the stride (mid-stance), lagging the shoulder line by ≈75°, and the pelvis range grows with speed (≈15° → 21° from 3.3 to 5 m/s,
+  // thorax-on-pelvis up to ≈33°). RUN-1.1 turned pelvis and thorax together (E5, from CMU skeleton fits): ±6° and a ±4.5° spine twist — one
+  // block. Trunk lean is NOT increased (steady-speed lean does not grow with speed); its stance dip is kept, a little firmer
+  pelvisYaw: 10, pelvisYawPh: 0.20, thoraxYaw: 12, obliq: 5, tiltAmp: 3.0, lean: 11.5, leanAmp: 2.5,
 };
 RUN1.anchors11 = [                                                                   // RUN-1.1's anchors, verbatim (the jog source)
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
