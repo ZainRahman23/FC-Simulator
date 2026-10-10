@@ -1,0 +1,49 @@
+{
+ "clip": "history",
+ "file": "LOCOMOTION_V2_VERSION_HISTORY",
+ "lanes": [
+  {
+   "key": "L0",
+   "eng": "v1",
+   "label": "V1 5.5",
+   "v": 5.5
+  },
+  {
+   "key": "L1",
+   "eng": "orig",
+   "label": "RUN-1.0 5.5",
+   "v": 5.5
+  },
+  {
+   "key": "L2",
+   "eng": "v11",
+   "label": "RUN-1.1 5.5",
+   "v": 5.5
+  },
+  {
+   "key": "L3",
+   "eng": "run1",
+   "label": "RUN-1.3 5.5",
+   "v": 5.5
+  }
+ ],
+ "frames": 420,
+ "laneFrames": 1680,
+ "locomotion": "MATCH: 1151 of 1680 lane-frames bit-identical to the independent replay; in the rest 1997 of 618240 float32 matrix terms differ, each by at most 0.000 float32 ulp at the matrix scale (largest absolute 1.1e-13) — last-bit rounding between Chrome's and Node's V8 math, not a different pose",
+ "animationTime": "every frame at exactly t0 + k / 60 s (t 1.000 … 7.983 s): no dropped or repeated animation time",
+ "playback": [
+  {
+   "file": "LOCOMOTION_V2_VERSION_HISTORY.mp4",
+   "bytes": 11826915,
+   "duration": "00:00:07.00",
+   "stream": "Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 2940x1302, 13510 kb/s, 60 fps, 60 tbr, 15360 tbn (default)",
+   "decodedFrames": 420,
+   "expectedFrames": 420,
+   "psnrMinDb": 39.09,
+   "psnrMeanDb": 39.46,
+   "psnrFrames": 420,
+   "duplicatesDropped": 0,
+   "verdict": "PASS"
+  }
+ ]
+}

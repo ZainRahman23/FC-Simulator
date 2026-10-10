@@ -1,0 +1,62 @@
+{
+ "clip": "ladder",
+ "file": "LOCOMOTION_V2_FINAL_LADDER",
+ "lanes": [
+  {
+   "key": "L0",
+   "eng": "run1",
+   "label": "RUN-1.3 LOW 3.0",
+   "v": 3
+  },
+  {
+   "key": "L1",
+   "eng": "run1",
+   "label": "RUN-1.3 JOG 5.5",
+   "v": 5.5
+  },
+  {
+   "key": "L2",
+   "eng": "run1",
+   "label": "RUN-1.3 FAST RUN 7.8",
+   "v": 7.8
+  },
+  {
+   "key": "L3",
+   "eng": "run1",
+   "label": "RUN-1.3 ALL-OUT 9.5",
+   "v": 9.5
+  }
+ ],
+ "frames": 420,
+ "laneFrames": 1680,
+ "locomotion": "MATCH: 973 of 1680 lane-frames bit-identical to the independent replay; in the rest 2687 of 618240 float32 matrix terms differ, each by at most 0.016 float32 ulp at the matrix scale (largest absolute 1.9e-9) — last-bit rounding between Chrome's and Node's V8 math, not a different pose",
+ "animationTime": "every frame at exactly t0 + k / 60 s (t 1.000 … 7.983 s): no dropped or repeated animation time",
+ "playback": [
+  {
+   "file": "LOCOMOTION_V2_FINAL_LADDER.mp4",
+   "bytes": 13516438,
+   "duration": "00:00:07.00",
+   "stream": "Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 2940x1302, 15440 kb/s, 60 fps, 60 tbr, 15360 tbn (default)",
+   "decodedFrames": 420,
+   "expectedFrames": 420,
+   "psnrMinDb": 38.51,
+   "psnrMeanDb": 38.91,
+   "psnrFrames": 420,
+   "duplicatesDropped": 0,
+   "verdict": "PASS"
+  },
+  {
+   "file": "LOCOMOTION_V2_FINAL_LADDER_UNLABELED.mp4",
+   "bytes": 13278936,
+   "duration": "00:00:07.00",
+   "stream": "Stream #0:0[0x1](und): Video: h264 (High) (avc1 / 0x31637661), yuv420p(tv, bt709, progressive), 2940x1302, 15168 kb/s, 60 fps, 60 tbr, 15360 tbn (default)",
+   "decodedFrames": 420,
+   "expectedFrames": 420,
+   "psnrMinDb": 39.09,
+   "psnrMeanDb": 39.55,
+   "psnrFrames": 420,
+   "duplicatesDropped": 0,
+   "verdict": "PASS"
+  }
+ ]
+}
