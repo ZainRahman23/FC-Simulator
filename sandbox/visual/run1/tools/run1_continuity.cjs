@@ -51,7 +51,7 @@ function analyse(S, hz) {
     const fi = B["foot_" + sd].idx, ti = B["toe_" + sd].idx; let maxStance = 0, maxTick = 0, acc = 0, prev = null, maxPen = 0, minClear = 1e9;
     for (let k = 0; k < S.length; k++) { const a = S[k].j[fi], tip = S[k].tip[ti], low = Math.min(a[1] - skel.ankleH, tip[1]);
       maxPen = Math.max(maxPen, -Math.min(0, low + 0.004));
-      const heel = X.M4.transformPoint(S[k].W[fi], [0, -skel.ankleH, heelZ]), mtp = X.M4.transformPoint(S[k].W[ti], [0, -mtpUp, 0]), pad = X.M4.transformPoint(S[k].W[ti], [0, -mtpUp, 0.07]);
+      const heel = X.M4.transformPoint(S[k].W[fi], [0, -skel.ankleH, heelZ]), mtp = X.M4.transformPoint(S[k].W[ti], [0, -mtpUp, 0]), pad = X.M4.transformPoint(S[k].W[ti], [0, -mtpUp, 0.08]);
       const c3 = [{ k: "heel", p: heel }, { k: "mtp", p: mtp }, { k: "pad", p: pad }].sort((a, b) => a.p[1] - b.p[1]), cp = c3[0].p[1] < c3[1].p[1] - 1e-4 ? c3[0] : (c3[0].k === "pad" || c3[1].k === "pad" ? (c3[0].k === "pad" ? c3[0] : c3[1]) : c3[0]);   // the lowest contact (the toe pad wins a tie: it is the last to leave)
       if (S[k].planted[sd]) { if (prev && prev.k === cp.k) { const d = Math.hypot(cp.p[0] - prev.p[0], cp.p[2] - prev.p[2]); acc += d; maxTick = Math.max(maxTick, d); } prev = cp; maxStance = Math.max(maxStance, acc); }
       else { prev = null; acc = 0; minClear = Math.min(minClear, a[1] - skel.ankleH); } }

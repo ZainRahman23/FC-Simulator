@@ -239,7 +239,7 @@ function r1StanceBase(G, sd, s, pl) {
 }
 // MTP extension cap for the push-off: the toes stay flat on the turf until the MTP joint reaches ~52° of dorsiflexion (smooth, C1); beyond
 // that the toe segment itself pitches and the foot rolls onto the toe pad (front studs) — V2 F1 MTP range: DF 60° active / 70° hard
-const R1_MTP = { cap: 52 * Math.PI / 180, w: 8 * Math.PI / 180, padAhead: 0.07 };
+const R1_MTP = { cap: 52 * Math.PI / 180, w: 8 * Math.PI / 180, padAhead: 0.08 };   // pad 8 cm ahead of the MTP joint: the boot tip (toe spring) never swings below the turf
 function r1MtpDF(up) { const c = R1_MTP.cap, w = R1_MTP.w; if (up <= c - w) return up; if (up >= c + w) return c; const x = up - (c - w); return up - x * x / (4 * w); }
 function r1AnkleAt(body, B, beta) {                     // foot rolled by beta about the heel contact (beta > 0), or heel-up about the MTP joint / toe pad (beta < 0)
   const Rf = R3.mul(B.Ry, R3.x(-beta));
