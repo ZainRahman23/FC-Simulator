@@ -1,5 +1,7 @@
 # Locomotion V2 / RUN-1: morning report (draft, updated through the night)
 
+> **10 Oct, afternoon:** this report describes the original RUN-1, now **RUN-1.0**, frozen in `run1_gait_orig.js`. The effort pass that followed your review, **RUN-1.1**, is in `RUN1_1_EFFORT.md` (reference, iterations E0–E6, results, regressions, next step).
+
 ## 1. Watch it
 
 ```

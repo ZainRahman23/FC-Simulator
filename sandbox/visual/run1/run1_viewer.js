@@ -39,9 +39,9 @@ function rv1Path(lane) {
   return { hd, ux, uy, x0: cx - ux * len / 2 + lx * lane, y0: cy - uy * len / 2 + ly * lane, len };
 }
 function rv1Sim(lane, t) { const P = rv1Path(lane), s = rv1Dist(t), v = rv1V(t); return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * v, vy: P.uy * v, heading: P.hd, v }; }
-function rv1Lane(who) {                                                 // shown subjects on parallel lanes 3.6 m apart, RUN-1.1 nearest the camera when running across
+function rv1Lane(who) {                                                 // shown subjects on parallel lanes 5 m apart, RUN-1.1 nearest the camera when running across
   const on = RV1_WHO.filter(w => RV1.show[w]), i = on.indexOf(who), n = on.length; if (i < 0 || n < 2) return 0;
-  return ((n - 1) / 2 - i) * 3.6 * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1);
+  return ((n - 1) / 2 - i) * 5.0 * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1);
 }
 
 // ── camera math ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────

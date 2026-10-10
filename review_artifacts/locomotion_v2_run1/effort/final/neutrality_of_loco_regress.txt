@@ -1,6 +1,6 @@
-# of_loco_regress.js on prototype/locomotion-v2-run1 (RUN-1.1 working tree over 949bd763), 2026-10-10 14:24
+# of_loco_regress.js on prototype/locomotion-v2-run1 (RUN-1.1 working tree over da3035f5), 2026-10-10 14:32
 # files changed vs the RUN-1 baseline 9d57d460 outside the RUN-1 paths: 0
-# Item 3's flag is pre-existing: of_player.js:194 (corner-flag animation time in the composite, not a pose), unchanged since e2c98ec7 (28 Sep); identical to the RUN-1.0 session's gate output. run1_gait.js / run1_gait_orig.js: no Math.random, Date.now or performance.now.
+# Item 3's flag is pre-existing: of_player.js:194 (corner-flag animation time in the composite, not a pose), unchanged since e2c98ec7 (28 Sep); identical to the RUN-1.0 session's gate output. run1_gait.js / run1_gait_orig.js: sandbox/visual/run1/run1_gait_orig.js:0 sandbox/visual/run1/run1_gait.js:0  occurrences of Math.random / Date.now / performance.now.
 OUTFIELD LOCOMOTION V1 — REGRESSION GATE
   1. animation ON/OFF neutrality (authoritative x,y,vx,vy,facing over 720 ticks of every gait + transitions + turns + stop)
        SHORT_LEAN    max |delta| = 0   IDENTICAL

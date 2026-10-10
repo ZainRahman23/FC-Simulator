@@ -88,3 +88,89 @@ Each step is one principled change, then watched against the reference and RUN-1
 | E5 | **A mechanical spine wring** (E0 item 7). RUN-1.0 counter-rotated the pelvis against the thorax: "right hip back" at 39 % of the stride against the shoulders at 86 %, a ±17° thoracic twist. The swing-side pelvic drop peaked just after touchdown (9 %). The real pelvis turns *with* the thorax (4 % / 98 %); the arms and shoulders counter the legs. The drop builds through stance and peaks around toe-off (31 %). | Pelvis yaw ±6° peaking at 4 % (0.38). Thorax ±10.5° at 3 % (±13° at 86 %; the arm-driven clavicle shifts the measured shoulder line to 97 %). Obliquity ±4° peaking at 30 % (±3.5° at 9 %; below the skin-marker 5.8°, which overstates by up to 4×). | **Phases at 5.5 m/s:** pelvis 3 % (real 4.1 %), shoulders 97 % (real 98.2 %), obliquity 30 % (real 31.5 %).<br>**Spine twist:** thoracic axial ±7.1° (±17.1°), lumbar ±2.0° (±4.8°).<br>**Contact:** stance median 0.0 mm and swing ≥ +0.2 mm on the mesh; foot to stance leg ≥ 18 cm.<br>**Visual:** from the rear ¾ the trunk turns with the pelvis while the arms counter the legs, with no wringing.<br>**Tool fix:** a comment edit in `run1_refmetrics.cjs` had silently dropped the shoulder-yaw and obliquity rows from the saved metric files of E0–E4. The E0 values in the table above come from the run before that edit. `effort/E0_metrics_real_vs_RUN1.0.txt` was regenerated with the fixed tool; the real strides and RUN-1.0 are unaffected by later changes.<br>**Evidence:** `effort/E5_*`. |
 | E6 | **Found by the smoothness comparison** (`run1_continuity.cjs` now also runs RUN-1.0 on the same input).<br>• At a constant 5.5 m/s RUN-1.1's ankles were 25 % rougher than RUN-1.0's (p99 7.38 vs 5.90). The peak was 12 ms before touchdown: the swing hip had to reverse, because the stance hip briefly *flexed* after contact (+73 °/s; RUN-1.0 +38). The knee collapse at the landing dragged the thigh forward; real thighs keep extending through contact.<br>• The stance knee peaked at 54° (5.5 m/s) to 58° (4.2 m/s); real 47° at 3.6 m/s.<br>• Hip extension reached −20.9° at 4.2 m/s.<br>• Also found: the E1 "ramp" continuity run had silently used constant speed. A bare `--ramp` takes no profile; the tool now refuses an invalid one. | **The ankle takes more of the landing:**<br>• Heel 7° up at touchdown (4°), lowering over 12 % of stance.<br>• Touchdown knee 28° (26; real 28.7), loading-peak extra 2° (3).<br>• Jog contact 0.25 s (0.27): at 3.8 m/s the duty falls from 34.7 to 32.7 % (real 30.6 %).<br>**Tried and not adopted** (kept as `effort/experiments/E6_com_consistent_pelvis_NOT_ADOPTED.patch`):<br>• **A COM-consistent pelvis:** the whole-body COM, not the pelvis, follows the vertical model, via a Fourier correction from the pose's own COM offset. It changed the pelvis range by 0.1 cm and the knee peaks by 0.0–0.1°, and doubled the per-cell solve cost.<br>• **Jog anchor:** zero loading extra, touchdown knee 26° and a later heel rise. Each moved the mid-speed knee by ≤ 1.3°. | **Contact:** hip extends through contact (−22 °/s); knee touchdown rate 806 °/s, peak rate 803 °/s (RUN-1.0 836).<br>**Knee peak:** 50.5 / 54.0 / 54.9 / 53.6 / 46.1° at 3.0 / 3.8 / 4.2 / 5.5 / 7.8 m/s.<br>**Hip extension** is now inside V2's box at every speed (worst −19.3°; RUN-1.0 −20.9°). **Every joint channel is inside the planning box.**<br>**Smoothness against RUN-1.0, p99 cm/tick² at a constant 5.5 m/s:**<br>• knees 2.57 vs 2.95;<br>• ankles 5.09 vs 5.90;<br>• toes 4.92 vs 6.98;<br>• hands 0.96 vs 1.39;<br>• elbows 0.69 vs 0.97;<br>• pelvis / spine / head 0.52–0.56 vs 0.29–0.31, the true-gravity bounce, still 1/20 of V1's.<br>**On the 3 → 7.8 → 3 ramp:** every limb group is smoother than RUN-1.0; pelvis 0.59 vs 0.33.<br>**Evidence:** `effort/E6_*`, `effort/final/`. |
 
+## Result — RUN-1.1 (head of `prototype/locomotion-v2-run1`)
+
+**To watch it.**
+1. Start the server: `cd ~/Downloads/"FC Simulator worktrees"/locomotion-v2-run1 && python3 -m http.server 8317 --bind 127.0.0.1`.
+2. Open **http://127.0.0.1:8317/sandbox/visual/run1.html**.
+
+It opens with **RUN-1.1 new** (near lane), **RUN-1.0 original** (middle) and **V1** (far) on the gameplay camera, with RUN-1.1 and RUN-1.0 side views on the right.
+- Toggle any of the three under *Show*.
+- Every close view can show any subject.
+- Speeds 1× / 0.5× / 0.25× / 0.1×; zoom 1× (true game size), 2.5× and 4×; speed 3.0 – 7.8 m/s or the ramp.
+
+**The largest visual changes, in order of how much they change the read:**
+1. **Arms drive instead of reaching.** The elbow drives back. The upper arm swings from about 50° behind the trunk to about level with it (RUN-1.0: 33° in front), with the elbow flexed 84 – 120°. The hand comes forward to the chest (34 cm ahead of the hips, against 50), with the elbows tucked in front view.
+2. **Weight and launch.** The vertical is the body under its own stance force and true gravity. RUN-1.0 fell at 0.6 g in flight.
+   - The body sinks early into each stance (low point at 41 % of stance) and leaves the ground 1.5 cm higher than it landed.
+   - It is then thrown into a flight that falls at g.
+   - Pelvis range 7.2 cm at 5.5 m/s (RUN-1.0 4.3). The shape is fitted to real strides; the amplitude is physics, not a scale factor.
+3. **Lean into the run.** The trunk leans about 11° (RUN-1.0 7°) and dips about ±2° into every stance. The head stays stabilised: pitch range 2.4°, as before.
+4. **A loaded stance and a push.**
+   - Mid-foot landing (heel 7° up) under a bent knee (28°).
+   - The heel lowers to take the first of the load; the knee loads to about 54°.
+   - The heel rises progressively from about 40 % of stance (RUN-1.0: flat to 54 %, then a peel).
+   - The knee extends to 96 % of stance, so knee, ankle and hip extend together into toe-off, and the hip keeps extending through the landing.
+5. **A driven recovery.** Heel recovery (knee peak at 61 % of the stride), then knee drive (thigh peak at 78 %, RUN-1.0 83 %), then the foot coming *down* onto the turf with a small settle (thigh retraction 14°, RUN-1.0 29°), instead of reaching far ahead and pawing back.
+6. **Pelvis turns with the trunk.** "Right hip back" peaks at the right touchdown and the shoulders at 97 % (real 4 % / 98 %). RUN-1.0 wrung the spine ±17°; now ±6°. The swing-side pelvic drop peaks at toe-off (30 %, real 31.5 %).
+
+**Smoothness is kept, and improved for every limb** (60 Hz second differences, p99, cm/tick², RUN-1.1 vs RUN-1.0, same input):
+
+| at a constant 5.5 m/s | RUN-1.1 | RUN-1.0 |
+|---|---|---|
+| hands | 0.96 | 1.39 |
+| elbows | 0.69 | 0.97 |
+| knees | 2.57 | 2.95 |
+| ankles | 5.09 | 5.90 |
+| toes | 4.92 | 6.98 |
+| pelvis / spine / head | 0.52 / 0.51 / 0.56 | 0.29 / 0.29 / 0.31 |
+
+- **Pelvis, spine and head** are higher because RUN-1.1 really bounces at g. They are still about 1/20 of V1 (12.0).
+- **The 3 → 7.8 → 3 ramp:** every limb group is smoother than RUN-1.0 (toes 5.91 vs 9.13, hands 2.06 vs 3.16); pelvis 0.59 vs 0.33.
+- **Joins and rates:** every leg channel is C0 + C1 through both contacts at all speeds (worst value step 0.06° from speed-grid interpolation; RUN-1.0 0.08°). Knee peak rate 803 °/s (RUN-1.0 836).
+
+**What remains visibly weak** (my judgement from stills, phase sheets, motion paths and chronophotographs — not from watching it in motion):
+- **The bounce is now real.**
+  - 7.2 cm at 5.5 m/s, 8.3 cm at the 3 m/s jog. The real recreational strides at 3.6 m/s bounce 9 cm.
+  - Whether this reads as "weight" or as "bouncy" for a footballer is a judgement for your eyes in motion.
+  - The physically consistent levers are the contact time (`tc`) and the force skew (`vSkew`); a scale factor would bring back the 0.6 g flight.
+- **The stance is a little too compliant.** Peak ankle dorsiflexion is about 35° (real 22°; Fukuchi 2017: about 27°), and the knee loads to about 54° (real 47° at 3.6 m/s). The shin pitches far over the planted foot at mid-stance in close side views. Part of this is skeleton proportions (the CMU and Vinícius feet and hips differ). Every lever tried trades it against the landing rate or the heel rise (E6 scan).
+- **The 5.5 m/s numbers are extrapolated.** The open real reference tops out at 4.1 m/s, from recreational runners. The Stanford 5 m/s data (Hamner & Delp 2013) needs a SimTK account.
+- **Swing details.**
+  - The heel tucks a little lower at the back of the recovery than in the real strides.
+  - The toe trails a little longer after toe-off.
+  - The ankle's reversal at contact is placed in the last 12 ms of swing, a fast foot rotation that can be seen at 0.1× in close views.
+- **Hands** brush the shorts at the rear of the drive; there is no penetration on the skinned mesh, as in RUN-1.0.
+- **Grid solve.** The first use of each speed-grid cell costs about 50 ms (RUN-1.0 58). The viewer pre-solves all 27 cells before the ramp. A match with 22 different rigs needs these precomputed per rig.
+- **Asset issues, unchanged:** Vinícius's mirrored front print and the hand-mesh openings.
+
+**Regressions — none found in any guaranteed property:**
+- **Simulation-authoritative root, presentation only.** No file outside the RUN-1 paths changed. The V1 gate's ON/OFF neutrality and determinism are IDENTICAL; its item-3 flag is the pre-existing corner-flag timer (`effort/final/neutrality_of_loco_regress.txt`).
+- **Determinism.** Replay ≡ replay and incremental ≡ incremental at constant speed and on the ramp; replay ≡ incremental at constant speed. No `Math.random`, `Date.now` or `performance.now` in either gait file.
+- **Foot planting.** Contact-point slip 0.00 cm at constant speed and 0.01 mm per tick on the ramp. Skinned-mesh stance median 0.0 mm, never below the stud plane; swing ≥ +0.0 mm at 3.0 – 7.8 m/s. Foot to stance leg ≥ 16.9 cm (RUN-1.0 11.2).
+- **Joint limits.** Every channel is inside V2's planning box at 3.0 – 7.8 m/s, including hip extension (−19.8°; RUN-1.0 was 0.9° outside).
+- **Performance** (Node, mean / p95):
+
+| case | RUN-1.1 | RUN-1.0 | V1.3 |
+|---|---|---|---|
+| 1 rig | 0.032 / 0.048 ms | 0.028 / 0.041 ms | — |
+| 22 rigs | 0.68 / 0.82 ms | 0.58 / 0.71 ms | 3.0 / 4.2 ms |
+| 22 rigs, speed changing every frame | 1.04 / 1.22 ms | 0.95 / 0.93 ms | — |
+
+- **RUN-1.0 preserved.** `run1_orig_check.cjs`: the verbatim block is identical to `3caa5d58`, and the pose hash is identical.
+
+**Recommended next locomotion step (not started).**
+1. **Your review in motion.** Watch RUN-1.1 against RUN-1.0 at 1×, 2.5× and 0.25× and decide the bounce and compliance question above. The method makes a re-tune quick: one principled change, then the phase sheet, the chronophotograph and the smoothness table against RUN-1.0.
+2. **Then curved running and turning on the same evidence-led method.** The open CMU set has real *run + veer left / right* and *90° turn* trials (subject 16, trials 37 – 44 and 48 – 54) at about 4 m/s for reference.
+   - It needs world-space plants (each plant stays fixed on the pitch while the heading changes), lean into the curve, and the step-width and foot-yaw changes of a curve.
+   - It is the prerequisite for any match use.
+   - A per-rig precomputed speed grid should come with it, before integration.
+
+**Files.**
+- `sandbox/visual/run1/run1_gait.js` (RUN-1.1), `run1_gait_orig.js` (RUN-1.0, frozen), `run1_viewer.js`, `../run1.html`.
+- Tools: `tools/run1_orig_check.cjs`, `tools/run1_handclear.cjs` (new); `tools/run1_continuity.cjs` and `tools/run1_perf.cjs` (RUN-1.0 / ramp cases).
+- `tools/ref/`: `cmu_amc.cjs`, `cmu_trial.cjs`, `run1_refmetrics.cjs`, `run1_phases.cjs`, `run1_refpaths.cjs`, `run1_strobe.cjs`.
+- Evidence: `effort/E0…E6_*` and `effort/final/`.
+
+**Commits:** `0ecdbd65` setup, `c2b824cd` E1, `141859ca` E2, `156f90b9` E3, `f2fac238` E4, `949bd763` E5, `da3035f5` E6, then the final evidence commit.
+
