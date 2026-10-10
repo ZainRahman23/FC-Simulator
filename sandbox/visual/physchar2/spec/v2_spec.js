@@ -8,6 +8,7 @@ import { buildColliders, disabledPairs, CONTACT } from "./v2_colliders.js";
 import { BONES, skeletonPositions, skeletonFrames } from "./v2_skeleton.js";
 import { jointAxisCapacities, ACTIVATION, FATIGUE } from "./v2_actuators.js";
 import { f1Bodies, f1JointDefs, f1Colliders } from "./v2_f1.js";   // V2-F1 toe body (default off: only when human.f1)
+import { applyHinges } from "./v2_hinges.js";                       // RH1 record-hinged joint centres (default off: only when human.hinges)
 
 export const SPEC_VERSION = "touchline.physchar-v2.spec/0.1 (G0)";
 export function generateSpec(human = V2_REF) {
@@ -24,7 +25,7 @@ export function generateSpec(human = V2_REF) {
   }
   const toeTip = {}; for (const [s, g] of [["L", -1], ["R", 1]]) { const f = bodies.find(b => b.name === "foot_" + s); toeTip[s] = [g * Lm.hx, EQUIP.toeSpring, f.boot.tipAheadAJC]; }
   const wb = wholeBody(bodies);
-  return {
+  const spec = {
     version: SPEC_VERSION,
     human: { id: human.id || null, H: human.H, M: human.M, overrides: human.overrides || {}, ...(human.f1 ? { f1: human.f1 } : {}) },
     coordinate: "CCS +X anatomical right, +Y up, +Z anatomical forward (LEFT-handed, Unity numeric); metres, kg, s, rad; ground = stud-tip plane y = 0",
@@ -36,6 +37,8 @@ export function generateSpec(human = V2_REF) {
     skeleton: { bones: BONES, positions, frames }, toeTip,
     totals: { mass: wb.M, massBody: bodies.reduce((s, b) => s + b.massBody, 0), massEquip: bodies.reduce((s, b) => s + b.massEquip, 0), com: wb.com, inertiaAboutCom: wb.I },
   };
+  if (human.hinges) applyHinges(spec, human.hinges);   // RH1_PREREG.md §1.4: opt-in, hinge-only; absent → the unchanged spec
+  return spec;
 }
 // FNV-1a 32 over the canonical JSON text (char codes; deterministic) — the spec hash
 export function fnv1a(str) { let h = 2166136261 >>> 0; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }

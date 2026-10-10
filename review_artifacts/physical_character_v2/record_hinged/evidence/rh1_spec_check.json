@@ -1,0 +1,98 @@
+{
+ "rows": [
+  {
+   "id": "N1",
+   "name": "the 20 existing spec hashes unchanged",
+   "pass": true,
+   "value": "20 / 20 identical"
+  },
+  {
+   "id": "R1",
+   "name": "RH1 record values = rig.json bindOrigin (exact)",
+   "pass": true,
+   "value": "spine, chest, upperArm_L, foreArm_L, upperArm_R, foreArm_R"
+  },
+  {
+   "id": "D1",
+   "name": "RH1 generation deterministic",
+   "pass": true,
+   "value": "e2892d27 / e2892d27"
+  },
+  {
+   "id": "H1",
+   "name": "moved joint centres = RH1_PREREG §1.2",
+   "pass": true,
+   "value": "lumbar (0.000000, 1.029058, 0.000000) Δ 49.830 mm · thoracic (0.000000, 1.243945, 0.000000) Δ 57.725 mm · elbow_L (-0.559812, 1.458831, 0.000000) Δ 11.557 mm · elbow_R (0.559812, 1.458831, 0.000000) Δ 11.557 mm"
+  },
+  {
+   "id": "H2",
+   "name": "every joint identical except the moved centres (frames A / Rz / Cm / F1 / F2 / axes, ranges, passive, capacities, locked axes)",
+   "pass": true,
+   "value": "identical"
+  },
+  {
+   "id": "H3",
+   "name": "masses identical (body, equipment)",
+   "pass": true,
+   "value": "14 / 14 bit-identical"
+  },
+  {
+   "id": "H4",
+   "name": "world COM at the canonical pose identical",
+   "pass": true,
+   "value": "max 0.00e+0 m"
+  },
+  {
+   "id": "H5",
+   "name": "inertia tensors (canonical frame, about the COM) identical",
+   "pass": true,
+   "value": "max 0.00e+0"
+  },
+  {
+   "id": "H6",
+   "name": "collider world placement identical; collider shapes otherwise identical; unmoved bodies identical",
+   "pass": true,
+   "value": "max 0.00e+0 m; other fields identical"
+  },
+  {
+   "id": "H7",
+   "name": "whole-body mass / COM / inertia about the COM identical (recomputed)",
+   "pass": true,
+   "value": "ΔCOM 0.00e+0 m, ΔI 0.00e+0"
+  },
+  {
+   "id": "H8",
+   "name": "lower body (pelvis, thighs, shanks, feet) and hip / knee / ankle / neck / shoulder joints byte-identical",
+   "pass": true,
+   "value": "identical"
+  },
+  {
+   "id": "H9",
+   "name": "disabled pairs, landmarks, passive law, contact, equipment identical",
+   "pass": true,
+   "value": "identical"
+  },
+  {
+   "id": "H10",
+   "name": "bind pose (anatomical zero): every body COM and rotation identical",
+   "pass": true,
+   "value": "ΔCOM 1.11e-16 m, Δrot 0"
+  }
+ ],
+ "report": {
+  "upperArm": 0.31281764324324324,
+  "forearmToWrist": 0.2760155704095998,
+  "staticMomentNm": {
+   "lumbar": [
+    10.581311014560002,
+    0
+   ],
+   "thoracic": [
+    9.165388510080001,
+    0
+   ]
+  },
+  "specHash": "e2892d27"
+ },
+ "pass": true
+}

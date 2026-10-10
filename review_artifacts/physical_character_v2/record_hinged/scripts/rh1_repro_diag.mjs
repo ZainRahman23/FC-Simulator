@@ -1,0 +1,19 @@
+// STOP-investigation of the RH1 reproduction rule (RH1_PREREG.md §5): is the ≤ 1e-4 relative difference between the RH1 + MC-1 implementation and
+// the D12n study the frozen fit's stopping slack? For chosen instants: (a) MC-1 as frozen; (b) the same fit CONTINUED from its own stopping point
+// (warm restarts until θ stops changing; diagnostic only, not MC-1); (c) the study's value. Read-only; nothing stepped.
+// usage: LV2_ARCHIVE=… V13_WT=… STUDY=… node .../rh1_repro_diag.mjs <speed> <k,k,…>
+import fs from "fs"; import zlib from "zlib"; import vm from "vm"; import path from "path"; import { createRequire } from "module";
+const require = createRequire(import.meta.url), ARCH = process.env.LV2_ARCHIVE, { loadRun1 } = require(path.join(ARCH, "sandbox/visual/run1/tools/run1_load.cjs")), X = loadRun1({ extra: ["run1/lv2_state.js"] }), LV = vm.runInContext("LV2_STATE", X.ctx), E = X.RUN1_V13;
+const P2 = path.resolve("sandbox/visual/physchar2") + "/", MC = await import(P2 + "map/v2_lv2_map.js"), { pi1RunnerRH1Spec } = await import(P2 + "spec/v2_pi1_runner_rh.js"), { V, Q } = await import(P2 + "core/v2_math.js");
+const SPEC = pi1RunnerRH1Spec(), md = MC.model(SPEC), own = () => { const s = Object.assign({}, X.charSkel("vinicius")); delete s._r1body; return s; }, SK = own(), bindW = X.skelFK(SK, {}, X.M4.ident()).world.map(m => Array.from(m)), RIG = { bones: SK.bones.map(b => ({ name: b.name, parent: b.parent ? b.parent.name : null })), bind: bindW };
+const STUDY = JSON.parse(zlib.gunzipSync(fs.readFileSync(process.env.STUDY)).toString()), v = +process.argv[2], ks = process.argv[3].split(",").map(Number), HD = 0.3, N = 240;
+const P = { vOf: () => v, simAt: (t) => ({ x: 70 + v * t * Math.cos(HD), y: 30 + v * t * Math.sin(HD), heading: HD, v }) }, A = E.r1Make(own()); E.r1Replay(A, P.vOf, null, 1.9)(); const T = E.r1GaitAt(A.body, A.prm, v).T, Qat = (t) => LV.queryAt(E, A, P.simAt, t, P.vOf, null, { provenance: false });
+const rigBindP = (n) => [bindW[SK.byName[n].idx][12], bindW[SK.byName[n].idx][13], bindW[SK.byName[n].idx][14]], fa = md.bi("forearm_L"), faR = md.bi("forearm_R");
+const elbowF = (S, q) => Math.max(...[["foreArm_L", fa], ["foreArm_R", faR]].map(([bn, b]) => { const l = Q.rot(Q.conj(md.Z0[b].rot), V.sub(rigBindP(bn), md.Z0[b].pos)), p = V.add(S[b].pos, Q.rot(S[b].rot, l)); return V.dist(p, q.joints.find(j => j.name === bn).world.position) * 1000; }));
+for (const k of ks) { const tt = 2.0 + (k + 0.5) / N * T, q = { m: Qat(tt - 1e-4), 0: Qat(tt), p: Qat(tt + 1e-4) }, M = MC.mapLV2toV2(SPEC, RIG, q), a = elbowF(M.S, q["0"]);
+  // continue the same fit from its stopping point (warm restarts) until θ stops changing
+  const S0 = M.lower.poses[1].S.map((s, i) => s), base = { pos: S0[0].pos, rot: S0[0].rot }; let th = M.fit.th, F = null, restarts = 0, dth = Infinity;
+  const startS = (() => { const rots = M.lower.poses[1].S.map(s => s.rot); const Sx = new Array(md.NB); Sx[0] = { pos: base.pos.slice(), rot: rots[0] }; for (const j of SPEC.joints) { const p = j.parentIndex, c = j.childIndex; Sx[c] = { pos: V.add(Sx[p].pos, Q.rot(Sx[p].rot, V.sub(md.B[c].origin, md.B[p].origin))), rot: rots[c] }; } return Sx; })();
+  for (; restarts < 8 && dth > 1e-12; restarts++) { F = MC.fitUpper(md, startS, M.ref, th); dth = Math.max(...F.th.map((x, i) => Math.abs(x - th[i]))); th = F.th; }
+  const Sc = F.S.map((s, i) => (md.UPPER.includes(i) ? s : M.S[i])), b = elbowF(Sc, q["0"]), c = STUDY.speeds[String(v)].rows[k].alts.D12n.posMm.elbowF;
+  console.log(`k ${k}: frozen MC-1 ${a.toFixed(7)} mm (f ${M.fit.f.toExponential(6)}, it ${M.fit.it}) · continued ${b.toFixed(7)} mm (f ${F.f.toExponential(6)}, ${restarts} restarts, last Δθ ${dth.toExponential(1)}°) · study ${c.toFixed(7)} mm · |frozen − continued| ${Math.abs(a - b).toExponential(2)} · |study − continued| ${Math.abs(c - b).toExponential(2)}`); }
