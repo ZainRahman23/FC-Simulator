@@ -73,6 +73,11 @@ function r1Herm(K, w) {
   const a = K[i], b = K[i + 1], h = b.w - a.w, t = (w - a.w) / h, t2 = t * t, t3 = t2 * t;
   return (2 * t3 - 3 * t2 + 1) * a.v + (t3 - 2 * t2 + t) * h * a.mo + (-2 * t3 + 3 * t2) * b.v + (t3 - t2) * h * b.mi;
 }
+function r1HermD(K, w) {                                // d/dw of r1Herm (exact)
+  let i = 0; while (i < K.length - 2 && w > K[i + 1].w) i++;
+  const a = K[i], b = K[i + 1], h = b.w - a.w, t = (w - a.w) / h, t2 = t * t;
+  return ((6 * t2 - 6 * t) * a.v + (3 * t2 - 4 * t + 1) * h * a.mo + (-6 * t2 + 6 * t) * b.v + (3 * t2 - 2 * t) * h * b.mi) / h;
+}
 function r1HermPrep(K) {                                // per-knot outgoing / incoming slopes with a monotone limiter on each segment
   for (const k of K) { k.mo = k.m; k.mi = k.m; }
   for (let i = 0; i < K.length - 1; i++) {
@@ -146,7 +151,7 @@ const RUN1 = {
     // RUN-1.0 83 %), then the lower leg unfolds and the foot comes DOWN onto the turf, settling back ~20° (real 15°) instead of reaching far ahead
     // low and pawing back 29° (RUN-1.0). The knee stays a little flexed into the contact (21° before re-flexing to the touchdown 26°).
     kneeMax: 115, kneeMaxW: 0.46, kneeHold: 100, kneeHoldW: 0.62, kneeExt: 21, kneeExtW: 0.92,
-    hipMax: 58, hipMaxW: 0.70, hipExtMinW: 0.055,
+    hipMax: 58, hipMaxW: 0.70, hipExtMinW: 0.055, hipOpp: 0, hipOppK: 0,   // hipOpp*: the optional opposite-touchdown thigh key (off)
     anklePFMaxW: 0.07, anklePFExtra: 6, ankleDFSwing: -6, ankleDFW: 0.60,
     swingAbd: 8.0,            // extra abduction at mid swing (deg): the recovering leg passes outside the stance leg
     psiSwing: 8, psiSwingW: 0.48,   // mid-swing hip internal rotation (deg) — the recovering heel passes lateral of the stance calf
@@ -220,7 +225,18 @@ RUN1.anchors11 = [                                                              
     kneeMax: 132, kneeMaxW: 0.44, kneeHold: 116, kneeHoldW: 0.60, kneeExt: 24, kneeExtW: 0.90, hipMax: 70, hipMaxW: 0.68,
     tilt: 10.5, lean: 15, leanAmp: 2.8, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 56, elbow: 96, elbowAmp: 22, armAbd: 8 },
 ];
-if (!RUN1.regimes.SPRINT) RUN1.regimes.SPRINT = Object.assign({}, RUN1.anchors11[2]);   // until the regime design: RUN-1.1's sprint anchor
+// SPRINT — a footballer near top speed, 7.8 m/s (RUN1_2_REGIMES.md §3): RUN-1.1's sprint anchor + the structural sprint changes. Cadence carries
+// the speed (step ≈1.95 m, the plateau above ~7 m/s), the stance force is front-loaded (Clark & Weyand 2014), the swing leg LEADS the cycle (heel
+// tucked by the opposite touchdown with the thigh near vertical, then driven violently to ≈65° at the opposite toe-off — team-sport athletes, CL25),
+// the thighs are split ≈92° at toe-off and nearly together at touchdown, the arms become a drive (hands to face height), the trunk is NOT more
+// inclined than at the run (steady top speed ≈5–14°, NAG14; steep lean belongs to acceleration), the pelvis turns ≈±6–7° (OTA24)
+RUN1.regimes.SPRINT = Object.assign({}, RUN1.anchors11[2], {
+  cadence: 4.05, vSkew: 1.4,
+  kneeMax: 135, kneeMaxW: 0.44, kneeHold: 120, kneeHoldW: 0.58, kneeExt: 24, kneeExtW: 0.84,
+  hipMax: 77, hipOpp: 8, hipOppK: 1,
+  armFwd: 42, armBack: 56, elbow: 95, elbowAmp: 30, armAbdAmp: 4,
+  lean: 12, leanAmp: 2.0, pelvisYaw: 7, pelvisYawPh: 0.20, thoraxYaw: 14, obliq: 5, tiltAmp: 3,
+});
 function r1Anchors(ref) {                                                           // the RUN-1.2 anchor list: JOG 3.0 · JOG 4.0 (= RUN-1.1 at 4.0) · RUN · SPRINT
   const J = Object.assign({}, ref, RUN1.jog11), R11 = Object.assign({}, ref, RUN1.anchors11[1]), t = (4.0 - 3.0) / (5.5 - 3.0), J4 = { v: 4.0, id: "JOG" };
   for (const k in ref) if (typeof ref[k] === "number") J4[k] = J[k] + (R11[k] - J[k]) * t;
@@ -381,6 +397,13 @@ function r1SwingKnots(G, sd) {
   // hip flexion in the leg plane: the extension carries on briefly after toe-off, drive to peak flexion, retraction to touchdown
   const hExtMin = TO.c.h + Math.min(0, TO.m.h) * p.hipExtMinW * 0.5;
   K.h = [K.h[0], knot(p.hipExtMinW, hExtMin), knot(p.hipMaxW, p.hipMax * D), K.h[1]];
+  // optional key: the swing thigh at the OPPOSITE touchdown (sprint mechanics: near vertical while the heel is tucked, then driven violently to
+  // its peak at the opposite toe-off — CL25 team-sport athletes ≈7° behind vertical, track ≈11° in front). Blended in by weight hipOppK: the key
+  // first takes the existing curve's own value and slope there (a cubic Hermite split at its own point is the same curve), so hipOppK = 0 is
+  // exactly RUN-1.1's swing, and the value moves toward hipOpp (deg, relative to the pelvis) as the weight rises
+  // ALWAYS present (the speed grid blends knot lists index by index, so every speed must carry the same knots); at weight 0 it is an exact copy
+  { r1HermPrep(K.h); const wO = Math.max(p.hipExtMinW + 0.02, Math.min(p.hipMaxW - 0.02, (0.5 - p.D) / (1 - p.D))), v0 = r1Herm(K.h, wO), m0 = r1HermD(K.h, wO);
+    K.h.splice(2, 0, knot(wO, v0 + (p.hipOpp * D - v0) * (p.hipOppK || 0), m0, true)); }
   // ankle pitch (+ = plantar-flexion): the push-off carries on briefly, then dorsiflexion for clearance, then the strike angle
   const pfMax = TO.c.fp + Math.min(p.anklePFExtra * D, Math.max(0, TO.m.fp) * p.anklePFMaxW * 0.5);   // the push-off plantar-flexion carries on a few degrees
   // pre-contact: a mid-foot landing dorsiflexes the ankle fast from the first instant (the heel lowers, the shank rolls over). Real ankles reverse
