@@ -1,10 +1,10 @@
 // run1/tools/run1_same.cjs — is the evolving run1_gait.js IDENTICAL to a frozen version where it must be? Bit-level hash of every joint world
 // matrix (runtime replay path, 120 Hz over 1.25 s) at constant speeds, plus the maximum joint-position difference; and on a speed ramp that stays
 // inside the identity range. RUN-1.3 must equal RUN-1.2 at every speed ≤ 8.0 m/s (and so RUN-1.1 at ≤ 4.0).
-// usage: node run1_same.cjs [--vs v12|v11] [--v 3.0,4.0,5.5,7.8,8.0] [--ramp 3,8,1,4]
+// usage: node run1_same.cjs [--vs v12|v11|v13] [--v 3.0,4.0,5.5,7.8,8.0] [--ramp 3,8,1,4]
 const { loadRun1 } = require("./run1_load.cjs"), crypto = require("crypto");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
-const X = loadRun1(), vs = arg("vs", "v12"), F = vs === "v11" ? X.RUN1_V11 : vs === "orig" ? X.RUN1_ORIG : X.RUN1_V12;
+const X = loadRun1(), vs = arg("vs", "v12"), F = vs === "v11" ? X.RUN1_V11 : vs === "orig" ? X.RUN1_ORIG : vs === "v13" ? X.RUN1_V13 : X.RUN1_V12;
 const own = () => { const s = Object.assign({}, X.charSkel("vinicius")); delete s._r1body; return s; };
 function trace(E, vOf, xOf) { const A = E.r1Make(own()), h = crypto.createHash("sha256"), J = [];
   for (let k = 0; k < 150; k++) { const t = 1 + k / 120, rs = E.r1Replay(A, vOf, null, t), ev = E.r1Evaluate(A, { x: xOf(t), y: 0, heading: 0, v: vOf(t) }); rs();

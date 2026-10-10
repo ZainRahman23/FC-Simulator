@@ -24,6 +24,17 @@ Two documentation clips of the straight-line locomotion, made before the baselin
 - **Verification results:** `*.verify.json`.
 - **Playback-check sheets** made from the *decoded* files, one frame every 0.5 s: `*_playback_check.jpg`.
 
+## Status and correspondence to the frozen baseline
+
+- **Approved by the user (10 Oct):**
+  - `LOCOMOTION_V2_FINAL_LADDER.mp4` is the canonical, labeled straight-line locomotion record;
+  - `_UNLABELED` is the clean / blind-viewing record;
+  - `LOCOMOTION_V2_VERSION_HISTORY.mp4` is the historical comparison. The decision not to make a fifth, duplicate history panel was approved.
+- **The lanes shown are the frozen Locomotion V2 straight-line baseline** (`run1_gait_v13.js`, `../LOCOMOTION_V2_STRAIGHT_BASELINE.md`). This covers all of Clip 1 and Clip 2's RUN-1.2 = RUN-1.3 cell.
+  - The captures were rendered by `run1_gait.js` blob 010212622e05, which is the baseline's verbatim block.
+  - An independent replay with the frozen file itself matches every captured lane-frame: `../baseline/final/video_*_vs_frozen_baseline.json`.
+  - Clip 2's V1, RUN-1.0 and RUN-1.1 cells are the preserved historical implementations.
+
 ## Clip 1 — the final locomotion ladder
 
 - **Lanes:** the viewer's own default preset `ladder` (run1_viewer.js `RV1_PRESETS.ladder`), all on the final implementation **RUN-1.3** (`run1_gait.js`):

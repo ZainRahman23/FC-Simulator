@@ -1,5 +1,7 @@
 # RUN-1.3 — ALL-OUT: a top-speed regime above RUN-1.2
 
+> **Status (10 Oct, later):** the user approved the archival captures and froze RUN-1.3 as the **Locomotion V2 straight-line baseline** (`run1_gait_v13.js`, `LOCOMOTION_V2_STRAIGHT_BASELINE.md`; state contract `LOCOMOTION_V2_STATE_CONTRACT.md`).
+
 **The decision (user, 10 Oct evening, after watching RUN-1.2 several times).**
 - Keep all three RUN-1.2 regimes exactly. They are good motions, read one category slower than their names:
   - 3.0 m/s: a fast-walk / shuffle-jog transition;

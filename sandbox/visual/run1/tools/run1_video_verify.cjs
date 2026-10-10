@@ -4,7 +4,9 @@
 //     the viewer computes, at exactly the stated times (t = t0 + k / fps, no dropped or repeated animation time).
 //  2. PLAYBACK: the encoded MP4 decodes to the stated frame count / rate / duration, each decoded frame matches its source frame (PSNR per frame:
 //     a dropped, repeated or reordered frame would collapse it), and no decoded frame repeats its predecessor (mpdecimate).
-// usage: FFMPEG=<ffmpeg> node run1_video_verify.cjs --meta <dir>/<FILE>.capture.json --frames <scratch frames dir> [--stills <dir>]
+// usage: FFMPEG=<ffmpeg> node run1_video_verify.cjs --meta <dir>/<FILE>.capture.json --frames <scratch frames dir> [--stills <dir>] [--engine v13]
+//   --engine v13: the replay runs the RUN-1.3 lanes on the FROZEN baseline file (run1_gait_v13.js, RUN1_V13) instead of run1_gait.js — proving the
+//   captures show the frozen implementation. --skip-playback 1: the locomotion half only.
 const fs = require("fs"), path = require("path"), vm = require("vm"), cp = require("child_process");
 const { CLIPS } = require("./run1_video_clips.cjs");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
@@ -15,11 +17,12 @@ const ctx = { console, Math, Float32Array, Uint16Array, Uint32Array, Uint8Array,
   window: { addEventListener() {}, devicePixelRatio: 2 } };
 vm.createContext(ctx);
 for (const f of ["anim3d/m4.js", "anim3d/skeleton.js", "anim3d/ik.js", "anim3d/of_rig.js", "anim3d/of_motion.js", "anim3d/of_loco.js", "anim3d/of_loco_cont.js", "anim3d/of_character.js",
-  "run1/run1_gait.js", "run1/run1_gait_orig.js", "run1/run1_gait_v11.js", "run1/run1_gait_v12.js", "run1/run1_viewer.js"])
+  "run1/run1_gait.js", "run1/run1_gait_orig.js", "run1/run1_gait_v11.js", "run1/run1_gait_v12.js", "run1/run1_gait_v13.js", "run1/run1_viewer.js"])
   vm.runInContext(fs.readFileSync(path.join(VIS, f), "utf8"), ctx, { filename: f });
-ctx.__rig = JSON.parse(fs.readFileSync(path.join(REPO, "assets/characters/outfield/vinicius/rig.json"), "utf8")); ctx.__C = C; ctx.__N = META.frames.length;
+ctx.__rig = JSON.parse(fs.readFileSync(path.join(REPO, "assets/characters/outfield/vinicius/rig.json"), "utf8")); ctx.__C = C; ctx.__N = META.frames.length; ctx.__ENGINE = arg("engine", "run1_gait.js");
 const rep = vm.runInContext(`(() => {
   const C = __C; if (C.inject) RV1_PRESETS[C.preset] = C.inject;
+  if (__ENGINE === "v13") { RV1_ENG.run1.api = () => RUN1_V13; RV1_ENG.run1.own = true; }   // the frozen baseline in place of run1_gait.js
   RV1.entry = { skel: ofCharSkeleton({ rig: __rig }) };
   Object.assign(RV1, { preset: C.preset, zoom: C.zoom, dir: C.dir, v1Mode: C.v1Mode, rate: 1, labels: false, blind: 0, speedMode: "const", sampleTicks: false });
   rv1Reset(); RV1.t = C.t0; rv1Update(C.t0);
@@ -40,12 +43,12 @@ META.frames.forEach((F, k) => { if (Math.abs(F.viewerT - (C.t0 + k / C.fps)) > 1
   F.lanes.forEach((L, i) => { const R = rep.out[k][i]; if (R.key !== L.key) keyBad++; let any = false;
     for (let q = 0; q < R.W.length; q++) { const d = Math.abs(PB[off + q] - R.W[q]); nAll++; if (d > 0) { any = true; nD++; maxD = Math.max(maxD, d); const u = d / ulp32(Math.max(Math.abs(PB[off + q]), Math.abs(R.W[q]), 1)); maxUlp = Math.max(maxUlp, u); if (u > 1.0000001) overUlp++; } }
     off += R.W.length; if (any) diff++; else same++; }); });
-const res = { clip: META.clip, file: META.file, lanes: rep.lanes, frames: META.frames.length, laneFrames: same + diff,
+const res = { clip: META.clip, file: META.file, replayEngine: arg("engine") === "v13" ? "RUN-1.3 lanes on the frozen baseline run1_gait_v13.js (RUN1_V13)" : "run1_gait.js", lanes: rep.lanes, frames: META.frames.length, laneFrames: same + diff,
   locomotion: keyBad === 0 && off === PB.length && overUlp === 0 && maxD < 1e-6 ? `MATCH: ${same} of ${same + diff} lane-frames bit-identical to the independent replay; in the rest ${nD} of ${nAll} float32 matrix terms differ, each by at most ${maxUlp.toFixed(3)} float32 ulp at the matrix scale (largest absolute ${maxD.toExponential(1)}) — last-bit rounding between Chrome's and Node's V8 math, not a different pose` : `MISMATCH: ${overUlp} terms beyond 1 float32 ulp (max ${maxUlp.toFixed(1)} ulp), max |Δ| ${maxD.toExponential(2)}, ${diff} lane-frames, key errors ${keyBad}, size ${off}/${PB.length}`,
   animationTime: dtBad === 0 ? `every frame at exactly t0 + k / ${C.fps} s (t ${C.t0.toFixed(3)} … ${(C.t0 + (META.frames.length - 1) / C.fps).toFixed(3)} s): no dropped or repeated animation time` : `${dtBad} frames off the 1/${C.fps} s grid` };
 // ── 2. playback of the encoded files ──
 const run = (args) => { const r = cp.spawnSync(FF, args, { encoding: "utf8", maxBuffer: 1 << 28 }); return (r.stdout || "") + (r.stderr || ""); };   // ffmpeg reports on stderr
-res.playback = META.encoded.map(E => {
+res.playback = arg("skip-playback") ? [] : META.encoded.map(E => {
   const f = path.join(path.dirname(arg("meta")), E.file), src = path.join(FR, /UNLABELED/.test(E.file) ? "bare" : "lab", "%05d.png");
   const info = run(["-hide_banner", "-i", f]), dur = (info.match(/Duration: ([0-9:.]+)/) || [])[1], stream = (info.match(/Stream #0:0[^\n]*Video: [^\n]*/) || [""])[0];
   const count = run(["-hide_banner", "-i", f, "-map", "0:v", "-f", "null", "-"]), nDec = +((count.match(/frame=\s*(\d+)/g) || []).pop() || "frame=0").replace(/\D/g, "");

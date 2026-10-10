@@ -1,0 +1,333 @@
+{
+ "rows": [
+  {
+   "k": "HT-4 query purity",
+   "ok": true,
+   "txt": "actor state hash e81f0808daa39366 → e81f0808daa39366; rendered pose hash 51060359a27d1681 → 51060359a27d1681 across two queries"
+  },
+  {
+   "k": "query determinism (same load)",
+   "ok": true,
+   "txt": "two queries fb2b1dc9c40c9ca1 / fb2b1dc9c40c9ca1"
+  },
+  {
+   "k": "HT-4 cost, O(1) in match time",
+   "ok": true,
+   "txt": "query 229 µs (with provenance stamp 188 µs); queryAt 3 ms past the committed time: at t = 5 s 1400 µs, at t = 300 s 863 µs"
+  },
+  {
+   "k": "HT-7 input echo (bitwise)",
+   "ok": true,
+   "txt": "x 405907e6b74dce59 · y 4040a66666666666 · heading 3fd3333333333333 · v 401f333333333333 · a 3fd0000000000000 · yawRate 0000000000000000"
+  },
+  {
+   "k": "R-0 provenance",
+   "ok": true,
+   "txt": "LV2-STATE-1 · RUN-1.3 @ bdab1f5f · params 037a485e (3962 B) · rig vinicius bind dba63d85 · 23 bones · ladder LOW 3 / LOW 4 / JOG 5.5 / FAST RUN 7.8 / FAST RUN 8 / ALL-OUT 9.5"
+  },
+  {
+   "k": "R-1 queryAt(τ) = rendered state at τ",
+   "ok": true,
+   "txt": "max joint difference 0 m over 92 joint samples (queryAt from an earlier committed state vs the actor replayed to τ, as the viewer renders)"
+  },
+  {
+   "k": "R-2 float64 pose vs rendered float32",
+   "ok": true,
+   "txt": "max 6.14 µm at pitch x ≈ 80–110 m (the rendered matrices are float32: this is their quantization, the contract's values are float64)"
+  },
+  {
+   "k": "HT-2 velocities 3.0",
+   "ok": true,
+   "txt": "|v − Δx/2δ| p99 0.000 / max 0.00 mm/s (head / hand 0.000), max |ω − ΔR/2δ| 0.0000 rad/s over 240 samples × 23 bones (independent: δ = 0.1 ms on the replay path; 0 samples with a declared event inside ±δ skipped) · worst shin_L"
+  },
+  {
+   "k": "HT-2 velocities 5.5",
+   "ok": true,
+   "txt": "|v − Δx/2δ| p99 0.000 / max 0.00 mm/s (head / hand 0.000), max |ω − ΔR/2δ| 0.0000 rad/s over 240 samples × 23 bones (independent: δ = 0.1 ms on the replay path; 0 samples with a declared event inside ±δ skipped) · worst shin_L"
+  },
+  {
+   "k": "HT-2 velocities 7.8",
+   "ok": true,
+   "txt": "|v − Δx/2δ| p99 0.000 / max 0.00 mm/s (head / hand 0.000), max |ω − ΔR/2δ| 0.0000 rad/s over 238 samples × 23 bones (independent: δ = 0.1 ms on the replay path; 2 samples with a declared event inside ±δ skipped) · worst toe_R"
+  },
+  {
+   "k": "HT-2 velocities 9.5",
+   "ok": true,
+   "txt": "|v − Δx/2δ| p99 0.000 / max 0.00 mm/s (head / hand 0.000), max |ω − ΔR/2δ| 0.0000 rad/s over 238 samples × 23 bones (independent: δ = 0.1 ms on the replay path; 2 samples with a declared event inside ±δ skipped) · worst shin_L"
+  },
+  {
+   "k": "HT-2 velocities ramp 6→9.5",
+   "ok": true,
+   "txt": "|v − Δx/2δ| p99 0.001 / max 0.09 mm/s (head / hand 0.059), max |ω − ΔR/2δ| 0.0002 rad/s over 236 samples × 23 bones (independent: δ = 0.1 ms on the replay path; 0 samples with a declared event inside ±δ skipped; 4 samples with a touchdown in the replay's uncommitted partial step measured separately: the plant re-derives by 5.33 µm per 2δ — a ≤ 0.1 mm presentation transient on speed changes) · worst toe_L"
+  },
+  {
+   "k": "HT-3 pivot velocity planted 3.0",
+   "ok": true,
+   "txt": "max material speed at the contact pivot: MTP joint 0.00 mm/s, toe pad 0.00 mm/s, sole 0.00 mm/s (sole = the ankle while flat; its non-zero maximum is the heel-rise onset, where the foot-pitch rate starts from a small non-zero value)"
+  },
+  {
+   "k": "HT-3 pivot velocity planted 5.5",
+   "ok": true,
+   "txt": "max material speed at the contact pivot: MTP joint 0.01 mm/s, toe pad 0.00 mm/s, sole 0.00 mm/s (sole = the ankle while flat; its non-zero maximum is the heel-rise onset, where the foot-pitch rate starts from a small non-zero value)"
+  },
+  {
+   "k": "HT-3 pivot velocity planted 7.8",
+   "ok": true,
+   "txt": "max material speed at the contact pivot: sole 0.00 mm/s, MTP joint 0.01 mm/s, toe pad 0.01 mm/s (sole = the ankle while flat; its non-zero maximum is the heel-rise onset, where the foot-pitch rate starts from a small non-zero value)"
+  },
+  {
+   "k": "HT-3 pivot velocity planted 9.5",
+   "ok": true,
+   "txt": "max material speed at the contact pivot: sole 0.00 mm/s, MTP joint 0.02 mm/s, toe pad 0.02 mm/s (sole = the ankle while flat; its non-zero maximum is the heel-rise onset, where the foot-pitch rate starts from a small non-zero value)"
+  },
+  {
+   "k": "HT-3 pivot velocity planted ramp 6→9.5",
+   "ok": true,
+   "txt": "max material speed at the contact pivot: MTP joint 0.01 mm/s, toe pad 0.01 mm/s, sole 0.00 mm/s (sole = the ankle while flat; its non-zero maximum is the heel-rise onset, where the foot-pitch rate starts from a small non-zero value)"
+  },
+  {
+   "k": "R-4 pelvis vertical analytic",
+   "ok": true,
+   "txt": "max |ẏ analytic − pose-function ẏ| 3.8e-6 m/s (constant speed)"
+  },
+  {
+   "k": "COM stride mean (diagnostic)",
+   "ok": true,
+   "txt": "stride-mean COM velocity − root velocity: 3.0 m/s [0,0,0] · 5.5 m/s [-0.0001,0,0] · 7.8 m/s [0,0,0] · 9.5 m/s [0.0001,0,0]"
+  },
+  {
+   "k": "touchdown position step (C0)",
+   "ok": true,
+   "txt": "5.5 m/s 0.0000 mm · 5.6 m/s 0.0151 mm · 7.8 m/s 0.0440 mm · 8.9 m/s 0.0044 mm · 9.4 m/s 0.0041 mm (report only: grid speeds 5.5 / 7.8 / 9.5 are exact; between them the lerped swing end and the stance start differ slightly — the contract's one-sided stencil never straddles it)"
+  },
+  {
+   "k": "determinism, two fresh loads",
+   "ok": true,
+   "txt": "state hash 7d65c94df2cf136c / 7d65c94df2cf136c"
+  }
+ ],
+ "shares": {
+  "3.0": {
+   "sub": {
+    "heel-up (rolling about the MTP joint, toe segment flat)": 0.598,
+    "toe pad (toe segment rolling about the pad)": 0.098,
+    "forefoot landing (heel lowering about the MTP joint)": 0.134,
+    "flat": 0.171
+   },
+   "support": {
+    "stance": 0.683,
+    "flight": 0.317
+   },
+   "mtp5": 0.524,
+   "mtp15": 0.329,
+   "pivotSpeedMax": {
+    "MTP joint": 0.0000012637732643116254,
+    "toe pad": 0.0000010976516047449408,
+    "sole": 2.8700184273302993e-12
+   },
+   "comMinusRoot": [
+    0,
+    0,
+    0
+   ],
+   "pelvisAnalyticVsPoseFn": 9.154853085613368e-7
+  },
+  "5.5": {
+   "sub": {
+    "heel-up (rolling about the MTP joint, toe segment flat)": 0.493,
+    "toe pad (toe segment rolling about the pad)": 0.194,
+    "forefoot landing (heel lowering about the MTP joint)": 0.134,
+    "flat": 0.179
+   },
+   "support": {
+    "stance": 0.558,
+    "flight": 0.442
+   },
+   "mtp5": 0.567,
+   "mtp15": 0.388,
+   "pivotSpeedMax": {
+    "MTP joint": 0.000005797098686560139,
+    "toe pad": 0.000004963699819622224,
+    "sole": 4.879593897223955e-12
+   },
+   "comMinusRoot": [
+    -0.0001,
+    0,
+    0
+   ],
+   "pelvisAnalyticVsPoseFn": 0.0000015929303164297082
+  },
+  "7.8": {
+   "sub": {
+    "flat": 0.017,
+    "heel-up (rolling about the MTP joint, toe segment flat)": 0.61,
+    "toe pad (toe segment rolling about the pad)": 0.22,
+    "forefoot landing (heel lowering about the MTP joint)": 0.153
+   },
+   "support": {
+    "stance": 0.492,
+    "flight": 0.508
+   },
+   "mtp5": 0.593,
+   "mtp15": 0.441,
+   "pivotSpeedMax": {
+    "sole": 2.2526917076791623e-12,
+    "MTP joint": 0.000013422099916178155,
+    "toe pad": 0.00001225980488326128
+   },
+   "comMinusRoot": [
+    0,
+    0,
+    0
+   ],
+   "pelvisAnalyticVsPoseFn": 0.0000030566780804264226
+  },
+  "9.5": {
+   "sub": {
+    "flat": 0.127,
+    "heel-up (rolling about the MTP joint, toe segment flat)": 0.527,
+    "toe pad (toe segment rolling about the pad)": 0.2,
+    "forefoot landing (heel lowering about the MTP joint)": 0.145
+   },
+   "support": {
+    "stance": 0.458,
+    "flight": 0.542
+   },
+   "mtp5": 0.564,
+   "mtp15": 0.418,
+   "pivotSpeedMax": {
+    "sole": 3.461280017712312e-12,
+    "MTP joint": 0.000023292217907422253,
+    "toe pad": 0.00002249217049246129
+   },
+   "comMinusRoot": [
+    0.0001,
+    0,
+    0
+   ],
+   "pelvisAnalyticVsPoseFn": 0.000003822565481481632
+  },
+  "ramp 6→9.5": {
+   "sub": {
+    "heel-up (rolling about the MTP joint, toe segment flat)": 0.563,
+    "toe pad (toe segment rolling about the pad)": 0.227,
+    "forefoot landing (heel lowering about the MTP joint)": 0.151,
+    "flat": 0.059
+   },
+   "support": {
+    "stance": 0.496,
+    "flight": 0.504
+   },
+   "mtp5": 0.546,
+   "mtp15": 0.353,
+   "pivotSpeedMax": {
+    "MTP joint": 0.000010107084027030068,
+    "toe pad": 0.000009638943086243188,
+    "sole": 3.379739056999836e-12
+   },
+   "comMinusRoot": [
+    0.0192,
+    -0.0425,
+    -0.0032
+   ],
+   "pelvisAnalyticVsPoseFn": 0
+  }
+ },
+ "ht2": [
+  {
+   "name": "3.0",
+   "dv": 3.6429686547466286e-9,
+   "dw": 8.427928801637272e-9,
+   "dvH": 1.2220621523522721e-10,
+   "nS": 240,
+   "skip": 0,
+   "worst": {
+    "e": 3.6429686547466286e-9,
+    "joint": "shin_L",
+    "t": 2.0196924259378455,
+    "R": "swing w 0.6613",
+    "L": "heel-up (rolling about the MTP joint, toe segment flat) s 0.8079",
+    "method": "central, h = 0.1 ms"
+   },
+   "p99": 1.1263992644965036e-10,
+   "partialStepPlant": 0,
+   "partialStepShiftPer2DeltaM": 0
+  },
+  {
+   "name": "5.5",
+   "dv": 1.8305498866137504e-9,
+   "dw": 6.985668821594596e-9,
+   "dvH": 1.0611132275867442e-10,
+   "nS": 240,
+   "skip": 0,
+   "worst": {
+    "e": 1.8305498866137504e-9,
+    "joint": "shin_L",
+    "t": 2.2538476781050423,
+    "R": "swing w 0.4542",
+    "L": "heel-up (rolling about the MTP joint, toe segment flat) s 0.3821",
+    "method": "central, h = 0.1 ms"
+   },
+   "p99": 9.877337859038597e-11,
+   "partialStepPlant": 0,
+   "partialStepShiftPer2DeltaM": 0
+  },
+  {
+   "name": "7.8",
+   "dv": 1.6858025218936474e-10,
+   "dw": 9.832981057050099e-11,
+   "dvH": 1.4479229651452082e-10,
+   "nS": 238,
+   "skip": 2,
+   "worst": {
+    "e": 1.6858025218936474e-10,
+    "joint": "toe_R",
+    "t": 2.29008775610509,
+    "R": "swing w 0.4994",
+    "L": "heel-up (rolling about the MTP joint, toe segment flat) s 0.4981",
+    "method": "central, h = 0.1 ms"
+   },
+   "p99": 1.2640369916188485e-10,
+   "partialStepPlant": 0,
+   "partialStepShiftPer2DeltaM": 0
+  },
+  {
+   "name": "9.5",
+   "dv": 4.432534755952125e-9,
+   "dw": 1.0026617723915547e-8,
+   "dvH": 1.3814290469065254e-10,
+   "nS": 238,
+   "skip": 2,
+   "worst": {
+    "e": 4.432534755952125e-9,
+    "joint": "shin_L",
+    "t": 2.0668343957231197,
+    "R": "swing w 0.6134",
+    "L": "toe pad (toe segment rolling about the pad) s 0.8754",
+    "method": "central, h = 0.1 ms"
+   },
+   "p99": 1.2660541192751828e-10,
+   "partialStepPlant": 0,
+   "partialStepShiftPer2DeltaM": 0
+  },
+  {
+   "name": "ramp 6→9.5",
+   "dv": 0.00008786449004184107,
+   "dw": 0.0002487669572591889,
+   "dvH": 0.00005946652497425713,
+   "nS": 236,
+   "skip": 0,
+   "worst": {
+    "e": 0.00008786449004184107,
+    "joint": "toe_L",
+    "t": 1.78304727461247,
+    "R": "heel-up (rolling about the MTP joint, toe segment flat) s 0.4250",
+    "L": "swing w 0.4742",
+    "method": "central, h = 0.1 ms"
+   },
+   "p99": 6.378965573360034e-7,
+   "partialStepPlant": 4,
+   "partialStepShiftPer2DeltaM": 0.000005330548205070313
+  }
+ ]
+}
