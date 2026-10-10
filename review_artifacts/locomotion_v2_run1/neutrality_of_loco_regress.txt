@@ -1,0 +1,20 @@
+# of_loco_regress.js on prototype/locomotion-v2-run1 @ 41110a54, 2026-10-10 05:46
+# No file outside sandbox/visual/run1/, run1.html and review_artifacts/locomotion_v2_run1/ differs from the baseline 9d57d460 (git diff --name-only).
+# Item 3's flag is pre-existing: of_player.js:194 (corner-flag animation time in the composite, not a pose), unchanged since e2c98ec7 (28 Sep).
+OUTFIELD LOCOMOTION V1 — REGRESSION GATE
+  1. animation ON/OFF neutrality (authoritative x,y,vx,vy,facing over 720 ticks of every gait + transitions + turns + stop)
+       SHORT_LEAN    max |delta| = 0   IDENTICAL
+       AVG_ATHLETIC  max |delta| = 0   IDENTICAL
+       TALL_LEAN     max |delta| = 0   IDENTICAL
+  2. determinism (same run twice, joint world positions)
+       SHORT_LEAN    max |delta| = 0   IDENTICAL   NaN false
+       AVG_ATHLETIC  max |delta| = 0   IDENTICAL   NaN false
+       TALL_LEAN     max |delta| = 0   IDENTICAL   NaN false
+  3. no presentation RNG, no wall-clock in the pose path
+       none (of_loco.js, of_motion.js, of_rig.js carry no Math.random / Date.now / performance.now; of_player.js carries no Math.random)
+       harness timing probes in of_player.js: 10 (measured into OFPLAY.perf only, never into a pose)
+       *** of_player.js:194: if (typeof CornerFlags !== "undefined") CornerFlags.compositeNear(octx, sproj3, typeof FLAG_TIME ===
+
+GATE FAIL
+const: replay 0d396c5dd6d1b47f / 0d396c5dd6d1b47f IDENTICAL · incremental 0d396c5dd6d1b47f / 0d396c5dd6d1b47f IDENTICAL · replay vs incremental IDENTICAL
+ramp: replay 859bd9509cf8bf8a / 859bd9509cf8bf8a IDENTICAL · incremental c39c27d31531a3a1 / c39c27d31531a3a1 IDENTICAL · replay vs incremental differ (expected only if the grid paths differ)
