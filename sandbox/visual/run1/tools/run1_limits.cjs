@@ -5,7 +5,7 @@
 const { loadRun1 } = require("./run1_load.cjs"); const X = loadRun1(), D = 180 / Math.PI, skel = X.charSkel("vinicius");
 const LIM = X.R1_LIMITS, rows = {};
 const add = (k, v) => { const r = rows[k] || (rows[k] = { min: 1e9, max: -1e9 }); r.min = Math.min(r.min, v); r.max = Math.max(r.max, v); };
-for (const v of [3.0, 5.5, 7.8]) { const A = X.r1Make(skel), G = X.r1Prepare(A, v);
+for (const v of [3.0, 4.0, 4.75, 5.5, 6.5, 7.0, 7.8]) { const A = X.r1Make(skel), G = X.r1Prepare(A, v);
   for (let i = 0; i < 400; i++) { const pose = X.r1Pose(G, i / 400);
     for (const sd of ["R"]) { const c = pose.legs[sd].ch, side = 1;
       add("hipFlex", c.h * D); add("hipAbd", side * c.a * D); add("hipRot", -side * c.psi * D); add("knee", c.k * D); add("ankleDF", -c.fp * D); add("ankleInv", side * c.fr * D); add("mtpDF", -c.toe * D); }

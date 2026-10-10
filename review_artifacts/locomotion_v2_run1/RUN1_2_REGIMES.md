@@ -159,3 +159,118 @@ What was wrong is the *data*, not the construction. RUN-1.1's "RUN" anchor was R
 - So the RUN and SPRINT numbers above are literature values, not motion I can replay.
 - Joint angles in the 6.5–7 m/s band, front/back elbow angles and hand heights are thinly reported.
 - Where values are [X], they are regressions or model derivations, and are labelled as such.
+
+## 6. Results — RUN-1.2 as built
+
+**State.** `run1_gait.js` = **RUN-1.2** (`RUN1.id`). RUN-1.1 stays frozen in `run1_gait_v11.js` and RUN-1.0 in `run1_gait_orig.js`; both are byte- and pose-identical to their commits (`regimes/final/frozen_check.txt`). RUN-1.2 is identical to RUN-1.1 at every speed ≤ 4.0 m/s (checked at 3.0 / 3.25 / 3.5 / 3.75 / 4.0), so the approved jog is untouched.
+
+**One addition beyond §4.** The sprint's "knee still folded when the other foot lands" could not be reached by the existing swing knots without bending the whole thigh curve. RUN-1.2 adds **one hip knot at the opposite touchdown** (`hipOpp`, `hipOppK`). It is present in every regime. At `hipOppK = 0` it sits exactly on the curve with the curve's own slope (`r1HermD`, the exact Hermite derivative), so the curve is unchanged. Only SPRINT sets it. It is a knot in an existing channel, not a new motion construct.
+
+### Iterations
+
+| | problem | change | result |
+|---|---|---|---|
+| R1 `84af00d0` | RUN stance sinks (knee 28 → 54°); placed landing | Fore-foot landing (heel 10° up), touchdown knee 24°, no extra loading peak; lower leg unfolded by 85 % of the swing so the foot is swept under the body | Stance knee 24 → 43.5 → 16°; leg shortening 6.4 → 4.1 cm; foot speed 25 ms before contact 4.1 → 2.9 m/s |
+| R2 `f697eee6` | Jog recovery (knee 115°, ankle 44 cm) | Front-loaded recovery: the heel snaps up earlier and higher, and stays folded while the knee drives | Swing knee 125° at 59 %; ankle 54 cm high, 31.6 cm below the hip; thigh 49° at the opposite toe-off |
+| R3 `a5dce3ab` | Jog arms (range 60°, hand to the chest) | Upper arm 56° back to 22° forward of the trunk; elbow opens to ~70° behind and closes to ~122° in front | Arm range 82°; hand 39 cm above the hip; no hand-body penetration; inside V2's shoulder box |
+| R4 `7cd03859` | Pelvis and shoulders as one block | Pelvis ±10°, right hip back at ~20 % of the stride (Fukuchi phase), lagging the thorax ~75°; obliquity ±5°, tilt ±3°; trunk lean **not** increased | Pelvis yaw range 12 → 18.7°; shoulders 20.8 → 23.5°; lean 10.9 → 10.5° |
+| S1 `8e55f7e1` | Sprint = the run, stretched | SPRINT anchor: cadence 4.05, force skew 1.4, swing knee 135°, hip 77° with the opposite-touchdown knot, arms 56° back / 42° forward, elbow 95 ± 30°, lean 12° | See the sprint table |
+| fix | Seeding the regimes, SPRINT fell back to `RUN1.ref` (the old 5.5 values): 1.2 m joint difference at 6.5–7.8 m/s, found by the RUN-1.1 identity check | SPRINT seeded from RUN-1.1's own sprint anchor | Identity restored before any regime design |
+| fix | First hip-knot version: an 18.4° hip jump at the touchdown join at 5.7 m/s. The knot existed only where `hipOppK > 0`, so grid cells had different knot counts and the speed blend paired the wrong knots | The knot is always present (exact copy at K = 0), position clamped inside the swing | Worst join over the speed grid 0.06°; identity ≤ 4.0 kept |
+| fix `2a716e26` | Viewer: `?zoom=` `?v=` `?dir=` were ignored since the lanes refactor (left behind a line comment) | Restored | Verified by capture |
+
+### The 5.5 m/s RUN (all [R], same definitions as §1; `regimes/final/regime_metrics_real_RUN1.1_RUN1.2.txt`)
+
+| at 5.5 m/s | RUN-1.1 | **RUN-1.2 RUN** | target (§2) |
+|---|---|---|---|
+| contact / flight / cadence / step | 175 / 138 ms / 3.20 / 1.72 m | same (by design) | as RUN-1.1 |
+| COM range | 7.6 cm | 7.6 cm | unchanged in kind |
+| stance knee touchdown → peak (yield) | 28 → 54° (25°) | **24 → 43.5° (19°)** | ~24 → ~45° |
+| leg shortening in stance | 6.4 cm | 4.1 cm | stiffer |
+| swing knee peak | 115° at 61 % | **125° at 59 %** | ~125°, a little earlier |
+| knee at the opposite touchdown | 91° | 104° | folded longer |
+| swing ankle highest / closest below the hip | 44 / 38.7 cm | **54 / 31.6 cm** | — |
+| thigh peak (knee drive) | 47.8° | 49.1° | ~50° |
+| late-swing thigh retraction | 147 °/s | 185 °/s | 200–250 °/s — **short** |
+| foot speed 25 / 10 ms before contact | 4.10 / 1.68 m/s | 2.92 / 0.64 m/s | ≈ 0.3 × v at contact [X] — the last 10 ms is now **slower** than that |
+| upper-arm forward / back / range | 6 / 54 / 60° | **22 / 59 / 82°** | ~20 / ~58 / ~80° |
+| elbow behind / in front | 84 / 120° | **70 / 122°** | ~70 / ~120° |
+| hand above the hip | 32 cm | 39 cm | chest–chin |
+| pelvis yaw range | 12° | **18.7°** | 18–20° |
+| shoulder yaw range | 20.8° | 23.5° | twist grows |
+| trunk lean (pelvis → neck) | 10.9° | 10.5° | ~11°, not more |
+
+### The 7.8 m/s SPRINT
+
+| at 7.8 m/s | RUN-1.1 | **RUN-1.2 SPRINT** | target (§3) |
+|---|---|---|---|
+| cadence / step | 4.14 / 1.89 m | 4.03 / 1.93 m | ~4.0 / ~1.95 m |
+| contact / flight | 121 / 121 ms | 121 / 129 ms | ~120 / ~130 ms |
+| stance knee touchdown → peak (yield) | 32 → 46° (14°) | 31 → 44° (13°) | 28–30°, ~14° yield |
+| swing knee peak | 132° | **135°** | 135–140° |
+| knee at the opposite touchdown | 118° | 123° | 112–118° (team sport) — **slightly track-like** |
+| thigh peak (knee drive) | 57.6° | **63.5°** | 63–65° (team sport) |
+| thigh separation at touchdown / toe-off | 19 / 86° | **29 / 90°** | 25–30 / 95–100° — toe-off **short** |
+| late-swing thigh retraction | 301 °/s | 362 °/s | 250–300 °/s [X] — **above** |
+| upper-arm forward / range | 26 / 86° | **45 / 104°** | big drive, hand to the face |
+| elbow behind / in front | 74 / 118° | 65 / 125° | opens markedly behind |
+| hand above the hip | 38 cm | 50 cm | face height |
+| trunk lean | 13.1° | 11.5° | not more than the run's at steady speed |
+| pelvis yaw range | 14.1° | 12.6° | ~13° |
+
+### How it reads
+
+- **Close side view, same 5.5 m/s** (`S1_side_RUN1.1_5.5_vs_RUN1.2_RUN_5.5.png`): RUN-1.2 carries the hands higher and drives them further, folds the heel higher behind, lands on a straighter leg and sinks less. The hips counter the shoulders. Same timing and bounce.
+- **Hierarchy** (`S1_phases_…`, `S1_chronophotograph_…`, `S1_side_RUN1.2_RUN_5.5_vs_SPRINT_7.8.png`): the jog is compact; the run has the higher arms, tucked heel and wider split; the sprint has a near-horizontal knee drive with the heel under the hip, the rear thigh near vertical at touchdown, and hands to face height.
+- **Gameplay camera.** At 2.5× and 4× the three regimes are distinct, in stills (`S1_game_zoom4_*`) and in motion. At 1× (true match scale, ~40 px figures) jog / run / sprint separate mainly through cadence, stride and arm amplitude. **RUN-1.1 vs RUN-1.2 at the same 5.5 m/s is a moderate difference at 1×**, mostly the arms and heel; it needs your eye in motion.
+- **Waveforms** (`S1_waveforms_real_RUN1.1_RUN1.2.png`): the curves now change *shape* with speed, not only scale. The stance knee hump shrinks, the swing knee peak moves earlier and higher, the ankle path rises, the arm swing opens forward.
+
+### Regression (`regimes/final/`)
+
+- **Authoritative simulation untouched.** 0 files changed outside the RUN-1 paths vs 9d57d460. V1 gate: ON/OFF neutrality and determinism IDENTICAL. Its item-3 flag is the pre-existing corner-flag timer, and the gate output is line-for-line identical to the RUN-1.0 / RUN-1.1 sessions'.
+- **Determinism.** Replay ≡ replay and incremental ≡ incremental, constant speed and ramp; replay ≡ incremental at constant speed. No RNG or clock in the pose path.
+- **Foot planting.** Contact slip 0 at constant speed, 0.01 mm/tick on the ramp. Skinned-mesh stance median 0.0 mm, never below the stud plane; swing minimum ≥ 0.0 mm at 3.0 / 4.2 / 5.5 / 6.5 / 7.0 / 7.8 m/s.
+- **Clearance.** Swing foot to stance leg ≥ 16.9 cm (5.5 m/s: 21.5 cm; RUN-1.1 19.3). Hands: no penetration at 3.0 / 5.5 / 6.5 / 7.8 m/s.
+- **Joint limits** (now scanned at 3.0 / 4.0 / 4.75 / 5.5 / 6.5 / 7.0 / 7.8 m/s). All channels are inside V2's planning box except **hip extension −20.15° at 4.0–4.25 m/s**: 0.15° outside, 4.85° inside the hard limit. **Inherited from RUN-1.1**, which reaches −20.52° at 4.75 m/s. Its earlier "inside" claim came from a 3-speed scan; erratum added to `RUN1_1_EFFORT.md`. Not fixed, because fixing it would break the exact RUN-1.1 identity at 4.0 m/s for an invisible 0.15°. Sprint hip flexion 76.7°, knee 134.8°, shoulder −59.4° (box −60°).
+- **Joins.** Worst stance/swing join over the speed grid 0.06°.
+- **Smoothness** (p99, cm per tick² at 60 Hz; lower is smoother):
+
+| | RUN-1.2 | RUN-1.1 | RUN-1.0 | V1.3 |
+|---|---|---|---|---|
+| 5.5 m/s pelvis / knees | 0.52 / 2.52 | 0.52 / 2.57 | 0.29 / 2.95 | 12.0 / 21.7 |
+| 5.5 m/s ankles / toes / hands | 5.71 / 7.12 / 1.42 | 5.09 / 4.92 / 0.96 | 5.90 / 6.98 / 1.39 | 13.4 / 14.1 / 12.3 |
+| 7.8 m/s ankles / toes / hands | 8.13 / 9.78 / 2.83 | 6.00 / 6.66 / 2.13 | 8.79 / 10.38 / 3.33 | 24.2 / 30.1 / 19.7 |
+| ramp 3 → 7.8 → 3 ankles / toes / hands | 6.99 / 8.41 / 2.58 | 5.48 / 5.91 / 2.06 | 7.66 / 9.13 / 3.16 | 20.0 / 22.8 / 13.8 |
+
+  The trunk and knees are as smooth as RUN-1.1. The feet and hands are rougher than RUN-1.1, because they move faster: bigger arm swing, faster unfolding. They are at RUN-1.0's level: at 5.5 m/s toes and hands are 2 % above RUN-1.0; at 7.8 m/s and on the ramp the ankles, toes and hands are all below it. That is still ½ to ⅑ of V1. The toe peak at 5.5 m/s is the shank braking at the end of the unfolding (swing ≈ 0.82): a smooth ~50 ms swell, not a one-tick snap.
+- **CPU** (Node, 22 rigs, mean / p95): RUN-1.2 0.67 / 0.80 ms; RUN-1.1 0.61 / 0.73; V1.3 3.30 / 4.67. On the speed ramp: 1.06 / 1.25 vs 1.10 / 1.13. Grid solve 50 ms per cell (RUN-1.1 44).
+
+### What is still weak
+
+1. **No replayable reference at ≥ 5 m/s.** The RUN and SPRINT targets are literature values (§5 gaps), not motion compared frame by frame.
+2. **RUN late-swing retraction** 185 °/s, short of 200–250. **The last 10 ms before contact** the foot is slower (0.12 × v) than the reference (≈ 0.3 × v [X]), so the touchdown can look slightly "set down" in a frame-by-frame view.
+3. **Sprint** is between team-sport and track mechanics: knee at the opposite touchdown 123° (team sport 112–118°), retraction 362 °/s (above CL20), separation at toe-off 90° (target 95–100°).
+4. **Inherited from RUN-1.1:** peak stance dorsiflexion ~33–35° (real ~25°); hip extension −20.15° at 4.0–4.25 m/s.
+5. **The jog keeps E5's in-phase pelvis** (up to 4.0 m/s, as approved). The Fukuchi data suggests a lag even at 3.5 m/s. The RUN and SPRINT regimes use the measured phase; the blend between them is a smooth parameter blend.
+6. **At 1× the RUN vs RUN-1.1 difference is moderate.** If it does not read at match scale, the strongest remaining levers are the arm drive and the pelvis/shoulder counter-rotation, not lean or bounce.
+7. **Not built:** an acceleration regime (inclined trunk, landing under the COM). Steady-speed lean is deliberately not increased.
+8. Asset issues unchanged: Vinícius's mirrored front print, the hand-mesh openings.
+
+### How to review
+
+- Server: `cd ~/Downloads/"FC Simulator worktrees"/locomotion-v2-run1 && python3 -m http.server 8317 --bind 127.0.0.1`
+- **http://127.0.0.1:8317/sandbox/visual/run1.html** opens the **Review** preset: RUN-1.1 at 5.5 (the jog), RUN-1.2 RUN 5.5, RUN-1.2 SPRINT 7.8, V1 at 5.5. The close views show RUN-1.1 and RUN-1.2 at 5.5 side by side.
+- Other presets (Lanes menu or `?lanes=`):
+  - `hier`: RUN-1.2 at 3.0 / 5.5 / 7.8;
+  - `jogrun`: RUN-1.1 5.5 / RUN 5.5 / SPRINT 7.8;
+  - `cmp`: same speed, all lanes — use the 1–4 keys or the ramp for the 4.0–5.5 transition;
+  - `hier11`: RUN-1.1 stretched over 3.0 / 5.5 / 7.8;
+  - `cmp4`: adds RUN-1.0.
+- Zoom: `&zoom=2.5` or `&zoom=4`.
+
+**Recommendation.** Review the RUN in motion at 1× and 2.5×.
+- If the RUN and SPRINT read right, freeze RUN-1.2 as the straight-running baseline: a frozen `run1_gait_v12.js` like the other two.
+- Then the candidates (none started) are:
+  - tightening the RUN's last 50 ms before contact (weak point 2);
+  - an acceleration regime;
+  - curved running.

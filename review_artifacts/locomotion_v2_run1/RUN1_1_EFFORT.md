@@ -149,6 +149,7 @@ It opens with **RUN-1.1 new** (near lane), **RUN-1.0 original** (middle) and **V
 - **Determinism.** Replay ≡ replay and incremental ≡ incremental at constant speed and on the ramp; replay ≡ incremental at constant speed. No `Math.random`, `Date.now` or `performance.now` in either gait file.
 - **Foot planting.** Contact-point slip 0.00 cm at constant speed and 0.01 mm per tick on the ramp. Skinned-mesh stance median 0.0 mm, never below the stud plane; swing ≥ +0.0 mm at 3.0 – 7.8 m/s. Foot to stance leg ≥ 16.9 cm (RUN-1.0 11.2).
 - **Joint limits.** Every channel is inside V2's planning box at 3.0 – 7.8 m/s, including hip extension (−19.8°; RUN-1.0 was 0.9° outside).
+  - **Erratum (10 Oct, RUN-1.2 final regression).** The `run1_limits.cjs` scan behind this line sampled only 3.0 / 5.5 / 7.8 m/s. A 0.25 m/s scan of the frozen RUN-1.1 finds hip extension **−20.1 to −20.5° at 4.0 – 5.0 m/s** (worst −20.52° at 4.75 m/s): 0.5° outside the planning box, 4.5° inside V2's hard limit. Nothing else changes. RUN-1.1 stays frozen as it is; see `RUN1_2_REGIMES.md` §6 for RUN-1.2 (worst −20.15°).
 - **Performance** (Node, mean / p95):
 
 | case | RUN-1.1 | RUN-1.0 | V1.3 |

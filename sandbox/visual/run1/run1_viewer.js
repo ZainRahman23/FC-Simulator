@@ -9,7 +9,7 @@ if (typeof gkRootMatrix !== "function") {                       // ofActorTick (
   var gkRootMatrix = r1RootMatrix;
 }
 const RV1 = {
-  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60, preset: "cmp",
+  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60, preset: "review",
   ov: { skel: false, feet: false, com: false, trail: false },
   viewA: "L0:side", viewB: "L1:side", entry: null, R: null, ready: false, frame: 0,
   lanes: [], run1: null, engSkel: {}, warm: {}, lastT: null, perf: [],
@@ -23,6 +23,7 @@ const RV1_ENG = {
 };
 // lane presets: v = a fixed speed for that lane (null = the shared speed / ramp); tag = the regime label shown with the lane
 const RV1_PRESETS = {
+  review: { label: "Review: RUN-1.1 at 5.5 (the jog) · RUN-1.2 RUN 5.5 · RUN-1.2 SPRINT 7.8 · V1 at 5.5", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }, { eng: "v1", v: 5.5, tag: "5.5" }] },
   cmp: { label: "RUN-1.2 · RUN-1.1 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "v1" }] },
   cmp4: { label: "RUN-1.2 · RUN-1.1 · RUN-1.0 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "orig" }, { eng: "v1" }] },
   hier: { label: "RUN-1.2 hierarchy: JOG 3.0 · RUN 5.5 · SPRINT 7.8", lanes: [{ eng: "run1", v: 3.0, tag: "JOG 3.0" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }] },

@@ -2,10 +2,10 @@
 // influence hand_*) vs pelvis / thigh / spine vertices of the same side. Reports the closest approach over a stride (negative = the hand is
 // inside the body's surface by at most that much along the line between the closest points — a proxy, the meshes are not watertight).
 // Penetration: a hand vertex within 3 cm of its nearest body vertex and more than 2 mm behind that vertex's skinned normal.
-// usage: node run1_handclear.cjs [--v 5.5] [--orig 1]
+// usage: node run1_handclear.cjs [--v 5.5] [--orig 1 | --v11 1]
 const { loadRun1, REPO } = require("./run1_load.cjs"), fs = require("fs"), path = require("path");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
-const X = loadRun1(), v = +arg("v", 5.5), E = arg("orig") ? X.RUN1_ORIG : X;
+const X = loadRun1(), v = +arg("v", 5.5), E = arg("orig") ? X.RUN1_ORIG : arg("v11") ? X.RUN1_V11 : X;
 const dir = path.join(REPO, "assets/characters/outfield/vinicius"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8"));
 const buf = fs.readFileSync(path.join(dir, "mesh.bin")), ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 const T = { Float32Array, Uint16Array, Uint32Array, Uint8Array }, M = {};
@@ -29,4 +29,4 @@ for (let f = 0; f < n; f++) { const t = 2 + f / n * G.p.T, rs = E.r1Replay(A, ()
       bd = Math.sqrt(bd); if (bd < dm) dm = bd; if (bd < 0.03) { const b = Bd[bi], nn = Bn[bi], sdist = (h[0] - b[0]) * nn[0] + (h[1] - b[1]) * nn[1] + (h[2] - b[2]) * nn[2]; if (sdist < -0.002) { nPen++; pen = Math.max(pen, -sdist); } } }
     if (dm < res[sd].d) { res[sd].d = dm; res[sd].ph = A.phase; } if (pen > res[sd].pen) { res[sd].pen = pen; res[sd].nPen = nPen; res[sd].phPen = A.phase; } } }
 const f = (r) => `closest ${(r.d * 100).toFixed(1)} cm @${r.ph.toFixed(2)}, deepest penetration ${(r.pen * 1000).toFixed(1)} mm (${r.nPen} hand verts > 2 mm inside) @${r.phPen.toFixed(2)}`;
-console.log(`${arg("orig") ? "RUN-1.0" : X.RUN1.id} ${v} m/s — hand vs pelvis / thigh / spine skin: R ${f(res.R)} | L ${f(res.L)}`);
+console.log(`${arg("orig") ? "RUN-1.0" : arg("v11") ? "RUN-1.1" : X.RUN1.id} ${v} m/s — hand vs pelvis / thigh / spine skin: R ${f(res.R)} | L ${f(res.L)}`);
