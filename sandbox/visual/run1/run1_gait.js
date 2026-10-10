@@ -147,7 +147,7 @@ const RUN1 = {
     elbow: 84, elbowAmp: 12, elbowPh: 0.05,
     armAbd: 12, armAbdAmp: 3, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
     clavProt: 5,
-    gazeDown: 6,
+    gazeDown: 6, headNod: 1.2, headYawFollow: 0.22, headRollFollow: 0.15,
   },
 };
 
@@ -344,7 +344,10 @@ function r1Pose(G, u, plants) {
   rot.chest = R3.yxz(twist * 0.78, bend * 0.55, -pel.roll * 0.30);
   // head: stabilised toward the direction of travel (neck takes 40 % of the correction, the head the rest)
   const Rch = R3.mul3(pel.R, rot.spine, rot.chest);
-  const want = R3.x(p.gazeDown * D), Q = R3.mul(R3.tr(Rch), want), qa = R3.toYXZ(Q);
+  // not a gyroscope: a residual yaw with the thorax (≈ 6° range, Pontzer 2009), a small pitch nod that counters the vertical bob (nose down at
+  // the top of the flight; Pozzo 1990) and a slight roll with the trunk
+  const nod = p.headNod * Math.cos(2 * R1_TAU * (u - p.D - (0.5 - p.D) / 2)) * D;
+  const want = R3.mul3(R3.y(thYaw * p.headYawFollow), R3.x(p.gazeDown * D + nod), R3.z(-pel.roll * p.headRollFollow)), Q = R3.mul(R3.tr(Rch), want), qa = R3.toYXZ(Q);
   rot.neck = R3.yxz(qa[0] * 0.4, qa[1] * 0.4, qa[2] * 0.4);
   rot.head = R3.mul(R3.tr(rot.neck), Q);
   // arms: shoulder-driven swing, contralateral to the legs (the RIGHT arm is forward when the LEFT leg is), elbow closes forward
