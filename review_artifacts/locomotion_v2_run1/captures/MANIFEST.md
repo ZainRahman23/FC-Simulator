@@ -10,3 +10,7 @@ All frames come from the viewer `sandbox/visual/run1.html` at the commit that ad
 | 04_game_zoom1_RUN1_vs_V1.png | the same at true gameplay scale (1×), cropped around the runners |
 | 05_front_RUN1_5.5.png | RUN-1 running toward the camera, front close view |
 | 06_side_RUN1_ramp_3_7.8_3.png | RUN-1 through the 3.0 → 7.8 → 3.0 m/s ramp, one frame every 0.5 s |
+| 07_rear_RUN1_5.5.png | RUN-1 running toward the camera, rear close view (the recovering heel passes outside the stance leg after iteration 11) |
+| 08_game_zoom2.5_diagonal_RUN1_vs_V1.png | the gameplay camera at 2.5×, diagonal run; RUN-1 near, V1 far |
+
+The sheets were recaptured at 05:46 after iterations 7 – 12 (MTP cap / toe-pad roll, swing clearance, head residual, arm asymmetry); the earlier versions are in Git history (`e2dfc0a8`).
