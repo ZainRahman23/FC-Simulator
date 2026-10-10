@@ -1,0 +1,235 @@
+{
+ "prereg": "ITS1_PREREG.md cb886b14",
+ "pf0": {
+  "A-ctl": {
+   "id": "A-ctl",
+   "state": "S-A",
+   "V1": {
+    "nonStanceLowestMm": 119.99,
+    "minSelfSepMm": 53.5,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 4.1761039071275263e-13,
+    "anchorVelMaxMs": 8.903441835098303e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0264,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 5.0723,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 1,
+    "slipMm": 4.8869,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 1.0004,
+    "finite": true,
+    "pass": true
+   },
+   "pass": true,
+   "report": {
+    "dyMm": -2.765,
+    "keDistJ": 106.249,
+    "refVComY": 1.6234,
+    "refL": [
+     -6.6374,
+     -5.4246,
+     -2.1957
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": -1.45171,
+     "who": "ankle_L.x"
+    },
+    "supportLostTau": 85.25,
+    "firstNonFoot": {
+     "tau": 89.25,
+     "bodies": [
+      "thigh_R"
+     ]
+    },
+    "fallTau": 92,
+    "presDiffMaxMm": {
+     "v13": 73.2,
+     "lc1": 103.9
+    }
+   }
+  },
+  "A2-ctl": {
+   "id": "A2-ctl",
+   "state": "S-A2",
+   "V1": {
+    "nonStanceLowestMm": 71.979,
+    "minSelfSepMm": 97.06,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 1.0380585280245214e-12,
+    "anchorVelMaxMs": 6.894343321548949e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0578,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 2.0576,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 0.9444,
+    "slipMm": 18.7983,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.8942,
+    "finite": true,
+    "pass": false
+   },
+   "pass": false,
+   "report": {
+    "dyMm": -19.787,
+    "keDistJ": 135.5198,
+    "refVComY": 1.7849,
+    "refL": [
+     -2.8342,
+     4.6216,
+     -5.6008
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 1.537187,
+     "who": "lumbar.x"
+    },
+    "supportLostTau": 60.75,
+    "firstNonFoot": {
+     "tau": 93,
+     "bodies": [
+      "forearm_R"
+     ]
+    },
+    "fallTau": 89.75,
+    "presDiffMaxMm": {
+     "v13": 93.1,
+     "lc1": 147.9
+    }
+   }
+  },
+  "B-ctl": {
+   "id": "B-ctl",
+   "state": "S-B",
+   "V1": {
+    "nonStanceLowestMm": 114.16,
+    "minSelfSepMm": 58.25,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 1.7053025658242404e-13,
+    "anchorVelMaxMs": 9.992007221626409e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0328,
+    "energyResidPlusJ": 0.5115,
+    "stanceNormalImpulseMaxNs": 8.8026,
+    "limitNs": 6.0421,
+    "pass": false
+   },
+   "V4": {
+    "stanceManifoldFrac": 1,
+    "slipMm": 1.5248,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 1.0006,
+    "finite": true,
+    "pass": true
+   },
+   "pass": false,
+   "report": {
+    "dyMm": 4.348,
+    "keDistJ": 27.0899,
+    "refVComY": 0.5654,
+    "refL": [
+     -7.5056,
+     -6.5447,
+     -4.9928
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": -1.299187,
+     "who": "ankle_L.x"
+    },
+    "supportLostTau": 74.25,
+    "firstNonFoot": {
+     "tau": 80.5,
+     "bodies": [
+      "thigh_R"
+     ]
+    },
+    "fallTau": 81.25,
+    "presDiffMaxMm": {
+     "v13": 54,
+     "lc1": 66.3
+    }
+   }
+  },
+  "B2-ctl": {
+   "id": "B2-ctl",
+   "state": "S-B2",
+   "V1": {
+    "nonStanceLowestMm": 95.435,
+    "minSelfSepMm": 57.48,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 2.3581137043038325e-13,
+    "anchorVelMaxMs": 9.049605298586575e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0626,
+    "energyResidPlusJ": 0.6955,
+    "stanceNormalImpulseMaxNs": 17.9308,
+    "limitNs": 6.0421,
+    "pass": false
+   },
+   "V4": {
+    "stanceManifoldFrac": 0.9722,
+    "slipMm": 11.9967,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.9999,
+    "finite": true,
+    "pass": false
+   },
+   "pass": false,
+   "report": {
+    "dyMm": 13.939,
+    "keDistJ": 43.6454,
+    "refVComY": 0.7781,
+    "refL": [
+     -7.097,
+     -5.7384,
+     -1.0859
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 1.300037,
+     "who": "ankle_L.x"
+    },
+    "supportLostTau": 97.25,
+    "firstNonFoot": {
+     "tau": 107.5,
+     "bodies": [
+      "pelvis"
+     ]
+    },
+    "fallTau": 104.25,
+    "presDiffMaxMm": {
+     "v13": 94,
+     "lc1": 120.9
+    }
+   }
+  }
+ },
+ "struck": {},
+ "C": {},
+ "diagnostics": {},
+ "determinism": {},
+ "outcome": {},
+ "PF0": false
+}

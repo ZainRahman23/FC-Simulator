@@ -3278,3 +3278,50 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 - Event `vT` is the striking primitive's velocity.
 
 **Awaiting:** the external review. Nothing is recommended or started.
+
+## 2026-10-10: Interaction-time physics pivot adopted (decision 2c6900de); ITS-1 preregistered (cb886b14), built, STOPPED at PF-0 activation validity before any struck run (`interaction_time/ITS1_STOP_PF0.md`)
+
+**Decision recorded.** Interaction-time physics pivot, following Astra's review:
+- the simulation is authoritative for ordinary movement and outcome;
+- ordinary locomotion is animation-driven (a separate effort);
+- V2 is the interaction body, activated only for meaningful interaction;
+- all prior work is kept as evidence.
+
+**Contract and preregistration:** `interaction_time/ITS1_CONTRACT.md` and `ITS1_PREREG.md` (frozen cb886b14).
+- **Initializer:** the simulation's own collision-skeleton pose at τ_c − 0.25, plus a vertical grounding shift. Velocities are the KE-metric projection of the law's velocity field onto: stance foot fixed, M·v_auth, vertical COM velocity 0, L from the authority.
+- **Collision:** the authoritative impulse once, over one step, at the mapped point.
+- **Controller:** REV2 posture tone, frozen at initialization. No B, carrier or stand-in.
+- PI-1 locomotion gates are listed as not applicable.
+
+**Run:** the four official controls.
+
+| state | PF-0 | failing row(s) |
+|---|---|---|
+| S-A (rx_free_leg 59.5, early stance) | **passes** | — |
+| S-A2 (late stance) | fails | V-4 slip 18.8 mm |
+| S-B (rx_planted_leg 48.5, early stance) | fails | V-3 load 8.80 N·s per step vs 6.04, energy residual 0.5115 vs 0.5 J |
+| S-B2 (rx_glancing, touchdown) | fails | V-3 slap 17.9 N·s per step, 0.70 J; V-4 slip 12.0 mm |
+
+Per the frozen rule, no struck run (A / B / C).
+
+**Attribution** (STOP diagnostics on the controls only, default path verified bit-identical):
+- The binding element is the frozen-target posture tone acting against the initialized stance-leg rates. With it off, the impact and slip vanish, but the body free-falls.
+- S-B2: also the pitched rigid boot at heel strike, still mid-collision.
+- S-A2: a late-stance toe-edge support, after a −19.8 mm toe-pivot shift.
+- V-3's 2·M·g·dt row is PI-1's PR-4 value; running stance loads are about 2 – 3 BW. Noted, not changed.
+
+**Held:**
+- authority writes 28 / 0;
+- `ib_verify` 59 / 1 / 0;
+- records unchanged;
+- determinism: identical digests across processes;
+- CPU physics 643 – 683 µs per step (diagnostics 216 – 261), ≈ 24 ms per 0.15 s interaction.
+
+**Decisions needed:**
+- the V-3 rows for running stance;
+- an interaction-time stance tone (amendment A1);
+- treatment of touchdown states;
+- a single-state C design;
+- optionally, A alone on S-A.
+
+**Awaiting user.**

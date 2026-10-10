@@ -1,0 +1,235 @@
+{
+ "prereg": "ITS1_PREREG.md cb886b14",
+ "pf0": {
+  "A-ctl": {
+   "id": "A-ctl",
+   "state": "S-A",
+   "V1": {
+    "nonStanceLowestMm": 119.99,
+    "minSelfSepMm": 53.5,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 4.1761039071275263e-13,
+    "anchorVelMaxMs": 8.903441835098303e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.037,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 0.1326,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 1,
+    "slipMm": 1.6298,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.8775,
+    "finite": true,
+    "pass": true
+   },
+   "pass": true,
+   "report": {
+    "dyMm": -2.765,
+    "keDistJ": 106.249,
+    "refVComY": 1.6234,
+    "refL": [
+     -6.6374,
+     -5.4246,
+     -2.1957
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 6.104219,
+     "who": "lumbar.x"
+    },
+    "supportLostTau": 76.25,
+    "firstNonFoot": {
+     "tau": 79.5,
+     "bodies": [
+      "thigh_L"
+     ]
+    },
+    "fallTau": 81,
+    "presDiffMaxMm": {
+     "v13": 73.2,
+     "lc1": 103.9
+    }
+   }
+  },
+  "A2-ctl": {
+   "id": "A2-ctl",
+   "state": "S-A2",
+   "V1": {
+    "nonStanceLowestMm": 71.979,
+    "minSelfSepMm": 97.06,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 1.0380585280245214e-12,
+    "anchorVelMaxMs": 6.894343321548949e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.2487,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 0.0777,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 0.9722,
+    "slipMm": 2.4946,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.851,
+    "finite": true,
+    "pass": true
+   },
+   "pass": true,
+   "report": {
+    "dyMm": -19.787,
+    "keDistJ": 135.5198,
+    "refVComY": 1.7849,
+    "refL": [
+     -2.8342,
+     4.6216,
+     -5.6008
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 0.2658303,
+     "who": "knee_L.y"
+    },
+    "supportLostTau": 67.5,
+    "firstNonFoot": {
+     "tau": 71.25,
+     "bodies": [
+      "thigh_R"
+     ]
+    },
+    "fallTau": 70.25,
+    "presDiffMaxMm": {
+     "v13": 93.1,
+     "lc1": 147.9
+    }
+   }
+  },
+  "B-ctl": {
+   "id": "B-ctl",
+   "state": "S-B",
+   "V1": {
+    "nonStanceLowestMm": 114.16,
+    "minSelfSepMm": 58.25,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 1.7053025658242404e-13,
+    "anchorVelMaxMs": 9.992007221626409e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0495,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 0.1584,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 1,
+    "slipMm": 2.3145,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.8753,
+    "finite": true,
+    "pass": true
+   },
+   "pass": true,
+   "report": {
+    "dyMm": 4.348,
+    "keDistJ": 27.0899,
+    "refVComY": 0.5654,
+    "refL": [
+     -7.5056,
+     -6.5447,
+     -4.9928
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 3.125704,
+     "who": "lumbar.x"
+    },
+    "supportLostTau": 65,
+    "firstNonFoot": {
+     "tau": 67.75,
+     "bodies": [
+      "thigh_L"
+     ]
+    },
+    "fallTau": 70,
+    "presDiffMaxMm": {
+     "v13": 54,
+     "lc1": 66.3
+    }
+   }
+  },
+  "B2-ctl": {
+   "id": "B2-ctl",
+   "state": "S-B2",
+   "V1": {
+    "nonStanceLowestMm": 95.435,
+    "minSelfSepMm": 57.48,
+    "pass": true
+   },
+   "V2": {
+    "residualMax": 2.3581137043038325e-13,
+    "anchorVelMaxMs": 9.049605298586575e-16,
+    "pass": true
+   },
+   "V3": {
+    "posCorrMaxMm": 0.0737,
+    "energyResidPlusJ": 0,
+    "stanceNormalImpulseMaxNs": 0,
+    "limitNs": 6.0421,
+    "pass": true
+   },
+   "V4": {
+    "stanceManifoldFrac": 0.5278,
+    "slipMm": 3.2794,
+    "nonFoot": false,
+    "pelvisYMinOverInit": 0.8775,
+    "finite": true,
+    "pass": false
+   },
+   "pass": false,
+   "report": {
+    "dyMm": 13.939,
+    "keDistJ": 43.6454,
+    "refVComY": 0.7781,
+    "refL": [
+     -7.097,
+     -5.7384,
+     -1.0859
+    ],
+    "jointMarginMinDegWvalid": {
+     "v": 0.7368848,
+     "who": "lumbar.x"
+    },
+    "supportLostTau": 66.75,
+    "firstNonFoot": {
+     "tau": 84.25,
+     "bodies": [
+      "thigh_L"
+     ]
+    },
+    "fallTau": 98,
+    "presDiffMaxMm": {
+     "v13": 94,
+     "lc1": 120.9
+    }
+   }
+  }
+ },
+ "struck": {},
+ "C": {},
+ "diagnostics": {},
+ "determinism": {},
+ "outcome": {},
+ "PF0": false
+}
