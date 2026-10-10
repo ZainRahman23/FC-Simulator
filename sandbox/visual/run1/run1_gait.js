@@ -243,13 +243,29 @@ RUN1.regimes.SPRINT = Object.assign({}, RUN1.anchors11[2], {
 // names (LOW / JOG / FAST RUN, RUN1.ladder), and the missing category is a footballer running as fast as he physically can. ALL-OUT is fitted at
 // its own speed (RUN1_3_ALLOUT.md). RUN-1.3 ≡ RUN-1.2 at every speed ≤ 8.0 m/s: the SPRINT parameters hold from 7.8 to 8.0 m/s (RUN-1.2 already
 // held them above 7.8), and the blend into ALL-OUT starts at the 8.0 m/s speed-grid cell, so every cell ≤ 8.0 is RUN-1.2's own solve.
+// ALL-OUT — a footballer at his maximum speed, 9.5 m/s (≈34 km/h: a fast professional winger; LaLiga season-best match peaks, forwards 9.2 ± 0.4 m/s,
+// 15 % of players above 9.44, fastest 9.78 — Del Coso 2020). Fitted to top-speed data (RUN1_3_ALLOUT.md §2): footballer values where they exist
+// (Clark 2025 "fast team-sport" athletes at 9.3 m/s; Kadlec 2024), otherwise sprinters at 9.5–9.9 m/s (Clark 2020; Miyashiro 2019). From FAST RUN:
 RUN1.regimes.ALLOUT = Object.assign({}, RUN1.regimes.SPRINT, { v: 9.5, id: "ALLOUT",
-  cadence: 4.50, tc: 0.100, vSkew: 1.8,
-  kneeTD: 27, kneeTO: 24, kneePkExtra: 5, kneeTOrate: 120, strikeToeUp: -10, flatS: 0.22, heelRiseS: 0.23, heelRiseTO: 82, footW: 0.018, sway: 0.006,
-  kneeMax: 142, kneeMaxW: 0.40, kneeHold: 128, kneeHoldW: 0.55, kneeExt: 26, kneeExtW: 0.82,
-  hipMax: 84, hipMaxW: 0.66, hipOpp: 16, hipOppK: 1, ankleDFSwing: -14, ankleDFW: 0.55,
-  armFwd: 52, armBack: 56, elbow: 92, elbowAmp: 36, armAbdAmp: 4,
-  lean: 11, leanAmp: 1.6, tilt: 12, tiltAmp: 3.2, pelvisYaw: 7.5, thoraxYaw: 16, obliq: 5, headNod: 0.8, headYawFollow: 0.15,
+  // speed from turnover: 4.55 steps/s × 2.09 m (9.50 m/s males 4.58 × 2.07, contact 105 ms, flight 114 ms — Clark 2020); same subjects 7 → 9 m/s:
+  // stride frequency +25 %, stride length +3 % (Dorn 2012). The force skew stays at FAST RUN's 1.4: even sprinters' first-half / second-half vertical
+  // force (2.65 / 1.71 BW, Clark & Weyand 2014) is less front-loaded than that; the impact peak (~27 % of contact) is a two-mass feature
+  cadence: 4.55, tc: 0.102,                     // (0.102 s → 104 ms measured on frames)
+  // a stiff, tall stance: knee 27° at touchdown (152–153° included, Miyashiro 2019 / Haugen 2018), yields ≈14° (13.6 ± 3.6°), extends to 21° at toe-off
+  // (Paradisis 2019 161 ± 7°); the foot lands nearly flat (team-sport athletes 0.2 ± 6.5° at top speed, Clark 2025 — FAST RUN's strike is kept)
+  kneeTD: 27, kneeTO: 21, kneePkExtra: 0, heelRiseTO: 78, footW: 0.018, sway: 0.006,
+  // swing: heel recovery to 142° (sprinters 148°), peaking later than a sprinter's so the knee is ≈127° when the other foot lands (team sport 118°,
+  // track 131°, Clark 2025); thigh drive ≈66° (team sport 65 ± 7°, sprinters 70°); the swing thigh ≈ vertical at the other touchdown (team sport −7°,
+  // sprinters +4°); swing ankle dorsiflexed (design)
+  kneeMax: 142, kneeMaxW: 0.46, kneeHold: 118, kneeHoldW: 0.55, kneeExt: 26, kneeExtW: 0.82,
+  hipMax: 81, hipMaxW: 0.66, hipOpp: 10, hipOppK: 1, ankleDFSwing: -14, ankleDFW: 0.55,
+  // arms: a full drive within V2's shoulder box (extension −60°): range ≈113° (200 m sprinters 118–135°, Mann via Macadam 2018), the elbow opening to
+  // ≈50° behind and closing to ≈130° in front (one sprinter at top speed 44–142°, Haralabidis 2021, CC BY); hand to cheek height
+  armFwd: 50, armBack: 56, elbow: 90, elbowAmp: 40, armAbdAmp: 4,
+  // trunk nearly upright at top speed (6–9° from vertical at contact: Haugen 2018, Paradisis 2019) — a little MORE upright than FAST RUN, never more
+  // inclined; the pelvis turns more (range ≈17°: rotation plateaus ≈16° in acceleration, Nagahara 2018; one sprinter ≈24°) with the thorax countering;
+  // the head steadier (design: no head data at top speed)
+  lean: 10, leanAmp: 1.6, tilt: 12, tiltAmp: 3.2, pelvisYaw: 9.5, thoraxYaw: 17, obliq: 5, headNod: 0.8, headYawFollow: 0.15,
 });
 RUN1.allOutFrom = 8.0;                                                             // the last RUN-1.2 grid cell; the ALL-OUT blend starts here
 // what the user calls each regime (presentation labels; the parameter keys keep their fitting history)

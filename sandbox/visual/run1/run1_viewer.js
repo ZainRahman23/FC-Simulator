@@ -24,10 +24,11 @@ const RV1_ENG = {
   v1: { name: () => "V1", col: "#ff8a5e" },
 };
 // lane presets: v = a fixed speed for that lane (null = the shared speed / ramp); tag = the regime label shown with the lane; views = the default
-// close views [A, B]. RUN-1.3 ≡ RUN-1.2 at ≤ 8.0 m/s; the presets that show RUN-1.2's own regimes run the FROZEN copy (v12), byte for byte.
+// close views [A, B]; zoom / rate = the preset's gameplay zoom and playback rate (unless the URL sets them). RUN-1.3 ≡ RUN-1.2 at ≤ 8.0 m/s; the presets that show RUN-1.2's own regimes run the FROZEN copy (v12), byte for byte.
 const RV1_VMAX = 9.5;                                            // the ALL-OUT anchor speed (RUN1.regimes.ALLOUT.v)
 const RV1_PRESETS = {
   ladder: { label: "Ladder (RUN-1.3): LOW 3.0 · JOG 5.5 · FAST RUN 7.8 · ALL-OUT 9.5", views: ["L3:side", "L2:side"], lanes: [{ eng: "run1", v: 3.0, tag: "LOW 3.0" }, { eng: "run1", v: 5.5, tag: "JOG 5.5" }, { eng: "run1", v: 7.8, tag: "FAST RUN 7.8" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
+  diag: { label: "ALL-OUT diagnosis: 9.5 m/s alone, 2.5× zoom, 0.25× playback", views: ["L0:side", "L0:front34"], zoom: 2.5, rate: 0.25, lanes: [{ eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
   top: { label: "Top end (RUN-1.3): FAST RUN 7.8 · ALL-OUT 9.5", views: ["L1:side", "L0:side"], lanes: [{ eng: "run1", v: 7.8, tag: "FAST RUN 7.8" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
   stretch: { label: "Same 9.5 m/s: RUN-1.2 (its 7.8 gait stretched) · RUN-1.3 ALL-OUT", views: ["L1:side", "L0:side"], lanes: [{ eng: "v12", v: RV1_VMAX, tag: "9.5 (stretched)" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
   hier12: { label: "RUN-1.2 frozen: 3.0 · 5.5 · 7.8 (as reviewed)", lanes: [{ eng: "v12", v: 3.0, tag: "LOW 3.0" }, { eng: "v12", v: 5.5, tag: "JOG 5.5" }, { eng: "v12", v: 7.8, tag: "FAST RUN 7.8" }] },
@@ -312,11 +313,13 @@ function rv1Boot() {
   if (q.get("rate")) RV1.rate = +q.get("rate"); if (q.get("labels") === "0") RV1.labels = false; if (q.get("blind")) { RV1.blind = Math.max(1, +q.get("blind") || 1); if (!q.get("lanes")) RV1.preset = "ladder"; }
   if (q.get("v1")) RV1.v1Mode = q.get("v1"); if (q.get("ticks") === "1") RV1.sampleTicks = true;
   for (const k of ["skel", "feet", "com", "trail"]) if (q.get(k) === "1") { RV1.ov[k] = true; }
+  { const P = RV1_PRESETS[RV1.preset]; if (P && P.zoom && !q.get("zoom")) RV1.zoom = P.zoom; if (P && P.rate && !q.get("rate")) RV1.rate = P.rate; }
   rv1Views();
   rv1Group("rate", (v) => { RV1.rate = +v; }); rv1Group("zoom", (v) => { RV1.zoom = +v; });
   document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", +x.dataset.rate === RV1.rate));
   const selL = document.getElementById("selLanes"); selL.innerHTML = Object.entries(RV1_PRESETS).map(([k, P]) => `<option value="${k}">${P.label}</option>`).join(""); selL.value = RV1.preset;
-  selL.onchange = (e) => { RV1.preset = e.target.value; RV1.fixViews(); const t = RV1.t; rv1Reset(); rv1Update(t); RV1.t = t; };
+  selL.onchange = (e) => { RV1.preset = e.target.value; const P = RV1_PRESETS[RV1.preset]; if (P.zoom) RV1.zoom = P.zoom; if (P.rate) RV1.rate = P.rate;
+    document.querySelectorAll("[data-zoom]").forEach(x => x.classList.toggle("on", +x.dataset.zoom === RV1.zoom)); document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", +x.dataset.rate === RV1.rate)); RV1.fixViews(); const t = RV1.t; rv1Reset(); rv1Update(t); RV1.t = t; };
   document.querySelectorAll("[data-zoom]").forEach(x => x.classList.toggle("on", +x.dataset.zoom === RV1.zoom));
   document.getElementById("bPlay").onclick = () => rv1SetPlaying(!RV1.playing);
   document.getElementById("bRestart").onclick = () => { rv1Reset(); rv1Update(0); };

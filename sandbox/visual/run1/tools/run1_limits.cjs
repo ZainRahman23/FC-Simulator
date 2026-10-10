@@ -11,7 +11,7 @@ for (const v of [3.0, 4.0, 4.75, 5.5, 6.5, 7.0, 7.8, 8.5, 9.0, 9.5, 10.0]) { con
       add("hipFlex", c.h * D); add("hipAbd", side * c.a * D); add("hipRot", -side * c.psi * D); add("knee", c.k * D); add("ankleDF", -c.fp * D); add("ankleInv", side * c.fr * D); add("mtpDF", -c.toe * D); }
     const yx = (R) => X.R3.toYXZ(R);
     add("lumbarAxial", yx(pose.rot.spine)[0] * D); add("thoracicAxial", yx(pose.rot.chest)[0] * D);
-    const fa = yx(pose.rot.foreArm_R); add("elbow", -fa[1] * D);
+    const fa = pose.rot.foreArm_R; add("elbow", -Math.atan2(fa[7], fa[4]) * D);   // a pure x rotation: atan2, not the YXZ decomposition (its asin capped at 90°; RUN-1.2's "90" was 125)
     const ua = pose.rot.upperArm_R, dir = X.R3.v(ua, [0, -1, 0]); add("shoulderFlex", Math.atan2(dir[2], -dir[1]) * D); } }
 const box = { hipFlex: LIM.hipFlex, hipAbd: LIM.hipAbd, hipRot: LIM.hipRot, knee: LIM.knee, ankleDF: LIM.ankleDF, ankleInv: LIM.ankleInv, mtpDF: LIM.mtpDF, lumbarAxial: LIM.lumbarAxial, thoracicAxial: LIM.thoracicAxial, elbow: LIM.elbow, shoulderFlex: LIM.shoulderFlex };
 console.log("channel         RUN-1 range (3.0–10.0 m/s)    V2 planning box     inside");
