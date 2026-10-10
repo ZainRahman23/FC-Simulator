@@ -163,7 +163,7 @@ RUN1.anchors = [
   { v: 5.5, id: "RUN" },
   { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kv: 0.6, kneeTD: 28, kneeTO: 26, footW: 0.02, strikeToeUp: 2, heelRiseTO: 80, kneeTOrate: 420,
     kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
-    tilt: 8, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 45, armBack: 60, elbow: 88, elbowAmp: 18, armAbd: 11 },
+    tilt: 8, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 45, armBack: 55, elbow: 88, elbowAmp: 18, armAbd: 11 },
 ];
 function r1ParamsAt(v, base) {
   const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
