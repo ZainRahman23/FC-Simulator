@@ -1,0 +1,813 @@
+{
+ "tool": "rh1_spec_diff.mjs",
+ "ankleNeutralK": 0.13,
+ "hashes": {
+  "V2-REF": "7df7ab64",
+  "R0": "62d5d797",
+  "RH1": "e2892d27"
+ },
+ "humans": {
+  "V2-REF": {
+   "id": "V2-REF",
+   "H": 1.82,
+   "M": 78,
+   "kind": "population"
+  },
+  "R0": {
+   "id": "PI1-runner-vinicius",
+   "H": 1.76,
+   "M": 73,
+   "kind": "morphology-variant",
+   "overrides": {
+    "ankleH": 0.0386364,
+    "kneeH": 0.2651623,
+    "hipH": 0.5122814,
+    "hipHalf": 0.0866456,
+    "shoulderHalf": 0.1403375,
+    "sjcH": 0.8175175,
+    "armScale": 1.0578941
+   },
+   "record": "assets/characters/outfield/vinicius/rig.json @ f5f6076 (identity 176 cm / 73 kg)"
+  },
+  "RH1": {
+   "id": "PI1-runner-vinicius-RH1",
+   "H": 1.76,
+   "M": 73,
+   "kind": "morphology-variant",
+   "overrides": {
+    "ankleH": 0.0386364,
+    "kneeH": 0.2651623,
+    "hipH": 0.5122814,
+    "hipHalf": 0.0866456,
+    "shoulderHalf": 0.1403375,
+    "sjcH": 0.8175175,
+    "armScale": 1.0578941
+   },
+   "record": "assets/characters/outfield/vinicius/rig.json @ f5f6076 (identity 176 cm / 73 kg); record-hinged lumbar / thoracic / elbow (RH1_PREREG.md §1.2)",
+   "hinges": {
+    "lumbar": [
+     0,
+     1.029058373428653,
+     0
+    ],
+    "thoracic": [
+     0,
+     1.2439445905306439,
+     0
+    ],
+    "elbow": {
+     "L": [
+      -0.5598116432432433,
+      1.4588308,
+      0
+     ],
+     "R": [
+      0.5598116432432433,
+      1.4588308,
+      0
+     ]
+    },
+    "source": "assets/characters/outfield/vinicius/rig.json @ 6ca64389 bindOrigin (spine, chest, upperArm → foreArm length)"
+   }
+  }
+ },
+ "rigRecord": {
+  "file": "assets/characters/outfield/vinicius/rig.json",
+  "blob": "6ca64389d44244331cd7af37ce8f4ee6f854353e",
+  "bindOrigin": {
+   "spine": [
+    0,
+    1.029058373428653,
+    0
+   ],
+   "chest": [
+    0,
+    1.2439445905306439,
+    0
+   ],
+   "upperArm_L": [
+    -0.24699406338809193,
+    1.4588308076326348,
+    0
+   ],
+   "foreArm_L": [
+    -0.24699406338809193,
+    1.1460131643893916,
+    0
+   ],
+   "upperArm_R": [
+    0.24699406338809193,
+    1.4588308076326348,
+    0
+   ],
+   "foreArm_R": [
+    0.24699406338809193,
+    1.1460131643893916,
+    0
+   ]
+  }
+ },
+ "RH1_vs_R0": {
+  "differingLeaves": 101,
+  "bySection": {
+   "bodies.abdomen": 8,
+   "bodies.forearm_L": 5,
+   "bodies.forearm_R": 5,
+   "bodies.thorax": 10,
+   "bodies.upperArm_L": 1,
+   "bodies.upperArm_R": 1,
+   "hinges": 34,
+   "human": 1,
+   "joints.elbow_L": 1,
+   "joints.elbow_R": 1,
+   "joints.lumbar": 2,
+   "joints.thoracic": 2,
+   "skeleton": 30
+  },
+  "leaves": [
+   {
+    "path": "bodies.abdomen.comBodyLocal.1",
+    "a": 0.11977492475588725,
+    "b": 0.15962187850931353,
+    "delta": 0.039846953753426284
+   },
+   {
+    "path": "bodies.abdomen.comBodyLocal.2",
+    "a": 0.029920000000000002,
+    "b": 0,
+    "delta": -0.029920000000000002
+   },
+   {
+    "path": "bodies.abdomen.comLocal.1",
+    "a": 0.11977492475588725,
+    "b": 0.15962187850931353,
+    "delta": 0.039846953753426284
+   },
+   {
+    "path": "bodies.abdomen.comLocal.2",
+    "a": 0.029920000000000002,
+    "b": 0,
+    "delta": -0.029920000000000002
+   },
+   {
+    "path": "bodies.abdomen.origin.1",
+    "a": 1.0689053271820792,
+    "b": 1.029058373428653,
+    "delta": -0.039846953753426284
+   },
+   {
+    "path": "bodies.abdomen.origin.2",
+    "a": -0.029920000000000002,
+    "b": 0,
+    "delta": 0.029920000000000002
+   },
+   {
+    "path": "bodies.abdomen.shapes.0.pos.1",
+    "a": 0.1089259046524984,
+    "b": 0.1487728584059247,
+    "delta": 0.039846953753426284
+   },
+   {
+    "path": "bodies.abdomen.shapes.0.pos.2",
+    "a": 0.029920000000000002,
+    "b": 0,
+    "delta": -0.029920000000000002
+   },
+   {
+    "path": "bodies.forearm_L.comBodyLocal.0",
+    "a": -0.19413939657361667,
+    "b": -0.1825827709221023,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_L.comLocal.0",
+    "a": -0.19413939657361667,
+    "b": -0.1825827709221023,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_L.origin.0",
+    "a": -0.5482550175917289,
+    "b": -0.5598116432432433,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_L.shapes.0.pos.0",
+    "a": -0.14378609803055709,
+    "b": -0.1322294723790427,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_L.shapes.1.pos.0",
+    "a": -0.34333535447906016,
+    "b": -0.3317787288275458,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_R.comBodyLocal.0",
+    "a": 0.19413939657361667,
+    "b": 0.1825827709221023,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_R.comLocal.0",
+    "a": 0.19413939657361667,
+    "b": 0.1825827709221023,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_R.origin.0",
+    "a": 0.5482550175917289,
+    "b": 0.5598116432432433,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_R.shapes.0.pos.0",
+    "a": 0.14378609803055709,
+    "b": 0.1322294723790427,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.forearm_R.shapes.1.pos.0",
+    "a": 0.34333535447906016,
+    "b": 0.3317787288275458,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.thorax.comBodyLocal.1",
+    "a": 0.12081128271108565,
+    "b": 0.163623828667518,
+    "delta": 0.04281254595643236
+   },
+   {
+    "path": "bodies.thorax.comBodyLocal.2",
+    "a": 0.03872,
+    "b": 0,
+    "delta": -0.03872
+   },
+   {
+    "path": "bodies.thorax.comLocal.1",
+    "a": 0.12081128271108565,
+    "b": 0.163623828667518,
+    "delta": 0.04281254595643236
+   },
+   {
+    "path": "bodies.thorax.comLocal.2",
+    "a": 0.03872,
+    "b": 0,
+    "delta": -0.03872
+   },
+   {
+    "path": "bodies.thorax.origin.1",
+    "a": 1.2867571364870762,
+    "b": 1.2439445905306439,
+    "delta": -0.04281254595643236
+   },
+   {
+    "path": "bodies.thorax.origin.2",
+    "a": -0.03872,
+    "b": 0,
+    "delta": 0.03872
+   },
+   {
+    "path": "bodies.thorax.shapes.0.pos.1",
+    "a": 0.08628144744399768,
+    "b": 0.12909399340043004,
+    "delta": 0.04281254595643236
+   },
+   {
+    "path": "bodies.thorax.shapes.0.pos.2",
+    "a": 0.03872,
+    "b": 0,
+    "delta": -0.03872
+   },
+   {
+    "path": "bodies.thorax.shapes.1.pos.1",
+    "a": 0.19915058658984686,
+    "b": 0.2419631325462792,
+    "delta": 0.04281254595643236
+   },
+   {
+    "path": "bodies.thorax.shapes.1.pos.2",
+    "a": 0.019379340659340657,
+    "b": -0.01934065934065934,
+    "delta": -0.03872
+   },
+   {
+    "path": "bodies.upperArm_L.distal.0",
+    "a": -0.5482550175917289,
+    "b": -0.5598116432432433,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "bodies.upperArm_R.distal.0",
+    "a": 0.5482550175917289,
+    "b": 0.5598116432432433,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "hinges.moved.0.body",
+    "a": "(absent)",
+    "b": "abdomen",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.from.0",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.from.1",
+    "a": "(absent)",
+    "b": 1.0689053271820792,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.from.2",
+    "a": "(absent)",
+    "b": -0.029920000000000002,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.joint",
+    "a": "(absent)",
+    "b": "lumbar",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.to.0",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.to.1",
+    "a": "(absent)",
+    "b": 1.029058373428653,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.0.to.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.body",
+    "a": "(absent)",
+    "b": "thorax",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.from.0",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.from.1",
+    "a": "(absent)",
+    "b": 1.2867571364870762,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.from.2",
+    "a": "(absent)",
+    "b": -0.03872,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.joint",
+    "a": "(absent)",
+    "b": "thoracic",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.to.0",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.to.1",
+    "a": "(absent)",
+    "b": 1.2439445905306439,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.1.to.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.body",
+    "a": "(absent)",
+    "b": "forearm_L",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.from.0",
+    "a": "(absent)",
+    "b": -0.5482550175917289,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.from.1",
+    "a": "(absent)",
+    "b": 1.4588308,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.from.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.joint",
+    "a": "(absent)",
+    "b": "elbow_L",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.to.0",
+    "a": "(absent)",
+    "b": -0.5598116432432433,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.to.1",
+    "a": "(absent)",
+    "b": 1.4588308,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.2.to.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.body",
+    "a": "(absent)",
+    "b": "forearm_R",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.from.0",
+    "a": "(absent)",
+    "b": 0.5482550175917289,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.from.1",
+    "a": "(absent)",
+    "b": 1.4588308,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.from.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.joint",
+    "a": "(absent)",
+    "b": "elbow_R",
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.to.0",
+    "a": "(absent)",
+    "b": 0.5598116432432433,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.to.1",
+    "a": "(absent)",
+    "b": 1.4588308,
+    "delta": null
+   },
+   {
+    "path": "hinges.moved.3.to.2",
+    "a": "(absent)",
+    "b": 0,
+    "delta": null
+   },
+   {
+    "path": "hinges.rule",
+    "a": "(absent)",
+    "b": "hinge-only (RH1_PREREG.md §1.3)",
+    "delta": null
+   },
+   {
+    "path": "hinges.source",
+    "a": "(absent)",
+    "b": "assets/characters/outfield/vinicius/rig.json @ 6ca64389 bindOrigin (spine, chest, upperArm → foreArm length)",
+    "delta": null
+   },
+   {
+    "path": "human.id",
+    "a": "PI1-runner-vinicius",
+    "b": "PI1-runner-vinicius-RH1",
+    "delta": null
+   },
+   {
+    "path": "joints.elbow_L.at.0",
+    "a": -0.5482550175917289,
+    "b": -0.5598116432432433,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "joints.elbow_R.at.0",
+    "a": 0.5482550175917289,
+    "b": 0.5598116432432433,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "joints.lumbar.at.1",
+    "a": 1.0689053271820792,
+    "b": 1.029058373428653,
+    "delta": -0.039846953753426284
+   },
+   {
+    "path": "joints.lumbar.at.2",
+    "a": -0.029920000000000002,
+    "b": 0,
+    "delta": 0.029920000000000002
+   },
+   {
+    "path": "joints.thoracic.at.1",
+    "a": 1.2867571364870762,
+    "b": 1.2439445905306439,
+    "delta": -0.04281254595643236
+   },
+   {
+    "path": "joints.thoracic.at.2",
+    "a": -0.03872,
+    "b": 0,
+    "delta": 0.03872
+   },
+   {
+    "path": "skeleton.frames.hips.q.0",
+    "a": -0.10003722965337628,
+    "b": 0,
+    "delta": 0.10003722965337628
+   },
+   {
+    "path": "skeleton.frames.hips.q.3",
+    "a": 0.9949836946821178,
+    "b": 1,
+    "delta": 0.005016305317882219
+   },
+   {
+    "path": "skeleton.frames.hips.y.1",
+    "a": 0.9799851053665553,
+    "b": 1,
+    "delta": 0.020014894633444746
+   },
+   {
+    "path": "skeleton.frames.hips.y.2",
+    "a": -0.19907082473255963,
+    "b": 0,
+    "delta": 0.19907082473255963
+   },
+   {
+    "path": "skeleton.frames.hips.z.1",
+    "a": 0.19907082473255963,
+    "b": 0,
+    "delta": -0.19907082473255963
+   },
+   {
+    "path": "skeleton.frames.hips.z.2",
+    "a": 0.9799851053665554,
+    "b": 1,
+    "delta": 0.020014894633444635
+   },
+   {
+    "path": "skeleton.frames.spine_01.q.0",
+    "a": -0.02018487028443475,
+    "b": 0,
+    "delta": 0.02018487028443475
+   },
+   {
+    "path": "skeleton.frames.spine_01.q.3",
+    "a": 0.9997962647517746,
+    "b": 1,
+    "delta": 0.00020373524822536737
+   },
+   {
+    "path": "skeleton.frames.spine_01.y.1",
+    "a": 0.9991851420232011,
+    "b": 1,
+    "delta": 0.0008148579767989217
+   },
+   {
+    "path": "skeleton.frames.spine_01.y.2",
+    "a": -0.0403615158297539,
+    "b": 0,
+    "delta": 0.0403615158297539
+   },
+   {
+    "path": "skeleton.frames.spine_01.z.1",
+    "a": 0.0403615158297539,
+    "b": 0,
+    "delta": -0.0403615158297539
+   },
+   {
+    "path": "skeleton.frames.spine_01.z.2",
+    "a": 0.9991851420232011,
+    "b": 1,
+    "delta": 0.0008148579767989217
+   },
+   {
+    "path": "skeleton.frames.spine_03.q.0",
+    "a": 0.03546094138638625,
+    "b": -0.1013979654615547,
+    "delta": -0.13685890684794094
+   },
+   {
+    "path": "skeleton.frames.spine_03.q.3",
+    "a": 0.9993710630371441,
+    "b": 0.9948459441542984,
+    "delta": -0.00452511888284568
+   },
+   {
+    "path": "skeleton.frames.spine_03.y.1",
+    "a": 0.9974850432719825,
+    "b": 0.9794369052005147,
+    "delta": -0.018048138071467767
+   },
+   {
+    "path": "skeleton.frames.spine_03.y.2",
+    "a": 0.07087727737922138,
+    "b": -0.20175070936985065,
+    "delta": -0.272627986749072
+   },
+   {
+    "path": "skeleton.frames.spine_03.z.1",
+    "a": -0.07087727737922138,
+    "b": 0.20175070936985065,
+    "delta": 0.272627986749072
+   },
+   {
+    "path": "skeleton.frames.spine_03.z.2",
+    "a": 0.9974850432719826,
+    "b": 0.9794369052005147,
+    "delta": -0.01804813807146788
+   },
+   {
+    "path": "skeleton.positions.forearm_twist_L.0",
+    "a": -0.7207983352283974,
+    "b": -0.7254209854890031,
+    "delta": -0.00462265026060571
+   },
+   {
+    "path": "skeleton.positions.forearm_twist_R.0",
+    "a": 0.7207983352283974,
+    "b": 0.7254209854890031,
+    "delta": 0.00462265026060571
+   },
+   {
+    "path": "skeleton.positions.lowerArm_L.0",
+    "a": -0.5482550175917289,
+    "b": -0.5598116432432433,
+    "delta": -0.011556625651514385
+   },
+   {
+    "path": "skeleton.positions.lowerArm_R.0",
+    "a": 0.5482550175917289,
+    "b": 0.5598116432432433,
+    "delta": 0.011556625651514385
+   },
+   {
+    "path": "skeleton.positions.spine_01.1",
+    "a": 1.0689053271820792,
+    "b": 1.029058373428653,
+    "delta": -0.039846953753426284
+   },
+   {
+    "path": "skeleton.positions.spine_01.2",
+    "a": -0.029920000000000002,
+    "b": 0,
+    "delta": 0.029920000000000002
+   },
+   {
+    "path": "skeleton.positions.spine_02.1",
+    "a": 1.2867571364870762,
+    "b": 1.2439445905306439,
+    "delta": -0.04281254595643236
+   },
+   {
+    "path": "skeleton.positions.spine_02.2",
+    "a": -0.03872,
+    "b": 0,
+    "delta": 0.03872
+   },
+   {
+    "path": "skeleton.positions.spine_03.1",
+    "a": 1.4106031518161974,
+    "b": 1.3891968788379814,
+    "delta": -0.021406272978216068
+   },
+   {
+    "path": "skeleton.positions.spine_03.2",
+    "a": -0.03872,
+    "b": 0,
+    "delta": 0.03872
+   },
+   {
+    "path": "skeleton.positions.upperArm_twist_L.0",
+    "a": -0.3976245087958645,
+    "b": -0.40340282162162167,
+    "delta": -0.0057783128257571925
+   },
+   {
+    "path": "skeleton.positions.upperArm_twist_R.0",
+    "a": 0.3976245087958645,
+    "b": 0.40340282162162167,
+    "delta": 0.0057783128257571925
+   }
+  ]
+ },
+ "R0_vs_V2REF": {
+  "differingLeaves": 1962,
+  "bySection": {
+   "bodies.abdomen": 22,
+   "bodies.foot_L": 581,
+   "bodies.foot_R": 582,
+   "bodies.forearm_L": 38,
+   "bodies.forearm_R": 38,
+   "bodies.head": 28,
+   "bodies.pelvis": 19,
+   "bodies.shank_L": 28,
+   "bodies.shank_R": 28,
+   "bodies.thigh_L": 26,
+   "bodies.thigh_R": 26,
+   "bodies.thorax": 27,
+   "bodies.upperArm_L": 25,
+   "bodies.upperArm_R": 25,
+   "human": 10,
+   "joints.ankle_L": 18,
+   "joints.ankle_R": 18,
+   "joints.elbow_L": 18,
+   "joints.elbow_R": 18,
+   "joints.hip_L": 26,
+   "joints.hip_R": 26,
+   "joints.knee_L": 18,
+   "joints.knee_R": 18,
+   "joints.lumbar": 26,
+   "joints.neck": 26,
+   "joints.shoulder_L": 26,
+   "joints.shoulder_R": 26,
+   "joints.thoracic": 26,
+   "landmarks": 27,
+   "profile": 7,
+   "skeleton": 117,
+   "toeTip": 4,
+   "totals": 14
+  }
+ },
+ "RH1_vs_V2REF": {
+  "differingLeaves": 2002,
+  "bySection": {
+   "bodies.abdomen": 22,
+   "bodies.foot_L": 581,
+   "bodies.foot_R": 582,
+   "bodies.forearm_L": 38,
+   "bodies.forearm_R": 38,
+   "bodies.head": 28,
+   "bodies.pelvis": 19,
+   "bodies.shank_L": 28,
+   "bodies.shank_R": 28,
+   "bodies.thigh_L": 26,
+   "bodies.thigh_R": 26,
+   "bodies.thorax": 27,
+   "bodies.upperArm_L": 25,
+   "bodies.upperArm_R": 25,
+   "hinges": 34,
+   "human": 10,
+   "joints.ankle_L": 18,
+   "joints.ankle_R": 18,
+   "joints.elbow_L": 18,
+   "joints.elbow_R": 18,
+   "joints.hip_L": 26,
+   "joints.hip_R": 26,
+   "joints.knee_L": 18,
+   "joints.knee_R": 18,
+   "joints.lumbar": 26,
+   "joints.neck": 26,
+   "joints.shoulder_L": 26,
+   "joints.shoulder_R": 26,
+   "joints.thoracic": 26,
+   "landmarks": 27,
+   "profile": 7,
+   "skeleton": 123,
+   "toeTip": 4,
+   "totals": 14
+  }
+ }
+}
