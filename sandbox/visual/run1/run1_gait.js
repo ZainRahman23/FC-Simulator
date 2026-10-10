@@ -155,7 +155,8 @@ const RUN1 = {
     pelvisYaw: 6, pelvisYawPh: 0.38,
     sway: 0.012, swayPh: 0.12,
     // trunk (deg): constant-speed lean 5–8° (Preece 2016b), thorax counter-rotates the pelvis (Preece 2016a; Pontzer 2009: ~24° shoulder range at 3 m/s)
-    lean: 8, leanAmp: 1.0, leanPh: 0.15,
+    lean: 12.5, leanAmp: 3.0, leanPh: 0.16, // the trunk DIPS INTO EVERY STANCE: real strides lean 12.6° (pelvis → neck, relative to standing) and pitch 6.2° per
+                                            // step, most forward at ~60 % of stance, most upright in flight (RUN-1.0: 8° ± 1°, a rigid, upright trunk)
     thoraxYaw: 13, thoraxYawPh: 0.86,
     // arms (deg): contralateral to the legs. The work is the ELBOW DRIVING BACK: real strides swing the upper arm from ~42° behind the trunk
     // to about level with it (+1.5°, range −10…+16 at 3.6 m/s) with the elbow flexed 94–124°, so the hand comes forward only to the front of
@@ -178,11 +179,11 @@ const RUN1 = {
 RUN1.anchors = [
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
     kneeMax: 100, kneeMaxW: 0.45, kneeHold: 94, kneeHoldW: 0.62, kneeExt: 10, kneeExtW: 0.92, hipMax: 50, hipMaxW: 0.78, ankleDFSwing: -12,
-    tilt: 7.5, lean: 5, leanAmp: 0.8, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
+    tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
   { v: 5.5, id: "RUN" },
   { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kneeTD: 30, kneeTO: 22, kneeTOrate: 120, footW: 0.02, strikeToeUp: -5, flatS: 0.14, heelRiseTO: 80, heelRiseS: 0.16,   // the heel leaves early at a sprint
     kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
-    tilt: 10.5, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 60, elbow: 96, elbowAmp: 22, armAbd: 8 },
+    tilt: 10.5, lean: 15, leanAmp: 2.8, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 60, elbow: 96, elbowAmp: 22, armAbd: 8 },
 ];
 function r1ParamsAt(v, base) {
   const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
