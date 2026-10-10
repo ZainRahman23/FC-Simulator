@@ -47,3 +47,13 @@ No existing file is modified.
 - **05:38–05:42 Iteration 11.** Swing-foot / stance-calf clipping caused by a sign error, found with a new clearance diagnostic.
 - **05:43–05:46 Continuous state export** (`r1Kinematics`) with its consistency check, then iteration 12 (residual head motion) and the subtle arm asymmetry.
 - **9 Oct chronicle.** A background agent drafted the entry from the commits and committed sources (draft only). I reviewed it, added the RUN-1 and parallel-work paragraphs, and prepared the archive of the four owner screenshots. All of it is applied and pushed at the 06:00 boundary under the daily rule.
+- **06:00–06:02 Daily rule.** The 9 Oct chronicle `e57bf98d` (4 owner screenshots) was committed, and touchline-current, physical-character-v2, v1.3, LC-1 and RUN-1 were pushed.
+  - The `git ls-remote` verification was blocked by the auto-mode classifier. Tracking refs match.
+  - Shared memory was updated so the V2 session does not repeat the housekeeping.
+- **06:02–06:10 Defect hunts.**
+  - Skinning at the extreme poses: clean.
+  - Chirality check against Astra's reference: the camera is correct. Vinícius's front print is mirrored in the asset, the same in V1.
+  - Iteration 14: speed-dependent heel rise.
+  - Mesh-contact diagnostic, then iteration 15: toe pad 8 cm ahead of the MTP joint.
+  - The DF scan was recorded and left unchanged.
+- **06:09–06:12** Final captures, smoke test, the full diagnostic suite saved, and the final report.
