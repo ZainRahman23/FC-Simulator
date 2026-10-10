@@ -13,4 +13,7 @@ All frames come from the viewer `sandbox/visual/run1.html` at the commit that ad
 | 07_rear_RUN1_5.5.png | RUN-1 running toward the camera, rear close view (the recovering heel passes outside the stance leg after iteration 11) |
 | 08_game_zoom2.5_diagonal_RUN1_vs_V1.png | the gameplay camera at 2.5×, diagonal run; RUN-1 near, V1 far |
 
-The sheets were recaptured at 05:46 after iterations 7 – 12 (MTP cap / toe-pad roll, swing clearance, head residual, arm asymmetry); the earlier versions are in Git history (`e2dfc0a8`).
+| 09_side_RUN1_3.0.png / 09_side_RUN1_7.8.png | RUN-1 jog (3.0 m/s) and sprint (7.8 m/s), one stride each, side view |
+| 10_motion_paths_RUN1_vs_V1_5.5.png | motion paths relative to the pelvis over one stride (ankle, toe tip, knee, wrist, head), side and front, RUN-1 vs V1 (`tools/run1_paths.cjs`) |
+
+All sheets were recaptured at 06:09 (10 Oct) after iterations 7 – 15. Earlier versions are in Git history (`e2dfc0a8`, `41110a54`).
