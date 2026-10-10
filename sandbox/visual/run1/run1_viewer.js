@@ -30,12 +30,12 @@ function rv1Dist(t) {                                                  // closed
 function rv1Path(lane) {
   const d = RV1.dir, len = rv1Dist(RV1_LOOP);
   const hd = d === "across" ? 0 : d === "toward" ? Math.PI / 2 : d === "away" ? -Math.PI / 2 : Math.PI / 4;
-  const ux = Math.cos(hd), uy = Math.sin(hd), lx = -uy, ly = ux;   // pitch frame (y south); lane offset to the runner's left
+  const ux = Math.cos(hd), uy = Math.sin(hd), lx = -uy, ly = ux;   // pitch frame (y south): (lx, ly) is the runner's RIGHT; + lane = nearer the camera when running across
   const cx = 52.5, cy = d === "across" ? 36 : 34;
   return { hd, ux, uy, x0: cx - ux * len / 2 + lx * lane, y0: cy - uy * len / 2 + ly * lane, len };
 }
 function rv1Sim(lane, t) { const P = rv1Path(lane), s = rv1Dist(t), v = rv1V(t); return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * v, vy: P.uy * v, heading: P.hd, v }; }
-const rv1Lane = (who) => RV1.cmp === "both" ? (who === "run1" ? -2.2 : 2.2) * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1) : 0;   // RUN-1 on the near lane when running across
+const rv1Lane = (who) => RV1.cmp === "both" ? (who === "run1" ? 2.2 : -2.2) * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1) : 0;   // RUN-1 on the near lane when running across
 
 // ── camera math ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function rv1Persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
@@ -197,7 +197,8 @@ function rv1Render() {
   gl.disable(gl.SCISSOR_TEST);
 }
 function rv1Proj(cam, vw, dpr, p) {
-  const v = M4.transformPoint(cam.view, p), pr = cam.proj; const cx = pr[0] * v[0], cy = pr[5] * v[1], w = -v[2]; if (w <= 1e-4) return null;
+  const v = M4.transformPoint(cam.view, p), pr = cam.proj;                          // full projection (the zoomed gameplay view carries a clip-space offset)
+  const cx = pr[0] * v[0] + pr[4] * v[1] + pr[8] * v[2] + pr[12], cy = pr[1] * v[0] + pr[5] * v[1] + pr[9] * v[2] + pr[13], w = pr[3] * v[0] + pr[7] * v[1] + pr[11] * v[2] + pr[15]; if (w <= 1e-4) return null;
   return [(vw.x + (cx / w * 0.5 + 0.5) * vw.w) * dpr, (vw.y + (0.5 - cy / w * 0.5) * vw.h) * dpr];
 }
 function rv1Overlay(ctx, vw, cam, subj, dpr, label) {
