@@ -1,0 +1,19 @@
+22:24:45 start (commit 196815e53218743eeec1319d31184e5e31e33128, worktree status:        0 changed)
+22:24:45 Q0 scratch VARIATION_SET 10 bodies; R0 62d5d797 RH1 e2892d27 (expected R0 62d5d797, RH1 e2892d27)
+22:24:45 Q0 spec check (scratch tree, extended set): 13/13 PASS
+22:25:14 Q0 component regressions: component regressions: 58/58 pass
+22:25:15 Q0 guard: guard_v1: OK — V1 runtime + evidence identical to checkpoint/physchar-v1-final-research
+22:25:15 component jobs: 275
+22:32:49 component jobs done
+22:32:50 G0: exit 1 (64 lines)
+22:38:08 G1 (8 bodies): G1 RESULT: FAIL — 2 failing gate check(s)   (317 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json
+22:42:39 G1 (RH1 / R0 main): G1 RESULT: FAIL — 3 failing gate check(s)   (271 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json
+22:45:11 G1 perturbed (V2-REF / V1-matched) done
+22:47:54 G1 perturbed (RH1 / R0) done
+22:54:44 G2 (10 bodies) done
+22:55:20 G2 (RH1 in V2-REF's rows) done
+23:01:50 G3 (10 bodies) done
+23:07:54 G3 (RH1 in V2-REF's rows) done
+23:12:05 J2a mirror (V2-REF + bodies) done
+23:16:23 J2a mirror (RH1) done
+23:16:23 ALL DONE

@@ -1,0 +1,1586 @@
+{
+ "battery": "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/rh1",
+ "rows": [
+  {
+   "item": "G0",
+   "id": "rows",
+   "body": "RH1",
+   "pass": null,
+   "value": "42/47 rows pass; spec 687ec6a1; failing: 0.4c (stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H); 0.6a (0.1733 H = 0.305 m); 0.6b (0.2807 H = 0.494 m); 0.6e (leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876); 0.10a (bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.)",
+   "failing": [
+    {
+     "id": "0.4c",
+     "value": "stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H",
+     "limit": "exact"
+    },
+    {
+     "id": "0.6a",
+     "value": "0.1733 H = 0.305 m",
+     "limit": "0.09–0.11 H"
+    },
+    {
+     "id": "0.6b",
+     "value": "0.2807 H = 0.494 m",
+     "limit": "0.218 H ± 10 %"
+    },
+    {
+     "id": "0.6e",
+     "value": "leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876",
+     "limit": "exact"
+    },
+    {
+     "id": "0.10a",
+     "value": "bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
+     "limit": "within tolerance"
+    }
+   ]
+  },
+  {
+   "item": "G0",
+   "id": "rows",
+   "body": "R0",
+   "pass": null,
+   "value": "42/47 rows pass; spec 2a894c69; failing: 0.4c (stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H); 0.6a (0.1733 H = 0.305 m); 0.6b (0.2807 H = 0.494 m); 0.6e (leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876); 0.10a (bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.)",
+   "failing": [
+    {
+     "id": "0.4c",
+     "value": "stature 1.7600 m, leg 0.4736 H (legScale 1), C7 0.8605 H, HJC→C7 0.3482 H",
+     "limit": "exact"
+    },
+    {
+     "id": "0.6a",
+     "value": "0.1733 H = 0.305 m",
+     "limit": "0.09–0.11 H"
+    },
+    {
+     "id": "0.6b",
+     "value": "0.2807 H = 0.494 m",
+     "limit": "0.218 H ± 10 %"
+    },
+    {
+     "id": "0.6e",
+     "value": "leg 0.8336 m (0.4736 H), thigh 0.4349, shank 0.3987, upper arm 0.3013, forearm 0.2876",
+     "limit": "exact"
+    },
+    {
+     "id": "0.10a",
+     "value": "bideltoid (deltoid spheres) 55.3 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
+     "limit": "within tolerance"
+    }
+   ]
+  },
+  {
+   "item": "G0",
+   "id": "class",
+   "body": "RH1",
+   "pass": true,
+   "value": "RH1 failing rows 0.4c, 0.6a, 0.6b, 0.6e, 0.10a; recorded R0 exceptions 0.6a, 0.6b, 0.10a, 0.4c, 0.6e; R0 failing 0.4c, 0.6a, 0.6b, 0.6e, 0.10a; 0.4c: recorded, identical value to R0; 0.6a: recorded, identical value to R0; 0.6b: recorded, identical value to R0; 0.6e: recorded, identical value to R0; 0.10a: recorded, identical value to R0",
+   "rule": "every RH1 failing row is a recorded R0 exception failing identically"
+  },
+  {
+   "item": "G0",
+   "id": "global",
+   "body": "RH1",
+   "pass": null,
+   "value": "0.1b pass, 0.12 pass, 0.E pass, 0.V1 FAIL (0.V1 needs the git checkout; scratch-tree artefact as in the qualification, worktree guard_v1 run separately in Q0)"
+  },
+  {
+   "item": "G1",
+   "id": "1.5",
+   "body": "RH1",
+   "pass": null,
+   "value": "10 it: 6/17 pass, 15 it: 9/17 pass, 20 it: 8/17 pass, 30 it: 11/17 pass, 60 it: 13/17 pass, 150 it: 15/17 pass → none of 10/15/20/30 qualifies"
+  },
+  {
+   "item": "G1",
+   "id": "1.S",
+   "body": "RH1",
+   "pass": false,
+   "value": "V2-REF: every scenario passes every criterion — 14/17 scenarios; failing: 1.3d, 1.R, 1.4d"
+  },
+  {
+   "item": "G1",
+   "id": "1.S′",
+   "body": "R0",
+   "pass": false,
+   "value": "V1-matched instance: every scenario passes every criterion — 16/17 scenarios"
+  },
+  {
+   "item": "G1",
+   "id": "1.6a",
+   "body": "RH1",
+   "pass": true,
+   "value": "determinism: ×3 runs (two processes) — identical per-tick hash, contac — 17/17 scenarios"
+  },
+  {
+   "item": "G1",
+   "id": "1.6b",
+   "body": "RH1",
+   "pass": true,
+   "value": "snapshot / restore bit-exact (Jolt SaveState / RestoreState; passive l — upright ✓, awkward ✓, drop1m ✓, isoSelfCol ✓"
+  },
+  {
+   "item": "G1",
+   "id": "5",
+   "body": "RH1",
+   "pass": true,
+   "value": "passive joint rig: applied torque = spec law (sign + magnitude), resto — 34/34 tests"
+  },
+  {
+   "item": "G1",
+   "id": "5c",
+   "body": "RH1",
+   "pass": true,
+   "value": "pose-dependent passive limits (couplings) as specified — hip-flexion soft limit knee 0/45/90°: 80.0 / 100.0 / 120.0°; ankle-DF soft limit knee 0/45/90°: 20.0 / 27.5 / 35.0°; hamstring: hip 100° knee straight → hip extension torque, knee flexion cross torque: -0.87 / +0.057 N·m; knee axial zero-torque range at 0/30/60° (v2k spec: θ0(φ) ∓ slack·f): [-0.50,1.00] [7.66,9.63] [12.18,14.18] vs [-0.50,1.00] [7.66,9.63] [12.18,14.18]; hip ER soft limit hip 0/90°: -45.0 / -40.0°"
+  },
+  {
+   "item": "G1",
+   "id": "8",
+   "body": "RH1",
+   "pass": true,
+   "value": "timestep 180/240/360/720 Hz (D4a, v3.1): physical invariants hold for  — upright: invariants ok; leanF: invariants ok [reported: 180 Hz: COM Δ 0.153 m (spread 0.096); 240 Hz: COM Δ 0.154 m (spread 0.096)]; leanB: invariants ok [reported: 180 Hz: COM Δ 0.182 m (spread 0.140)]; flatSupine: invariants ok; drop1m: invariants ok [reported: 180 Hz: timing Δ 69.4 ms (spread 5.6), COM Δ 0.304 m (spread 0.016); 240 Hz: COM Δ 0.196 m (spread 0.016)]; sideFirst: invariants ok; awkward: invariants ok; isoMomentum: invariants ok || pre-registered v3 evaluation: FAIL — leanF (v3: genuine effect at 240 Hz); drop1m (v3: genuine effect at 240 Hz)"
+  },
+  {
+   "item": "G1",
+   "id": "7.HS",
+   "body": "RH1",
+   "pass": true,
+   "value": "C7 high-speed envelope (V2-REF, baseline): finite, no missed turf coll — 8/8 envelope scenarios"
+  },
+  {
+   "item": "G1",
+   "id": "1.1f",
+   "body": "RH1",
+   "pass": null,
+   "value": "ΔL/L 1.51e-3 at 1 rad/s, 5.55e-3 at 3 rad/s, 1.29e-2 at 6 rad/s; linear 0.0e+0"
+  },
+  {
+   "item": "G1",
+   "id": "1.E",
+   "body": "RH1",
+   "pass": true,
+   "value": "vendored Jolt = V1's pinned build — 011233a5fff762d6…"
+  },
+  {
+   "item": "G1",
+   "id": "runs",
+   "body": "RH1",
+   "pass": null,
+   "value": "17 scenario runs (the gate is 1.S / 1.S′); failing criteria: leanL 1.3d 1.74° (shoulder_L.abd) (limit ≤ 1.5°); dropA 1.R KE 0.002 J, joint ω RMS 0.094 rad/s (final 0.5 s) (limit ≤ 0.1 J, ≤ 0.05 rad/s); isoSelfCol 1.4d 24.60 mm (limit ≤ 10 mm)",
+   "failing": [
+    {
+     "key": "leanL",
+     "id": "1.3d",
+     "value": "1.74° (shoulder_L.abd)",
+     "limit": "≤ 1.5°"
+    },
+    {
+     "key": "dropA",
+     "id": "1.R",
+     "value": "KE 0.002 J, joint ω RMS 0.094 rad/s (final 0.5 s)",
+     "limit": "≤ 0.1 J, ≤ 0.05 rad/s"
+    },
+    {
+     "key": "isoSelfCol",
+     "id": "1.4d",
+     "value": "24.60 mm",
+     "limit": "≤ 10 mm"
+    }
+   ]
+  },
+  {
+   "item": "G1",
+   "id": "1.4d",
+   "body": "RH1",
+   "pass": null,
+   "value": "isoSelfCol 1.4d: 24.60 mm (limit ≤ 10 mm); selfCol {\"minDxFeetM\":-1.738904893398285,\"legContact\":true,\"missedSteps\":0,\"passedThrough\":false}"
+  },
+  {
+   "item": "G1",
+   "id": "runs",
+   "body": "R0",
+   "pass": null,
+   "value": "17 scenario runs (the gate is 1.S / 1.S′); failing criteria: isoSelfCol 1.4d 24.59 mm (limit ≤ 10 mm)",
+   "failing": [
+    {
+     "key": "isoSelfCol",
+     "id": "1.4d",
+     "value": "24.59 mm",
+     "limit": "≤ 10 mm"
+    }
+   ]
+  },
+  {
+   "item": "G1",
+   "id": "1.4d",
+   "body": "R0",
+   "pass": null,
+   "value": "isoSelfCol 1.4d: 24.59 mm (limit ≤ 10 mm); selfCol {\"minDxFeetM\":-1.7746876776218414,\"legContact\":true,\"missedSteps\":0,\"passedThrough\":false}"
+  },
+  {
+   "item": "G1",
+   "id": "1.4d-cls",
+   "body": "RH1",
+   "pass": true,
+   "value": "RH1 fails (24.60 mm); R0 fails (24.59 mm); cause (rh1_g1_diag, hashes reproduced): RH1 foot_L ↔ foot_R 24.60 mm (first 0.017 s, 20 steps) / R0 foot_L ↔ foot_R 24.59 mm (first 0.017 s, 20 steps) → identical in cause (boot ↔ boot, same first contact and duration): the recorded R0 exception"
+  },
+  {
+   "item": "G1",
+   "id": "pert",
+   "body": "RH1",
+   "pass": true,
+   "value": "4/150 = 2.7 % (≤ 8.1 %); systematic scenarios (≥ 5 / 15): none; per scenario leanL 4/15 [1.3d]; invalid manifolds 0; >1 J rises 0"
+  },
+  {
+   "item": "G1",
+   "id": "pert",
+   "body": "R0",
+   "pass": true,
+   "value": "3/150 = 2.0 % (≤ 8.1 %); systematic scenarios (≥ 5 / 15): none; per scenario perturb 3/15 [1.R]; invalid manifolds 0; >1 J rises 0"
+  },
+  {
+   "item": "G2",
+   "id": "run",
+   "body": "RH1",
+   "pass": true,
+   "value": "702 ok / 0 errors (10-body run)"
+  },
+  {
+   "item": "G2",
+   "id": "2.1",
+   "body": "RH1",
+   "pass": true,
+   "value": "a✓ b✓ c✓ d✓ e✓ f✓ g✓ · slip 0.26 mm tilt 0.17° COM ahead 4.00 cm knee 4.0–4.0° peak ankle_L.y 7.3 % T_iso sat 0 range 0.20 mm sep 0.00 mm turf 0.00 mm eng 0",
+   "items": {
+    "a": true,
+    "b": true,
+    "c": true,
+    "d": true,
+    "e": true,
+    "f": true,
+    "g": true
+   }
+  },
+  {
+   "item": "G2",
+   "id": "2.2a",
+   "body": "RH1",
+   "pass": true,
+   "value": "8/8 (expected 8: 10 N·s × 8 directions) · F10 recovered slip 0.3 tilt 0.2, B10 recovered slip 0.3 tilt 0.2, L10 recovered slip 0.3 tilt 0.2, R10 recovered slip 0.3 tilt 0.2, FL10 recovered slip 0.3 tilt 0.2, FR10 recovered slip 0.3 tilt 0.2, BL10 recovered slip 0.3 tilt 0.2, BR10 recovered slip 0.3 tilt 0.2"
+  },
+  {
+   "item": "G2",
+   "id": "2.2b",
+   "body": "RH1",
+   "pass": true,
+   "value": "4 sweeps, 0 inversions, symmetry 1/1 · boundaries (N·s recovered / first fail): F 15/20, B 15/20, L 30/35, R 30/35",
+   "boundaries": {
+    "PI1-runner-vinicius-RH1|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       10,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       15,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       20,
+       "step required → fell",
+       1164.5748266540318
+      ],
+      [
+       25,
+       "step required → fell",
+       763.8947171977265
+      ],
+      [
+       30,
+       "step required → fell",
+       845.800877644287
+      ],
+      [
+       35,
+       "step required → fell",
+       821.7317675876375
+      ],
+      [
+       40,
+       "step required → fell",
+       817.3425566184676
+      ],
+      [
+       45,
+       "step required → fell",
+       816.1236030944907
+      ]
+     ]
+    },
+    "PI1-runner-vinicius-RH1|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       10,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       15,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       20,
+       "step required → fell",
+       601.9556963901545
+      ],
+      [
+       25,
+       "step required → fell",
+       633.5371733900326
+      ],
+      [
+       30,
+       "step required → fell",
+       628.258363063909
+      ],
+      [
+       35,
+       "step required → fell",
+       578.1598006097615
+      ],
+      [
+       40,
+       "step required → fell",
+       624.0223719923072
+      ],
+      [
+       45,
+       "step required → fell",
+       524.4157333872629
+      ]
+     ]
+    },
+    "PI1-runner-vinicius-RH1|L": {
+     "recovered": 30,
+     "fails": 35,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       10,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       15,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       20,
+       "recovered",
+       1.3878917710522478
+      ],
+      [
+       25,
+       "recovered",
+       5.862342034789367
+      ],
+      [
+       30,
+       "recovered",
+       12.533736012907736
+      ],
+      [
+       35,
+       "foot relocated",
+       27.625821327745594
+      ],
+      [
+       40,
+       "step required → fell",
+       903.204849265133
+      ],
+      [
+       45,
+       "step required → fell",
+       911.8732823021074
+      ]
+     ]
+    },
+    "PI1-runner-vinicius-RH1|R": {
+     "recovered": 30,
+     "fails": 35,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       10,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       15,
+       "recovered",
+       0.25592535801108773
+      ],
+      [
+       20,
+       "recovered",
+       1.3806272167550369
+      ],
+      [
+       25,
+       "recovered",
+       5.855716445741304
+      ],
+      [
+       30,
+       "recovered",
+       12.537118321097118
+      ],
+      [
+       35,
+       "foot relocated",
+       27.62964981325118
+      ],
+      [
+       40,
+       "step required → fell",
+       904.4603186613101
+      ],
+      [
+       45,
+       "step required → fell",
+       870.5778356960565
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "item": "G2",
+   "id": "2.3",
+   "body": "RH1",
+   "pass": true,
+   "value": "0 ticks over 41 runs"
+  },
+  {
+   "item": "G2",
+   "id": "2.4",
+   "body": "RH1",
+   "pass": true,
+   "value": "18 non-recoveries, 16 falls (16 step-required), ledger exact"
+  },
+  {
+   "item": "G2",
+   "id": "E",
+   "body": "RH1",
+   "pass": true,
+   "value": "max residual -0.333 J, min -626.20 J over 41 runs (≤ +0.5 J)"
+  },
+  {
+   "item": "G2",
+   "id": "F(ii)",
+   "body": "RH1",
+   "pass": true,
+   "value": "turf penetration max 0.01 mm (≤ 10), rest max 0.00 mm (≤ 5) over 9 runs (2.1 + 2.2a)"
+  },
+  {
+   "item": "G2",
+   "id": "2.1c-cap",
+   "body": "RH1",
+   "pass": null,
+   "value": "quiet stance peak isometric fraction ankle_L.y 7.3 %, ankle_R.y 7.3 %, neck.y 3.6 %, lumbar.y 3.0 %; sat ticks after 1 s 0; controller cost in run mean 0.545 ms (9-worker run; reported)"
+  },
+  {
+   "item": "G2",
+   "id": "2.1",
+   "body": "R0",
+   "pass": true,
+   "value": "a✓ b✓ c✓ d✓ e✓ f✓ g✓ · slip 1.48 mm tilt 0.16° COM ahead 4.00 cm knee 3.9–4.1° peak lumbar.y 7.5 % T_iso sat 0 range 0.59 mm sep 0.00 mm turf 0.00 mm eng 0",
+   "items": {
+    "a": true,
+    "b": true,
+    "c": true,
+    "d": true,
+    "e": true,
+    "f": true,
+    "g": true
+   }
+  },
+  {
+   "item": "G2",
+   "id": "2.2a",
+   "body": "R0",
+   "pass": true,
+   "value": "8/8 (expected 8: 10 N·s × 8 directions) · F10 recovered slip 0.3 tilt 0.2, B10 recovered slip 0.3 tilt 0.2, L10 recovered slip 0.3 tilt 0.2, R10 recovered slip 0.3 tilt 0.2, FL10 recovered slip 0.3 tilt 0.2, BL10 recovered slip 0.3 tilt 0.2, FR10 recovered slip 0.3 tilt 0.2, BR10 recovered slip 0.3 tilt 0.2"
+  },
+  {
+   "item": "G2",
+   "id": "2.2b",
+   "body": "R0",
+   "pass": true,
+   "value": "4 sweeps, 0 inversions, symmetry 1/1 · boundaries (N·s recovered / first fail): F 15/20, B 15/20, L 25/30, R 25/30",
+   "boundaries": {
+    "PI1-runner-vinicius|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       10,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       15,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       20,
+       "step required → fell",
+       870.4309402023795
+      ],
+      [
+       25,
+       "step required → fell",
+       867.1451008806658
+      ],
+      [
+       30,
+       "step required → fell",
+       849.5577834559124
+      ],
+      [
+       35,
+       "step required → fell",
+       863.0086906544632
+      ],
+      [
+       40,
+       "step required → fell",
+       908.8820193400481
+      ],
+      [
+       45,
+       "step required → fell",
+       953.2869992234771
+      ]
+     ]
+    },
+    "PI1-runner-vinicius|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       10,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       15,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       20,
+       "step required → fell",
+       660.5797130677876
+      ],
+      [
+       25,
+       "step required → fell",
+       547.9989189477427
+      ],
+      [
+       30,
+       "step required → fell",
+       625.8187270903098
+      ],
+      [
+       35,
+       "step required → fell",
+       416.3457309544327
+      ],
+      [
+       40,
+       "step required → fell",
+       323.9916027415787
+      ],
+      [
+       45,
+       "step required → fell",
+       338.96527338793567
+      ]
+     ]
+    },
+    "PI1-runner-vinicius|L": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       10,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       15,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       20,
+       "recovered",
+       1.5971878302589193
+      ],
+      [
+       25,
+       "recovered",
+       5.413892628776296
+      ],
+      [
+       30,
+       "foot relocated",
+       22.981067816743302
+      ],
+      [
+       35,
+       "foot relocated",
+       25.262325020846514
+      ],
+      [
+       40,
+       "step required → fell",
+       756.129857405577
+      ],
+      [
+       45,
+       "step required → fell",
+       863.530032139695
+      ]
+     ]
+    },
+    "PI1-runner-vinicius|R": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       10,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       15,
+       "recovered",
+       0.25127255837021995
+      ],
+      [
+       20,
+       "recovered",
+       1.574538003820849
+      ],
+      [
+       25,
+       "recovered",
+       5.396879510254223
+      ],
+      [
+       30,
+       "foot relocated",
+       23.11730055206224
+      ],
+      [
+       35,
+       "foot relocated",
+       25.1821204229193
+      ],
+      [
+       40,
+       "step required → fell",
+       764.8234811595979
+      ],
+      [
+       45,
+       "step required → fell",
+       886.2767303470997
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "item": "G2",
+   "id": "2.3",
+   "body": "R0",
+   "pass": true,
+   "value": "0 ticks over 41 runs"
+  },
+  {
+   "item": "G2",
+   "id": "2.4",
+   "body": "R0",
+   "pass": true,
+   "value": "20 non-recoveries, 16 falls (16 step-required), ledger exact"
+  },
+  {
+   "item": "G2",
+   "id": "E",
+   "body": "R0",
+   "pass": true,
+   "value": "max residual -0.330 J, min -649.62 J over 41 runs (≤ +0.5 J)"
+  },
+  {
+   "item": "G2",
+   "id": "F(ii)",
+   "body": "R0",
+   "pass": true,
+   "value": "turf penetration max 0.01 mm (≤ 10), rest max 0.00 mm (≤ 5) over 9 runs (2.1 + 2.2a)"
+  },
+  {
+   "item": "G2",
+   "id": "2.1c-cap",
+   "body": "R0",
+   "pass": null,
+   "value": "quiet stance peak isometric fraction lumbar.y 7.5 %, ankle_L.y 7.3 %, ankle_R.y 7.3 %, thoracic.y 5.3 %; sat ticks after 1 s 0; controller cost in run mean 0.609 ms (9-worker run; reported)"
+  },
+  {
+   "item": "G2",
+   "id": "rows-id",
+   "body": "RH1",
+   "pass": true,
+   "value": "S4 / S5 / copSweep / determinism / snapshot run on PI1-runner-vinicius-RH1; 49 jobs, 0 errors"
+  },
+  {
+   "item": "G2",
+   "id": "S4",
+   "body": "RH1",
+   "pass": true,
+   "value": "6/6",
+   "detail": [
+    {
+     "axis": "yaw",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.32315630511928234,
+     "trunk": 0.2763585731768069
+    },
+    {
+     "axis": "yaw",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25592535801108773,
+     "trunk": 0.09836721360523808
+    },
+    {
+     "axis": "roll",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25592535801108773,
+     "trunk": 0.04265766712771057
+    },
+    {
+     "axis": "pitch",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25592535801108773,
+     "trunk": 0.018269539494128115
+    },
+    {
+     "axis": "pitch",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25592535801108773,
+     "trunk": 0.7484555172587649
+    },
+    {
+     "axis": "roll",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25592535801108773,
+     "trunk": 0.11379469534137189
+    }
+   ]
+  },
+  {
+   "item": "G2",
+   "id": "S5",
+   "body": "RH1",
+   "pass": true,
+   "value": "10/10",
+   "detail": [
+    {
+     "name": "knees 12°",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.21371835550286905,
+     "trunk": 0.002071824018883799
+    },
+    {
+     "name": "hips 10°",
+     "ok": true,
+     "settle": 1.0125,
+     "slip": 0.2689490493984192,
+     "trunk": 0.0011104323688973612
+    },
+    {
+     "name": "COM over ankles",
+     "ok": true,
+     "settle": 0.9416666666666667,
+     "slip": 0.2874030518388364,
+     "trunk": 0.00009232595247171621
+    },
+    {
+     "name": "trunk 10° flexed",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.2504649681503853,
+     "trunk": 0.0009206365872750194
+    },
+    {
+     "name": "arms 30° abducted",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.2571902751848002,
+     "trunk": 0.002539734649218266
+    },
+    {
+     "name": "COM 7 cm ahead",
+     "ok": true,
+     "settle": 0.7125,
+     "slip": 0.27944314157140404,
+     "trunk": 0.73446484619247
+    },
+    {
+     "name": "head 20° flexed",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.25315603276509996,
+     "trunk": 0.002687322302114149
+    },
+    {
+     "name": "COM 5 cm/s forward",
+     "ok": true,
+     "settle": 0.09166666666666666,
+     "slip": 0.28861495509000584,
+     "trunk": 0.002390771327964135
+    },
+    {
+     "name": "COM 5 cm/s right",
+     "ok": true,
+     "settle": 0.08333333333333333,
+     "slip": 0.25539758440406635,
+     "trunk": 0.009411143382534161
+    },
+    {
+     "name": "COM 5 cm/s back-left",
+     "ok": true,
+     "settle": 0.08333333333333333,
+     "slip": 0.22614219911727357,
+     "trunk": 0.007899704088657367
+    }
+   ]
+  },
+  {
+   "item": "G2",
+   "id": "F(i)",
+   "body": "RH1",
+   "pass": true,
+   "value": "CoP sweeps 6/6, max jump 0.65 mm, max track 1.92 mm; S4 / S5 penetration ok (max 0.86 mm)"
+  },
+  {
+   "item": "G2",
+   "id": "D",
+   "body": "RH1",
+   "pass": true,
+   "value": "×3 6/6, snapshot 3/3 (browser = Node: not re-run, body-independent, declared in the prereg)"
+  },
+  {
+   "item": "G2",
+   "id": "2.3/E-r",
+   "body": "RH1",
+   "pass": true,
+   "value": "V2-REF-role rows: capacity ticks over 0; energy residual max -0.300 J"
+  },
+  {
+   "item": "G3",
+   "id": "I2",
+   "body": "RH1",
+   "pass": true,
+   "value": "PI1-runner-vinicius-RH1: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.70 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.30 % / mean 96.39 % (v1 window min 94.46 %); U:R ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°), U:L ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°)"
+  },
+  {
+   "item": "G3",
+   "id": "I2",
+   "body": "R0",
+   "pass": true,
+   "value": "PI1-runner-vinicius: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.71 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.29 % / mean 96.39 % (v1 window min 94.47 %); U:R ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.16°)"
+  },
+  {
+   "item": "G3",
+   "id": "rows-id",
+   "body": "RH1",
+   "pass": true,
+   "value": "non-T9 jobs run on PI1-runner-vinicius-RH1; 338 jobs, 0 errors"
+  },
+  {
+   "item": "G3",
+   "id": "run",
+   "body": "RH1",
+   "pass": true,
+   "value": "311 ok / 0 errors"
+  },
+  {
+   "item": "G3",
+   "id": "A",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood; hold mean load_R 0.500; slip 0.37 mm; contact loss 0.00 s"
+  },
+  {
+   "item": "G3",
+   "id": "B",
+   "body": "RH1",
+   "pass": true,
+   "value": "T1: stood; holds R 0.832/0.844; RMS 0.020; end 0.503; slip 0.27 mm; roll 0.0°; lean 0.5° · T2: stood; holds L 0.832/0.844; RMS 0.020; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°"
+  },
+  {
+   "item": "G3",
+   "id": "C",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood; holds R 0.832/0.842, L 0.831/0.842; RMS 0.022; end 0.497; slip 0.27 mm; roll 0.0°; lean 0.5°"
+  },
+  {
+   "item": "G3",
+   "id": "D",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood; pelvis drift cycle 1 → 5: 9.5 → 9.5 mm (Δ 0.03); yaw -0.73 → -0.73° (Δ 0.00); slip 0.55 mm; hold means R 0.863 → 0.860, L 0.855 → 0.856; end 0.499"
+  },
+  {
+   "item": "G3",
+   "id": "E2",
+   "body": "RH1",
+   "pass": true,
+   "value": "T5 stood; R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.504 · T6 stood; L: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.77 % (v1 window min 94.54 %); slip 0.27 mm; end 0.496"
+  },
+  {
+   "item": "G3",
+   "id": "F2",
+   "body": "RH1",
+   "pass": true,
+   "value": "U:R stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7° · U:L stood; unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°; stance 99.93–99.95 %; COM in true, ξ margin 4.0 cm; roll 0.0°, lean 0.7°"
+  },
+  {
+   "item": "G3",
+   "id": "G",
+   "body": "RH1",
+   "pass": false,
+   "value": "T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort 2.34"
+  },
+  {
+   "item": "G3",
+   "id": "H",
+   "body": "RH1",
+   "pass": false,
+   "value": "H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6"
+  },
+  {
+   "item": "G3",
+   "id": "J2a",
+   "body": "RH1",
+   "pass": true,
+   "value": "81/81 pairs; 462966 ticks probed (both directions, up to each fall) · worst: lam 1.11e-16, copMm 1.33e-12, share 1.44e-15, footCopMm 1.14e-12, forceN 1.24e-12, g3OutS 0.00e+0, ikResM 1.75e-15, cmdTauNm 3.33e-11, cmdGain 5.68e-14, actTauNm 3.33e-11, actGain 5.68e-14, actBoundNm 9.49e-12, actCapNm 3.69e-13, activation 9.44e-14, holdMm 0.00e+0, holdRad 0.00e+0 · post-fall ticks (reported, not gated): 1950"
+  },
+  {
+   "item": "G3",
+   "id": "J2b",
+   "body": "RH1",
+   "pass": null,
+   "value": "81 pairs · A (no meaningful slide) n 56: median 0.0334 / p99 0.3596 / max 0.5841 mm · B (slide + recovery) n 17: median 0.175 / max 2.528 mm · C (failure through the common abort) n 8: median 0.028 / max 0.441 mm; abort Δ ticks {\"0\":8} · class mismatches 0; failures without a common abort 0; above the v3.2 reference values (A 0.5 / B 10 / C 2 mm, 5 ticks) 1"
+  },
+  {
+   "item": "G3",
+   "id": "K′",
+   "body": "RH1",
+   "pass": false,
+   "value": "[original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood",
+   "rows": [
+    {
+     "key": "T11:over:1.4",
+     "lam": 1.4,
+     "marginCm": -7.38,
+     "excessive": true,
+     "outcome": "step required → fell"
+    },
+    {
+     "key": "T11:over:1.2",
+     "lam": 1.2,
+     "marginCm": -1.42,
+     "excessive": true,
+     "outcome": "step required → fell"
+    },
+    {
+     "key": "T11:over:1.4:sup",
+     "lam": 1.4,
+     "marginCm": -7.38,
+     "excessive": true,
+     "outcome": "stood"
+    }
+   ]
+  },
+  {
+   "item": "G3",
+   "id": "L",
+   "body": "RH1",
+   "pass": true,
+   "value": "155/155 runs; energy residual max -0.257 J, min -581.358 J"
+  },
+  {
+   "item": "G3",
+   "id": "M",
+   "body": "RH1",
+   "pass": true,
+   "value": "max per-tick per-foot CoP change 4.407 mm over 9 runs; seam crossings per run (L+R) 2–60"
+  },
+  {
+   "item": "G3",
+   "id": "N",
+   "body": "RH1",
+   "pass": true,
+   "value": "T5 ×3 8115d72c; T3 ×3 ba777e55; U:R ×3 58fb5adb; T8:hold:R:R:10 ×3 69150ac5 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact"
+  },
+  {
+   "item": "G3",
+   "id": "Q",
+   "body": "RH1",
+   "pass": true,
+   "value": "residual max 3.94e-6 of M·g·dt over 9 runs"
+  },
+  {
+   "item": "G3",
+   "id": "J2a-n",
+   "body": "RH1",
+   "pass": true,
+   "value": "mirror pairs evaluated: 74 RH1 + 7 U pairs of V2-165-62, V2-175-70, V2-190-85, V2-198-92, V2-long-legs, V2-short-legs, R0"
+  },
+  {
+   "item": "G3",
+   "id": "J2a",
+   "body": "R0",
+   "pass": true,
+   "value": "R0 U:R / U:L pair probed; within every J2a tolerance"
+  },
+  {
+   "item": "KV6c",
+   "id": "Q2a",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood slip 0.256 mm, |θ−θ0| 1.39° (from 1 s 0.10°), flexion 3.7–28.8°; hard margins (°, tw / sy / sz) hip_L 35.2/27.6/42.5; hip_R 35.2/27.6/42.5; knee_L —/8.7/—; knee_R —/8.7/—",
+   "hardMarginDeg": {
+    "hip_L": [
+     35.18,
+     27.56,
+     42.5
+    ],
+    "hip_R": [
+     35.18,
+     27.56,
+     42.5
+    ],
+    "knee_L": [
+     null,
+     8.7,
+     null
+    ],
+    "knee_R": [
+     null,
+     8.71,
+     null
+    ]
+   }
+  },
+  {
+   "item": "KV6c",
+   "id": "Q2a",
+   "body": "R0",
+   "pass": true,
+   "value": "stood slip 0.251 mm, |θ−θ0| 1.39° (from 1 s 0.10°), flexion 3.7–28.8°; hard margins (°, tw / sy / sz) hip_L 35.2/27.6/42.5; hip_R 35.2/27.6/42.5; knee_L —/8.7/—; knee_R —/8.7/—",
+   "hardMarginDeg": {
+    "hip_L": [
+     35.18,
+     27.57,
+     42.49
+    ],
+    "hip_R": [
+     35.18,
+     27.57,
+     42.5
+    ],
+    "knee_L": [
+     null,
+     8.71,
+     null
+    ],
+    "knee_R": [
+     null,
+     8.71,
+     null
+    ]
+   }
+  },
+  {
+   "item": "KV6c",
+   "id": "Q2b",
+   "body": "RH1",
+   "pass": true,
+   "value": "RH1 run twice: byte-identical (13456 bytes)"
+  },
+  {
+   "item": "Q6b",
+   "id": "180Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood slip 0.195 dev 1.39° flex max 28.83° (240 Hz 28.83°)"
+  },
+  {
+   "item": "Q6b",
+   "id": "480Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood slip 0.217 dev 1.41° flex max 28.83° (240 Hz 28.83°)"
+  },
+  {
+   "item": "Q6b",
+   "id": "180Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "stood slip 0.188 dev 1.39° flex max 28.83° (240 Hz 28.83°)"
+  },
+  {
+   "item": "Q6b",
+   "id": "480Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "stood slip 0.221 dev 1.41° flex max 28.83° (240 Hz 28.83°)"
+  },
+  {
+   "item": "Q6c",
+   "id": "180Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 5.71e-5 J, Σ+ 0.005 J"
+  },
+  {
+   "item": "Q6c",
+   "id": "240Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 4.38e-5 J, Σ+ 0.005 J"
+  },
+  {
+   "item": "Q6c",
+   "id": "480Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 3.35e-5 J, Σ+ 0.025 J"
+  },
+  {
+   "item": "Q6c",
+   "id": "180Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 6.31e-5 J, Σ+ 0.006 J"
+  },
+  {
+   "item": "Q6c",
+   "id": "240Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 7.20e-5 J, Σ+ 0.006 J"
+  },
+  {
+   "item": "Q6c",
+   "id": "480Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "stood, chatter 0, closure max/tick 3.09e-5 J, Σ+ 0.017 J"
+  },
+  {
+   "item": "Q6d",
+   "id": "180Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "recovered DECAYING (ratio 3.3e-5), hip work 12–20 s -5.7e-7 J"
+  },
+  {
+   "item": "Q6d",
+   "id": "480Hz",
+   "body": "RH1",
+   "pass": true,
+   "value": "recovered DECAYING (ratio 0.0e+0), hip work 12–20 s 1.8e-7 J"
+  },
+  {
+   "item": "Q6d",
+   "id": "180Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "recovered DECAYING (ratio 1.1e-4), hip work 12–20 s -3.2e-7 J"
+  },
+  {
+   "item": "Q6d",
+   "id": "480Hz",
+   "body": "R0",
+   "pass": true,
+   "value": "recovered DECAYING (ratio 0.0e+0), hip work 12–20 s 1.8e-6 J"
+  },
+  {
+   "item": "Q7",
+   "id": "yaw",
+   "body": "RH1",
+   "pass": true,
+   "value": "3 stance-leg decompositions; telescoping max 0.0e+0°; A closure max 0.015° (≤ 0.3); flags none; A pelvis 7.71/7.71° = ankle 7.13/7.11 + knee 0.13/0.16 + hip 0.45/0.44"
+  },
+  {
+   "item": "Q7",
+   "id": "yaw",
+   "body": "R0",
+   "pass": true,
+   "value": "3 stance-leg decompositions; telescoping max 0.0e+0°; A closure max 0.014° (≤ 0.3); flags none; A pelvis 7.57/7.57° = ankle 6.99/6.97 + knee 0.13/0.16 + hip 0.45/0.43"
+  },
+  {
+   "item": "twist",
+   "id": "ref",
+   "body": "RH1",
+   "pass": true,
+   "value": "reference: C1′ ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✓ C5 ✓ C6 ✓ C7′ ✓ (frozen C1 ✓, C7 ✓); HO3 recovered; HO1 slip 0.3/0.3 mm",
+   "crit": {
+    "C1": true,
+    "C1q": true,
+    "C2": true,
+    "C3": true,
+    "C4": true,
+    "C5": true,
+    "C6": true,
+    "C7": true,
+    "C1p": true,
+    "C7p": true
+   }
+  },
+  {
+   "item": "twist",
+   "id": "current",
+   "body": "RH1",
+   "pass": null,
+   "value": "current (reported): C1 ✓ C1q ✓ C2 ✓ C3 ✗ C4 ✗ C5 ✓ C6 ✓ C7 ✓; C1′ ✓, C7′ ✓"
+  },
+  {
+   "item": "twist",
+   "id": "ref",
+   "body": "R0",
+   "pass": true,
+   "value": "reference: C1′ ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✓ C5 ✓ C6 ✓ C7′ ✓ (frozen C1 ✓, C7 ✓); HO3 recovered; HO1 slip 0.3/0.3 mm",
+   "crit": {
+    "C1": true,
+    "C1q": true,
+    "C2": true,
+    "C3": true,
+    "C4": true,
+    "C5": true,
+    "C6": true,
+    "C7": true,
+    "C1p": true,
+    "C7p": true
+   }
+  },
+  {
+   "item": "twist",
+   "id": "current",
+   "body": "R0",
+   "pass": null,
+   "value": "current (reported): C1 ✓ C1q ✓ C2 ✓ C3 ✓ C4 ✗ C5 ✓ C6 ✓ C7 ✓; C1′ ✓, C7′ ✓"
+  }
+ ],
+ "regression": [
+  {
+   "id": "G0 V2-REF",
+   "pass": true,
+   "value": "spec ceda2998 / ceda2998; 48 rows identical"
+  },
+  {
+   "id": "G0 V2-165-62",
+   "pass": true,
+   "value": "spec 13fa5bfa / 13fa5bfa; 47 rows identical"
+  },
+  {
+   "id": "G0 V2-198-92",
+   "pass": true,
+   "value": "spec f86d3971 / f86d3971; 47 rows identical"
+  },
+  {
+   "id": "G0 V2-175-70",
+   "pass": true,
+   "value": "spec 0ca23788 / 0ca23788; 47 rows identical"
+  },
+  {
+   "id": "G0 V2-190-85",
+   "pass": true,
+   "value": "spec 9044adba / 9044adba; 47 rows identical"
+  },
+  {
+   "id": "G0 V2-short-legs",
+   "pass": true,
+   "value": "spec 5b56bcc8 / 5b56bcc8; 47 rows identical"
+  },
+  {
+   "id": "G0 V2-long-legs",
+   "pass": true,
+   "value": "spec d5920ded / d5920ded; 47 rows identical"
+  },
+  {
+   "id": "G0 V1-matched",
+   "pass": true,
+   "value": "spec dd54edaa / dd54edaa; 48 rows identical"
+  },
+  {
+   "id": "G1 8-body runs",
+   "pass": true,
+   "value": "74/74 run hashes identical to the official qualification run (official 74)"
+  },
+  {
+   "id": "G1 8-body gate",
+   "pass": true,
+   "value": "1.5 pass, 1.S pass, 1.S′ FAIL, 6 pass, 1.6a pass, 1.6b pass, 5 pass, 5c pass, 8 pass, 7.HS pass, 1.1f pass, 1.V1 FAIL, 1.E pass"
+  },
+  {
+   "id": "G1 perturbed (V2-REF / V1-matched)",
+   "pass": true,
+   "value": "300/300 run hashes identical (official 300)"
+  },
+  {
+   "id": "G2 8-body jobs",
+   "pass": true,
+   "value": "617/617 official jobs found with identical result hash"
+  },
+  {
+   "id": "G2 snapshot jobs",
+   "pass": true,
+   "value": "3/3 official snapshot jobs identical (hashA / hashB / exact)"
+  },
+  {
+   "id": "G3 8-body jobs",
+   "pass": true,
+   "value": "332/332 official jobs found with identical result"
+  },
+  {
+   "id": "J2a mirror 8-body pairs",
+   "pass": true,
+   "value": "81/81 official pairs identical (j2a + j2b)"
+  },
+  {
+   "id": "K′ margins 8 bodies",
+   "pass": true,
+   "value": "8/8 identical; RH1 {\"1\":4.19,\"1.1\":1.55,\"1.2\":-1.42,\"1.3\":-4.4,\"1.4\":-7.38}, R0 {\"1\":4.19,\"1.1\":1.55,\"1.2\":-1.42,\"1.3\":-4.4,\"1.4\":-7.38}"
+  },
+  {
+   "id": "KV6c 8 bodies",
+   "pass": true,
+   "value": "8/8 byte-identical"
+  },
+  {
+   "id": "twist battery 8 bodies",
+   "pass": true,
+   "value": "192/192 r_ files byte-identical to the official (expected 192)"
+  }
+ ],
+ "replaced": [
+  {
+   "item": "G1",
+   "id": "6",
+   "why": "body variants row: not an RH1 row (VARS = [] in the substituted run; the 4 variants ran in the 8-body regression run): 0/0 runs; failing criteria: none"
+  },
+  {
+   "item": "G1",
+   "id": "1.V1",
+   "why": "V1 frozen: needs the git checkout (scratch-tree artefact, as the qualification); worktree guard_v1 OK in Q0: guard_v1: FAIL — V1 files differ from checkpoint/physchar-v1-final-research:"
+  },
+  {
+   "item": "G2",
+   "id": "2.5",
+   "why": "controller cost: not a body-validity row (RATE_PERFORMANCE.md §2); the isolated RH1 vs R0 step cost is measured separately (CPU item)"
+  },
+  {
+   "item": "G2",
+   "id": "R",
+   "why": "earlier gates: replaced by this battery's G0 / G1 (as the qualification)"
+  },
+  {
+   "item": "G3",
+   "id": "I2",
+   "why": "per body from the 10-body run (rows above)"
+  },
+  {
+   "item": "G3",
+   "id": "O",
+   "why": "browser = Node: not re-run (body-independent, declared in the prereg)"
+  },
+  {
+   "item": "G3",
+   "id": "P2",
+   "why": "earlier gates valid: replaced by this battery's G0 / G1 / G2 rows on RH1 (as the qualification's Q3a–d)"
+  },
+  {
+   "item": "G3",
+   "id": "S2",
+   "why": "controller cost: not a body-validity row; isolated RH1 vs R0 step cost measured separately (CPU item)"
+  }
+ ],
+ "g3": {
+  "E10I2": [
+   {
+    "human": "V2-175-70",
+    "pass": true,
+    "v": "V2-175-70: T9 stood, R: unloaded foot ≤ 3.92 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 96.08 % / mean 96.74 % (v1 window min 95.52 %); L: unloaded foot ≤ 3.94 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 96.06 % / mean 96.73 % (v1 window min 95.49 %); U:R ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°)"
+   },
+   {
+    "human": "V2-165-62",
+    "pass": true,
+    "v": "V2-165-62: T9 stood, R: unloaded foot ≤ 3.91 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 96.09 % / mean 96.75 % (v1 window min 95.51 %); L: unloaded foot ≤ 3.93 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 96.07 % / mean 96.74 % (v1 window min 95.49 %); U:R ✓ ( unloaded foot ≤ 0.09 % BW (contact lost 0.00 s), slip 0.30 mm, lift 0.00 mm, tilt 0.17°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.17°)"
+   },
+   {
+    "human": "V2-REF",
+    "pass": true,
+    "v": "V2-REF: T9 stood, R: unloaded foot ≤ 3.93 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.07 % / mean 96.73 % (v1 window min 95.52 %); L: unloaded foot ≤ 3.95 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.05 % / mean 96.73 % (v1 window min 95.49 %); U:R ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.27 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.30 mm, lift 0.00 mm, tilt 0.16°)"
+   },
+   {
+    "human": "V2-198-92",
+    "pass": true,
+    "v": "V2-198-92: T9 stood, R: unloaded foot ≤ 3.96 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 96.04 % / mean 96.72 % (v1 window min 95.49 %); L: unloaded foot ≤ 3.99 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 96.01 % / mean 96.71 % (v1 window min 95.45 %); U:R ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.14°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.31 mm, lift 0.00 mm, tilt 0.14°)"
+   },
+   {
+    "human": "V2-190-85",
+    "pass": true,
+    "v": "V2-190-85: T9 stood, R: unloaded foot ≤ 3.94 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 96.06 % / mean 96.73 % (v1 window min 95.50 %); L: unloaded foot ≤ 3.97 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 96.03 % / mean 96.72 % (v1 window min 95.47 %); U:R ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.27 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.15°)"
+   },
+   {
+    "human": "V2-long-legs",
+    "pass": true,
+    "v": "V2-long-legs: T9 stood, R: unloaded foot ≤ 3.67 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.33 % / mean 96.82 % (v1 window min 95.89 %); L: unloaded foot ≤ 3.68 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.32 % / mean 96.82 % (v1 window min 95.87 %); U:R ✓ ( unloaded foot ≤ 0.06 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.06 % BW (contact lost 0.00 s), slip 0.30 mm, lift 0.00 mm, tilt 0.16°)"
+   },
+   {
+    "human": "V1-matched",
+    "pass": true,
+    "v": "V1-matched: T9 stood, R: unloaded foot ≤ 3.96 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 96.04 % / mean 96.72 % (v1 window min 95.48 %); L: unloaded foot ≤ 3.98 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 96.02 % / mean 96.71 % (v1 window min 95.44 %); U:R ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.08 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°)"
+   },
+   {
+    "human": "PI1-runner-vinicius",
+    "pass": true,
+    "v": "PI1-runner-vinicius: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.71 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.29 % / mean 96.39 % (v1 window min 94.47 %); U:R ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.16°)"
+   },
+   {
+    "human": "V2-short-legs",
+    "pass": true,
+    "v": "V2-short-legs: T9 stood, R: unloaded foot ≤ 4.27 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.73 % / mean 96.61 % (v1 window min 95.04 %); L: unloaded foot ≤ 4.30 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.70 % / mean 96.60 % (v1 window min 94.99 %); U:R ✓ ( unloaded foot ≤ 0.09 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.09 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°)"
+   },
+   {
+    "human": "PI1-runner-vinicius-RH1",
+    "pass": true,
+    "v": "PI1-runner-vinicius-RH1: T9 stood, R: unloaded foot ≤ 4.65 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.35 % / mean 96.41 % (v1 window min 94.54 %); L: unloaded foot ≤ 4.70 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 2.9 cm; stance foot settled min 95.30 % / mean 96.39 % (v1 window min 94.46 %); U:R ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.32 mm, lift 0.00 mm, tilt 0.17°), U:L ✓ ( unloaded foot ≤ 0.07 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°)"
+   }
+  ],
+  "Kprime": [
+   {
+    "key": "T11:over:1.4",
+    "lam": 1.4,
+    "marginCm": -7.38,
+    "excessive": true,
+    "outcome": "step required → fell"
+   },
+   {
+    "key": "T11:over:1.2",
+    "lam": 1.2,
+    "marginCm": -1.42,
+    "excessive": true,
+    "outcome": "step required → fell"
+   },
+   {
+    "key": "T11:over:1.4:sup",
+    "lam": 1.4,
+    "marginCm": -7.38,
+    "excessive": true,
+    "outcome": "stood"
+   }
+  ]
+ },
+ "summary": {
+  "rh1GatingRows": 54,
+  "rh1Failing": [
+   "G1 1.S: V2-REF: every scenario passes every criterion — 14/17 scenarios; failing: 1.3d, 1.R, 1.4d",
+   "G3 G: T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort",
+   "G3 H: H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6",
+   "G3 K′: [original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; sto"
+  ],
+  "r0Failing": [
+   "G1 1.S′"
+  ],
+  "regressionAllSame": true
+ }
+}

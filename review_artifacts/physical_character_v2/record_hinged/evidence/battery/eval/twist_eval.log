@@ -1,0 +1,18 @@
+
+══ k = 0.13 N·m/° ══
+current  not eligible  fails: C1[4: V2-165-62,V2-190-85,V2-198-92,V2-short-legs] C6[6: V2-165-62,V2-175-70,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs] C3[6: V2-175-70,PI1-runner-vinicius-RH1,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs] C4[6: PI1-runner-vinicius-RH1,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,PI1-runner-vinicius] C2[4: V2-190-85,V2-198-92,V2-long-legs,V2-short-legs] C5[1: V2-190-85]
+         settle med 13 s | SB pelvis-yaw peak med 5.4°, ankle residual med 1.02° | TURN yaw@12 med 20.0° | UR/T5 ankle peak med 1.8/2.1° | HO1 stance ankle med 13.1° | LIFT stance ankle med 7.9° | PY4 hip work med 0.30 J
+ref      not eligible  fails: C7[2: V2-165-62,V2-198-92]
+         settle med 2 s | SB pelvis-yaw peak med 10.5°, ankle residual med 0.06° | TURN yaw@12 med 20.0° | UR/T5 ankle peak med 1.3/1.3° | HO1 stance ankle med 9.7° | LIFT stance ankle med 1.0° | PY4 hip work med -0.00 J
+
+── frozen 8-body evaluator (regression) ──
+
+══ k = 0.13 N·m/° ══
+current  not eligible  fails: C1[6: V2-165-62,V2-REF,V2-190-85,V2-198-92,V2-short-legs,V1-matched] C6[8: V2-165-62,V2-175-70,V2-REF,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,V1-matched] C3[7: V2-175-70,V2-REF,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,V1-matched] C2[6: V2-REF,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,V1-matched] C4[6: V2-REF,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,V1-matched] C5[2: V2-190-85,V1-matched]
+         settle med 6 s | SB pelvis-yaw peak med 5.7°, ankle residual med 4.35° | TURN yaw@12 med 16.3° | UR/T5 ankle peak med 1.8/1.8° | HO1 stance ankle med 13.1° | LIFT stance ankle med 10.6° | PY4 hip work med 5.15 J
+ref      not eligible  fails: C7[2: V2-165-62,V2-198-92]
+         settle med 2 s | SB pelvis-yaw peak med 10.7°, ankle residual med 0.16° | TURN yaw@12 med 20.0° | UR/T5 ankle peak med 1.3/1.2° | HO1 stance ankle med 10.0° | LIFT stance ankle med 1.1° | PY4 hip work med -0.00 J
+
+── close_eval --policy ──
+k 0.13 current: C1 (v1) fails on V1-matched, V2-165-62, V2-190-85, V2-198-92, V2-REF, V2-short-legs | C1′ fails on V1-matched, V2-190-85, V2-198-92, V2-REF, V2-short-legs | C7 (v1) fails on none | C7′ fails on none
+k 0.13 ref: C1 (v1) fails on none | C1′ fails on none | C7 (v1) fails on V2-165-62, V2-198-92 | C7′ fails on none

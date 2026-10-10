@@ -1,0 +1,153 @@
+{
+ "tool": "rh1_g3_diag.mjs",
+ "body": "trunk",
+ "xstand": {
+  "ikRefTwist": true,
+  "lifecycle": true
+ },
+ "rows": [
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:R:4",
+   "hash": "5c6abafc",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.5618901452006939,
+   "abortT": 3.658333333333333,
+   "slipMm": 0.2654630082342866,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:R:2",
+   "hash": "22e3c277",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.6063209158843129,
+   "abortT": 2.341666666666667,
+   "slipMm": 0.2669984735658051,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:R:1",
+   "hash": "f83e4c9d",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.9215471908319555,
+   "abortT": 5.154166666666667,
+   "slipMm": 3.893411717825834,
+   "gRow": null,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:L:4",
+   "hash": "e439bace",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.5618945995912003,
+   "abortT": 3.658333333333333,
+   "slipMm": 0.2654630082342866,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:L:2",
+   "hash": "1f5354aa",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.6063283849914838,
+   "abortT": 2.341666666666667,
+   "slipMm": 0.2663871292201913,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T7:L:1",
+   "hash": "53462ed1",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": 0.9215672123392897,
+   "abortT": 5.154166666666667,
+   "slipMm": 3.9749531578273136,
+   "gRow": null,
+   "h3Abort": true
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T11:over:1.2",
+   "hash": "6991eaa0",
+   "batteryHash": null,
+   "outcome": "step required → fell",
+   "holdMean": null,
+   "abortT": null,
+   "slipMm": 830.3994816639952,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T11:over:1.4",
+   "hash": "47df9cba",
+   "batteryHash": null,
+   "outcome": "step required → fell",
+   "holdMean": null,
+   "abortT": null,
+   "slipMm": 653.7505238115898,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T11:over:1.4:sup",
+   "hash": "5356abcf",
+   "batteryHash": null,
+   "outcome": "stood",
+   "holdMean": null,
+   "abortT": 2.783333333333333,
+   "slipMm": 0.2654630082342866,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T11:fast:0.25",
+   "hash": "45d85eb7",
+   "batteryHash": null,
+   "outcome": "step required → fell",
+   "holdMean": 0.8371252664359858,
+   "abortT": null,
+   "slipMm": 594.7360424561255,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "trunk",
+   "spec": "b1fbf0d0",
+   "key": "T11:fast:0.1",
+   "hash": "16fc5641",
+   "batteryHash": null,
+   "outcome": "not settled",
+   "holdMean": 0.7983185306440908,
+   "abortT": null,
+   "slipMm": 4.945165812167696,
+   "gRow": null,
+   "h3Abort": null
+  }
+ ]
+}

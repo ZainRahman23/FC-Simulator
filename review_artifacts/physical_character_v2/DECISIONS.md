@@ -3420,3 +3420,49 @@ Per the frozen rule, no struck run (A / B / C).
 - `bodySep` reports isolated false overlaps.
 
 **Awaiting user review.** Stopped before modifying the V2 body specification or implementing the handoff.
+
+## 2026-10-10: Record-hinged V2 runner RH1 + mapping contract MC-1 BUILT and VALIDATED: verdict C, RECORD-HINGED V2 BODY INVALID under the frozen rule (`record_hinged/RH1_RESULTS.md`; decision `sources/2026-10-10_user_decision_record_hinged_v2_implement_validate.md` 084f736d; prereg `record_hinged/RH1_PREREG.md` 50eae23a)
+
+**Built (2ab15cab, 196815e5):**
+- New versioned spec `PI1-runner-vinicius-RH1` (e2892d27): lumbar / thoracic / elbow centres taken from `rig.json` exactly, hinge-only.
+- Opt-in generator post-step: the 20 existing spec hashes are unchanged.
+- Masses, world COM, inertia, colliders, frames, ranges, passive law, capacities and lower body are bit-identical to R0.
+- MC-1: frozen lower body, KE-metric upper-body fit, KE projection of LV2's analytic bone velocities.
+
+**Handoff transfer (valid instants; 0 Jolt steps):**
+- ALL-OUT shoulder / elbow / wrist ≤ 6.5 / 5.4 / 2.6 mm.
+- P-14c ≤ 0.093 m/s; P-15c ≤ 0.67 rad/s; P-16c ≤ 0.0065 m/s; P-17c ≤ 0.057 of its limit.
+- PR-2: 0 instants over 0.18 m/s.
+- Lower body bit-identical to `pcg_rev1`.
+- Instantiation read-back ≤ 1.8e-7 m; anchors ≤ 0.0003 mm.
+- **Fails:** P-9 in late toe pad (0 / 10 / 12 / 8) and stance contact consistency in heel-up / toe pad / forefoot landing (16 / 42 / 50 / 40). Cause: the rigid F0 boot, as predicted. This alone would be B.
+
+**Body suite (qualification-v2 configuration, RH1 + control R0):** RH1 passes 50 / 54 gating rows; the 8-body regression is identical throughout.
+
+| failing row | detail | R0 | cause |
+|---|---|---|---|
+| G1 1.S leanL 1.3d | shoulder_L settles 1.74° beyond hard (limit 1.5°); perturbed 4 / 15 | passes | the trunk hinges |
+| G1 1.S dropA 1.R | 0.094 rad/s: a late left-arm settle at ≈ 10 s, at rest by 13.5 s | passes | both hinge sets together |
+| G3 G | T7 ramps aborted by the supervisor | identical | **inherited** from the record hip spacing ± 0.1525 m (R0 had never been run through G3) |
+| G3 H | aborts in nominal T7 | identical | inherited |
+| G3 K′ | λ 1.4:sup "stood" after an abort | identical | inherited |
+
+**Recorded R0 exceptions, failing identically on RH1:** G0 0.4c / 0.6a / 0.6b / 0.6e / 0.10a, and G1 isoSelfCol 1.4d (boot ↔ boot, same cause).
+
+**Everything else passes:**
+- G1 determinism / rig / timestep / envelope, and the perturbed ensemble 2.7 %;
+- G2 all rows;
+- G3 other rows, including J2a 81 / 81;
+- KV6c, 180 / 480 Hz, boundary harness, PY4, yaw, twist battery.
+- CPU: RH1 = R0 = V2-REF per tick (0.73 ms). MC-1 one-shot median 5.5–9.2 ms.
+
+**Procedural:**
+- The reproduction stop rule (§5, 1e-6 vs the D12n study) **failed as written**: a prereg defect (the study stored 4 decimals and used float32 inputs); worst 1.15e-4.
+- Investigated and reported for the user's ruling. Verdict C does not depend on it.
+- Evaluation-tool and diagnostic bugs were fixed and recorded.
+
+**Recommendation (not applied):** keep RH1 unadopted, and run a read-only investigation of:
+- (i) the G3 ramped-transfer aborts for record hip spacing;
+- (ii) RH1's leanL prone shoulder end-range rest.
+
+The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle, PI-1 or bridge work; **nothing pushed.**

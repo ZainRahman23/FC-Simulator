@@ -1,0 +1,7 @@
+tools/g1_run_rh1.js:18
+tools/b_sweep_rh1.mjs:10
+tools/g2_run_rh1.js:10
+tools/g3_run_rh1.js:2
+tools/g3_mirror_v3_rh1.mjs:1
+tools/k_premise_rh1.mjs:1
+69:  const VARS = [], vars = VARS.flatMap(h => ESSENTIAL.map(k => J({ kind: "scen", human: h, key: k, cfg: REFCFG, tag: "var" })));

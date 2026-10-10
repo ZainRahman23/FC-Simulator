@@ -1,0 +1,153 @@
+{
+ "tool": "rh1_g3_diag.mjs",
+ "body": "RH1",
+ "xstand": {
+  "ikRefTwist": true,
+  "lifecycle": true
+ },
+ "rows": [
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:R:4",
+   "hash": "61887a64",
+   "batteryHash": "61887a64",
+   "outcome": "stood",
+   "holdMean": 0.5618749195134489,
+   "abortT": 3.658333333333333,
+   "slipMm": 0.26542910075139664,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:R:2",
+   "hash": "7850a618",
+   "batteryHash": "7850a618",
+   "outcome": "stood",
+   "holdMean": 0.6063219131904044,
+   "abortT": 2.341666666666667,
+   "slipMm": 0.2683289152287144,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:R:1",
+   "hash": "e7fc8e72",
+   "batteryHash": "e7fc8e72",
+   "outcome": "stood",
+   "holdMean": 0.9215522892804929,
+   "abortT": 5.154166666666667,
+   "slipMm": 3.8957401282741984,
+   "gRow": null,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:L:4",
+   "hash": "da7d3c80",
+   "batteryHash": "da7d3c80",
+   "outcome": "stood",
+   "holdMean": 0.5618897901418101,
+   "abortT": 3.658333333333333,
+   "slipMm": 0.26542910075139664,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:L:2",
+   "hash": "e5f53fd3",
+   "batteryHash": "e5f53fd3",
+   "outcome": "stood",
+   "holdMean": 0.6063263247068509,
+   "abortT": 2.341666666666667,
+   "slipMm": 0.26542910075139664,
+   "gRow": false,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T7:L:1",
+   "hash": "cd5286e3",
+   "batteryHash": "cd5286e3",
+   "outcome": "stood",
+   "holdMean": 0.9215766985959716,
+   "abortT": 5.154166666666667,
+   "slipMm": 3.9764762583042272,
+   "gRow": null,
+   "h3Abort": true
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T11:over:1.2",
+   "hash": "122b18e9",
+   "batteryHash": "122b18e9",
+   "outcome": "step required → fell",
+   "holdMean": null,
+   "abortT": null,
+   "slipMm": 861.2369950398027,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T11:over:1.4",
+   "hash": "2fa79033",
+   "batteryHash": "2fa79033",
+   "outcome": "step required → fell",
+   "holdMean": null,
+   "abortT": null,
+   "slipMm": 655.4151790783466,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T11:over:1.4:sup",
+   "hash": "2bdd62fc",
+   "batteryHash": "2bdd62fc",
+   "outcome": "stood",
+   "holdMean": null,
+   "abortT": 2.783333333333333,
+   "slipMm": 0.27581813194754456,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T11:fast:0.25",
+   "hash": "08ff0a03",
+   "batteryHash": "08ff0a03",
+   "outcome": "step required → fell",
+   "holdMean": 0.837158915213877,
+   "abortT": null,
+   "slipMm": 586.4357458728016,
+   "gRow": null,
+   "h3Abort": null
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "T11:fast:0.1",
+   "hash": "a2c51dcd",
+   "batteryHash": "a2c51dcd",
+   "outcome": "not settled",
+   "holdMean": 0.7983168523862173,
+   "abortT": null,
+   "slipMm": 5.000926895218382,
+   "gRow": null,
+   "h3Abort": null
+  }
+ ]
+}

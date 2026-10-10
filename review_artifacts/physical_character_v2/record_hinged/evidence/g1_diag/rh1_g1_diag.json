@@ -1,0 +1,842 @@
+{
+ "tool": "rh1_g1_diag.mjs",
+ "cfg": {
+  "velSteps": 150
+ },
+ "rows": [
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "leanL",
+   "hash": "1593cf3c",
+   "batteryHash": "1593cf3c",
+   "posture": "prone",
+   "settledExcDeg": 1.7358823705767008,
+   "settledWho": "shoulder_L.abd",
+   "restKE": 8.794110901245163e-8,
+   "jitterRadS": 0.0014247686202159921,
+   "topJointsRMS": [
+    [
+     "shoulder_R",
+     0.004913994674098888
+    ],
+    [
+     "elbow_R",
+     0.0004503568631637725
+    ],
+    [
+     "lumbar",
+     0.00018112826564537873
+    ],
+    [
+     "thoracic",
+     0.0001810791791588911
+    ]
+   ],
+   "selfPenMaxMm": 0.27277693152427673,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "dropA",
+   "hash": "8d76926f",
+   "batteryHash": "8d76926f",
+   "posture": "prone",
+   "settledExcDeg": 1.1172341442666254,
+   "settledWho": "ankle_L.inv",
+   "restKE": 0.0017948949093761397,
+   "jitterRadS": 0.09379887977743481,
+   "topJointsRMS": [
+    [
+     "shoulder_L",
+     0.14209218345913724
+    ],
+    [
+     "elbow_L",
+     0.11992301693297895
+    ],
+    [
+     "shoulder_R",
+     0.045075866769687306
+    ],
+    [
+     "lumbar",
+     0.03718893790053647
+    ]
+   ],
+   "selfPenMaxMm": 1.6666948795318604,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "isoSelfCol",
+   "hash": "90af79c7",
+   "batteryHash": "90af79c7",
+   "posture": "on left side",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 104.54465597465318,
+   "jitterRadS": 1.1347781148076288,
+   "topJointsRMS": [
+    [
+     "shoulder_R",
+     1.6674325273253263
+    ],
+    [
+     "shoulder_L",
+     1.3623372691274473
+    ],
+    [
+     "hip_L",
+     0.949384933253233
+    ],
+    [
+     "ankle_L",
+     0.8450104171551152
+    ]
+   ],
+   "selfPenMaxMm": 24.596352130174637,
+   "pairsOver10mm": [
+    "foot_L ↔ foot_R 24.60 mm (first 0.017 s, 20 steps)"
+   ]
+  },
+  {
+   "body": "RH1",
+   "spec": "e2892d27",
+   "key": "upright",
+   "hash": "07c444c9",
+   "batteryHash": "07c444c9",
+   "posture": "prone",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 4.094697163375244e-9,
+   "jitterRadS": 0.0001709252485306,
+   "topJointsRMS": [
+    [
+     "ankle_R",
+     0.00033360003649507685
+    ],
+    [
+     "knee_R",
+     0.00022026267908262074
+    ],
+    [
+     "elbow_R",
+     0.00020627813725340938
+    ],
+    [
+     "ankle_L",
+     0.00018335784852895078
+    ]
+   ],
+   "selfPenMaxMm": 0.7263310253620148,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "R0",
+   "spec": "62d5d797",
+   "key": "leanL",
+   "hash": "f539512f",
+   "batteryHash": "f539512f",
+   "posture": "supine",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 2.4738546240656528e-8,
+   "jitterRadS": 0.0002207738991095929,
+   "topJointsRMS": [
+    [
+     "elbow_L",
+     0.0005298046970499186
+    ],
+    [
+     "ankle_R",
+     0.00024698868150627726
+    ],
+    [
+     "ankle_L",
+     0.0001790483590869646
+    ],
+    [
+     "hip_R",
+     0.00017664212660952055
+    ]
+   ],
+   "selfPenMaxMm": 0.42602047324180603,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "R0",
+   "spec": "62d5d797",
+   "key": "dropA",
+   "hash": "63fe7210",
+   "batteryHash": "63fe7210",
+   "posture": "prone",
+   "settledExcDeg": 0.6522443174714642,
+   "settledWho": "hip_L.rot",
+   "restKE": 4.1748411545072836e-10,
+   "jitterRadS": 0.00007281008057227291,
+   "topJointsRMS": [
+    [
+     "knee_L",
+     0.00017018168581308632
+    ],
+    [
+     "ankle_L",
+     0.0001643916549603483
+    ],
+    [
+     "neck",
+     0.0000931716225830937
+    ],
+    [
+     "ankle_R",
+     0.00004285698413534008
+    ]
+   ],
+   "selfPenMaxMm": 0.9663160890340805,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "R0",
+   "spec": "62d5d797",
+   "key": "isoSelfCol",
+   "hash": "ec629b1f",
+   "batteryHash": "ec629b1f",
+   "posture": "on left side",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 103.90930513544511,
+   "jitterRadS": 1.273953369329054,
+   "topJointsRMS": [
+    [
+     "shoulder_R",
+     1.474213940718628
+    ],
+    [
+     "shoulder_L",
+     1.4721081115545638
+    ],
+    [
+     "ankle_L",
+     1.0828315015283005
+    ],
+    [
+     "hip_R",
+     0.9241140316781985
+    ]
+   ],
+   "selfPenMaxMm": 24.58864077925682,
+   "pairsOver10mm": [
+    "foot_L ↔ foot_R 24.59 mm (first 0.017 s, 20 steps)"
+   ]
+  },
+  {
+   "body": "R0",
+   "spec": "62d5d797",
+   "key": "upright",
+   "hash": "8affd7f9",
+   "batteryHash": "8affd7f9",
+   "posture": "prone",
+   "settledExcDeg": 0.3795974822198666,
+   "settledWho": "hip_R.rot",
+   "restKE": 4.1166398051441644e-10,
+   "jitterRadS": 0.00006543159030859717,
+   "topJointsRMS": [
+    [
+     "neck",
+     0.00015500520698743977
+    ],
+    [
+     "ankle_R",
+     0.00013908149021295708
+    ],
+    [
+     "knee_L",
+     0.00006780058762276315
+    ],
+    [
+     "ankle_L",
+     0.00006194642247699878
+    ]
+   ],
+   "selfPenMaxMm": 0.3622323274612427,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:trunk-only",
+   "spec": "b1fbf0d0",
+   "key": "leanL",
+   "hash": "818a66fa",
+   "batteryHash": null,
+   "posture": "prone",
+   "settledExcDeg": 2.27974912828304,
+   "settledWho": "shoulder_L.abd",
+   "restKE": 2.5492567951167293e-8,
+   "jitterRadS": 0.00033796446651022135,
+   "topJointsRMS": [
+    [
+     "elbow_L",
+     0.00030718951765474153
+    ],
+    [
+     "shoulder_R",
+     0.00029931923044660915
+    ],
+    [
+     "elbow_R",
+     0.0002832904898394413
+    ],
+    [
+     "ankle_R",
+     0.0002473901866551022
+    ]
+   ],
+   "selfPenMaxMm": 0.5951561033725739,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:trunk-only",
+   "spec": "b1fbf0d0",
+   "key": "dropA",
+   "hash": "6d423081",
+   "batteryHash": null,
+   "posture": "prone",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 0.00000150504602354091,
+   "jitterRadS": 0.002565435174850413,
+   "topJointsRMS": [
+    [
+     "thoracic",
+     0.004762245783522038
+    ],
+    [
+     "lumbar",
+     0.004206411230236853
+    ],
+    [
+     "shoulder_L",
+     0.004083995709668335
+    ],
+    [
+     "shoulder_R",
+     0.003028354319946319
+    ]
+   ],
+   "selfPenMaxMm": 1.522757112979889,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:trunk-only",
+   "spec": "b1fbf0d0",
+   "key": "isoSelfCol",
+   "hash": "8dc140cb",
+   "batteryHash": null,
+   "posture": "on left side",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 104.55111813398392,
+   "jitterRadS": 1.1387315029089153,
+   "topJointsRMS": [
+    [
+     "shoulder_R",
+     1.6706443868519878
+    ],
+    [
+     "shoulder_L",
+     1.366269270080962
+    ],
+    [
+     "hip_L",
+     0.9486639241210456
+    ],
+    [
+     "ankle_L",
+     0.8559495783269498
+    ]
+   ],
+   "selfPenMaxMm": 24.596333503723145,
+   "pairsOver10mm": [
+    "foot_L ↔ foot_R 24.60 mm (first 0.017 s, 20 steps)"
+   ]
+  },
+  {
+   "body": "diag:trunk-only",
+   "spec": "b1fbf0d0",
+   "key": "upright",
+   "hash": "d38ba338",
+   "batteryHash": null,
+   "posture": "prone",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 1.6893122513331125e-7,
+   "jitterRadS": 0.0011155699887217267,
+   "topJointsRMS": [
+    [
+     "elbow_R",
+     0.0014386904414524589
+    ],
+    [
+     "ankle_R",
+     0.0012014954541718099
+    ],
+    [
+     "shoulder_R",
+     0.0007803464106094399
+    ],
+    [
+     "ankle_L",
+     0.0005457561844871542
+    ]
+   ],
+   "selfPenMaxMm": 0.874960795044899,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:elbow-only",
+   "spec": "98508450",
+   "key": "leanL",
+   "hash": "90ad7ef3",
+   "batteryHash": null,
+   "posture": "supine",
+   "settledExcDeg": 0.34342154950582626,
+   "settledWho": "hip_L.rot",
+   "restKE": 1.8842224912569484e-8,
+   "jitterRadS": 0.00017685988666261244,
+   "topJointsRMS": [
+    [
+     "ankle_L",
+     0.0002429622207267803
+    ],
+    [
+     "ankle_R",
+     0.00018965434208583818
+    ],
+    [
+     "hip_R",
+     0.00016397428216080172
+    ],
+    [
+     "knee_L",
+     0.00015492791206866892
+    ]
+   ],
+   "selfPenMaxMm": 0.38886070251464844,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:elbow-only",
+   "spec": "98508450",
+   "key": "dropA",
+   "hash": "ce741477",
+   "batteryHash": null,
+   "posture": "prone",
+   "settledExcDeg": 0.3499302472524729,
+   "settledWho": "hip_L.rot",
+   "restKE": 0.000018285649813672576,
+   "jitterRadS": 0.010544735106494146,
+   "topJointsRMS": [
+    [
+     "neck",
+     0.03556545187254903
+    ],
+    [
+     "knee_R",
+     0.00020769227343029532
+    ],
+    [
+     "ankle_R",
+     0.00020733066730968105
+    ],
+    [
+     "elbow_R",
+     0.00015782136840042225
+    ]
+   ],
+   "selfPenMaxMm": 0.37004053592681885,
+   "pairsOver10mm": []
+  },
+  {
+   "body": "diag:elbow-only",
+   "spec": "98508450",
+   "key": "isoSelfCol",
+   "hash": "deb93a22",
+   "batteryHash": null,
+   "posture": "on left side",
+   "settledExcDeg": 0,
+   "settledWho": null,
+   "restKE": 103.90180382292215,
+   "jitterRadS": 1.2761688962008715,
+   "topJointsRMS": [
+    [
+     "shoulder_R",
+     1.4784347806666007
+    ],
+    [
+     "shoulder_L",
+     1.470231908687858
+    ],
+    [
+     "ankle_L",
+     1.0819071571930754
+    ],
+    [
+     "hip_R",
+     0.9215707110593607
+    ]
+   ],
+   "selfPenMaxMm": 24.588637053966522,
+   "pairsOver10mm": [
+    "foot_L ↔ foot_R 24.59 mm (first 0.017 s, 20 steps)"
+   ]
+  },
+  {
+   "body": "diag:elbow-only",
+   "spec": "98508450",
+   "key": "upright",
+   "hash": "655b8c31",
+   "batteryHash": null,
+   "posture": "prone",
+   "settledExcDeg": 0.13178836754103226,
+   "settledWho": "hip_R.rot",
+   "restKE": 3.5836112085930357e-10,
+   "jitterRadS": 0.00008135634069407766,
+   "topJointsRMS": [
+    [
+     "ankle_L",
+     0.00013967856571527385
+    ],
+    [
+     "knee_L",
+     0.00013670295386641318
+    ],
+    [
+     "neck",
+     0.00010839466880029877
+    ],
+    [
+     "ankle_R",
+     0.00008121421921507186
+    ]
+   ],
+   "selfPenMaxMm": 1.921389251947403,
+   "pairsOver10mm": []
+  }
+ ],
+ "dropAContinued": [
+  {
+   "body": "RH1",
+   "scenarioEndS": 10,
+   "windows": [
+    {
+     "t": 8,
+     "jitterMax": 0.006279424199416344,
+     "shoulderL": 0.011850211212302992,
+     "elbowL": 0.01795705673793729
+    },
+    {
+     "t": 8.5,
+     "jitterMax": 0.007557102459048124,
+     "shoulderL": 0.01637398078877602,
+     "elbowL": 0.02115051422001442
+    },
+    {
+     "t": 9,
+     "jitterMax": 0.009996357622988427,
+     "shoulderL": 0.025230350782918715,
+     "elbowL": 0.02314700576438099
+    },
+    {
+     "t": 9.5,
+     "jitterMax": 0.025930398331165064,
+     "shoulderL": 0.06641010302580823,
+     "elbowL": 0.057033544766767155
+    },
+    {
+     "t": 10,
+     "jitterMax": 0.09379887977743481,
+     "shoulderL": 0.24338062996384413,
+     "elbowL": 0.20391610835144855
+    },
+    {
+     "t": 10.5,
+     "jitterMax": 0.2197402898199429,
+     "shoulderL": 0.5592364441365005,
+     "elbowL": 0.49196979224175863
+    },
+    {
+     "t": 11,
+     "jitterMax": 0.01062355927609217,
+     "shoulderL": 0.0009160236671991646,
+     "elbowL": 0.0010662705737471121
+    },
+    {
+     "t": 11.5,
+     "jitterMax": 0.004665999441324562,
+     "shoulderL": 0.00009596363565087586,
+     "elbowL": 0.00011184148432576031
+    },
+    {
+     "t": 12,
+     "jitterMax": 0.002031474395831626,
+     "shoulderL": 0.00008299681879554869,
+     "elbowL": 0.00011210903597904413
+    },
+    {
+     "t": 12.5,
+     "jitterMax": 0.0011987314098224758,
+     "shoulderL": 0.00003291337228808285,
+     "elbowL": 0.00007354327969919527
+    },
+    {
+     "t": 13,
+     "jitterMax": 0.0005814459773904501,
+     "shoulderL": 0.00003442761021005437,
+     "elbowL": 0.00007101963522776348
+    },
+    {
+     "t": 13.5,
+     "jitterMax": 0.0003714293825110618,
+     "shoulderL": 0.000030005106629347236,
+     "elbowL": 0.00007188127213768367
+    },
+    {
+     "t": 14,
+     "jitterMax": 0.0001938633654378514,
+     "shoulderL": 0.000027827096179103767,
+     "elbowL": 0.00006963326403968538
+    },
+    {
+     "t": 14.5,
+     "jitterMax": 0.0001364914479034001,
+     "shoulderL": 0.00003267794070059511,
+     "elbowL": 0.00007324385116916568
+    },
+    {
+     "t": 15,
+     "jitterMax": 0.00011109808057488269,
+     "shoulderL": 0.000059480507447053744,
+     "elbowL": 0.00011165430042638558
+    },
+    {
+     "t": 15.5,
+     "jitterMax": 0.00009886469725874748,
+     "shoulderL": 0.00003585896899524816,
+     "elbowL": 0.00007564790476647402
+    },
+    {
+     "t": 16,
+     "jitterMax": 0.00009896092226540688,
+     "shoulderL": 0.00003207144691372592,
+     "elbowL": 0.00007751563775096397
+    },
+    {
+     "t": 16.5,
+     "jitterMax": 0.00009872008573363806,
+     "shoulderL": 0.00002737863345429685,
+     "elbowL": 0.00006982790946629238
+    },
+    {
+     "t": 17,
+     "jitterMax": 0.00009882652090427548,
+     "shoulderL": 0.000029911001994410766,
+     "elbowL": 0.00007153249302698144
+    },
+    {
+     "t": 17.5,
+     "jitterMax": 0.00009906344643399564,
+     "shoulderL": 0.000027511274094079527,
+     "elbowL": 0.00007078394087892695
+    },
+    {
+     "t": 18,
+     "jitterMax": 0.00009923823105580242,
+     "shoulderL": 0.00002782335320937054,
+     "elbowL": 0.0000704065235599058
+    },
+    {
+     "t": 18.5,
+     "jitterMax": 0.00009931478067070705,
+     "shoulderL": 0.000027525835912496677,
+     "elbowL": 0.00007033619182747586
+    },
+    {
+     "t": 19,
+     "jitterMax": 0.00009941795618355777,
+     "shoulderL": 0.000030194532598770167,
+     "elbowL": 0.00007175952342140156
+    },
+    {
+     "t": 19.5,
+     "jitterMax": 0.00009964371105339799,
+     "shoulderL": 0.00002994601850177142,
+     "elbowL": 0.00007162096152306799
+    },
+    {
+     "t": 20,
+     "jitterMax": 0.00010017557689289734,
+     "shoulderL": 0.000027912129731352278,
+     "elbowL": 0.00007038202397896353
+    }
+   ]
+  },
+  {
+   "body": "R0",
+   "scenarioEndS": 10,
+   "windows": [
+    {
+     "t": 8,
+     "jitterMax": 0.00007283166045371697,
+     "shoulderL": 2.043103985186466e-7,
+     "elbowL": 0.0000011041904609875632
+    },
+    {
+     "t": 8.5,
+     "jitterMax": 0.00007278566939220839,
+     "shoulderL": 2.424642882688325e-7,
+     "elbowL": 0.000001431511003921238
+    },
+    {
+     "t": 9,
+     "jitterMax": 0.00007287249115941705,
+     "shoulderL": 1.5294058080037507e-7,
+     "elbowL": 0.000001231807945138406
+    },
+    {
+     "t": 9.5,
+     "jitterMax": 0.00007279935414191212,
+     "shoulderL": 1.2937049350756897e-7,
+     "elbowL": 7.808913156215608e-7
+    },
+    {
+     "t": 10,
+     "jitterMax": 0.00007281008057227291,
+     "shoulderL": 1.9308662056227284e-7,
+     "elbowL": 0.0000011082671145419441
+    },
+    {
+     "t": 10.5,
+     "jitterMax": 0.00007289822752578713,
+     "shoulderL": 1.450696144600995e-7,
+     "elbowL": 9.085972522122337e-7
+    },
+    {
+     "t": 11,
+     "jitterMax": 0.0000727250794581587,
+     "shoulderL": 1.5039868719093115e-7,
+     "elbowL": 0.000001227363442460809
+    },
+    {
+     "t": 11.5,
+     "jitterMax": 0.00007288726579981676,
+     "shoulderL": 1.587547731867133e-7,
+     "elbowL": 0.0000010495307818049875
+    },
+    {
+     "t": 12,
+     "jitterMax": 0.00007284094531914642,
+     "shoulderL": 1.4774597575785173e-7,
+     "elbowL": 7.516999392777336e-7
+    },
+    {
+     "t": 12.5,
+     "jitterMax": 0.00007288349447531727,
+     "shoulderL": 1.7114483212823477e-7,
+     "elbowL": 0.0000011061470218268775
+    },
+    {
+     "t": 13,
+     "jitterMax": 0.00007277666600374214,
+     "shoulderL": 1.861599823536437e-7,
+     "elbowL": 0.0000011861402278432845
+    },
+    {
+     "t": 13.5,
+     "jitterMax": 0.00007293356482921068,
+     "shoulderL": 1.954500636464711e-7,
+     "elbowL": 0.0000011660444627394152
+    },
+    {
+     "t": 14,
+     "jitterMax": 0.00007288833195593154,
+     "shoulderL": 1.7650273829781687e-7,
+     "elbowL": 0.000001423809782374363
+    },
+    {
+     "t": 14.5,
+     "jitterMax": 0.0000727856882062975,
+     "shoulderL": 2.2349717677796912e-7,
+     "elbowL": 0.0000013590061216257076
+    },
+    {
+     "t": 15,
+     "jitterMax": 0.00007282090876092561,
+     "shoulderL": 1.2071078928075834e-7,
+     "elbowL": 9.707975881345815e-7
+    },
+    {
+     "t": 15.5,
+     "jitterMax": 0.00007290718083094973,
+     "shoulderL": 2.3793456387196782e-7,
+     "elbowL": 0.0000014592372788001186
+    },
+    {
+     "t": 16,
+     "jitterMax": 0.00007285974899487793,
+     "shoulderL": 2.377073005084673e-7,
+     "elbowL": 0.0000013321516493488683
+    },
+    {
+     "t": 16.5,
+     "jitterMax": 0.00007282133910677208,
+     "shoulderL": 1.7071018224753132e-7,
+     "elbowL": 0.0000011815968894822022
+    },
+    {
+     "t": 17,
+     "jitterMax": 0.00007292171783060683,
+     "shoulderL": 2.081082511610789e-7,
+     "elbowL": 7.580013625802147e-7
+    },
+    {
+     "t": 17.5,
+     "jitterMax": 0.00007293936358506691,
+     "shoulderL": 1.490102230752018e-7,
+     "elbowL": 9.020973728940062e-7
+    },
+    {
+     "t": 18,
+     "jitterMax": 0.00007300839966311028,
+     "shoulderL": 2.2329420670006486e-7,
+     "elbowL": 0.000001508153304015565
+    },
+    {
+     "t": 18.5,
+     "jitterMax": 0.00007291526814183047,
+     "shoulderL": 1.8204749649184198e-7,
+     "elbowL": 0.0000016562460946752848
+    },
+    {
+     "t": 19,
+     "jitterMax": 0.00007276460535530113,
+     "shoulderL": 1.4251945342791552e-7,
+     "elbowL": 0.00000104533969187172
+    },
+    {
+     "t": 19.5,
+     "jitterMax": 0.00007281806704899553,
+     "shoulderL": 1.7069936616927817e-7,
+     "elbowL": 0.0000011983354032734043
+    },
+    {
+     "t": 20,
+     "jitterMax": 0.0000729088898438629,
+     "shoulderL": 2.1397184243444515e-7,
+     "elbowL": 9.992618267391423e-7
+    }
+   ]
+  }
+ ]
+}
