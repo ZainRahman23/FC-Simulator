@@ -1,0 +1,15 @@
+// READ-ONLY attribution diagnostic for the rx_miss coherence failure (no physics): per tick, physical vs law (reference) pelvis COM height, the simulation's own
+// foot_L (law) lowest axis point vs the physical foot_L lowest point, the law's planted flags; and the right-ankle actuator request vs capacity vs applied.
+import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
+const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../.."), SL = path.resolve(here, ".."), LP = await import(path.join(here, "law_provider.mjs"));
+const { V, Q, B, loadAir, bodyLowest } = LP.L; const R = loadAir(path.join(ROOT, "promotion_carrier/evidence/records/on_rx"), "rx_miss_LOCO.json.gz"), run = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(SL, "evidence/runs/rx_miss_contact_a.json.gz"))));
+const law = LP.makeLaw(R), bi = (n) => B.findIndex(b => b.name === n), J = ["lumbar", "thoracic", "neck", "shoulder_L", "shoulder_R", "elbow_L", "elbow_R", "hip_L", "hip_R", "knee_L", "knee_R", "ankle_L", "ankle_R"];
+const rows = []; for (const t of run.ticks.filter(t => t.tau <= 58)) { const s = run.stepsLog.find(x => Math.abs(x.tau - t.tau) < 1e-9), o = law.at(t.tau), pelLaw = LP.comW(o.S, 0)[1], pelPhys = s.bodies[0][8];
+  const sb = R.simBody[t.r][3], fL = sb.segs.find(g => g.name === "foot_L"), toeL = sb.segs.find(g => g.name === "toe_L"), simFootLow = Math.min(fL.a[2], fL.b[2], toeL ? toeL.b[2] : 9) - (fL.rb ?? fL.r);
+  const fi = bi("foot_L"), phys = { pos: s.bodies[fi].slice(0, 3), rot: s.bodies[fi].slice(3, 7) }, physLow = bodyLowest(B[fi], phys).y;
+  const lawFoot = bodyLowest(B[fi], o.S[fi]).y;   // the V2 foot posed by the reference pose, at the reference pelvis height
+  rows.push({ tau: t.tau, pelvisPhysMm: +(pelPhys * 1000).toFixed(1), pelvisLawMm: +(pelLaw * 1000).toFixed(1), dPelMm: +((pelPhys - pelLaw) * 1000).toFixed(1), footL_V2onLawMm: +(lawFoot * 1000).toFixed(1), footL_simSegLowMm: +(simFootLow * 1000).toFixed(1), footL_physLowMm: +(physLow * 1000).toFixed(1), lawPlanted: o.planted, simPlanted: { L: sb.legs.L.planted, R: sb.legs.R.planted } }); }
+const ank = run.stepsLog.filter(s => s.tau <= 54).map(s => { const x = s.ax.find(a => a[0] === 12 && a[1] === 1); return x ? { tau: s.tau, vff: x[3], id: x[4], servo: x[5], req: x[6], applied: x[7], capP: x[8], capM: x[9], K: x[10], D: x[11] } : null; }).filter(Boolean);
+const out = { ticks: rows, ankleR_axis1: ank }; fs.writeFileSync(path.join(SL, "evidence/runs/diag_rx_miss_attribution.json"), JSON.stringify(out, null, 1));
+for (const r of rows) console.log(r.tau, "pelvis phys", r.pelvisPhysMm, "law", r.pelvisLawMm, "Δ", r.dPelMm, "| foot_L: V2 posed on the law", r.footL_V2onLawMm, "mm, sim seg low", r.footL_simSegLowMm, "phys", r.footL_physLowMm, "| law planted", JSON.stringify(r.lawPlanted));
+for (const a of ank.filter((a, i) => i % 4 === 0)) console.log("ankle_R ax1", a.tau, "vff", a.vff.toFixed(0), "req", a.req.toFixed(0), "applied", a.applied.toFixed(0), "cap", a.capP.toFixed(0), "/", a.capM.toFixed(0), "K", a.K.toFixed(0), "D", a.D.toFixed(1));

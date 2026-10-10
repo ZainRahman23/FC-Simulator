@@ -8,7 +8,7 @@ const here = path.dirname(fileURLToPath(import.meta.url)), P2 = path.resolve(her
 const M = await import(path.join(ROOT, "pi1/rev1/scripts/pcg_rev1.mjs")), M0 = await import(path.join(ROOT, "pi1/trackB/scripts/pcg_f0.mjs"));
 const SIM = await import(path.join(ROOT, "pi1/rev2/scripts/pi1_rev2_sim.mjs")), CS = await import(path.join(here, "pi1_carrier_sim.mjs")), LP = await import(path.join(here, "law_provider.mjs")), SE = await import(path.join(here, "stand_in_e.mjs"));
 const TACKLER = process.env.TACKLER || "ast1";   // AST1E_PREREG.md (7b77dc5): "ast1e" = the extending slide-leg stand-in; HG-T evaluated for the stand-in in use
-const { loadJolt } = await import(P2 + "core/v2_jolt.js"), { pi1RunnerSpec } = await import(P2 + "spec/v2_pi1_runner.js"), { bootSole } = await import(P2 + "sim/v2_geom.js");
+const { loadJolt } = await import(P2 + "core/v2_jolt.js"), { pi1RunnerSpec } = await import(P2 + "spec/v2_pi1_runner.js"), { bootSole } = await import(P2 + "sim/v2_geom.js"), { unitEv } = await import(P2 + "core/v2_math.js");
 const { L, makeMapper, geomRowsRev1, rigGeom, angVel, SEGMAP, ADJ, AXES, relRot } = M; const { V, Q, B, NB, bi, loadAir, bodySep, bodyLowest, capsulePen, SELF_PAIRS, Z0 } = L;
 const [CASE, VARIANT, MODE, OUT, STEPS] = process.argv.slice(2), J = await loadJolt(P2 + "vendor/jolt-physics.wasm-compat.js"), RANK = { NEGLIGIBLE: 0, CORRECTION: 1, STUMBLE: 2, FALL: 3 };
 const PREREG_KP = { rx_miss: 47, rx_free_leg: 39, rx_planted_leg: 38 }, RECS = path.join(ROOT, "promotion_carrier/evidence/records/on_rx");
@@ -75,13 +75,17 @@ const CAP = { h: 274.95, up: 1161.2, down: 193.5, T: 81.80 }, dt = sim.dt;
 const stateDigest = () => { const st = sim.st, f = new Float64Array(st.length * 13); st.forEach((b, i) => { f.set([...b.pos, ...b.rot, ...b.v, ...b.w], i * 13); }); return crypto.createHash("sha1").update(Buffer.from(f.buffer)).digest("hex").slice(0, 16); };
 const steps = [], ticks = [], snaps = [], digests = [], A2 = []; let minSep = Infinity, sepPair = null, slipOld = { L: 0, R: 0 };
 const slipSt = { L: { on: false, gap: 0, acc: 0, max: 0, n: 0 }, R: { on: false, gap: 0, acc: 0, max: 0, n: 0 } }, stances = { L: [], R: [] };
-let state = "PRE", firstManifoldTau = null, firstA2 = null, lastA2 = null, recEntry = null, dgTau = null, dgFail = false, handoffTau = null, kes = [], fallLow = null;
+const chk2b = { n: 0, K: 0, D: 0, cap: 0 }; let state = "PRE", firstManifoldTau = null, firstA2 = null, lastA2 = null, recEntry = null, dgTau = null, dgFail = false, handoffTau = null, kes = [], fallLow = null;
 const smEvents = [{ tau: kp + 1, state: "PRE" }], cpuS = []; let cpuPrev = null, Eprev = null;
 const cpuNow = () => { const c = sim.cpu || {}, c2 = sim.cpu2 || {}, cc = sim.carCpu || {}; return { step: c.step || 0, passive: c.passive || 0, measure: c.measure || 0, act2: c2.act || 0, probe: c2.probe || 0, law: cc.law || 0, ref: cc.ref || 0, id: cc.id || 0, carrier: cc.carrier || 0, Bset: cc.Bset || 0, standIn: cc.standIn || 0, disturb: cc.disturb || 0, pd: cc.pd || 0, act: cc.act || 0 }; };
 cpuPrev = cpuNow(); Eprev = sim.last ? sim.last.E : null; let stPrev = sim.st.map(b => ({ ...b, v: b.v.slice(), w: b.w.slice(), com: b.com.slice() }));
 for (let s = 0; s < maxSteps; s++) {
-  const tq0 = performance.now(); if (MODE !== "rev2") sim.appliedPlan = sim.aplan;
+  const tq0 = performance.now(); if (MODE !== "rev2") sim.appliedPlan = sim.aplan; const wUsed = sim.pd && sim.pd.wSt ? sim.pd.wSt.slice() : null, evPrev = sim.up.ev, planA = sim.aplan, cmdA = sim.pending ? sim.pending.cmd : null;   // PCS-1 §4.2 2(b) inputs
   if (!sim.tick()) break; const tq1 = performance.now(); const tau = sim.tauP + sim.n / 4, Sp = sim.st, S = Sp.map(b => ({ pos: V.add(b.pos, off), rot: b.rot.slice(), com: V.add(b.com, off), v: b.v.slice(), w: b.w.slice() }));
+  // PCS-1 §4.2 2(b): K, D from the posture blend actually used, capacity from the actuator model at the plan's joint state — must equal the applied values exactly
+  if (MODE !== "rev2" && cmdA && planA && wUsed) { const C = sim.ctrl, ev2 = unitEv(evPrev); for (const p of planA.joints) p.rows.forEach((r, i) => { if (!r || r.off) return; const k = p.k, side = C.legSide[k], leg = side >= 0, g = C.gain[k], gs = leg ? C.gainSwing[k] : null, w = leg ? wUsed[side] : 1;
+    const K2 = leg ? w * g.K + (1 - w) * gs.K : g.K, D2 = leg ? w * g.D + (1 - w) * gs.D : g.D, c = cmdA[k][i]; chk2b.n++; chk2b.K = Math.max(chk2b.K, Math.abs(K2 - c.K)); chk2b.D = Math.max(chk2b.D, Math.abs(D2 - c.D));
+    const x = sim.act.ax[k][i], kn = sim.act.kneeOf[k], kneeDeg = kn != null ? sim.P.anat(sim.P.jd[kn], ev2.qs[kn], "flex") : null, sh = r.share != null ? r.share : 1, cP = sim.act.capFull(x, 1, r.anat, r.w, kneeDeg) * sh, cM = sim.act.capFull(x, -1, r.anat, -r.w, kneeDeg) * sh;   /* footYaw axis: capacity shared with inversion (ActuatorLayer share) */ const dv = Math.max(Math.abs(cP - r.capP), Math.abs(cM - r.capM)); if (process.env.DBG2B && dv > 0 && !chk2b.shown) { chk2b.shown = 1; console.log("2b dev", spec.joints[k].name, i, x.key, x.base, "capP", r.capP, cP, "capM", r.capM, cM, "anat", r.anat, "w", r.w, "knee", kneeDeg); } chk2b.cap = Math.max(chk2b.cap, dv); }); }
   const tm0 = performance.now(); snaps.push({ tau, S }); if (sim.n % 2 === 0) for (const [i, j] of SELF_PAIRS) { const d = bodySep(i, j, S).d; if (d < minSep) { minSep = d; sepPair = B[i].name + "↔" + B[j].name; } }
   const dg = MODE === "rev2" ? { state: stateDigest(), cmd: null, carrier: null } : sim.digests(); digests.push(dg);
   // stand-in contact (A2) and manifolds
@@ -154,6 +158,7 @@ res.standInInfo = sim.standIn.kind === "AST-1E" ? { kind: "AST-1E", release: sim
 res.steps = steps.length; res.tauEnd = steps.length ? steps[steps.length - 1].tau : null; res.horizon = { tauCap, slideEnd, scanEnd, maxSteps };
 res.smEvents = smEvents; res.firstManifoldTau = firstManifoldTau; res.firstA2 = firstA2; res.lastA2 = lastA2; res.recEntry = recEntry; res.dgTau = dgTau; res.dgFail = dgFail && dgTau == null; res.handoffTau = handoffTau; res.fallLowTau = fallLow; res.tRecSim = tRecSim;
 res.fallAt = sim.fallAt != null ? sim.fallAt : null; res.writesAfter = sim.ledger.authorityWrites - writes0; res.stances = stances; res.CG8 = { minSepMm: +(minSep * 1000).toFixed(1), pair: sepPair, pass: minSep >= -0.010 };
+res.check2b = { ...chk2b, pass: chk2b.n > 0 && chk2b.K === 0 && chk2b.D === 0 && chk2b.cap === 0 }; res.turfPenMaxMm = +((sim.A.turfPenMax || 0) * 1000).toFixed(2); res.gains = sim.ctrl.gain.map((g, k) => ({ joint: spec.joints[k].name, K: g.K, D: g.D, swingK: sim.ctrl.gainSwing && sim.ctrl.gainSwing[k] ? sim.ctrl.gainSwing[k].K : null, swingD: sim.ctrl.gainSwing && sim.ctrl.gainSwing[k] ? sim.ctrl.gainSwing[k].D : null }));
 res.actOverCap = sim.act.led.flat().filter(Boolean).reduce((s2, l) => s2 + l.overCap, 0); res.actSat = sim.act.led.flat().filter(Boolean).reduce((s2, l) => s2 + l.satTicks, 0);
 // ── REV2 §4 contact rows (scan_lc.mjs code, unchanged; AST-C1 over the REV2 scan window) ──
 { const phys = sim.phys, contactsAll = []; for (const p of phys) for (const im of p.impulses) { const Jn = V.len(im.J); if (Jn < 1e-3 && Math.abs(im.Jy) < 1e-3) continue;

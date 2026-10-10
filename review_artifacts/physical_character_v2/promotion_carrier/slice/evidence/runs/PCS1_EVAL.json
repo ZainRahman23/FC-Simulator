@@ -1,0 +1,560 @@
+{
+ "prereg": "PCS1_PREREG.md 8585adc + AST1E_PREREG.md 7b77dc5 (A1 bc12611, A2 2306cc0)",
+ "K0": true,
+ "K4b": true,
+ "cases": {
+  "rx_miss": {
+   "ran": true,
+   "kp": 47,
+   "leadTicks": 12.5,
+   "simClass": "NO_CONTACT",
+   "promotion": {
+    "HG": {
+     "pass": true,
+     "fails": [],
+     "HGAshiftMs": 0.1461,
+     "P14": 0.086,
+     "P15": 0.409,
+     "P16": 0.0145,
+     "P17": 0.462
+    },
+    "PR2v2": {
+     "mm": 19.65,
+     "body": "shank_R",
+     "pass": false
+    },
+    "PR3": {
+     "residualPlusJ": 0.3911,
+     "pass": true
+    },
+    "PR4": {
+     "manifoldsFirst50ms": 0,
+     "turfForceMaxN": 649.27,
+     "limitN": 1450.11,
+     "pass": true
+    },
+    "PR5": {
+     "writes": 28,
+     "after": 0,
+     "pass": true
+    }
+   },
+   "coherence": {
+    "window": [
+     49,
+     59.75
+    ],
+    "ticks": 11,
+    "firstFail": {
+     "CG2": 51,
+     "NM2slip": 51,
+     "CG4sim": 53
+    },
+    "values": {
+     "pelHratioMin": 0.9958,
+     "tiltMaxDeg": 4.67,
+     "legSimMaxMm": 248.15,
+     "marginMinDeg": 2.55,
+     "slipMaxMm": 141.44,
+     "slipOldMaxMm": 139.45,
+     "presLegSimMaxMm": 235.19
+    },
+    "B": {
+     "meanFrac": {
+      "x": 0.7874,
+      "z": 0.4609,
+      "rx": 0.7973,
+      "ry": 0.2732,
+      "rz": 0.9171
+     },
+     "satFrac": 0.8696,
+     "verticalAxis": "released (motor off)"
+    },
+    "pass": false
+   },
+   "cpu": {
+    "run": "contact b",
+    "steps": 220,
+    "meanUsPerStep": {
+     "physics": 765.2813,
+     "joltStep": 348.1733,
+     "passiveTissue": 356.4882,
+     "postureServo": 21.2532,
+     "actuators": 39.3666,
+     "gaitTargets": 235.5232,
+     "inverseDynamics": 34.3214,
+     "carrierAandBtargets": 7.7316,
+     "recoverySupportBset": 1.7544,
+     "standIn": 24.5872,
+     "measurement": 1627.6928
+    },
+    "medianMsPerStep": {
+     "joltStep": 0.317,
+     "law": 0.1636,
+     "id": 0.031,
+     "carrier": 0.0059
+    },
+    "note": "carrier includes the B-target reference evaluations, which are also counted under gaitTargets (law)"
+   },
+   "contactRows": {
+    "rows": {
+     "NM": {
+      "physicalContacts": 30,
+      "simContact": false,
+      "predictorFires": true,
+      "pass": false
+     },
+     "CG-8": {
+      "minSepMm": 0,
+      "pair": "forearm_L↔thigh_L",
+      "pass": true
+     },
+     "AST-C1": {
+      "mm": 0,
+      "pass": true
+     },
+     "discontinuity10mm": {
+      "mm": 3.4,
+      "pass": true,
+      "attribution": null
+     }
+    },
+    "decisive": null,
+    "physicalFirst": {
+     "firstContact": {
+      "tau": 59.75,
+      "body": "foot_L",
+      "seg": "LEG"
+     },
+     "gameplayFirst": null,
+     "fallTau": null
+    },
+    "pass": false
+   },
+   "integrity": {
+    "K0": true,
+    "K4b": true,
+    "PR5": true,
+    "I1": true,
+    "finite": true,
+    "pass": true
+   },
+   "reported": {
+    "DG": null,
+    "dgFail": true,
+    "dgTau": null,
+    "RC4": {
+     "pelHratioMin": 0.1554,
+     "tiltMaxDeg": 97.62,
+     "BsatFracPromoted": 0.9682,
+     "pass": false
+    },
+    "outcome": "fall",
+    "pelvisComMinM": 0.1207,
+    "handoffTau": null,
+    "fallAt": null,
+    "FL6": {
+     "residualPlusJ": 4.1405,
+     "turfPenMaxMm": 0.5,
+     "pass": true
+    },
+    "legsNetForwardImpulsePRE_Ns": -24.7622,
+    "actuatorSatAxisSteps": 1620,
+    "maxAbsIdNm": 3197.72,
+    "maxAbsVffNm": 2591.94,
+    "stances": {
+     "L": [
+      {
+       "t0": 51,
+       "t1": 59,
+       "slipMm": 141.44,
+       "steps": 33
+      },
+      {
+       "t0": 62.75,
+       "t1": 69.75,
+       "slipMm": 15.48,
+       "steps": 29
+      },
+      {
+       "t0": 82,
+       "t1": 92.5,
+       "slipMm": 178.17,
+       "steps": 43
+      }
+     ],
+     "R": [
+      {
+       "t0": 48.25,
+       "t1": 52.75,
+       "slipMm": 10.26,
+       "steps": 19
+      },
+      {
+       "t0": 67.5,
+       "t1": 67.75,
+       "slipMm": 0.9,
+       "steps": 2
+      },
+      {
+       "t0": 70.25,
+       "t1": 85.75,
+       "slipMm": 109.79,
+       "steps": 63
+      }
+     ]
+    },
+    "standIn": {
+     "kind": "AST-1E",
+     "release": {
+      "tau": 59.75,
+      "why": "manifold",
+      "stateUnchanged": true,
+      "before": [
+       -0.022350892424583435,
+       0.1399454027414322,
+       0.5103819966316223,
+       0,
+       -0.06894659250974655,
+       0,
+       0.9976203441619873,
+       -0.013960201293230057,
+       -0.013102270662784576,
+       -3.714515447616577,
+       0,
+       -0.4230440557003021,
+       0
+      ],
+      "after": [
+       -0.022350892424583435,
+       0.1399454027414322,
+       0.5103819966316223,
+       0,
+       -0.06894659250974655,
+       0,
+       0.9976203441619873,
+       -0.013960201293230057,
+       -0.013102270662784576,
+       -3.714515447616577,
+       0,
+       -0.4230440557003021,
+       0
+      ]
+     },
+     "consts": {
+      "L_NOGROUND": 2,
+      "OBST_UD": 2000,
+      "tetherHz": 2,
+      "zeta": 1,
+      "capN": 334,
+      "capNm": 82,
+      "legFrac": 0.2365,
+      "mT": 78,
+      "ext0": 1,
+      "rC": null,
+      "release": "first of (a) LEG-runner manifold in the previous step, (b) tau_n >= r_c"
+     },
+     "Lext": 0.6401000000000009,
+     "L0": 0.6401000000000009,
+     "masses": [
+      {
+       "name": "TORSO",
+       "m": 59.553000000000004,
+       "Iyy": 1.408712933072681
+      },
+      {
+       "name": "LEG",
+       "m": 18.447,
+       "Iyy": 1.866267010125678
+      }
+     ]
+    },
+    "smEvents": [
+     {
+      "tau": 48,
+      "state": "PRE"
+     },
+     {
+      "tau": 59.75,
+      "state": "IMPACT"
+     },
+     {
+      "tau": 73,
+      "state": "RECONCILE"
+     }
+    ],
+    "firstA2": 59.75,
+    "lastA2": 67
+   },
+   "critical": {
+    "1": {
+     "tManifold": 59.75,
+     "stepsCompared": 46,
+     "firstDifference": null,
+     "pass": true
+    },
+    "2": {
+     "a_carrierStreamIdenticalAllSteps": true,
+     "a_firstDifference": null,
+     "b_recomputed": {
+      "contact": {
+       "n": 7700,
+       "K": 0,
+       "D": 0,
+       "cap": 0,
+       "pass": true
+      },
+      "counterpart": {
+       "n": 7700,
+       "K": 0,
+       "D": 0,
+       "cap": 0,
+       "pass": true
+      }
+     },
+     "c_gainExceedanceSteps": 228,
+     "c_joints": [
+      "knee_L",
+      "ankle_L",
+      "hip_R",
+      "knee_R",
+      "ankle_R",
+      "hip_L"
+     ],
+     "c_first": {
+      "tau": 63.25,
+      "joint": "knee_L",
+      "axis": 0,
+      "Kc": 245.43,
+      "Kf": 237.74,
+      "contactFlags": [
+       [
+        true,
+        false
+       ],
+       [
+        false,
+        false
+       ]
+      ]
+     },
+     "pass": true
+    },
+    "3": {
+     "a_Aidentical": true,
+     "events": [
+      {
+       "t0": 59.75,
+       "t1": 67,
+       "standInSeg": "LEG",
+       "runnerBody": "foot_L",
+       "point": [
+        0.7316,
+        0.1087,
+        0.2398
+       ],
+       "normal": [
+        -0.018,
+        -0.1222,
+        -0.9923
+       ],
+       "transferredImpulseNs": 18.7513,
+       "transferred": [
+        5.3052,
+        -1.0483,
+        -17.9546
+       ],
+       "angularImpulseNms": 17.3891,
+       "RC3": {
+        "BopposingLinearNs": 10.7405,
+        "BopposingAngularNms": 5.9576,
+        "pass": false
+       },
+       "RC2": {
+        "struckDvMs": 0.7588,
+        "dvVsNormalDeg": 5.35,
+        "struckFootDevMm": 139.28,
+        "pass": true
+       }
+      }
+     ],
+     "ledger": [
+      {
+       "tAfterS": 0.05,
+       "dP": [
+        -0.0267,
+        1.6822,
+        -12.4757
+       ],
+       "dPnorm": 12.5886,
+       "dL": [
+        10.1399,
+        -1.7208,
+        -0.2636
+       ],
+       "dLnorm": 10.2883,
+       "contactImpulse": [
+        2.4417,
+        -0.7637,
+        -13.6905
+       ],
+       "dB": [
+        -0.1775,
+        0,
+        0.7456
+       ],
+       "turfAndOther": [
+        -2.2909,
+        2.4459,
+        0.4691
+       ],
+       "retainedAlongJ": 0.8736
+      },
+      {
+       "tAfterS": 0.1,
+       "dP": [
+        -2.1373,
+        7.1791,
+        -5.9343
+       ],
+       "dPnorm": 9.5563,
+       "dL": [
+        8.0783,
+        -1.1809,
+        -1.1683
+       ],
+       "dLnorm": 8.2474,
+       "contactImpulse": [
+        5.3052,
+        -1.0483,
+        -17.9546
+       ],
+       "dB": [
+        -2.9126,
+        0,
+        10.3564
+       ],
+       "turfAndOther": [
+        -4.5298,
+        8.2274,
+        1.6638
+       ],
+       "retainedAlongJ": 0.2494
+      },
+      {
+       "tAfterS": 0.25,
+       "dP": [
+        2.3873,
+        4.9735,
+        11.6417
+       ],
+       "dPnorm": 12.8827,
+       "dL": [
+        -0.1884,
+        1.663,
+        2.8587
+       ],
+       "dLnorm": 3.3126,
+       "contactImpulse": [
+        5.4314,
+        -0.9684,
+        -18.557
+       ],
+       "dB": [
+        5.2824,
+        0,
+        17.3617
+       ],
+       "turfAndOther": [
+        -8.3265,
+        5.9419,
+        12.837
+       ],
+       "retainedAlongJ": -0.5547
+      }
+     ],
+     "pass": false
+    },
+    "4": {
+     "BcapExcessN": 0,
+     "actuatorOverCap": 0,
+     "writesAfter": 0,
+     "pass": true
+    },
+    "6": {
+     "stateAndCommandIdenticalAllSteps": false,
+     "physicalContacts": 30,
+     "DG": [
+      null,
+      null
+     ],
+     "pass": false
+    },
+    "8": {
+     "contact": true,
+     "counterpart": true,
+     "pass": true
+    }
+   },
+   "answerRow": {
+    "coherence": false,
+    "contactRows": false,
+    "critical": false,
+    "integrity": true,
+    "pass": false
+   }
+  }
+ },
+ "criterion7": {
+  "recordsSha256Unchanged": true,
+  "gameplayHashes": {
+   "rx_miss": {
+    "hashes": {
+     "on.OFFNP": "3c502075",
+     "on.OFF": "3c502075",
+     "on.FULL": "3c502075",
+     "on.LOCO": "3c502075",
+     "off.OFF": "3c502075",
+     "off.LOCO": "3c502075",
+     "rep.OFF": "3c502075",
+     "rep.LOCO": "3c502075",
+     "v13.OFF": "3c502075",
+     "v13.LOCO": "3c502075"
+    },
+    "identical": true
+   },
+   "rx_free_leg": {
+    "hashes": {
+     "on.OFFNP": "8fb114a1",
+     "on.OFF": "8fb114a1",
+     "on.FULL": "8fb114a1",
+     "on.LOCO": "8fb114a1",
+     "off.OFF": "8fb114a1",
+     "off.LOCO": "8fb114a1",
+     "rep.OFF": "8fb114a1",
+     "rep.LOCO": "8fb114a1",
+     "v13.OFF": "8fb114a1",
+     "v13.LOCO": "8fb114a1"
+    },
+    "identical": true
+   },
+   "rx_planted_leg": {
+    "hashes": {
+     "on.OFFNP": "18d95b1d",
+     "on.OFF": "18d95b1d",
+     "on.FULL": "18d95b1d",
+     "on.LOCO": "18d95b1d",
+     "off.OFF": "18d95b1d",
+     "off.LOCO": "18d95b1d",
+     "rep.OFF": "18d95b1d",
+     "rep.LOCO": "18d95b1d",
+     "v13.OFF": "18d95b1d",
+     "v13.LOCO": "18d95b1d"
+    },
+    "identical": true
+   }
+  },
+  "pass": true
+ },
+ "answer": false
+}

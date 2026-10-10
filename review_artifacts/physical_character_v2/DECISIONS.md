@@ -3190,3 +3190,30 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 - Diagnostic only: with the start-of-step target, 0.09 – 0.19 mm.
 
 **Decision needed:** approve that one-line stand-in-drive amendment, then re-run items 2 – 6 and the slice. The alternative (run with AST-C1 failing) is not recommended. **Awaiting user.**
+
+## 2026-10-10: PCS-1 slice run after the AST-1E A2 correction (approval 2306cc0). STOPPED at the first case on pre-contact coherence (`promotion_carrier/slice/PCS1_RESULTS.md`)
+
+**Before the slice:**
+- Checks 2 – 6 re-run unchanged and passed: stand-in geometry 0.24 / 0.11 / 0.11 mm, frames 47 / 39 / 38, hashes, near miss, contacts, release.
+- K0 and K4b (AST-1E) passed, with 2(b) recomputation exact.
+
+**rx_miss** (contact and no-tackler runs, each twice, bit-identical):
+- **Coherence.** The promoted runner was coherent for 3 ticks. At τ 51 the left (swing) foot struck the turf 6 ticks before the simulation's touchdown and slid 141 mm (CG-2 / NM-2), and the legs were 135 – 248 mm off the simulation's legs from τ 53 (CG-4).
+- **Authority.** B was saturated on 87 % of pre-contact steps.
+- **Outcome.** The runner later fell (pelvis COM 0.12 m), and the dragging foot was hit by the stand-in at τ 59.75 (18.75 N·s).
+- **Hard stop.** rx_free_leg and rx_planted_leg were not run.
+
+**Attribution:**
+- **Primary: the temporary gait driver.** Joint-space targets from the simulation's leg law assume the law's pelvis vertical, which vaults up to 137 mm above the physically reached height (B vertical released). Velocity and inverse-dynamics feed-forward on the law's fast or cusped motion ask 2,000 – 3,200 N·m.
+- **Contributing:** the law's non-physical vertical.
+- **No V2 body failure.**
+- **Worked:** the stand-in, handoff gate, determinism, neutrality, and identical driver commands with and without the tackler.
+
+**Verdict:** the core architecture is not yet demonstrated.
+
+**Options:**
+1. Make the shared law's vertical physically realisable (gameplay-geometry decision).
+2. Foot-space targets (new mechanism).
+3. A ≈ 3-tick lead (conflicts with D-5).
+
+**Recommended:** investigate option 1 read-only first. **Awaiting user.**
