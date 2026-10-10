@@ -1,0 +1,1009 @@
+{
+ "version": "v2.1",
+ "systems": [
+  {
+   "id": "gegenpress",
+   "name": "Gegenpress",
+   "formation": "433",
+   "identity": "Win it back within seconds, attack a broken defence.",
+   "key_demands": [
+    "All: stamina, acceleration, aggression",
+    "CMs: standing tackle, interceptions",
+    "Front three: sprint speed, reactions"
+   ],
+   "tactics": {
+    "buildUpTempo": "Quick",
+    "passingDirectness": "Mixed",
+    "progressionRisk": "Ambitious",
+    "attackingWidth": "Balanced",
+    "chanceCreationFocus": "Balanced",
+    "boxCommitment": "Balanced",
+    "afterWinningPossession": "Counter",
+    "afterLosingPossession": "Counterpress",
+    "defensiveBlockHeight": "High",
+    "pressingIntensity": "Aggressive",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Hybrid",
+    "defensiveLineBehavior": "Step Up"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Short Build-Up",
+     "attackEffort": 35,
+     "defenseRole": "Aggressive Sweeper",
+     "defenseEffort": 55
+    },
+    "LB": {
+     "attackRole": "Overlap",
+     "attackEffort": 65,
+     "defenseRole": "Press Wide",
+     "defenseEffort": 70
+    },
+    "RB": {
+     "attackRole": "Overlap",
+     "attackEffort": 65,
+     "defenseRole": "Press Wide",
+     "defenseEffort": 70
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Step Out",
+     "defenseEffort": 70
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Step Out",
+     "defenseEffort": 70
+    },
+    "CM": {
+     "attackRole": "Anchor",
+     "attackEffort": 45,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 80
+    },
+    "LCM": {
+     "attackRole": "Runner",
+     "attackEffort": 65,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 80
+    },
+    "RCM": {
+     "attackRole": "Runner",
+     "attackEffort": 65,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 80
+    },
+    "LW": {
+     "attackRole": "Inside Forward",
+     "attackEffort": 70,
+     "defenseRole": "Press Fullback",
+     "defenseEffort": 80
+    },
+    "RW": {
+     "attackRole": "Inside Forward",
+     "attackEffort": 70,
+     "defenseRole": "Press Fullback",
+     "defenseEffort": 80
+    },
+    "ST": {
+     "attackRole": "Run Behind",
+     "attackEffort": 70,
+     "defenseRole": "Press CBs",
+     "defenseEffort": 85
+    }
+   },
+   "signature_cards": [
+    "blitz",
+    "counterpress_trap",
+    "high_line",
+    "fresh_press"
+   ],
+   "key_bonuses": [
+    "engine_room",
+    "pace_in_behind"
+   ],
+   "pillars": [
+    {
+     "id": "fast_recoveries",
+     "label": "Won it back within 5 s",
+     "metric": "recoveries_5s",
+     "benchmark": 14,
+     "higher_is_better": true
+    },
+    {
+     "id": "field_tilt",
+     "label": "Field tilt (box entries share)",
+     "metric": "field_tilt",
+     "benchmark": 0.55,
+     "higher_is_better": true
+    },
+    {
+     "id": "transition_shots",
+     "label": "Shots from quick transitions",
+     "metric": "transition_shots",
+     "benchmark": 3,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "positional",
+   "name": "Positional Play",
+   "formation": "433",
+   "identity": "Patient short passing, pin the defence with wide players.",
+   "key_demands": [
+    "CMs/CBs: short passing, ball control, vision, composure",
+    "Wingers: dribbling, crossing"
+   ],
+   "tactics": {
+    "buildUpTempo": "Patient",
+    "passingDirectness": "Short",
+    "progressionRisk": "Secure",
+    "attackingWidth": "Wide",
+    "chanceCreationFocus": "Balanced",
+    "boxCommitment": "Balanced",
+    "afterWinningPossession": "Secure",
+    "afterLosingPossession": "Counterpress",
+    "defensiveBlockHeight": "High",
+    "pressingIntensity": "Selective",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Hold"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Short Build-Up",
+     "attackEffort": 45,
+     "defenseRole": "Sweeper",
+     "defenseEffort": 45
+    },
+    "LB": {
+     "attackRole": "Invert",
+     "attackEffort": 55,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 60
+    },
+    "RB": {
+     "attackRole": "Invert",
+     "attackEffort": 55,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 60
+    },
+    "LCB": {
+     "attackRole": "Distributor",
+     "attackEffort": 40,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 60
+    },
+    "RCB": {
+     "attackRole": "Distributor",
+     "attackEffort": 40,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 60
+    },
+    "CM": {
+     "attackRole": "Deep Playmaker",
+     "attackEffort": 50,
+     "defenseRole": "Screen",
+     "defenseEffort": 70
+    },
+    "LCM": {
+     "attackRole": "Controller",
+     "attackEffort": 60,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 55
+    },
+    "RCM": {
+     "attackRole": "Creator",
+     "attackEffort": 65,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 55
+    },
+    "LW": {
+     "attackRole": "Touchline Winger",
+     "attackEffort": 70,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 45
+    },
+    "RW": {
+     "attackRole": "Touchline Winger",
+     "attackEffort": 70,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 45
+    },
+    "ST": {
+     "attackRole": "Link",
+     "attackEffort": 60,
+     "defenseRole": "Stay High",
+     "defenseEffort": 35
+    }
+   },
+   "signature_cards": [
+    "control",
+    "pin_the_wings",
+    "half_space_overload",
+    "third_man"
+   ],
+   "key_bonuses": [],
+   "pillars": [
+    {
+     "id": "possession",
+     "label": "Possession",
+     "metric": "possession",
+     "benchmark": 58,
+     "higher_is_better": true
+    },
+    {
+     "id": "pass_completion",
+     "label": "Pass completion",
+     "metric": "pass_completion",
+     "benchmark": 84,
+     "higher_is_better": true
+    },
+    {
+     "id": "box_entries",
+     "label": "Box entries",
+     "metric": "box_entries",
+     "benchmark": 28,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "wing_overload",
+   "name": "Wing Overload",
+   "formation": "4231",
+   "identity": "Overlapping full-backs and crosses into a big striker.",
+   "key_demands": [
+    "FBs: stamina, crossing, sprint speed",
+    "ST: height, heading, jumping, strength",
+    "CAM: vision"
+   ],
+   "tactics": {
+    "buildUpTempo": "Balanced",
+    "passingDirectness": "Mixed",
+    "progressionRisk": "Balanced",
+    "attackingWidth": "Wide",
+    "chanceCreationFocus": "Wide",
+    "boxCommitment": "Commit",
+    "afterWinningPossession": "Balanced",
+    "afterLosingPossession": "Balanced",
+    "defensiveBlockHeight": "Mid",
+    "pressingIntensity": "Selective",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Hold"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Mixed Distributor",
+     "attackEffort": 30,
+     "defenseRole": "Line Keeper",
+     "defenseEffort": 35
+    },
+    "LB": {
+     "attackRole": "Overlap",
+     "attackEffort": 80,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 55
+    },
+    "RB": {
+     "attackRole": "Overlap",
+     "attackEffort": 80,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 55
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 65
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 65
+    },
+    "LDM": {
+     "attackRole": "Anchor",
+     "attackEffort": 40,
+     "defenseRole": "Screen",
+     "defenseEffort": 70
+    },
+    "RDM": {
+     "attackRole": "Deep Playmaker",
+     "attackEffort": 45,
+     "defenseRole": "Backline Cover",
+     "defenseEffort": 65
+    },
+    "LW": {
+     "attackRole": "Wide Creator",
+     "attackEffort": 65,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 55
+    },
+    "RW": {
+     "attackRole": "Wide Creator",
+     "attackEffort": 65,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 55
+    },
+    "CAM": {
+     "attackRole": "Creator",
+     "attackEffort": 70,
+     "defenseRole": "Stay High",
+     "defenseEffort": 30
+    },
+    "ST": {
+     "attackRole": "Target",
+     "attackEffort": 70,
+     "defenseRole": "Stay High",
+     "defenseEffort": 30
+    }
+   },
+   "signature_cards": [
+    "fullback_storm",
+    "cross_it_in",
+    "big_man_target",
+    "second_wave"
+   ],
+   "key_bonuses": [
+    "aerial_threat"
+   ],
+   "pillars": [
+    {
+     "id": "crosses",
+     "label": "Crosses",
+     "metric": "crosses",
+     "benchmark": 18,
+     "higher_is_better": true
+    },
+    {
+     "id": "headed_shots",
+     "label": "Headed shots",
+     "metric": "headed_shots",
+     "benchmark": 3,
+     "higher_is_better": true
+    },
+    {
+     "id": "fb_entries",
+     "label": "Full-back box entries + crosses",
+     "metric": "fb_final_third",
+     "benchmark": 8,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "target_man",
+   "name": "Target Man",
+   "formation": "4141",
+   "identity": "Long balls to a target man, second balls, set pieces (4-4-1-1 flavour).",
+   "key_demands": [
+    "ST: height, strength, heading",
+    "CMs: long passing, aggression",
+    "CDM: interceptions"
+   ],
+   "tactics": {
+    "buildUpTempo": "Quick",
+    "passingDirectness": "Direct",
+    "progressionRisk": "Balanced",
+    "attackingWidth": "Balanced",
+    "chanceCreationFocus": "Balanced",
+    "boxCommitment": "Commit",
+    "afterWinningPossession": "Counter",
+    "afterLosingPossession": "Balanced",
+    "defensiveBlockHeight": "Mid",
+    "pressingIntensity": "Aggressive",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Hold"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Direct Distributor",
+     "attackEffort": 35,
+     "defenseRole": "Line Keeper",
+     "defenseEffort": 35
+    },
+    "LB": {
+     "attackRole": "Support",
+     "attackEffort": 55,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 60
+    },
+    "RB": {
+     "attackRole": "Support",
+     "attackEffort": 55,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 60
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 65
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 65
+    },
+    "CDM": {
+     "attackRole": "Anchor",
+     "attackEffort": 40,
+     "defenseRole": "Screen",
+     "defenseEffort": 75
+    },
+    "LCM": {
+     "attackRole": "Second Striker",
+     "attackEffort": 70,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 65
+    },
+    "RCM": {
+     "attackRole": "Runner",
+     "attackEffort": 65,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 70
+    },
+    "LM": {
+     "attackRole": "Winger",
+     "attackEffort": 65,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 60
+    },
+    "RM": {
+     "attackRole": "Winger",
+     "attackEffort": 65,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 60
+    },
+    "ST": {
+     "attackRole": "Target",
+     "attackEffort": 75,
+     "defenseRole": "Press CBs",
+     "defenseEffort": 55
+    }
+   },
+   "signature_cards": [
+    "go_long",
+    "second_balls",
+    "knock_down",
+    "aerial_bombardment"
+   ],
+   "key_bonuses": [
+    "aerial_threat"
+   ],
+   "pillars": [
+    {
+     "id": "long_balls",
+     "label": "Long balls played",
+     "metric": "long_passes",
+     "benchmark": 45,
+     "higher_is_better": true
+    },
+    {
+     "id": "aerials_won",
+     "label": "Aerial duels won",
+     "metric": "aerials_won_share",
+     "benchmark": 0.5,
+     "higher_is_better": true
+    },
+    {
+     "id": "headed_shots",
+     "label": "Headed shots",
+     "metric": "headed_shots",
+     "benchmark": 3,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "counter_strike",
+   "name": "Counter Strike",
+   "formation": "4141",
+   "identity": "Deep block, break fast into space.",
+   "key_demands": [
+    "CBs: defensive awareness, heading",
+    "Wingers/ST: sprint speed, acceleration, finishing",
+    "CDM: interceptions"
+   ],
+   "tactics": {
+    "buildUpTempo": "Quick",
+    "passingDirectness": "Direct",
+    "progressionRisk": "Ambitious",
+    "attackingWidth": "Balanced",
+    "chanceCreationFocus": "Vertical",
+    "boxCommitment": "Balanced",
+    "afterWinningPossession": "Counter",
+    "afterLosingPossession": "Regroup",
+    "defensiveBlockHeight": "Deep",
+    "pressingIntensity": "Selective",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Drop"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Direct Distributor",
+     "attackEffort": 35,
+     "defenseRole": "Line Keeper",
+     "defenseEffort": 40
+    },
+    "LB": {
+     "attackRole": "Support",
+     "attackEffort": 50,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 65
+    },
+    "RB": {
+     "attackRole": "Support",
+     "attackEffort": 50,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 65
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 25,
+     "defenseRole": "Cover",
+     "defenseEffort": 70
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 25,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 70
+    },
+    "CDM": {
+     "attackRole": "Anchor",
+     "attackEffort": 35,
+     "defenseRole": "Screen",
+     "defenseEffort": 80
+    },
+    "LCM": {
+     "attackRole": "Carry Forward",
+     "attackEffort": 60,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 65
+    },
+    "RCM": {
+     "attackRole": "Runner",
+     "attackEffort": 60,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 65
+    },
+    "LM": {
+     "attackRole": "Wide Runner",
+     "attackEffort": 75,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 60
+    },
+    "RM": {
+     "attackRole": "Wide Runner",
+     "attackEffort": 75,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 60
+    },
+    "ST": {
+     "attackRole": "Run Behind",
+     "attackEffort": 80,
+     "defenseRole": "Stay High",
+     "defenseEffort": 30
+    }
+   },
+   "signature_cards": [
+    "spring_the_trap",
+    "release_the_runners",
+    "hit_the_space",
+    "bait_the_press"
+   ],
+   "key_bonuses": [
+    "pace_in_behind"
+   ],
+   "pillars": [
+    {
+     "id": "fast_break_shots",
+     "label": "Fast-break shots",
+     "metric": "transition_shots",
+     "benchmark": 4,
+     "higher_is_better": true
+    },
+    {
+     "id": "xg_against",
+     "label": "xG conceded",
+     "metric": "xg_against",
+     "benchmark": 1.2,
+     "higher_is_better": false
+    },
+    {
+     "id": "shot_quality",
+     "label": "xG per shot",
+     "metric": "xg_per_shot",
+     "benchmark": 0.12,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "low_block",
+   "name": "Low Block",
+   "formation": "4141",
+   "identity": "Stay compact, defend the box, nick one.",
+   "key_demands": [
+    "CBs: heading, strength, standing tackle",
+    "CDM: interceptions, positioning",
+    "GK: reflexes, handling"
+   ],
+   "tactics": {
+    "buildUpTempo": "Balanced",
+    "passingDirectness": "Direct",
+    "progressionRisk": "Secure",
+    "attackingWidth": "Balanced",
+    "chanceCreationFocus": "Balanced",
+    "boxCommitment": "Cautious",
+    "afterWinningPossession": "Counter",
+    "afterLosingPossession": "Regroup",
+    "defensiveBlockHeight": "Deep",
+    "pressingIntensity": "Passive",
+    "defensiveWidth": "Narrow",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Drop"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Mixed Distributor",
+     "attackEffort": 30,
+     "defenseRole": "Line Keeper",
+     "defenseEffort": 40
+    },
+    "LB": {
+     "attackRole": "Support",
+     "attackEffort": 40,
+     "defenseRole": "Tuck In",
+     "defenseEffort": 70
+    },
+    "RB": {
+     "attackRole": "Support",
+     "attackEffort": 40,
+     "defenseRole": "Tuck In",
+     "defenseEffort": 70
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 20,
+     "defenseRole": "Tight Mark",
+     "defenseEffort": 75
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 20,
+     "defenseRole": "Cover",
+     "defenseEffort": 75
+    },
+    "CDM": {
+     "attackRole": "Anchor",
+     "attackEffort": 30,
+     "defenseRole": "Screen Pivot",
+     "defenseEffort": 85
+    },
+    "LCM": {
+     "attackRole": "Support",
+     "attackEffort": 45,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 75
+    },
+    "RCM": {
+     "attackRole": "Support",
+     "attackEffort": 45,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 75
+    },
+    "LM": {
+     "attackRole": "Wide Support",
+     "attackEffort": 50,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 75
+    },
+    "RM": {
+     "attackRole": "Wide Support",
+     "attackEffort": 50,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 75
+    },
+    "ST": {
+     "attackRole": "Target",
+     "attackEffort": 60,
+     "defenseRole": "Drop Into Block",
+     "defenseEffort": 55
+    }
+   },
+   "signature_cards": [
+    "park_the_bus",
+    "box_defence",
+    "outlet_ball",
+    "sit_in"
+   ],
+   "key_bonuses": [
+    "wall"
+   ],
+   "pillars": [
+    {
+     "id": "xg_against",
+     "label": "xG conceded",
+     "metric": "xg_against",
+     "benchmark": 1.1,
+     "higher_is_better": false
+    },
+    {
+     "id": "box_entries_against",
+     "label": "Box entries conceded",
+     "metric": "box_entries_against",
+     "benchmark": 26,
+     "higher_is_better": false
+    },
+    {
+     "id": "clearances",
+     "label": "Clearances + interceptions",
+     "metric": "defensive_actions",
+     "benchmark": 30,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "inside_forwards",
+   "name": "Inside Forwards",
+   "formation": "433",
+   "identity": "Wingers cut inside to shoot, full-backs give width.",
+   "key_demands": [
+    "Wingers: dribbling, finishing, long shots, opposite foot to their side",
+    "FBs: crossing, stamina"
+   ],
+   "tactics": {
+    "buildUpTempo": "Balanced",
+    "passingDirectness": "Mixed",
+    "progressionRisk": "Ambitious",
+    "attackingWidth": "Balanced",
+    "chanceCreationFocus": "Central",
+    "boxCommitment": "Balanced",
+    "afterWinningPossession": "Balanced",
+    "afterLosingPossession": "Balanced",
+    "defensiveBlockHeight": "Mid",
+    "pressingIntensity": "Selective",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Zonal",
+    "defensiveLineBehavior": "Hold"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Mixed Distributor",
+     "attackEffort": 30,
+     "defenseRole": "Line Keeper",
+     "defenseEffort": 35
+    },
+    "LB": {
+     "attackRole": "Overlap",
+     "attackEffort": 75,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 55
+    },
+    "RB": {
+     "attackRole": "Overlap",
+     "attackEffort": 75,
+     "defenseRole": "Hold Wide",
+     "defenseEffort": 55
+    },
+    "LCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 60
+    },
+    "RCB": {
+     "attackRole": "Hold & Recycle",
+     "attackEffort": 30,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 60
+    },
+    "CM": {
+     "attackRole": "Anchor",
+     "attackEffort": 40,
+     "defenseRole": "Screen",
+     "defenseEffort": 70
+    },
+    "LCM": {
+     "attackRole": "Controller",
+     "attackEffort": 55,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 55
+    },
+    "RCM": {
+     "attackRole": "Advance Support",
+     "attackEffort": 60,
+     "defenseRole": "Hold Zone",
+     "defenseEffort": 55
+    },
+    "LW": {
+     "attackRole": "Inside Forward",
+     "attackEffort": 80,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 45
+    },
+    "RW": {
+     "attackRole": "Inside Forward",
+     "attackEffort": 80,
+     "defenseRole": "Track Fullback",
+     "defenseEffort": 45
+    },
+    "ST": {
+     "attackRole": "Link",
+     "attackEffort": 65,
+     "defenseRole": "Stay High",
+     "defenseEffort": 35
+    }
+   },
+   "signature_cards": [
+    "cut_inside",
+    "shoot_on_sight",
+    "fullback_width",
+    "false_nine"
+   ],
+   "key_bonuses": [
+    "pace_in_behind"
+   ],
+   "pillars": [
+    {
+     "id": "winger_shots",
+     "label": "Shots by the wide forwards",
+     "metric": "winger_shots",
+     "benchmark": 5,
+     "higher_is_better": true
+    },
+    {
+     "id": "winger_xg",
+     "label": "xG by the wide forwards",
+     "metric": "winger_xg",
+     "benchmark": 0.6,
+     "higher_is_better": true
+    },
+    {
+     "id": "fb_entries",
+     "label": "Full-back box entries + crosses",
+     "metric": "fb_final_third",
+     "benchmark": 6,
+     "higher_is_better": true
+    }
+   ]
+  },
+  {
+   "id": "total_football",
+   "name": "Total Football",
+   "formation": "4231",
+   "identity": "Roaming, rotation, everyone joins attacks.",
+   "key_demands": [
+    "All: stamina, vision, ball control",
+    "High versatility"
+   ],
+   "tactics": {
+    "buildUpTempo": "Balanced",
+    "passingDirectness": "Short",
+    "progressionRisk": "Ambitious",
+    "attackingWidth": "Wide",
+    "chanceCreationFocus": "Balanced",
+    "boxCommitment": "Commit",
+    "afterWinningPossession": "Balanced",
+    "afterLosingPossession": "Counterpress",
+    "defensiveBlockHeight": "High",
+    "pressingIntensity": "Aggressive",
+    "defensiveWidth": "Balanced",
+    "markingOrientation": "Hybrid",
+    "defensiveLineBehavior": "Step Up"
+   },
+   "slots": {
+    "GK": {
+     "attackRole": "Short Build-Up",
+     "attackEffort": 45,
+     "defenseRole": "Aggressive Sweeper",
+     "defenseEffort": 55
+    },
+    "LB": {
+     "attackRole": "Underlap",
+     "attackEffort": 70,
+     "defenseRole": "Press Wide",
+     "defenseEffort": 65
+    },
+    "RB": {
+     "attackRole": "Overlap",
+     "attackEffort": 70,
+     "defenseRole": "Press Wide",
+     "defenseEffort": 65
+    },
+    "LCB": {
+     "attackRole": "Carry Forward",
+     "attackEffort": 40,
+     "defenseRole": "Step Out",
+     "defenseEffort": 65
+    },
+    "RCB": {
+     "attackRole": "Distributor",
+     "attackEffort": 35,
+     "defenseRole": "Hold Line",
+     "defenseEffort": 65
+    },
+    "LDM": {
+     "attackRole": "Advance Support",
+     "attackEffort": 60,
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 70
+    },
+    "RDM": {
+     "attackRole": "Deep Playmaker",
+     "attackEffort": 50,
+     "defenseRole": "Screen",
+     "defenseEffort": 70
+    },
+    "LW": {
+     "attackRole": "Wide Creator",
+     "attackEffort": 70,
+     "defenseRole": "Press Fullback",
+     "defenseEffort": 65
+    },
+    "RW": {
+     "attackRole": "Inside Forward",
+     "attackEffort": 70,
+     "defenseRole": "Press Fullback",
+     "defenseEffort": 65
+    },
+    "CAM": {
+     "attackRole": "Roamer",
+     "attackEffort": 75,
+     "defenseRole": "Press",
+     "defenseEffort": 60
+    },
+    "ST": {
+     "attackRole": "Free Forward",
+     "attackEffort": 70,
+     "defenseRole": "Press CBs",
+     "defenseEffort": 65
+    }
+   },
+   "signature_cards": [
+    "rotate",
+    "everyone_attacks",
+    "fluid_press",
+    "switch_play"
+   ],
+   "key_bonuses": [
+    "engine_room"
+   ],
+   "pillars": [
+    {
+     "id": "contributors",
+     "label": "Players with a shot or key pass",
+     "metric": "contributors",
+     "benchmark": 7,
+     "higher_is_better": true
+    },
+    {
+     "id": "possession",
+     "label": "Possession",
+     "metric": "possession",
+     "benchmark": 54,
+     "higher_is_better": true
+    },
+    {
+     "id": "fast_recoveries",
+     "label": "Won it back within 5 s",
+     "metric": "recoveries_5s",
+     "benchmark": 12,
+     "higher_is_better": true
+    }
+   ]
+  }
+ ]
+}
