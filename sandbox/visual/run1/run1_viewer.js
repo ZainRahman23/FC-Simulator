@@ -1,4 +1,6 @@
-// ═══ run1/run1_viewer.js — RUN-1 viewer: the gameplay camera + close views, RUN-1 vs Locomotion V1, playback controls, overlays ═══
+// ═══ run1/run1_viewer.js — RUN-1 viewer: the gameplay camera + close views, RUN-1.x versions vs Locomotion V1, playback, overlays ═══
+// LANES: each lane = one presentation engine (RUN-1.2 = run1_gait.js · RUN-1.1 = frozen run1_gait_v11.js · RUN-1.0 = frozen run1_gait_orig.js ·
+// V1 = the unmodified Locomotion V1 runtime) at the shared speed or at its own fixed speed; presets under "Lanes".
 // One WebGL2 canvas, three viewports (the real character mesh draws through anim3d/of_char_gl.js ofCharDraw, so its GPU buffers live in
 // ONE context). A 2D canvas on top carries the optional diagnostics. Nothing here is random; the mover is a closed-form function of time.
 "use strict";
@@ -7,42 +9,52 @@ if (typeof gkRootMatrix !== "function") {                       // ofActorTick (
   var gkRootMatrix = r1RootMatrix;
 }
 const RV1 = {
-  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60,
-  show: { run1: true, orig: true, v1: true },                    // run1 = RUN-1.1 (the evolving run1_gait.js), orig = RUN-1.0 (frozen 3caa5d58 copy), v1 = Locomotion V1
+  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60, preset: "cmp",
   ov: { skel: false, feet: false, com: false, trail: false },
-  viewA: "run1:side", viewB: "orig:side", entry: null, R: null, ready: false, frame: 0,
-  run1: null, orig: null, v1: null, v1T: 0, v1Acc: 0, trails: { run1: [], orig: [], v1: [] }, lastT: null, perf: [],
+  viewA: "L0:side", viewB: "L1:side", entry: null, R: null, ready: false, frame: 0,
+  lanes: [], run1: null, engSkel: {}, warm: {}, lastT: null, perf: [],
 };
-const RV1_WHO = ["run1", "orig", "v1"];
-const RV1_NAME = { run1: "RUN-1.1", orig: "RUN-1.0", v1: "V1" };
-const RV1_COL = { run1: "#5ee0ff", orig: "#c79bff", v1: "#ff8a5e" };
+// presentation engines (frozen copies get their own skeleton copy: every version caches its body / speed grid on skel._r1body)
+const RV1_ENG = {
+  run1: { name: () => (typeof RUN1 !== "undefined" ? RUN1.id : "RUN-1.2"), col: "#5ee0ff", api: () => ({ r1Make, r1Replay, r1Evaluate, r1Kinematics, r1GaitAt, RUN1 }), own: false },
+  v11: { name: () => "RUN-1.1", col: "#8fe388", api: () => RUN1_V11, own: true },
+  orig: { name: () => "RUN-1.0", col: "#c79bff", api: () => RUN1_ORIG, own: true },
+  v1: { name: () => "V1", col: "#ff8a5e" },
+};
+// lane presets: v = a fixed speed for that lane (null = the shared speed / ramp); tag = the regime label shown with the lane
+const RV1_PRESETS = {
+  cmp: { label: "RUN-1.2 · RUN-1.1 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "v1" }] },
+  cmp4: { label: "RUN-1.2 · RUN-1.1 · RUN-1.0 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "orig" }, { eng: "v1" }] },
+  hier: { label: "RUN-1.2 hierarchy: JOG 3.0 · RUN 5.5 · SPRINT 7.8", lanes: [{ eng: "run1", v: 3.0, tag: "JOG 3.0" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }] },
+  jogrun: { label: "RUN-1.1 at 5.5 (the jog) · RUN-1.2 RUN 5.5 · RUN-1.2 SPRINT 7.8", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }] },
+  hier11: { label: "RUN-1.1 at 3.0 · 5.5 · 7.8 (one gait stretched)", lanes: [{ eng: "v11", v: 3.0, tag: "3.0" }, { eng: "v11", v: 5.5, tag: "5.5" }, { eng: "v11", v: 7.8, tag: "7.8" }] },
+};
 const RV1_PRE = 1.0;                                             // seconds of pre-roll before the visible start (V1 settles into its gait)
 const RV1_LOOP = 9.0;                                            // seconds per pass, then the run restarts
 
 // ── the authoritative straight-line mover (INPUT to both presentations): constant speed, or the speed ramp (3.0 → 7.8 → 3.0 m/s) ─────────
 const RV1_RAMP = { a: 3.0, b: 7.8, t1: 1.2, t2: 4.2, hold: 1.0 };          // 1.6 m/s² up, the same down; the loop is 9 s
-function rv1V(t) {
+function rv1V(t, L) {
+  if (L && L.v != null) return L.v;
   if (RV1.speedMode !== "ramp") return RV1.v;
   const R = RV1_RAMP, d = R.t2 - R.t1; if (t < R.t1) return R.a; if (t < R.t2) return R.a + (R.b - R.a) * (t - R.t1) / d;
   if (t < R.t2 + R.hold) return R.b; if (t < R.t2 + R.hold + d) return R.b + (R.a - R.b) * (t - R.t2 - R.hold) / d; return R.a;
 }
-function rv1Dist(t) {                                                  // closed-form integral of rv1V
+function rv1Dist(t, L) {                                               // closed-form integral of rv1V
+  if (L && L.v != null) return L.v * t;
   if (RV1.speedMode !== "ramp") return RV1.v * t;
   const R = RV1_RAMP, d = R.t2 - R.t1, seg = [[0, R.t1, R.a, R.a], [R.t1, R.t2, R.a, R.b], [R.t2, R.t2 + R.hold, R.b, R.b], [R.t2 + R.hold, R.t2 + R.hold + d, R.b, R.a], [R.t2 + R.hold + d, 1e9, R.a, R.a]];
   let s = 0; for (const [t0, t1, v0, v1] of seg) { if (t <= t0) break; const te = Math.min(t, t1), f = (te - t0) / (t1 - t0); s += (te - t0) * (v0 + (v0 + (v1 - v0) * f)) / 2; } return s;
 }
-function rv1Path(lane) {
-  const d = RV1.dir, len = rv1Dist(RV1_LOOP);
+function rv1Path(L) {                                                 // each lane is centred at mid-loop, so lanes at different speeds pass together at t = 4.5 s
+  const d = RV1.dir, len = rv1Dist(RV1_LOOP, L), lane = L.off;
   const hd = d === "across" ? 0 : d === "toward" ? Math.PI / 2 : d === "away" ? -Math.PI / 2 : Math.PI / 4;
   const ux = Math.cos(hd), uy = Math.sin(hd), lx = -uy, ly = ux;   // pitch frame (y south): (lx, ly) is the runner's RIGHT; + lane = nearer the camera when running across
   const cx = 52.5, cy = d === "across" ? 36 : 34;
   return { hd, ux, uy, x0: cx - ux * len / 2 + lx * lane, y0: cy - uy * len / 2 + ly * lane, len };
 }
-function rv1Sim(lane, t) { const P = rv1Path(lane), s = rv1Dist(t), v = rv1V(t); return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * v, vy: P.uy * v, heading: P.hd, v }; }
-function rv1Lane(who) {                                                 // shown subjects on parallel lanes 5 m apart, RUN-1.1 nearest the camera when running across
-  const on = RV1_WHO.filter(w => RV1.show[w]), i = on.indexOf(who), n = on.length; if (i < 0 || n < 2) return 0;
-  return ((n - 1) / 2 - i) * 5.0 * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1);
-}
+function rv1Sim(L, t) { const P = rv1Path(L), s = rv1Dist(t, L), v = rv1V(t, L); return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * v, vy: P.uy * v, heading: P.hd, v }; }
+function rv1LaneOff(i, n) { return n < 2 ? 0 : ((n - 1) / 2 - i) * 5.0 * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1); }   // lanes 5 m apart, the first nearest the camera
 
 // ── camera math ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function rv1Persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
@@ -117,47 +129,44 @@ function rv1GroundProgram(gl) {
 }
 
 // ── actors ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-function rv1Reset() {
-  const skel = RV1.entry.skel;
-  if (!RV1.origSkel) { RV1.origSkel = Object.assign({}, skel); delete RV1.origSkel._r1body; }   // RUN-1.0 caches its own body / speed grid
-  if (RV1.speedMode === "ramp" && !RV1.warm) {                       // the ramp crosses ~20 speed-grid cells: solve them all once, up front, so the first
-    r1WarmGrid(r1Make(skel).body);                                    // pass does not stall on a cell solve mid-run (both versions; cached per body)
-    const ob = RUN1_ORIG.r1Make(RV1.origSkel).body; for (let i = 0; i <= 26; i++) RUN1_ORIG.r1GaitAt(ob, RUN1_ORIG.RUN1.ref, 2.5 + i * 0.25);
-    RV1.warm = true; }
-  RV1.run1 = { E: { r1Make, r1Replay, r1Evaluate }, A: r1Make(skel), sim: null, fk: null, skin: null };
-  RV1.orig = { E: RUN1_ORIG, A: RUN1_ORIG.r1Make(RV1.origSkel), sim: null, fk: null, skin: null };
-  const a = ofActorMake(skel, 0, 0, 0); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} };
-  RV1.v1 = { a, sim: null, fk: null, skin: null };
-  RV1.v1T = -RV1_PRE; RV1.trails = { run1: [], orig: [], v1: [] }; RV1.t = 0;
-  rv1V1Advance(0);
+function rv1EngSkel(eng) {                                             // the skeleton an engine evaluates on (frozen versions: their own copy)
+  const skel = RV1.entry.skel; if (!RV1_ENG[eng].own) return skel;
+  if (!RV1.engSkel[eng]) { RV1.engSkel[eng] = Object.assign({}, skel); delete RV1.engSkel[eng]._r1body; } return RV1.engSkel[eng];
 }
-function rv1V1Advance(tTarget) {                                 // Locomotion V1: fixed 60 Hz ticks of the unmodified runtime up to tTarget
+function rv1Reset() {
+  const skel = RV1.entry.skel, P = RV1_PRESETS[RV1.preset] || RV1_PRESETS.cmp, n = P.lanes.length;
+  RV1.lanes = P.lanes.map((sp, i) => { const eng = RV1_ENG[sp.eng], L = { key: "L" + i, i, eng: sp.eng, v: sp.v != null ? sp.v : null, off: rv1LaneOff(i, n), col: eng.col, trail: [], sim: null, fk: null, skin: null };
+    L.label = eng.name() + (sp.tag ? " " + sp.tag : "");
+    if (sp.eng === "v1") { const a = ofActorMake(skel, 0, 0, 0); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} }; L.a = a; L.v1T = -RV1_PRE; }
+    else { L.E = eng.api(); L.A = L.E.r1Make(rv1EngSkel(sp.eng)); }
+    return L; });
+  // the ramp crosses ~20 speed-grid cells: solve every cell of every RUN engine in use once, up front, so the first pass never stalls mid-run
+  if (RV1.speedMode === "ramp") for (const L of RV1.lanes) if (L.E && L.v == null && !RV1.warm[L.eng]) { for (let k = 0; k <= 26; k++) L.E.r1GaitAt(L.A.body, L.E.RUN1.ref, 2.5 + k * 0.25); RV1.warm[L.eng] = true; }
+  RV1.run1 = RV1.lanes.find(L => L.eng === "run1") || RV1.lanes.find(L => L.E) || null;    // HUD / export / capture-label subject
+  RV1.t = 0;
+  for (const L of RV1.lanes) if (L.a) rv1V1Advance(L, 0);
+}
+function rv1V1Advance(L, tTarget) {                              // Locomotion V1: fixed 60 Hz ticks of the unmodified runtime up to tTarget
   if (typeof OF_CONT !== "undefined") OF_CONT.on = RV1.v1Mode === "lc1";
-  const dt = 1 / RV1.tickHz, a = RV1.v1.a, lane = rv1Lane("v1");
-  while (RV1.v1T + dt <= tTarget + 1e-9) {
-    RV1.v1T += dt; const s = RV1.v1T < 0 ? Object.assign(rv1Sim(lane, 0), { x: rv1Sim(lane, 0).x + Math.cos(rv1Path(lane).hd) * rv1V(0) * RV1.v1T, y: rv1Sim(lane, 0).y + Math.sin(rv1Path(lane).hd) * rv1V(0) * RV1.v1T }) : rv1Sim(lane, RV1.v1T);
+  const dt = 1 / RV1.tickHz, a = L.a;
+  while (L.v1T + dt <= tTarget + 1e-9) {
+    L.v1T += dt; const s0 = rv1Sim(L, 0), hd = rv1Path(L).hd, s = L.v1T < 0 ? Object.assign(s0, { x: s0.x + Math.cos(hd) * rv1V(0, L) * L.v1T, y: s0.y + Math.sin(hd) * rv1V(0, L) * L.v1T }) : rv1Sim(L, L.v1T);
     a.x = s.x; a.y = s.y; a.facing = s.heading; a.speed = s.v; a.sim = { x: s.x, y: s.y, vx: s.vx, vy: s.vy, facing: s.heading };
-    ofActorTick(a, dt, RV1.v1T + 10);
-    RV1.v1.sim = s; RV1.v1.fk = a.sol.fk; RV1.v1.skin = a.skinMats;
+    ofActorTick(a, dt, L.v1T + 10);
+    L.sim = s; L.fk = a.sol.fk; L.skin = a.skinMats;
   }
 }
-function rv1Run1Eval(t, who) {
-  const r = RV1[who || "run1"], E = r.E, lane = rv1Lane(who || "run1"), s = rv1Sim(lane, t);
-  const restore = E.r1Replay(r.A, rv1V, null, t);                   // the runtime path: fixed 1/240 s grid from t = 0 (deterministic for any t)
-  const out = E.r1Evaluate(r.A, s); r.sim = s; r.fk = out.fk; r.skin = out.skinMats; r.pose = out.pose; r.G = r.A.G; restore();
+function rv1Run1Eval(t, L) {
+  const s = rv1Sim(L, t), restore = L.E.r1Replay(L.A, (tt) => rv1V(tt, L), null, t);   // the runtime path: fixed 1/240 s grid from t = 0 (deterministic for any t)
+  const out = L.E.r1Evaluate(L.A, s); L.sim = s; L.fk = out.fk; L.skin = out.skinMats; L.pose = out.pose; L.G = L.A.G; restore();
 }
 function rv1Update(t) {
-  const t0 = performance.now();
   const tick = RV1.sampleTicks ? Math.floor(t * RV1.tickHz + 1e-9) / RV1.tickHz : t;
-  rv1Run1Eval(tick, "run1");
-  const t1 = performance.now();
-  if (RV1.show.orig) rv1Run1Eval(tick, "orig");
-  if (t < RV1.v1T - 1e-9) { rv1Reset(); }                       // time went backwards: replay V1 from its pre-roll (deterministic)
-  rv1V1Advance(t);
-  RV1.perf.push(t1 - t0); if (RV1.perf.length > 240) RV1.perf.shift();
+  if (RV1.lanes.some(L => L.a && t < L.v1T - 1e-9)) { const keep = t; rv1Reset(); RV1.t = keep; }   // time went backwards: replay V1 from its pre-roll (deterministic)
+  for (const L of RV1.lanes) { if (L.a) { rv1V1Advance(L, t); continue; } const t0 = performance.now(); rv1Run1Eval(tick, L); if (L === RV1.run1) { RV1.perf.push(performance.now() - t0); if (RV1.perf.length > 240) RV1.perf.shift(); } }
   // trails (ankles), presentation-only
-  for (const who of RV1_WHO) { const o = RV1[who], B = RV1.entry.skel.byName; if (!o || !o.fk) continue; const tr = RV1.trails[who];
-    tr.push([o.fk.joint[B.foot_R.idx].slice(), o.fk.joint[B.foot_L.idx].slice(), o.fk.tip[B.toe_R.idx].slice(), o.fk.tip[B.toe_L.idx].slice()]); if (tr.length > 70) tr.shift(); }
+  const B = RV1.entry.skel.byName;
+  for (const L of RV1.lanes) { if (!L.fk) continue; L.trail.push([L.fk.joint[B.foot_R.idx].slice(), L.fk.joint[B.foot_L.idx].slice(), L.fk.tip[B.toe_R.idx].slice(), L.fk.tip[B.toe_L.idx].slice()]); if (L.trail.length > 70) L.trail.shift(); }
 }
 
 // ── COM from segment masses (V2 fractions; segment centre ≈ joint→tip midpoint) ──────────────────────────────────────────────────
@@ -176,7 +185,7 @@ function rv1Layout() {                                                   // fit 
   const topH = Math.round(Hav * 0.58), botH = Hav - topH - 4;
   return { W, H: Hav, views: [{ id: "game", x: 0, y: 0, w: W, h: topH }, { id: "A", x: 0, y: topH + 4, w: Math.floor(W / 2) - 2, h: botH }, { id: "B", x: Math.floor(W / 2) + 2, y: topH + 4, w: W - Math.floor(W / 2) - 2, h: botH }] };
 }
-function rv1Subjects() { return RV1_WHO.filter(w => RV1.show[w] && RV1[w]).map(w => ({ who: w, o: RV1[w] })); }
+function rv1Subjects() { return RV1.lanes.map(L => ({ who: L.key, o: L })); }
 function rv1Render() {
   const gl = RV1.R.gl, cv = RV1.cv, dpr = Math.min(window.devicePixelRatio || 1, 2), L = rv1Layout();
   if (cv.width !== Math.round(L.W * dpr) || cv.height !== Math.round(L.H * dpr)) {
@@ -197,7 +206,7 @@ function rv1Render() {
     gl.viewport(px, py, pw, ph); gl.scissor(px, py, pw, ph); gl.clearColor(0.06, 0.08, 0.07, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     let cam, label;
     if (vw.id === "game") {
-      const ss = subj.filter(q => q.o.sim), f = ss[0] ? ss[0].o.sim : rv1Sim(0, RV1.t);
+      const ss = subj.filter(q => q.o.sim), f = ss[0] ? ss[0].o.sim : { x: 52.5, y: 34 };
       const lead = ss.length ? ss.reduce((q, z) => q + z.o.sim.x, 0) / ss.length : f.x, leadY = ss.length ? ss.reduce((q, z) => q + z.o.sim.y, 0) / ss.length : f.y;
       cam = rv1GameCam(lead - 52.5, RV1.zoom, vw.w, vw.h); label = `GAMEPLAY CAMERA (CAMERA_V1) · zoom ${RV1.zoom}×`;
       if (RV1.zoom > 1.01) {                                    // zoomed: keep the subject centred by a clip-space offset (the camera pose / angle are CAMERA_V1's)
@@ -206,7 +215,7 @@ function rv1Render() {
         cam = { view: cam.view, proj: P2, eye: cam.eye }; label += " · subject centred";
       }
     }
-    else { const spec = (vw.id === "A" ? RV1.viewA : RV1.viewB).split(":"); const o = RV1[spec[0]]; if (!o || !o.sim || !RV1.show[spec[0]]) { rv1Overlay(ctx, vw, null, [], dpr, `${RV1_NAME[spec[0]] || spec[0]} hidden — enable it under Show`); continue; } cam = rv1CloseCam(o, spec[1], vw.w, vw.h); label = `${RV1_NAME[spec[0]]} · ${spec[1]}`; vw.subject = spec[0]; }
+    else { const spec = (vw.id === "A" ? RV1.viewA : RV1.viewB).split(":"), o = RV1.lanes.find(L => L.key === spec[0]); if (!o || !o.sim) { rv1Overlay(ctx, vw, null, [], dpr, `lane ${spec[0]} not in this preset`); continue; } cam = rv1CloseCam(o, spec[1], vw.w, vw.h); label = `${o.label} · ${o.sim.v.toFixed(1)} m/s · ${spec[1]}`; vw.subject = spec[0]; }
     vw.cam = cam;
     gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE); gl.disable(gl.BLEND);
     const G = RV1.ground; gl.useProgram(G.p); gl.uniformMatrix4fv(G.u.view, false, cam.view); gl.uniformMatrix4fv(G.u.proj, false, cam.proj); gl.uniform4fv(G.u.sh, sh); gl.uniform1i(G.u.nsh, ns);
@@ -228,14 +237,14 @@ function rv1Overlay(ctx, vw, cam, subj, dpr, label) {
   const B = RV1.entry.skel.byName, bones = RV1.entry.skel.bones, P = (p) => rv1Proj(cam, vw, dpr, p);
   for (const s of subj) {
     if (vw.id !== "game" && s.who !== vw.subject && !RV1.closeBoth) continue;
-    const fk = s.o.fk; if (!fk) continue; const col = RV1_COL[s.who];
-    if (RV1.ov.trail) { const tr = RV1.trails[s.who]; for (let k = 0; k < 4; k++) { ctx.beginPath(); let first = true; for (const q of tr) { const p = P(q[k]); if (!p) continue; if (first) { ctx.moveTo(p[0], p[1]); first = false; } else ctx.lineTo(p[0], p[1]); } ctx.strokeStyle = k % 2 ? "rgba(255,120,200,0.8)" : "rgba(120,255,160,0.8)"; ctx.lineWidth = (k < 2 ? 1.6 : 1) * dpr; ctx.stroke(); } }
+    const fk = s.o.fk; if (!fk) continue; const col = s.o.col;
+    if (RV1.ov.trail) { const tr = s.o.trail; for (let k = 0; k < 4; k++) { ctx.beginPath(); let first = true; for (const q of tr) { const p = P(q[k]); if (!p) continue; if (first) { ctx.moveTo(p[0], p[1]); first = false; } else ctx.lineTo(p[0], p[1]); } ctx.strokeStyle = k % 2 ? "rgba(255,120,200,0.8)" : "rgba(120,255,160,0.8)"; ctx.lineWidth = (k < 2 ? 1.6 : 1) * dpr; ctx.stroke(); } }
     if (RV1.ov.skel) { ctx.lineWidth = 2 * dpr; ctx.strokeStyle = col; for (const b of bones) { if (!b.parent || b.name === "pelvis" || b.name === "hair") continue; const a = P(fk.joint[b.parent.idx]), c = P(fk.joint[b.idx]); if (a && c) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } }
       for (const n of ["toe_R", "toe_L", "head", "hand_R", "hand_L"]) { const a = P(fk.joint[B[n].idx]), c = P(fk.tip[B[n].idx]); if (a && c) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } }
       ctx.fillStyle = "#fff"; for (const b of bones) { const a = P(fk.joint[b.idx]); if (a) { ctx.beginPath(); ctx.arc(a[0], a[1], 1.8 * dpr, 0, 7); ctx.fill(); } } }
     if (RV1.ov.feet) {
       for (const sd of ["R", "L"]) { let planted = false, gp = null;
-        if (s.who !== "v1") { const lg = s.o.pose.legs[sd]; planted = lg.st; const a = fk.joint[B["foot_" + sd].idx]; gp = [a[0], 0.002, a[2]]; }
+        if (!s.o.a) { const lg = s.o.pose.legs[sd]; planted = lg.st; const a = fk.joint[B["foot_" + sd].idx]; gp = [a[0], 0.002, a[2]]; }
         else { const st = s.o.a.state.feet[sd]; planted = !!(st && st.locked && st.w > 0.5); const a = fk.joint[B["foot_" + sd].idx]; gp = [a[0], 0.002, a[2]]; }
         const p = P(gp); if (!p) continue; ctx.beginPath(); ctx.arc(p[0], p[1], (vw.id === "game" ? 3 : 6) * dpr, 0, 7); ctx.fillStyle = planted ? (sd === "R" ? "rgba(120,255,160,0.95)" : "rgba(255,120,200,0.95)") : "rgba(255,255,255,0.0)"; ctx.fill(); ctx.strokeStyle = sd === "R" ? "#78ffa0" : "#ff78c8"; ctx.lineWidth = 1.2 * dpr; ctx.stroke(); }
     }
@@ -243,8 +252,8 @@ function rv1Overlay(ctx, vw, cam, subj, dpr, label) {
     if (vw.id === "game" && subj.length > 1 && RV1.labels !== false) {      // tag beside the pelvis, toward the screen side away from the direction of travel
       const pv = P(fk.joint[B.pelvis.idx]), ahead = P(V3.add(fk.joint[B.pelvis.idx], [Math.cos(s.o.sim.heading), 0, -Math.sin(s.o.sim.heading)])); if (pv && ahead) {
         const sx = ahead[0] >= pv[0] ? -1 : 1, x = pv[0] + sx * 14 * dpr; ctx.font = `600 ${10 * dpr}px -apple-system, Helvetica`; ctx.textAlign = sx < 0 ? "right" : "left"; ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgba(0,0,0,0.55)"; const w = ctx.measureText(RV1_NAME[s.who]).width; ctx.fillRect(sx < 0 ? x - w - 3 * dpr : x - 3 * dpr, pv[1] - 7 * dpr, w + 6 * dpr, 14 * dpr);
-        ctx.fillStyle = col; ctx.fillText(RV1_NAME[s.who], x, pv[1]); ctx.textBaseline = "alphabetic"; } }
+        ctx.fillStyle = "rgba(0,0,0,0.55)"; const w = ctx.measureText(s.o.label).width; ctx.fillRect(sx < 0 ? x - w - 3 * dpr : x - 3 * dpr, pv[1] - 7 * dpr, w + 6 * dpr, 14 * dpr);
+        ctx.fillStyle = col; ctx.fillText(s.o.label, x, pv[1]); ctx.textBaseline = "alphabetic"; } }
   }
   ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.textAlign = "left"; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(label, (vw.x + 8) * dpr, (vw.y + 16) * dpr);
   ctx.restore();
@@ -253,7 +262,7 @@ function rv1Hud() {
   const r = RV1.run1; if (!r || !r.G) return; const p = r.G.p, lg = r.pose.legs;
   const pm = RV1.perf.length ? RV1.perf.reduce((a, b) => a + b, 0) / RV1.perf.length : 0;
   document.getElementById("hud").textContent =
-    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   RUN-1.1: ${r.sim.v.toFixed(2)} m/s (${p.anchor}, blend ${p.blend.toFixed(2)}) · lean+${(r.A.accLean || 0).toFixed(1)}° · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
+    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   ${r.label}: ${r.sim.v.toFixed(2)} m/s (${p.anchor}, blend ${p.blend.toFixed(2)}) · lean+${(r.A.accLean || 0).toFixed(1)}° · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
 }
 
 // ── loop + UI ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -266,9 +275,11 @@ function rv1Frame(now) {
 function rv1SetPlaying(on) { RV1.playing = on; const b = document.getElementById("bPlay"); b.textContent = on ? "❚❚ Pause" : "▶ Play"; b.classList.toggle("on", on); }
 function rv1Group(attr, fn) { document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener("click", () => { document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.toggle("on", x === b)); fn(b.dataset[attr]); })); }
 function rv1Views() {
-  const opts = []; for (const w of RV1_WHO) for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top", "zoomFront", "zoomSide", "zoom34", "zoomRear34"]) opts.push([`${w}:${a}`, `${RV1_NAME[w]} · ${a}`]);
-  for (const id of ["selA", "selB"]) { const s = document.getElementById(id); s.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join(""); }
-  const fix = () => { const on = RV1_WHO.filter(w => RV1.show[w]); if (on.length === 1) { RV1.viewA = on[0] + ":side"; RV1.viewB = on[0] + ":front34"; } else { RV1.viewA = on[0] + ":side"; RV1.viewB = on[1] + ":side"; } document.getElementById("selA").value = RV1.viewA; document.getElementById("selB").value = RV1.viewB; };
+  const fix = () => { const P = RV1_PRESETS[RV1.preset] || RV1_PRESETS.cmp, opts = [];
+    P.lanes.forEach((sp, i) => { for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top", "zoomFront", "zoomSide", "zoom34", "zoomRear34"]) opts.push([`L${i}:${a}`, `${RV1_ENG[sp.eng].name()}${sp.tag ? " " + sp.tag : ""} · ${a}`]); });
+    for (const id of ["selA", "selB"]) { const s = document.getElementById(id); s.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join(""); }
+    RV1.viewA = "L0:side"; RV1.viewB = (P.lanes.length > 1 ? "L1" : "L0") + (P.lanes.length > 1 ? ":side" : ":front34");
+    document.getElementById("selA").value = RV1.viewA; document.getElementById("selB").value = RV1.viewB; };
   RV1.fixViews = fix; fix();
   document.getElementById("selA").onchange = (e) => { RV1.viewA = e.target.value; }; document.getElementById("selB").onchange = (e) => { RV1.viewB = e.target.value; };
 }
@@ -277,20 +288,20 @@ function rv1Boot() {
   RV1.cv = document.getElementById("gl"); RV1.ovc = document.getElementById("ov"); RV1.ov2d = RV1.ovc.getContext("2d");
   const gl = RV1.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.body.innerHTML = "WebGL2 unavailable"; return; }
   RV1.R = { gl }; RV1.ground = rv1GroundProgram(gl);
-  if (q.get("cmp")) { const c = q.get("cmp"); RV1.show = { run1: c !== "v1", orig: c === "all", v1: c !== "run1" }; }   // legacy: run1 | both | v1 | all
-  if (q.get("show")) { const w = q.get("show").split(","); RV1.show = { run1: w.includes("run1"), orig: w.includes("orig"), v1: w.includes("v1") }; } if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
+  if (q.get("lanes") && RV1_PRESETS[q.get("lanes")]) RV1.preset = q.get("lanes");
+  if (q.get("show") || q.get("cmp")) { const w = (q.get("show") || "").split(","); RV1.preset = w.includes("orig") || q.get("cmp") === "all" ? "cmp4" : "cmp"; }   // legacy URLs if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
   if (q.get("v1")) RV1.v1Mode = q.get("v1"); if (q.get("ticks") === "1") RV1.sampleTicks = true;
   for (const k of ["skel", "feet", "com", "trail"]) if (q.get(k) === "1") { RV1.ov[k] = true; }
   rv1Views();
   rv1Group("rate", (v) => { RV1.rate = +v; }); rv1Group("zoom", (v) => { RV1.zoom = +v; });
-  document.querySelectorAll("[data-show]").forEach(b => { b.classList.toggle("on", !!RV1.show[b.dataset.show]); b.addEventListener("click", () => {
-    const w = b.dataset.show, next = Object.assign({}, RV1.show, { [w]: !RV1.show[w] }); if (!RV1_WHO.some(k => next[k])) return;   // at least one subject
-    RV1.show = next; b.classList.toggle("on", RV1.show[w]); RV1.fixViews(); const t = RV1.t; rv1Reset(); RV1.t = t; rv1Update(t); }); }); document.querySelectorAll("[data-zoom]").forEach(x => x.classList.toggle("on", +x.dataset.zoom === RV1.zoom));
+  const selL = document.getElementById("selLanes"); selL.innerHTML = Object.entries(RV1_PRESETS).map(([k, P]) => `<option value="${k}">${P.label}</option>`).join(""); selL.value = RV1.preset;
+  selL.onchange = (e) => { RV1.preset = e.target.value; RV1.fixViews(); const t = RV1.t; rv1Reset(); rv1Update(t); RV1.t = t; };
+  document.querySelectorAll("[data-zoom]").forEach(x => x.classList.toggle("on", +x.dataset.zoom === RV1.zoom));
   document.getElementById("bPlay").onclick = () => rv1SetPlaying(!RV1.playing);
   document.getElementById("bRestart").onclick = () => { rv1Reset(); rv1Update(0); };
   document.getElementById("bStep").onclick = () => { rv1SetPlaying(false); RV1.t += 1 / 60; rv1Update(RV1.t); };
   document.getElementById("bExport").onclick = () => {                 // the explicit continuous state (r1Kinematics) at the current time
-    const lane = rv1Lane("run1"), K = r1Kinematics(RV1.run1.A, rv1V, (tt) => rv1Sim(lane, tt), RV1.t);
+    const L = RV1.run1, K = L.E.r1Kinematics(L.A, (tt) => rv1V(tt, L), (tt) => rv1Sim(L, tt), RV1.t);
     const blob = new Blob([JSON.stringify(K, null, 1)], { type: "application/json" }), a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = `run1_state_t${RV1.t.toFixed(3)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   };
@@ -318,7 +329,7 @@ function rv1Boot() {
 window.RUN1V = {
   state: RV1,
   layout() { return rv1Layout(); },
-  set(t, opts) { if (opts) { Object.assign(RV1, opts.top || {}); Object.assign(RV1.ov, opts.ov || {}); if (opts.reset) rv1Reset(); if (RV1.fixViews && opts.fixViews) RV1.fixViews(); if (opts.viewA) RV1.viewA = opts.viewA; if (opts.viewB) RV1.viewB = opts.viewB; }
+  set(t, opts) { if (opts) { const pre = RV1.preset; Object.assign(RV1, opts.top || {}); Object.assign(RV1.ov, opts.ov || {}); if (RV1.preset !== pre && RV1.fixViews) { RV1.fixViews(); opts.reset = true; } if (opts.reset) rv1Reset(); if (RV1.fixViews && opts.fixViews) RV1.fixViews(); if (opts.viewA) RV1.viewA = opts.viewA; if (opts.viewB) RV1.viewB = opts.viewB; }
     if (t < RV1.t - 1e-9 || (opts && opts.reset)) rv1Reset(); RV1.t = t; rv1Update(t); rv1Render(); rv1Hud(); return true; },
   report() { const r = RV1.run1; return r && r.G ? { p: Object.assign({}, r.G.p, { swing: undefined, late: undefined }), phase: r.A.phase } : null; },
 };

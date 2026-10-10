@@ -112,7 +112,7 @@ function r1Body(skel) {
 
 // ── the RUN-1 parameter set at the reference speed (5.5 m/s). Units: deg, s, m. Provenance per item in RUN1_RESEARCH.md ─────────
 const RUN1 = {
-  id: "RUN-1.1",
+  id: "RUN-1.2",
   ref: {
     v: 5.5,
     // timing: a footballer at 5.5 m/s — higher step rate, shorter steps and longer contact than a distance runner

@@ -28,7 +28,7 @@ function refColumn(spec) {
 }
 let X = null;
 function run1Column(which, v) {
-  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : X, skel0 = X.charSkel("vinicius"), skel = Object.assign({}, skel0); delete skel._r1body;
+  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : X, skel0 = X.charSkel("vinicius"), skel = Object.assign({}, skel0); delete skel._r1body;
   const B = skel.byName, A = E.r1Make(skel), G = E.r1Prepare(A, v), p = G.p;
   const kneeAt = (u) => E.r1Pose(G, u).legs.R.ch.k;
   let kL = 0; for (let i = 0; i <= 100; i++) { const u = p.D * i / 100; if (kneeAt(u) > kneeAt(kL)) kL = u; }
@@ -39,13 +39,13 @@ function run1Column(which, v) {
     const L = (sd) => ({ hip: P("thigh_" + sd), knee: P("shin_" + sd), ankle: P("foot_" + sd), mtp: P("toe_" + sd), tip: ttip(sd), sh: P("upperArm_" + sd), el: P("foreArm_" + sd), wr: P("hand_" + sd), hd: tip("hand_" + sd) });
     const R = L("R"), Lf = L("L");
     return { pel: mid(R.hip, Lf.hip), spine: [mid(R.hip, Lf.hip), P("spine"), P("chest"), P("neck"), P("head"), tip("head")], clav: P("neck"), S: R, O: Lf, ground: 0 }; };
-  return { title: `${which === "orig" ? "RUN-1.0 original" : "RUN-1.1 new"} · ${v} m/s`, ref: false, orig: which === "orig", frames: ev.map(J), fwd: [0, 0, 1], up: [0, 1, 0], right: [1, 0, 0], scale: 1, pct: ev.map(u => (u * 100).toFixed(0) + "%") };
+  return { title: `${which === "orig" ? "RUN-1.0 original" : which === "v11" ? "RUN-1.1" : "RUN-1.2 new"} · ${v} m/s`, ref: false, orig: which === "orig", v11: which === "v11", frames: ev.map(J), fwd: [0, 0, 1], up: [0, 1, 0], right: [1, 0, 0], scale: 1, pct: ev.map(u => (u * 100).toFixed(0) + "%") };
 }
 const cols = arg("cols", "").split(",").filter(Boolean).map(c => c.startsWith("ref:") ? refColumn(c) : run1Column(c.split(":")[0], +c.split(":")[1]));
 const CW = 200, CH = 222, S = 108, top = 46, left = 104;
 const W = left + CW * cols.length + 10, H = top + CH * PH.length + 34;
 let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><rect width="100%" height="100%" fill="#101412"/>`;
-cols.forEach((c, j) => { svg += `<text x="${left + j * CW + CW / 2}" y="24" fill="${c.ref ? "#ffd45e" : c.orig ? "#c79bff" : "#5ee0ff"}" font-size="12" font-weight="600" font-family="Helvetica" text-anchor="middle">${c.title}</text>`; });
+cols.forEach((c, j) => { svg += `<text x="${left + j * CW + CW / 2}" y="24" fill="${c.ref ? "#ffd45e" : c.orig ? "#c79bff" : c.v11 ? "#8fe388" : "#5ee0ff"}" font-size="12" font-weight="600" font-family="Helvetica" text-anchor="middle">${c.title}</text>`; });
 PH.forEach((ph, i) => { svg += `<text x="8" y="${top + i * CH + CH / 2}" fill="#ddd" font-size="13" font-family="Helvetica">${i + 1}. ${ph}</text>`; });
 cols.forEach((c, j) => c.frames.forEach((J, i) => {
   const ox = left + j * CW + CW / 2, gy = top + i * CH + CH - 18, k = c.scale * S;

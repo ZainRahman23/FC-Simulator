@@ -20,12 +20,12 @@ function refRow(spec) {
 }
 let X = null;
 function run1Row(which, v) {
-  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body; const B = sk.byName, A = E.r1Make(sk), t0 = 2.0, fr = [];
+  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body; const B = sk.byName, A = E.r1Make(sk), t0 = 2.0, fr = [];
   for (let t = 0; t <= DUR + 1e-9; t += DT) { const tt = t0 + t, rs = E.r1Replay(A, () => v, null, tt), ev = E.r1Evaluate(A, { x: v * tt, y: 0, heading: 0, v }); const legs = A.pose.legs; rs();
     const f = ev.fk, q = (p) => [p[0] - v * t0, p[1]], P = (n) => q(f.joint[B[n].idx]), tip = (n) => q(f.tip[B[n].idx]);
     const L = (sd) => ({ hip: P("thigh_" + sd), knee: P("shin_" + sd), ankle: P("foot_" + sd), mtp: P("toe_" + sd), tip: tip("toe_" + sd), sh: P("upperArm_" + sd), el: P("foreArm_" + sd), wr: P("hand_" + sd) });
     const Sd = L("R"), Od = L("L"); fr.push({ t, J: { hip: [(Sd.hip[0] + Od.hip[0]) / 2, (Sd.hip[1] + Od.hip[1]) / 2], neck: P("neck"), head: tip("head"), spine: [P("spine"), P("chest")], S: Sd, O: Od }, stS: legs.R.st, stO: legs.L.st }); }
-  return { title: `${which === "orig" ? "RUN-1.0 original" : "RUN-1.1 new"} · ${v} m/s`, col: which === "orig" ? "#c79bff" : "#5ee0ff", fr };
+  return { title: `${which === "orig" ? "RUN-1.0 original" : which === "v11" ? "RUN-1.1" : "RUN-1.2 new"} · ${v} m/s`, col: which === "orig" ? "#c79bff" : which === "v11" ? "#8fe388" : "#5ee0ff", fr };
 }
 const rows = arg("rows", "").split(",").filter(Boolean).map(r => r.startsWith("ref:") ? refRow(r) : run1Row(r.split(":")[0], +r.split(":")[1]));
 const S = 230, RH = 2.15 * S * 0.9, left = 30;
