@@ -289,7 +289,8 @@ function rv1Boot() {
   const gl = RV1.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.body.innerHTML = "WebGL2 unavailable"; return; }
   RV1.R = { gl }; RV1.ground = rv1GroundProgram(gl);
   if (q.get("lanes") && RV1_PRESETS[q.get("lanes")]) RV1.preset = q.get("lanes");
-  if (q.get("show") || q.get("cmp")) { const w = (q.get("show") || "").split(","); RV1.preset = w.includes("orig") || q.get("cmp") === "all" ? "cmp4" : "cmp"; }   // legacy URLs if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
+  if (q.get("show") || q.get("cmp")) { const w = (q.get("show") || "").split(","); RV1.preset = w.includes("orig") || q.get("cmp") === "all" ? "cmp4" : "cmp"; }   // legacy URLs
+  if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
   if (q.get("v1")) RV1.v1Mode = q.get("v1"); if (q.get("ticks") === "1") RV1.sampleTicks = true;
   for (const k of ["skel", "feet", "com", "trail"]) if (q.get(k) === "1") { RV1.ov[k] = true; }
   rv1Views();
