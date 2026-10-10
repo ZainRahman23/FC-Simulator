@@ -456,4 +456,26 @@ function r1Replay(A, vOf, aOf, t) {
   return () => { Object.assign(A, { phase: snap.phase, t: snap.t, v: snap.v, aF: snap.aF, accLean: snap.accLean, legs: snap.legs }); };
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1SpringMass, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix, r1ParamsAt, r1GaitAt, r1Replay, r1Plants, R1_STEP };
+// ── explicit continuous state (interaction initialisation / diagnostics): at time t under the authoritative profile (simAt(t) → {x, y,
+// heading, v}, vOf(t) → v), the gait phase, root reference, per-foot contact state and plant, joint world transforms, joint angular velocities
+// (world, rad/s) and segment linear velocities (world, m/s). Velocities are the symmetric difference of the closed-form, deterministic replay
+// at t ± h (h = 0.5 ms) — a derivative of the continuous pose function, never of rendered frames.
+function r1Kinematics(A, vOf, simAt, t, h) {
+  h = h || 5e-4;
+  const at = (tt) => { const restore = r1Replay(A, vOf, null, tt), ev = r1Evaluate(A, simAt(tt));
+    const out = { R: ev.fk.world.map(m => Float32Array.from(m)), legs: JSON.parse(JSON.stringify({ R: A.pose.legs.R, L: A.pose.legs.L })), phase: A.phase, plants: JSON.parse(JSON.stringify(r1Plants(A))) }; restore(); return out; };
+  const a = at(t - h), c = at(t + h), b = at(t), bones = A.body.skel.bones, joints = [];
+  for (const bn of bones) {
+    const i = bn.idx, Ma = a.R[i], Mc = c.R[i], Mb = b.R[i];
+    const v = [(Mc[12] - Ma[12]) / (2 * h), (Mc[13] - Ma[13]) / (2 * h), (Mc[14] - Ma[14]) / (2 * h)];
+    // angular velocity from dR/dt · Rᵀ (skew part), column-major 3×3 blocks
+    const dR = (r, c2) => (Mc[c2 * 4 + r] - Ma[c2 * 4 + r]) / (2 * h), Rm = (r, c2) => Mb[c2 * 4 + r];
+    const W = (r, k) => dR(r, 0) * Rm(k, 0) + dR(r, 1) * Rm(k, 1) + dR(r, 2) * Rm(k, 2);
+    const w = [(W(2, 1) - W(1, 2)) / 2, (W(0, 2) - W(2, 0)) / 2, (W(1, 0) - W(0, 1)) / 2];
+    joints.push({ name: bn.name, world: Array.from(Mb), vel: v, angVel: w });
+  }
+  const sim = simAt(t);
+  return { t, phase: b.phase, root: { x: sim.x, y: sim.y, heading: sim.heading, v: sim.v }, contact: { R: { stance: b.legs.R.st, s: b.legs.R.s, w: b.legs.R.w, plant: b.plants.R || null }, L: { stance: b.legs.L.st, s: b.legs.L.s, w: b.legs.L.w, plant: b.plants.L || null } }, joints, frame: "3D world (anim3d: x = pitch x, y = up, z = -pitch y)" };
+}
+
+if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1SpringMass, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix, r1ParamsAt, r1GaitAt, r1Replay, r1Plants, R1_STEP, r1Kinematics };
