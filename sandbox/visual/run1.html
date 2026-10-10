@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RUN-1 Viewer</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --run1: #5ee0ff; --v1: #ff8a5e; --line: #2a3530; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 13px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #bar { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 8px 12px; background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+  #bar .grp { display: flex; gap: 4px; align-items: center; }
+  #bar .lab { color: var(--dim); margin-right: 2px; }
+  button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  button:hover { border-color: #5b6d63; }
+  label.chk { display: inline-flex; gap: 4px; align-items: center; color: var(--ink); cursor: pointer; }
+  #wrap { position: relative; margin: 0 auto; }
+  #gl, #ov { position: absolute; left: 0; top: 0; display: block; }
+  #hud { padding: 6px 12px; color: var(--dim); font: 12px/1.4 Menlo, monospace; white-space: pre-wrap; }
+  .tag { display: inline-block; padding: 0 6px; border-radius: 4px; font-weight: 600; }
+  .t-run1 { background: var(--run1); color: #06222b; } .t-v1 { background: var(--v1); color: #2b0e06; }
+  #notes { padding: 4px 12px 14px; color: var(--dim); max-width: 1100px; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <div class="grp"><button id="bPlay" class="on">❚❚ Pause</button><button id="bRestart">⟲ Restart</button><button id="bStep" title="one 60 Hz frame">▸| Frame</button></div>
+  <div class="grp"><span class="lab">Speed</span><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button data-rate="0.1">0.1×</button></div>
+  <div class="grp"><span class="lab">Show</span><button data-cmp="run1">RUN-1</button><button data-cmp="both" class="on">RUN-1 + V1</button><button data-cmp="v1">V1 only</button>
+    <select id="selV1" title="which old locomotion"><option value="v13">V1 (V1.3 presentation)</option><option value="lc1">V1 + LC-1 continuity</option></select></div>
+  <div class="grp"><span class="lab">Run</span><select id="selDir"><option value="across">across →</option><option value="toward">toward camera ↓</option><option value="away">away ↑</option><option value="diag">diagonal ↘</option></select>
+    <select id="selV"><option value="5.0">5.0 m/s</option><option value="5.5" selected>5.5 m/s</option><option value="6.0">6.0 m/s</option></select></div>
+  <div class="grp"><span class="lab">Game zoom</span><button data-zoom="1" class="on">1×</button><button data-zoom="1.6">1.6×</button><button data-zoom="2.5">2.5×</button><button data-zoom="4">4×</button></div>
+  <div class="grp"><span class="lab">Overlay</span><label class="chk"><input type="checkbox" id="cSkel">skeleton</label><label class="chk"><input type="checkbox" id="cFeet">contacts</label><label class="chk"><input type="checkbox" id="cCom">pelvis / COM</label><label class="chk"><input type="checkbox" id="cTrail">foot trails</label></div>
+  <div class="grp"><span class="lab">Close views</span><select id="selA"></select><select id="selB"></select></div>
+</div>
+<div id="wrap"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
+<div id="hud"></div>
+<div id="notes">Top: the actual Touchline gameplay camera (CAMERA_V1: 30 m high, 43 m behind the touchline, 22° pitch, 28° FOV), rail-following the runner like the match camera. Bottom: close side / ¾ views for inspection.
+<span class="tag t-run1">RUN-1</span> is evaluated in continuous time (the pose is a closed-form function of the gait phase); <span class="tag t-v1">V1</span> is the unmodified Locomotion V1 runtime (ofActorTick, 60 Hz ticks, as in the match), shown on the parallel lane. Both are driven by the same authoritative straight-line mover at the selected speed. Keys: Space play/pause, R restart, 1–4 speed, . frame step, S skeleton, C contacts.</div>
+
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_loco_cont.js"></script>
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="run1/run1_gait.js"></script>
+<script src="run1/run1_viewer.js"></script>
+</body>
+</html>

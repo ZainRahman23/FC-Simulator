@@ -112,36 +112,39 @@ const RUN1 = {
   id: "RUN-1",
   ref: {
     v: 5.5,
-    cadence: 2.95,            // steps / s  (177 spm) for the 0.834 m reference leg; scaled by sqrt(Lref / L) for other legs
-    tc: 0.160,                // contact time (s)
-    kv: 0.70,                 // pelvis vertical / spring-mass COM vertical (design: the pelvis carries less bounce than the COM model)
-    kneeTD: 20, kneeTO: 20,   // touchdown knee (solved for by the plant distance); toe-off knee (prescribed late-stance curve)
-    footW: 0.050,             // foot centre-line offset from the line of travel (narrow running base)
+    // timing: a footballer at 5.5 m/s — higher step rate, shorter steps and longer contact than a distance runner
+    // (Hamner & Delp 2013; Takai 2025; Clark 2025; toe-off at ~29 % of the stride, between 37.5 % at 5 m/s treadmill and ~24 % sprinting)
+    cadence: 3.20,            // steps / s (192 spm) for the 0.834 m reference leg; scaled by sqrt(Lref / L) for other legs
+    tc: 0.175,                // contact time (s): flight 0.138 s, swing 0.450 s
+    kv: 0.60,                 // pelvis vertical / spring-mass COM vertical (design: a grounded footballer, ~4 cm pelvis bounce, not a bouncy jogger)
+    kneeTD: 22, kneeTO: 23,   // touchdown knee (solved for by the plant distance); toe-off knee (prescribed late-stance curve) (Sundström 2021; Miyashiro 2019)
+    footW: 0.032,             // foot centre-line offset from the line of travel (narrow running base: Arellano 2015, 4.1 → 1.5 cm with speed)
     toeOut: 7,                // foot progression angle (deg, outward)
-    strikeToeUp: 10,          // foot pitch at touchdown (toes up): rear-foot contact rolling flat (the roll absorbs part of the leg compression)
+    strikeToeUp: 8,           // foot pitch at touchdown (toes up): rear-/mid-foot border (Altman & Davis 2012); team-sport athletes land flatter
     flatS: 0.16,              // stance fraction at which the foot is flat
     heelRiseS: 0.46,          // stance fraction at which the heel starts to rise (late stance becomes knee-driven from here)
-    heelRiseTO: 60,           // foot pitch at toe-off (heel up): solved for by the pelvis height
+    heelRiseTO: 74,           // foot pitch at toe-off (heel up), solved for by the pelvis height: shank ~53° + ~24° plantar-flexion (Miyashiro 2019)
     kneeMinS: 0.86,           // late stance: the knee reaches its extension minimum here …
     kneeTOrate: 320,          // … and is already flexing at toe-off (deg/s): the swing recovery begins inside the stance
-    // swing keys (w = swing fraction 0 at toe-off … 1 at touchdown)
-    kneeMax: 112, kneeMaxW: 0.48, kneeExt: 14, kneeExtW: 0.92,
-    hipMax: 58, hipMaxW: 0.80, hipExtMinW: 0.05,
-    anklePFMaxW: 0.06, ankleDFSwing: -6, ankleDFW: 0.60,
+    // swing keys (w = swing fraction 0 at toe-off … 1 at touchdown); scissor timing: the rear thigh's peak extension and the front
+    // thigh's peak flexion both fall ~0.03–0.04 s after the other foot's toe-off (Clark 2025)
+    kneeMax: 115, kneeMaxW: 0.42, kneeHold: 104, kneeHoldW: 0.58, kneeExt: 16, kneeExtW: 0.92,
+    hipMax: 62, hipMaxW: 0.76, hipExtMinW: 0.055,
+    anklePFMaxW: 0.07, anklePFExtra: 6, ankleDFSwing: -6, ankleDFW: 0.60,
     swingAbd: 3.0,            // extra abduction at mid swing (deg) so the swing knee clears the stance knee
     toeRelaxW: 0.22,
-    // pelvis (deg)
-    tilt: 6, tiltAmp: 2.0, tiltPh: 0.20,
-    obliq: 4.5, obliqPh: 0.10,
-    pelvisYaw: 7, pelvisYawPh: 0.00,
-    sway: 0.014, swayPh: 0.12,
-    // trunk (deg)
-    lean: 9, leanAmp: 1.2, leanPh: 0.18,
-    thoraxYaw: 11, thoraxYawPh: 0.03,
-    // arms (deg)
-    armFwd: 38, armBack: 48, armPh: 0.03,
-    elbow: 88, elbowAmp: 16, elbowPh: 0.06,
-    armAbd: 13, armAbdAmp: 6, armRot: 18,
+    // pelvis (deg): tilt peaks near each toe-off; the swing-side hip drops in early stance; axial rotation follows the thigh scissor
+    tilt: 6, tiltAmp: 2.2, tiltPh: 0.29,
+    obliq: 3.5, obliqPh: 0.09,
+    pelvisYaw: 6, pelvisYawPh: 0.38,
+    sway: 0.012, swayPh: 0.12,
+    // trunk (deg): constant-speed lean 5–8° (Preece 2016b), thorax counter-rotates the pelvis (Preece 2016a; Pontzer 2009: ~24° shoulder range at 3 m/s)
+    lean: 8, leanAmp: 1.0, leanPh: 0.15,
+    thoraxYaw: 13, thoraxYawPh: 0.86,
+    // arms (deg): contralateral to the legs, each arm most forward near its own leg's toe-off; elbow closes in the forward swing
+    armFwd: 33, armBack: 45, armPh: -0.14,
+    elbow: 84, elbowAmp: 12, elbowPh: 0.05,
+    armAbd: 12, armAbdAmp: 3, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
     clavProt: 5,
     gazeDown: 6,
   },
@@ -270,12 +273,12 @@ function r1SwingKnots(G, sd) {
   for (const c of R1_CH) K[c] = [knot(0, TO.c[c], TO.m[c], true), knot(1, TD.c[c], TD.m[c], true)];
   // knee: rapid recovery flexion → late-swing extension → the touchdown value (already flexing into the stance)
   const kExt = Math.min(p.kneeExt * D, TD.c.k - 1.5 * D);
-  K.k = [K.k[0], knot(p.kneeMaxW, p.kneeMax * D), knot(p.kneeExtW, kExt), K.k[1]];
+  K.k = [K.k[0], knot(p.kneeMaxW, p.kneeMax * D), knot(p.kneeHoldW, p.kneeHold * D, -2.2 * (p.kneeMax - p.kneeHold) * D / (p.kneeHoldW - p.kneeMaxW)), knot(p.kneeExtW, kExt), K.k[1]];
   // hip flexion in the leg plane: the extension carries on briefly after toe-off, drive to peak flexion, retraction to touchdown
   const hExtMin = TO.c.h + Math.min(0, TO.m.h) * p.hipExtMinW * 0.5;
   K.h = [K.h[0], knot(p.hipExtMinW, hExtMin), knot(p.hipMaxW, p.hipMax * D), K.h[1]];
   // ankle pitch (+ = plantar-flexion): the push-off carries on briefly, then dorsiflexion for clearance, then the strike angle
-  const pfMax = TO.c.fp + Math.max(0, TO.m.fp) * p.anklePFMaxW * 0.5;
+  const pfMax = TO.c.fp + Math.min(p.anklePFExtra * D, Math.max(0, TO.m.fp) * p.anklePFMaxW * 0.5);   // the push-off plantar-flexion carries on a few degrees
   K.fp = [K.fp[0], knot(p.anklePFMaxW, pfMax), knot(p.ankleDFW, p.ankleDFSwing * D), K.fp[1]];
   // hip adduction: a little abduction at mid swing (the swing knee passes outside the stance knee)
   K.a = [K.a[0], knot(0.45, (TO.c.a + TD.c.a) / 2 - side * p.swingAbd * D), K.a[1]];
