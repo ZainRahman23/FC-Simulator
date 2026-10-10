@@ -1,0 +1,20 @@
+// DIAGNOSTIC ONLY (not adopted, not used by any criterion): is AST-1's / AST-1E's long-lead tracking lead caused by the tether's spring target timing?
+// Jolt evaluates a spring motor's position error at the START of the step; AST-1 sets the target to the END-of-step pose p1, so a body exactly on track is
+// pulled forward by k·(p1 − p0). Counterfactual: the same stand-in with the spring's position / orientation target at the start-of-step pose p0 (velocity target
+// unchanged). REV2 runner plant, no-tackler variant (no contact), PCS-1 frames; LEG-segment endpoint error vs the record over (τ_p, τ_ref].
+import path from "path"; import { fileURLToPath } from "url";
+const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../.."), P2 = path.resolve(here, "../../../../../sandbox/visual/physchar2") + "/";
+const M = await import(path.join(ROOT, "pi1/rev1/scripts/pcg_rev1.mjs")); const { V, Q, loadAir, Z0, NB, B } = M.L; const SIM = await import(path.join(ROOT, "pi1/rev2/scripts/pi1_rev2_sim.mjs")), SE = await import(path.join(here, "stand_in_e.mjs"));
+const { loadJolt } = await import(P2 + "core/v2_jolt.js"), { pi1RunnerSpec } = await import(P2 + "spec/v2_pi1_runner.js"); const J = await loadJolt(P2 + "vendor/jolt-physics.wasm-compat.js"); const sim2r = (p) => [p[0], p[2], -p[1]];
+class DiagE extends SE.StandInE { drive(tau, dt) { const out = super.drive(tau, dt); for (const g of this.segs) { if (g.released) continue; const p0 = this.poseAt(g, tau), dp = V.sub(p0.com, g.cW0); this.v.Set(dp[0], dp[1], dp[2]); g.con.SetTargetPositionCS(this.v); const q = [0, Math.sin((p0.th - g.th0) / 2), 0, Math.cos((p0.th - g.th0) / 2)]; this.qq.Set(q[0], q[1], q[2], q[3]); g.con.SetTargetOrientationCS(this.qq); } return out; } }
+const CASES = [["rx_miss", 47, 60.5, Infinity], ["rx_free_leg", 39, 50.25, 50], ["rx_planted_leg", 38, 48.75, 48]];
+for (const [cs, kp, tRef, rC] of CASES) { const R = loadAir(path.join(ROOT, "promotion_carrier/evidence/records/on_rx"), cs + "_LOCO.json.gz"), mapper = M.makeMapper(R, { knee: "RK", rf1: true }), S0 = mapper.poseAt(kp).S, off = [Math.round(S0[0].pos[0]), 0, Math.round(S0[0].pos[2])], FAR = [0, 0, 500];
+  const samples = (tau) => { const k = Math.min(R.prims.length - 1, Math.max(0, Math.ceil(tau - 1e-9) - 1)), n = Math.max(1, Math.min(4, Math.round((tau - k) * 4))), o = {}; for (const p of R.prims[k][n - 1]) o[p.prim] = { a: V.add(V.sub(sim2r(p.a), off), FAR), b: V.add(V.sub(sim2r(p.b), off), FAR), r: p.r }; return o; };
+  const rootAt = (tau) => { const k = Math.max(1, Math.ceil(tau - 1e-9) - 1), w = tau - k, a = R.rows[k - 1], b = R.rows[Math.min(R.rows.length - 1, k)], lp = (i) => a[i] + (b[i] - a[i]) * w; return { pos: V.sub([lp(8), 0, -lp(9)], off), vel: [lp(10), 0, -lp(11)], facing: lp(12) }; };
+  const res = {}; for (const [lab, Cls] of [["AST-1E (as preregistered)", SE.StandInE], ["DIAG: spring target at p0", DiagE]]) {
+    const sim = new SIM.PI1Sim(J, pi1RunnerSpec(), { S: S0.map(s => ({ pos: V.sub(s.pos, off), rot: s.rot.slice() })), vel: S0.map(() => ({ v: [0, 0, 0], w: [0, 0, 0] })) }, { tauP: kp + 1, rootAt, fallTau: null, samples, mT: 78, legFrac: 0.2365, isLeg: (n) => n === "LEG" || n === "THIGH" }, { seconds: (tRef - kp) / 60 + 0.05, Ipel: [8, 2, 8] });
+    const old = sim.standIn; for (const g of old.segs) { sim.w.ps.RemoveConstraint(g.con); const id = g.body.GetID(); sim.w.bi.RemoveBody(id); sim.w.bi.DestroyBody(id); }
+    sim.standIn = new Cls(J, sim.w, samples, kp + 1, 78, 0.2365, (n) => n === "LEG" || n === "THIGH", { sim, rC, ext0: Math.min(1, R.def[kp].launchT / R.slide.extT) }); sim.standIn.init(kp + 1, sim.dt);
+    let mx = 0; while (sim.tauP + sim.n / 4 < tRef - 1e-9) { sim.tick(); const tau = sim.tauP + sim.n / 4, st = sim.standIn.state(tau); if (sim.standIn.segs.find(g => g.leg).released) break; mx = Math.max(mx, st.trackErr); }
+    res[lab] = +(mx * 1000).toFixed(3); sim.destroy && sim.destroy(); }
+  console.log(cs.padEnd(15), "max stand-in endpoint error (mm) over (τ_p, min(τ_ref, release)]:", JSON.stringify(res)); }

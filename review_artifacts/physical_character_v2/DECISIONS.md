@@ -3161,3 +3161,32 @@ Three defects were found in the official run and not fixed: the walk / run-blend
 - **D:** promote planted at an invalid frame (not recommended).
 
 **Recommended:** A now, C next. **Awaiting user.**
+
+## 2026-10-10: Option C, AST-1E extending stand-in slide leg (decision 3ec464e; prereg 7b77dc5; A1 bc12611): STOPPED before the carrier slice on item 2 (`promotion_carrier/slice/AST1E_STOP_TRACKING.md`); no carrier run
+
+**Correction, recorded prominently:**
+- The PCS-1 frames k39 / k38 were wrongly described as passing the full REV2 gate: HG-T was omitted from the extracted `valid` flag of `valid_on_rx.json`.
+- The original evidence is unchanged; the erratum is appended to the investigation report.
+
+**Built:** AST-1E. Only the LEG segment changes:
+- a rigid-point fit (THIGH a / b, LEG a);
+- exact recorded geometry via a MutableCompoundShape of 8 collinear pieces (A1: OffsetCenterOfMassShape aborts this Jolt build);
+- mass properties of the fully extended leg from the k_p record (L_ext 0.6401 m in all cases);
+- the AST-1 drive while prescribed;
+- release at the first of (a) a LEG ↔ runner manifold or (b) the authoritative contact interval: feed-forward off, tether motors off, geometry frozen, no state write.
+
+**Verification:**
+
+| item | result |
+|---|---|
+| 3 – 4 (gate with HG-T for the stand-in in use) | frames 47 / 39 / 38 (leads 12.5 / 10.25 / 9.75) |
+| 5 (hashes) | pass |
+| 6 (near miss stays a miss; contacts on the intended body region / time) | pass |
+| R-1, R-2, R-4 | pass |
+| **2 (slide-leg geometry within 10 mm over the lead window)** | **FAIL: 12.99 / 13.23 / 12.24 mm** |
+
+**Cause.** The tether's spring target is the end-of-step pose (inherited unchanged from REV2's AST-1), while Jolt evaluates spring error at the start of the step. An on-path body is pulled about one step ahead (≈ 18 – 20 mm steady).
+- AST-1 itself: 14.45 mm.
+- Diagnostic only: with the start-of-step target, 0.09 – 0.19 mm.
+
+**Decision needed:** approve that one-line stand-in-drive amendment, then re-run items 2 – 6 and the slice. The alternative (run with AST-C1 failing) is not recommended. **Awaiting user.**

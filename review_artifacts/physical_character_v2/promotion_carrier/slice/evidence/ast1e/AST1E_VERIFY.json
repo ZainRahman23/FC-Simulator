@@ -1,0 +1,305 @@
+{
+ "prereg": "AST1E_PREREG.md 7b77dc5 + A1 bc12611",
+ "cases": {
+  "rx_miss": {
+   "kp": 47,
+   "leadTicks": 12.5,
+   "item2": {
+    "window": [
+     48,
+     60.5
+    ],
+    "comparisons": 600,
+    "legMaxErrMm": 12.989,
+    "legWorst": {
+     "tau": 60.5,
+     "prim": "THIGH",
+     "end": "a"
+    },
+    "standInAllMaxErrMm": 12.989,
+    "pass": false
+   },
+   "R1": {
+    "releaseTau": null,
+    "why": null,
+    "stepsAfter": 0,
+    "pass": true
+   },
+   "R2": {
+    "stateUnchangedAtRelease": null,
+    "pass": true
+   },
+   "R4": {
+    "consts": {
+     "L_NOGROUND": 2,
+     "OBST_UD": 2000,
+     "tetherHz": 2,
+     "zeta": 1,
+     "capN": 334,
+     "capNm": 82,
+     "legFrac": 0.2365,
+     "mT": 78,
+     "ext0": 1,
+     "rC": null,
+     "release": "first of (a) LEG-runner manifold in the previous step, (b) tau_n >= r_c"
+    },
+    "Lext": 0.6400999999999955,
+    "L0": 0.6400999999999955,
+    "masses": [
+     {
+      "name": "TORSO",
+      "m": 59.553000000000004,
+      "Iyy": 1.408712933072681
+     },
+     {
+      "name": "LEG",
+      "m": 18.447,
+      "Iyy": 1.866267010125678
+     }
+    ]
+   },
+   "item6": {
+    "kind": "near miss",
+    "window": [
+     48,
+     72.5
+    ],
+    "penetrations": 0,
+    "first": null,
+    "pass": true
+   },
+   "pass": false
+  },
+  "rx_free_leg": {
+   "kp": 39,
+   "leadTicks": 10.25,
+   "item2": {
+    "window": [
+     40,
+     50.25
+    ],
+    "comparisons": 468,
+    "legMaxErrMm": 13.2281,
+    "legWorst": {
+     "tau": 49.75,
+     "prim": "THIGH",
+     "end": "a"
+    },
+    "standInAllMaxErrMm": 13.2281,
+    "pass": false
+   },
+   "R1": {
+    "releaseTau": 50,
+    "why": "authoritative",
+    "stepsAfter": 63,
+    "pass": true
+   },
+   "R2": {
+    "stateUnchangedAtRelease": true,
+    "pass": true
+   },
+   "R4": {
+    "consts": {
+     "L_NOGROUND": 2,
+     "OBST_UD": 2000,
+     "tetherHz": 2,
+     "zeta": 1,
+     "capN": 334,
+     "capNm": 82,
+     "legFrac": 0.2365,
+     "mT": 78,
+     "ext0": 0.5555555555555591,
+     "rC": 50,
+     "release": "first of (a) LEG-runner manifold in the previous step, (b) tau_n >= r_c"
+    },
+    "Lext": 0.64009999999998,
+    "L0": 0.3556111111111023,
+    "masses": [
+     {
+      "name": "TORSO",
+      "m": 59.553000000000004,
+      "Iyy": 1.408712459937815
+     },
+     {
+      "name": "LEG",
+      "m": 18.447,
+      "Iyy": 1.8662674253260698
+     }
+    ]
+   },
+   "item6": {
+    "kind": "contact",
+    "earlyPenetrations": 0,
+    "earlyFirst": null,
+    "checks": [
+     {
+      "contact": "first",
+      "tSim": 50.25,
+      "seg": "foot_L",
+      "prim": "LEG",
+      "react": "CORRECTION",
+      "hits": 4,
+      "firstHit": {
+       "tau": 50,
+       "runnerSeg": "foot_L",
+       "penMm": 4.08,
+       "dTicks": -0.25
+      },
+      "pass": true
+     },
+     {
+      "contact": "decisive",
+      "tSim": 59.75,
+      "seg": "toe_R",
+      "prim": "LEG",
+      "react": "STUMBLE",
+      "hits": 9,
+      "firstHit": {
+       "tau": 59.75,
+       "runnerSeg": "foot_R",
+       "penMm": 8.76,
+       "dTicks": 0
+      },
+      "pass": true
+     }
+    ],
+    "pass": true
+   },
+   "pass": false
+  },
+  "rx_planted_leg": {
+   "kp": 38,
+   "leadTicks": 9.75,
+   "item2": {
+    "window": [
+     39,
+     48.75
+    ],
+    "comparisons": 420,
+    "legMaxErrMm": 12.2418,
+    "legWorst": {
+     "tau": 47.75,
+     "prim": "THIGH",
+     "end": "a"
+    },
+    "standInAllMaxErrMm": 12.2418,
+    "pass": false
+   },
+   "R1": {
+    "releaseTau": 48,
+    "why": "authoritative",
+    "stepsAfter": 27,
+    "pass": true
+   },
+   "R2": {
+    "stateUnchangedAtRelease": true,
+    "pass": true
+   },
+   "R4": {
+    "consts": {
+     "L_NOGROUND": 2,
+     "OBST_UD": 2000,
+     "tetherHz": 2,
+     "zeta": 1,
+     "capN": 334,
+     "capNm": 82,
+     "legFrac": 0.2365,
+     "mT": 78,
+     "ext0": 0.41666666666666985,
+     "rC": 48,
+     "release": "first of (a) LEG-runner manifold in the previous step, (b) tau_n >= r_c"
+    },
+    "Lext": 0.6401000000000834,
+    "L0": 0.26670833333337013,
+    "masses": [
+     {
+      "name": "TORSO",
+      "m": 59.553000000000004,
+      "Iyy": 1.4087128147889347
+     },
+     {
+      "name": "LEG",
+      "m": 18.447,
+      "Iyy": 1.8662672177258508
+     }
+    ]
+   },
+   "item6": {
+    "kind": "contact",
+    "earlyPenetrations": 0,
+    "earlyFirst": null,
+    "checks": [
+     {
+      "contact": "first = decisive",
+      "tSim": 48.75,
+      "seg": "shin_L",
+      "prim": "LEG",
+      "react": "FALL",
+      "hits": 4,
+      "firstHit": {
+       "tau": 48.75,
+       "runnerSeg": "shin_L",
+       "penMm": 14.15,
+       "dTicks": 0
+      },
+      "pass": true
+     }
+    ],
+    "pass": true
+   },
+   "pass": false
+  }
+ },
+ "item5": {
+  "recordsSha256Unchanged": true,
+  "gameplayHashes": {
+   "rx_miss": {
+    "hashes": {
+     "on.OFFNP": "3c502075",
+     "on.OFF": "3c502075",
+     "on.FULL": "3c502075",
+     "on.LOCO": "3c502075",
+     "off.OFF": "3c502075",
+     "off.LOCO": "3c502075",
+     "rep.OFF": "3c502075",
+     "rep.LOCO": "3c502075",
+     "v13.OFF": "3c502075",
+     "v13.LOCO": "3c502075"
+    },
+    "identical": true
+   },
+   "rx_free_leg": {
+    "hashes": {
+     "on.OFFNP": "8fb114a1",
+     "on.OFF": "8fb114a1",
+     "on.FULL": "8fb114a1",
+     "on.LOCO": "8fb114a1",
+     "off.OFF": "8fb114a1",
+     "off.LOCO": "8fb114a1",
+     "rep.OFF": "8fb114a1",
+     "rep.LOCO": "8fb114a1",
+     "v13.OFF": "8fb114a1",
+     "v13.LOCO": "8fb114a1"
+    },
+    "identical": true
+   },
+   "rx_planted_leg": {
+    "hashes": {
+     "on.OFFNP": "18d95b1d",
+     "on.OFF": "18d95b1d",
+     "on.FULL": "18d95b1d",
+     "on.LOCO": "18d95b1d",
+     "off.OFF": "18d95b1d",
+     "off.LOCO": "18d95b1d",
+     "rep.OFF": "18d95b1d",
+     "rep.LOCO": "18d95b1d",
+     "v13.OFF": "18d95b1d",
+     "v13.LOCO": "18d95b1d"
+    },
+    "identical": true
+   }
+  },
+  "pass": true
+ },
+ "pass": false
+}

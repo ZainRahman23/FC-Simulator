@@ -6,7 +6,8 @@
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import crypto from "crypto"; import { fileURLToPath } from "url";
 const here = path.dirname(fileURLToPath(import.meta.url)), P2 = path.resolve(here, "../../../../../sandbox/visual/physchar2") + "/", ROOT = path.resolve(here, "../../..");
 const M = await import(path.join(ROOT, "pi1/rev1/scripts/pcg_rev1.mjs")), M0 = await import(path.join(ROOT, "pi1/trackB/scripts/pcg_f0.mjs"));
-const SIM = await import(path.join(ROOT, "pi1/rev2/scripts/pi1_rev2_sim.mjs")), CS = await import(path.join(here, "pi1_carrier_sim.mjs")), LP = await import(path.join(here, "law_provider.mjs"));
+const SIM = await import(path.join(ROOT, "pi1/rev2/scripts/pi1_rev2_sim.mjs")), CS = await import(path.join(here, "pi1_carrier_sim.mjs")), LP = await import(path.join(here, "law_provider.mjs")), SE = await import(path.join(here, "stand_in_e.mjs"));
+const TACKLER = process.env.TACKLER || "ast1";   // AST1E_PREREG.md (7b77dc5): "ast1e" = the extending slide-leg stand-in; HG-T evaluated for the stand-in in use
 const { loadJolt } = await import(P2 + "core/v2_jolt.js"), { pi1RunnerSpec } = await import(P2 + "spec/v2_pi1_runner.js"), { bootSole } = await import(P2 + "sim/v2_geom.js");
 const { L, makeMapper, geomRowsRev1, rigGeom, angVel, SEGMAP, ADJ, AXES, relRot } = M; const { V, Q, B, NB, bi, loadAir, bodySep, bodyLowest, capsulePen, SELF_PAIRS, Z0 } = L;
 const [CASE, VARIANT, MODE, OUT, STEPS] = process.argv.slice(2), J = await loadJolt(P2 + "vendor/jolt-physics.wasm-compat.js"), RANK = { NEGLIGIBLE: 0, CORRECTION: 1, STUMBLE: 2, FALL: 3 };
@@ -27,15 +28,16 @@ function handoff(R, k, mapper, G) { const g = geomRowsRev1(R, k, k - 6, mapper, 
   const p5 = Math.max(g.foot.L.physVsPresDeg, g.foot.R.physVsPresDeg); if (p5 > 5) fails.push("P5_footDeg");
   const kin = M0.kinRows(R, k, mapper.poseAt); fails.push(...kin.fails);
   const iv = initVel(mapper, k), vc = comVel(iv.v), row = R.rows[k], va = [row[10], 0, -row[11]], dA = Math.hypot(vc[0] - va[0], vc[2] - va[2]); if (dA > 0.180) fails.push("HGAv2_shift");
-  const d = R.def[k]; if (!(d && d.kind === "SLIDE" && d.launchT >= R.slide.extT - 1e-9)) fails.push("HGT_extension");
-  return { k, pass: !fails.length, fails, P5: +p5.toFixed(2), HGA: +dA.toFixed(4), P14: kin.P14_bodyVelMs, P15: kin.P15_angVelRadS, P16: kin.P16_comVelMs, P17: kin.P17_dL, iv, vc }; }
+  const d = R.def[k], hgtAST1 = !!(d && d.kind === "SLIDE" && d.launchT >= R.slide.extT - 1e-9), hgtAST1E = !!(d && d.kind === "SLIDE" && d.launchT != null && d.launchT > 0);
+  if (TACKLER === "ast1e") { if (!hgtAST1E) fails.push("HGT_AST1E"); } else if (!hgtAST1) fails.push("HGT_extension");
+  return { k, pass: !fails.length, fails, hgtAST1, hgtAST1E, P5: +p5.toFixed(2), HGA: +dA.toFixed(4), P14: kin.P14_bodyVelMs, P15: kin.P15_angVelRadS, P16: kin.P16_comVelMs, P17: kin.P17_dL, iv, vc }; }
 // ── setup ──
 const t0all = Date.now(), R = deepFreeze(loadAir(RECS, `${CASE}_LOCO.json.gz`)), G = rigGeom(R), mapper = makeMapper(R, { knee: "RK", rf1: true }), spec = pi1RunnerSpec();
 const ev = R.events.filter(e => e.kind === "PLAYER_CONTACT"), cl = (e) => e.react || e.cls, fin = ev.reduce((m, e) => (RANK[cl(e)] > RANK[m] ? cl(e) : m), "NEGLIGIBLE"), dec = ev.find(e => cl(e) === fin) || null, first = ev[0] || null;
 const cat = !ev.length ? "NEAR MISS" : (fin === "CORRECTION" || fin === "STUMBLE") ? "RECOVERABLE" : (fin === "FALL" && dec.segPlanted) ? "PLANTED-LEG FALL" : "other";
 const kt = R.pred.findIndex(x => x != null && x <= 0.25); let kend = null, tRef = null;
 if (first) { kend = first.tick - 2; tRef = first.tick - 1 + first.sub / 4; } else { let mn = Infinity, kc = null; for (let k = Math.max(1, kt); k < R.dnow.length; k++) if (R.dnow[k] != null && R.dnow[k] < mn) { mn = R.dnow[k]; kc = k; } kend = kc - 1; tRef = kc + 0.5; }
-const res = { prereg: "PCS1_PREREG.md 8585adc", case: CASE, variant: VARIANT, mode: MODE, cat, finalClass: ev.length ? fin : "NO_CONTACT", trigger: kt, tRef, reasons: [] };
+const res = { prereg: "PCS1_PREREG.md 8585adc" + (TACKLER === "ast1e" ? " + AST1E_PREREG.md 7b77dc5" : ""), tackler: TACKLER, case: CASE, variant: VARIANT, mode: MODE, cat, finalClass: ev.length ? fin : "NO_CONTACT", trigger: kt, tRef, reasons: [] };
 // D-5: the latest HG-valid frame with lead >= 6 ticks (re-derived; must equal the preregistered frame)
 let kp = null; const kLim = Math.floor(tRef - 7 + 1e-9), hgScan = []; for (let k = kLim; k >= 2; k--) { const h = handoff(R, k, mapper, G); hgScan.push({ k, pass: h.pass, fails: h.fails }); if (h.pass) { kp = k; break; } }
 res.kpRule = { kLim, scanned: hgScan, kp, preregistered: PREREG_KP[CASE], match: kp === PREREG_KP[CASE] };
@@ -61,6 +63,7 @@ const auth = { tauP: kp + 1, rootAt, fallTau, samples, mT: R.mass[1] || 75, legF
 const maxSteps = STEPS ? +STEPS : Math.ceil((tauCap - (kp + 1)) * 4), simOpts = { seconds: maxSteps / 240 + 0.05, Ipel };
 const sim = MODE === "rev2" ? new SIM.PI1Sim(J, spec, { S: hS, vel: hV }, auth, simOpts)
   : new CS.PI1CarrierSim(J, spec, { S: hS, vel: hV }, auth, { ...simOpts, probes: true, carrier: { on: MODE === "carrier", law, rows: R.rows, react: R.react, rC, off } });
+if (TACKLER === "ast1e") SE.replaceStandIn(sim, J, samples, kp + 1, auth.mT, auth.legFrac, auth.isLeg, { rC, ext0: Math.min(1, R.def[kp].launchT / R.slide.extT) });
 res.promotionWrites = sim.promotionWrites; const writes0 = sim.ledger.authorityWrites;
 // ── per-step measurement ──
 const SOLE = { L: bootSole(B[bi("foot_L")]), R: bootSole(B[bi("foot_R")]) }, soleC = (sd) => V.sc(SOLE[sd].pts.reduce((s, p) => V.add(s, p), [0, 0, 0]), 1 / SOLE[sd].pts.length);
@@ -111,6 +114,7 @@ for (let s = 0; s < maxSteps; s++) {
   steps.push({ tau, n: sim.n, state, bodies: S.map(b => [...rv(b.pos), ...rv(b.rot), ...rv(b.com), ...rv(b.v), ...rv(b.w)]), P: rv(P), L: rv(Lc), com: rv(c), Jr: rv(Jr), Hr: rv(Hr), B: { J: rv(Bf), H: rv(Bt) },
     A: A ? { r: A.r, alpha: A.alphaA, aT: rv(A.aT), on: !!Af } : null, Wact: r7(Wact), WB: r7(WB), WA: r7(WA), Wc: r7(Wc), D: r7(Dst), E: r7(E), resid: r7(resid), feet, ax,
     car: car ? { wb: r7(car.wb), wID: rv(car.wID), q: car.q.map(rv), wStar: car.wStar.map(rv), tauID: car.tauID.map(rv) } : null, Bt: sim.Blast ? { dp: rv(sim.Blast.dp), vel: rv(sim.Blast.vel), q: rv(sim.Blast.q), om: rv(sim.Blast.om) } : null,
+    si: ph.standIn.map((x, j) => { const g = sim.standIn.segs[j], d = g && g.lastDrive; return { n: x.name, pts: x.pts.map(rv), rel: g && g.released ? 1 : 0, drv: d ? { F: d.F.slice(), T: d.T, lt: d.lt.slice(), lr: d.lr } : null }; }),   // released / drive read from the stand-in itself (REV2's phys record drops them)
     fallen: !!sim.fallen || sim.fallAt != null, trackErr: r7(ph.trackErr), manifolds: manif.length, Bon: !!sim.Bon, wSt: sim.pd && sim.pd.wSt ? rv(sim.pd.wSt) : null, contactFlags: sim.contactFlags.slice() });
   // state machine (evaluation only; PCS-1 §2.7)
   if (sim.fallAt != null && state !== "FALL") { state = "FALL"; smEvents.push({ tau: sim.fallAt, state }); }
@@ -146,6 +150,7 @@ for (let s = 0; s < maxSteps; s++) {
     if (endSM && (lastA2 == null || tau >= lastA2 + 18 - 1e-9)) break; }
 }
 for (const sd of ["L", "R"]) if (slipSt[sd].on) stances[sd].push({ t0: slipSt[sd].t0, t1: null, slipMm: +(slipSt[sd].acc * 1000).toFixed(2), steps: slipSt[sd].n, open: true });
+res.standInInfo = sim.standIn.kind === "AST-1E" ? { kind: "AST-1E", release: sim.standIn.release, consts: sim.standIn.consts, Lext: sim.standIn.segs.find(g => g.leg).ext.Lext, L0: sim.standIn.segs.find(g => g.leg).ext.L0, masses: sim.standIn.segs.map(g => ({ name: g.name, m: g.m, Iyy: g.Iyy })) } : { kind: "AST-1" };
 res.steps = steps.length; res.tauEnd = steps.length ? steps[steps.length - 1].tau : null; res.horizon = { tauCap, slideEnd, scanEnd, maxSteps };
 res.smEvents = smEvents; res.firstManifoldTau = firstManifoldTau; res.firstA2 = firstA2; res.lastA2 = lastA2; res.recEntry = recEntry; res.dgTau = dgTau; res.dgFail = dgFail && dgTau == null; res.handoffTau = handoffTau; res.fallLowTau = fallLow; res.tRecSim = tRecSim;
 res.fallAt = sim.fallAt != null ? sim.fallAt : null; res.writesAfter = sim.ledger.authorityWrites - writes0; res.stances = stances; res.CG8 = { minSepMm: +(minSep * 1000).toFixed(1), pair: sepPair, pass: minSep >= -0.010 };
