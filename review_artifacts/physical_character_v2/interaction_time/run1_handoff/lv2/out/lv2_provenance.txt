@@ -1,0 +1,12 @@
+LV2-STATE-1 → V2 handoff reconciliation: provenance (2026-10-10 20:50 BST)
+frozen tag: locomotion-v2-straight-baseline-1 -> 4a226b1f43ddf5b918acab2807041334ff637405
+consumed ONLY via: git archive locomotion-v2-straight-baseline-1 sandbox/visual/run1 sandbox/visual/anim3d review_artifacts/locomotion_v2_run1 assets/characters/outfield/vinicius/rig.json (scratch copy; the live worktree was not read for any measurement)
+  sandbox/visual/run1/run1_gait_v13.js blob(tag) 7ba8297c2e7db1e764bdd08452c27fd6aec7a977 archive 7ba8297c2e7db1e764bdd08452c27fd6aec7a977 MATCH sha256 93a7cc0e65c3cdce
+  sandbox/visual/run1/lv2_state.js blob(tag) 572df9f770342c9091b68e2b881c152b59d447f9 archive 572df9f770342c9091b68e2b881c152b59d447f9 MATCH sha256 cc84a1c24b52b476
+  sandbox/visual/run1/tools/lv2_state_check.cjs blob(tag) dd8a34a4b8a26c1564f8d68789a661edb24f0195 archive dd8a34a4b8a26c1564f8d68789a661edb24f0195 MATCH sha256 de63565a4429100f
+  sandbox/visual/run1/tools/run1_load.cjs blob(tag) 5853cc9edfcecfa148044bb0671d179faea1caa1 archive 5853cc9edfcecfa148044bb0671d179faea1caa1 MATCH sha256 f61686e66715dcee
+  review_artifacts/locomotion_v2_run1/LOCOMOTION_V2_STATE_CONTRACT.md blob(tag) 44521303e82f8a15265590290714a9d8ddc26d55 archive 44521303e82f8a15265590290714a9d8ddc26d55 MATCH sha256 b6a52bee88c94e61
+  assets/characters/outfield/vinicius/rig.json blob(tag) 6ca64389d44244331cd7af37ce8f4ee6f854353e archive 6ca64389d44244331cd7af37ce8f4ee6f854353e MATCH sha256 b8e67cff7849198b
+simulation: V1.3 at 5042230b5bc162247e151c10bef8634539a92be0 (scratch git-archive copy, V13_WT; read-only, loaded through pi1/trackB/scripts/charcollide_sim.mjs)
+V2: pi1RunnerSpec (sandbox/visual/physchar2 @ 39772380, unchanged); mapping pi1/rev1/scripts/pcg_rev1.mjs makeMapper (R-K + RF-1); tolerances pi1/trackB/scripts/pcg_f0.mjs TOL; HG-A v2 0.180 m/s (pi1/hga/HGA_V2_ADOPTED.md)
+node v22.19.0; platform Darwin arm64

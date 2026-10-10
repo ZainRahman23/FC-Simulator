@@ -1,3 +1,5 @@
+> **Superseded for review by `RUN1_TO_V2_HANDOFF_CONTRACT_DRAFT_R2.md`** (reconciled with the frozen Locomotion V2 baseline, LV2-STATE-1). This R1 text is kept unchanged below as the record of the RUN-1 949bd763 probes.
+
 # RUN-1 → V2 interaction-time handoff: contract DRAFT (10 Oct 2026, for review; nothing adopted)
 
 **Source:** `../../sources/2026-10-10_user_decision_pause_its1_amendment_run1_handoff_contract.md` (4da41c4f).

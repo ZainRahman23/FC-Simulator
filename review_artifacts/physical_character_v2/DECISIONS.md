@@ -3355,3 +3355,41 @@ Per the frozen rule, no struck run (A / B / C).
 **Nothing modified:** no RUN-1, V2, simulation or ITS-1 code or evidence; no physics run.
 
 **Awaiting user review.**
+
+## 2026-10-10: Locomotion V2 straight-line baseline FROZEN upstream (tag `locomotion-v2-straight-baseline-1` = 4a226b1f, contract LV2-STATE-1); RUN-1 → V2 handoff contract RECONCILED as DRAFT R2, read-only (`interaction_time/run1_handoff/RUN1_TO_V2_HANDOFF_CONTRACT_DRAFT_R2.md`; source `sources/2026-10-10_user_instruction_reconcile_handoff_with_lv2_state_1.md`, 39772380)
+
+**Instruction recorded (user):**
+- The frozen baseline is an immutable upstream dependency, consumed only through a `git archive` of the tag.
+- No bridge, PI-1, collision, recovery, fall, acceleration, turning or controller work.
+- No change to RUN-1, the simulation or V2.
+
+**Done (read-only):**
+- The frozen contract checks were run from the archive: 21/21, identical to the frozen result apart from timings.
+- R-0…R-8 classified. All are answered directly by LV2-STATE-1 for straight running, except two that stay unresolved: clock ownership (R-5 / H-1) and turning (R-7).
+- V-* responsibilities, V2's own COM / P / L and the one-shot H-4 read are kept. LV2's COM stays diagnostic only.
+- The instantaneous LV2 → V2 transfer was re-measured on the frozen baseline with V2's frozen mapping, mass model and tolerances (PCG P-1…P-17, HG-A v2). Probes are in `run1_handoff/lv2/`; they are deterministic and step no physics.
+
+**Verdict proposed for review: B, HANDOFF STATE CONTRACT NOT READY.**
+- **Smallest genuine blocker:** V-a, the 23 → 14 mapping onto V2's articulation. Owner: V2.
+- **Evidence:**
+  - At FAST RUN / ALL-OUT the mapped upper body is off by 16 / 26–27 / 30–31 mm at the shoulders / elbows / hands, and by 0.23–0.57 m/s.
+  - Frozen P-14 fails at 68 % / 88 % of instants; P-12 shoulder hard range is exceeded at ALL-OUT (≤ 1.34°).
+  - No ALL-OUT instant passes the mapping rows.
+- **Cause:** V2's lumbar / thoracic / neck centres are 50–60 mm from the rig's joints, V2 has no clavicle, and its upper arm is 11.6 mm shorter.
+- **What transfers exactly:** the leg chain (0.0 mm, 0.00 m/s).
+
+**Open, reported not decided:**
+- **Stride clock:** the simulation's is 17–44 % faster than LV2's; drift 0.23–0.90 strides/s.
+- **v_auth:** HG-A v2 |s| passes at 88 / 94 / 68 / 41 % of instants.
+- **F0 foot:** representable only in flat stance (2–18 % of stance) and in flight.
+- **Vertical:** V2's COM ẏ differs from LV2's pelvis ẏ by ≤ ±0.38 m/s, and the COM is not ballistic in flight.
+- **Gameplay legs:** 0.19–0.29 m from the runner's legs at any phase offset; the simulation's VMAX 8.2 m/s is below ALL-OUT.
+- **Proposed rewording of R1's yaw-L default,** to agree with HG-A v2.
+
+**Errata:**
+- **R1's toe-lever estimate:** R1 estimated the rigid tip at ≈ 75 mm into the turf. V2's boot actually penetrates ≤ 10.5 mm and floats ≤ 21 mm.
+- **Frozen-document discrepancies, reported only:** 7.8 m/s is not a grid speed; the `h` comment in `lv2_state.js`; "ballistic in flight" holds for the pelvis, not the COM; the shoulder range is exceeded once the clavicle merges into the thorax.
+
+**Nothing modified:** no RUN-1 / LV2, V2, simulation or ITS-1 code or evidence. R1 gained only a one-line pointer to R2.
+
+**Awaiting user review.**

@@ -1,0 +1,492 @@
+{
+ "tool": "lv2_vs_sim_probe.mjs",
+ "note": "read-only; nothing stepped",
+ "simVMAX": 8.2,
+ "legLen": 0.865,
+ "speeds": {
+  "3": {
+   "lv2": {
+    "stepsPerS": 2.7506,
+    "duty": 0.3438,
+    "strideS": 0.7271,
+    "stepLengthM": 1.0907,
+    "flightMs": 113.6101,
+    "source": "RUN-1's own cadence (not simulation-locked)"
+   },
+   "sim": {
+    "stepsPerS": 3.2113,
+    "duty": 0.42,
+    "strideS": 0.6228,
+    "stepLengthM": 0.9342,
+    "aboveVMAX": false
+   },
+   "driftStridesPerS": 0.2303,
+   "phaseLockedSupportDisagreePerLeg": 0.0762,
+   "legVsSim": {
+    "phaseLocked": {
+     "phi": 0,
+     "p50": 0.1974,
+     "p90": 0.2512,
+     "max": 0.267,
+     "within10cm": 0.0833,
+     "supportAgree": 0.925
+    },
+    "bestOffsetByP90": {
+     "phi": 0.06,
+     "p50": 0.1869,
+     "p90": 0.2235,
+     "max": 0.2253,
+     "within10cm": 0,
+     "supportAgree": 0.925
+    },
+    "bestOffsetBySupport": {
+     "phi": 0.06,
+     "p50": 0.1869,
+     "p90": 0.2235,
+     "max": 0.2253,
+     "within10cm": 0,
+     "supportAgree": 0.925
+    },
+    "note": "CG-4 measure: V2 leg body COM (thigh / shank / foot) to the simulation's segment axis, horizontal, max over legs; frozen limit 0.10 m"
+   },
+   "segments": [
+    {
+     "name": "foot_R",
+     "lengthM": 0.2286,
+     "r": 0.0295,
+     "ra": 0.0295,
+     "rb": 0.0248
+    },
+    {
+     "name": "toe_R",
+     "lengthM": 0.0788,
+     "r": 0.0094
+    },
+    {
+     "name": "shin_R",
+     "lengthM": 0.3987,
+     "r": 0.0536,
+     "ra": 0.0536,
+     "rb": 0.0361
+    },
+    {
+     "name": "thigh_R",
+     "lengthM": 0.4349,
+     "r": 0.0845,
+     "ra": 0.0845,
+     "rb": 0.0598
+    }
+   ],
+   "rigBones": {
+    "thigh": 0.4349,
+    "shin": 0.3987,
+    "foot": 0.1893,
+    "toe": 0.0966,
+    "legLenRig": 0.8336
+   },
+   "frames60": {
+    "n": 92,
+    "pelvisStepMm": {
+     "n": 88,
+     "p50": 8.2604,
+     "p90": 11.8785,
+     "max": 13.4243
+    },
+    "pelvis2ndDiffMm": {
+     "n": 88,
+     "p50": 2.7125,
+     "p90": 3.5348,
+     "max": 3.7281
+    },
+    "jointOneFrameChangeMm": {
+     "n": 88,
+     "p50": 10.2791,
+     "p90": 23.5159,
+     "max": 27.4915
+    },
+    "flightFhBW": {
+     "n": 19,
+     "p50": 0.2646,
+     "p90": 0.6943,
+     "max": 0.7156
+    },
+    "flightFyBW": {
+     "n": 19,
+     "p50": 0.0409,
+     "p90": 0.168,
+     "max": 0.1956
+    },
+    "flightTorqueNm": {
+     "n": 19,
+     "p50": 94.2298,
+     "p90": 108.9109,
+     "max": 110.5444
+    },
+    "note": "moving-handoff estimators (pres_sources.mjs): rig pelvis height steps / 2nd differences per 60 Hz frame; V2 joints' |Δ_k+1 − Δ_k|; COM 2nd difference × 3600 and L centred differences on three consecutive flight frames (mapping R-K, no RF-1, as there)"
+   }
+  },
+  "5.5": {
+   "lv2": {
+    "stepsPerS": 3.2007,
+    "duty": 0.28,
+    "strideS": 0.6249,
+    "stepLengthM": 1.7184,
+    "flightMs": 137.4683,
+    "source": "RUN-1's own cadence (not simulation-locked)"
+   },
+   "sim": {
+    "stepsPerS": 4.6075,
+    "duty": 0.36,
+    "strideS": 0.4341,
+    "stepLengthM": 1.1937,
+    "aboveVMAX": false
+   },
+   "driftStridesPerS": 0.7034,
+   "phaseLockedSupportDisagreePerLeg": 0.08,
+   "legVsSim": {
+    "phaseLocked": {
+     "phi": 0,
+     "p50": 0.2138,
+     "p90": 0.2848,
+     "max": 0.3073,
+     "within10cm": 0.1167,
+     "supportAgree": 0.925
+    },
+    "bestOffsetByP90": {
+     "phi": 0.06,
+     "p50": 0.212,
+     "p90": 0.2611,
+     "max": 0.2644,
+     "within10cm": 0,
+     "supportAgree": 0.925
+    },
+    "bestOffsetBySupport": {
+     "phi": 0.06,
+     "p50": 0.212,
+     "p90": 0.2611,
+     "max": 0.2644,
+     "within10cm": 0,
+     "supportAgree": 0.925
+    },
+    "note": "CG-4 measure: V2 leg body COM (thigh / shank / foot) to the simulation's segment axis, horizontal, max over legs; frozen limit 0.10 m"
+   },
+   "segments": [
+    {
+     "name": "foot_R",
+     "lengthM": 0.2286,
+     "r": 0.0295,
+     "ra": 0.0295,
+     "rb": 0.0248
+    },
+    {
+     "name": "toe_R",
+     "lengthM": 0.0788,
+     "r": 0.0094
+    },
+    {
+     "name": "shin_R",
+     "lengthM": 0.3987,
+     "r": 0.0536,
+     "ra": 0.0536,
+     "rb": 0.0361
+    },
+    {
+     "name": "thigh_R",
+     "lengthM": 0.4349,
+     "r": 0.0845,
+     "ra": 0.0845,
+     "rb": 0.0598
+    }
+   ],
+   "rigBones": {
+    "thigh": 0.4349,
+    "shin": 0.3987,
+    "foot": 0.1893,
+    "toe": 0.0966,
+    "legLenRig": 0.8336
+   },
+   "frames60": {
+    "n": 79,
+    "pelvisStepMm": {
+     "n": 75,
+     "p50": 7.9638,
+     "p90": 12.5042,
+     "max": 13.8014
+    },
+    "pelvis2ndDiffMm": {
+     "n": 75,
+     "p50": 2.725,
+     "p90": 4.84,
+     "max": 5.1582
+    },
+    "jointOneFrameChangeMm": {
+     "n": 75,
+     "p50": 21.2462,
+     "p90": 42.6308,
+     "max": 58.2144
+    },
+    "flightFhBW": {
+     "n": 25,
+     "p50": 0.4076,
+     "p90": 0.6642,
+     "max": 0.6875
+    },
+    "flightFyBW": {
+     "n": 25,
+     "p50": 0.0278,
+     "p90": 0.1498,
+     "max": 0.2295
+    },
+    "flightTorqueNm": {
+     "n": 25,
+     "p50": 133.7073,
+     "p90": 201.2145,
+     "max": 215.1251
+    },
+    "note": "moving-handoff estimators (pres_sources.mjs): rig pelvis height steps / 2nd differences per 60 Hz frame; V2 joints' |Δ_k+1 − Δ_k|; COM 2nd difference × 3600 and L centred differences on three consecutive flight frames (mapping R-K, no RF-1, as there)"
+   }
+  },
+  "7.8": {
+   "lv2": {
+    "stepsPerS": 4.0361,
+    "duty": 0.244,
+    "strideS": 0.4955,
+    "stepLengthM": 1.9325,
+    "flightMs": 126.8332,
+    "source": "RUN-1's own cadence (not simulation-locked)"
+   },
+   "sim": {
+    "stepsPerS": 5.5714,
+    "duty": 0.3089,
+    "strideS": 0.359,
+    "stepLengthM": 1.4,
+    "aboveVMAX": false
+   },
+   "driftStridesPerS": 0.7676,
+   "phaseLockedSupportDisagreePerLeg": 0.0648,
+   "legVsSim": {
+    "phaseLocked": {
+     "phi": 0,
+     "p50": 0.2654,
+     "p90": 0.3158,
+     "max": 0.3374,
+     "within10cm": 0.0833,
+     "supportAgree": 0.9333
+    },
+    "bestOffsetByP90": {
+     "phi": 0.03,
+     "p50": 0.235,
+     "p90": 0.2885,
+     "max": 0.292,
+     "within10cm": 0,
+     "supportAgree": 0.9333
+    },
+    "bestOffsetBySupport": {
+     "phi": 0.03,
+     "p50": 0.235,
+     "p90": 0.2885,
+     "max": 0.292,
+     "within10cm": 0,
+     "supportAgree": 0.9333
+    },
+    "note": "CG-4 measure: V2 leg body COM (thigh / shank / foot) to the simulation's segment axis, horizontal, max over legs; frozen limit 0.10 m"
+   },
+   "segments": [
+    {
+     "name": "foot_R",
+     "lengthM": 0.2286,
+     "r": 0.0295,
+     "ra": 0.0295,
+     "rb": 0.0248
+    },
+    {
+     "name": "toe_R",
+     "lengthM": 0.0788,
+     "r": 0.0094
+    },
+    {
+     "name": "shin_R",
+     "lengthM": 0.3987,
+     "r": 0.0536,
+     "ra": 0.0536,
+     "rb": 0.0361
+    },
+    {
+     "name": "thigh_R",
+     "lengthM": 0.4349,
+     "r": 0.0845,
+     "ra": 0.0845,
+     "rb": 0.0598
+    }
+   ],
+   "rigBones": {
+    "thigh": 0.4349,
+    "shin": 0.3987,
+    "foot": 0.1893,
+    "toe": 0.0966,
+    "legLenRig": 0.8336
+   },
+   "frames60": {
+    "n": 64,
+    "pelvisStepMm": {
+     "n": 60,
+     "p50": 7.0202,
+     "p90": 10.9454,
+     "max": 11.7783
+    },
+    "pelvis2ndDiffMm": {
+     "n": 60,
+     "p50": 2.725,
+     "p90": 5.9314,
+     "max": 6.3355
+    },
+    "jointOneFrameChangeMm": {
+     "n": 60,
+     "p50": 34.9155,
+     "p90": 61.7039,
+     "max": 82.8204
+    },
+    "flightFhBW": {
+     "n": 22,
+     "p50": 0.8435,
+     "p90": 1.0268,
+     "max": 1.1083
+    },
+    "flightFyBW": {
+     "n": 22,
+     "p50": -0.2421,
+     "p90": 0.1288,
+     "max": 0.2105
+    },
+    "flightTorqueNm": {
+     "n": 22,
+     "p50": 263.5932,
+     "p90": 361.9754,
+     "max": 366.831
+    },
+    "note": "moving-handoff estimators (pres_sources.mjs): rig pelvis height steps / 2nd differences per 60 Hz frame; V2 joints' |Δ_k+1 − Δ_k|; COM 2nd difference × 3600 and L centred differences on three consecutive flight frames (mapping R-K, no RF-1, as there)"
+   }
+  },
+  "9.5": {
+   "lv2": {
+    "stepsPerS": 4.551,
+    "duty": 0.232,
+    "strideS": 0.4395,
+    "stepLengthM": 2.0874,
+    "flightMs": 117.753,
+    "source": "RUN-1's own cadence (not simulation-locked)"
+   },
+   "sim": {
+    "stepsPerS": 6.3413,
+    "duty": 0.3,
+    "strideS": 0.3154,
+    "stepLengthM": 1.4981,
+    "aboveVMAX": true
+   },
+   "driftStridesPerS": 0.8951,
+   "phaseLockedSupportDisagreePerLeg": 0.068,
+   "legVsSim": {
+    "phaseLocked": {
+     "phi": 0,
+     "p50": 0.2726,
+     "p90": 0.502,
+     "max": 0.5259,
+     "within10cm": 0.0167,
+     "supportAgree": 0.9333
+    },
+    "bestOffsetByP90": {
+     "phi": 0.07,
+     "p50": 0.2876,
+     "p90": 0.3159,
+     "max": 0.3213,
+     "within10cm": 0,
+     "supportAgree": 0.9167
+    },
+    "bestOffsetBySupport": {
+     "phi": 0.06,
+     "p50": 0.2884,
+     "p90": 0.3272,
+     "max": 0.347,
+     "within10cm": 0,
+     "supportAgree": 0.9333
+    },
+    "note": "CG-4 measure: V2 leg body COM (thigh / shank / foot) to the simulation's segment axis, horizontal, max over legs; frozen limit 0.10 m"
+   },
+   "segments": [
+    {
+     "name": "foot_R",
+     "lengthM": 0.2286,
+     "r": 0.0295,
+     "ra": 0.0295,
+     "rb": 0.0248
+    },
+    {
+     "name": "toe_R",
+     "lengthM": 0.0788,
+     "r": 0.0094
+    },
+    {
+     "name": "shin_R",
+     "lengthM": 0.3987,
+     "r": 0.0536,
+     "ra": 0.0536,
+     "rb": 0.0361
+    },
+    {
+     "name": "thigh_R",
+     "lengthM": 0.4349,
+     "r": 0.0845,
+     "ra": 0.0845,
+     "rb": 0.0598
+    }
+   ],
+   "rigBones": {
+    "thigh": 0.4349,
+    "shin": 0.3987,
+    "foot": 0.1893,
+    "toe": 0.0966,
+    "legLenRig": 0.8336
+   },
+   "frames60": {
+    "n": 57,
+    "pelvisStepMm": {
+     "n": 53,
+     "p50": 6.4768,
+     "p90": 9.8257,
+     "max": 10.8713
+    },
+    "pelvis2ndDiffMm": {
+     "n": 53,
+     "p50": 2.725,
+     "p90": 6.0734,
+     "max": 6.724
+    },
+    "jointOneFrameChangeMm": {
+     "n": 53,
+     "p50": 64.2855,
+     "p90": 106.7945,
+     "max": 110.8262
+    },
+    "flightFhBW": {
+     "n": 21,
+     "p50": 1.1178,
+     "p90": 1.3876,
+     "max": 1.6635
+    },
+    "flightFyBW": {
+     "n": 21,
+     "p50": -0.092,
+     "p90": 0.1785,
+     "max": 0.419
+    },
+    "flightTorqueNm": {
+     "n": 21,
+     "p50": 399.4457,
+     "p90": 478.7908,
+     "max": 496.1132
+    },
+    "note": "moving-handoff estimators (pres_sources.mjs): rig pelvis height steps / 2nd differences per 60 Hz frame; V2 joints' |Δ_k+1 − Δ_k|; COM 2nd difference × 3600 and L centred differences on three consecutive flight frames (mapping R-K, no RF-1, as there)"
+   }
+  }
+ }
+}
