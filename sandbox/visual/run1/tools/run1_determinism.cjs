@@ -1,7 +1,8 @@
 // run1/tools/run1_determinism.cjs — RUN-1 is a pure function of its input history: two fresh loads, the same speed profile, bit-identical
-// joint matrices at every 60 Hz tick (constant 5.5 m/s and the 3 → 7.8 → 3 m/s ramp); also replay-from-zero vs incremental stepping.
+// joint matrices at every 60 Hz tick (constant 5.5 and 9.5 m/s, the 3 → 7.8 → 3 and 6 → 9.5 → 6 m/s ramps); also replay-from-zero vs incremental stepping.
 const { loadRun1 } = require("./run1_load.cjs"), crypto = require("crypto");
-const prof = { const: () => 5.5, ramp: (t) => t < 1 ? 3 : t < 4 ? 3 + 4.8 * (t - 1) / 3 : t < 5 ? 7.8 : t < 8 ? 7.8 - 4.8 * (t - 5) / 3 : 3 };
+const prof = { const: () => 5.5, ramp: (t) => t < 1 ? 3 : t < 4 ? 3 + 4.8 * (t - 1) / 3 : t < 5 ? 7.8 : t < 8 ? 7.8 - 4.8 * (t - 5) / 3 : 3,
+  allout: () => 9.5, ramp9: (t) => t < 1 ? 6 : t < 3.2 ? 6 + 3.5 * (t - 1) / 2.2 : t < 4.2 ? 9.5 : t < 6.4 ? 9.5 - 3.5 * (t - 4.2) / 2.2 : 6 };   // RUN-1.3: ALL-OUT and the 6 → 9.5 → 6 m/s ramp
 function run(kind, mode) {
   const X = loadRun1(), skel = X.charSkel("vinicius"), A = X.r1Make(skel), h = crypto.createHash("sha256"), vOf = prof[kind];
   let x = 0;
@@ -11,5 +12,5 @@ function run(kind, mode) {
     for (const m of ev.fk.world) h.update(Buffer.from(new Float32Array(m).buffer)); }
   return h.digest("hex").slice(0, 16);
 }
-for (const kind of ["const", "ramp"]) { const a = run(kind, "replay"), b = run(kind, "replay"), c = run(kind, "step"), d = run(kind, "step");
+for (const kind of ["const", "ramp", "allout", "ramp9"]) { const a = run(kind, "replay"), b = run(kind, "replay"), c = run(kind, "step"), d = run(kind, "step");
   console.log(`${kind}: replay ${a} / ${b} ${a === b ? "IDENTICAL" : "DIFFER"} · incremental ${c} / ${d} ${c === d ? "IDENTICAL" : "DIFFER"} · replay vs incremental ${a === c ? "IDENTICAL" : "differ (expected only if the grid paths differ)"}`); }

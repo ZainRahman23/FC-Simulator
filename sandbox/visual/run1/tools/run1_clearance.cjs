@@ -4,7 +4,7 @@
 const { loadRun1 } = require("./run1_load.cjs");
 const X = loadRun1(), skel = X.charSkel("vinicius"), B = skel.byName;
 const seg = (p, a, b) => { const ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], ap = [p[0] - a[0], p[1] - a[1], p[2] - a[2]]; const t = Math.max(0, Math.min(1, (ab[0] * ap[0] + ab[1] * ap[1] + ab[2] * ap[2]) / (ab[0] ** 2 + ab[1] ** 2 + ab[2] ** 2))); return Math.hypot(ap[0] - ab[0] * t, ap[1] - ab[1] * t, ap[2] - ab[2] * t); };
-for (const v of [3.0, 4.2, 5.5, 6.5, 7.0, 7.8]) {
+for (const v of [3.0, 4.2, 5.5, 6.5, 7.0, 7.8, 8.5, 9.0, 9.5, 10.0]) {
   const A = X.r1Make(skel), G = X.r1Prepare(A, v); let foot = 1e9, knees = 1e9, at = 0;
   for (let i = 0; i < 800; i++) { const u = i / 800, pose = X.r1Pose(G, u), fk = X.r1FK(G, pose, null), P = fk.P;
     knees = Math.min(knees, Math.hypot(...[0, 1, 2].map(k => P[B.shin_R.idx][k] - P[B.shin_L.idx][k])));

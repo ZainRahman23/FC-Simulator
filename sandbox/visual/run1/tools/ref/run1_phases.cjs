@@ -28,7 +28,7 @@ function refColumn(spec) {
 }
 let X = null;
 function run1Column(which, v) {
-  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : X, skel0 = X.charSkel("vinicius"), skel = Object.assign({}, skel0); delete skel._r1body;
+  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : which === "v12" ? X.RUN1_V12 : X, skel0 = X.charSkel("vinicius"), skel = Object.assign({}, skel0); delete skel._r1body;
   const B = skel.byName, A = E.r1Make(skel), G = E.r1Prepare(A, v), p = G.p;
   const kneeAt = (u) => E.r1Pose(G, u).legs.R.ch.k;
   let kL = 0; for (let i = 0; i <= 100; i++) { const u = p.D * i / 100; if (kneeAt(u) > kneeAt(kL)) kL = u; }
@@ -39,7 +39,7 @@ function run1Column(which, v) {
     const L = (sd) => ({ hip: P("thigh_" + sd), knee: P("shin_" + sd), ankle: P("foot_" + sd), mtp: P("toe_" + sd), tip: ttip(sd), sh: P("upperArm_" + sd), el: P("foreArm_" + sd), wr: P("hand_" + sd), hd: tip("hand_" + sd) });
     const R = L("R"), Lf = L("L");
     return { pel: mid(R.hip, Lf.hip), spine: [mid(R.hip, Lf.hip), P("spine"), P("chest"), P("neck"), P("head"), tip("head")], clav: P("neck"), S: R, O: Lf, ground: 0 }; };
-  return { title: `${which === "orig" ? "RUN-1.0 original" : which === "v11" ? "RUN-1.1" : "RUN-1.2 new"} · ${v} m/s`, ref: false, orig: which === "orig", v11: which === "v11", frames: ev.map(J), fwd: [0, 0, 1], up: [0, 1, 0], right: [1, 0, 0], scale: 1, pct: ev.map(u => (u * 100).toFixed(0) + "%") };
+  return { title: `${which === "orig" ? "RUN-1.0 original" : which === "v11" ? "RUN-1.1" : which === "v12" ? "RUN-1.2" : X.RUN1.id} · ${v} m/s`, ref: false, orig: which === "orig", v11: which === "v11", frames: ev.map(J), fwd: [0, 0, 1], up: [0, 1, 0], right: [1, 0, 0], scale: 1, pct: ev.map(u => (u * 100).toFixed(0) + "%") };
 }
 const cols = arg("cols", "").split(",").filter(Boolean).map(c => c.startsWith("ref:") ? refColumn(c) : run1Column(c.split(":")[0], +c.split(":")[1]));
 const CW = 200, CH = 222, S = 108, top = 46, left = 104;

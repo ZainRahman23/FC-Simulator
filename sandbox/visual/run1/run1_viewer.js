@@ -1,6 +1,7 @@
 // ═══ run1/run1_viewer.js — RUN-1 viewer: the gameplay camera + close views, RUN-1.x versions vs Locomotion V1, playback, overlays ═══
-// LANES: each lane = one presentation engine (RUN-1.2 = run1_gait.js · RUN-1.1 = frozen run1_gait_v11.js · RUN-1.0 = frozen run1_gait_orig.js ·
-// V1 = the unmodified Locomotion V1 runtime) at the shared speed or at its own fixed speed; presets under "Lanes".
+// LANES: each lane = one presentation engine (RUN-1.3 = run1_gait.js · RUN-1.2 / RUN-1.1 / RUN-1.0 = the frozen run1_gait_v12 / _v11 / _orig.js ·
+// V1 = the unmodified Locomotion V1 runtime) at the shared speed or at its own fixed speed; presets under "Lanes". BLIND (?blind=1…4): the lanes of
+// the preset in a fixed shuffled order with every label hidden (L reveals) — the "which one is sprinting all-out?" test.
 // One WebGL2 canvas, three viewports (the real character mesh draws through anim3d/of_char_gl.js ofCharDraw, so its GPU buffers live in
 // ONE context). A 2D canvas on top carries the optional diagnostics. Nothing here is random; the mover is a closed-form function of time.
 "use strict";
@@ -9,42 +10,52 @@ if (typeof gkRootMatrix !== "function") {                       // ofActorTick (
   var gkRootMatrix = r1RootMatrix;
 }
 const RV1 = {
-  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60, preset: "review",
+  t: 0, rate: 1, playing: true, speedMode: "const", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60, preset: "ladder", labels: true, blind: 0,
   ov: { skel: false, feet: false, com: false, trail: false },
   viewA: "L0:side", viewB: "L1:side", entry: null, R: null, ready: false, frame: 0,
   lanes: [], run1: null, engSkel: {}, warm: {}, lastT: null, perf: [],
 };
 // presentation engines (frozen copies get their own skeleton copy: every version caches its body / speed grid on skel._r1body)
 const RV1_ENG = {
-  run1: { name: () => (typeof RUN1 !== "undefined" ? RUN1.id : "RUN-1.2"), col: "#5ee0ff", api: () => ({ r1Make, r1Replay, r1Evaluate, r1Kinematics, r1GaitAt, RUN1 }), own: false },
+  run1: { name: () => (typeof RUN1 !== "undefined" ? RUN1.id : "RUN-1.3"), col: "#5ee0ff", api: () => ({ r1Make, r1Replay, r1Evaluate, r1Kinematics, r1GaitAt, RUN1 }), own: false },
+  v12: { name: () => "RUN-1.2", col: "#ffd45e", api: () => RUN1_V12, own: true },
   v11: { name: () => "RUN-1.1", col: "#8fe388", api: () => RUN1_V11, own: true },
   orig: { name: () => "RUN-1.0", col: "#c79bff", api: () => RUN1_ORIG, own: true },
   v1: { name: () => "V1", col: "#ff8a5e" },
 };
-// lane presets: v = a fixed speed for that lane (null = the shared speed / ramp); tag = the regime label shown with the lane
+// lane presets: v = a fixed speed for that lane (null = the shared speed / ramp); tag = the regime label shown with the lane; views = the default
+// close views [A, B]. RUN-1.3 ≡ RUN-1.2 at ≤ 8.0 m/s; the presets that show RUN-1.2's own regimes run the FROZEN copy (v12), byte for byte.
+const RV1_VMAX = 9.5;                                            // the ALL-OUT anchor speed (RUN1.regimes.ALLOUT.v)
 const RV1_PRESETS = {
-  review: { label: "Review: RUN-1.1 at 5.5 (the jog) · RUN-1.2 RUN 5.5 · RUN-1.2 SPRINT 7.8 · V1 at 5.5", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }, { eng: "v1", v: 5.5, tag: "5.5" }] },
-  cmp: { label: "RUN-1.2 · RUN-1.1 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "v1" }] },
-  cmp4: { label: "RUN-1.2 · RUN-1.1 · RUN-1.0 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v11" }, { eng: "orig" }, { eng: "v1" }] },
-  hier: { label: "RUN-1.2 hierarchy: JOG 3.0 · RUN 5.5 · SPRINT 7.8", lanes: [{ eng: "run1", v: 3.0, tag: "JOG 3.0" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }] },
-  jogrun: { label: "RUN-1.1 at 5.5 (the jog) · RUN-1.2 RUN 5.5 · RUN-1.2 SPRINT 7.8", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "run1", v: 5.5, tag: "RUN 5.5" }, { eng: "run1", v: 7.8, tag: "SPRINT 7.8" }] },
+  ladder: { label: "Ladder (RUN-1.3): LOW 3.0 · JOG 5.5 · FAST RUN 7.8 · ALL-OUT 9.5", views: ["L3:side", "L2:side"], lanes: [{ eng: "run1", v: 3.0, tag: "LOW 3.0" }, { eng: "run1", v: 5.5, tag: "JOG 5.5" }, { eng: "run1", v: 7.8, tag: "FAST RUN 7.8" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
+  top: { label: "Top end (RUN-1.3): FAST RUN 7.8 · ALL-OUT 9.5", views: ["L1:side", "L0:side"], lanes: [{ eng: "run1", v: 7.8, tag: "FAST RUN 7.8" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
+  stretch: { label: "Same 9.5 m/s: RUN-1.2 (its 7.8 gait stretched) · RUN-1.3 ALL-OUT", views: ["L1:side", "L0:side"], lanes: [{ eng: "v12", v: RV1_VMAX, tag: "9.5 (stretched)" }, { eng: "run1", v: RV1_VMAX, tag: "ALL-OUT 9.5" }] },
+  hier12: { label: "RUN-1.2 frozen: 3.0 · 5.5 · 7.8 (as reviewed)", lanes: [{ eng: "v12", v: 3.0, tag: "LOW 3.0" }, { eng: "v12", v: 5.5, tag: "JOG 5.5" }, { eng: "v12", v: 7.8, tag: "FAST RUN 7.8" }] },
+  review: { label: "RUN-1.2 review (frozen): RUN-1.1 at 5.5 · RUN-1.2 5.5 · RUN-1.2 7.8 · V1 at 5.5", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "v12", v: 5.5, tag: "5.5" }, { eng: "v12", v: 7.8, tag: "7.8" }, { eng: "v1", v: 5.5, tag: "5.5" }] },
+  cmp: { label: "RUN-1.3 · RUN-1.2 · RUN-1.1 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v12" }, { eng: "v11" }, { eng: "v1" }] },
+  cmp4: { label: "RUN-1.3 · RUN-1.2 · RUN-1.1 · RUN-1.0 · V1 — same speed", lanes: [{ eng: "run1" }, { eng: "v12" }, { eng: "v11" }, { eng: "orig" }, { eng: "v1" }] },
+  jogrun: { label: "RUN-1.1 at 5.5 · RUN-1.2 at 5.5 · RUN-1.2 at 7.8 (frozen)", lanes: [{ eng: "v11", v: 5.5, tag: "5.5" }, { eng: "v12", v: 5.5, tag: "5.5" }, { eng: "v12", v: 7.8, tag: "7.8" }] },
   hier11: { label: "RUN-1.1 at 3.0 · 5.5 · 7.8 (one gait stretched)", lanes: [{ eng: "v11", v: 3.0, tag: "3.0" }, { eng: "v11", v: 5.5, tag: "5.5" }, { eng: "v11", v: 7.8, tag: "7.8" }] },
 };
+RV1_PRESETS.hier = RV1_PRESETS.hier12;                           // the RUN-1.2 URL name (?lanes=hier) shows the same, frozen
+const RV1_BLIND = [[2, 0, 3, 1], [1, 3, 0, 2], [3, 1, 2, 0], [0, 2, 1, 3]];   // fixed shuffles of a 4-lane preset (?blind=1…4); fewer lanes: the order filtered
 const RV1_PRE = 1.0;                                             // seconds of pre-roll before the visible start (V1 settles into its gait)
 const RV1_LOOP = 9.0;                                            // seconds per pass, then the run restarts
 
 // ── the authoritative straight-line mover (INPUT to both presentations): constant speed, or the speed ramp (3.0 → 7.8 → 3.0 m/s) ─────────
 const RV1_RAMP = { a: 3.0, b: 7.8, t1: 1.2, t2: 4.2, hold: 1.0 };          // 1.6 m/s² up, the same down; the loop is 9 s
+const RV1_RAMP9 = { a: 6.0, b: 9.5, t1: 1.2, t2: 3.4, hold: 1.0 };        // into ALL-OUT and back: 6.0 → 9.5 → 6.0 m/s, 1.6 m/s² (the regime blend, not an acceleration model)
+const rv1Ramp = () => RV1.speedMode === "ramp9" ? RV1_RAMP9 : RV1_RAMP;
 function rv1V(t, L) {
   if (L && L.v != null) return L.v;
-  if (RV1.speedMode !== "ramp") return RV1.v;
-  const R = RV1_RAMP, d = R.t2 - R.t1; if (t < R.t1) return R.a; if (t < R.t2) return R.a + (R.b - R.a) * (t - R.t1) / d;
+  if (RV1.speedMode !== "ramp" && RV1.speedMode !== "ramp9") return RV1.v;
+  const R = rv1Ramp(), d = R.t2 - R.t1; if (t < R.t1) return R.a; if (t < R.t2) return R.a + (R.b - R.a) * (t - R.t1) / d;
   if (t < R.t2 + R.hold) return R.b; if (t < R.t2 + R.hold + d) return R.b + (R.a - R.b) * (t - R.t2 - R.hold) / d; return R.a;
 }
 function rv1Dist(t, L) {                                               // closed-form integral of rv1V
   if (L && L.v != null) return L.v * t;
-  if (RV1.speedMode !== "ramp") return RV1.v * t;
-  const R = RV1_RAMP, d = R.t2 - R.t1, seg = [[0, R.t1, R.a, R.a], [R.t1, R.t2, R.a, R.b], [R.t2, R.t2 + R.hold, R.b, R.b], [R.t2 + R.hold, R.t2 + R.hold + d, R.b, R.a], [R.t2 + R.hold + d, 1e9, R.a, R.a]];
+  if (RV1.speedMode !== "ramp" && RV1.speedMode !== "ramp9") return RV1.v * t;
+  const R = rv1Ramp(), d = R.t2 - R.t1, seg = [[0, R.t1, R.a, R.a], [R.t1, R.t2, R.a, R.b], [R.t2, R.t2 + R.hold, R.b, R.b], [R.t2 + R.hold, R.t2 + R.hold + d, R.b, R.a], [R.t2 + R.hold + d, 1e9, R.a, R.a]];
   let s = 0; for (const [t0, t1, v0, v1] of seg) { if (t <= t0) break; const te = Math.min(t, t1), f = (te - t0) / (t1 - t0); s += (te - t0) * (v0 + (v0 + (v1 - v0) * f)) / 2; } return s;
 }
 function rv1Path(L) {                                                 // each lane is centred at mid-loop, so lanes at different speeds pass together at t = 4.5 s
@@ -136,17 +147,19 @@ function rv1EngSkel(eng) {                                             // the sk
 }
 function rv1Reset() {
   const skel = RV1.entry.skel, P = RV1_PRESETS[RV1.preset] || RV1_PRESETS.cmp, n = P.lanes.length;
-  RV1.lanes = P.lanes.map((sp, i) => { const eng = RV1_ENG[sp.eng], L = { key: "L" + i, i, eng: sp.eng, v: sp.v != null ? sp.v : null, off: rv1LaneOff(i, n), col: eng.col, trail: [], sim: null, fk: null, skin: null };
-    L.label = eng.name() + (sp.tag ? " " + sp.tag : "");
+  RV1.lanes = rv1Order(n).map((pi, i) => { const sp = P.lanes[pi], eng = RV1_ENG[sp.eng], L = { key: "L" + pi, i, eng: sp.eng, v: sp.v != null ? sp.v : null, off: rv1LaneOff(i, n), col: RV1.blind ? "#e6efe9" : eng.col, trail: [], sim: null, fk: null, skin: null };
+    L.label = eng.name() + (sp.tag ? " " + sp.tag : ""); L.blindName = "lane " + (n - i);   // blind: numbered from the far lane
     if (sp.eng === "v1") { const a = ofActorMake(skel, 0, 0, 0); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} }; L.a = a; L.v1T = -RV1_PRE; }
     else { L.E = eng.api(); L.A = L.E.r1Make(rv1EngSkel(sp.eng)); }
     return L; });
   // the ramp crosses ~20 speed-grid cells: solve every cell of every RUN engine in use once, up front, so the first pass never stalls mid-run
-  if (RV1.speedMode === "ramp") for (const L of RV1.lanes) if (L.E && L.v == null && !RV1.warm[L.eng]) { for (let k = 0; k <= 26; k++) L.E.r1GaitAt(L.A.body, L.E.RUN1.ref, 2.5 + k * 0.25); RV1.warm[L.eng] = true; }
+  if (RV1.speedMode === "ramp" || RV1.speedMode === "ramp9") for (const L of RV1.lanes) if (L.E && L.v == null && !RV1.warm[L.eng]) { for (let k = 0; k <= 30; k++) L.E.r1GaitAt(L.A.body, L.E.RUN1.ref, 2.5 + k * 0.25); RV1.warm[L.eng] = true; }
   RV1.run1 = RV1.lanes.find(L => L.eng === "run1") || RV1.lanes.find(L => L.E) || null;    // HUD / export / capture-label subject
   RV1.t = 0;
   for (const L of RV1.lanes) if (L.a) rv1V1Advance(L, 0);
 }
+function rv1Order(n) { if (!RV1.blind) return [...Array(n).keys()]; return RV1_BLIND[(RV1.blind - 1) % RV1_BLIND.length].filter(k => k < n).concat([...Array(n).keys()].filter(k => k >= 4)); }
+const rv1Name = (L) => RV1.blind && !RV1.reveal ? L.blindName : L.label;
 function rv1V1Advance(L, tTarget) {                              // Locomotion V1: fixed 60 Hz ticks of the unmodified runtime up to tTarget
   if (typeof OF_CONT !== "undefined") OF_CONT.on = RV1.v1Mode === "lc1";
   const dt = 1 / RV1.tickHz, a = L.a;
@@ -216,7 +229,7 @@ function rv1Render() {
         cam = { view: cam.view, proj: P2, eye: cam.eye }; label += " · subject centred";
       }
     }
-    else { const spec = (vw.id === "A" ? RV1.viewA : RV1.viewB).split(":"), o = RV1.lanes.find(L => L.key === spec[0]); if (!o || !o.sim) { rv1Overlay(ctx, vw, null, [], dpr, `lane ${spec[0]} not in this preset`); continue; } cam = rv1CloseCam(o, spec[1], vw.w, vw.h); label = `${o.label} · ${o.sim.v.toFixed(1)} m/s · ${spec[1]}`; vw.subject = spec[0]; }
+    else { const spec = (vw.id === "A" ? RV1.viewA : RV1.viewB).split(":"), o = RV1.lanes.find(L => L.key === spec[0]); if (!o || !o.sim) { rv1Overlay(ctx, vw, null, [], dpr, `lane ${spec[0]} not in this preset`); continue; } cam = rv1CloseCam(o, spec[1], vw.w, vw.h); label = RV1.blind && !RV1.reveal ? `${rv1Name(o)} · ${spec[1]}` : `${o.label} · ${o.sim.v.toFixed(1)} m/s · ${spec[1]}`; vw.subject = spec[0]; }
     vw.cam = cam;
     gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE); gl.disable(gl.BLEND);
     const G = RV1.ground; gl.useProgram(G.p); gl.uniformMatrix4fv(G.u.view, false, cam.view); gl.uniformMatrix4fv(G.u.proj, false, cam.proj); gl.uniform4fv(G.u.sh, sh); gl.uniform1i(G.u.nsh, ns);
@@ -250,11 +263,11 @@ function rv1Overlay(ctx, vw, cam, subj, dpr, label) {
         const p = P(gp); if (!p) continue; ctx.beginPath(); ctx.arc(p[0], p[1], (vw.id === "game" ? 3 : 6) * dpr, 0, 7); ctx.fillStyle = planted ? (sd === "R" ? "rgba(120,255,160,0.95)" : "rgba(255,120,200,0.95)") : "rgba(255,255,255,0.0)"; ctx.fill(); ctx.strokeStyle = sd === "R" ? "#78ffa0" : "#ff78c8"; ctx.lineWidth = 1.2 * dpr; ctx.stroke(); }
     }
     if (RV1.ov.com) { const pv = P(fk.joint[B.pelvis.idx]), cm = P(rv1COM(fk)); if (pv) { ctx.fillStyle = "#ffd45e"; ctx.fillRect(pv[0] - 3 * dpr, pv[1] - 3 * dpr, 6 * dpr, 6 * dpr); } if (cm) { ctx.beginPath(); ctx.arc(cm[0], cm[1], 4 * dpr, 0, 7); ctx.strokeStyle = "#ffd45e"; ctx.lineWidth = 2 * dpr; ctx.stroke(); } }
-    if (vw.id === "game" && subj.length > 1 && RV1.labels !== false) {      // tag beside the pelvis, toward the screen side away from the direction of travel
+    if (vw.id === "game" && subj.length > 1 && (RV1.blind ? RV1.reveal : RV1.labels !== false)) {      // tag beside the pelvis, toward the screen side away from the direction of travel
       const pv = P(fk.joint[B.pelvis.idx]), ahead = P(V3.add(fk.joint[B.pelvis.idx], [Math.cos(s.o.sim.heading), 0, -Math.sin(s.o.sim.heading)])); if (pv && ahead) {
         const sx = ahead[0] >= pv[0] ? -1 : 1, x = pv[0] + sx * 14 * dpr; ctx.font = `600 ${10 * dpr}px -apple-system, Helvetica`; ctx.textAlign = sx < 0 ? "right" : "left"; ctx.textBaseline = "middle";
-        ctx.fillStyle = "rgba(0,0,0,0.55)"; const w = ctx.measureText(s.o.label).width; ctx.fillRect(sx < 0 ? x - w - 3 * dpr : x - 3 * dpr, pv[1] - 7 * dpr, w + 6 * dpr, 14 * dpr);
-        ctx.fillStyle = col; ctx.fillText(s.o.label, x, pv[1]); ctx.textBaseline = "alphabetic"; } }
+        ctx.fillStyle = "rgba(0,0,0,0.55)"; const w = ctx.measureText(rv1Name(s.o)).width; ctx.fillRect(sx < 0 ? x - w - 3 * dpr : x - 3 * dpr, pv[1] - 7 * dpr, w + 6 * dpr, 14 * dpr);
+        ctx.fillStyle = col; ctx.fillText(rv1Name(s.o), x, pv[1]); ctx.textBaseline = "alphabetic"; } }
   }
   ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.textAlign = "left"; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(label, (vw.x + 8) * dpr, (vw.y + 16) * dpr);
   ctx.restore();
@@ -262,8 +275,10 @@ function rv1Overlay(ctx, vw, cam, subj, dpr, label) {
 function rv1Hud() {
   const r = RV1.run1; if (!r || !r.G) return; const p = r.G.p, lg = r.pose.legs;
   const pm = RV1.perf.length ? RV1.perf.reduce((a, b) => a + b, 0) / RV1.perf.length : 0;
+  if (RV1.blind && !RV1.reveal) { document.getElementById("hud").textContent = `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   BLIND ${RV1.blind}: labels, speeds and the HUD hidden — press L to reveal`; return; }
+  const ladder = r.E && r.E.RUN1 && r.E.RUN1.ladder, reg = ladder && ladder[p.anchor] ? ladder[p.anchor] : p.anchor;
   document.getElementById("hud").textContent =
-    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   ${r.label}: ${r.sim.v.toFixed(2)} m/s (${p.anchor}, blend ${p.blend.toFixed(2)}) · lean+${(r.A.accLean || 0).toFixed(1)}° · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
+    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   ${r.label}: ${r.sim.v.toFixed(2)} m/s (${reg}, blend ${p.blend.toFixed(2)}) · lean+${(r.A.accLean || 0).toFixed(1)}° · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
 }
 
 // ── loop + UI ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -277,9 +292,11 @@ function rv1SetPlaying(on) { RV1.playing = on; const b = document.getElementById
 function rv1Group(attr, fn) { document.querySelectorAll(`[data-${attr}]`).forEach(b => b.addEventListener("click", () => { document.querySelectorAll(`[data-${attr}]`).forEach(x => x.classList.toggle("on", x === b)); fn(b.dataset[attr]); })); }
 function rv1Views() {
   const fix = () => { const P = RV1_PRESETS[RV1.preset] || RV1_PRESETS.cmp, opts = [];
-    P.lanes.forEach((sp, i) => { for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top", "zoomFront", "zoomSide", "zoom34", "zoomRear34"]) opts.push([`L${i}:${a}`, `${RV1_ENG[sp.eng].name()}${sp.tag ? " " + sp.tag : ""} · ${a}`]); });
+    const n = P.lanes.length, ord = rv1Order(n);                   // blind: listed in screen order under the blind names, no preset views
+    ord.forEach((pi, i) => { const sp = P.lanes[pi]; for (const a of ["side", "front34", "rear34", "front", "rear", "sideR", "top", "zoomFront", "zoomSide", "zoom34", "zoomRear34"]) opts.push([`L${pi}:${a}`, `${RV1.blind ? "lane " + (n - i) : RV1_ENG[sp.eng].name() + (sp.tag ? " " + sp.tag : "")} · ${a}`]); });
     for (const id of ["selA", "selB"]) { const s = document.getElementById(id); s.innerHTML = opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join(""); }
-    RV1.viewA = "L0:side"; RV1.viewB = (P.lanes.length > 1 ? "L1" : "L0") + (P.lanes.length > 1 ? ":side" : ":front34");
+    if (RV1.blind) { RV1.viewA = `L${ord[0]}:side`; RV1.viewB = `L${ord[Math.min(1, n - 1)]}:side`; }
+    else { RV1.viewA = P.views ? P.views[0] : "L0:side"; RV1.viewB = P.views ? P.views[1] : (n > 1 ? "L1" : "L0") + (n > 1 ? ":side" : ":front34"); }
     document.getElementById("selA").value = RV1.viewA; document.getElementById("selB").value = RV1.viewB; };
   RV1.fixViews = fix; fix();
   document.getElementById("selA").onchange = (e) => { RV1.viewA = e.target.value; }; document.getElementById("selB").onchange = (e) => { RV1.viewB = e.target.value; };
@@ -291,11 +308,13 @@ function rv1Boot() {
   RV1.R = { gl }; RV1.ground = rv1GroundProgram(gl);
   if (q.get("lanes") && RV1_PRESETS[q.get("lanes")]) RV1.preset = q.get("lanes");
   if (q.get("show") || q.get("cmp")) { const w = (q.get("show") || "").split(","); RV1.preset = w.includes("orig") || q.get("cmp") === "all" ? "cmp4" : "cmp"; }   // legacy URLs
-  if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
+  if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp" || q.get("v") === "ramp9") RV1.speedMode = q.get("v"); else RV1.v = +q.get("v"); }
+  if (q.get("rate")) RV1.rate = +q.get("rate"); if (q.get("labels") === "0") RV1.labels = false; if (q.get("blind")) { RV1.blind = Math.max(1, +q.get("blind") || 1); if (!q.get("lanes")) RV1.preset = "ladder"; }
   if (q.get("v1")) RV1.v1Mode = q.get("v1"); if (q.get("ticks") === "1") RV1.sampleTicks = true;
   for (const k of ["skel", "feet", "com", "trail"]) if (q.get(k) === "1") { RV1.ov[k] = true; }
   rv1Views();
   rv1Group("rate", (v) => { RV1.rate = +v; }); rv1Group("zoom", (v) => { RV1.zoom = +v; });
+  document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", +x.dataset.rate === RV1.rate));
   const selL = document.getElementById("selLanes"); selL.innerHTML = Object.entries(RV1_PRESETS).map(([k, P]) => `<option value="${k}">${P.label}</option>`).join(""); selL.value = RV1.preset;
   selL.onchange = (e) => { RV1.preset = e.target.value; RV1.fixViews(); const t = RV1.t; rv1Reset(); rv1Update(t); RV1.t = t; };
   document.querySelectorAll("[data-zoom]").forEach(x => x.classList.toggle("on", +x.dataset.zoom === RV1.zoom));
@@ -309,7 +328,8 @@ function rv1Boot() {
   };
   const selV1 = document.getElementById("selV1"); selV1.value = RV1.v1Mode; selV1.onchange = (e) => { RV1.v1Mode = e.target.value; rv1Reset(); rv1Update(0); };
   const selDir = document.getElementById("selDir"); selDir.value = RV1.dir; selDir.onchange = (e) => { RV1.dir = e.target.value; rv1Reset(); rv1Update(0); };
-  const selV = document.getElementById("selV"); selV.value = RV1.speedMode === "ramp" ? "ramp" : RV1.v.toFixed(1); selV.onchange = (e) => { if (e.target.value === "ramp") RV1.speedMode = "ramp"; else { RV1.speedMode = "const"; RV1.v = +e.target.value; } rv1Reset(); rv1Update(0); };
+  const selV = document.getElementById("selV"); selV.value = RV1.speedMode !== "const" ? RV1.speedMode : RV1.v.toFixed(1); selV.onchange = (e) => { if (e.target.value.startsWith("ramp")) RV1.speedMode = e.target.value; else { RV1.speedMode = "const"; RV1.v = +e.target.value; } rv1Reset(); rv1Update(0); };
+  const cL = document.getElementById("cLabels"); if (cL) { cL.checked = RV1.labels; cL.onchange = () => { RV1.labels = cL.checked; if (RV1.blind) RV1.reveal = cL.checked; }; }
   for (const [id, k] of [["cSkel", "skel"], ["cFeet", "feet"], ["cCom", "com"], ["cTrail", "trail"]]) { const c = document.getElementById(id); c.checked = RV1.ov[k]; c.onchange = () => { RV1.ov[k] = c.checked; }; }
   window.addEventListener("keydown", (e) => {
     if (e.target.tagName === "SELECT") return;
@@ -318,6 +338,7 @@ function rv1Boot() {
     else if ("1234".includes(e.key)) { const r = [1, 0.5, 0.25, 0.1][+e.key - 1]; RV1.rate = r; document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", +x.dataset.rate === r)); }
     else if (e.key === "s" || e.key === "S") { RV1.ov.skel = !RV1.ov.skel; document.getElementById("cSkel").checked = RV1.ov.skel; }
     else if (e.key === "c" || e.key === "C") { RV1.ov.feet = !RV1.ov.feet; document.getElementById("cFeet").checked = RV1.ov.feet; }
+    else if (e.key === "l" || e.key === "L") { if (RV1.blind) RV1.reveal = !RV1.reveal; else RV1.labels = !RV1.labels; const c = document.getElementById("cLabels"); if (c) c.checked = RV1.blind ? !!RV1.reveal : RV1.labels; }
   });
   const id = q.get("char") || "vinicius";
   ofCharLoad(id).then((e) => {

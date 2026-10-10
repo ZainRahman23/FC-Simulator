@@ -20,12 +20,12 @@ function refCol(spec) {
 }
 let X = null;
 function run1Col(which, v) {
-  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body;
+  X = X || loadRun1(); const E = which === "orig" ? X.RUN1_ORIG : which === "v11" ? X.RUN1_V11 : which === "v12" ? X.RUN1_V12 : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body;
   const B = sk.byName, A = E.r1Make(sk), G = E.r1Prepare(A, v), rows = [];
   for (let k = 0; k <= N; k++) { const f = E.r1FK(G, E.r1Pose(G, (k / N) % 1), null), P = (n) => f.P[B[n].idx], hc = mid(P("thigh_R"), P("thigh_L"));
     const tip = X.RV.add(f.P[B.toe_R.idx], X.R3.v(f.R[B.toe_R.idx], [0, -0.031, G.body.tipZ - G.body.mtp[2]]));
     const q = { ankle: P("foot_R"), tip, knee: P("shin_R"), wrist: P("hand_R") }, r = {}; for (const k2 in q) { const d = sub(q[k2], hc); r[k2] = [d[2], d[1]]; } rows.push(r); }
-  return { title: `${which === "orig" ? "RUN-1.0" : which === "v11" ? "RUN-1.1" : "RUN-1.2"} ${v} m/s`, rows, D: G.p.D, col: which === "orig" ? "#c79bff" : which === "v11" ? "#8fe388" : "#5ee0ff" };
+  return { title: `${which === "orig" ? "RUN-1.0" : which === "v11" ? "RUN-1.1" : which === "v12" ? "RUN-1.2" : X.RUN1.id} ${v} m/s`, rows, D: G.p.D, col: which === "orig" ? "#c79bff" : which === "v11" ? "#8fe388" : which === "v12" ? "#ffd45e" : "#5ee0ff" };
 }
 const cols = arg("cols", "").split(",").filter(Boolean).map(c => c.startsWith("ref:") ? refCol(c) : run1Col(c.split(":")[0], +c.split(":")[1]));
 const CW = 330, H = 560, S = 260, oy = 150;

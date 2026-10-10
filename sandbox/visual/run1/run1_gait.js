@@ -1,5 +1,7 @@
-// ═══ run1/run1_gait.js — LOCOMOTION V2 / RUN-1.1: straight-line football running on the real character rig (presentation only) ═══
-// RUN-1.1 is the effort pass on RUN-1 (the original, RUN-1.0, is frozen in run1_gait_orig.js). See review_artifacts/locomotion_v2_run1/RUN1_1_EFFORT.md.
+// ═══ run1/run1_gait.js — LOCOMOTION V2 / RUN-1.3: straight-line football running on the real character rig (presentation only) ═══
+// Lineage (each frozen beside this file for comparison): RUN-1.0 the original (run1_gait_orig.js) · RUN-1.1 the effort pass (run1_gait_v11.js,
+// RUN1_1_EFFORT.md) · RUN-1.2 the speed regimes (run1_gait_v12.js, RUN1_2_REGIMES.md) · RUN-1.3 = RUN-1.2 + an ALL-OUT top-speed regime above it
+// (RUN1_3_ALLOUT.md). See review_artifacts/locomotion_v2_run1/.
 // A fresh production-locomotion track. It does not modify, call into or replace Outfield Locomotion V1 (anim3d/of_loco.js and the
 // shared law the simulation consumes); it only reads the character's own bind (anim3d/of_character.js ofCharSkeleton output).
 //
@@ -117,7 +119,7 @@ function r1Body(skel) {
 
 // ── the RUN-1 parameter set at the reference speed (5.5 m/s). Units: deg, s, m. Provenance per item in RUN1_RESEARCH.md ─────────
 const RUN1 = {
-  id: "RUN-1.2",
+  id: "RUN-1.3",
   ref: {
     v: 5.5,
     // timing: a footballer at 5.5 m/s — higher step rate, shorter steps and longer contact than a distance runner
@@ -237,10 +239,26 @@ RUN1.regimes.SPRINT = Object.assign({}, RUN1.anchors11[2], {
   armFwd: 42, armBack: 56, elbow: 95, elbowAmp: 30, armAbdAmp: 4,
   lean: 12, leanAmp: 2.0, pelvisYaw: 7, pelvisYawPh: 0.20, thoraxYaw: 14, obliq: 5, tiltAmp: 3,
 });
-function r1Anchors(ref) {                                                           // the RUN-1.2 anchor list: JOG 3.0 · JOG 4.0 (= RUN-1.1 at 4.0) · RUN · SPRINT
+// RUN-1.3 — ALL-OUT. The user (10 Oct, after watching RUN-1.2): keep the three RUN-1.2 regimes exactly; they read one category slower than their
+// names (LOW / JOG / FAST RUN, RUN1.ladder), and the missing category is a footballer running as fast as he physically can. ALL-OUT is fitted at
+// its own speed (RUN1_3_ALLOUT.md). RUN-1.3 ≡ RUN-1.2 at every speed ≤ 8.0 m/s: the SPRINT parameters hold from 7.8 to 8.0 m/s (RUN-1.2 already
+// held them above 7.8), and the blend into ALL-OUT starts at the 8.0 m/s speed-grid cell, so every cell ≤ 8.0 is RUN-1.2's own solve.
+RUN1.regimes.ALLOUT = Object.assign({}, RUN1.regimes.SPRINT, { v: 9.5, id: "ALLOUT",
+  cadence: 4.50, tc: 0.100, vSkew: 1.8,
+  kneeTD: 27, kneeTO: 24, kneePkExtra: 5, kneeTOrate: 120, strikeToeUp: -10, flatS: 0.22, heelRiseS: 0.23, heelRiseTO: 82, footW: 0.018, sway: 0.006,
+  kneeMax: 142, kneeMaxW: 0.40, kneeHold: 128, kneeHoldW: 0.55, kneeExt: 26, kneeExtW: 0.82,
+  hipMax: 84, hipMaxW: 0.66, hipOpp: 16, hipOppK: 1, ankleDFSwing: -14, ankleDFW: 0.55,
+  armFwd: 52, armBack: 56, elbow: 92, elbowAmp: 36, armAbdAmp: 4,
+  lean: 11, leanAmp: 1.6, tilt: 12, tiltAmp: 3.2, pelvisYaw: 7.5, thoraxYaw: 16, obliq: 5, headNod: 0.8, headYawFollow: 0.15,
+});
+RUN1.allOutFrom = 8.0;                                                             // the last RUN-1.2 grid cell; the ALL-OUT blend starts here
+// what the user calls each regime (presentation labels; the parameter keys keep their fitting history)
+RUN1.ladder = { JOG: "LOW", RUN: "JOG", SPRINT: "FAST RUN", ALLOUT: "ALL-OUT" };
+function r1Anchors(ref) {                                       // the anchor list: JOG 3.0 · JOG 4.0 (= RUN-1.1 at 4.0) · RUN · SPRINT 7.8 · SPRINT 8.0 · ALL-OUT
   const J = Object.assign({}, ref, RUN1.jog11), R11 = Object.assign({}, ref, RUN1.anchors11[1]), t = (4.0 - 3.0) / (5.5 - 3.0), J4 = { v: 4.0, id: "JOG" };
   for (const k in ref) if (typeof ref[k] === "number") J4[k] = J[k] + (R11[k] - J[k]) * t;
-  return [J, Object.assign({}, ref, J4, { v: 4.0, id: "JOG" }), Object.assign({}, ref, RUN1.regimes.RUN), Object.assign({}, ref, RUN1.regimes.SPRINT)];
+  const S = Object.assign({}, ref, RUN1.regimes.SPRINT);
+  return [J, Object.assign({}, ref, J4, { v: 4.0, id: "JOG" }), Object.assign({}, ref, RUN1.regimes.RUN), S, Object.assign({}, S, { v: RUN1.allOutFrom }), Object.assign({}, ref, RUN1.regimes.ALLOUT)];
 }
 function r1ParamsAt(v, base) {
   const ref = base || RUN1.ref, A = r1Anchors(ref);
@@ -491,7 +509,7 @@ function r1FK(G, pose, rootM, out) {
 // ── the runtime entry: one actor, authoritative {x, y (pitch), heading, speed} + a gait phase it owns (presentation) ───────────
 // Speed grid: the solved gait (plant distance, pelvis height, swing boundary curves) is computed once per grid speed and interpolated —
 // every quantity is continuous in the speed, so the blend is smooth and a speed change costs a few hundred multiply-adds, not a solve.
-const R1_GRID = { v0: 2.5, dv: 0.25, n: 27, keys: 0 };           // 2.5 … 9.0 m/s
+const R1_GRID = { v0: 2.5, dv: 0.25, n: 31, keys: 0 };           // 2.5 … 10.0 m/s (RUN-1.2: 2.5 … 9.0; the cells it had are unchanged)
 function r1GridGait(body, prm, i) {
   const key = prm === RUN1.ref ? "ref" : (prm.__key || (prm.__key = "p" + (++R1_GRID.keys)));   // identity tag of a parameter object (deterministic counter)
   const C = body._r1grid || (body._r1grid = {}), row = C[key] || (C[key] = []);

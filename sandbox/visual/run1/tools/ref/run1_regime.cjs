@@ -2,7 +2,7 @@
 // drive, recovery, upper body), measured the SAME way from world joint positions on real strides (CMU mocap) and on any RUN-1 version at any
 // speed. One stride, right leg, right touchdown → next right touchdown.
 // usage: node run1_regime.cjs --cmu <dir> --cols ref:16_46:r:18:100,v11:3.0,v11:5.5,v11:7.8,new:5.5 [--json out.json]
-//   engines: orig (RUN-1.0), v11 (RUN-1.1, frozen), new (run1_gait.js)
+//   engines: orig (RUN-1.0), v11 (RUN-1.1, frozen), v12 (RUN-1.2, frozen), new (run1_gait.js)
 const { trial } = require("./cmu_trial.cjs"), { parseASF, parseAMC, fk } = require("./cmu_amc.cjs"), { loadRun1 } = require("../run1_load.cjs");
 const path = require("path"), fs = require("fs");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
@@ -29,7 +29,7 @@ function refSource(spec) {
 }
 let X = null;
 function run1Source(eng, v) {
-  X = X || loadRun1(); const E = eng === "orig" ? X.RUN1_ORIG : eng === "v11" ? X.RUN1_V11 : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body;
+  X = X || loadRun1(); const E = eng === "orig" ? X.RUN1_ORIG : eng === "v11" ? X.RUN1_V11 : eng === "v12" ? X.RUN1_V12 : X, sk = Object.assign({}, X.charSkel("vinicius")); delete sk._r1body;
   const B = sk.byName, A = E.r1Make(sk), hz = 240, frames = []; let t0 = null;
   for (let k = 0; k <= 3 * hz; k++) { const t = 1.5 + k / hz, rs = E.r1Replay(A, () => v, null, t), ev = E.r1Evaluate(A, { x: v * t, y: 0, heading: 0, v }), lg = A.pose.legs; rs();
     const f = ev.fk, P = (n) => Array.from(f.joint[B[n].idx]), tip = (n) => Array.from(f.tip[B[n].idx]);
@@ -40,7 +40,7 @@ function run1Source(eng, v) {
   // trim to the first right touchdown … the next one (+1 frame)
   let i1 = t0 + 1; while (i1 < frames.length && !( !frames[i1 - 1].stR && frames[i1].stR)) i1++;
   const fr = frames.slice(t0, i1 + 1); const tb = fr[0].t; fr.forEach(f => f.t -= tb);
-  const names = { orig: "RUN-1.0", v11: "RUN-1.1", new: "RUN-1.2" };
+  const names = { orig: "RUN-1.0", v11: "RUN-1.1", v12: "RUN-1.2", new: X.RUN1.id };
   return { title: `${names[eng]} ${v}`, frames: fr, fwd: [1, 0, 0], up: [0, 1, 0], right: [0, 0, -1], hz, v, ref: false };   // world: x = forward, z = −right (GL)
 }
 function metrics(S) {
@@ -62,7 +62,8 @@ function metrics(S) {
   const J0 = F[0].J, cpt = J0.R.mtp; m.tdFootAheadOfCOM_m = fx(J0.R.ankle) - fx(C[0]); m.tdFootAheadOfHip_m = fx(J0.R.ankle) - fx(J0.R.hip);
   m.tdShank_deg = sag(sub(J0.R.ankle, J0.R.knee)); m.tdThigh_deg = sag(sub(J0.R.knee, J0.R.hip)); m.tdKnee_deg = ang(sub(J0.R.knee, J0.R.hip), sub(J0.R.ankle, J0.R.knee));
   m.tdLegAngle_deg = Math.atan2(fx(J0.R.ankle) - fx(J0.R.hip), uy(J0.R.hip) - uy(J0.R.ankle)) * D;
-  const JT = F[iTO].J; m.toLegAngle_deg = Math.atan2(fx(JT.R.mtp) - fx(JT.R.hip), uy(JT.R.hip) - uy(JT.R.mtp)) * D;
+  m.flightOverContact = m.flight_ms / m.contact_ms;
+  const JT = F[iTO].J; m.toFootBehindCOM_m = fx(C[iTO]) - fx(JT.R.mtp); m.toLegAngle_deg = Math.atan2(fx(JT.R.mtp) - fx(JT.R.hip), uy(JT.R.hip) - uy(JT.R.mtp)) * D;
   // stance compression: hip → ankle distance shortening (and knee flexion excursion)
   const legL = F.slice(0, iTO + 1).map(f => len(sub(f.J.R.hip, f.J.R.ankle))); m.legShorten_cm = (legL[0] - Math.min(...legL)) * 100;
   const kneeS = F.slice(0, iTO + 1).map(f => ang(sub(f.J.R.knee, f.J.R.hip), sub(f.J.R.ankle, f.J.R.knee))); m.stanceKneePeak = Math.max(...kneeS); m.stanceKneeFlex = m.stanceKneePeak - kneeS[0];
@@ -82,10 +83,15 @@ function metrics(S) {
   const i90 = Math.round(iTO + 0.9 * (n - iTO)); m.knee90swing = kR[i90];
   let ke = 0, tr = 0; for (let i = Math.round(iTO + 0.5 * (n - iTO)); i < n; i++) { ke = Math.min(ke, (kR[i + 1] - kR[i - 1]) / (2 * dt)); tr = Math.min(tr, (thR[i + 1] - thR[i - 1]) / (2 * dt)); }
   m.lateSwingKneeExtRate_degs = ke; m.lateSwingThighRetractRate_degs = tr;
+  // thigh reversal after toe-off: how soon the rear thigh stops and turns forward, and how fast it then comes through
+  let iRev = iTO; for (let i = iTO; i < Math.min(n, iTO + Math.round(0.15 * hz)); i++) if (thR[i] < thR[iRev]) iRev = i; m.thighReversalAfterTO_ms = (iRev - iTO) * dt * 1000;
+  let wf = 0; for (let i = iTO + 1; i < iTh; i++) wf = Math.max(wf, (thR[i + 1] - thR[i - 1]) / (2 * dt)); m.swingThighFwdRate_degs = wf;
+  // foot speed relative to the hip just before touchdown (m/s, − = sweeping back under the body)
+  const fh = (i) => (fx(F[i + 1].J.R.ankle) - fx(F[i + 1].J.R.hip) - fx(F[i - 1].J.R.ankle) + fx(F[i - 1].J.R.hip)) / (2 * dt);
   // foot velocity relative to the ground just before touchdown (ankle, world forward, m/s; + = still moving forward), 10 and 25 ms before; and relative to the hip
   const fv = (i) => (fx(F[i + 1].J.R.ankle) - fx(F[i - 1].J.R.ankle)) / (2 * dt), lastFrame = n;     // the stride ends AT the next right touchdown
   const back = (ms) => Math.max(1, lastFrame - Math.round(ms / 1000 * hz));
-  m.footVel10msBeforeTD_ms = fv(back(10)); m.footVel25msBeforeTD_ms = fv(back(25)); m.footVel50msBeforeTD_ms = fv(back(50));
+  m.footVel10msBeforeTD_ms = fv(back(10)); m.footVel25msBeforeTD_ms = fv(back(25)); m.footVel50msBeforeTD_ms = fv(back(50)); m.footVsHip10msBeforeTD_ms = fh(back(10));
   // upper body
   const tr2 = F.map(f => Math.atan2(dot(sub(f.J.neck, f.J.pel), S.fwd), dot(sub(f.J.neck, f.J.pel), S.up)) * D);
   m.trunkLean_deg = tr2.reduce((a, b) => a + b, 0) / tr2.length; m.trunkRange_deg = Math.max(...tr2) - Math.min(...tr2);
@@ -95,6 +101,8 @@ function metrics(S) {
   const el = F.map(f => ang(sub(f.J.R.el, f.J.R.sh), sub(f.J.R.wr, f.J.R.el))); m.elbowMin = Math.min(...el); m.elbowMax = Math.max(...el);
   const wH = F.map(f => uy(f.J.R.wr) - uy(f.J.pel)), wF = F.map(f => fx(f.J.R.wr) - fx(f.J.pel)); m.handHighAboveHip_cm = Math.max(...wH) * 100; m.handFwd_cm = Math.max(...wF) * 100; m.handBack_cm = -Math.min(...wF) * 100;
   const hd = F.map(f => uy(f.J.head)); m.headRange_cm = (Math.max(...hd) - Math.min(...hd)) * 100;
+  const hp = F.map(f => sag(sub(f.J.neck, f.J.head))); m.headPitchRange_deg = Math.max(...hp) - Math.min(...hp);
+  m.pelvisHeightMean_cm = py.reduce((a, b) => a + b, 0) / py.length * 100;
   return m;
 }
 const cols = arg("cols", "").split(",").filter(Boolean).map(c => c.startsWith("ref:") ? refSource(c) : run1Source(c.split(":")[0], +c.split(":")[1]));
