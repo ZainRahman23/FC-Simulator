@@ -13,15 +13,17 @@ const skel = X.charSkel("vinicius"), B = skel.byName;
 const GROUPS = { pelvis: ["pelvis"], spine: ["spine", "chest"], head: ["head"], hands: ["hand_R", "hand_L"], elbows: ["foreArm_R", "foreArm_L"], knees: ["shin_R", "shin_L"], ankles: ["foot_R", "foot_L"], toes: ["toe_R", "toe_L"] };
 // speed profile: constant v, or --ramp a,b,T1,T2 (v from a to b between T1 and T2 s, then back to a over the same time) — the same profile drives V1
 const RAMP = arg("ramp") ? arg("ramp").split(",").map(Number) : null;
+if (RAMP && (RAMP.length !== 4 || RAMP.some(x => !isFinite(x)))) { console.error("--ramp needs a,b,T1,T2 (e.g. 3,7.8,1.2,4.2 — the viewer's ramp)"); process.exit(2); }
 const SPEED_OF = (t) => { if (!RAMP) return v; const [a, b, T1, T2] = RAMP, d = T2 - T1; if (t < T1) return a; if (t < T2) return a + (b - a) * (t - T1) / d; if (t < T2 + 1) return b; if (t < T2 + 1 + d) return b + (a - b) * (t - T2 - 1) / d; return a; };
 const DIST = (t) => { let s = 0; const n = Math.max(1, Math.ceil(t * 960)), h = t / n; for (let i = 0; i < n; i++) s += SPEED_OF((i + 0.5) * h) * h; return s; };
 const simAt = (t) => { const vv = SPEED_OF(t); return { x: 20 + DIST(t), y: 34, vx: vv, vy: 0, heading: 0, v: vv }; };
 const sim = simAt;
 function series(kind) {                                   // returns per-tick { joint: [[x,y,z]...], planted: {R,L}, low: {R,L}, ground: {R,L} }
   const out = [];
-  if (kind === "run1") {
-    const A = X.r1Make(skel), vOf = SPEED_OF;
-    for (let k = 0; k <= SECS * HZ; k++) { const t = k * dt; const restore = X.r1Replay(A, vOf, null, t); const ev = X.r1Evaluate(A, simAt(t)); restore(); const fk = ev.fk;
+  if (kind === "run1" || kind === "orig") {                // RUN-1.1 (run1_gait.js) or RUN-1.0 (the frozen run1_gait_orig.js, its own skeleton copy)
+    const E = kind === "orig" ? X.RUN1_ORIG : X, sk = kind === "orig" ? Object.assign({}, skel, { _r1body: undefined }) : skel;
+    const A = E.r1Make(sk), vOf = SPEED_OF;
+    for (let k = 0; k <= SECS * HZ; k++) { const t = k * dt; const restore = E.r1Replay(A, vOf, null, t); const ev = E.r1Evaluate(A, simAt(t)); restore(); const fk = ev.fk;
       out.push({ t, j: fk.joint.map(p => p.slice()), tip: fk.tip.map(p => p.slice()), W: [B.foot_R.idx, B.foot_L.idx, B.toe_R.idx, B.toe_L.idx].reduce((o, i) => (o[i] = Array.from(fk.world[i]), o), {}), planted: { R: ev.pose.legs.R.st, L: ev.pose.legs.L.st } }); }
   } else {
     X.setCont(kind === "lc1");
@@ -60,16 +62,16 @@ function analyse(S, hz) {
   return r;
 }
 const res = {};
-for (const kind of ["run1", "v13", "lc1"]) { const S = kind === "run1" && HZ !== 60 ? series(kind) : series(kind); res[kind] = analyse(S, kind === "run1" ? HZ : 60); }
+for (const kind of ["run1", "orig", "v13", "lc1"]) res[kind] = analyse(series(kind), kind === "run1" || kind === "orig" ? HZ : 60);
 // RUN-1 angular velocities (continuous time): channel rates over one stride at 2000 samples
 { const A = X.r1Make(skel); const G = X.r1Prepare(A, v), T = G.p.T, h = 1e-4, mx = {};
   for (let i = 0; i < 2000; i++) { const t = i / 2000 * T; const c0 = X.r1Pose(G, ((t - h) / T + 1) % 1).legs.R.ch, c1 = X.r1Pose(G, ((t + h) / T) % 1).legs.R.ch;
     for (const c of X.R1_CH) { const w = Math.abs(c1[c] - c0[c]) / (2 * h) * D; mx[c] = Math.max(mx[c] || 0, w); } }
   res.run1.channelRateMaxDegS = Object.fromEntries(Object.entries(mx).map(([k, w]) => [k, Math.round(w)])); }
-console.log(`continuity @ ${v} m/s, RUN-1 sampled at ${HZ} Hz, V1 at 60 Hz ticks (measures in cm per tick²; lower = smoother)`);
-console.log("group     |  RUN-1 acc p99/max   jerk p99/max  |  V1.3 acc p99/max   jerk p99/max  |  V1+LC-1 acc p99/max  jerk p99/max");
-for (const g of Object.keys(GROUPS)) { const a = res.run1.groups[g], b = res.v13.groups[g], c = res.lc1.groups[g];
-  console.log(`${g.padEnd(9)} | ${String(a.accP99cm).padStart(6)} / ${String(a.accMaxCm).padEnd(6)} ${String(a.jerkP99cm).padStart(6)} / ${String(a.jerkMaxCm).padEnd(6)} | ${String(b.accP99cm).padStart(6)} / ${String(b.accMaxCm).padEnd(6)} ${String(b.jerkP99cm).padStart(6)} / ${String(b.jerkMaxCm).padEnd(6)} | ${String(c.accP99cm).padStart(6)} / ${String(c.accMaxCm).padEnd(6)} ${String(c.jerkP99cm).padStart(6)} / ${String(c.jerkMaxCm).padEnd(6)}`); }
-for (const k of ["run1", "v13", "lc1"]) console.log(`${k}: contact-point slip per stance R ${res[k].slip.R.stanceCm} cm (max/tick ${res[k].slip.R.tickMm} mm) L ${res[k].slip.L.stanceCm} cm · penetration R ${res[k].pen.R} L ${res[k].pen.L} cm · swing min ankle-above-rest R ${res[k].clear.R} L ${res[k].clear.L} cm`);
+console.log(`continuity ${RAMP ? `on the ramp ${RAMP[0]} → ${RAMP[1]} → ${RAMP[0]} m/s (accelerating ${RAMP[2]}–${RAMP[3]} s, ${SECS} s)` : `@ ${v} m/s`}, RUN-1.x sampled at ${HZ} Hz, V1 at 60 Hz ticks (measures in cm per tick²; lower = smoother)`);
+console.log("group     |  RUN-1.1 acc p99/max  jerk p99/max |  RUN-1.0 acc p99/max  jerk p99/max |  V1.3 acc p99/max   jerk p99/max  |  V1+LC-1 acc p99/max  jerk p99/max");
+const cell = (a) => `${String(a.accP99cm).padStart(6)} / ${String(a.accMaxCm).padEnd(6)} ${String(a.jerkP99cm).padStart(6)} / ${String(a.jerkMaxCm).padEnd(6)}`;
+for (const g of Object.keys(GROUPS)) console.log(`${g.padEnd(9)} | ${cell(res.run1.groups[g])} | ${cell(res.orig.groups[g])} | ${cell(res.v13.groups[g])} | ${cell(res.lc1.groups[g])}`);
+for (const k of ["run1", "orig", "v13", "lc1"]) console.log(`${k}: contact-point slip per stance R ${res[k].slip.R.stanceCm} cm (max/tick ${res[k].slip.R.tickMm} mm) L ${res[k].slip.L.stanceCm} cm · penetration R ${res[k].pen.R} L ${res[k].pen.L} cm · swing min ankle-above-rest R ${res[k].clear.R} L ${res[k].clear.L} cm`);
 console.log("RUN-1 channel angular-rate max (deg/s):", JSON.stringify(res.run1.channelRateMaxDegS));
 if (arg("json")) require("fs").writeFileSync(arg("json"), JSON.stringify(res, null, 1));

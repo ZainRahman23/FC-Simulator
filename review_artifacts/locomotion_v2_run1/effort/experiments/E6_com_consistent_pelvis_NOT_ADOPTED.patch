@@ -1,0 +1,59 @@
+--- run1_gait.js (E5 + E6a)
++++ run1_gait.js (+ COM-consistent pelvis, not adopted)
+@@ -119,6 +119,8 @@
+     // (Hamner & Delp 2013; Takai 2025; Clark 2025; toe-off at ~29 % of the stride, between 37.5 % at 5 m/s treadmill and ~24 % sprinting)
+     cadence: 3.20,            // steps / s (192 spm) for the 0.834 m reference leg; scaled by sqrt(Lref / L) for other legs
+     tc: 0.175,                // contact time (s): flight 0.138 s, swing 0.450 s
++    comCorr: 1,               // 1 = the WHOLE-BODY centre of mass follows the vertical model (true gravity in flight); the pelvis carries the pose's own COM
++                              // offset changes (real strides: the hips drop ~1 cm less than the COM). 0 = the pelvis itself follows it (E1)
+     vSkew: 1.3,               // stance-force skew c (vertical below): the force peaks at 37 % of stance, the low point at 41 %, take-off 1.5 cm above touchdown.
+                               // Fitted to 9 real strides (CMU, 3.4–4.1 m/s: low at 43 %, take-off +2.0 cm, apex +1.8 cm, range 9.0 cm; the model gives 41 % /
+                               // +2.0 / +1.6 / 9.2 at their timing). RUN-1.0 scaled a symmetric spring-mass by 0.6, so its flight fell at 0.6 g
+@@ -227,8 +229,9 @@
+   // 34 halvings each: 0.35 m / 2^34 ≈ 2e-11 m (RUN-1.0: 48) — the solve is per speed-grid cell, at first use; the knee-driven stance rebuilds its
+   // knee curve for every trial pelvis height, so the halving count is most of the cost
+   const solveY = () => { let lo = body.pelvisY - 0.30, hi = body.pelvisY + 0.05; for (let i = 0; i < 34; i++) { p.y0 = (lo + hi) / 2; G.late = null; if (heelAt() < p.heelRiseTO) lo = p.y0; else hi = p.y0; } };
+-  { let lo = -0.10, hi = 0.70; for (let i = 0; i < 34; i++) { p.zTD = (lo + hi) / 2; solveY(); if (kneeAt(0) > p.kneeTD) lo = p.zTD; else hi = p.zTD; } }
+-  G.late = null;
++  const solve = () => { let lo = -0.10, hi = 0.70; for (let i = 0; i < 34; i++) { p.zTD = (lo + hi) / 2; solveY(); if (kneeAt(0) > p.kneeTD) lo = p.zTD; else hi = p.zTD; } G.late = null; };
++  p.comF = null; solve();
++  if (p.comCorr > 0) for (let it = 0; it < 2; it++) { p.swing = { R: r1SwingKnots(G, "R"), L: r1SwingKnots(G, "L") }; p.comF = r1ComFourier(G, p.comF); solve(); }
+   p.solveErr = r1StanceErr(G); p.late = G.late;
+   // swing boundary conditions (stance channels + slopes at toe-off and touchdown), both legs are mirror images
+   p.swing = { R: r1SwingKnots(G, "R"), L: r1SwingKnots(G, "L") };
+@@ -239,11 +242,25 @@
+   return [a.ch.k / R1_DEG - G.p.kneeTD, -b.beta / R1_DEG - G.p.heelRiseTO, b.ch.k / R1_DEG - G.p.kneeTO];
+ }
+ 
++// ── the COM correction: the oscillating part of (pose COM height − pelvis height) over the cycle, as the even harmonics 2…8 (period = one step,
++// so both legs see the same correction; smooth, C∞). The pelvis is lowered where the COM sits high above it (flight: legs spread, arms up) and
++// raised where it sits low (mid-stance), so the COM itself — not the pelvis — follows the force / gravity model. Computed from the closed-form
++// cycle of the current solve (prev = the correction that solve used); deterministic.
++const R1_COMH = [2, 4, 6, 8];
++function r1ComFourier(G, prev) {
++  const { body, p } = G, B = body.skel.byName, mf = body.massFrac, N = 64, off = [];
++  for (let i = 0; i < N; i++) { const u = i / N, pose = r1Pose(G, u, null), f = r1FK(G, pose, null); let m = 0, y = 0;
++    for (const k in mf) { const b = B[k], j = f.P[b.idx], t = RV.add(j, R3.v(f.R[b.idx], RV.sc(b.dir, b.len))); y += mf[k] * (j[1] + t[1]) / 2; m += mf[k]; }
++    off.push(y / m - pose.pelvisPos[1] + r1ComDelta(prev, u)); }       // the pose's COM offset with the previous correction taken back out
++  const F = []; for (const k of R1_COMH) { let a = 0, b = 0; for (let i = 0; i < N; i++) { a += off[i] * Math.cos(R1_TAU * k * i / N); b += off[i] * Math.sin(R1_TAU * k * i / N); } F.push(-2 * a / N * p.comCorr, -2 * b / N * p.comCorr); }
++  return F;
++}
++function r1ComDelta(F, u) { if (!F) return 0; let d = 0; for (let j = 0; j < R1_COMH.length; j++) { const w = R1_TAU * R1_COMH[j] * u; d += F[2 * j] * Math.cos(w) + F[2 * j + 1] * Math.sin(w); } return d; }
+ // ── pelvis at global phase u (root frame) ──────────────────────────────────────────────────────────────────────────────────────
+ function r1Pelvis(G, u) {
+   const p = G.p, g = 9.81, ustep = r1wrap(u * 2), tau = ustep * p.Ts;
+   const sm = r1Vertical(tau, p.tc, p.Ts, g, p.vSkew);
+-  const y = p.y0 + sm.y;                                                                    // y0 = the pelvis height at touchdown
++  const y = p.y0 + sm.y + r1ComDelta(p.comF, u);                                           // y0 = the COM-model height at touchdown (+ the COM correction)
+   const x = p.sway * Math.cos(R1_TAU * (u - p.swayPh));                                   // toward the RIGHT foot during the right stance
+   const tilt = (p.tilt + p.tiltAmp * Math.cos(2 * R1_TAU * (u - p.tiltPh))) * R1_DEG;      // anterior tilt (forward), twice per stride
+   const roll = p.obliq * Math.cos(R1_TAU * (u - p.obliqPh)) * R1_DEG;                    // + = right hip up (left side drops in the right stance)
+@@ -446,7 +463,7 @@
+ function r1GaitAt(body, prm, v) {
+   const x = Math.max(0, Math.min(R1_GRID.n - 1 - 1e-9, (v - R1_GRID.v0) / R1_GRID.dv)), i = Math.floor(x), t = x - i;
+   const a = r1GridGait(body, prm, i), b = r1GridGait(body, prm, i + 1), p = {};
+-  for (const k in a) p[k] = typeof a[k] === "number" ? a[k] + (b[k] - a[k]) * t : a[k];
++  for (const k in a) p[k] = typeof a[k] === "number" ? a[k] + (b[k] - a[k]) * t : (Array.isArray(a[k]) && Array.isArray(b[k]) && typeof a[k][0] === "number" ? a[k].map((x, i) => x + (b[k][i] - x) * t) : a[k]);
+   p.v = v; p.swing = {};
+   for (const sd of ["R", "L"]) { const K = {}; for (const c of R1_CH) K[c] = r1LerpKnots(a.swing[sd].K[c], b.swing[sd].K[c], t); p.swing[sd] = { K }; }
+   return p;

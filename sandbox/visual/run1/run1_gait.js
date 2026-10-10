@@ -122,19 +122,19 @@ const RUN1 = {
     vSkew: 1.3,               // stance-force skew c (vertical below): the force peaks at 37 % of stance, the low point at 41 %, take-off 1.5 cm above touchdown.
                               // Fitted to 9 real strides (CMU, 3.4–4.1 m/s: low at 43 %, take-off +2.0 cm, apex +1.8 cm, range 9.0 cm; the model gives 41 % /
                               // +2.0 / +1.6 / 9.2 at their timing). RUN-1.0 scaled a symmetric spring-mass by 0.6, so its flight fell at 0.6 g
-    kneeTD: 26, kneeTO: 19,   // touchdown knee (solved for by the plant distance); toe-off knee (prescribed late-stance curve). Real strides: 28.7° at touchdown
+    kneeTD: 28, kneeTO: 19,   // touchdown knee (solved for by the plant distance); toe-off knee (prescribed late-stance curve). Real strides: 28.7° at touchdown
                               // (footballers ~31° near top speed, Romero 2022; Sundström 2021 21.6° at 4.4 m/s) — the foot lands under a bent knee, not ahead
                               // of a straight one; 14.7° at toe-off: the knee extends right through the push
     footW: 0.032,             // foot centre-line offset from the line of travel (narrow running base: Arellano 2015, 4.1 → 1.5 cm with speed)
     toeOut: 7,                // foot progression angle (deg, outward)
-    strikeToeUp: -4,          // foot pitch at touchdown (+ toes up): a MID-FOOT landing, heel 4° up, which then lowers onto the turf — the ankle takes the
+    strikeToeUp: -7,          // foot pitch at touchdown (+ toes up): a MID-FOOT landing, heel 7° up, which then lowers onto the turf — the ankle takes the
                               // first part of the load, so the knee flexes into the stance at a controlled rate (real strides: heel 3.7° up at touchdown, knee
                               // flexion ≤ 445 °/s after it; team-sport athletes land flatter with speed, Clark 2025). RUN-1.0: 8° toes up, a heel strike,
                               // knee 840 °/s at contact
     flatS: 0.12,              // stance fraction at which the foot is flat
     heelRiseS: 0.24,          // stance fraction from which the stance is knee-driven and the heel may rise: the real heel comes up progressively from
                               // early stance while the shank rolls over (RUN-1.0: 0.46 — the foot stayed flat past mid-stance, then peeled)
-    kneePkExtra: 3, kneePkDelay: 0.05,   // the loading peak of the knee curve: 3° above the flat-foot knee's own peak, 5 % of stance later, so the
+    kneePkExtra: 2, kneePkDelay: 0.05,   // the loading peak of the knee curve: 3° above the flat-foot knee's own peak, 5 % of stance later, so the
                               // heel is already lifting while the knee still loads (the foot rolls instead of collapsing the ankle)
     heelRiseTO: 74,           // foot pitch at toe-off (heel up), solved for by the pelvis height: shank ~53° + ~24° plantar-flexion (Miyashiro 2019)
     kneeMinS: 0.96,           // late stance: the knee extends practically to toe-off (real minimum at 100–108 % of stance; RUN-1.0: 86 %, then a locked
@@ -184,7 +184,7 @@ const RUN1 = {
 // contact time halves while swing time barely changes (Weyand 2000; Hamner & Delp 2013); rear-foot strike at the jog, flat at the sprint
 // (Siegel 2023; Clark 2025); more knee recovery, hip drive, arm range and trunk lean with speed (Fukuchi 2017; Miyashiro 2019; Romero 2022).
 RUN1.anchors = [
-  { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
+  { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.25, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
     kneeMax: 100, kneeMaxW: 0.48, kneeHold: 92, kneeHoldW: 0.65, kneeExt: 16, kneeExtW: 0.92, hipMax: 47, hipMaxW: 0.72, ankleDFSwing: -12,
     tilt: 7.5, lean: 9, leanAmp: 2.4, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
   { v: 5.5, id: "RUN" },
@@ -224,8 +224,10 @@ function r1Gait(body, prm, v) {
   // straightens both knees; a plant further ahead straightens the touchdown knee), so nested bisection is robust and deterministic.
   const G = { body, p };
   const kneeAt = (s) => r1StanceLeg(G, "R", s).ch.k / R1_DEG, heelAt = () => -r1StanceLeg(G, "R", 1).beta / R1_DEG;
-  const solveY = () => { let lo = body.pelvisY - 0.30, hi = body.pelvisY + 0.05; for (let i = 0; i < 48; i++) { p.y0 = (lo + hi) / 2; G.late = null; if (heelAt() < p.heelRiseTO) lo = p.y0; else hi = p.y0; } };
-  { let lo = -0.10, hi = 0.70; for (let i = 0; i < 48; i++) { p.zTD = (lo + hi) / 2; solveY(); if (kneeAt(0) > p.kneeTD) lo = p.zTD; else hi = p.zTD; } }
+  // 34 halvings each: 0.35 m / 2^34 ≈ 2e-11 m (RUN-1.0: 48) — the solve is per speed-grid cell, at first use; the knee-driven stance rebuilds its
+  // knee curve for every trial pelvis height, so the halving count is most of the cost
+  const solveY = () => { let lo = body.pelvisY - 0.30, hi = body.pelvisY + 0.05; for (let i = 0; i < 34; i++) { p.y0 = (lo + hi) / 2; G.late = null; if (heelAt() < p.heelRiseTO) lo = p.y0; else hi = p.y0; } };
+  { let lo = -0.10, hi = 0.70; for (let i = 0; i < 34; i++) { p.zTD = (lo + hi) / 2; solveY(); if (kneeAt(0) > p.kneeTD) lo = p.zTD; else hi = p.zTD; } }
   G.late = null;
   p.solveErr = r1StanceErr(G); p.late = G.late;
   // swing boundary conditions (stance channels + slopes at toe-off and touchdown), both legs are mirror images
@@ -440,6 +442,7 @@ function r1GridGait(body, prm, i) {
   return row[i];
 }
 function r1LerpKnots(A, B, t) { return A.map((k, i) => ({ w: k.w + (B[i].w - k.w) * t, v: k.v + (B[i].v - k.v) * t, m: k.m + (B[i].m - k.m) * t, mo: k.mo + (B[i].mo - k.mo) * t, mi: k.mi + (B[i].mi - k.mi) * t, fixed: k.fixed })); }
+function r1WarmGrid(body, prm) { for (let i = 0; i < R1_GRID.n; i++) r1GridGait(body, prm || RUN1.ref, i); }   // solve every cell now (viewer / load)
 function r1GaitAt(body, prm, v) {
   const x = Math.max(0, Math.min(R1_GRID.n - 1 - 1e-9, (v - R1_GRID.v0) / R1_GRID.dv)), i = Math.floor(x), t = x - i;
   const a = r1GridGait(body, prm, i), b = r1GridGait(body, prm, i + 1), p = {};
@@ -523,4 +526,4 @@ function r1Kinematics(A, vOf, simAt, t, h) {
   return { t, phase: b.phase, root: { x: sim.x, y: sim.y, heading: sim.heading, v: sim.v }, contact: { R: { stance: b.legs.R.st, s: b.legs.R.s, w: b.legs.R.w, plant: b.plants.R || null }, L: { stance: b.legs.L.st, s: b.legs.L.s, w: b.legs.L.w, plant: b.plants.L || null } }, joints, frame: "3D world (anim3d: x = pitch x, y = up, z = -pitch y)" };
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1Vertical, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix, r1ParamsAt, r1GaitAt, r1Replay, r1Plants, R1_STEP, r1Kinematics };
+if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1Vertical, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix, r1ParamsAt, r1GaitAt, r1Replay, r1Plants, R1_STEP, r1Kinematics, r1WarmGrid };

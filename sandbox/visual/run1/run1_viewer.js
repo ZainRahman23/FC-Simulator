@@ -119,8 +119,12 @@ function rv1GroundProgram(gl) {
 // ── actors ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function rv1Reset() {
   const skel = RV1.entry.skel;
-  RV1.run1 = { E: { r1Make, r1Replay, r1Evaluate }, A: r1Make(skel), sim: null, fk: null, skin: null };
   if (!RV1.origSkel) { RV1.origSkel = Object.assign({}, skel); delete RV1.origSkel._r1body; }   // RUN-1.0 caches its own body / speed grid
+  if (RV1.speedMode === "ramp" && !RV1.warm) {                       // the ramp crosses ~20 speed-grid cells: solve them all once, up front, so the first
+    r1WarmGrid(r1Make(skel).body);                                    // pass does not stall on a cell solve mid-run (both versions; cached per body)
+    const ob = RUN1_ORIG.r1Make(RV1.origSkel).body; for (let i = 0; i <= 26; i++) RUN1_ORIG.r1GaitAt(ob, RUN1_ORIG.RUN1.ref, 2.5 + i * 0.25);
+    RV1.warm = true; }
+  RV1.run1 = { E: { r1Make, r1Replay, r1Evaluate }, A: r1Make(skel), sim: null, fk: null, skin: null };
   RV1.orig = { E: RUN1_ORIG, A: RUN1_ORIG.r1Make(RV1.origSkel), sim: null, fk: null, skin: null };
   const a = ofActorMake(skel, 0, 0, 0); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} };
   RV1.v1 = { a, sim: null, fk: null, skin: null };
