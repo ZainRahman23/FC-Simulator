@@ -150,6 +150,27 @@ const RUN1 = {
   },
 };
 
+// ── speed anchors: one parameter set per anchor speed, blended piecewise-linearly by the AUTHORITATIVE speed (clamped outside) ──
+// JOG 3.0 m/s and SPRINT 7.8 m/s are footballer variants of the same construction (provenance: RUN1_RESEARCH.md §speed scaling):
+// contact time halves while swing time barely changes (Weyand 2000; Hamner & Delp 2013); rear-foot strike at the jog, flat at the sprint
+// (Siegel 2023; Clark 2025); more knee recovery, hip drive, arm range and trunk lean with speed (Fukuchi 2017; Miyashiro 2019; Romero 2022).
+RUN1.anchors = [
+  { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kv: 0.75, kneeTD: 17, kneeTO: 18, footW: 0.04, strikeToeUp: 13, heelRiseTO: 60, kneeTOrate: 260,
+    kneeMax: 100, kneeMaxW: 0.45, kneeHold: 90, kneeHoldW: 0.60, kneeExt: 10, kneeExtW: 0.92, hipMax: 50, hipMaxW: 0.78,
+    tilt: 5, lean: 5, leanAmp: 0.8, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 24, armBack: 32, elbow: 90, elbowAmp: 8, armAbd: 12 },
+  { v: 5.5, id: "RUN" },
+  { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kv: 0.6, kneeTD: 28, kneeTO: 26, footW: 0.02, strikeToeUp: 2, heelRiseTO: 80, kneeTOrate: 420,
+    kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
+    tilt: 8, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 45, armBack: 60, elbow: 88, elbowAmp: 18, armAbd: 11 },
+];
+function r1ParamsAt(v, base) {
+  const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
+  let i = 0; while (i < A.length - 2 && v > A[i + 1].v) i++;
+  const a = A[i], b = A[i + 1], t = Math.max(0, Math.min(1, (v - a.v) / (b.v - a.v))), P = {};
+  for (const k in ref) P[k] = typeof ref[k] === "number" ? a[k] + (b[k] - a[k]) * t : ref[k];
+  P.v = v; P.anchor = t < 0.5 ? a.id : b.id; P.blend = i + t; return P;
+}
+
 // Spring-mass vertical COM over one STEP: tau from the touchdown, contact tc, step Ts. Returns {y, v, a} relative to the mid-stance low.
 function r1SpringMass(tau, tc, Ts, g) {
   const tf = Ts - tc, K = Math.PI * Ts / (2 * tc), w = Math.PI / tc, vTD = -g * tf / 2;
@@ -204,13 +225,13 @@ function r1FootPitch(p, s) {
   return 0;
 }
 // the stance geometry shared by both phases: pelvis, hip, the plant (flat-foot ankle point), foot yaw, leg-plane yaw
-function r1StanceBase(G, sd, s) {
+function r1StanceBase(G, sd, s, pl) {
   const { body, p } = G, side = sd === "R" ? 1 : -1;
   const u = r1wrap((sd === "R" ? 0 : 0.5) + s * p.D);                                       // global phase
   const pel = r1Pelvis(G, u);
   const psiF = side * p.toeOut * R1_DEG, Ry = R3.y(psiF);
   // the plant (flat-foot ankle point) in the root frame: fixed on the pitch, so it travels back at exactly the root speed
-  const flat = [side * p.footW, body.ankleH, p.zTD - p.v * s * p.tc];
+  const flat = pl ? [side * pl.footW, body.ankleH, pl.zTD - pl.travel] : [side * p.footW, body.ankleH, p.zTD - p.v * s * p.tc];   // runtime: the plant made at THIS touchdown, back by the root's own travel
   const hip = RV.add(pel.pos, R3.v(pel.R, [side * body.hipX, 0, 0]));
   return { u, pel, psiF, Ry, flat, hip, psi: psiF - pel.yaw };
 }
@@ -229,8 +250,8 @@ function r1LateKnots(G, sd) {
   G.late = { key, K: r1HermPrep([{ w: s0, v: k0, m: m0, fixed: true }, { w: p.kneeMinS, v: kMin, m: 0 }, { w: 1, v: kTO, m: mTO, fixed: true }]) };
   return G.late;
 }
-function r1StanceLeg(G, sd, s) {
-  const { body, p } = G, B = r1StanceBase(G, sd, s);
+function r1StanceLeg(G, sd, s, pl) {
+  const { body, p } = G, B = r1StanceBase(G, sd, s, pl);
   let beta = 0, kWant = null;
   if (s <= p.heelRiseS) beta = r1FootPitch(p, s) * R1_DEG;
   else {                                                                                   // knee-driven heel rise: the toe joint stays on the turf
@@ -289,13 +310,13 @@ function r1SwingKnots(G, sd) {
 }
 
 // ── the full pose at global phase u: per-bone LOCAL rotations (bind = identity) + pelvis translation, root frame ───────────────
-function r1Pose(G, u) {
+function r1Pose(G, u, plants) {
   const { body, p } = G, D = R1_DEG, pel = r1Pelvis(G, u), rot = {}, legs = {};
   rot.pelvis = pel.R;
   for (const sd of ["R", "L"]) {
     const side = sd === "R" ? 1 : -1, ul = r1wrap(u - (sd === "R" ? 0 : 0.5));
     let ch, st, s = null, w = null;
-    if (ul < p.D) { s = ul / p.D; const S = r1StanceLeg(G, sd, s); ch = S.ch; st = true; }
+    if (ul < p.D) { s = ul / p.D; const S = r1StanceLeg(G, sd, s, plants && plants[sd]); ch = S.ch; st = true; }
     else { w = (ul - p.D) / (1 - p.D); const K = p.swing[sd].K; ch = {}; for (const c of R1_CH) ch[c] = r1Herm(K[c], w); st = false; }
     rot["thigh_" + sd] = R3.mul3(R3.y(ch.psi), R3.z(ch.a), R3.x(-ch.h));
     rot["shin_" + sd] = R3.x(ch.k);
@@ -304,7 +325,7 @@ function r1Pose(G, u) {
     legs[sd] = { st, s, w, ul, ch };
   }
   // trunk: global lean target split over pelvis tilt / lumbar / thorax; thorax counter-rotation mostly in the thoracic spine
-  const lean = (p.lean + p.leanAmp * Math.cos(2 * R1_TAU * (u - p.leanPh))) * D;
+  const lean = (p.lean + (G.accLean || 0) + p.leanAmp * Math.cos(2 * R1_TAU * (u - p.leanPh))) * D;   // + the (filtered) acceleration lean
   const thYaw = p.thoraxYaw * Math.cos(R1_TAU * (u - p.thoraxYawPh)) * D;                  // + = turned right: the LEFT shoulder leads at the RIGHT touchdown
   const twist = thYaw - pel.yaw, bend = lean - pel.tilt;              // chest global pitch = lean
   rot.spine = R3.yxz(twist * 0.22, bend * 0.45, -pel.roll * 0.55);
@@ -352,16 +373,59 @@ function r1FK(G, pose, rootM, out) {
 }
 
 // ── the runtime entry: one actor, authoritative {x, y (pitch), heading, speed} + a gait phase it owns (presentation) ───────────
-function r1Make(skel, prm) { return { body: r1Body(skel), prm: prm || RUN1.ref, G: null, gv: null, phase: 0, fk: null }; }
-function r1Prepare(A, v) {
-  if (!A.G || Math.abs(A.gv - v) > 1e-9) { A.G = { body: A.body, p: r1Gait(A.body, A.prm, v) }; A.gv = v; }
+// Speed grid: the solved gait (plant distance, pelvis height, swing boundary curves) is computed once per grid speed and interpolated —
+// every quantity is continuous in the speed, so the blend is smooth and a speed change costs a few hundred multiply-adds, not a solve.
+const R1_GRID = { v0: 2.5, dv: 0.25, n: 27, keys: 0 };           // 2.5 … 9.0 m/s
+function r1GridGait(body, prm, i) {
+  const key = prm === RUN1.ref ? "ref" : (prm.__key || (prm.__key = "p" + (++R1_GRID.keys)));   // identity tag of a parameter object (deterministic counter)
+  const C = body._r1grid || (body._r1grid = {}), row = C[key] || (C[key] = []);
+  if (!row[i]) { const v = R1_GRID.v0 + i * R1_GRID.dv; row[i] = r1Gait(body, r1ParamsAt(v, prm), v); }
+  return row[i];
+}
+function r1LerpKnots(A, B, t) { return A.map((k, i) => ({ w: k.w + (B[i].w - k.w) * t, v: k.v + (B[i].v - k.v) * t, m: k.m + (B[i].m - k.m) * t, mo: k.mo + (B[i].mo - k.mo) * t, mi: k.mi + (B[i].mi - k.mi) * t, fixed: k.fixed })); }
+function r1GaitAt(body, prm, v) {
+  const x = Math.max(0, Math.min(R1_GRID.n - 1 - 1e-9, (v - R1_GRID.v0) / R1_GRID.dv)), i = Math.floor(x), t = x - i;
+  const a = r1GridGait(body, prm, i), b = r1GridGait(body, prm, i + 1), p = {};
+  for (const k in a) p[k] = typeof a[k] === "number" ? a[k] + (b[k] - a[k]) * t : a[k];
+  p.v = v; p.swing = {};
+  for (const sd of ["R", "L"]) { const K = {}; for (const c of R1_CH) K[c] = r1LerpKnots(a.swing[sd].K[c], b.swing[sd].K[c], t); p.swing[sd] = { K }; }
+  return p;
+}
+// ── the runtime: one actor. Authoritative input per evaluation: {x, y (pitch), heading, v}. The actor owns only presentation state:
+// the gait clock, each leg's plant (made at its touchdown, fixed on the pitch) and the root's travel since that touchdown, and a filtered
+// acceleration lean. Advanced on a FIXED 1/240 s grid from t = 0, so the state at any time is a pure function of the input history. ──
+const R1_STEP = 1 / 240;
+function r1Make(skel, prm) {
+  const A = { body: skel._r1body || (skel._r1body = r1Body(skel)), prm: prm || RUN1.ref,   // the body (and its speed-grid cache) is shared per skeleton
+              phase: 0, t: 0, v: null, legs: { R: { pl: null }, L: { pl: null } }, accLean: 0, aF: 0, fk: null };
+  return A;
+}
+function r1Prepare(A, v) {                                       // the gait in use at speed v (cached for the last speed)
+  if (!A.G || A.gv !== v) { A.G = { body: A.body, p: r1GaitAt(A.body, A.prm, v), late: null }; A.gv = v; }
   return A.G;
 }
-// advance the gait clock by dt at speed v (cadence from THIS body's stride; frame-rate independent)
-function r1Advance(A, v, dt) { const G = r1Prepare(A, v); A.phase = r1wrap(A.phase + dt / G.p.T); return A.phase; }
+// advance the presentation by dt at authoritative speed v (and acceleration aIn, optional): phase by THIS body's cadence, plants by travel
+function r1Advance(A, v, dt, aIn) {
+  const G = r1Prepare(A, v), p = G.p, dphi = dt / p.T;
+  if (A.v == null) {                                              // first call: already running — the right foot has just landed
+    A.v = v; A.legs.R.pl = { zTD: p.zTD, footW: p.footW, travel: 0 }; A.legs.L.pl = null;
+  }
+  for (const sd of ["R", "L"]) {
+    const L = A.legs[sd], ul0 = r1wrap(A.phase - (sd === "R" ? 0 : 0.5)), ul1 = ul0 + dphi;
+    if (ul1 >= 1) { const f = (1 - ul0) / dphi; L.pl = { zTD: p.zTD, footW: p.footW, travel: v * dt * (1 - f) }; }   // touchdown inside this step
+    else if (L.pl && ul1 < p.D) L.pl.travel += v * dt;
+    else if (ul1 >= p.D) L.pl = null;                                                                            // toe-off
+  }
+  A.phase = r1wrap(A.phase + dphi); A.t += dt;
+  const a = aIn != null ? aIn : (dt > 0 ? (v - A.v) / dt : 0); A.v = v;
+  const k = 1 - Math.exp(-dt / 0.15); A.aF += (a - A.aF) * k;                                                    // deterministic first-order filter
+  A.accLean = Math.max(-6, Math.min(12, A.aF * 1.6));                                                            // deg per m/s² (forward when accelerating)
+  return A.phase;
+}
+function r1Plants(A) { const o = {}; for (const sd of ["R", "L"]) if (A.legs[sd].pl) o[sd] = A.legs[sd].pl; return o; }
 function r1Evaluate(A, sim) {
-  const G = r1Prepare(A, sim.v);
-  const pose = r1Pose(G, A.phase);
+  const G = r1Prepare(A, sim.v); G.accLean = A.accLean;
+  const pose = r1Pose(G, A.phase, A.closedForm ? null : r1Plants(A));
   const rootM = r1RootMatrix(sim.x, sim.y, sim.heading, 0);
   const fk = r1FK(G, pose, rootM, A.fkBuf);
   A.fkBuf = fk; A.pose = pose; A.fk = fk;
@@ -370,5 +434,14 @@ function r1Evaluate(A, sim) {
   for (let i = 0; i < fk.world.length; i++) A.skinMats.set(M4.mul(fk.world[i], inv[i]), i * 16);
   return { pose, fk, skinMats: A.skinMats };
 }
+// a deterministic replay from t = 0 on the fixed grid (viewer / capture): the state at time t is a pure function of the speed profile
+function r1Replay(A, vOf, aOf, t) {
+  if (A._replayT == null || t < A._replayT - 1e-12) { const fresh = r1Make(A.body.skel, A.prm); Object.assign(A, fresh, { body: A.body }); A._replayT = 0; A._snap = null; }
+  while (A._replayT + R1_STEP <= t + 1e-12) { const tm = A._replayT + R1_STEP / 2; r1Advance(A, vOf(tm), R1_STEP, aOf ? aOf(tm) : null); A._replayT += R1_STEP; }
+  const rest = t - A._replayT;                                       // the partial step is evaluated on a copy: the grid state stays path-independent
+  const snap = { phase: A.phase, t: A.t, v: A.v, aF: A.aF, accLean: A.accLean, legs: JSON.parse(JSON.stringify(A.legs)) };
+  if (rest > 1e-12) r1Advance(A, vOf(A._replayT + rest / 2), rest, aOf ? aOf(A._replayT + rest / 2) : null);
+  return () => { Object.assign(A, { phase: snap.phase, t: snap.t, v: snap.v, aF: snap.aF, accLean: snap.accLean, legs: snap.legs }); };
+}
 
-if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1SpringMass, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix };
+if (typeof module !== "undefined" && module.exports) module.exports = { RUN1, R3, RV, r1Herm, r1HermPrep, r1Body, r1Gait, r1Pelvis, r1StanceLeg, r1LegIK, r1SwingKnots, r1Pose, r1FK, r1Make, r1Prepare, r1Advance, r1Evaluate, r1SpringMass, r1FootPitch, R1_LIMITS, R1_CH, r1RootMatrix, r1ParamsAt, r1GaitAt, r1Replay, r1Plants, R1_STEP };

@@ -7,7 +7,7 @@ if (typeof gkRootMatrix !== "function") {                       // ofActorTick (
   var gkRootMatrix = r1RootMatrix;
 }
 const RV1 = {
-  t: 0, rate: 1, playing: true, cmp: "both", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60,
+  t: 0, rate: 1, playing: true, speedMode: "const", cmp: "both", v1Mode: "v13", dir: "across", v: 5.5, zoom: 1, tickHz: 60,
   ov: { skel: false, feet: false, com: false, trail: false },
   viewA: "run1:side", viewB: "v1:side", entry: null, R: null, ready: false, frame: 0,
   run1: null, v1: null, v1T: 0, v1Acc: 0, trails: { run1: [], v1: [] }, lastT: null, perf: [],
@@ -15,15 +15,26 @@ const RV1 = {
 const RV1_PRE = 1.0;                                             // seconds of pre-roll before the visible start (V1 settles into its gait)
 const RV1_LOOP = 9.0;                                            // seconds per pass, then the run restarts
 
-// ── the authoritative straight-line mover (INPUT to both presentations) ──────────────────────────────────────────────────────────
+// ── the authoritative straight-line mover (INPUT to both presentations): constant speed, or the speed ramp (3.0 → 7.8 → 3.0 m/s) ─────────
+const RV1_RAMP = { a: 3.0, b: 7.8, t1: 1.2, t2: 4.2, hold: 1.0 };          // 1.6 m/s² up, the same down; the loop is 9 s
+function rv1V(t) {
+  if (RV1.speedMode !== "ramp") return RV1.v;
+  const R = RV1_RAMP, d = R.t2 - R.t1; if (t < R.t1) return R.a; if (t < R.t2) return R.a + (R.b - R.a) * (t - R.t1) / d;
+  if (t < R.t2 + R.hold) return R.b; if (t < R.t2 + R.hold + d) return R.b + (R.a - R.b) * (t - R.t2 - R.hold) / d; return R.a;
+}
+function rv1Dist(t) {                                                  // closed-form integral of rv1V
+  if (RV1.speedMode !== "ramp") return RV1.v * t;
+  const R = RV1_RAMP, d = R.t2 - R.t1, seg = [[0, R.t1, R.a, R.a], [R.t1, R.t2, R.a, R.b], [R.t2, R.t2 + R.hold, R.b, R.b], [R.t2 + R.hold, R.t2 + R.hold + d, R.b, R.a], [R.t2 + R.hold + d, 1e9, R.a, R.a]];
+  let s = 0; for (const [t0, t1, v0, v1] of seg) { if (t <= t0) break; const te = Math.min(t, t1), f = (te - t0) / (t1 - t0); s += (te - t0) * (v0 + (v0 + (v1 - v0) * f)) / 2; } return s;
+}
 function rv1Path(lane) {
-  const d = RV1.dir, len = RV1.v * RV1_LOOP;
+  const d = RV1.dir, len = rv1Dist(RV1_LOOP);
   const hd = d === "across" ? 0 : d === "toward" ? Math.PI / 2 : d === "away" ? -Math.PI / 2 : Math.PI / 4;
   const ux = Math.cos(hd), uy = Math.sin(hd), lx = -uy, ly = ux;   // pitch frame (y south); lane offset to the runner's left
   const cx = 52.5, cy = d === "across" ? 36 : 34;
   return { hd, ux, uy, x0: cx - ux * len / 2 + lx * lane, y0: cy - uy * len / 2 + ly * lane, len };
 }
-function rv1Sim(lane, t) { const P = rv1Path(lane), s = RV1.v * t; return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * RV1.v, vy: P.uy * RV1.v, heading: P.hd, v: RV1.v }; }
+function rv1Sim(lane, t) { const P = rv1Path(lane), s = rv1Dist(t), v = rv1V(t); return { x: P.x0 + P.ux * s, y: P.y0 + P.uy * s, vx: P.ux * v, vy: P.uy * v, heading: P.hd, v }; }
 const rv1Lane = (who) => RV1.cmp === "both" ? (who === "run1" ? -2.2 : 2.2) * (RV1.dir === "toward" || RV1.dir === "away" ? -1 : 1) : 0;   // RUN-1 on the near lane when running across
 
 // ── camera math ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -111,7 +122,7 @@ function rv1V1Advance(tTarget) {                                 // Locomotion V
   if (typeof OF_CONT !== "undefined") OF_CONT.on = RV1.v1Mode === "lc1";
   const dt = 1 / RV1.tickHz, a = RV1.v1.a, lane = rv1Lane("v1");
   while (RV1.v1T + dt <= tTarget + 1e-9) {
-    RV1.v1T += dt; const s = rv1Sim(lane, RV1.v1T);
+    RV1.v1T += dt; const s = RV1.v1T < 0 ? Object.assign(rv1Sim(lane, 0), { x: rv1Sim(lane, 0).x + Math.cos(rv1Path(lane).hd) * rv1V(0) * RV1.v1T, y: rv1Sim(lane, 0).y + Math.sin(rv1Path(lane).hd) * rv1V(0) * RV1.v1T }) : rv1Sim(lane, RV1.v1T);
     a.x = s.x; a.y = s.y; a.facing = s.heading; a.speed = s.v; a.sim = { x: s.x, y: s.y, vx: s.vx, vy: s.vy, facing: s.heading };
     ofActorTick(a, dt, RV1.v1T + 10);
     RV1.v1.sim = s; RV1.v1.fk = a.sol.fk; RV1.v1.skin = a.skinMats;
@@ -119,8 +130,8 @@ function rv1V1Advance(tTarget) {                                 // Locomotion V
 }
 function rv1Run1Eval(t) {
   const r = RV1.run1, lane = rv1Lane("run1"), s = rv1Sim(lane, t);
-  const G = r1Prepare(r.A, s.v); r.A.phase = ((t / G.p.T) % 1 + 1) % 1;     // the gait clock: phase advances with this body's cadence (closed form at constant speed)
-  const out = r1Evaluate(r.A, s); r.sim = s; r.fk = out.fk; r.skin = out.skinMats; r.pose = out.pose; r.G = G;
+  const restore = r1Replay(r.A, rv1V, null, t);                     // the runtime path: fixed 1/240 s grid from t = 0 (deterministic for any t)
+  const out = r1Evaluate(r.A, s); r.sim = s; r.fk = out.fk; r.skin = out.skinMats; r.pose = out.pose; r.G = r.A.G; restore();
 }
 function rv1Update(t) {
   const t0 = performance.now();
@@ -219,7 +230,7 @@ function rv1Hud() {
   const r = RV1.run1; if (!r || !r.G) return; const p = r.G.p, lg = r.pose.legs;
   const pm = RV1.perf.length ? RV1.perf.reduce((a, b) => a + b, 0) / RV1.perf.length : 0;
   document.getElementById("hud").textContent =
-    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   RUN-1: ${RV1.v} m/s · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
+    `t ${RV1.t.toFixed(3)} s   rate ${RV1.rate}×   RUN-1: ${r.sim.v.toFixed(2)} m/s (${p.anchor}, blend ${p.blend.toFixed(2)}) · lean+${(r.A.accLean || 0).toFixed(1)}° · cadence ${(p.cadence * 60).toFixed(0)} spm · step ${p.stepLen.toFixed(2)} m · contact ${(p.tc * 1000).toFixed(0)} ms · flight ${((p.Ts - p.tc) * 1000).toFixed(0)} ms · phase ${r.A.phase.toFixed(3)} · R ${lg.R.st ? "STANCE " + lg.R.s.toFixed(2) : "swing " + lg.R.w.toFixed(2)} · L ${lg.L.st ? "STANCE " + lg.L.s.toFixed(2) : "swing " + lg.L.w.toFixed(2)} · pose eval ${(pm * 1000).toFixed(0)} µs`;
 }
 
 // ── loop + UI ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -243,7 +254,7 @@ function rv1Boot() {
   RV1.cv = document.getElementById("gl"); RV1.ovc = document.getElementById("ov"); RV1.ov2d = RV1.ovc.getContext("2d");
   const gl = RV1.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.body.innerHTML = "WebGL2 unavailable"; return; }
   RV1.R = { gl }; RV1.ground = rv1GroundProgram(gl);
-  if (q.get("cmp")) RV1.cmp = q.get("cmp"); if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) RV1.v = +q.get("v");
+  if (q.get("cmp")) RV1.cmp = q.get("cmp"); if (q.get("dir")) RV1.dir = q.get("dir"); if (q.get("zoom")) RV1.zoom = +q.get("zoom"); if (q.get("v")) { if (q.get("v") === "ramp") RV1.speedMode = "ramp"; else RV1.v = +q.get("v"); }
   if (q.get("v1")) RV1.v1Mode = q.get("v1"); if (q.get("ticks") === "1") RV1.sampleTicks = true;
   for (const k of ["skel", "feet", "com", "trail"]) if (q.get(k) === "1") { RV1.ov[k] = true; }
   rv1Views();
@@ -254,7 +265,7 @@ function rv1Boot() {
   document.getElementById("bStep").onclick = () => { rv1SetPlaying(false); RV1.t += 1 / 60; rv1Update(RV1.t); };
   const selV1 = document.getElementById("selV1"); selV1.value = RV1.v1Mode; selV1.onchange = (e) => { RV1.v1Mode = e.target.value; rv1Reset(); rv1Update(0); };
   const selDir = document.getElementById("selDir"); selDir.value = RV1.dir; selDir.onchange = (e) => { RV1.dir = e.target.value; rv1Reset(); rv1Update(0); };
-  const selV = document.getElementById("selV"); selV.value = RV1.v.toFixed(1); selV.onchange = (e) => { RV1.v = +e.target.value; rv1Reset(); rv1Update(0); };
+  const selV = document.getElementById("selV"); selV.value = RV1.speedMode === "ramp" ? "ramp" : RV1.v.toFixed(1); selV.onchange = (e) => { if (e.target.value === "ramp") RV1.speedMode = "ramp"; else { RV1.speedMode = "const"; RV1.v = +e.target.value; } rv1Reset(); rv1Update(0); };
   for (const [id, k] of [["cSkel", "skel"], ["cFeet", "feet"], ["cCom", "com"], ["cTrail", "trail"]]) { const c = document.getElementById(id); c.checked = RV1.ov[k]; c.onchange = () => { RV1.ov[k] = c.checked; }; }
   window.addEventListener("keydown", (e) => {
     if (e.target.tagName === "SELECT") return;

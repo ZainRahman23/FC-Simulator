@@ -11,18 +11,23 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
 const X = loadRun1(), D = 180 / Math.PI, v = +arg("v", 5.5), HZ = +arg("hz", 60), SECS = +arg("secs", 4), dt = 1 / HZ;
 const skel = X.charSkel("vinicius"), B = skel.byName;
 const GROUPS = { pelvis: ["pelvis"], spine: ["spine", "chest"], head: ["head"], hands: ["hand_R", "hand_L"], elbows: ["foreArm_R", "foreArm_L"], knees: ["shin_R", "shin_L"], ankles: ["foot_R", "foot_L"], toes: ["toe_R", "toe_L"] };
-const sim = (t) => ({ x: 20 + v * t, y: 34, vx: v, vy: 0, heading: 0, v });
+// speed profile: constant v, or --ramp a,b,T1,T2 (v from a to b between T1 and T2 s, then back to a over the same time) — the same profile drives V1
+const RAMP = arg("ramp") ? arg("ramp").split(",").map(Number) : null;
+const SPEED_OF = (t) => { if (!RAMP) return v; const [a, b, T1, T2] = RAMP, d = T2 - T1; if (t < T1) return a; if (t < T2) return a + (b - a) * (t - T1) / d; if (t < T2 + 1) return b; if (t < T2 + 1 + d) return b + (a - b) * (t - T2 - 1) / d; return a; };
+const DIST = (t) => { let s = 0; const n = Math.max(1, Math.ceil(t * 960)), h = t / n; for (let i = 0; i < n; i++) s += SPEED_OF((i + 0.5) * h) * h; return s; };
+const simAt = (t) => { const vv = SPEED_OF(t); return { x: 20 + DIST(t), y: 34, vx: vv, vy: 0, heading: 0, v: vv }; };
+const sim = simAt;
 function series(kind) {                                   // returns per-tick { joint: [[x,y,z]...], planted: {R,L}, low: {R,L}, ground: {R,L} }
   const out = [];
   if (kind === "run1") {
-    const A = X.r1Make(skel); const G = X.r1Prepare(A, v);
-    for (let k = 0; k <= SECS * HZ; k++) { const t = k * dt; A.phase = ((t / G.p.T) % 1 + 1) % 1; const ev = X.r1Evaluate(A, sim(t)); const fk = ev.fk;
+    const A = X.r1Make(skel), vOf = SPEED_OF;
+    for (let k = 0; k <= SECS * HZ; k++) { const t = k * dt; const restore = X.r1Replay(A, vOf, null, t); const ev = X.r1Evaluate(A, simAt(t)); restore(); const fk = ev.fk;
       out.push({ t, j: fk.joint.map(p => p.slice()), tip: fk.tip.map(p => p.slice()), W: [B.foot_R.idx, B.foot_L.idx, B.toe_R.idx, B.toe_L.idx].reduce((o, i) => (o[i] = Array.from(fk.world[i]), o), {}), planted: { R: ev.pose.legs.R.st, L: ev.pose.legs.L.st } }); }
   } else {
     X.setCont(kind === "lc1");
     const a = X.ofActorMake(skel, 0, 0, 0); a.motion = "LOCO"; a.loco = X.ofLocoMake(); a.state = { feet: {} };
     const pre = Math.round(1.0 * 60);
-    for (let k = -pre; k <= SECS * 60; k++) { const t = k / 60, s = sim(t); a.x = s.x; a.y = s.y; a.facing = 0; a.speed = v; a.sim = { x: s.x, y: s.y, vx: v, vy: 0, facing: 0 };
+    for (let k = -pre; k <= SECS * 60; k++) { const t = k / 60, s = k < 0 ? { x: 20 + SPEED_OF(0) * t, y: 34, v: SPEED_OF(0) } : sim(t); a.x = s.x; a.y = s.y; a.facing = 0; a.speed = s.v; a.sim = { x: s.x, y: s.y, vx: s.v, vy: 0, facing: 0 };
       X.ofActorTick(a, 1 / 60, t + 10); if (k < 0) continue; const fk = a.sol.fk;
       out.push({ t, j: fk.joint.map(p => Array.from(p)), tip: fk.tip.map(p => Array.from(p)), W: [B.foot_R.idx, B.foot_L.idx, B.toe_R.idx, B.toe_L.idx].reduce((o, i) => (o[i] = Array.from(fk.world[i]), o), {}), planted: { R: !!(a.state.feet.R && a.state.feet.R.locked && a.state.feet.R.w > 0.99 && a.state.feet.R.rel == null), L: !!(a.state.feet.L && a.state.feet.L.locked && a.state.feet.L.w > 0.99 && a.state.feet.L.rel == null) } }); }
   }
