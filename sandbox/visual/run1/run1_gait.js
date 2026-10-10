@@ -131,7 +131,8 @@ const RUN1 = {
     kneeMax: 115, kneeMaxW: 0.42, kneeHold: 104, kneeHoldW: 0.58, kneeExt: 16, kneeExtW: 0.92,
     hipMax: 62, hipMaxW: 0.76, hipExtMinW: 0.055,
     anklePFMaxW: 0.07, anklePFExtra: 6, ankleDFSwing: -6, ankleDFW: 0.60,
-    swingAbd: 3.0,            // extra abduction at mid swing (deg) so the swing knee clears the stance knee
+    swingAbd: 8.0,            // extra abduction at mid swing (deg): the recovering leg passes outside the stance leg
+    psiSwing: 8, psiSwingW: 0.48,   // mid-swing hip internal rotation (deg) — the recovering heel passes lateral of the stance calf
     toeRelaxW: 0.22,
     // pelvis (deg): tilt peaks near each toe-off; the swing-side hip drops in early stance; axial rotation follows the thigh scissor
     tilt: 6, tiltAmp: 2.2, tiltPh: 0.29,
@@ -310,7 +311,10 @@ function r1SwingKnots(G, sd) {
   const pfMax = TO.c.fp + Math.min(p.anklePFExtra * D, Math.max(0, TO.m.fp) * p.anklePFMaxW * 0.5);   // the push-off plantar-flexion carries on a few degrees
   K.fp = [K.fp[0], knot(p.anklePFMaxW, pfMax), knot(p.ankleDFW, p.ankleDFSwing * D), K.fp[1]];
   // hip adduction: a little abduction at mid swing (the swing knee passes outside the stance knee)
-  K.a = [K.a[0], knot(0.45, (TO.c.a + TD.c.a) / 2 - side * p.swingAbd * D), K.a[1]];
+  K.a = [K.a[0], knot(0.45, (TO.c.a + TD.c.a) / 2 + side * p.swingAbd * D), K.a[1]];   // + side = abduction (Rz(a) moves the leg toward +x: lateral for R, medial for L)
+  // leg yaw: the stance toe-out (hip external rotation) would carry the tucked heel MEDIALLY across the stance leg; through mid-swing the
+  // hip rotates slightly internally instead, so the recovering foot passes lateral of the stance calf
+  K.psi = [K.psi[0], knot(p.psiSwingW, -side * p.psiSwing * D), K.psi[1]];
   // toe: the MTP extension relaxes early in the swing
   K.toe = [K.toe[0], knot(p.toeRelaxW, 2 * D), K.toe[1]];
   for (const c of R1_CH) r1HermPrep(K[c]);
