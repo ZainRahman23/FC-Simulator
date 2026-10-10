@@ -147,6 +147,7 @@ const RUN1 = {
     elbow: 84, elbowAmp: 12, elbowPh: 0.05,
     armAbd: 12, armAbdAmp: 3, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
     clavProt: 5,
+    asymArm: 0.06, asymElbow: 3,   // a deterministic dominant-side asymmetry: the right arm swings 6 % wider, the left elbow sits 3° more open
     gazeDown: 6, headNod: 1.2, headYawFollow: 0.22, headRollFollow: 0.15,
   },
 };
@@ -353,10 +354,10 @@ function r1Pose(G, u, plants) {
   // arms: shoulder-driven swing, contralateral to the legs (the RIGHT arm is forward when the LEFT leg is), elbow closes forward
   for (const sd of ["R", "L"]) {
     const side = sd === "R" ? 1 : -1, ua = u - (sd === "R" ? 0.5 : 0) - p.armPh;             // ua = 0 at this arm's forward peak
-    const cA = Math.cos(R1_TAU * ua), mid = (p.armFwd - p.armBack) / 2, amp = (p.armFwd + p.armBack) / 2;
+    const cA = Math.cos(R1_TAU * ua), mid = (p.armFwd - p.armBack) / 2, amp = (p.armFwd + p.armBack) / 2 * (sd === "R" ? 1 + p.asymArm : 1);   // subtle, constant L/R asymmetry
     const flex = (mid + amp * cA) * D;
     const ce = Math.cos(R1_TAU * (ua - p.elbowPh));
-    const elbow = (p.elbow + p.elbowAmp * ce) * D;
+    const elbow = (p.elbow - (sd === "L" ? p.asymElbow : 0) + p.elbowAmp * ce) * D;
     const abd = (p.armAbd - p.armAbdAmp * cA) * D;                                         // comes across the body in the forward swing
     rot["clavicle_" + sd] = R3.y(-side * p.clavProt * cA * D);
     rot["upperArm_" + sd] = R3.mul3(R3.z(side * abd), R3.x(-flex), R3.y(-side * p.armRot * D));
