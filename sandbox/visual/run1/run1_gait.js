@@ -235,10 +235,18 @@ function r1StanceBase(G, sd, s, pl) {
   const hip = RV.add(pel.pos, R3.v(pel.R, [side * body.hipX, 0, 0]));
   return { u, pel, psiF, Ry, flat, hip, psi: psiF - pel.yaw };
 }
-function r1AnkleAt(body, B, beta) {                     // foot rolled by beta about the heel contact (beta > 0) or the MTP joint (beta < 0)
+// MTP extension cap for the push-off: the toes stay flat on the turf until the MTP joint reaches ~52° of dorsiflexion (smooth, C1); beyond
+// that the toe segment itself pitches and the foot rolls onto the toe pad (front studs) — V2 F1 MTP range: DF 60° active / 70° hard
+const R1_MTP = { cap: 52 * Math.PI / 180, w: 8 * Math.PI / 180, padAhead: 0.07 };
+function r1MtpDF(up) { const c = R1_MTP.cap, w = R1_MTP.w; if (up <= c - w) return up; if (up >= c + w) return c; const x = up - (c - w); return up - x * x / (4 * w); }
+function r1AnkleAt(body, B, beta) {                     // foot rolled by beta about the heel contact (beta > 0), or heel-up about the MTP joint / toe pad (beta < 0)
   const Rf = R3.mul(B.Ry, R3.x(-beta));
-  if (beta > 0) { const hz = body.heelZ + 0.012, heel = RV.add(B.flat, R3.v(B.Ry, [0, -body.ankleH, hz])); return { Rf, ankle: RV.add(heel, R3.v(Rf, [0, body.ankleH, -hz])) }; }
-  const mtp = RV.add(B.flat, R3.v(B.Ry, body.mtp)); return { Rf, ankle: RV.add(mtp, R3.v(Rf, RV.sc(body.mtp, -1))) };
+  if (beta > 0) { const hz = body.heelZ + 0.012, heel = RV.add(B.flat, R3.v(B.Ry, [0, -body.ankleH, hz])); return { Rf, ankle: RV.add(heel, R3.v(Rf, [0, body.ankleH, -hz])), mtpDF: 0 }; }
+  const up = -beta, tau = r1MtpDF(up), toeUp = up - tau;                               // toe-segment pitch (heel-up sense) once the MTP extension is capped
+  const flatPad = RV.add(B.flat, R3.v(B.Ry, [0, -body.ankleH, body.mtp[2] + R1_MTP.padAhead]));   // toe-pad contact on the stud plane, fixed on the pitch
+  const Rt = R3.mul(B.Ry, R3.x(toeUp));                                               // toe segment world rotation (heel-up by toeUp)
+  const mtpW = RV.add(flatPad, R3.v(Rt, [0, body.ankleH + body.mtp[1], -R1_MTP.padAhead]));   // MTP joint from the fixed toe pad
+  return { Rf, ankle: RV.add(mtpW, R3.v(Rf, RV.sc(body.mtp, -1))), mtpDF: tau };
 }
 // late-stance knee curve (C1 from the flat-foot IK knee at the heel-rise onset → extension minimum → toe-off, already flexing)
 function r1LateKnots(G, sd) {
@@ -264,7 +272,7 @@ function r1StanceLeg(G, sd, s, pl) {
   const ik = r1LegIK(body, B.pel.R, B.psi, B.hip, A.ankle);
   const Rshin = R3.mul(B.pel.R, R3.mul(ik.Rthigh, ik.Rshin));
   const footLocal = R3.toYXZ(R3.mul(R3.tr(Rshin), A.Rf));
-  const ch = { psi: B.psi, a: ik.a, h: ik.h, k: ik.k, fy: footLocal[0], fp: footLocal[1], fr: footLocal[2], toe: beta < 0 ? beta : 0 };
+  const ch = { psi: B.psi, a: ik.a, h: ik.h, k: ik.k, fy: footLocal[0], fp: footLocal[1], fr: footLocal[2], toe: beta < 0 ? -A.mtpDF : 0 };
   return { ch, ankle: A.ankle, hip: B.hip, Rf: A.Rf, beta, pel: B.pel, reach: ik.reach, u: B.u, kWant };
 }
 // analytic two-bone leg IK in the leg frame F = Rpelvis·Ry(psi): adduction a about F's forward axis, then the planar chain
