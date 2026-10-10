@@ -157,10 +157,14 @@ const RUN1 = {
     // trunk (deg): constant-speed lean 5–8° (Preece 2016b), thorax counter-rotates the pelvis (Preece 2016a; Pontzer 2009: ~24° shoulder range at 3 m/s)
     lean: 8, leanAmp: 1.0, leanPh: 0.15,
     thoraxYaw: 13, thoraxYawPh: 0.86,
-    // arms (deg): contralateral to the legs, each arm most forward near its own leg's toe-off; elbow closes in the forward swing
-    armFwd: 33, armBack: 45, armPh: -0.14,
-    elbow: 84, elbowAmp: 12, elbowPh: 0.11,
-    armAbd: 12, armAbdAmp: 3, armAbdPh: 0.12, armRot: 6,      // the wrist stays ~11 cm lateral of the sternal notch at its closest (Hild 2005): slight inward swing only
+    // arms (deg): contralateral to the legs. The work is the ELBOW DRIVING BACK: real strides swing the upper arm from ~42° behind the trunk
+    // to about level with it (+1.5°, range −10…+16 at 3.6 m/s) with the elbow flexed 94–124°, so the hand comes forward only to the front of
+    // the trunk (≈ 20 cm ahead of the hips). RUN-1.0 swung it 33° in FRONT with a 72–96° elbow: the hand reached ~50 cm ahead, a pendulum.
+    // Each arm is most forward just before its own leg's toe-off (real 26 % of the stride, RUN-1.0 36 %), so it drives back through the other
+    // leg's push; the elbow closes a little after the forward extreme (real lag 9 % of the stride) and opens in the drive back.
+    armFwd: 5, armBack: 50, armPh: -0.25,
+    elbow: 102, elbowAmp: 18, elbowPh: 0.08,
+    armAbd: 8, armAbdAmp: 3, armAbdPh: 0.12, armRot: 6,       // elbows close to the trunk (RUN-1.0 12°); the wrist stays lateral of the sternal notch (Hild 2005)
     clavProt: 5,
     asymArm: 0.06, asymElbow: 3,   // a deterministic dominant-side asymmetry: the right arm swings 6 % wider, the left elbow sits 3° more open
     gazeDown: 6, headNod: 1.2, headYawFollow: 0.22, headRollFollow: 0.15,
@@ -174,11 +178,11 @@ const RUN1 = {
 RUN1.anchors = [
   { v: 3.0, id: "JOG", cadence: 2.75, tc: 0.27, kneeTD: 24, kneeTO: 16, kneeTOrate: 140, footW: 0.04, strikeToeUp: -2, flatS: 0.14, heelRiseTO: 60, heelRiseS: 0.30,
     kneeMax: 100, kneeMaxW: 0.45, kneeHold: 94, kneeHoldW: 0.62, kneeExt: 10, kneeExtW: 0.92, hipMax: 50, hipMaxW: 0.78, ankleDFSwing: -12,
-    tilt: 7.5, lean: 5, leanAmp: 0.8, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 24, armBack: 32, elbow: 90, elbowAmp: 8, armAbd: 12 },
+    tilt: 7.5, lean: 5, leanAmp: 0.8, thoraxYaw: 10, pelvisYaw: 6, sway: 0.016, armFwd: 0, armBack: 40, elbow: 106, elbowAmp: 14, armAbd: 8 },
   { v: 5.5, id: "RUN" },
   { v: 7.8, id: "SPRINT", cadence: 4.15, tc: 0.12, kneeTD: 30, kneeTO: 22, kneeTOrate: 120, footW: 0.02, strikeToeUp: -5, flatS: 0.14, heelRiseTO: 80, heelRiseS: 0.16,   // the heel leaves early at a sprint
     kneeMax: 132, kneeMaxW: 0.40, kneeHold: 120, kneeHoldW: 0.55, kneeExt: 22, kneeExtW: 0.90, hipMax: 74, hipMaxW: 0.74,
-    tilt: 10.5, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 45, armBack: 55, elbow: 88, elbowAmp: 18, armAbd: 11 },
+    tilt: 10.5, lean: 13, leanAmp: 1.5, thoraxYaw: 15, pelvisYaw: 7, sway: 0.008, armFwd: 25, armBack: 60, elbow: 96, elbowAmp: 22, armAbd: 8 },
 ];
 function r1ParamsAt(v, base) {
   const ref = base || RUN1.ref, A = RUN1.anchors.map(a => Object.assign({}, ref, a));
