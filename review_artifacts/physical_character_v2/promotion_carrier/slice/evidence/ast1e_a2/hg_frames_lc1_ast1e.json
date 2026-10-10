@@ -1,0 +1,1284 @@
+{
+ "label": "LC-1+AST-1E",
+ "tackler": "ast1e",
+ "cases": {
+  "rx_miss": {
+   "tRef": 60.5,
+   "trigger": 51,
+   "kend": 59,
+   "hgtFirstFrame": 43,
+   "hgtFirstLead": 16.5,
+   "fullyValid": [
+    {
+     "k": 38,
+     "lead": 21.5
+    },
+    {
+     "k": 39,
+     "lead": 20.5
+    },
+    {
+     "k": 45,
+     "lead": 14.5
+    },
+    {
+     "k": 47,
+     "lead": 12.5
+    },
+    {
+     "k": 57,
+     "lead": 2.5
+    }
+   ],
+   "validExceptHGT": [
+    {
+     "k": 10,
+     "lead": 49.5
+    }
+   ],
+   "latestFullyValidLeadGe6": {
+    "k": 47,
+    "lead": 12.5,
+    "fails": []
+   },
+   "frames": [
+    {
+     "k": 8,
+     "lead": 51.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 9,
+     "lead": 50.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 10,
+     "lead": 49.5,
+     "fails": [
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 11,
+     "lead": 48.5,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 12,
+     "lead": 47.5,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 13,
+     "lead": 46.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 14,
+     "lead": 45.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 15,
+     "lead": 44.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 16,
+     "lead": 43.5,
+     "fails": [
+      "P10_nonContact",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 17,
+     "lead": 42.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 18,
+     "lead": 41.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 19,
+     "lead": 40.5,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 20,
+     "lead": 39.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 21,
+     "lead": 38.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 22,
+     "lead": 37.5,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 23,
+     "lead": 36.5,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 24,
+     "lead": 35.5,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 25,
+     "lead": 34.5,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 26,
+     "lead": 33.5,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 27,
+     "lead": 32.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 28,
+     "lead": 31.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 29,
+     "lead": 30.5,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 30,
+     "lead": 29.5,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 31,
+     "lead": 28.5,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 32,
+     "lead": 27.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 33,
+     "lead": 26.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 34,
+     "lead": 25.5,
+     "fails": [
+      "P10_nonContact",
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 35,
+     "lead": 24.5,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 36,
+     "lead": 23.5,
+     "fails": [
+      "P5_footDeg",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 37,
+     "lead": 22.5,
+     "fails": [
+      "P10_nonContact",
+      "P11_renderedBootPenMm",
+      "P14_bodyVel",
+      "P15_angVel"
+     ]
+    },
+    {
+     "k": 38,
+     "lead": 21.5,
+     "fails": []
+    },
+    {
+     "k": 39,
+     "lead": 20.5,
+     "fails": []
+    },
+    {
+     "k": 40,
+     "lead": 19.5,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 41,
+     "lead": 18.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 42,
+     "lead": 17.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 43,
+     "lead": 16.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "lead": 15.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 45,
+     "lead": 14.5,
+     "fails": []
+    },
+    {
+     "k": 46,
+     "lead": 13.5,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 47,
+     "lead": 12.5,
+     "fails": []
+    },
+    {
+     "k": 48,
+     "lead": 11.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 49,
+     "lead": 10.5,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 50,
+     "lead": 9.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 51,
+     "lead": 8.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 52,
+     "lead": 7.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 53,
+     "lead": 6.5,
+     "fails": [
+      "P10_nonContact",
+      "P5_footDeg",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 54,
+     "lead": 5.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 55,
+     "lead": 4.5,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel"
+     ]
+    },
+    {
+     "k": 56,
+     "lead": 3.5,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 57,
+     "lead": 2.5,
+     "fails": []
+    },
+    {
+     "k": 58,
+     "lead": 1.5,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 59,
+     "lead": 0.5,
+     "fails": [
+      "P17_angMom"
+     ]
+    }
+   ]
+  },
+  "rx_free_leg": {
+   "tRef": 50.25,
+   "trigger": 41,
+   "kend": 49,
+   "hgtFirstFrame": 43,
+   "hgtFirstLead": 6.25,
+   "fullyValid": [
+    {
+     "k": 38,
+     "lead": 11.25
+    },
+    {
+     "k": 39,
+     "lead": 10.25
+    },
+    {
+     "k": 45,
+     "lead": 4.25
+    },
+    {
+     "k": 47,
+     "lead": 2.25
+    }
+   ],
+   "validExceptHGT": [
+    {
+     "k": 10,
+     "lead": 39.25
+    }
+   ],
+   "latestFullyValidLeadGe6": {
+    "k": 39,
+    "lead": 10.25,
+    "fails": []
+   },
+   "frames": [
+    {
+     "k": 8,
+     "lead": 41.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 9,
+     "lead": 40.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 10,
+     "lead": 39.25,
+     "fails": [
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 11,
+     "lead": 38.25,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 12,
+     "lead": 37.25,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 13,
+     "lead": 36.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 14,
+     "lead": 35.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 15,
+     "lead": 34.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 16,
+     "lead": 33.25,
+     "fails": [
+      "P10_nonContact",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 17,
+     "lead": 32.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 18,
+     "lead": 31.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 19,
+     "lead": 30.25,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 20,
+     "lead": 29.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 21,
+     "lead": 28.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 22,
+     "lead": 27.25,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 23,
+     "lead": 26.25,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 24,
+     "lead": 25.25,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 25,
+     "lead": 24.25,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 26,
+     "lead": 23.25,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 27,
+     "lead": 22.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 28,
+     "lead": 21.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 29,
+     "lead": 20.25,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 30,
+     "lead": 19.25,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 31,
+     "lead": 18.25,
+     "fails": [
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 32,
+     "lead": 17.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 33,
+     "lead": 16.25,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 34,
+     "lead": 15.25,
+     "fails": [
+      "P10_nonContact",
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 35,
+     "lead": 14.25,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 36,
+     "lead": 13.25,
+     "fails": [
+      "P5_footDeg",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 37,
+     "lead": 12.25,
+     "fails": [
+      "P10_nonContact",
+      "P11_renderedBootPenMm",
+      "P14_bodyVel",
+      "P15_angVel"
+     ]
+    },
+    {
+     "k": 38,
+     "lead": 11.25,
+     "fails": []
+    },
+    {
+     "k": 39,
+     "lead": 10.25,
+     "fails": []
+    },
+    {
+     "k": 40,
+     "lead": 9.25,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 41,
+     "lead": 8.25,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 42,
+     "lead": 7.25,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 43,
+     "lead": 6.25,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "lead": 5.25,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 45,
+     "lead": 4.25,
+     "fails": []
+    },
+    {
+     "k": 46,
+     "lead": 3.25,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 47,
+     "lead": 2.25,
+     "fails": []
+    },
+    {
+     "k": 48,
+     "lead": 1.25,
+     "fails": [
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 49,
+     "lead": 0.25,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    }
+   ]
+  },
+  "rx_planted_leg": {
+   "tRef": 48.75,
+   "trigger": 39,
+   "kend": 47,
+   "hgtFirstFrame": 43,
+   "hgtFirstLead": 4.75,
+   "fullyValid": [
+    {
+     "k": 35,
+     "lead": 12.75
+    },
+    {
+     "k": 38,
+     "lead": 9.75
+    }
+   ],
+   "validExceptHGT": [
+    {
+     "k": 17,
+     "lead": 30.75
+    },
+    {
+     "k": 19,
+     "lead": 28.75
+    },
+    {
+     "k": 29,
+     "lead": 18.75
+    }
+   ],
+   "latestFullyValidLeadGe6": {
+    "k": 38,
+    "lead": 9.75,
+    "fails": []
+   },
+   "frames": [
+    {
+     "k": 8,
+     "lead": 39.75,
+     "fails": [
+      "P5_footDeg",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 9,
+     "lead": 38.75,
+     "fails": [
+      "P9_footContact_L",
+      "P11_renderedBootPenMm",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 10,
+     "lead": 37.75,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 11,
+     "lead": 36.75,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 12,
+     "lead": 35.75,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 13,
+     "lead": 34.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 14,
+     "lead": 33.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 15,
+     "lead": 32.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 16,
+     "lead": 31.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 17,
+     "lead": 30.75,
+     "fails": [
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 18,
+     "lead": 29.75,
+     "fails": [
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 19,
+     "lead": 28.75,
+     "fails": [
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 20,
+     "lead": 27.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 21,
+     "lead": 26.75,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 22,
+     "lead": 25.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 23,
+     "lead": 24.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 24,
+     "lead": 23.75,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 25,
+     "lead": 22.75,
+     "fails": [
+      "P10_nonContact",
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 26,
+     "lead": 21.75,
+     "fails": [
+      "P5_footDeg",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 27,
+     "lead": 20.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 28,
+     "lead": 19.75,
+     "fails": [
+      "P9_footContact_R",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 29,
+     "lead": 18.75,
+     "fails": [
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 30,
+     "lead": 17.75,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 31,
+     "lead": 16.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 32,
+     "lead": 15.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 33,
+     "lead": 14.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 34,
+     "lead": 13.75,
+     "fails": [
+      "P17_angMom",
+      "HGT_AST1E"
+     ]
+    },
+    {
+     "k": 35,
+     "lead": 12.75,
+     "fails": []
+    },
+    {
+     "k": 36,
+     "lead": 11.75,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 37,
+     "lead": 10.75,
+     "fails": [
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 38,
+     "lead": 9.75,
+     "fails": []
+    },
+    {
+     "k": 39,
+     "lead": 8.75,
+     "fails": [
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 40,
+     "lead": 7.75,
+     "fails": [
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 41,
+     "lead": 6.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 42,
+     "lead": 5.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 43,
+     "lead": 4.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    },
+    {
+     "k": 44,
+     "lead": 3.75,
+     "fails": [
+      "P10_nonContact",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 45,
+     "lead": 2.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel",
+      "HGAv2_shift"
+     ]
+    },
+    {
+     "k": 46,
+     "lead": 1.75,
+     "fails": [
+      "P5_footDeg",
+      "P14_bodyVel",
+      "P15_angVel"
+     ]
+    },
+    {
+     "k": 47,
+     "lead": 0.75,
+     "fails": [
+      "P9_footContact_L",
+      "P14_bodyVel",
+      "P15_angVel",
+      "P17_angMom"
+     ]
+    }
+   ]
+  }
+ }
+}

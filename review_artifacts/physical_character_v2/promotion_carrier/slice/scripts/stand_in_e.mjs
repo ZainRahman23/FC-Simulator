@@ -79,8 +79,8 @@ export class StandInE {
       const pm = this.poseAt(g, tau - 0.25), p0 = this.poseAt(g, tau), p1 = this.poseAt(g, tau + 0.25);
       const a = V.sc(V.add(V.sub(p1.com, V.sc(p0.com, 2)), pm.com), 1 / (dt * dt)), alpha = (p1.th - 2 * p0.th + pm.th) / (dt * dt), vel = V.sc(V.sub(p1.com, p0.com), 1 / dt), om = (p1.th - p0.th) / dt;
       const F = V.sc(a, g.m), T = g.Iyy * alpha; g.pre = { v: [vb.GetX(), vb.GetY(), vb.GetZ()], wy: wb.GetY(), F, T }; this.v.Set(F[0], F[1], F[2]); this.w.bi.AddForce(id, this.v, this.J.EActivation_Activate); this.v.Set(0, T, 0); this.w.bi.AddTorque(id, this.v, this.J.EActivation_Activate);
-      const dp = V.sub(p1.com, g.cW0); this.v.Set(dp[0], dp[1], dp[2]); g.con.SetTargetPositionCS(this.v); this.v.Set(vel[0], vel[1], vel[2]); g.con.SetTargetVelocityCS(this.v);
-      const q = yawQ(p1.th - g.th0); this.qq.Set(q[0], q[1], q[2], q[3]); g.con.SetTargetOrientationCS(this.qq); this.v.Set(0, om, 0); g.con.SetTargetAngularVelocityCS(this.v);
+      const dp = V.sub(p0.com, g.cW0); this.v.Set(dp[0], dp[1], dp[2]); g.con.SetTargetPositionCS(this.v); this.v.Set(vel[0], vel[1], vel[2]); g.con.SetTargetVelocityCS(this.v);   // A2: spring position / orientation target at the START-of-step pose p0 (Jolt evaluates spring error at the step start)
+      const q = yawQ(p0.th - g.th0); this.qq.Set(q[0], q[1], q[2], q[3]); g.con.SetTargetOrientationCS(this.qq); this.v.Set(0, om, 0); g.con.SetTargetAngularVelocityCS(this.v);
       if (g.leg) { const L1 = this._legLocal(g, tau + 0.25); this._setLegShape(g, L1.a, L1.b); }
       this.log.push({ tau, seg: g.name, released: 0 }); out.push({ name: g.name, F, T, fitRes: p1.res }); } return out; }
   contactImpulses(dt) { return this.segs.map(g => { if (!g.pre) return { name: g.name, J: [0, 0, 0], Jy: 0 }; const v = g.body.GetLinearVelocity(), w = g.body.GetAngularVelocity(), lt = g.con.GetTotalLambdaMotorTranslation(), lr = g.con.GetTotalLambdaMotorRotation();

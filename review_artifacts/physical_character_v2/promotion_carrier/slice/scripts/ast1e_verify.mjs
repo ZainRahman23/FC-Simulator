@@ -6,7 +6,7 @@ const M = await import(path.join(ROOT, "pi1/rev1/scripts/pcg_rev1.mjs")), M0 = a
 const rd = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(f))), sim2r = (p) => [p[0], p[2], -p[1]], r2sim = (p) => [p[0], -p[2], p[1]], segR = (g, t) => (g.ra != null ? g.ra + (g.rb - g.ra) * Math.max(0, Math.min(1, t)) : g.r);
 const RECS = path.join(ROOT, "promotion_carrier/evidence/records/on_rx"), FAR = [0, 0, 500], out = { prereg: "AST1E_PREREG.md 7b77dc5 + A1 bc12611", cases: {} }; let allOK = true;
 const RANK = { NEGLIGIBLE: 0, CORRECTION: 1, STUMBLE: 2, FALL: 3 };
-for (const cs of ["rx_miss", "rx_free_leg", "rx_planted_leg"]) { const R = loadAir(RECS, `${cs}_LOCO.json.gz`), run = rd(path.join(SL, `evidence/ast1e/verify_${cs}_free_rev2.json.gz`)), off = run.handoff.off, kp = run.kp, tauP = kp + 1;
+for (const cs of ["rx_miss", "rx_free_leg", "rx_planted_leg"]) { const R = loadAir(RECS, `${cs}_LOCO.json.gz`), run = rd(path.join(SL, `evidence/${process.env.VERIFY_DIR || "ast1e"}/verify_${cs}_free_rev2.json.gz`)), off = run.handoff.off, kp = run.kp, tauP = kp + 1;
   const ev = R.events.filter(e => e.kind === "PLAYER_CONTACT"), cl = (e) => e.react || e.cls, fin = ev.reduce((m, e) => (RANK[cl(e)] > RANK[m] ? cl(e) : m), "NEGLIGIBLE"), dec = ev.find(e => cl(e) === fin) || null, tRef = run.tRef;
   const order = R.prims[kp][3].map(p => p.prim), isLeg = (n) => n === "LEG" || n === "THIGH", segPrims = { LEG: order.filter(isLeg), TORSO: order.filter(n => !isLeg(n)) }, rad = Object.fromEntries(R.prims[kp][3].map(p => [p.prim, p.r]));
   const primAt = (tau) => { const k = Math.min(R.prims.length - 1, Math.max(0, Math.ceil(tau - 1e-9) - 1)), n = Math.max(1, Math.min(4, Math.round((tau - k) * 4))); return Object.fromEntries(R.prims[k][n - 1].map(p => [p.prim, p])); };
