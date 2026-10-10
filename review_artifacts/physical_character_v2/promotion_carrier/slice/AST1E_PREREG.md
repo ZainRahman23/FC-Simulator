@@ -132,3 +132,15 @@ None at freezing.
 - **Release.** Release freezes the pieces.
 
 Everything else in §2 – §5 is unchanged.
+
+### A2 (user-approved correction, `../../sources/2026-10-10_user_approval_standin_timing_correction.md`; before the re-run of checks 2 – 6)
+
+**Change.** The stand-in tether's spring **position and orientation targets** are set to the authoritative pose at the **start** of the step (p0, τ), replacing the end-of-step pose (p1, τ + ¼ tick). It applies to both segments while prescribed.
+
+**Unchanged:**
+- the velocity / angular-velocity targets ((p1 − p0) / dt);
+- the feed-forward;
+- caps, gains, mass properties, geometry, trajectory, the release rule;
+- every check and threshold, including item 2's 10 mm.
+
+**Reason.** Jolt evaluates a spring motor's position error at the start of the step. With the end-of-step target, an on-path body is pulled about one step ahead (`AST1E_STOP_TRACKING.md` §2). This is a correction of the inherited drive's timing, not of any criterion.
