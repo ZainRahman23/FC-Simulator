@@ -1,0 +1,20 @@
+05:03:09 PVP-1A-DX execution — commit 0a829068f5220b767b00088ccd9cb69c7e57331f — tree changes 0
+05:03:10 ib_verify before: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+C0: RAN · entry OK · steps 260 · first cross contact none · hash bc24da7b20eaf828 · 0.7 s
+N2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash e5751b0cbdd7c2b9 · 0.7 s
+X2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash d25b5abf12216265 · no-op {"identical":true,"steps":260} · 1.7 s
+SOLO_R: RAN · entry OK · steps 260 · first cross contact none · hash 9a3f9305399a7e27 · 0.4 s
+SOLO_T: RAN · entry OK · steps 260 · first cross contact none · hash 970379f121316e9f · 0.4 s
+C0: RAN · entry OK · steps 260 · first cross contact none · hash bc24da7b20eaf828 · 0.7 s
+N2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash e5751b0cbdd7c2b9 · 0.7 s
+SOLO_T 970379f121316e9f RAN
+SOLO_R 9a3f9305399a7e27 RAN
+N2 e5751b0cbdd7c2b9 RAN
+C0 bc24da7b20eaf828 RAN
+C0 step median 1.053 ms · 150 ms event 38.27 ms · construction 8.0 ms
+N2 step median 1.074 ms · 150 ms event 39.21 ms · construction 7.7 ms
+05:03:30 ib_verify after: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+gameplay hash after: a2678624 a2678624
+PVP-1A: BLOCKED (H2 TACKLER_FIT_BLOCKED) | DX verdict: DX-CONTROL_INVALID (N2 reported, not interpreted)
+labels: TACKLER_FIT_GATES_FAILED (G-T1, G-T3) — the DX entry · CONTROL_INVALID_PRIMARY · NATIVE_INTEGRITY_FAILED · OUTCOME_INCONSISTENT (runner) · VISUAL_PENDING
+05:03:31 DONE

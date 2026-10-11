@@ -1,5 +1,8 @@
 // PVP-1A(-DX) evaluator — the frozen criteria of PVP1A_PREREGISTRATION.md §6–§11, applied literally to the run records (written before any N2 run).
 // usage: V2_KNEE_MODEL=v2k node pvp1a_eval.mjs <runs dir> <fixture.json> <out.json>
+// CORRECTIONS after DX run 1 (PVP1A_DX_CORRECTIONS.md; the original evaluation is kept as evidence/dx_run1/PVP1A_DX_EVAL_original.json):
+//   DX-C1 the entry verdict now applies the frozen §4 tackler entry check "self-penetration ≤ 10 mm" (fixture self-overlap + step-1 self-manifold depth);
+//   DX-C2 CG-6 normalised 2-D vectors with the 3-D helper V.norm (garbage for 2-D input) and reported 0°; now a 2-D normalisation.
 import fs from "fs"; import path from "path"; import zlib from "zlib";
 const PL = await import(new URL("./pvp1a_lib.mjs", import.meta.url).href), { PV, IL, V, Q, MC } = PL;
 const [DIR, FIXF, OUTF] = process.argv.slice(2), FIX = JSON.parse(fs.readFileSync(FIXF)), { OFF } = PL.records(), sR = PL.SPEC_R(), sT = PL.SPEC_T();
@@ -32,6 +35,9 @@ function mech(run) { if (!run) return null; const res = {};
 out.mechanics = { C0: mech(C0), N2: mech(N2), X2: mech(X2) };
 // ── entry ──
 out.entry = { N2: N2 && N2.entry ? { pass: N2.entry.pass, readback: N2.entry.readback, momentum: N2.entry.momentumReadbackNs, cacheClean: N2.entry.cacheClean, writes: N2.entry.writes } : null, C0: C0 && C0.entry ? { pass: C0.entry.pass } : null, fixtureRunner: FIX.runner.valid, fixtureStatus: FIX.status };
+// DX-C1: the frozen §4 entry check "self-penetration ≤ 10 mm" for both characters (fixture GJK overlap + the deepest self manifold of step 1)
+{ const sp = (role) => { const r1 = N2 && N2.recs[0]; const d = r1 ? Math.max(0, ...r1.contacts.filter(c => c.kind === "self-" + role).map(c => Math.max(...c.points.map(q => q.depth)))) * 1000 : null; return { fixtureOverlap: FIX[role].self.overlap, fixturePair: FIX[role].self.pair, step1DeepestSelfManifoldMm: d, pass: !FIX[role].self.overlap && (d == null || d <= PV.entry.selfPenMm) }; };
+  out.entry.selfPenetration = { runner: sp("runner"), tackler: sp("tackler") }; out.entry.selfPass = out.entry.selfPenetration.runner.pass && out.entry.selfPenetration.tackler.pass; }
 // ── controls (C0, primary window) ──
 const soleLocal = (() => { const fb = sR.bodies[bi(sR, "foot_L")], s = PL.CL ? null : null; const { bootSole, hull2 } = { bootSole: (b) => { const P = b.shapes.filter(x => x.type === "hull").flatMap(x => x.points.map(p => V.add(p, x.pos))), ys = P.map(p => p[1]), y0 = Math.min(...ys); return { y0, pts: P.filter((p, i) => ys[i] < y0 + 0.002) }; }, hull2: null };
   return ["foot_L", "foot_R"].map(n => { const sb = bootSole(sR.bodies[bi(sR, n)]), xs = sb.pts.map(p => p[0]), zs = sb.pts.map(p => p[2]); return [xs.reduce((a, b) => a + b, 0) / xs.length, sb.y0, zs.reduce((a, b) => a + b, 0) / zs.length]; }); })();
@@ -75,9 +81,10 @@ function contact(run) { if (!run) return null; const steps = run.recs.filter(r =
     for (let tau = PV.tauSim; tau <= PV.tauSim + 6 + 1e-9; tau += 0.25) { const P = PL.primsAt(OFF, tau), LEG = P.find(x => x.prim === "LEG"), q = segseg(LEG.a, LEG.b, cap.a, cap.b), rr = cap.ra + (cap.rb - cap.ra) * q.t; phys = Math.max(phys, LEG.r + rr - q.d);
       const seg = PL.runnerSegsAt(OFF, tau).find(g => g.name === "shin_R"), q2 = segseg(LEG.a, LEG.b, seg.a, seg.b), r2 = seg.ra != null ? seg.ra + (seg.rb - seg.ra) * q2.t : seg.r; sim = Math.max(sim, LEG.r + r2 - q2.d); }
     const ratio = sim > 0 ? phys / sim : null; return { pass: ratio != null && ratio >= PV.cg.ovlLo && ratio <= PV.cg.ovlHi, physMaxPenMm: mm(phys), simMaxOverlapMm: mm(sim), ratio }; })();
-  CG.CG6 = (() => { const pre = run.recs.find(r => r.n === o.first - 1) || { S: null }, n = deep.n, tFirst = deep.a !== "turf" && deep.a[0] === "tackler", nTR = tFirst ? n : V.sc(n, -1), nP = V.norm([nTR[0], -nTR[2]]);
+  const n2 = (v) => { const l = Math.hypot(v[0], v[1]); return [v[0] / l, v[1] / l]; };   // DX-C2
+  CG.CG6 = (() => { const pre = run.recs.find(r => r.n === o.first - 1) || { S: null }, n = deep.n, tFirst = deep.a !== "turf" && deep.a[0] === "tackler", nTR = tFirst ? n : V.sc(n, -1), nP = n2([nTR[0], -nTR[2]]);
     const angN = Math.acos(Math.max(-1, Math.min(1, nP[0] * PV.cg.simNormal[0] + nP[1] * PV.cg.simNormal[1]))) * R2D;
-    let angV = null; if (pre.S) { const St = pre.S.slice(nR), Sr = pre.S.slice(0, nR), ti = bi(sT, tb), ri = bi(sR, rb), vt = IL.velAt(St[ti], St[ti].com, p), vr = IL.velAt(Sr[ri], Sr[ri].com, p), rv = V.sub(vt, vr), rvP = V.norm([rv[0], -rv[2]]);
+    let angV = null; if (pre.S) { const St = pre.S.slice(nR), Sr = pre.S.slice(0, nR), ti = bi(sT, tb), ri = bi(sR, rb), vt = IL.velAt(St[ti], St[ti].com, p), vr = IL.velAt(Sr[ri], Sr[ri].com, p), rv = V.sub(vt, vr), rvP = n2([rv[0], -rv[2]]);
       angV = Math.acos(Math.max(-1, Math.min(1, rvP[0] * 1 + rvP[1] * 0))) * R2D; }   // simulation relative velocity (4.533, 0)
     return { pass: angN <= PV.cg.angDeg && angV != null && angV <= PV.cg.angDeg, normalDeg: angN, relVelDeg: angV }; })();
   o.CG = CG; o.correspondencePass = Object.values(CG).every(x => x.pass);
@@ -139,7 +146,7 @@ out.determinism = (() => { const d = {}; for (const m of ["C0", "N2"]) { const b
   d[m] = { fresh: base && rep ? JSON.stringify(base.recs.map(r => r.hash)) === JSON.stringify(rep.recs.map(r => r.hash)) : null, batch: base && bat ? bat === base.finalHash : null, finalHash: base ? base.finalHash : null }; }
   d.X2noop = X2 ? X2.noopRestore : null; d.all = d.C0.fresh && d.N2.fresh && d.C0.batch && d.N2.batch && X2 && X2.noopRestore && X2.noopRestore.identical; return d; })();
 // ── verdict (DX-prefixed; PVP-1A remains BLOCKED) ──
-{ const m = out.mechanics.N2, ctl = out.controls, ct = out.contact, oc = out.outcome, entryOk = out.entry.N2 && out.entry.N2.pass && FIX.runner.valid, ctlOk = ctl && ctl.status === "CONTROL_VALID_PRIMARY";
+{ const m = out.mechanics.N2, ctl = out.controls, ct = out.contact, oc = out.outcome, entryOk = out.entry.N2 && out.entry.N2.pass && FIX.runner.valid && out.entry.selfPass, ctlOk = ctl && ctl.status === "CONTROL_VALID_PRIMARY";
   const mechOk = m && m.runner.primaryPass && m.tackler.primaryPass && m.system.primaryPass, cg = ct && ct.correspondencePass, ocOk = oc && oc.status === "OUTCOME_CONSISTENT";
   const labels = []; if (!FIX.tackler.gates.all) labels.push("TACKLER_FIT_GATES_FAILED (G-T1, G-T3) — the DX entry"); if (!entryOk) labels.push("INITIALIZATION_INVALID"); if (!ctlOk) labels.push("CONTROL_INVALID_PRIMARY");
   if (ct && ct.status === "PHYSICS_MISS") labels.push("PHYSICS_MISS"); if (ct && !cg && ct.status !== "PHYSICS_MISS") labels.push("NATIVE_CORRESPONDENCE_FAILED(" + Object.entries(ct.CG).filter(([, v]) => !v.pass).map(([k]) => k).join(",") + ")");
@@ -147,6 +154,7 @@ out.determinism = (() => { const d = {}; for (const m of ["C0", "N2"]) { const b
   for (const role of ["runner", "tackler"]) if (m && m[role].secondaryFailureAt != null) labels.push(`SECONDARY_FAILURE_AT(${role} ${(m[role].secondaryFailureAt * 1000).toFixed(1)} ms)`);
   if (oc) labels.push(oc.status); labels.push("VISUAL_PENDING");
   const v = !entryOk ? "DX-BLOCKED" : !ctlOk ? "DX-CONTROL_INVALID (N2 reported, not interpreted)" : (ct && ct.status === "PHYSICS_MISS") || (oc && oc.status.startsWith("OUTCOME_INCONSISTENT")) || (m && !(m.runner.primaryPass && m.tackler.primaryPass && m.system.primaryPass)) ? "DX-ARCHITECTURAL-FAILURE" : cg && mechOk && ocOk ? "DX-MECHANICAL-PASS" : "DX-PARTIAL";
-  out.verdict = { dx: v, labels, pvp1a: "BLOCKED (H2 TACKLER_FIT_BLOCKED)" }; }
+  if (!out.entry.selfPass) labels.splice(1, 0, `INITIALIZATION_INVALID (tackler self-penetration ${out.entry.selfPenetration.tackler.step1DeepestSelfManifoldMm.toFixed(1)} mm, ${out.entry.selfPenetration.tackler.fixturePair}; frozen limit 10 mm)`);
+  out.verdict = { dx: v, labels, pvp1a: "BLOCKED (H2 TACKLER_FIT_BLOCKED; the same fixture also records tackler self-overlap, an H3 condition)", corrections: ["DX-C1", "DX-C2"] }; }
 fs.writeFileSync(OUTF, JSON.stringify(out, null, 1));
 console.log("PVP-1A:", out.verdict.pvp1a, "| DX verdict:", out.verdict.dx); console.log("labels:", out.verdict.labels.join(" · "));
