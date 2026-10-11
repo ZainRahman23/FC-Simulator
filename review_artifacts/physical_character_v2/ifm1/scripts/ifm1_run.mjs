@@ -35,7 +35,7 @@ export async function runOne(job, J = Jolt) {
     sim.restoreAll(snap); sim.rejectPair = true; sim.mode = "X"; out.stop = null; runTo(IFM1.stepsTotal); out.recs = sim.recs; }
   out.cpu = { step: sim.cpu.step, passive: sim.cpu.passive, measure: sim.cpu.measure, act: sim.cpu2.act, tone: sim.cpu3.tone, instrument: sim.cpu3.instrument };
   out.joltSteps = sim.joltSteps; out.status = "RAN"; out.finalHash = L.sha256(JSON.stringify(out.recs.map(r => r.hash))).slice(0, 16); out.finalHashR = L.sha256(JSON.stringify(out.recs.map(r => r.hashR))).slice(0, 16);
-  out.injected = sim.injected; sim.destroy && sim.destroy(); try { sim.w.destroy(); } catch (e) { }
+  out.injected = sim.injected; sim.destroy();   // correction C4: G1Sim.destroy() already destroys the world (a second destroy corrupted the wasm heap in the single-process batch)
   return out;
 }
 if (process.argv[1] && process.argv[1].endsWith("ifm1_run.mjs")) {

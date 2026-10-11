@@ -1,0 +1,115 @@
+02:02:46 IFM-1 execution — commit 365dfd99304ddd504ad1aad4100bee9594b15c88 — status 0 changed
+02:02:46 ib_verify before: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+R0 S-FLAT control(SW) C0: RAN · steps 36 · hash f204f1fcb96ca45f · R ff09161511006fed
+R0 S-TOE control(TP) C0: RAN · steps 36 · hash ceed5ca3be5cdce4 · R 022c353b5b2fb68b
+R0 S-FLAT control(PL) C0: RAN · steps 36 · hash cf1a953968d78aff · R ff09161511006fed
+R0 S-FLAT control(SH) C0: RAN · steps 36 · hash 85b60950273805a2 · R ff09161511006fed
+RH1 S-FLAT control(SW) C0: RAN · steps 36 · hash de04e11ede5a322a · R 397a4bf0ac47c8c5
+RH1 S-TOE control(TP) C0: RAN · steps 36 · hash 7dd00e976f2a7015 · R ecb202a14e21626b
+RH1 S-FLAT control(PL) C0: RAN · steps 36 · hash 27d197dbe169c30b · R 397a4bf0ac47c8c5
+RH1 S-FLAT control(SH) C0: RAN · steps 36 · hash 0d04b6e68dbdf332 · R 397a4bf0ac47c8c5
+R0 S-FLAT SW N: RAN · steps 36 · hash ed78c83454d6560a · R 870b440776783735
+RH1 S-FLAT SW N: RAN · steps 36 · hash 97c01901a1380203 · R ea148417307df9c2
+R0 S-FLAT PL N: RAN · steps 36 · hash 67126d0587740dc1 · R 8a18c095ea08c693
+RH1 S-FLAT PL N: RAN · steps 36 · hash 4b70789f94e0a732 · R 69306536891c7576
+R0 S-FLAT SH N: RAN · steps 36 · hash 97d7cf46a1626a12 · R 52ece574cb0972ab
+RH1 S-FLAT SH N: RAN · steps 36 · hash 01d0d73f08b1954c · R e2097f8c3a01c62c
+R0 S-TOE TP N: RAN · steps 36 · hash 44be9b7e3e0b1a13 · R 206ed80c394c21d7
+RH1 S-TOE TP N: RAN · steps 36 · hash 2d02dd07ea163549 · R b7625c9c8e7c7f59
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+SW/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.4294967295
+SW/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.4294967295
+PL/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.4294967295
+PL/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.4294967295
+SH/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.4294967294
+SH/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.4294967294
+TP/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.4294967295
+TP/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.4294967295
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+SW/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.4294967295
+SW/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.4294967295
+PL/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.4294967295
+PL/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.4294967295
+SH/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.4294967294
+SH/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.4294967294
+TP/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.4294967295
+TP/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.4294967295
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+SW/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.4294967295
+SW/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.4294967295
+PL/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.4294967295
+PL/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.4294967295
+SH/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.4294967294
+SH/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.4294967294
+TP/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.4294967295
+TP/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.4294967295
+N_TP_RH1: RAN 2d02dd07ea163549
+wasm://wasm/007b6306:1
+
+
+RuntimeError: memory access out of bounds
+    at wasm://wasm/007b6306:wasm-function[14]:0xa5b2
+    at wasm://wasm/007b6306:wasm-function[811]:0x55b0c
+    at wasm://wasm/007b6306:wasm-function[1505]:0xaa4a0
+    at wasm://wasm/007b6306:wasm-function[1452]:0x9d639
+    at wasm://wasm/007b6306:wasm-function[772]:0x5081e
+    at wasm://wasm/007b6306:wasm-function[4925]:0x1e0657
+    at Jolt.L7.Create (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js:1103:66)
+    at V2JoltWorld._addBody (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/core/v2_jolt.js:95:19)
+    at new V2JoltWorld (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/core/v2_jolt.js:74:34)
+    at new G1Sim (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/gates/v2_g1.js:140:14)
+
+Node.js v22.19.0
+node:fs:561
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/ifm1_runs/batch_reverse.json'
+    at Object.openSync (node:fs:561:18)
+    at Object.readFileSync (node:fs:445:35)
+    at file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/review_artifacts/physical_character_v2/ifm1/scripts/ifm1_determinism.mjs:5:121
+    at ModuleJob.run (node:internal/modules/esm/module_job:345:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:651:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/ifm1_runs/batch_reverse.json'
+}
+
+Node.js v22.19.0
+C0_R0_S-FLAT: step 0.603 / 0.893 / 2.311 ms (Jolt 0.287), event 150 ms 22.33 ms, construction 5.3 ms, state = correctness run true
+C0_R0_S-TOE: step 0.485 / 0.642 / 0.957 ms (Jolt 0.257), event 150 ms 17.83 ms, construction 4.3 ms, state = correctness run true
+C0_RH1_S-FLAT: step 0.482 / 0.603 / 0.820 ms (Jolt 0.267), event 150 ms 17.80 ms, construction 4.0 ms, state = correctness run true
+C0_RH1_S-TOE: step 0.478 / 0.685 / 1.003 ms (Jolt 0.255), event 150 ms 17.63 ms, construction 4.2 ms, state = correctness run true
+N_SW_R0: step 0.496 / 0.636 / 0.957 ms (Jolt 0.278), event 150 ms 18.35 ms, construction 4.0 ms, state = correctness run true
+N_SW_RH1: step 0.493 / 0.619 / 0.863 ms (Jolt 0.277), event 150 ms 18.23 ms, construction 4.0 ms, state = correctness run true
+N_PL_R0: step 0.497 / 0.657 / 1.518 ms (Jolt 0.281), event 150 ms 18.27 ms, construction 4.0 ms, state = correctness run true
+N_PL_RH1: step 0.495 / 0.626 / 0.993 ms (Jolt 0.279), event 150 ms 18.21 ms, construction 4.0 ms, state = correctness run true
+N_SH_R0: step 0.491 / 0.622 / 0.870 ms (Jolt 0.277), event 150 ms 18.17 ms, construction 3.8 ms, state = correctness run true
+N_SH_RH1: step 0.489 / 0.627 / 0.822 ms (Jolt 0.275), event 150 ms 18.13 ms, construction 3.8 ms, state = correctness run true
+N_TP_R0: step 0.471 / 0.610 / 0.839 ms (Jolt 0.256), event 150 ms 17.50 ms, construction 3.8 ms, state = correctness run true
+N_TP_RH1: step 0.475 / 0.676 / 1.102 ms (Jolt 0.254), event 150 ms 17.59 ms, construction 3.9 ms, state = correctness run true
+02:03:00 ib_verify after: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED
+SW/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.4294967295
+SW/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.4294967295
+PL/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.4294967295
+PL/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.4294967295
+SH/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.4294967294
+SH/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.4294967294
+TP/R0: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.4294967295
+TP/RH1: NATIVE_CORRESPONDENCE_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.4294967295
+02:03:00 DONE

@@ -20,7 +20,7 @@ for (const job of jobs) {
     while (sim.n < IFM1.stepsTotal) { const t1 = now(); if (!sim.tick()) break; const dt = now() - t1, c2 = { s: sim.cpu.step, p: sim.cpu.passive, m: sim.cpu.measure, a: sim.cpu2.act, t: sim.cpu3.tone };
       per.push({ total: dt, jolt: c2.s - c.s, passive: c2.p - c.p, measure: c2.m - c.m, act: c2.a - c.a, tone: c2.t - c.t }); c = c2; }
     const fin = sim.read(), same = fin.every((b, i) => b.pos.every((x, k) => Object.is(x, refS[i].pos[k])) && b.v.every((x, k) => Object.is(x, refS[i].v[k])) && b.rot.every((x, k) => Object.is(x, refS[i].rot[k])));
-    try { sim.w.destroy(); } catch (e) { } return { construct: tc, per, same }; };
+    sim.destroy(); return { construct: tc, per, same }; };   // C4: one destroy
   once(false); const reps = []; for (let k = 0; k < 20; k++) reps.push(once(true));
   const prod = reps.flatMap(r => r.per.map(p => p.total - p.measure)), comp = (k) => { const a = reps.flatMap(r => r.per.map(p => p[k])); return { median: q(a, 0.5), p95: q(a, 0.95), max: Math.max(...a) }; };
   const ev = (n) => reps.map(r => r.per.slice(0, n).reduce((s, p) => s + (p.total - p.measure), 0)), e50 = ev(IFM1.stepsPrimary), e150 = ev(IFM1.stepsTotal);

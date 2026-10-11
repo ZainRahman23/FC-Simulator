@@ -18,6 +18,9 @@ function geom(bname) { const spec = L.SPECS[bname](), B = spec.bodies, bi = (n) 
   const sole = bootSole(B[bi("foot_L")]), hz = hull2(sole.pts), solePt = [hz.reduce((s, p) => s + p[0], 0) / hz.length, sole.y0, hz.reduce((s, p) => s + p[1], 0) / hz.length];   // PostureDriver's support point (flat-sole centroid)
   return { spec, B, bi, LM, solePt, M: B.reduce((s, b) => s + b.mass, 0) }; }
 const at = (S, i, l) => V.add(S[i].pos, Q.rot(S[i].rot, l));
+// correction C3: decoded contact-cache sub-shape ids are raw Jolt SubShapeID values; the first-level compound index is the V2 world's own rule
+// (core/v2_jolt.js _sub: bits = ceil(log2(number of shapes)), index = value & (2^bits − 1); single-shape bodies → 0)
+const subIdx = (B, i, raw) => { const n = B[i].shapes.length, bits = n > 1 ? Math.ceil(Math.log2(n)) : 0; return bits ? (raw & ((1 << bits) - 1)) : 0; };
 const CHAIN = { SW: ["shank_R", "thigh_R", "foot_R"], PL: ["shank_L", "thigh_L", "foot_L"], TP: ["shank_L", "thigh_L", "foot_L"], SH: ["upperArm_L", "forearm_L", "thorax"] };
 const CHAIN_LM = { SW: ["knee_R", "ankle_R"], PL: ["knee_L", "ankle_L"], TP: ["knee_L", "ankle_L"], SH: ["shoulder_L", "elbow_L", "wrist_L"] };
 // ── primary-window integrity + ledgers (shared by C0 / N / W / X) ──
@@ -52,7 +55,12 @@ for (const bname of BODIES) for (const sid of ["S-FLAT", "S-TOE"]) {
   const ent = run.entry, handoffOk = e.handoff.HGA2_3.pass && e.handoff.postShift.PR2.pass && e.handoff.postShift.kin.pass;
   o.entry = { geometry: e.entryGateGeometry, readback: ent.readback, momentumReadbackErrNs: ent.horizontalMomentumErrNs, momentumOk: ent.momentumReadbackOk, cacheClean: ent.cacheClean, writes: ent.entryWrites,
     pass: e.entryGateGeometry.pass && ent.momentumReadbackOk && ent.cacheClean && ent.entryWrites === 28 };
-  o.handoff = { pass: handoffOk, HGA2_3: e.handoff.HGA2_3, PR2post: e.handoff.postShift.PR2.auditGateMs, PR2pre: e.handoff.preShift.PR2.auditGateMs, kin: e.handoff.postShift.kin, label: handoffOk ? null : "HANDOFF_FAILED" };
+  o.handoff = { pass: handoffOk, HGA2_3: e.handoff.HGA2_3, PR2post: e.handoff.postShift.PR2.auditGateMs, PR2pre: e.handoff.preShift.PR2.auditGateMs, kin: e.handoff.postShift.kin, kinPre: e.handoff.preShift.kin, label: handoffOk ? null : "HANDOFF_FAILED",
+    // correction C5 (reporting only; the frozen label above is unchanged): HGA_V2_ADOPTED.md keeps P-1 … P-17 as PRE-shift mapping-fidelity rows ("P-16 remains the
+    // pre-shift mapping-fidelity row") and bounds the shift by HG-A2.3; PR-2's frame (pre / post shift) is not fixed by that text — both readings reported
+    readings: { frozenDecision8: { pass: handoffOk, rows: "P-14c…P-17c post-shift, PR-2 post-shift, HG-A2.3" },
+      contractTextPR2post: { pass: e.handoff.HGA2_3.pass && e.handoff.preShift.kin.pass && e.handoff.postShift.PR2.pass, rows: "P-14c…P-17c pre-shift, PR-2 post-shift, HG-A2.3" },
+      contractTextPR2pre: { pass: e.handoff.HGA2_3.pass && e.handoff.preShift.kin.pass && e.handoff.preShift.PR2.pass, rows: "P-14c…P-17c pre-shift, PR-2 pre-shift, HG-A2.3" } } };
   const m = mech(run, "C0"), R = run.recs, prim = R.filter(r => r.n <= NP), fL = g.bi("foot_L");
   const nonFoot = prim.flatMap(r => r.contacts.filter(c => c.kind === "ground").map(c => (typeof c.a === "number" ? c.a : c.b)).filter(i => !/^foot_/.test(g.B[i].name)).map(i => ({ n: r.n, body: g.B[i].name }))).filter(x => { const r = prim.find(q => q.n === x.n); const c = r.contacts.find(cc => cc.kind === "ground" && ((cc.a === g.bi(x.body)) || (cc.b === g.bi(x.body)))); return c && (c.Jn > 0 || c.points.some(p => p.depth > -0.0005)); });
   const loadSteps = prim.map(r => { const gL = r.ground.find(x => x.body === "foot_L"); return gL ? gL.Jn : 0; }), loaded = loadSteps.filter(x => x > 0).length, Jint = loadSteps.reduce((a, b) => a + b, 0), need = I.c0Flat.minImpulseFracMgT * g.M * G * 0.05;
@@ -92,8 +100,8 @@ for (const role of ROLES) for (const bname of BODIES) {
   if (!N || N.status !== "RAN") { o.N = { status: N ? N.status : "NOT_RUN" }; continue; }
   // native correspondence (first step)
   const r1 = N.recs.find(r => r.n === 1), ti = g.bi(fix.target.body), opp1 = r1 ? r1.contacts.filter(c => c.kind === "opponent") : [], q = (c) => V.len(c.J2) >= I.contact.minImpulseNs;
-  const onTarget = opp1.filter(c => q(c) && ((c.a === ti && c.sub1 === fix.target.sub) || (c.b === ti && c.sub2 === fix.target.sub)));
-  const anyQual = opp1.filter(q), firstBodies = [...new Set(anyQual.map(c => (typeof c.a === "number" ? `${g.B[c.a].name}.${c.sub1}` : `${g.B[c.b].name}.${c.sub2}`)))];
+  const onTarget = opp1.filter(c => q(c) && ((c.a === ti && subIdx(g.B, ti, c.sub1) === fix.target.sub) || (c.b === ti && subIdx(g.B, ti, c.sub2) === fix.target.sub)));
+  const anyQual = opp1.filter(q), firstBodies = [...new Set(anyQual.map(c => (typeof c.a === "number" ? `${g.B[c.a].name}.${subIdx(g.B, c.a, c.sub1)}` : `${g.B[c.b].name}.${subIdx(g.B, c.b, c.sub2)}`)))];
   let witnessMm = null, normalDeg = null;
   if (onTarget.length) { const c = onTarget.reduce((m, x) => (V.len(x.J2) > V.len(m.J2) ? x : m), onTarget[0]), wsum = c.points.reduce((s, p) => s + Math.max(p.lam, 0), 0), wpt = wsum > 0 ? V.sc(c.points.reduce((s, p) => V.add(s, V.sc(p.p, Math.max(p.lam, 0))), [0, 0, 0]), 1 / wsum) : c.points[0].p;
     const S0 = FIX.entries[ckey].write.poses, patch = at(S0, ti, fix.witnessLocal); witnessMm = V.dist(wpt, patch) * 1000;   // the target body's transform at contact = its pre-step (entry) transform for a first-step contact
@@ -134,5 +142,5 @@ for (const role of ROLES) for (const bname of BODIES) {
   o.status = [o.N.status, o.handoffLabel, ctl.status === "CONTROL_INVALID_PRIMARY" ? "CONTROL_INVALID_PRIMARY" : null, o.W.status ? "W:" + o.W.status : null, o.N.mechanics.secondaryFailure ? `SECONDARY_FAILURE_AT(${o.N.mechanics.secondaryFailure.t != null ? (o.N.mechanics.secondaryFailure.t * 1000).toFixed(1) + " ms" : "horizon"})` : null, "VISUAL_PENDING"].filter(Boolean);
 }
 fs.mkdirSync(path.dirname(OUTF), { recursive: true }); fs.writeFileSync(OUTF, JSON.stringify(out, null, 1));
-for (const [k, c] of Object.entries(out.controls)) console.log(`C0 ${k}: ${c.status}${c.primaryFails && c.primaryFails.length ? " · " + c.primaryFails.slice(0, 4).join("; ") : ""}${c.handoff && c.handoff.label ? " · " + c.handoff.label : ""}${c.secondary ? " · " + c.secondary : ""}`);
+for (const [k, c] of Object.entries(out.controls)) console.log(`C0 ${k}: ${c.status}${c.primaryFails && c.primaryFails.length ? " · " + c.primaryFails.slice(0, 4).join("; ") : ""}${c.handoff && c.handoff.label ? " · " + c.handoff.label : ""}${c.handoff ? ` [handoff readings: frozen ${c.handoff.readings.frozenDecision8.pass ? "pass" : "FAIL"} · contract/PR-2 post ${c.handoff.readings.contractTextPR2post.pass ? "pass" : "FAIL"} · contract/PR-2 pre ${c.handoff.readings.contractTextPR2pre.pass ? "pass" : "FAIL"}]` : ""}${c.secondary ? " · " + c.secondary : ""}`);
 for (const [k, c] of Object.entries(out.cells)) console.log(`${k}: ${Array.isArray(c.status) ? c.status.join(" · ") : c.status}${c.N && c.N.correspondence ? ` · first-step J ${c.N.correspondence.firstStepImpulseNs.toFixed(3)} N·s on ${c.N.correspondence.firstStepRegions.join(",")}` : ""}${c.X && c.X.triggered ? " · X " + c.X.status : ""}`);
