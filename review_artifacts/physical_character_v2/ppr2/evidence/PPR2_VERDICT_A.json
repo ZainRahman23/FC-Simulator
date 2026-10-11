@@ -1,0 +1,459 @@
+{
+ "criteria": {
+  "QS1": {
+   "minExitS": 0.45,
+   "why": "[E] ≥ start-up 0.10 s + 2 × loop delay: the open-loop body stays inside the standing envelope long enough for a delayed loop to act"
+  },
+  "QS2": {
+   "minEfoldS": 0.175,
+   "why": "[E] λ·τ ≤ 1 (margin √2 on the delayed-PD stabilisability limit λτ < √2, Stépán): the departure must be catchable by a 175 ms loop"
+  },
+  "QS3": {
+   "maxExitS": 4,
+   "why": "[M] passive + fixed tone cannot stand (every primary source): the body must leave the envelope; 4 s = 1.5 × the slowest human-equivalent estimate"
+  },
+  "I1a": "ankle K/mgh at the end of the 41.7 ms ramp within [0.5, 1.5] × Vlutters 2015 at the measured angle, all 5 amplitudes",
+  "I1b": "ankle K/mgh at 71 ms within [0.5, 1.5] × Sakanaka 2021 at the measured angle, every amplitude with angle ≤ 1.0°",
+  "I2": "knee elastic stiffness at 100 ms ≥ 17 N·m/rad (small amplitude, both signs)",
+  "I3": "hip elastic stiffness at 100 ms within [30, 91] N·m/rad (small amplitude, both signs)",
+  "S1": {
+   "maxDropMm": 5,
+   "maxComFrac": 0.5,
+   "why": "[D] not a floppy ragdoll: no collapse (relative pelvis drop ≤ 5 mm) and bounded sway (relative COM displacement at 300 ms ≤ ½ the COM-to-edge margin)"
+  },
+  "S2": {
+   "minDevDeg": 0.2,
+   "why": "[D] not a rigid mannequin: a measurable joint deflection somewhere between pelvis and ground"
+  },
+  "S3": {
+   "maxSettleRatio": 1,
+   "why": "[D] the joint-level transient decays: RMS relative joint speed 200–300 ms ≤ that at 50–150 ms"
+  },
+  "S4": "no loss of no-step balance within 300 ms (XcoM inside the base of support, both feet loaded)",
+  "M1": {
+   "growth": 1.3,
+   "minDevDeg": 1,
+   "minComMm": 15,
+   "why": "[D] substantial sway / yield: larger than small (×1.3 for ×1.6 impulse) and ≥ 1° or ≥ 15 mm COM"
+  },
+  "M2": "no loss of no-step balance within 300 ms",
+  "L1": "loss of no-step balance within 300 ms",
+  "C1": "per direction: COM displacement at 300 ms and max joint deflection strictly increase small < moderate < large",
+  "R1": "no growing oscillation after release (successive alternating extrema about the final value ≤ 1.05 × the previous)",
+  "R2": {
+   "minZeta": 0.05,
+   "why": "[D] not undamped where an oscillation (≥ 2 alternating extrema) is measurable"
+  },
+  "E1": {
+   "floorJ": 1,
+   "frac": 0.05,
+   "why": "[S] energy ledger closes where the feet stay planted: |Σ residual| ≤ 1 J + 5 % of |external work| (T1 from t0 to exit; small and moderate T2 to 300 ms). The ledger has no turf-contact term, so foot impacts and sliding (start-up, large pushes) appear as residual: reported, not judged"
+  },
+  "INT1": {
+   "maxTransientMm": 5,
+   "why": "[S] V2 G1 spec 1.3a"
+  },
+  "INT2": {
+   "maxRestMm": 1,
+   "why": "[S] V2 G1 spec 1.3c (at t0 in T1 and at 300 ms after small pushes)"
+  },
+  "DET": "bit-identical reruns (standing 240 steps, moderate forward push)"
+ },
+ "label": "CURRENT V2",
+ "law": "A",
+ "pass": false,
+ "nPass": 41,
+ "n": 45,
+ "failed": [
+  "QS1",
+  "I1a",
+  "I1b",
+  "I3"
+ ],
+ "results": {
+  "QS1": {
+   "pass": false,
+   "value": {
+    "t": 0.4083333333333333,
+    "step": 98,
+    "cause": "COM horizontal",
+    "Dmm": 10.000524299123606,
+    "jointDeg": 0.6100687905560782
+   }
+  },
+  "QS2": {
+   "pass": true,
+   "value": 0.2653215631254818
+  },
+  "QS3": {
+   "pass": true,
+   "value": 0.4083333333333333
+  },
+  "I1a": {
+   "pass": false,
+   "value": [
+    {
+     "deg": 0.15,
+     "K": 11.561,
+     "ref": 1.122,
+     "ratio": 10.31
+    },
+    {
+     "deg": 0.3,
+     "K": 11.352,
+     "ref": 0.923,
+     "ratio": 12.3
+    },
+    {
+     "deg": 0.62,
+     "K": 11.307,
+     "ref": 0.758,
+     "ratio": 14.92
+    },
+    {
+     "deg": 1.24,
+     "K": 11.453,
+     "ref": 0.627,
+     "ratio": 18.27
+    },
+    {
+     "deg": 2.84,
+     "K": 10.725,
+     "ref": 0.501,
+     "ratio": 21.41
+    }
+   ]
+  },
+  "I1b": {
+   "pass": false,
+   "value": [
+    {
+     "deg": 0.1,
+     "K": 3.439,
+     "ref": 1.162,
+     "ratio": 2.96
+    },
+    {
+     "deg": 0.22,
+     "K": 3.209,
+     "ref": 0.918,
+     "ratio": 3.5
+    },
+    {
+     "deg": 0.45,
+     "K": 2.866,
+     "ref": 0.725,
+     "ratio": 3.95
+    },
+    {
+     "deg": 0.9,
+     "K": 2.767,
+     "ref": 0.58,
+     "ratio": 4.77
+    }
+   ]
+  },
+  "I2": {
+   "pass": true,
+   "value": [
+    {
+     "sign": 1,
+     "Kel": 291.9
+    },
+    {
+     "sign": -1,
+     "Kel": 292
+    }
+   ]
+  },
+  "I3": {
+   "pass": false,
+   "value": [
+    {
+     "sign": 1,
+     "Kel": 108.7
+    },
+    {
+     "sign": -1,
+     "Kel": 108.9
+    }
+   ]
+  },
+  "S1.fwd": {
+   "pass": true,
+   "value": {
+    "dropMm": 0.38,
+    "comEndMm": 12.2,
+    "marginMm": 102.8
+   }
+  },
+  "S2.fwd": {
+   "pass": true,
+   "value": 0.946
+  },
+  "S3.fwd": {
+   "pass": true,
+   "value": 0.534
+  },
+  "S4.fwd": {
+   "pass": true,
+   "value": 0.059
+  },
+  "M1.fwd": {
+   "pass": true,
+   "value": {
+    "devDeg": 1.56,
+    "axis": "lumbar.flex",
+    "comEndMm": 19.6,
+    "smallDevDeg": 0.95
+   }
+  },
+  "M2.fwd": {
+   "pass": true,
+   "value": 0.047
+  },
+  "L1.fwd": {
+   "pass": true,
+   "value": {
+    "t": 0.025,
+    "cause": "XcoM beyond the base of support"
+   }
+  },
+  "C1.fwd": {
+   "pass": true,
+   "value": {
+    "comEndMm": [
+     12.2,
+     19.6,
+     136.5
+    ],
+    "devDeg": [
+     0.95,
+     1.56,
+     8.58
+    ]
+   }
+  },
+  "S1.back": {
+   "pass": true,
+   "value": {
+    "dropMm": 0.01,
+    "comEndMm": 12.2,
+    "marginMm": 124.6
+   }
+  },
+  "S2.back": {
+   "pass": true,
+   "value": 0.953
+  },
+  "S3.back": {
+   "pass": true,
+   "value": 0.496
+  },
+  "S4.back": {
+   "pass": true,
+   "value": 0.104
+  },
+  "M1.back": {
+   "pass": true,
+   "value": {
+    "devDeg": 1.68,
+    "axis": "lumbar.flex",
+    "comEndMm": 21.3,
+    "smallDevDeg": 0.95
+   }
+  },
+  "M2.back": {
+   "pass": true,
+   "value": 0.084
+  },
+  "L1.back": {
+   "pass": true,
+   "value": {
+    "t": 0.03333333333333333,
+    "cause": "XcoM beyond the base of support"
+   }
+  },
+  "C1.back": {
+   "pass": true,
+   "value": {
+    "comEndMm": [
+     12.2,
+     21.3,
+     129.2
+    ],
+    "devDeg": [
+     0.95,
+     1.68,
+     7.85
+    ]
+   }
+  },
+  "S1.left": {
+   "pass": true,
+   "value": {
+    "dropMm": 1.96,
+    "comEndMm": 51.6,
+    "marginMm": 268.1
+   }
+  },
+  "S2.left": {
+   "pass": true,
+   "value": 6.434
+  },
+  "S3.left": {
+   "pass": true,
+   "value": 0.649
+  },
+  "S4.left": {
+   "pass": true,
+   "value": 0.175
+  },
+  "M1.left": {
+   "pass": true,
+   "value": {
+    "devDeg": 10.47,
+    "axis": "hip_L.abd",
+    "comEndMm": 78.1,
+    "smallDevDeg": 6.43
+   }
+  },
+  "M2.left": {
+   "pass": true,
+   "value": 0.132
+  },
+  "L1.left": {
+   "pass": true,
+   "value": {
+    "t": 0.029166666666666667,
+    "cause": "XcoM beyond the base of support"
+   }
+  },
+  "C1.left": {
+   "pass": true,
+   "value": {
+    "comEndMm": [
+     51.6,
+     78.1,
+     324.5
+    ],
+    "devDeg": [
+     6.43,
+     10.47,
+     36.2
+    ]
+   }
+  },
+  "S1.right": {
+   "pass": true,
+   "value": {
+    "dropMm": 1.83,
+    "comEndMm": 50.5,
+    "marginMm": 273
+   }
+  },
+  "S2.right": {
+   "pass": true,
+   "value": 6.333
+  },
+  "S3.right": {
+   "pass": true,
+   "value": 0.603
+  },
+  "S4.right": {
+   "pass": true,
+   "value": 0.181
+  },
+  "M1.right": {
+   "pass": true,
+   "value": {
+    "devDeg": 10.42,
+    "axis": "hip_R.abd",
+    "comEndMm": 77.2,
+    "smallDevDeg": 6.33
+   }
+  },
+  "M2.right": {
+   "pass": true,
+   "value": 0.137
+  },
+  "L1.right": {
+   "pass": true,
+   "value": {
+    "t": 0.029166666666666667,
+    "cause": "XcoM beyond the base of support"
+   }
+  },
+  "C1.right": {
+   "pass": true,
+   "value": {
+    "comEndMm": [
+     50.5,
+     77.2,
+     323.8
+    ],
+    "devDeg": [
+     6.33,
+     10.42,
+     36.21
+    ]
+   }
+  },
+  "R1": {
+   "pass": true,
+   "value": []
+  },
+  "R2": {
+   "pass": true,
+   "value": []
+  },
+  "E1": {
+   "pass": true,
+   "value": {
+    "worst": [
+     [
+      "right.moderate",
+      -0.06
+     ],
+     [
+      "left.moderate",
+      -0.059
+     ],
+     [
+      "left.small",
+      -0.029
+     ]
+    ],
+    "failing": []
+   }
+  },
+  "INT1": {
+   "pass": true,
+   "value": 0.207
+  },
+  "INT2": {
+   "pass": true,
+   "value": [
+    0.0008,
+    0.0009,
+    0.0009,
+    0.0032,
+    0.0033
+   ]
+  },
+  "DET": {
+   "pass": true,
+   "value": {
+    "standing": [
+     "bcfef595527a79fd",
+     "bcfef595527a79fd"
+    ],
+    "push": [
+     "a28bb2bd96df045d",
+     "a28bb2bd96df045d"
+    ],
+    "identical": true
+   }
+  }
+ }
+}

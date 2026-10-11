@@ -1,0 +1,341 @@
+{
+ "label": "S*",
+ "runs": {
+  "fwd.small": {
+   "J": 7.3,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 1.04,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": -0.08,
+     "comRelMm": 2.8,
+     "comRelVel": 0.103,
+     "xcomMarginMm": 67.7
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 1.73,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 0.45,
+     "comRelMm": 7.8,
+     "comRelVel": 0.097,
+     "xcomMarginMm": 63.3
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 2.07,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 1.66,
+     "comRelMm": 15.1,
+     "comRelVel": 0.099,
+     "xcomMarginMm": 55.6
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 3.39,
+     "axis": "ankle_R.df",
+     "pelvisDropMm": 4.91,
+     "comRelMm": 28.4,
+     "comRelVel": 0.116,
+     "xcomMarginMm": 36
+    }
+   ],
+   "settleInsideTau": 0.787
+  },
+  "fwd.moderate": {
+   "J": 11.6,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 1.67,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": -0.12,
+     "comRelMm": 4.5,
+     "comRelVel": 0.164,
+     "xcomMarginMm": 46.9
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 3.03,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 0.85,
+     "comRelMm": 12.5,
+     "comRelVel": 0.157,
+     "xcomMarginMm": 39.7
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 4.26,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 3.14,
+     "comRelMm": 24.3,
+     "comRelVel": 0.161,
+     "xcomMarginMm": 26.6
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 7.47,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 9.09,
+     "comRelMm": 46.1,
+     "comRelVel": 0.19,
+     "xcomMarginMm": -4.8
+    }
+   ],
+   "settleInsideTau": 0.818
+  },
+  "back.small": {
+   "J": 7.2,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 1.01,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 0.12,
+     "comRelMm": 2.8,
+     "comRelVel": 0.102,
+     "xcomMarginMm": 89.7
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 1.68,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": -0.12,
+     "comRelMm": 7.7,
+     "comRelVel": 0.094,
+     "xcomMarginMm": 88.4
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 2.36,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 0.12,
+     "comRelMm": 14.3,
+     "comRelVel": 0.084,
+     "xcomMarginMm": 85.1
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 3.91,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 1.3,
+     "comRelMm": 25.7,
+     "comRelVel": 0.103,
+     "xcomMarginMm": 68.8
+    }
+   ],
+   "settleInsideTau": 0.84
+  },
+  "back.moderate": {
+   "J": 11.6,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 1.74,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 0.19,
+     "comRelMm": 4.5,
+     "comRelVel": 0.164,
+     "xcomMarginMm": 68.3
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 3.12,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": -0.22,
+     "comRelMm": 12.5,
+     "comRelVel": 0.156,
+     "xcomMarginMm": 64.3
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 4.65,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": -0.1,
+     "comRelMm": 23.7,
+     "comRelVel": 0.147,
+     "xcomMarginMm": 55.9
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 8.08,
+     "axis": "lumbar.flex",
+     "pelvisDropMm": 2.17,
+     "comRelMm": 43.1,
+     "comRelVel": 0.173,
+     "xcomMarginMm": 29.3
+    }
+   ],
+   "settleInsideTau": 0.807
+  },
+  "left.small": {
+   "J": 15.9,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 2.64,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.07,
+     "comRelMm": 6.1,
+     "comRelVel": 0.218,
+     "xcomMarginMm": 197.3
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 5.98,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.78,
+     "comRelMm": 16.1,
+     "comRelVel": 0.188,
+     "xcomMarginMm": 196.5
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 10.43,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 3.87,
+     "comRelMm": 29.5,
+     "comRelVel": 0.177,
+     "xcomMarginMm": 185.9
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 23.4,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 14.97,
+     "comRelMm": 55.2,
+     "comRelVel": 0.245,
+     "xcomMarginMm": 138.1
+    }
+   ],
+   "settleInsideTau": 0.974
+  },
+  "left.moderate": {
+   "J": 25.5,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 4.52,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.1,
+     "comRelMm": 9.7,
+     "comRelVel": 0.351,
+     "xcomMarginMm": 151.6
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 10.84,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 1.66,
+     "comRelMm": 26.1,
+     "comRelVel": 0.311,
+     "xcomMarginMm": 147.8
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 19.85,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 7.64,
+     "comRelMm": 48.6,
+     "comRelVel": 0.297,
+     "xcomMarginMm": 129.5
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 31.79,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 27.19,
+     "comRelMm": 91.3,
+     "comRelVel": 0.418,
+     "xcomMarginMm": 49.2
+    }
+   ],
+   "settleInsideTau": 0.972
+  },
+  "right.small": {
+   "J": 15.9,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 2.63,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.05,
+     "comRelMm": 6.1,
+     "comRelVel": 0.218,
+     "xcomMarginMm": 198.6
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 5.94,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.65,
+     "comRelMm": 16.1,
+     "comRelVel": 0.189,
+     "xcomMarginMm": 198.5
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 10.32,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 3.48,
+     "comRelMm": 29.6,
+     "comRelVel": 0.178,
+     "xcomMarginMm": 189.3
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 22.99,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 13.71,
+     "comRelMm": 55.2,
+     "comRelVel": 0.244,
+     "xcomMarginMm": 145.3
+    }
+   ],
+   "settleInsideTau": 0.962
+  },
+  "right.moderate": {
+   "J": 25.5,
+   "t": [
+    {
+     "ms": 50,
+     "maxDevDeg": 4.51,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 0.07,
+     "comRelMm": 9.7,
+     "comRelVel": 0.352,
+     "xcomMarginMm": 152.8
+    },
+    {
+     "ms": 100,
+     "maxDevDeg": 10.81,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 1.48,
+     "comRelMm": 26.1,
+     "comRelVel": 0.312,
+     "xcomMarginMm": 149.5
+    },
+    {
+     "ms": 175,
+     "maxDevDeg": 19.77,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 7.09,
+     "comRelMm": 48.7,
+     "comRelVel": 0.299,
+     "xcomMarginMm": 132.4
+    },
+    {
+     "ms": 300,
+     "maxDevDeg": 32.4,
+     "axis": "lumbar.lat",
+     "pelvisDropMm": 26,
+     "comRelMm": 91.3,
+     "comRelVel": 0.417,
+     "xcomMarginMm": 56.6
+    }
+   ],
+   "settleInsideTau": 0.969
+  }
+ }
+}

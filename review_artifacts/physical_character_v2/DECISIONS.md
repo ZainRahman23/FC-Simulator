@@ -3759,3 +3759,48 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 5. standing judged with delayed active balance.
 
 **Report:** `ppr1/PPR1_REPORT.md`. **Review:** `ppr1/review/PPR1_REVIEW.html`. Records and frames are outside Git.
+
+## 2026-10-11: PPR-2 physiological standing body (source f1f24783; design, audit, preregistration and freeze e454b068): candidate S* FAILED its frozen qualification (36 / 45); no PVP replay (PVP-1A-DX stays sealed); decision C; REVIEW_PENDING
+
+**PPR-1 is preserved unchanged** (B FAILED 12 / 23, 06591e7d).
+
+**Findings, kept separate:**
+- **A, control law:** excitation is fixed from the pre-contact state, with no regulator. The activation trace is bit-identical, struck vs unstruck, over 300 ms.
+- **A2, control law (new):** SnapshotTone's PostureDriver statics are a forward-accelerating leg-line force, not a rest equilibrium.
+  - Ankle 10.0–10.6 N·m against 20.7–21.7 at rest; knee 7.2–7.5 against 1.0–1.3.
+  - Every compliant body falls from t = 0 under it. PPR-2 corrects it with rest statics (COP under the COM).
+- **B, body spec:** V2 has no mid-range passive elasticity.
+  - Literature values, untuned: ankle 46 N·m/rad per leg, knee 17, hip 19, lumbar 10, neck 1.6 / 2.4, each about its anatomical slack angle.
+  - Implementable as V2's existing neutral-zone (G3-R7) term.
+- **C, actuator law:** the short-range / eccentric reserve is strain-based (persists at hold, yields at (e − 1)·a·capIso). The plateau e is unchanged (adequate per literature).
+- **The PVP entry is not a loaded equilibrium:** a 0.5 mm hover, both feet rolled 4.43° onto their medial edges, and leg-line statics.
+
+**Isolated ankle (I1; Vlutters / Sakanaka protocol).** S* = A + A2 + B + C is 0.98–1.44 × the human curve at every amplitude. S_A (A + A2 only) reaches 1.81 × at 0.5°, which counts as evidence that B and C are needed.
+
+**Qualification** (SOLO, PVP entry pose, PVP-independent magnitudes = 0.25 / 0.4 / 1.5 × this stance's zero-delay XcoM limit):
+- **S* 36 / 45:**
+  - QS1: exits the standing envelope at 0.26 s;
+  - QS2: e-folding 0.125 s, i.e. λτ = 1.40 against a 1.0 limit;
+  - I3: hip elastic stiffness 16.6 N·m/rad against human 30–91;
+  - S1 / S3 lateral: a small lateral push bends the lumbar spine 10° by 175 ms and 23° by 300 ms;
+  - S3 back;
+  - M2 forward: XcoM crosses at 287 ms.
+- **Passed:** ankle I1a / b, knee, continuum C1, large-push loss, release, energy, separation (≤ 0.71 mm), determinism.
+- **References:** S_A 31 / 45; CURRENT V2 41 / 45 (fails QS1 at 0.41 s, the 10–15 × human ankle, and the hip at 109).
+
+**Diagnosis: tone, not architecture.** The excitation "rest statics + 0.02 co-contraction" leaves every near-zero-load side with a 0.15–1 N·m strain reserve and a 0.03–0.5° elastic range. The open-loop mode is a sit-back squat: hip extension resisted only by co-contraction-toned flexors, with the knees buckling. The lumbar spine is nearly limp in lateral bending.
+
+**Battery limitation (mine, reported, not changed):** the 300 ms window runs past the ≈ 175 ms postural loop delay. Inside τ the forward and backward failures disappear; the lateral trunk and the hip failures do not.
+
+**Decision C** (pre-stated rule):
+- quiet standing needs a continuous, delayed (≥ 150 ms), low-bandwidth controller plus the substrate;
+- B and C are needed;
+- S* is not yet that substrate.
+
+**Proposed next (owner decision; nothing started):**
+1. A pre-disturbance co-activation spec for the hip, trunk and knee (EMG %MVC), then re-qualification with a τ-bounded battery amendment.
+2. Then the delayed controller, as its own preregistered phase, with a struck-vs-unstruck activation identity for t < t_contact + τ.
+3. B as a V2 body-spec parameter.
+4. A decision on the PVP entry fixture.
+
+**Report:** `ppr2/PPR2_REPORT.md`. **Review:** `ppr2/review/PPR2_REVIEW.html`, with clips (STAND, PUSHF). Frames, clip data and records are outside Git (`ppr2/review/frames.OUTSIDE_GIT.md`).
