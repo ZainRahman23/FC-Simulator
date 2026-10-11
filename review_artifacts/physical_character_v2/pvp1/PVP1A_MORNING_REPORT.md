@@ -193,7 +193,7 @@ The frames were checked against the records. Review page: §14.
 | 0a829068 | DX pre-run freeze (`PVP1A_DX_FREEZE.json`; `scripts/pvp1a_sim / run / eval / batch / cpu / execute`) |
 | 78497138 | DX run-1 evidence plus corrections DX-C1 / C2 (`evidence/dx_run1/`, `PVP1A_DX_CORRECTIONS.md`) |
 | fa34dd1f | visuals and the post-hoc OC-3 audit (`render/`, `review/`, `scripts/pvp1a_posthoc.mjs`) |
-| **latest** | post-hoc diagnostics (`diag/`, `evidence/diag_cf1/`, `evidence/dx_run1/PVP1A_DX_{DIAGNOSTICS,DIAG_DETAIL,CONTACT_TIMELINE,ENTRY_CPU}.json`), the R1 proposal, this report, a DECISIONS entry |
+| 9fbf7a47 | post-hoc diagnostics (`diag/`, `evidence/diag_cf1/`, `evidence/dx_run1/PVP1A_DX_{DIAGNOSTICS,DIAG_DETAIL,CONTACT_TIMELINE,ENTRY_CPU}.json`), the R1 proposal, this report, a DECISIONS entry |
 
 - Lossless review frames (2,007 PNGs, 437 MB) are kept outside Git, with checksums (`review/frames.OUTSIDE_GIT.md`).
 - No change was made to RUN-1, the LV2 baseline, the authoritative simulation, or any frozen PVP-1A script.
