@@ -3574,3 +3574,44 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 **Owner decisions needed:** D1–D5.
 
 **Stopped** for review. Nothing pushed.
+
+## 2026-10-11: PVP-1A FROZEN, BUILT and run as far as its own rules allow: BLOCKED at H2; diagnostic PVP-1A-DX run, rendered and diagnosed post hoc; successor PVP-1A-R1 proposed, not implemented (`pvp1/PVP1A_MORNING_REPORT.md`; instruction `sources/2026-10-11_user_instruction_pvp1a_overnight_mission.md`, 25a87d55)
+
+**PVP-1A: BLOCKED.**
+- The preregistration was frozen at d7fb69a1, before any code.
+- It stopped at **H2 TACKLER_FIT_BLOCKED** before any stepping (9fa1f57a). The simulation's slide primitives encode 0.265 m hip spacing against the V1-matched body's 0.190 m; the best worst-gate ratio is 1.39. The entry also self-penetrates (H3).
+
+**PVP-1A-DX: DX-BLOCKED (corrected).** This is the identical design with the gate-failing entry, labelled diagnostic, pre-run freeze 0a829068.
+- Determinism: bit-identical (fresh ×2, reverse batch, X2 no-op).
+- Neutrality: ib_verify 59 / 1 / 0 before and after; hash a2678624 unchanged.
+- CPU: about 1.06 ms per two-character step.
+- Contact: first native contact at step 3 (τ 51.75), tackler boot → runner shank_R. CG-1…6 pass.
+- Sustained contact matters: the boot rides under the planted right foot (89 % of the primary impulse); N2 vs X2 differ by 70.6 mm / 5.8°.
+- Runner: clean to step 131; Δv 0.20 m/s; no collapse.
+- Tackler: affected (Δv −0.47 m/s) but untrusted (entry self-penetration).
+- Corrections DX-C1 and DX-C2 were made separately; the original evaluation is preserved.
+- Visuals A–E are on `pvp1/review/PVP1A_REVIEW.html` (fa34dd1f). VISUAL_PENDING.
+
+**Post-hoc diagnostics** (`pvp1/diag/PVP1A_DX_DIAGNOSTICS.md`; nothing rerun as PVP-1A or DX; no frozen script changed):
+- **Isolation:** the H6 failure is body-ID solver ordering, shown by bit-exact probes. The frozen H6 is unattainable for the second-created character.
+- **Solver:** primary results move ≤ 3 % from 150 to 300 iterations.
+- **CF1 (arms cleared, a separately named fixture variant):**
+  - the tackler is clean to step 18;
+  - the runner's first 75 ms are unchanged;
+  - two C0 blockers remain that do not depend on the arms: the runner's step-1 criterion conflict, and an unactuated slide that cannot follow the prescribed trajectory (18 / 48 mm);
+  - the tackler's step-19 drift is ankle_L at its −60° hard limit, under load.
+- **Contact timeline:** from step 63 (262 ms) the passive tackler's head strikes the runner's pelvis. This is non-authoritative, and the continuation after it is no evidence about STUMBLE.
+- **OC-3:** under the simulation's own law, the no-contact baseline is FALL (eH 0.356). The authoritative STUMBLE arises from the contact pushing the runner back toward the stance foot, while the physical push is 55° away from that.
+
+**Proposed, not implemented:** PVP-1A-R1 (`pvp1/PVP1A_R1_SUCCESSOR_PROPOSAL.md`).
+- It is outcome-informed, so it is a development run, not a confirmation.
+- Contents: template entry with arm and joint-margin rules; slot-matched isolation; window of claim ending at the first non-authoritative contact; OC-3a (contact-effect direction / size) and OC-3b.
+- Predicted verdict: PARTIAL (OC-3a fails, about 55°).
+
+**Owner decisions needed:**
+- visual review;
+- whether the IB1-SR STUMBLE should be expected to be physically explicable, given the law's double-support baseline;
+- R1 approval;
+- the stepping-executor and slide-drive questions (PVP-1B scale).
+
+**Stopped.** No PVP-1B, RUN-1, simulation or production change. Nothing pushed; the daily publication rule falls due at the next prompt after 06:00.

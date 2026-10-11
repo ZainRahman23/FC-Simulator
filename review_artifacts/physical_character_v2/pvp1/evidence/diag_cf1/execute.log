@@ -1,0 +1,12 @@
+05:23:16 PVP-1A-DX-CF1 (post-hoc diagnostic) — commit fa34dd1f629166b0f234de7a376ee4ff479d8717 — frozen scripts unchanged: 0 changes in scripts/
+CF1 fixture: self-overlap null | lowest foot_R 0.51 mm | clearance 37.72 mm
+C0: RAN · entry OK · steps 260 · first cross contact none · hash fcf9381e6a7df02f · 0.7 s
+N2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash 20c6161b170403f8 · 0.7 s
+X2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash 320d9874b33cacda · no-op {"identical":true,"steps":260} · 1.7 s
+SOLO_R: RAN · entry OK · steps 260 · first cross contact none · hash 9a3f9305399a7e27 · 0.4 s
+SOLO_T: RAN · entry OK · steps 260 · first cross contact none · hash 4653878235ca9040 · 0.4 s
+N2: RAN · entry OK · steps 260 · first cross contact step 3 τ 51.75 · hash 20c6161b170403f8 · 0.7 s
+05:23:22 ib_verify after: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+PVP-1A: BLOCKED (H2 TACKLER_FIT_BLOCKED; the same fixture also records tackler self-overlap, an H3 condition) | DX verdict: DX-CONTROL_INVALID (N2 reported, not interpreted)
+labels: TACKLER_FIT_GATES_FAILED (G-T1, G-T3) — the DX entry · CONTROL_INVALID_PRIMARY · SECONDARY_FAILURE_AT(tackler 79.2 ms) · OUTCOME_INCONSISTENT (runner) · VISUAL_PENDING
+05:23:23 DONE

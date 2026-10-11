@@ -1,0 +1,209 @@
+{
+ "tool": "pvp1a_contact_timeline.mjs",
+ "label": "POST-HOC — descriptive; not a frozen criterion",
+ "stepS": 0.004166666666666667,
+ "runs": {
+  "DX_run1_N2": {
+   "pairs": {
+    "runner.shank_R↔tackler.foot_L": {
+     "first": 3,
+     "firstMsAfterActivation": 12.5,
+     "last": 5,
+     "J": 4.98
+    },
+    "runner.foot_R↔tackler.foot_L": {
+     "first": 7,
+     "firstMsAfterActivation": 29.2,
+     "last": 30,
+     "J": 61.6
+    },
+    "runner.pelvis↔tackler.head": {
+     "first": 63,
+     "firstMsAfterActivation": 262.5,
+     "last": 103,
+     "J": 37.99
+    },
+    "runner.thigh_L↔tackler.upperArm_L": {
+     "first": 84,
+     "firstMsAfterActivation": 350,
+     "last": 90,
+     "J": 6.96
+    },
+    "runner.thigh_L↔tackler.thorax": {
+     "first": 114,
+     "firstMsAfterActivation": 475,
+     "last": 131,
+     "J": 5.52
+    },
+    "runner.thigh_L↔tackler.head": {
+     "first": 171,
+     "firstMsAfterActivation": 712.5,
+     "last": 260,
+     "J": 13.4
+    }
+   },
+   "windows": [
+    {
+     "steps": [
+      1,
+      14
+     ],
+     "runnerFootTurfNs": {
+      "L": 21.8,
+      "R": 27.72
+     }
+    },
+    {
+     "steps": [
+      15,
+      36
+     ],
+     "runnerFootTurfNs": {
+      "L": 55.5,
+      "R": 9.08
+     }
+    },
+    {
+     "steps": [
+      37,
+      131
+     ],
+     "runnerFootTurfNs": {
+      "L": 187.1,
+      "R": 96.12
+     }
+    },
+    {
+     "steps": [
+      132,
+      170
+     ],
+     "runnerFootTurfNs": {
+      "L": 41.72,
+      "R": 72.61
+     }
+    },
+    {
+     "steps": [
+      171,
+      260
+     ],
+     "runnerFootTurfNs": {
+      "L": 105.85,
+      "R": 143.95
+     }
+    }
+   ]
+  },
+  "CF1_N2": {
+   "pairs": {
+    "runner.shank_R↔tackler.foot_L": {
+     "first": 3,
+     "firstMsAfterActivation": 12.5,
+     "last": 8,
+     "J": 5.24
+    },
+    "runner.foot_R↔tackler.foot_L": {
+     "first": 7,
+     "firstMsAfterActivation": 29.2,
+     "last": 63,
+     "J": 61.63
+    },
+    "runner.pelvis↔tackler.head": {
+     "first": 61,
+     "firstMsAfterActivation": 254.2,
+     "last": 75,
+     "J": 32.28
+    },
+    "runner.thigh_L↔tackler.upperArm_L": {
+     "first": 84,
+     "firstMsAfterActivation": 350,
+     "last": 99,
+     "J": 6.22
+    },
+    "runner.foot_R↔tackler.shank_L": {
+     "first": 100,
+     "firstMsAfterActivation": 416.7,
+     "last": 104,
+     "J": 3.94
+    },
+    "runner.thigh_L↔tackler.thorax": {
+     "first": 108,
+     "firstMsAfterActivation": 450,
+     "last": 113,
+     "J": 3.24
+    },
+    "runner.shank_L↔tackler.thorax": {
+     "first": 116,
+     "firstMsAfterActivation": 483.3,
+     "last": 120,
+     "J": 3.15
+    },
+    "runner.thigh_L↔tackler.head": {
+     "first": 148,
+     "firstMsAfterActivation": 616.7,
+     "last": 260,
+     "J": 7.3
+    },
+    "runner.shank_L↔tackler.head": {
+     "first": 152,
+     "firstMsAfterActivation": 633.3,
+     "last": 199,
+     "J": 7.09
+    }
+   },
+   "windows": [
+    {
+     "steps": [
+      1,
+      14
+     ],
+     "runnerFootTurfNs": {
+      "L": 21.71,
+      "R": 27.96
+     }
+    },
+    {
+     "steps": [
+      15,
+      36
+     ],
+     "runnerFootTurfNs": {
+      "L": 53.07,
+      "R": 10.1
+     }
+    },
+    {
+     "steps": [
+      37,
+      131
+     ],
+     "runnerFootTurfNs": {
+      "L": 166.69,
+      "R": 130.34
+     }
+    },
+    {
+     "steps": [
+      132,
+      170
+     ],
+     "runnerFootTurfNs": {
+      "L": 45.28,
+      "R": 70.16
+     }
+    },
+    {
+     "steps": [
+      171,
+      260
+     ],
+     "runnerFootTurfNs": {
+      "L": 117.43,
+      "R": 142.87
+     }
+    }
+   ]
+  }
+ }
+}

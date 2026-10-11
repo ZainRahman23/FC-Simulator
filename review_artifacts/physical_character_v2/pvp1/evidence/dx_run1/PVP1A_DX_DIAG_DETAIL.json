@@ -1,0 +1,125 @@
+{
+ "tool": "pvp1a_diag_detail.mjs",
+ "label": "POST-HOC DIAGNOSTIC DETAIL — not PVP-1A, not the DX result",
+ "ISO": {
+  "runnerFar_defaultOrder_vs_DXC0": {
+   "bitIdentical": true,
+   "nDiffComponents": 0,
+   "firstDiff": null
+  },
+  "tacklerFirst_runnerFar_vs_DXSOLO_T": {
+   "bitIdentical": true,
+   "nDiffComponents": 0,
+   "firstDiff": null
+  },
+  "DXC0_vs_DXSOLO_T": {
+   "bitIdentical": false,
+   "nDiffComponents": 6386,
+   "firstDiff": {
+    "step": 1,
+    "body": "pelvis",
+    "field": "rot",
+    "a": -0.09347672760486603,
+    "b": -0.09347672015428543
+   }
+  }
+ },
+ "CF1": {
+  "C0": {
+   "runner": {
+    "firstFailureByCriterion": {},
+    "primaryMax": {
+     "sepMm": 0.016,
+     "selfPenMm": 0,
+     "turfPenMm": 0.05,
+     "angLedger": 0.0001,
+     "linLedger": 0,
+     "engineAxes": 0
+    },
+    "secondaryMax": {
+     "sepMm": 0.016,
+     "angLedger": 0.0001
+    },
+    "nonFootTurfFirst": null,
+    "nonFootBodies": []
+   },
+   "tackler": {
+    "firstFailureByCriterion": {},
+    "primaryMax": {
+     "sepMm": 0.208,
+     "selfPenMm": 0,
+     "turfPenMm": 0.07,
+     "angLedger": 0.0029,
+     "linLedger": 0.0002,
+     "engineAxes": 0
+    },
+    "secondaryMax": {
+     "sepMm": 0.208,
+     "angLedger": 0.0029
+    },
+    "nonFootTurfFirst": 4,
+    "nonFootBodies": [
+     "shank_R",
+     "thigh_R",
+     "forearm_R",
+     "forearm_L"
+    ]
+   }
+  },
+  "N2": {
+   "runner": {
+    "firstFailureByCriterion": {
+     "sep": {
+      "step": 127,
+      "value": 1.1951
+     }
+    },
+    "primaryMax": {
+     "sepMm": 0.114,
+     "selfPenMm": 0,
+     "turfPenMm": 0.12,
+     "angLedger": 0.0015,
+     "linLedger": 0,
+     "engineAxes": 0
+    },
+    "secondaryMax": {
+     "sepMm": 0.428,
+     "angLedger": 0.0015
+    },
+    "nonFootTurfFirst": null,
+    "nonFootBodies": []
+   },
+   "tackler": {
+    "firstFailureByCriterion": {
+     "sep": {
+      "step": 19,
+      "value": 2.6892
+     },
+     "angLedger": {
+      "step": 22,
+      "value": 0.0133
+     }
+    },
+    "primaryMax": {
+     "sepMm": 0.351,
+     "selfPenMm": 0,
+     "turfPenMm": 0.04,
+     "angLedger": 0.0033,
+     "linLedger": 0.0003,
+     "engineAxes": 0
+    },
+    "secondaryMax": {
+     "sepMm": 6.741,
+     "angLedger": 0.0164
+    },
+    "nonFootTurfFirst": 4,
+    "nonFootBodies": [
+     "shank_R",
+     "thigh_R",
+     "forearm_R",
+     "forearm_L"
+    ]
+   }
+  }
+ }
+}

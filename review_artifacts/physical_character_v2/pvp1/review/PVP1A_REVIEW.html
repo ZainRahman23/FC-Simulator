@@ -31,6 +31,21 @@
 <h1>PVP-1A · standing recoverable player-v-player contact (IB1-SR)</h1>
 <div class="banner"><b>PVP-1A result: BLOCKED</b>. It stopped at the frozen tackler-entry gate (H2) before any physics; the same entry also self-penetrates (H3). No V1-matched pose can fit the simulation's slide primitives within the frozen tolerances, because the primitives encode 0.265 m hip spacing against the body's 0.190 m.<br>
 <b>Everything below is PVP-1A-DX</b>, a separately named <b>diagnostic</b>. It is the identical frozen design run with the best-available tackler entry. That entry fails the fit gates and self-penetrates by 39.5 mm (fixed arms inside the flexed thighs), so <b>the tackler is untrusted from step 1</b>. The runner is mechanically clean. The DX result cannot turn PVP-1A into a pass. <b>VISUAL_PENDING</b>: no visual-value verdict is made here.</div>
+<div class="card"><h2>Overnight post-hoc diagnostics (labelled; they change no result)</h2>
+<p><b>Read with the videos:</b>
+<ul>
+<li><b>Step 3 (12.5 ms):</b> the shin strike (5.0 N·s).</li>
+<li><b>Steps 7–30:</b> the tackler's boot rides under the runner's planted right foot and sweeps it (61.6 N·s). This is the dominant contact.</li>
+<li><b>From step 63 (262 ms):</b> the passive tackler, still sliding, drives its <b>head into the runner's pelvis</b>. The simulation has no such event; there, the runner steps away (STUMBLE). Here, neither body can step. Everything after about step 60, including the runner folding over the tackler at the end, is <b>not evidence about STUMBLE</b>.</li>
+</ul>
+<p><b>Cause-isolating probes:</b>
+<ul>
+<li><b>Arm artifact:</b> clearing the tackler's arms out of its body (variant CF1) makes the tackler mechanically clean to step 18. The runner's first 75 ms are unchanged (Δv 0.197 vs 0.20 m/s).</li>
+<li><b>Isolation:</b> the failure is pure body-ID solver ordering (bit-exact probes).</li>
+<li><b>Solver:</b> primary-window results move ≤ 3 % from 150 to 300 iterations.</li>
+<li><b>Balance law:</b> under the simulation's own law, the <i>no-contact</i> standing runner is already FALL (eH 0.356). Its STUMBLE comes from the contact pushing the runner back toward the stance foot. The physical push points 55° away from that.</li>
+</ul>
+<p>Reports: <a href="../PVP1A_MORNING_REPORT.md">PVP1A_MORNING_REPORT.md</a> · <a href="../diag/PVP1A_DX_DIAGNOSTICS.md">PVP1A_DX_DIAGNOSTICS.md</a> · <a href="../PVP1A_R1_SUCCESSOR_PROPOSAL.md">PVP1A_R1_SUCCESSOR_PROPOSAL.md</a> (draft, not implemented).</p></div>
 <div class="card"><h2>What the recorded physics shows</h2><div id="facts" class="info">loading…</div></div>
 
 <div class="card"><h2>A · Gameplay view: the frozen Touchline camera (CAMERA_V1), zoom 1, normal speed</h2>

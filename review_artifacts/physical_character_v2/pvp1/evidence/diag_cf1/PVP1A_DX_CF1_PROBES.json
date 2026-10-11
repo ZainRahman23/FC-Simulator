@@ -1,0 +1,300 @@
+{
+ "tool": "pvp1a_cf1_probe.mjs",
+ "label": "POST-HOC DIAGNOSTIC — CF1 variant; not PVP-1A, not the DX result",
+ "ISO": {
+  "tacklerFirst_runnerFar_vs_CF1_SOLO_T": {
+   "bitIdentical": true,
+   "nDiffComponents": 0,
+   "firstDiff": null
+  }
+ },
+ "SOLVER": {
+  "G1_WORLD": {
+   "velSteps": 150,
+   "posSteps": 2
+  },
+  "frozen": {
+   "anchorFirst": 19,
+   "angStepFirst": 22,
+   "maxSepMm_1_36": 6.741,
+   "runnerAnchorFirst": 127,
+   "maxCrossJ_1_36": 7.79
+  },
+  "vel300": {
+   "opts": {
+    "velSteps": 300
+   },
+   "anchorFirst": 19,
+   "angStepFirst": 22,
+   "maxSepMm_1_36": 6.262,
+   "runnerAnchorFirst": null,
+   "maxCrossJ_1_36": 7.63
+  },
+  "vel600": {
+   "opts": {
+    "velSteps": 600
+   },
+   "anchorFirst": 19,
+   "angStepFirst": 22,
+   "maxSepMm_1_36": 6.503,
+   "runnerAnchorFirst": null,
+   "maxCrossJ_1_36": 7.62
+  },
+  "pos2x": {
+   "opts": {
+    "posSteps": 4
+   },
+   "anchorFirst": 19,
+   "angStepFirst": null,
+   "maxSepMm_1_36": 3.708,
+   "runnerAnchorFirst": 123,
+   "maxCrossJ_1_36": 7.77
+  },
+  "pos4x": {
+   "opts": {
+    "posSteps": 8
+   },
+   "anchorFirst": 20,
+   "angStepFirst": null,
+   "maxSepMm_1_36": 1.657,
+   "runnerAnchorFirst": 124,
+   "maxCrossJ_1_36": 7.61
+  }
+ },
+ "jointDrift": [
+  {
+   "n": 15,
+   "top": [
+    "ankle_L 0.48",
+    "knee_L 0.18",
+    "ankle_R 0.11"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 3.07, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 1.17, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 16,
+   "top": [
+    "ankle_L 0.57",
+    "knee_L 0.21",
+    "ankle_R 0.09"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 2.34, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 1.39, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 17,
+   "top": [
+    "ankle_L 0.59",
+    "knee_L 0.22",
+    "ankle_R 0.07"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 1.32, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.52, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 18,
+   "top": [
+    "ankle_L 0.56",
+    "knee_L 0.22",
+    "hip_L 0.07"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 2.01, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 19,
+   "top": [
+    "ankle_L 2.69",
+    "knee_L 0.51",
+    "hip_L 0.08"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.84, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 20,
+   "top": [
+    "ankle_L 4.10",
+    "knee_L 0.57",
+    "hip_L 0.09"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 21,
+   "top": [
+    "ankle_L 5.31",
+    "knee_L 0.93",
+    "lumbar 0.08"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 22,
+   "top": [
+    "ankle_L 6.74",
+    "knee_L 1.27",
+    "hip_L 0.09"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.12, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 23,
+   "top": [
+    "ankle_L 4.66",
+    "knee_L 1.25",
+    "thoracic 0.09"
+   ],
+   "crossPairs": "runner,shank_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.75, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 24,
+   "top": [
+    "ankle_L 3.36",
+    "knee_L 1.09",
+    "thoracic 0.10"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 3.21, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 25,
+   "top": [
+    "ankle_L 2.52",
+    "knee_L 0.88",
+    "hip_L 0.11"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 1.78, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 26,
+   "top": [
+    "ankle_L 1.94",
+    "knee_L 0.68",
+    "hip_L 0.12"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.70, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 27,
+   "top": [
+    "ankle_L 1.52",
+    "knee_L 0.51",
+    "thoracic 0.13"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.22, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 28,
+   "top": [
+    "ankle_L 1.20",
+    "knee_L 0.38",
+    "thoracic 0.14"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.15, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 29,
+   "top": [
+    "ankle_L 0.96",
+    "knee_L 0.28",
+    "thoracic 0.14"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.10, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 30,
+   "top": [
+    "ankle_L 0.76",
+    "knee_L 0.21",
+    "thoracic 0.15"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 31,
+   "top": [
+    "ankle_L 0.61",
+    "knee_L 0.16",
+    "thoracic 0.15"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 32,
+   "top": [
+    "ankle_L 0.49",
+    "thoracic 0.16",
+    "neck 0.15"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.13, runner,foot_R↔tackler,foot_L 0.15"
+  },
+  {
+   "n": 33,
+   "top": [
+    "ankle_L 0.40",
+    "thoracic 0.17",
+    "neck 0.16"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.08"
+  },
+  {
+   "n": 34,
+   "top": [
+    "ankle_L 0.32",
+    "thoracic 0.17",
+    "neck 0.17"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 35,
+   "top": [
+    "ankle_L 0.27",
+    "neck 0.18",
+    "thoracic 0.18"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 36,
+   "top": [
+    "ankle_L 0.22",
+    "neck 0.19",
+    "thoracic 0.18"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 37,
+   "top": [
+    "neck 0.20",
+    "thoracic 0.19",
+    "ankle_L 0.18"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 38,
+   "top": [
+    "neck 0.20",
+    "thoracic 0.19",
+    "lumbar 0.16"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 39,
+   "top": [
+    "neck 0.21",
+    "thoracic 0.20",
+    "lumbar 0.17"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  },
+  {
+   "n": 40,
+   "top": [
+    "neck 0.22",
+    "thoracic 0.20",
+    "lumbar 0.17"
+   ],
+   "crossPairs": "runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00, runner,foot_R↔tackler,foot_L 0.00"
+  }
+ ]
+}

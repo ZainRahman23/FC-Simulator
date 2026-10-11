@@ -1,0 +1,210 @@
+{
+ "tool": "pvp1a_diagnostics.mjs",
+ "label": "POST-HOC DIAGNOSTICS — not PVP-1A, not the DX result",
+ "ISO": {
+  "runnerFarDefaultOrder_vs_DXC0_tackler": {
+   "maxPosM": 0,
+   "maxRotRad": 1.2412670766236363e-16,
+   "identical": false
+  },
+  "tacklerFirst_runnerFar_vs_DXSOLO_T": {
+   "maxPosM": 0,
+   "maxRotRad": 1.1102230246251563e-16,
+   "identical": false
+  },
+  "note": "(a) identical → the runner's presence (pairs rejected) does not affect the tackler; (b) identical → the solo / combined difference is the tackler's body-ID order (solver ordering), not a composition defect"
+ },
+ "DX_reference": {
+  "firstContactStep": 3,
+  "primaryCrossImpulseNs": 43.75,
+  "contactSteps": 166,
+  "runnerComDispMm": {
+   "n18": [
+    6.8,
+    -0.4,
+    -0.5
+   ],
+   "n36": [
+    24.8,
+    -6.8,
+    -6.3
+   ],
+   "n95": [
+    142.1,
+    -38.3,
+    -68.1
+   ]
+  },
+  "tacklerDvX": {
+   "n14": -0.472,
+   "n36": -0.809
+  },
+  "sweptFootMm": {
+   "n36": [
+    317,
+    19,
+    -60
+   ],
+   "n95": [
+    642,
+    5,
+    -57
+   ]
+  },
+  "runnerFirstNonFootTurf": null,
+  "firstIntegrityOrLedgerFailure": {
+   "runner": 132,
+   "tackler": 1
+  },
+  "tacklerStep1SelfPenMm": 39.53,
+  "tacklerStep1AnchorMm": 5.052,
+  "stop": null
+ },
+ "SOLVER": {
+  "velSteps75": {
+   "firstContactStep": 3,
+   "primaryCrossImpulseNs": 45.56,
+   "contactSteps": 129,
+   "runnerComDispMm": {
+    "n18": [
+     7,
+     -0.3,
+     -0.5
+    ],
+    "n36": [
+     25.2,
+     -8.5,
+     -6.3
+    ],
+    "n95": [
+     146.8,
+     -40.6,
+     -67.4
+    ]
+   },
+   "tacklerDvX": {
+    "n14": -0.486,
+    "n36": -0.611
+   },
+   "sweptFootMm": {
+    "n36": [
+     322,
+     18,
+     -56
+    ],
+    "n95": [
+     657,
+     3,
+     -19
+    ]
+   },
+   "runnerFirstNonFootTurf": null,
+   "firstIntegrityOrLedgerFailure": {
+    "runner": null,
+    "tackler": 1
+   },
+   "tacklerStep1SelfPenMm": 39.53,
+   "tacklerStep1AnchorMm": 5.052,
+   "stop": null
+  },
+  "velSteps300": {
+   "firstContactStep": 3,
+   "primaryCrossImpulseNs": 43.15,
+   "contactSteps": 164,
+   "runnerComDispMm": {
+    "n18": [
+     6.9,
+     -0.4,
+     -0.4
+    ],
+    "n36": [
+     25.1,
+     -6.9,
+     -6.3
+    ],
+    "n95": [
+     143.3,
+     -38.4,
+     -68.1
+    ]
+   },
+   "tacklerDvX": {
+    "n14": -0.466,
+    "n36": -0.799
+   },
+   "sweptFootMm": {
+    "n36": [
+     319,
+     20,
+     -59
+    ],
+    "n95": [
+     646,
+     5,
+     -56
+    ]
+   },
+   "runnerFirstNonFootTurf": null,
+   "firstIntegrityOrLedgerFailure": {
+    "runner": 133,
+    "tackler": 1
+   },
+   "tacklerStep1SelfPenMm": 39.53,
+   "tacklerStep1AnchorMm": 5.052,
+   "stop": null
+  }
+ },
+ "CF1": {
+  "arms": "shoulders abd 50°, elbows flex 15° (other arm angles 0); trunk / legs / pelvis = the frozen-objective fit",
+  "selfOverlap": null,
+  "lowestMm": 0.51,
+  "lowestBody": "foot_R",
+  "crossClearanceMm": 37.72,
+  "observables": {
+   "firstContactStep": 3,
+   "primaryCrossImpulseNs": 46.04,
+   "contactSteps": 179,
+   "runnerComDispMm": {
+    "n18": [
+     6.9,
+     -0.3,
+     -0.5
+    ],
+    "n36": [
+     22.7,
+     -7,
+     -4.7
+    ],
+    "n95": [
+     102.1,
+     -16.4,
+     -49.7
+    ]
+   },
+   "tacklerDvX": {
+    "n14": -0.495,
+    "n36": -0.695
+   },
+   "sweptFootMm": {
+    "n36": [
+     284,
+     9,
+     -39
+    ],
+    "n95": [
+     463,
+     4,
+     -37
+    ]
+   },
+   "runnerFirstNonFootTurf": null,
+   "firstIntegrityOrLedgerFailure": {
+    "runner": 127,
+    "tackler": 19
+   },
+   "tacklerStep1SelfPenMm": 0,
+   "tacklerStep1AnchorMm": 0.044,
+   "stop": null
+  }
+ }
+}
