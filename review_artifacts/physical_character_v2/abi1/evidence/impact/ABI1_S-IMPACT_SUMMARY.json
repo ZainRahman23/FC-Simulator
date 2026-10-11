@@ -1,0 +1,1975 @@
+{
+ "tool": "abi1_impact_summary.mjs",
+ "levels": {
+  "0.25": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 18,
+      "crossJ": 2.92,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.033,
+       0.042,
+       0.004
+      ],
+      "support": [],
+      "firstOut": 239,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.061,
+       "comDrop": 0.002,
+       "thoTilt": 0.8,
+       "pelTilt": 0.3
+      },
+      "tacklerDv": [
+       -0.96,
+       -0.05,
+       -0.02
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 18,
+      "crossJ": 6.99,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.103,
+       0.022,
+       0.023
+      ],
+      "support": [],
+      "firstOut": 239,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.013,
+       "comDrop": 0.007,
+       "thoTilt": 5,
+       "pelTilt": 5.9
+      },
+      "tacklerDv": [
+       -1.14,
+       0.04,
+       0.01
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 18,
+      "crossJ": 2.69,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.029,
+       0.042,
+       0.004
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.063,
+       "comDrop": 0.002,
+       "thoTilt": 0.7,
+       "pelTilt": 0.3
+      },
+      "tacklerDv": [
+       -0.96,
+       -0.05,
+       -0.03
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 18,
+      "crossJ": 9.37,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.012,
+       0.039,
+       -0.001
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.052,
+       "comDrop": 0.004,
+       "thoTilt": 2.3,
+       "pelTilt": 1.9
+      },
+      "tacklerDv": [
+       -1.14,
+       0.04,
+       0.01
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 18,
+      "crossJ": 2.69,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.029,
+       0.042,
+       0.004
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.063,
+       "comDrop": 0.002,
+       "thoTilt": 0.7,
+       "pelTilt": 0.3
+      },
+      "tacklerDv": [
+       -0.96,
+       -0.05,
+       -0.03
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 18,
+      "crossJ": 9.37,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.012,
+       0.039,
+       -0.001
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.052,
+       "comDrop": 0.004,
+       "thoTilt": 2.3,
+       "pelTilt": 1.9
+      },
+      "tacklerDv": [
+       -1.14,
+       0.04,
+       0.01
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.01,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0.01
+     },
+     "window": 60
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.01,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0.01
+     },
+     "window": 60
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 60
+    },
+    "B-A_LEGS": {
+     "cls": "VISIBLE_CLOSE",
+     "maxPx": 1.18,
+     "byGroup": {
+      "upperBody": 1.18,
+      "pelvis": 0.55,
+      "legL": 0.49,
+      "legR": 0.49
+     },
+     "window": 260
+    },
+    "C-A_LEGS": {
+     "cls": "VISIBLE_CLOSE",
+     "maxPx": 1.18,
+     "byGroup": {
+      "upperBody": 1.18,
+      "pelvis": 0.55,
+      "legL": 0.49,
+      "legR": 0.49
+     },
+     "window": 260
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 260
+    }
+   }
+  },
+  "0.5": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 6,
+      "crossJ": 46.77,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.033,
+       0.043,
+       -0.017
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.064,
+       "comDrop": 0.002,
+       "thoTilt": 1,
+       "pelTilt": 0.1
+      },
+      "tacklerDv": [
+       -1.85,
+       -0.16,
+       0.06
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 6,
+      "crossJ": 84.9,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.086,
+       0.026,
+       -0.046
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.002,
+       "comDrop": 0.005,
+       "thoTilt": 3.7,
+       "pelTilt": 4.9
+      },
+      "tacklerDv": [
+       -2.32,
+       0.04,
+       -0.01
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 6,
+      "crossJ": 46.77,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.028,
+       0.043,
+       -0.015
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.066,
+       "comDrop": 0.002,
+       "thoTilt": 1,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       -1.85,
+       -0.16,
+       0.06
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 6,
+      "crossJ": 77.77,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.015,
+       0.038,
+       0.005
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.053,
+       "comDrop": 0.003,
+       "thoTilt": 1.8,
+       "pelTilt": 1.7
+      },
+      "tacklerDv": [
+       -2.32,
+       0.04,
+       -0.01
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 6,
+      "crossJ": 46.77,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.028,
+       0.043,
+       -0.015
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.066,
+       "comDrop": 0.002,
+       "thoTilt": 1,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       -1.85,
+       -0.16,
+       0.06
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 6,
+      "crossJ": 77.77,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.015,
+       0.038,
+       0.005
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.053,
+       "comDrop": 0.003,
+       "thoTilt": 1.8,
+       "pelTilt": 1.7
+      },
+      "tacklerDv": [
+       -2.32,
+       0.04,
+       -0.01
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.01,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0,
+      "legL": 0.01,
+      "legR": 0
+     },
+     "window": 60
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.01,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0,
+      "legL": 0.01,
+      "legR": 0
+     },
+     "window": 60
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 60
+    },
+    "B-A_LEGS": {
+     "cls": "VISIBLE_CLOSE",
+     "maxPx": 0.95,
+     "byGroup": {
+      "upperBody": 0.95,
+      "pelvis": 0.55,
+      "legL": 0.49,
+      "legR": 0.5
+     },
+     "window": 260
+    },
+    "C-A_LEGS": {
+     "cls": "VISIBLE_CLOSE",
+     "maxPx": 0.95,
+     "byGroup": {
+      "upperBody": 0.95,
+      "pelvis": 0.55,
+      "legL": 0.49,
+      "legR": 0.5
+     },
+     "window": 260
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 260
+    }
+   }
+  },
+  "0.75": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 4,
+      "crossJ": 127.81,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.134,
+       0.046,
+       -0.091
+      ],
+      "support": [],
+      "firstOut": 227,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.087,
+       "comDrop": 0.007,
+       "thoTilt": 5.3,
+       "pelTilt": 5.2
+      },
+      "tacklerDv": [
+       -2.61,
+       -0.23,
+       0.2
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 4,
+      "crossJ": 191.82,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       -0.186,
+       -0.011,
+       -0.034
+      ],
+      "support": [],
+      "firstOut": 227,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.041,
+       "comDrop": 0.011,
+       "thoTilt": 38,
+       "pelTilt": 9.3
+      },
+      "tacklerDv": [
+       -3.53,
+       0.08,
+       -0.14
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 4,
+      "crossJ": 127.99,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.129,
+       0.043,
+       -0.088
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.087,
+       "comDrop": 0.007,
+       "thoTilt": 5.7,
+       "pelTilt": 5.4
+      },
+      "tacklerDv": [
+       -2.61,
+       -0.24,
+       0.19
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 4,
+      "crossJ": 198.41,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.057,
+       0.03,
+       0.048
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.083,
+       "comDrop": 0.003,
+       "thoTilt": 2.7,
+       "pelTilt": 1.6
+      },
+      "tacklerDv": [
+       -3.57,
+       0.08,
+       -0.15
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "ABSORBED",
+      "firstContact": 4,
+      "crossJ": 127.99,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.129,
+       0.043,
+       -0.088
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.087,
+       "comDrop": 0.007,
+       "thoTilt": 5.7,
+       "pelTilt": 5.4
+      },
+      "tacklerDv": [
+       -2.61,
+       -0.24,
+       0.19
+      ]
+     },
+     "LEGS": {
+      "window": 260,
+      "windowReason": "horizon",
+      "type": "ABSORBED",
+      "firstContact": 4,
+      "crossJ": 198.41,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.057,
+       0.03,
+       0.048
+      ],
+      "support": [],
+      "firstOut": null,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.083,
+       "comDrop": 0.003,
+       "thoTilt": 2.7,
+       "pelTilt": 1.6
+      },
+      "tacklerDv": [
+       -3.57,
+       0.08,
+       -0.15
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.07,
+     "byGroup": {
+      "upperBody": 0.06,
+      "pelvis": 0.02,
+      "legL": 0.03,
+      "legR": 0.07
+     },
+     "window": 60
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.07,
+     "byGroup": {
+      "upperBody": 0.06,
+      "pelvis": 0.02,
+      "legL": 0.03,
+      "legR": 0.07
+     },
+     "window": 60
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 60
+    },
+    "B-A_LEGS": {
+     "cls": "MATERIAL_AT_GAMEPLAY_CAMERA",
+     "maxPx": 6.5,
+     "byGroup": {
+      "upperBody": 6.5,
+      "pelvis": 0.21,
+      "legL": 0.25,
+      "legR": 0.29
+     },
+     "window": 260
+    },
+    "C-A_LEGS": {
+     "cls": "MATERIAL_AT_GAMEPLAY_CAMERA",
+     "maxPx": 6.5,
+     "byGroup": {
+      "upperBody": 6.5,
+      "pelvis": 0.21,
+      "legL": 0.25,
+      "legR": 0.29
+     },
+     "window": 260
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 260
+    }
+   }
+  },
+  "1.0": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 3,
+      "crossJ": 66.32,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.227,
+       -0.113,
+       -0.227
+      ],
+      "support": [
+       "R↑29",
+       "R↓61"
+      ],
+      "firstOut": 29,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.262,
+       "comDrop": 0.024,
+       "thoTilt": 8.9,
+       "pelTilt": 13
+      },
+      "tacklerDv": [
+       -2.41,
+       -0.22,
+       0.13
+      ]
+     },
+     "LEGS": {
+      "window": 149,
+      "windowReason": "non-authoritative cross contact at step 150: runner.shank_L↔tackler.thigh_L",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 3,
+      "crossJ": 103,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L",
+       "runner.shank_R↔tackler.shank_L"
+      ],
+      "runnerDv": [
+       -0.223,
+       -0.035,
+       -0.229
+      ],
+      "support": [
+       "R↑29",
+       "R↓61"
+      ],
+      "firstOut": 29,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.218,
+       "comDrop": 0.027,
+       "thoTilt": 32.4,
+       "pelTilt": 17.2
+      },
+      "tacklerDv": [
+       -4.41,
+       0.01,
+       0.61
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "SUPPORT_LOST_PASSIVE_RELOAD",
+      "firstContact": 3,
+      "crossJ": 69.8,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.153,
+       0.031,
+       -0.19
+      ],
+      "support": [
+       "R↑29",
+       "R↓55",
+       "R↑66",
+       "L↑240",
+       "L↓245",
+       "L↑250",
+       "R↓251"
+      ],
+      "firstOut": 29,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.025,
+       "comDrop": 0.022,
+       "thoTilt": 9.6,
+       "pelTilt": 12.7
+      },
+      "tacklerDv": [
+       -2.44,
+       -0.22,
+       0.12
+      ]
+     },
+     "LEGS": {
+      "window": 133,
+      "windowReason": "non-authoritative cross contact at step 134: runner.shank_L↔tackler.thigh_L",
+      "type": "SUPPORT_LOST_PASSIVE_RELOAD",
+      "firstContact": 3,
+      "crossJ": 101.88,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L",
+       "runner.shank_R↔tackler.shank_L"
+      ],
+      "runnerDv": [
+       -0.221,
+       -0.026,
+       -0.243
+      ],
+      "support": [
+       "R↑29",
+       "R↓55"
+      ],
+      "firstOut": 29,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.197,
+       "comDrop": 0.019,
+       "thoTilt": 26.3,
+       "pelTilt": 13.9
+      },
+      "tacklerDv": [
+       -4.38,
+       -0.01,
+       0.62
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 60,
+      "windowReason": "W1 nominal end (step 60)",
+      "type": "SUPPORT_LOST_PASSIVE_RELOAD",
+      "firstContact": 3,
+      "crossJ": 69.8,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.156,
+       0.024,
+       -0.198
+      ],
+      "support": [
+       "R↑29",
+       "R↓55",
+       "R↑65",
+       "R↓161",
+       "R↑164",
+       "R↓199",
+       "L↑258"
+      ],
+      "firstOut": 29,
+      "steps": [
+       "S58",
+       "H84",
+       "I92",
+       "S94",
+       "H190",
+       "S198",
+       "H228",
+       "S236"
+      ],
+      "atEnd": {
+       "dOut": 0.026,
+       "comDrop": 0.022,
+       "thoTilt": 9.6,
+       "pelTilt": 12.6
+      },
+      "tacklerDv": [
+       -2.44,
+       -0.22,
+       0.12
+      ]
+     },
+     "LEGS": {
+      "window": 129,
+      "windowReason": "non-authoritative cross contact at step 130: runner.shank_L↔tackler.thigh_L",
+      "type": "STEP_TOUCHDOWN_XCOM_OUTSIDE",
+      "firstContact": 3,
+      "crossJ": 74.25,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.shank_L",
+       "runner.shank_R↔tackler.shank_L"
+      ],
+      "runnerDv": [
+       -0.18,
+       -0.211,
+       -0.309
+      ],
+      "support": [
+       "R↑29",
+       "R↓55",
+       "R↑67",
+       "R↓104",
+       "L↑114",
+       "L↓123",
+       "L↑147",
+       "L↓155",
+       "L↑233",
+       "L↓238",
+       "R↑257"
+      ],
+      "firstOut": 29,
+      "steps": [
+       "S58",
+       "H84",
+       "S92",
+       "H152",
+       "S160",
+       "H184",
+       "S192"
+      ],
+      "atEnd": {
+       "dOut": 0.183,
+       "comDrop": 0.073,
+       "thoTilt": 23.3,
+       "pelTilt": 22.2
+      },
+      "tacklerDv": [
+       -4.33,
+       -0.01,
+       0.66
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.57,
+     "byGroup": {
+      "upperBody": 0.08,
+      "pelvis": 0.06,
+      "legL": 0.07,
+      "legR": 0.57
+     },
+     "window": 60
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.57,
+     "byGroup": {
+      "upperBody": 0.08,
+      "pelvis": 0.06,
+      "legL": 0.08,
+      "legR": 0.57
+     },
+     "window": 60
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.01,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0.01
+     },
+     "window": 60
+    },
+    "B-A_LEGS": {
+     "cls": "MATERIAL_AT_GAMEPLAY_CAMERA",
+     "maxPx": 3.42,
+     "byGroup": {
+      "upperBody": 3.42,
+      "pelvis": 0.37,
+      "legL": 0.79,
+      "legR": 0.62
+     },
+     "window": 133
+    },
+    "C-A_LEGS": {
+     "cls": "MATERIAL_AT_GAMEPLAY_CAMERA",
+     "maxPx": 2.26,
+     "byGroup": {
+      "upperBody": 2.26,
+      "pelvis": 1.44,
+      "legL": 2.12,
+      "legR": 2.15
+     },
+     "window": 129
+    },
+    "C-B_LEGS": {
+     "cls": "MATERIAL_AT_GAMEPLAY_CAMERA",
+     "maxPx": 2.98,
+     "byGroup": {
+      "upperBody": 2.98,
+      "pelvis": 1.08,
+      "legL": 2.39,
+      "legR": 2.21
+     },
+     "window": 129
+    }
+   }
+  },
+  "1.25": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 46,
+      "windowReason": "non-authoritative cross contact at step 47: runner.pelvis↔tackler.head",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 3,
+      "crossJ": 65.11,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.304,
+       -0.046,
+       -0.19
+      ],
+      "support": [
+       "R↑16",
+       "R↓110",
+       "L↑123",
+       "L↓143",
+       "L↑219"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.249,
+       "comDrop": 0.016,
+       "thoTilt": 6,
+       "pelTilt": 14.3
+      },
+      "tacklerDv": [
+       -1.94,
+       -0.08,
+       0.03
+      ]
+     },
+     "LEGS": {
+      "window": 61,
+      "windowReason": "non-authoritative cross contact at step 62: runner.foot_L↔tackler.foot_R",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 3,
+      "crossJ": 65.11,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.261,
+       -0.082,
+       -0.277
+      ],
+      "support": [
+       "R↑16",
+       "R↓112",
+       "R↑131",
+       "R↓147",
+       "R↑151"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.291,
+       "comDrop": 0.022,
+       "thoTilt": 12.6,
+       "pelTilt": 18
+      },
+      "tacklerDv": [
+       -2.36,
+       -0.22,
+       0.12
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 47,
+      "windowReason": "non-authoritative cross contact at step 48: runner.pelvis↔tackler.head",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 3,
+      "crossJ": 65.12,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.288,
+       -0.057,
+       -0.188
+      ],
+      "support": [
+       "R↑16",
+       "L↑153",
+       "L↓173",
+       "L↑197",
+       "L↓205",
+       "R↓209",
+       "L↑215"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.248,
+       "comDrop": 0.016,
+       "thoTilt": 6.9,
+       "pelTilt": 14.5
+      },
+      "tacklerDv": [
+       -1.97,
+       -0.09,
+       0.03
+      ]
+     },
+     "LEGS": {
+      "window": 61,
+      "windowReason": "non-authoritative cross contact at step 62: runner.foot_L↔tackler.foot_R",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 3,
+      "crossJ": 66.08,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.shank_L"
+      ],
+      "runnerDv": [
+       0.266,
+       -0.077,
+       -0.299
+      ],
+      "support": [
+       "R↑16",
+       "R↓238",
+       "R↑250"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.297,
+       "comDrop": 0.023,
+       "thoTilt": 19.6,
+       "pelTilt": 16.8
+      },
+      "tacklerDv": [
+       -2.37,
+       -0.22,
+       0.11
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 47,
+      "windowReason": "non-authoritative cross contact at step 48: runner.pelvis↔tackler.head",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 3,
+      "crossJ": 65.12,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.289,
+       -0.038,
+       -0.191
+      ],
+      "support": [
+       "R↑16",
+       "R↓125",
+       "L↑130",
+       "R↑141",
+       "L↓150",
+       "R↓166",
+       "L↑208"
+      ],
+      "firstOut": 16,
+      "steps": [
+       "S45",
+       "H154",
+       "I162",
+       "S165",
+       "H179",
+       "S187",
+       "H195",
+       "S203"
+      ],
+      "atEnd": {
+       "dOut": 0.249,
+       "comDrop": 0.016,
+       "thoTilt": 6.9,
+       "pelTilt": 14.4
+      },
+      "tacklerDv": [
+       -1.97,
+       -0.09,
+       0.03
+      ]
+     },
+     "LEGS": {
+      "window": 61,
+      "windowReason": "non-authoritative cross contact at step 62: runner.foot_L↔tackler.foot_R, runner.foot_L↔tackler.foot_R",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 3,
+      "crossJ": 65.12,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.252,
+       -0.029,
+       -0.307
+      ],
+      "support": [
+       "R↑16",
+       "R↓232",
+       "R↑250"
+      ],
+      "firstOut": 16,
+      "steps": [
+       "S45"
+      ],
+      "atEnd": {
+       "dOut": 0.299,
+       "comDrop": 0.02,
+       "thoTilt": 19,
+       "pelTilt": 16.2
+      },
+      "tacklerDv": [
+       -2.36,
+       -0.22,
+       0.12
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.08,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0.01,
+      "legL": 0.02,
+      "legR": 0.08
+     },
+     "window": 46
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.08,
+     "byGroup": {
+      "upperBody": 0.01,
+      "pelvis": 0.01,
+      "legL": 0.02,
+      "legR": 0.08
+     },
+     "window": 46
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 47
+    },
+    "B-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 1.13,
+     "byGroup": {
+      "upperBody": 1.13,
+      "pelvis": 0.06,
+      "legL": 0.13,
+      "legR": 0.19
+     },
+     "window": 61
+    },
+    "C-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 1.13,
+     "byGroup": {
+      "upperBody": 1.13,
+      "pelvis": 0.05,
+      "legL": 0.07,
+      "legR": 0.64
+     },
+     "window": 61
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.62,
+     "byGroup": {
+      "upperBody": 0.1,
+      "pelvis": 0.02,
+      "legL": 0.1,
+      "legR": 0.62
+     },
+     "window": 61
+    }
+   }
+  },
+  "1.5": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 39,
+      "windowReason": "non-authoritative cross contact at step 40: runner.pelvis↔tackler.head",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.37,
+       -0.011,
+       -0.174
+      ],
+      "support": [
+       "R↑16",
+       "L↑51",
+       "L↓60",
+       "R↓131",
+       "L↑145",
+       "L↓155",
+       "L↑184"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.248,
+       "comDrop": 0.014,
+       "thoTilt": 5,
+       "pelTilt": 15.6
+      },
+      "tacklerDv": [
+       -1.86,
+       -0.04,
+       0.05
+      ]
+     },
+     "LEGS": {
+      "window": 45,
+      "windowReason": "non-authoritative cross contact at step 46: runner.foot_L↔tackler.foot_R",
+      "type": "NO_ACTIVE_RESPONSE",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.348,
+       -0.008,
+       -0.21
+      ],
+      "support": [
+       "R↑16"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.264,
+       "comDrop": 0.015,
+       "thoTilt": 7.8,
+       "pelTilt": 17.9
+      },
+      "tacklerDv": [
+       -2,
+       -0.11,
+       0.07
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 39,
+      "windowReason": "non-authoritative cross contact at step 40: runner.pelvis↔tackler.head",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.363,
+       -0.011,
+       -0.173
+      ],
+      "support": [
+       "R↑16",
+       "L↑150",
+       "L↓177",
+       "L↑185",
+       "R↓198"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.247,
+       "comDrop": 0.014,
+       "thoTilt": 5,
+       "pelTilt": 15.6
+      },
+      "tacklerDv": [
+       -1.86,
+       -0.04,
+       0.05
+      ]
+     },
+     "LEGS": {
+      "window": 45,
+      "windowReason": "non-authoritative cross contact at step 46: runner.foot_L↔tackler.foot_R",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.336,
+       -0.014,
+       -0.208
+      ],
+      "support": [
+       "R↑16",
+       "R↓242",
+       "R↑249"
+      ],
+      "firstOut": 16,
+      "steps": [],
+      "atEnd": {
+       "dOut": 0.262,
+       "comDrop": 0.015,
+       "thoTilt": 8,
+       "pelTilt": 17.8
+      },
+      "tacklerDv": [
+       -2,
+       -0.11,
+       0.07
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 39,
+      "windowReason": "non-authoritative cross contact at step 40: runner.pelvis↔tackler.head",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.363,
+       -0.011,
+       -0.173
+      ],
+      "support": [
+       "R↑16",
+       "L↑74",
+       "L↓100",
+       "R↓182",
+       "L↑195",
+       "R↑204",
+       "R↓214",
+       "R↑223",
+       "R↓228",
+       "R↑247",
+       "R↓260"
+      ],
+      "firstOut": 16,
+      "steps": [
+       "S45",
+       "H211",
+       "S219",
+       "H243",
+       "S251"
+      ],
+      "atEnd": {
+       "dOut": 0.247,
+       "comDrop": 0.014,
+       "thoTilt": 5,
+       "pelTilt": 15.6
+      },
+      "tacklerDv": [
+       -1.86,
+       -0.04,
+       0.05
+      ]
+     },
+     "LEGS": {
+      "window": 45,
+      "windowReason": "non-authoritative cross contact at step 46: runner.foot_L↔tackler.foot_R",
+      "type": "UNRESOLVED_AT_WINDOW_END",
+      "firstContact": 2,
+      "crossJ": 62.47,
+      "pairs": [
+       "runner.shank_R↔tackler.foot_L",
+       "runner.foot_R↔tackler.foot_L"
+      ],
+      "runnerDv": [
+       0.336,
+       -0.014,
+       -0.208
+      ],
+      "support": [
+       "R↑16",
+       "R↓250"
+      ],
+      "firstOut": 16,
+      "steps": [
+       "S45"
+      ],
+      "atEnd": {
+       "dOut": 0.262,
+       "comDrop": 0.015,
+       "thoTilt": 8,
+       "pelTilt": 17.8
+      },
+      "tacklerDv": [
+       -2,
+       -0.11,
+       0.07
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.02,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0.02
+     },
+     "window": 39
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.02,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0.02
+     },
+     "window": 39
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 39
+    },
+    "B-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.14,
+     "byGroup": {
+      "upperBody": 0.03,
+      "pelvis": 0.01,
+      "legL": 0.03,
+      "legR": 0.14
+     },
+     "window": 45
+    },
+    "C-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0.14,
+     "byGroup": {
+      "upperBody": 0.03,
+      "pelvis": 0.01,
+      "legL": 0.03,
+      "legR": 0.14
+     },
+     "window": 45
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": 0,
+     "byGroup": {
+      "upperBody": 0,
+      "pelvis": 0,
+      "legL": 0,
+      "legR": 0
+     },
+     "window": 45
+    }
+   }
+  },
+  "2.0": {
+   "conds": {
+    "A": {
+     "ALL": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13",
+       "L↑35",
+       "L↓154"
+      ],
+      "firstOut": 13,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     },
+     "LEGS": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13",
+       "R↓191",
+       "L↑215",
+       "L↓240"
+      ],
+      "firstOut": 13,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    "B": {
+     "ALL": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "ABSORBED",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13",
+       "L↑35",
+       "L↓158",
+       "L↑166",
+       "L↓191",
+       "L↑203",
+       "L↓227",
+       "L↑240"
+      ],
+      "firstOut": 13,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     },
+     "LEGS": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "ABSORBED",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13"
+      ],
+      "firstOut": 13,
+      "steps": [],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     }
+    },
+    "C": {
+     "ALL": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "ABSORBED",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13",
+       "L↑35",
+       "L↓176",
+       "L↑200",
+       "L↓209",
+       "L↑232",
+       "L↓244"
+      ],
+      "firstOut": 13,
+      "steps": [
+       "S42"
+      ],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     },
+     "LEGS": {
+      "window": 1,
+      "windowReason": "runner integrity / ledger at step 2",
+      "type": "ABSORBED",
+      "firstContact": 2,
+      "crossJ": 0,
+      "pairs": [],
+      "runnerDv": [
+       0,
+       0,
+       0
+      ],
+      "support": [
+       "R↑13",
+       "L↑90",
+       "L↓96",
+       "L↑206",
+       "L↓220",
+       "R↓247"
+      ],
+      "firstOut": 13,
+      "steps": [
+       "S42"
+      ],
+      "atEnd": {
+       "dOut": -0.076,
+       "comDrop": 0,
+       "thoTilt": 0,
+       "pelTilt": 0
+      },
+      "tacklerDv": [
+       0,
+       0,
+       0
+      ]
+     }
+    }
+   },
+   "E1": {
+    "B-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    },
+    "C-A_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    },
+    "C-B_ALL": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    },
+    "B-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    },
+    "C-A_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    },
+    "C-B_LEGS": {
+     "cls": "SUBTLE_OR_NONE",
+     "maxPx": null,
+     "byGroup": {
+      "upperBody": null,
+      "pelvis": null,
+      "legL": null,
+      "legR": null
+     },
+     "window": 1
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,1019 @@
+{
+ "tool": "abi1_eval.mjs",
+ "prereg": "abi1/ABI1_PREREGISTRATION.md",
+ "set": "impact",
+ "runs": {
+  "A_N2_ALL": {
+   "finalHash": "fff8cdd6be700b38",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  },
+  "A_N2_LEGS": {
+   "finalHash": "b0f26bf857023402",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  },
+  "B_N2_ALL": {
+   "finalHash": "9a5e9bcd60490086",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  },
+  "B_N2_LEGS": {
+   "finalHash": "3fbc5eab04179770",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  },
+  "C_N2_ALL": {
+   "finalHash": "fc8b78d643f2ab3d",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  },
+  "C_N2_LEGS": {
+   "finalHash": "f25488aae27143f7",
+   "steps": 260,
+   "stop": null,
+   "entryPass": true,
+   "entryHash": "56499350acdc3f10"
+  }
+ },
+ "validity": {
+  "V1": {
+   "pass": true,
+   "entryHashes": [
+    "56499350acdc3f10"
+   ]
+  },
+  "V2": {
+   "B_N2": {
+    "lastIdenticalHashStep": 29,
+    "lastIdenticalBodyStateStep": 30,
+    "pass": true
+   },
+   "C_N2": {
+    "lastIdenticalHashStep": 29,
+    "lastIdenticalBodyStateStep": 30,
+    "pass": true
+   }
+  },
+  "V3": {},
+  "V4_A_N2_ALL": {
+   "pass": true
+  },
+  "V5_A_N2_ALL": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V4_A_N2_LEGS": {
+   "pass": true
+  },
+  "V5_A_N2_LEGS": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V4_B_N2_ALL": {
+   "pass": true
+  },
+  "V5_B_N2_ALL": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V4_B_N2_LEGS": {
+   "pass": true
+  },
+  "V5_B_N2_LEGS": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V4_C_N2_ALL": {
+   "pass": true
+  },
+  "V5_C_N2_ALL": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V4_C_N2_LEGS": {
+   "pass": true
+  },
+  "V5_C_N2_LEGS": {
+   "pass": true,
+   "overCapSteps": 0
+  },
+  "V6": {},
+  "V7": {
+   "B": {
+    "frameKeys": [
+     "n",
+     "S",
+     "F"
+    ],
+    "pass": true,
+    "inputs": "frames {n, S: runner body states ×14, F: foot_L / foot_R turf normal force}; the runner's own V2 spec / passive geometry / StandController geometry, gain tables and bounded leg IK"
+   },
+   "C": {
+    "frameKeys": [
+     "n",
+     "S",
+     "F"
+    ],
+    "pass": true,
+    "inputs": "frames {n, S: runner body states ×14, F: foot_L / foot_R turf normal force}; the runner's own V2 spec / passive geometry / StandController geometry, gain tables and bounded leg IK"
+   }
+  },
+  "V8": {
+   "ibBefore": null,
+   "ibAfter": null,
+   "pass": false
+  }
+ },
+ "windows": {
+  "A_N2_ALL": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  },
+  "A_N2_LEGS": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  },
+  "B_N2_ALL": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  },
+  "B_N2_LEGS": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  },
+  "C_N2_ALL": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  },
+  "C_N2_LEGS": {
+   "end": 1,
+   "reason": "runner integrity / ledger at step 2"
+  }
+ },
+ "contact": {
+  "A_N2_ALL": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  },
+  "A_N2_LEGS": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  },
+  "B_N2_ALL": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  },
+  "B_N2_LEGS": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  },
+  "C_N2_ALL": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  },
+  "C_N2_LEGS": {
+   "firstContactStep": 2,
+   "pairs": {},
+   "perStepCrossJ": [
+    0
+   ],
+   "eqOppMax": 0
+  }
+ },
+ "tackler": {
+  "A_N2_ALL": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  },
+  "A_N2_LEGS": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  },
+  "B_N2_ALL": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  },
+  "B_N2_LEGS": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  },
+  "C_N2_ALL": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  },
+  "C_N2_LEGS": {
+   "vStep1": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "vWindowEnd": [
+    9.23786753822107,
+    -0.030761224384916613,
+    0.0003231641207842384
+   ],
+   "dvWindow": [
+    0,
+    0,
+    0
+   ],
+   "integrityBadSteps": []
+  }
+ },
+ "timeline": {
+  "A_N2_ALL": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 35
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 154
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": []
+  },
+  "A_N2_LEGS": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    },
+    {
+     "foot": "R",
+     "to": "SUPPORT",
+     "n": 191
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 215
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 240
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": []
+  },
+  "B_N2_ALL": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 35
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 158
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 166
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 191
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 203
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 227
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 240
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": []
+  },
+  "B_N2_LEGS": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": []
+  },
+  "C_N2_ALL": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 35
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 176
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 200
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 209
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 232
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 244
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": [
+    {
+     "n": 42,
+     "phase": "SWING",
+     "leg": 1,
+     "foothold": [
+      0.2549717492142552,
+      -0.18023440850217876
+     ],
+     "footPos": [
+      0.7378852367401123,
+      0.2491016387939453,
+      -0.18743279576301575
+     ]
+    }
+   ]
+  },
+  "C_N2_LEGS": {
+   "support": [
+    {
+     "foot": "R",
+     "to": "OFF",
+     "n": 13
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 90
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 96
+    },
+    {
+     "foot": "L",
+     "to": "OFF",
+     "n": 206
+    },
+    {
+     "foot": "L",
+     "to": "SUPPORT",
+     "n": 220
+    },
+    {
+     "foot": "R",
+     "to": "SUPPORT",
+     "n": 247
+    }
+   ],
+   "firstXcomOutsideBoS": 13,
+   "stepEvents": [
+    {
+     "n": 42,
+     "phase": "SWING",
+     "leg": 1,
+     "foothold": [
+      0.2549717492142552,
+      -0.18023440850217876
+     ],
+     "footPos": [
+      0.710206151008606,
+      0.2736462950706482,
+      -0.18919530510902405
+     ]
+    }
+   ]
+  }
+ },
+ "metrics": {
+  "A_N2_ALL": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   }
+  },
+  "A_N2_LEGS": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   }
+  },
+  "B_N2_ALL": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   },
+   "peakDtauNm": {}
+  },
+  "B_N2_LEGS": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   },
+   "peakDtauNm": {}
+  },
+  "C_N2_ALL": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   },
+   "peakDtauNm": {}
+  },
+  "C_N2_LEGS": {
+   "windowEnd": 1,
+   "atEnd": {
+    "dOut": -0.07638339530918606,
+    "comDrop": 0,
+    "vh": 2.5849897029793825e-10,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 9.523220113588642e-7,
+    "F": [
+     0,
+     0
+    ]
+   },
+   "peaks": {
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "comDrop": 0,
+    "L": 9.523220113588642e-7
+   },
+   "satAxisSteps": 0,
+   "Wact": 0.02568716024162264,
+   "series": {
+    "dOut": [],
+    "FL": [],
+    "FR": [],
+    "pelTilt": [],
+    "thoTilt": [],
+    "comDrop": [],
+    "vh": []
+   },
+   "peakDtauNm": {}
+  }
+ },
+ "effects": {
+  "B-A_ALL": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  },
+  "C-A_ALL": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  },
+  "C-B_ALL": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  },
+  "B-A_LEGS": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  },
+  "C-A_LEGS": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  },
+  "C-B_LEGS": {
+   "window": 1,
+   "E1": {
+    "frames": [],
+    "maxPx": null,
+    "maxPxByGroup": {
+     "upperBody": null,
+     "pelvis": null,
+     "legL": null,
+     "legR": null
+    },
+    "maxMm": null,
+    "maxDeg": null,
+    "materialAtGameplayCamera": false,
+    "gameplayRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "visibleClose": false,
+    "closeRun": {
+     "longest": 0,
+     "firstOf4": null
+    },
+    "class": "SUBTLE_OR_NONE"
+   },
+   "E3atEnd": {
+    "dOut": 0,
+    "comDrop": 0,
+    "vh": 0,
+    "pelTilt": 0,
+    "thoTilt": 0,
+    "L": 0
+   },
+   "E4maxJointDeg": {}
+  }
+ },
+ "types": {
+  "A_N2_ALL": {
+   "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)"
+  },
+  "A_N2_LEGS": {
+   "type": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)"
+  },
+  "B_N2_ALL": {
+   "type": "ABSORBED"
+  },
+  "B_N2_LEGS": {
+   "type": "ABSORBED"
+  },
+  "C_N2_ALL": {
+   "type": "ABSORBED"
+  },
+  "C_N2_LEGS": {
+   "type": "ABSORBED"
+  }
+ },
+ "summary": {
+  "V": {
+   "V1": true,
+   "V2": {
+    "B_N2": true,
+    "C_N2": true
+   },
+   "V3": {},
+   "V4_A_N2_ALL": true,
+   "V5_A_N2_ALL": true,
+   "V4_A_N2_LEGS": true,
+   "V5_A_N2_LEGS": true,
+   "V4_B_N2_ALL": true,
+   "V5_B_N2_ALL": true,
+   "V4_B_N2_LEGS": true,
+   "V5_B_N2_LEGS": true,
+   "V4_C_N2_ALL": true,
+   "V5_C_N2_ALL": true,
+   "V4_C_N2_LEGS": true,
+   "V5_C_N2_LEGS": true,
+   "V6": {},
+   "V7": {
+    "B": true,
+    "C": true
+   },
+   "V8": false
+  },
+  "windows": {
+   "A_N2_ALL": 1,
+   "A_N2_LEGS": 1,
+   "B_N2_ALL": 1,
+   "B_N2_LEGS": 1,
+   "C_N2_ALL": 1,
+   "C_N2_LEGS": 1
+  },
+  "types": {
+   "A_N2_ALL": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+   "A_N2_LEGS": "NO_ACTIVE_RESPONSE (ABSORBED mechanically)",
+   "B_N2_ALL": "ABSORBED",
+   "B_N2_LEGS": "ABSORBED",
+   "C_N2_ALL": "ABSORBED",
+   "C_N2_LEGS": "ABSORBED"
+  },
+  "E1": {
+   "B-A_ALL": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)",
+   "C-A_ALL": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)",
+   "C-B_ALL": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)",
+   "B-A_LEGS": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)",
+   "C-A_LEGS": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)",
+   "C-B_LEGS": "SUBTLE_OR_NONE (max -Infinity px, -Infinity mm, -Infinity°, window 1)"
+  }
+ }
+}
