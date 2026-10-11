@@ -1,0 +1,105 @@
+02:05:33 IFM-1 execution — commit b1dc6209c228560f50527d33e500853f86a4c585 — status 0 changed
+02:05:33 ib_verify before: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+R0 S-FLAT control(SW) C0: RAN · steps 36 · hash f204f1fcb96ca45f · R ff09161511006fed
+R0 S-TOE control(TP) C0: RAN · steps 36 · hash ceed5ca3be5cdce4 · R 022c353b5b2fb68b
+R0 S-FLAT control(PL) C0: RAN · steps 36 · hash cf1a953968d78aff · R ff09161511006fed
+R0 S-FLAT control(SH) C0: RAN · steps 36 · hash 85b60950273805a2 · R ff09161511006fed
+RH1 S-FLAT control(SW) C0: RAN · steps 36 · hash de04e11ede5a322a · R 397a4bf0ac47c8c5
+RH1 S-TOE control(TP) C0: RAN · steps 36 · hash 7dd00e976f2a7015 · R ecb202a14e21626b
+RH1 S-FLAT control(PL) C0: RAN · steps 36 · hash 27d197dbe169c30b · R 397a4bf0ac47c8c5
+RH1 S-FLAT control(SH) C0: RAN · steps 36 · hash 0d04b6e68dbdf332 · R 397a4bf0ac47c8c5
+R0 S-FLAT SW N: RAN · steps 36 · hash ed78c83454d6560a · R 870b440776783735
+RH1 S-FLAT SW N: RAN · steps 36 · hash 97c01901a1380203 · R ea148417307df9c2
+R0 S-FLAT PL N: RAN · steps 36 · hash 67126d0587740dc1 · R 8a18c095ea08c693
+RH1 S-FLAT PL N: RAN · steps 36 · hash 4b70789f94e0a732 · R 69306536891c7576
+R0 S-FLAT SH N: RAN · steps 36 · hash 97d7cf46a1626a12 · R 52ece574cb0972ab
+RH1 S-FLAT SH N: RAN · steps 36 · hash 01d0d73f08b1954c · R e2097f8c3a01c62c
+R0 S-TOE TP N: RAN · steps 36 · hash 44be9b7e3e0b1a13 · R 206ed80c394c21d7
+RH1 S-TOE TP N: RAN · steps 36 · hash 2d02dd07ea163549 · R b7625c9c8e7c7f59
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+N_TP_RH1: RAN 2d02dd07ea163549
+N_TP_R0: RAN 44be9b7e3e0b1a13
+N_SH_RH1: RAN 01d0d73f08b1954c
+N_SH_R0: RAN 97d7cf46a1626a12
+N_PL_RH1: RAN 4b70789f94e0a732
+N_PL_R0: RAN 67126d0587740dc1
+N_SW_RH1: RAN 97c01901a1380203
+N_SW_R0: RAN ed78c83454d6560a
+C0_RH1_S-TOE: RAN 7dd00e976f2a7015
+C0_RH1_S-FLAT: RAN de04e11ede5a322a
+C0_R0_S-TOE: RAN ceed5ca3be5cdce4
+C0_R0_S-FLAT: RAN f204f1fcb96ca45f
+C0_R0_S-FLAT: fresh ×2 DIFFER · batch identical · 36 steps · f204f1fcb96ca45f
+C0_R0_S-TOE: fresh ×2 DIFFER · batch identical · 36 steps · ceed5ca3be5cdce4
+C0_RH1_S-FLAT: fresh ×2 DIFFER · batch identical · 36 steps · de04e11ede5a322a
+C0_RH1_S-TOE: fresh ×2 DIFFER · batch identical · 36 steps · 7dd00e976f2a7015
+N_SW_R0: fresh ×2 DIFFER · batch identical · 36 steps · ed78c83454d6560a
+N_SW_RH1: fresh ×2 DIFFER · batch identical · 36 steps · 97c01901a1380203
+N_PL_R0: fresh ×2 DIFFER · batch identical · 36 steps · 67126d0587740dc1
+N_PL_RH1: fresh ×2 DIFFER · batch identical · 36 steps · 4b70789f94e0a732
+N_SH_R0: fresh ×2 DIFFER · batch identical · 36 steps · 97d7cf46a1626a12
+N_SH_RH1: fresh ×2 DIFFER · batch identical · 36 steps · 01d0d73f08b1954c
+N_TP_R0: fresh ×2 DIFFER · batch identical · 36 steps · 44be9b7e3e0b1a13
+N_TP_RH1: fresh ×2 DIFFER · batch identical · 36 steps · 2d02dd07ea163549
+DETERMINISM: DIFFERENCES
+C0_R0_S-FLAT: step 0.576 / 0.791 / 1.163 ms (Jolt 0.280), event 150 ms 21.13 ms, construction 5.1 ms, state = correctness run true
+C0_R0_S-TOE: step 0.482 / 0.611 / 0.878 ms (Jolt 0.255), event 150 ms 17.75 ms, construction 4.2 ms, state = correctness run true
+C0_RH1_S-FLAT: step 0.484 / 0.640 / 1.024 ms (Jolt 0.267), event 150 ms 17.89 ms, construction 4.1 ms, state = correctness run true
+C0_RH1_S-TOE: step 0.474 / 0.667 / 0.873 ms (Jolt 0.254), event 150 ms 17.43 ms, construction 4.1 ms, state = correctness run true
+N_SW_R0: step 0.499 / 0.688 / 2.770 ms (Jolt 0.278), event 150 ms 18.47 ms, construction 4.2 ms, state = correctness run true
+N_SW_RH1: step 0.490 / 0.627 / 0.854 ms (Jolt 0.274), event 150 ms 18.22 ms, construction 4.0 ms, state = correctness run true
+N_PL_R0: step 0.497 / 0.738 / 1.376 ms (Jolt 0.281), event 150 ms 18.36 ms, construction 4.1 ms, state = correctness run true
+N_PL_RH1: step 0.491 / 0.629 / 0.867 ms (Jolt 0.277), event 150 ms 18.16 ms, construction 3.9 ms, state = correctness run true
+N_SH_R0: step 0.489 / 0.635 / 0.827 ms (Jolt 0.274), event 150 ms 18.20 ms, construction 3.8 ms, state = correctness run true
+N_SH_RH1: step 0.487 / 0.612 / 0.828 ms (Jolt 0.273), event 150 ms 17.95 ms, construction 3.8 ms, state = correctness run true
+N_TP_R0: step 0.474 / 0.713 / 1.625 ms (Jolt 0.257), event 150 ms 17.60 ms, construction 3.9 ms, state = correctness run true
+N_TP_RH1: step 0.475 / 0.685 / 0.933 ms (Jolt 0.253), event 150 ms 17.58 ms, construction 3.9 ms, state = correctness run true
+02:05:47 ib_verify after: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+02:05:47 DONE

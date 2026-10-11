@@ -55,3 +55,28 @@
 - `scripts/ifm1_cpu.mjs` b9283583d50c481342fbc1238cd0024b7f577e807d5dd546f31578b4d55b6690
 
 **Run 2:** the complete execution re-run from scratch after these corrections.
+
+## Run 2 (02:05:33, commit b1dc6209): one orchestration defect, run superseded
+
+**Physics:** C0 and N trajectories ran normally. Evidence is kept in `evidence/superseded_run2/`.
+
+### C6: orchestration path
+
+- `ifm1_execute.sh` joined `"$PWD/$RUNS/…"` while the runs path was absolute. The W / X selectors and the fresh-process repeat list therefore read non-existent files.
+- Consequences:
+  - **no W ran** (permitted cells show W:NOT_RUN);
+  - **no second fresh-process run** was made, so the determinism comparison reports DIFFERENCES for missing repeats.
+- **Correction:** RUNS is resolved to an absolute path and used directly.
+
+**Hash after C6:** `scripts/ifm1_execute.sh` 8f114eb6c84380b1e77ca3f8cd3fd6153dd2b646439e2b232cce223cbd002fb9
+
+### Run-2 observation, not a defect (reported in the results)
+
+- **SW primary angular-ledger residual:** 2.34e-2 N·m·s at the impact step (> 0.01). Most of it (1.9e-2) is the within-step rotation of anisotropic segment inertia at 27.7 rad/s, the engine's rotational integration.
+- **PL secondary excursion:** 5.6e-2 at 133 ms is not explained by:
+  - missing impulses (linear closure 2e-5);
+  - inertia rotation (5e-3);
+  - the angular-friction couple (removing or flipping it worsens every run).
+- Both stand as measured. No tolerance is changed.
+
+**Run 3:** the complete execution re-run from scratch after C6.
