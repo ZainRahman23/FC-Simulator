@@ -65,8 +65,11 @@ const out = { tool: "abi1_eval.mjs", prereg: "abi1/ABI1_PREREGISTRATION.md", set
 // V1
 { const hs = Object.values(R).map(r => r.entry.stateHash); out.validity.V1 = { pass: Object.values(R).every(r => r.entry.pass) && new Set(hs).size === 1, entryHashes: [...new Set(hs)] }; }
 // V2 causal identity through step d + 1 (B / C vs A, both modes, contact set ALL; A from --aref when the set has no A of its own)
-out.validity.V2 = {}; for (const c of ["B", "C"]) for (const m of ["N2", "C0"]) { const a = R[`A_${m}_ALL`], b = R[`${c}_${m}_ALL`]; if (!a || !b) continue; let last = 0; for (let i = 0; i < b.recs.length && a.recs[i].hash === b.recs[i].hash; i++) last = i + 1;
-  out.validity.V2[`${c}_${m}`] = { lastIdenticalStep: last, pass: last >= D + 1 }; }
+// AM-1 (ABI1_AMENDMENTS.md, pre-run): the frozen per-step hash includes the actuators' activation state, which the command issued after step n updates
+// before step n is recorded — so body states are compared through step d + 1 and the full hash through step d
+out.validity.V2 = {}; for (const c of ["B", "C"]) for (const m of ["N2", "C0"]) { const a = R[`A_${m}_ALL`], b = R[`${c}_${m}_ALL`]; if (!a || !b) continue; let last = 0, lastS = 0;
+  for (let i = 0; i < b.recs.length && a.recs[i].hash === b.recs[i].hash; i++) last = i + 1; for (let i = 0; i < b.recs.length && JSON.stringify(a.recs[i].S) === JSON.stringify(b.recs[i].S); i++) lastS = i + 1;
+  out.validity.V2[`${c}_${m}`] = { lastIdenticalHashStep: last, lastIdenticalBodyStateStep: lastS, pass: last >= D && lastS >= D + 1 }; }
 // V3 first contact-caused active response
 const firstContact = (run) => { const r = run.recs.find(x => crossPairs(x).length); return r ? r.n : null; };
 out.validity.V3 = {}; for (const c of ["B", "C"]) { const n2 = R[`${c}_N2_ALL`], c0 = R[`${c}_C0_ALL`]; if (!n2 || !c0) continue; let first = null;

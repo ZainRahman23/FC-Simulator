@@ -1,0 +1,77 @@
+{
+ "tool": "abi1_precheck.mjs",
+ "K1": {
+  "B": {
+   "lastIdenticalToA": 29,
+   "finite": true,
+   "stepTicks": 0,
+   "maxAbsDtauNm": 3.598791681217019,
+   "frameKeys": [
+    "n",
+    "S",
+    "F"
+   ],
+   "pass": false
+  },
+  "C": {
+   "lastIdenticalToA": 29,
+   "finite": true,
+   "stepTicks": 0,
+   "maxAbsDtauNm": 3.598791681217019,
+   "frameKeys": [
+    "n",
+    "S",
+    "F"
+   ],
+   "pass": false
+  }
+ },
+ "K2": {
+  "phases": [
+   {
+    "n": 1,
+    "phase": "IDLE"
+   },
+   {
+    "n": 32,
+    "phase": "SWING"
+   },
+   {
+    "n": 72,
+    "phase": "HOLD"
+   },
+   {
+    "n": 80,
+    "phase": "IDLE"
+   },
+   {
+    "n": 81,
+    "phase": "SWING"
+   },
+   {
+    "n": 106,
+    "phase": "HOLD"
+   },
+   {
+    "n": 114,
+    "phase": "IDLE"
+   },
+   {
+    "n": 119,
+    "phase": "SWING"
+   },
+   {
+    "n": 190,
+    "phase": "HOLD"
+   },
+   {
+    "n": 198,
+    "phase": "SWING"
+   }
+  ],
+  "maxIkErr": 0.016386491768074347,
+  "finite": true,
+  "nonFootTurf": [],
+  "pass": true
+ }
+}

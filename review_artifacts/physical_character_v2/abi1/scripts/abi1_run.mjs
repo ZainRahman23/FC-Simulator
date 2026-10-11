@@ -10,7 +10,7 @@ export const Jolt = await loadJolt(PL.P2 + "vendor/jolt-physics.wasm-compat.js")
 // controller factories by condition (A = none: the frozen PVP-1A response). B / C are bound only after the ABI-1 preregistration freeze.
 export const TONE_SCALE = Object.freeze({ k: 0.561, d: 0.749 });
 export async function controllerFor(cond, o = {}) { if (cond === "A") return null;
-  const M = await import(new URL("./abi1_ctrl.mjs", import.meta.url).href); return (plant) => new M.GBC1(plant, { step: cond === "C", d: o.d ?? 29, hip: o.hip ?? true, arms: o.arms ?? true }); }
+  const M = await import(new URL("./abi1_ctrl.mjs", import.meta.url).href); return (plant) => new M.GBC1Ctl(plant, { step: cond === "C", d: o.d ?? 29, hip: o.hip ?? true, arms: o.arms ?? true }); }
 export async function runOne(job, J = Jolt) {
   const FIX = job.fixtureObj || JSON.parse(fs.readFileSync(job.fixture)), steps = job.steps || PV.steps, vs = job.vscale ?? 1;
   const entries = { runner: FIX.write.runner, tackler: vs === 1 ? FIX.write.tackler : { ...FIX.write.tackler, vel: FIX.write.tackler.vel.map(x => ({ v: V.sc(x.v, vs), w: V.sc(x.w, vs) })) } };
