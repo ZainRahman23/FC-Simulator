@@ -20,7 +20,7 @@ export async function runOne(job, J = Jolt) {
   const sim = new IFM1Sim(J, spec, entry, fix, job.mode === "X" ? "N" : job.mode, { wrench, instrument: job.instrument !== false, O: entry.O });
   // ── t = 0 entry checks (no step yet) ──
   { const S = sim.read(), wr = entry.write, B = spec.bodies, M = B.reduce((s, b) => s + b.mass, 0), imp = sim.readImp(), cache = TA.decodeContacts(TA.saveState(J, sim.w.ps, J.EStateRecorderState_Contacts));
-    const posErr = Math.max(...S.map((s, i) => V.dist(s.pos, wr.poses[i].pos))), rotErr = Math.max(...S.map((s, i) => { const d = Math.abs(s.rot[0] * wr.poses[i].rot[0] + s.rot[1] * wr.poses[i].rot[1] + s.rot[2] * wr.poses[i].rot[2] + s.rot[3] * wr.poses[i].rot[3]); return 2 * Math.acos(Math.min(1, d)); }));
+    const posErr = Math.max(...S.map((s, i) => V.dist(s.pos, wr.poses[i].pos))), rotErr = Math.max(...S.map((s, i) => L.qangRad(s.rot, wr.poses[i].rot)));   // correction C1: small-angle-stable geodesic angle
     const velErr = Math.max(...S.map((s, i) => V.dist(s.v, wr.vel[i].v))), angErr = Math.max(...S.map((s, i) => V.dist(s.w, wr.vel[i].w))), P = S.reduce((s, b, i) => V.add(s, V.sc(b.v, B[i].mass)), [0, 0, 0]), vA = entry.momentum.vAuth;
     out.entry = { entryWrites: sim.entryWrites, impactorWrites: sim.impWrites, readback: { posM: posErr, rotRad: rotErr, velMs: velErr, angRadS: angErr }, horizontalMomentumErrNs: Math.hypot(P[0] - M * vA[0], P[2] - M * vA[2]),
       momentumReadbackOk: Math.hypot(P[0] - M * vA[0], P[2] - M * vA[2]) <= IFM1.entry.momentumReadbackNs, cacheClean: cache.pairs.length === 0, impactor: { pos: imp.pos, v: imp.v, specifiedV: fix.vImpactor, vErr: V.dist(imp.v, fix.vImpactor) },

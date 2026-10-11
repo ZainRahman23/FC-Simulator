@@ -103,4 +103,6 @@ export function manifoldImpulses(dec, pre) {
   }
   return out;
 }
+// geodesic angle between two orientations, stable for small angles (correction C1/C2: 2·acos(|dot|) loses ~1e-4 rad near identity for float32-rounded quaternions)
+export const qangRad = (a, b) => { const d = Q.mul(Q.conj(Q.norm(a)), Q.norm(b)), v = Math.hypot(d[0], d[1], d[2]); return 2 * Math.atan2(v, Math.abs(d[3])); };
 export const r6 = (x) => (x == null || !Number.isFinite(x) ? x : +x.toFixed(6)), rv6 = (v) => v.map(r6);

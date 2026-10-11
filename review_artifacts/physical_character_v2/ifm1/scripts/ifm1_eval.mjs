@@ -7,7 +7,7 @@ const { bootSole, hull2 } = await import(P2 + "sim/v2_geom.js");
 const DIR = process.argv[2], OUTF = process.argv[3] || path.join(RA, "ifm1/evidence/IFM1_EVAL.json"), FIX = JSON.parse(fs.readFileSync(path.join(RA, "ifm1/fixture/IFM1_FIXTURE.json")));
 const rd = (f) => { const p = path.join(DIR, f); if (!fs.existsSync(p)) return null; return JSON.parse(f.endsWith(".gz") ? zlib.gunzipSync(fs.readFileSync(p)) : fs.readFileSync(p)); };
 const R2D = 180 / Math.PI, M_OF = (b) => L.SPECS[b]().bodies.reduce((s, x) => s + x.mass, 0), G = 9.81, NP = IFM1.stepsPrimary, I = IFM1;
-const qang = (a, b) => { const d = Math.abs(a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]); return 2 * Math.acos(Math.min(1, d)) * R2D; };
+const qang = (a, b) => L.qangRad(a, b) * R2D;   // correction C2: small-angle-stable geodesic angle (no threshold change)
 const out = { eval: "IFM1_EVAL", controls: {}, cells: {}, notes: [] };
 // ── landmarks / material points ──
 function geom(bname) { const spec = L.SPECS[bname](), B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n);
