@@ -3715,3 +3715,47 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 **Not done:** no mesh-penetration fix (as instructed). ABI EXT after 250 ms is not re-rendered (erratum preserved).
 
 **Review:** `trc1/review/TRC1_REVIEW.html`. The frames are outside Git (`trc1/review/frames.OUTSIDE_GIT.md`).
+
+## 2026-10-11: PPR-1 physiological pre-reflex response (source 468c8971; preregistration d8849a6b; pre-run freeze e7afc26c): B FAILED its preregistration (12 / 23); preserved, diagnosed, not retuned; VISUAL_PENDING
+
+**Audit of CURRENT V2 (A):** a mannequin with an instantaneous nervous system.
+- **Zero-latency excitation:** computed from the same step's pose-spring request. The struck ankle goes 9 % → 96 % activation in ≈ 50 ms, at 12.7–16.5 kN·m/s from 0 ms, with up to 68 N·m per axis beyond the entry activation.
+- **≈ 100× human damping:** 78–97 % of 50 ms probe resistance is viscous.
+- **Non-yielding isotropic stiffness:** 1.5 × load (ankle 1.54 mgh) toward a frozen whole-body pose.
+- **Standing:** A cannot stand from the PVP entry (falls at 1.45 s; live statics does not help).
+- **Not causes:** frozen gravity compensation inside 0–120 ms; passive tissue.
+
+**B (frozen):**
+- **Drive:** excitation from a tonic drive with a 125 ms latency (A's bias plus a support-chain tone remainder on the runner's own delayed state).
+- **Intrinsic mechanics:** load-dependent stiffness K_i = Σ (e − 1)·a·capIso / θ_y, elastic ≈ 1° (ankle calibrated to 0.78 mgh, trunk to Brown & McGill), then yielding at V2's eccentric plateau with plastic slip; ζ = 0.2.
+- **Architecture:** the same actuator architecture; collision-blind.
+
+**Window result (0–120 ms after contact, B vs A):**
+- struck ankle 16° vs 5.5°, knee 19° vs 3.2°;
+- struck-leg torque change ≤ 10 vs 69 N·m;
+- muscle work −8 vs −21 J;
+- distal → proximal propagation (ankle 4 ms → knee 12.5 → hip 17–25 → lumbar / neck 25);
+- pelvis 2.2° vs 5.2°.
+
+**Failures:**
+- **H1 / H2 / H3 / PR3:** activation changed up to 0.61, because the excitation was normalised by the current-angle capacity (a specification error). Post-hoc D1 freezes activation exactly with unchanged window kinematics (≤ 0.05°).
+- **QS1–QS4 / P1:** B falls standing at 0.85 s. D2 (no delay) falls sooner and D3 (no slip) at 1.0 s, so this is not latency: joint-space tone with thin yield margins does not stand.
+- **IMP1:** joint-anchor separation 1.43–1.48 mm.
+- **PR1 / PR2:** partly criterion errors (they assumed a yield in both directions).
+
+**Passed:** integrity and ledgers, determinism, no chatter, physiological entry magnitudes, the same law without a tackler bit-identical, no energy creation, progressive and overwhelmable pushes.
+
+**Model 2 holds for the pre-reflex window. Model 1 elements remain for:**
+- non-yielding long-range intrinsic elasticity (V2 has zero mid-range passive stiffness and an eccentric reserve of 1.2–1.35×);
+- standing (needs a latency-respecting balance controller; the head needs faster loops than 125 ms).
+
+**CPU:** B's law 0.018 ms per step.
+
+**Successor B′ proposed, not run:**
+1. delayed-state excitation normalisation;
+2. passive long-range elasticity (a V2 representation change, needing approval);
+3. a literature-middle eccentric reserve;
+4. corrected criteria;
+5. standing judged with delayed active balance.
+
+**Report:** `ppr1/PPR1_REPORT.md`. **Review:** `ppr1/review/PPR1_REVIEW.html`. Records and frames are outside Git.

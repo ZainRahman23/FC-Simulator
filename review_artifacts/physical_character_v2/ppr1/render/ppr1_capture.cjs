@@ -58,7 +58,7 @@ const MARKS = [0, 40, 80, 120];
             c.drawImage(glc, cx0, cy0, cw, ch, x0, 0, W, H);
             const Pj = (q) => { const a = rv1Proj(cam, vw, 1, q); return a ? [(a[0] - cx0) * W / cw + x0, (a[1] - cy0) * H / ch] : null; };
             if (F.imp) { const p = Pj(F.imp.c), q = Pj([F.imp.c[0], F.imp.c[1] + F.imp.r, F.imp.c[2]]); if (p && q) { const rr = Math.hypot(q[0] - p[0], q[1] - p[1]), gr = c.createRadialGradient(p[0] - rr * 0.35, p[1] - rr * 0.35, rr * 0.1, p[0], p[1], rr); gr.addColorStop(0, "#d9dde0"); gr.addColorStop(1, "#4a5056");
-                c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip(); c.fillStyle = gr; c.beginPath(); c.arc(p[0], p[1], rr, 0, 7); c.fill(); c.restore(); } }
+                c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip(); c.fillStyle = gr; c.beginPath(); c.arc(p[0], p[1], Math.max(rr, 6), 0, 7); c.fill(); c.strokeStyle = "#ffd45e"; c.lineWidth = 1.5; c.stroke(); c.restore(); } }
             if (variant === "colliders" && F.phase === "phys" && F.shapes) { c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
               for (const s of F.shapes) { const q = s.pts.map(Pj).filter(Boolean); if (q.length < 3) continue; const h = hull(q); c.beginPath(); h.forEach((p, i) => (i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1]))); c.closePath();
                 c.fillStyle = s.who === "R" ? "rgba(70,215,255,0.33)" : "rgba(255,150,40,0.36)"; c.fill(); c.strokeStyle = s.who === "R" ? "rgba(150,240,255,0.95)" : "rgba(255,200,120,0.95)"; c.lineWidth = 1.1; c.stroke(); }

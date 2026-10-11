@@ -22,7 +22,10 @@ function silhouettes(W, camL, who) { return W.map(sh => { const c = sh.bc, vd = 
 // V2 skeleton (joint centres from the parent body) for the overlay
 const skel = (spec, S) => spec.joints.map(j => [toW(V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, V.sub(j.at, spec.bodies[j.parentIndex].origin)))), toW(S[j.childIndex].com)].map(rv));
 const entryS = () => { const mk = (spec, w) => w.poses.map((p, i) => ({ pos: p.pos, rot: p.rot, com: V.add(p.pos, Q.rot(p.rot, spec.bodies[i].comLocal)), v: w.vel[i].v, w: w.vel[i].w })); return [...mk(sR, FIX.write.runner), ...mk(sT, FIX.write.tackler)]; };
-const fc = run.recs.find(r => r.contacts.some(c => c.kind === "cross" && V.len(c.J2) >= 1e-3)), tAfter = (n) => (fc ? (n - (fc.n - 1)) * 1000 / 240 : null);
+// time origin: the first impulse-carrying cross contact (N2); --t0step forces it (C0: the N2 contact step, so both share one clock); SOLO with an
+// impactor: the first step whose record carries an impactor contact
+const fcCross = run.recs.find(r => r.contacts.some(c => c.kind === "cross" && V.len(c.J2) >= 1e-3)), fcImp = run.recs.find(r => r.chars.runner.ext && r.chars.runner.ext.imp && r.chars.runner.ext.imp.pts.length);
+const t0step = arg("t0step") ? +arg("t0step") : fcCross ? fcCross.n : fcImp ? fcImp.n : null, fc = t0step != null ? { n: t0step } : null, tAfter = (n) => (fc ? (n - (fc.n - 1)) * 1000 / 240 : null);
 const frames = [];
 if (withLead) { const bodyMid = (tau) => { const g = PL.primsAt(OFF, tau).find(p => p.prim === "BODY"); return V.lerp(g.a, g.b, 0.5); }, mid0 = bodyMid(FIX.tauAct);
   for (let k = 0; k < 60; k++) { const tau = FIX.tauAct - 15 + k / 4, row = Math.floor(tau - 1 + 1e-9), d = V.sub(bodyMid(tau), mid0), ST = FIX.write.tackler.poses.map(s => ({ pos: V.add(s.pos, d), rot: s.rot }));

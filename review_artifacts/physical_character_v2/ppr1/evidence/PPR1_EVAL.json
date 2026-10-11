@@ -1,0 +1,414 @@
+{
+ "tool": "ppr1_eval.mjs",
+ "prereg": "d8849a6b",
+ "prerun": "e7afc26c",
+ "criteria": {
+  "H1": {
+   "pass": false,
+   "value": {
+    "maxDriveDiffNm": 0,
+    "firstDriveDiffRecord": null,
+    "maxActivationDiff": 0.606908347489403,
+    "firstActivationDiffRecord": 4
+   },
+   "note": "τ_drive and a± bit-identical B-N2 vs B-C0, records ≤ 32"
+  },
+  "H2": {
+   "pass": false,
+   "value": {
+    "maxActivationChange": 0.6069733481313054,
+    "at": {
+     "n": 30,
+     "k": 10,
+     "i": 1
+    },
+    "A_reference": 0.9425633594151235
+   },
+   "note": "max |a(n) − a(t=0)| ≤ 0.01 in 0–120 ms"
+  },
+  "H3": {
+   "pass": false,
+   "value": {
+    "maxBeyondNormalised": 0.0015247944975083903,
+    "A_reference_maxBeyondNm": 68.24103148423391
+   },
+   "note": "|τ| − a_entry·cap(θ, ω) ≤ 1e-6·max(1, cap)"
+  },
+  "H4": {
+   "pass": true,
+   "value": {
+    "sepMm": 0.38146759197676905,
+    "selfPenMm": 0,
+    "crossPenMm": 1.850800824213358,
+    "turfPenMm": 1.328412958512909,
+    "finite": true,
+    "maxSpeed": 3.336678228518541,
+    "lin": 0.000009527716239728389,
+    "ang": 0.0015664351114951067
+   },
+   "note": "integrity and ledgers in the window"
+  },
+  "H5": {
+   "pass": true,
+   "value": [
+    {
+     "id": "QS_DET",
+     "law": "B",
+     "final": "a544fcdc2c08a33d",
+     "identical": true
+    },
+    {
+     "id": "N2_DET",
+     "law": "B",
+     "final": "2463d9b08e927d52",
+     "identical": true
+    }
+   ],
+   "note": "QS and N2 repeats bit-identical"
+  },
+  "H6": {
+   "pass": true,
+   "value": {
+    "worst": 0,
+    "ax": null
+   },
+   "note": "≤ 2 consecutive α alternations (|α| > 500 rad/s²) on any key axis in the window"
+  },
+  "H7": {
+   "pass": true,
+   "value": {
+    "ankleSagittalSumKiOverMgh": 0.78,
+    "ankleDi": [
+     0.7360634446171447,
+     0.7208107459127087
+    ],
+    "lumbarFlexKi": 142.8352648247872,
+    "pass": true
+   },
+   "note": "physiological entry magnitudes"
+  },
+  "V1": {
+   "pass": true,
+   "value": {
+    "maxStateDiff": 0
+   },
+   "note": "B-C0 runner bit-identical to B-QS over 260 steps"
+  },
+  "QS1": {
+   "pass": false,
+   "value": {
+    "trunkDeg": 33.96156265544917,
+    "pelvisDropMm": 11.745989322662354,
+    "comDriftMm": 111.21250289423399
+   },
+   "note": "through 1.0 s"
+  },
+  "QS2": {
+   "pass": false,
+   "value": {
+    "maxOmega": 39.6211,
+    "zeroCrossings": 0
+   },
+   "note": "0.5–1.0 s: no spontaneous oscillation"
+  },
+  "QS3": {
+   "pass": false,
+   "value": {
+    "fallTimeS": 0.8541666666666666,
+    "standsFull4s": false
+   },
+   "note": "trunk > 20° not before 1.20 s (A: 1.45 s)"
+  },
+  "QS4": {
+   "pass": false,
+   "value": {
+    "slipMm": [
+     30.7,
+     21.28
+    ]
+   },
+   "note": "slip ≤ 2 mm through 1.0 s"
+  },
+  "QS5": {
+   "pass": true,
+   "value": {
+    "sumEnergyResJ": -83.04527756092288
+   },
+   "note": "Σ energy residual 0–1 s ≤ +0.5 J"
+  },
+  "P1": {
+   "pass": false,
+   "value": {
+    "0": {
+     "com": 50.18509938218713,
+     "trunk": 14.019565649477164,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.9708333333333333
+    },
+    "45": {
+     "com": 42.327674162420024,
+     "trunk": 8.526930983654086,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.9291666666666667
+    },
+    "90": {
+     "com": 20.242275069764275,
+     "trunk": 9.762100439966801,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.9458333333333333
+    },
+    "135": {
+     "com": 42.446260141501284,
+     "trunk": 4.608003146700313,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.8375
+    },
+    "180": {
+     "com": 60.978531468050285,
+     "trunk": 4.355149251173833,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.8333333333333334
+    },
+    "225": {
+     "com": 40.68322750225207,
+     "trunk": 2.9828875272125166,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.8708333333333333
+    },
+    "270": {
+     "com": 40.263464828551456,
+     "trunk": 7.973202430642284,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.9249999999999999
+    },
+    "315": {
+     "com": 27.865299208872667,
+     "trunk": 9.595192337832525,
+     "verdict": "LOST_BALANCE",
+     "fall": 1.0166666666666666
+    }
+   },
+   "note": "8 × 10 N·s: peak COM dev ≤ 60 mm, trunk ≤ 6°"
+  },
+  "P2": {
+   "pass": true,
+   "value": {
+    "fwd": [
+     [
+      5,
+      30.78761601683378
+     ],
+     [
+      10,
+      50.18509938218713
+     ],
+     [
+      20,
+      107.25761185109428
+     ],
+     [
+      40,
+      213.60594771681806
+     ],
+     [
+      60,
+      336.9290928370537
+     ],
+     [
+      90,
+      495.4933955160251
+     ]
+    ],
+    "back": [
+     [
+      5,
+      33.291884897073636
+     ],
+     [
+      10,
+      60.978531468050285
+     ],
+     [
+      20,
+      104.48943391558785
+     ],
+     [
+      40,
+      209.96268358925118
+     ],
+     [
+      60,
+      318.4495655515956
+     ],
+     [
+      90,
+      468.58577293810373
+     ]
+    ],
+    "right": [
+     [
+      5,
+      16.824390033519798
+     ],
+     [
+      10,
+      40.263464828551456
+     ],
+     [
+      20,
+      42.0331642872625
+     ],
+     [
+      40,
+      133.44270718177145
+     ],
+     [
+      60,
+      232.4207488586163
+     ],
+     [
+      90,
+      393.1151898616995
+     ]
+    ]
+   },
+   "note": "graded: peak COM dev strictly increasing"
+  },
+  "P3": {
+   "pass": true,
+   "value": {
+    "fwd": {
+     "com": 495.4933955160251,
+     "trunk": 87.26545066634331,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.5916666666666667
+    },
+    "back": {
+     "com": 468.58577293810373,
+     "trunk": 60.30587527762117,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.6166666666666667
+    },
+    "right": {
+     "com": 393.1151898616995,
+     "trunk": 67.41366152346274,
+     "verdict": "LOST_BALANCE",
+     "fall": 0.6708333333333333
+    }
+   },
+   "note": "90 N·s → LOST_BALANCE within 2 s"
+  },
+  "IMP1": {
+   "pass": false,
+   "value": {
+    "IMP_shankR_back": {
+     "finite": true,
+     "maxSpeed": 2.3892461040987114,
+     "sepMm": 1.4821699612114043,
+     "chatter": {
+      "worst": 0,
+      "ax": null
+     },
+     "verdict": "LOST_BALANCE"
+    },
+    "IMP_shankL_side": {
+     "finite": true,
+     "maxSpeed": 3.0503709319833394,
+     "sepMm": 1.4780754189298861,
+     "chatter": {
+      "worst": 1,
+      "ax": "ankle_L.inv"
+     },
+     "verdict": "UNRESOLVED"
+    },
+    "IMP_deltoidL_side": {
+     "finite": true,
+     "maxSpeed": 2.3354197591755685,
+     "sepMm": 1.430762395670205,
+     "chatter": {
+      "worst": 0,
+      "ax": null
+     },
+     "verdict": "LOST_BALANCE"
+    }
+   },
+   "note": "impacts: integrity and no chatter"
+  },
+  "PR1": {
+   "pass": false,
+   "value": {
+    "ankle_R.df+": {
+     "ratio": 2.6468942829962936,
+     "dampShareSmall": 0.018391582880313617
+    },
+    "ankle_R.df−": {
+     "ratio": 0.9265401232578824,
+     "dampShareSmall": 0.10734610349376122
+    },
+    "knee_R.flex+": {
+     "ratio": 1.8609218500859457,
+     "dampShareSmall": 0.1357481477234237
+    },
+    "knee_R.flex−": {
+     "ratio": 2.742709537415533,
+     "dampShareSmall": 0.6464093410623719
+    },
+    "hip_R.flex+": {
+     "ratio": 3.0667697096088355,
+     "dampShareSmall": 0.4057691933648494
+    },
+    "hip_R.flex−": {
+     "ratio": 2.4527662854679604,
+     "dampShareSmall": 0.40381442534282913
+    },
+    "lumbar.flex+": {
+     "ratio": 1.6924977865314288,
+     "dampShareSmall": 0.1902937048409052
+    },
+    "lumbar.flex−": {
+     "ratio": 1.0040869891686135,
+     "dampShareSmall": 0.7811142615413345
+    }
+   },
+   "note": "yield ratio ≥ 1.5, 4 joints × 2 signs"
+  },
+  "PR2": {
+   "pass": false,
+   "value": {
+    "ankle_R.df+": 0.018391582880313617,
+    "ankle_R.df−": 0.10734610349376122,
+    "knee_R.flex+": 0.1357481477234237,
+    "knee_R.flex−": 0.6464093410623719,
+    "hip_R.flex+": 0.4057691933648494,
+    "hip_R.flex−": 0.40381442534282913,
+    "lumbar.flex+": 0.1902937048409052,
+    "lumbar.flex−": 0.7811142615413345
+   },
+   "note": "damping share < 50 %"
+  },
+  "PR3": {
+   "pass": false,
+   "value": {
+    "v": 0.2894244214384618,
+    "at": "knee_R.flex −40"
+   },
+   "note": "|Δa| ≤ 1e-9 for 30 steps after onset"
+  }
+ },
+ "reference": {},
+ "pass": false,
+ "failed": [
+  "H1",
+  "H2",
+  "H3",
+  "QS1",
+  "QS2",
+  "QS3",
+  "QS4",
+  "P1",
+  "IMP1",
+  "PR1",
+  "PR2",
+  "PR3"
+ ]
+}

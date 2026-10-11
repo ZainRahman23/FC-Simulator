@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PPR-1 pre-reflex A|B</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff6b5b; --ok: #3fd17a; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 10px; } h2 { font-size: 18px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 14px 0 4px; color: var(--acc); }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; } a { color: var(--acc); }
+  .banner { background: #13261b; border: 1px solid #2f7a4c; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .warn { background: #3a1512; border: 1px solid var(--bad); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 18px 0; }
+  video { width: 100%; height: auto; background: #000; border-radius: 4px; display: block; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 6px 0; } .ctl .lab { color: var(--dim); margin: 0 4px 0 10px; font-size: 12px; min-width: 52px; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; } button:disabled { opacity: 0.35; cursor: default; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; background: #111815; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; white-space: nowrap; } th { color: var(--dim); font-weight: 600; }
+  td.ok { color: var(--ok); font-weight: 600; } td.bad { color: var(--bad); font-weight: 600; } td.wrap { white-space: normal; }
+  @media (max-width: 600px) { main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<main>
+<h1>PPR-1 · CURRENT V2 | PHYSIOLOGICAL PRE-REFLEX</h1>
+<div class="warn"><b>B failed its preregistration: 12 of 23 hard criteria</b> (details below, and in <a href="../PPR1_REPORT.md">PPR1_REPORT.md</a>). I have not retuned it. You are seeing the frozen B.
+  <ul style="margin:6px 0">
+    <li><b>Activation still changed inside the window</b>, up to 0.61 on one axis.
+      <ul style="margin:2px 0">
+        <li>Cause: my specification error. The excitation was divided by the current-angle capacity.</li>
+        <li>Diagnostic D1 removes it: activation is then frozen exactly. The window motion is unchanged (struck ankle 15.90° vs 15.95°, knee 19.22° vs 19.20°), so these clips are representative.</li>
+      </ul></li>
+    <li><b>B cannot stand quietly.</b> It falls at 0.85 s, versus A at 1.45 s (A cannot stand either). The probes and the small-push criteria also failed.</li>
+  </ul></div>
+<div class="banner"><b>Judge only the first 120 ms after contact.</b>
+  <ul style="margin:6px 0">
+    <li><b>A</b> reacts with zero latency: the struck ankle goes from 9 % to 96 % activation in ≈ 50 ms.</li>
+    <li><b>B</b> keeps its pre-contact muscle drive: no neural change before 125 ms. Its muscles respond only intrinsically, elastic for ≈ 1° and then yielding.</li>
+  </ul>
+  What the record shows:
+  <ul style="margin:6px 0">
+    <li><b>The struck leg yields in B:</b> ankle 16° (A 5.5°) and knee 19° (A 3.2°) by 120 ms.</li>
+    <li><b>B's struck-leg torques change ≤ 10 N·m</b> (A up to 69 N·m).</li>
+    <li><b>The disturbance propagates outward:</b> ankle 4 ms → knee 12.5 ms → hip 17–25 ms → lumbar and neck 25 ms.</li>
+    <li><b>The pelvis moves less</b> than in A (2.2° vs 5.2°). The tackler's response is about the same.</li>
+  </ul>
+  Frames after 120 ms are marked as not in the primary judgement.</div>
+
+<div class="card"><h2>A | B, same tackler and collision</h2>
+  <div class="ctl"><span class="lab">view</span><button data-view="F_PVP" class="on">struck leg close-up</button><button data-view="K_PVP">close 8×</button><button data-view="G_PVP">gameplay 1×</button><button data-view="K_C0">no contact (C0)</button><button data-view="K_IMP">away from the tackle: impactor</button></div>
+  <div class="ctl"><span class="lab">layers</span><button data-lay="mesh" class="on">mesh</button><button data-lay="colliders">mesh + colliders</button><button data-lay="overlay">skeleton / COM / ground contact</button>
+    <span class="lab">speed</span><button data-sp="1">1× real time</button><button data-sp="0.25">0.25×</button><button data-sp="0.125">8× slow</button><button data-sp="0.1">0.1×</button></div>
+  <video id="vid" muted playsinline loop></video>
+  <input id="rng" type="range" min="0" max="1" value="0">
+  <div class="ctl"><button data-a="play">▶ play</button><button data-a="prev">◀ step</button><button data-a="next">step ▶</button>
+    <span class="lab">jump</span><button data-j="0">0 ms (contact)</button><button data-j="40">40 ms</button><button data-j="80">80 ms</button><button data-j="120">120 ms</button></div>
+  <div id="info" class="info"></div>
+  <p id="vnote" style="margin:6px 0 0"></p>
+</div>
+
+<div class="card"><h2>What happens in each bin (PVP-1A-DX; A / B)</h2><div class="tw" id="bins"></div>
+  <p>Joint angles are the peak change from contact in each bin; torque and activation are the struck-leg actuators. Onset is the first time a joint's angular speed changes by more than 0.5 rad/s.</p><div class="tw" id="onset"></div></div>
+
+<div class="card"><h2>Preregistered criteria (B)</h2><div class="tw" id="crit"></div>
+  <h3>Post-hoc diagnostics (labelled; not adopted)</h3>
+  <div class="tw"><table><tr><th>diagnostic</th><th>the one change from B</th><th>result</th></tr>
+    <tr><td>D1</td><td class="wrap">excitation normalised by the entry capacity, not the current-angle capacity</td><td class="wrap">Activation in the window is frozen exactly, and N2 equals C0 bit for bit (H1 / H2 would pass). Window kinematics are equal to B's within 0.05°. Quiet standing still falls (0.91 s).</td></tr>
+    <tr><td>D2</td><td class="wrap">D1 with no regulator delay (L = 0)</td><td class="wrap">Falls sooner (0.41 s). The 125 ms latency is <b>not</b> why B cannot stand.</td></tr>
+    <tr><td>D3</td><td class="wrap">D1 without the plastic anchor slip</td><td class="wrap">Falls at 1.00 s. The yield memory is not the main cause.</td></tr></table></div></div>
+
+<div class="card"><h2>Why CURRENT V2 reads stiff (audit)</h2>
+  <ul>
+    <li><b>Zero-latency torque generation.</b> The actuator's excitation is computed from the same step's pose-spring demand. In the collision: activation 9 % → 96 % in ≈ 50 ms, torque rates 12,700–16,500 N·m/s from 0 ms, and up to 68 N·m per axis beyond what the entry activation could give.</li>
+    <li><b>About 100× human damping.</b> The ankle sums to 349 N·m·s/rad (D / K 0.35 s). At 50 ms after a push, 78–97 % of the resistance is viscous.</li>
+    <li><b>Stiffness that never yields.</b> 1.5 × the supported load on every joint and every axis (ankle 1.54 mgh vs human 0.64–0.94), around a frozen whole-body pose.</li>
+    <li><b>Not causes:</b> frozen gravity compensation inside the window; the passive tissue layer.</li>
+  </ul>
+  <p>Details: <a href="../PPR1_AUDIT_CURRENT_V2.md">PPR1_AUDIT_CURRENT_V2.md</a> · <a href="../PPR1_RESEARCH_AND_DESIGN.md">design</a> · <a href="../PPR1_PREREGISTRATION.md">preregistration</a> · <a href="../research/PRE_REFLEX_LITERATURE.md">literature</a></p></div>
+</main>
+<script>
+"use strict";
+const NOTE = { F_PVP: "Zoom 16, cropped on the struck right leg against the tackler's boot. Left A, right B, same physical step.", K_PVP: "CAMERA_V1 at 8×, every 1/240 s step.", G_PVP: "The gameplay camera at zoom 1, every 4th step (1× real time). It ends at +108 ms (every 4th step).", K_C0: "PVP-1A-DX with contacts disabled (the tackler passes through): each law with nothing to respond to. B's runner here is bit-identical to B standing alone (criterion V1).", K_IMP: "Validation away from the tackle: IFM-1's 10 kg sphere at 3 m/s strikes the right shank from behind; the runner stands alone. Time is from the first impactor contact." };
+const RUN = { F_PVP: "N2", K_PVP: "N2", G_PVP: "N2", K_C0: "C0", K_IMP: "IMP" };
+const blobs = {}; const blobUrl = (u) => blobs[u] || (blobs[u] = fetch(u).then(r => r.blob()).then(b => URL.createObjectURL(b)));
+const st = { view: "F_PVP", lay: "mesh", sp: 0.125, k: 0 }, vid = document.getElementById("vid"), rng = document.getElementById("rng"), info = document.getElementById("info");
+let CI = null, RD = null; const cur = () => CI.views[st.view], f = (x, k = 1) => (x == null ? "—" : (+x).toFixed(k));
+const rate = () => Math.max(0.0625, Math.min(4, st.sp * 4 / cur().every));
+function show(j) { const c = cur(); st.k = j; rng.value = j; const [n, tau, tc] = c.index[j]; let s = `${st.view} · frame ${j + 1}/${c.index.length} · ${n >= 0 ? "record step " + n : "lead-in (constructed)"} · τ ${tau >= 0 ? "+" : ""}${(+tau).toFixed(1)} ms from activation`;
+  if (typeof tc === "number") s += ` · t ${tc >= 0 ? "+" : ""}${tc.toFixed(1)} ms after contact${tc > 121 ? " · NOT in the primary judgement" : ""}`;
+  if (n >= 1) { const q = n - 1, A = RD.runs["A_" + RUN[st.view]], B = RD.runs["B_" + RUN[st.view]];
+    s += `\n            A        B\nankle_R Δθ  ${f(A.ankle[q]).padStart(6)}°  ${f(B.ankle[q]).padStart(6)}°     knee_R Δθ ${f(A.knee[q]).padStart(6)}° ${f(B.knee[q]).padStart(6)}°     hip_R Δθ ${f(A.hip[q]).padStart(6)}° ${f(B.hip[q]).padStart(6)}°`;
+    s += `\nstruck-leg max activation  ${f(A.act[q], 2)} | ${f(B.act[q], 2)}     Δτ ankle_R ${f(A.tauAnkle[q])} | ${f(B.tauAnkle[q])} N·m     Δτ knee_R ${f(A.tauKnee[q])} | ${f(B.tauKnee[q])} N·m`;
+    s += `\nfoot load L/R  ${A.F[q][0]}/${A.F[q][1]} N | ${B.F[q][0]}/${B.F[q][1]} N     pelvis tilt ${f(A.pelvis[q], 2)}° | ${f(B.pelvis[q], 2)}°     trunk ${f(A.trunk[q], 2)}° | ${f(B.trunk[q], 2)}°     COM ${f(A.com[q])} | ${f(B.com[q])} mm`; }
+  info.textContent = s; }
+const seek = (j) => { const c = cur(); j = Math.max(0, Math.min(c.index.length - 1, j)); vid.pause(); vid.currentTime = (j + 0.5) / 60; show(j); };
+const findT = (ms) => { const c = cur(); let best = 0, bd = 1e9; c.index.forEach((e, j) => { if (typeof e[2] === "number" && Math.abs(e[2] - ms) < bd) { bd = Math.abs(e[2] - ms); best = j; } }); return best; };
+async function load() { const c = cur(), prev = st.prevT, play = !vid.paused; document.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("on", b.dataset.view === st.view));
+  document.querySelectorAll("[data-sp]").forEach(b => { b.disabled = c.every === 1 && +b.dataset.sp >= 1; b.classList.toggle("on", +b.dataset.sp === st.sp); });
+  document.getElementById("vnote").textContent = NOTE[st.view] + " Gold ticks on the strip: 0 / 40 / 80 / 120 ms after contact. Green = the primary window; red = after it. Arrow keys step; space plays.";
+  rng.max = c.index.length - 1; vid.src = await blobUrl("video/" + c.videos[st.lay]); vid.addEventListener("loadeddata", () => { vid.playbackRate = rate(); seek(prev != null ? findT(prev) : findT(40)); if (play) vid.play(); }, { once: true }); }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || b.disabled) return;
+  if (b.dataset.view) { const e0 = cur().index[st.k]; st.prevT = typeof e0[2] === "number" ? e0[2] : null; st.view = b.dataset.view; if (cur().every === 1 && st.sp >= 1) st.sp = 0.125; if (cur().every === 4 && st.sp < 1) st.sp = 1; load(); }
+  else if (b.dataset.lay) { const e0 = cur().index[st.k]; st.prevT = typeof e0[2] === "number" ? e0[2] : null; st.lay = b.dataset.lay; document.querySelectorAll("[data-lay]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+  else if (b.dataset.sp) { st.sp = +b.dataset.sp; document.querySelectorAll("[data-sp]").forEach(x => x.classList.toggle("on", x === b)); vid.playbackRate = rate(); }
+  else if (b.dataset.a) { const a = b.dataset.a; if (a === "play") { if (vid.paused) { vid.playbackRate = rate(); vid.play(); } else vid.pause(); } else seek(st.k + (a === "next" ? 1 : -1)); }
+  else if (b.dataset.j != null) seek(findT(+b.dataset.j)); });
+rng.oninput = () => seek(+rng.value); vid.onplay = () => { document.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }; vid.onpause = () => { document.querySelector('[data-a="play"]').textContent = "▶ play"; };
+const tick = (now, md) => { if (!vid.paused && CI) show(Math.min(cur().index.length - 1, Math.floor(md.mediaTime * 60 + 1e-4))); vid.requestVideoFrameCallback(tick); }; if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) vid.requestVideoFrameCallback(tick);
+document.addEventListener("keydown", (e) => { if (e.target.tagName === "INPUT") return; if (e.key === "ArrowRight") seek(st.k + 1); else if (e.key === "ArrowLeft") seek(st.k - 1); else if (e.key === " ") { e.preventDefault(); document.querySelector('[data-a="play"]').click(); } });
+Promise.all(["capture_index.json", "review_data.json", "../evidence/PPR1_EVAL.json", "../evidence/PPR1_BATTERY_A.json", "../evidence/PPR1_BATTERY_B.json"].map(u => fetch(u).then(r => r.json()))).then(([ci, rd, ev, bA, bB]) => { CI = ci; RD = rd; load();
+  const wa = bA.runs.N2.window, wb = bB.runs.N2.window, J = ["ankle_R.df", "ankle_R.inv", "knee_R.flex", "hip_R.flex", "hip_R.abd", "knee_L.flex", "lumbar.flex", "neck.flex", "shoulder_R.flex", "shoulder_L.abd"];
+  document.getElementById("bins").innerHTML = `<table><tr><th>quantity</th>${wa.bins.map(b => `<th>${b.bin[0]}–${b.bin[1]} ms</th>`).join("")}</tr>
+    ${[["COM displacement (mm)", (b) => b.comDispMm], ["pelvis tilt (°)", (b) => b.pelvisDeg], ["trunk tilt (°)", (b) => b.trunkDeg], ["head tilt (°)", (b) => b.headDeg], ["right foot min load (N)", (b) => b.footLoadN[1]], ["actuator work (J)", (b) => b.Wact]].map(([l, g]) => `<tr><td>${l}</td>${wa.bins.map((b, j) => `<td>${f(g(b))} / <b>${f(g(wb.bins[j]))}</b></td>`).join("")}</tr>`).join("")}
+    ${J.map(nm => `<tr><td>${nm} Δθ (°) · Δτ (N·m) · act</td>${wa.bins.map((b, j) => { const p = b.joints[nm], q = wb.bins[j].joints[nm]; return `<td>${f(p.dthDeg)} / <b>${f(q.dthDeg)}</b> · ${f(p.dTau)} / <b>${f(q.dTau)}</b> · ${f(p.maxAct, 2)} / <b>${f(q.maxAct, 2)}</b></td>`; }).join("")}</tr>`).join("")}</table>`;
+  const ks = Object.keys(wa.onsetMs).filter(k => wa.onsetMs[k] != null || wb.onsetMs[k] != null).sort((x, y) => (wb.onsetMs[x] ?? 999) - (wb.onsetMs[y] ?? 999));
+  document.getElementById("onset").innerHTML = `<table><tr><th>onset (ms after contact)</th>${ks.map(k => `<th>${k}</th>`).join("")}</tr><tr><td>A</td>${ks.map(k => `<td>${wa.onsetMs[k] ?? "—"}</td>`).join("")}</tr><tr><td><b>B</b></td>${ks.map(k => `<td><b>${wb.onsetMs[k] ?? "—"}</b></td>`).join("")}</tr></table>`;
+  document.getElementById("crit").innerHTML = `<table><tr><th>id</th><th>result</th><th>criterion</th><th>measured</th></tr>${Object.entries(ev.criteria).map(([k, c]) => `<tr><td>${k}</td><td class="${c.pass ? "ok" : "bad"}">${c.pass ? "PASS" : "FAIL"}</td><td class="wrap">${c.note}</td><td class="wrap" style="font:11px Menlo">${JSON.stringify(c.value).slice(0, 220)}</td></tr>`).join("")}</table>
+    <p><b>Verdict: ${ev.pass ? "PASSED" : "FAILED (" + ev.failed.join(", ") + ")"}</b>. PR1 / PR2 partly failed because my criteria wrongly assumed a joint yields in both directions. Pushing into the tonic muscles' unloading direction, or into the ground at the stance ankle, is elastic for physical reasons. I report those failures as criterion errors, but they still count.</p>`; });
+</script>
+</body>
+</html>
