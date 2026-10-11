@@ -1,0 +1,1980 @@
+{
+ "tool": "trc1_mesh.mjs --signCheck",
+ "label": "DX_N2",
+ "rule": "after (MC-1P)",
+ "rays": 7,
+ "steps": {
+  "1": {
+   "cxa1Inside": 1,
+   "trc1Inside": 0,
+   "agreeInside": 0,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    24.7
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "2": {
+   "cxa1Inside": 8,
+   "trc1Inside": 2,
+   "agreeInside": 2,
+   "disagree": 6,
+   "arbitrated": 6,
+   "parityInside": 0,
+   "parityOutside": 6,
+   "cxa1Only": {
+    "n": 6,
+    "parityInside": 0,
+    "parityOutside": 6
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    91,
+    83.7,
+    77.9,
+    26.3,
+    26.3,
+    19.7
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "3": {
+   "cxa1Inside": 17,
+   "trc1Inside": 16,
+   "agreeInside": 16,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    75.2
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      17.3,
+      7
+     ]
+    ]
+   }
+  },
+  "4": {
+   "cxa1Inside": 46,
+   "trc1Inside": 46,
+   "agreeInside": 46,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      19.8,
+      7
+     ]
+    ]
+   }
+  },
+  "5": {
+   "cxa1Inside": 67,
+   "trc1Inside": 66,
+   "agreeInside": 66,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    79.9
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "6": {
+   "cxa1Inside": 87,
+   "trc1Inside": 87,
+   "agreeInside": 87,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 2,
+    "parityOutside": 0,
+    "depths": [
+     [
+      16.9,
+      6
+     ],
+     [
+      15.5,
+      6
+     ]
+    ]
+   }
+  },
+  "7": {
+   "cxa1Inside": 112,
+   "trc1Inside": 105,
+   "agreeInside": 105,
+   "disagree": 7,
+   "arbitrated": 7,
+   "parityInside": 0,
+   "parityOutside": 7,
+   "cxa1Only": {
+    "n": 7,
+    "parityInside": 0,
+    "parityOutside": 7
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    83.9,
+    83.6,
+    82.2,
+    80.5,
+    80,
+    79.6,
+    79.6
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 4,
+    "parityInside": 4,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.1,
+      7
+     ],
+     [
+      16.1,
+      6
+     ],
+     [
+      22.4,
+      6
+     ],
+     [
+      21.4,
+      6
+     ]
+    ]
+   }
+  },
+  "8": {
+   "cxa1Inside": 120,
+   "trc1Inside": 110,
+   "agreeInside": 110,
+   "disagree": 10,
+   "arbitrated": 10,
+   "parityInside": 0,
+   "parityOutside": 10,
+   "cxa1Only": {
+    "n": 10,
+    "parityInside": 0,
+    "parityOutside": 10
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    85.2,
+    84.9,
+    84.2,
+    83.4,
+    82.5,
+    81.8,
+    81.1,
+    80.9,
+    80.9,
+    77.6
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 4,
+    "parityInside": 4,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.8,
+      7
+     ],
+     [
+      16.3,
+      6
+     ],
+     [
+      15.2,
+      6
+     ],
+     [
+      22.4,
+      6
+     ]
+    ]
+   }
+  },
+  "9": {
+   "cxa1Inside": 123,
+   "trc1Inside": 106,
+   "agreeInside": 106,
+   "disagree": 17,
+   "arbitrated": 17,
+   "parityInside": 0,
+   "parityOutside": 17,
+   "cxa1Only": {
+    "n": 17,
+    "parityInside": 0,
+    "parityOutside": 17
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    95.8,
+    95.8,
+    95,
+    94.9,
+    94.3,
+    93.6,
+    92.7,
+    92.7,
+    92.7,
+    85.7,
+    83.1,
+    82.3
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 6,
+    "parityInside": 6,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.8,
+      5
+     ],
+     [
+      17.3,
+      7
+     ],
+     [
+      15.5,
+      7
+     ],
+     [
+      16.5,
+      6
+     ],
+     [
+      16.9,
+      6
+     ],
+     [
+      23.7,
+      6
+     ]
+    ]
+   }
+  },
+  "10": {
+   "cxa1Inside": 102,
+   "trc1Inside": 98,
+   "agreeInside": 98,
+   "disagree": 4,
+   "arbitrated": 4,
+   "parityInside": 0,
+   "parityOutside": 4,
+   "cxa1Only": {
+    "n": 4,
+    "parityInside": 0,
+    "parityOutside": 4
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    97.6,
+    88.3,
+    83.7,
+    80.7
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 4,
+    "parityInside": 4,
+    "parityOutside": 0,
+    "depths": [
+     [
+      18.6,
+      4
+     ],
+     [
+      15.8,
+      7
+     ],
+     [
+      17.8,
+      6
+     ],
+     [
+      23.4,
+      6
+     ]
+    ]
+   }
+  },
+  "11": {
+   "cxa1Inside": 89,
+   "trc1Inside": 83,
+   "agreeInside": 83,
+   "disagree": 6,
+   "arbitrated": 6,
+   "parityInside": 0,
+   "parityOutside": 6,
+   "cxa1Only": {
+    "n": 6,
+    "parityInside": 0,
+    "parityOutside": 6
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    104,
+    103.1,
+    101.8,
+    100.9,
+    100.9,
+    93.9
+   ],
+   "uncertifiedCxa1Inside": 5,
+   "deepAgreed": {
+    "n": 6,
+    "parityInside": 6,
+    "parityOutside": 0,
+    "depths": [
+     [
+      19,
+      5
+     ],
+     [
+      15.1,
+      7
+     ],
+     [
+      15.8,
+      6
+     ],
+     [
+      19.9,
+      7
+     ],
+     [
+      23.3,
+      6
+     ],
+     [
+      20.3,
+      6
+     ]
+    ]
+   }
+  },
+  "12": {
+   "cxa1Inside": 81,
+   "trc1Inside": 68,
+   "agreeInside": 68,
+   "disagree": 13,
+   "arbitrated": 13,
+   "parityInside": 0,
+   "parityOutside": 13,
+   "cxa1Only": {
+    "n": 13,
+    "parityInside": 0,
+    "parityOutside": 13
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    109.9,
+    109.7,
+    109.2,
+    108.7,
+    108.3,
+    107.9,
+    107.5,
+    107.4,
+    106.8,
+    106.8,
+    106.6,
+    105.7
+   ],
+   "uncertifiedCxa1Inside": 13,
+   "deepAgreed": {
+    "n": 4,
+    "parityInside": 4,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.6,
+      5
+     ],
+     [
+      17.6,
+      7
+     ],
+     [
+      20.5,
+      6
+     ],
+     [
+      17.4,
+      6
+     ]
+    ]
+   }
+  },
+  "13": {
+   "cxa1Inside": 77,
+   "trc1Inside": 65,
+   "agreeInside": 65,
+   "disagree": 12,
+   "arbitrated": 12,
+   "parityInside": 0,
+   "parityOutside": 12,
+   "cxa1Only": {
+    "n": 12,
+    "parityInside": 0,
+    "parityOutside": 12
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    114.5,
+    114.3,
+    113.7,
+    113.3,
+    112.8,
+    112.4,
+    112,
+    111.4,
+    111.4,
+    111.2,
+    110.4,
+    104.6
+   ],
+   "uncertifiedCxa1Inside": 12,
+   "deepAgreed": {
+    "n": 3,
+    "parityInside": 3,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.1,
+      7
+     ],
+     [
+      17.9,
+      6
+     ],
+     [
+      15,
+      6
+     ]
+    ]
+   }
+  },
+  "14": {
+   "cxa1Inside": 65,
+   "trc1Inside": 60,
+   "agreeInside": 60,
+   "disagree": 5,
+   "arbitrated": 5,
+   "parityInside": 0,
+   "parityOutside": 5,
+   "cxa1Only": {
+    "n": 5,
+    "parityInside": 0,
+    "parityOutside": 5
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    113.3,
+    112.2,
+    111.8,
+    110.9,
+    110.1
+   ],
+   "uncertifiedCxa1Inside": 5,
+   "deepAgreed": {
+    "n": 3,
+    "parityInside": 3,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.1,
+      7
+     ],
+     [
+      18.5,
+      6
+     ],
+     [
+      15.9,
+      6
+     ]
+    ]
+   }
+  },
+  "15": {
+   "cxa1Inside": 65,
+   "trc1Inside": 64,
+   "agreeInside": 64,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    112
+   ],
+   "uncertifiedCxa1Inside": 1,
+   "deepAgreed": {
+    "n": 3,
+    "parityInside": 3,
+    "parityOutside": 0,
+    "depths": [
+     [
+      17.7,
+      6
+     ],
+     [
+      18.1,
+      7
+     ],
+     [
+      15.2,
+      6
+     ]
+    ]
+   }
+  },
+  "16": {
+   "cxa1Inside": 69,
+   "trc1Inside": 67,
+   "agreeInside": 67,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    113.9,
+    112.8
+   ],
+   "uncertifiedCxa1Inside": 2,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 2,
+    "parityOutside": 0,
+    "depths": [
+     [
+      16.2,
+      6
+     ],
+     [
+      16.9,
+      7
+     ]
+    ]
+   }
+  },
+  "17": {
+   "cxa1Inside": 82,
+   "trc1Inside": 71,
+   "agreeInside": 71,
+   "disagree": 11,
+   "arbitrated": 11,
+   "parityInside": 0,
+   "parityOutside": 11,
+   "cxa1Only": {
+    "n": 11,
+    "parityInside": 0,
+    "parityOutside": 11
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    115.1,
+    115,
+    114.3,
+    113.9,
+    113.5,
+    113,
+    112.6,
+    112,
+    112,
+    111.8,
+    105.3
+   ],
+   "uncertifiedCxa1Inside": 11,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.9,
+      7
+     ]
+    ]
+   }
+  },
+  "18": {
+   "cxa1Inside": 71,
+   "trc1Inside": 61,
+   "agreeInside": 61,
+   "disagree": 10,
+   "arbitrated": 10,
+   "parityInside": 0,
+   "parityOutside": 10,
+   "cxa1Only": {
+    "n": 10,
+    "parityInside": 0,
+    "parityOutside": 10
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    116.4,
+    116.1,
+    115.6,
+    115.1,
+    114.8,
+    114.1,
+    114.1,
+    113.9,
+    113.1,
+    107.5
+   ],
+   "uncertifiedCxa1Inside": 10
+  },
+  "19": {
+   "cxa1Inside": 72,
+   "trc1Inside": 68,
+   "agreeInside": 68,
+   "disagree": 4,
+   "arbitrated": 4,
+   "parityInside": 0,
+   "parityOutside": 4,
+   "cxa1Only": {
+    "n": 4,
+    "parityInside": 0,
+    "parityOutside": 4
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    115.4,
+    115.4,
+    115.3,
+    108.9
+   ],
+   "uncertifiedCxa1Inside": 4
+  },
+  "20": {
+   "cxa1Inside": 67,
+   "trc1Inside": 66,
+   "agreeInside": 66,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    109.5
+   ],
+   "uncertifiedCxa1Inside": 1
+  },
+  "21": {
+   "cxa1Inside": 59,
+   "trc1Inside": 58,
+   "agreeInside": 58,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    109.4
+   ],
+   "uncertifiedCxa1Inside": 1
+  },
+  "22": {
+   "cxa1Inside": 51,
+   "trc1Inside": 51,
+   "agreeInside": 51,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "23": {
+   "cxa1Inside": 57,
+   "trc1Inside": 53,
+   "agreeInside": 53,
+   "disagree": 4,
+   "arbitrated": 4,
+   "parityInside": 0,
+   "parityOutside": 4,
+   "cxa1Only": {
+    "n": 4,
+    "parityInside": 0,
+    "parityOutside": 4
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    107.5,
+    106.4,
+    106.3,
+    106.3
+   ],
+   "uncertifiedCxa1Inside": 4
+  },
+  "24": {
+   "cxa1Inside": 61,
+   "trc1Inside": 60,
+   "agreeInside": 60,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    108.1
+   ],
+   "uncertifiedCxa1Inside": 1,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.2,
+      5
+     ]
+    ]
+   }
+  },
+  "25": {
+   "cxa1Inside": 47,
+   "trc1Inside": 47,
+   "agreeInside": 47,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "26": {
+   "cxa1Inside": 43,
+   "trc1Inside": 43,
+   "agreeInside": 43,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "27": {
+   "cxa1Inside": 37,
+   "trc1Inside": 37,
+   "agreeInside": 37,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "28": {
+   "cxa1Inside": 43,
+   "trc1Inside": 43,
+   "agreeInside": 43,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "29": {
+   "cxa1Inside": 21,
+   "trc1Inside": 21,
+   "agreeInside": 21,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "30": {
+   "cxa1Inside": 17,
+   "trc1Inside": 17,
+   "agreeInside": 17,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "31": {
+   "cxa1Inside": 13,
+   "trc1Inside": 13,
+   "agreeInside": 13,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "32": {
+   "cxa1Inside": 8,
+   "trc1Inside": 8,
+   "agreeInside": 8,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      21,
+      6
+     ]
+    ]
+   }
+  },
+  "33": {
+   "cxa1Inside": 5,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      19.7,
+      6
+     ]
+    ]
+   }
+  },
+  "34": {
+   "cxa1Inside": 6,
+   "trc1Inside": 6,
+   "agreeInside": 6,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      18.6,
+      6
+     ]
+    ]
+   }
+  },
+  "35": {
+   "cxa1Inside": 6,
+   "trc1Inside": 6,
+   "agreeInside": 6,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      17.8,
+      6
+     ]
+    ]
+   }
+  },
+  "36": {
+   "cxa1Inside": 5,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      17,
+      6
+     ]
+    ]
+   }
+  },
+  "37": {
+   "cxa1Inside": 5,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      16.4,
+      6
+     ]
+    ]
+   }
+  },
+  "38": {
+   "cxa1Inside": 5,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      16.1,
+      6
+     ]
+    ]
+   }
+  },
+  "39": {
+   "cxa1Inside": 5,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.9,
+      6
+     ]
+    ]
+   }
+  },
+  "40": {
+   "cxa1Inside": 4,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.8,
+      6
+     ]
+    ]
+   }
+  },
+  "41": {
+   "cxa1Inside": 4,
+   "trc1Inside": 3,
+   "agreeInside": 3,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    30
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.7,
+      6
+     ]
+    ]
+   }
+  },
+  "42": {
+   "cxa1Inside": 7,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    42.4,
+    29.7
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.7,
+      6
+     ]
+    ]
+   }
+  },
+  "43": {
+   "cxa1Inside": 6,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    41.6,
+    29.5
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 1,
+    "parityOutside": 0,
+    "depths": [
+     [
+      15.8,
+      6
+     ]
+    ]
+   }
+  },
+  "44": {
+   "cxa1Inside": 6,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    41
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 1,
+    "parityOutside": 1,
+    "depths": [
+     [
+      29.6,
+      0
+     ],
+     [
+      15.9,
+      6
+     ]
+    ]
+   }
+  },
+  "45": {
+   "cxa1Inside": 6,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    40.6
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 1,
+    "parityOutside": 1,
+    "depths": [
+     [
+      29.9,
+      1
+     ],
+     [
+      15.2,
+      6
+     ]
+    ]
+   }
+  },
+  "46": {
+   "cxa1Inside": 7,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55.1,
+    40.4
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1,
+    "depths": [
+     [
+      30.3,
+      1
+     ]
+    ]
+   }
+  },
+  "47": {
+   "cxa1Inside": 7,
+   "trc1Inside": 6,
+   "agreeInside": 6,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    54.7
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2,
+    "depths": [
+     [
+      30.6,
+      1
+     ],
+     [
+      40.5,
+      1
+     ]
+    ]
+   }
+  },
+  "48": {
+   "cxa1Inside": 7,
+   "trc1Inside": 6,
+   "agreeInside": 6,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    54.6
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2,
+    "depths": [
+     [
+      31.2,
+      0
+     ],
+     [
+      40.7,
+      1
+     ]
+    ]
+   }
+  },
+  "49": {
+   "cxa1Inside": 6,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    54.6,
+    40.7
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "50": {
+   "cxa1Inside": 6,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    54.7,
+    40.9
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "51": {
+   "cxa1Inside": 5,
+   "trc1Inside": 3,
+   "agreeInside": 3,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55,
+    41.3
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "52": {
+   "cxa1Inside": 5,
+   "trc1Inside": 3,
+   "agreeInside": 3,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55.3,
+    41.9
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "53": {
+   "cxa1Inside": 7,
+   "trc1Inside": 5,
+   "agreeInside": 5,
+   "disagree": 2,
+   "arbitrated": 2,
+   "parityInside": 0,
+   "parityOutside": 2,
+   "cxa1Only": {
+    "n": 2,
+    "parityInside": 0,
+    "parityOutside": 2
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55.2,
+    42.3
+   ],
+   "uncertifiedCxa1Inside": 0,
+   "deepAgreed": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1,
+    "depths": [
+     [
+      16.7,
+      1
+     ]
+    ]
+   }
+  },
+  "54": {
+   "cxa1Inside": 5,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55.2
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "55": {
+   "cxa1Inside": 5,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 1,
+   "arbitrated": 1,
+   "parityInside": 0,
+   "parityOutside": 1,
+   "cxa1Only": {
+    "n": 1,
+    "parityInside": 0,
+    "parityOutside": 1
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [
+    55.2
+   ],
+   "uncertifiedCxa1Inside": 0
+  },
+  "56": {
+   "cxa1Inside": 4,
+   "trc1Inside": 4,
+   "agreeInside": 4,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "57": {
+   "cxa1Inside": 3,
+   "trc1Inside": 3,
+   "agreeInside": 3,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "58": {
+   "cxa1Inside": 2,
+   "trc1Inside": 2,
+   "agreeInside": 2,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "59": {
+   "cxa1Inside": 0,
+   "trc1Inside": 0,
+   "agreeInside": 0,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "60": {
+   "cxa1Inside": 0,
+   "trc1Inside": 0,
+   "agreeInside": 0,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "61": {
+   "cxa1Inside": 0,
+   "trc1Inside": 0,
+   "agreeInside": 0,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  },
+  "62": {
+   "cxa1Inside": 0,
+   "trc1Inside": 0,
+   "agreeInside": 0,
+   "disagree": 0,
+   "arbitrated": 0,
+   "parityInside": 0,
+   "parityOutside": 0,
+   "cxa1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "trc1Only": {
+    "n": 0,
+    "parityInside": 0,
+    "parityOutside": 0
+   },
+   "cxa1OnlyDepths": [],
+   "uncertifiedCxa1Inside": 0
+  }
+ }
+}

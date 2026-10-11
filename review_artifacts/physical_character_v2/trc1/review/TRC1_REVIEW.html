@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRC-1 tackler render</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff6b5b; --ok: #3fd17a; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 10px; } h2 { font-size: 18px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 14px 0 4px; color: var(--acc); }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; } a { color: var(--acc); }
+  .banner { background: #13261b; border: 1px solid #2f7a4c; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .warn { background: #3a1512; border: 1px solid var(--bad); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 18px 0; }
+  video { width: 100%; height: auto; background: #000; border-radius: 4px; display: block; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 6px 0; } .ctl .lab { color: var(--dim); margin: 0 4px 0 10px; font-size: 12px; min-width: 52px; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; } button:disabled { opacity: 0.35; cursor: default; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; background: #111815; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; }
+  canvas.tl { width: 100%; height: 26px; display: block; cursor: pointer; }
+  canvas.chart { width: 100%; height: 210px; background: #111815; border-radius: 4px; display: block; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+  .tw { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; white-space: nowrap; } th { color: var(--dim); font-weight: 600; }
+  td.z { color: var(--ok); } td.hi { color: var(--bad); }
+  .legend span { display: inline-block; margin-right: 14px; font-size: 12px; color: var(--dim); } .legend i { display: inline-block; width: 14px; height: 3px; margin-right: 5px; vertical-align: middle; }
+  @media (max-width: 600px) { main { padding: 12px 16px; } .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>TRC-1 · the tackler drawn on its own physics</h1>
+<div class="banner" id="banner"><b>Presentation-only correction.</b> Gabriel's skeleton is now attached to the tackler's actual V2 joints. No physics, collider, record or outcome changed: every view re-renders the committed records, and the final hashes are unchanged. Full answers: <a href="../TRC1_REPORT.md">TRC1_REPORT.md</a>.
+  <ul style="margin:6px 0">
+    <li><b>Tackler joints:</b> hips, knees, ankles, shoulders, elbows and wrists are 0.00 mm from the physics, down from 51–153 mm. The bone rotations are unchanged.</li>
+    <li><b>1 · Most of the phasing is gone.</b> Robust mesh interpenetration (10th-deepest vertex) peaks at 12 mm in DX (was 43), 15–16 mm in ABI (was 43) and 13–14 mm in 0.75× (was 42). The median falls from ≈ 30 mm to 0 (DX) and 7–10 mm (ABI).</li>
+    <li><b>2 · What remains is envelope only,</b> and almost all of it is the tackler's left boot against the runner's right heel / ankle. Shins ≤ 9 mm. Thighs, pelvis / torso, arms and head ≈ 0. The deepest parity-confirmed vertex is 24–26 mm (was 51–54).</li>
+    <li><b>3 · First contact now looks right:</b> the meshes first touch at the same configuration Jolt builds the contact from, on the same anatomy, with 6 mm of overlap there (was 30 mm, with the meshes already 46 mm into each other at entry).</li>
+    <li><b>4 · The first 250 ms of PVP-1A-DX can be visually trusted</b> to within ≈ 1 cm at the boots (close-up only; sub-pixel at gameplay). The known caveats are the DX entry-pose self-penetration, and a 12 mm head / pelvis gap at the window end.</li>
+    <li><b>5 · The mannequin / stiff assessment still holds.</b> The correction moves the tackler without changing any joint rotation, and the runner was already exact.</li>
+    <li><b>6 · Visually, contact-time skin correction is enough.</b> A V2 body revision is only worth deciding for non-visual reasons: the sole-only boot collider, and the tackler's 190 mm hips.</li>
+    <li><b>Appearance cost:</b> Gabriel's pelvis is squeezed to 0.59 width, so the tackler has narrower hips. Limb scales stay within 0.90–1.04.</li>
+  </ul></div>
+<div class="warn"><b>Read with these limits.</b>
+  <ul style="margin:6px 0">
+    <li><b>Trustworthy intervals</b> (green on every timeline):
+      <ul style="margin:2px 0">
+        <li>PVP-1A-DX: steps 1–62 (258 ms).</li>
+        <li>ABI-1 A / B / C: steps 1–60 (250 ms).</li>
+        <li>S-IMPACT 0.75×: the full 1.08 s, which uses only the authoritative leg pairs.</li>
+      </ul>
+      Frames outside the interval are dimmed red on the timeline.</li>
+    <li><b>ABI-1 EXT after 250 ms is not valid evidence.</b> Its filtered non-leg pairs pass through each other from step 61, so it is not shown here (<a href="../../abi1/ABI1_ERRATUM_CXA1.md">ABI1_ERRATUM_CXA1.md</a>).</li>
+    <li><b>The no-contact panels (C0) disable contacts by design.</b> In them the tackler passes through the runner, which is expected.</li>
+    <li><b>Known PVP-1A-DX caveat:</b> the DX tackler's entry pose self-penetrates (forearm in thigh). Its integrity is therefore untrusted from step 1.</li>
+    <li><b>Lead-in frames are constructed</b> (labelled on the timeline): the runner shows the frozen presentation, and the tackler's activation pose is carried by the authoritative displacement.</li>
+  </ul></div>
+
+<div class="card"><h2>Re-rendered evidence</h2>
+  <div class="ctl"><span class="lab">record</span><button data-rec="DX" class="on">PVP-1A-DX (committed)</button><button data-rec="ABI">ABI-1 A / B / C · first 250 ms</button><button data-rec="V075">ABI-1 S-IMPACT 0.75×</button></div>
+  <div class="ctl"><span class="lab">view</span><span id="views"></span></div>
+  <div class="ctl"><span class="lab">layers</span><button data-lay="mesh" class="on">mesh</button><button data-lay="colliders">mesh + colliders</button>
+    <span class="lab">speed</span><button data-sp="1">1× real time</button><button data-sp="0.25">4× slow</button><button data-sp="0.125">8× slow</button><button data-sp="0.1">10× slow</button></div>
+  <video id="vid" muted playsinline loop></video>
+  <canvas id="tl" class="tl"></canvas>
+  <input id="rng" type="range" min="0" max="1" value="0">
+  <div class="ctl"><button data-a="play">▶ play</button><button data-a="prev">◀ step</button><button data-a="next">step ▶</button>
+    <span class="lab">jump</span><button data-j="act">activation (step 0)</button><button data-j="fcm">contact detected (config step 2)</button><button data-j="fc">first impulse (step 3)</button><button data-j="fcp">+4 steps</button><button data-j="deep">deepest remaining mesh overlap</button><button data-j="end">window end</button></div>
+  <div id="info" class="info"></div>
+  <p id="vnote" style="margin:6px 0 0"></p>
+</div>
+
+<div class="card"><h2>Rendered joints vs the physical joints (tackler)</h2>
+  <p><b>Before:</b> MC-1 §2(4), the rule every earlier review used, which places bones by Gabriel's own forward kinematics. <b>After:</b> MC-1P (<code>trc1/scripts/trc1_retarget.mjs</code>). Each value is the error in mm, as median / max over the trustworthy window. Each rendered joint is compared with the V2 joint centre on the child body.</p>
+  <div class="ctl"><span class="lab">record</span><span id="jrecs"></span></div>
+  <div class="tw" id="jtab"></div>
+  <div class="tw" id="jextra"></div>
+</div>
+
+<div class="card"><h2>Remaining visible mesh overlap while the colliders stay valid</h2>
+  <p>Each chart shows one record, frame by frame. The interpenetration measure is the robust depth (the 10th-deepest vertex of one footballer inside the other's skinned surface).</p>
+  <div class="legend"><span><i style="background:#3fd17a"></i>collider min separation (negative = penetration)</span><span><i style="background:#ff8a5b"></i>mesh, before (MC-1)</span><span><i style="background:#5bc0ff"></i>mesh, after (MC-1P)</span><span><i style="background:#ffd45e"></i>5 mm slop</span></div>
+  <div class="grid2" id="charts"></div>
+  <h3>By anatomy: robust depth in mm, median / max over the window (after the correction; before in brackets)</h3>
+  <div class="tw" id="anat"></div>
+  <h3>Which surfaces still overlap (after: robust max / unvalidated single-vertex max, frames)</h3>
+  <div class="tw" id="pairs"></div>
+  <h3>Is the inside / outside test right? (7-ray parity arbitration)</h3>
+  <p>Every window vertex was tested with CXA-1's interpolated-normal sign and with TRC-1's pseudonormal sign. Each disagreement, and each agreed "inside" vertex at least 15 mm deep, was ray-cast through the other mesh. <b>All of CXA-1's extra "inside" vertices are outside</b>, so CXA-1's visible-overlap upper range was overstated: its "25–81 mm" should read ≈ 16–43 mm robust (erratum in <a href="../TRC1_REPORT.md">TRC1_REPORT.md</a> §2).</p>
+  <div class="tw" id="sign"></div>
+  <h3>Anatomy outside its own colliders (envelope p95 mm)</h3>
+  <div class="tw" id="env"></div>
+</div>
+
+<div class="card"><h2>First contact: where the meshes touch vs where Jolt's contact is</h2><div class="tw" id="fc"></div></div>
+</main>
+<script>
+"use strict";
+const REC = {
+  DX: { views: [["G_DX", "gameplay 1× · no-hit | native"], ["K_DX", "close 8× · no-hit | native"], ["F_DX", "heel / shin close-up · before | after"]], mesh: ["DX_N2"], fcCfg: 2 },
+  ABI: { views: [["G_ABI", "gameplay 1× · A | B | C"], ["K_ABI", "close 8× · A | B | C"], ["N_ABI", "close 8× · no-hit | native (A)"], ["F_CF1", "heel / shin close-up · before | after (A)"]], mesh: ["CF1_A", "CF1_B", "CF1_C"], fcCfg: 2 },
+  V075: { views: [["G_075", "gameplay 1× · A | B | C"], ["K_075", "close 8× · A | B | C"]], mesh: ["V075_A", "V075_B"], fcCfg: 3 } };
+const NOTE = {
+  G_DX: "The CAMERA_V1 gameplay view at zoom 1, drawing every 4th physics step (1× real time at 60 fps). Left: contacts disabled, so the tackler passes through by design. Right: the committed native contact.",
+  K_DX: "8× zoom, every 1/240 s step. Left: no contact. Right: native contact. Toggle mesh + colliders to see the V2 shapes.",
+  F_DX: "Zoom 16, cropped on the tackler's boot / shin against the runner's planted right heel and shin. Left: the old MC-1 drawing (54–87 mm off). Right: the corrected drawing. Both are the same physical frame.",
+  G_ABI: "ABI-1 conditions in the gameplay view. All three share the same collision. Only the first 250 ms (the trustworthy window) is shown.",
+  K_ABI: "8× zoom, every step. The ABI-1 conditions over the trustworthy 250 ms.",
+  N_ABI: "ABI-1 A: contacts disabled (left, passes through by design) vs native contact (right).",
+  F_CF1: "ABI-1 A, heel / shin close-up: the old MC-1 drawing vs the corrected drawing.",
+  G_075: "S-IMPACT 0.75×: the full 1.08 s, gameplay view. B and C are bit-identical records (same final hash).",
+  K_075: "S-IMPACT 0.75×, 8× zoom, every step." };
+const blobs = {}; const blobUrl = (u) => blobs[u] || (blobs[u] = fetch(u).then(r => r.blob()).then(b => URL.createObjectURL(b)));
+const st = { rec: "DX", view: "F_DX", lay: "mesh", sp: 0.125, k: 0, jrec: "DX_N2" }, vid = document.getElementById("vid"), rng = document.getElementById("rng"), info = document.getElementById("info"), tl = document.getElementById("tl");
+let CI = null, SUM = null;
+const cur = () => CI.views[st.view], f = (x, k = 1) => (x == null ? "—" : (+x).toFixed(k)), sg2 = (x) => (x == null ? "—" : (x > 0 ? "+" : "") + (+x).toFixed(1) + " mm");
+const rate = () => { const c = cur(); return Math.max(0.0625, Math.min(4, st.sp * 4 / c.every)); };
+const meshAt = (key, n) => { const s = SUM.mesh[key]; if (!s || n == null || n < 0) return null; let best = null; for (const [i, ...v] of s.series.after) if (i <= n) best = i; if (best == null) return null;
+  const pick = (arr) => arr.find(x => x[0] === best); return { n: best, col: pick(s.series.collider)[1], b: pick(s.series.before), a: pick(s.series.after) }; };
+function show(j) { const c = cur(); st.k = j; rng.value = j; const [n, t, ph] = c.index[j], fc = c.firstContact;
+  const where = ph === "lead" ? "constructed lead-in (before activation)" : ph === "entry" ? "entry state (step 0)" : n <= c.window ? "INSIDE the trustworthy window" : "beyond the trustworthy window — not evidence";
+  let s = `${st.view} · frame ${j + 1}/${c.index.length} · ${n >= 0 ? "record step " + n : "lead-in"} · τ ${t >= 0 ? "+" : ""}${t.toFixed(2)} ms from activation${n >= fc ? ` · +${((n - fc) * 1000 / 240).toFixed(1)} ms after the first impulse (step ${fc})` : ""} · ${where}`;
+  const keys = [...new Set(c.panels.map(p => p.k))].filter(k => SUM.mesh[k] || SUM.mesh[k.replace("V075_C", "V075_B")]);
+  for (const k0 of keys) { const k = SUM.mesh[k0] ? k0 : k0.replace("V075_C", "V075_B"), m = meshAt(k, n); if (!m) continue;
+    s += `\n${k0}${k !== k0 ? " (= " + k + ")" : ""}${m.n !== n ? ` [audited step ${m.n}]` : ""}: colliders min separation ${f(m.col, 2)} mm · robust mesh overlap BEFORE ${f(m.b[1])} mm → AFTER ${f(m.a[1])} mm`; }
+  info.textContent = s; drawTL(); }
+function drawTL() { const c = cur(), dpr = window.devicePixelRatio || 1, W = tl.clientWidth, H = tl.clientHeight; tl.width = W * dpr; tl.height = H * dpr; const g = tl.getContext("2d"); g.scale(dpr, dpr); const N = c.index.length, x = (i) => (i / N) * W;
+  c.index.forEach(([n, , ph], i) => { g.fillStyle = ph === "lead" ? "#3b6ea8" : ph === "entry" ? "#7a8a84" : n <= c.window ? "#2f9e5b" : "#6a2e2a"; g.fillRect(x(i), 6, Math.ceil(W / N) + 0.5, 10); });
+  const fi = c.index.findIndex(e => e[2] !== "lead" && e[0] >= c.firstContact); if (fi >= 0) { g.fillStyle = "#ffe14a"; g.beginPath(); g.moveTo(x(fi + 0.5), 17); g.lineTo(x(fi + 0.5) - 5, 25); g.lineTo(x(fi + 0.5) + 5, 25); g.fill(); }
+  g.fillStyle = "#fff"; g.fillRect(x(st.k + 0.5) - 1, 0, 2, 20);
+  g.font = "10px Menlo"; g.fillStyle = "#cfe3d8"; const wi = c.index.findIndex(e => e[2] === "w"); if (wi >= 0) g.fillText("trustworthy window", x(wi) + 4, 14); }
+tl.onclick = (e) => { const r = tl.getBoundingClientRect(); seek(Math.floor((e.clientX - r.left) / r.width * cur().index.length)); };
+const seek = (j) => { const c = cur(); j = Math.max(0, Math.min(c.index.length - 1, j)); vid.pause(); vid.currentTime = (j + 0.5) / 60; show(j); };
+const find = (n) => { const c = cur(), j = c.index.findIndex(x => x[2] !== "lead" && x[0] >= n); return j < 0 ? c.index.length - 1 : j; };
+async function load() { const c = cur(), prevN = st.prev ? st.prev.index[st.k] : null, play = !vid.paused;
+  document.getElementById("views").innerHTML = REC[st.rec].views.map(([v, l]) => `<button data-view="${v}" class="${v === st.view ? "on" : ""}">${l}</button>`).join("");
+  document.querySelectorAll("[data-sp]").forEach(b => { const ok = c.every === 4 || +b.dataset.sp < 1; b.disabled = !ok; b.classList.toggle("on", +b.dataset.sp === st.sp); });
+  document.querySelector('[data-j="fcm"]').textContent = `contact detected (config step ${REC[st.rec].fcCfg})`; document.querySelector('[data-j="fc"]').textContent = `first impulse (step ${c.firstContact})`;
+  document.getElementById("vnote").textContent = NOTE[st.view] + " Timeline: blue = constructed lead-in, green = trustworthy window, red = beyond it, ▲ = first contact impulse.";
+  rng.max = c.index.length - 1; vid.src = await blobUrl("video/" + c.videos[st.lay]); vid.addEventListener("loadeddata", () => { vid.playbackRate = rate(); const j = prevN ? (prevN[2] === "lead" ? c.index.findIndex(x => x[2] === "lead" && Math.abs(x[1] - prevN[1]) < 1.1) : find(prevN[0])) : find(REC[st.rec].fcCfg);
+    st.prev = c; seek(j < 0 ? 0 : j); if (play) vid.play(); }, { once: true }); }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || b.disabled) return;
+  if (b.dataset.rec) { st.rec = b.dataset.rec; st.view = REC[st.rec].views[REC[st.rec].views.length > 2 ? REC[st.rec].views.length - 1 : 1][0]; if (cur().every === 4 && st.sp < 1) st.sp = 1; if (cur().every === 1 && st.sp >= 1) st.sp = 0.125; st.prev = null; document.querySelectorAll("[data-rec]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+  else if (b.dataset.view) { st.view = b.dataset.view; if (cur().every === 1 && st.sp >= 1) st.sp = 0.125; if (cur().every === 4) st.sp = st.sp < 1 ? st.sp : 1; load(); }
+  else if (b.dataset.lay) { st.lay = b.dataset.lay; document.querySelectorAll("[data-lay]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+  else if (b.dataset.sp) { st.sp = +b.dataset.sp; document.querySelectorAll("[data-sp]").forEach(x => x.classList.toggle("on", x === b)); vid.playbackRate = rate(); }
+  else if (b.dataset.a) { const a = b.dataset.a; if (a === "play") { if (vid.paused) { vid.playbackRate = rate(); vid.play(); } else vid.pause(); } else seek(st.k + (a === "next" ? 1 : -1)); }
+  else if (b.dataset.j) { const c = cur(), j = b.dataset.j; let n;
+    if (j === "act") n = 0; else if (j === "fcm") n = REC[st.rec].fcCfg; else if (j === "fc") n = c.firstContact; else if (j === "fcp") n = c.firstContact + 4; else if (j === "end") n = c.window;
+    else { const key = REC[st.rec].mesh[0], s = SUM.mesh[key]; n = s.series.after.filter(x => x[0] >= 1 && x[0] <= s.window).reduce((a, x) => (x[1] > a[1] ? x : a), [1, -1])[0]; }
+    seek(find(n)); }
+  else if (b.dataset.jrec) { st.jrec = b.dataset.jrec; jointTable(); } });
+rng.oninput = () => seek(+rng.value); vid.onplay = () => { document.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }; vid.onpause = () => { document.querySelector('[data-a="play"]').textContent = "▶ play"; };
+const tick = (now, md) => { if (!vid.paused && CI) show(Math.min(cur().index.length - 1, Math.floor(md.mediaTime * 60 + 1e-4))); vid.requestVideoFrameCallback(tick); }; if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) vid.requestVideoFrameCallback(tick);
+document.addEventListener("keydown", (e) => { if (e.target.tagName === "INPUT") return; if (e.key === "ArrowRight") seek(st.k + 1); else if (e.key === "ArrowLeft") seek(st.k - 1); else if (e.key === " ") { e.preventDefault(); document.querySelector('[data-a="play"]').click(); } });
+// ── tables / charts ──
+const MA = (o) => `${f(o.median)} / ${f(o.max)}`, cls = (o) => (o.max < 0.01 ? "z" : o.max > 20 ? "hi" : "");
+function jointTable() { const J = SUM.joints[st.jrec]; document.getElementById("jrecs").innerHTML = Object.keys(SUM.joints).map(k => `<button data-jrec="${k}" class="${k === st.jrec ? "on" : ""}">${k}</button>`).join("");
+  const keys = Object.keys(J.after.pos);
+  document.getElementById("jtab").innerHTML = `<table><tr><th>${J.title} · steps 1–${J.window}</th>${keys.map(k => `<th>${k}</th>`).join("")}</tr>
+    <tr><td>tackler position, BEFORE (MC-1)</td>${keys.map(k => `<td class="${cls(J.before.pos[k])}">${MA(J.before.pos[k])}</td>`).join("")}</tr>
+    <tr><td>tackler position, AFTER (MC-1P)</td>${keys.map(k => `<td class="${cls(J.after.pos[k])}">${MA(J.after.pos[k])}</td>`).join("")}</tr>
+    <tr><td>runner position (MC-1, unchanged)</td>${keys.map(k => `<td class="${cls(J.runner.pos[k])}">${MA(J.runner.pos[k])}</td>`).join("")}</tr></table>`;
+  const sg = Object.keys(J.after.axisDeg);
+  document.getElementById("jextra").innerHTML = `<table><tr><th>segment</th>${sg.map(k => `<th>${k}</th>`).join("")}</tr>
+    <tr><td>axis angle vs physical segment, BEFORE (°)</td>${sg.map(k => `<td>${MA(J.before.axisDeg[k])}</td>`).join("")}</tr>
+    <tr><td>axis angle vs physical segment, AFTER (°)</td>${sg.map(k => `<td class="${cls(J.after.axisDeg[k])}">${MA(J.after.axisDeg[k])}</td>`).join("")}</tr>
+    <tr><td>bone tip vs next physical joint, BEFORE (mm)</td>${sg.map(k => `<td>${MA(J.before.tip[k])}</td>`).join("")}</tr>
+    <tr><td>bone tip vs next physical joint, AFTER (mm)</td>${sg.map(k => `<td class="${cls(J.after.tip[k])}">${MA(J.after.tip[k])}</td>`).join("")}</tr></table>
+    <p>Foot orientation vs the physical foot: ${f(J.after.footDeg.foot_L.max, 2)}° after and ${f(J.before.footDeg.foot_L.max, 2)}° before (both rules take bone rotations from the bodies).
+    Toe-bone tip ahead of the foot colliders: after ${f(J.after.toeOverhangMm.toe_L.median)} mm (L) / ${f(J.after.toeOverhangMm.toe_R.median)} mm (R); before ${MA(J.before.toeOverhangMm.toe_L)} (L) / ${MA(J.before.toeOverhangMm.toe_R)} (R); runner ${f(J.runner.toeOverhangMm.toe_L.median)} mm.</p>
+    <p><b>Appearance changes (constant scales, in the bind pose):</b>
+      <ul style="margin:2px 0">
+        <li>pelvis width × ${f(SUM.corrections.pelvis.scale, 3)} (Gabriel's hip spacing squeezed to the V2 hips);</li>
+        <li>thigh × ${f(SUM.corrections.thigh_L.scale, 3)}, shank × ${f(SUM.corrections.shin_L.scale, 3)};</li>
+        <li>upper arm × ${f(SUM.corrections.upperArm_L.scale, 3)}, forearm × ${f(SUM.corrections.foreArm_L.scale, 3)}.</li>
+      </ul>
+    The bridges are re-aimed every frame: the neck stretches ${MA(J.after.bridgeStretch.neck)}× (${MA(J.after.bridgeAimDeg.neck)}°), and the clavicles ${MA(J.after.bridgeStretch.clavicle_L)}× (${MA(J.after.bridgeAimDeg.clavicle_L)}°). Mesh, skin and textures are unchanged.</p>`; }
+function chart(cv, s) { const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext("2d"); c.scale(dpr, dpr);
+  const N = Math.max(...s.series.after.map(x => x[0])), vals = [...s.series.before.map(x => x[1]), ...s.series.after.map(x => x[1]), ...s.series.collider.map(x => x[1])], hi = Math.max(12, ...vals), lo = Math.min(-6, ...vals);
+  const X = (n) => 34 + (n / N) * (W - 44), Y = (y) => H - 18 - ((y - lo) / (hi - lo)) * (H - 30);
+  c.fillStyle = "rgba(63,209,122,0.08)"; c.fillRect(X(1), 4, X(Math.min(s.window, N)) - X(1), H - 22);
+  c.strokeStyle = "#445"; c.beginPath(); c.moveTo(X(0), Y(0)); c.lineTo(X(N), Y(0)); c.stroke();
+  c.strokeStyle = "#ffd45e"; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(X(0), Y(-5)); c.lineTo(X(N), Y(-5)); c.stroke(); c.setLineDash([]);
+  c.fillStyle = "#9fb3a9"; c.font = "10px Menlo"; c.fillText(hi.toFixed(0) + " mm", 2, Y(hi) + 8); c.fillText(lo.toFixed(0), 2, Y(lo)); c.fillText(`step 0 … ${N}`, X(0), H - 4);
+  for (const [arr, col] of [[s.series.collider, "#3fd17a"], [s.series.before.map(x => [x[0], x[1]]), "#ff8a5b"], [s.series.after.map(x => [x[0], x[1]]), "#5bc0ff"]]) { c.strokeStyle = col; c.lineWidth = 1.6; c.beginPath(); arr.filter(p => p[1] != null).forEach(([n, y], i) => (i ? c.lineTo(X(n), Y(y)) : c.moveTo(X(n), Y(y)))); c.stroke(); } }
+const G = ["boots", "shins_calves", "thighs", "pelvis_torso", "arms", "head"];
+Promise.all([fetch("capture_index.json").then(r => r.json()), fetch("../evidence/TRC1_SUMMARY.json").then(r => r.json())]).then(([ci, sum]) => { CI = ci; SUM = sum; load(); jointTable();
+  const M = sum.mesh, keys = Object.keys(M);
+  document.getElementById("charts").innerHTML = keys.map(k => `<div><h3>${M[k].title}${M[k].every > 1 ? ` (every ${M[k].every} steps)` : ""}</h3><canvas class="chart" id="ch_${k}"></canvas></div>`).join(""); keys.forEach(k => chart(document.getElementById("ch_" + k), M[k]));
+  document.getElementById("anat").innerHTML = `<table><tr><th>record (window)</th><th>colliders min sep (mm)</th><th>all</th>${G.map(g => `<th>${g.replace("_", " / ")}</th>`).join("")}</tr>${keys.map(k => { const a = M[k].window_stats.after, b = M[k].window_stats.before;
+    return `<tr><td>${M[k].title} (1–${M[k].window})</td><td>${f(M[k].window_stats.colliders_minSepMm.min, 2)}</td><td>${MA(a.all.robust)} <span style="color:#9fb3a9">(${MA(b.all.robust)})</span></td>${G.map(g => `<td>${MA(a.groups[g].robust)} <span style="color:#9fb3a9">(${MA(b.groups[g].robust)})</span></td>`).join("")}</tr>`; }).join("")}</table>`;
+  document.getElementById("pairs").innerHTML = `<table><tr><th>record</th><th>tackler × runner surfaces (after)</th></tr>${keys.map(k => `<tr><td>${M[k].title}</td><td style="white-space:normal">${Object.entries(M[k].window_stats.after.pairs).slice(0, 6).map(([p, e]) => `${p}: <b>${f(e.robustMaxMm)}</b> / ${f(e.maxMm)} mm (${e.frames} fr)`).join(" · ") || "none"}</td></tr>`).join("")}</table>`;
+  document.getElementById("sign").innerHTML = `<table><tr><th>record · rule</th><th>steps</th><th>inside (TRC-1)</th><th>CXA-1-only "inside": parity outside / total</th><th>TRC-1-only "inside": parity outside / total</th><th>deep agreed (≥ 15 mm): parity-confirmed / total</th><th>deepest parity-confirmed vertex</th></tr>${Object.entries(sum.signCheck).map(([k, t]) => `<tr><td>${k}</td><td>${t.steps}</td><td>${t.trc1Inside}</td><td>${t.cxa1Only.parityOutside} / ${t.cxa1Only.n}</td><td>${t.trc1Only.parityOutside} / ${t.trc1Only.n}</td><td>${t.deepAgreed.parityInside} / ${t.deepAgreed.n}</td><td><b>${f(t.confirmedMaxMm)} mm</b> (step ${t.confirmedMaxStep})</td></tr>`).join("")}</table>`;
+  const E = M.DX_N2 && M.DX_N2.envelope["30"], B = ["foot_R", "foot_L", "shank_R", "shank_L", "thigh_R", "thigh_L", "pelvis", "abdomen", "thorax", "head", "upperArm_R", "forearm_R"];
+  if (E) document.getElementById("env").innerHTML = `<table><tr><th>PVP-1A-DX step 30</th>${B.map(b => `<th>${b}</th>`).join("")}</tr>${[["runner (MC-1)", E.runner], ["tackler BEFORE (MC-1)", E.tackler_before], ["tackler AFTER (MC-1P)", E.tackler_after]].map(([l, e]) => `<tr><td>${l}</td>${B.map(b => `<td>${e[b] ? e[b].p95mm : "—"}</td>`).join("")}</tr>`).join("")}</table>`;
+  document.getElementById("fc").innerHTML = `<table><tr><th>record</th><th>first contact: config → impulse step</th><th>Jolt contact (impulse)</th><th>colliders</th><th>meshes AT that contact: before → after</th><th>first visible mesh overlap: before / after</th><th>every impulse-carrying contact in the window: mesh separation at the site, after (median · deepest overlap · largest gap)</th><th>same, before</th></tr>${keys.map(k => { const s = M[k], F = s.firstContact; if (!F) return "";
+    const fv = s.firstVisibleOverlap, a = s.contactSiteStats.after, b = s.contactSiteStats.before, sg = (x) => (x == null ? "—" : (x > 0 ? "+" : "") + f(x) + " mm");
+    return `<tr><td>${s.title}</td><td>${F.configN} → ${F.impulseStep}</td><td>${F.sites.map(c => `${c.pair} (${f(c.J, 2)} N·s)`).join(", ")}</td><td>${f(F.colliders.minSepMm, 2)} mm apart</td><td>${F.sites.map(c => `${sg(c.before)} → <b>${sg(c.after)}</b>`).join(", ")}</td><td>step ${fv.before ? fv.before.n : "—"} / step ${fv.after ? fv.after.n : "—"}</td><td>${a.contacts} contacts · ${sg(a.medianMm)} · ${sg(a.deepestOverlapMm)} · ${sg(a.largestGapMm)}</td><td>${sg(b.medianMm)} · ${sg(b.deepestOverlapMm)} · ${sg(b.largestGapMm)}</td></tr>`; }).join("")}</table>
+    <p>"Meshes at the contact" is the signed separation of the two contacting bodies' skinned meshes within 80 mm of the Jolt contact point: negative means the meshes overlap there, positive means a visible gap. The physics contact is the Jolt manifold solved from that configuration and applied in the next step. ${Object.entries(M).map(([k, s]) => Object.entries(s.contactSiteStats.byPair).filter(([p]) => !/foot_L × R\.(foot|shank)_R/.test(p)).map(([p, e]) => `${s.title}: ${p} — ${e.contacts} contact(s), after ${sg2(e.after.min)}…${sg2(e.after.max)}`).join("; ")).filter(Boolean).join(" · ")}</p>`;
+  });
+window.addEventListener("resize", () => { if (CI) { drawTL(); Object.keys(SUM.mesh).forEach(k => chart(document.getElementById("ch_" + k), SUM.mesh[k])); } });
+</script>
+</body>
+</html>

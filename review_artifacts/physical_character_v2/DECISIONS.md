@@ -3680,3 +3680,38 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 - M2: a collider-envelope decision (surface-fitted boot / leg colliders as a new body spec, or contact-aware skinning).
 
 **Report:** `cxa1/CXA1_REPORT.md`. **Review:** `cxa1/review/CXA1_REVIEW.html`.
+
+## 2026-10-11: TRC-1 tackler render correction (presentation only; CXA-1 M1; source 3b864663): tackler drawn on its V2 joints; most phasing gone; the remainder is boot envelope; CXA-1 visible-overlap numbers corrected
+
+**Change:** a new render rule, MC-1P (`trc1/scripts/trc1_retarget.mjs`). Gabriel's bones keep MC-1's body rotations, but are rigidly attached at the V2 joints and stretched axially to the next joint. The pelvis is scaled laterally to the V2 hip spacing, and the neck and clavicles are re-aimed every frame. The runner keeps MC-1 (already exact).
+
+**Unchanged:** physics, colliders, mass, solver, filtering, controllers, records, RUN-1 and outcomes. No physics, record or tool file outside `trc1/` was modified (only this DECISIONS entry), and every re-rendered record's final hash is unchanged.
+
+**Joint audit (tackler):**
+- Before: 51–153 mm (DX hips 67 / knees 73–80 / ankles 69–87 / shoulders 63–84 / elbows 51–71 / wrists 52–70 mm; 0.75× arms up to 153 mm).
+- After: 0.00 mm at every joint, and 0.00° on segment axes.
+- Appearance cost: pelvis width × 0.588 (rig hips 323 mm vs the V1-matched tackler's 190 mm); limbs × 0.90–1.04.
+
+**Remaining mesh overlap** (robust 10th-deepest vertex, max in the window, before → after):
+- DX: 43 → 12 mm (median 30 → 0).
+- ABI A / B / C: 43 → 15–16 mm.
+- 0.75×: 42 → 13–14 mm.
+- Location: almost entirely the tackler's left boot against the runner's right heel / ankle. Shins ≤ 9 mm; thighs, pelvis / torso, arms and head ≈ 0.
+- Deepest parity-confirmed vertex: 24–26 mm (was 51–54).
+- At the Jolt contact sites the meshes overlap by a median of ≈ 17 mm (was ≈ 43 mm).
+
+**First contact:** the meshes first touch at the same configuration Jolt builds the contact from, on the same anatomy, with 6 mm of overlap there (was 30 mm, after 46 mm of overlap at entry).
+
+**Validation:** 7-ray parity confirms the TRC-1 inside / outside test and refutes CXA-1's interpolated-normal false positives. CXA-1's "25–81 mm" visible overlap should read ≈ 16–43 mm robust. Its conclusion stands. The erratum is in `trc1/TRC1_REPORT.md` §2, and the CXA-1 files were not edited.
+
+**Answers** (report): see `trc1/TRC1_REPORT.md`.
+- Most phasing removed.
+- The remainder is envelope only.
+- The first 250 ms of DX are visually trustworthy to ≈ 1 cm at the boots.
+- The stiff assessment holds.
+- Visually, contact-time skin correction suffices.
+- A body revision only for non-visual reasons (sole-only boot collider; the tackler's narrow hips): owner decision (CXA-1 M2).
+
+**Not done:** no mesh-penetration fix (as instructed). ABI EXT after 250 ms is not re-rendered (erratum preserved).
+
+**Review:** `trc1/review/TRC1_REVIEW.html`. The frames are outside Git (`trc1/review/frames.OUTSIDE_GIT.md`).

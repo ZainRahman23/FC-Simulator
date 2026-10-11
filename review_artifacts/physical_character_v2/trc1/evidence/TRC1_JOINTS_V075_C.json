@@ -1,0 +1,724 @@
+{
+ "tool": "trc1_joint_audit.mjs",
+ "label": "V075_C",
+ "run": "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/abi1_impact/V0.75_C_N2_ALL.json.gz",
+ "window": 260,
+ "finalHash": "ab5e25d0ca68741d",
+ "units": {
+  "pos": "mm",
+  "tip": "mm",
+  "axisDeg": "deg",
+  "footDeg": "deg",
+  "bridgeStretch": "ratio",
+  "bridgeAimDeg": "deg",
+  "toeOverhangMm": "mm (+ = rendered toe tip ahead of the foot colliders)"
+ },
+ "scope": "position error of the rendered joint (bone origin) vs the V2 joint centre evaluated on the child body; values < 0.005 mm print as 0 (float precision)",
+ "corrections": {
+  "pelvis": {
+   "kind": "pelvis",
+   "scale": 0.58809,
+   "swingDeg": null
+  },
+  "spine": {
+   "kind": "attached",
+   "scale": null,
+   "swingDeg": null
+  },
+  "chest": {
+   "kind": "attached",
+   "scale": null,
+   "swingDeg": null
+  },
+  "neck": {
+   "kind": "bridge",
+   "scale": null,
+   "swingDeg": null
+  },
+  "head": {
+   "kind": "attached",
+   "scale": null,
+   "swingDeg": null
+  },
+  "clavicle_R": {
+   "kind": "bridge",
+   "scale": null,
+   "swingDeg": null
+  },
+  "upperArm_R": {
+   "kind": "attached",
+   "scale": 0.8954,
+   "swingDeg": 0
+  },
+  "foreArm_R": {
+   "kind": "attached",
+   "scale": 0.96868,
+   "swingDeg": 0
+  },
+  "clavicle_L": {
+   "kind": "bridge",
+   "scale": null,
+   "swingDeg": null
+  },
+  "upperArm_L": {
+   "kind": "attached",
+   "scale": 0.8954,
+   "swingDeg": 0
+  },
+  "foreArm_L": {
+   "kind": "attached",
+   "scale": 0.96868,
+   "swingDeg": 0
+  },
+  "thigh_R": {
+   "kind": "attached",
+   "scale": 0.92586,
+   "swingDeg": 0
+  },
+  "shin_R": {
+   "kind": "attached",
+   "scale": 1.03581,
+   "swingDeg": 0
+  },
+  "foot_R": {
+   "kind": "attached",
+   "scale": null,
+   "swingDeg": null
+  },
+  "thigh_L": {
+   "kind": "attached",
+   "scale": 0.92586,
+   "swingDeg": 0
+  },
+  "shin_L": {
+   "kind": "attached",
+   "scale": 1.03581,
+   "swingDeg": 0
+  },
+  "foot_L": {
+   "kind": "attached",
+   "scale": null,
+   "swingDeg": null
+  }
+ },
+ "tackler": {
+  "before_MC1": {
+   "pos": {
+    "hip_L": {
+     "median": 66.54,
+     "min": 66.47,
+     "max": 66.56
+    },
+    "knee_L": {
+     "median": 75.08,
+     "min": 73.6,
+     "max": 75.44
+    },
+    "ankle_L": {
+     "median": 69.5,
+     "min": 68.76,
+     "max": 72.35
+    },
+    "hip_R": {
+     "median": 66.54,
+     "min": 66.52,
+     "max": 66.55
+    },
+    "knee_R": {
+     "median": 73.19,
+     "min": 72.19,
+     "max": 74.05
+    },
+    "ankle_R": {
+     "median": 85.01,
+     "min": 83.77,
+     "max": 86.72
+    },
+    "shoulder_L": {
+     "median": 117.24,
+     "min": 64.69,
+     "max": 123.11
+    },
+    "elbow_L": {
+     "median": 136.75,
+     "min": 81.67,
+     "max": 147.15
+    },
+    "shoulder_R": {
+     "median": 122.4,
+     "min": 61.67,
+     "max": 131.24
+    },
+    "elbow_R": {
+     "median": 136.26,
+     "min": 77.98,
+     "max": 147.15
+    },
+    "wrist_L": {
+     "median": 142.86,
+     "min": 87.55,
+     "max": 153.23
+    },
+    "wrist_R": {
+     "median": 140.7,
+     "min": 83.78,
+     "max": 152.21
+    }
+   },
+   "tip": {
+    "thigh_L": {
+     "median": 75.08,
+     "min": 73.6,
+     "max": 75.44
+    },
+    "shank_L": {
+     "median": 69.5,
+     "min": 68.76,
+     "max": 72.35
+    },
+    "thigh_R": {
+     "median": 73.19,
+     "min": 72.19,
+     "max": 74.05
+    },
+    "shank_R": {
+     "median": 85.01,
+     "min": 83.77,
+     "max": 86.72
+    },
+    "upperArm_L": {
+     "median": 136.75,
+     "min": 81.67,
+     "max": 147.15
+    },
+    "upperArm_R": {
+     "median": 136.26,
+     "min": 77.98,
+     "max": 147.15
+    },
+    "forearm_L": {
+     "median": 142.86,
+     "min": 87.55,
+     "max": 153.23
+    },
+    "forearm_R": {
+     "median": 140.7,
+     "min": 83.78,
+     "max": 152.21
+    }
+   },
+   "axisDeg": {
+    "thigh_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0.11
+    },
+    "shank_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0.48
+    },
+    "thigh_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shank_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0.02
+    },
+    "upperArm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0.01
+    },
+    "upperArm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0.01
+    },
+    "forearm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "forearm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "footDeg": {
+    "foot_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "foot_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "bridgeStretch": {
+    "neck": {
+     "median": 1,
+     "min": 1,
+     "max": 1
+    },
+    "clavicle_L": {
+     "median": 1,
+     "min": 1,
+     "max": 1
+    },
+    "clavicle_R": {
+     "median": 1,
+     "min": 1,
+     "max": 1
+    }
+   },
+   "bridgeAimDeg": {
+    "neck": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "clavicle_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "clavicle_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "toeOverhangMm": {
+    "toe_L": {
+     "median": 53.98,
+     "min": 46.65,
+     "max": 77.72
+    },
+    "toe_R": {
+     "median": -43.39,
+     "min": -44.2,
+     "max": -14.26
+    }
+   }
+  },
+  "after_MC1P": {
+   "pos": {
+    "hip_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "knee_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "ankle_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "hip_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "knee_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "ankle_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shoulder_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "elbow_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shoulder_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "elbow_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "wrist_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "wrist_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "tip": {
+    "thigh_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shank_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "thigh_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shank_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "upperArm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "upperArm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "forearm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "forearm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "axisDeg": {
+    "thigh_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shank_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "thigh_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "shank_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "upperArm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "upperArm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "forearm_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "forearm_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "footDeg": {
+    "foot_L": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    },
+    "foot_R": {
+     "median": 0,
+     "min": 0,
+     "max": 0
+    }
+   },
+   "bridgeStretch": {
+    "neck": {
+     "median": 0.79,
+     "min": 0.64,
+     "max": 1.06
+    },
+    "clavicle_L": {
+     "median": 0.78,
+     "min": 0.78,
+     "max": 0.78
+    },
+    "clavicle_R": {
+     "median": 0.78,
+     "min": 0.78,
+     "max": 0.78
+    }
+   },
+   "bridgeAimDeg": {
+    "neck": {
+     "median": 21.27,
+     "min": 0.01,
+     "max": 34.71
+    },
+    "clavicle_L": {
+     "median": 16.87,
+     "min": 16.85,
+     "max": 16.87
+    },
+    "clavicle_R": {
+     "median": 16.87,
+     "min": 16.87,
+     "max": 16.89
+    }
+   },
+   "toeOverhangMm": {
+    "toe_L": {
+     "median": 37.76,
+     "min": 37.76,
+     "max": 37.76
+    },
+    "toe_R": {
+     "median": 37.76,
+     "min": 37.76,
+     "max": 37.76
+    }
+   }
+  }
+ },
+ "runner_MC1_unchanged": {
+  "pos": {
+   "hip_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0.02
+   },
+   "knee_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0.02
+   },
+   "ankle_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0.03
+   },
+   "hip_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0.03
+   },
+   "knee_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0.12
+   },
+   "ankle_R": {
+    "median": 0.01,
+    "min": 0,
+    "max": 0.82
+   },
+   "shoulder_L": {
+    "median": 5.19,
+    "min": 0.45,
+    "max": 8.16
+   },
+   "elbow_L": {
+    "median": 13.6,
+    "min": 10,
+    "max": 17.09
+   },
+   "shoulder_R": {
+    "median": 5.23,
+    "min": 0.45,
+    "max": 8.21
+   },
+   "elbow_R": {
+    "median": 12.95,
+    "min": 9.27,
+    "max": 17.03
+   },
+   "wrist_L": {
+    "median": 7.86,
+    "min": 2.21,
+    "max": 11.33
+   },
+   "wrist_R": {
+    "median": 7.53,
+    "min": 2.15,
+    "max": 11.79
+   }
+  },
+  "tip": {
+   "thigh_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0.02
+   },
+   "shank_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0.03
+   },
+   "thigh_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0.12
+   },
+   "shank_R": {
+    "median": 0.01,
+    "min": 0,
+    "max": 0.82
+   },
+   "upperArm_L": {
+    "median": 13.6,
+    "min": 10,
+    "max": 17.09
+   },
+   "upperArm_R": {
+    "median": 12.95,
+    "min": 9.27,
+    "max": 17.03
+   },
+   "forearm_L": {
+    "median": 7.86,
+    "min": 2.21,
+    "max": 11.33
+   },
+   "forearm_R": {
+    "median": 7.53,
+    "min": 2.15,
+    "max": 11.79
+   }
+  },
+  "axisDeg": {
+   "thigh_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "shank_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "thigh_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0.02
+   },
+   "shank_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0.08
+   },
+   "upperArm_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "upperArm_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "forearm_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "forearm_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   }
+  },
+  "footDeg": {
+   "foot_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "foot_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   }
+  },
+  "bridgeStretch": {
+   "neck": {
+    "median": 1,
+    "min": 1,
+    "max": 1
+   },
+   "clavicle_L": {
+    "median": 1,
+    "min": 1,
+    "max": 1
+   },
+   "clavicle_R": {
+    "median": 1,
+    "min": 1,
+    "max": 1
+   }
+  },
+  "bridgeAimDeg": {
+   "neck": {
+    "median": 3,
+    "min": 3,
+    "max": 3
+   },
+   "clavicle_L": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   },
+   "clavicle_R": {
+    "median": 0,
+    "min": 0,
+    "max": 0
+   }
+  },
+  "toeOverhangMm": {
+   "toe_L": {
+    "median": 54.08,
+    "min": 54.07,
+    "max": 54.08
+   },
+   "toe_R": {
+    "median": 54.08,
+    "min": 53.68,
+    "max": 54.09
+   }
+  }
+ }
+}
