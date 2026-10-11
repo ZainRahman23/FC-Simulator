@@ -3647,3 +3647,36 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 **Unchanged:** RUN-1, the simulation, V2 anatomy and contact geometry, the PVP-1A plant / fixtures / records.
 
 **Review:** `abi1/review/ABI1_REVIEW.html`. Results: `abi1/ABI1_RESULTS.md`.
+
+## 2026-10-11: CXA-1 collision-exclusion audit (read-only; ABI work stopped; source f1933adb): the colliders do not phase; the visible phasing is presentation; ABI-1 EXT invalid after step 60
+
+**Method:** exact signed separation of every runner × tackler collision-shape pair at every recorded step (GJK / minimum-translation depth on V2's own support functions), matched to the Jolt manifolds built from the same configuration (geometry vs Jolt depth: mean 0.008 mm in DX).
+
+**Colliders, frozen contact set:**
+- **PVP-1A-DX:** ≤ 1.19 mm in the window (1.86 mm overall).
+- **CF1:** ≤ 3.30 mm. **ABI-1 B / C:** ≤ 3.52 mm. **Creation-order swap:** ≤ 2.78 mm.
+- All below Jolt's 5 mm penetration slop: 0 dropped contacts, 0 side crossings.
+- **Filtering:** 196 / 196 cross pairs enabled.
+- **Detection:** approach ≤ 15.4 mm per step, inside the 20 mm speculative distance; motion is discrete.
+
+**Visible phasing is presentation:**
+- the tackler is rendered 54–87 mm from its physics skeleton (Gabriel's rig driven by a V1-matched body through MC-1 §2(4));
+- V2's colliders are inscribed, and the F0 boot is a sole-only slab (the visible boot is 24 mm wider each side, +55 mm at the toe, ≈ 70 mm taller);
+- result: meshes interpenetrate by 25–81 mm in every frame, while the colliders touch.
+
+**The sustained contact is a heel sweep from behind and above**, not "under the foot": 61.6 N·s, legitimate, foot slid 659 mm.
+
+**ABI-1 EXT:**
+- Its filtered non-leg pairs phase from step 61, up to 154 mm.
+- Its window missed this, because filtered pairs create no contacts.
+- EXT results after step 60 are withdrawn (`abi1/ABI1_ERRATUM_CXA1.md`).
+- ABI-1's W1 and S-IMPACT 0.75× physics stand: ≤ 3.5 mm. Every visual judgement is confounded.
+
+**S-IMPACT 2.0×:** 13.6 mm, the discrete-step limit at ≈ 37 mm per step.
+
+**Proposed** (not implemented; owner decision):
+- M1, a presentation-only fix: render the tackler with its rig rescaled onto its V2 joint centres;
+- then re-view;
+- M2: a collider-envelope decision (surface-fitted boot / leg colliders as a new body spec, or contact-aware skinning).
+
+**Report:** `cxa1/CXA1_REPORT.md`. **Review:** `cxa1/review/CXA1_REVIEW.html`.

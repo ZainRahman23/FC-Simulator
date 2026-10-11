@@ -1,0 +1,24 @@
+// CXA-1 summary: compiles the audits, the mesh audits and the filter check into one JSON (the report's and the review page's numbers). Read-only.
+// usage: node cxa1_summary.mjs <evidence dir> <out.json>
+import fs from "fs"; import path from "path"; import zlib from "zlib";
+const [D, OUTF] = process.argv.slice(2), gz = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(D, f))));
+const RUNS = [["DX", "PVP-1A-DX run 1 (committed record; frozen contact set)", "CXA1_DX.json.gz", "CXA1_MESH_DX.json.gz"], ["CF1", "PVP-1A-DX CF1 variant (ABI-1 input; frozen contact set)", "CXA1_CF1.json.gz", "CXA1_MESH_CF1.json.gz"],
+  ["DX_TR", "DX, creation order swapped (diagnostic)", "CXA1_DX_TR.json.gz"], ["CF1_TR", "CF1, creation order swapped (diagnostic)", "CXA1_CF1_TR.json.gz"],
+  ["ABI_B_ALL", "ABI-1 B primary (frozen contact set)", "CXA1_ABI_B_ALL.json.gz"], ["ABI_C_ALL", "ABI-1 C primary (frozen contact set)", "CXA1_ABI_C_ALL.json.gz"],
+  ["ABI_A_EXT", "ABI-1 A EXT (non-leg cross pairs filtered by design)", "CXA1_ABI_A_EXT.json.gz"], ["ABI_B_EXT", "ABI-1 B EXT", "CXA1_ABI_B_EXT.json.gz"], ["ABI_C_EXT", "ABI-1 C EXT", "CXA1_ABI_C_EXT.json.gz"],
+  ["IMPACT_0.75_A", "ABI-1 S-IMPACT 0.75× A (frozen contact set)", "CXA1_IMPACT_0.75_A.json.gz"], ["IMPACT_0.75_B", "ABI-1 S-IMPACT 0.75× B", "CXA1_IMPACT_0.75_B.json.gz"],
+  ["IMPACT_1.5", "ABI-1 S-IMPACT 1.5× A", "CXA1_IMPACT_1.5.json.gz"], ["IMPACT_2.0", "ABI-1 S-IMPACT 2.0× A", "CXA1_IMPACT_2.0.json.gz"]];
+const h = 1 / 240, out = { tool: "cxa1_summary.mjs", runs: {}, filter: JSON.parse(fs.readFileSync(path.join(D, "CXA1_FILTER.json"))) };
+for (const [id, title, af, mf] of RUNS) { const A = gz(af), M = mf ? gz(mf) : null;
+  let maxApp = 0; for (const s of A.steps.filter(s => s.n >= 1 && s.n <= A.window)) for (const r of s.rows) if (r.d < 0.02) maxApp = Math.max(maxApp, -r.vn * h);
+  const firstFiltered = (() => { const LEG = ["thigh_L", "shank_L", "foot_L", "thigh_R", "shank_R", "foot_R"]; const last = Math.max(...A.steps.map(s => s.n)); for (const s of A.steps) { if (s.n >= last) continue; for (const r of s.rows) { const [a, b] = r.key.split("|").map(x => x.split("#")[0]); if (!(LEG.includes(a) && LEG.includes(b)) && r.d < 0 && !r.bodyCached) return { n: s.n, key: r.key, dmm: +(r.d * 1000).toFixed(2) }; } } return null; })();   // the final recorded state has no following step (no contact cache) → excluded
+  const rob = (f) => { const d = [...f.tacklerInRunner.verts, ...f.runnerInTackler.verts].map(v => v[1]).sort((a, b) => b - a); return { d10: d[9] || 0, n10: d.filter(x => x > 10).length }; };
+  const vis = M ? M.frames.map(f => ({ n: f.n, ...rob(f) })) : null, visW = vis ? vis.filter(v => v.n <= A.window) : null;
+  out.runs[id] = { title, window: A.window, finalHash: A.finalHash, order: A.order, window_stats: A.window_stats, all_stats: A.all_stats, validation: { n: A.validation.n, meanGeomMinusJoltMm: A.validation.meanGeomMinusJoltMm, maxAbsMm: A.validation.maxAbsMm },
+    maxApproachPerStepMm: +(maxApp * 1000).toFixed(1), firstFilteredOverlap: firstFiltered,
+    deepestPairs: A.pairs.filter(p => p.minDmm < 0).slice(0, 8).map(p => ({ key: p.key, types: p.types, minDmm: p.minDmm, step: p.minDStep, rMinMm: p.rMinMm, J: p.Jtot, uncachedOverlapSteps: p.uncachedOverlapSteps, episodes: p.episodes.length, crossed: p.episodes.some(e => e.crossed === true), flips: p.episodes.reduce((a, e) => a + e.normalFlipsWithin, 0) })),
+    series: { collider: A.steps.filter(s => s.n >= 1).map(s => [s.n, +(s.maxPen * 1000).toFixed(2)]), visible: vis ? vis.map(v => [v.n, +v.d10.toFixed(1)]) : null },
+    visibleInWindow: visW ? { maxD10Mm: Math.max(...visW.map(v => v.d10)), framesWith10VertsOver10mm: visW.filter(v => v.n10 >= 10).length, frames: visW.length } : null,
+    envelope: M ? Object.fromEntries(Object.entries(M.envelope).map(([n, e]) => [n, { runner: Object.fromEntries(Object.entries(e.runner).map(([b, x]) => [b, { p95mm: x.p95mm, maxMm: x.maxMm, over10mm: x.over10mm }])), tackler: Object.fromEntries(Object.entries(e.tackler).map(([b, x]) => [b, { p95mm: x.p95mm, maxMm: x.maxMm, over10mm: x.over10mm }])) }])) : null }; }
+fs.writeFileSync(OUTF, JSON.stringify(out, null, 1));
+for (const [id, r] of Object.entries(out.runs)) console.log(id.padEnd(14), `W1–${r.window}: collider max ${r.window_stats.maxPenMm} mm @${r.window_stats.at}, over slop ${r.window_stats.stepsOverSlop}, uncached ${r.window_stats.uncachedOverlapSteps} | all: ${r.all_stats.maxPenMm} mm, over slop ${r.all_stats.stepsOverSlop}, uncached ${r.all_stats.uncachedOverlapSteps} | approach ${r.maxApproachPerStepMm} mm/step | Jolt Δ ${r.validation.meanGeomMinusJoltMm}/${r.validation.maxAbsMm} mm${r.visibleInWindow ? ` | visible W ${r.visibleInWindow.maxD10Mm.toFixed(0)} mm (${r.visibleInWindow.framesWith10VertsOver10mm}/${r.visibleInWindow.frames})` : ""}${r.firstFilteredOverlap ? ` | first filtered overlap @${r.firstFilteredOverlap.n}` : ""}`);

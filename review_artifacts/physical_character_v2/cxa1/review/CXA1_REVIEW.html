@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CXA-1 collider audit</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff6b5b; --ok: #3fd17a; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 10px; } h2 { font-size: 18px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 14px 0 4px; color: var(--acc); }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; }
+  .banner { background: #13261b; border: 1px solid #2f7a4c; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .warn { background: #3a1512; border: 1px solid var(--bad); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 18px 0; }
+  video { width: 100%; height: auto; background: #000; border-radius: 4px; display: block; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 6px 0; } .ctl .lab { color: var(--dim); margin: 0 4px 0 10px; font-size: 12px; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; background: #111815; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; }
+  canvas.chart { width: 100%; height: 210px; background: #111815; border-radius: 4px; display: block; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; } th { color: var(--dim); font-weight: 600; }
+  @media (max-width: 600px) { main { padding: 12px 16px; } .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>CXA-1 · do the PVP-1A-DX bodies keep collision exclusion?</h1>
+<div class="banner"><b>Answer: the physical colliders do not phase.</b>
+<ul style="margin:6px 0">
+<li><b>Measured:</b> collider penetration stays ≤ 1.2 mm in the committed PVP-1A-DX run, and ≤ 3.3 mm in CF1 (ABI-1's input). That is below Jolt's 5 mm solver slop, with no dropped contact, no crossing and no filtered pair.</li>
+<li><b>What you saw is presentation.</b> The tackler is rendered <b>54–87 mm away from its physics skeleton</b> (Gabriel's rig on a V1-matched body). Both bodies' meshes also extend well beyond their deliberately inscribed colliders, and the boot collider is a sole-only slab.</li>
+<li><b>So the rendered footballers interpenetrate by 25–80 mm in every frame</b>, even before any collider touches.</li>
+</ul>
+Full answers: <a href="../CXA1_REPORT.md" style="color:var(--acc)">CXA1_REPORT.md</a>. Read-only audit; nothing was changed.</div>
+<div class="warn"><b>One real phasing, and it is mine.</b> ABI-1's EXT diagnostic filtered non-leg contacts by design. From step 61 (254 ms) the tackler's head and torso pass through the runner by up to 154 mm, and EXT's window failed to stop there. See the EXT view below (red colliders) and <code>abi1/ABI1_ERRATUM_CXA1.md</code>.</div>
+
+<div class="card"><h2>Rendered meshes | actual V2 colliders (same frame, same camera)</h2>
+  <div class="ctl"><span class="lab">record</span><button data-run="DX" class="on">PVP-1A-DX (committed)</button><button data-run="CF1">CF1 (ABI-1 input)</button><button data-run="EXT">ABI-1 EXT (filtered by design)</button></div>
+  <div class="ctl"><span class="lab">view</span><button data-v="feet" class="on">feet close-up</button><button data-v="close">close (zoom 16)</button><button data-v="full">full (zoom 6)</button>
+    <span class="lab">speed</span><button data-r="1" class="on">0.25×</button><button data-r="0.4">0.1×</button></div>
+  <video id="vid" muted playsinline loop></video>
+  <input id="rng" type="range" min="0" max="1" value="0">
+  <div class="ctl"><button data-a="play">▶ play</button><button data-a="prev">◀ step</button><button data-a="next">step ▶</button>
+    <span class="lab">jump</span><button data-j="3">first contact (step 3)</button><button data-j="7">heel sweep starts (7)</button><button data-j="deep">deepest collider overlap</button><button data-j="vis">deepest visible intersection</button><button data-j="61">step 61 (EXT phasing starts)</button></div>
+  <div id="info" class="info"></div>
+  <p style="margin:6px 0 0">Left: what the PVP-1A-DX and ABI-1 reviews showed. Right: the same frame faded, with the exact silhouettes of every V2 collision shape (runner cyan, tackler orange; red = penetration beyond the 5 mm slop). Yellow dots are the Jolt contact points the solver used for this configuration; dimmed dots are speculative. The labels give the audit's signed separation of the closest pairs.</p>
+</div>
+
+<div class="card"><h2>Collider penetration vs visible mesh intersection, per step</h2>
+  <p>Green: maximum collider penetration (audit). Orange: visible mesh interpenetration (10th-deepest vertex). Dashed lines: 5 mm solver slop and 10 mm integrity threshold.</p>
+  <div class="grid2"><div><h3>PVP-1A-DX (committed)</h3><canvas id="c1" class="chart"></canvas></div><div><h3>CF1 (ABI-1 input)</h3><canvas id="c2" class="chart"></canvas></div><div><h3>ABI-1 A EXT (filtered pairs) · collider only</h3><canvas id="c3" class="chart"></canvas></div><div><h3>S-IMPACT 2.0× (timestep limit) · collider only</h3><canvas id="c4" class="chart"></canvas></div></div>
+</div>
+<div class="card"><h2>Every audited record</h2><div id="runs"></div></div>
+<div class="card"><h2>Visible anatomy outside the colliders (p95 mm; step 30)</h2><div id="env"></div>
+  <p><b>The tackler's skeleton is offset from its physics</b> (rendered bone origin vs V2 joint centre): hips 67 mm, knees 73–78 mm, ankles 69–87 mm, shoulder 65 mm, elbow 54–59 mm. The runner's is 0 mm at hip, knee and ankle.
+  <br><b>The runner's boot against its 10 boot hulls:</b> 24 mm wider each side, 55 mm longer at the toe, 17 mm at the heel, and ≈ 70 mm higher (no collider above the sole).</p></div>
+</main>
+<script>
+"use strict";
+const blobs = {}; const blobUrl = (u) => blobs[u] || (blobs[u] = fetch(u).then(r => r.blob()).then(b => URL.createObjectURL(b)));
+const st = { run: "DX", v: "feet", rate: 1, k: 0 }, vid = document.getElementById("vid"), rng = document.getElementById("rng"), info = document.getElementById("info"); let CI = null, SUM = null;
+const id = () => (st.run === "EXT" ? "X_EXT" : `X_${st.run}${st.v === "full" ? "" : "_" + st.v}`);
+const cur = () => CI.views[id()];
+const show = (j) => { const c = cur(); st.k = j; rng.value = j; const [n, t] = c.index[j], key = st.run === "EXT" ? "ABI_A_EXT" : st.run, S = SUM.runs[key], col = S.series.collider.find(x => x[0] === n), vis = S.series.visible ? S.series.visible.find(x => x[0] === n) : null;
+  info.textContent = `step ${n} · τ +${t.toFixed(2)} ms after activation${n >= 3 ? ` · +${((n - 3) * 1000 / 240).toFixed(1)} ms after first contact` : ""} · ${n <= c.window ? "inside the trustworthy window" : "beyond the window"}\ncollider max penetration ${col ? col[1].toFixed(2) : "—"} mm${vis ? ` · visible mesh intersection ${vis[1].toFixed(0)} mm` : ""}`; };
+const seek = (j) => { const c = cur(); j = Math.max(0, Math.min(c.index.length - 1, j)); vid.pause(); vid.currentTime = (j + 0.5) / 60; show(j); };
+const find = (n) => { const c = cur(); const j = c.index.findIndex(x => x[0] >= n); return j < 0 ? c.index.length - 1 : j; };
+async function load(keep = true) { const n = CI && st.prevIdx ? st.prevIdx[st.k][0] : 1, play = !vid.paused, c = cur(); document.querySelectorAll("[data-v]").forEach(b => { b.disabled = st.run === "EXT" && b.dataset.v !== "full"; b.classList.toggle("on", st.run === "EXT" ? b.dataset.v === "full" : b.dataset.v === st.v); });
+  rng.max = c.index.length - 1; vid.src = await blobUrl("video/" + c.video); vid.playbackRate = st.rate; vid.addEventListener("loadeddata", () => { st.prevIdx = c.index; seek(keep ? find(n) : 0); if (play) vid.play(); }, { once: true }); }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || b.disabled) return;
+  if (b.dataset.run) { st.run = b.dataset.run; document.querySelectorAll("[data-run]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+  else if (b.dataset.v) { st.v = b.dataset.v; load(); } else if (b.dataset.r) { st.rate = +b.dataset.r; document.querySelectorAll("[data-r]").forEach(x => x.classList.toggle("on", x === b)); vid.playbackRate = st.rate; }
+  else if (b.dataset.a) { const a = b.dataset.a; if (a === "play") vid.paused ? vid.play() : vid.pause(); else seek(st.k + (a === "next" ? 1 : -1)); }
+  else if (b.dataset.j) { const key = st.run === "EXT" ? "ABI_A_EXT" : st.run, S = SUM.runs[key]; let n = +b.dataset.j;
+    if (b.dataset.j === "deep") n = S.window_stats.at; if (b.dataset.j === "vis") n = S.series.visible ? S.series.visible.filter(x => x[0] <= S.window).reduce((a, x) => (x[1] > a[1] ? x : a), [1, -1])[0] : S.window_stats.at; seek(find(n)); } });
+rng.oninput = () => seek(+rng.value); vid.onplay = () => { document.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }; vid.onpause = () => { document.querySelector('[data-a="play"]').textContent = "▶ play"; };
+const tick = (now, md) => { if (!vid.paused && CI) show(Math.min(cur().index.length - 1, Math.floor(md.mediaTime * 60 + 1e-4))); vid.requestVideoFrameCallback(tick); }; if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) vid.requestVideoFrameCallback(tick);
+function chart(cid, series, N, win) { const cv = document.getElementById(cid), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext("2d"); c.scale(dpr, dpr);
+  const all = series.flatMap(s => s.pts.map(p => p[1])), hi = Math.max(12, ...all), X = (n) => 34 + (n / N) * (W - 44), Y = (y) => H - 18 - (y / hi) * (H - 30);
+  c.fillStyle = "rgba(63,209,122,0.08)"; c.fillRect(X(0), 4, X(Math.min(win, N)) - X(0), H - 22);
+  for (const [y, col] of [[5, "#ffd45e"], [10, "#ff6b5b"]]) { c.strokeStyle = col; c.setLineDash([4, 4]); c.beginPath(); c.moveTo(X(0), Y(y)); c.lineTo(X(N), Y(y)); c.stroke(); c.setLineDash([]); c.fillStyle = col; c.font = "10px Menlo"; c.fillText(y + " mm", X(N) - 34, Y(y) - 3); }
+  c.fillStyle = "#9fb3a9"; c.font = "10px Menlo"; c.fillText(hi.toFixed(0) + " mm", 2, Y(hi) + 8); c.fillText(`step 0 … ${N}`, X(0), H - 4);
+  series.forEach(s => { c.strokeStyle = s.col; c.lineWidth = 1.6; c.beginPath(); s.pts.filter(p => p[0] <= N).forEach(([n, y], i) => (i ? c.lineTo(X(n), Y(y)) : c.moveTo(X(n), Y(y)))); c.stroke(); }); }
+const f = (x, k = 2) => (x == null ? "—" : (+x).toFixed(k));
+Promise.all([fetch("capture_index.json").then(r => r.json()), fetch("../evidence/CXA1_SUMMARY.json").then(r => r.json())]).then(([ci, sum]) => { CI = ci; SUM = sum; load(false);
+  const R = sum.runs; chart("c1", [{ col: "#3fd17a", pts: R.DX.series.collider }, { col: "#ffa040", pts: R.DX.series.visible }], 130, 62); chart("c2", [{ col: "#3fd17a", pts: R.CF1.series.collider }, { col: "#ffa040", pts: R.CF1.series.visible }], 130, 60);
+  chart("c3", [{ col: "#3fd17a", pts: R.ABI_A_EXT.series.collider }], 260, 60); chart("c4", [{ col: "#3fd17a", pts: R["IMPACT_2.0"].series.collider }], 120, 40);
+  document.getElementById("runs").innerHTML = `<table><tr><th>record</th><th>window</th><th>max collider penetration: window / all (mm)</th><th>steps &gt; 5 mm slop (all)</th><th>overlapping, no contact (all)</th><th>crossings</th><th>approach / step (mm)</th><th>geometry vs Jolt depth (mean / max mm)</th></tr>${Object.entries(R).map(([k, r]) => `<tr><td>${r.title}</td><td>1–${r.window}</td><td>${f(r.window_stats.maxPenMm)} / ${f(r.all_stats.maxPenMm)}</td><td>${r.all_stats.stepsOverSlop}</td><td>${r.all_stats.uncachedOverlapSteps}</td><td>${r.deepestPairs.some(p => p.crossed) ? "yes" : "none"}</td><td>${r.maxApproachPerStepMm}</td><td>${f(r.validation.meanGeomMinusJoltMm, 3)} / ${f(r.validation.maxAbsMm)}</td></tr>`).join("")}</table>
+    <p>Filtering: ${sum.filter.crossPairs.enabled} / ${sum.filter.crossPairs.enabled + sum.filter.crossPairs.disabled.length} cross-character body pairs enabled in Jolt's filter table · motion quality ${sum.filter.motionQuality.join(",")} · speculative distance ${f(sum.filter.settings.speculativeContactDistance * 1000, 0)} mm · penetration slop ${f(sum.filter.settings.penetrationSlop * 1000, 0)} mm.</p>`;
+  const E = R.DX.envelope["30"], B = ["foot_R", "foot_L", "shank_R", "shank_L", "thigh_R", "thigh_L", "pelvis", "thorax", "head", "upperArm_R", "forearm_R"];
+  document.getElementById("env").innerHTML = `<table><tr><th>body</th>${B.map(b => `<th>${b}</th>`).join("")}</tr><tr><td>runner</td>${B.map(b => `<td>${E.runner[b] ? E.runner[b].p95mm : "—"}</td>`).join("")}</tr><tr><td>tackler (includes its render offset)</td>${B.map(b => `<td>${E.tackler[b] ? E.tackler[b].p95mm : "—"}</td>`).join("")}</tr></table>`; });
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+ "tool": "cxa1_filter.mjs",
+ "crossPairs": {
+  "enabled": 196,
+  "disabled": []
+ },
+ "withinPairs": {
+  "total": 182,
+  "disabled": [
+   "pelvis(R)–abdomen(R)",
+   "pelvis(R)–thorax(R)",
+   "pelvis(R)–thigh_L(R)",
+   "pelvis(R)–thigh_R(R)",
+   "abdomen(R)–thorax(R)",
+   "abdomen(R)–thigh_L(R)",
+   "abdomen(R)–thigh_R(R)",
+   "thorax(R)–head(R)",
+   "thorax(R)–upperArm_L(R)",
+   "thorax(R)–upperArm_R(R)",
+   "upperArm_L(R)–forearm_L(R)",
+   "upperArm_R(R)–forearm_R(R)",
+   "thigh_L(R)–shank_L(R)",
+   "shank_L(R)–foot_L(R)",
+   "thigh_R(R)–shank_R(R)",
+   "shank_R(R)–foot_R(R)",
+   "pelvis(T)–abdomen(T)",
+   "pelvis(T)–thorax(T)",
+   "pelvis(T)–thigh_L(T)",
+   "pelvis(T)–thigh_R(T)",
+   "abdomen(T)–thorax(T)",
+   "abdomen(T)–thigh_L(T)",
+   "abdomen(T)–thigh_R(T)",
+   "thorax(T)–head(T)",
+   "thorax(T)–upperArm_L(T)",
+   "thorax(T)–upperArm_R(T)",
+   "upperArm_L(T)–forearm_L(T)",
+   "upperArm_R(T)–forearm_R(T)",
+   "thigh_L(T)–shank_L(T)",
+   "shank_L(T)–foot_L(T)",
+   "thigh_R(T)–shank_R(T)",
+   "shank_R(T)–foot_R(T)"
+  ]
+ },
+ "specDisabledPairs": 32,
+ "objectLayers": [
+  1
+ ],
+ "motionQuality": [
+  "Discrete"
+ ],
+ "settings": {
+  "speculativeContactDistance": 0.019999999552965164,
+  "penetrationSlop": 0.004999999888241291,
+  "baumgarte": 0.20000000298023224,
+  "velocitySteps": 150,
+  "positionSteps": 2,
+  "hz": 240
+ }
+}

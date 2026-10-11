@@ -1,0 +1,5 @@
+runner boot vertices 920 | outside > 5 mm: 728
+foot-frame x: mesh -79 … 78 mm | hull union -55 … 55 mm
+foot-frame y: mesh -88 … 55 mm | hull union -88 … -15 mm
+foot-frame z: mesh -81 … 275 mm | hull union -64 … 220 mm
+vertices > 20 mm outside: 597 centroid (foot frame, mm): -0, 10, 55
