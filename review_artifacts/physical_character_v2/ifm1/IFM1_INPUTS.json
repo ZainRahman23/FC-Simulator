@@ -1,0 +1,1737 @@
+{
+ "manifest": "IFM1_INPUTS",
+ "prereg": {
+  "path": "review_artifacts/physical_character_v2/ifm1/Touchline_IFM1_Claude_Preregistration.md",
+  "sha256": "c9264f2b60d9608113a073531f2be8941e171a71b89c048e60095e6009c8e7f0",
+  "approvalCommit": "5b5883fe8931eb0450f834ee4bceb21f211f1211",
+  "approvalSource": "review_artifacts/physical_character_v2/sources/2026-10-11_user_approval_ifm1_execute.md"
+ },
+ "repository": {
+  "worktree": "physical-character-v2",
+  "branch": "prototype/physical-character-v2",
+  "headAtBinding": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+  "statusAtBinding": [
+   "?? review_artifacts/physical_character_v2/ifm1/evidence/ib_verify_before.txt",
+   "?? review_artifacts/physical_character_v2/ifm1/evidence/ifm1_bind.log",
+   "?? review_artifacts/physical_character_v2/ifm1/evidence/lv2_state_check_fresh_archive.txt"
+  ],
+  "cleanOutsideIfm1Outputs": true
+ },
+ "decisions": [
+  {
+   "item": "RUN-1 freeze",
+   "resolution": "locomotion-v2-straight-baseline-1 → tag object d85304f5af525556320b555feb889270f066b94a → commit 4a226b1f43ddf5b918acab2807041334ff637405",
+   "basis": "the only locomotion tag in the repository; equals the owner's verbatim freeze statement (sources/2026-10-10_user_instruction_reconcile_handoff_with_lv2_state_1.md); the earlier draft affc30b0 is not used"
+  },
+  {
+   "item": "posture driver / actuator adapter (§6.4)",
+   "resolution": "PostureDriver (pi1_rev2_sim.mjs) gains (StandController gain / gainSwing built by G2Sim with stand SLP_STAND at plant construction, exactly as REV2 / ITS-1) and statics formula; ActuatorLayer compute(init=true) activation initialisation; actuator encoding τ_req = τ0 − (D + h·K)·ω = the preregistered encoding (no translation needed)",
+   "basis": "the only posture driver in the repository; used unchanged by PI-1 REV2 and ITS-1"
+  },
+  {
+   "item": "contact-impulse instrumentation (§2.6 / §7 N)",
+   "resolution": "post-step contact-cache decode (track_a_lib saveState(Contacts) + decodeContacts, Jolt 5.6.0 layout) with the reconstruction above",
+   "basis": "the only version-bound solved-impulse readout in the repository; the Jolt 5.6.0 source fixes tangents, application points and signs"
+  },
+  {
+   "item": "snapshot / restore (§7 X)",
+   "resolution": "track_a_lib saveState / restoreState (EStateRecorderState_All via StateRecorderJS) + harness state (actuator activations, SnapshotTone state, ledgers, step index)",
+   "basis": "G3Sim snapshot / restore is the validated precedent (bit-exact, G3 N)"
+  },
+  {
+   "item": "R0 / RH1 mappers (§2.2, §6.1–6.2)",
+   "resolution": "MC-1 (map/v2_lv2_map.js) applied to each candidate's own joint frames: RH1 = the audit's MC-1 (study D12n / k); R0 = the same equations on R0 = the committed study's alternative A2 with velocity field k",
+   "basis": "owner decision D2 (084f736d) adopted the mapping contract body-generically; the study names 'frozen anatomy plus the A2 mapping' as the alternative to D12n; the prereg §6.2 requires the audit's continuous velocity construction for every candidate (excludes R2's 'm' field); binding checks R0.mapper.lower / R0.mapper.studyA2"
+  }
+ ],
+ "checks": [
+  {
+   "id": "RUN1.archive",
+   "pass": true,
+   "value": "LV2_ARCHIVE files byte-identical to the tag blobs: 18/18"
+  },
+  {
+   "id": "SPEC.hashes",
+   "pass": true,
+   "value": "R0 62d5d797 (audit 62d5d797), RH1 e2892d27 (audit e2892d27), at ankle K 0.13"
+  },
+  {
+   "id": "SPEC.ranges",
+   "pass": true,
+   "value": "R0 and RH1 joint range definitions identical"
+  },
+  {
+   "id": "WORLD.solver",
+   "pass": true,
+   "value": "G1_WORLD hz 240, velSteps 150, posSteps 2 (the audit's 150 / 2 at 240 Hz)"
+  },
+  {
+   "id": "JOLT.binary",
+   "pass": true,
+   "value": "vendored Jolt sha256 011233a5fff762d6f0f5b50726b315246bf68cb182f0a10024559d04f4c257de"
+  },
+  {
+   "id": "R0.mapper.lower",
+   "pass": true,
+   "value": "MC-1 lower body on R0 bit-identical to pcg_rev1 (R-K + RF-1) at all 240 instants × 3 (τ, τ ± δ), 3.0 m/s"
+  },
+  {
+   "id": "R0.mapper.studyA2",
+   "pass": true,
+   "value": "MC-1 on R0 vs the committed study's A2 / k at 3.0 m/s: 2808 values over 234 valid instants, worst relative 5.00e-5 (abs 5.00e-5, bodyV, k 127); study storage = 4 decimals"
+  }
+ ],
+ "run1": {
+  "tag": "locomotion-v2-straight-baseline-1",
+  "tagObject": "d85304f5af525556320b555feb889270f066b94a",
+  "peeledCommit": "4a226b1f43ddf5b918acab2807041334ff637405",
+  "tagMessage": "Locomotion V2 straight-line baseline: RUN-1.3 (run1_gait_v13.js = run1_gait.js @ bdab1f5f) + state contract LV2-STATE-1 (lv2_state.js). Straight-line only. See review_artifacts/locomotion_v2_run1/LOCOMOTION_V2_STRAIGHT_BASELINE.md",
+  "files": [
+   {
+    "path": "review_artifacts/locomotion_v2_run1/LOCOMOTION_V2_STRAIGHT_BASELINE.md",
+    "role": "acceptance record + four-regime ladder (LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "49e410058d3f29c717cb43e09b3e98c3bf09817c",
+    "sha256": "97a63b4156143cb43f3f3f74065087f0500716d972e24a703a3c2d0a76e39c03",
+    "bytes": 13487
+   },
+   {
+    "path": "review_artifacts/locomotion_v2_run1/LOCOMOTION_V2_STATE_CONTRACT.md",
+    "role": "state / velocity handoff contract LV2-STATE-1 (regime weights, stance sub-phases, pose-function derivatives)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "44521303e82f8a15265590290714a9d8ddc26d55",
+    "sha256": "b6a52bee88c94e618ab0c11f21fcdfe56be4e20138de08aa9731b9affb6dba49",
+    "bytes": 16521
+   },
+   {
+    "path": "sandbox/visual/run1/lv2_state.js",
+    "role": "LV2-STATE-1 implementation (export contract: query / queryAt)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "572df9f770342c9091b68e2b881c152b59d447f9",
+    "sha256": "cc84a1c24b52b47619f72286829d796313a4c8ceab1837310f1335c46a823b9e",
+    "bytes": 23580
+   },
+   {
+    "path": "sandbox/visual/run1/run1_gait_v13.js",
+    "role": "frozen evaluator RUN-1.3 @ bdab1f5f (RUN1_V13)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "7ba8297c2e7db1e764bdd08452c27fd6aec7a977",
+    "sha256": "93a7cc0e65c3cdcea1c968f35b6ebec5831c2bc2bf4b7fef16c976203a79abcd",
+    "bytes": 59573
+   },
+   {
+    "path": "sandbox/visual/run1/run1_gait.js",
+    "role": "evolving file (= baseline at the freeze; NOT used)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "010212622e0548ad87e4f5e91b23ae04d6972320",
+    "sha256": "8bd18dc1f45703defab88081d9fa0665b89b435789545b496d3f9f06303fc8c6",
+    "bytes": 57606
+   },
+   {
+    "path": "sandbox/visual/run1/tools/run1_load.cjs",
+    "role": "loader (vm context, load order)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "5853cc9edfcecfa148044bb0671d179faea1caa1",
+    "sha256": "f61686e66715dcee65a304228863becef374a6ac51b92db72454351fc2cf4ce0",
+    "bytes": 2207
+   },
+   {
+    "path": "sandbox/visual/run1/tools/lv2_state_check.cjs",
+    "role": "contract checks (21 rows)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "dd8a34a4b8a26c1564f8d68789a661edb24f0195",
+    "sha256": "de63565a4429100f2c5eb1a7754c71febddcdbc79cb19b895384ed76d743e41a",
+    "bytes": 14214
+   },
+   {
+    "path": "sandbox/visual/anim3d/m4.js",
+    "role": "dependency",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "bbf83e6e5b12ad0998abfcdfe70dc125dff20546",
+    "sha256": "fcbe559ea04796f2179c49f5d1623cf01d0268a48689547f5f3d4d3c7b29f1b2",
+    "bytes": 4033
+   },
+   {
+    "path": "sandbox/visual/anim3d/skeleton.js",
+    "role": "dependency",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "89b5faa02dd6cdb8868feb742aa9d19cec60846b",
+    "sha256": "92ce29d32e0be1511b45c2b214128452396888ee5fc3ee7d6f4a5421a3dd7134",
+    "bytes": 7145
+   },
+   {
+    "path": "sandbox/visual/anim3d/of_rig.js",
+    "role": "dependency",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "09cc8ff909e2f29eecf915d174e783640ee75ad5",
+    "sha256": "2cbe19a2dc68d35de0c17ddd8e384e0cbd08a1735b0eff7080f772c50cb3399b",
+    "bytes": 12635
+   },
+   {
+    "path": "sandbox/visual/anim3d/of_character.js",
+    "role": "dependency (ofCharSkeleton)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "216bd4f61d19ba86686e576bfa716cb61132cf8d",
+    "sha256": "fe218d38ebd90e76d78393f65b4832368e657487fe8708aaadf81dcf8f415c9c",
+    "bytes": 6554
+   },
+   {
+    "path": "sandbox/visual/anim3d/of_char_gl.js",
+    "role": "character skinning / draw (ofCharLoad / ofCharDraw)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "adae61837acea778502f16cf23df0e849018da95",
+    "sha256": "0f32b01f9fea5a2f25ad26f5cd756078b490b91b102147fb170ae1f2fdc0864e",
+    "bytes": 7664
+   },
+   {
+    "path": "sandbox/visual/anim3d/skin_mesh.js",
+    "role": "skin mesh",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "7e43f2753eaf93ab7864399f57716718a6b928fe",
+    "sha256": "2143b936e7219b888041f6c2c415a0f481a6d7573e7e5eca765be7c35d3ac916",
+    "bytes": 8927
+   },
+   {
+    "path": "sandbox/visual/run1/run1_viewer.js",
+    "role": "gameplay camera rv1GameCam = CAMERA_V1 (height 30, dist 43, fov 28, depthoff 3, pitch 22, yaw 0, rail), viewports, zoom 1",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "c0053580c8805dd1c6045ce564a2dbf41d548ff2",
+    "sha256": "ccd515d73c9fcc8c54bf1e1a705a705cd6ac019dd7262ff51a76f4d0f272e79b",
+    "bytes": 40105
+   },
+   {
+    "path": "sandbox/visual/run1.html",
+    "role": "viewer page (script order)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "cea1c0af67434ba6ade47de6cd6da6c864b0e57f",
+    "sha256": "452dbcc2c060e5f15594f215ffbee147d44515babc0fc397e3c98b31def11817",
+    "bytes": 6900
+   },
+   {
+    "path": "assets/characters/outfield/vinicius/rig.json",
+    "role": "rig (23 bones)",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "6ca64389d44244331cd7af37ce8f4ee6f854353e",
+    "sha256": "b8e67cff7849198b225725a5b52b67ff48ebefd9bc160955a57ad9c76da68a2e",
+    "bytes": 27395
+   },
+   {
+    "path": "assets/characters/outfield/vinicius/mesh.bin",
+    "role": "character mesh",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "1338036a9d37479c0db810efe5910a85f9b87ff5",
+    "sha256": "10643c7bc542a4bb63a177543e6db4b9299c35a5d5cd656c0dc1f7d09b7e1c06",
+    "bytes": 5865872
+   },
+   {
+    "path": "assets/characters/outfield/vinicius/atlas.png",
+    "role": "character texture",
+    "commit": "4a226b1f43ddf5b918acab2807041334ff637405",
+    "blob": "c0d0d0ec672d6da12dfdc3ab5f8f6dbc31bac18f",
+    "sha256": "5526ed7a646dddf10196387dc3176e3462c5e415f029f09372f5eaf8172d2131",
+    "bytes": 15355
+   }
+  ],
+  "ownerFreezeStatement": {
+   "path": "review_artifacts/physical_character_v2/sources/2026-10-10_user_instruction_reconcile_handoff_with_lv2_state_1.md",
+   "role": "owner's verbatim freeze statement (tag, commit 4a226b1f, ladder)",
+   "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+   "blob": "3858556e47c0e62c1a20272ae468b19bbf3f6c35",
+   "sha256": "7517d6fb679dc8bd87d052b0a9f3ebe38d7f8d968bb72dfc875cde34dc6dcce1",
+   "bytes": 4894
+  },
+  "regimeAt3": "LOW (anchor 3.0 m/s, parameter key JOG)",
+  "stanceSubPhases": [
+   "forefoot landing",
+   "flat",
+   "heel-up",
+   "toe pad"
+  ],
+  "swingSubPhase": "swing"
+ },
+ "audit": {
+  "files": [
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_pi1_runner.js",
+    "role": "R0 constructor PI1_RUNNER / pi1RunnerSpec",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "aa77751d0ffc10dcc87a8f921e89ebd97cddb9cc",
+    "sha256": "00184e8f99a8cb2e0e60225e6b8843d0afc5452c6f34635b75418aa05edc05d4",
+    "bytes": 2242
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_pi1_runner_rh.js",
+    "role": "RH1 constructor PI1_RUNNER_RH1 / pi1RunnerRH1Spec",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "ed1f8b2587d0fbea2da82e15ebec567fb9ed8cb8",
+    "sha256": "a2b4076382fbcc0847643969f695138d1a2a6698c1bb23073925d4bc9186b4a1",
+    "bytes": 3405
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_hinges.js",
+    "role": "RH1 hinge-only post-step",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "95fbcc26be255e202951930a158139d31c8190a3",
+    "sha256": "653aea67bd52d39bb8268100ae9a70e34726be2bdb50912b13c077cccb91ff17",
+    "bytes": 3354
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_spec.js",
+    "role": "V2 generator",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "18fb9a915460e1665c5f6e3b4c3de53bfd7c866d",
+    "sha256": "d60a7e1a332d7acdc4f3b9bfda7dea64abb368c85fedfce00aab575ba1f44359",
+    "bytes": 4020
+   },
+   {
+    "path": "sandbox/visual/physchar2/map/v2_lv2_map.js",
+    "role": "mapper MC-1 (RH1_PREREG §2) — applied to each candidate's own joint frames",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "69f1696646df51c4ad015d84b18194f57038fbb3",
+    "sha256": "b4516916391d16a2337649f79e81140c47a1f28bc57828d1fe65664f7a75d2d3",
+    "bytes": 22128
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/pi1/rev1/scripts/pcg_rev1.mjs",
+    "role": "frozen PI-1 lower-body mapper (MC-1 (1) reference)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "da4f187b0e15eed2cfa634b3612d21bbe6836927",
+    "sha256": "67743052e0e918950b691b57cff2ea36f558ebb6593d57a1a4365040f4f8d176",
+    "bytes": 15684
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/pi1/trackB/scripts/pcg_f0.mjs",
+    "role": "PCG tolerances / helpers",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "4d002ec03418ff2c6b3cdd3a1b3be81fcf32aecc",
+    "sha256": "86da7e2c6de3d1e3ef1c6f370c0a0a4cf0a956e5e77758ec30b2c8ca3bb2ed81",
+    "bytes": 10598
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/pi1/scripts/compat_lib.mjs",
+    "role": "PCG library",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "bf48e7655089c96cdb2c4149a9f5e2507b0758ec",
+    "sha256": "3ca08a2017349847ff4a1ec0b8fc783277874d3d33362950d98810958f53bd16",
+    "bytes": 15934
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/RH1_PREREG.md",
+    "role": "RH1 frozen preregistration (50eae23a)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "a8ee1e9d7e8c5e5b8e7a15b2fc3c98659c21fe70",
+    "sha256": "9a23993ad6fc288dd69859ba84e834c78f9a4e3107eafab1921245cb3c72e365",
+    "bytes": 16165
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/RH1_RESULTS.md",
+    "role": "RH1 results",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "779a301cfda0c96040921a012fc532155b4bea61",
+    "sha256": "9887df61096bf4c2205c93723c048061bd36430878b576a410905b22e92466f9",
+    "bytes": 23581
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/RH1_AUDIT_HANDOFF.md",
+    "role": "reproduced audit report",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "f993e7584c3f9e36089fcf02e687647b5acc915f",
+    "sha256": "c577261e70b764ddde44389ca2910f55b79ef637689a28ae3a8198fb16d04155",
+    "bytes": 11187
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/evidence/battery/eval/gate_eval.json",
+    "role": "raw per-row results (audit grouping)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "09a1a6354def31a603f142034ad113945d5cabfc",
+    "sha256": "25b907336529030c6159a2edb271f9563189d98d50d34f71cc4dd283d6d36c0b",
+    "bytes": 46517
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/evidence/audit/audit.log",
+    "role": "clean-tree reproduction log",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "9490e4423b43e6de76d8f9004ac5cc95ef788212",
+    "sha256": "f5a66c033e2a24f6cccdd91b27f625724b360bc03165f0f62fa3d3b04733f77d",
+    "bytes": 3500
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/evidence/audit/g3_body_R0.json",
+    "role": "R0 in V2-REF's G3 rows",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "d58c2a3f6a1a2dbcfe7b2d2d831ddfbd658bc304",
+    "sha256": "52f5a02df55187534b374a07a6fb585007c39b89709e5d38a2caf329bee5d624",
+    "bytes": 3674
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/scripts/rh1_gate_eval.mjs",
+    "role": "qualification evaluation code (per-body, frozen evaluators)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "9179eb06053f35671425bbd0a100ef0bf30fab95",
+    "sha256": "50aa15d779032ff903ba9e0720d368db7b28477caf5ecd3b9652032fb67e8ba1",
+    "bytes": 32684
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/record_hinged/scripts/rh1_handoff_eval.mjs",
+    "role": "handoff evaluation (MC-1 on RH1)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "af5b3172bb629aa03b63cb5f377e085a2a7a3cb2",
+    "sha256": "74bdf3afa0e98adb29a42b5392b624aa25a355940ceed26cc3ae47e8d4332a3b",
+    "bytes": 21023
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_time/run1_handoff/V2_UPPER_BODY_REPRESENTATION.md",
+    "role": "study naming A2 (R0) and D12n (RH1)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "803e0afee2515dfff943b6cc6f774aaef527cde7",
+    "sha256": "d58eba869ceaf603662cfdf49d631a549b041c7503f37f5b4d85a25f67a0bc23",
+    "bytes": 22035
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_time/run1_handoff/lv2/upper/out/v2_upper_alt_probe.json.gz",
+    "role": "study per-instant values (A2/k, D12n/k)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "cb65ab58cd1e8c086742e3b10587b60cc32a0118",
+    "sha256": "de1c66a7a57a7c8140c921befaee619abd755d8c54c375c06014e93cd66529d5",
+    "bytes": 4899381
+   }
+  ],
+  "rowGrouping": {
+   "source": "gate_eval.json (copied, not re-derived)",
+   "rh1GatingRows": 54,
+   "rh1Passing": 50,
+   "failing": [
+    {
+     "item": "G1",
+     "row": "1.S",
+     "value": "V2-REF: every scenario passes every criterion — 14/17 scenarios; failing: 1.3d, 1.R, 1.4d"
+    },
+    {
+     "item": "G3",
+     "row": "G",
+     "value": "T7:R:2 stood hold mean 0.606 slip 0.27 abort 2.34 · T7:R:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:4 stood hold mean 0.562 slip 0.27 abort 3.66 · T7:L:2 stood hold mean 0.606 slip 0.27 abort 2.34"
+    },
+    {
+     "item": "G3",
+     "row": "H",
+     "value": "H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 6"
+    },
+    {
+     "item": "G3",
+     "row": "K′",
+     "value": "[original K FAIL] T11:over:1.4: margin -7.38 cm → EXCESSIVE; step required → fell · T11:over:1.2: margin -1.42 cm → EXCESSIVE; step required → fell · T11:over:1.4:sup: margin -7.38 cm → EXCESSIVE; stood"
+    }
+   ],
+   "r0Failing": [
+    {
+     "item": "G1",
+     "row": "1.S′",
+     "value": "V1-matched instance: every scenario passes every criterion — 16/17 scenarios"
+    }
+   ],
+   "scenarioLabelsInsideG1_1S": [
+    "leanL 1.3d",
+    "dropA 1.R",
+    "isoSelfCol 1.4d"
+   ],
+   "note": "G1 1.S is ONE gating row whose failing scenario labels are leanL 1.3d, dropA 1.R, isoSelfCol 1.4d; G3 G / H / K′ are three gating rows; 50 / 54 is the preregistered RH1 count, not qualification",
+   "auditFindings": {
+    "RH1": "INVALID under its frozen preregistration (verdict C)",
+    "introduced": [
+     "G1 leanL 1.3d",
+     "G1 dropA 1.R"
+    ],
+    "sharedWithR0": [
+     "G3 G",
+     "G3 H",
+     "G3 K′"
+    ],
+    "isoSelfCol": "PI-1-scoped exception only (D1C); NOT extended to IFM-1",
+    "G0": "0.4c/0.6a/0.6b/0.6e/0.10a never waived by the owner — unresolved historical qualification debt"
+   }
+  }
+ },
+ "v2": {
+  "files": [
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_joints.js",
+    "role": "joints, ranges, decompose / anatomical angles",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "2f9829e28545114299a86b1614a4e0261a1cc526",
+    "sha256": "9395d6bd60b9e77f6dff834906e30395c356bcf341ee9ada52a1a6ca786c5518",
+    "bytes": 27757
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_actuators.js",
+    "role": "actuator capacities",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "077659b0843d6b525d269b8772d2f65f96fe5075",
+    "sha256": "99e865e95e501cc86d6597193890fea18c205efafba7bf46598da8e03f463695",
+    "bytes": 9616
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_human.js",
+    "role": "variation set / human profiles",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "166e4afb1e236c801c524de8ad111bc8f47bc179",
+    "sha256": "68c02b547a0fc3bc4261ac61a3b5207a7138bc7d922f61ba33163b176bc8f104",
+    "bytes": 10309
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_body.js",
+    "role": "segment mass model",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "96c84b0f7de6ae5cae50976f799937cfed0505b5",
+    "sha256": "3cc4146dea29131a9b7460ddf204f236a43edd187875a91d3bfde69f2e870215",
+    "bytes": 10051
+   },
+   {
+    "path": "sandbox/visual/physchar2/spec/v2_knee.js",
+    "role": "v2k knee",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "d0a5034422647ac7caa52900224069750779b91d",
+    "sha256": "09cfdc2bf8d686e02b9eab78738da50d1902a271cbd36605c29131b369f9e627",
+    "bytes": 6432
+   },
+   {
+    "path": "sandbox/visual/physchar2/sim/v2_passive.js",
+    "role": "passive tissue",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "8379fb0f7b80d009a11e3bd5290ec9c5c6563306",
+    "sha256": "616b287bb435ac8b763a7baeb66e6843eb8cac3d27da7a3324006238c154fab0",
+    "bytes": 27648
+   },
+   {
+    "path": "sandbox/visual/physchar2/sim/v2_actuation.js",
+    "role": "ActuatorLayer (implicit PD encoding τ = τ0 − (D + h·K)·ω)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "ebd5f5d317a0a0ac0e8c7433f44df865d3489cbb",
+    "sha256": "dc63b383ebc53adfe14c0a314985466ee29dbfe244f61231b51ba33f21088ca1",
+    "bytes": 10679
+   },
+   {
+    "path": "sandbox/visual/physchar2/sim/v2_geom.js",
+    "role": "boot sole / geometry",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "16d8916d6bbe2dfe858bdee25f29d8e47f1d3238",
+    "sha256": "0646eeb1a82707cada16d8c206211ced2f66d733d09586ad048d4b70b0e15d1c",
+    "bytes": 11866
+   },
+   {
+    "path": "sandbox/visual/physchar2/core/v2_jolt.js",
+    "role": "V2 Jolt world: layers, contact listener, F0 boot shapes, contact config",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "fbe08b7f7b4310f8a0d31f7972ee70927d92f24a",
+    "sha256": "11a9c4d59e2e3a12eb1dfa418b54493e7df385850b25bc78da111519afb8050f",
+    "bytes": 29404
+   },
+   {
+    "path": "sandbox/visual/physchar2/core/v2_math.js",
+    "role": "math",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "a54f9359fac1a2f7e32d5365ac50a66d2eb1f5c6",
+    "sha256": "ba964c6bc46e0d7199aa8d8c60d07304ceffda8ebe74ad502bc956778690bd6e",
+    "bytes": 8524
+   },
+   {
+    "path": "sandbox/visual/physchar2/gates/v2_g1.js",
+    "role": "G1_WORLD hz 240 / velSteps 150 / posSteps 2 / discrete; G1Sim",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "b73601d69da0b77025ff85469e89987d10ecf983",
+    "sha256": "0cec82e8b18882a95b42288009a6a9c46498ac456b6e99bac94245a7a60cda1e",
+    "bytes": 48637
+   },
+   {
+    "path": "sandbox/visual/physchar2/gates/v2_g2.js",
+    "role": "G2Sim plant (G1 world + passive + actuators), G2_SCENARIOS",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "934b87d552fbf835fd1e74f0af52d207eef0740d",
+    "sha256": "e2291a485379d6d7d63f75a2bef18ad16955cd490624b38e03bc7c0fbd2a63b8",
+    "bytes": 21465
+   },
+   {
+    "path": "sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js",
+    "role": "Jolt Physics 5.6.0 (jolt-physics@1.1.0), WASM inlined",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "0c7bb3e66ce660eaf9179c1581e1157034af9f76",
+    "sha256": "011233a5fff762d6f0f5b50726b315246bf68cb182f0a10024559d04f4c257de",
+    "bytes": 3222495
+   }
+  ]
+ },
+ "postureDriver": {
+  "files": [
+   {
+    "path": "review_artifacts/physical_character_v2/pi1/rev2/scripts/pi1_rev2_sim.mjs",
+    "role": "PostureDriver: per-axis {K, D, τ0}, stance / swing gain blend, gravity statics from support flags",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "16404332cf3b8a114948cf53a6d88feb4d88ec31",
+    "sha256": "3d9834627869d88ff4ae027955a831e098e7c4fa4e824ff8500e0881841a491e",
+    "bytes": 17628
+   },
+   {
+    "path": "sandbox/visual/physchar2/gates/v2_slp.js",
+    "role": "SLP_STAND controller construction",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "bbe58d950e655f9c01687c9fd7fce814831c9cb3",
+    "sha256": "b90270347d1b8149720c6fa48f3df8cbb4309b95825454ef5ed76bd44336500d",
+    "bytes": 18188
+   },
+   {
+    "path": "sandbox/visual/physchar2/ctrl/v2_stand.js",
+    "role": "StandController gains gain[k] / gainSwing[k] (computed at plant construction)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "d2de3d73f7e4b0fc8d5d1180b98759dec43ac97b",
+    "sha256": "735969c9f8a26b7a4d3ec801a86081fff809d458ca0199ffdadbdb5feb86d5fe",
+    "bytes": 128186
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_time/scripts/its_sim.mjs",
+    "role": "ITS-1 plant: the same construction (G2Sim S0short + SLP_STAND, PostureDriver, ActuatorLayer init path)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "40c8920c14aa1f7f95426f6c420b0667820bcfe8",
+    "sha256": "94dd7cc7ce80eb7e278562ca3ba256bb503eaca1d1e81ae55fe95ef03682fe5f",
+    "bytes": 5011
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_time/ITS1_STOP_PF0.md",
+    "role": "the frozen-target mismatch SnapshotTone removes",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "93fcee684a374ff2e748665a8a439efa55ce8291",
+    "sha256": "f0865a809012c44ee28bf2a77e0bba674a2031821ae09cedd44be4dd7c710947",
+    "bytes": 10364
+   }
+  ]
+ },
+ "ib1": {
+  "files": [
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_benchmark/MANIFEST.json",
+    "role": "IB-1 manifest",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "5dd3708f4f68790c1d8957f3cfad5da23bd19491",
+    "sha256": "7bde91b756e143c62c09f23066e04170fe4dca9e388fe42f40a41b122870498a",
+    "bytes": 12819
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_benchmark/METRICS.md",
+    "role": "IB-1 metrics",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "e6ba86338e00ee945c5815ed1f90094db0b35428",
+    "sha256": "8bd7ccfdcdb24581974c76af67ed793e862900aea0268248ec7f877be688d5fc",
+    "bytes": 10234
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_benchmark/README.md",
+    "role": "IB-1 description",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "384fd80f710848462fc875df21dc429fdf54c4f7",
+    "sha256": "6fa8ed2dcc1cc49343dbf07b1e8df6b1cfca600b48a68182132dc4a16d8368ef",
+    "bytes": 11934
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_benchmark/scripts/ib_verify.mjs",
+    "role": "immutable-record verifier",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "078bfea310da45fc3e84acc2c306af825013085b",
+    "sha256": "4a89b69be1fba7788dece084ba6118a86540f30385cf54bd6e9b2f30fbde2c11",
+    "bytes": 5175
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/interaction_benchmark/SHA256SUMS",
+    "role": "record checksums",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "e70769c4c9257afccbb157d6882b60c4f2a6e03d",
+    "sha256": "59dc316c9900f9684d60772488b305440d6959a473b7af5ccc66ac80add74651",
+    "bytes": 2474
+   },
+   {
+    "path": "review_artifacts/physical_character_v2/pi1/trackB/scripts/air_export_v13.cjs",
+    "role": "the football runner / snapshot exporter (V1.3 5042230, schema pi1.air/3-v13)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "75a3cdab536ddd63e683d2dd511fc96873527c27",
+    "sha256": "78b961532a0732dbe530af5addd9e800cb00dcaba7f5dd02ead2d524afbf2dd2",
+    "bytes": 12446
+   }
+  ],
+  "simulationCommit": "5042230b5bc162247e151c10bef8634539a92be0",
+  "liveInterface": "the authoritative football simulation (V1.3, 5042230) has no RUN-1-only or IFM-1-observer animation mode; IFM-1 fixtures take no football input. Stated in advance: READ_ONLY_RECORD_NEUTRALITY_PROVEN (ib_verify before / after) / LIVE_NEUTRALITY_NOT_TESTED"
+ },
+ "instrumentation": {
+  "files": [
+   {
+    "path": "sandbox/visual/physchar2/tools/track_a_lib.mjs",
+    "role": "Jolt state save / restore (StateRecorderJS) + v5.6.0 ManifoldCache codec (solved per-point normal λ, per-manifold friction λ1 λ2, angular friction λ)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "426a4c4f6b62958afb248c87978e2a248160041f",
+    "sha256": "d7d61be41ee26cd248cba932aadb0581180bf3c05a2617a1890dcf3e850a3432",
+    "bytes": 5839
+   },
+   {
+    "path": "sandbox/visual/physchar2/gates/v2_g3.js",
+    "role": "G3Sim snapshot / restore precedent (bit-exact, G3 row N)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "450b5b435356a4e76beaa07fa1316e66631004c7",
+    "sha256": "49cce2454bfbc9132f66d50f7933436b2579f4c93771255f3db2bfcdd2182c81",
+    "bytes": 34053
+   },
+   {
+    "path": "sandbox/visual/physchar2/gates/v2_g1_tests.js",
+    "role": "snapshotRestore (G1 1.6b)",
+    "commit": "1c3e26473cc6dfe8b0af59d23651784991d450e5",
+    "blob": "9d7cd405b7109048fc99fdca396c7f9c28d757c9",
+    "sha256": "f72b3ba89b328007c8f67d3bd9dbb713243fd1a0a8b1601ace34a5d635c62c6d",
+    "bytes": 21300
+   }
+  ],
+  "joltSource": {
+   "version": "Jolt Physics 5.6.0",
+   "files": [
+    {
+     "url": "https://raw.githubusercontent.com/jrouwe/JoltPhysics/v5.6.0/Jolt/Physics/Constraints/ContactConstraintManager.cpp",
+     "sha256": "cdf571bd257769c5e765c837ce6440eb0fbfd7a445edb9b74cc580b9b1864386"
+    },
+    {
+     "url": "https://raw.githubusercontent.com/jrouwe/JoltPhysics/v5.6.0/Jolt/Physics/Constraints/ContactConstraintManager.h",
+     "sha256": "e8443da6375bb453e7057269bf5c44bee934c820436a2b89ff85254f5d3fcb5b"
+    },
+    {
+     "url": "https://raw.githubusercontent.com/jrouwe/JoltPhysics/v5.6.0/Jolt/Physics/Constraints/ConstraintPart/ContactConstraintPart.h",
+     "sha256": "1a5c6a877c641884373e1b69c5653f68607fc2e19f5790d2a0bd79649bf86946"
+    },
+    {
+     "url": "https://raw.githubusercontent.com/jrouwe/JoltPhysics/v5.6.0/Jolt/Physics/Constraints/ConstraintPart/AngularFrictionConstraintPart.h",
+     "sha256": "66239158cc9d3f767e2cc7f10c978c6c5f9d04775bf94a4d306d0044a40963c9"
+    }
+   ],
+   "reconstruction": "per manifold (key body1/sub1/body2/sub2): world points p1 = T1·p1_local, p2 = T2·p2_local with the PRE-STEP centre-of-mass transforms (GetCenterOfMassTransform at constraint setup); application point p = ½(p1 + p2); normal n = normalize(R2·n_local); non-penetration impulse λ_k on body2 = +λ_k n at p_k, on body1 = −λ_k n; friction point f = mean of p_k; tangents t1 = n.GetNormalizedPerpendicular(), t2 = n × t1; friction impulses ±(λf1 t1 + λf2 t2) at f; angular friction ±λa n as a free couple (only when > 1 point). Sign: body1 −, body2 +."
+  }
+ },
+ "definitions": {
+  "units": "anatomical joint angles in degrees; positions m; velocities m/s; angular velocities rad/s; impulses N·s; angular impulses N·m·s",
+  "jointRanges": {
+   "semantics": "per joint and anatomical axis: active [lo, hi] and hard [lo, hi] (deg); shoulder combined horizontal-adduction limit; locked axes fixed. The Jolt hard stop is an EMERGENCY stop at the anatomical hard limit ± a measured per-joint margin (G1 C2); ordinary loading is resisted by the passive anatomical end-stop",
+   "R0": {
+    "lumbar": {
+     "rom": {
+      "flex": {
+       "active": [
+        -25,
+        60
+       ],
+       "hard": [
+        -30,
+        70
+       ]
+      },
+      "lat": {
+       "active": [
+        -25,
+        25
+       ],
+       "hard": [
+        -30,
+        30
+       ]
+      },
+      "rot": {
+       "active": [
+        -7,
+        7
+       ],
+       "hard": [
+        -10,
+        10
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "thoracic": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        30
+       ],
+       "hard": [
+        -20,
+        40
+       ]
+      },
+      "lat": {
+       "active": [
+        -20,
+        20
+       ],
+       "hard": [
+        -25,
+        25
+       ]
+      },
+      "rot": {
+       "active": [
+        -35,
+        35
+       ],
+       "hard": [
+        -40,
+        40
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "neck": {
+     "rom": {
+      "flex": {
+       "active": [
+        -60,
+        50
+       ],
+       "hard": [
+        -70,
+        60
+       ]
+      },
+      "lat": {
+       "active": [
+        -40,
+        40
+       ],
+       "hard": [
+        -45,
+        45
+       ]
+      },
+      "rot": {
+       "active": [
+        -70,
+        70
+       ],
+       "hard": [
+        -80,
+        80
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "shoulder_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        -55,
+        170
+       ],
+       "hard": [
+        -65,
+        180
+       ]
+      },
+      "abd": {
+       "active": [
+        0,
+        170
+       ],
+       "hard": [
+        0,
+        180
+       ]
+      },
+      "rot": {
+       "active": [
+        -90,
+        70
+       ],
+       "hard": [
+        -100,
+        80
+       ]
+      }
+     },
+     "combined": {
+      "active": [
+       {
+        "elev": 90,
+        "hAdd": 130
+       }
+      ],
+      "hard": [
+       {
+        "elev": 90,
+        "hAdd": 140
+       }
+      ]
+     },
+     "locked": []
+    },
+    "shoulder_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        -55,
+        170
+       ],
+       "hard": [
+        -65,
+        180
+       ]
+      },
+      "abd": {
+       "active": [
+        0,
+        170
+       ],
+       "hard": [
+        0,
+        180
+       ]
+      },
+      "rot": {
+       "active": [
+        -90,
+        70
+       ],
+       "hard": [
+        -100,
+        80
+       ]
+      }
+     },
+     "combined": {
+      "active": [
+       {
+        "elev": 90,
+        "hAdd": 130
+       }
+      ],
+      "hard": [
+       {
+        "elev": 90,
+        "hAdd": 140
+       }
+      ]
+     },
+     "locked": []
+    },
+    "elbow_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        145
+       ],
+       "hard": [
+        -5,
+        150
+       ]
+      },
+      "pron": {
+       "active": [
+        -85,
+        77
+       ],
+       "hard": [
+        -90,
+        85
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "elbow_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        145
+       ],
+       "hard": [
+        -5,
+        150
+       ]
+      },
+      "pron": {
+       "active": [
+        -85,
+        77
+       ],
+       "hard": [
+        -90,
+        85
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "hip_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        120
+       ],
+       "hard": [
+        -25,
+        140
+       ]
+      },
+      "abd": {
+       "active": [
+        -25,
+        40
+       ],
+       "hard": [
+        -35,
+        50
+       ]
+      },
+      "rot": {
+       "active": [
+        -40,
+        30
+       ],
+       "hard": [
+        -50,
+        45
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "hip_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        120
+       ],
+       "hard": [
+        -25,
+        140
+       ]
+      },
+      "abd": {
+       "active": [
+        -25,
+        40
+       ],
+       "hard": [
+        -35,
+        50
+       ]
+      },
+      "rot": {
+       "active": [
+        -40,
+        30
+       ],
+       "hard": [
+        -50,
+        45
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "knee_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        140
+       ],
+       "hard": [
+        -5,
+        155
+       ]
+      },
+      "rot": {
+       "active": [
+        -30,
+        20
+       ],
+       "hard": [
+        -40,
+        30
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "knee_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        140
+       ],
+       "hard": [
+        -5,
+        155
+       ]
+      },
+      "rot": {
+       "active": [
+        -30,
+        20
+       ],
+       "hard": [
+        -40,
+        30
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "ankle_L": {
+     "rom": {
+      "df": {
+       "active": [
+        -50,
+        20
+       ],
+       "hard": [
+        -60,
+        45
+       ]
+      },
+      "inv": {
+       "active": [
+        -20,
+        25
+       ],
+       "hard": [
+        -30,
+        35
+       ]
+      },
+      "fabd": {
+       "active": [
+        -10,
+        10
+       ],
+       "hard": [
+        -15,
+        15
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "ankle_R": {
+     "rom": {
+      "df": {
+       "active": [
+        -50,
+        20
+       ],
+       "hard": [
+        -60,
+        45
+       ]
+      },
+      "inv": {
+       "active": [
+        -20,
+        25
+       ],
+       "hard": [
+        -30,
+        35
+       ]
+      },
+      "fabd": {
+       "active": [
+        -10,
+        10
+       ],
+       "hard": [
+        -15,
+        15
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    }
+   },
+   "RH1": {
+    "lumbar": {
+     "rom": {
+      "flex": {
+       "active": [
+        -25,
+        60
+       ],
+       "hard": [
+        -30,
+        70
+       ]
+      },
+      "lat": {
+       "active": [
+        -25,
+        25
+       ],
+       "hard": [
+        -30,
+        30
+       ]
+      },
+      "rot": {
+       "active": [
+        -7,
+        7
+       ],
+       "hard": [
+        -10,
+        10
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "thoracic": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        30
+       ],
+       "hard": [
+        -20,
+        40
+       ]
+      },
+      "lat": {
+       "active": [
+        -20,
+        20
+       ],
+       "hard": [
+        -25,
+        25
+       ]
+      },
+      "rot": {
+       "active": [
+        -35,
+        35
+       ],
+       "hard": [
+        -40,
+        40
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "neck": {
+     "rom": {
+      "flex": {
+       "active": [
+        -60,
+        50
+       ],
+       "hard": [
+        -70,
+        60
+       ]
+      },
+      "lat": {
+       "active": [
+        -40,
+        40
+       ],
+       "hard": [
+        -45,
+        45
+       ]
+      },
+      "rot": {
+       "active": [
+        -70,
+        70
+       ],
+       "hard": [
+        -80,
+        80
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "shoulder_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        -55,
+        170
+       ],
+       "hard": [
+        -65,
+        180
+       ]
+      },
+      "abd": {
+       "active": [
+        0,
+        170
+       ],
+       "hard": [
+        0,
+        180
+       ]
+      },
+      "rot": {
+       "active": [
+        -90,
+        70
+       ],
+       "hard": [
+        -100,
+        80
+       ]
+      }
+     },
+     "combined": {
+      "active": [
+       {
+        "elev": 90,
+        "hAdd": 130
+       }
+      ],
+      "hard": [
+       {
+        "elev": 90,
+        "hAdd": 140
+       }
+      ]
+     },
+     "locked": []
+    },
+    "shoulder_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        -55,
+        170
+       ],
+       "hard": [
+        -65,
+        180
+       ]
+      },
+      "abd": {
+       "active": [
+        0,
+        170
+       ],
+       "hard": [
+        0,
+        180
+       ]
+      },
+      "rot": {
+       "active": [
+        -90,
+        70
+       ],
+       "hard": [
+        -100,
+        80
+       ]
+      }
+     },
+     "combined": {
+      "active": [
+       {
+        "elev": 90,
+        "hAdd": 130
+       }
+      ],
+      "hard": [
+       {
+        "elev": 90,
+        "hAdd": 140
+       }
+      ]
+     },
+     "locked": []
+    },
+    "elbow_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        145
+       ],
+       "hard": [
+        -5,
+        150
+       ]
+      },
+      "pron": {
+       "active": [
+        -85,
+        77
+       ],
+       "hard": [
+        -90,
+        85
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "elbow_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        145
+       ],
+       "hard": [
+        -5,
+        150
+       ]
+      },
+      "pron": {
+       "active": [
+        -85,
+        77
+       ],
+       "hard": [
+        -90,
+        85
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "hip_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        120
+       ],
+       "hard": [
+        -25,
+        140
+       ]
+      },
+      "abd": {
+       "active": [
+        -25,
+        40
+       ],
+       "hard": [
+        -35,
+        50
+       ]
+      },
+      "rot": {
+       "active": [
+        -40,
+        30
+       ],
+       "hard": [
+        -50,
+        45
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "hip_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        -15,
+        120
+       ],
+       "hard": [
+        -25,
+        140
+       ]
+      },
+      "abd": {
+       "active": [
+        -25,
+        40
+       ],
+       "hard": [
+        -35,
+        50
+       ]
+      },
+      "rot": {
+       "active": [
+        -40,
+        30
+       ],
+       "hard": [
+        -50,
+        45
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "knee_L": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        140
+       ],
+       "hard": [
+        -5,
+        155
+       ]
+      },
+      "rot": {
+       "active": [
+        -30,
+        20
+       ],
+       "hard": [
+        -40,
+        30
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "knee_R": {
+     "rom": {
+      "flex": {
+       "active": [
+        0,
+        140
+       ],
+       "hard": [
+        -5,
+        155
+       ]
+      },
+      "rot": {
+       "active": [
+        -30,
+        20
+       ],
+       "hard": [
+        -40,
+        30
+       ]
+      }
+     },
+     "combined": null,
+     "locked": [
+      "z"
+     ]
+    },
+    "ankle_L": {
+     "rom": {
+      "df": {
+       "active": [
+        -50,
+        20
+       ],
+       "hard": [
+        -60,
+        45
+       ]
+      },
+      "inv": {
+       "active": [
+        -20,
+        25
+       ],
+       "hard": [
+        -30,
+        35
+       ]
+      },
+      "fabd": {
+       "active": [
+        -10,
+        10
+       ],
+       "hard": [
+        -15,
+        15
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    },
+    "ankle_R": {
+     "rom": {
+      "df": {
+       "active": [
+        -50,
+        20
+       ],
+       "hard": [
+        -60,
+        45
+       ]
+      },
+      "inv": {
+       "active": [
+        -20,
+        25
+       ],
+       "hard": [
+        -30,
+        35
+       ]
+      },
+      "fabd": {
+       "active": [
+        -10,
+        10
+       ],
+       "hard": [
+        -15,
+        15
+       ]
+      }
+     },
+     "combined": null,
+     "locked": []
+    }
+   },
+   "identical": true
+  },
+  "g1Integrity": {
+   "transientJointSeparationMm": 5,
+   "restJointSeparationMm": 1,
+   "transientHardOvershootDegDocumented": 3,
+   "settledExcursionBeyondHardDeg": 1.5,
+   "emergencyStop": "0 engine-stop ticks (G1 1.3b); anatomical overshoot documented",
+   "transientSelfPenetrationMm": 10,
+   "transientTurfPenetrationMm": 10,
+   "energyStepJ": 0.5
+  },
+  "ifm1Integrity": "IFM-1 §9 (prospective): anchor separation ≤ 1 mm; self-penetration ≤ 10 mm (no isoSelfCol exception); turf penetration ≤ 10 mm; emergency stop not reached (G1 1.3b semantics); capacity integrity (ActuatorLayer overCap = 0)",
+  "handoff": {
+   "HGA_v2": {
+    "source": "review_artifacts/physical_character_v2/pi1/hga/HGA_V2_ADOPTED.md (adopted 2026-10-09)",
+    "write": "s = (v_auth − v_COM)_h added to every body; ω and positions unchanged; no vertical shift",
+    "rows": {
+     "HG-A2.1": "horizontal momentum = M·v_auth,h (≤ 1e-6 m/s)",
+     "HG-A2.2": "L about the COM and relative velocities unchanged (≤ 1e-9)",
+     "HG-A2.3": "|s| ≤ 0.180 m/s (3 mm per 60 Hz frame, from PI-1 PR-2)"
+    }
+   },
+   "PR2": {
+    "source": "review_artifacts/physical_character_v2/pi1/PI1_PREREGISTRATION.md (6ef7e1e) row PR-2; RH1_PREREG §4 / MC-1 §2(4)",
+    "definition": "every rig joint's first-frame displacement within 3 mm of the RUN-1 stream's (= 0.18 m/s per rig landmark); render rule: rotation retarget, mapped bones take their V2 body's angular velocity, unmapped bones hold their entry local rotation",
+    "limitMs": 0.18
+   }
+  },
+  "P14c_17c": {
+   "source": "review_artifacts/physical_character_v2/record_hinged/RH1_PREREG.md §3",
+   "P14c": "≤ 0.25 m/s",
+   "P15c": "≤ 2.0 rad/s",
+   "P16c": "≤ 0.05 m/s",
+   "P17c": "|ΔL| ≤ 0.10 × max(|L*|, 1.0 kg·m²/s) (pcg_f0 TOL Lrel 0.10, Lfloor 1.0)",
+   "P17frac": "the audit evaluator's P17frac = |ΔL| / max(|L*|, 1.0) — RELATIVE TO THE REFERENCE (limit 0.10 on this scale). The audit's ALL-OUT 0.049 = 4.9 % of the reference = 49 % of the limit (the prereg §1 phrase '4.9 % of its stated limit' inherits a mislabel in RH1_RESULTS; erratum record_hinged/ERRATUM_2026-10-11_P17_UNITS.md)",
+   "note": "a fraction of a limit is not a percentage error against the reference momentum; both are reported separately"
+  },
+  "world": {
+   "G1_WORLD": {
+    "hz": 240,
+    "coll": 1,
+    "velSteps": 150,
+    "posSteps": 2,
+    "ccd": "discrete"
+   },
+   "G2_WORLD": {
+    "hz": 240,
+    "coll": 1,
+    "velSteps": 150,
+    "posSteps": 2,
+    "ccd": "discrete",
+    "actuators": true
+   },
+   "timestep": 0.004166666666666667,
+   "velocityIterations": 150,
+   "positionIterations": 2,
+   "contact": {
+    "speculative": 0.02,
+    "slop": 0.005,
+    "baumgarte": 0.2,
+    "restitution": 0,
+    "friction": {
+     "boot|turf": 1.2,
+     "hand|turf": 0.7,
+     "body|turf": 0.5,
+     "body|body": 0.4,
+     "boot|body": 0.4,
+     "hand|body": 0.4,
+     "boot|boot": 0.4,
+     "hand|hand": 0.4,
+     "boot|hand": 0.4
+    },
+    "frictionNote": "boot–turf 1.2 [ENG] default pending the turf gate (range 1.0–1.6); others [V1] values kept as [ENG]"
+   },
+   "env": {
+    "V2_KNEE_MODEL": "v2k",
+    "ankleNeutralK": 0.13
+   },
+   "actuatorConstants": {
+    "U_MARGIN": 0.25,
+    "U_TONE": 0.02,
+    "D_MIN": 0.02,
+    "SAT_TOL": 0.001
+   }
+  },
+  "specHashes": {
+   "R0": "62d5d797",
+   "RH1": "e2892d27",
+   "R0id": "PI1-runner-vinicius",
+   "RH1id": "PI1-runner-vinicius-RH1"
+  }
+ },
+ "status": "BOUND",
+ "blockedBy": []
+}

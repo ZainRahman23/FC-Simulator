@@ -1,0 +1,8 @@
+PASS RUN1.archive: LV2_ARCHIVE files byte-identical to the tag blobs: 18/18
+PASS SPEC.hashes: R0 62d5d797 (audit 62d5d797), RH1 e2892d27 (audit e2892d27), at ankle K 0.13
+PASS SPEC.ranges: R0 and RH1 joint range definitions identical
+PASS WORLD.solver: G1_WORLD hz 240, velSteps 150, posSteps 2 (the audit's 150 / 2 at 240 Hz)
+PASS JOLT.binary: vendored Jolt sha256 011233a5fff762d6f0f5b50726b315246bf68cb182f0a10024559d04f4c257de
+PASS R0.mapper.lower: MC-1 lower body on R0 bit-identical to pcg_rev1 (R-K + RF-1) at all 240 instants × 3 (τ, τ ± δ), 3.0 m/s
+PASS R0.mapper.studyA2: MC-1 on R0 vs the committed study's A2 / k at 3.0 m/s: 2808 values over 234 valid instants, worst relative 5.00e-5 (abs 5.00e-5, bodyV, k 127); study storage = 4 decimals
+IFM1_INPUTS.json: BOUND

@@ -1,0 +1,62 @@
+PASS  rx_miss             V1 sha256 = SHA256SUMS (off)                   c9f382b5a6121c2d
+PASS  rx_miss             V2 sha256 prefix = committed summary (off)     c9f382b5a6121c2d
+PASS  rx_miss             V3 gameplay hash recomputed = record = summary (off) 3c502075
+PASS  rx_miss             V1 sha256 = SHA256SUMS (v13loco)               c2727823cec4c44b
+PASS  rx_miss             V2 sha256 prefix = committed summary (v13loco) c2727823cec4c44b
+PASS  rx_miss             V3 gameplay hash recomputed = record = summary (v13loco) 3c502075
+PASS  rx_miss             V1 sha256 = SHA256SUMS (lc1loco)               25eb29a85fcf56b1
+PASS  rx_miss             V2 sha256 prefix = committed summary (lc1loco) 25eb29a85fcf56b1
+PASS  rx_miss             V3 gameplay hash recomputed = record = summary (lc1loco) 3c502075
+PASS  rx_miss             V4 V1.3 OFF ≡ V1.3 LOCO (except mode/pres/cpu) identical
+PASS  rx_miss             V5 LC-1 LOCO ≡ V1.3 OFF (authoritative streams) identical: 16 fields (scenario.keys null)
+PASS  rx_miss             V6 manifest / scenario file agree with records 0 contact(s)
+PASS  rx_free_leg         V1 sha256 = SHA256SUMS (off)                   ae872a96acfd02e6
+PASS  rx_free_leg         V2 sha256 prefix = committed summary (off)     ae872a96acfd02e6
+PASS  rx_free_leg         V3 gameplay hash recomputed = record = summary (off) 8fb114a1
+PASS  rx_free_leg         V1 sha256 = SHA256SUMS (v13loco)               9da73e3f515dd083
+PASS  rx_free_leg         V2 sha256 prefix = committed summary (v13loco) 9da73e3f515dd083
+PASS  rx_free_leg         V3 gameplay hash recomputed = record = summary (v13loco) 8fb114a1
+PASS  rx_free_leg         V1 sha256 = SHA256SUMS (lc1loco)               adf263f9465a3af3
+PASS  rx_free_leg         V2 sha256 prefix = committed summary (lc1loco) adf263f9465a3af3
+PASS  rx_free_leg         V3 gameplay hash recomputed = record = summary (lc1loco) 8fb114a1
+PASS  rx_free_leg         V4 V1.3 OFF ≡ V1.3 LOCO (except mode/pres/cpu) identical
+PASS  rx_free_leg         V5 LC-1 LOCO ≡ V1.3 OFF (authoritative streams) identical: 16 fields (scenario.keys null)
+PASS  rx_free_leg         V6 manifest / scenario file agree with records 2 contact(s)
+PASS  rx_planted_leg      V1 sha256 = SHA256SUMS (off)                   87074aa00f29a7ea
+PASS  rx_planted_leg      V2 sha256 prefix = committed summary (off)     87074aa00f29a7ea
+PASS  rx_planted_leg      V3 gameplay hash recomputed = record = summary (off) 18d95b1d
+PASS  rx_planted_leg      V1 sha256 = SHA256SUMS (v13loco)               d6ceda6cbc179a1a
+PASS  rx_planted_leg      V2 sha256 prefix = committed summary (v13loco) d6ceda6cbc179a1a
+PASS  rx_planted_leg      V3 gameplay hash recomputed = record = summary (v13loco) 18d95b1d
+PASS  rx_planted_leg      V1 sha256 = SHA256SUMS (lc1loco)               96403248f3676193
+PASS  rx_planted_leg      V2 sha256 prefix = committed summary (lc1loco) 96403248f3676193
+PASS  rx_planted_leg      V3 gameplay hash recomputed = record = summary (lc1loco) 18d95b1d
+PASS  rx_planted_leg      V4 V1.3 OFF ≡ V1.3 LOCO (except mode/pres/cpu) identical
+PASS  rx_planted_leg      V5 LC-1 LOCO ≡ V1.3 OFF (authoritative streams) identical: 16 fields (scenario.keys null)
+PASS  rx_planted_leg      V6 manifest / scenario file agree with records 1 contact(s)
+PASS  rx_glancing         V1 sha256 = SHA256SUMS (off)                   3bffb2359b5a95f1
+PASS  rx_glancing         V2 sha256 prefix = committed summary (off)     3bffb2359b5a95f1
+PASS  rx_glancing         V3 gameplay hash recomputed = record = summary (off) b85dde0f
+PASS  rx_glancing         V1 sha256 = SHA256SUMS (v13loco)               8b5365624c4e6dc6
+NOTE  rx_glancing         V2 sha256 prefix = committed summary (v13loco) file 8b5365624c4e6dc6 vs summary 271eb0176de0febe: presentation-mode bytes include the wall-clock cpu field; see V3–V5
+PASS  rx_glancing         V3 gameplay hash recomputed = record = summary (v13loco) b85dde0f
+PASS  rx_glancing         V1 sha256 = SHA256SUMS (lc1loco)               71e02a10c9840072
+PASS  rx_glancing         V2 sha256 prefix = committed summary (lc1loco) 71e02a10c9840072
+PASS  rx_glancing         V3 gameplay hash recomputed = record = summary (lc1loco) b85dde0f
+PASS  rx_glancing         V4 V1.3 OFF ≡ V1.3 LOCO (except mode/pres/cpu) identical
+PASS  rx_glancing         V5 LC-1 LOCO ≡ V1.3 OFF (authoritative streams) identical: 16 fields (scenario.keys null)
+PASS  rx_glancing         V6 manifest / scenario file agree with records 1 contact(s)
+PASS  rx_behind_standing  V1 sha256 = SHA256SUMS (off)                   7ca8028993db3852
+PASS  rx_behind_standing  V2 sha256 prefix = committed summary (off)     7ca8028993db3852
+PASS  rx_behind_standing  V3 gameplay hash recomputed = record = summary (off) a2678624
+PASS  rx_behind_standing  V1 sha256 = SHA256SUMS (v13loco)               8ce9d90d343856ac
+PASS  rx_behind_standing  V2 sha256 prefix = committed summary (v13loco) 8ce9d90d343856ac
+PASS  rx_behind_standing  V3 gameplay hash recomputed = record = summary (v13loco) a2678624
+PASS  rx_behind_standing  V1 sha256 = SHA256SUMS (lc1loco)               b31a4a7065db3ad2
+PASS  rx_behind_standing  V2 sha256 prefix = committed summary (lc1loco) b31a4a7065db3ad2
+PASS  rx_behind_standing  V3 gameplay hash recomputed = record = summary (lc1loco) a2678624
+PASS  rx_behind_standing  V4 V1.3 OFF ≡ V1.3 LOCO (except mode/pres/cpu) identical
+PASS  rx_behind_standing  V5 LC-1 LOCO ≡ V1.3 OFF (authoritative streams) identical: 16 fields (scenario.keys null)
+PASS  rx_behind_standing  V6 manifest / scenario file agree with records 1 contact(s)
+
+ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
