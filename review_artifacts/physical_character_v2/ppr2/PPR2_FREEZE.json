@@ -1,0 +1,33 @@
+{
+ "protocol": "PPR-2 qualification (frozen before any candidate battery run)",
+ "frozenAt": "2026-10-11T21:43:46.208Z",
+ "env": {
+  "V2_KNEE_MODEL": "v2k",
+  "node": "v22.19.0"
+ },
+ "candidate": "ppr2/PPR2_CANDIDATE_S.json",
+ "references": [
+  "ppr2/PPR2_REFERENCE_SA.json",
+  "CURRENT V2 (law A)"
+ ],
+ "sha256": {
+  "ppr2/PPR2_PREREGISTRATION.md": "d2f676a09801cc565b21e5a77235faa3f60acfed02e8b2a87fbece351ea5a00a",
+  "ppr2/PPR2_DESIGN.md": "9d7a816b6f44b59dfdb552b2b83463e5e1b6dbdea8f303cf0444c1e391424bf6",
+  "ppr2/PPR2_CRITERIA_AUDIT.md": "346e43a6beb1e6cdc913d168ba7efb65c55471d9479b227b48773809bd9b1f08",
+  "ppr2/PPR2_CANDIDATE_S.json": "e6f08db394551c82e318ecc0d117b82fda0b02522f86d91537d0b422cdb1ee59",
+  "ppr2/PPR2_REFERENCE_SA.json": "55c1670b6d493d8571238e2914b08c1c67b67a71b28857541b1c97249b28c0b4",
+  "ppr2/scripts/ppr2_substrate.mjs": "4ede077f68c1f4355da54e9570b7114816c9772f0a5fb157fae00ef22e345daa",
+  "ppr2/scripts/ppr2_plant.mjs": "435a9a392636ad0ac2b8ce297fcaa9d5a1fe2c47d7f049147448d56543b889b1",
+  "ppr2/scripts/ppr2_run.mjs": "da38fe6cd78d29ff1f095e4fbc0425241355769e965e5c383477052d723a116d",
+  "ppr2/scripts/ppr2_ankle_platform.mjs": "28b80c46c01c97d0c19b9fb3e5931952ab6373fa35c4e17e48a58b42cb471433",
+  "ppr2/scripts/ppr2_battery.mjs": "d9beab03bdc6dbb6abd29cbd0bf4c3a060799f5993427eab96b20824ea2a492a",
+  "ppr2/scripts/ppr2_qualify.mjs": "a16411563c03866b815ef3167a5a30ef8ab6afd072cad66ebf3679180d6fd0a8",
+  "ppr2/scripts/ppr2_eval.mjs": "9c1bdc48bb9d41c9008045b50eecced148dd27290805b8314b73b2bad5bf35f2",
+  "pvp1/fixture/PVP1A_FIXTURE.json": "93c62cb434a0d41ce4dbff2c6b5e2a99199b91b380b3fe62a41d568be41973a8",
+  "ppr1/scripts/ppr1_law.mjs": "6b2d6148d854c9681c12d0e64b108b66ef3e04da291a1d6cb4b49959e4beacb3",
+  "ppr1/scripts/ppr1_plant.mjs": "4b626426133e7d2b012ec71d10c22d9b90b741c114101f3ffb7685038a85d1cb",
+  "pvp1/scripts/pvp1a_sim.mjs": "a4d933b329e443f36088bd528b6854d7c979f2c1b932542a4bc9619e52c62e5e",
+  "pvp1/scripts/pvp1a_lib.mjs": "1cda6741f68582e284104cc7b6f11bfd6524fe1f26e96c399515cf8bcd993f24",
+  "ppr2/research/STANDING_SUBSTRATE_LITERATURE.md": "7c05a6f8029baa26af6394841da598807e7474bc7e40c0248c49171302927ba4"
+ }
+}

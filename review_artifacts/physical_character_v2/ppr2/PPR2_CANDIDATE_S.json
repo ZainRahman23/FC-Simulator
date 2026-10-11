@@ -1,0 +1,54 @@
+{
+ "id": "PPR-2 candidate standing substrate S* (A + A2 + B + C)",
+ "L": 30,
+ "aCC": 0.02,
+ "zeta": 0.2,
+ "floor": 1.2,
+ "support": [],
+ "thetaYdeg": {
+  "ankle": 0.9673617406041296,
+  "knee": 1,
+  "hip": 1,
+  "lumbar": 3,
+  "thoracic": 3,
+  "neck": 2,
+  "shoulder": 2.2,
+  "elbow": 2
+ },
+ "passive": {
+  "ankle.df": {
+   "k": 46,
+   "slackDeg": 0,
+   "src": "Loram, Maganaris & Lakie 2007a [M]: long-range relaxed ankle stiffness in standing, 46 N·m/rad per leg; slack = anatomical neutral [D]"
+  },
+  "knee.flex": {
+   "k": 17,
+   "slackDeg": 14,
+   "src": "Riener & Edrich 1999 [E]: passive knee stiffness at 14.2° flexion (≈ 16 at 15°, 26 at 10°); slack = passive zero-moment angle ≈ 14°"
+  },
+  "hip.flex": {
+   "k": 19,
+   "slackDeg": 26.8,
+   "src": "Riener & Edrich 1999 [E]: passive hip stiffness at 7.4° flexion (20.6 at 5°, 17.8 at 10°); slack = passive zero-moment angle 26.8° (knee extended)"
+  },
+  "lumbar.flex": {
+   "k": 10,
+   "slackDeg": 0,
+   "src": "Watt 2022 table [M/R]: lumbar neutral-zone stiffness ≈ 10 N·m/rad; slack = neutral"
+  },
+  "neck.flex": {
+   "k": 1.6,
+   "slackDeg": 0,
+   "src": "Liu et al. 2024 [M]: zone-1 neck stiffness 2.1 (flexion) / 1.1 (extension) N·m/rad, mean; slack = neutral"
+  },
+  "neck.lat": {
+   "k": 2.4,
+   "slackDeg": 0,
+   "src": "Liu et al. 2024 [M]: zone-1 lateral bending ≈ 2.4 N·m/rad; slack = neutral"
+  }
+ },
+ "eccentric": null,
+ "srsHold": true,
+ "statics": "rest",
+ "note": "A: fixed excitation from the entry state (no regulator); A2: rest statics; B: passive mid-range elasticity (literature, untuned); C: short-range/eccentric reserve strain-based (srsHold), plateau e unchanged (V2 1.20–1.35, adequate per literature). Intrinsic muscle mechanics = PPR-1 B (θ_y, ζ 0.2, aCC 0.02) unchanged."
+}

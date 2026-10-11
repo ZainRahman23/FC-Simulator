@@ -1,0 +1,23 @@
+{
+ "id": "PPR-2 reference S_A (corrected laws only: A + A2)",
+ "L": 30,
+ "aCC": 0.02,
+ "zeta": 0.2,
+ "floor": 1.2,
+ "support": [],
+ "thetaYdeg": {
+  "ankle": 0.9673617406041296,
+  "knee": 1,
+  "hip": 1,
+  "lumbar": 3,
+  "thoracic": 3,
+  "neck": 2,
+  "shoulder": 2.2,
+  "elbow": 2
+ },
+ "passive": null,
+ "eccentric": null,
+ "srsHold": false,
+ "statics": "rest",
+ "note": "reference only (not the candidate): the corrected control law with V2 body spec and PPR-1 intrinsic mechanics, no B, no C"
+}
