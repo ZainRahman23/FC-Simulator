@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PVP-1A Review</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff6b5b; --ok: #3fd17a; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 10px; } h2 { font-size: 18px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 14px 0 4px; color: var(--acc); }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; }
+  .banner { background: #3a1512; border: 1px solid var(--bad); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .banner b { color: #ffd1cb; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 18px 0; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+  video { width: 100%; height: auto; background: #000; border-radius: 4px; display: block; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 6px 0; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; background: #111815; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; }
+  canvas.chart { width: 100%; height: 190px; background: #111815; border-radius: 4px; display: block; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; } th { color: var(--dim); font-weight: 600; }
+  .pass { color: var(--ok); font-weight: 600; } .fail { color: var(--bad); font-weight: 600; }
+  @media (max-width: 600px) { main { padding: 12px 16px; } .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>PVP-1A · standing recoverable player-v-player contact (IB1-SR)</h1>
+<div class="banner"><b>PVP-1A result: BLOCKED</b>. It stopped at the frozen tackler-entry gate (H2) before any physics; the same entry also self-penetrates (H3). No V1-matched pose can fit the simulation's slide primitives within the frozen tolerances, because the primitives encode 0.265 m hip spacing against the body's 0.190 m.<br>
+<b>Everything below is PVP-1A-DX</b>, a separately named <b>diagnostic</b>. It is the identical frozen design run with the best-available tackler entry. That entry fails the fit gates and self-penetrates by 39.5 mm (fixed arms inside the flexed thighs), so <b>the tackler is untrusted from step 1</b>. The runner is mechanically clean. The DX result cannot turn PVP-1A into a pass. <b>VISUAL_PENDING</b>: no visual-value verdict is made here.</div>
+<div class="card"><h2>What the recorded physics shows</h2><div id="facts" class="info">loading…</div></div>
+
+<div class="card"><h2>A · Gameplay view: the frozen Touchline camera (CAMERA_V1), zoom 1, normal speed</h2>
+<p>250 ms of lead-in (no physics), then the 1.083 s record at 60 Hz. Runner: vinicius (R0). Tackler: gabriel (V1-matched). The tackler's lead-in pose is constructed from the simulation's slide primitives; the record contains no tackler animation.</p>
+<video data-src="video/A_gameplay_N2_1x.mp4" controls loop muted playsinline></video></div>
+
+<div class="card"><h2>B · Slow-motion close view: the viewer's own 6× zoom (same camera pose and perspective)</h2>
+<div class="ctl"><button data-b="video/B_close_N2_0.25x.mp4" class="on">0.25×</button><button data-b="video/B_close_N2_0.10x.mp4">0.1×</button><span style="color:var(--dim);font-size:12px">Every recorded 1/240 s step is one frame.</span></div>
+<video id="vB" controls loop muted playsinline></video></div>
+
+<div class="card"><h2>C · Diagnostic slow motion (same frames)</h2>
+<p>White = runner skeleton · orange = tackler skeleton · cyan = contact-body colliders · yellow = native contact points, normals and step impulse · gold ⊕ / cyan ⊕ = runner / tackler COM, with velocity arrows from the recorded states (1 m/s = 0.25 m) · filled circles = runner boots loaded this step · dashed magenta = the simulation's authoritative tackler primitives · dashed amber = its authoritative runner shin / foot.</p>
+<video data-src="video/C_diag_N2_0.25x.mp4" controls loop muted playsinline></video></div>
+
+<div class="card" id="pairD"></div>
+<div class="card" id="pairE"></div>
+
+<div class="card"><h2>Charts (N2 vs C0, from the recorded states)</h2>
+<p>Green = primary window (to τ_sim + 50 ms); amber = secondary (to 150 ms); violet = diagnostic continuation (never validity evidence). Yellow line = first native contact. Red line = where the runner stops being trustworthy (anchor separation > 1 mm, step 132). The tackler is untrusted throughout.</p>
+<div class="grid2"><div><h3>Runner COM displacement vs C0 (mm; x forward / y south / up)</h3><canvas class="chart" id="ch1"></canvas></div>
+<div><h3>Swept right foot vs C0 (mm)</h3><canvas class="chart" id="ch2"></canvas></div>
+<div><h3>Runner boot loads per step (N·s turf normal impulse): N2 L / R</h3><canvas class="chart" id="ch3"></canvas></div>
+<div><h3>Native cross-contact impulse per step (N·s)</h3><canvas class="chart" id="ch4"></canvas></div>
+<div><h3>Tackler COM forward speed (m/s): N2 · C0 · X2</h3><canvas class="chart" id="ch5"></canvas></div>
+<div><h3>Runner XcoM error vs left ankle (m): N2 · C0 (the offline balance-law input)</h3><canvas class="chart" id="ch6"></canvas></div></div></div>
+
+<div class="card"><h2>Frozen criteria (corrected evaluation; would-be values for DX)</h2><div id="crit"></div></div>
+</main>
+<script>
+"use strict";
+const blobs = {}; const blobUrl = (u) => blobs[u] || (blobs[u] = fetch(u).then(r => r.blob()).then(b => URL.createObjectURL(b)));
+document.querySelectorAll("video[data-src]").forEach(async v => { v.src = await blobUrl(v.dataset.src); });
+const vB = document.getElementById("vB"); const setB = async (u) => { vB.src = await blobUrl(u); }; setB("video/B_close_N2_0.25x.mp4");
+document.querySelectorAll("[data-b]").forEach(b => b.onclick = () => { document.querySelectorAll("[data-b]").forEach(x => x.classList.toggle("on", x === b)); setB(b.dataset.b); });
+Promise.all([fetch("capture_index.json").then(r => r.json()), fetch("../evidence/dx_run1/PVP1A_DX_EVAL_corrected.json").then(r => r.json()), fetch("../evidence/dx_run1/PVP1A_DX_POSTHOC.json").then(r => r.json())]).then(([CI, E, P]) => {
+  facts(E, P); pair("pairD", "D · NO CONTACT (C0) vs NATIVE PVP CONTACT (N2): identical start, time and camera", "D_pair_C0_N2", CI, E); pair("pairE", "E · Sustained native contact (N2) vs contact cut after the first contact step (X2): what continued contact does", "E_pair_N2_X2", CI, E); charts(P, E); crit(E);
+});
+function facts(E, P) { const c = E.contact, r = E.response, o = E.outcome, a = P.oc3Audit, d = E.determinism, cpu = null;
+  const f = (x, k = 3) => (x == null ? "—" : (+x).toFixed(k));
+  document.getElementById("facts").textContent = [
+    `First native contact: step ${c.first} (τ ${c.firstTau}; the simulation says 51.5), tackler ${c.firstPair.tackler} → runner ${c.firstPair.runner}. CG-1…6 all pass (location ${f(c.CG.CG4.horizM)} m, overlap ratio ${f(c.CG.CG5.ratio, 2)}, normal ${f(c.CG.CG6.normalDeg, 1)}°).`,
+    `Native contact persisted for ${c.steps.length} of 260 steps; intervals ${JSON.stringify(c.intervals)}. Primary-window cross impulse: ${Object.entries(c.primaryPairs).map(([k, v]) => `${k} ${f(v.Ns, 1)} N·s`).join(", ")}.`,
+    `Propagation through the runner (first detectable step vs C0): ${r.runnerChain.map(([n, s]) => `${n} ${s ?? "—"}`).join(" · ")}.`,
+    `The tackler was physically affected: forward-speed change vs C0 ${f(r.tacklerDvVsC0.n14[0], 2)} m/s at the end of the primary window and ${f(r.tacklerDvVsC0.n36[0], 2)} m/s at 150 ms (the simulation's model: −0.97). Equal and opposite holds exactly (max ${E.contact.eqOppMaxNs} N·s).`,
+    `The runner's right foot was swept ${f(P.series[94].sweptFootMm[0], 0)} mm forward, lifted up to ~44 mm, and replanted by about step 95. The runner stayed supported (no non-foot turf contact) to the end of the 1.083 s record; at the end its pelvis is ${f(P.series[259].pelvisDropMm, 0)} mm lower than in C0.`,
+    `Continued native contact matters: X2 differs from N2 by ${f(E.continued.maxLandmarkMm, 1)} mm / ${f(E.continued.maxOrientDeg, 1)}° within 50 ms of the first contact.`,
+    `Outcome (OFFLINE balance law): the frozen OC-3 says ${o.OC3.cls} (eH ${f(o.OC3.eH)}). But it also calls the no-contact control ${a.frozenOnC0SameStep.cls} (${f(a.frozenOnC0SameStep.eH)}) and the pre-contact state ${a.frozenOnPreContactStep1.cls} (${f(a.frozenOnPreContactStep1.eH)}), so it cannot discriminate here. Post-hoc: the simulation's own static term plus the physically measured contact effect (${f(a.deltaEMagnitude)} m, directed forward) → ${a.postHocAdjusted.law.cls} (eH ${f(a.postHocAdjusted.law.eH)}). The simulation's own contact term (${f(a.simulationContactTerm)} m) points toward the left foot, and that is what kept its case at STUMBLE with a 40 mm margin.`,
+    `Determinism: ${d.all ? "bit-identical (fresh ×2, reverse batch, X2 no-op restore)" : "NOT identical"}. Isolation: runner ${E.isolation.runner.pass ? "identical" : "differs"}, tackler ${E.isolation.tackler.pass ? "identical" : `differs (${(E.isolation.tackler.maxPosM * 1000).toFixed(3)} mm, ${(E.isolation.tackler.maxRotRad * 180 / Math.PI).toFixed(3)}°)`}.`].join("\n"); }
+function pair(id, title, base, CI, E) { const el = document.getElementById(id), idx = CI.views[base].index, fc = E.contact.first, FPS = 60;
+  el.innerHTML = `<h2>${title}</h2><div class="ctl"><button data-v="clean" class="on">CLEAN</button><button data-v="diag">DIAGNOSTIC</button><span style="margin-left:10px;color:var(--dim)">speed</span><button data-s="1" class="on">0.25×</button><button data-s="0.4">0.1×</button></div>
+    <video muted playsinline loop></video><input type="range" min="0" max="${idx.length - 1}" value="0"><div class="ctl"><button data-a="play">▶ play</button><button data-a="prev">◀ frame</button><button data-a="next">frame ▶</button><button data-a="act">activation</button><button data-a="contact">first contact</button><button data-a="p50">+50 ms</button><button data-a="start">start</button></div><div class="info"></div>`;
+  const v = el.querySelector("video"), rng = el.querySelector("input"), info = el.querySelector(".info"); let ver = "clean", rate = 1, k = 0;
+  const src = () => `video/${base}${ver === "diag" ? "_diag" : ""}_0.25x.mp4`, show = (j) => { k = j; rng.value = j; const [n, t] = idx[j]; info.textContent = n < 0 ? `frame ${j + 1}/${idx.length} · τ ${t.toFixed(2)} ms before activation (lead-in; no physics)` : `frame ${j + 1}/${idx.length} · record step ${n} · τ +${t.toFixed(2)} ms after activation${fc != null ? (n === fc ? " · FIRST NATIVE CONTACT" : n > fc ? ` · +${((n - fc) * 1000 / 240).toFixed(1)} ms after first contact` : "") : ""}${n > 131 ? " · runner untrusted after step 131" : ""} · tackler untrusted (entry self-penetration)`; };
+  const seek = (j) => { j = Math.max(0, Math.min(idx.length - 1, j)); v.pause(); v.currentTime = (j + 0.5) / FPS; show(j); }, find = (n) => idx.findIndex(x => x[0] === n);
+  const load = async () => { const j = k, play = !v.paused; v.src = await blobUrl(src()); v.playbackRate = rate; v.addEventListener("loadeddata", () => { seek(j); if (play) v.play(); }, { once: true }); };
+  el.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; if (b.dataset.v) { ver = b.dataset.v; el.querySelectorAll("[data-v]").forEach(x => x.classList.toggle("on", x === b)); load(); } else if (b.dataset.s) { rate = +b.dataset.s; el.querySelectorAll("[data-s]").forEach(x => x.classList.toggle("on", x === b)); v.playbackRate = rate; }
+    else { const a = b.dataset.a; if (a === "play") { if (v.paused) v.play(); else v.pause(); } else if (a === "prev") seek(k - 1); else if (a === "next") seek(k + 1); else if (a === "act") seek(find(0)); else if (a === "contact") seek(find(fc)); else if (a === "p50") seek(find(fc + 12)); else if (a === "start") seek(0); } });
+  rng.oninput = () => seek(+rng.value); v.onplay = () => { el.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }; v.onpause = () => { el.querySelector('[data-a="play"]').textContent = "▶ play"; };
+  const tick = (now, m) => { if (!v.paused) show(Math.min(idx.length - 1, Math.floor(m.mediaTime * FPS + 1e-4))); v.requestVideoFrameCallback(tick); }; if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) v.requestVideoFrameCallback(tick);
+  load(); }
+function chart(id, series, opts) { const cv = document.getElementById(id), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext("2d"); c.scale(dpr, dpr);
+  const N = 260, all = series.flatMap(s => s.y.filter(Number.isFinite)), lo = Math.min(0, ...all), hi = Math.max(1e-9, ...all), X = (n) => 34 + (n / N) * (W - 44), Y = (y) => H - 18 - (y - lo) / (hi - lo || 1) * (H - 30);
+  const band = (a, b, col) => { c.fillStyle = col; c.fillRect(X(a), 4, X(b) - X(a), H - 22); }; band(0, 14, "rgba(63,209,122,0.10)"); band(14, 36, "rgba(240,198,74,0.10)"); band(36, 260, "rgba(154,140,255,0.08)");
+  c.strokeStyle = "#ffe14a"; c.beginPath(); c.moveTo(X(opts.fc), 4); c.lineTo(X(opts.fc), H - 18); c.stroke(); c.strokeStyle = "#ff6b5b"; c.beginPath(); c.moveTo(X(131), 4); c.lineTo(X(131), H - 18); c.stroke();
+  c.strokeStyle = "#3a4a42"; c.beginPath(); c.moveTo(X(0), Y(0)); c.lineTo(X(N), Y(0)); c.stroke(); c.fillStyle = "#9fb3a9"; c.font = "10px Menlo"; c.fillText(hi.toFixed(2), 2, Y(hi) + 8); c.fillText(lo.toFixed(2), 2, Y(lo)); c.fillText("step 0", X(0), H - 4); c.fillText("260", X(N) - 18, H - 4);
+  series.forEach(s => { c.strokeStyle = s.col; c.lineWidth = 1.5; c.beginPath(); s.y.forEach((y, i) => { if (!Number.isFinite(y)) return; const x = X(i + 1); i ? c.lineTo(x, Y(y)) : c.moveTo(x, Y(y)); }); c.stroke(); });
+  let lx = X(0) + 4; series.forEach(s => { c.fillStyle = s.col; c.fillText(s.name, lx, 14); lx += c.measureText(s.name).width + 14; }); }
+function charts(P, E) { const S = P.series, fc = E.contact.first, g = (f) => S.map(f);
+  chart("ch1", [{ name: "x fwd", col: "#ffd45e", y: g(s => s.runnerComDispMm[0]) }, { name: "y south", col: "#7fe3ff", y: g(s => -s.runnerComDispMm[2]) }, { name: "up", col: "#ff78c8", y: g(s => s.runnerComDispMm[1]) }], { fc });
+  chart("ch2", [{ name: "x fwd", col: "#ffd45e", y: g(s => s.sweptFootMm[0]) }, { name: "y south", col: "#7fe3ff", y: g(s => -s.sweptFootMm[2]) }, { name: "up", col: "#ff78c8", y: g(s => s.sweptFootMm[1]) }], { fc });
+  chart("ch3", [{ name: "L", col: "#ff78c8", y: g(s => s.feetN2.L) }, { name: "R", col: "#78ffa0", y: g(s => s.feetN2.R) }], { fc });
+  chart("ch4", [{ name: "cross N·s", col: "#ffe14a", y: g(s => s.crossJ) }], { fc });
+  chart("ch5", [{ name: "N2", col: "#ff9f43", y: g(s => s.tacklerV[0]) }, { name: "C0", col: "#9fb3a9", y: g(s => s.tacklerVC0[0]) }, { name: "X2", col: "#7fe3ff", y: g(s => s.tacklerVX2[0]) }], { fc });
+  chart("ch6", [{ name: "N2", col: "#ffd45e", y: g(s => s.eN2) }, { name: "C0", col: "#9fb3a9", y: g(s => s.eC0) }], { fc }); }
+function crit(E) { const row = (k, ok, v) => `<tr><td>${k}</td><td class="${ok ? "pass" : "fail"}">${ok ? "pass" : "fail"}</td><td>${v}</td></tr>`, c = E.contact, m = E.mechanics.N2, o = E.outcome;
+  document.getElementById("crit").innerHTML = `<table><tr><th>criterion</th><th></th><th>value</th></tr>` +
+    row("Entry: tackler fit gates (G-T1, G-T3)", false, "boot 15.2 / centroid 17.0 mm (limit 10); hip_R–TUCK 55.7 mm (limit 30). No pose satisfies them (best worst-ratio 1.39)") +
+    row("Entry: tackler self-penetration ≤ 10 mm (DX-C1)", E.entry.selfPass, `${E.entry.selfPenetration.tackler.step1DeepestSelfManifoldMm.toFixed(1)} mm (${E.entry.selfPenetration.tackler.fixturePair})`) +
+    row("C0 runner validity", E.controls.runner.valid, E.controls.runner.fails.join("; ") + ` (post-hoc IFM-1-style loaded steps ${E.controls.runner.postHocIfm1StyleLoadedSteps}/14)`) +
+    row("C0 tackler validity", E.controls.tackler.valid, E.controls.tackler.fails.join("; ")) +
+    Object.entries(c.CG).map(([k, v]) => row(k, v.pass, JSON.stringify(v))).join("") +
+    row("Runner primary mechanics (N2)", m.runner.primaryPass, `angular ≤ ${m.runner.maxPrimary.angStep.toFixed(4)} N·m·s/step; first failure ${JSON.stringify(m.runner.firstFailure)}`) +
+    row("Tackler primary mechanics (N2)", m.tackler.primaryPass, m.tackler.primaryFails.join(" ")) +
+    row("System ledgers (N2)", m.system.primaryPass, `angular cumulative ${m.system.angCumPrimary.toFixed(3)} N·m·s; energy Σ⁺ ${m.system.energyResPlusPrimaryJ.toFixed(3)} J`) +
+    row("OC-1 no runner non-foot turf contact", o.OC1.pass, "") + row("OC-2 pelvis drop ≤ 0.121 m", o.OC2.pass, o.OC2.maxDropM.toFixed(3) + " m") + row("OC-3 balance law (offline)", o.OC3.cls !== "FALL", `${o.OC3.cls} (eH ${o.OC3.eH.toFixed(3)}); non-discriminating — see facts`) + row("OC-T tackler slide continues", o.OCT.pass, "") +
+    row("Determinism", E.determinism.all, JSON.stringify(E.determinism)) + row("Isolation (H6)", E.isolation.runner.pass && E.isolation.tackler.pass, JSON.stringify(E.isolation)) + `</table>`; }
+</script>
+</body>
+</html>
