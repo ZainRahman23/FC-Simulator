@@ -1,0 +1,122 @@
+{
+ "id": "PPR-3 S2 sensitivity: tone HIGH (§2 range high ends)",
+ "zeta": 0.2,
+ "thetaYdeg": {
+  "ankle": 0.9673617406041296,
+  "knee": 1,
+  "hip": 1,
+  "lumbar": 3,
+  "thoracic": 3,
+  "neck": 2,
+  "shoulder": 2.2,
+  "elbow": 2
+ },
+ "floorDefault": 0.02,
+ "passive": {
+  "ankle.df": {
+   "k": 46,
+   "slackDeg": 0,
+   "src": "Loram, Maganaris & Lakie 2007a [M]: long-range relaxed ankle stiffness in standing, 46 N·m/rad per leg; slack = anatomical neutral [D]"
+  },
+  "knee.flex": {
+   "k": 17,
+   "slackDeg": 14,
+   "src": "Riener & Edrich 1999 [E]: passive knee stiffness at 14.2° flexion (≈ 16 at 15°, 26 at 10°); slack = passive zero-moment angle ≈ 14°"
+  },
+  "hip.flex": {
+   "k": 19,
+   "slackDeg": 26.8,
+   "src": "Riener & Edrich 1999 [E]: passive hip stiffness at 7.4° flexion (20.6 at 5°, 17.8 at 10°); slack = passive zero-moment angle 26.8° (knee extended)"
+  },
+  "lumbar.flex": {
+   "k": 10,
+   "slackDeg": 0,
+   "src": "Watt 2022 table [M/R]: lumbar neutral-zone stiffness ≈ 10 N·m/rad; slack = neutral"
+  },
+  "neck.flex": {
+   "k": 1.6,
+   "slackDeg": 0,
+   "src": "Liu et al. 2024 [M]: zone-1 neck stiffness 2.1 (flexion) / 1.1 (extension) N·m/rad, mean; slack = neutral"
+  },
+  "neck.lat": {
+   "k": 2.4,
+   "slackDeg": 0,
+   "src": "Liu et al. 2024 [M]: zone-1 lateral bending ≈ 2.4 N·m/rad; slack = neutral"
+  }
+ },
+ "frontalPair": "minEffort",
+ "ecc": {
+  "fRes": 0.15,
+  "wS": 0.3,
+  "wF": 0.55,
+  "tauS": 0.5,
+  "tauF": 0.02,
+  "src": "ECCENTRIC_PERSISTENCE_DAMPING_LITERATURE §recommendation (central values)"
+ },
+ "floors": {
+  "ankle.df": {
+   "pos": 0.02,
+   "neg": 0.1
+  },
+  "ankle.inv": {
+   "pos": 0.05,
+   "neg": 0.08
+  },
+  "knee.flex": {
+   "pos": 0.06,
+   "neg": 0.11
+  },
+  "knee.rot": {
+   "pos": 0.06,
+   "neg": 0.06
+  },
+  "hip.flex": {
+   "pos": 0.04,
+   "neg": 0.08
+  },
+  "hip.abd": {
+   "pos": 0.08,
+   "neg": 0.06
+  },
+  "hip.rot": {
+   "pos": 0.06,
+   "neg": 0.06
+  },
+  "lumbar.flex": {
+   "pos": 0.05,
+   "neg": 0.12
+  },
+  "lumbar.lat": {
+   "pos": 0.1,
+   "neg": 0.1
+  },
+  "lumbar.rot": {
+   "pos": 0.08,
+   "neg": 0.08
+  },
+  "thoracic.flex": {
+   "pos": 0.05,
+   "neg": 0.09
+  },
+  "thoracic.lat": {
+   "pos": 0.1,
+   "neg": 0.1
+  },
+  "thoracic.rot": {
+   "pos": 0.08,
+   "neg": 0.08
+  },
+  "neck.flex": {
+   "pos": 0.04,
+   "neg": 0.07
+  },
+  "neck.lat": {
+   "pos": 0.06,
+   "neg": 0.06
+  },
+  "neck.rot": {
+   "pos": 0.06,
+   "neg": 0.06
+  }
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "id": "PPR-3 S2 ablation − B (no passive elasticity)",
+ "zeta": 0.2,
+ "thetaYdeg": {
+  "ankle": 0.9673617406041296,
+  "knee": 1,
+  "hip": 1,
+  "lumbar": 3,
+  "thoracic": 3,
+  "neck": 2,
+  "shoulder": 2.2,
+  "elbow": 2
+ },
+ "floorDefault": 0.02,
+ "passive": null,
+ "frontalPair": "minEffort",
+ "ecc": {
+  "fRes": 0.15,
+  "wS": 0.3,
+  "wF": 0.55,
+  "tauS": 0.5,
+  "tauF": 0.02,
+  "src": "ECCENTRIC_PERSISTENCE_DAMPING_LITERATURE §recommendation (central values)"
+ },
+ "floors": {
+  "ankle.df": {
+   "pos": 0.01,
+   "neg": 0.07
+  },
+  "ankle.inv": {
+   "pos": 0.02,
+   "neg": 0.04
+  },
+  "knee.flex": {
+   "pos": 0.03,
+   "neg": 0.085
+  },
+  "knee.rot": {
+   "pos": 0.03,
+   "neg": 0.03
+  },
+  "hip.flex": {
+   "pos": 0.03,
+   "neg": 0.05
+  },
+  "hip.abd": {
+   "pos": 0.04,
+   "neg": 0.03
+  },
+  "hip.rot": {
+   "pos": 0.03,
+   "neg": 0.03
+  },
+  "lumbar.flex": {
+   "pos": 0.025,
+   "neg": 0.07
+  },
+  "lumbar.lat": {
+   "pos": 0.06,
+   "neg": 0.06
+  },
+  "lumbar.rot": {
+   "pos": 0.04,
+   "neg": 0.04
+  },
+  "thoracic.flex": {
+   "pos": 0.025,
+   "neg": 0.05
+  },
+  "thoracic.lat": {
+   "pos": 0.06,
+   "neg": 0.06
+  },
+  "thoracic.rot": {
+   "pos": 0.04,
+   "neg": 0.04
+  },
+  "neck.flex": {
+   "pos": 0.02,
+   "neg": 0.05
+  },
+  "neck.lat": {
+   "pos": 0.04,
+   "neg": 0.04
+  },
+  "neck.rot": {
+   "pos": 0.04,
+   "neg": 0.04
+  }
+ },
+ "toneSrc": "STANDING_TONE_LITERATURE §2 ready-stance mid values (EMG %MVC ≈ activation)"
+}
