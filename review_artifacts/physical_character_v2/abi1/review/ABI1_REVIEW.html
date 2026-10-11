@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABI-1 A | B | C review</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff6b5b; --ok: #3fd17a; --A: #ffffff; --B: #7fe3ff; --C: #ffb35c; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 10px; } h2 { font-size: 18px; margin: 0 0 6px; } h3 { font-size: 15px; margin: 14px 0 4px; color: var(--acc); }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; }
+  .banner { background: #14263a; border: 1px solid #3c6a99; border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 18px 0; }
+  video { width: 100%; height: auto; background: #000; border-radius: 4px; display: block; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 6px 0; }
+  .ctl .lab { color: var(--dim); margin: 0 4px 0 10px; font-size: 12px; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  button:disabled { opacity: 0.35; cursor: default; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; background: #111815; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; }
+  canvas.chart { width: 100%; height: 190px; background: #111815; border-radius: 4px; display: block; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 14px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; } th { color: var(--dim); font-weight: 600; }
+  .pass { color: var(--ok); font-weight: 600; } .fail { color: var(--bad); font-weight: 600; }
+  .key span { display: inline-block; margin-right: 14px; } .cA { color: var(--A); } .cB { color: var(--B); } .cC { color: var(--C); }
+  @media (max-width: 600px) { main { padding: 12px 16px; } .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main>
+<h1>ABI-1 · active balance on the PVP-1A collision: A | B | C</h1>
+<div class="banner"><b>A diagnostic, not PVP-1A and not PVP-1B.</b> One native collision: the PVP-1A slide (CF1 fixture), the same entry state, identical in all three panels.
+<ul style="margin:6px 0">
+<li><b class="cA">A</b>: the current V2 runner (frozen posture tone).</li>
+<li><b class="cB">B</b>: A plus <b>GBC-1</b>, a generic, outcome-blind active-balance controller.
+  <ul>
+  <li>V2's validated G2 balance law (ankle strategy, load transfer, bounded hip and arm strategies).</li>
+  <li>It runs on the physical state as it was <b>120.8 ms earlier</b>, through V2's finite actuators.</li>
+  <li>No step.</li>
+  </ul></li>
+<li><b class="cC">C</b>: B plus a physically triggered reactive step.</li>
+</ul>
+Preregistered before any B / C code: <code>abi1/ABI1_PREREGISTRATION.md</code>. Results and the direct answers: <a href="../ABI1_RESULTS.md" style="color:var(--acc)">ABI1_RESULTS.md</a>. <b>VISUAL_PENDING: you judge believability.</b></div>
+
+<div class="card"><h2>Synchronised A | B | C (one frame = one recorded 1/240 s step, same instant in all three panels)</h2>
+  <div class="ctl"><span class="lab">record</span><button data-set="primary" class="on">PRIMARY · frozen contact set</button><button data-set="ext">EXT · restricted contact set</button><button data-set="v075">S-IMPACT 0.75×</button><button data-set="tone">S-TONE</button></div>
+  <div class="ctl"><span class="lab">view</span><button data-view="G">Gameplay camera 1×</button><button data-view="K" class="on">Close 6× (clean)</button><button data-view="D">Close 6× diagnostic</button>
+    <span class="lab">speed</span><button data-rate="0.25" class="on">0.25×</button><button data-rate="0.10">0.1×</button><button data-rate="1">1× (gameplay)</button></div>
+  <video id="vid" muted playsinline loop></video>
+  <input id="rng" type="range" min="0" max="1" value="0">
+  <div class="ctl"><button data-a="play">▶ play</button><button data-a="prev">◀ frame</button><button data-a="next">frame ▶</button>
+    <span class="lab">jump</span><button data-j="act">activation</button><button data-j="contact">first contact</button><button data-j="loss">R-foot support lost</button><button data-j="resp">first active response</button><button data-j="w1">W1 end (250 ms)</button><button data-j="trig">C step trigger</button><button data-j="td">C touchdown sensed</button></div>
+  <div id="info" class="info"></div>
+  <p id="note" style="margin:6px 0 0"></p>
+</div>
+
+<div class="card"><h2>What the measurements say (from the committed evaluations)</h2><div id="facts"></div></div>
+
+<div class="card"><h2>Physical traces</h2>
+  <p class="key"><span class="cA">■ A passive</span><span class="cB">■ B active, no step</span><span class="cC">■ C active + step</span>. Yellow line: first contact. Cyan: first active response. White: end of W1. Every value comes from the records.</p>
+  <div class="grid2">
+    <div><h3>Thorax tilt from entry (°) · primary, frozen contact set (W1)</h3><canvas id="ch1" class="chart"></canvas></div>
+    <div><h3>Thorax tilt from entry (°) · EXT (to each window end)</h3><canvas id="ch2" class="chart"></canvas></div>
+    <div><h3>XcoM outside the support (m; &gt; 0 = outside) · EXT</h3><canvas id="ch3" class="chart"></canvas></div>
+    <div><h3>Thorax tilt (°) · S-IMPACT 0.75× (authoritative contact only, full record)</h3><canvas id="ch4" class="chart"></canvas></div>
+  </div></div>
+
+<div class="card"><h2>Impact sensitivity (preregistered levels; no level adopted)</h2><div id="imp"></div></div>
+<div class="card"><h2>Validity (preregistered V1–V8)</h2><div id="val"></div></div>
+</main>
+<script>
+"use strict";
+const blobs = {}; const blobUrl = (u) => blobs[u] || (blobs[u] = fetch(u).then(r => r.blob()).then(b => URL.createObjectURL(b)));
+const st = { set: "primary", view: "K", rate: 0.25, k: 0 }, vid = document.getElementById("vid"), rng = document.getElementById("rng"), info = document.getElementById("info");
+const NOTES = {
+  primary: "Frozen PVP-1A contact set. Only W1 (0–250 ms, green) is trustworthy: from step 61 the passive tackler's head strikes the runner's pelvis, a contact the simulation does not have (red band, no inference).",
+  ext: "EXT diagnostic continuation: only runner-leg ↔ tackler-leg contacts. Bit-identical to the primary through step 60. The passive tackler's torso passes through the runner, so the runner's response can be watched past 250 ms. Each panel's window ends at its first non-authoritative contact.",
+  v075: "S-IMPACT diagnostic: tackler entry velocity × 0.75 (not adopted). Frozen contact set. Only the authoritative boot–shin / boot-under-foot pairs touch for the whole 1.08 s, bit-identical to EXT. Starts at activation (no lead-in, whose tackler speed would not match).",
+  tone: "S-TONE diagnostic: the runner's posture-tone stiffness lowered to the measured human intrinsic level (K × 0.561, D × 0.749). EXT contact set." };
+let CI = null;
+const viewId = () => (st.set === "primary" ? `${st.view}_primary` : st.set === "ext" ? `${st.view}_ext` : st.set === "v075" ? (st.view === "D" ? "K_v075" : `${st.view}_v075`) : "K_tone");
+function cur() { const id = viewId(), v = CI.views[id] || CI.views[id.replace(/^D_/, "K_")]; return { id: CI.views[id] ? id : id.replace(/^D_/, "K_"), v }; }
+function srcOf(c) { const vids = c.v.videos; if (c.v.every === 4) return vids["60"]; return st.rate === 0.10 && vids["24"] ? vids["24"] : vids["60"]; }
+function fps(c) { return c.v.every === 4 ? 60 : st.rate === 0.10 && c.v.videos["24"] ? 24 : 60; }
+function show(j) { const c = cur(); st.k = j; rng.value = j; const [n, t] = c.v.index[j];
+  info.textContent = n < 0 ? `frame ${j + 1}/${c.v.index.length} · ${t.toFixed(1)} ms before activation (lead-in; no physics)` : `frame ${j + 1}/${c.v.index.length} · record step ${n} · τ +${t.toFixed(2)} ms after activation${n >= 3 ? ` · +${((n - 3) * 1000 / 240).toFixed(1)} ms after first contact` : ""}\nview ${c.id} · ${c.v.every === 4 ? "60 Hz gameplay frames (every 4th step)" : "every step"} · windows ${JSON.stringify(c.v.windowEnd)}`; }
+function seek(j) { const c = cur(); j = Math.max(0, Math.min(c.v.index.length - 1, j)); vid.pause(); vid.currentTime = (j + 0.5) / fps(c); show(j); }
+const find = (n) => { const c = cur(); let j = c.v.index.findIndex(x => x[0] >= n); return j < 0 ? c.v.index.length - 1 : j; };
+async function load(keepStep = true) { const c = cur(), stepNow = CI && st.k != null && st.prevIdx ? st.prevIdx[st.k] : null, play = !vid.paused;
+  document.querySelectorAll("[data-view]").forEach(b => { b.disabled = (st.set === "v075" && b.dataset.view === "D") || (st.set === "tone" && b.dataset.view !== "K"); b.classList.toggle("on", b.dataset.view === st.view && !b.disabled); });
+  document.getElementById("note").textContent = NOTES[st.set] + (c.id !== viewId() ? " (this view is not rendered for this record; showing the close view)" : "");
+  rng.max = c.v.index.length - 1; vid.src = await blobUrl("video/" + srcOf(c)); vid.playbackRate = c.v.every === 4 ? 1 : st.rate === 1 ? 4 : 1;
+  vid.addEventListener("loadeddata", () => { const j = keepStep && stepNow ? find(stepNow[0]) : 0; st.prevIdx = c.v.index; seek(j); if (play) vid.play(); }, { once: true }); }
+document.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || b.disabled) return;
+  if (b.dataset.set) { st.set = b.dataset.set; if (st.set === "tone") st.view = "K"; if (st.set === "v075" && st.view === "D") st.view = "K"; document.querySelectorAll("[data-set]").forEach(x => x.classList.toggle("on", x === b)); load(false); }
+  else if (b.dataset.view) { st.view = b.dataset.view; load(); }
+  else if (b.dataset.rate) { st.rate = +b.dataset.rate; document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+  else if (b.dataset.a) { const a = b.dataset.a; if (a === "play") { vid.paused ? vid.play() : vid.pause(); } else if (a === "prev") seek(st.k - 1); else if (a === "next") seek(st.k + 1); }
+  else if (b.dataset.j) { const c = cur(), m = (t) => (c.v.marks.find(x => x.t.startsWith(t)) || {}).n, J = b.dataset.j;
+    const n = J === "act" ? 0 : J === "contact" ? (m("contact") ?? 3) : J === "loss" ? (m("R foot") ?? 29) : J === "resp" ? (m("first active") ?? 32) : J === "w1" ? 60 : J === "trig" ? m("C step trigger") : m("C touchdown"); if (n != null) seek(find(n)); } });
+rng.oninput = () => seek(+rng.value); vid.onplay = () => { document.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }; vid.onpause = () => { document.querySelector('[data-a="play"]').textContent = "▶ play"; };
+const tick = (now, md) => { if (!vid.paused && CI) { const c = cur(); show(Math.min(c.v.index.length - 1, Math.floor(md.mediaTime * fps(c) + 1e-4))); } vid.requestVideoFrameCallback(tick); };
+if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) vid.requestVideoFrameCallback(tick);
+function chart(id, series, opts) { const cv = document.getElementById(id), dpr = window.devicePixelRatio || 1, W = cv.clientWidth, H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; const c = cv.getContext("2d"); c.scale(dpr, dpr);
+  const N = opts.N || 260, all = series.flatMap(s => s.pts.map(p => p[1])), lo = Math.min(0, ...all), hi = Math.max(1e-9, ...all), X = (n) => 34 + (n / N) * (W - 44), Y = (y) => H - 18 - (y - lo) / (hi - lo || 1) * (H - 30);
+  if (opts.w1) { c.fillStyle = "rgba(63,209,122,0.09)"; c.fillRect(X(0), 4, X(60) - X(0), H - 22); }
+  for (const [n, col] of [[3, "#ffe14a"], [32, "#7fe3ff"], ...(opts.w1 !== false ? [[60, "#ffffff"]] : [])]) { c.strokeStyle = col; c.globalAlpha = 0.6; c.beginPath(); c.moveTo(X(n), 4); c.lineTo(X(n), H - 18); c.stroke(); c.globalAlpha = 1; }
+  c.strokeStyle = "#3a4a42"; c.beginPath(); c.moveTo(X(0), Y(0)); c.lineTo(X(N), Y(0)); c.stroke(); c.fillStyle = "#9fb3a9"; c.font = "10px Menlo"; c.fillText(hi.toFixed(2), 2, Y(hi) + 8); c.fillText(lo.toFixed(2), 2, Y(lo)); c.fillText(`step 0 … ${N} (${(N * 1000 / 240).toFixed(0)} ms)`, X(0), H - 4);
+  series.forEach(s => { c.strokeStyle = s.col; c.lineWidth = 1.6; c.beginPath(); s.pts.forEach(([n, y], i) => (i ? c.lineTo(X(n), Y(y)) : c.moveTo(X(n), Y(y)))); c.stroke(); }); }
+const f = (x, k = 2) => (x == null || !isFinite(x) ? "—" : (+x).toFixed(k));
+Promise.all(["capture_index.json", "../evidence/run1/ABI1_EVAL.json", "../evidence/impact/ABI1_S-IMPACT_SUMMARY.json", "../evidence/impact/ABI1_EVAL_S-IMPACT_V0.75.json", "../evidence/run1/ABI1_EVAL_S-ABL-B0.json", "../evidence/run1/ABI1_CPU.json"].map(u => fetch(u).then(r => r.json()))).then(([ci, E, IMP, E075, B0, CPU]) => {
+  CI = ci; load(false);
+  const v3 = E.validity.V3.B, eff = E.effects, M = E.metrics, T = E.timeline;
+  document.getElementById("facts").innerHTML = `<ul>
+  <li><b>Same collision.</b> Entry state identical in A / B / C. Body states of B and C are bit-identical to A through step 30. First contact at step ${E.contact.A_N2_ALL.firstContactStep}, tackler foot → runner shank_R. The tackler slows from 4.61 to ≈ 2.2 m/s by 250 ms in every condition (equal / opposite residual 0).</li>
+  <li><b>First active response: step ${v3.firstResponseCommandStep}</b> (${f(v3.firstResponseMs, 1)} ms after activation, ${f(v3.latencyFromContactMs, 1)} ms after first contact), the physiological latency. Before that, every condition is the same passive body.</li>
+  <li><b>Support loss.</b> The right foot's support is lost at step ${T.A_N2_ALL.support[0].n} (121 ms); the XcoM is ≈ 0.19 m outside the remaining left foot from then on. A delayed controller can only sense this at ≈ 242 ms, 8 ms before W1 ends.</li>
+  <li><b>W1 (0–250 ms, trustworthy):</b> B − A ${eff["B-A_ALL"].E1.class} (max ${f(eff["B-A_ALL"].E1.maxPx)} px at the gameplay camera, ${f(eff["B-A_ALL"].E1.maxMm, 0)} mm / ${f(eff["B-A_ALL"].E1.maxDeg, 1)}° at close range at 250 ms). C − B ${f(eff["C-B_ALL"].E1.maxPx)} px.</li>
+  <li><b>EXT (diagnostic, past 250 ms):</b> B − A ${eff["B-A_LEGS"].E1.class} from step ${eff["B-A_LEGS"].E1.gameplayRun.firstOf4} (${f(eff["B-A_LEGS"].E1.maxPx)} px; upper body ${f(eff["B-A_LEGS"].E1.maxPxByGroup.upperBody)} px: shoulders up to ${f(eff["B-A_LEGS"].E4maxJointDeg.shoulders, 0)}°, trunk ${f(eff["B-A_LEGS"].E4maxJointDeg.trunk, 0)}°).
+    <ul>
+    <li>Without the hip and arm terms (B0) only ${f(B0.effects["B-A_LEGS"].E1.maxPx)} px: the arms carry the visible response.</li>
+    <li>The balance outcome is unchanged: the XcoM is ≈ 0.2 m outside the support at the window end in A, B and C.</li>
+    </ul></li>
+  <li><b>C's reactive step under the delay.</b> The step decision uses 121 ms-old support information.
+    <ul>
+    <li>It fires at step 58 for a right foot that the physics had already put down at step 55.</li>
+    <li>The swing re-lifts that foot (step 67), the delayed "touchdown" latches onto the old reload, and C then takes repeated steps.</li>
+    <li>It never improves on B.</li>
+    </ul></li>
+  <li><b>0.75× impact</b> (only authoritative contact for the whole 1.08 s):
+    <ul>
+    <li>A's trunk folds progressively to ${f(E075.metrics.A_N2_LEGS.atEnd.thoTilt, 0)}°.</li>
+    <li>B / C peak at ${f(Math.max(...E075.metrics.B_N2_LEGS.series.thoTilt.map(p => p[1])), 0)}° near 0.6 s, then recover to ${f(E075.metrics.B_N2_LEGS.atEnd.thoTilt, 0)}°.</li>
+    <li>B − A ${f(E075.effects["B-A_LEGS"].E1.maxPx)} px at the gameplay camera, visible close from 450 ms.</li>
+    </ul></li>
+  <li><b>CPU per step:</b> controller ${f(CPU.perStepMs.B.controller, 3)} ms (B) / ${f(CPU.perStepMs.C.controller, 3)} ms (C), against physics + plant ≈ ${f(CPU.perStepMs.A.physicsAndPlant, 2)} ms.</li></ul>`;
+  const S = (k, ser, ev = E) => ev.metrics[k].series[ser], col = { A: "#ffffff", B: "#7fe3ff", C: "#ffb35c" };
+  chart("ch1", ["A", "B", "C"].map(c => ({ col: col[c], pts: S(`${c}_N2_ALL`, "thoTilt") })), { N: 60, w1: true });
+  chart("ch2", ["A", "B", "C"].map(c => ({ col: col[c], pts: S(`${c}_N2_LEGS`, "thoTilt") })), { N: 150, w1: true });
+  chart("ch3", ["A", "B", "C"].map(c => ({ col: col[c], pts: S(`${c}_N2_LEGS`, "dOut") })), { N: 150, w1: true });
+  chart("ch4", ["A", "B", "C"].map(c => ({ col: col[c], pts: S(`${c}_N2_LEGS`, "thoTilt", E075) })), { N: 260, w1: false });
+  const rows = Object.entries(IMP.levels).map(([v, L]) => { const a = L.conds.A, b = L.conds.B, c = L.conds.C, e1 = L.E1;
+    return `<tr><td>${v}×</td><td>${a.ALL.window} / ${a.LEGS.window}</td><td>${a.LEGS.support.join(" ") || "none"}</td><td>${f(e1["B-A_ALL"] && e1["B-A_ALL"].maxPx)}</td><td>${f(e1["B-A_LEGS"] && e1["B-A_LEGS"].maxPx)}</td><td>${f(a.LEGS.atEnd.thoTilt, 0)} / ${f(b.LEGS.atEnd.thoTilt, 0)} / ${f(c.LEGS.atEnd.thoTilt, 0)}</td><td>${c.LEGS.steps.join(" ") || "—"}</td><td>${a.ALL.windowReason.replace(/non-authoritative cross contact at step/, "non-auth. at").slice(0, 70)}</td></tr>`; }).join("");
+  document.getElementById("imp").innerHTML = `<table><tr><th>tackler v</th><th>window W1 / EXT (steps)</th><th>A support changes (EXT)</th><th>B−A px W1</th><th>B−A px EXT</th><th>thorax tilt at EXT end A / B / C (°)</th><th>C step events (EXT)</th><th>what ends W1</th></tr>${rows}</table>
+    <p>At 1.25× and above, the passive tackler reaches the runner's pelvis (or left foot) before a 121 ms response could act. At 2.0× the runner's ledger integrity fails at step 2.</p>`;
+  const V = E.summary.V, flat = []; const walk = (o, p) => { for (const [k, x] of Object.entries(o)) { if (x !== null && typeof x === "object") walk(x, p + k + " "); else flat.push([p + k, x]); } }; walk(V, "");
+  document.getElementById("val").innerHTML = `<table><tr><th>criterion</th><th></th></tr>${flat.map(([k, x]) => `<tr><td>${k}</td><td class="${x ? "pass" : "fail"}">${x ? "pass" : "fail"}</td></tr>`).join("")}</table>`;
+});
+</script>
+</body>
+</html>

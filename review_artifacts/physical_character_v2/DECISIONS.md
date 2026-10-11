@@ -3615,3 +3615,35 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 - the stepping-executor and slide-drive questions (PVP-1B scale).
 
 **Stopped.** No PVP-1B, RUN-1, simulation or production change. Nothing pushed; the daily publication rule falls due at the next prompt after 06:00.
+
+## 2026-10-11: ABI-1 active balance investigation: preregistered (7cf107fe), frozen (5a8704ca), run (dc4da05a, ea0b20f3), rendered; VISUAL_PENDING (`abi1/`, source 64ce7d0f)
+
+**Question.** Is PVP-1A's mannequin look a matter of collision magnitude or of missing active control?
+
+**Design:** A / B / C on the same native PVP-1A collision (CF1 fixture).
+- **A:** the frozen SnapshotTone.
+- **B:** A + **GBC-1**, the V2-G2 balance law on a 120.8 ms-delayed physical frame (V2 lifecycle support sensing, kξ 1/3, lever-rule load split, inverse statics, bounded hip and arm strategies), as increments through the unchanged ActuatorLayer; outcome-blind (input whitelist {n, S, F}).
+- **C:** B + an XcoM-triggered capture-point step.
+- Literature-based delays, preregistered before any B / C code (`abi1/research/BALANCE_LITERATURE.md`).
+- AM-1: V2 evaluated on body states; a wording defect, with the claim unchanged.
+
+**Result:**
+- **Validity:** V1–V8 pass. B / C ≡ A through step 30; the first contact-caused active response is 120.8 ms after contact.
+- **W1 (0–250 ms): B − A ≤ 0.57 px (subtle).** The support loss at 121 ms reaches the controller at 242 ms, and the passive tackler's head strike follows at 254 ms.
+- **EXT (restricted contact set, diagnostic): B − A material, 3.4 px** (arms and trunk; the arm term carries it). No condition recovers at 1.0×.
+- **C:** the step on delayed support state re-lifts the passively re-planted foot. It never improves on B.
+- **S-IMPACT 0.75×** (authoritative contact only, 1.08 s): A's trunk folds to 38° (frozen gravity bias); B / C hold it and recover to 3° (6.5 px).
+- **S-TONE:** with intrinsic-level tone, GBC-1 stands the body in C0 but not under the collision.
+- **Tackler:** equal / opposite exact; it slows 4.61 → 2.2 m/s by 250 ms in every condition.
+- **CPU:** controller 0.025 / 0.21 ms per step.
+
+**Answers.** In 0–250 ms, neither magnitude nor active control. The passive layer (a non-yielding 1.39 mgh tone) and physiological latency set the look there. After 250 ms, active control is the missing ingredient. The collision is not too weak: it removes support with the XcoM 0.19 m outside.
+
+**Recommendation** (not started; each step needs owner approval):
+- a physiological passive layer with always-on postural control;
+- a stepping executor with a fast load channel and a predictive trigger;
+- an authoritative post-contact tackler motion.
+
+**Unchanged:** RUN-1, the simulation, V2 anatomy and contact geometry, the PVP-1A plant / fixtures / records.
+
+**Review:** `abi1/review/ABI1_REVIEW.html`. Results: `abi1/ABI1_RESULTS.md`.
