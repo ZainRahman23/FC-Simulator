@@ -3541,3 +3541,36 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 **Proposed (not started):** INT-1, a read-only live-match observer for native planted-leg contact. Only if the visual review does not reject the scope.
 
 **Stopped:** waiting for the owner. No adoption, production integration, recovery or new experiment. Nothing pushed.
+
+## 2026-10-11: PVP-1 (first player-v-player native interaction) DESIGNED and PREREGISTERED as a draft; not built or run; awaiting approval (`pvp1/PVP1_PREREGISTRATION.md`, `pvp1/PVP1_CASE_SELECTION_AND_READINESS.md`; instruction `sources/2026-10-11_user_instruction_pvp1_design_preregister.md`, 17fa068f)
+
+**Recommended case: IB1-SR (`rx_behind_standing`).**
+- A standing runner (R0) is slide-tackled from behind by a tackler (V1-matched, H 1.90 m, 78 kg).
+- The decisive contact is LEG → planted shin_R at τ 51.5, J 75.64. The outcome is STUMBLE, recoverable.
+- It is the strongest recoverable contact of the 26 authoritative V1.3 fixtures, has the best prior correspondence (CG-1…6; the REV2 end-to-end pass), and the contact faces the gameplay camera.
+
+**Readiness:**
+- **A running two-body test is premature.** Two authority-level blockers apply:
+  - the simulation's contact legs (V1 law) are 0.197 / 0.251 m (p50 / p90) from LV2's at 3 m/s, with 0 % within CG-4;
+  - running-presentation momentum is incoherent (HG-A; IFM-1's HANDOFF_FAILED).
+- **SR is not blocked by these,** but it does not exercise LV2. That is decision D1.
+- Shown, not waived:
+  - R0's G0 (never waived), G3 G / H / K′ and isoSelfCol status;
+  - V1-matched's KC-4 exception;
+  - no V2 body ever validated seated or sliding;
+  - no tackler pose in the record (the entry needs a new primitive fit);
+  - the two-character world is unbuilt.
+
+**Preregistration (draft):**
+- Activation of both players at τ 51.0.
+- Controllers: IFM-1's SnapshotTone unchanged (support flags (1, 1) for the runner, (0, 0) for the tackler).
+- Modes C0 / N2 / X2, window 150 ms.
+- Correspondence: the frozen CG-1…6 rows (REV2's physical form).
+- Integrity and ledgers: IFM-1's numbers.
+- Outcome consistency: **the simulation's own balance law applied to the physical COM state** (FALL boundary e0 0.352 vs authoritative 0.312 m), plus the tackler's slide continuing.
+- Visual: CAMERA_V1 at 1× plus a synchronised 6× diagnostic.
+- Hard stops H1–H7; success / partial / architectural-failure definitions; an explicit list of what a pass does not prove.
+
+**Owner decisions needed:** D1–D5.
+
+**Stopped** for review. Nothing pushed.

@@ -1,0 +1,1565 @@
+{
+ "tool": "pvp1_survey.mjs",
+ "head": "17fa068f4c3e368a30cead5f239eae353ed64078",
+ "note": "read-only design evidence; no stepping",
+ "fixtures": [
+  {
+   "case": "rx_miss",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "3c502075"
+  },
+  {
+   "case": "rx_free_leg",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "STUMBLE",
+   "contacts": [
+    {
+     "tick": 51,
+     "sub": 1,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "planted": false,
+     "react": "CORRECTION",
+     "J": 2.82,
+     "family": null
+    },
+    {
+     "tick": 60,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "toe_R",
+     "planted": false,
+     "react": "STUMBLE",
+     "J": 3.63,
+     "family": null
+    }
+   ],
+   "maxJ": 3.63,
+   "gameplayHash": "8fb114a1"
+  },
+  {
+   "case": "rx_planted_leg",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 144.13,
+   "gameplayHash": "18d95b1d"
+  },
+  {
+   "case": "rx_jog",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 49,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 144.13,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 144.13,
+   "gameplayHash": "18d95b1d"
+  },
+  {
+   "case": "rx_sprint",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "5e3f29f5"
+  },
+  {
+   "case": "rx_square",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 62,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "planted": false,
+     "react": "CORRECTION",
+     "J": 5.51,
+     "family": null
+    },
+    {
+     "tick": 66,
+     "sub": 4,
+     "prim": "TUCK",
+     "seg": "foot_R",
+     "planted": false,
+     "react": "FALL",
+     "J": 6.04,
+     "family": "FRONT"
+    },
+    {
+     "tick": 69,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "toe_R",
+     "planted": false,
+     "react": "FALL",
+     "J": 4.97,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 6.04,
+   "gameplayHash": "efb4902b"
+  },
+  {
+   "case": "rx_glancing",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 66,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 79.28,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 79.28,
+   "gameplayHash": "b85dde0f"
+  },
+  {
+   "case": "rx_lateral",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 5.5,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 50,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "planted": false,
+     "react": "STUMBLE",
+     "J": 6.16,
+     "family": null
+    },
+    {
+     "tick": 58,
+     "sub": 1,
+     "prim": "THIGH",
+     "seg": "foot_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 50.77,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 50.77,
+   "gameplayHash": "1e1ef730"
+  },
+  {
+   "case": "rx_rear_diag",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 5.5,
+   "outcome": "CORRECTION",
+   "contacts": [
+    {
+     "tick": 45,
+     "sub": 4,
+     "prim": "LEG",
+     "seg": "toe_L",
+     "planted": false,
+     "react": "CORRECTION",
+     "J": 0,
+     "family": null
+    }
+   ],
+   "maxJ": 0,
+   "gameplayHash": "3ef87c6e"
+  },
+  {
+   "case": "rx_front_diag",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 5.5,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 57,
+     "sub": 2,
+     "prim": "TUCKSHIN",
+     "seg": "toe_L",
+     "planted": false,
+     "react": "CORRECTION",
+     "J": 13.4,
+     "family": null
+    },
+    {
+     "tick": 61,
+     "sub": 4,
+     "prim": "TUCK",
+     "seg": "foot_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 0,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 13.4,
+   "gameplayHash": "fd763e29"
+  },
+  {
+   "case": "rx_rear",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 3,
+   "outcome": "NEGLIGIBLE",
+   "contacts": [
+    {
+     "tick": 53,
+     "sub": 3,
+     "prim": "TUCKSHIN",
+     "seg": "foot_R",
+     "planted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    }
+   ],
+   "maxJ": 0,
+   "gameplayHash": "deec64e2"
+  },
+  {
+   "case": "rx_standing",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 0,
+   "outcome": "STUMBLE",
+   "contacts": [
+    {
+     "tick": 52,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "shin_R",
+     "planted": true,
+     "react": "STUMBLE",
+     "J": 75.64,
+     "family": null
+    }
+   ],
+   "maxJ": 75.64,
+   "gameplayHash": "daf802b4"
+  },
+  {
+   "case": "rx_airborne",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "dafa0a26"
+  },
+  {
+   "case": "rx_early_stance",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 58,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "toe_L",
+     "planted": false,
+     "react": "STUMBLE",
+     "J": 4.22,
+     "family": null
+    },
+    {
+     "tick": 63,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "toe_R",
+     "planted": false,
+     "react": "FALL",
+     "J": 9.76,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 9.76,
+   "gameplayHash": "96434751"
+  },
+  {
+   "case": "rx_late_stance",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 56,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "toe_L",
+     "planted": false,
+     "react": "CORRECTION",
+     "J": 0,
+     "family": null
+    },
+    {
+     "tick": 61,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "toe_R",
+     "planted": false,
+     "react": "FALL",
+     "J": 12.27,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 12.27,
+   "gameplayHash": "bf34c9a7"
+  },
+  {
+   "case": "rx_facing_front",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 0,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 53,
+     "sub": 1,
+     "prim": "LEG",
+     "seg": "shin_L",
+     "planted": true,
+     "react": "FALL",
+     "J": 75.42,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 75.42,
+   "gameplayHash": "ecf58e63"
+  },
+  {
+   "case": "rx_side_standing",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 0,
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 61,
+     "sub": 2,
+     "prim": "THIGH",
+     "seg": "shin_R",
+     "planted": true,
+     "react": "FALL",
+     "J": 49,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 49,
+   "gameplayHash": "e8d28e92"
+  },
+  {
+   "case": "rx_behind_standing",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 0,
+   "outcome": "STUMBLE",
+   "contacts": [
+    {
+     "tick": 52,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "shin_R",
+     "planted": true,
+     "react": "STUMBLE",
+     "J": 75.64,
+     "family": null
+    }
+   ],
+   "maxJ": 75.64,
+   "gameplayHash": "a2678624"
+  },
+  {
+   "case": "rx_heavy",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "eb9a52a8"
+  },
+  {
+   "case": "rx_light",
+   "source": "pi1/trackB/v13/air/air_summary.json",
+   "runnerV": 7.5,
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "eb9a52a8"
+  },
+  {
+   "case": "sl_win",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 73,
+     "sub": 3,
+     "prim": "LEG",
+     "seg": "foot_R",
+     "planted": false,
+     "react": "FALL",
+     "J": 9.32,
+     "family": "FRONT"
+    }
+   ],
+   "maxJ": 9.32,
+   "gameplayHash": "b8145794"
+  },
+  {
+   "case": "sl_early",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "b8ba1e18"
+  },
+  {
+   "case": "sl_late",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "NO_CONTACT",
+   "contacts": [],
+   "maxJ": 0,
+   "gameplayHash": "9f28be40"
+  },
+  {
+   "case": "sl_from_behind",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 87,
+     "sub": 1,
+     "prim": "LEG",
+     "seg": "foot_R",
+     "planted": true,
+     "react": "FALL",
+     "J": 122.78,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 122.78,
+   "gameplayHash": "44054073"
+  },
+  {
+   "case": "sl_left",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "NEGLIGIBLE",
+   "contacts": [
+    {
+     "tick": 75,
+     "sub": 2,
+     "prim": "LEG",
+     "seg": "foot_L",
+     "planted": true,
+     "react": "NEGLIGIBLE",
+     "J": 0,
+     "family": null
+    }
+   ],
+   "maxJ": 0,
+   "gameplayHash": "9bf15806"
+  },
+  {
+   "case": "sl_loose",
+   "source": "pi1/trackB/v13/air_def/air_summary.json",
+   "runnerV": "drill (dribble, sprint keys)",
+   "outcome": "FALL",
+   "contacts": [
+    {
+     "tick": 146,
+     "sub": 1,
+     "prim": "TRUNK",
+     "seg": "pelvis",
+     "planted": null,
+     "react": "FALL",
+     "J": 118.03,
+     "family": "SIDE"
+    }
+   ],
+   "maxJ": 118.03,
+   "gameplayHash": "5f414c8a"
+  }
+ ],
+ "recoverable": [
+  {
+   "case": "rx_free_leg",
+   "runnerV": 3,
+   "outcome": "STUMBLE",
+   "maxJ": 3.63,
+   "contacts": [
+    "LEG→foot_L (swing) CORRECTION J 2.82",
+    "LEG→toe_R (swing) STUMBLE J 3.63"
+   ]
+  },
+  {
+   "case": "rx_rear_diag",
+   "runnerV": 5.5,
+   "outcome": "CORRECTION",
+   "maxJ": 0,
+   "contacts": [
+    "LEG→toe_L (swing) CORRECTION J 0"
+   ]
+  },
+  {
+   "case": "rx_standing",
+   "runnerV": 0,
+   "outcome": "STUMBLE",
+   "maxJ": 75.64,
+   "contacts": [
+    "LEG→shin_R (planted) STUMBLE J 75.64"
+   ]
+  },
+  {
+   "case": "rx_behind_standing",
+   "runnerV": 0,
+   "outcome": "STUMBLE",
+   "maxJ": 75.64,
+   "contacts": [
+    "LEG→shin_R (planted) STUMBLE J 75.64"
+   ]
+  }
+ ],
+ "recommended": {
+  "id": "IB1-SR",
+  "case": "rx_behind_standing",
+  "role": "standing runner, weight-bearing shin struck, recoverable outcome (the only REV2 end-to-end pass; anchor)",
+  "params": {
+   "v": 0,
+   "ang": 0,
+   "ph": 0.08,
+   "off": 0,
+   "ballAhead": true
+  },
+  "characters": [
+   "vinicius",
+   "gabriel"
+  ],
+  "massKg": [
+   73,
+   78
+  ],
+  "gameplayHash": "a2678624",
+  "finalClass": "STUMBLE",
+  "reactionWindowRows": [
+   51,
+   115
+  ],
+  "events": [
+   {
+    "kind": "TACKLE_START",
+    "tick": 30
+   },
+   {
+    "kind": "TACKLE_BODY_CONTACT",
+    "tick": 52,
+    "prim": "LEG",
+    "seg": "shin_R",
+    "took": "REACTION",
+    "relV": 4.533
+   },
+   {
+    "kind": "PLAYER_CONTACT",
+    "tick": 52,
+    "sub": 2,
+    "prim": "LEG",
+    "seg": "shin_R",
+    "react": "STUMBLE",
+    "took": "REACTION",
+    "pen": 0.009,
+    "J": 75.64
+   },
+   {
+    "kind": "TACKLE_BODY_CONTACT",
+    "tick": 66,
+    "prim": "BODY",
+    "seg": "foot_L",
+    "took": "RESTING",
+    "relV": 0.999
+   },
+   {
+    "kind": "PLAYER_CONTACT_ABSORBED",
+    "tick": 66,
+    "sub": 1,
+    "prim": "BODY",
+    "seg": "foot_L",
+    "react": "STUMBLE",
+    "took": "RESTING",
+    "pen": 0.135,
+    "J": 0
+   },
+   {
+    "kind": "TACKLE_BODY_CONTACT",
+    "tick": 68,
+    "prim": "THIGH",
+    "seg": "foot_L",
+    "took": "ABSORBED",
+    "relV": 0.711
+   },
+   {
+    "kind": "PLAYER_CONTACT_ABSORBED",
+    "tick": 68,
+    "sub": 1,
+    "prim": "THIGH",
+    "seg": "foot_L",
+    "react": "STUMBLE",
+    "took": "ABSORBED",
+    "pen": 0.113,
+    "J": 1.43
+   },
+   {
+    "kind": "TACKLE",
+    "tick": 80
+   }
+  ],
+  "decisive": {
+   "tick": 52,
+   "sub": 2,
+   "tau": 51.5,
+   "prim": "LEG",
+   "seg": "shin_R",
+   "segPlanted": true,
+   "stride": "DOUBLE",
+   "point": [
+    49.97,
+    34.208,
+    0.108
+   ],
+   "normal": [
+    0.671,
+    -0.741
+   ],
+   "pen": 0.009,
+   "vn": 3.042,
+   "vt": 3.361,
+   "vA": [
+    0,
+    0
+   ],
+   "vT": [
+    4.533,
+    0
+   ],
+   "J": 75.64,
+   "Jfric": 11.64,
+   "sweep": 0.8,
+   "supportLost": true,
+   "dvCom": 0.259,
+   "spin": -0.303,
+   "dvTackler": 0.97,
+   "tSup": 0.06,
+   "e0": 0.312,
+   "rc": 0.228,
+   "gStep": 2.756,
+   "steps": 3,
+   "obstacle": 0.139,
+   "errTrace": [
+    0.312,
+    0.232,
+    0.012,
+    0
+   ],
+   "collapse": false,
+   "drop": 0,
+   "dropCap": 0.121,
+   "tip": 5.63
+  },
+  "stumble": {
+   "t0": 0.8666666666666677,
+   "until": 1.9266666666666676,
+   "steps": 3,
+   "Tstep": 0.32,
+   "v0": [
+    0.1738175048764111,
+    -0.19205620544847518
+   ],
+   "spin": -0.3030961670410555
+  },
+  "balanceLaw": {
+   "source": "pt_react.js ptRxResolve @5042230",
+   "maxSteps": 4,
+   "comHxLeg": 0.9774499999999999,
+   "omega0": 3.168014992593768,
+   "fallBoundaryE0M": 0.35163796210860626,
+   "marginM": 0.03963796210860626,
+   "stepLimits": {
+    "fwd": 0.42,
+    "back": 0.2,
+    "out": 0.3,
+    "cross": 0.12,
+    "tMin": 0.16,
+    "tMax": 0.32
+   }
+  },
+  "clearanceSeries": [
+   {
+    "tau": 49.25,
+    "LEG_shin_R_mm": 138.2,
+    "LEG_foot_R_mm": 117.6,
+    "LEG_toe_R_mm": 351.4,
+    "tacklerV": [
+     4.537,
+     0.596
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 49.5,
+    "LEG_shin_R_mm": 121.1,
+    "LEG_foot_R_mm": 103.1,
+    "LEG_toe_R_mm": 334.1,
+    "tacklerV": [
+     4.572,
+     0.477
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 49.75,
+    "LEG_shin_R_mm": 103.9,
+    "LEG_foot_R_mm": 89,
+    "LEG_toe_R_mm": 316.6,
+    "tacklerV": [
+     4.609,
+     0.352
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 50,
+    "LEG_shin_R_mm": 86.6,
+    "LEG_foot_R_mm": 75.4,
+    "LEG_toe_R_mm": 299,
+    "tacklerV": [
+     4.648,
+     0.221
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 50.25,
+    "LEG_shin_R_mm": 69.5,
+    "LEG_foot_R_mm": 62.7,
+    "LEG_toe_R_mm": 281.5,
+    "tacklerV": [
+     4.599,
+     0.085
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 50.5,
+    "LEG_shin_R_mm": 52.2,
+    "LEG_foot_R_mm": 50.9,
+    "LEG_toe_R_mm": 263.8,
+    "tacklerV": [
+     4.625,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 50.75,
+    "LEG_shin_R_mm": 35.4,
+    "LEG_foot_R_mm": 40.6,
+    "LEG_toe_R_mm": 246.2,
+    "tacklerV": [
+     4.625,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 51,
+    "LEG_shin_R_mm": 19.2,
+    "LEG_foot_R_mm": 32.3,
+    "LEG_toe_R_mm": 228.7,
+    "tacklerV": [
+     4.625,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 51.25,
+    "LEG_shin_R_mm": 4.3,
+    "LEG_foot_R_mm": 26.6,
+    "LEG_toe_R_mm": 211.9,
+    "tacklerV": [
+     4.533,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 51.5,
+    "LEG_shin_R_mm": -9.2,
+    "LEG_foot_R_mm": 23.2,
+    "LEG_toe_R_mm": 195.4,
+    "tacklerV": [
+     4.533,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 51.75,
+    "LEG_shin_R_mm": -20.8,
+    "LEG_foot_R_mm": 20.3,
+    "LEG_toe_R_mm": 179.1,
+    "tacklerV": [
+     4.533,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 52,
+    "LEG_shin_R_mm": -29.4,
+    "LEG_foot_R_mm": 17.6,
+    "LEG_toe_R_mm": 163.3,
+    "tacklerV": [
+     4.533,
+     0
+    ],
+    "runnerX": 50
+   },
+   {
+    "tau": 52.25,
+    "LEG_shin_R_mm": -21.4,
+    "LEG_foot_R_mm": 17.6,
+    "LEG_toe_R_mm": 181.5,
+    "tacklerV": [
+     3.472,
+     0
+    ],
+    "runnerX": 50.0035
+   },
+   {
+    "tau": 52.5,
+    "LEG_shin_R_mm": -27.5,
+    "LEG_foot_R_mm": 15.7,
+    "LEG_toe_R_mm": 170.2,
+    "tacklerV": [
+     3.472,
+     0
+    ],
+    "runnerX": 50.0035
+   },
+   {
+    "tau": 52.75,
+    "LEG_shin_R_mm": -31.8,
+    "LEG_foot_R_mm": 13.9,
+    "LEG_toe_R_mm": 159.2,
+    "tacklerV": [
+     3.472,
+     0
+    ],
+    "runnerX": 50.0035
+   },
+   {
+    "tau": 53,
+    "LEG_shin_R_mm": -35.8,
+    "LEG_foot_R_mm": 12.3,
+    "LEG_toe_R_mm": 148.4,
+    "tacklerV": [
+     3.472,
+     0
+    ],
+    "runnerX": 50.0035
+   },
+   {
+    "tau": 53.25,
+    "LEG_shin_R_mm": -39.6,
+    "LEG_foot_R_mm": 10.7,
+    "LEG_toe_R_mm": 138.3,
+    "tacklerV": [
+     3.38,
+     0
+    ],
+    "runnerX": 50.007
+   },
+   {
+    "tau": 53.5,
+    "LEG_shin_R_mm": -43.5,
+    "LEG_foot_R_mm": 9.4,
+    "LEG_toe_R_mm": 128.5,
+    "tacklerV": [
+     3.38,
+     0
+    ],
+    "runnerX": 50.007
+   },
+   {
+    "tau": 53.75,
+    "LEG_shin_R_mm": -47.4,
+    "LEG_foot_R_mm": 8.1,
+    "LEG_toe_R_mm": 119.1,
+    "tacklerV": [
+     3.38,
+     0
+    ],
+    "runnerX": 50.007
+   },
+   {
+    "tau": 54,
+    "LEG_shin_R_mm": -51.2,
+    "LEG_foot_R_mm": 6.9,
+    "LEG_toe_R_mm": 110.3,
+    "tacklerV": [
+     3.38,
+     0
+    ],
+    "runnerX": 50.007
+   },
+   {
+    "tau": 54.25,
+    "LEG_shin_R_mm": -55,
+    "LEG_foot_R_mm": 6,
+    "LEG_toe_R_mm": 102.1,
+    "tacklerV": [
+     3.289,
+     0
+    ],
+    "runnerX": 50.0105
+   },
+   {
+    "tau": 54.5,
+    "LEG_shin_R_mm": -58.7,
+    "LEG_foot_R_mm": 5.1,
+    "LEG_toe_R_mm": 94.6,
+    "tacklerV": [
+     3.289,
+     0
+    ],
+    "runnerX": 50.0105
+   },
+   {
+    "tau": 54.75,
+    "LEG_shin_R_mm": -62.5,
+    "LEG_foot_R_mm": 4.4,
+    "LEG_toe_R_mm": 87.7,
+    "tacklerV": [
+     3.289,
+     0
+    ],
+    "runnerX": 50.0105
+   },
+   {
+    "tau": 55,
+    "LEG_shin_R_mm": -66.2,
+    "LEG_foot_R_mm": 3.8,
+    "LEG_toe_R_mm": 81.5,
+    "tacklerV": [
+     3.289,
+     0
+    ],
+    "runnerX": 50.0105
+   },
+   {
+    "tau": 55.25,
+    "LEG_shin_R_mm": -69.9,
+    "LEG_foot_R_mm": 3.3,
+    "LEG_toe_R_mm": 76.4,
+    "tacklerV": [
+     3.197,
+     0
+    ],
+    "runnerX": 50.014
+   },
+   {
+    "tau": 55.5,
+    "LEG_shin_R_mm": -73.5,
+    "LEG_foot_R_mm": 3,
+    "LEG_toe_R_mm": 72,
+    "tacklerV": [
+     3.197,
+     0
+    ],
+    "runnerX": 50.014
+   },
+   {
+    "tau": 55.75,
+    "LEG_shin_R_mm": -77.2,
+    "LEG_foot_R_mm": 2.8,
+    "LEG_toe_R_mm": 68.7,
+    "tacklerV": [
+     3.197,
+     0
+    ],
+    "runnerX": 50.014
+   },
+   {
+    "tau": 56,
+    "LEG_shin_R_mm": -80.8,
+    "LEG_foot_R_mm": 2.7,
+    "LEG_toe_R_mm": 66.2,
+    "tacklerV": [
+     3.197,
+     0
+    ],
+    "runnerX": 50.014
+   },
+   {
+    "tau": 56.25,
+    "LEG_shin_R_mm": -84.3,
+    "LEG_foot_R_mm": 2.8,
+    "LEG_toe_R_mm": 64.2,
+    "tacklerV": [
+     3.105,
+     0
+    ],
+    "runnerX": 50.0175
+   },
+   {
+    "tau": 56.5,
+    "LEG_shin_R_mm": -87.8,
+    "LEG_foot_R_mm": 2.9,
+    "LEG_toe_R_mm": 62.2,
+    "tacklerV": [
+     3.105,
+     0
+    ],
+    "runnerX": 50.0175
+   },
+   {
+    "tau": 56.75,
+    "LEG_shin_R_mm": -91.4,
+    "LEG_foot_R_mm": 3.2,
+    "LEG_toe_R_mm": 60.2,
+    "tacklerV": [
+     3.105,
+     0
+    ],
+    "runnerX": 50.0175
+   },
+   {
+    "tau": 57,
+    "LEG_shin_R_mm": -94.9,
+    "LEG_foot_R_mm": 3.6,
+    "LEG_toe_R_mm": 58.4,
+    "tacklerV": [
+     3.105,
+     0
+    ],
+    "runnerX": 50.0175
+   },
+   {
+    "tau": 57.25,
+    "LEG_shin_R_mm": -98.3,
+    "LEG_foot_R_mm": 4.2,
+    "LEG_toe_R_mm": 56.6,
+    "tacklerV": [
+     3.014,
+     0
+    ],
+    "runnerX": 50.021
+   },
+   {
+    "tau": 57.5,
+    "LEG_shin_R_mm": -101.7,
+    "LEG_foot_R_mm": 4.9,
+    "LEG_toe_R_mm": 54.9,
+    "tacklerV": [
+     3.014,
+     0
+    ],
+    "runnerX": 50.021
+   },
+   {
+    "tau": 57.75,
+    "LEG_shin_R_mm": -105.1,
+    "LEG_foot_R_mm": 5.7,
+    "LEG_toe_R_mm": 53.3,
+    "tacklerV": [
+     3.014,
+     0
+    ],
+    "runnerX": 50.021
+   },
+   {
+    "tau": 58,
+    "LEG_shin_R_mm": -107.6,
+    "LEG_foot_R_mm": 6.4,
+    "LEG_toe_R_mm": 51.8,
+    "tacklerV": [
+     3.014,
+     0
+    ],
+    "runnerX": 50.021
+   },
+   {
+    "tau": 58.25,
+    "LEG_shin_R_mm": -104.4,
+    "LEG_foot_R_mm": 7.2,
+    "LEG_toe_R_mm": 50.3,
+    "tacklerV": [
+     2.922,
+     0
+    ],
+    "runnerX": 50.0245
+   },
+   {
+    "tau": 58.5,
+    "LEG_shin_R_mm": -101.1,
+    "LEG_foot_R_mm": 7.9,
+    "LEG_toe_R_mm": 49,
+    "tacklerV": [
+     2.922,
+     0
+    ],
+    "runnerX": 50.0245
+   },
+   {
+    "tau": 58.75,
+    "LEG_shin_R_mm": -97.8,
+    "LEG_foot_R_mm": 8.6,
+    "LEG_toe_R_mm": 47.7,
+    "tacklerV": [
+     2.922,
+     0
+    ],
+    "runnerX": 50.0245
+   },
+   {
+    "tau": 59,
+    "LEG_shin_R_mm": -94.6,
+    "LEG_foot_R_mm": 9.4,
+    "LEG_toe_R_mm": 46.5,
+    "tacklerV": [
+     2.922,
+     0
+    ],
+    "runnerX": 50.0245
+   },
+   {
+    "tau": 59.25,
+    "LEG_shin_R_mm": -91.4,
+    "LEG_foot_R_mm": 10.1,
+    "LEG_toe_R_mm": 45.4,
+    "tacklerV": [
+     2.83,
+     0
+    ],
+    "runnerX": 50.028
+   },
+   {
+    "tau": 59.5,
+    "LEG_shin_R_mm": -88.3,
+    "LEG_foot_R_mm": 10.8,
+    "LEG_toe_R_mm": 44.3,
+    "tacklerV": [
+     2.83,
+     0
+    ],
+    "runnerX": 50.028
+   },
+   {
+    "tau": 59.75,
+    "LEG_shin_R_mm": -85.1,
+    "LEG_foot_R_mm": 11.5,
+    "LEG_toe_R_mm": 43.4,
+    "tacklerV": [
+     2.83,
+     0
+    ],
+    "runnerX": 50.028
+   },
+   {
+    "tau": 60,
+    "LEG_shin_R_mm": -82,
+    "LEG_foot_R_mm": 12.2,
+    "LEG_toe_R_mm": 42.5,
+    "tacklerV": [
+     2.83,
+     0
+    ],
+    "runnerX": 50.028
+   }
+  ],
+  "posture_tau51": {
+   "prims": [
+    {
+     "prim": "LEG",
+     "lengthM": 0.64,
+     "r": 0.07,
+     "z": [
+      0.12,
+      0.12
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    },
+    {
+     "prim": "THIGH",
+     "lengthM": 0.48,
+     "r": 0.085,
+     "z": [
+      0.17,
+      0.13
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    },
+    {
+     "prim": "TUCK",
+     "lengthM": 0.484,
+     "r": 0.08,
+     "z": [
+      0.14,
+      0.08
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    },
+    {
+     "prim": "TUCKSHIN",
+     "lengthM": 0.44,
+     "r": 0.06,
+     "z": [
+      0.08,
+      0.06
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    },
+    {
+     "prim": "BODY",
+     "lengthM": 0.191,
+     "r": 0.16,
+     "z": [
+      0.22,
+      0.17
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    },
+    {
+     "prim": "TRUNK",
+     "lengthM": 0.513,
+     "r": 0.15,
+     "z": [
+      0.36,
+      0.86
+     ],
+     "v": [
+      4.624999999999998,
+      0
+     ]
+    }
+   ],
+   "kneeL_deg": 4.8,
+   "kneeR_deg": 140,
+   "hipL_flex_deg": 75.7,
+   "hipR_flex_deg": 72,
+   "trunkFromVertical_deg": 13.1
+  },
+  "runnerPresentationChangesRows30to51": 0,
+  "runnerPresentationChangeRows": [
+   "51→52",
+   "52→53"
+  ],
+  "contactLocationAtTauSim": {
+   "legParam_s": 1,
+   "shinParam_t": 0.911,
+   "note": "s = 1: the LEG primitive's far end (the tackler's boot); t: 0 knee → 1 ankle"
+  },
+  "tacklerPresentationInRecord": false,
+  "existingEvidence": {
+   "compatGateV13": {
+    "finalClass": "STUMBLE",
+    "trigger": 40,
+    "criteria": {
+     "CG-8 self-collision": {
+      "minSepMm": 84.1,
+      "pair": "forearm_R↔thigh_R",
+      "at": 53,
+      "pass": true
+     },
+     "CG-1 segment": {
+      "sim": "shin_R",
+      "mapped": "shank_R",
+      "d1First": "shank_R",
+      "adjacency": null,
+      "pass": true
+     },
+     "CG-2 support": {
+      "L": {
+       "sim": true,
+       "up": 0.58,
+       "presentation": [
+        true,
+        true
+       ],
+       "presModes": [
+        "ankle",
+        "ankle"
+       ],
+       "d1LowestMm": -3.9,
+       "d1": true,
+       "agree": true
+      },
+      "R": {
+       "sim": true,
+       "up": 0.08,
+       "presentation": [
+        true,
+        true
+       ],
+       "presModes": [
+        "ankle",
+        "ankle"
+       ],
+       "d1LowestMm": -3.9,
+       "d1": true,
+       "agree": true
+      },
+      "pass": true
+     },
+     "CG-3 timing": {
+      "tSim": 51.5,
+      "tD1": 51.5,
+      "dTicks": 0,
+      "pass": true
+     },
+     "CG-4 location": {
+      "horizDistM": 0.037,
+      "sSim": 0.911,
+      "sD1": 0.891,
+      "simPoint": [
+       49.97,
+       0.108,
+       -34.208
+      ],
+      "d1Point": [
+       49.940333081975496,
+       0.13816312189656513,
+       -34.230002738508475
+      ],
+      "pass": true
+     },
+     "CG-5 overlap": {
+      "region": [
+       "shank_R"
+      ],
+      "simMaxUnperturbedMm": 106.8,
+      "d1MaxMm": 79.3,
+      "ratio": 0.743,
+      "pass": true
+     },
+     "CG-6 approach": {
+      "simNormal": [
+       0.671,
+       -0.741
+      ],
+      "d1Normal": [
+       0.0049,
+       -0.0045
+      ],
+      "normalAngleDeg": 5.4,
+      "simRelVel": [
+       4.532,
+       0.001
+      ],
+      "d1RelVel": [
+       4.533,
+       0
+      ],
+      "relVelAngleDeg": 0,
+      "pass": true
+     },
+     "CG-7 pose continuity (PCG-F0 window)": {
+      "failingFrames": 0,
+      "failItems": [],
+      "primitiveMaxDisplacementChangeMm": 17.9,
+      "pass": false
+     }
+    }
+   },
+   "rev2Scan": {
+    "cat": "RECOVERABLE",
+    "finalClass": "STUMBLE",
+    "trigger": 40,
+    "pass": true,
+    "reasons": [],
+    "kp": 50,
+    "leadTicks": 0.5
+   }
+  },
+  "rev2": "pi1/rev2/PI1_REV2_RESULTS.md §3: k_p 50 (lead 0.5 tick), physical first contact 51.5 shank_R / LEG, CG-1 pass, CG-3 Δt 0, CG-4 0.037 m, first-contact / total impulse 7.47 / 19.94 N·s against the articulated two-segment stand-in AST-1 (TORSO 59.55 + LEG 18.45 kg) driven along the authoritative slide; post-contact response not evaluated (PI-1 not run)"
+ },
+ "alternativeFL": {
+  "id": "IB1-FL",
+  "case": "rx_free_leg",
+  "params": {
+   "v": 3,
+   "ang": 90,
+   "ph": 0,
+   "off": 0
+  },
+  "finalClass": "STUMBLE",
+  "contacts": [
+   {
+    "tick": 51,
+    "sub": 1,
+    "prim": "LEG",
+    "seg": "foot_L",
+    "segPlanted": false,
+    "react": "CORRECTION",
+    "J": 2.82,
+    "stride": "SINGLE_R"
+   },
+   {
+    "tick": 60,
+    "sub": 3,
+    "prim": "LEG",
+    "seg": "toe_R",
+    "segPlanted": false,
+    "react": "STUMBLE",
+    "J": 3.63,
+    "stride": "SINGLE_L"
+   }
+  ],
+  "existingEvidence": {
+   "CG4": {
+    "horizDistM": 0.01,
+    "sSim": 0.775,
+    "sD1": 0.331,
+    "simPoint": [
+     52.6,
+     0.11,
+     -34.121
+    ],
+    "d1Point": [
+     52.593959192780545,
+     0.12138086816618271,
+     -34.11330158876769
+    ],
+    "pass": false
+   }
+  },
+  "simVsLV2Legs": "interaction_time/run1_handoff/RUN1_TO_V2_HANDOFF_CONTRACT_DRAFT_R2.md (6a0cf340) line ~250: gameplay legs vs mapped LV2 legs at 3.0 m/s, phase-locked p50 / p90 = 0.197 / 0.251 m; 0 % of instants within CG-4's 0.10 m"
+ },
+ "bodies": {
+  "runner_R0": {
+   "id": "R0 (PI1-runner-vinicius)",
+   "massKg": 73.91,
+   "thighM": 0.4349,
+   "shankM": 0.3987,
+   "hipHalfWidthM": 0.1525,
+   "shankRadii": [
+    0.0536,
+    0.0361
+   ],
+   "kneeFlexHard": [
+    -5,
+    155
+   ],
+   "hipFlexHard": [
+    -25,
+    140
+   ]
+  },
+  "tackler_V1matched": {
+   "id": "V1-matched (H 1.90, M 78)",
+   "massKg": 78.91,
+   "thighM": 0.4465,
+   "shankM": 0.4579,
+   "hipHalfWidthM": 0.095,
+   "shankRadii": [
+    0.0516,
+    0.0347
+   ],
+   "kneeFlexHard": [
+    -5,
+    155
+   ],
+   "hipFlexHard": [
+    -25,
+    140
+   ]
+  },
+  "V2REF": {
+   "id": "V2-REF (H 1.82, M 78)",
+   "massKg": 78.91,
+   "thighM": 0.4277,
+   "shankM": 0.4386,
+   "hipHalfWidthM": 0.091,
+   "shankRadii": [
+    0.0528,
+    0.0355
+   ],
+   "kneeFlexHard": [
+    -5,
+    155
+   ],
+   "hipFlexHard": [
+    -25,
+    140
+   ]
+  }
+ },
+ "rigs": {
+  "vinicius": {
+   "H": 1.76,
+   "legLenM": 0.8336152648776572,
+   "thighM": 0.43492970341442994,
+   "shankM": 0.3986855614632273,
+   "blob": "6ca64389d44244331cd7af37ce8f4ee6f854353e"
+  },
+  "gabriel": {
+   "H": 1.9,
+   "legLenM": 0.9243244660562321,
+   "thighM": 0.48225624315977333,
+   "shankM": 0.44206822289645875,
+   "blob": "a75a38ae0a15de69f4834654637ca6b2db419604"
+  },
+  "frozenRun1TagHasGabriel": true
+ }
+}
