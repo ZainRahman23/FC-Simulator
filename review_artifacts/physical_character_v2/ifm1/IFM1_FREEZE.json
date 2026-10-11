@@ -1,0 +1,157 @@
+{
+ "freeze": "IFM1_FREEZE",
+ "head": "7c4f4eaac19788753a956aad4b87f24467467c6d",
+ "joltSteppingBeforeFreeze": "none (no IFM-1 world was stepped; the fixture generator creates no Jolt object)",
+ "hashes": {
+  "ifm1/Touchline_IFM1_Claude_Preregistration.md": "c9264f2b60d9608113a073531f2be8941e171a71b89c048e60095e6009c8e7f0",
+  "ifm1/IFM1_INPUTS.json": "bc31d74509ca8ec30a77f79ac0befb78b84d4496adb186967cfc26da1b72539e",
+  "ifm1/fixture/IFM1_FIXTURE.json": "cb30fd75ff876820bf1a2c38e7c4bbedfa47f00cc381fb34d09aee858c6f94dd",
+  "ifm1/fixture/ifm1_fixture.log": "b959efb62e94d6a148d2b86e734b65cc898a4d2108b2bff6a466bb6241fe660b",
+  "ifm1/scripts/ifm1_batch.mjs": "fee504b0d780b523cbdfd71af61b4fc43e90a042641c8b0465f1232c6bdee24b",
+  "ifm1/scripts/ifm1_bind.mjs": "24e987effce3e7d94f2f14e4b52ae954730c363166c8c74a6a1704bd3dadf2cc",
+  "ifm1/scripts/ifm1_cpu.mjs": "5ed275e7c1539d77598dd5908be2d4547da4df09538a184f89ae0ef69da4117f",
+  "ifm1/scripts/ifm1_determinism.mjs": "129350873d6fb26ee7f94b6b7e3bce2adba839edb9be1438cfcf5565fb133f28",
+  "ifm1/scripts/ifm1_eval.mjs": "f4f4f7a444f9c303f415b2fb3d66e5d3ba914cd12f2b9c90e6ebe7d0ff0350e3",
+  "ifm1/scripts/ifm1_execute.sh": "f39a277c98eab0a7edb1f113a616ddcab34f11ea9993fdd857ec3ddb35fdfdd0",
+  "ifm1/scripts/ifm1_fixture.mjs": "abdbc475e93ba246205ced72fb21d6726082334ec8171d9685e74c8a8883eee4",
+  "ifm1/scripts/ifm1_lib.mjs": "d11ad2b84b16a7bcd803600be5d4ce815e0ae919db83cf63f900ae4e79a1174d",
+  "ifm1/scripts/ifm1_run.mjs": "1701fbbee6b0ddfc5904914a1f87c35d0fb2b18ff086425b2a71d44bf84d8d17",
+  "ifm1/scripts/ifm1_sim.mjs": "2b1dd14bd34d71f8421e1f3fb2675496ecb9f074ab3a8b62534fefc80d3f7951"
+ },
+ "decisions": [
+  "trajectory: the frozen viewer's single-lane 'across' mover (run1_viewer.js rv1Path / rv1Sim): heading 0, pitch y 36 m, x0 = 52.5 − 3.0·9/2 = 39 m, constant 3.000 m/s from t = 0, zero yaw rate; LOW regime (anchor 3.0, key JOG) — not relabelled",
+  "gait cycles: intervals between right touchdowns (LV2 gait phase u = 0); three complete cycles precede cycle 4 = [w3, w4); the actor is committed at w3 (queryAt reproduces the rendered replay path exactly)",
+  "world → local: subtract the rounded root position at the start of cycle 4 (one fixed transform for both states and bodies)",
+  "stage predicates: S-FLAT = legs.L.contact.subPhase 'flat' ∧ L stance ∧ R swing; S-TOE = L subPhase starts with 'toe pad' ∧ L stance ∧ R swing (LV2-STATE-1 sub-phases; toe pad = heel raised, toe rolling about the pad after MTP rollover); 4,096-sample grid over cycle 4 + 40 bisections of the predicate",
+  "mapper: MC-1 (map/v2_lv2_map.js) on each candidate's own joint frames (R0 = the study's A2/k, RH1 = D12n/k); RF-1 validity across ±δ recorded",
+  "grounding: left F0 boot lowest point (compat_lib bodyLowest) → +0.5 mm, one vertical translation; > 10 mm rejects entry",
+  "HG-A shift: s_h = v_auth,h − P_raw,h / M added to every body (ω, positions, vertical unchanged)",
+  "HANDOFF label: HG-A2.3 (|s| ≤ 0.180 m/s), PR-2 on the ENTERED (post-shift) state with the audit's landmark set and gate (rh1_handoff_eval POINTS; shoulder / elbowU / elbowF / wrist / handTip / head ≤ 0.18 m/s; render rule MC-1 §2(4)), P-14c … P-17c; pre-shift values and every-rig-joint values reported",
+  "impactor placement: reference = midpoint of the knee and ankle joint centres (shank roles) / the deltoid sphere centre (SH); outward ray horizontal ⊥ travel toward the leg's / LEFT side (anim3d world is mirror-handed: runner's right = up × travel; verified against the mapped shanks, hard stop otherwise); exact closed-form distance for sphere / tapered targets and clearances (closestOnSwept; the frozen PCG sdShape approximates tapered capsules by up to 0.5 mm), frozen GJK sdShape for box / hull clearances; bracket scanned inward from 1 m in 1 mm steps, then 60 bisections; witness / normal = exact closest point / outward normal of the target collider",
+  "impactor body: Jolt SphereShape r 0.060, mass 10.000, inertia 0.0144 diagonal, dynamic, object layer MOVING, userData 2000 (V2 listener: material 'body', combined friction / restitution by the V2 policy), damping / max ω / sleep / gyroscopic from the V2 world cfg, discrete motion quality, created after the receiver; its two initial writes recorded separately",
+  "world: G2_WORLD (the audit's G2 configuration: 240 Hz, 150 / 2 iterations, plane turf, manifold reduction / pair cache off); plant constructed as REV2 / ITS-1 (G2Sim S0short, stand SLP_STAND, probes off, passive v2k) — controller gains therefore come from the plant-construction pose exactly as REV2 / ITS-1",
+  "receiver–impactor collisions disabled through the V2 listener's OnContactValidate (Reject for receiver↔impactor pairs) in C0 / W throughout and in X after its restore; impactor–turf stays enabled",
+  "SnapshotTone: coordinates a = (tw, sy, sz) of the passive layer's constraint-space rotation (spec/v2_joints.js pyramid parameterisation); a0 / ȧ0 from the MC-1 entry state (ȧ0 = Jpyr(a0)⁻¹ ω_cs, locked coordinates fixed); ω_ref = Jpyr(a_ref)·ȧ0 (exact analytic Jacobian) rotated by the target child frame and projected on the ACTUAL actuator axes; target domain = anatomical hard range on every unlocked axis and |sy|, |sz| < π (crossing < 50 ms → TARGET_DOMAIN_BLOCKED, later → secondary truncated)",
+  "gains / bias: the bound PostureDriver evaluated ONCE at entry with targets = the current pose and wSt = the initial support flags (1 / 0), giving K, D (stance or swing gains per leg; non-leg gains otherwise) and the statics feed-forward ff (incl. the controller's locked-axis option) — held fixed; τ0 = ff + K·err + (D + h·K)·ω_ref passed to the unchanged ActuatorLayer (init path at entry)",
+  "W: per-body first-step receiver–impactor impulses J_i and moments H_i,O from N's step-1 contact cache; injected once in G2Sim._disturb at n = 0 (after the pre-impulse plans are applied, before the first step) via BodyInterface.AddImpulse (at the COM) and AddAngularImpulse(H_i,O − (c_i − O) × J_i); injected work = the measured KE jump at fixed pose",
+  "X: N to h, full snapshot (Jolt state incl. contacts + plant / adapter / measurement state), uninterrupted N to the end, no-op restore proof (bit-identical), restore, pairs disabled, continue; triggered by the evaluator rule (W not state-matched, or N / W disagree on validity / detectability / equivalence)",
+  "contact impulses: post-step manifold cache decode (track_a_lib, Jolt 5.6.0 layout) reconstructed with the pre-step centre-of-mass transforms (IFM1_INPUTS.json instrumentation.joltSource.reconstruction)",
+  "momentum closure (receiver): ΔP − (M·g·h + Σ measured contact impulses on receiver bodies + declared wrench); angular about the fixed origin O = the entry COM: ΔL_O − (Σ (c_i − O) × m_i g h + Σ contact moments at their application points + declared H_O + Σ Δx_corr × m_i v_i) with Δx_corr = c_post − (c_pre + h v_post) measured from positions (position-solver term); combined receiver + impactor balances as the second check",
+  "energy: the V2 ledger E = KE + PE + passive U per step, residual ΔE − (W_act + W_ext − D), Σ of positive parts (ITS-1's definition); W_ext = opponent work on the receiver (Σ impulse · mean point velocity, the validated ledger's F·v_mid·dt form) in N / X, injected work in W, 0 in C0; the N primary energy verdict uses the combined receiver + impactor system (all terms measured), the receiver ledger is reported",
+  "integrity per step: G1's per-tick values (anchor separation, turf penetration from exact collider geometry, emergency-stop contacts), self-penetration from receiver–receiver manifold depths, ActuatorLayer capacity counter, authority writes = 28",
+  "C0 S-FLAT support: left-foot normal impulse = Σ λ_n of turf manifolds on foot_L (> 0 counts a loaded step); material point = the flat-sole centroid (PostureDriver's support point) advected with foot_L, cumulative horizontal travel; pelvis height = pelvis COM y; non-foot turf contact = a turf manifold of a non-foot receiver body with positive normal impulse or any point deeper than −0.5 mm",
+  "native correspondence: qualifying impulse ≥ 1e-3 N·s on the target body AND sub-shape in step 1; witness = impulse-weighted mean of that manifold's contact midpoints vs the fixture witness (target-body local) advected with the target's pre-step (entry) transform ≤ 10 mm; contact normal oriented toward the impactor vs the planned outward normal ≤ 15°",
+  "causal response: struck-chain points = the target witness and the chain landmarks (knee / ankle or shoulder / elbow / wrist), relevant segments = the struck chain bodies; detectability ≥ 1 mm or ≥ 0.1° vs C0 within 50 ms (repeat noise from the determinism runs)",
+  "equivalence (N–W, N–X, 0–50 ms): landmarks pelvis + knees / ankles / shoulders / elbows / wrists ≤ 10 mm; torso (thorax) and struck-segment geodesic orientation ≤ 3°; identical per-step left-foot loaded / unloaded pattern",
+  "safe stop: non-finite state or any body (receiver or impactor) faster than 25 m/s",
+  "gameplay camera: CAMERA_V1 exactly as rv1GameCam (travelX = runner pitch x − 52.5), zoom 1, 1280 × 720 viewport (CAMERA_V1's 720-px focal definition); the clip renderer is presentation tooling added after this freeze (it cannot affect any gate; its hashes are recorded when it is added)",
+  "determinism: every base trajectory twice in fresh processes; the complete available set once more in reverse order in one process (fresh world + plant per trajectory)",
+  "CPU: instrument off, 1 warm-up + 20 replays, G1 measurement timer excluded from the production-like step cost, companion final-state equality with the correctness run"
+ ],
+ "knownBeforeStepping": {
+  "states": {
+   "S-FLAT": {
+    "t": 3.3269575412338144,
+    "phase": 0.5756221381497117,
+    "intervalMs": 39.9959756685595
+   },
+   "S-TOE": {
+    "t": 3.508699687721697,
+    "phase": 0.8255752495430007,
+    "intervalMs": 26.42990232467568
+   }
+  },
+  "entries": {
+   "R0/S-FLAT": {
+    "status": "ENTRY_GEOMETRY_OK",
+    "handoff": {
+     "HGA2_3": true,
+     "PR2post": 0.2297991326697887,
+     "PR2pre": 0.09851301263704225,
+     "kinPass": false
+    },
+    "tone": "SECONDARY_TRUNCATED_AT_CROSSING",
+    "firstCrossing": {
+     "t": 0.06666666666666667,
+     "step": 16,
+     "joint": "ankle_L.df",
+     "valueDeg": 46.2555851600582,
+     "hard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "R0/S-TOE": {
+    "status": "ENTRY_GEOMETRY_OK",
+    "handoff": {
+     "HGA2_3": true,
+     "PR2post": 0.15404619507212344,
+     "PR2pre": 0.06138021059862816,
+     "kinPass": false
+    },
+    "tone": "SECONDARY_TRUNCATED_AT_CROSSING",
+    "firstCrossing": {
+     "t": 0.0875,
+     "step": 21,
+     "joint": "hip_L.flex",
+     "valueDeg": -25.319621995440873,
+     "hard": [
+      -25,
+      140
+     ]
+    }
+   },
+   "RH1/S-FLAT": {
+    "status": "ENTRY_GEOMETRY_OK",
+    "handoff": {
+     "HGA2_3": true,
+     "PR2post": 0.24173293723611716,
+     "PR2pre": 0.08677204208643782,
+     "kinPass": false
+    },
+    "tone": "SECONDARY_TRUNCATED_AT_CROSSING",
+    "firstCrossing": {
+     "t": 0.06666666666666667,
+     "step": 16,
+     "joint": "ankle_L.df",
+     "valueDeg": 46.2555851600582,
+     "hard": [
+      -60,
+      45
+     ]
+    }
+   },
+   "RH1/S-TOE": {
+    "status": "ENTRY_GEOMETRY_OK",
+    "handoff": {
+     "HGA2_3": true,
+     "PR2post": 0.1452329360473117,
+     "PR2pre": 0.05333664147174683,
+     "kinPass": false
+    },
+    "tone": "SECONDARY_TRUNCATED_AT_CROSSING",
+    "firstCrossing": {
+     "t": 0.0875,
+     "step": 21,
+     "joint": "hip_L.flex",
+     "valueDeg": -25.319621995440873,
+     "hard": [
+      -25,
+      140
+     ]
+    }
+   }
+  },
+  "fixtures": {
+   "SW/R0": "PLACED",
+   "SW/RH1": "PLACED",
+   "PL/R0": "PLACED",
+   "PL/RH1": "PLACED",
+   "SH/R0": "PLACED",
+   "SH/RH1": "PLACED",
+   "TP/R0": "PLACED",
+   "TP/RH1": "PLACED"
+  }
+ }
+}
