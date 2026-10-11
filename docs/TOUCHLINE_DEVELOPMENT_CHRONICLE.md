@@ -2659,6 +2659,168 @@ What was done is not reconstructed here.
 - **E2:** unchanged since the 8 Oct entry.
 - **Publication:** 48 V2 commits above the published `0ddba2b`, plus the local branches `prototype/slide-contact-v1.3-charcollide`, `prototype/locomotion-continuity-v1` and `prototype/locomotion-v2-run1`. Pushed in the 10 Oct housekeeping.
 
+## Saturday 10 October 2026 — Locomotion V2 frozen, the handoff contract, RH1, IFM-1 and the first player-v-player contact
+
+**Evidence:** [FC-Sim Git] 30 commits on `prototype/locomotion-v2-run1`, `0d032424` (06:05) → `4a226b1f` (18:40), with the annotated tag `locomotion-v2-straight-baseline-1` (18:40); 34 commits on `prototype/physical-character-v2`, `4da41c4` (14:20) → `1e39418` (05:39, 11 Oct). The housekeeping commit `e57bf98` (06:00) on `touchline-current` and the 06:00 – 06:01 pushes are in the remote-tracking reflog. None of the later commits, and not the tag, was pushed by 06:00 on 11 Oct. [Doc] `review_artifacts/locomotion_v2_run1/` (`RUN1_REPORT.md`, `RUN1_1_EFFORT.md`, `RUN1_2_REGIMES.md`, `RUN1_3_ALLOUT.md`, `LOCOMOTION_V2_STRAIGHT_BASELINE.md`, `LOCOMOTION_V2_STATE_CONTRACT.md`, `video/VIDEO_CAPTURES.md`); in `review_artifacts/physical_character_v2/`: `DECISIONS.md` (the sections from "ITS-1 amendment A1 PAUSED" onward), `interaction_time/run1_handoff/`, `record_hinged/`, `ifm1/`, `pvp1/`. 8 user decisions and instructions saved verbatim in `sources/` (4 dated 10 Oct, 4 dated 11 Oct). The five RUN-1 instructions, and the 03:03 and 03:18 review requests, are not in `sources/`; they are quoted from the session records. [Session] the times of the user's messages, from the two Claude Code session records (UTC + 1 h). One owner screen recording; no owner screenshots.
+
+**Publication housekeeping, 06:00** (`e57bf98`).
+- `e57bf98` added the 9 Oct entry, the Current state / open problems update and four owner screenshots.
+- **Pushed at 06:00 – 06:01, unchanged:**
+  - `prototype/physical-character-v2` `0ddba2b` → `c647f4c` (48 commits);
+  - the new branches `prototype/slide-contact-v1.3-charcollide` (`5042230`), `prototype/locomotion-continuity-v1` (`9d57d46`) and `prototype/locomotion-v2-run1` (`affc30b`);
+  - `touchline-current` `bb96657` → `e57bf98`.
+
+**RUN-1 closes its overnight pass, 06:05 – 06:11** (`0d03242`, `b0e016e`, `88cd4d8`, `10c5cd1`, `56fada1`, `3caa5d5`).
+- Iteration 14: a speed-dependent heel-rise onset (jog 0.50 / run 0.46 / sprint 0.28 of stance). The sprint stance knee no longer whips towards lock: peak rate 1,509 → 1,054 °/s, minimum angle 12 → 23.4°.
+- **Contact on the skinned mesh** (every boot vertex skinned as the GPU does): RUN-1's stance median is 0.0 mm above the stud plane and never below it; V1.3 hovers 17 mm above it and dips up to 7 mm below.
+- Iteration 15: the toe-pad contact moves 8 cm ahead of the MTP joint, and the boot mesh no longer penetrates at any speed (sprint toe-off −1.4 → +1.3 mm).
+- `3caa5d5`: the final RUN-1 report (`RUN1_REPORT.md`: weaknesses, diagnostics, CPU, verdict against V1, recommendations) and work log.
+
+**RUN-1.1, the effort pass, early afternoon** (`0ecdbd6` 13:43, `c2b824c` 14:00, `141859c` 14:10, `156f90b` 14:11, `f2fac23` 14:16, `949bd76` 14:18, `da3035f` 14:30, `83a457d` 14:37).
+- User (13:18): "Decision: RUN-1 is a major improvement over Locomotion V1. Keep this architecture and continue developing RUN-1." And: "Running looks too effortless." The target: "effort without fatigue; force without stiffness; weight without sluggishness."
+- **Setup:** RUN-1.0 frozen byte for byte (`run1_gait_orig.js` = `3caa5d5`); the viewer runs RUN-1.1 / RUN-1.0 / V1 on three lanes. Reference tools on real running (CMU motion capture, data kept outside the repository) gave phase sheets and coordination metrics against 9 real strides (E0).
+- **E1 – E6:**
+  - E1, a loaded stance and propulsion: a true-gravity vertical with a skewed stance force fitted to real strides, the knee driving from 24 % of stance with the heel rolling up as it loads, and a mid-foot landing under a bent knee;
+  - E2, arm carriage: the elbow drives back, the upper arm 50° behind to 5° in front at 5.5 m/s, elbow 102 ± 18°;
+  - E3, trunk: lean 12.5° with a ±3° pitch into every stance (real 12.6° / 6.2°);
+  - E4, the recovery leg: heel recovery → knee drive → the foot comes down onto the turf instead of reaching out and pawing back;
+  - E5, the pelvis turns with the thorax; spine twist ±17 → ±7°;
+  - E6, landing: heel 7° up at touchdown, knee 28°, jog contact 0.25 s. Every limb is smoother than in RUN-1.0, and all joints sit inside V2's box. A COM-consistent pelvis was tried and kept as a not-adopted patch.
+- `83a457d`: `RUN1_1_EFFORT.md`, with phase sheets, motion paths, chronophotographs, gameplay-camera sheets and the regression.
+
+**RUN-1.2, speed regimes, mid-afternoon** (`decc581` 15:01, `f4f5426` 15:08, `e5c8790` 15:33, `84af00d` and `f697eee` 15:35, `a5dce3a` and `7cd0385` 15:37, `8e55f7e` 15:43, `2a716e2` 15:45, `cddaf89` 15:52).
+- User (14:50): "Preserve RUN-1.1 exactly. Do not overwrite it." And: "visually it reads to me as a good athletic jog, not as a convincing 5–6 m/s football run or sprint." The goal: "jog looks like jogging; run looks like running; sprint looks like sprinting."
+- RUN-1.1 frozen as `run1_gait_v11.js` (`83a457d` byte for byte).
+- **Evidence:** RUN-1.1 at 5.5 m/s reproduces the joint waveforms of real joggers at 3.6 – 4.1 m/s.
+- **Investigation** (`RUN1_2_REGIMES.md`):
+  - why RUN-1.1 reads as a jog: run timing on a jog body (a sinking stance, jog arms, a pelvis and trunk moving as one block, a placed landing);
+  - the architecture answer: regime anchors inside the existing continuous speed blend, with no new constructs;
+  - measured and extrapolated evidence kept apart, including a pelvis-phase analysis of the Fukuchi data set (CC BY).
+- **RUN regime, 5.5 m/s** (R1 – R4): a stiffer stance on a fore-foot landing (knee 24 → 46 → 16°); a front-loaded recovery (swing knee 125°); driving arms (upper arm 56° back to 22° forward); and a driving pelvis (±10°) countered by the shoulders (spine twist ±11°, against ±4.5°).
+- **SPRINT regime, 7.8 m/s** (S1): front-side mechanics, the thigh driven nearly horizontal (hip 77°); 4.05 steps/s, contact 121 ms, flight 129 ms.
+- RUN-1.2 equals RUN-1.1 at 3.0 / 3.5 / 4.0 m/s.
+- **Regression** (`cddaf89`): a wider limits scan found −20.15° of hip extension at 4.0 – 4.25 m/s (planning box −20°, hard −25°), inherited from RUN-1.1. An erratum went into `RUN1_1_EFFORT.md`, whose "inside" claim had come from a 3-speed scan. It was not patched, to keep the identity with RUN-1.1.
+
+**RUN-1.3, ALL-OUT, late afternoon** (`e023b11` 17:12, `7a8204c` 17:12, `bdab1f5` 17:19, `15574a4` 17:27).
+- User (16:51): "Preserve all three current RUN-1.2 regimes exactly. I like them." They read "approximately one category slower than their current labels suggest", so the request was "one additional top-end locomotion regime representing a footballer running at or near maximum speed."
+- RUN-1.2 frozen as `run1_gait_v12.js` (`cddaf89` verbatim).
+- **A1**, the first ALL-OUT draft at 9.5 m/s, was too track-like for a footballer: a forefoot strike, the heel tucked to 138°, the rear thigh only −25°, a force skew of 1.8.
+- **A2 – A3**, calibrated to top-speed evidence (`RUN1_3_ALLOUT.md`): 4.55 steps/s, contact 104 ms, flight 117 ms, force skew 1.4, FAST RUN's foot strike, stance hip extension 808 °/s (Miyashiro: 850 ± 73), lean 10°. Identical to RUN-1.2 at ≤ 8.0 m/s.
+- **Viewer:** the Ladder preset LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 (the user's names for the regimes), a blind test (`?blind=1-4`) and a 6 → 9.5 → 6 m/s ramp.
+- **Limits tool corrected:** the elbow had been read through a YXZ `asin` capped at 90°. RUN-1.2's reported elbow maximum of 90° was really 125°, inside the 145° box.
+
+**Archival captures and the freeze, early evening** (`a7f9a8c` 17:58; `4a226b1` 18:40 and the tag).
+- User (17:42), attaching a screen recording: "Before we freeze the new Locomotion V2 straight-line baseline, I want two short archival video clips created and committed with the locomotion evidence." And: "Do not change any locomotion behavior, parameters, camera geometry, simulation behavior, or animation code to make these videos."
+- **Owner screen recording** (17:40): `Screen Recording 2026-10-10 at 5.40.26 PM.mov`, 7.0 s, 2940 × 1302, 38.9 MB, SHA-256 `a94e0a1b1f21b8f9d22ee9bf0a5cc16f8a8e0d24c8c59797f6695e39d2d388ba`. It is the composition reference for the first clip, and `VIDEO_CAPTURES.md` records that use. As a video rather than a screenshot it is kept outside Git, on the Desktop.
+- **The captures** (`a7f9a8c`):
+  - `LOCOMOTION_V2_FINAL_LADDER.mp4`, with an `_UNLABELED` companion;
+  - `LOCOMOTION_V2_VERSION_HISTORY.mp4`: V1 / RUN-1.0 / RUN-1.1 / RUN-1.2 at 5.5 m/s. RUN-1.3 is bit-identical to RUN-1.2 at that speed, so one labelled cell shows both;
+  - 7.000 s, 420 frames at 60 fps, copied frame-exactly from the viewer's WebGL canvas; an independent Node replay matches every lane-frame.
+- User (18:06): "Approved." And: "Now freeze the current four-regime straight-line locomotion system as the Locomotion V2 straight-line baseline." Also to be frozen: the locomotion-side state interface for the Physical Character V2 handoff.
+- **Frozen** (`4a226b1`, tag `locomotion-v2-straight-baseline-1`; local):
+  - RUN-1.3 as `run1_gait_v13.js`, the implementation that rendered the approved captures. RUN-1.0, 1.1 and 1.2 are kept as historical references;
+  - straight lines only. Acceleration and deceleration, curves, turning, per-player speed characteristics and ball carry are not frozen;
+  - the state contract LV2-STATE-1 (`lv2_state.js`, `LOCOMOTION_V2_STATE_CONTRACT.md`): a pure O(1) float64 root-relative state, with analytic velocities where a closed form exists and a declared central difference otherwise.
+- **Final regression:** identity 36 / 36, determinism, neutrality, slip 0, limits (only the inherited −20.1° hip), 0.59 ms for 22 rigs, contract 21 / 21, and both clips match the frozen file. Found at the freeze and documented, not changed: the heel-rise onset is a velocity kink, and the replay path has a plant transient of ≤ 0.1 mm on speed changes.
+
+**The RUN-1 → V2 handoff contract, afternoon and evening** (`4da41c4` 14:20, `14b5cba` 14:33; `3977238` 20:18, `6a0cf34` 20:56; read-only).
+- User (14:19): "Architecture sequencing decision: pause implementation of the proposed interaction-controller amendment." And: "I do not want to optimize the production animation→physics handoff around V1.3/LC-1 if that locomotion representation is going to be retired."
+- **Draft** (`14b5cba`):
+  - the interface split into rows RUN-1 exposes (R-0 … R-8), rows V2 derives (V-a … V-g) and rows the simulation owns (S-a … S-g), with hard preconditions H-1 … H-5 and the ITS-1 tests kept or retired;
+  - probed from a git-archive copy of RUN-1 at `949bd76`: its stride clock differs from the simulation's (2.75 vs 3.21 steps/s at 3 m/s), its kinematics export was float32 and mutating, and its heel-up / MTP stance makes the rigid F0 foot mismatch central.
+- User (20:17): "The Locomotion V2 straight-line baseline is now formally frozen." And: "Consume it only through a git archive of that tag, never from the live worktree."
+- **Draft R2** (`6a0cf34`), reconciled with LV2-STATE-1:
+  - the contract checks give 21 / 21 from a git archive. R-0 … R-8 are all answered directly for straight running; clock ownership (R-5 / H-1) and turning (R-7) are unresolved;
+  - instantaneous transfer measured with V2's frozen mapping at 3.0 / 5.5 / 7.8 / 9.5 m/s, no physics stepped: **verdict B, NOT READY.** The smallest blocker is V-a, the 23 → 14 bone mapping (owner: V2). At FAST RUN / ALL-OUT the shoulders, elbows and hands are 16 – 31 mm and 0.23 – 0.57 m/s off, and the shoulder's hard range is exceeded at ALL-OUT (≤ 1.34°). The leg chain transfers exactly;
+  - reported, not decided: the simulation's stride clock runs 17 – 44 % faster; the F0 foot is representable only in flat stance and flight; the gameplay legs are 0.19 – 0.29 m from the runner's at any phase offset; the simulation's VMAX of 8.2 m/s is below ALL-OUT.
+
+**The upper body and RH1, late evening** (`a7a5bfb` 21:10, `edfa2b8` 21:50; `084f736` 21:54, `50eae23` 22:06, `2ab15ca` 22:20, `196815e` 22:24, `fa5915b` 23:32).
+- User (21:09): "Accept verdict B and keep the frozen Locomotion V2 baseline completely untouched." And: "does the physical interaction body actually need a one-to-one representation of all 23 presentation bones?"
+- **Investigation** (`edfa2b8`, read-only, 14 alternatives): classification D, a combination.
+  - Physics is mainly a mapping problem. The velocity reference must be the rig's material velocities, not a differenced copied pose: ALL-OUT per-body velocity error 0.52 → 0.14 m/s with V2 unchanged.
+  - Visible continuity needs lumbar, thoracic and elbow joint anchors taken from the record. A clavicle is not justified, and the 1.34° shoulder exceedance is a copy-mapping artefact.
+  - Also found: the frozen P-14 … P-17 reference misplaces V2's trunk mass by 50 – 60 mm, and P-17 swaps the arm inertia axes.
+- User (21:53), approving D1 – D4: "Adopt the record-hinged runner as a new V2 body-spec version." "Do not add physical clavicle articulation." And: "I do not consider the new body valid until the existing V2 physical-body gates have been rerun against the new version."
+- **RH1**, preregistered (`50eae23`) and built (`2ab15ca`): spec `PI1-runner-vinicius-RH1`, hinge-only (masses, COM, inertia, colliders, ranges and the lower body preserved; the 20 existing spec hashes unchanged), with mapping contract MC-1.
+- **Verdict C, RECORD-HINGED V2 BODY INVALID** (`fa5915b`). RH1 passes 50 / 54 gating rows.
+  - Two failures are new and caused by the hinges, both in G1: leanL (shoulder_L 1.74° against 1.5°) and dropA (a late left-arm settle at the edge of the 10 s window).
+  - G3 G / H / K′ fail too, inherited from the record hip spacing: R0 fails them identically. Newly found: R0 had never run G3.
+  - The transfer itself was close: at ALL-OUT ≤ 6.5 / 5.4 / 2.6 mm at shoulder / elbow / wrist, no visible pops, the lower body bit-exact. But the rigid F0 boot fails P-9 and stance-contact consistency, so the handoff would be B regardless.
+  - The preregistration's reproduction stop rule failed as written (≤ 1.15 · 10⁻⁴), a preregistration defect; the verdict does not depend on it.
+
+**The hold and the audit, after midnight** (`36ec2e9` 00:15, `ff5be5e` 00:21, `196f466` 00:36).
+- User (00:13): "Hold here." And: "We are having the accumulated architecture independently reviewed."
+- `RH1_AUDIT_HANDOFF.md`, facts and provenance only. The four failing rows are separated into:
+  - RH1-introduced: G1 leanL and dropA;
+  - shared with R0: G3 G, H and K′;
+  - recorded exceptions: isoSelfCol, permitted for PI-1 only, and the G0 rows, recorded but never waived by the user;
+  - unresolved rigid-foot / promotion issues.
+- A clean-tree audit from a git archive: 0 / 14 comparisons differ.
+
+**IFM-1, the impact-first matched-state comparison, small hours** (`5b5883f` 01:13, `7315537` 01:32, `1c3e264` 01:32, `7c4f4ea` 01:32, `796a6e1` 02:01, `365dfd9` 02:02, `b1dc620` 02:05, `2139709` 02:10, `f22a914` 02:49; slow-motion review `df2f206` 03:31).
+- User (01:12): "I approve IFM-1 for implementation and execution under this preregistration." The preregistration was the user's attached `Touchline_IFM1_Claude_Preregistration.md` (`~/Downloads`, 01:10), copied byte for byte into `ifm1/`.
+- Inputs bound (`7c4f4ea`) and the implementation frozen (`796a6e1`) before any stepping; an erratum on P-17's units (`7315537`). A side-convention bug in the fixture was fixed before the freeze and disclosed.
+- Corrections C1 – C6 were recorded over runs 1 – 2 (an orientation-angle precision bug, contact sub-shape decoding, a double world destroy, a path join). Run 3 is the reported run; runs 1 – 2 are kept.
+- **Results** (no combined verdict; R0 and RH1 runners at 3.0 m/s, struck by an impactor closing at 3 m/s):
+  - SW (swing shank): native integrity failed at step 1;
+  - PL (planted shank), SH (shoulder) and TP (toe-pad stance): the native response is mechanically valid over 0 – 50 ms;
+  - continued native contact matters for PL (33 mm / 2° when contact is cut after one step) and TP (42.5 mm / 3.5°), but not for SH;
+  - every entry carries the frozen HANDOFF_FAILED label;
+  - at the gameplay camera, no 0 – 50 ms response differs from the no-hit control by more than 0.68 px.
+- `IFM1_ARCHITECTURE_DECISION.md` proposes INT-1; not started.
+- User (03:18): "Create a focused slow-motion visual review of the existing IFM-1 results." `df2f206`: C0 | N side by side for all four cells on both bodies, an exact 8× crop of the gameplay projection at 0.25× and 0.1×, CLEAN and DIAGNOSTIC versions, and `SLOWMO_REVIEW.html`. Verified against the records (clip data 26 / 26 byte-identical).
+
+**PVP-1, the first player-v-player design, before dawn** (`17fa068` 03:39, `34a5086` 04:00; research only).
+- User (03:39): "I want the next milestone to be our first genuine player-v-player physical interaction." And: "Do not build it yet."
+- **Case selection:** of the 26 V1.3 fixtures, 4 are recoverable. IB1-SR (rx_behind_standing) was recommended: a standing runner, a slide from behind, the tackler's boot on the planted right shin at τ 51.5, outcome STUMBLE.
+- **Readiness:** a running two-body test was judged premature (the simulation's contact legs are 0.197 / 0.251 m from LV2's at 3 m/s, p50 / p90; the running presentation's momentum is incoherent).
+- A draft preregistration, with owner decisions D1 – D5.
+
+**PVP-1A, overnight** (`25a87d5` 04:28, `d7fb69a` 04:34, `9fa1f57` 04:49, `0a82906` 05:03, `7849713` 05:08, `fa34dd1` 05:17, `9fbf7a4` 05:39, `1e39418` 05:39).
+- User (04:25): "OVERNIGHT PVP-1A MISSION — work autonomously for an extended session and maximize useful evidence, not the probability of a PASS." And: "A rigorous failure is more valuable than a manufactured success."
+- The instruction referred to an earlier approval and architecture amendment that had not been received. This was recorded on receipt (`25a87d5`), and the instruction was taken as the operative approval.
+- **Frozen** (`d7fb69a`) before any code: the R0 runner and a V1-matched tackler in one unmodified V2JoltWorld; activation at τ 51.0; a no-contact control C0, native contact N2 and a contact-cut branch X2; CG-1 … 6; integrity rows; the simulation's balance law as an offline evaluator (OC-3); hard stops H1 – H7.
+- **PVP-1A BLOCKED at H2** (`9fa1f57`), before any two-character stepping. The tackler's fit to the simulation's slide primitives fails G-T1 and G-T3, and no V1-matched pose inside the hard ranges satisfies the gates: the primitives put the thighs 0.265 m apart at the hips, against the body's 0.190 m.
+- **PVP-1A-DX**, the identical frozen design with the tackler entered by the frozen fit objective and every verdict DX-prefixed (protocol `9fa1f57`, implementation freeze `0a82906`):
+  - run 1 (`7849713`): first native contact at step 3 (τ 51.75), boot → runner shank_R; CG-1 … 6 pass; contact on 166 of 260 steps; the runner clean; determinism bit-identical;
+  - the tackler fails integrity from step 1: its entry pose has the forearm 39.5 mm inside the thigh. **Corrected verdict DX-BLOCKED** (DX-C1: the evaluator had omitted that frozen entry check). The original evaluation is preserved.
+- **Visual evidence** (`fa34dd1`): gameplay camera 1×, 6× slow motion, a diagnostic view, and synchronized C0 | N2 and N2 | X2 pages, all on `pvp1/review/PVP1A_REVIEW.html`.
+- **Post-hoc diagnostics** (`9fbf7a4`, labelled as such):
+  - the shin strike carries 5.0 N·s; the boot then rides under the planted foot for 61.6 N·s (steps 7 – 30);
+  - from step 63 (262 ms) the still-sliding tackler's head strikes the runner's pelvis, a contact the simulation does not have;
+  - the tackler's isolation failure is the solver's body-ID ordering: the runs are bit-identical when the bodies occupy the same slots;
+  - CF1, a separately named variant with the tackler's arms cleared: the tackler stays clean to step 18, and the runner's first 75 ms are unchanged;
+  - under the simulation's own balance law, the runner's no-contact state is already FALL (eH 0.356). Its STUMBLE comes from a contact push toward the stance foot, while the physical push points 55° away from it.
+- `PVP1A_MORNING_REPORT.md`, and `PVP1A_R1_SUCCESSOR_PROPOSAL.md`: a draft, outcome-informed, neither frozen nor implemented, with PARTIAL predicted.
+
+**Parallel work outside this repository** ([Local], file times only; not investigated).
+- In the user's Codex workspace `~/Documents/Codex/2026-10-10/new-chat/`, 15:51 – 21:03: statistics, transfers, club, overview, home, squad-play and matchday pages with their `build_*.py` and `verify_*.cjs` scripts, `matchday-integrated.html`, and `Touchline_Playable_Statistics.html` (41.1 MB; a copy in `~/Downloads` at 21:01).
+- In `~/Downloads`: `2026-27-ratings-updated-ranked-2026-10-10-elite-pace-locked.xlsx` (21:12); after midnight, `Touchline_2026-27_Ratings_Final_Pace_2026-10-10.xlsx` (01:27), `Touchline_2026-27_Ratings_Rebuilt_Validated.xlsx` (02:12), `Touchline_2026-27_Ratings_Live_OVR_Olise92.xlsx` (02:31) and `Touchline_226_Player_Stamina_Review.xlsx` (03:31).
+
+What was done is not reconstructed here.
+
+**Corrections and process errors.**
+- **RUN-1.1** claimed every joint inside V2's box from a 3-speed scan; RUN-1.2's wider scan found −20.15° of hip extension (erratum).
+- **RUN-1.2** reported an elbow maximum of 90°, a limits-tool artefact (really 125°). Its identity with RUN-1.1 is bit-exact only at grid speeds, ≤ 0.12 mm between cells (erratum in `RUN1_2_REGIMES.md`).
+- **RH1.** The reproduction stop rule failed as written; the P-17 units erratum (`7315537`).
+- **IFM-1.** C1 – C6 recorded, runs 1 – 2 superseded and kept, the pre-freeze side-convention bug disclosed.
+- **PVP-1A-DX.** DX-C1 (the omitted tackler self-penetration check) and DX-C2 (the CG-6 reading), with the original evaluation preserved.
+- **Sources.** The 03:03 and 03:18 review requests were not saved to `sources/`.
+
+**Adopted / not adopted.**
+- **Frozen (owner decision):** the Locomotion V2 straight-line baseline, `locomotion-v2-straight-baseline-1` = `4a226b1`, with LV2-STATE-1. RUN-1.0, 1.1 and 1.2 are kept as frozen historical copies.
+- **Paused:** ITS-1 amendment A1 (user, 14:19).
+- **Not adopted, kept as evidence:** RH1 (verdict C, on hold); the IFM-1 results (visual review pending); PVP-1A and PVP-1A-DX; the PVP-1A-R1 draft.
+- **Unchanged:** V2 and its configuration, R0, the simulation (V1.3), the Jolt settings and every frozen criterion.
+
+**End-of-day state** (06:00, 11 Oct).
+- **Locomotion V2** is frozen for straight-line running. Acceleration, turning and match integration are not started.
+- **Physical character:**
+  - the handoff state contract is NOT READY (verdict B), and RH1 is invalid (verdict C), held for the independent architecture review;
+  - IFM-1 awaits the owner's visual review;
+  - PVP-1A is BLOCKED and its DX diagnostics are complete. Pending owner decisions: the visual review, whether IB1-SR's STUMBLE should be physically explicable at all, and PVP-1A-R1.
+- **Publication:** 34 V2 commits above the published `c647f4c`, 30 RUN-1 commits above `affc30b` and the baseline tag. Pushed in the 11 Oct housekeeping.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -2672,7 +2834,7 @@ What was done is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `c647f4c`, 10 Oct 05:09, pushed in the 10 Oct housekeeping; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `1e39418`, 11 Oct 05:39, pushed in the 11 Oct housekeeping; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -2686,7 +2848,7 @@ What was done is not reconstructed here.
 - **Locomotion evidence** (8 Oct; counterfactual diagnostics CF-1 … CF-6, not adopted). With harness-only gait layers, V2-REF walked 59 consecutive continuous steps at 0.10 m/s. Every failure at higher speed lay in the gait / planning / control layer; no body limit was found. Autonomous V2 walking is no longer pursued.
 - **Architecture** (decided 10 Oct 04:42, after Astra's review, `2c6900d`): interaction-time physics.
   - The simulation is authoritative.
-  - Ordinary locomotion is animation-driven, a separate effort (RUN-1, below).
+  - Ordinary locomotion is animation-driven: the Locomotion V2 straight-line baseline (below), frozen on 10 Oct, is an immutable upstream dependency consumed only through a git archive of its tag.
   - V2 is activated only at a meaningful interaction, initialized at the interaction state.
   - Sustained or pre-contact V2 locomotion is no longer a prerequisite.
   - The 9 Oct promotion design (PI-1) is paused and kept as evidence.
@@ -2699,15 +2861,19 @@ What was done is not reconstructed here.
   - No PI-1 qualifying run has ever run.
 - **ITS-1**, the first interaction-time slice (`cb886b1`), stopped at PF-0 activation validity (`c647f4c`).
   - 1 of 4 control states is valid, and no struck run has been made.
-  - The recommended next step, amendment A1, is not started: an interaction-time stance tone, running-stance V-3 rows and a single-state C design.
+  - Amendment A1 (an interaction-time stance tone, running-stance V-3 rows and a single-state C design) was paused by the user on 10 Oct.
+- **The RUN-1 → V2 handoff contract** (`interaction_time/run1_handoff/`, R2 `6a0cf34`, reconciled with LV2-STATE-1): **NOT READY (verdict B).** The leg chain transfers exactly; the upper body does not under V2's frozen mapping. Stride-clock ownership and turning are unresolved.
+- **RH1**, the record-hinged runner (`fa5915b`): **verdict C, body invalid** (50 / 54 rows; two new G1 failures, three G3 failures shared with R0). Held for the independent architecture review, with a facts-only audit (`record_hinged/RH1_AUDIT_HANDOFF.md`).
+- **IFM-1** (`f22a914`, run 3): native contact is mechanically valid over 0 – 50 ms for the planted shank, shoulder and toe-pad stance, and continued contact matters for the first and last; at the gameplay camera no response exceeds 0.68 px. Every entry carries HANDOFF_FAILED. Visual review pending; nothing adopted.
+- **PVP-1A**, the first player-v-player test (IB1-SR, `pvp1/`): **BLOCKED at H2** (the simulation's slide primitives cannot be fitted by the tackler's body). The labelled diagnostic PVP-1A-DX made native two-body contact that matches the simulation's (CG-1 … 6) but is DX-BLOCKED by the tackler's entry pose. Post-hoc diagnostics and the PVP-1A-R1 draft await the owner (`PVP1A_MORNING_REPORT.md`).
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
 **Touchline material that exists but is *not* in `touchline-current`** (nothing here should be assumed integrated):
-- **Locomotion and collision branches of 9 – 10 Oct** (pushed in the 10 Oct housekeeping, not merged):
+- **Locomotion and collision branches of 9 – 10 Oct** (pushed in the 10 and 11 Oct housekeeping, not merged):
   - `prototype/slide-contact-v1.3-charcollide` (`5042230`);
   - `prototype/locomotion-continuity-v1` (`9d57d46`, LC-1);
-  - `prototype/locomotion-v2-run1` (RUN-1, the straight-line run with its viewer `sandbox/visual/run1.html`).
+  - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -2717,6 +2883,7 @@ What was done is not reconstructed here.
   - **Workbooks:** flank rules; the 4 Oct ranked workbook.
   - **Design packages:** exposure; aging / Fitness.
   - **Location:** the user's Codex workspace (`~/Documents/Codex/2026-10-0X/`) and `~/Downloads`.
+  - **Later file activity** (9 – 11 Oct, file times only): statistics, transfers, club, overview, home and matchday pages in `~/Documents/Codex/2026-10-10/new-chat/`, and further ratings and stamina workbooks in `~/Downloads`.
 - **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip. It was extended on 8 Oct with stages 23 – 29 for the 1 – 7 Oct work (Appendix G).
 - **One generated evidence archive** (`runs_records_240_REF_165.tgz`, 105.8 MB), removed from the V2 history for publication on 8 Oct, is kept locally outside Git (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
@@ -2738,13 +2905,16 @@ What was done is not reconstructed here.
 - **Physical character.**
   - **Interaction-time activation is not yet valid.**
     - ITS-1's frozen-target posture tone opposes the initialized stance-leg rates: activation load 8.80 vs 6.04 N·s per step, slips of 12 – 18.8 mm.
-    - The touchdown and late-stance states also fail, so no struck response has been observed.
+    - The touchdown and late-stance states also fail. The ITS-1 amendment is paused.
+  - **The handoff state is NOT READY** (verdict B, 10 Oct): V2's 23 → 14 upper-body mapping, and the rigid F0 boot against the frozen runner's heel-up / toe-pad stance (P-9, stance-contact consistency). RH1, the attempted body-spec fix, is invalid (verdict C).
+  - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
+    - The simulation's contact legs are 0.19 – 0.29 m from the frozen Locomotion V2 runner's at any phase offset, and its stride clock runs 17 – 44 % faster.
     - The shared leg law's pelvis vertical is not physically realisable. A physical law would change 12 / 26 first contacts, a gameplay change that is undecided.
   - **The interaction-time architecture is decided, but its later stages are untested:** hand-back / reconciliation, recovery and broader tackle coverage. The articulated toe (F1) is closed at the solver, and toe-pivot geometry remains a rigid-boot limitation.
   - **A candidate V2 model limit:** from 4.2 m/s the swing hip torque exceeds the modelled capacity (Hill w0 15 rad/s). This is not an observed failure.
-  - **Production locomotion (RUN-1)** covers straight-line running only (3.0 – 7.8 m/s, with acceleration). Turning, cutting, stop / start, walking and integration into the match runtime are not started.
+  - **Production locomotion (Locomotion V2, frozen 10 Oct)** covers straight-line running only, in four regimes from 3.0 to 9.5 m/s. Acceleration and deceleration, curves, turning and cutting, walking, per-player speed, ball carry and integration into the match runtime are not started. The simulation's VMAX (8.2 m/s) is below ALL-OUT.
   - **E2 touchdown** is blocked at TD2C (U-1, the +20 mm obstacle at 180 / 240 Hz). The recovery-step touchdown (R-4 / R-5) is unsolved. TD-15 and TD-17 are open.
   - **CPU.** Continuous V2 locomotion for 22 players measured 4.3 – 5.1 s CPU per simulated second (SLP-2, unoptimised, one core). Promotion is estimated at roughly 18 – 38× less on average, but the interaction rates behind that estimate are assumed, not measured.
 - **Sprint dribbling** still loses the ball (not hidden). The Dribbling V1 boot-plan lateral mirror is recorded and unfixed.
