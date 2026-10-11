@@ -1,0 +1,40 @@
+{
+ "freeze": "PVP1A_DX_FREEZE",
+ "note": "implementation hashes frozen before any N2 / X2 run (PVP-1A-DX)",
+ "hashes": {
+  "PVP1A_PREREGISTRATION.md": "a6108c6832bc7acb27b91f1458fdeb70c40a166888c74f660148861257e83788",
+  "PVP1A_DX_PROTOCOL.md": "f749f61c4568c38e40374a8325e87c624192c7cbcde15286bf6fc81443793789",
+  "PVP1A_STOP_H2.md": "757b93a6465f62dc8b4010ff8042f3b2be3173d853f0d177ccd4441007e28be2",
+  "PVP1A_INPUTS.json": "1d72fb01eeebbd542e923f0e9b32b4e3f437b045d006fab29d0331f0babf081c",
+  "fixture/PVP1A_FIXTURE.json": "93c62cb434a0d41ce4dbff2c6b5e2a99199b91b380b3fe62a41d568be41973a8",
+  "evidence/PVP1A_FIT_FEASIBILITY.json": "d0887e531c6fb9ee3cd85f68d176e932654c094a2dbd81fd86016800589269d5",
+  "scripts/pvp1_survey.mjs": "07556f2a4b12e475c9198977378f272efc69b2d3a1fa3daae86970f454186d5b",
+  "scripts/pvp1a_batch.mjs": "b2d539a68583a143a25bd05a0c993347aad2fa754d4f67f179afc24acf78909c",
+  "scripts/pvp1a_bind.mjs": "341e5103a802f4969078d2dbad4bae0b1aee4ab4570e311268676bb1eb653b70",
+  "scripts/pvp1a_cpu.mjs": "c1508c97b9b4b9a4441772961e2f5d6127f969dec8048fbeff4f9e4ef9b2d807",
+  "scripts/pvp1a_eval.mjs": "571516cff7eed58d57dbe7e18c1d3ffdebb8c3cb1f829c08a93ac2fe02b03ddc",
+  "scripts/pvp1a_execute.sh": "b7e1ab6e6b26eed2f2f82e1f97fe02db4bfaa5d9f9a9ddb72e2b52053d1c2408",
+  "scripts/pvp1a_fit_feasibility.mjs": "a2b4d28aa800d2534eb8e21621398cf8f46118cd83bfa080a2d6ce0a55b2d670",
+  "scripts/pvp1a_fixture.mjs": "a2ce78cdeecc4dcc98aae37d170687becb164e60e4e1514002060b052c74c4b8",
+  "scripts/pvp1a_lib.mjs": "1cda6741f68582e284104cc7b6f11bfd6524fe1f26e96c399515cf8bcd993f24",
+  "scripts/pvp1a_run.mjs": "5e7be19e3ffa564cc5273afc8aa3f99818d66b5414c304f1ca27e62e5572a776",
+  "scripts/pvp1a_sim.mjs": "a4d933b329e443f36088bd528b6854d7c979f2c1b932542a4bc9619e52c62e5e"
+ },
+ "decisions": [
+  "world: one unmodified V2JoltWorld on the combined spec (runner 0–13, tackler 14–27), G1_WORLD settings (240 Hz, coll 1, 150 / 2, discrete) + actuators, gravity −9.81, the spec contact configuration (equal for both specs, checked)",
+  "per character: unmodified PassiveLayer {enabled, couplings, kneeModel v2k}, ActuatorLayer {}, solveStance(STANCE), StandController(SLP_STAND) as model, PostureDriver; through worldView (index offsets; any unmapped world function throws)",
+  "SnapshotTone exactly as IFM1Sim.toneCmd; a0 = coordsOf(qcs) of the written entry poses; ȧ0 = 0 (the entry has zero relative joint rates; asserted); ActuatorLayer init path at entry",
+  "tick order = G2Sim.tick: both P.apply + act.apply → one w.step(h, 1) → read → dampingLoss + act.after → P.compute + toneCmd + act.compute → record",
+  "contacts: post-step cache decode (track_a_lib) with pre-step COM transforms (IFM1 manifoldImpulses); kinds turf-runner / turf-tackler / self-* / cross",
+  "ledgers: per character Δ P / ΔL_O vs gravity + turf + cross impulses (+ position-correction term), system vs gravity + turf; energy E = KE + PE + passive U; per character residual includes the cross-contact work (IFM-1 F·v_mid·dt form); system Σ⁺ of ΔE − (W_act − D)",
+  "integrity per character = G1 _measure definitions (anchors, hard excess, engine stop margin < 0.25°, exact turf penetration) + self / cross penetration from manifold depths + ActuatorLayer overCap",
+  "C0 / X2 rejection through the listener validate callback (userData ranges); X2 = N2 to the end of the first step with a cross manifold |J2| ≥ 1e-3 N·s, snapshot (Jolt All + plant state), no-op proof, restore, reject",
+  "first physical contact attributed to the deepest qualifying cross manifold of the first contact step (REV2 A2); OC-3 at the first step n* with t ≥ t_phys + 0.060 s (n_phys + 15); remaining support = the physical left ankle joint centre",
+  "isolation: SOLO_R / SOLO_T = the same plant code with one character (world from that spec alone), compared with C0 over steps 1–36",
+  "safe stop: non-finite or any body > 25 m/s (stops the run; marker recorded)"
+ ],
+ "disclosures": [
+  "an 8-step C0 smoke test (cross pairs rejected; no contact possible) was run before this freeze to check the harness; it showed (a) zero turf impulse on both runner boots in step 1 (the frozen +0.5 mm grounding gap) — which conflicts with the frozen C0 runner criterion \"impulse > 0 in every step\" (my preregistration error; the criterion is kept and reported as written, with the IFM-1-style count labelled post-hoc); (b) the fitted tackler is supported by its pointed left boot, right foot and right forearm (pelvis above the turf), the right forearm strikes the turf at step 3 (13.4 N·s) and the tucked right foot spins up to 15–21 rad/s from sliding friction; the tackler angular ledger reached 0.067 N·m·s at step 3. No N2 / X2 step has been run.",
+  "the evaluator (scripts/pvp1a_eval.mjs) was written before any N2 run"
+ ]
+}
