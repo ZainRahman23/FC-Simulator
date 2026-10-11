@@ -3502,3 +3502,42 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
   - R2 clock / turning questions open.
 
 **Stopped:** waiting for the user. Nothing pushed.
+
+## 2026-10-11: IFM-1 impact-first matched-state comparison EXECUTED (run 3); results and one-page decision written; VISUAL_PENDING; stopped for the owner's review (`ifm1/IFM1_RESULTS.md`, `ifm1/IFM1_ARCHITECTURE_DECISION.md`; approval `sources/2026-10-11_user_approval_ifm1_execute.md`, 5b5883fe)
+
+**Provenance:**
+- Inputs bound uniquely: 7c4f4eaa. RUN-1 tag d85304f5 → 4a226b1f; R0 62d5d797; RH1 e2892d27.
+- Pre-run freeze: 796a6e1b.
+- Corrections C1–C6 recorded before re-runs, with no threshold or physics change (`ifm1/IFM1_CORRECTIONS.md`).
+- Reported run: run 3 at 21397097. Runs 1 and 2 are kept as superseded evidence.
+
+**Scoped statuses** (no combined verdict; global failures unchanged and shown):
+- **SW (both bodies):** NATIVE_INTEGRITY_FAILED at step 1. Angular residual 2.34e-2 N·m·s; segment spin 27.7 rad/s. W and X not permitted.
+- **PL (both):** N PRIMARY_MECHANICS_VALID; SECONDARY_FAILURE_AT(120.8 ms).
+  - W: R0 not state-matched by 0.0003 N·s; RH1 valid.
+  - N–W and N–X both 33 mm / 2° apart, with a different support pattern. Continued native contact matters.
+- **SH (both):** N valid. W not state-matched; post-hoc: the injection is clipped by the 100 rad/s ω limit on the upper arm. X ≡ N (≤ 8.7 mm / 1.6°): first-step dominated.
+- **TP (both):** N valid. W state-matched but integrity 1.03e-2 / step. N–X 42.5 mm / 3.5°. Continued native contact matters. F0 entry valid.
+- **All entries:** HANDOFF_FAILED under the frozen reading (three readings reported, C5).
+- **All controls:** CONTROL_VALID_PRIMARY, healthy to 66.7 / 87.5 ms (SnapshotTone truncation).
+- **R0 vs RH1:** nearly indistinguishable.
+
+**Gameplay camera:**
+- Setup: frozen RUN-1 viewer and character, CAMERA_V1, zoom 1, 1280 × 720, render rule MC-1 §2(4).
+- Screening: every 0–50 ms response is ≤ 0.68 px from C0. The 2 px screening marker is reached in no cell. Entry continuity ≤ 0.55 px.
+- Clips and blinded A/B: `ifm1/evidence/run3/clips/REVIEW.html`. Lossless frames are outside Git (pointer file).
+- **VISUAL_PENDING.**
+
+**Repeatability and neutrality:**
+- All base trajectories, the reverse batch, the X restore proofs, the rendered poses and the pixels are identical on repeat.
+- `IFM1_EVAL.json` reproduces byte for byte from the committed records.
+- ib_verify 59/1/0 before and after.
+- READ_ONLY_RECORD_NEUTRALITY_PROVEN / LIVE_NEUTRALITY_NOT_TESTED.
+
+**CPU:**
+- Step median ≈ 0.49 ms; 150 ms event ≈ 18 ms per receiver; MC-1 activation ≈ 27 ms.
+- X overhead not measured (disclosure D2).
+
+**Proposed (not started):** INT-1, a read-only live-match observer for native planted-leg contact. Only if the visual review does not reject the scope.
+
+**Stopped:** waiting for the owner. No adoption, production integration, recovery or new experiment. Nothing pushed.

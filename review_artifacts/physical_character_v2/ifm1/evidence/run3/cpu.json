@@ -1,0 +1,1264 @@
+{
+ "generated": "ifm1_cpu.mjs",
+ "node": "v22.19.0",
+ "cpu": "Apple M4",
+ "loadavgStart": [
+  2.4404296875,
+  2.3544921875,
+  2.3955078125
+ ],
+ "replays": 20,
+ "jobs": [
+  {
+   "name": "C0_R0_S-FLAT",
+   "mode": "C0",
+   "construction": {
+    "median": 5.5496669999999995,
+    "max": 8.326667000000043
+   },
+   "stepProductionLike": {
+    "median": 0.6022089999999025,
+    "p95": 0.9565839999999639,
+    "max": 2.053750000000008
+   },
+   "components": {
+    "jolt": {
+     "median": 0.28862499999999613,
+     "p95": 0.35812500000000114,
+     "max": 0.6130420000000072
+    },
+    "passive": {
+     "median": 0.2504170000000272,
+     "p95": 0.5040419999999699,
+     "max": 1.424416999999977
+    },
+    "act": {
+     "median": 0.022126000000071144,
+     "p95": 0.05366699999996172,
+     "max": 0.5094170000000418
+    },
+    "tone": {
+     "median": 0.01854099999997061,
+     "p95": 0.028541000000018357,
+     "max": 0.19695900000002098
+    },
+    "measureDiagnostics": {
+     "median": 0.07058299999999917,
+     "p95": 0.2244580000000269,
+     "max": 0.6558749999999804
+    }
+   },
+   "event50ms": {
+    "median": 8.015831999999875,
+    "max": 11.322167999999976
+   },
+   "event150ms": {
+    "median": 22.734377000000336,
+    "max": 29.740841000000017
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.6022089999999025,
+     "event150MsMedian": 22.734377000000336
+    },
+    "2": {
+     "stepMsMedian": 1.204417999999805,
+     "event150MsMedian": 45.46875400000067
+    },
+    "4": {
+     "stepMsMedian": 2.40883599999961,
+     "event150MsMedian": 90.93750800000134
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "C0_R0_S-TOE",
+   "mode": "C0",
+   "construction": {
+    "median": 4.717499999999973,
+    "max": 6.530500000000075
+   },
+   "stepProductionLike": {
+    "median": 0.4997080000000551,
+    "p95": 0.7913750000000164,
+    "max": 1.3042500000000246
+   },
+   "components": {
+    "jolt": {
+     "median": 0.26566700000012133,
+     "p95": 0.34399999999993724,
+     "max": 0.78287499999999
+    },
+    "passive": {
+     "median": 0.19074999999998,
+     "p95": 0.37174900000002253,
+     "max": 0.6652500000000146
+    },
+    "act": {
+     "median": 0.01824999999996635,
+     "p95": 0.03979099999992286,
+     "max": 0.3326670000001286
+    },
+    "tone": {
+     "median": 0.010499999999865395,
+     "p95": 0.019334000000071683,
+     "max": 0.3367909999999483
+    },
+    "measureDiagnostics": {
+     "median": 0.060083999999960724,
+     "p95": 0.17129099999999653,
+     "max": 0.6182920000001104
+    }
+   },
+   "event50ms": {
+    "median": 6.552918000000091,
+    "max": 8.137456999999927
+   },
+   "event150ms": {
+    "median": 18.861542000000327,
+    "max": 25.03279000000032
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4997080000000551,
+     "event150MsMedian": 18.861542000000327
+    },
+    "2": {
+     "stepMsMedian": 0.9994160000001102,
+     "event150MsMedian": 37.723084000000654
+    },
+    "4": {
+     "stepMsMedian": 1.9988320000002204,
+     "event150MsMedian": 75.44616800000131
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "C0_RH1_S-FLAT",
+   "mode": "C0",
+   "construction": {
+    "median": 4.572458999999981,
+    "max": 21.86066700000015
+   },
+   "stepProductionLike": {
+    "median": 0.5034160000000156,
+    "p95": 1.3932919999997466,
+    "max": 12.606874999999945
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2779170000001159,
+     "p95": 0.7537500000000819,
+     "max": 3.576416999999992
+    },
+    "passive": {
+     "median": 0.18724900000006528,
+     "p95": 0.524831999999833,
+     "max": 11.613625000000184
+    },
+    "act": {
+     "median": 0.014957999999751337,
+     "p95": 0.06125100000008388,
+     "max": 0.27787400000011075
+    },
+    "tone": {
+     "median": 0.010041999999884865,
+     "p95": 0.03150000000005093,
+     "max": 0.24708300000020245
+    },
+    "measureDiagnostics": {
+     "median": 0.054832999999916865,
+     "p95": 0.24558299999989686,
+     "max": 2.030667999999878
+    }
+   },
+   "event50ms": {
+    "median": 6.778001000001268,
+    "max": 23.83292000000006
+   },
+   "event150ms": {
+    "median": 18.83487200000104,
+    "max": 58.030714000000216
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.5034160000000156,
+     "event150MsMedian": 18.83487200000104
+    },
+    "2": {
+     "stepMsMedian": 1.0068320000000313,
+     "event150MsMedian": 37.66974400000208
+    },
+    "4": {
+     "stepMsMedian": 2.0136640000000625,
+     "event150MsMedian": 75.33948800000417
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "C0_RH1_S-TOE",
+   "mode": "C0",
+   "construction": {
+    "median": 4.180667000000085,
+    "max": 5.041041999999834
+   },
+   "stepProductionLike": {
+    "median": 0.47587499999963256,
+    "p95": 0.6622489999999743,
+    "max": 0.8458750000004329
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2560840000001008,
+     "p95": 0.27862499999991996,
+     "max": 0.37449999999989814
+    },
+    "passive": {
+     "median": 0.18425000000024738,
+     "p95": 0.3519169999995029,
+     "max": 0.5434580000001006
+    },
+    "act": {
+     "median": 0.01429199999984121,
+     "p95": 0.01929199999995035,
+     "max": 0.22024999999985084
+    },
+    "tone": {
+     "median": 0.009874999999738066,
+     "p95": 0.015041999999994005,
+     "max": 0.24516700000003766
+    },
+    "measureDiagnostics": {
+     "median": 0.04874999999992724,
+     "p95": 0.08112500000015643,
+     "max": 0.45604099999991377
+    }
+   },
+   "event50ms": {
+    "median": 6.002001000000291,
+    "max": 7.0631240000020625
+   },
+   "event150ms": {
+    "median": 17.5615019999982,
+    "max": 20.28691499999786
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.47587499999963256,
+     "event150MsMedian": 17.5615019999982
+    },
+    "2": {
+     "stepMsMedian": 0.9517499999992651,
+     "event150MsMedian": 35.1230039999964
+    },
+    "4": {
+     "stepMsMedian": 1.9034999999985303,
+     "event150MsMedian": 70.2460079999928
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_SW_R0",
+   "mode": "N",
+   "construction": {
+    "median": 4.212207999999919,
+    "max": 5.901499999999942
+   },
+   "stepProductionLike": {
+    "median": 0.4971660000005613,
+    "p95": 0.6982489999995778,
+    "max": 2.725166000000172
+   },
+   "components": {
+    "jolt": {
+     "median": 0.27991700000029596,
+     "p95": 0.31195900000011534,
+     "max": 0.7915000000002692
+    },
+    "passive": {
+     "median": 0.18295899999975518,
+     "p95": 0.342876000000615,
+     "max": 2.3334570000001804
+    },
+    "act": {
+     "median": 0.01412499999969441,
+     "p95": 0.017959000000246306,
+     "max": 0.30349999999998545
+    },
+    "tone": {
+     "median": 0.009750000000167347,
+     "p95": 0.01366699999971388,
+     "max": 0.2799169999998412
+    },
+    "measureDiagnostics": {
+     "median": 0.056084000000282686,
+     "p95": 0.10012499999993452,
+     "max": 0.8737919999998667
+    }
+   },
+   "event50ms": {
+    "median": 6.420163999998749,
+    "max": 12.401455999999598
+   },
+   "event150ms": {
+    "median": 18.476621999999224,
+    "max": 24.274838999999247
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4971660000005613,
+     "event150MsMedian": 18.476621999999224
+    },
+    "2": {
+     "stepMsMedian": 0.9943320000011227,
+     "event150MsMedian": 36.95324399999845
+    },
+    "4": {
+     "stepMsMedian": 1.9886640000022453,
+     "event150MsMedian": 73.9064879999969
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_SW_RH1",
+   "mode": "N",
+   "construction": {
+    "median": 3.9357920000002196,
+    "max": 4.398415999999997
+   },
+   "stepProductionLike": {
+    "median": 0.49424999999973807,
+    "p95": 0.6203329999998459,
+    "max": 0.8413750000004256
+   },
+   "components": {
+    "jolt": {
+     "median": 0.27816699999993943,
+     "p95": 0.3000419999998485,
+     "max": 0.34016699999983757
+    },
+    "passive": {
+     "median": 0.18087500000001455,
+     "p95": 0.3077920000000631,
+     "max": 0.5043339999997443
+    },
+    "act": {
+     "median": 0.013999999999668944,
+     "p95": 0.01587500000005093,
+     "max": 0.30545800000027157
+    },
+    "tone": {
+     "median": 0.009666999999808468,
+     "p95": 0.010333000000173342,
+     "max": 0.24512499999991633
+    },
+    "measureDiagnostics": {
+     "median": 0.04854099999965911,
+     "p95": 0.07937499999934516,
+     "max": 0.3600829999995767
+    }
+   },
+   "event50ms": {
+    "median": 6.311083999999937,
+    "max": 6.7664999999997235
+   },
+   "event150ms": {
+    "median": 18.249664999998913,
+    "max": 18.511788000003435
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.49424999999973807,
+     "event150MsMedian": 18.249664999998913
+    },
+    "2": {
+     "stepMsMedian": 0.9884999999994761,
+     "event150MsMedian": 36.499329999997826
+    },
+    "4": {
+     "stepMsMedian": 1.9769999999989523,
+     "event150MsMedian": 72.99865999999565
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_PL_R0",
+   "mode": "N",
+   "construction": {
+    "median": 4.057667000000038,
+    "max": 7.910708000000341
+   },
+   "stepProductionLike": {
+    "median": 0.4970419999999649,
+    "p95": 0.6330839999995987,
+    "max": 1.3659579999998641
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2824590000000171,
+     "p95": 0.3034170000000813,
+     "max": 0.5651249999996253
+    },
+    "passive": {
+     "median": 0.18104200000016135,
+     "p95": 0.3142910000001393,
+     "max": 0.9417080000002898
+    },
+    "act": {
+     "median": 0.013959000000340893,
+     "p95": 0.01608299999998053,
+     "max": 0.28537599999981467
+    },
+    "tone": {
+     "median": 0.00966699999935372,
+     "p95": 0.010540999999648193,
+     "max": 0.2549579999999878
+    },
+    "measureDiagnostics": {
+     "median": 0.052374999999756255,
+     "p95": 0.09000000000014552,
+     "max": 1.76949999999988
+    }
+   },
+   "event50ms": {
+    "median": 6.3580890000012005,
+    "max": 9.44366300000138
+   },
+   "event150ms": {
+    "median": 18.358206999997947,
+    "max": 21.496835000001283
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4970419999999649,
+     "event150MsMedian": 18.358206999997947
+    },
+    "2": {
+     "stepMsMedian": 0.9940839999999298,
+     "event150MsMedian": 36.71641399999589
+    },
+    "4": {
+     "stepMsMedian": 1.9881679999998596,
+     "event150MsMedian": 73.43282799999179
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_PL_R0",
+   "mode": "W",
+   "construction": {
+    "median": 3.8492089999999735,
+    "max": 4.525250000000597
+   },
+   "stepProductionLike": {
+    "median": 0.4817089999987729,
+    "p95": 0.6137920000001031,
+    "max": 0.8267490000007456
+   },
+   "components": {
+    "jolt": {
+     "median": 0.27045799999996234,
+     "p95": 0.28862500000013824,
+     "max": 0.4203749999996944
+    },
+    "passive": {
+     "median": 0.18016700000043784,
+     "p95": 0.3109999999996944,
+     "max": 0.5053329999991547
+    },
+    "act": {
+     "median": 0.013958000000457105,
+     "p95": 0.015249999999468855,
+     "max": 0.14237500000126602
+    },
+    "tone": {
+     "median": 0.009583999999449588,
+     "p95": 0.010290999999597261,
+     "max": 0.2388330000003407
+    },
+    "measureDiagnostics": {
+     "median": 0.04679099999975733,
+     "p95": 0.0696669999997539,
+     "max": 0.3430840000000899
+    }
+   },
+   "event50ms": {
+    "median": 6.203830999999809,
+    "max": 6.570208999998613
+   },
+   "event150ms": {
+    "median": 17.790452999997797,
+    "max": 18.194871000001513
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4817089999987729,
+     "event150MsMedian": 17.790452999997797
+    },
+    "2": {
+     "stepMsMedian": 0.9634179999975458,
+     "event150MsMedian": 35.58090599999559
+    },
+    "4": {
+     "stepMsMedian": 1.9268359999950917,
+     "event150MsMedian": 71.16181199999119
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_PL_RH1",
+   "mode": "N",
+   "construction": {
+    "median": 3.9440410000006523,
+    "max": 5.521249999999782
+   },
+   "stepProductionLike": {
+    "median": 0.49487500000032014,
+    "p95": 0.7390829999985726,
+    "max": 2.6348750000006476
+   },
+   "components": {
+    "jolt": {
+     "median": 0.282125000000633,
+     "p95": 0.30429199999980483,
+     "max": 0.7117499999994834
+    },
+    "passive": {
+     "median": 0.18045900000015536,
+     "p95": 0.3957090000003518,
+     "max": 2.2371240000002217
+    },
+    "act": {
+     "median": 0.014041999999790278,
+     "p95": 0.016459000001304958,
+     "max": 0.13799999999991996
+    },
+    "tone": {
+     "median": 0.00966699999935372,
+     "p95": 0.010917000000517874,
+     "max": 0.26008400000046095
+    },
+    "measureDiagnostics": {
+     "median": 0.047290999999859196,
+     "p95": 0.18262500000037107,
+     "max": 0.4446239999997488
+    }
+   },
+   "event50ms": {
+    "median": 6.312753999999586,
+    "max": 10.778747999999723
+   },
+   "event150ms": {
+    "median": 18.208213000003525,
+    "max": 29.191208000003826
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.49487500000032014,
+     "event150MsMedian": 18.208213000003525
+    },
+    "2": {
+     "stepMsMedian": 0.9897500000006403,
+     "event150MsMedian": 36.41642600000705
+    },
+    "4": {
+     "stepMsMedian": 1.9795000000012806,
+     "event150MsMedian": 72.8328520000141
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_PL_RH1",
+   "mode": "W",
+   "construction": {
+    "median": 3.967834000000039,
+    "max": 4.228917000000365
+   },
+   "stepProductionLike": {
+    "median": 0.4814150000001973,
+    "p95": 0.6295000000000073,
+    "max": 0.9760419999993246
+   },
+   "components": {
+    "jolt": {
+     "median": 0.26841700000022684,
+     "p95": 0.2921670000005179,
+     "max": 0.38208399999984977
+    },
+    "passive": {
+     "median": 0.18062399999962508,
+     "p95": 0.3225829999992129,
+     "max": 0.6764170000005834
+    },
+    "act": {
+     "median": 0.014041999999790278,
+     "p95": 0.01649999999881402,
+     "max": 0.33141599999908067
+    },
+    "tone": {
+     "median": 0.009667000000263215,
+     "p95": 0.010707999999794993,
+     "max": 0.14354199999979755
+    },
+    "measureDiagnostics": {
+     "median": 0.04712499999914144,
+     "p95": 0.06954199999927368,
+     "max": 0.36999999999989086
+    }
+   },
+   "event50ms": {
+    "median": 6.282748999997239,
+    "max": 6.828167999999096
+   },
+   "event150ms": {
+    "median": 17.97087599999668,
+    "max": 18.79087399999844
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4814150000001973,
+     "event150MsMedian": 17.97087599999668
+    },
+    "2": {
+     "stepMsMedian": 0.9628300000003946,
+     "event150MsMedian": 35.94175199999336
+    },
+    "4": {
+     "stepMsMedian": 1.9256600000007893,
+     "event150MsMedian": 71.88350399998671
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_SH_R0",
+   "mode": "N",
+   "construction": {
+    "median": 3.913791000000856,
+    "max": 4.535416000000623
+   },
+   "stepProductionLike": {
+    "median": 0.4922499999993306,
+    "p95": 0.644666999999572,
+    "max": 0.8507499999986976
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2793339999998352,
+     "p95": 0.30658299999959127,
+     "max": 0.3511659999994663
+    },
+    "passive": {
+     "median": 0.18087500000092405,
+     "p95": 0.318583000000217,
+     "max": 0.5171250000003056
+    },
+    "act": {
+     "median": 0.014001000000462227,
+     "p95": 0.015957999999955064,
+     "max": 0.32045800000014424
+    },
+    "tone": {
+     "median": 0.00966599999992468,
+     "p95": 0.010457999999744061,
+     "max": 0.25066700000024866
+    },
+    "measureDiagnostics": {
+     "median": 0.051250999998956104,
+     "p95": 0.07941599999958271,
+     "max": 0.3580839999995078
+    }
+   },
+   "event50ms": {
+    "median": 6.353084999996099,
+    "max": 6.7040009999991526
+   },
+   "event150ms": {
+    "median": 18.401586999997562,
+    "max": 18.789085999991585
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4922499999993306,
+     "event150MsMedian": 18.401586999997562
+    },
+    "2": {
+     "stepMsMedian": 0.9844999999986612,
+     "event150MsMedian": 36.803173999995124
+    },
+    "4": {
+     "stepMsMedian": 1.9689999999973224,
+     "event150MsMedian": 73.60634799999025
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_SH_R0",
+   "mode": "W",
+   "construction": {
+    "median": 3.899207999999817,
+    "max": 8.971125000000029
+   },
+   "stepProductionLike": {
+    "median": 0.496208999999908,
+    "p95": 0.7554159999990588,
+    "max": 3.079957999999351
+   },
+   "components": {
+    "jolt": {
+     "median": 0.27941700000064884,
+     "p95": 0.29770900000039546,
+     "max": 0.8098330000002534
+    },
+    "passive": {
+     "median": 0.18208400000003166,
+     "p95": 0.4287080000003698,
+     "max": 2.416541999999936
+    },
+    "act": {
+     "median": 0.014999999999417923,
+     "p95": 0.028333000000202446,
+     "max": 0.350125000000844
+    },
+    "tone": {
+     "median": 0.009667000000263215,
+     "p95": 0.01079200000003766,
+     "max": 0.40887500000008004
+    },
+    "measureDiagnostics": {
+     "median": 0.05179200000020501,
+     "p95": 0.19795800000065356,
+     "max": 1.0318749999996726
+    }
+   },
+   "event50ms": {
+    "median": 6.322583000000122,
+    "max": 11.76262300000326
+   },
+   "event150ms": {
+    "median": 18.483000999999604,
+    "max": 29.39146000000892
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.496208999999908,
+     "event150MsMedian": 18.483000999999604
+    },
+    "2": {
+     "stepMsMedian": 0.992417999999816,
+     "event150MsMedian": 36.96600199999921
+    },
+    "4": {
+     "stepMsMedian": 1.984835999999632,
+     "event150MsMedian": 73.93200399999841
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_SH_RH1",
+   "mode": "N",
+   "construction": {
+    "median": 3.8239170000006197,
+    "max": 4.308582999999999
+   },
+   "stepProductionLike": {
+    "median": 0.4907499999999345,
+    "p95": 0.6310000000003129,
+    "max": 0.8941249999998035
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2782499999993888,
+     "p95": 0.29812500000025466,
+     "max": 0.31150000000070577
+    },
+    "passive": {
+     "median": 0.18141800000103103,
+     "p95": 0.3240009999999529,
+     "max": 0.5803750000004584
+    },
+    "act": {
+     "median": 0.014083999999456864,
+     "p95": 0.015499999999519787,
+     "max": 0.16554099999939353
+    },
+    "tone": {
+     "median": 0.00966599999992468,
+     "p95": 0.010291999999935797,
+     "max": 0.2736670000003869
+    },
+    "measureDiagnostics": {
+     "median": 0.04800000000068394,
+     "p95": 0.07374999999956344,
+     "max": 0.3517499999998108
+    }
+   },
+   "event50ms": {
+    "median": 6.274083000002065,
+    "max": 6.6691710000022795
+   },
+   "event150ms": {
+    "median": 18.173121000003448,
+    "max": 18.628755000004276
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4907499999999345,
+     "event150MsMedian": 18.173121000003448
+    },
+    "2": {
+     "stepMsMedian": 0.981499999999869,
+     "event150MsMedian": 36.346242000006896
+    },
+    "4": {
+     "stepMsMedian": 1.962999999999738,
+     "event150MsMedian": 72.69248400001379
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_SH_RH1",
+   "mode": "W",
+   "construction": {
+    "median": 3.8472920000003796,
+    "max": 7.3709170000001905
+   },
+   "stepProductionLike": {
+    "median": 0.49116700000013225,
+    "p95": 0.638292000000547,
+    "max": 1.0153739999996105
+   },
+   "components": {
+    "jolt": {
+     "median": 0.27775000000019645,
+     "p95": 0.29758399999991525,
+     "max": 0.33224999999947613
+    },
+    "passive": {
+     "median": 0.18116699999973207,
+     "p95": 0.32491699999991397,
+     "max": 0.6856250000000728
+    },
+    "act": {
+     "median": 0.014083999999456864,
+     "p95": 0.0160409999989497,
+     "max": 0.19895900000028632
+    },
+    "tone": {
+     "median": 0.00966599999992468,
+     "p95": 0.010374999999839929,
+     "max": 0.4518340000004173
+    },
+    "measureDiagnostics": {
+     "median": 0.0494989999997415,
+     "p95": 0.07229199999983393,
+     "max": 0.5246669999996811
+    }
+   },
+   "event50ms": {
+    "median": 6.269249999998465,
+    "max": 6.958378000000266
+   },
+   "event150ms": {
+    "median": 18.239080000002104,
+    "max": 18.828667000000678
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.49116700000013225,
+     "event150MsMedian": 18.239080000002104
+    },
+    "2": {
+     "stepMsMedian": 0.9823340000002645,
+     "event150MsMedian": 36.47816000000421
+    },
+    "4": {
+     "stepMsMedian": 1.964668000000529,
+     "event150MsMedian": 72.95632000000842
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_TP_R0",
+   "mode": "N",
+   "construction": {
+    "median": 4.20141700000022,
+    "max": 10.962124999999105
+   },
+   "stepProductionLike": {
+    "median": 0.4867499999991196,
+    "p95": 1.0562090000003082,
+    "max": 2.5226239999992686
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2652909999997064,
+     "p95": 0.47895900000003166,
+     "max": 1.3038329999999405
+    },
+    "passive": {
+     "median": 0.1871259999998074,
+     "p95": 0.46474900000066555,
+     "max": 1.2900000000008731
+    },
+    "act": {
+     "median": 0.014957000000322296,
+     "p95": 0.04162499999983993,
+     "max": 0.9597500000018044
+    },
+    "tone": {
+     "median": 0.010459000000992091,
+     "p95": 0.02025000000048749,
+     "max": 0.6286669999999503
+    },
+    "measureDiagnostics": {
+     "median": 0.05049899999903573,
+     "p95": 0.22475000000122236,
+     "max": 0.8792510000002949
+    }
+   },
+   "event50ms": {
+    "median": 6.471958000003724,
+    "max": 13.882375000001048
+   },
+   "event150ms": {
+    "median": 18.396625000000313,
+    "max": 36.78495799999473
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4867499999991196,
+     "event150MsMedian": 18.396625000000313
+    },
+    "2": {
+     "stepMsMedian": 0.9734999999982392,
+     "event150MsMedian": 36.793250000000626
+    },
+    "4": {
+     "stepMsMedian": 1.9469999999964784,
+     "event150MsMedian": 73.58650000000125
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_TP_R0",
+   "mode": "W",
+   "construction": {
+    "median": 3.749041999999463,
+    "max": 3.964708999999857
+   },
+   "stepProductionLike": {
+    "median": 0.46774899999945774,
+    "p95": 0.6155409999992116,
+    "max": 1.241833999998562
+   },
+   "components": {
+    "jolt": {
+     "median": 0.25437500000043656,
+     "p95": 0.2684589999989839,
+     "max": 0.5270420000015292
+    },
+    "passive": {
+     "median": 0.18183400000089023,
+     "p95": 0.32433300000047893,
+     "max": 0.9562089999999444
+    },
+    "act": {
+     "median": 0.014083000000027823,
+     "p95": 0.01541700000052515,
+     "max": 0.32045800000014424
+    },
+    "tone": {
+     "median": 0.009667000000263215,
+     "p95": 0.010249999999359716,
+     "max": 0.2677089999997406
+    },
+    "measureDiagnostics": {
+     "median": 0.047125000000960426,
+     "p95": 0.0573339999991731,
+     "max": 0.4926260000011098
+    }
+   },
+   "event50ms": {
+    "median": 6.020919999995385,
+    "max": 6.509290999996665
+   },
+   "event150ms": {
+    "median": 17.40041999999994,
+    "max": 18.71424900000966
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.46774899999945774,
+     "event150MsMedian": 17.40041999999994
+    },
+    "2": {
+     "stepMsMedian": 0.9354979999989155,
+     "event150MsMedian": 34.80083999999988
+    },
+    "4": {
+     "stepMsMedian": 1.870995999997831,
+     "event150MsMedian": 69.60167999999976
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "N_TP_RH1",
+   "mode": "N",
+   "construction": {
+    "median": 3.912500000000364,
+    "max": 14.306124999999156
+   },
+   "stepProductionLike": {
+    "median": 0.4750830000011774,
+    "p95": 1.2647909999996045,
+    "max": 6.8469179999992775
+   },
+   "components": {
+    "jolt": {
+     "median": 0.25870800000120653,
+     "p95": 0.639458999999988,
+     "max": 1.8925419999995938
+    },
+    "passive": {
+     "median": 0.18362499999784632,
+     "p95": 0.5751660000005359,
+     "max": 5.856456999999864
+    },
+    "act": {
+     "median": 0.01429199999802222,
+     "p95": 0.05191700000068522,
+     "max": 0.3922079999993002
+    },
+    "tone": {
+     "median": 0.009833000000071479,
+     "p95": 0.018749999999272404,
+     "max": 0.5771669999994629
+    },
+    "measureDiagnostics": {
+     "median": 0.04724999999780266,
+     "p95": 0.2634170000001177,
+     "max": 1.4082500000022264
+    }
+   },
+   "event50ms": {
+    "median": 6.16941400000178,
+    "max": 18.620543999999427
+   },
+   "event150ms": {
+    "median": 17.716337999989264,
+    "max": 58.27400699998543
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.4750830000011774,
+     "event150MsMedian": 17.716337999989264
+    },
+    "2": {
+     "stepMsMedian": 0.9501660000023548,
+     "event150MsMedian": 35.43267599997853
+    },
+    "4": {
+     "stepMsMedian": 1.9003320000047097,
+     "event150MsMedian": 70.86535199995706
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  },
+  {
+   "name": "W_TP_RH1",
+   "mode": "W",
+   "construction": {
+    "median": 3.7890409999999974,
+    "max": 4.179000000000087
+   },
+   "stepProductionLike": {
+    "median": 0.466456999998627,
+    "p95": 0.6161659999997937,
+    "max": 0.863708000002589
+   },
+   "components": {
+    "jolt": {
+     "median": 0.2528330000004644,
+     "p95": 0.27162499999940337,
+     "max": 0.5246670000015001
+    },
+    "passive": {
+     "median": 0.1817510000000766,
+     "p95": 0.33404200000040873,
+     "max": 0.5694579999981215
+    },
+    "act": {
+     "median": 0.014082999998208834,
+     "p95": 0.0152909999997064,
+     "max": 0.288791000000856
+    },
+    "tone": {
+     "median": 0.009667000000263215,
+     "p95": 0.01020799999969313,
+     "max": 0.2867079999996349
+    },
+    "measureDiagnostics": {
+     "median": 0.0472090000002936,
+     "p95": 0.06150000000161526,
+     "max": 0.36599999999998545
+    }
+   },
+   "event50ms": {
+    "median": 5.9670400000031805,
+    "max": 6.393545999997514
+   },
+   "event150ms": {
+    "median": 17.357955000010406,
+    "max": 17.734166000007463
+   },
+   "finalStateEqualsCorrectnessRun": true,
+   "extrapolation": {
+    "0": {
+     "stepMsMedian": 0,
+     "event150MsMedian": 0
+    },
+    "1": {
+     "stepMsMedian": 0.466456999998627,
+     "event150MsMedian": 17.357955000010406
+    },
+    "2": {
+     "stepMsMedian": 0.932913999997254,
+     "event150MsMedian": 34.71591000002081
+    },
+    "4": {
+     "stepMsMedian": 1.865827999994508,
+     "event150MsMedian": 69.43182000004163
+    }
+   },
+   "extrapolationNote": "arithmetic × n; not a measured interacting-island benchmark; ordinary players: 0 articulated steps"
+  }
+ ],
+ "mapping": {
+  "R0/S-FLAT": {
+   "median": 27.071083000000726,
+   "max": 36.190833000000566,
+   "note": "MC-1 one-shot (three LV2 queries excluded)"
+  },
+  "R0/S-TOE": {
+   "median": 27.377000000000407,
+   "max": 29.912791999999172,
+   "note": "MC-1 one-shot (three LV2 queries excluded)"
+  },
+  "RH1/S-FLAT": {
+   "median": 26.955041999999594,
+   "max": 27.86433400000169,
+   "note": "MC-1 one-shot (three LV2 queries excluded)"
+  },
+  "RH1/S-TOE": {
+   "median": 26.909749999998894,
+   "max": 28.089332999999897,
+   "note": "MC-1 one-shot (three LV2 queries excluded)"
+  }
+ },
+ "loadavgEnd": [
+  2.26171875,
+  2.31982421875,
+  2.38232421875
+ ]
+}

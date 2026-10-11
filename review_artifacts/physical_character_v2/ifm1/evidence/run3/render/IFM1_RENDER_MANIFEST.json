@@ -1,0 +1,168 @@
+{
+ "manifest": "IFM1_RENDER_MANIFEST",
+ "note": "presentation tooling added AFTER run 3 (post-freeze, IFM1_FREEZE.json decision 'gameplay camera'); it reads run records and cannot affect any gate",
+ "head": "21397097a45bebb16d13d7794688910652d046e8",
+ "tag": {
+  "name": "locomotion-v2-straight-baseline-1",
+  "object": "d85304f5af525556320b555feb889270f066b94a",
+  "commit": "4a226b1f43ddf5b918acab2807041334ff637405"
+ },
+ "tooling": {
+  "ifm1/render/IFM1_BLIND_KEY.json": "b7071a983211d014eb930d760af8246367fa917985996f06d57a3e1ece772b1a",
+  "ifm1/render/ifm1_clip_assemble.py": "32dbea91a06ad38a03e14c5f6ee10f04a224b4ba7ec321d5b26f83860c5d65db",
+  "ifm1/render/ifm1_clip_capture.cjs": "a5e09b8fd72d04aa42e4c75e085d7fd2cea7d2cd11f8c53ac1fc1ec531b5c1f1",
+  "ifm1/render/ifm1_clip_prep.mjs": "c9d57626b64119f6fa0f37453140fc79f52da3543348fb658ad2fb03c0c9b67b",
+  "ifm1/render/ifm1_clip_screen.mjs": "650974070ba13249821ae5688611abdb61cd60d553d7e5e93fa8095e53e09994",
+  "ifm1/render/ifm1_render_manifest.mjs": "572192da8d64e5b4c8dac5cbcca5aa06f5c1b77b00188c5071ca8f49f98f73ff"
+ },
+ "frozenFiles": {
+  "sandbox/visual/run1.html": {
+   "sha256": "452dbcc2c060e5f15594f215ffbee147d44515babc0fc397e3c98b31def11817",
+   "blob": "cea1c0af67434ba6ade47de6cd6da6c864b0e57f",
+   "tagBlob": "cea1c0af67434ba6ade47de6cd6da6c864b0e57f",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_viewer.js": {
+   "sha256": "ccd515d73c9fcc8c54bf1e1a705a705cd6ac019dd7262ff51a76f4d0f272e79b",
+   "blob": "c0053580c8805dd1c6045ce564a2dbf41d548ff2",
+   "tagBlob": "c0053580c8805dd1c6045ce564a2dbf41d548ff2",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_gait.js": {
+   "sha256": "8bd18dc1f45703defab88081d9fa0665b89b435789545b496d3f9f06303fc8c6",
+   "blob": "010212622e0548ad87e4f5e91b23ae04d6972320",
+   "tagBlob": "010212622e0548ad87e4f5e91b23ae04d6972320",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_gait_orig.js": {
+   "sha256": "9e30a025bae175e71a627928324f6d4196dda7d3625b4b073c06d742eb40e042",
+   "blob": "d1f9721297efd6e0c860ee8a4f0ba85635ad92a9",
+   "tagBlob": "d1f9721297efd6e0c860ee8a4f0ba85635ad92a9",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_gait_v11.js": {
+   "sha256": "e376921be0e309deb27f2803fd864a7448c0542da314e57be64227408d924985",
+   "blob": "453ffa7ee94b0558b9c7ef500622a20abec3bdea",
+   "tagBlob": "453ffa7ee94b0558b9c7ef500622a20abec3bdea",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_gait_v12.js": {
+   "sha256": "8aec556614b2d2ae713ebbce62b215d72ddb60209a02b1355a729b01c0fc0868",
+   "blob": "d37542a64c8e8e20569527a37f5065a67f5e8d6d",
+   "tagBlob": "d37542a64c8e8e20569527a37f5065a67f5e8d6d",
+   "identical": true
+  },
+  "sandbox/visual/run1/run1_gait_v13.js": {
+   "sha256": "93a7cc0e65c3cdcea1c968f35b6ebec5831c2bc2bf4b7fef16c976203a79abcd",
+   "blob": "7ba8297c2e7db1e764bdd08452c27fd6aec7a977",
+   "tagBlob": "7ba8297c2e7db1e764bdd08452c27fd6aec7a977",
+   "identical": true
+  },
+  "sandbox/visual/run1/lv2_state.js": {
+   "sha256": "cc84a1c24b52b47619f72286829d796313a4c8ceab1837310f1335c46a823b9e",
+   "blob": "572df9f770342c9091b68e2b881c152b59d447f9",
+   "tagBlob": "572df9f770342c9091b68e2b881c152b59d447f9",
+   "identical": true
+  },
+  "sandbox/visual/run1/tools/run1_load.cjs": {
+   "sha256": "f61686e66715dcee65a304228863becef374a6ac51b92db72454351fc2cf4ce0",
+   "blob": "5853cc9edfcecfa148044bb0671d179faea1caa1",
+   "tagBlob": "5853cc9edfcecfa148044bb0671d179faea1caa1",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/m4.js": {
+   "sha256": "fcbe559ea04796f2179c49f5d1623cf01d0268a48689547f5f3d4d3c7b29f1b2",
+   "blob": "bbf83e6e5b12ad0998abfcdfe70dc125dff20546",
+   "tagBlob": "bbf83e6e5b12ad0998abfcdfe70dc125dff20546",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/skeleton.js": {
+   "sha256": "92ce29d32e0be1511b45c2b214128452396888ee5fc3ee7d6f4a5421a3dd7134",
+   "blob": "89b5faa02dd6cdb8868feb742aa9d19cec60846b",
+   "tagBlob": "89b5faa02dd6cdb8868feb742aa9d19cec60846b",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/ik.js": {
+   "sha256": "ddb36970dbb8158471daeac420427593e6330f2f930f6349d58612affe9e434f",
+   "blob": "dcece177b3c44bb3e1235bb4d396f66d8ee5b594",
+   "tagBlob": "dcece177b3c44bb3e1235bb4d396f66d8ee5b594",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_rig.js": {
+   "sha256": "2cbe19a2dc68d35de0c17ddd8e384e0cbd08a1735b0eff7080f772c50cb3399b",
+   "blob": "09cc8ff909e2f29eecf915d174e783640ee75ad5",
+   "tagBlob": "09cc8ff909e2f29eecf915d174e783640ee75ad5",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_motion.js": {
+   "sha256": "50581cd9d81e3ca5c35e390026807364dade8060830a456908ac9fda6d127982",
+   "blob": "fe999be78fa863407c3b14cb8116dfaba09933b8",
+   "tagBlob": "fe999be78fa863407c3b14cb8116dfaba09933b8",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_loco.js": {
+   "sha256": "af43b6051b9124179b3866ad6696ef3edffac4b7cbd72f1b45c3903e8da23af7",
+   "blob": "44b3f46cfaf14446e90d239fe4db9dc48f47e0ab",
+   "tagBlob": "44b3f46cfaf14446e90d239fe4db9dc48f47e0ab",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_loco_cont.js": {
+   "sha256": "d015518da39a7432e4594fee9b4e8f24dc5f7c1e36854fb44c5563e0e763ee48",
+   "blob": "c93dcac83077492d8cb943786060e7ad6b75d9dc",
+   "tagBlob": "c93dcac83077492d8cb943786060e7ad6b75d9dc",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_character.js": {
+   "sha256": "fe218d38ebd90e76d78393f65b4832368e657487fe8708aaadf81dcf8f415c9c",
+   "blob": "216bd4f61d19ba86686e576bfa716cb61132cf8d",
+   "tagBlob": "216bd4f61d19ba86686e576bfa716cb61132cf8d",
+   "identical": true
+  },
+  "sandbox/visual/anim3d/of_char_gl.js": {
+   "sha256": "0f32b01f9fea5a2f25ad26f5cd756078b490b91b102147fb170ae1f2fdc0864e",
+   "blob": "adae61837acea778502f16cf23df0e849018da95",
+   "tagBlob": "adae61837acea778502f16cf23df0e849018da95",
+   "identical": true
+  },
+  "assets/characters/outfield/vinicius/rig.json": {
+   "sha256": "b8e67cff7849198b225725a5b52b67ff48ebefd9bc160955a57ad9c76da68a2e",
+   "blob": "6ca64389d44244331cd7af37ce8f4ee6f854353e",
+   "tagBlob": "6ca64389d44244331cd7af37ce8f4ee6f854353e",
+   "identical": true
+  },
+  "assets/characters/outfield/vinicius/mesh.bin": {
+   "sha256": "10643c7bc542a4bb63a177543e6db4b9299c35a5d5cd656c0dc1f7d09b7e1c06",
+   "blob": "1338036a9d37479c0db810efe5910a85f9b87ff5",
+   "tagBlob": "1338036a9d37479c0db810efe5910a85f9b87ff5",
+   "identical": true
+  },
+  "assets/characters/outfield/vinicius/atlas.png": {
+   "sha256": "5526ed7a646dddf10196387dc3176e3462c5e415f029f09372f5eaf8172d2131",
+   "blob": "c0d0d0ec672d6da12dfdc3ab5f8f6dbc31bac18f",
+   "tagBlob": "c0d0d0ec672d6da12dfdc3ab5f8f6dbc31bac18f",
+   "identical": true
+  }
+ },
+ "settings": {
+  "page": "sandbox/visual/run1.html?external=1&paused=1&lanes=diag (frozen archive, unmodified)",
+  "viewportCss": [
+   1280,
+   720
+  ],
+  "devicePixelRatio": 1,
+  "camera": "CAMERA_V1 rv1GameCam (height 30, dist 43, pitch 22°, FOV 28°, 720-px focal), rail x = authoritative mover x (identical in every mode), zoom 1 (primary) / 4 (diagnostic only)",
+  "renderRule": "MC-1 §2(4) (record_hinged/RH1_PREREG.md, 50eae23a): rotation retarget, unmapped bones hold τ0 local rotation, rig FK from the V2 hip midpoint",
+  "impactor": "sphere r 0.060 m, drawn by this tooling (Lambert, depth-tested), labelled 'diagnostic impactor (not a tackler)'",
+  "cadence": "primary 60 Hz (lead-in τ = −250 … −16.7 ms from RUN-1, physical n = 0, 4, …, 36); diagnostic 240 Hz shown at 60 fps = 0.25×",
+  "browser": {
+   "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+   "dpr": 1,
+   "glVendor": "WebKit",
+   "glRenderer": "WebKit WebGL",
+   "char": "vinicius",
+   "meshTriangles": 120172
+  },
+  "puppeteer": "23.11.1"
+ },
+ "allFrozenIdentical": true
+}

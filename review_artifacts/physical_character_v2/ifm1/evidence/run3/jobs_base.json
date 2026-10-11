@@ -1,0 +1,134 @@
+[
+ {
+  "name": "C0_R0_S-FLAT",
+  "body": "R0",
+  "state": "S-FLAT",
+  "mode": "C0",
+  "file": "C0_R0_S-FLAT.json.gz"
+ },
+ {
+  "name": "C0_R0_S-TOE",
+  "body": "R0",
+  "state": "S-TOE",
+  "mode": "C0",
+  "file": "C0_R0_S-TOE.json.gz"
+ },
+ {
+  "name": "C0_RH1_S-FLAT",
+  "body": "RH1",
+  "state": "S-FLAT",
+  "mode": "C0",
+  "file": "C0_RH1_S-FLAT.json.gz"
+ },
+ {
+  "name": "C0_RH1_S-TOE",
+  "body": "RH1",
+  "state": "S-TOE",
+  "mode": "C0",
+  "file": "C0_RH1_S-TOE.json.gz"
+ },
+ {
+  "name": "N_SW_R0",
+  "body": "R0",
+  "role": "SW",
+  "mode": "N",
+  "file": "N_SW_R0.json.gz"
+ },
+ {
+  "name": "N_SW_RH1",
+  "body": "RH1",
+  "role": "SW",
+  "mode": "N",
+  "file": "N_SW_RH1.json.gz"
+ },
+ {
+  "name": "N_PL_R0",
+  "body": "R0",
+  "role": "PL",
+  "mode": "N",
+  "file": "N_PL_R0.json.gz"
+ },
+ {
+  "name": "W_PL_R0",
+  "body": "R0",
+  "role": "PL",
+  "mode": "W",
+  "wrench": "N_PL_R0.json.gz",
+  "file": "W_PL_R0.json.gz"
+ },
+ {
+  "name": "N_PL_RH1",
+  "body": "RH1",
+  "role": "PL",
+  "mode": "N",
+  "file": "N_PL_RH1.json.gz"
+ },
+ {
+  "name": "W_PL_RH1",
+  "body": "RH1",
+  "role": "PL",
+  "mode": "W",
+  "wrench": "N_PL_RH1.json.gz",
+  "file": "W_PL_RH1.json.gz"
+ },
+ {
+  "name": "N_SH_R0",
+  "body": "R0",
+  "role": "SH",
+  "mode": "N",
+  "file": "N_SH_R0.json.gz"
+ },
+ {
+  "name": "W_SH_R0",
+  "body": "R0",
+  "role": "SH",
+  "mode": "W",
+  "wrench": "N_SH_R0.json.gz",
+  "file": "W_SH_R0.json.gz"
+ },
+ {
+  "name": "N_SH_RH1",
+  "body": "RH1",
+  "role": "SH",
+  "mode": "N",
+  "file": "N_SH_RH1.json.gz"
+ },
+ {
+  "name": "W_SH_RH1",
+  "body": "RH1",
+  "role": "SH",
+  "mode": "W",
+  "wrench": "N_SH_RH1.json.gz",
+  "file": "W_SH_RH1.json.gz"
+ },
+ {
+  "name": "N_TP_R0",
+  "body": "R0",
+  "role": "TP",
+  "mode": "N",
+  "file": "N_TP_R0.json.gz"
+ },
+ {
+  "name": "W_TP_R0",
+  "body": "R0",
+  "role": "TP",
+  "mode": "W",
+  "wrench": "N_TP_R0.json.gz",
+  "file": "W_TP_R0.json.gz"
+ },
+ {
+  "name": "N_TP_RH1",
+  "body": "RH1",
+  "role": "TP",
+  "mode": "N",
+  "file": "N_TP_RH1.json.gz"
+ },
+ {
+  "name": "W_TP_RH1",
+  "body": "RH1",
+  "role": "TP",
+  "mode": "W",
+  "wrench": "N_TP_RH1.json.gz",
+  "file": "W_TP_RH1.json.gz"
+ }
+]

@@ -1,0 +1,5679 @@
+{
+ "eval": "IFM1_EVAL",
+ "controls": {
+  "R0/S-FLAT": {
+   "key": "R0/S-FLAT",
+   "fixtureStatus": "ENTRY_GEOMETRY_OK",
+   "entry": {
+    "geometry": {
+     "finite": true,
+     "posDef": true,
+     "rangeOk": true,
+     "anchorOk": true,
+     "anchorVelOk": true,
+     "groundingOk": true,
+     "turfOk": true,
+     "selfOk": true,
+     "momentumOk": true,
+     "mapperValid": true,
+     "pass": true
+    },
+    "readback": {
+     "posM": 1.699155958108213e-7,
+     "rotRad": 6.042958995250332e-8,
+     "velMs": 2.3140467757100624e-7,
+     "angRadS": 1.4494528244557432e-7
+    },
+    "momentumReadbackErrNs": 0.0000011935440233206634,
+    "momentumOk": true,
+    "cacheClean": true,
+    "writes": 28,
+    "pass": true
+   },
+   "handoff": {
+    "pass": false,
+    "HGA2_3": {
+     "sNorm": 0.15695870944234366,
+     "pass": true
+    },
+    "PR2post": 0.2297991326697887,
+    "PR2pre": 0.09851301263704225,
+    "kin": {
+     "P14c": 0.19072917468257705,
+     "P15c": 0.3327544327167802,
+     "P16c": 0.1575209883630511,
+     "P17c": 0.013205005225789926,
+     "P17lim": 0.40858324669516466,
+     "P17relRef": 0.0032319008017580083,
+     "P17fracOfLimit": 0.03231900801758008,
+     "pass": false
+    },
+    "kinPre": {
+     "P14c": 0.05650833244565802,
+     "P15c": 0.3327544327167802,
+     "P16c": 0.0016420066233811636,
+     "P17c": 0.013205005225795036,
+     "P17lim": 0.40858324669516466,
+     "P17relRef": 0.003231900801759259,
+     "P17fracOfLimit": 0.03231900801759258,
+     "pass": true
+    },
+    "label": "HANDOFF_FAILED",
+    "readings": {
+     "frozenDecision8": {
+      "pass": false,
+      "rows": "P-14c…P-17c post-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2post": {
+      "pass": false,
+      "rows": "P-14c…P-17c pre-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2pre": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 pre-shift, HG-A2.3"
+     }
+    }
+   },
+   "support": {
+    "loadedSteps": 12,
+    "integratedNormalNs": 16.42492190726841,
+    "requiredNs": 9.063213750000001,
+    "flatPointTravelMm": 0.05235653011215036,
+    "pelvisMinFrac": 0.9562740506450582,
+    "nonFootTurfContacts": [],
+    "firstUnloadedStep": null,
+    "perStepNormalNs": [
+     1.5568990372121334,
+     3.2111112736165524,
+     1.881468591938301,
+     1.6375961834564805,
+     1.4139879245740303,
+     1.2550006067031063,
+     1.0999177472112933,
+     0.9888211712241173,
+     0.8904324428539168,
+     0.828918672130385,
+     0.8099003730458207,
+     0.8508678833022714
+    ]
+   },
+   "mechanics": {
+    "pass": true,
+    "fails": [],
+    "ledger": {
+     "linMaxNs": 0.00010008715112429375,
+     "linCumNs": 0.00010905621012625766,
+     "linSumNormNs": 0.00047179481702251,
+     "angMaxNms": 0.0003682532518154437,
+     "angCumNms": 0.0018677467540946268,
+     "angSumNormNms": 0.0028287061859734574,
+     "energyResPlusJ": 0,
+     "energyResPlusHorizonJ": 0,
+     "combinedEnergyResPlusJ": 0,
+     "combinedLinMaxNs": 0.00010010029081866852,
+     "combinedAngMaxNms": 0.0003682534939490363,
+     "posCorrMaxMm": 0.03958777706799215,
+     "angPosCorrTermMaxNms": 0.0001413964864129388
+    },
+    "secondaryFailure": null
+   },
+   "primaryPass": true,
+   "primaryFails": [],
+   "supportClass": null,
+   "status": "CONTROL_VALID_PRIMARY",
+   "toneTruncation": {
+    "t": 0.06666666666666667,
+    "step": 16,
+    "joint": "ankle_L.df",
+    "valueDeg": 46.2555851600582,
+    "hard": [
+     -60,
+     45
+    ]
+   },
+   "placementIndependence": [
+    {
+     "placement": "PL",
+     "identicalReceiver": true
+    },
+    {
+     "placement": "SH",
+     "identicalReceiver": true
+    }
+   ]
+  },
+  "R0/S-TOE": {
+   "key": "R0/S-TOE",
+   "fixtureStatus": "ENTRY_GEOMETRY_OK",
+   "entry": {
+    "geometry": {
+     "finite": true,
+     "posDef": true,
+     "rangeOk": true,
+     "anchorOk": true,
+     "anchorVelOk": true,
+     "groundingOk": true,
+     "turfOk": true,
+     "selfOk": true,
+     "momentumOk": true,
+     "mapperValid": true,
+     "pass": true
+    },
+    "readback": {
+     "posM": 1.3908180098471941e-7,
+     "rotRad": 7.004348780784302e-8,
+     "velMs": 1.87753571782111e-7,
+     "angRadS": 3.3414556788587727e-7
+    },
+    "momentumReadbackErrNs": 0.000003898911395201255,
+    "momentumOk": true,
+    "cacheClean": true,
+    "writes": 28,
+    "pass": true
+   },
+   "handoff": {
+    "pass": false,
+    "HGA2_3": {
+     "sNorm": 0.13118934596509038,
+     "pass": true
+    },
+    "PR2post": 0.15404619507212344,
+    "PR2pre": 0.06138021059862816,
+    "kin": {
+     "P14c": 0.13964157687407602,
+     "P15c": 0.21325237964768975,
+     "P16c": 0.13066801916834234,
+     "P17c": 0.033606164593486886,
+     "P17lim": 0.5841370069403269,
+     "P17relRef": 0.00575313054886111,
+     "P17fracOfLimit": 0.057531305488611094,
+     "pass": false
+    },
+    "kinPre": {
+     "P14c": 0.025966445276049813,
+     "P15c": 0.21325237964768975,
+     "P16c": 0.0007488000671346698,
+     "P17c": 0.0336061645935029,
+     "P17lim": 0.5841370069403269,
+     "P17relRef": 0.0057531305488638515,
+     "P17fracOfLimit": 0.05753130548863851,
+     "pass": true
+    },
+    "label": "HANDOFF_FAILED",
+    "readings": {
+     "frozenDecision8": {
+      "pass": false,
+      "rows": "P-14c…P-17c post-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2post": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2pre": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 pre-shift, HG-A2.3"
+     }
+    }
+   },
+   "support": {
+    "loadedSteps": 7,
+    "integratedNormalNs": 1.0331710781902075,
+    "requiredNs": 9.063213750000001,
+    "flatPointTravelMm": 82.36180411121187,
+    "pelvisMinFrac": 1.0020827595434183,
+    "nonFootTurfContacts": [],
+    "firstUnloadedStep": 1,
+    "perStepNormalNs": [
+     0,
+     0.11477090418338776,
+     0.20246648788452148,
+     0.18366795778274536,
+     0.22364020347595215,
+     0.20094576478004456,
+     0.09969382733106613,
+     0.007985932752490044,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "mechanics": {
+    "pass": true,
+    "fails": [],
+    "ledger": {
+     "linMaxNs": 0.00005124489329922515,
+     "linCumNs": 0.000028353248096440877,
+     "linSumNormNs": 0.00020936256205257868,
+     "angMaxNms": 0.0020148543512398527,
+     "angCumNms": 0.003989069946470765,
+     "angSumNormNms": 0.007952882093876096,
+     "energyResPlusJ": 0,
+     "energyResPlusHorizonJ": 0,
+     "combinedEnergyResPlusJ": 0,
+     "combinedLinMaxNs": 0.00005115873180704519,
+     "combinedAngMaxNms": 0.0020149321211846674,
+     "posCorrMaxMm": 0.22750722140349258,
+     "angPosCorrTermMaxNms": 0.0016403985906319138
+    },
+    "secondaryFailure": null
+   },
+   "primaryPass": true,
+   "primaryFails": [],
+   "supportClass": "support released at step 1",
+   "status": "CONTROL_VALID_PRIMARY",
+   "toneTruncation": {
+    "t": 0.0875,
+    "step": 21,
+    "joint": "hip_L.flex",
+    "valueDeg": -25.319621995440873,
+    "hard": [
+     -25,
+     140
+    ]
+   },
+   "placementIndependence": []
+  },
+  "RH1/S-FLAT": {
+   "key": "RH1/S-FLAT",
+   "fixtureStatus": "ENTRY_GEOMETRY_OK",
+   "entry": {
+    "geometry": {
+     "finite": true,
+     "posDef": true,
+     "rangeOk": true,
+     "anchorOk": true,
+     "anchorVelOk": true,
+     "groundingOk": true,
+     "turfOk": true,
+     "selfOk": true,
+     "momentumOk": true,
+     "mapperValid": true,
+     "pass": true
+    },
+    "readback": {
+     "posM": 8.747541763899734e-8,
+     "rotRad": 7.328975071211511e-8,
+     "velMs": 1.7652476003914441e-7,
+     "angRadS": 1.712700903920458e-7
+    },
+    "momentumReadbackErrNs": 0.0000015874554029531455,
+    "momentumOk": true,
+    "cacheClean": true,
+    "writes": 28,
+    "pass": true
+   },
+   "handoff": {
+    "pass": false,
+    "HGA2_3": {
+     "sNorm": 0.15789347789707037,
+     "pass": true
+    },
+    "PR2post": 0.24173293723611716,
+    "PR2pre": 0.08677204208643782,
+    "kin": {
+     "P14c": 0.18554855949790042,
+     "P15c": 0.32343831084240554,
+     "P16c": 0.1575410293912335,
+     "P17c": 0.0024390872905363853,
+     "P17lim": 0.40858324669516455,
+     "P17relRef": 0.0005969621393596046,
+     "P17fracOfLimit": 0.005969621393596046,
+     "pass": false
+    },
+    "kinPre": {
+     "P14c": 0.04580120550992365,
+     "P15c": 0.32343831084240554,
+     "P16c": 0.0028054810724701335,
+     "P17c": 0.0024390872905452696,
+     "P17lim": 0.40858324669516455,
+     "P17relRef": 0.0005969621393617791,
+     "P17fracOfLimit": 0.005969621393617791,
+     "pass": true
+    },
+    "label": "HANDOFF_FAILED",
+    "readings": {
+     "frozenDecision8": {
+      "pass": false,
+      "rows": "P-14c…P-17c post-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2post": {
+      "pass": false,
+      "rows": "P-14c…P-17c pre-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2pre": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 pre-shift, HG-A2.3"
+     }
+    }
+   },
+   "support": {
+    "loadedSteps": 12,
+    "integratedNormalNs": 16.14862503330069,
+    "requiredNs": 9.063213750000001,
+    "flatPointTravelMm": 0.05607678481398177,
+    "pelvisMinFrac": 0.9565230213096719,
+    "nonFootTurfContacts": [],
+    "firstUnloadedStep": null,
+    "perStepNormalNs": [
+     1.5617528334259987,
+     3.1943904124200344,
+     1.867942410784508,
+     1.6177514679729939,
+     1.3923081447828736,
+     1.2279615842853673,
+     1.0653423939074855,
+     0.9497879296541214,
+     0.8568607629342306,
+     0.8053517590306001,
+     0.7686378195649013,
+     0.8405375145375729
+    ]
+   },
+   "mechanics": {
+    "pass": true,
+    "fails": [],
+    "ledger": {
+     "linMaxNs": 0.00010382634098986504,
+     "linCumNs": 0.000039722015322748045,
+     "linSumNormNs": 0.0004943029652741245,
+     "angMaxNms": 0.0003553586809997425,
+     "angCumNms": 0.001804066272537509,
+     "angSumNormNms": 0.002834079286096358,
+     "energyResPlusJ": 0,
+     "energyResPlusHorizonJ": 0,
+     "combinedEnergyResPlusJ": 0,
+     "combinedLinMaxNs": 0.00010382309672401882,
+     "combinedAngMaxNms": 0.00035535895726249844,
+     "posCorrMaxMm": 0.03972572675819275,
+     "angPosCorrTermMaxNms": 0.00014269241108017327
+    },
+    "secondaryFailure": null
+   },
+   "primaryPass": true,
+   "primaryFails": [],
+   "supportClass": null,
+   "status": "CONTROL_VALID_PRIMARY",
+   "toneTruncation": {
+    "t": 0.06666666666666667,
+    "step": 16,
+    "joint": "ankle_L.df",
+    "valueDeg": 46.2555851600582,
+    "hard": [
+     -60,
+     45
+    ]
+   },
+   "placementIndependence": [
+    {
+     "placement": "PL",
+     "identicalReceiver": true
+    },
+    {
+     "placement": "SH",
+     "identicalReceiver": true
+    }
+   ]
+  },
+  "RH1/S-TOE": {
+   "key": "RH1/S-TOE",
+   "fixtureStatus": "ENTRY_GEOMETRY_OK",
+   "entry": {
+    "geometry": {
+     "finite": true,
+     "posDef": true,
+     "rangeOk": true,
+     "anchorOk": true,
+     "anchorVelOk": true,
+     "groundingOk": true,
+     "turfOk": true,
+     "selfOk": true,
+     "momentumOk": true,
+     "mapperValid": true,
+     "pass": true
+    },
+    "readback": {
+     "posM": 1.0633766940317499e-7,
+     "rotRad": 7.786484426435269e-8,
+     "velMs": 2.2109953092165732e-7,
+     "angRadS": 3.341455714339664e-7
+    },
+    "momentumReadbackErrNs": 0.0000017797262526139257,
+    "momentumOk": true,
+    "cacheClean": true,
+    "writes": 28,
+    "pass": true
+   },
+   "handoff": {
+    "pass": false,
+    "HGA2_3": {
+     "sNorm": 0.13134338459044936,
+     "pass": true
+    },
+    "PR2post": 0.1452329360473117,
+    "PR2pre": 0.05333664147174683,
+    "kin": {
+     "P14c": 0.13974611699654357,
+     "P15c": 0.23327415397946924,
+     "P16c": 0.1307299821747009,
+     "P17c": 0.03622062753065255,
+     "P17lim": 0.5841370069403261,
+     "P17relRef": 0.006200707556669621,
+     "P17fracOfLimit": 0.062007075566696206,
+     "pass": false
+    },
+    "kinPre": {
+     "P14c": 0.028792753662943333,
+     "P15c": 0.23327415397946924,
+     "P16c": 0.004351439411462502,
+     "P17c": 0.036220627530658106,
+     "P17lim": 0.5841370069403261,
+     "P17relRef": 0.006200707556670572,
+     "P17fracOfLimit": 0.062007075566705726,
+     "pass": true
+    },
+    "label": "HANDOFF_FAILED",
+    "readings": {
+     "frozenDecision8": {
+      "pass": false,
+      "rows": "P-14c…P-17c post-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2post": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 post-shift, HG-A2.3"
+     },
+     "contractTextPR2pre": {
+      "pass": true,
+      "rows": "P-14c…P-17c pre-shift, PR-2 pre-shift, HG-A2.3"
+     }
+    }
+   },
+   "support": {
+    "loadedSteps": 7,
+    "integratedNormalNs": 0.9523020349442959,
+    "requiredNs": 9.063213750000001,
+    "flatPointTravelMm": 83.03133733529117,
+    "pelvisMinFrac": 1.0021068625577816,
+    "nonFootTurfContacts": [],
+    "firstUnloadedStep": 8,
+    "perStepNormalNs": [
+     0.0017590895295143127,
+     0.11359953880310059,
+     0.19206374883651733,
+     0.17518413066864014,
+     0.21604911983013153,
+     0.19915083050727844,
+     0.05449557676911354,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "mechanics": {
+    "pass": true,
+    "fails": [],
+    "ledger": {
+     "linMaxNs": 0.00007702033409163368,
+     "linCumNs": 0.00006212337138198211,
+     "linSumNormNs": 0.00023600129091062326,
+     "angMaxNms": 0.002016199761470747,
+     "angCumNms": 0.003700515558569732,
+     "angSumNormNms": 0.00763469960407851,
+     "energyResPlusJ": 0,
+     "energyResPlusHorizonJ": 0,
+     "combinedEnergyResPlusJ": 0,
+     "combinedLinMaxNs": 0.00007702345192633492,
+     "combinedAngMaxNms": 0.0020162769529365864,
+     "posCorrMaxMm": 0.22891846291458576,
+     "angPosCorrTermMaxNms": 0.0016663672008394492
+    },
+    "secondaryFailure": null
+   },
+   "primaryPass": true,
+   "primaryFails": [],
+   "supportClass": "support released at step 8",
+   "status": "CONTROL_VALID_PRIMARY",
+   "toneTruncation": {
+    "t": 0.0875,
+    "step": 21,
+    "joint": "hip_L.flex",
+    "valueDeg": -25.319621995440873,
+    "hard": [
+     -25,
+     140
+    ]
+   },
+   "placementIndependence": []
+  }
+ },
+ "cells": {
+  "SW/R0": {
+   "key": "SW/R0",
+   "role": "SW",
+   "body": "R0",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_R.0"
+     ],
+     "witnessMm": 0.24998793802671107,
+     "normalDeg": 0.000018091139215819242,
+     "firstStepImpulseNs": 9.205479291760845,
+     "firstStepImpulse": [
+      {
+       "body": "shank_R",
+       "i": 12,
+       "J": [
+        -0.5109570928395905,
+        0.18878897791770166,
+        9.18934875614869
+       ],
+       "H_O": [
+        -4.975218116649675,
+        1.86574583640177,
+        -0.3149684826901399
+       ],
+       "W": 9.407200038508762
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       0.5109570928395905,
+       -0.18878897791770166,
+       -9.18934875614869
+      ],
+      "H": [
+       4.975218116649675,
+       -1.86574583640177,
+       0.3149684826901399
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+     ],
+     "durationSteps": 26,
+     "postFirstStepImpulseNs": 12.062352639527246,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 2.34e-2 N·m·s/step"
+     ],
+     "ledger": {
+      "linMaxNs": 0.00010956039329524864,
+      "linCumNs": 0.00003113776700317227,
+      "linSumNormNs": 0.000467555386262007,
+      "angMaxNms": 0.023449005985459983,
+      "angCumNms": 0.002856011776033344,
+      "angSumNormNms": 0.047695595063950144,
+      "energyResPlusJ": 0.0006465369718906544,
+      "energyResPlusHorizonJ": 0.0006465369718906544,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.0001491673520295304,
+      "combinedAngMaxNms": 0.023460254176118106,
+      "posCorrMaxMm": 0.09766137455150521,
+      "angPosCorrTermMaxNms": 0.0003636958417857219
+     },
+     "secondaryFailure": null
+    },
+    "status": "NATIVE_INTEGRITY_FAILED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.397098124437193,
+      "targetDispInwardMm": 8.025323983406441,
+      "targetVelDiffMs": 2.0225696620283706,
+      "targetVelInwardMs": 1.9345235341988407,
+      "chainLandmarkMm": {
+       "knee_R": 3.419708042729139,
+       "ankle_R": 11.94976770605217
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.17298026090683227,
+       "knee_L": 0.04678934302296368,
+       "ankle_L": 0.008768219186289413,
+       "shoulder_L": 0.01816741848382273,
+       "elbow_L": 0.016919427002611762,
+       "wrist_L": 0.0026436970311209413,
+       "knee_R": 3.419708042729139,
+       "ankle_R": 11.94976770605217,
+       "shoulder_R": 0.008316129667697002,
+       "elbow_R": 0.00573483728653882,
+       "wrist_R": 0.000992073193634283
+      },
+      "torsoDeg": 0.0040212845133002235,
+      "struckDeg": 2.3992459226591953,
+      "chainDeg": {
+       "shank_R": 2.3992459226591953,
+       "thigh_R": 1.3038310636368005,
+       "foot_R": 6.226092553285697
+      },
+      "P": [
+       221.65726800742124,
+       -44.558093270803425,
+       8.908920930590597
+      ],
+      "L_O": [
+       -7.231851681198996,
+       0.43649373511404543,
+       -2.8840094806981336
+      ],
+      "com": [
+       1.024118732833972,
+       0.9314294509301568,
+       0.01022333401684366
+      ],
+      "supportFootNs": 1.6873404845246114
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 43.98091321379298,
+      "targetDispInwardMm": 42.94040303176161,
+      "targetVelDiffMs": 1.5077489744473977,
+      "targetVelInwardMs": 1.4645559429721842,
+      "chainLandmarkMm": {
+       "knee_R": 23.720899033782498,
+       "ankle_R": 61.41523915547364
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.4318428584454692,
+       "knee_L": 0.9447919162166072,
+       "ankle_L": 3.3067723037497876,
+       "shoulder_L": 1.0607023272136953,
+       "elbow_L": 0.9329205689039451,
+       "wrist_L": 0.1364511489460653,
+       "knee_R": 23.720899033782498,
+       "ankle_R": 61.41523915547364,
+       "shoulder_R": 0.5399041927531097,
+       "elbow_R": 0.41388933680764484,
+       "wrist_R": 0.1136853084551058
+      },
+      "torsoDeg": 0.07949225592766446,
+      "struckDeg": 5.4395119544348285,
+      "chainDeg": {
+       "shank_R": 5.4395119544348285,
+       "thigh_R": 6.420738106837851,
+       "foot_R": 12.694020287162111
+      },
+      "P": [
+       221.2976340221617,
+       -54.16233963451692,
+       14.34739042062834
+      ],
+      "L_O": [
+       -9.648818989103424,
+       1.4508014195498045,
+       -3.8151329291025915
+      ],
+      "com": [
+       1.0865521308784958,
+       0.9176753691003632,
+       0.01366749794135469
+      ],
+      "supportFootNs": 0.10332118533551693
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 77.21060654806519,
+      "targetDispInwardMm": 74.67917704961488,
+      "targetVelDiffMs": 1.308251802585654,
+      "targetVelInwardMs": 1.175789946059045,
+      "chainLandmarkMm": {
+       "knee_R": 46.224578512880576,
+       "ankle_R": 103.92049597852414
+      },
+      "allLandmarkMm": {
+       "pelvis": 9.137062967020624,
+       "knee_L": 7.884556857840433,
+       "ankle_L": 28.238912175511604,
+       "shoulder_L": 4.569215070465488,
+       "elbow_L": 3.562462327376329,
+       "wrist_L": 1.0823484817419438,
+       "knee_R": 46.224578512880576,
+       "ankle_R": 103.92049597852414,
+       "shoulder_R": 3.7528708045304544,
+       "elbow_R": 3.14115353789028,
+       "wrist_R": 1.0156981805343295
+      },
+      "torsoDeg": 0.3484460683607588,
+      "struckDeg": 9.445681473700477,
+      "chainDeg": {
+       "shank_R": 9.445681473700477,
+       "thigh_R": 10.773803055514488,
+       "foot_R": 1.3084238351031394
+      },
+      "P": [
+       221.73694758976143,
+       -70.78744804074839,
+       17.824752954375
+      ],
+      "L_O": [
+       -10.897923115005675,
+       1.6743417343641565,
+       -5.175617215132888
+      ],
+      "com": [
+       1.161460896696068,
+       0.8960042682986699,
+       0.01938319075711882
+      ],
+      "supportFootNs": 0.4659266732633114
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 124.28548218148906,
+      "targetDispInwardMm": 112.15099701198795,
+      "targetVelDiffMs": 0.8326771570583809,
+      "targetVelInwardMs": 0.20318070013870276,
+      "chainLandmarkMm": {
+       "knee_R": 80.72941049298764,
+       "ankle_R": 158.34799854515913
+      },
+      "allLandmarkMm": {
+       "pelvis": 36.86585544228935,
+       "knee_L": 18.697099310855,
+       "ankle_L": 56.64217092805206,
+       "shoulder_L": 15.497669630431643,
+       "elbow_L": 11.154652709325333,
+       "wrist_L": 9.711696605187678,
+       "knee_R": 80.72941049298764,
+       "ankle_R": 158.34799854515913,
+       "shoulder_R": 23.66668352976277,
+       "elbow_R": 21.415086861966188,
+       "wrist_R": 7.056010267521512
+      },
+      "torsoDeg": 2.544076010970379,
+      "struckDeg": 15.695980160563831,
+      "chainDeg": {
+       "shank_R": 15.695980160563831,
+       "thigh_R": 15.974259554281652,
+       "foot_R": 18.66208971085349
+      },
+      "P": [
+       222.65461564156863,
+       -93.51246660216154,
+       13.18859660731107
+      ],
+      "L_O": [
+       -5.371506170224094,
+       1.3478176355113374,
+       -10.762794056182699
+      ],
+      "com": [
+       1.3118378118364822,
+       0.839054987848646,
+       0.02969056596787085
+      ],
+      "supportFootNs": 2.0736563205718994
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 140.3434646740316,
+      "targetDispInwardMm": 108.97217943510294,
+      "targetVelDiffMs": 0.6898540370475824,
+      "targetVelInwardMs": -0.08355370621182096,
+      "chainLandmarkMm": {
+       "knee_R": 99.98257107210384,
+       "ankle_R": 168.80214591719493
+      },
+      "allLandmarkMm": {
+       "pelvis": 70.09321326436027,
+       "knee_L": 36.74820932893771,
+       "ankle_L": 62.812791217745506,
+       "shoulder_L": 31.91886387505128,
+       "elbow_L": 30.95827221489113,
+       "wrist_L": 24.20908363930484,
+       "knee_R": 99.98257107210384,
+       "ankle_R": 168.80214591719493,
+       "shoulder_R": 62.18971522460613,
+       "elbow_R": 55.863077064968415,
+       "wrist_R": 36.200826290958226
+      },
+      "torsoDeg": 6.343820022457828,
+      "struckDeg": 15.074771924649033,
+      "chainDeg": {
+       "shank_R": 15.074771924649033,
+       "thigh_R": 14.80510137507366,
+       "foot_R": 20.521825806725296
+      },
+      "P": [
+       232.60346090355517,
+       -89.37280408295244,
+       10.566266512583196
+      ],
+      "L_O": [
+       -5.121966464286102,
+       1.713283465802831,
+       -7.881894957334417
+      ],
+      "com": [
+       1.4655673738252393,
+       0.777247261468237,
+       0.037437163837244734
+      ],
+      "supportFootNs": 2.709552526473999
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 103.92049597852414,
+     "maxRelevantRotationDeg": 12.694020287162111,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 2.0225696620283706,
+      "disp150Mm": 140.3434646740316
+     }
+    },
+    "apparentPointMassKg": 4.686282672414093,
+    "apparentPointDvMs": 1.9643457160510405
+   },
+   "W": {
+    "permitted": false,
+    "reason": "N first step not valid"
+   },
+   "X": {
+    "triggered": false
+   },
+   "status": [
+    "NATIVE_INTEGRITY_FAILED",
+    "HANDOFF_FAILED",
+    "VISUAL_PENDING"
+   ]
+  },
+  "SW/RH1": {
+   "key": "SW/RH1",
+   "role": "SW",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_R.0"
+     ],
+     "witnessMm": 0.24998793802670669,
+     "normalDeg": 0.000018091139215819242,
+     "firstStepImpulseNs": 9.205565011833146,
+     "firstStepImpulse": [
+      {
+       "body": "shank_R",
+       "i": 12,
+       "J": [
+        -0.5099748840509071,
+        0.18924760231388082,
+        9.189479754030819
+       ],
+       "H_O": [
+        -4.982388887732231,
+        1.8673164490564194,
+        -0.31495562681809497
+       ],
+       "W": 9.402937306563008
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       0.5099748840509071,
+       -0.18924760231388082,
+       -9.189479754030819
+      ],
+      "H": [
+       4.982388887732231,
+       -1.8673164490564194,
+       0.31495562681809497
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+     ],
+     "durationSteps": 26,
+     "postFirstStepImpulseNs": 12.06224300457998,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 2.34e-2 N·m·s/step"
+     ],
+     "ledger": {
+      "linMaxNs": 0.00012175459971837055,
+      "linCumNs": 0.00009463757604819105,
+      "linSumNormNs": 0.00039925307810563824,
+      "angMaxNms": 0.02344391769792521,
+      "angCumNms": 0.003210460769396407,
+      "angSumNormNms": 0.04732156316004898,
+      "energyResPlusJ": 0.0008395867677570834,
+      "energyResPlusHorizonJ": 0.0008395867677570834,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.0000916381410281277,
+      "combinedAngMaxNms": 0.023459603858922297,
+      "posCorrMaxMm": 0.09759868805147746,
+      "angPosCorrTermMaxNms": 0.00036486052185797025
+     },
+     "secondaryFailure": null
+    },
+    "status": "NATIVE_INTEGRITY_FAILED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.397910463148355,
+      "targetDispInwardMm": 8.023936384349255,
+      "targetVelDiffMs": 2.0227542828813956,
+      "targetVelInwardMs": 1.9341946720813672,
+      "chainLandmarkMm": {
+       "knee_R": 3.421113749021295,
+       "ankle_R": 11.946803132606334
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.182399866738027,
+       "knee_L": 0.04387965724549101,
+       "ankle_L": 0.009045686817118091,
+       "shoulder_L": 0.02461781871659072,
+       "elbow_L": 0.02205035548084653,
+       "wrist_L": 0.004963756579849251,
+       "knee_R": 3.421113749021295,
+       "ankle_R": 11.946803132606334,
+       "shoulder_R": 0.019576570300179022,
+       "elbow_R": 0.012181715225215118,
+       "wrist_R": 0.0028273994282257474
+      },
+      "torsoDeg": 0.006928203988535264,
+      "struckDeg": 2.3985919521495966,
+      "chainDeg": {
+       "shank_R": 2.3985919521495966,
+       "thigh_R": 1.3033845832974726,
+       "foot_R": 6.225285426055744
+      },
+      "P": [
+       221.657160530396,
+       -44.2749506264761,
+       8.90908619092512
+      ],
+      "L_O": [
+       -7.242817115641283,
+       0.4391701936451148,
+       -2.897147736909528
+      ],
+      "com": [
+       1.024308432651105,
+       0.9322280148552544,
+       0.010223814324335835
+      ],
+      "supportFootNs": 1.6766763324849308
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 43.97575403383635,
+      "targetDispInwardMm": 42.94636939351107,
+      "targetVelDiffMs": 1.5080283392861606,
+      "targetVelInwardMs": 1.4659434344482065,
+      "chainLandmarkMm": {
+       "knee_R": 23.76030067615631,
+       "ankle_R": 61.380771730026744
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.3611442360608692,
+       "knee_L": 0.9798697761071237,
+       "ankle_L": 3.4101372959140326,
+       "shoulder_L": 1.0834434506549808,
+       "elbow_L": 0.9154177908626224,
+       "wrist_L": 0.2277418981375999,
+       "knee_R": 23.76030067615631,
+       "ankle_R": 61.380771730026744,
+       "shoulder_R": 0.4963776801159331,
+       "elbow_R": 0.360664475828335,
+       "wrist_R": 0.19167759851830127
+      },
+      "torsoDeg": 0.1037303131731907,
+      "struckDeg": 5.429559575272606,
+      "chainDeg": {
+       "shank_R": 5.429559575272606,
+       "thigh_R": 6.419464035983128,
+       "foot_R": 12.684569066541545
+      },
+      "P": [
+       221.21368650732484,
+       -53.92855524698609,
+       14.35367737426944
+      ],
+      "L_O": [
+       -9.6729302471074,
+       1.4657624461852203,
+       -3.8802871233627028
+      ],
+      "com": [
+       1.086728391176776,
+       0.9185460075596028,
+       0.01366655615732848
+      ],
+      "supportFootNs": 0.09246164001524448
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 77.25737055728925,
+      "targetDispInwardMm": 74.78255423300693,
+      "targetVelDiffMs": 1.3111531050078236,
+      "targetVelInwardMs": 1.180452310724763,
+      "chainLandmarkMm": {
+       "knee_R": 46.38405006545415,
+       "ankle_R": 103.89036627525995
+      },
+      "allLandmarkMm": {
+       "pelvis": 8.928161021666984,
+       "knee_L": 8.143379830097622,
+       "ankle_L": 28.59067566080961,
+       "shoulder_L": 4.965986721121851,
+       "elbow_L": 3.3459773998924476,
+       "wrist_L": 1.7330886976921338,
+       "knee_R": 46.38405006545415,
+       "ankle_R": 103.89036627525995,
+       "shoulder_R": 4.056790200401713,
+       "elbow_R": 3.493513620319574,
+       "wrist_R": 1.3284627789890564
+      },
+      "torsoDeg": 0.5124876067771594,
+      "struckDeg": 9.434986171207969,
+      "chainDeg": {
+       "shank_R": 9.434986171207969,
+       "thigh_R": 10.77714567638703,
+       "foot_R": 1.3123539700421394
+      },
+      "P": [
+       221.60144608577858,
+       -70.64441089845522,
+       17.908426736269146
+      ],
+      "L_O": [
+       -10.961117970635321,
+       1.6915129860889024,
+       -5.263389771504215
+      ],
+      "com": [
+       1.1615937082530552,
+       0.8969449418739942,
+       0.019389211123391124
+      ],
+      "supportFootNs": 0.4228343963623047
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 124.05696612071903,
+      "targetDispInwardMm": 112.31826552666958,
+      "targetVelDiffMs": 0.8015738704575803,
+      "targetVelInwardMs": 0.20368910607333454,
+      "chainLandmarkMm": {
+       "knee_R": 80.6579615937205,
+       "ankle_R": 158.11954618196057
+      },
+      "allLandmarkMm": {
+       "pelvis": 36.64932275234203,
+       "knee_L": 20.441130046850283,
+       "ankle_L": 58.53225215205947,
+       "shoulder_L": 18.086102959742263,
+       "elbow_L": 10.267842236275788,
+       "wrist_L": 12.139256877189126,
+       "knee_R": 80.6579615937205,
+       "ankle_R": 158.11954618196057,
+       "shoulder_R": 26.635219793648933,
+       "elbow_R": 23.84259218353709,
+       "wrist_R": 7.05472534851201
+      },
+      "torsoDeg": 3.198083429596104,
+      "struckDeg": 15.634742323616969,
+      "chainDeg": {
+       "shank_R": 15.634742323616969,
+       "thigh_R": 15.870518780155878,
+       "foot_R": 18.655242346864114
+      },
+      "P": [
+       222.2740114489019,
+       -93.59911799831988,
+       13.396504650762676
+      ],
+      "L_O": [
+       -5.497898265229105,
+       1.3391539556870722,
+       -11.100268414706157
+      ],
+      "com": [
+       1.3117709502593509,
+       0.8400114355766382,
+       0.029904482810692655
+      ],
+      "supportFootNs": 2.007192850112915
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 139.06805314633522,
+      "targetDispInwardMm": 108.95402209889465,
+      "targetVelDiffMs": 0.6703504993409338,
+      "targetVelInwardMs": -0.08476644722446258,
+      "chainLandmarkMm": {
+       "knee_R": 97.11367572286618,
+       "ankle_R": 169.03790862166008
+      },
+      "allLandmarkMm": {
+       "pelvis": 70.22312401126015,
+       "knee_L": 38.70558573668335,
+       "ankle_L": 66.05625373378498,
+       "shoulder_L": 34.10816939995009,
+       "elbow_L": 28.949997850967556,
+       "wrist_L": 26.977768208405987,
+       "knee_R": 97.11367572286618,
+       "ankle_R": 169.03790862166008,
+       "shoulder_R": 68.5225776175731,
+       "elbow_R": 57.107237199964906,
+       "wrist_R": 38.60597585620564
+      },
+      "torsoDeg": 7.418080298177504,
+      "struckDeg": 15.036662688657778,
+      "chainDeg": {
+       "shank_R": 15.036662688657778,
+       "thigh_R": 14.619325388353305,
+       "foot_R": 20.341841998430425
+      },
+      "P": [
+       232.02815019974113,
+       -89.85096419883072,
+       10.856584631142018
+      ],
+      "L_O": [
+       -5.336143141755532,
+       1.7155697128551148,
+       -8.417555660804677
+      ],
+      "com": [
+       1.4651551892179675,
+       0.777971851628628,
+       0.037793842082573026
+      ],
+      "supportFootNs": 2.6862690448760986
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 103.89036627525995,
+     "maxRelevantRotationDeg": 12.684569066541545,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 2.0227542828813956,
+      "disp150Mm": 139.06805314633522
+     }
+    },
+    "apparentPointMassKg": 4.686832140815314,
+    "apparentPointDvMs": 1.964133712335548
+   },
+   "W": {
+    "permitted": false,
+    "reason": "N first step not valid"
+   },
+   "X": {
+    "triggered": false
+   },
+   "status": [
+    "NATIVE_INTEGRITY_FAILED",
+    "HANDOFF_FAILED",
+    "VISUAL_PENDING"
+   ]
+  },
+  "PL/R0": {
+   "key": "PL/R0",
+   "role": "PL",
+   "body": "R0",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_L.0"
+     ],
+     "witnessMm": 0.24999833369642285,
+     "normalDeg": 0.00002262097403300073,
+     "firstStepImpulseNs": 12.993392438359287,
+     "firstStepImpulse": [
+      {
+       "body": "shank_L",
+       "i": 9,
+       "J": [
+        0.5432126296037003,
+        2.7796047528844015,
+        -12.680968595260923
+       ],
+       "H_O": [
+        7.9083858487738,
+        0.6517511914168391,
+        0.48163085779393155
+       ],
+       "W": 9.633017873172637
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -0.5432126296037003,
+       -2.7796047528844015,
+       12.680968595260923
+      ],
+      "H": [
+       -7.9083858487738,
+       -0.6517511914168391,
+       -0.48163085779393155
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+     ],
+     "durationSteps": 22,
+     "postFirstStepImpulseNs": 9.979164025213166,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00004339277775266175,
+      "linCumNs": 0.00003809949532020807,
+      "linSumNormNs": 0.0002665528915382073,
+      "angMaxNms": 0.005805318191383002,
+      "angCumNms": 0.0009242580744992621,
+      "angSumNormNms": 0.017326797137215022,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000048887884354783205,
+      "combinedAngMaxNms": 0.0058118535183752625,
+      "posCorrMaxMm": 0.11641142130917376,
+      "angPosCorrTermMaxNms": 0.0003432336194861802
+     },
+     "secondaryFailure": {
+      "n": 29,
+      "t": 0.12083333333333333,
+      "subsystem": [
+       "angular ledger"
+      ]
+     }
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 6.846217860129127,
+      "targetDispInwardMm": 6.03971783793969,
+      "targetVelDiffMs": 1.6504504793966384,
+      "targetVelInwardMs": 1.455988564436008,
+      "chainLandmarkMm": {
+       "knee_L": 5.50162798164935,
+       "ankle_L": 7.734586249367992
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.42384642758532354,
+       "knee_L": 5.50162798164935,
+       "ankle_L": 7.734586249367992,
+       "shoulder_L": 0.1850504913059675,
+       "elbow_L": 0.1864743481317871,
+       "wrist_L": 0.010865028083483946,
+       "knee_R": 0.17065743910013584,
+       "ankle_R": 0.024069430132188815,
+       "shoulder_R": 0.2326910368082628,
+       "elbow_R": 0.19418237566701937,
+       "wrist_R": 0.021168922722054912
+      },
+      "torsoDeg": 0.03709944290316515,
+      "struckDeg": 2.1450077011463704,
+      "chainDeg": {
+       "shank_L": 2.1450077011463704,
+       "thigh_L": 0.8002964614999989,
+       "foot_L": 4.556842754323257
+      },
+      "P": [
+       223.63463691471327,
+       -36.74780810074694,
+       -9.103676558535362
+      ],
+      "L_O": [
+       2.187133135299984,
+       -0.5622069397254328,
+       -1.3046633409599764
+      ],
+      "com": [
+       1.024230202471286,
+       0.9318697918296523,
+       0.009207876108735732
+      ],
+      "supportFootNs": 6.906825685873628
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 31.728974262030537,
+      "targetDispInwardMm": 30.974738922384613,
+      "targetVelDiffMs": 1.0608986354364602,
+      "targetVelInwardMs": 1.0426673231112518,
+      "chainLandmarkMm": {
+       "knee_L": 27.531192086818738,
+       "ankle_L": 37.09249249612556
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.1112628725874045,
+       "knee_L": 27.531192086818738,
+       "ankle_L": 37.09249249612556,
+       "shoulder_L": 1.243011348279146,
+       "elbow_L": 1.3058358315587404,
+       "wrist_L": 0.23376522281186468,
+       "knee_R": 2.60470812374144,
+       "ankle_R": 2.67546811242428,
+       "shoulder_R": 1.4345751299005798,
+       "elbow_R": 1.1398572175723276,
+       "wrist_R": 0.4603302019997104
+      },
+      "torsoDeg": 0.265774178980969,
+      "struckDeg": 1.7631925560108168,
+      "chainDeg": {
+       "shank_L": 1.7631925560108168,
+       "thigh_L": 3.6640579025181705,
+       "foot_L": 5.512781655787747
+      },
+      "P": [
+       222.54130696167346,
+       -47.076499929786046,
+       -13.618152677176893
+      ],
+      "L_O": [
+       4.453515109284754,
+       -0.3085070226905411,
+       -2.356129959777126
+      ],
+      "com": [
+       1.086960614229262,
+       0.9201178689499906,
+       0.0057926633431053375
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 52.5025054451021,
+      "targetDispInwardMm": 51.5456081011481,
+      "targetVelDiffMs": 0.6818042653604849,
+      "targetVelInwardMs": 0.6466855300784544,
+      "chainLandmarkMm": {
+       "knee_L": 47.495365803918226,
+       "ankle_L": 59.061685430476764
+      },
+      "allLandmarkMm": {
+       "pelvis": 3.9594485357342597,
+       "knee_L": 47.495365803918226,
+       "ankle_L": 59.061685430476764,
+       "shoulder_L": 1.2778621833310366,
+       "elbow_L": 1.4836960370148082,
+       "wrist_L": 0.8543517310734944,
+       "knee_R": 10.610946345616249,
+       "ankle_R": 3.0888826679360433,
+       "shoulder_R": 1.9083384566819555,
+       "elbow_R": 1.658255662236824,
+       "wrist_R": 1.6666915973722465
+      },
+      "torsoDeg": 0.43192226106758863,
+      "struckDeg": 2.401043013684384,
+      "chainDeg": {
+       "shank_L": 2.401043013684384,
+       "thigh_L": 6.148526738299184,
+       "foot_L": 3.6030781603971946
+      },
+      "P": [
+       222.60193932673482,
+       -64.04918629848957,
+       -16.303196269966943
+      ],
+      "L_O": [
+       5.925645979771415,
+       -0.0356832308199333,
+       -4.198993530815694
+      ],
+      "com": [
+       1.1622589248209134,
+       0.9007641211220171,
+       0.0006052251762537003
+      ],
+      "supportFootNs": 0.5414929389953613
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 65.02110842029315,
+      "targetDispInwardMm": 64.0334946654595,
+      "targetVelDiffMs": 0.243075674398398,
+      "targetVelInwardMs": 0.12824332069377636,
+      "chainLandmarkMm": {
+       "knee_L": 68.65337588406896,
+       "ankle_L": 58.78168358448431
+      },
+      "allLandmarkMm": {
+       "pelvis": 11.099872559624306,
+       "knee_L": 68.65337588406896,
+       "ankle_L": 58.78168358448431,
+       "shoulder_L": 5.412900444133845,
+       "elbow_L": 4.52791623793775,
+       "wrist_L": 3.438796818270008,
+       "knee_R": 44.979742313862154,
+       "ankle_R": 21.213249552005127,
+       "shoulder_R": 8.734363644044311,
+       "elbow_R": 9.074934057310088,
+       "wrist_R": 4.138357233004846
+      },
+      "torsoDeg": 1.3477094947000512,
+      "struckDeg": 6.239380056948265,
+      "chainDeg": {
+       "shank_L": 6.239380056948265,
+       "thigh_L": 9.161432015155903,
+       "foot_L": 2.090502905162803
+      },
+      "P": [
+       225.8255372094512,
+       -72.14715029714255,
+       -15.7899037635535
+      ],
+      "L_O": [
+       4.830544001154424,
+       -0.3134335895759659,
+       -5.688101478684155
+      ],
+      "com": [
+       1.3132751187296268,
+       0.8510117758390109,
+       -0.010540210325512823
+      ],
+      "supportFootNs": 4.766676634550095
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 80.91620927506042,
+      "targetDispInwardMm": 79.69872177397413,
+      "targetVelDiffMs": 0.1235075825617621,
+      "targetVelInwardMs": 0.08210339471841026,
+      "chainLandmarkMm": {
+       "knee_L": 85.29848427034713,
+       "ankle_L": 73.83184982001725
+      },
+      "allLandmarkMm": {
+       "pelvis": 19.92372952928892,
+       "knee_L": 85.29848427034713,
+       "ankle_L": 73.83184982001725,
+       "shoulder_L": 15.187260869720628,
+       "elbow_L": 14.62676266598136,
+       "wrist_L": 9.26529376183335,
+       "knee_R": 74.71434631195085,
+       "ankle_R": 47.3177349208157,
+       "shoulder_R": 17.855266359796772,
+       "elbow_R": 19.77415827223469,
+       "wrist_R": 7.987550373554715
+      },
+      "torsoDeg": 2.9259245441059543,
+      "struckDeg": 4.7449146337001995,
+      "chainDeg": {
+       "shank_L": 4.7449146337001995,
+       "thigh_L": 9.418721306938847,
+       "foot_L": 8.05348477642178
+      },
+      "P": [
+       234.9625375693142,
+       -58.367216590777915,
+       -13.129569571292958
+      ],
+      "L_O": [
+       1.784203968057556,
+       -1.927775892579117,
+       -0.9009648756151081
+      ],
+      "com": [
+       1.4686302661429627,
+       0.8077421300184775,
+       -0.02069567644845236
+      ],
+      "supportFootNs": 3.52042818069458
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 59.061685430476764,
+     "maxRelevantRotationDeg": 6.148526738299184,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.6504504793966384,
+      "disp150Mm": 80.91620927506042
+     }
+    },
+    "apparentPointMassKg": 8.219079715566798,
+    "apparentPointDvMs": 1.580881666562988
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 0.03654734812257534,
+     "rotDeg": 0.024857867565041616,
+     "velMs": 0.008711989425078512,
+     "angVelRadS": 0.09388159695428652,
+     "PNs": 0.05030579366896182,
+     "LNms": 0.0360240818518699,
+     "pass": false
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 9,
+       "body": "shank_L",
+       "J": [
+        0.5432126296037003,
+        2.7796047528844015,
+        -12.680968595260923
+       ],
+       "H_O": [
+        7.9083858487738,
+        0.6517511914168391,
+        0.48163085779393155
+       ]
+      }
+     ],
+     "workJ": 26.437614498307596,
+     "preKE": 380.355769069028,
+     "postKE": 406.7933835673356,
+     "J": [
+      0.5432126296037003,
+      2.7796047528844015,
+      -12.680968595260923
+     ],
+     "H_O": [
+      7.9083858487738,
+      0.6517511914168391,
+      0.48163085779393155
+     ]
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00013398629620189502,
+      "linCumNs": 0.00009552848043775307,
+      "linSumNormNs": 0.0004120219896112491,
+      "angMaxNms": 0.00738479258368612,
+      "angCumNms": 0.012675391798525842,
+      "angSumNormNms": 0.019906371506710045,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00013398925436812096,
+      "combinedAngMaxNms": 0.007384761170868617,
+      "posCorrMaxMm": 0.04115371210565814,
+      "angPosCorrTermMaxNms": 0.00017851751028050676
+     },
+     "secondaryFailure": null
+    },
+    "status": "WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 6.822660215946038,
+      "targetDispInwardMm": 6.009648035558868,
+      "targetVelDiffMs": 1.6446821538919216,
+      "targetVelInwardMs": 1.4486331260355456,
+      "chainLandmarkMm": {
+       "knee_L": 5.509332262452624,
+       "ankle_L": 7.684251957823198
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.4258514982759884,
+       "knee_L": 5.509332262452624,
+       "ankle_L": 7.684251957823198,
+       "shoulder_L": 0.18682088727347224,
+       "elbow_L": 0.188290141225764,
+       "wrist_L": 0.010918516011898806,
+       "knee_R": 0.17380699102053587,
+       "ankle_R": 0.02458164129609423,
+       "shoulder_R": 0.2352391571526788,
+       "elbow_R": 0.19649597563370624,
+       "wrist_R": 0.02143198172289512
+      },
+      "torsoDeg": 0.03760406855893061,
+      "struckDeg": 2.1370839682388083,
+      "chainDeg": {
+       "shank_L": 2.1370839682388083,
+       "thigh_L": 0.8051185606754674,
+       "foot_L": 4.532194132364729
+      },
+      "P": [
+       223.65356031294553,
+       -36.70657609286495,
+       -9.081939507170764
+      ],
+      "L_O": [
+       2.155918142863238,
+       -0.5570086255742697,
+       -1.287448921119914
+      ],
+      "com": [
+       1.0242312516687593,
+       0.9318721339496933,
+       0.009209101507838404
+      ],
+      "supportFootNs": 6.948055563494563
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 22.949026926847697,
+      "targetDispInwardMm": 22.098842342017157,
+      "targetVelDiffMs": 0.6022257011075094,
+      "targetVelInwardMs": 0.5126658142432616,
+      "chainLandmarkMm": {
+       "knee_L": 20.872061516536604,
+       "ankle_L": 25.82661395166967
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.10142167563515,
+       "knee_L": 20.872061516536604,
+       "ankle_L": 25.82661395166967,
+       "shoulder_L": 0.4336253689298062,
+       "elbow_L": 0.48968763173596014,
+       "wrist_L": 0.18388452651995346,
+       "knee_R": 2.1083561416641126,
+       "ankle_R": 1.96071761691015,
+       "shoulder_R": 0.41531479100430035,
+       "elbow_R": 0.3510660765032882,
+       "wrist_R": 0.3286367824955925
+      },
+      "torsoDeg": 0.15552701965805393,
+      "struckDeg": 1.0068079210915801,
+      "chainDeg": {
+       "shank_L": 1.0068079210915801,
+       "thigh_L": 2.9379177144426007,
+       "foot_L": 3.4528777612614414
+      },
+      "P": [
+       223.65352039694787,
+       -51.81194927763249,
+       -9.08194274116
+      ],
+      "L_O": [
+       2.128772631250481,
+       -0.5543832912955096,
+       -1.8574464093355427
+      ],
+      "com": [
+       1.0872735238134126,
+       0.918970722830181,
+       0.006649144079301569
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 26.511225494003398,
+      "targetDispInwardMm": 24.995094853365472,
+      "targetVelDiffMs": 0.07126550955281188,
+      "targetVelInwardMs": 0.01249022274666911,
+      "chainLandmarkMm": {
+       "knee_L": 26.71870435152605,
+       "ankle_L": 26.142648441238784
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.5858907386195455,
+       "knee_L": 26.71870435152605,
+       "ankle_L": 26.142648441238784,
+       "shoulder_L": 0.49818412164654685,
+       "elbow_L": 0.5177945417572568,
+       "wrist_L": 0.6928683350046353,
+       "knee_R": 8.404421181513744,
+       "ankle_R": 3.146147226082921,
+       "shoulder_R": 1.7078686860968149,
+       "elbow_R": 1.3851088050204463,
+       "wrist_R": 0.9371092118463874
+      },
+      "torsoDeg": 0.3538985796899481,
+      "struckDeg": 0.7252689047038442,
+      "chainDeg": {
+       "shank_L": 0.7252689047038442,
+       "thigh_L": 3.9216716492047494,
+       "foot_L": 2.9075837129436004
+      },
+      "P": [
+       222.82650696496185,
+       -62.94973511425601,
+       -8.322465611543018
+      ],
+      "L_O": [
+       1.5570645825919223,
+       -0.8317264342255437,
+       -4.303525451193593
+      ],
+      "com": [
+       1.162721877768404,
+       0.8992412213838661,
+       0.0038920148900601485
+      ],
+      "supportFootNs": 1.0293980166316032
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 26.908810782162302,
+      "targetDispInwardMm": 24.406564009917364,
+      "targetVelDiffMs": 0.052267346543510035,
+      "targetVelInwardMs": 0.007420602796821205,
+      "chainLandmarkMm": {
+       "knee_L": 29.929200286970413,
+       "ankle_L": 20.63683153081888
+      },
+      "allLandmarkMm": {
+       "pelvis": 4.4819884753080075,
+       "knee_L": 29.929200286970413,
+       "ankle_L": 20.63683153081888,
+       "shoulder_L": 2.7572010412128787,
+       "elbow_L": 1.3433481958392395,
+       "wrist_L": 3.1787652900563366,
+       "knee_R": 21.629119373955746,
+       "ankle_R": 8.57341652647804,
+       "shoulder_R": 5.72600086692458,
+       "elbow_R": 5.462043750222558,
+       "wrist_R": 3.421183429695895
+      },
+      "torsoDeg": 0.975095374692301,
+      "struckDeg": 4.5444158899218285,
+      "chainDeg": {
+       "shank_L": 4.5444158899218285,
+       "thigh_L": 4.518698934030469,
+       "foot_L": 1.2586262281121066
+      },
+      "P": [
+       226.95643225600574,
+       -64.90602749119849,
+       -8.220330348254741
+      ],
+      "L_O": [
+       1.5157506040727644,
+       -1.399942869717428,
+       -4.1314243305324645
+      ],
+      "com": [
+       1.314481726086135,
+       0.8529068921765275,
+       -0.0017850445847366883
+      ],
+      "supportFootNs": 4.213393986225128
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 32.35970027349462,
+      "targetDispInwardMm": 30.44348149391092,
+      "targetVelDiffMs": 0.07449296772129724,
+      "targetVelInwardMs": 0.07213222777955118,
+      "chainLandmarkMm": {
+       "knee_L": 37.88630185288841,
+       "ankle_L": 23.214222634301084
+      },
+      "allLandmarkMm": {
+       "pelvis": 5.670838034907221,
+       "knee_L": 37.88630185288841,
+       "ankle_L": 23.214222634301084,
+       "shoulder_L": 5.934889535233966,
+       "elbow_L": 4.533072409387634,
+       "wrist_L": 7.115639466981625,
+       "knee_R": 33.637960295005946,
+       "ankle_R": 17.03329787196688,
+       "shoulder_R": 10.268222249989186,
+       "elbow_R": 11.091787117307671,
+       "wrist_R": 6.018238949254342
+      },
+      "torsoDeg": 1.8181599000671709,
+      "struckDeg": 4.223669805619452,
+      "chainDeg": {
+       "shank_L": 4.223669805619452,
+       "thigh_L": 5.4202578783781865,
+       "foot_L": 1.9463243061218172
+      },
+      "P": [
+       236.46021085482832,
+       -53.51488420078307,
+       -7.679976890511063
+      ],
+      "L_O": [
+       -0.5775297256032221,
+       -1.5188700375896051,
+       0.48065617890147383
+      ],
+      "com": [
+       1.4709676462125594,
+       0.8140149057690397,
+       -0.007189921359186082
+      ],
+      "supportFootNs": 2.7337536811828613
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 26.71870435152605,
+     "maxRelevantRotationDeg": 4.532194132364729,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 33.606653306723366,
+    "maxOrientDeg": 2.058395003022253,
+    "sameSupport": false,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00005138087562304462,
+      "linCumNs": 0.0000788172379586877,
+      "linSumNormNs": 0.0003406741541605923,
+      "angMaxNms": 0.005938780325520828,
+      "angCumNms": 0.0017869016408756627,
+      "angSumNormNms": 0.01789342074936031,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000051332225398759243,
+      "combinedAngMaxNms": 0.0059387762505298735,
+      "posCorrMaxMm": 0.040702877762794167,
+      "angPosCorrTermMaxNms": 0.0001738961629513323
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 33.39576348823259,
+    "maxOrientDeg": 2.0077920317022064,
+    "sameSupport": false,
+    "equivalent": false
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ]
+  },
+  "PL/RH1": {
+   "key": "PL/RH1",
+   "role": "PL",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_L.0"
+     ],
+     "witnessMm": 0.2499983336964075,
+     "normalDeg": 0.00002262097403300073,
+     "firstStepImpulseNs": 12.995680636122483,
+     "firstStepImpulse": [
+      {
+       "body": "shank_L",
+       "i": 9,
+       "J": [
+        0.5419414252556912,
+        2.7778254692006996,
+        -12.683757343561119
+       ],
+       "H_O": [
+        7.920342030777938,
+        0.6493203084845361,
+        0.4806194074932064
+       ],
+       "W": 9.644950238024592
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -0.5419414252556912,
+       -2.7778254692006996,
+       12.683757343561119
+      ],
+      "H": [
+       -7.920342030777938,
+       -0.6493203084845361,
+       -0.4806194074932064
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+     ],
+     "durationSteps": 23,
+     "postFirstStepImpulseNs": 10.116719271074606,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00005482564798683188,
+      "linCumNs": 0.00016798568539681317,
+      "linSumNormNs": 0.0003024918905910413,
+      "angMaxNms": 0.006074982622931081,
+      "angCumNms": 0.0010383412242910464,
+      "angSumNormNms": 0.017699176336296356,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.0000547009364635042,
+      "combinedAngMaxNms": 0.006075425033274788,
+      "posCorrMaxMm": 0.09758227175404033,
+      "angPosCorrTermMaxNms": 0.00029072633009203736
+     },
+     "secondaryFailure": {
+      "n": 29,
+      "t": 0.12083333333333333,
+      "subsystem": [
+       "angular ledger"
+      ]
+     }
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 6.84790138994096,
+      "targetDispInwardMm": 6.039644376096942,
+      "targetVelDiffMs": 1.6508601647699432,
+      "targetVelInwardMs": 1.4559757375760534,
+      "chainLandmarkMm": {
+       "knee_L": 5.497328347057019,
+       "ankle_L": 7.740243271410221
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.3958388378327011,
+       "knee_L": 5.497328347057019,
+       "ankle_L": 7.740243271410221,
+       "shoulder_L": 0.208372265043002,
+       "elbow_L": 0.19997083836873228,
+       "wrist_L": 0.024859022217358803,
+       "knee_R": 0.1907233496039299,
+       "ankle_R": 0.02134385757507519,
+       "shoulder_R": 0.24516969268765457,
+       "elbow_R": 0.17419961951792018,
+       "wrist_R": 0.036243950931777166
+      },
+      "torsoDeg": 0.007629437553523264,
+      "struckDeg": 2.1487020718831125,
+      "chainDeg": {
+       "shank_L": 2.1487020718831125,
+       "thigh_L": 0.796298443760323,
+       "foot_L": 4.560522621746519
+      },
+      "P": [
+       223.63670933082904,
+       -36.45418735103533,
+       -9.10450318727158
+      ],
+      "L_O": [
+       2.1900643297161544,
+       -0.5625481479598085,
+       -1.315631565484129
+      ],
+      "com": [
+       1.0244200326945265,
+       0.9326689357128075,
+       0.009208302481954044
+      ],
+      "supportFootNs": 6.908862835727632
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 31.513007381580334,
+      "targetDispInwardMm": 30.710522827209846,
+      "targetVelDiffMs": 1.0536936975854165,
+      "targetVelInwardMs": 1.0328251718988735,
+      "chainLandmarkMm": {
+       "knee_L": 27.518441488340063,
+       "ankle_L": 36.64148893169862
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.115286248845214,
+       "knee_L": 27.518441488340063,
+       "ankle_L": 36.64148893169862,
+       "shoulder_L": 1.3528571179725868,
+       "elbow_L": 1.363199610151279,
+       "wrist_L": 0.22744823119053426,
+       "knee_R": 2.5351611759863366,
+       "ankle_R": 2.720759004884701,
+       "shoulder_R": 1.8360840871581954,
+       "elbow_R": 1.2038562531833306,
+       "wrist_R": 0.4116933712636762
+      },
+      "torsoDeg": 0.17344221988728675,
+      "struckDeg": 1.6419992068170821,
+      "chainDeg": {
+       "shank_L": 1.6419992068170821,
+       "thigh_L": 3.681752713523575,
+       "foot_L": 5.54003718642634
+      },
+      "P": [
+       222.5335558571487,
+       -46.56312888466345,
+       -13.542359090990017
+      ],
+      "L_O": [
+       4.365324572627051,
+       -0.29667208679429535,
+       -2.3567546362934064
+      ],
+      "com": [
+       1.0871476156680775,
+       0.9210631378504942,
+       0.005809995397879259
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 52.012124309185864,
+      "targetDispInwardMm": 50.93948742852897,
+      "targetVelDiffMs": 0.6688609469509096,
+      "targetVelInwardMs": 0.6298847723052903,
+      "chainLandmarkMm": {
+       "knee_L": 47.38237409382049,
+       "ankle_L": 58.10298572056908
+      },
+      "allLandmarkMm": {
+       "pelvis": 3.9615648642108816,
+       "knee_L": 47.38237409382049,
+       "ankle_L": 58.10298572056908,
+       "shoulder_L": 1.288300406813598,
+       "elbow_L": 1.347954449341652,
+       "wrist_L": 0.9192520497504162,
+       "knee_R": 10.464391466573934,
+       "ankle_R": 3.0996979387586268,
+       "shoulder_R": 2.6108240070822704,
+       "elbow_R": 1.6997047922477233,
+       "wrist_R": 1.8093514663997259
+      },
+      "torsoDeg": 0.48442320674575373,
+      "struckDeg": 2.4413674148032944,
+      "chainDeg": {
+       "shank_L": 2.4413674148032944,
+       "thigh_L": 6.2061297903027155,
+       "foot_L": 3.5268345172302866
+      },
+      "P": [
+       222.5333152721629,
+       -63.44616907117422,
+       -16.179954251787994
+      ],
+      "L_O": [
+       5.785332579722754,
+       -0.04034202293640465,
+       -4.247759667127516
+      ],
+      "com": [
+       1.1624387775325853,
+       0.9018954216198704,
+       0.0006545900682849566
+      ],
+      "supportFootNs": 0.4731724262237549
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 63.671261310539336,
+      "targetDispInwardMm": 62.62308411068282,
+      "targetVelDiffMs": 0.26103684908095687,
+      "targetVelInwardMs": 0.028600256511053343,
+      "chainLandmarkMm": {
+       "knee_L": 67.78483847945938,
+       "ankle_L": 56.78654433135978
+      },
+      "allLandmarkMm": {
+       "pelvis": 10.272857719569064,
+       "knee_L": 67.78483847945938,
+       "ankle_L": 56.78654433135978,
+       "shoulder_L": 6.930775953037006,
+       "elbow_L": 5.034743597190543,
+       "wrist_L": 5.143780108231755,
+       "knee_R": 44.28811418352122,
+       "ankle_R": 20.376772472235114,
+       "shoulder_R": 8.85824785220166,
+       "elbow_R": 8.972679898046474,
+       "wrist_R": 6.077088228226297
+      },
+      "torsoDeg": 1.7220783653216742,
+      "struckDeg": 6.222448580275149,
+      "chainDeg": {
+       "shank_L": 6.222448580275149,
+       "thigh_L": 9.254180790402854,
+       "foot_L": 1.5194966195721085
+      },
+      "P": [
+       225.5263310627535,
+       -72.46691114284694,
+       -15.149158593501895
+      ],
+      "L_O": [
+       4.399655808899107,
+       -0.39581728686785556,
+       -6.115127537228442
+      ],
+      "com": [
+       1.313307576531439,
+       0.8523769727959108,
+       -0.010374199206145374
+      ],
+      "supportFootNs": 4.580991752445698
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 80.36135108758232,
+      "targetDispInwardMm": 79.27251862431068,
+      "targetVelDiffMs": 0.13961805938988955,
+      "targetVelInwardMs": 0.12266957712862894,
+      "chainLandmarkMm": {
+       "knee_L": 85.7044201641952,
+       "ankle_L": 72.25656716429359
+      },
+      "allLandmarkMm": {
+       "pelvis": 18.050850857684026,
+       "knee_L": 85.7044201641952,
+       "ankle_L": 72.25656716429359,
+       "shoulder_L": 16.98452740606802,
+       "elbow_L": 15.924690486186496,
+       "wrist_L": 12.585640567091096,
+       "knee_R": 73.56620479521436,
+       "ankle_R": 45.68565034130947,
+       "shoulder_R": 17.80416565295665,
+       "elbow_R": 19.359685351527677,
+       "wrist_R": 10.30543488816141
+      },
+      "torsoDeg": 3.3910048969796427,
+      "struckDeg": 4.569337534530706,
+      "chainDeg": {
+       "shank_L": 4.569337534530706,
+       "thigh_L": 9.90301698911762,
+       "foot_L": 7.87257991940736
+      },
+      "P": [
+       234.64514137442708,
+       -58.74316593493185,
+       -13.241908712166918
+      ],
+      "L_O": [
+       2.096174127448404,
+       -1.7791563906693812,
+       -1.2840348605486565
+      ],
+      "com": [
+       1.4684419485355262,
+       0.8090265561308007,
+       -0.020441828917532354
+      ],
+      "supportFootNs": 3.280357599258423
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 58.10298572056908,
+     "maxRelevantRotationDeg": 6.2061297903027155,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.6508601647699432,
+      "disp150Mm": 80.36135108758232
+     }
+    },
+    "apparentPointMassKg": 8.220299139405693,
+    "apparentPointDvMs": 1.5809255132608275
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 0.036077957933546886,
+     "rotDeg": 0.024969597400782223,
+     "velMs": 0.008612230277071444,
+     "angVelRadS": 0.09453209505002982,
+     "PNs": 0.04840615500985763,
+     "LNms": 0.035059106124324946,
+     "pass": true
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 9,
+       "body": "shank_L",
+       "J": [
+        0.5419414252556912,
+        2.7778254692006996,
+        -12.683757343561119
+       ],
+       "H_O": [
+        7.920342030777938,
+        0.6493203084845361,
+        0.4806194074932064
+       ]
+      }
+     ],
+     "workJ": 26.459346268104582,
+     "preKE": 380.1680810700791,
+     "postKE": 406.6274273381837,
+     "J": [
+      0.5419414252556912,
+      2.7778254692006996,
+      -12.683757343561119
+     ],
+     "H_O": [
+      7.920342030777938,
+      0.6493203084845361,
+      0.4806194074932064
+     ]
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00008128327441817846,
+      "linCumNs": 0.00008555956374057286,
+      "linSumNormNs": 0.00035625711165247726,
+      "angMaxNms": 0.0073977852732201805,
+      "angCumNms": 0.012713545309069164,
+      "angSumNormNms": 0.020067892311895968,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00008128301112891428,
+      "combinedAngMaxNms": 0.007397753908022394,
+      "posCorrMaxMm": 0.04081374171451946,
+      "angPosCorrTermMaxNms": 0.0001653023098935259
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 6.824651901506211,
+      "targetDispInwardMm": 6.009994469026419,
+      "targetVelDiffMs": 1.6451664227594804,
+      "targetVelInwardMs": 1.4487221199641571,
+      "chainLandmarkMm": {
+       "knee_L": 5.504907843004427,
+       "ankle_L": 7.690265506221703
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.3973676608306657,
+       "knee_L": 5.504907843004427,
+       "ankle_L": 7.690265506221703,
+       "shoulder_L": 0.21017370472486688,
+       "elbow_L": 0.20175375457818515,
+       "wrist_L": 0.025171344716411553,
+       "knee_R": 0.1945449318414428,
+       "ankle_R": 0.02206122827900425,
+       "shoulder_R": 0.24839751440032,
+       "elbow_R": 0.17621774527470327,
+       "wrist_R": 0.03652804822546384
+      },
+      "torsoDeg": 0.007842279429618454,
+      "struckDeg": 2.140802225801394,
+      "chainDeg": {
+       "shank_L": 2.140802225801394,
+       "thigh_L": 0.8009436601340381,
+       "foot_L": 4.535766665945399
+      },
+      "P": [
+       223.654761779136,
+       -36.41443369527758,
+       -9.083600751842743
+      ],
+      "L_O": [
+       2.159591519334469,
+       -0.557376124603377,
+       -1.2990846949619108
+      ],
+      "com": [
+       1.0244210118474697,
+       0.9326711772450355,
+       0.009209480386761898
+      ],
+      "supportFootNs": 6.94860976934433
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 22.977912411781208,
+      "targetDispInwardMm": 22.110304493706185,
+      "targetVelDiffMs": 0.6058263652244211,
+      "targetVelInwardMs": 0.5124650296205937,
+      "chainLandmarkMm": {
+       "knee_L": 20.891043718330128,
+       "ankle_L": 25.867805693950245
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.062354503387425,
+       "knee_L": 20.891043718330128,
+       "ankle_L": 25.867805693950245,
+       "shoulder_L": 0.44670520490767257,
+       "elbow_L": 0.48455088600326296,
+       "wrist_L": 0.15462107911885897,
+       "knee_R": 2.068865608734271,
+       "ankle_R": 1.9287350861623451,
+       "shoulder_R": 0.586809608429578,
+       "elbow_R": 0.37200699468727255,
+       "wrist_R": 0.2929979206984303
+      },
+      "torsoDeg": 0.14621168281760377,
+      "struckDeg": 0.947267898410343,
+      "chainDeg": {
+       "shank_L": 0.947267898410343,
+       "thigh_L": 2.9530192119620695,
+       "foot_L": 3.411339445625768
+      },
+      "P": [
+       223.6547565940202,
+       -51.51983757412718,
+       -9.083602490776961
+      ],
+      "L_O": [
+       2.132441159340085,
+       -0.5547709938804684,
+       -1.8691299480032253
+      ],
+      "com": [
+       1.0874636169337821,
+       0.9198522292827288,
+       0.006649044295231078
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 26.5450963684196,
+      "targetDispInwardMm": 24.96801566688836,
+      "targetVelDiffMs": 0.07396922580883934,
+      "targetVelInwardMs": 0.008908038985089434,
+      "chainLandmarkMm": {
+       "knee_L": 26.83450085444299,
+       "ankle_L": 26.024182896133176
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.458794997934081,
+       "knee_L": 26.83450085444299,
+       "ankle_L": 26.024182896133176,
+       "shoulder_L": 0.8973535886260963,
+       "elbow_L": 0.3980961338783524,
+       "wrist_L": 0.848814056257038,
+       "knee_R": 8.394605509333715,
+       "ankle_R": 3.0858191031429185,
+       "shoulder_R": 2.040253615922313,
+       "elbow_R": 1.230945537536922,
+       "wrist_R": 1.1024645628722134
+      },
+      "torsoDeg": 0.4269961708613142,
+      "struckDeg": 0.8890282693552188,
+      "chainDeg": {
+       "shank_L": 0.8890282693552188,
+       "thigh_L": 3.9963324574542707,
+       "foot_L": 2.816977659568182
+      },
+      "P": [
+       222.7233139329232,
+       -62.90810301591158,
+       -8.3453047301827
+      ],
+      "L_O": [
+       1.5731857179099633,
+       -0.828477821468238,
+       -4.4214880089145705
+      ],
+      "com": [
+       1.1628889350407405,
+       0.9001733243951813,
+       0.0038869649955483405
+      ],
+      "supportFootNs": 0.9591153934597969
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 27.11164519861812,
+      "targetDispInwardMm": 24.535916984540066,
+      "targetVelDiffMs": 0.053702127182234646,
+      "targetVelInwardMs": 0.007195015234964089,
+      "chainLandmarkMm": {
+       "knee_L": 30.370716805533988,
+       "ankle_L": 20.569946935288385
+      },
+      "allLandmarkMm": {
+       "pelvis": 4.152746655183072,
+       "knee_L": 30.370716805533988,
+       "ankle_L": 20.569946935288385,
+       "shoulder_L": 4.064192547143376,
+       "elbow_L": 2.085796769675576,
+       "wrist_L": 4.359133873380762,
+       "knee_R": 21.778807968648923,
+       "ankle_R": 8.50233763273367,
+       "shoulder_R": 6.655599919955671,
+       "elbow_R": 5.918491530964825,
+       "wrist_R": 4.474133152748083
+      },
+      "torsoDeg": 1.236499389229818,
+      "struckDeg": 4.442929923511796,
+      "chainDeg": {
+       "shank_L": 4.442929923511796,
+       "thigh_L": 4.683603732635472,
+       "foot_L": 1.4137288172057447
+      },
+      "P": [
+       226.74578636255268,
+       -65.21255610392988,
+       -8.310948468468709
+      ],
+      "L_O": [
+       1.5705341116637481,
+       -1.3896698434140944,
+       -4.4011344883840815
+      ],
+      "com": [
+       1.3145219199803573,
+       0.8537124642415649,
+       -0.0018533307580582707
+      ],
+      "supportFootNs": 4.200656533241272
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 32.427122931499085,
+      "targetDispInwardMm": 30.38757212688145,
+      "targetVelDiffMs": 0.07948563803339022,
+      "targetVelInwardMs": 0.07634404089496939,
+      "chainLandmarkMm": {
+       "knee_L": 38.29125084634023,
+       "ankle_L": 22.90274914314966
+      },
+      "allLandmarkMm": {
+       "pelvis": 5.216374519704266,
+       "knee_L": 38.29125084634023,
+       "ankle_L": 22.90274914314966,
+       "shoulder_L": 7.489017752093345,
+       "elbow_L": 5.890186701330048,
+       "wrist_L": 9.049207104458716,
+       "knee_R": 34.010442733760456,
+       "ankle_R": 16.987005694657487,
+       "shoulder_R": 11.256736131228113,
+       "elbow_R": 11.759168209183066,
+       "wrist_R": 7.336084630197331
+      },
+      "torsoDeg": 2.1415132869262696,
+      "struckDeg": 4.085847860263777,
+      "chainDeg": {
+       "shank_L": 4.085847860263777,
+       "thigh_L": 5.601611538721101,
+       "foot_L": 1.8733706294631347
+      },
+      "P": [
+       236.27972380050417,
+       -54.034987565483895,
+       -7.844478028122333
+      ],
+      "L_O": [
+       -0.45930145500236635,
+       -1.4866331669747137,
+       0.19836741615626297
+      ],
+      "com": [
+       1.4708903168228737,
+       0.8146029935858843,
+       -0.007330040840242633
+      ],
+      "supportFootNs": 2.6644768714904785
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 26.83450085444299,
+     "maxRelevantRotationDeg": 4.535766665945399,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 32.77523394294598,
+    "maxOrientDeg": 1.9838099293965357,
+    "sameSupport": false,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00006975701583415933,
+      "linCumNs": 0.00026193464137100125,
+      "linSumNormNs": 0.0003787979783555712,
+      "angMaxNms": 0.005912799333925534,
+      "angCumNms": 0.0019422540101766434,
+      "angSumNormNms": 0.018057575883920794,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00006979524975284748,
+      "combinedAngMaxNms": 0.005912791965391956,
+      "posCorrMaxMm": 0.04058016217309753,
+      "angPosCorrTermMaxNms": 0.0001729785188909659
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 32.5005015716124,
+    "maxOrientDeg": 1.967475903088736,
+    "sameSupport": false,
+    "equivalent": false
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:PRIMARY_MECHANICS_VALID",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ]
+  },
+  "SH/R0": {
+   "key": "SH/R0",
+   "role": "SH",
+   "body": "R0",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "upperArm_L.0"
+     ],
+     "witnessMm": 0.25002359137335106,
+     "normalDeg": 0.00003980819765399356,
+     "firstStepImpulseNs": 18.941036311358943,
+     "firstStepImpulse": [
+      {
+       "body": "upperArm_L",
+       "i": 4,
+       "J": [
+        0.6312038468158774,
+        -1.6878804708761332,
+        -18.855118609226984
+       ],
+       "H_O": [
+        -7.567465897399581,
+        0.24848007549479714,
+        -0.27557600456426407
+       ],
+       "W": 13.502643120715405
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -0.6312038468158774,
+       1.6878804708761332,
+       18.855118609226984
+      ],
+      "H": [
+       7.567465897399581,
+       -0.24848007549479714,
+       0.27557600456426407
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+     ],
+     "durationSteps": 36,
+     "postFirstStepImpulseNs": 3.5061448173189493,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00014140630305098457,
+      "linCumNs": 0.00033357136695405103,
+      "linSumNormNs": 0.0004341635073827855,
+      "angMaxNms": 0.0006604251405077492,
+      "angCumNms": 0.0010796364669838558,
+      "angSumNormNms": 0.0029542492124439404,
+      "energyResPlusJ": 0.01059627699047283,
+      "energyResPlusHorizonJ": 0.01059627699047283,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00011871874442833663,
+      "combinedAngMaxNms": 0.000661261841911892,
+      "posCorrMaxMm": 0.037639251839235624,
+      "angPosCorrTermMaxNms": 0.0001954415319504295
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 4.856444080203236,
+      "targetDispInwardMm": 4.152717919313043,
+      "targetVelDiffMs": 1.1643018136793204,
+      "targetVelInwardMs": 0.9970295007168808,
+      "chainLandmarkMm": {
+       "shoulder_L": 4.748117578130003,
+       "elbow_L": 2.4010001309764855,
+       "wrist_L": 0.9349976584539738
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.12280061752981009,
+       "knee_L": 0.06375994662970545,
+       "ankle_L": 0.0021525248285692794,
+       "shoulder_L": 4.748117578130003,
+       "elbow_L": 2.4010001309764855,
+       "wrist_L": 0.9349976584539738,
+       "knee_R": 0.16557360671732613,
+       "ankle_R": 0.014750463697644219,
+       "shoulder_R": 4.562115445007667,
+       "elbow_R": 1.5671964538420065,
+       "wrist_R": 0.31132772364377453
+      },
+      "torsoDeg": 0.535625292415558,
+      "struckDeg": 0.6263817940972418,
+      "chainDeg": {
+       "upperArm_L": 0.6263817940972418,
+       "forearm_L": 0.4221347319752394,
+       "thorax": 0.535625292415558
+      },
+      "P": [
+       222.7970600599706,
+       -46.34063923446742,
+       -19.094924416632733
+      ],
+      "L_O": [
+       -9.885856433254093,
+       -1.1823604179169755,
+       -2.868367352900399
+      ],
+      "com": [
+       1.0241830149382867,
+       0.9313289673940686,
+       0.008644622941228631
+      ],
+      "supportFootNs": 1.7814769880278618
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 27.04658880040816,
+      "targetDispInwardMm": 23.354387195369586,
+      "targetVelDiffMs": 0.9764783716145916,
+      "targetVelInwardMs": 0.8535696592873092,
+      "chainLandmarkMm": {
+       "shoulder_L": 26.270904665500375,
+       "elbow_L": 16.696783488476086,
+       "wrist_L": 5.17335878304127
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.811000352911828,
+       "knee_L": 1.01589430097474,
+       "ankle_L": 0.009214136367849143,
+       "shoulder_L": 26.270904665500375,
+       "elbow_L": 16.696783488476086,
+       "wrist_L": 5.17335878304127,
+       "knee_R": 2.9688703362582207,
+       "ankle_R": 0.7538262626575082,
+       "shoulder_R": 25.545983093764136,
+       "elbow_R": 9.591514911501314,
+       "wrist_R": 3.0230660647609096
+      },
+      "torsoDeg": 2.872800334680697,
+      "struckDeg": 2.9003890176818206,
+      "chainDeg": {
+       "upperArm_L": 2.9003890176818206,
+       "forearm_L": 3.20028377983292,
+       "thorax": 2.872800334680697
+      },
+      "P": [
+       222.91220087548925,
+       -53.67970452837296,
+       -23.504079409595764
+      ],
+      "L_O": [
+       -9.33063252383825,
+       -1.1569331268703584,
+       -3.0213596396188023
+      ],
+      "com": [
+       1.0870172763474821,
+       0.9172714319618825,
+       0.0024540122419945023
+      ],
+      "supportFootNs": 0.9520793814735953
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 48.95686936521007,
+      "targetDispInwardMm": 42.98038823992373,
+      "targetVelDiffMs": 0.824137807799393,
+      "targetVelInwardMs": 0.7481796108500373,
+      "chainLandmarkMm": {
+       "shoulder_L": 47.662298969053865,
+       "elbow_L": 31.547840341511645,
+       "wrist_L": 13.367569501780816
+      },
+      "allLandmarkMm": {
+       "pelvis": 8.738633655997115,
+       "knee_L": 2.8133031527834254,
+       "ankle_L": 0.3993242571075172,
+       "shoulder_L": 47.662298969053865,
+       "elbow_L": 31.547840341511645,
+       "wrist_L": 13.367569501780816,
+       "knee_R": 7.921707592523978,
+       "ankle_R": 3.9122781862647464,
+       "shoulder_R": 46.69056203981124,
+       "elbow_R": 22.333268003800978,
+       "wrist_R": 10.315304901443069
+      },
+      "torsoDeg": 5.068842626964516,
+      "struckDeg": 4.829228195822784,
+      "chainDeg": {
+       "upperArm_L": 4.829228195822784,
+       "forearm_L": 5.641572490386127,
+       "thorax": 5.068842626964516
+      },
+      "P": [
+       223.00949892605692,
+       -67.12503333663544,
+       -27.18279790416951
+      ],
+      "L_O": [
+       -7.485789662935826,
+       -0.9820572287469407,
+       -4.459317456356576
+      ],
+      "com": [
+       1.162438994729217,
+       0.8964900339931452,
+       -0.006243699877421449
+      ],
+      "supportFootNs": 0.7704691737890244
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 87.12969572904966,
+      "targetDispInwardMm": 79.02179875752368,
+      "targetVelDiffMs": 0.7280014391305774,
+      "targetVelInwardMs": 0.699713503760947,
+      "chainLandmarkMm": {
+       "shoulder_L": 85.41227228736119,
+       "elbow_L": 56.79326928209914,
+       "wrist_L": 38.866721614558806
+      },
+      "allLandmarkMm": {
+       "pelvis": 22.507501840520867,
+       "knee_L": 5.049357654104309,
+       "ankle_L": 1.6867557232683232,
+       "shoulder_L": 85.41227228736119,
+       "elbow_L": 56.79326928209914,
+       "wrist_L": 38.866721614558806,
+       "knee_R": 15.612850855838342,
+       "ankle_R": 14.552193748541947,
+       "shoulder_R": 84.56512239946504,
+       "elbow_R": 55.09927319421745,
+       "wrist_R": 31.61516058935457
+      },
+      "torsoDeg": 8.511619009845054,
+      "struckDeg": 7.919838920487389,
+      "chainDeg": {
+       "upperArm_L": 7.919838920487389,
+       "forearm_L": 8.787675122284183,
+       "thorax": 8.511619009845054
+      },
+      "P": [
+       227.4838745896876,
+       -70.06138004751503,
+       -30.54558332821615
+      ],
+      "L_O": [
+       -8.51073219126063,
+       -0.5774212263351128,
+       -3.894216436512931
+      ],
+      "com": [
+       1.3145338507500863,
+       0.8469831791946228,
+       -0.02612263986617433
+      ],
+      "supportFootNs": 4.059952288866043
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 121.15282004421654,
+      "targetDispInwardMm": 113.2222451533832,
+      "targetVelDiffMs": 0.6793000866465215,
+      "targetVelInwardMs": 0.674823486896679,
+      "chainLandmarkMm": {
+       "shoulder_L": 119.76140114773615,
+       "elbow_L": 78.70716098257004,
+       "wrist_L": 73.60863439120524
+      },
+      "allLandmarkMm": {
+       "pelvis": 37.91432671138499,
+       "knee_L": 7.463776010725385,
+       "ankle_L": 4.075606879572019,
+       "shoulder_L": 119.76140114773615,
+       "elbow_L": 78.70716098257004,
+       "wrist_L": 73.60863439120524,
+       "knee_R": 19.237357033357647,
+       "ankle_R": 26.236103134631257,
+       "shoulder_R": 121.76786918969289,
+       "elbow_R": 98.20853854074258,
+       "wrist_R": 61.69051755961769
+      },
+      "torsoDeg": 11.055863529848816,
+      "struckDeg": 9.946586903386569,
+      "chainDeg": {
+       "upperArm_L": 9.946586903386569,
+       "forearm_L": 10.409439515277109,
+       "thorax": 11.055863529848816
+      },
+      "P": [
+       236.5095209140837,
+       -61.990603063015584,
+       -32.493720832591514
+      ],
+      "L_O": [
+       -10.934332685387476,
+       -0.0003799650027969115,
+       -0.7688328235744897
+      ],
+      "com": [
+       1.4714514082627475,
+       0.8040150860873846,
+       -0.04743204227675263
+      ],
+      "supportFootNs": 2.0969247817993164
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 48.95686936521007,
+     "maxRelevantRotationDeg": 5.641572490386127,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.1643018136793204,
+      "disp150Mm": 121.15282004421654
+     }
+    },
+    "apparentPointMassKg": 20.250786171813637,
+    "apparentPointDvMs": 0.9353235055003598
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 8.691371465588148,
+     "rotDeg": 4.258187262457975,
+     "velMs": 2.0870760443192347,
+     "angVelRadS": 17.824904405973275,
+     "PNs": 0.11322571577107075,
+     "LNms": 1.5671651419766737,
+     "pass": false
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 4,
+       "body": "upperArm_L",
+       "J": [
+        0.6312038468158774,
+        -1.6878804708761332,
+        -18.855118609226984
+       ],
+       "H_O": [
+        -7.567465897399581,
+        0.24848007549479714,
+        -0.27557600456426407
+       ]
+      }
+     ],
+     "workJ": 167.35313620249343,
+     "preKE": 380.355769069028,
+     "postKE": 547.7089052715214,
+     "J": [
+      0.6312038468158774,
+      -1.6878804708761332,
+      -18.855118609226984
+     ],
+     "H_O": [
+      -7.567465897399581,
+      0.24848007549479714,
+      -0.27557600456426407
+     ]
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 1.55e+0 N·m·s/step",
+      "angular cumulative 1.55e+0 N·m·s"
+     ],
+     "ledger": {
+      "linMaxNs": 0.0001414207718926383,
+      "linCumNs": 0.00017805699321213602,
+      "linSumNormNs": 0.0005353722611736387,
+      "angMaxNms": 1.5507551086968272,
+      "angCumNms": 1.5503713507880021,
+      "angSumNormNms": 1.5627606254428006,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00014141008630922346,
+      "combinedAngMaxNms": 1.5507551683737753,
+      "posCorrMaxMm": 0.07762628993480926,
+      "angPosCorrTermMaxNms": 0.00025613091100092533
+     },
+     "secondaryFailure": null
+    },
+    "status": "WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 5.274746054048157,
+      "targetDispInwardMm": 3.441662470952289,
+      "targetVelDiffMs": 1.3470168579325217,
+      "targetVelInwardMs": 0.8698112748958342,
+      "chainLandmarkMm": {
+       "shoulder_L": 3.0396312921378335,
+       "elbow_L": 17.69734026864371,
+       "wrist_L": 0.6681420417396788
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.06811465337914686,
+       "knee_L": 0.029760682737031825,
+       "ankle_L": 0.0011637046068802609,
+       "shoulder_L": 3.0396312921378335,
+       "elbow_L": 17.69734026864371,
+       "wrist_L": 0.6681420417396788,
+       "knee_R": 0.09231995657390805,
+       "ankle_R": 0.007170726131410915,
+       "shoulder_R": 2.9582642570831124,
+       "elbow_R": 1.0675865813142584,
+       "wrist_R": 0.18811383403546444
+      },
+      "torsoDeg": 0.32727222373119647,
+      "struckDeg": 4.069548016226884,
+      "chainDeg": {
+       "upperArm_L": 4.069548016226884,
+       "forearm_L": 3.442656482460565,
+       "thorax": 0.32727222373119647
+      },
+      "P": [
+       222.78703656592734,
+       -46.452468176301394,
+       -19.10954905499849
+      ],
+      "L_O": [
+       -8.452013784243658,
+       -1.8127321217023038,
+       -2.8160858535694837
+      ],
+      "com": [
+       1.0241824070821997,
+       0.9313227124667135,
+       0.008643800046385909
+      ],
+      "supportFootNs": 1.6696546860039234
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 25.144005360735974,
+      "targetDispInwardMm": 18.972017752961868,
+      "targetVelDiffMs": 0.7784184445459418,
+      "targetVelInwardMs": 0.6659685788686269,
+      "chainLandmarkMm": {
+       "shoulder_L": 16.367783218140193,
+       "elbow_L": 79.51226615509026,
+       "wrist_L": 18.090383758256067
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.1383220517033017,
+       "knee_L": 0.7352754800966065,
+       "ankle_L": 0.009129041074715813,
+       "shoulder_L": 16.367783218140193,
+       "elbow_L": 79.51226615509026,
+       "wrist_L": 18.090383758256067,
+       "knee_R": 2.2723674811790233,
+       "ankle_R": 0.5084931592011006,
+       "shoulder_R": 15.697928792438212,
+       "elbow_R": 3.895474790765592,
+       "wrist_R": 2.336706561301391
+      },
+      "torsoDeg": 1.7890170679956756,
+      "struckDeg": 15.81397861703856,
+      "chainDeg": {
+       "upperArm_L": 15.81397861703856,
+       "forearm_L": 14.663810037461383,
+       "thorax": 1.7890170679956756
+      },
+      "P": [
+       223.41284127027674,
+       -53.201634868946485,
+       -20.98681239626882
+      ],
+      "L_O": [
+       -7.05666025778113,
+       -1.7235649880680122,
+       -3.1351066782403105
+      ],
+      "com": [
+       1.0871122860279478,
+       0.9173504913488019,
+       0.0029792944221270815
+      ],
+      "supportFootNs": 1.0386106852147377
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 38.651714506250435,
+      "targetDispInwardMm": 32.6250602757841,
+      "targetVelDiffMs": 0.5126722881783782,
+      "targetVelInwardMs": 0.4929592304092951,
+      "chainLandmarkMm": {
+       "shoulder_L": 28.735189633743857,
+       "elbow_L": 116.0346102367671,
+       "wrist_L": 47.36884261533442
+      },
+      "allLandmarkMm": {
+       "pelvis": 7.315908887976209,
+       "knee_L": 2.2271058552139587,
+       "ankle_L": 0.2834901574569085,
+       "shoulder_L": 28.735189633743857,
+       "elbow_L": 116.0346102367671,
+       "wrist_L": 47.36884261533442,
+       "knee_R": 6.759273275140262,
+       "ankle_R": 3.0454521236668435,
+       "shoulder_R": 27.859427499363857,
+       "elbow_R": 12.706376883065042,
+       "wrist_R": 6.512521746909028
+      },
+      "torsoDeg": 2.7632445589042387,
+      "struckDeg": 19.546732296887,
+      "chainDeg": {
+       "upperArm_L": 19.546732296887,
+       "forearm_L": 18.563971477507522,
+       "thorax": 2.7632445589042387
+      },
+      "P": [
+       223.6681590464678,
+       -66.63281055953145,
+       -23.544472211427248
+      ],
+      "L_O": [
+       -4.813900098944138,
+       -1.6131337593493134,
+       -4.69105965201666
+      ],
+      "com": [
+       1.1627414033304386,
+       0.8967410308352122,
+       -0.004625924341453523
+      ],
+      "supportFootNs": 0.7924275910481811
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 58.00462518886003,
+      "targetDispInwardMm": 54.83941676085252,
+      "targetVelDiffMs": 0.4513589531128657,
+      "targetVelInwardMs": 0.4366287830706149,
+      "chainLandmarkMm": {
+       "shoulder_L": 50.2656546127075,
+       "elbow_L": 145.6335151568554,
+       "wrist_L": 85.55926787013121
+      },
+      "allLandmarkMm": {
+       "pelvis": 19.87875948093966,
+       "knee_L": 4.130737651139098,
+       "ankle_L": 1.413345584380062,
+       "shoulder_L": 50.2656546127075,
+       "elbow_L": 145.6335151568554,
+       "wrist_L": 85.55926787013121,
+       "knee_R": 13.947826559698006,
+       "ankle_R": 12.187771645122407,
+       "shoulder_R": 50.47561822400032,
+       "elbow_R": 36.22499134902255,
+       "wrist_R": 20.000599825138153
+      },
+      "torsoDeg": 3.3763550073106625,
+      "struckDeg": 19.17533953959805,
+      "chainDeg": {
+       "upperArm_L": 19.17533953959805,
+       "forearm_L": 18.580089470725657,
+       "thorax": 3.3763550073106625
+      },
+      "P": [
+       228.75516685337274,
+       -68.26535836837049,
+       -24.572924785159064
+      ],
+      "L_O": [
+       -5.32622975821682,
+       -1.5622731389567195,
+       -3.9073247422357
+      ],
+      "com": [
+       1.3155167493476967,
+       0.8479828778851919,
+       -0.021070161686251036
+      ],
+      "supportFootNs": 4.094896271824837
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 78.46985075062835,
+      "targetDispInwardMm": 77.23720110319465,
+      "targetVelDiffMs": 0.4664991576176082,
+      "targetVelInwardMs": 0.4535739510862604,
+      "chainLandmarkMm": {
+       "shoulder_L": 73.64923054356991,
+       "elbow_L": 148.2585638178723,
+       "wrist_L": 101.53196240680793
+      },
+      "allLandmarkMm": {
+       "pelvis": 33.653535377156636,
+       "knee_L": 5.751855512835057,
+       "ankle_L": 2.9401122622465454,
+       "shoulder_L": 73.64923054356991,
+       "elbow_L": 148.2585638178723,
+       "wrist_L": 101.53196240680793,
+       "knee_R": 16.473419300257255,
+       "ankle_R": 22.0528318236746,
+       "shoulder_R": 75.96130132316111,
+       "elbow_R": 64.75698002992758,
+       "wrist_R": 44.65486850041365
+      },
+      "torsoDeg": 3.7564699961063286,
+      "struckDeg": 14.671634172234773,
+      "chainDeg": {
+       "upperArm_L": 14.671634172234773,
+       "forearm_L": 14.375307525705624,
+       "thorax": 3.7564699961063286
+      },
+      "P": [
+       238.03276230452659,
+       -60.1254302217015,
+       -26.062234613035628
+      ],
+      "L_O": [
+       -7.533093460190066,
+       -1.0887088294464262,
+       -0.681691390399719
+      ],
+      "com": [
+       1.4734112381507702,
+       0.8063334053911764,
+       -0.03814542139710375
+      ],
+      "supportFootNs": 2.0501022338867188
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 116.0346102367671,
+     "maxRelevantRotationDeg": 19.546732296887,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 93.47282320305328,
+    "maxOrientDeg": 21.948080002054944,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00015429739129904708,
+      "linCumNs": 0.0003586478803607028,
+      "linSumNormNs": 0.0007496734184694517,
+      "angMaxNms": 0.0005796223373296488,
+      "angCumNms": 0.0010968587727156868,
+      "angSumNormNms": 0.0028967144729619026,
+      "energyResPlusJ": 0.01059627699047283,
+      "energyResPlusHorizonJ": 0.01059627699047283,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00015429232059590935,
+      "combinedAngMaxNms": 0.0005796082500386915,
+      "posCorrMaxMm": 0.037937819334896,
+      "angPosCorrTermMaxNms": 0.00017579872152198315
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 7.555028153248341,
+    "maxOrientDeg": 1.2747974533007496,
+    "sameSupport": true,
+    "equivalent": true
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ]
+  },
+  "SH/RH1": {
+   "key": "SH/RH1",
+   "role": "SH",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "upperArm_L.0"
+     ],
+     "witnessMm": 0.2499992844557602,
+     "normalDeg": 0.000022524095754713237,
+     "firstStepImpulseNs": 18.96388929570073,
+     "firstStepImpulse": [
+      {
+       "body": "upperArm_L",
+       "i": 4,
+       "J": [
+        0.8632982036678942,
+        -1.975845472358607,
+        -18.84090889794058
+       ],
+       "H_O": [
+        -7.49635028439422,
+        0.32224539591441326,
+        -0.3772797203995672
+       ],
+       "W": 14.077742493594974
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -0.8632982036678942,
+       1.975845472358607,
+       18.84090889794058
+      ],
+      "H": [
+       7.49635028439422,
+       -0.32224539591441326,
+       0.3772797203995672
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+     ],
+     "durationSteps": 36,
+     "postFirstStepImpulseNs": 3.377960223509495,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00011499394791755412,
+      "linCumNs": 0.0002300508931517668,
+      "linSumNormNs": 0.0005140252875404293,
+      "angMaxNms": 0.0005538602520761674,
+      "angCumNms": 0.0012415958133835895,
+      "angSumNormNms": 0.0029455894287928027,
+      "energyResPlusJ": 0.04505373215427255,
+      "energyResPlusHorizonJ": 0.04505373215427255,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00013688343461517333,
+      "combinedAngMaxNms": 0.0005529775627848897,
+      "posCorrMaxMm": 0.03829107211735591,
+      "angPosCorrTermMaxNms": 0.00019944506833830284
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 5.156342246583019,
+      "targetDispInwardMm": 4.158691124633906,
+      "targetVelDiffMs": 1.2349975636897206,
+      "targetVelInwardMs": 0.9971959887077698,
+      "chainLandmarkMm": {
+       "shoulder_L": 5.0564499048897416,
+       "elbow_L": 2.5402657224424954,
+       "wrist_L": 1.2394023216655718
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.15014704613341062,
+       "knee_L": 0.07075373243247128,
+       "ankle_L": 0.0039778024617551765,
+       "shoulder_L": 5.0564499048897416,
+       "elbow_L": 2.5402657224424954,
+       "wrist_L": 1.2394023216655718,
+       "knee_R": 0.1863010407934017,
+       "ankle_R": 0.015414572441422317,
+       "shoulder_R": 4.845517551551023,
+       "elbow_R": 1.6952810781281524,
+       "wrist_R": 0.44990835956423514
+      },
+      "torsoDeg": 0.6866916369969678,
+      "struckDeg": 0.6709550400334217,
+      "chainDeg": {
+       "upperArm_L": 0.6709550400334217,
+       "forearm_L": 0.46093642898807496,
+       "thorax": 0.6866916369969678
+      },
+      "P": [
+       223.04221344802784,
+       -46.28420787722841,
+       -19.076466761866815
+      ],
+      "L_O": [
+       -9.82409840988754,
+       -1.1070055152935732,
+       -2.9734313098488703
+      ],
+      "com": [
+       1.0243865064882873,
+       0.9321148129683652,
+       0.00864612880295833
+      ],
+      "supportFootNs": 1.8325162615801673
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 28.41486415453446,
+      "targetDispInwardMm": 23.63493686942514,
+      "targetVelDiffMs": 1.0203858426513612,
+      "targetVelInwardMs": 0.8719005680508981,
+      "chainLandmarkMm": {
+       "shoulder_L": 27.516785975193528,
+       "elbow_L": 17.09177939528842,
+       "wrist_L": 5.375367072998637
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.6566904737380694,
+       "knee_L": 0.691698755035544,
+       "ankle_L": 0.008741548275980235,
+       "shoulder_L": 27.516785975193528,
+       "elbow_L": 17.09177939528842,
+       "wrist_L": 5.375367072998637,
+       "knee_R": 2.3894320294423057,
+       "ankle_R": 0.9820068766810083,
+       "shoulder_R": 26.534640682509547,
+       "elbow_R": 9.677965073447732,
+       "wrist_R": 3.895579585401061
+      },
+      "torsoDeg": 3.412484987473299,
+      "struckDeg": 3.0606864094915824,
+      "chainDeg": {
+       "upperArm_L": 3.0606864094915824,
+       "forearm_L": 3.3812777008526096,
+       "thorax": 3.412484987473299
+      },
+      "P": [
+       223.04492586953558,
+       -53.22985989465489,
+       -23.18023563954648
+      ],
+      "L_O": [
+       -9.25136061873705,
+       -1.1423699596617338,
+       -3.057850977403957
+      ],
+      "com": [
+       1.087278187328723,
+       0.9181598802670654,
+       0.002524571930248697
+      ],
+      "supportFootNs": 0.9288860392225615
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 51.139347226430125,
+      "targetDispInwardMm": 43.69586018573518,
+      "targetVelDiffMs": 0.8520903233048615,
+      "targetVelInwardMs": 0.7638971052250149,
+      "chainLandmarkMm": {
+       "shoulder_L": 49.55115327067316,
+       "elbow_L": 32.000994804904025,
+       "wrist_L": 12.838995105762535
+      },
+      "allLandmarkMm": {
+       "pelvis": 7.984071698349082,
+       "knee_L": 2.6086105311123675,
+       "ankle_L": 0.2792685469052532,
+       "shoulder_L": 49.55115327067316,
+       "elbow_L": 32.000994804904025,
+       "wrist_L": 12.838995105762535,
+       "knee_R": 6.156869179418814,
+       "ankle_R": 3.8136479926078612,
+       "shoulder_R": 48.11878840079046,
+       "elbow_R": 22.402843011606233,
+       "wrist_R": 12.12114239894909
+      },
+      "torsoDeg": 5.801257510019671,
+      "struckDeg": 5.215916799427865,
+      "chainDeg": {
+       "upperArm_L": 5.215916799427865,
+       "forearm_L": 6.0697840371467855,
+       "thorax": 5.801257510019671
+      },
+      "P": [
+       222.9189673351213,
+       -66.89050689436873,
+       -26.897680590123358
+      ],
+      "L_O": [
+       -7.444493805276835,
+       -1.0147235177996545,
+       -4.576441020809577
+      ],
+      "com": [
+       1.162696836610928,
+       0.8974764941725893,
+       -0.006072574316384981
+      ],
+      "supportFootNs": 0.7583580911159515
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 90.28943725382193,
+      "targetDispInwardMm": 80.36505183505541,
+      "targetVelDiffMs": 0.7388630222464008,
+      "targetVelInwardMs": 0.7056120530325708,
+      "chainLandmarkMm": {
+       "shoulder_L": 88.11613807176339,
+       "elbow_L": 57.203078846170186,
+       "wrist_L": 37.66779372833455
+      },
+      "allLandmarkMm": {
+       "pelvis": 20.66606129615631,
+       "knee_L": 5.178065141517215,
+       "ankle_L": 1.3238426476129608,
+       "shoulder_L": 88.11613807176339,
+       "elbow_L": 57.203078846170186,
+       "wrist_L": 37.66779372833455,
+       "knee_R": 12.390137959285031,
+       "ankle_R": 12.924738485706905,
+       "shoulder_R": 86.66221384902654,
+       "elbow_R": 56.262523508532,
+       "wrist_R": 34.226567393114145
+      },
+      "torsoDeg": 9.483497129631225,
+      "struckDeg": 8.700632326554894,
+      "chainDeg": {
+       "upperArm_L": 8.700632326554894,
+       "forearm_L": 9.612481270527812,
+       "thorax": 9.483497129631225
+      },
+      "P": [
+       227.0858219838187,
+       -70.39075278682857,
+       -30.45122698712768
+      ],
+      "L_O": [
+       -8.453722357555085,
+       -0.642473385923988,
+       -4.309563586217722
+      ],
+      "com": [
+       1.3146018001460977,
+       0.847969976051545,
+       -0.025890180843515204
+      ],
+      "supportFootNs": 4.042013257741928
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 124.83794927160145,
+      "targetDispInwardMm": 114.9014046530602,
+      "targetVelDiffMs": 0.6869263040620323,
+      "targetVelInwardMs": 0.6801326504990357,
+      "chainLandmarkMm": {
+       "shoulder_L": 123.01271361220837,
+       "elbow_L": 78.50647872838665,
+       "wrist_L": 71.9802893186349
+      },
+      "allLandmarkMm": {
+       "pelvis": 35.3855398386868,
+       "knee_L": 5.880925771437383,
+       "ankle_L": 3.3810081754556736,
+       "shoulder_L": 123.01271361220837,
+       "elbow_L": 78.50647872838665,
+       "wrist_L": 71.9802893186349,
+       "knee_R": 15.987138960893258,
+       "ankle_R": 23.458505943420015,
+       "shoulder_R": 124.31887747183423,
+       "elbow_R": 99.02102715726586,
+       "wrist_R": 63.19920957631246
+      },
+      "torsoDeg": 12.238101462563959,
+      "struckDeg": 10.902336366211735,
+      "chainDeg": {
+       "upperArm_L": 10.902336366211735,
+       "forearm_L": 11.417823750172508,
+       "thorax": 12.238101462563959
+      },
+      "P": [
+       236.213760684216,
+       -62.41067720158765,
+       -32.52520957292281
+      ],
+      "L_O": [
+       -10.847283557836333,
+       0.012225186599426952,
+       -1.075492005517893
+      ],
+      "com": [
+       1.4712902843090894,
+       0.8047669134291346,
+       -0.04717461812417153
+      ],
+      "supportFootNs": 2.0824086666107178
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 51.139347226430125,
+     "maxRelevantRotationDeg": 6.0697840371467855,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.2349975636897206,
+      "disp150Mm": 124.83794927160145
+     }
+    },
+    "apparentPointMassKg": 20.887003115023482,
+    "apparentPointDvMs": 0.9079277286103574
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 8.175463217404953,
+     "rotDeg": 4.139953899289343,
+     "velMs": 1.963284429428384,
+     "angVelRadS": 17.32313583035033,
+     "PNs": 0.10988420401647052,
+     "LNms": 1.5584844475388138,
+     "pass": false
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 4,
+       "body": "upperArm_L",
+       "J": [
+        0.8632982036678942,
+        -1.975845472358607,
+        -18.84090889794058
+       ],
+       "H_O": [
+        -7.49635028439422,
+        0.32224539591441326,
+        -0.3772797203995672
+       ]
+      }
+     ],
+     "workJ": 168.58219559415556,
+     "preKE": 380.1680810700791,
+     "postKE": 548.7502766642347,
+     "J": [
+      0.8632982036678942,
+      -1.975845472358607,
+      -18.84090889794058
+     ],
+     "H_O": [
+      -7.49635028439422,
+      0.32224539591441326,
+      -0.3772797203995672
+     ]
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 1.54e+0 N·m·s/step",
+      "angular cumulative 1.54e+0 N·m·s"
+     ],
+     "ledger": {
+      "linMaxNs": 0.0001700328402466632,
+      "linCumNs": 0.0004679238817869071,
+      "linSumNormNs": 0.0007016979161062645,
+      "angMaxNms": 1.544533168605961,
+      "angCumNms": 1.5442718088298046,
+      "angSumNormNms": 1.5554377066575833,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00017014994338000806,
+      "combinedAngMaxNms": 1.5445332289006672,
+      "posCorrMaxMm": 0.06753073577827456,
+      "angPosCorrTermMaxNms": 0.00021711765772236866
+     },
+     "secondaryFailure": null
+    },
+    "status": "WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 5.2775909180355765,
+      "targetDispInwardMm": 3.411121256239047,
+      "targetVelDiffMs": 1.339334810491354,
+      "targetVelInwardMs": 0.8611360483668483,
+      "chainLandmarkMm": {
+       "shoulder_L": 3.2159167290321626,
+       "elbow_L": 17.195926255942908,
+       "wrist_L": 1.1451303335995948
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.09299342797449942,
+       "knee_L": 0.041360374051338994,
+       "ankle_L": 0.0022401388236208747,
+       "shoulder_L": 3.2159167290321626,
+       "elbow_L": 17.195926255942908,
+       "wrist_L": 1.1451303335995948,
+       "knee_R": 0.11428598459462364,
+       "ankle_R": 0.010286594393160164,
+       "shoulder_R": 3.133328451929058,
+       "elbow_R": 1.1528183269110934,
+       "wrist_R": 0.2576830790827276
+      },
+      "torsoDeg": 0.4138167249490964,
+      "struckDeg": 3.903351350712724,
+      "chainDeg": {
+       "upperArm_L": 3.903351350712724,
+       "forearm_L": 3.3761376540825574,
+       "thorax": 0.4138167249490964
+      },
+      "P": [
+       223.03209686202604,
+       -46.39295168776476,
+       -19.0885901545453
+      ],
+      "L_O": [
+       -8.38293390901824,
+       -1.6962654183140358,
+       -2.904937358679321
+      ],
+      "com": [
+       1.0243858787562974,
+       0.932108641202206,
+       0.008645450622289406
+      ],
+      "supportFootNs": 1.7237752186073294
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 24.968437299688635,
+      "targetDispInwardMm": 18.905012902558806,
+      "targetVelDiffMs": 0.7691338044338992,
+      "targetVelInwardMs": 0.66894422283693,
+      "chainLandmarkMm": {
+       "shoulder_L": 17.27177921429259,
+       "elbow_L": 77.88520880436539,
+       "wrist_L": 20.033081341002806
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.0958927725437118,
+       "knee_L": 0.47714733634063317,
+       "ankle_L": 0.008903684629042606,
+       "shoulder_L": 17.27177921429259,
+       "elbow_L": 77.88520880436539,
+       "wrist_L": 20.033081341002806,
+       "knee_R": 1.926726528590554,
+       "ankle_R": 0.7040984293847063,
+       "shoulder_R": 16.64296298135579,
+       "elbow_R": 4.2231600642839995,
+       "wrist_R": 2.8986580694158035
+      },
+      "torsoDeg": 2.181929441845871,
+      "struckDeg": 15.08690096850659,
+      "chainDeg": {
+       "upperArm_L": 15.08690096850659,
+       "forearm_L": 14.066940126181306,
+       "thorax": 2.181929441845871
+      },
+      "P": [
+       223.66792622380535,
+       -52.93691499744784,
+       -20.924805679479515
+      ],
+      "L_O": [
+       -7.012755898984467,
+       -1.619219997182515,
+       -3.2157377038279376
+      ],
+      "com": [
+       1.0873905231354764,
+       0.9181965870433744,
+       0.0029940647976602758
+      ],
+      "supportFootNs": 1.0421170390000043
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 38.277538444923884,
+      "targetDispInwardMm": 32.691087500063496,
+      "targetVelDiffMs": 0.5053959049617762,
+      "targetVelInwardMs": 0.4975431755461989,
+      "chainLandmarkMm": {
+       "shoulder_L": 30.028788017719748,
+       "elbow_L": 114.84745699357696,
+       "wrist_L": 49.74190458184121
+      },
+      "allLandmarkMm": {
+       "pelvis": 6.973210340918794,
+       "knee_L": 2.050637651385086,
+       "ankle_L": 0.19425314962743487,
+       "shoulder_L": 30.028788017719748,
+       "elbow_L": 114.84745699357696,
+       "wrist_L": 49.74190458184121,
+       "knee_R": 5.53790015358264,
+       "ankle_R": 2.993541745950838,
+       "shoulder_R": 29.350928979739308,
+       "elbow_R": 12.968174536452421,
+       "wrist_R": 7.897599144682578
+      },
+      "torsoDeg": 3.3931102139807137,
+      "struckDeg": 18.661191054212907,
+      "chainDeg": {
+       "upperArm_L": 18.661191054212907,
+       "forearm_L": 17.801298214783934,
+       "thorax": 3.3931102139807137
+      },
+      "P": [
+       223.80864474797843,
+       -66.54372284931782,
+       -23.502742169731626
+      ],
+      "L_O": [
+       -4.757061184513552,
+       -1.5322191417751503,
+       -4.864921578548652
+      ],
+      "com": [
+       1.1630821363990613,
+       0.8976362294457101,
+       -0.0045980791258321725
+      ],
+      "supportFootNs": 0.7881254404783249
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 57.32735609442855,
+      "targetDispInwardMm": 54.99602239176521,
+      "targetVelDiffMs": 0.4551673510705231,
+      "targetVelInwardMs": 0.4364624513362755,
+      "chainLandmarkMm": {
+       "shoulder_L": 51.38337189949562,
+       "elbow_L": 145.2020748421246,
+       "wrist_L": 87.06329441700859
+      },
+      "allLandmarkMm": {
+       "pelvis": 18.90531762389913,
+       "knee_L": 4.523265484375987,
+       "ankle_L": 0.950231524063361,
+       "shoulder_L": 51.38337189949562,
+       "elbow_L": 145.2020748421246,
+       "wrist_L": 87.06329441700859,
+       "knee_R": 11.263511454419238,
+       "ankle_R": 10.99658941492192,
+       "shoulder_R": 52.25862300686797,
+       "elbow_R": 36.3660777279958,
+       "wrist_R": 20.701705369651126
+      },
+      "torsoDeg": 4.330240673166909,
+      "struckDeg": 18.31864036644523,
+      "chainDeg": {
+       "upperArm_L": 18.31864036644523,
+       "forearm_L": 17.873869094556845,
+       "thorax": 4.330240673166909
+      },
+      "P": [
+       228.6736409618393,
+       -68.59476931500019,
+       -24.88564849684313
+      ],
+      "L_O": [
+       -4.917101788728201,
+       -1.5268157725795577,
+       -4.30008081833868
+      ],
+      "com": [
+       1.3158518480182002,
+       0.8488264862278826,
+       -0.02106434857964334
+      ],
+      "supportFootNs": 4.063929423689842
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 77.86570148694082,
+      "targetDispInwardMm": 77.30018878129668,
+      "targetVelDiffMs": 0.47461379989667535,
+      "targetVelInwardMs": 0.45226998007185204,
+      "chainLandmarkMm": {
+       "shoulder_L": 74.53089166526964,
+       "elbow_L": 146.00880612430325,
+       "wrist_L": 102.18596430533651
+      },
+      "allLandmarkMm": {
+       "pelvis": 32.07334500344706,
+       "knee_L": 4.532777274890975,
+       "ankle_L": 2.5971013797131848,
+       "shoulder_L": 74.53089166526964,
+       "elbow_L": 146.00880612430325,
+       "wrist_L": 102.18596430533651,
+       "knee_R": 13.899500801409484,
+       "ankle_R": 20.14197838549416,
+       "shoulder_R": 78.2016363102808,
+       "elbow_R": 63.57681550930275,
+       "wrist_R": 42.14028737034409
+      },
+      "torsoDeg": 5.153158256116837,
+      "struckDeg": 13.616478655936756,
+      "chainDeg": {
+       "upperArm_L": 13.616478655936756,
+       "forearm_L": 13.508452943505466,
+       "thorax": 5.153158256116837
+      },
+      "P": [
+       237.96780460894698,
+       -60.729821971185174,
+       -25.952354154961547
+      ],
+      "L_O": [
+       -7.344503093089269,
+       -1.060243435058552,
+       -1.0482492732928002
+      ],
+      "com": [
+       1.4736214676754607,
+       0.8066992894978544,
+       -0.03809028484644486
+      ],
+      "supportFootNs": 2.0924317836761475
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 114.84745699357696,
+     "maxRelevantRotationDeg": 18.661191054212907,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 93.77812137174313,
+    "maxOrientDeg": 21.217172685223208,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00011985102036032398,
+      "linCumNs": 0.00022931110688187106,
+      "linSumNormNs": 0.0004891730261610324,
+      "angMaxNms": 0.0004363753798824065,
+      "angCumNms": 0.0010483104098045503,
+      "angSumNormNms": 0.0026252312933540073,
+      "energyResPlusJ": 0.04505373215427255,
+      "energyResPlusHorizonJ": 0.04505373215427255,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.0001198416049883142,
+      "combinedAngMaxNms": 0.0004363737535267485,
+      "posCorrMaxMm": 0.03862081168299424,
+      "angPosCorrTermMaxNms": 0.00018497479862942967
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 8.671227071924209,
+    "maxOrientDeg": 1.589718993356467,
+    "sameSupport": true,
+    "equivalent": true
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ]
+  },
+  "TP/R0": {
+   "key": "TP/R0",
+   "role": "TP",
+   "body": "R0",
+   "state": "S-TOE",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_L.0"
+     ],
+     "witnessMm": 0.25000248041322143,
+     "normalDeg": 0.000018860476299618448,
+     "firstStepImpulseNs": 10.877309480648469,
+     "firstStepImpulse": [
+      {
+       "body": "shank_L",
+       "i": 9,
+       "J": [
+        1.6536973919762403,
+        2.4640430220436835,
+        -10.464685301483932
+       ],
+       "H_O": [
+        6.128830507884313,
+        -3.1865268737436927,
+        0.21820930617245377
+       ],
+       "W": 13.217385757546074
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -1.6536973919762403,
+       -2.4640430220436835,
+       10.464685301483932
+      ],
+      "H": [
+       -6.128830507884313,
+       3.1865268737436927,
+       -0.21820930617245377
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+     ],
+     "durationSteps": 35,
+     "postFirstStepImpulseNs": 8.296242309579407,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00005266556593457892,
+      "linCumNs": 0.00009193757852368261,
+      "linSumNormNs": 0.0002087164100742202,
+      "angMaxNms": 0.008513629998137052,
+      "angCumNms": 0.00458549731662152,
+      "angSumNormNms": 0.020445153129971173,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000035766863694336675,
+      "combinedAngMaxNms": 0.00851715798551427,
+      "posCorrMaxMm": 0.21531708827425333,
+      "angPosCorrTermMaxNms": 0.0014225198801388569
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.146382268963578,
+      "targetDispInwardMm": 7.9368883473601155,
+      "targetVelDiffMs": 1.9626655100612733,
+      "targetVelInwardMs": 1.912539990566523,
+      "chainLandmarkMm": {
+       "knee_L": 5.24985720873495,
+       "ankle_L": 10.723815929225793
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.32479643754501053,
+       "knee_L": 5.24985720873495,
+       "ankle_L": 10.723815929225793,
+       "shoulder_L": 0.09337158565865031,
+       "elbow_L": 0.09192118958976728,
+       "wrist_L": 0.017860480192091462,
+       "knee_R": 0.07283562143912876,
+       "ankle_R": 0.027953877664961893,
+       "shoulder_R": 0.06838521316459081,
+       "elbow_R": 0.04349351582730341,
+       "wrist_R": 0.0018160296780363313
+      },
+      "torsoDeg": 0.00867264803447551,
+      "struckDeg": 2.507363845224802,
+      "chainDeg": {
+       "shank_L": 2.507363845224802,
+       "thigh_L": 0.7561789978275356,
+       "foot_L": 5.038891612964561
+      },
+      "P": [
+       223.3975405396819,
+       33.35764265161455,
+       -10.490273465432786
+      ],
+      "L_O": [
+       3.1522823956253307,
+       -2.600550838228514,
+       5.170136720353554
+      ],
+      "com": [
+       1.5627401740696802,
+       0.9939311453760751,
+       -0.004412705173757633
+      ],
+      "supportFootNs": 0.02425101213157177
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 46.9332253025089,
+      "targetDispInwardMm": 46.42765404976868,
+      "targetVelDiffMs": 1.7837366982169887,
+      "targetVelInwardMs": 1.7720844411171455,
+      "chainLandmarkMm": {
+       "knee_L": 31.52726180767164,
+       "ankle_L": 61.88758470356453
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.0046943166296807,
+       "knee_L": 31.52726180767164,
+       "ankle_L": 61.88758470356453,
+       "shoulder_L": 1.1951840912823444,
+       "elbow_L": 1.1509686851172358,
+       "wrist_L": 0.32081890043439093,
+       "knee_R": 1.854141508647191,
+       "ankle_R": 2.2213909320461815,
+       "shoulder_R": 0.6619851679422794,
+       "elbow_R": 0.5408937975565001,
+       "wrist_R": 0.10845392670121631
+      },
+      "torsoDeg": 0.0824065976968696,
+      "struckDeg": 7.393798725899705,
+      "chainDeg": {
+       "shank_L": 7.393798725899705,
+       "thigh_L": 4.440183058718332,
+       "foot_L": 11.83684624039267
+      },
+      "P": [
+       223.6027295826554,
+       20.37335917794108,
+       -15.856328105080639
+      ],
+      "L_O": [
+       6.119347522999504,
+       -4.186684124894758,
+       4.070321340056508
+      ],
+      "com": [
+       1.6257233040446666,
+       1.0012251645932864,
+       -0.008448158623954347
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 91.58198481895576,
+      "targetDispInwardMm": 90.88724764300187,
+      "targetVelDiffMs": 1.8304486132865734,
+      "targetVelInwardMs": 1.8192362592335958,
+      "chainLandmarkMm": {
+       "knee_L": 63.12129938913293,
+       "ankle_L": 120.36948854738543
+      },
+      "allLandmarkMm": {
+       "pelvis": 3.6888329469081116,
+       "knee_L": 63.12129938913293,
+       "ankle_L": 120.36948854738543,
+       "shoulder_L": 2.9257067154371788,
+       "elbow_L": 2.6201797081751472,
+       "wrist_L": 1.3249824110352992,
+       "knee_R": 4.67187313610102,
+       "ankle_R": 5.995013576796921,
+       "shoulder_R": 2.551195236033444,
+       "elbow_R": 2.4384543556640543,
+       "wrist_R": 0.6127642974068505
+      },
+      "torsoDeg": 0.31215842408784217,
+      "struckDeg": 10.564406854662069,
+      "chainDeg": {
+       "shank_L": 10.564406854662069,
+       "thigh_L": 8.469946809050821,
+       "foot_L": 9.984655452113143
+      },
+      "P": [
+       224.27164659860134,
+       2.9930196503845985,
+       -18.129389772470315
+      ],
+      "L_O": [
+       7.249106519759683,
+       -4.676053459417252,
+       2.324879492192741
+      ],
+      "com": [
+       1.7014886350540426,
+       1.0047037433640649,
+       -0.014290348389520516
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 184.52684449518173,
+      "targetDispInwardMm": 183.40137826989223,
+      "targetVelDiffMs": 1.8567932190060314,
+      "targetVelInwardMs": 1.8320437985967526,
+      "chainLandmarkMm": {
+       "knee_L": 132.14963714716632,
+       "ankle_L": 238.17004391766227
+      },
+      "allLandmarkMm": {
+       "pelvis": 13.549513475646943,
+       "knee_L": 132.14963714716632,
+       "ankle_L": 238.17004391766227,
+       "shoulder_L": 9.450982524422518,
+       "elbow_L": 5.017899706974959,
+       "wrist_L": 8.163654333625857,
+       "knee_R": 15.653670275754962,
+       "ankle_R": 3.6609333125918884,
+       "shoulder_R": 13.267745354159516,
+       "elbow_R": 12.2990025722287,
+       "wrist_R": 5.144287757290039
+      },
+      "torsoDeg": 1.976625716784501,
+      "struckDeg": 17.43120898393889,
+      "chainDeg": {
+       "shank_L": 17.43120898393889,
+       "thigh_L": 15.931813074990584,
+       "foot_L": 10.406569095067454
+      },
+      "P": [
+       225.09034046622514,
+       -33.14327967076003,
+       -20.042816776338963
+      ],
+      "L_O": [
+       7.726009585329684,
+       -4.945494773466773,
+       -5.270081929464681
+      ],
+      "com": [
+       1.8535765237199195,
+       0.993542963404719,
+       -0.027422487731165398
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 271.9442856367807,
+      "targetDispInwardMm": 269.50405282125115,
+      "targetVelDiffMs": 1.6605509222544625,
+      "targetVelInwardMs": 1.5980906226904183,
+      "chainLandmarkMm": {
+       "knee_L": 201.5750432448475,
+       "ankle_L": 346.20098178099283
+      },
+      "allLandmarkMm": {
+       "pelvis": 27.800707835624625,
+       "knee_L": 201.5750432448475,
+       "ankle_L": 346.20098178099283,
+       "shoulder_L": 19.585663583052302,
+       "elbow_L": 8.253072147798209,
+       "wrist_L": 22.489259764135305,
+       "knee_R": 28.14241561760647,
+       "ankle_R": 6.974911177341131,
+       "shoulder_R": 31.581666207130613,
+       "elbow_R": 30.661906100711896,
+       "wrist_R": 15.567527126565022
+      },
+      "torsoDeg": 5.121665898046529,
+      "struckDeg": 22.405175948985782,
+      "chainDeg": {
+       "shank_L": 22.405175948985782,
+       "thigh_L": 21.426846738823016,
+       "foot_L": 16.09907576828481
+      },
+      "P": [
+       225.05607006528373,
+       -69.38704054227472,
+       -20.784659237863863
+      ],
+      "L_O": [
+       7.052337671404081,
+       -4.984202466818536,
+       -18.822417583387058
+      ],
+      "com": [
+       2.005852041349184,
+       0.957824428303911,
+       -0.041304670432140214
+      ],
+      "supportFootNs": 0
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 120.36948854738543,
+     "maxRelevantRotationDeg": 11.83684624039267,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.9626655100612733,
+      "disp150Mm": 271.9442856367807
+     }
+    },
+    "apparentPointMassKg": 5.761394205259144,
+    "apparentPointDvMs": 1.887964803852406
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 0.003985303303823986,
+     "rotDeg": 0.005208492650892271,
+     "velMs": 0.0009756342086730646,
+     "angVelRadS": 0.021900740378515176,
+     "PNs": 0.0007429929251361318,
+     "LNms": 0.002577733301661401,
+     "pass": true
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 9,
+       "body": "shank_L",
+       "J": [
+        1.6536973919762403,
+        2.4640430220436835,
+        -10.464685301483932
+       ],
+       "H_O": [
+        6.128830507884313,
+        -3.1865268737436927,
+        0.21820930617245377
+       ]
+      }
+     ],
+     "workJ": 22.284959970639363,
+     "preKE": 375.01589203677725,
+     "postKE": 397.3008520074166,
+     "J": [
+      1.6536973919762403,
+      2.4640430220436835,
+      -10.464685301483932
+     ],
+     "H_O": [
+      6.128830507884313,
+      -3.1865268737436927,
+      0.21820930617245377
+     ]
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 1.03e-2 N·m·s/step"
+     ],
+     "ledger": {
+      "linMaxNs": 0.000044467838189598336,
+      "linCumNs": 0.00007799612315461631,
+      "linSumNormNs": 0.00018946289453468612,
+      "angMaxNms": 0.010323640933308915,
+      "angCumNms": 0.003784039691063113,
+      "angSumNormNms": 0.023088326700297913,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000044463343335275986,
+      "combinedAngMaxNms": 0.010323577435719794,
+      "posCorrMaxMm": 0.21907936725075353,
+      "angPosCorrTermMaxNms": 0.0015099593686883352
+     },
+     "secondaryFailure": null
+    },
+    "status": "NATIVE_INTEGRITY_FAILED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.141704980219462,
+      "targetDispInwardMm": 7.932800423600783,
+      "targetVelDiffMs": 1.961519960653162,
+      "targetVelInwardMs": 1.9115324881968663,
+      "chainLandmarkMm": {
+       "knee_L": 5.248922143094238,
+       "ankle_L": 10.716924831368821
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.3241193535034799,
+       "knee_L": 5.248922143094238,
+       "ankle_L": 10.716924831368821,
+       "shoulder_L": 0.09337158565865031,
+       "elbow_L": 0.09192275005257133,
+       "wrist_L": 0.01786042944169615,
+       "knee_R": 0.0728587015662581,
+       "ankle_R": 0.027941048360003426,
+       "shoulder_R": 0.0686261035586502,
+       "elbow_R": 0.04359020360629954,
+       "wrist_R": 0.0017436324458912893
+      },
+      "torsoDeg": 0.008680104770361107,
+      "struckDeg": 2.5043820299488266,
+      "chainDeg": {
+       "shank_L": 2.5043820299488266,
+       "thigh_L": 0.755410264227243,
+       "foot_L": 5.0337446491348175
+      },
+      "P": [
+       223.39779530436994,
+       33.35811666012109,
+       -10.490785763564986
+      ],
+      "L_O": [
+       3.1506303343782376,
+       -2.59910736920928,
+       5.171490160341459
+      ],
+      "com": [
+       1.56274019320865,
+       0.9939312052178964,
+       -0.0044127370256194925
+      ],
+      "supportFootNs": 0.024728959426283836
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 34.967354660884865,
+      "targetDispInwardMm": 34.81664984060692,
+      "targetVelDiffMs": 1.1023065755691737,
+      "targetVelInwardMs": 1.098869467581487,
+      "chainLandmarkMm": {
+       "knee_L": 23.708658860057806,
+       "ankle_L": 46.480202222069884
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.7241264541374347,
+       "knee_L": 23.708658860057806,
+       "ankle_L": 46.480202222069884,
+       "shoulder_L": 0.8689959846366682,
+       "elbow_L": 0.8320831941850407,
+       "wrist_L": 0.23782532709265336,
+       "knee_R": 1.505783321627493,
+       "ankle_R": 1.8699928519674185,
+       "shoulder_R": 0.44365061634212305,
+       "elbow_R": 0.3671869290136736,
+       "wrist_R": 0.08590041274199281
+      },
+      "torsoDeg": 0.06549751841782216,
+      "struckDeg": 5.208927698900029,
+      "chainDeg": {
+       "shank_L": 5.208927698900029,
+       "thigh_L": 3.328281207015572,
+       "foot_L": 8.673283756779492
+      },
+      "P": [
+       223.3978334012032,
+       18.25277346958816,
+       -10.49079037798699
+      ],
+      "L_O": [
+       3.128172057376719,
+       -2.5963057983909503,
+       4.5879739801097585
+      ],
+      "com": [
+       1.6257103569669538,
+       1.0007793768889675,
+       -0.0073698302462222405
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 59.398057777828846,
+      "targetDispInwardMm": 59.14786208383005,
+      "targetVelDiffMs": 0.9485301216054118,
+      "targetVelInwardMs": 0.9344127399769443,
+      "chainLandmarkMm": {
+       "knee_L": 41.062491045437945,
+       "ankle_L": 78.15276035265299
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.617018105106456,
+       "knee_L": 41.062491045437945,
+       "ankle_L": 78.15276035265299,
+       "shoulder_L": 1.7576636728896395,
+       "elbow_L": 1.4676946463697982,
+       "wrist_L": 0.8828377581833622,
+       "knee_R": 3.529251946544397,
+       "ankle_R": 4.47503539670099,
+       "shoulder_R": 1.6322233396901538,
+       "elbow_R": 1.5146721224226858,
+       "wrist_R": 0.45007431764745964
+      },
+      "torsoDeg": 0.2206744477788128,
+      "struckDeg": 7.06250640344079,
+      "chainDeg": {
+       "shank_L": 7.06250640344079,
+       "thigh_L": 5.539913245673852,
+       "foot_L": 7.372276983829205
+      },
+      "P": [
+       223.39773336316347,
+       0.1263417914824563,
+       -10.490795003941846
+      ],
+      "L_O": [
+       3.0385679550679487,
+       -2.5963708077606515,
+       2.6354378965167182
+      ],
+      "com": [
+       1.7012745349642036,
+       1.0033768281876183,
+       -0.010918333984082564
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 104.48599696569732,
+      "targetDispInwardMm": 103.31318058449645,
+      "targetVelDiffMs": 0.8830690579852447,
+      "targetVelInwardMs": 0.8435193819788265,
+      "chainLandmarkMm": {
+       "knee_L": 75.0390834626599,
+       "ankle_L": 134.3647517268211
+      },
+      "allLandmarkMm": {
+       "pelvis": 8.39920196122299,
+       "knee_L": 75.0390834626599,
+       "ankle_L": 134.3647517268211,
+       "shoulder_L": 5.618307528251951,
+       "elbow_L": 2.0832676916497945,
+       "wrist_L": 5.126384816379786,
+       "knee_R": 10.751962428527884,
+       "ankle_R": 1.0326309337463195,
+       "shoulder_R": 7.825451318996437,
+       "elbow_R": 7.213186512017335,
+       "wrist_R": 3.2641107409372654
+      },
+      "torsoDeg": 1.275313038899059,
+      "struckDeg": 10.163248445002747,
+      "chainDeg": {
+       "shank_L": 10.163248445002747,
+       "thigh_L": 9.021437507269187,
+       "foot_L": 4.596385755116618
+      },
+      "P": [
+       223.39776778751613,
+       -36.12654557767287,
+       -10.490826118726098
+      ],
+      "L_O": [
+       2.6630660666142796,
+       -2.5972119496621078,
+       -5.374367853491016
+      ],
+      "com": [
+       1.8524028851480774,
+       0.9901778422007943,
+       -0.018015355742581222
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 144.55879278993655,
+      "targetDispInwardMm": 141.43806376146503,
+      "targetVelDiffMs": 0.761998778668449,
+      "targetVelInwardMs": 0.6939698740575306,
+      "chainLandmarkMm": {
+       "knee_L": 107.40113467253165,
+       "ankle_L": 183.5156052625876
+      },
+      "allLandmarkMm": {
+       "pelvis": 15.811025016362134,
+       "knee_L": 107.40113467253165,
+       "ankle_L": 183.5156052625876,
+       "shoulder_L": 11.470118683025596,
+       "elbow_L": 4.762228985047923,
+       "wrist_L": 13.07265540628329,
+       "knee_R": 17.996338443634617,
+       "ankle_R": 3.9740792584746325,
+       "shoulder_R": 17.36887624190151,
+       "elbow_R": 17.22179533360127,
+       "wrist_R": 9.195569495153329
+      },
+      "torsoDeg": 3.020081180675192,
+      "struckDeg": 12.011893275308411,
+      "chainDeg": {
+       "shank_L": 12.011893275308411,
+       "thigh_L": 11.294366530402645,
+       "foot_L": 7.022655708290951
+      },
+      "P": [
+       223.39780438838005,
+       -72.37940356256067,
+       -10.49083958111368
+      ],
+      "L_O": [
+       2.028214420166841,
+       -2.595322743110359,
+       -18.84754304689684
+      ],
+      "com": [
+       2.0035310873709804,
+       0.9524538537442175,
+       -0.025112394876033423
+      ],
+      "supportFootNs": 0
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 78.15276035265299,
+     "maxRelevantRotationDeg": 8.673283756779492,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 42.55223264673663,
+    "maxOrientDeg": 3.5454600886338135,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.00004263321265181616,
+      "linCumNs": 0.00008623974065624917,
+      "linSumNormNs": 0.00019355081998737714,
+      "angMaxNms": 0.008513629998137052,
+      "angCumNms": 0.004135392043806882,
+      "angSumNormNms": 0.021310993912798518,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00004262851687025774,
+      "combinedAngMaxNms": 0.00851715798551427,
+      "posCorrMaxMm": 0.21908258804799646,
+      "angPosCorrTermMaxNms": 0.0015045766279479622
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 42.5154159032465,
+    "maxOrientDeg": 3.539545746569018,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ]
+  },
+  "TP/RH1": {
+   "key": "TP/RH1",
+   "role": "TP",
+   "body": "RH1",
+   "state": "S-TOE",
+   "fixtureStatus": "PLACED",
+   "handoffLabel": "HANDOFF_FAILED",
+   "controlStatus": "CONTROL_VALID_PRIMARY",
+   "N": {
+    "correspondence": {
+     "pass": true,
+     "onTarget": true,
+     "firstStepRegions": [
+      "shank_L.0"
+     ],
+     "witnessMm": 0.25000248041322143,
+     "normalDeg": 0.000018860476299618448,
+     "firstStepImpulseNs": 10.872081929884244,
+     "firstStepImpulse": [
+      {
+       "body": "shank_L",
+       "i": 9,
+       "J": [
+        1.6553832266509478,
+        2.4599072044739465,
+        -10.459958336839367
+       ],
+       "H_O": [
+        6.121329012084262,
+        -3.184261045910576,
+        0.2199013236557461
+       ],
+       "W": 13.22042059063696
+      }
+     ],
+     "impactorImpulse": {
+      "J": [
+       -1.6553832266509478,
+       -2.4599072044739465,
+       10.459958336839367
+      ],
+      "H": [
+       -6.121329012084262,
+       3.184261045910576,
+       -0.2199013236557461
+      ]
+     }
+    },
+    "contact": {
+     "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+     ],
+     "durationSteps": 35,
+     "postFirstStepImpulseNs": 8.302035576908162,
+     "weakChallenge": false
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.000025546321867118342,
+      "linCumNs": 0.00003270404635900088,
+      "linSumNormNs": 0.00014999438611070756,
+      "angMaxNms": 0.008525554210776306,
+      "angCumNms": 0.004159937973328595,
+      "angSumNormNms": 0.02005899660243888,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000031821996879649296,
+      "combinedAngMaxNms": 0.008530340077466694,
+      "posCorrMaxMm": 0.21541645378295363,
+      "angPosCorrTermMaxNms": 0.0014296765070027269
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.148533174750982,
+      "targetDispInwardMm": 7.938499674533861,
+      "targetVelDiffMs": 1.9635592335590828,
+      "targetVelInwardMs": 1.913277143872687,
+      "chainLandmarkMm": {
+       "knee_L": 5.247165600189515,
+       "ankle_L": 10.6918145417694
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.3468708229146927,
+       "knee_L": 5.247165600189515,
+       "ankle_L": 10.6918145417694,
+       "shoulder_L": 0.10800289676570766,
+       "elbow_L": 0.10840393933831512,
+       "wrist_L": 0.02889051758111118,
+       "knee_R": 0.054010575867064155,
+       "ankle_R": 0.03280034335291653,
+       "shoulder_R": 0.06530673556940511,
+       "elbow_R": 0.03378679181471867,
+       "wrist_R": 0.006761862451294304
+      },
+      "torsoDeg": 0.008770618370114659,
+      "struckDeg": 2.513265539305957,
+      "chainDeg": {
+       "shank_L": 2.513265539305957,
+       "thigh_L": 0.7572484391627652,
+       "foot_L": 5.012769359932332
+      },
+      "P": [
+       223.39850222210882,
+       33.06575343999565,
+       -10.483984835226973
+      ],
+      "L_O": [
+       3.14489858249525,
+       -2.6016421711470463,
+       5.170994751793159
+      ],
+      "com": [
+       1.5626722042838965,
+       0.993395303161045,
+       -0.0042890812813408796
+      ],
+      "supportFootNs": 0.022814316675066948
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 46.87673930632905,
+      "targetDispInwardMm": 46.357331527864766,
+      "targetVelDiffMs": 1.7749524817806046,
+      "targetVelInwardMs": 1.7625103249656848,
+      "chainLandmarkMm": {
+       "knee_L": 31.49684591458006,
+       "ankle_L": 61.805523220349464
+      },
+      "allLandmarkMm": {
+       "pelvis": 1.2173044784057772,
+       "knee_L": 31.49684591458006,
+       "ankle_L": 61.805523220349464,
+       "shoulder_L": 1.3636584825700047,
+       "elbow_L": 1.310703254938206,
+       "wrist_L": 0.463265698961137,
+       "knee_R": 1.6352481841420536,
+       "ankle_R": 2.3673015505482846,
+       "shoulder_R": 0.49692939723056506,
+       "elbow_R": 0.3732624570858131,
+       "wrist_R": 0.16324045293248088
+      },
+      "torsoDeg": 0.1723185066202413,
+      "struckDeg": 7.352842318923413,
+      "chainDeg": {
+       "shank_L": 7.352842318923413,
+       "thigh_L": 4.435032600625676,
+       "foot_L": 11.402046732402086
+      },
+      "P": [
+       223.56706075990198,
+       20.0128103445597,
+       -15.855937439888487
+      ],
+      "L_O": [
+       6.1209772368579705,
+       -4.193453643744175,
+       4.069822938226379
+      ],
+      "com": [
+       1.6256486683776683,
+       1.000592905887146,
+       -0.008323947401173457
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 91.66887874063192,
+      "targetDispInwardMm": 90.96241688750465,
+      "targetVelDiffMs": 1.841722064917659,
+      "targetVelInwardMs": 1.830818905528465,
+      "chainLandmarkMm": {
+       "knee_L": 63.23505261834987,
+       "ankle_L": 120.53737648579
+      },
+      "allLandmarkMm": {
+       "pelvis": 3.9406542312584065,
+       "knee_L": 63.23505261834987,
+       "ankle_L": 120.53737648579,
+       "shoulder_L": 3.5567028875152045,
+       "elbow_L": 2.8379618111555773,
+       "wrist_L": 1.870946639545948,
+       "knee_R": 4.184343168331129,
+       "ankle_R": 6.343814966832692,
+       "shoulder_R": 2.5344878277630962,
+       "elbow_R": 2.306517548112474,
+       "wrist_R": 1.1024272072125652
+      },
+      "torsoDeg": 0.5726929622191067,
+      "struckDeg": 10.492703356156207,
+      "chainDeg": {
+       "shank_L": 10.492703356156207,
+       "thigh_L": 8.460879060700947,
+       "foot_L": 9.040408193065081
+      },
+      "P": [
+       224.20283009089232,
+       2.639241121624783,
+       -18.16682112819385
+      ],
+      "L_O": [
+       7.270100268263458,
+       -4.694706303426971,
+       2.303650319000967
+      ],
+      "com": [
+       1.7013958736219874,
+       1.0039495626264237,
+       -0.014172073115111195
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 185.21924951221277,
+      "targetDispInwardMm": 184.08933734607095,
+      "targetVelDiffMs": 1.8717212910891943,
+      "targetVelInwardMs": 1.8468871459504905,
+      "chainLandmarkMm": {
+       "knee_L": 132.62561272422275,
+       "ankle_L": 239.48857536218853
+      },
+      "allLandmarkMm": {
+       "pelvis": 13.79581381059385,
+       "knee_L": 132.62561272422275,
+       "ankle_L": 239.48857536218853,
+       "shoulder_L": 12.320826505802273,
+       "elbow_L": 4.9187001476934675,
+       "wrist_L": 10.552360932367726,
+       "knee_R": 15.456790239544937,
+       "ankle_R": 4.616769556791571,
+       "shoulder_R": 15.189032432074313,
+       "elbow_R": 14.149090962908371,
+       "wrist_R": 7.416938519745579
+      },
+      "torsoDeg": 2.728464325063054,
+      "struckDeg": 17.36609101140444,
+      "chainDeg": {
+       "shank_L": 17.36609101140444,
+       "thigh_L": 15.956881108237022,
+       "foot_L": 10.471501075071467
+      },
+      "P": [
+       225.03566600098608,
+       -33.42207379338908,
+       -20.269107725466043
+      ],
+      "L_O": [
+       7.844740303169043,
+       -4.991864500461552,
+       -5.296517977839802
+      ],
+      "com": [
+       1.8534297262214228,
+       0.9925881850186796,
+       -0.02739231592205146
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 273.84651934347863,
+      "targetDispInwardMm": 271.3997009893034,
+      "targetVelDiffMs": 1.6868610865025098,
+      "targetVelInwardMs": 1.6097852274403557,
+      "chainLandmarkMm": {
+       "knee_L": 202.85270262527644,
+       "ankle_L": 349.2485403375968
+      },
+      "allLandmarkMm": {
+       "pelvis": 28.75654595044619,
+       "knee_L": 202.85270262527644,
+       "ankle_L": 349.2485403375968,
+       "shoulder_L": 25.306852240772987,
+       "elbow_L": 9.817686020069264,
+       "wrist_L": 26.7480999337634,
+       "knee_R": 27.949027348497687,
+       "ankle_R": 10.060390032233775,
+       "shoulder_R": 36.12822126627247,
+       "elbow_R": 36.47143842096854,
+       "wrist_R": 19.807123105287356
+      },
+      "torsoDeg": 6.417952666152796,
+      "struckDeg": 22.53095729098018,
+      "chainDeg": {
+       "shank_L": 22.53095729098018,
+       "thigh_L": 21.572298459810515,
+       "foot_L": 17.194457315154935
+      },
+      "P": [
+       224.94189757318495,
+       -69.52943645784855,
+       -21.259889480085295
+      ],
+      "L_O": [
+       7.299550080935211,
+       -5.046247338007782,
+       -18.885613479825132
+      ],
+      "com": [
+       2.00564046207566,
+       0.9567307043990881,
+       -0.04153661457897316
+      ],
+      "supportFootNs": 0
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 120.53737648579,
+     "maxRelevantRotationDeg": 11.402046732402086,
+     "detectable": true,
+     "older": {
+      "velChangeMs": 1.9635592335590828,
+      "disp150Mm": 273.84651934347863
+     }
+    },
+    "apparentPointMassKg": 5.759021500431767,
+    "apparentPointDvMs": 1.8878349263098149
+   },
+   "W": {
+    "permitted": true,
+    "reason": null,
+    "fidelity": {
+     "posMm": 0.004176050424575806,
+     "rotDeg": 0.005218317523196554,
+     "velMs": 0.000977233665627597,
+     "angVelRadS": 0.021884523101281673,
+     "PNs": 0.0007312506860716066,
+     "LNms": 0.0025679249394368327,
+     "pass": true
+    },
+    "injected": {
+     "bodies": [
+      {
+       "i": 9,
+       "body": "shank_L",
+       "J": [
+        1.6553832266509478,
+        2.4599072044739465,
+        -10.459958336839367
+       ],
+       "H_O": [
+        6.121329012084262,
+        -3.184261045910576,
+        0.2199013236557461
+       ]
+      }
+     ],
+     "workJ": 22.269293797399314,
+     "preKE": 374.8656415208894,
+     "postKE": 397.13493531828874,
+     "J": [
+      1.6553832266509478,
+      2.4599072044739465,
+      -10.459958336839367
+     ],
+     "H_O": [
+      6.121329012084262,
+      -3.184261045910576,
+      0.2199013236557461
+     ]
+    },
+    "mechanics": {
+     "pass": false,
+     "fails": [
+      "angular residual 1.03e-2 N·m·s/step"
+     ],
+     "ledger": {
+      "linMaxNs": 0.000032785355385925514,
+      "linCumNs": 0.00011698557512771125,
+      "linSumNormNs": 0.00019251512514565502,
+      "angMaxNms": 0.010313318583506809,
+      "angCumNms": 0.0034688937538367532,
+      "angSumNormNms": 0.022711185559722343,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.00003278637890355789,
+      "combinedAngMaxNms": 0.01031325570492706,
+      "posCorrMaxMm": 0.21951200682187885,
+      "angPosCorrTermMaxNms": 0.0015235358835702245
+     },
+     "secondaryFailure": null
+    },
+    "status": "NATIVE_INTEGRITY_FAILED",
+    "response": [
+     {
+      "n": 1,
+      "t": 0.004166666666666667,
+      "targetDispMm": 8.143853082318552,
+      "targetDispInwardMm": 7.934391432727173,
+      "targetVelDiffMs": 1.962413694072553,
+      "targetVelInwardMs": 1.9122689092692933,
+      "chainLandmarkMm": {
+       "knee_L": 5.246211287087827,
+       "ankle_L": 10.684911111744208
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.3461392368632099,
+       "knee_L": 5.246211287087827,
+       "ankle_L": 10.684911111744208,
+       "shoulder_L": 0.10812105537640355,
+       "elbow_L": 0.10840228838987653,
+       "wrist_L": 0.028992034695541315,
+       "knee_R": 0.05400366872370196,
+       "ankle_R": 0.03278109157071839,
+       "shoulder_R": 0.06554002309017336,
+       "elbow_R": 0.034050115205504806,
+       "wrist_R": 0.006879150581392622
+      },
+      "torsoDeg": 0.008766761180204148,
+      "struckDeg": 2.5102786338961907,
+      "chainDeg": {
+       "shank_L": 2.5102786338961907,
+       "thigh_L": 0.7564768834555371,
+       "foot_L": 5.007619651863093
+      },
+      "P": [
+       223.3987550983191,
+       33.066214996469014,
+       -10.484492522936153
+      ],
+      "L_O": [
+       3.1432477099182727,
+       -2.600204254641845,
+       5.172336859968097
+      ],
+      "com": [
+       1.5626722191469127,
+       0.9933953591081414,
+       -0.004289109423956468
+      ],
+      "supportFootNs": 0.023288963362574577
+     },
+     {
+      "n": 6,
+      "t": 0.025,
+      "targetDispMm": 34.8972124233519,
+      "targetDispInwardMm": 34.73818848821492,
+      "targetVelDiffMs": 1.0918997620969533,
+      "targetVelInwardMs": 1.0884312244786194,
+      "chainLandmarkMm": {
+       "knee_L": 23.665605816647627,
+       "ankle_L": 46.37819967511642
+      },
+      "allLandmarkMm": {
+       "pelvis": 0.8838867426873886,
+       "knee_L": 23.665605816647627,
+       "ankle_L": 46.37819967511642,
+       "shoulder_L": 1.0158602779000312,
+       "elbow_L": 0.9708673083891495,
+       "wrist_L": 0.3504696788195962,
+       "knee_R": 1.33188371264631,
+       "ankle_R": 1.9662151126477447,
+       "shoulder_R": 0.33067359221801823,
+       "elbow_R": 0.2517565590908115,
+       "wrist_R": 0.13532750759237722
+      },
+      "torsoDeg": 0.13016919034006602,
+      "struckDeg": 5.179922307646613,
+      "chainDeg": {
+       "shank_L": 5.179922307646613,
+       "thigh_L": 3.320692704130712,
+       "foot_L": 8.26536322591078
+      },
+      "P": [
+       223.39871915929314,
+       17.96085658877715,
+       -10.48449701766146
+      ],
+      "L_O": [
+       3.1209144026165343,
+       -2.5974328276820513,
+       4.588858482528487
+      ],
+      "com": [
+       1.6256426405197006,
+       1.000161240906685,
+       -0.007244419448625561
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 12,
+      "t": 0.05,
+      "targetDispMm": 59.38300677266719,
+      "targetDispInwardMm": 59.14573222973096,
+      "targetVelDiffMs": 0.9540197813860798,
+      "targetVelInwardMs": 0.9415142011400093,
+      "chainLandmarkMm": {
+       "knee_L": 41.09231063051509,
+       "ankle_L": 78.18551279555359
+      },
+      "allLandmarkMm": {
+       "pelvis": 2.7571848553135374,
+       "knee_L": 41.09231063051509,
+       "ankle_L": 78.18551279555359,
+       "shoulder_L": 2.2951709200722004,
+       "elbow_L": 1.671537785546562,
+       "wrist_L": 1.282098116363252,
+       "knee_R": 3.2621510119747428,
+       "ankle_R": 4.641448985042574,
+       "shoulder_R": 1.7479878957433683,
+       "elbow_R": 1.5147077506522524,
+       "wrist_R": 0.8136246400757612
+      },
+      "torsoDeg": 0.38832954204891357,
+      "struckDeg": 6.989805147937971,
+      "chainDeg": {
+       "shank_L": 6.989805147937971,
+       "thigh_L": 5.519766593688486,
+       "foot_L": 6.388404850391723
+      },
+      "P": [
+       223.39864624739886,
+       -0.16557029533428125,
+       -10.484498976329341
+      ],
+      "L_O": [
+       3.0310218849494444,
+       -2.5976972219908268,
+       2.6365086286419412
+      ],
+      "com": [
+       1.7012071079797184,
+       1.0026599106523035,
+       -0.01079078774431252
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 24,
+      "t": 0.1,
+      "targetDispMm": 104.37095614344146,
+      "targetDispInwardMm": 103.27423369100175,
+      "targetVelDiffMs": 0.8774261800616203,
+      "targetVelInwardMs": 0.8374368380744223,
+      "chainLandmarkMm": {
+       "knee_L": 74.94188446698477,
+       "ankle_L": 134.5123163703628
+      },
+      "allLandmarkMm": {
+       "pelvis": 8.529310766275888,
+       "knee_L": 74.94188446698477,
+       "ankle_L": 134.5123163703628,
+       "shoulder_L": 7.514324115575825,
+       "elbow_L": 2.326441103261383,
+       "wrist_L": 6.595264483790993,
+       "knee_R": 10.702540428989844,
+       "ankle_R": 1.369256015388606,
+       "shoulder_R": 9.055316707790025,
+       "elbow_R": 8.483065071599722,
+       "wrist_R": 4.627654290293559
+      },
+      "torsoDeg": 1.7032490604615065,
+      "struckDeg": 10.057993179492732,
+      "chainDeg": {
+       "shank_L": 10.057993179492732,
+       "thigh_L": 8.983641769552209,
+       "foot_L": 4.41858920624964
+      },
+      "P": [
+       223.3984607887268,
+       -36.4184478679414,
+       -10.484521688927337
+      ],
+      "L_O": [
+       2.6555022418888017,
+       -2.5988582501664457,
+       -5.37410921664252
+      ],
+      "com": [
+       1.8523358520873099,
+       0.9892635129752226,
+       -0.01788352917439675
+      ],
+      "supportFootNs": 0
+     },
+     {
+      "n": 36,
+      "t": 0.15,
+      "targetDispMm": 144.02225229930886,
+      "targetDispInwardMm": 140.94010103437,
+      "targetVelDiffMs": 0.7499378735847501,
+      "targetVelInwardMs": 0.6674211125289138,
+      "chainLandmarkMm": {
+       "knee_L": 106.96452530951655,
+       "ankle_L": 183.20661320234302
+      },
+      "allLandmarkMm": {
+       "pelvis": 16.27638270943134,
+       "knee_L": 106.96452530951655,
+       "ankle_L": 183.20661320234302,
+       "shoulder_L": 14.535752919066358,
+       "elbow_L": 5.974240304762792,
+       "wrist_L": 15.261119169528069,
+       "knee_R": 17.927869623906098,
+       "ankle_R": 4.364199451357358,
+       "shoulder_R": 19.727828335715692,
+       "elbow_R": 20.423384098409795,
+       "wrist_R": 11.516911346957809
+      },
+      "torsoDeg": 3.6635423563574356,
+      "struckDeg": 11.92533766258594,
+      "chainDeg": {
+       "shank_L": 11.92533766258594,
+       "thigh_L": 11.24114283862585,
+       "foot_L": 7.773700810488782
+      },
+      "P": [
+       223.3984521250963,
+       -72.67130567971468,
+       -10.484538919611833
+      ],
+      "L_O": [
+       2.021368042004048,
+       -2.59730164363237,
+       -18.848656912714766
+      ],
+      "com": [
+       2.003464990907328,
+       0.9513422213256878,
+       -0.024976304019588995
+      ],
+      "supportFootNs": 0
+     }
+    ],
+    "causal": {
+     "maxStruckChainPointMm": 78.18551279555359,
+     "maxRelevantRotationDeg": 8.26536322591078,
+     "detectable": true
+    }
+   },
+   "NW": {
+    "comparable": true,
+    "maxLandmarkMm": 42.69144084483133,
+    "maxOrientDeg": 3.5448903346345855,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "X": {
+    "triggered": true,
+    "noopRestore": {
+     "identicalToUninterrupted": true,
+     "identicalToNRun": true,
+     "steps": 36
+    },
+    "mechanics": {
+     "pass": true,
+     "fails": [],
+     "ledger": {
+      "linMaxNs": 0.000028489422898174393,
+      "linCumNs": 0.000059061958707674645,
+      "linSumNormNs": 0.00011532148315174934,
+      "angMaxNms": 0.008525554210776306,
+      "angCumNms": 0.0036867520244679573,
+      "angSumNormNms": 0.020933538524296632,
+      "energyResPlusJ": 0,
+      "energyResPlusHorizonJ": 0,
+      "combinedEnergyResPlusJ": 0,
+      "combinedLinMaxNs": 0.000028461467334874484,
+      "combinedAngMaxNms": 0.008530340077466694,
+      "posCorrMaxMm": 0.21949583505105347,
+      "angPosCorrTermMaxNms": 0.001520464869294825
+     },
+     "secondaryFailure": null
+    },
+    "status": "PRIMARY_MECHANICS_VALID"
+   },
+   "NX": {
+    "comparable": true,
+    "maxLandmarkMm": 42.654492264915085,
+    "maxOrientDeg": 3.539020138014435,
+    "sameSupport": true,
+    "equivalent": false
+   },
+   "status": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ]
+  }
+ },
+ "notes": []
+}

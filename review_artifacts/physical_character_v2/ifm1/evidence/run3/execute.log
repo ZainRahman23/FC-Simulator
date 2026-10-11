@@ -1,0 +1,153 @@
+02:10:01 IFM-1 execution — commit 21397097a45bebb16d13d7794688910652d046e8 — status 0 changed
+02:10:02 ib_verify before: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+R0 S-FLAT control(SW) C0: RAN · steps 36 · hash f204f1fcb96ca45f · R ff09161511006fed
+R0 S-TOE control(TP) C0: RAN · steps 36 · hash ceed5ca3be5cdce4 · R 022c353b5b2fb68b
+R0 S-FLAT control(PL) C0: RAN · steps 36 · hash cf1a953968d78aff · R ff09161511006fed
+R0 S-FLAT control(SH) C0: RAN · steps 36 · hash 85b60950273805a2 · R ff09161511006fed
+RH1 S-FLAT control(SW) C0: RAN · steps 36 · hash de04e11ede5a322a · R 397a4bf0ac47c8c5
+RH1 S-TOE control(TP) C0: RAN · steps 36 · hash 7dd00e976f2a7015 · R ecb202a14e21626b
+RH1 S-FLAT control(PL) C0: RAN · steps 36 · hash 27d197dbe169c30b · R 397a4bf0ac47c8c5
+RH1 S-FLAT control(SH) C0: RAN · steps 36 · hash 0d04b6e68dbdf332 · R 397a4bf0ac47c8c5
+R0 S-FLAT SW N: RAN · steps 36 · hash ed78c83454d6560a · R 870b440776783735
+RH1 S-FLAT SW N: RAN · steps 36 · hash 97c01901a1380203 · R ea148417307df9c2
+R0 S-FLAT PL N: RAN · steps 36 · hash 67126d0587740dc1 · R 8a18c095ea08c693
+RH1 S-FLAT PL N: RAN · steps 36 · hash 4b70789f94e0a732 · R 69306536891c7576
+R0 S-FLAT SH N: RAN · steps 36 · hash 97d7cf46a1626a12 · R 52ece574cb0972ab
+RH1 S-FLAT SH N: RAN · steps 36 · hash 01d0d73f08b1954c · R e2097f8c3a01c62c
+R0 S-TOE TP N: RAN · steps 36 · hash 44be9b7e3e0b1a13 · R 206ed80c394c21d7
+RH1 S-TOE TP N: RAN · steps 36 · hash 2d02dd07ea163549 · R b7625c9c8e7c7f59
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NOT_RUN · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+R0 S-FLAT PL W: RAN · steps 36 · hash 91ae9d8928f60d70 · R a318ce396e9d6310
+RH1 S-FLAT PL W: RAN · steps 36 · hash 9f98c24517215c36 · R ae9d42b0322b43d8
+R0 S-FLAT SH W: RAN · steps 36 · hash 75fff229b2660209 · R 565e74e1df4fb0f5
+RH1 S-FLAT SH W: RAN · steps 36 · hash 4ce922b74b6b79ee · R 4e8a9224c91ef7a6
+R0 S-TOE TP W: RAN · steps 36 · hash 40b14a32a86ca1c5 · R 06b24d2f1d6634b6
+RH1 S-TOE TP W: RAN · steps 36 · hash 26cf71c927b45eb9 · R c582a664d6fa56d0
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:PRIMARY_MECHANICS_VALID · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X NOT_RUN (continuation necessity unresolved)
+R0 S-FLAT PL X: RAN · steps 36 · hash e355125d3990ac27 · R 458bb35a2e5d037f · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+RH1 S-FLAT PL X: RAN · steps 36 · hash 4c3dfa4f4369ba7c · R 820c677de9b00eb5 · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+R0 S-FLAT SH X: RAN · steps 36 · hash b12ab55fcd3a6b86 · R 3077f016221c568c · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+RH1 S-FLAT SH X: RAN · steps 36 · hash 433a4915c485ce0a · R 5cc08e7a06ab246c · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+R0 S-TOE TP X: RAN · steps 36 · hash 0485009894f99c7e · R 94c34ada1608f625 · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+RH1 S-TOE TP X: RAN · steps 36 · hash ca4a42995a4e45d9 · R c5fc94e736e2054a · no-op restore {"identicalToUninterrupted":true,"identicalToNRun":true,"steps":36}
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:PRIMARY_MECHANICS_VALID · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X PRIMARY_MECHANICS_VALID
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X PRIMARY_MECHANICS_VALID
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+R0 S-FLAT control(SW) C0: RAN · steps 36 · hash f204f1fcb96ca45f · R ff09161511006fed
+R0 S-TOE control(TP) C0: RAN · steps 36 · hash ceed5ca3be5cdce4 · R 022c353b5b2fb68b
+RH1 S-FLAT control(SW) C0: RAN · steps 36 · hash de04e11ede5a322a · R 397a4bf0ac47c8c5
+RH1 S-TOE control(TP) C0: RAN · steps 36 · hash 7dd00e976f2a7015 · R ecb202a14e21626b
+R0 S-FLAT SW N: RAN · steps 36 · hash ed78c83454d6560a · R 870b440776783735
+RH1 S-FLAT SW N: RAN · steps 36 · hash 97c01901a1380203 · R ea148417307df9c2
+R0 S-FLAT PL N: RAN · steps 36 · hash 67126d0587740dc1 · R 8a18c095ea08c693
+R0 S-FLAT PL W: RAN · steps 36 · hash 91ae9d8928f60d70 · R a318ce396e9d6310
+RH1 S-FLAT PL N: RAN · steps 36 · hash 4b70789f94e0a732 · R 69306536891c7576
+RH1 S-FLAT PL W: RAN · steps 36 · hash 9f98c24517215c36 · R ae9d42b0322b43d8
+R0 S-FLAT SH N: RAN · steps 36 · hash 97d7cf46a1626a12 · R 52ece574cb0972ab
+R0 S-FLAT SH W: RAN · steps 36 · hash 75fff229b2660209 · R 565e74e1df4fb0f5
+RH1 S-FLAT SH N: RAN · steps 36 · hash 01d0d73f08b1954c · R e2097f8c3a01c62c
+RH1 S-FLAT SH W: RAN · steps 36 · hash 4ce922b74b6b79ee · R 4e8a9224c91ef7a6
+R0 S-TOE TP N: RAN · steps 36 · hash 44be9b7e3e0b1a13 · R 206ed80c394c21d7
+R0 S-TOE TP W: RAN · steps 36 · hash 40b14a32a86ca1c5 · R 06b24d2f1d6634b6
+RH1 S-TOE TP N: RAN · steps 36 · hash 2d02dd07ea163549 · R b7625c9c8e7c7f59
+RH1 S-TOE TP W: RAN · steps 36 · hash 26cf71c927b45eb9 · R c582a664d6fa56d0
+W_TP_RH1: RAN 26cf71c927b45eb9
+N_TP_RH1: RAN 2d02dd07ea163549
+W_TP_R0: RAN 40b14a32a86ca1c5
+N_TP_R0: RAN 44be9b7e3e0b1a13
+W_SH_RH1: RAN 4ce922b74b6b79ee
+N_SH_RH1: RAN 01d0d73f08b1954c
+W_SH_R0: RAN 75fff229b2660209
+N_SH_R0: RAN 97d7cf46a1626a12
+W_PL_RH1: RAN 9f98c24517215c36
+N_PL_RH1: RAN 4b70789f94e0a732
+W_PL_R0: RAN 91ae9d8928f60d70
+N_PL_R0: RAN 67126d0587740dc1
+N_SW_RH1: RAN 97c01901a1380203
+N_SW_R0: RAN ed78c83454d6560a
+C0_RH1_S-TOE: RAN 7dd00e976f2a7015
+C0_RH1_S-FLAT: RAN de04e11ede5a322a
+C0_R0_S-TOE: RAN ceed5ca3be5cdce4
+C0_R0_S-FLAT: RAN f204f1fcb96ca45f
+C0_R0_S-FLAT: fresh ×2 identical · batch identical · 36 steps · f204f1fcb96ca45f
+C0_R0_S-TOE: fresh ×2 identical · batch identical · 36 steps · ceed5ca3be5cdce4
+C0_RH1_S-FLAT: fresh ×2 identical · batch identical · 36 steps · de04e11ede5a322a
+C0_RH1_S-TOE: fresh ×2 identical · batch identical · 36 steps · 7dd00e976f2a7015
+N_SW_R0: fresh ×2 identical · batch identical · 36 steps · ed78c83454d6560a
+N_SW_RH1: fresh ×2 identical · batch identical · 36 steps · 97c01901a1380203
+N_PL_R0: fresh ×2 identical · batch identical · 36 steps · 67126d0587740dc1
+W_PL_R0: fresh ×2 identical · batch identical · 36 steps · 91ae9d8928f60d70
+N_PL_RH1: fresh ×2 identical · batch identical · 36 steps · 4b70789f94e0a732
+W_PL_RH1: fresh ×2 identical · batch identical · 36 steps · 9f98c24517215c36
+N_SH_R0: fresh ×2 identical · batch identical · 36 steps · 97d7cf46a1626a12
+W_SH_R0: fresh ×2 identical · batch identical · 36 steps · 75fff229b2660209
+N_SH_RH1: fresh ×2 identical · batch identical · 36 steps · 01d0d73f08b1954c
+W_SH_RH1: fresh ×2 identical · batch identical · 36 steps · 4ce922b74b6b79ee
+N_TP_R0: fresh ×2 identical · batch identical · 36 steps · 44be9b7e3e0b1a13
+W_TP_R0: fresh ×2 identical · batch identical · 36 steps · 40b14a32a86ca1c5
+N_TP_RH1: fresh ×2 identical · batch identical · 36 steps · 2d02dd07ea163549
+W_TP_RH1: fresh ×2 identical · batch identical · 36 steps · 26cf71c927b45eb9
+DETERMINISM: all identical
+C0_R0_S-FLAT: step 0.602 / 0.957 / 2.054 ms (Jolt 0.289), event 150 ms 22.73 ms, construction 5.5 ms, state = correctness run true
+C0_R0_S-TOE: step 0.500 / 0.791 / 1.304 ms (Jolt 0.266), event 150 ms 18.86 ms, construction 4.7 ms, state = correctness run true
+C0_RH1_S-FLAT: step 0.503 / 1.393 / 12.607 ms (Jolt 0.278), event 150 ms 18.83 ms, construction 4.6 ms, state = correctness run true
+C0_RH1_S-TOE: step 0.476 / 0.662 / 0.846 ms (Jolt 0.256), event 150 ms 17.56 ms, construction 4.2 ms, state = correctness run true
+N_SW_R0: step 0.497 / 0.698 / 2.725 ms (Jolt 0.280), event 150 ms 18.48 ms, construction 4.2 ms, state = correctness run true
+N_SW_RH1: step 0.494 / 0.620 / 0.841 ms (Jolt 0.278), event 150 ms 18.25 ms, construction 3.9 ms, state = correctness run true
+N_PL_R0: step 0.497 / 0.633 / 1.366 ms (Jolt 0.282), event 150 ms 18.36 ms, construction 4.1 ms, state = correctness run true
+W_PL_R0: step 0.482 / 0.614 / 0.827 ms (Jolt 0.270), event 150 ms 17.79 ms, construction 3.8 ms, state = correctness run true
+N_PL_RH1: step 0.495 / 0.739 / 2.635 ms (Jolt 0.282), event 150 ms 18.21 ms, construction 3.9 ms, state = correctness run true
+W_PL_RH1: step 0.481 / 0.630 / 0.976 ms (Jolt 0.268), event 150 ms 17.97 ms, construction 4.0 ms, state = correctness run true
+N_SH_R0: step 0.492 / 0.645 / 0.851 ms (Jolt 0.279), event 150 ms 18.40 ms, construction 3.9 ms, state = correctness run true
+W_SH_R0: step 0.496 / 0.755 / 3.080 ms (Jolt 0.279), event 150 ms 18.48 ms, construction 3.9 ms, state = correctness run true
+N_SH_RH1: step 0.491 / 0.631 / 0.894 ms (Jolt 0.278), event 150 ms 18.17 ms, construction 3.8 ms, state = correctness run true
+W_SH_RH1: step 0.491 / 0.638 / 1.015 ms (Jolt 0.278), event 150 ms 18.24 ms, construction 3.8 ms, state = correctness run true
+N_TP_R0: step 0.487 / 1.056 / 2.523 ms (Jolt 0.265), event 150 ms 18.40 ms, construction 4.2 ms, state = correctness run true
+W_TP_R0: step 0.468 / 0.616 / 1.242 ms (Jolt 0.254), event 150 ms 17.40 ms, construction 3.7 ms, state = correctness run true
+N_TP_RH1: step 0.475 / 1.265 / 6.847 ms (Jolt 0.259), event 150 ms 17.72 ms, construction 3.9 ms, state = correctness run true
+W_TP_RH1: step 0.466 / 0.616 / 0.864 ms (Jolt 0.253), event 150 ms 17.36 ms, construction 3.8 ms, state = correctness run true
+02:10:27 ib_verify after: ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)
+C0 R0/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 R0/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+C0 RH1/S-FLAT: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post FAIL · contract/PR-2 pre pass]
+C0 RH1/S-TOE: CONTROL_VALID_PRIMARY · HANDOFF_FAILED [handoff readings: frozen FAIL · contract/PR-2 post pass · contract/PR-2 pre pass]
+SW/R0: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.205 N·s on shank_R.0
+SW/RH1: NATIVE_INTEGRITY_FAILED · HANDOFF_FAILED · VISUAL_PENDING · first-step J 9.206 N·s on shank_R.0
+PL/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.993 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+PL/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:PRIMARY_MECHANICS_VALID · SECONDARY_FAILURE_AT(120.8 ms) · VISUAL_PENDING · first-step J 12.996 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+SH/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.941 N·s on upperArm_L.0 · X PRIMARY_MECHANICS_VALID
+SH/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:WRENCH_REPLAY_NOT_STATE_MATCHED · VISUAL_PENDING · first-step J 18.964 N·s on upperArm_L.0 · X PRIMARY_MECHANICS_VALID
+TP/R0: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.877 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+TP/RH1: PRIMARY_MECHANICS_VALID · HANDOFF_FAILED · W:NATIVE_INTEGRITY_FAILED · VISUAL_PENDING · first-step J 10.872 N·s on shank_L.0 · X PRIMARY_MECHANICS_VALID
+02:10:27 DONE

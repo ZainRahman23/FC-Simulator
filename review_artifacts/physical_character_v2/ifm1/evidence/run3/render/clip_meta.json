@@ -1,0 +1,1369 @@
+{
+ "tool": "ifm1_clip_prep.mjs",
+ "note": "post-freeze presentation tooling (prereg §11); reads run records only",
+ "renderRule": "MC-1 §2(4) (record_hinged/RH1_PREREG.md, 50eae23a)",
+ "worldToLocal": {
+  "subtract": [
+   48,
+   0,
+   -36
+  ],
+  "frame": "anim3d world (x = pitch x, y up, z = −pitch y) minus this offset; one transform for both states and both bodies"
+ },
+ "fps": 60,
+ "leadInMs": 250,
+ "h": 0.004166666666666667,
+ "meshWeights": {
+  "root": {
+   "vertexWeightShare": 0,
+   "driven": "root (τ0 rotation, authoritative mover)"
+  },
+  "pelvis": {
+   "vertexWeightShare": 0.029756,
+   "driven": "V2 body pelvis"
+  },
+  "spine": {
+   "vertexWeightShare": 0.001021,
+   "driven": "V2 body abdomen"
+  },
+  "chest": {
+   "vertexWeightShare": 0.026684,
+   "driven": "V2 body thorax"
+  },
+  "neck": {
+   "vertexWeightShare": 0.004628,
+   "driven": "held τ0 local rotation"
+  },
+  "head": {
+   "vertexWeightShare": 0.704037,
+   "driven": "V2 body head"
+  },
+  "hair": {
+   "vertexWeightShare": 0,
+   "driven": "held τ0 local rotation"
+  },
+  "clavicle_R": {
+   "vertexWeightShare": 0.000191,
+   "driven": "held τ0 local rotation"
+  },
+  "upperArm_R": {
+   "vertexWeightShare": 0.008629,
+   "driven": "V2 body upperArm_R"
+  },
+  "foreArm_R": {
+   "vertexWeightShare": 0.007853,
+   "driven": "V2 body forearm_R"
+  },
+  "hand_R": {
+   "vertexWeightShare": 0.037173,
+   "driven": "held τ0 local rotation"
+  },
+  "clavicle_L": {
+   "vertexWeightShare": 0.000203,
+   "driven": "held τ0 local rotation"
+  },
+  "upperArm_L": {
+   "vertexWeightShare": 0.008629,
+   "driven": "V2 body upperArm_L"
+  },
+  "foreArm_L": {
+   "vertexWeightShare": 0.007853,
+   "driven": "V2 body forearm_L"
+  },
+  "hand_L": {
+   "vertexWeightShare": 0.037173,
+   "driven": "held τ0 local rotation"
+  },
+  "thigh_R": {
+   "vertexWeightShare": 0.032311,
+   "driven": "V2 body thigh_R"
+  },
+  "shin_R": {
+   "vertexWeightShare": 0.015152,
+   "driven": "V2 body shank_R"
+  },
+  "foot_R": {
+   "vertexWeightShare": 0.010464,
+   "driven": "V2 body foot_R"
+  },
+  "toe_R": {
+   "vertexWeightShare": 0.002622,
+   "driven": "held τ0 local rotation"
+  },
+  "thigh_L": {
+   "vertexWeightShare": 0.037381,
+   "driven": "V2 body thigh_L"
+  },
+  "shin_L": {
+   "vertexWeightShare": 0.015152,
+   "driven": "V2 body shank_L"
+  },
+  "foot_L": {
+   "vertexWeightShare": 0.010464,
+   "driven": "V2 body foot_L"
+  },
+  "toe_L": {
+   "vertexWeightShare": 0.002622,
+   "driven": "held τ0 local rotation"
+  }
+ },
+ "states": {
+  "S-FLAT": {
+   "tMid": 3.3269575412338144,
+   "run1VsFixtureJointsM": 0.0000022787081498661476,
+   "run1RigChainResidualM": 0.08133387135456363,
+   "tau0": {
+    "joint": [
+     [
+      48.980873107910156,
+      0,
+      -36
+     ],
+     [
+      48.980873107910156,
+      0.8417489528656006,
+      -35.984619140625
+     ],
+     [
+      48.99127197265625,
+      0.9486876726150513,
+      -35.98476028442383
+     ],
+     [
+      49.0196647644043,
+      1.161680817604065,
+      -35.982826232910156
+     ],
+     [
+      49.06356430053711,
+      1.4084581136703491,
+      -35.97787857055664
+     ],
+     [
+      49.07686996459961,
+      1.4995396137237549,
+      -35.9768180847168
+     ],
+     [
+      49.0802001953125,
+      1.63150954246521,
+      -35.97647476196289
+     ],
+     [
+      49.06678009033203,
+      1.3726433515548706,
+      -36.034786224365234
+     ],
+     [
+      49.09102249145508,
+      1.372109293937683,
+      -36.22322463989258
+     ],
+     [
+      48.89684295654297,
+      1.1339397430419922,
+      -36.28174591064453
+     ],
+     [
+      49.143802642822266,
+      1.022114634513855,
+      -36.22988510131836
+     ],
+     [
+      49.04780578613281,
+      1.3737651109695435,
+      -35.92238235473633
+     ],
+     [
+      49.02356719970703,
+      1.374299168586731,
+      -35.73394012451172
+     ],
+     [
+      48.90690231323242,
+      1.0859711170196533,
+      -35.70060348510742
+     ],
+     [
+      49.17930221557617,
+      1.0418184995651245,
+      -35.694847106933594
+     ],
+     [
+      48.996253967285156,
+      0.8400503396987915,
+      -36.13632583618164
+     ],
+     [
+      49.022254943847656,
+      0.40658411383628845,
+      -36.1119384765625
+     ],
+     [
+      48.632137298583984,
+      0.3597133159637451,
+      -36.17947769165039
+     ],
+     [
+      48.58469009399414,
+      0.17669206857681274,
+      -36.1884880065918
+     ],
+     [
+      48.965492248535156,
+      0.8434475064277649,
+      -35.832908630371094
+     ],
+     [
+      49.134742736816406,
+      0.44526007771492004,
+      -35.87723922729492
+     ],
+     [
+      48.97832489013672,
+      0.08799999952316284,
+      -35.959999084472656
+     ],
+     [
+      49.15747833251953,
+      0.03099999949336052,
+      -35.93800354003906
+     ]
+    ],
+    "tip": [
+     [
+      48.980873107910156,
+      0.921615,
+      -36
+     ],
+     [
+      48.99127046665313,
+      0.948687591420412,
+      -35.98476241152799
+     ],
+     [
+      49.019666738798705,
+      1.1616805816839932,
+      -35.982823702436605
+     ],
+     [
+      49.0635652549475,
+      1.4084585625867247,
+      -35.97787842474035
+     ],
+     [
+      49.076869579662535,
+      1.4995393342877625,
+      -35.97682027027788
+     ],
+     [
+      49.08019804001358,
+      1.6315092118425287,
+      -35.97647428442401
+     ],
+     [
+      49.0802001953125,
+      1.63150954246521,
+      -35.97647476196289
+     ],
+     [
+      49.091020278485864,
+      1.372109334801574,
+      -36.223227797137795
+     ],
+     [
+      48.89684267259025,
+      1.1339394811136723,
+      -36.281743371756164
+     ],
+     [
+      49.143805129979135,
+      1.0221144363808632,
+      -36.22988434909415
+     ],
+     [
+      49.2700203246995,
+      0.9877439197720971,
+      -36.13029229138947
+     ],
+     [
+      49.02356559797898,
+      1.37429912772284,
+      -35.73394078196377
+     ],
+     [
+      48.90690289580822,
+      1.0859707716950178,
+      -35.700604262241704
+     ],
+     [
+      49.17930318687058,
+      1.0418184455599784,
+      -35.694846689630154
+     ],
+     [
+      49.32812245920845,
+      1.0408436559617378,
+      -35.7647224438431
+     ],
+     [
+      49.022254652103,
+      0.40658381869852545,
+      -36.11193640763968
+     ],
+     [
+      48.63213695855033,
+      0.35971326613749566,
+      -36.17947817480746
+     ],
+     [
+      48.58468975920487,
+      0.17669222408962207,
+      -36.18848878152299
+     ],
+     [
+      48.568833710199954,
+      0.08145642331357332,
+      -36.19110138663738
+     ],
+     [
+      49.134741587052346,
+      0.4452597911953926,
+      -35.87724054942876
+     ],
+     [
+      48.97832554917276,
+      0.08799960290062431,
+      -35.959998746461125
+     ],
+     [
+      49.157479318096804,
+      0.031000047411821434,
+      -35.93800168698654
+     ],
+     [
+      49.25146716168485,
+      0.011999941007164155,
+      -35.92646316306962
+     ]
+    ]
+   }
+  },
+  "S-TOE": {
+   "tMid": 3.508699687721697,
+   "run1VsFixtureJointsM": 0.0000030706476061414037,
+   "run1RigChainResidualM": 0.026716552365897515,
+   "tau0": {
+    "joint": [
+     [
+      49.526100158691406,
+      0,
+      -36
+     ],
+     [
+      49.526100158691406,
+      0.8952651619911194,
+      -35.99559020996094
+     ],
+     [
+      49.54358673095703,
+      1.000988245010376,
+      -36.00339889526367
+     ],
+     [
+      49.57610321044922,
+      1.2132710218429565,
+      -36.010799407958984
+     ],
+     [
+      49.61037826538086,
+      1.4615960121154785,
+      -36.014060974121094
+     ],
+     [
+      49.622074127197266,
+      1.552903652191162,
+      -36.01442337036133
+     ],
+     [
+      49.627376556396484,
+      1.6848028898239136,
+      -36.013118743896484
+     ],
+     [
+      49.60253143310547,
+      1.4257804155349731,
+      -36.070518493652344
+     ],
+     [
+      49.578163146972656,
+      1.4266693592071533,
+      -36.258941650390625
+     ],
+     [
+      49.3467903137207,
+      1.2168647050857544,
+      -36.27638626098633
+     ],
+     [
+      49.539398193359375,
+      1.021241307258606,
+      -36.30500411987305
+     ],
+     [
+      49.608428955078125,
+      1.4264616966247559,
+      -35.9566764831543
+     ],
+     [
+      49.63279724121094,
+      1.4255727529525757,
+      -35.76824951171875
+     ],
+     [
+      49.58194351196289,
+      1.1187111139297485,
+      -35.735015869140625
+     ],
+     [
+      49.837615966796875,
+      1.1965913772583008,
+      -35.8039436340332
+     ],
+     [
+      49.52083969116211,
+      0.8849079012870789,
+      -36.14764404296875
+     ],
+     [
+      49.78498458862305,
+      0.5442716479301453,
+      -36.08969497680664
+     ],
+     [
+      49.56838607788086,
+      0.2138604372739792,
+      -36.03617477416992
+     ],
+     [
+      49.7071418762207,
+      0.08558868616819382,
+      -36.025108337402344
+     ],
+     [
+      49.5313606262207,
+      0.9056224226951599,
+      -35.84354019165039
+     ],
+     [
+      49.34930419921875,
+      0.5136886239051819,
+      -35.89259719848633
+     ],
+     [
+      49.09429168701172,
+      0.21187204122543335,
+      -35.945762634277344
+     ],
+     [
+      49.158729553222656,
+      0.03406689316034317,
+      -35.93785095214844
+     ]
+    ],
+    "tip": [
+     [
+      49.526100158691406,
+      0.921615,
+      -36
+     ],
+     [
+      49.54358489372253,
+      1.0009881162961125,
+      -36.003396590773896
+     ],
+     [
+      49.57610323788822,
+      1.21327077267766,
+      -36.0108013357515
+     ],
+     [
+      49.610378592099266,
+      1.4615965121414662,
+      -36.01406093431169
+     ],
+     [
+      49.62207373407629,
+      1.5529033182210923,
+      -36.014421905664705
+     ],
+     [
+      49.62737812686085,
+      1.68480261553884,
+      -36.013119764526465
+     ],
+     [
+      49.627376556396484,
+      1.6848028898239136,
+      -36.013118743896484
+     ],
+     [
+      49.578160978256314,
+      1.4266694046182,
+      -36.25894192444056
+     ],
+     [
+      49.34679191522729,
+      1.2168644106265307,
+      -36.276387148551756
+     ],
+     [
+      49.53939659288597,
+      1.0212409782953262,
+      -36.305004611573935
+     ],
+     [
+      49.66526540940645,
+      0.9315681276847703,
+      -36.24890473142105
+     ],
+     [
+      49.63279940992728,
+      1.425572707541529,
+      -35.76825305236608
+     ],
+     [
+      49.58194281526127,
+      1.1187108227261304,
+      -35.73501280338594
+     ],
+     [
+      49.8376159781599,
+      1.1965914715194703,
+      -35.80394390690255
+     ],
+     [
+      49.94662947789214,
+      1.2628106871928415,
+      -35.90768385729609
+     ],
+     [
+      49.78498503866196,
+      0.5442713881909848,
+      -36.0896948643966
+     ],
+     [
+      49.56838752572739,
+      0.21386007316553596,
+      -36.036174619041084
+     ],
+     [
+      49.70714163975011,
+      0.08558880466477692,
+      -36.02510804893204
+     ],
+     [
+      49.78956213177734,
+      0.035630647597027415,
+      -36.01884902843103
+     ],
+     [
+      49.349302353217304,
+      0.5136883692002296,
+      -35.89259717273921
+     ],
+     [
+      49.094293473158956,
+      0.21187168993878364,
+      -35.94576293892404
+     ],
+     [
+      49.1587275212854,
+      0.03406704945781003,
+      -35.93785090841467
+     ],
+     [
+      49.251919833516794,
+      0.01142339921200888,
+      -35.92640862481475
+     ]
+    ]
+   }
+  }
+ },
+ "clips": [
+  {
+   "id": "C0_R0_S-FLAT",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "C0",
+   "role": null,
+   "source": "C0_R0_S-FLAT.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "f204f1fcb96ca45f",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "CONTROL_VALID_PRIMARY",
+    "HANDOFF_FAILED"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "C0_R0_S-TOE",
+   "body": "R0",
+   "state": "S-TOE",
+   "mode": "C0",
+   "role": null,
+   "source": "C0_R0_S-TOE.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "ceed5ca3be5cdce4",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "CONTROL_VALID_PRIMARY",
+    "HANDOFF_FAILED"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.031027554829186305,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.0372530943807321,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "C0_RH1_S-FLAT",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "C0",
+   "role": null,
+   "source": "C0_RH1_S-FLAT.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "de04e11ede5a322a",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "CONTROL_VALID_PRIMARY",
+    "HANDOFF_FAILED"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "C0_RH1_S-TOE",
+   "body": "RH1",
+   "state": "S-TOE",
+   "mode": "C0",
+   "role": null,
+   "source": "C0_RH1_S-TOE.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "7dd00e976f2a7015",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "CONTROL_VALID_PRIMARY",
+    "HANDOFF_FAILED"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.019839981920835484,
+    "maxJointBone": "toe_L",
+    "maxTipM": 0.026867870248988845,
+    "maxTipBone": "toe_L"
+   }
+  },
+  {
+   "id": "N_SW_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "SW",
+   "source": "N_SW_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "ed78c83454d6560a",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "NATIVE_INTEGRITY_FAILED",
+    "HANDOFF_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "N_SW_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "SW",
+   "source": "N_SW_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "97c01901a1380203",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "NATIVE_INTEGRITY_FAILED",
+    "HANDOFF_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "N_PL_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "PL",
+   "source": "N_PL_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "67126d0587740dc1",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": {
+    "n": 29,
+    "t": 0.12083333333333333,
+    "subsystem": [
+     "angular ledger"
+    ]
+   },
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "W_PL_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "W",
+   "role": "PL",
+   "source": "W_PL_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "91ae9d8928f60d70",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "X_PL_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "X",
+   "role": "PL",
+   "source": "X_PL_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "e355125d3990ac27",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "N_PL_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "PL",
+   "source": "N_PL_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "4b70789f94e0a732",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": {
+    "n": 29,
+    "t": 0.12083333333333333,
+    "subsystem": [
+     "angular ledger"
+    ]
+   },
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:PRIMARY_MECHANICS_VALID",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "W_PL_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "W",
+   "role": "PL",
+   "source": "W_PL_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "9f98c24517215c36",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:PRIMARY_MECHANICS_VALID",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "X_PL_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "X",
+   "role": "PL",
+   "source": "X_PL_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "4c3dfa4f4369ba7c",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:PRIMARY_MECHANICS_VALID",
+    "SECONDARY_FAILURE_AT(120.8 ms)",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "N_SH_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "SH",
+   "source": "N_SH_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "97d7cf46a1626a12",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "W_SH_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "W",
+   "role": "SH",
+   "source": "W_SH_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "75fff229b2660209",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "X_SH_R0",
+   "body": "R0",
+   "state": "S-FLAT",
+   "mode": "X",
+   "role": "SH",
+   "source": "X_SH_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "b12ab55fcd3a6b86",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.018121989248217066,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.02173866244994416,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "N_SH_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "N",
+   "role": "SH",
+   "source": "N_SH_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "01d0d73f08b1954c",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "W_SH_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "W",
+   "role": "SH",
+   "source": "W_SH_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "4ce922b74b6b79ee",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "X_SH_RH1",
+   "body": "RH1",
+   "state": "S-FLAT",
+   "mode": "X",
+   "role": "SH",
+   "source": "X_SH_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "433a4915c485ce0a",
+   "healthyControlUntilMs": 66.66666666666667,
+   "healthyReason": "C0 SnapshotTone reference truncated at 66.7 ms (ankle_L.df)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:WRENCH_REPLAY_NOT_STATE_MATCHED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.00818833583098891,
+    "maxJointBone": "foreArm_L",
+    "maxTipM": 0.008187819464814472,
+    "maxTipBone": "upperArm_L"
+   }
+  },
+  {
+   "id": "N_TP_R0",
+   "body": "R0",
+   "state": "S-TOE",
+   "mode": "N",
+   "role": "TP",
+   "source": "N_TP_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "44be9b7e3e0b1a13",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.031027554829186305,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.0372530943807321,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "W_TP_R0",
+   "body": "R0",
+   "state": "S-TOE",
+   "mode": "W",
+   "role": "TP",
+   "source": "W_TP_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "40b14a32a86ca1c5",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.031027554829186305,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.0372530943807321,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "X_TP_R0",
+   "body": "R0",
+   "state": "S-TOE",
+   "mode": "X",
+   "role": "TP",
+   "source": "X_TP_R0.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "0485009894f99c7e",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.031027554829186305,
+    "maxJointBone": "hand_R",
+    "maxTipM": 0.0372530943807321,
+    "maxTipBone": "hand_R"
+   }
+  },
+  {
+   "id": "N_TP_RH1",
+   "body": "RH1",
+   "state": "S-TOE",
+   "mode": "N",
+   "role": "TP",
+   "source": "N_TP_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "2d02dd07ea163549",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.019839981920835484,
+    "maxJointBone": "toe_L",
+    "maxTipM": 0.026867870248988845,
+    "maxTipBone": "toe_L"
+   }
+  },
+  {
+   "id": "W_TP_RH1",
+   "body": "RH1",
+   "state": "S-TOE",
+   "mode": "W",
+   "role": "TP",
+   "source": "W_TP_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "26cf71c927b45eb9",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.019839981920835484,
+    "maxJointBone": "toe_L",
+    "maxTipM": 0.026867870248988845,
+    "maxTipBone": "toe_L"
+   }
+  },
+  {
+   "id": "X_TP_RH1",
+   "body": "RH1",
+   "state": "S-TOE",
+   "mode": "X",
+   "role": "TP",
+   "source": "X_TP_RH1.json.gz",
+   "status": "RAN",
+   "stop": null,
+   "finalHash": "ca4a42995a4e45d9",
+   "healthyControlUntilMs": 87.5,
+   "healthyReason": "C0 SnapshotTone reference truncated at 87.5 ms (hip_L.flex)",
+   "ownSecondaryFailure": null,
+   "cellStatus": [
+    "PRIMARY_MECHANICS_VALID",
+    "HANDOFF_FAILED",
+    "W:NATIVE_INTEGRITY_FAILED",
+    "VISUAL_PENDING"
+   ],
+   "frames": 37,
+   "entryVsRun1Tau0": {
+    "maxJointM": 0.019839981920835484,
+    "maxJointBone": "toe_L",
+    "maxTipM": 0.026867870248988845,
+    "maxTipBone": "toe_L"
+   }
+  }
+ ],
+ "bones": [
+  {
+   "name": "root",
+   "idx": 0,
+   "parent": null
+  },
+  {
+   "name": "pelvis",
+   "idx": 1,
+   "parent": "root"
+  },
+  {
+   "name": "spine",
+   "idx": 2,
+   "parent": "pelvis"
+  },
+  {
+   "name": "chest",
+   "idx": 3,
+   "parent": "spine"
+  },
+  {
+   "name": "neck",
+   "idx": 4,
+   "parent": "chest"
+  },
+  {
+   "name": "head",
+   "idx": 5,
+   "parent": "neck"
+  },
+  {
+   "name": "hair",
+   "idx": 6,
+   "parent": "head"
+  },
+  {
+   "name": "clavicle_R",
+   "idx": 7,
+   "parent": "chest"
+  },
+  {
+   "name": "upperArm_R",
+   "idx": 8,
+   "parent": "clavicle_R"
+  },
+  {
+   "name": "foreArm_R",
+   "idx": 9,
+   "parent": "upperArm_R"
+  },
+  {
+   "name": "hand_R",
+   "idx": 10,
+   "parent": "foreArm_R"
+  },
+  {
+   "name": "clavicle_L",
+   "idx": 11,
+   "parent": "chest"
+  },
+  {
+   "name": "upperArm_L",
+   "idx": 12,
+   "parent": "clavicle_L"
+  },
+  {
+   "name": "foreArm_L",
+   "idx": 13,
+   "parent": "upperArm_L"
+  },
+  {
+   "name": "hand_L",
+   "idx": 14,
+   "parent": "foreArm_L"
+  },
+  {
+   "name": "thigh_R",
+   "idx": 15,
+   "parent": "pelvis"
+  },
+  {
+   "name": "shin_R",
+   "idx": 16,
+   "parent": "thigh_R"
+  },
+  {
+   "name": "foot_R",
+   "idx": 17,
+   "parent": "shin_R"
+  },
+  {
+   "name": "toe_R",
+   "idx": 18,
+   "parent": "foot_R"
+  },
+  {
+   "name": "thigh_L",
+   "idx": 19,
+   "parent": "pelvis"
+  },
+  {
+   "name": "shin_L",
+   "idx": 20,
+   "parent": "thigh_L"
+  },
+  {
+   "name": "foot_L",
+   "idx": 21,
+   "parent": "shin_L"
+  },
+  {
+   "name": "toe_L",
+   "idx": 22,
+   "parent": "foot_L"
+  }
+ ]
+}

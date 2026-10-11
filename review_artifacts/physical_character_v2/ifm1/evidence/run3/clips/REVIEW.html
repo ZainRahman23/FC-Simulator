@@ -1,0 +1,111 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IFM-1 Visual Review</title>
+<style>:root{--bg:#0f1412;--panel:#18201c;--ink:#e6efe9;--dim:#9fb3a9;--acc:#ffd45e;--line:#2a3530}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,Helvetica,Arial,sans-serif}main{max-width:1320px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:8px 0}h2{font-size:18px;margin:28px 0 8px;border-top:1px solid var(--line);padding-top:16px}h3{font-size:15px;margin:18px 0 6px;color:var(--acc)}
+p,li{color:var(--dim);max-width:980px}b{color:var(--ink)}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:10px}
+figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px}figure img{width:100%;height:auto;display:block;image-rendering:auto}
+figcaption{color:var(--dim);font-size:12px;margin-top:4px}.sheet img{width:100%;image-rendering:pixelated}.note{background:var(--panel);border-left:3px solid var(--acc);padding:8px 12px}
+@media(max-width:480px){main{padding:12px 16px}.grid{grid-template-columns:1fr}}</style></head><body><main>
+<h1>IFM-1 · gameplay-camera visual review</h1>
+<p class="note"><b>Status: VISUAL_PENDING.</b> No reviewer has judged these clips yet. All clips use the frozen RUN-1 viewer, CAMERA_V1 at zoom 1, 1280×720 and 60 Hz: 250 ms of RUN-1 lead-in (no physics), then the 150 ms physical record. They loop. The pink sphere is a <b>diagnostic impactor, not a tackler</b>. An orange line in a frame or an orange bar on a sheet marks time outside the healthy control interval: C0's SnapshotTone reference is truncated after 66.7 ms (S-FLAT) and 87.5 ms (S-TOE). Pixel screening (prereg §11) found no struck-chain landmark ≥ 2 px from C0 in any 0–50 ms frame; see IFM1_RESULTS.md. That screening is <b>not</b> a substitute for this review.</p>
+<p>Judge separately (prereg §11): <b>1</b> Is entry acceptably continuous, including upper-body fit? <b>2</b> Is contact visually located on the correct body region? <b>3</b> Is the direction and propagation of the response readable as caused by the impact? <b>4</b> Is the response visibly more informative than the no-hit continuation (C0), without looking unstable or weightless? Record the result and the reviewer.</p>
+<h2>A · Version-blinded A/B (judge these first)</h2><p>A and B are the two bodies. The label mapping is fixed for every cell and mode, and is recorded in <code>ifm1/render/IFM1_BLIND_KEY.json</code>. Do not open it until you have judged.</p>
+<h3>SW · right (swing) shank (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/SW_blind_sheet.png" loading="lazy" alt="SW: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B"><figcaption>SW: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B</figcaption></figure></div><div class="grid">
+<figure><img src="blind/C0_S-FLAT_A.webp" loading="lazy" alt="C0 no-contact control · version A"><figcaption>C0 no-contact control · version A</figcaption></figure>
+<figure><img src="blind/C0_S-FLAT_B.webp" loading="lazy" alt="C0 no-contact control · version B"><figcaption>C0 no-contact control · version B</figcaption></figure>
+<figure><img src="blind/SW_N_A.webp" loading="lazy" alt="SW · N · version A"><figcaption>SW · N · version A</figcaption></figure>
+<figure><img src="blind/SW_N_B.webp" loading="lazy" alt="SW · N · version B"><figcaption>SW · N · version B</figcaption></figure>
+</div>
+<h3>PL · left (planted) shank (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/PL_blind_sheet.png" loading="lazy" alt="PL: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B"><figcaption>PL: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B</figcaption></figure></div><div class="grid">
+<figure><img src="blind/C0_S-FLAT_A.webp" loading="lazy" alt="C0 no-contact control · version A"><figcaption>C0 no-contact control · version A</figcaption></figure>
+<figure><img src="blind/C0_S-FLAT_B.webp" loading="lazy" alt="C0 no-contact control · version B"><figcaption>C0 no-contact control · version B</figcaption></figure>
+<figure><img src="blind/PL_N_A.webp" loading="lazy" alt="PL · N · version A"><figcaption>PL · N · version A</figcaption></figure>
+<figure><img src="blind/PL_N_B.webp" loading="lazy" alt="PL · N · version B"><figcaption>PL · N · version B</figcaption></figure>
+<figure><img src="blind/PL_W_A.webp" loading="lazy" alt="PL · W · version A"><figcaption>PL · W · version A</figcaption></figure>
+<figure><img src="blind/PL_W_B.webp" loading="lazy" alt="PL · W · version B"><figcaption>PL · W · version B</figcaption></figure>
+<figure><img src="blind/PL_X_A.webp" loading="lazy" alt="PL · X · version A"><figcaption>PL · X · version A</figcaption></figure>
+<figure><img src="blind/PL_X_B.webp" loading="lazy" alt="PL · X · version B"><figcaption>PL · X · version B</figcaption></figure>
+</div>
+<h3>SH · left deltoid (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/SH_blind_sheet.png" loading="lazy" alt="SH: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B"><figcaption>SH: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B</figcaption></figure></div><div class="grid">
+<figure><img src="blind/C0_S-FLAT_A.webp" loading="lazy" alt="C0 no-contact control · version A"><figcaption>C0 no-contact control · version A</figcaption></figure>
+<figure><img src="blind/C0_S-FLAT_B.webp" loading="lazy" alt="C0 no-contact control · version B"><figcaption>C0 no-contact control · version B</figcaption></figure>
+<figure><img src="blind/SH_N_A.webp" loading="lazy" alt="SH · N · version A"><figcaption>SH · N · version A</figcaption></figure>
+<figure><img src="blind/SH_N_B.webp" loading="lazy" alt="SH · N · version B"><figcaption>SH · N · version B</figcaption></figure>
+<figure><img src="blind/SH_W_A.webp" loading="lazy" alt="SH · W · version A"><figcaption>SH · W · version A</figcaption></figure>
+<figure><img src="blind/SH_W_B.webp" loading="lazy" alt="SH · W · version B"><figcaption>SH · W · version B</figcaption></figure>
+<figure><img src="blind/SH_X_A.webp" loading="lazy" alt="SH · X · version A"><figcaption>SH · X · version A</figcaption></figure>
+<figure><img src="blind/SH_X_B.webp" loading="lazy" alt="SH · X · version B"><figcaption>SH · X · version B</figcaption></figure>
+</div>
+<h3>TP · left shank, toe-pad stance (S-TOE)</h3><div class="sheet"><figure><img src="sheets/TP_blind_sheet.png" loading="lazy" alt="TP: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B"><figcaption>TP: magnified crops (×4, nearest-neighbour) of the actual frames at fixed instants, versions A / B</figcaption></figure></div><div class="grid">
+<figure><img src="blind/C0_S-TOE_A.webp" loading="lazy" alt="C0 no-contact control · version A"><figcaption>C0 no-contact control · version A</figcaption></figure>
+<figure><img src="blind/C0_S-TOE_B.webp" loading="lazy" alt="C0 no-contact control · version B"><figcaption>C0 no-contact control · version B</figcaption></figure>
+<figure><img src="blind/TP_N_A.webp" loading="lazy" alt="TP · N · version A"><figcaption>TP · N · version A</figcaption></figure>
+<figure><img src="blind/TP_N_B.webp" loading="lazy" alt="TP · N · version B"><figcaption>TP · N · version B</figcaption></figure>
+<figure><img src="blind/TP_W_A.webp" loading="lazy" alt="TP · W · version A"><figcaption>TP · W · version A</figcaption></figure>
+<figure><img src="blind/TP_W_B.webp" loading="lazy" alt="TP · W · version B"><figcaption>TP · W · version B</figcaption></figure>
+<figure><img src="blind/TP_X_A.webp" loading="lazy" alt="TP · X · version A"><figcaption>TP · X · version A</figcaption></figure>
+<figure><img src="blind/TP_X_B.webp" loading="lazy" alt="TP · X · version B"><figcaption>TP · X · version B</figcaption></figure>
+</div>
+<h2>B · Labelled clips</h2><p>Primary: normal speed, full gameplay frame. Each cell sheet compares R0 and RH1 across C0 / N / W / X at the same instants.</p>
+<h3>SW · right (swing) shank (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/SW_sheet.png" loading="lazy" alt="SW: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames"><figcaption>SW: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames</figcaption></figure></div><div class="grid">
+<figure><img src="primary/C0_R0_S-FLAT.webp" loading="lazy" alt="C0 · R0 · S-FLAT"><figcaption>C0 · R0 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_SW_R0.webp" loading="lazy" alt="N · SW · R0"><figcaption>N · SW · R0</figcaption></figure>
+<figure><img src="primary/C0_RH1_S-FLAT.webp" loading="lazy" alt="C0 · RH1 · S-FLAT"><figcaption>C0 · RH1 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_SW_RH1.webp" loading="lazy" alt="N · SW · RH1"><figcaption>N · SW · RH1</figcaption></figure>
+</div>
+<h3>PL · left (planted) shank (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/PL_sheet.png" loading="lazy" alt="PL: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames"><figcaption>PL: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames</figcaption></figure></div><div class="grid">
+<figure><img src="primary/C0_R0_S-FLAT.webp" loading="lazy" alt="C0 · R0 · S-FLAT"><figcaption>C0 · R0 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_PL_R0.webp" loading="lazy" alt="N · PL · R0"><figcaption>N · PL · R0</figcaption></figure>
+<figure><img src="primary/W_PL_R0.webp" loading="lazy" alt="W · PL · R0"><figcaption>W · PL · R0</figcaption></figure>
+<figure><img src="primary/X_PL_R0.webp" loading="lazy" alt="X · PL · R0"><figcaption>X · PL · R0</figcaption></figure>
+<figure><img src="primary/C0_RH1_S-FLAT.webp" loading="lazy" alt="C0 · RH1 · S-FLAT"><figcaption>C0 · RH1 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_PL_RH1.webp" loading="lazy" alt="N · PL · RH1"><figcaption>N · PL · RH1</figcaption></figure>
+<figure><img src="primary/W_PL_RH1.webp" loading="lazy" alt="W · PL · RH1"><figcaption>W · PL · RH1</figcaption></figure>
+<figure><img src="primary/X_PL_RH1.webp" loading="lazy" alt="X · PL · RH1"><figcaption>X · PL · RH1</figcaption></figure>
+</div>
+<h3>SH · left deltoid (S-FLAT)</h3><div class="sheet"><figure><img src="sheets/SH_sheet.png" loading="lazy" alt="SH: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames"><figcaption>SH: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames</figcaption></figure></div><div class="grid">
+<figure><img src="primary/C0_R0_S-FLAT.webp" loading="lazy" alt="C0 · R0 · S-FLAT"><figcaption>C0 · R0 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_SH_R0.webp" loading="lazy" alt="N · SH · R0"><figcaption>N · SH · R0</figcaption></figure>
+<figure><img src="primary/W_SH_R0.webp" loading="lazy" alt="W · SH · R0"><figcaption>W · SH · R0</figcaption></figure>
+<figure><img src="primary/X_SH_R0.webp" loading="lazy" alt="X · SH · R0"><figcaption>X · SH · R0</figcaption></figure>
+<figure><img src="primary/C0_RH1_S-FLAT.webp" loading="lazy" alt="C0 · RH1 · S-FLAT"><figcaption>C0 · RH1 · S-FLAT</figcaption></figure>
+<figure><img src="primary/N_SH_RH1.webp" loading="lazy" alt="N · SH · RH1"><figcaption>N · SH · RH1</figcaption></figure>
+<figure><img src="primary/W_SH_RH1.webp" loading="lazy" alt="W · SH · RH1"><figcaption>W · SH · RH1</figcaption></figure>
+<figure><img src="primary/X_SH_RH1.webp" loading="lazy" alt="X · SH · RH1"><figcaption>X · SH · RH1</figcaption></figure>
+</div>
+<h3>TP · left shank, toe-pad stance (S-TOE)</h3><div class="sheet"><figure><img src="sheets/TP_sheet.png" loading="lazy" alt="TP: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames"><figcaption>TP: R0 / RH1 × C0 / N / W / X, magnified crops of the actual 1× frames</figcaption></figure></div><div class="grid">
+<figure><img src="primary/C0_R0_S-TOE.webp" loading="lazy" alt="C0 · R0 · S-TOE"><figcaption>C0 · R0 · S-TOE</figcaption></figure>
+<figure><img src="primary/N_TP_R0.webp" loading="lazy" alt="N · TP · R0"><figcaption>N · TP · R0</figcaption></figure>
+<figure><img src="primary/W_TP_R0.webp" loading="lazy" alt="W · TP · R0"><figcaption>W · TP · R0</figcaption></figure>
+<figure><img src="primary/X_TP_R0.webp" loading="lazy" alt="X · TP · R0"><figcaption>X · TP · R0</figcaption></figure>
+<figure><img src="primary/C0_RH1_S-TOE.webp" loading="lazy" alt="C0 · RH1 · S-TOE"><figcaption>C0 · RH1 · S-TOE</figcaption></figure>
+<figure><img src="primary/N_TP_RH1.webp" loading="lazy" alt="N · TP · RH1"><figcaption>N · TP · RH1</figcaption></figure>
+<figure><img src="primary/W_TP_RH1.webp" loading="lazy" alt="W · TP · RH1"><figcaption>W · TP · RH1</figcaption></figure>
+<figure><img src="primary/X_TP_RH1.webp" loading="lazy" alt="X · TP · RH1"><figcaption>X · TP · RH1</figcaption></figure>
+</div>
+<h2>C · Diagnostic only: 0.25× with collider overlays</h2><p>Every 1/240 s physics step, played at 60 fps (0.25×). These use the viewer's own 4× gameplay zoom (same CAMERA_V1 pose) and are cropped to the centre. Cyan: V2 colliders. Yellow: receiver–impactor contact points and normals. White: the evaluator's struck-chain points. Not a primary view.</p><div class="grid">
+<figure><img src="diag/C0_R0_S-FLAT_025x.webp" loading="lazy" alt="C0 · R0 · S-FLAT · 0.25×"><figcaption>C0 · R0 · S-FLAT · 0.25×</figcaption></figure>
+<figure><img src="diag/N_SW_R0_025x.webp" loading="lazy" alt="N · SW · R0 · 0.25×"><figcaption>N · SW · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/C0_RH1_S-FLAT_025x.webp" loading="lazy" alt="C0 · RH1 · S-FLAT · 0.25×"><figcaption>C0 · RH1 · S-FLAT · 0.25×</figcaption></figure>
+<figure><img src="diag/N_SW_RH1_025x.webp" loading="lazy" alt="N · SW · RH1 · 0.25×"><figcaption>N · SW · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/N_PL_R0_025x.webp" loading="lazy" alt="N · PL · R0 · 0.25×"><figcaption>N · PL · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_PL_R0_025x.webp" loading="lazy" alt="W · PL · R0 · 0.25×"><figcaption>W · PL · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_PL_R0_025x.webp" loading="lazy" alt="X · PL · R0 · 0.25×"><figcaption>X · PL · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/N_PL_RH1_025x.webp" loading="lazy" alt="N · PL · RH1 · 0.25×"><figcaption>N · PL · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_PL_RH1_025x.webp" loading="lazy" alt="W · PL · RH1 · 0.25×"><figcaption>W · PL · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_PL_RH1_025x.webp" loading="lazy" alt="X · PL · RH1 · 0.25×"><figcaption>X · PL · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/N_SH_R0_025x.webp" loading="lazy" alt="N · SH · R0 · 0.25×"><figcaption>N · SH · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_SH_R0_025x.webp" loading="lazy" alt="W · SH · R0 · 0.25×"><figcaption>W · SH · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_SH_R0_025x.webp" loading="lazy" alt="X · SH · R0 · 0.25×"><figcaption>X · SH · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/N_SH_RH1_025x.webp" loading="lazy" alt="N · SH · RH1 · 0.25×"><figcaption>N · SH · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_SH_RH1_025x.webp" loading="lazy" alt="W · SH · RH1 · 0.25×"><figcaption>W · SH · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_SH_RH1_025x.webp" loading="lazy" alt="X · SH · RH1 · 0.25×"><figcaption>X · SH · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/C0_R0_S-TOE_025x.webp" loading="lazy" alt="C0 · R0 · S-TOE · 0.25×"><figcaption>C0 · R0 · S-TOE · 0.25×</figcaption></figure>
+<figure><img src="diag/N_TP_R0_025x.webp" loading="lazy" alt="N · TP · R0 · 0.25×"><figcaption>N · TP · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_TP_R0_025x.webp" loading="lazy" alt="W · TP · R0 · 0.25×"><figcaption>W · TP · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_TP_R0_025x.webp" loading="lazy" alt="X · TP · R0 · 0.25×"><figcaption>X · TP · R0 · 0.25×</figcaption></figure>
+<figure><img src="diag/C0_RH1_S-TOE_025x.webp" loading="lazy" alt="C0 · RH1 · S-TOE · 0.25×"><figcaption>C0 · RH1 · S-TOE · 0.25×</figcaption></figure>
+<figure><img src="diag/N_TP_RH1_025x.webp" loading="lazy" alt="N · TP · RH1 · 0.25×"><figcaption>N · TP · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/W_TP_RH1_025x.webp" loading="lazy" alt="W · TP · RH1 · 0.25×"><figcaption>W · TP · RH1 · 0.25×</figcaption></figure>
+<figure><img src="diag/X_TP_RH1_025x.webp" loading="lazy" alt="X · TP · RH1 · 0.25×"><figcaption>X · TP · RH1 · 0.25×</figcaption></figure>
+</div></main></body></html>
