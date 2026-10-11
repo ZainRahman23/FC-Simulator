@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IFM-1 Slow-Motion Review</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #9fb3a9; --acc: #ffd45e; --line: #2a3530; --bad: #ff3b3b; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1160px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 6px 0 8px; } h2 { font-size: 18px; margin: 0; }
+  p, li { color: var(--dim); } b { color: var(--ink); } code { color: #cfe3d8; }
+  .note { background: var(--panel); border-left: 3px solid var(--acc); padding: 8px 12px; margin: 10px 0; }
+  .case { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 22px 0; }
+  .case.invalid { border-color: var(--bad); }
+  .banner { background: #b81414; color: #fff; font-weight: 700; padding: 6px 10px; border-radius: 4px; margin: 8px 0; }
+  .head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+  .grp { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; } .lab { color: var(--dim); margin-right: 4px; font-size: 12px; }
+  button { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; font-size: 13px; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; } button:hover { border-color: #5b6d63; }
+  video { width: 100%; height: auto; display: block; background: #000; margin-top: 8px; border-radius: 4px; }
+  .tl { position: relative; display: flex; gap: 1px; height: 18px; margin: 8px 0 2px; cursor: pointer; }
+  .tl div { flex: 1; } .tl .cur { outline: 2px solid #fff; outline-offset: -1px; } .tl .ct { box-shadow: inset 0 -5px 0 #ffe14a; }
+  input[type=range] { width: 100%; }
+  .info { font: 12px/1.5 Menlo, monospace; color: #cfe3d8; white-space: pre-wrap; background: #111815; border-radius: 4px; padding: 6px 8px; margin-top: 6px; min-height: 3.2em; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--dim); margin-top: 4px; } .legend i { display: inline-block; width: 12px; height: 10px; margin-right: 4px; vertical-align: -1px; }
+  .dl { font-size: 12px; color: var(--dim); } .dl a { color: #9fd8ff; }
+  @media (max-width: 600px) { main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<main>
+<h1>IFM-1 · slow-motion collision review (C0 | N)</h1>
+<p class="note">This is a <b>visualisation of the committed IFM-1 records only</b>. Nothing was re-simulated, tuned, amplified or interpolated. <b>No visual-value verdict is made here</b>; the preregistered labels below are shown exactly as recorded, and every cell is still <b>VISUAL_PENDING</b>.<br>
+<b>Each video:</b> LEFT = <b>C0</b>, the no-hit control. RIGHT = <b>N</b>, native contact. Both sides are one composite frame, so they are always locked to the same instant.<br>
+<b>Content:</b> 100 ms of frozen RUN-1 lead-in, then entry into V2 at τ = 0, then <b>every recorded 1/240 s step</b> to 150 ms. Nothing is synthesised between steps.<br>
+<b>Camera:</b> the frozen RUN-1 viewer and character, the gameplay camera CAMERA_V1 with the viewer's own zoom at <b>8×</b>. That is the same camera pose and perspective, an exact 8× magnified crop of the 1280×720 gameplay projection.<br>
+<b>Speed:</b> 0.25× shows one step per frame at 60 fps. 0.1× shows one step per frame at 24 fps.<br>
+<b>Versions:</b> CLEAN hides the diagnostic impactor after the contact step. DIAGNOSTIC draws overlays on the exact same character frames.<br>
+<b>Verification:</b> <code>SLOWMO_VERIFICATION.md</code>.</p>
+<p><b>Questions this aid is for.</b> They are for you to answer; nothing here answers them.</p>
+<ul><li>Does motion first diverge at the struck body part?</li>
+<li>Does the disturbance propagate naturally through connected joints?</li>
+<li>Do remote body parts initially preserve inertia?</li>
+<li>Does a planted foot or support state provide plausible resistance?</li>
+<li>Does the response look articulated rather than like whole-body translation?</li>
+<li>For PL and TP: can you see the effect of continued native contact? The contact steps are marked yellow under the timeline.</li>
+<li>Is any apparent response actually present in C0 as well?</li></ul>
+<div class="legend"><span><i style="background:#4aa8ff"></i>RUN-1 lead-in (no physics)</span><span><i style="background:#d8e6ff"></i>entry into V2 (τ 0)</span><span><i style="background:#3fd17a"></i>primary 0–50 ms</span><span><i style="background:#f0c64a"></i>secondary, control still valid</span><span><i style="background:#ff8a3d"></i>outside the control-valid window</span><span><i style="background:#ff4a4a"></i>after N's own secondary failure</span><span><i style="background:#ff3b3b;outline:1px solid #fff"></i>SW: mechanically invalid</span><span><i style="background:#ffe14a"></i>(under the bar) native contact impulse recorded</span></div>
+<p class="dl"><b>Keys</b>, after clicking a case: Space play / pause · ← / → one frame · C contact step · E entry.</p>
+<div id="cases"></div>
+</main>
+<script>
+"use strict";
+const ORDER = ["SH", "PL", "TP", "SW"], BANDC = { lead: "#4aa8ff", entry: "#d8e6ff", primary: "#3fd17a", secondary: "#f0c64a", outsideControl: "#ff8a3d", ownSecondary: "#ff4a4a", invalid: "#ff3b3b" };
+const BANDT = { lead: "RUN-1 lead-in (frozen RUN-1, no physics)", entry: "entry into V2 (τ = 0)", primary: "primary window 0–50 ms", secondary: "secondary, control still valid", outsideControl: "OUTSIDE the control-valid window", ownSecondary: "AFTER N's own secondary failure", invalid: "MECHANICALLY INVALID (native integrity failed at step 1)" };
+const blobs = {};
+async function blobUrl(u) { if (!blobs[u]) blobs[u] = fetch(u).then(r => { if (!r.ok) throw new Error(u + " " + r.status); return r.blob(); }).then(b => URL.createObjectURL(b)); return blobs[u]; }
+fetch("slowmo_frames.json").then(r => r.json()).then(M => { const root = document.getElementById("cases"); for (const id of ORDER) root.appendChild(makeCase(M, id)); });
+function makeCase(M, id) {
+  const st = { body: "R0", ver: "CLEAN", speed: 0.25, k: 0 }, FPS = M.fps025;
+  const el = document.createElement("section"); el.className = "case"; el.tabIndex = 0;
+  const C = () => M.cases[`${id}_${st.body}`];
+  el.innerHTML = `<div class="head"><h2></h2><div class="grp"><span class="lab">body</span><button data-body="R0" class="on">R0</button><button data-body="RH1">RH1</button>
+    <span class="lab" style="margin-left:10px">version</span><button data-ver="CLEAN" class="on">CLEAN</button><button data-ver="DIAG">DIAGNOSTIC</button>
+    <span class="lab" style="margin-left:10px">speed</span><button data-speed="0.25" class="on">0.25×</button><button data-speed="0.1">0.1×</button></div></div>
+    <div class="banner" hidden></div><video muted playsinline loop preload="auto"></video>
+    <div class="tl"></div><input type="range" min="0" value="0" step="1">
+    <div class="grp" style="margin-top:4px"><button data-a="play">▶ play</button><button data-a="prev">◀ frame</button><button data-a="next">frame ▶</button>
+      <button data-a="entry">entry (τ 0)</button><button data-a="contact">contact step</button><button data-a="p50">+50 ms</button><button data-a="start">start</button></div>
+    <div class="info"></div><p class="dl"></p>`;
+  const v = el.querySelector("video"), tl = el.querySelector(".tl"), rng = el.querySelector("input"), info = el.querySelector(".info"), dl = el.querySelector(".dl"), ban = el.querySelector(".banner");
+  const src = () => `video/${id}_${st.body}_${st.ver}_0.25x.mp4`;
+  const frameOf = (t) => Math.max(0, Math.min(C().frames.length - 1, Math.floor(t * FPS + 1e-4)));
+  const seek = (k) => { st.k = Math.max(0, Math.min(C().frames.length - 1, k)); v.pause(); v.currentTime = (st.k + 0.5) / FPS; show(st.k); };
+  function show(k) { const c = C(), F = c.frames[k]; st.k = k; rng.value = k; [...tl.children].forEach((d, j) => d.classList.toggle("cur", j === k));
+    const ln = [];
+    ln.push(`frame ${k + 1}/${c.frames.length} · ${F.phase === "lead" ? `τ = ${F.tauMs.toFixed(2)} ms (RUN-1 lead-in)` : `τ = +${F.tauMs.toFixed(2)} ms · record step ${F.n}`} · ${BANDT[F.band]}`);
+    if (F.phase === "lead") ln.push(`RUN-1 stance flags: L ${F.run1Legs.L ? "stance" : "swing"}, R ${F.run1Legs.R ? "stance" : "swing"} · left / right panels ${F.panelDiffPx === 0 ? "pixel-identical" : `differ in ${F.panelDiffPx} px`}`);
+    else { const fl = (x) => x == null ? "—" : x.toFixed(2);
+      ln.push(`recorded contact impulse this step (N): ${F.contactJn ? F.contactJn.toFixed(2) + " N·s" : "none"} · turf impulse C0 L ${fl(F.footC0.L)} / R ${fl(F.footC0.R)} · N L ${fl(F.footN.L)} / R ${fl(F.footN.R)} N·s`);
+      ln.push(`largest N − C0 rendered-joint distance: ${F.maxDivMm.toFixed(2)} mm (${F.maxDivJoint}) · character pixels differing left vs right: ${F.panelDiffPx}`); }
+    info.textContent = ln.join("\n"); }
+  function build() { const c = C(); el.classList.toggle("invalid", !!c.invalid); el.querySelector("h2").textContent = `${c.title} · ${st.body} · ${c.state}`;
+    ban.hidden = !c.invalid; ban.textContent = c.invalidText || "";
+    tl.innerHTML = ""; c.frames.forEach((F, j) => { const d = document.createElement("div"); d.style.background = BANDC[F.band]; if (F.contactJn) d.classList.add("ct"); d.title = F.phase === "lead" ? `τ ${F.tauMs} ms` : `step ${F.n} · τ ${F.tauMs} ms`; d.onclick = () => seek(j); tl.appendChild(d); });
+    rng.max = c.frames.length - 1;
+    dl.innerHTML = `preregistered — N: <b>${c.statusN.join(" · ")}</b> · C0: <b>${c.statusC0.join(" · ")}</b><br>control-valid until ${c.healthyControlUntilMs.toFixed(1)} ms (${c.healthyReason})${c.ownSecondaryFailure ? ` · N secondary failure at ${(c.ownSecondaryFailure.t * 1000).toFixed(1)} ms (${c.ownSecondaryFailure.subsystem.join(", ")})` : ""} · native contact in steps ${c.contact.steps[0]}–${c.contact.steps[c.contact.steps.length - 1]} (${c.contact.steps.length} steps; first-step impulse ${c.contact.firstStepImpulseNs.toFixed(2)} N·s, after it ${c.contact.postFirstStepImpulseNs.toFixed(2)} N·s)<br>files: <a href="${src()}">0.25× ${st.ver}</a> · <a href="video/${id}_${st.body}_${st.ver}_0.10x.mp4">0.1× ${st.ver}</a> (standalone MP4, H.264)`; }
+  async function load() { const k = st.k, playing = !v.paused; build(); v.src = await blobUrl(src()); v.playbackRate = st.speed === 0.25 ? 1 : 0.4; v.addEventListener("loadeddata", () => { seek(k); if (playing) v.play(); }, { once: true }); }
+  el.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; el.focus();
+    if (b.dataset.body) { st.body = b.dataset.body; el.querySelectorAll("[data-body]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+    else if (b.dataset.ver) { st.ver = b.dataset.ver; el.querySelectorAll("[data-ver]").forEach(x => x.classList.toggle("on", x === b)); load(); }
+    else if (b.dataset.speed) { st.speed = +b.dataset.speed; el.querySelectorAll("[data-speed]").forEach(x => x.classList.toggle("on", x === b)); v.playbackRate = st.speed === 0.25 ? 1 : 0.4; }
+    else act(b.dataset.a); });
+  const idxN = (n) => C().frames.findIndex(F => F.phase === "phys" && F.n === n);
+  function act(a) { if (a === "play") { if (v.paused) v.play(); else v.pause(); } else if (a === "prev") seek(st.k - 1); else if (a === "next") seek(st.k + 1); else if (a === "entry") seek(idxN(0)); else if (a === "contact") seek(idxN(C().contact.firstStep)); else if (a === "p50") seek(idxN(12)); else if (a === "start") seek(0); }
+  v.addEventListener("play", () => { el.querySelector('[data-a="play"]').textContent = "❚❚ pause"; }); v.addEventListener("pause", () => { el.querySelector('[data-a="play"]').textContent = "▶ play"; });
+  const tick = (now, meta) => { if (!v.paused) show(frameOf(meta.mediaTime)); v.requestVideoFrameCallback(tick); };
+  if ("requestVideoFrameCallback" in HTMLVideoElement.prototype) v.requestVideoFrameCallback(tick); else v.addEventListener("timeupdate", () => { if (!v.paused) show(frameOf(v.currentTime)); });
+  rng.addEventListener("input", () => seek(+rng.value));
+  el.addEventListener("keydown", (e) => { if (e.key === " ") { act("play"); e.preventDefault(); } else if (e.key === "ArrowLeft") { act("prev"); e.preventDefault(); } else if (e.key === "ArrowRight") { act("next"); e.preventDefault(); } else if (e.key === "c" || e.key === "C") act("contact"); else if (e.key === "e" || e.key === "E") act("entry"); });
+  load(); return el;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,522 @@
+{
+ "tool": "ifm1_slowmo_verify.mjs",
+ "head": "f22a91411e0725d8ad6374ad25fa47d98fa5247b",
+ "V1": {
+  "files": 26,
+  "allIdentical": true,
+  "differing": []
+ },
+ "V2": {
+  "cases": {
+   "PL_R0": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000013048709948450314,
+    "maxPelvisJointErrM": 7.852278525741416e-7,
+    "maxImpactorErrM": 7.34318263628261e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "PL_RH1": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.000001237633455538479,
+    "maxPelvisJointErrM": 8.149771953989085e-7,
+    "maxImpactorErrM": 7.285227190222216e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "SH_R0": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000013048709948450314,
+    "maxPelvisJointErrM": 7.852278525741416e-7,
+    "maxImpactorErrM": 6.792145264505725e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "SH_RH1": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000012320869897775908,
+    "maxPelvisJointErrM": 7.682535633571579e-7,
+    "maxImpactorErrM": 6.465602379019906e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "SW_R0": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000013048709948450314,
+    "maxPelvisJointErrM": 7.852278525741416e-7,
+    "maxImpactorErrM": 7.456912606265619e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "SW_RH1": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000011776875036870467,
+    "maxPelvisJointErrM": 7.682535633571579e-7,
+    "maxImpactorErrM": 7.480419852340403e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "TP_R0": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000011867961322769327,
+    "maxPelvisJointErrM": 6.983036918433927e-7,
+    "maxImpactorErrM": 7.047573041677104e-7,
+    "prepFramesEqualCommittedClipdata": true
+   },
+   "TP_RH1": {
+    "physFramesChecked": 74,
+    "maxMappedBoneRotationErrRad": 0.0000011733394470027962,
+    "maxPelvisJointErrM": 7.085283812048554e-7,
+    "maxImpactorErrM": 7.757485060483947e-7,
+    "prepFramesEqualCommittedClipdata": true
+   }
+  }
+ },
+ "V3": {
+  "cases": {
+   "PL_R0": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "PL_RH1": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "SH_R0": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "SH_RH1": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "SW_R0": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "SW_RH1": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "TP_R0": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   },
+   "TP_RH1": {
+    "frames": 61,
+    "uploadedSkinEqualsCommitted": true
+   }
+  }
+ },
+ "V4": {
+  "cases": {
+   "PL_R0": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2759
+    },
+    "sameCameraEveryFrame": true
+   },
+   "PL_RH1": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2666
+    },
+    "sameCameraEveryFrame": true
+   },
+   "SH_R0": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2205
+    },
+    "sameCameraEveryFrame": true
+   },
+   "SH_RH1": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2270
+    },
+    "sameCameraEveryFrame": true
+   },
+   "SW_R0": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2104
+    },
+    "sameCameraEveryFrame": true
+   },
+   "SW_RH1": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2068
+    },
+    "sameCameraEveryFrame": true
+   },
+   "TP_R0": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2787
+    },
+    "sameCameraEveryFrame": true
+   },
+   "TP_RH1": {
+    "leadInPanelsPixelIdentical": true,
+    "entryPanelsPixelIdentical": true,
+    "firstDivergentFrame": {
+     "k": 25,
+     "n": 1,
+     "tauMs": 4.166667,
+     "pixels": 2800
+    },
+    "sameCameraEveryFrame": true
+   }
+  }
+ },
+ "V5": {
+  "videos": {
+   "PL_R0_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "PL_R0_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "PL_R0_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "PL_R0_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "PL_RH1_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "PL_RH1_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "PL_RH1_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "PL_RH1_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SH_R0_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SH_R0_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SH_R0_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SH_R0_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SH_RH1_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SH_RH1_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SH_RH1_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SH_RH1_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SW_R0_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SW_R0_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SW_R0_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SW_R0_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SW_RH1_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SW_RH1_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "SW_RH1_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "SW_RH1_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "TP_R0_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "TP_R0_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "TP_R0_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "TP_R0_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "TP_RH1_CLEAN_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "TP_RH1_CLEAN_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   },
+   "TP_RH1_DIAG_0.10x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 24,
+    "frameDurationS": [
+     0.041666666666666664,
+     0.041666666666666664
+    ],
+    "ok": true
+   },
+   "TP_RH1_DIAG_0.25x.mp4": {
+    "samples": 61,
+    "expected": 61,
+    "fps": 60,
+    "frameDurationS": [
+     0.016666666666666666,
+     0.016666666666666666
+    ],
+    "ok": true
+   }
+  }
+ },
+ "allPass": true
+}

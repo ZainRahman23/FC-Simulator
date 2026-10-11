@@ -1,0 +1,124 @@
+{
+ "bones": [
+  {
+   "name": "root",
+   "idx": 0,
+   "parent": null
+  },
+  {
+   "name": "pelvis",
+   "idx": 1,
+   "parent": 0
+  },
+  {
+   "name": "spine",
+   "idx": 2,
+   "parent": 1
+  },
+  {
+   "name": "chest",
+   "idx": 3,
+   "parent": 2
+  },
+  {
+   "name": "neck",
+   "idx": 4,
+   "parent": 3
+  },
+  {
+   "name": "head",
+   "idx": 5,
+   "parent": 4
+  },
+  {
+   "name": "hair",
+   "idx": 6,
+   "parent": 5
+  },
+  {
+   "name": "clavicle_R",
+   "idx": 7,
+   "parent": 3
+  },
+  {
+   "name": "upperArm_R",
+   "idx": 8,
+   "parent": 7
+  },
+  {
+   "name": "foreArm_R",
+   "idx": 9,
+   "parent": 8
+  },
+  {
+   "name": "hand_R",
+   "idx": 10,
+   "parent": 9
+  },
+  {
+   "name": "clavicle_L",
+   "idx": 11,
+   "parent": 3
+  },
+  {
+   "name": "upperArm_L",
+   "idx": 12,
+   "parent": 11
+  },
+  {
+   "name": "foreArm_L",
+   "idx": 13,
+   "parent": 12
+  },
+  {
+   "name": "hand_L",
+   "idx": 14,
+   "parent": 13
+  },
+  {
+   "name": "thigh_R",
+   "idx": 15,
+   "parent": 1
+  },
+  {
+   "name": "shin_R",
+   "idx": 16,
+   "parent": 15
+  },
+  {
+   "name": "foot_R",
+   "idx": 17,
+   "parent": 16
+  },
+  {
+   "name": "toe_R",
+   "idx": 18,
+   "parent": 17
+  },
+  {
+   "name": "thigh_L",
+   "idx": 19,
+   "parent": 1
+  },
+  {
+   "name": "shin_L",
+   "idx": 20,
+   "parent": 19
+  },
+  {
+   "name": "foot_L",
+   "idx": 21,
+   "parent": 20
+  },
+  {
+   "name": "toe_L",
+   "idx": 22,
+   "parent": 21
+  }
+ ],
+ "leadFrames": 24,
+ "verify": {
+  "notes": [],
+  "leadSkinMaxAbsDiff": 0.000004180419921340217
+ }
+}
