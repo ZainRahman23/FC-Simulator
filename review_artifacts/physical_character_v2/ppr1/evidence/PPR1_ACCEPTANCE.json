@@ -1,0 +1,35 @@
+{
+ "tool": "ppr1_acceptance.mjs",
+ "entry": {
+  "worstRel": {
+   "rel": 3.4759319171645243e-16,
+   "at": "ankle_L.inv Ki",
+   "runtime": 81.76716376421118,
+   "table": 81.76716376421115
+  },
+  "pass": true,
+  "H7": {
+   "ankleSagittalSumKiOverMgh": 0.78,
+   "ankleDi": [
+    0.7360634446171447,
+    0.7208107459127087
+   ],
+   "lumbarFlexKi": 142.8352648247872,
+   "pass": true
+  }
+ },
+ "A": {
+  "N2": "e5751b0cbdd7c2b9",
+  "C0": "bc24da7b20eaf828",
+  "pass": true
+ },
+ "Bsmoke": {
+  "steps": 24,
+  "finite": true,
+  "h1": "61cead345b09d272",
+  "h2": "61cead345b09d272",
+  "stop": null,
+  "pass": true
+ },
+ "pass": true
+}
