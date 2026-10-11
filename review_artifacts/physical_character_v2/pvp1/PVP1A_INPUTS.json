@@ -1,0 +1,77 @@
+{
+ "manifest": "PVP1A_INPUTS",
+ "head": "d7fb69a12072d0ba20f1abc30dd0e35b73cad70e",
+ "prereg": "pvp1/PVP1A_PREREGISTRATION.md (d7fb69a1)",
+ "files": {
+  "interaction_benchmark/records/v13/rx_behind_standing_OFF.json.gz": "7ca8028993db38522784cbb2c42b08d21b21feba847be5265471b64b7d6261fa",
+  "interaction_benchmark/records/v13/rx_behind_standing_LOCO.json.gz": "8ce9d90d343856ac8eab76ca23bb559c7d6f21b7693f54d5312922f1c9c57b19",
+  "interaction_benchmark/scenarios/IB1-SR_rx_behind_standing.json": "6fa7ea7014545ade2c98d199669235e8a2131eebbdf1388553bef105a1870091",
+  "interaction_benchmark/SHA256SUMS": "59dc316c9900f9684d60772488b305440d6959a473b7af5ccc66ac80add74651",
+  "pvp1/PVP1A_PREREGISTRATION.md": "a6108c6832bc7acb27b91f1458fdeb70c40a166888c74f660148861257e83788",
+  "pvp1/evidence/PVP1_SURVEY.json": "3e23294105c028a8a6af2d6d8a83dc9ea0a599d1d0546a0cd26a24f3404528db"
+ },
+ "implementation": {
+  "core/v2_jolt.js": "11a9c4d59e2e3a12eb1dfa418b54493e7df385850b25bc78da111519afb8050f",
+  "sim/v2_passive.js": "616b287bb435ac8b763a7baeb66e6843eb8cac3d27da7a3324006238c154fab0",
+  "sim/v2_actuation.js": "dc63b383ebc53adfe14c0a314985466ee29dbfe244f61231b51ba33f21088ca1",
+  "ctrl/v2_stand.js": "735969c9f8a26b7a4d3ec801a86081fff809d458ca0199ffdadbdb5feb86d5fe",
+  "ctrl/v2_stance.js": "4458428c9046a664775f44df3b169c57ee1f53f1676af01d296ae1a07b668ac7",
+  "gates/v2_slp.js": "b90270347d1b8149720c6fa48f3df8cbb4309b95825454ef5ed76bd44336500d",
+  "map/v2_lv2_map.js": "b4516916391d16a2337649f79e81140c47a1f28bc57828d1fe65664f7a75d2d3",
+  "map/v2_render_map.js": "09c79a3a9072e7994650e186668122f825fd965ad3f5849733e86548a39a85fd",
+  "spec/v2_spec.js": "d60a7e1a332d7acdc4f3b9bfda7dea64abb368c85fedfce00aab575ba1f44359",
+  "spec/v2_pi1_runner.js": "00184e8f99a8cb2e0e60225e6b8843d0afc5452c6f34635b75418aa05edc05d4",
+  "spec/v2_human.js": "68c02b547a0fc3bc4261ac61a3b5207a7138bc7d922f61ba33163b176bc8f104",
+  "tools/track_a_lib.mjs": "d7d61be41ee26cd248cba932aadb0581180bf3c05a2617a1890dcf3e850a3432",
+  "vendor/jolt-physics.wasm-compat.js": "011233a5fff762d6f0f5b50726b315246bf68cb182f0a10024559d04f4c257de"
+ },
+ "specs": {
+  "R0": {
+   "hash": "62d5d797",
+   "mass": 73.91
+  },
+  "V1matched": {
+   "hash": "d81cdbe4",
+   "mass": 78.91000000000001
+  }
+ },
+ "contactConfigurationsEqual": true,
+ "tag": {
+  "name": "locomotion-v2-straight-baseline-1",
+  "object": "d85304f5af525556320b555feb889270f066b94a",
+  "commit": "4a226b1f43ddf5b918acab2807041334ff637405"
+ },
+ "assets": {
+  "vinicius/rig.json": {
+   "tag": "6ca64389d44244331cd7af37ce8f4ee6f854353e",
+   "sim5042230": "6ca64389d44244331cd7af37ce8f4ee6f854353e"
+  },
+  "vinicius/mesh.bin": {
+   "tag": "1338036a9d37479c0db810efe5910a85f9b87ff5",
+   "sim5042230": "1338036a9d37479c0db810efe5910a85f9b87ff5"
+  },
+  "vinicius/atlas.png": {
+   "tag": "c0d0d0ec672d6da12dfdc3ab5f8f6dbc31bac18f",
+   "sim5042230": "c0d0d0ec672d6da12dfdc3ab5f8f6dbc31bac18f"
+  },
+  "gabriel/rig.json": {
+   "tag": "a75a38ae0a15de69f4834654637ca6b2db419604",
+   "sim5042230": "a75a38ae0a15de69f4834654637ca6b2db419604"
+  },
+  "gabriel/mesh.bin": {
+   "tag": "1e6eda3d21f5fd8298976f96b2367053fb51347e",
+   "sim5042230": "1e6eda3d21f5fd8298976f96b2367053fb51347e"
+  },
+  "gabriel/atlas.png": {
+   "tag": "233a90fb1b20073f4a4e8fac6fee9806138d89b7",
+   "sim5042230": "233a90fb1b20073f4a4e8fac6fee9806138d89b7"
+  }
+ },
+ "gameplayHash": {
+  "expected": "a2678624",
+  "recomputedOFF": "a2678624",
+  "recomputedLOCO": "a2678624"
+ },
+ "ibVerify": "ALL HARD CHECKS PASS (59 pass, 1 note, 0 fail)",
+ "status": "BOUND"
+}

@@ -1,0 +1,5 @@
+   pre-grounding: boot 14.72 / centroid 17.43 mm, shank 15.4/11.7, T3 max 55.6 mm (hipR_TUCK), lowest -0.0 mm (forearm_R)
+τ 51: clearance 37.72 mm (shank_R ↔ foot_L); fit gates {"T1":false,"T2":true,"T3":false,"T4":true} boot 15.19 / centroid 17.00 mm; ground shift 0.54 mm; F 7.024e-2 it 1500; at limit hip_R.rot,ankle_L.fabd,ankle_L.df
+runner: shift 4.42 mm, feet lowest 0.50 / 0.50 mm, range exc 0, self false, valid true
+tackler: angles {"lumbar.rot":-5.005,"lumbar.flex":-2.619,"lumbar.lat":-7.45,"thoracic.rot":-4.492,"thoracic.flex":-11.906,"thoracic.lat":-0.324,"hip_L.rot":9.1,"hip_L.flex":82.796,"hip_L.abd":-0.733,"hip_R.rot":-50,"hip_R.flex":81.48,"hip_R.abd":-4.337,"knee_L.rot":-5.481,"knee_L.flex":-4.499,"knee_R.rot":19.9,"knee_R.flex":145.36,"ankle_L.fabd":15,"ankle_L.df":-60,"ankle_L.inv":-28.796,"ankle_R.fabd":11.562,"ankle_R.df":-2.845,"ankle_R.inv":18.595}
+status TACKLER_FIT_BLOCKED · τ_act 51 · clearance 37.72 mm · prediction {"tau":51.75,"pair":["shank_R","foot_L"],"note":"first sub-step at which the rigidly carried tackler touches the static runner (geometry only)"}
