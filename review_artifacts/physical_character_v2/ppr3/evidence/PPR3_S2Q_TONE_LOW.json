@@ -1,0 +1,1583 @@
+{
+ "cond": "S2",
+ "battery": {
+  "windowsMs": {
+   "ankle": 40,
+   "knee": 30,
+   "hip": 30,
+   "trunk": 30,
+   "neck": 25,
+   "body": 30
+  },
+  "entry": {
+   "steps": 60
+  },
+  "onset": 60,
+  "platform": {
+   "from": 60,
+   "ramp": 10,
+   "steps": 30,
+   "amps": [
+    0.005,
+    0.01,
+    0.02,
+    0.04,
+    0.08
+   ],
+   "mgh": 647.2
+  },
+  "fast": {
+   "from": 60,
+   "ramp": 7,
+   "steps": 20,
+   "amps": [
+    0.01
+   ],
+   "readMs": [
+    29.2
+   ]
+  },
+  "quasi": {
+   "from": 60,
+   "ramp": 7,
+   "steps": 260,
+   "amp": 0.01,
+   "readMs": [
+    250,
+    1000
+   ],
+   "joints": [
+    "ankle",
+    "knee",
+    "hip",
+    "lumbarFlex",
+    "lumbarLat"
+   ]
+  },
+  "ecc": {
+   "from": 60,
+   "ramp": 2,
+   "holdSteps": 262,
+   "amp": 0.0175,
+   "readMs": [
+    100,
+    300,
+    1000
+   ],
+   "joints": [
+    "ankle",
+    "knee",
+    "hip"
+   ],
+   "sign": {
+    "ankle": 1,
+    "knee": 1,
+    "hip": 1
+   }
+  },
+  "push": {
+   "pulse": 12,
+   "judgeSteps": 7,
+   "reportSteps": 24,
+   "steps": 90,
+   "J": {
+    "fwd": {
+     "small": 6.1,
+     "moderate": 9.7,
+     "large": 36.4
+    },
+    "back": {
+     "small": 7.3,
+     "moderate": 11.6,
+     "large": 43.5
+    },
+    "left": {
+     "small": 15.6,
+     "moderate": 24.9,
+     "large": 93.3
+    },
+    "right": {
+     "small": 15.6,
+     "moderate": 24.9,
+     "large": 93.3
+    }
+   }
+  },
+  "hold": {
+   "from": 60,
+   "hold": 48,
+   "after": 72,
+   "recoilMs": [
+    25,
+    50
+   ],
+   "probes": [
+    {
+     "joint": "ankle_R",
+     "axis": "df",
+     "parent": "shank_R",
+     "child": "foot_R",
+     "T": 5
+    },
+    {
+     "joint": "knee_R",
+     "axis": "flex",
+     "parent": "thigh_R",
+     "child": "shank_R",
+     "T": 5
+    },
+    {
+     "joint": "hip_R",
+     "axis": "flex",
+     "parent": "pelvis",
+     "child": "thigh_R",
+     "T": 5
+    },
+    {
+     "joint": "lumbar",
+     "axis": "flex",
+     "parent": "pelvis",
+     "child": "abdomen",
+     "T": 5
+    },
+    {
+     "joint": "lumbar",
+     "axis": "lat",
+     "parent": "pelvis",
+     "child": "abdomen",
+     "T": 5
+    }
+   ]
+  },
+  "openLoop": {
+   "steps": 960,
+   "envMm": 10,
+   "envDeg": 3
+  }
+ },
+ "wall": {
+  "E": 0.917,
+  "I": 4.908,
+  "P": 1.024,
+  "R": 1.669,
+  "C": 1.35,
+  "D": 0.624
+ },
+ "E": {
+  "feetN": {
+   "first4": [
+    712.6441086921841,
+    741.8959852948319,
+    729.9152920758206,
+    726.7628400831018
+   ],
+   "min": 712.6441086921841,
+   "max": 741.8959852948319,
+   "after4": {
+    "min": 724.0729613932481,
+    "max": 726.7521962580383
+   }
+  },
+  "bodyWeightN": 725.0571,
+  "turfPenMaxMm": 0.006535006259800191,
+  "sepMaxMm": 0.003486421545475985,
+  "pelvisDropMm": 0.007033348083496094,
+  "comHorizMm": 0.1911368913339551,
+  "maxJointDriftDeg": 0.6605883594646504,
+  "copComOffsetMm": {
+   "first": 1.6696552682139532,
+   "max": 1.6696552682139532,
+   "last": 1.531641781585243
+  }
+ },
+ "openLoop": {
+  "exit": {
+   "t": 1.075,
+   "cause": "departure 10.1 mm"
+  },
+  "cpu": {
+   "step": 339.22805700000066,
+   "passive": 261.686556999999,
+   "act": 32.35815100000221,
+   "tone": 10.957509999999616,
+   "instrument": 81.20273700000159,
+   "measure": 151.59547299999895,
+   "law": 18.52971299999973
+  },
+  "steps": 960,
+  "finalHash": "02668981ed931d97",
+  "stop": null
+ },
+ "I": {
+  "ankle": [
+   {
+    "ampRad": 0.005,
+    "ampDeg": 0.2864788975654116,
+    "endRamp": {
+     "ms": 41.7,
+     "ankleDeg": 0.2583010022544034,
+     "Kmgh": 0.7292916371652226,
+     "followFrac": 0.09835940989187297
+    },
+    "at71": {
+     "ms": 70.8,
+     "ankleDeg": 0.21793294961450527,
+     "Kmgh": 0.4612597160731575,
+     "followFrac": 0.23927049612879525
+    },
+    "stop": null
+   },
+   {
+    "ampRad": 0.01,
+    "ampDeg": 0.5729577951308232,
+    "endRamp": {
+     "ms": 41.7,
+     "ankleDeg": 0.5165742198684252,
+     "Kmgh": 0.7302180900824393,
+     "followFrac": 0.09840790323748705
+    },
+    "at71": {
+     "ms": 70.8,
+     "ankleDeg": 0.43566465660106973,
+     "Kmgh": 0.4616802720594504,
+     "followFrac": 0.23962173077408855
+    },
+    "stop": null
+   },
+   {
+    "ampRad": 0.02,
+    "ampDeg": 1.1459155902616465,
+    "endRamp": {
+     "ms": 41.7,
+     "ankleDeg": 1.035616695431465,
+     "Kmgh": 0.7317231398942468,
+     "followFrac": 0.09625394380488095
+    },
+    "at71": {
+     "ms": 70.8,
+     "ankleDeg": 0.8733926962857089,
+     "Kmgh": 0.4626430221018473,
+     "followFrac": 0.2378210893471766
+    },
+    "stop": null
+   },
+   {
+    "ampRad": 0.04,
+    "ampDeg": 2.291831180523293,
+    "endRamp": {
+     "ms": 41.7,
+     "ankleDeg": 2.0749179854125623,
+     "Kmgh": 0.6623921934370186,
+     "followFrac": 0.09464623614257783
+    },
+    "at71": {
+     "ms": 70.8,
+     "ankleDeg": 1.7814194834497272,
+     "Kmgh": 0.37925080882150647,
+     "followFrac": 0.2227091163656406
+    },
+    "stop": null
+   },
+   {
+    "ampRad": 0.08,
+    "ampDeg": 4.583662361046586,
+    "endRamp": {
+     "ms": 41.7,
+     "ankleDeg": 4.215451907650084,
+     "Kmgh": 0.4815711921098048,
+     "followFrac": 0.08033105940037621
+    },
+    "at71": {
+     "ms": 70.8,
+     "ankleDeg": 3.788411304832872,
+     "Kmgh": 0.2323669565161826,
+     "followFrac": 0.1734968663861478
+    },
+    "stop": null
+   }
+  ],
+  "fast": {
+   "ankle": {
+    "joint": "ankle_R",
+    "axis": "df",
+    "rows": [
+     {
+      "ampRad": 0.01,
+      "sign": 1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": 0.5355904429220572,
+        "dT": -2.3896937580490096,
+        "K": 255.64191533733288,
+        "Kel": 231.1789313468915
+       }
+      },
+      "stop": null
+     },
+     {
+      "ampRad": 0.01,
+      "sign": -1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": -0.5346641830942147,
+        "dT": 2.3741033694839473,
+        "K": 254.41409299573093,
+        "Kel": 230.00146328548965
+       }
+      },
+      "stop": null
+     }
+    ]
+   },
+   "knee": {
+    "joint": "knee_R",
+    "axis": "flex",
+    "rows": [
+     {
+      "ampRad": 0.01,
+      "sign": 1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": 0.5414557392165303,
+        "dT": -2.9547089818811414,
+        "K": 312.66148290559556,
+        "Kel": 194.47925878689236
+       }
+      },
+      "stop": null
+     },
+     {
+      "ampRad": 0.01,
+      "sign": -1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": -0.5415980441312142,
+        "dT": 2.912015862622261,
+        "K": 308.062816347581,
+        "Kel": 191.2756686541601
+       }
+      },
+      "stop": null
+     }
+    ]
+   },
+   "hip": {
+    "joint": "hip_R",
+    "axis": "flex",
+    "rows": [
+     {
+      "ampRad": 0.01,
+      "sign": 1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": 0.43878145541749897,
+        "dT": -4.629453181877137,
+        "K": 604.5108003085209,
+        "Kel": 257.8863962703509
+       }
+      },
+      "stop": null
+     },
+     {
+      "ampRad": 0.01,
+      "sign": -1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": -0.43433208222440267,
+        "dT": 4.586947302312851,
+        "K": 605.0962662612145,
+        "Kel": 256.5344603210814
+       }
+      },
+      "stop": null
+     }
+    ]
+   },
+   "lumbarFlex": {
+    "joint": "lumbar",
+    "axis": "flex",
+    "rows": [
+     {
+      "ampRad": 0.01,
+      "sign": 1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": 0.5004954451784208,
+        "dT": -3.8992247511291502,
+        "K": 446.37593361715074,
+        "Kel": 139.54836900877766
+       }
+      },
+      "stop": null
+     },
+     {
+      "ampRad": 0.01,
+      "sign": -1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": -0.49737490215665,
+        "dT": 3.898300138244629,
+        "K": 449.0699957480681,
+        "Kel": 139.9170517508732
+       }
+      },
+      "stop": null
+     }
+    ]
+   },
+   "lumbarLat": {
+    "joint": "lumbar",
+    "axis": "lat",
+    "rows": [
+     {
+      "ampRad": 0.01,
+      "sign": 1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": 0.5711864760397571,
+        "dT": -2.1810278440685824,
+        "K": 218.7791478048734,
+        "Kel": 54.601776461255405
+       }
+      },
+      "stop": null
+     },
+     {
+      "ampRad": 0.01,
+      "sign": -1,
+      "at": {
+       "29.2": {
+        "ms": 29.2,
+        "jointDeg": -0.5711874920665281,
+        "dT": 2.181080113089506,
+        "K": 218.7840017431434,
+        "Kel": 54.602815427543185
+       }
+      },
+      "stop": null
+     }
+    ]
+   }
+  },
+  "quasi": {
+   "ankle": {
+    "joint": "ankle_R",
+    "axis": "df",
+    "ampDeg": 0.5729577951308232,
+    "rows": [
+     {
+      "sign": 1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": 0.5729016043325429,
+        "K": 129.08765981319155
+       },
+       {
+        "ms": 1000,
+        "jointDeg": 0.5729016043325429,
+        "K": 96.18643314238504
+       }
+      ]
+     },
+     {
+      "sign": -1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": -0.5728990408822705,
+        "K": 128.61118849974662
+       },
+       {
+        "ms": 1000,
+        "jointDeg": -0.5728990408822705,
+        "K": 96.01684609632443
+       }
+      ]
+     }
+    ]
+   },
+   "knee": {
+    "joint": "knee_R",
+    "axis": "flex",
+    "ampDeg": 0.5729577951308232,
+    "rows": [
+     {
+      "sign": 1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": 0.5726084453281278,
+        "K": 102.09825241132692
+       },
+       {
+        "ms": 1000,
+        "jointDeg": 0.5726084453281278,
+        "K": 72.742353226299
+       }
+      ]
+     },
+     {
+      "sign": -1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": -0.572604654166443,
+        "K": 100.29481643482141
+       },
+       {
+        "ms": 1000,
+        "jointDeg": -0.572604654166443,
+        "K": 71.74722120285733
+       }
+      ]
+     }
+    ]
+   },
+   "hip": {
+    "joint": "hip_R",
+    "axis": "flex",
+    "ampDeg": 0.5729577951308232,
+    "rows": [
+     {
+      "sign": 1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": 0.5718113337175762,
+        "K": 128.34481189028767
+       },
+       {
+        "ms": 1000,
+        "jointDeg": 0.5718113337175762,
+        "K": 88.01511407494044
+       }
+      ]
+     },
+     {
+      "sign": -1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": -0.5718115481244286,
+        "K": 127.07121593370529
+       },
+       {
+        "ms": 1000,
+        "jointDeg": -0.5718115481244286,
+        "K": 87.34774601661378
+       }
+      ]
+     }
+    ]
+   },
+   "lumbarFlex": {
+    "joint": "lumbar",
+    "axis": "flex",
+    "ampDeg": 0.5729577951308232,
+    "rows": [
+     {
+      "sign": 1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": 0.5729586959368651,
+        "K": 52.595917308533686
+       },
+       {
+        "ms": 1000,
+        "jointDeg": 0.5729586959368651,
+        "K": 34.250946150554796
+       }
+      ]
+     },
+     {
+      "sign": -1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": -0.5729574584362651,
+        "K": 52.59603090768223
+       },
+       {
+        "ms": 1000,
+        "jointDeg": -0.5729574584362651,
+        "K": 34.25202012795515
+       }
+      ]
+     }
+    ]
+   },
+   "lumbarLat": {
+    "joint": "lumbar",
+    "axis": "lat",
+    "ampDeg": 0.5729577951308232,
+    "rows": [
+     {
+      "sign": 1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": 0.5828288429798135,
+        "K": 10.508949417523317
+       },
+       {
+        "ms": 1000,
+        "jointDeg": 0.5828288429798135,
+        "K": 5.9829248040268395
+       }
+      ]
+     },
+     {
+      "sign": -1,
+      "read": [
+       {
+        "ms": 250,
+        "jointDeg": -0.5828289982795085,
+        "K": 10.508946617325243
+       },
+       {
+        "ms": 1000,
+        "jointDeg": -0.5828289982795085,
+        "K": 5.982923209826138
+       }
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "P": {
+  "edges": {
+   "fwd": 0.12935342041979284,
+   "back": -0.09835644869286042,
+   "left": 0.26609404047978236,
+   "right": -0.26609397534100165
+  },
+  "runs": {
+   "fwd.small": {
+    "J": 6.1,
+    "judge": {
+     "dev": {
+      "deg": 0.4068063163310995,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0,
+     "comRelPeakMm": 0.8513442682847803,
+     "comRelEndMm": 0.8513442682847803,
+     "xcomMinMarginM": 0.08556083528088326,
+     "loss": null,
+     "feetMinN": 361.5221640226082,
+     "satMax": 0
+    },
+    "report": {
+     "dev": {
+      "deg": 1.81583620264309,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.5110502243041992,
+     "comRelPeakMm": 6.599524819525315,
+     "comRelEndMm": 6.599524819525315,
+     "xcomMinMarginM": 0.06934071499366443,
+     "loss": null,
+     "feetMinN": 339.88111814484,
+     "satMax": 0
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 12.5,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.003486421545475985
+   },
+   "fwd.moderate": {
+    "J": 9.7,
+    "judge": {
+     "dev": {
+      "deg": 0.6480653035979188,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0,
+     "comRelPeakMm": 1.3534065663716073,
+     "comRelEndMm": 1.3534065663716073,
+     "xcomMinMarginM": 0.07554854128671451,
+     "loss": null,
+     "feetMinN": 361.9403313403018,
+     "satMax": 0
+    },
+    "report": {
+     "dev": {
+      "deg": 2.895724000913298,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.881195068359375,
+     "comRelPeakMm": 10.483201248976709,
+     "comRelEndMm": 10.483201248976709,
+     "xcomMinMarginM": 0.05013617435001219,
+     "loss": null,
+     "feetMinN": 327.2311101271771,
+     "satMax": 0
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 12.5,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.00438602054768942
+   },
+   "fwd.large": {
+    "J": 36.4,
+    "judge": {
+     "dev": {
+      "deg": 2.472614005940883,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0,
+     "comRelPeakMm": 5.068408085775865,
+     "comRelEndMm": 5.068408085775865,
+     "xcomMinMarginM": 0.001542213511032925,
+     "loss": null,
+     "feetMinN": 348.7630761251785,
+     "satMax": 2
+    },
+    "report": {
+     "dev": {
+      "deg": 13.05681197572701,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 4.934251308441162,
+     "comRelPeakMm": 39.31022343013926,
+     "comRelEndMm": 39.31022343013926,
+     "xcomMinMarginM": -0.0944786435428974,
+     "loss": {
+      "t": 0.03333333333333333,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 242.2057554870844,
+     "satMax": 4
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 4.17,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.08567813857464182
+   },
+   "back.small": {
+    "J": 7.3,
+    "judge": {
+     "dev": {
+      "deg": 0.4909214758677545,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.07617473602294922,
+     "comRelPeakMm": 1.0199754934134102,
+     "comRelEndMm": 1.0199754934134102,
+     "xcomMinMarginM": 0.10480326666455789,
+     "loss": null,
+     "feetMinN": 339.261717946938,
+     "satMax": 1
+    },
+    "report": {
+     "dev": {
+      "deg": 2.261326082760141,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.08118152618408203,
+     "comRelPeakMm": 7.945258176374412,
+     "comRelEndMm": 7.945258176374412,
+     "xcomMinMarginM": 0.08631818463436305,
+     "loss": null,
+     "feetMinN": 339.261717946938,
+     "satMax": 1
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 12.5,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.003486421545475985
+   },
+   "back.moderate": {
+    "J": 11.6,
+    "judge": {
+     "dev": {
+      "deg": 0.8407735694385621,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.12743473052978516,
+     "comRelPeakMm": 1.6236727298532225,
+     "comRelEndMm": 1.6236727298532225,
+     "xcomMinMarginM": 0.09272286316108558,
+     "loss": null,
+     "feetMinN": 327.3554369411431,
+     "satMax": 3
+    },
+    "report": {
+     "dev": {
+      "deg": 3.9118454560218896,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.15532970428466797,
+     "comRelPeakMm": 12.716926902081095,
+     "comRelEndMm": 12.716926902081095,
+     "xcomMinMarginM": 0.062479584539758874,
+     "loss": null,
+     "feetMinN": 327.3554369411431,
+     "satMax": 3
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 8.33,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.0070487862520194535
+   },
+   "back.large": {
+    "J": 43.5,
+    "judge": {
+     "dev": {
+      "deg": 3.0501036062002855,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 0.7829666137695312,
+     "comRelPeakMm": 6.156039602501405,
+     "comRelEndMm": 6.156039602501405,
+     "xcomMinMarginM": 0.0017070727171847183,
+     "loss": null,
+     "feetMinN": 230.88069612975687,
+     "satMax": 4
+    },
+    "report": {
+     "dev": {
+      "deg": 16.687644409750412,
+      "axis": "lumbar.flex"
+     },
+     "pelvisDropMm": 2.7210116386413574,
+     "comRelPeakMm": 49.45215764424657,
+     "comRelEndMm": 49.45215764424657,
+     "xcomMinMarginM": -0.12580818771991753,
+     "loss": {
+      "t": 0.03333333333333333,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 212.853434428107,
+     "satMax": 6
+    },
+    "yieldInWindow": [
+     "7_1",
+     "8_1",
+     "9_1",
+     "10_1"
+    ],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 4.17,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.1296461748493646
+   },
+   "left.small": {
+    "J": 15.6,
+    "judge": {
+     "dev": {
+      "deg": 1.0027312110794062,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.004291534423828125,
+     "comRelPeakMm": 2.2506055501154583,
+     "comRelEndMm": 2.2506055501154583,
+     "xcomMinMarginM": 0.2211758881865647,
+     "loss": null,
+     "feetMinN": 327.9718180792406,
+     "satMax": 2
+    },
+    "report": {
+     "dev": {
+      "deg": 5.603426800683228,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.6223917007446289,
+     "comRelPeakMm": 17.514859152745444,
+     "comRelEndMm": 17.514859152745444,
+     "xcomMinMarginM": 0.17722103948564402,
+     "loss": null,
+     "feetMinN": 307.48611979099223,
+     "satMax": 4
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 8.33,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.01999731823779681
+   },
+   "left.moderate": {
+    "J": 24.9,
+    "judge": {
+     "dev": {
+      "deg": 1.6442862698180751,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.012755393981933594,
+     "comRelPeakMm": 3.5990301680538366,
+     "comRelEndMm": 3.5990301680538366,
+     "xcomMinMarginM": 0.19427957626849202,
+     "loss": null,
+     "feetMinN": 301.6474822611781,
+     "satMax": 4
+    },
+    "report": {
+     "dev": {
+      "deg": 10.253082686811865,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 1.687943935394287,
+     "comRelPeakMm": 28.38190855100739,
+     "comRelEndMm": 28.38190855100739,
+     "xcomMinMarginM": 0.12068823300964326,
+     "loss": null,
+     "feetMinN": 261.35828267375473,
+     "satMax": 4
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 8.33,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.06608722951978854
+   },
+   "left.large": {
+    "J": 93.3,
+    "judge": {
+     "dev": {
+      "deg": 7.1040582296342585,
+      "axis": "thoracic.lat"
+     },
+     "pelvisDropMm": 0,
+     "comRelPeakMm": 13.614823933361809,
+     "comRelEndMm": 13.614823933361809,
+     "xcomMinMarginM": -0.0055696865600528,
+     "loss": {
+      "t": 0.029166666666666667,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 140.66781924571842,
+     "satMax": 8
+    },
+    "report": {
+     "dev": {
+      "deg": 30.253518053642352,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 11.767148971557617,
+     "comRelPeakMm": 107.05437500810453,
+     "comRelEndMm": 107.05437500810453,
+     "xcomMinMarginM": -0.2762009114938009,
+     "loss": {
+      "t": 0.029166666666666667,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 12.311934940516949,
+     "satMax": 18
+    },
+    "yieldInWindow": [
+     "8_2",
+     "1_2",
+     "7_2",
+     "0_2",
+     "11_2",
+     "12_2"
+    ],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 4.17,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.6861767170098967
+   },
+   "right.small": {
+    "J": 15.6,
+    "judge": {
+     "dev": {
+      "deg": 1.0025001705576027,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.007569789886474609,
+     "comRelPeakMm": 2.2504250973462594,
+     "comRelEndMm": 2.2504250973462594,
+     "xcomMinMarginM": 0.22157305412439943,
+     "loss": null,
+     "feetMinN": 333.4796533273766,
+     "satMax": 2
+    },
+    "report": {
+     "dev": {
+      "deg": 5.588811869420388,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.6389021873474121,
+     "comRelPeakMm": 17.481957330060716,
+     "comRelEndMm": 17.481957330060716,
+     "xcomMinMarginM": 0.17819295667978094,
+     "loss": null,
+     "feetMinN": 311.35602891328745,
+     "satMax": 4
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 8.33,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.01937857071561605
+   },
+   "right.moderate": {
+    "J": 24.9,
+    "judge": {
+     "dev": {
+      "deg": 1.6437799116999086,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0.01806020736694336,
+     "comRelPeakMm": 3.598040708800635,
+     "comRelEndMm": 3.598040708800635,
+     "xcomMinMarginM": 0.19470754597015907,
+     "loss": null,
+     "feetMinN": 305.2000889884948,
+     "satMax": 4
+    },
+    "report": {
+     "dev": {
+      "deg": 10.22092204227914,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 1.710057258605957,
+     "comRelPeakMm": 28.335573616152953,
+     "comRelEndMm": 28.335573616152953,
+     "xcomMinMarginM": 0.12172052461298577,
+     "loss": null,
+     "feetMinN": 265.5109226660534,
+     "satMax": 4
+    },
+    "yieldInWindow": [],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 8.33,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.0649665172552545
+   },
+   "right.large": {
+    "J": 93.3,
+    "judge": {
+     "dev": {
+      "deg": 7.105546825569988,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 0,
+     "comRelPeakMm": 13.606281567202737,
+     "comRelEndMm": 13.606281567202737,
+     "xcomMinMarginM": -0.004886319994302557,
+     "loss": {
+      "t": 0.029166666666666667,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 136.82439096271992,
+     "satMax": 8
+    },
+    "report": {
+     "dev": {
+      "deg": 30.412134256821968,
+      "axis": "lumbar.lat"
+     },
+     "pelvisDropMm": 11.34425401687622,
+     "comRelPeakMm": 107.25412306171008,
+     "comRelEndMm": 107.25412306171008,
+     "xcomMinMarginM": -0.27718185498987946,
+     "loss": {
+      "t": 0.029166666666666667,
+      "cause": "XcoM beyond the base of support"
+     },
+     "feetMinN": 12.908817529678345,
+     "satMax": 18
+    },
+    "yieldInWindow": [
+     "7_2",
+     "1_2",
+     "8_2",
+     "12_2",
+     "0_2",
+     "11_2"
+    ],
+    "chronoMs": {
+     "stateDiff": 4.17,
+     "joint001": 4.17,
+     "joint01": 4.17,
+     "command": null,
+     "command01": null,
+     "activation": null,
+     "neuralTorque01": null
+    },
+    "stop": null,
+    "sepMax": 0.6845074556471793
+   }
+  }
+ },
+ "R": [
+  {
+   "probe": "ankle_R.df +5",
+   "holdDeg": 1.3104467664419657,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": 1.3616328867340246
+    },
+    {
+     "ms": 50,
+     "deg": 1.349989542617822
+    }
+   ],
+   "finalDeg": 0.9862813261788028,
+   "residualFrac": 0.7526298293342244,
+   "oscDeg": [
+    0.37584349583210974
+   ],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "ankle_R.df −5",
+   "holdDeg": -1.3427324998637602,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": -1.3955387331064664
+    },
+    {
+     "ms": 50,
+     "deg": -1.3780547885360035
+    }
+   ],
+   "finalDeg": -0.9983619391567654,
+   "residualFrac": 0.7435300324212483,
+   "oscDeg": [
+    -0.39717679394970096
+   ],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "knee_R.flex +5",
+   "holdDeg": 2.3378861355543568,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": 2.1705860573078515
+    },
+    {
+     "ms": 50,
+     "deg": 1.8548621140402135
+    }
+   ],
+   "finalDeg": 0.7416367181277007,
+   "residualFrac": 0.3172253373887453,
+   "oscDeg": [
+    -0.0014677938250942102
+   ],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "knee_R.flex −5",
+   "holdDeg": -2.489082464224258,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": -2.3136832183661644
+    },
+    {
+     "ms": 50,
+     "deg": -1.9800903759261541
+    }
+   ],
+   "finalDeg": -0.8395845670937788,
+   "residualFrac": 0.3373068506813984,
+   "oscDeg": [
+    0.001240858115725274
+   ],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "hip_R.flex +5",
+   "holdDeg": 1.4388960389952714,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": 1.3406321872837994
+    },
+    {
+     "ms": 50,
+     "deg": 1.236986890260406
+    }
+   ],
+   "finalDeg": 0.8881582140025996,
+   "residualFrac": 0.6172497455916052,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "hip_R.flex −5",
+   "holdDeg": -1.4688700551437206,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": -1.3711089217955479
+    },
+    {
+     "ms": 50,
+     "deg": -1.2666302727870775
+    }
+   ],
+   "finalDeg": -0.9185585334850959,
+   "residualFrac": 0.625350438773306,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "lumbar.flex +5",
+   "holdDeg": 2.792630661376676,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": 2.8791314371400962
+    },
+    {
+     "ms": 50,
+     "deg": 2.9280587036773373
+    }
+   ],
+   "finalDeg": 4.251919533675502,
+   "residualFrac": 1.5225498998064584,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "lumbar.flex −5",
+   "holdDeg": -2.8110485127927363,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": -2.890940885056288
+    },
+    {
+     "ms": 50,
+     "deg": -2.936579831928104
+    }
+   ],
+   "finalDeg": -4.3329788619737,
+   "residualFrac": 1.5414102041479705,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "lumbar.lat +5",
+   "holdDeg": 4.075650742461284,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": 4.719334706917065
+    },
+    {
+     "ms": 50,
+     "deg": 5.283116813494747
+    }
+   ],
+   "finalDeg": 14.751099845665461,
+   "residualFrac": 3.6193238277226074,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  },
+  {
+   "probe": "lumbar.lat −5",
+   "holdDeg": -4.0760001080475075,
+   "recoil": [
+    {
+     "ms": 25,
+     "deg": -4.7196776000283815
+    },
+    {
+     "ms": 50,
+     "deg": -5.283895530900269
+    }
+   ],
+   "finalDeg": -14.68588373420396,
+   "residualFrac": 3.603013578240266,
+   "oscDeg": [],
+   "zeta": null,
+   "growing": false,
+   "stop": null
+  }
+ ],
+ "C": {
+  "ankle": {
+   "ampDeg": 1.0026761414789407,
+   "endOfStretchNm": -3.4127,
+   "reserve": [
+    0.0375,
+    3.8354
+   ],
+   "fraction": {
+    "100": 0.464444574676942,
+    "300": 0.3673982477217453,
+    "1000": 0.2243765933132124
+   }
+  },
+  "knee": {
+   "ampDeg": 1.0026761414789407,
+   "endOfStretchNm": -3.04427,
+   "reserve": [
+    1.7298,
+    1.8392
+   ],
+   "fraction": {
+    "100": 0.4645284419581706,
+    "300": 0.3673360115889852,
+    "1000": 0.22336060861881502
+   }
+  },
+  "hip": {
+   "ampDeg": 1.0026761414789407,
+   "endOfStretchNm": -4.15649,
+   "reserve": [
+    0.7219,
+    4.1528
+   ],
+   "fraction": {
+    "100": 0.4646612887315981,
+    "300": 0.3674566761859165,
+    "1000": 0.22345777326542346
+   }
+  }
+ },
+ "D": {
+  "standing": [
+   "c0dba9785a481671",
+   "c0dba9785a481671"
+  ],
+  "push": [
+   "30f529d1f84f7d9a",
+   "30f529d1f84f7d9a"
+  ],
+  "identical": true
+ },
+ "label": "S2_TONE_LOW",
+ "params": {
+  "id": "PPR-3 S2 sensitivity: tone LOW (§2 range low ends)",
+  "zeta": 0.2,
+  "thetaYdeg": {
+   "ankle": 0.9673617406041296,
+   "knee": 1,
+   "hip": 1,
+   "lumbar": 3,
+   "thoracic": 3,
+   "neck": 2,
+   "shoulder": 2.2,
+   "elbow": 2
+  },
+  "floorDefault": 0.02,
+  "passive": {
+   "ankle.df": {
+    "k": 46,
+    "slackDeg": 0,
+    "src": "Loram, Maganaris & Lakie 2007a [M]: long-range relaxed ankle stiffness in standing, 46 N·m/rad per leg; slack = anatomical neutral [D]"
+   },
+   "knee.flex": {
+    "k": 17,
+    "slackDeg": 14,
+    "src": "Riener & Edrich 1999 [E]: passive knee stiffness at 14.2° flexion (≈ 16 at 15°, 26 at 10°); slack = passive zero-moment angle ≈ 14°"
+   },
+   "hip.flex": {
+    "k": 19,
+    "slackDeg": 26.8,
+    "src": "Riener & Edrich 1999 [E]: passive hip stiffness at 7.4° flexion (20.6 at 5°, 17.8 at 10°); slack = passive zero-moment angle 26.8° (knee extended)"
+   },
+   "lumbar.flex": {
+    "k": 10,
+    "slackDeg": 0,
+    "src": "Watt 2022 table [M/R]: lumbar neutral-zone stiffness ≈ 10 N·m/rad; slack = neutral"
+   },
+   "neck.flex": {
+    "k": 1.6,
+    "slackDeg": 0,
+    "src": "Liu et al. 2024 [M]: zone-1 neck stiffness 2.1 (flexion) / 1.1 (extension) N·m/rad, mean; slack = neutral"
+   },
+   "neck.lat": {
+    "k": 2.4,
+    "slackDeg": 0,
+    "src": "Liu et al. 2024 [M]: zone-1 lateral bending ≈ 2.4 N·m/rad; slack = neutral"
+   }
+  },
+  "frontalPair": "minEffort",
+  "ecc": {
+   "fRes": 0.15,
+   "wS": 0.3,
+   "wF": 0.55,
+   "tauS": 0.5,
+   "tauF": 0.02,
+   "src": "ECCENTRIC_PERSISTENCE_DAMPING_LITERATURE §recommendation (central values)"
+  },
+  "floors": {
+   "ankle.df": {
+    "pos": 0.005,
+    "neg": 0.05
+   },
+   "ankle.inv": {
+    "pos": 0.01,
+    "neg": 0.02
+   },
+   "knee.flex": {
+    "pos": 0.01,
+    "neg": 0.06
+   },
+   "knee.rot": {
+    "pos": 0.01,
+    "neg": 0.01
+   },
+   "hip.flex": {
+    "pos": 0.015,
+    "neg": 0.03
+   },
+   "hip.abd": {
+    "pos": 0.02,
+    "neg": 0.01
+   },
+   "hip.rot": {
+    "pos": 0.01,
+    "neg": 0.01
+   },
+   "lumbar.flex": {
+    "pos": 0.015,
+    "neg": 0.04
+   },
+   "lumbar.lat": {
+    "pos": 0.03,
+    "neg": 0.03
+   },
+   "lumbar.rot": {
+    "pos": 0.02,
+    "neg": 0.02
+   },
+   "thoracic.flex": {
+    "pos": 0.015,
+    "neg": 0.03
+   },
+   "thoracic.lat": {
+    "pos": 0.03,
+    "neg": 0.03
+   },
+   "thoracic.rot": {
+    "pos": 0.02,
+    "neg": 0.02
+   },
+   "neck.flex": {
+    "pos": 0.01,
+    "neg": 0.02
+   },
+   "neck.lat": {
+    "pos": 0.02,
+    "neg": 0.02
+   },
+   "neck.rot": {
+    "pos": 0.02,
+    "neg": 0.02
+   }
+  }
+ }
+}

@@ -1,0 +1,303 @@
+{
+ "criteria": {
+  "E1": "[D] entry load: steps 1–4 within ±10 % of body weight, steps 5–60 within ±1 %",
+  "E2": "[S] entry: turf penetration ≤ 1 mm and joint separation ≤ 1 mm over the first 250 ms",
+  "E3": "[D] entry: centre of pressure within 5 mm of the COM ground projection from step 5 (static equilibrium consistent)",
+  "E4": "[D] entry: over 250 ms pelvis vertical change ≤ 1 mm, COM horizontal ≤ 2 mm, max key-axis drift ≤ 0.5° (no start-up transient)",
+  "I1a": "[M/E] ankle K/mgh at the end of the 41.7 ms ramp (ankle intrinsic window 40 ms) within [0.5, 1.5] × Vlutters 2015, all 5 amplitudes",
+  "I1b": "[M/E] ankle K/mgh at 71 ms within [0.5, 1.5] × Sakanaka 2021 for sub-degree rotations (no stretch reflex at sway size, Loram & Lakie 2002)",
+  "I2": "[M/E] ankle quasi-static (held, 1 s) K/mgh within [0.13 (relaxed passive, Loram 2007a), 0.75 (1.5 × Kiemel 2008 intrinsic ≈ 0.5)]",
+  "I3": "[M/E] hip quasi-static (held, 1 s) per side within [24, 111] N·m/rad (Kiemel 2008 intrinsic 95–147 both hips → 48–74 per hip × [0.5, 1.5])",
+  "I4": "[E] knee quasi-static (held, 1 s) ≥ 17 N·m/rad (Riener & Edrich passive at 14°; lower bound only)",
+  "I5": "[M/E] lumbar flexion fast (29 ms, trunk window 30 ms) elastic stiffness within [55, 164] N·m/rad (Brown & McGill 2009 intrinsic 109 × [0.5, 1.5])",
+  "I6": "[M/E] lumbar lateral fast elastic stiffness ≥ 55 N·m/rad (Brown & McGill 2009: lateral ≥ flexion at every level; lower bound only)",
+  "P1": "[D] small pushes (4 directions): no key axis yields within the 30 ms intrinsic window, and some key axis deflects ≥ 0.01° (resisted but compliant)",
+  "P2": "[D] continuum: max key-axis deflection at 30 ms strictly increases small < moderate < large in every direction",
+  "R1": "[D] release: no growing oscillation",
+  "R2": "[D] release: ζ ≥ 0.05 where an oscillation is measurable",
+  "C1": "[LIT-MODEL] eccentric hold (near-step 1° held stretch of the tonically active side): fraction of the stretch-induced strain torque remaining at 100 / 300 / 1000 ms within [0.25, 0.60] / [0.15, 0.45] / [0.08, 0.35] (ECCENTRIC_PERSISTENCE_DAMPING_LITERATURE §recommendation), ankle, knee, hip",
+  "INT": "[S] joint separation ≤ 5 mm in every push run; no non-finite / speed stop in small and moderate pushes",
+  "DET": "[S] bit-identical reruns (240-step standing, moderate forward push)"
+ },
+ "ref": {
+  "vlutters": "0.93·(θ/0.29°)^−0.271",
+  "sakanaka": "0.94·(θ/0.2°)^−0.321",
+  "band": [
+   0.5,
+   1.5
+  ],
+  "ankleQuasi": [
+   0.13,
+   0.75
+  ],
+  "hipQuasi": [
+   24,
+   111
+  ],
+  "kneeQuasiMin": 17,
+  "lumbarFlexFast": [
+   55,
+   164
+  ],
+  "lumbarLatFastMin": 55,
+  "ecc": {
+   "100": [
+    0.25,
+    0.6
+   ],
+   "300": [
+    0.15,
+    0.45
+   ],
+   "1000": [
+    0.08,
+    0.35
+   ]
+  }
+ },
+ "label": "S2_ABL_noB",
+ "cond": "S2",
+ "pass": true,
+ "nPass": 18,
+ "n": 18,
+ "failed": [],
+ "results": {
+  "E1": {
+   "pass": true,
+   "value": {
+    "first4": [
+     712.0549961272627,
+     742.0981940750062,
+     729.7755260166741,
+     726.4383884255319
+    ],
+    "min": 712.0549961272627,
+    "max": 742.0981940750062,
+    "after4": {
+     "min": 724.1897266655657,
+     "max": 726.3824125072439
+    }
+   }
+  },
+  "E2": {
+   "pass": true,
+   "value": {
+    "pen": 0.0069222363150295285,
+    "sep": 0.003583340023459585
+   }
+  },
+  "E3": {
+   "pass": true,
+   "value": {
+    "first": 1.7626635310439376,
+    "max": 1.7626635310439376,
+    "last": 0.602539840313157
+   }
+  },
+  "E4": {
+   "pass": true,
+   "value": {
+    "pelvisDropMm": -0.04029273986816406,
+    "comHorizMm": 0.09213908328501762,
+    "maxJointDriftDeg": 0.24881372193066276
+   }
+  },
+  "I1a": {
+   "pass": true,
+   "value": [
+    {
+     "deg": 0.25,
+     "K": 0.915,
+     "ratio": 0.95
+    },
+    {
+     "deg": 0.51,
+     "K": 0.917,
+     "ratio": 1.15
+    },
+    {
+     "deg": 1.02,
+     "K": 0.919,
+     "ratio": 1.39
+    },
+    {
+     "deg": 2.04,
+     "K": 0.796,
+     "ratio": 1.45
+    },
+    {
+     "deg": 4.18,
+     "K": 0.508,
+     "ratio": 1.13
+    }
+   ]
+  },
+  "I1b": {
+   "pass": true,
+   "value": [
+    {
+     "deg": 0.21,
+     "K": 0.523,
+     "ratio": 0.57
+    },
+    {
+     "deg": 0.42,
+     "K": 0.523,
+     "ratio": 0.71
+    },
+    {
+     "deg": 0.85,
+     "K": 0.525,
+     "ratio": 0.89
+    }
+   ]
+  },
+  "I2": {
+   "pass": true,
+   "value": [
+    0.254,
+    0.253
+   ]
+  },
+  "I3": {
+   "pass": true,
+   "value": [
+    64.7,
+    64.2
+   ]
+  },
+  "I4": {
+   "pass": true,
+   "value": [
+    81.9,
+    80.4
+   ]
+  },
+  "I5": {
+   "pass": true,
+   "value": [
+    142.1,
+    142.2
+   ]
+  },
+  "I6": {
+   "pass": true,
+   "value": [
+    77.3,
+    77.3
+   ]
+  },
+  "P1": {
+   "pass": true,
+   "value": {
+    "fwd": {
+     "dev": 0.392,
+     "axis": "lumbar.flex",
+     "yields": []
+    },
+    "back": {
+     "dev": 0.466,
+     "axis": "lumbar.flex",
+     "yields": []
+    },
+    "left": {
+     "dev": 0.915,
+     "axis": "lumbar.lat",
+     "yields": []
+    },
+    "right": {
+     "dev": 0.914,
+     "axis": "lumbar.lat",
+     "yields": []
+    }
+   }
+  },
+  "P2": {
+   "pass": true,
+   "value": {
+    "fwd": [
+     0.392,
+     0.624,
+     2.359
+    ],
+    "back": [
+     0.466,
+     0.744,
+     3.065
+    ],
+    "left": [
+     0.915,
+     1.468,
+     6.586
+    ],
+    "right": [
+     0.914,
+     1.468,
+     6.584
+    ]
+   }
+  },
+  "R1": {
+   "pass": true,
+   "value": []
+  },
+  "R2": {
+   "pass": true,
+   "value": [
+    {
+     "probe": "ankle_R.df +5",
+     "zeta": 0.801
+    },
+    {
+     "probe": "ankle_R.df −5",
+     "zeta": 0.822
+    }
+   ]
+  },
+  "C1": {
+   "pass": true,
+   "value": {
+    "ankle": {
+     "100": 0.465,
+     "300": 0.367,
+     "1000": 0.224
+    },
+    "knee": {
+     "100": 0.464,
+     "300": 0.367,
+     "1000": 0.223
+    },
+    "hip": {
+     "100": 0.465,
+     "300": 0.367,
+     "1000": 0.223
+    }
+   }
+  },
+  "INT": {
+   "pass": true,
+   "value": {
+    "sepMax": 0.616,
+    "stops": []
+   }
+  },
+  "DET": {
+   "pass": true,
+   "value": {
+    "standing": [
+     "b1ef36f467d8bfe6",
+     "b1ef36f467d8bfe6"
+    ],
+    "push": [
+     "dd899ca15227caac",
+     "dd899ca15227caac"
+    ],
+    "identical": true
+   }
+  }
+ },
+ "openLoop": {
+  "t": 1.4083333333333334,
+  "cause": "departure 10.0 mm"
+ }
+}
