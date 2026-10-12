@@ -2935,7 +2935,7 @@ What was done there is not reconstructed here.
   - the standing body: S2 qualified as a substrate; no delayed balance controller is qualified. BALANCE-1, the continuous delayed controller on M1b, is in progress; its freeze and results came after 06:00;
   - no explicit review verdict is recorded for ABI-1, TRC-1, PPR-1, PPR-2, PPR-3 or MUSCLE-1. Each later instruction built on the previous result, and MUSCLE-1's recommendation was approved at 04:59;
   - PVP-1A stays BLOCKED, and PVP is sealed until the receiving player is qualified.
-- **Publication:** 32 V2 commits above the published `1e39418`, and 2 more after 06:00. Pushed in the 12 Oct housekeeping.
+- **Publication:** 32 V2 commits above the published `1e39418`, and 2 more after 06:00. All 34 were pushed at 16:10 on 12 Oct (`1e39418` → `903c12d`), in the 12 Oct housekeeping; the push was delayed by a tool-permission block from 14:24 until the user's explicit authorization.
 
 ## Current state of the Touchline project
 
@@ -2950,7 +2950,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `903c12d`, 12 Oct 06:47, pushed in the 12 Oct housekeeping; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `903c12d`, 12 Oct 06:47, pushed at 16:10 on 12 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
