@@ -1,0 +1,230 @@
+{
+ "tool": "ppr3_capture.cjs",
+ "views": {
+  "STAND_normal": {
+   "panels": [
+    {
+     "k": "STAND_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "STAND_S2",
+     "l": "S2 alone (no feedback)"
+    },
+    {
+     "k": "STAND_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "STAND_normal_clean.mp4",
+    "overlay": "STAND_normal_overlay.mp4"
+   }
+  },
+  "STAND_slow": {
+   "panels": [
+    {
+     "k": "STAND_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "STAND_S2",
+     "l": "S2 alone (no feedback)"
+    },
+    {
+     "k": "STAND_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "STAND_slow_clean.mp4",
+    "overlay": "STAND_slow_overlay.mp4"
+   }
+  },
+  "PUSHF_normal": {
+   "panels": [
+    {
+     "k": "PUSHF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHF_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHF_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHF_normal_clean.mp4",
+    "overlay": "PUSHF_normal_overlay.mp4"
+   }
+  },
+  "PUSHF_slow": {
+   "panels": [
+    {
+     "k": "PUSHF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHF_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHF_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHF_slow_clean.mp4",
+    "overlay": "PUSHF_slow_overlay.mp4"
+   }
+  },
+  "PUSHL_normal": {
+   "panels": [
+    {
+     "k": "PUSHL_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHL_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHL_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHL_normal_clean.mp4",
+    "overlay": "PUSHL_normal_overlay.mp4"
+   }
+  },
+  "PUSHL_slow": {
+   "panels": [
+    {
+     "k": "PUSHL_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHL_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHL_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHL_slow_clean.mp4",
+    "overlay": "PUSHL_slow_overlay.mp4"
+   }
+  },
+  "PUSHX_normal": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHX_normal_clean.mp4",
+    "overlay": "PUSHX_normal_overlay.mp4"
+   }
+  },
+  "PUSHX_slow": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2R",
+     "l": "S2 · replayed commands"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + P2 (delayed control)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHX_slow_clean.mp4",
+    "overlay": "PUSHX_slow_overlay.mp4"
+   }
+  }
+ },
+ "logs": []
+}

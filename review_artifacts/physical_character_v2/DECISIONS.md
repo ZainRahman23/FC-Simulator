@@ -3804,3 +3804,79 @@ The alternative is a KC-4-style scoping decision. Stopped; no collision, tackle,
 4. A decision on the PVP entry fixture.
 
 **Report:** `ppr2/PPR2_REPORT.md`. **Review:** `ppr2/review/PPR2_REVIEW.html`, with clips (STAND, PUSHF). Frames, clip data and records are outside Git (`ppr2/review/frames.OUTSIDE_GIT.md`).
+
+## 2026-10-11: PPR-3 physiological standing foundation (source f7cef6b3; S2 frozen 594a6d37, results ca7674b5; P2 frozen 932cd113, results f53b7917): S2 QUALIFIED 18 / 18; S2 + P2 FAILED 10 / 14; P2b unstable; stop condition B (architectural decision); REVIEW_PENDING
+
+**Preserved unchanged:** PPR-1 and PPR-2.
+
+**Not touched:**
+- PVP stayed sealed: no PVP-1A-DX, ABI or tackle was run or viewed.
+- RUN-1, slide, simulation, outcomes, geometry, solver, TRC-1 rendering and PVP records are not modified.
+- The canonical V2 spec is unchanged.
+
+**Entry.** A flat-footed standing entry (`ppr3/fixture/PPR3_STANDING_ENTRY.json`) carries body weight within 4 steps with no settling rig. The PVP start-up transients came from its hovering, rolled-foot entry.
+
+**S2: the substrate, no feedback. Qualified 18 / 18** inside the literature intrinsic windows (ankle 40 ms; knee, hip, trunk 30 ms).
+- Components:
+  - fixed excitation;
+  - minimum-effort rest statics: hip-abductor tone 4.0 % vs gluteus medius 3.6 %, untargeted;
+  - ready-stance tone T;
+  - PPR-2 passive B;
+  - Maxwell strain arms C (0.15 persistent / 0.30, τ 0.5 s / 0.55, τ 20 ms);
+  - bidirectional short-range-stiffness cap.
+- Results:
+  - ankle 0.78–1.21 × Vlutters;
+  - hip 108 per side (band top edge), knee 99, lumbar 151 / 77 N·m/rad;
+  - eccentric-hold fractions 0.465 / 0.367 / 0.224;
+  - open-loop exit 1.43 s (CURRENT V2 0.34 s).
+- **Ablations:**
+  - T is bounded on both sides: no-T, low and high all fail;
+  - C is supported in its relaxing form: no-C and PPR-2's indefinite hold both fail;
+  - **B is not shown necessary**: no-B passes 18 / 18.
+
+**S2 + P2: continuous delayed control. FAILED 10 / 14.**
+- P2 is causal by construction: a frozen view of delayed samples only.
+- Channels: COM PID 100 ms; hip / trunk 75 ms; neck 25 ms; knee 75 ms; null-axis joint posture 75 ms. Motor noise CV 2.5 %.
+- Passed:
+  - 60 s standing with noise (COM RMS 1.86 / 0.62 mm);
+  - clean 250 ms;
+  - no creep;
+  - large pushes topple it;
+  - continuum;
+  - **causality on all 12 pushes**: commands bit-identical to the twin until 29.17 ms;
+  - body-joint neural torque from 79 ms;
+  - determinism.
+- **Failed:**
+  - P1 lateral small (not settled);
+  - P2 lateral moderate (far-foot unload at 0.40 s);
+  - M1 (human-matched pushes unsettled);
+  - T1 (forward threshold 1.00 × the zero-delay limit: over-robust; lateral 0.32 ×: fragile).
+- The S2-replay twin (no feedback) loses balance from every push at 0.33–0.64 s.
+
+**Diagnosis:**
+- P2 is stable only while its torque is superhuman: ankle rise 908 N·m/s for a moderate push vs 372 ± 267 human; sway ≈ 4 × human frequency.
+- It lacks COM acceleration feedback, and the lateral four-bar mode (1.70 × mg/h) is underdamped.
+
+**P2b** (`ppr3/explore/`, labelled exploration): a physiological EMG → torque filter + K_A, three Pasma / van der Kooij variants. **All three diverge undisturbed and noise-free.** No battery push was run. The frozen `ppr3_ctrl.mjs` still matches its freeze; the P2b additions live only in `explore/`.
+
+**Stop condition B: owner decisions needed:**
+1. Muscle contraction (EMG → force) dynamics: in the V2 body spec (recommended) or in P2.
+2. P2's controller class: a model-based delayed multi-joint controller (state estimation + predictor, coordinated output; recommended), or PID + acceleration feedback (shown unstable here).
+
+Either is re-qualified on the same frozen S2 + P2 battery.
+
+**Spec recommendation (not applied):**
+
+| Element | Recommendation | Kind |
+|---|---|---|
+| C + bidirectional short-range-stiffness cap | adopt | body |
+| T | adopt | neural / feed-forward setting |
+| A2 | adopt | feed-forward law |
+| B | optional, via the existing neutral-zone term | body |
+| P | architecture yes, current controller no | controller |
+
+**Report:** `ppr3/PPR3_REPORT.md` (fifteen answers).
+
+**Review:** `ppr3/review/PPR3_REVIEW.html`. Clips are CURRENT V2 | S2 | S2 + P2 for STAND, PUSHF, PUSHL and PUSHX, each at normal and 4× slow speed, clean and with overlay.
+
+Records and clip data are outside Git (`ppr3/review/OUTSIDE_GIT.md`).

@@ -1,0 +1,39 @@
+diff --git a/review_artifacts/physical_character_v2/ppr3/scripts/ppr3_ctrl.mjs b/review_artifacts/physical_character_v2/ppr3/scripts/ppr3_ctrl.mjs
+index 3574c4ea..3a989a02 100644
+--- a/review_artifacts/physical_character_v2/ppr3/scripts/ppr3_ctrl.mjs
++++ b/review_artifacts/physical_character_v2/ppr3/scripts/ppr3_ctrl.mjs
+@@ -54,11 +54,11 @@ export class P2Controller {
+     const joint = this.kneeJ.map(k => P.anat(P.jd[k], ev.qs[k], "flex")), ang = this.c.spec.joints.map((j, k) => [0, 1, 2].map(i => { const x = this.c.act.ax[k][i]; return x ? P.anat(P.jd[k], ev.qs[k], x.key) : 0; }));
+     return { com: [cm[0] - am[0], cm[2] - am[2]], comV: [vm[0], vm[2]], seg, knee: joint, ang }; }
+   _pivVel(st, S) { const vs = S.joints.map(k => { const j = this.c.spec.joints[k], b = st[j.parentIndex], p = this.c.ctrl.jointAt(st, k); return V.add(b.v, V.cross(b.w, V.sub(p, b.com))); }); return vs.length === 1 ? vs[0] : V.sc(V.add(vs[0], vs[1]), 0.5); }
+-  step(n, st, ev) { st = unitStates(st); ev = unitEv(ev); const s = this._sample(st, ev); this.ring.set(n, s); this.ring.delete(n - this.maxD - 3);
++  step(n, st, ev) { st = unitStates(st); ev = unitEv(ev); const s = this._sample(st, ev); this.ring.set(n, s); this.ring.delete(n - this.maxD - 8);
+     // the frozen view: per channel, ONLY the sample (and the one before it) at that channel's delay; nothing newer exists in the view
+     const D = this.p.delays, at = (dd) => (n - dd >= 0 ? this.ring.get(n - dd) : this.entry), seg = {}, segPrev = {};
+     for (const name of Object.keys(D.seg)) { seg[name] = at(D.seg[name]); segPrev[name] = at(D.seg[name] + 1); }
+-    const view = Object.freeze({ com: at(D.com), comPrev: at(D.com + 1), seg: Object.freeze(seg), segPrev: Object.freeze(segPrev), knee: at(D.knee), kneePrev: at(D.knee + 1), joint: D.joint ? at(D.joint) : null, jointPrev: D.joint ? at(D.joint + 1) : null });
++    const view = Object.freeze({ com: at(D.com), comPrev: at(D.com + 1), comPrev6: at(D.com + 6), seg: Object.freeze(seg), segPrev: Object.freeze(segPrev), knee: at(D.knee), kneePrev: at(D.knee + 1), joint: D.joint ? at(D.joint) : null, jointPrev: D.joint ? at(D.joint + 1) : null });
+     const cmd = this.control(view), sensed = [n - D.com, ...Object.values(D.seg).map(d => n - d), n - D.knee, ...(D.joint ? [n - D.joint] : [])];
+     this.log.n.push(n); this.log.cmd.push(cmd.flat); this.log.sensed.push(sensed); return cmd.dTau; }
+   // the control law: a function of the delayed view only
+@@ -69,7 +69,10 @@ export class P2Controller {
+     const hc = 0.892, pick = (v, j) => (Array.isArray(v) ? v[j] : v), n2 = mgh / (hc * hc), dx = vw.com.com[0] - e.com[0], dz = vw.com.com[1] - e.com[1];
+     // optional integral term (Peterka 2002 PID, K_I in mgh/s): the integral of the DELAYED COM offset (accumulated once per step)
+     if (!this.ci) this.ci = [0, 0]; if (p.com.kI) { this.ci[0] += dx * h; this.ci[1] += dz * h; }
+-    const fx = pick(p.com.kP, 0) * n2 * dx + pick(p.com.kD, 0) * n2 * vw.com.comV[0] + (p.com.kI ? pick(p.com.kI, 0) * n2 * this.ci[0] : 0), fz = pick(p.com.kP, 1) * n2 * dz + pick(p.com.kD, 1) * n2 * vw.com.comV[1] + (p.com.kI ? pick(p.com.kI, 1) * n2 * this.ci[1] : 0);
++    // optional COM acceleration feedback (Welch & Ting 2008/2009; Pasma 2017 K_A in mgh·s²): acceleration of the DELAYED COM estimate over 6 steps
++    const acc = p.com.kA ? [(vw.com.comV[0] - vw.comPrev6.comV[0]) / (6 * h), (vw.com.comV[1] - vw.comPrev6.comV[1]) / (6 * h)] : [0, 0];
++    const fx = pick(p.com.kP, 0) * n2 * dx + pick(p.com.kD, 0) * n2 * vw.com.comV[0] + (p.com.kI ? pick(p.com.kI, 0) * n2 * this.ci[0] : 0) + (p.com.kA ? pick(p.com.kA, 0) * n2 * acc[0] : 0);
++    const fz = pick(p.com.kP, 1) * n2 * dz + pick(p.com.kD, 1) * n2 * vw.com.comV[1] + (p.com.kI ? pick(p.com.kI, 1) * n2 * this.ci[1] : 0) + (p.com.kA ? pick(p.com.kA, 1) * n2 * acc[1] : 0);
+     this.Jf.forEach((r, k) => r.forEach((jj, i) => { if (jj) raw[k][i] += jj[0] * fx + jj[1] * fz; }));
+     // (2) segmental posture: the supported mass's horizontal offset from its joint (relative to entry) and its rate; Δτ = kP·(Jd·Δd) + kD·(Jd·ḋ),
+     //     Jd = ∂τ_static/∂d (so kP = 1 supplies exactly the static gravity-load change; kP dimensionless, kD in s)
+@@ -87,7 +90,7 @@ export class P2Controller {
+       this.jK.forEach((row, k) => row.forEach((g, i) => { if (!g) return; const dth = (vw.joint.ang[k][i] - e.ang[k][i]) * Math.PI / 180, om = (vw.joint.ang[k][i] - vw.jointPrev.ang[k][i]) * Math.PI / 180 / h; raw[k][i] += -g.s * (g.K * dth + g.D * om); })); }
+     // (4) EMG → torque dynamics: critically damped second-order filter per axis (ω rad/s) on the neural command (POSTURAL_TIMING §controller delays)
+     if (!this.filt) this.filt = raw.map(r => r.map(() => [0, 0])); const out = raw.map(r => [0, 0, 0]), w = p.filter ? p.filter.omega : null;
+-    raw.forEach((r, k) => r.forEach((u, i) => { if (!w) { out[k][i] = u; return; } const f = this.filt[k][i], acc = w * w * (u - f[0]) - 2 * w * f[1]; f[1] += h * acc; f[0] += h * f[1]; out[k][i] = f[0]; }));
++    raw.forEach((r, k) => r.forEach((u, i) => { if (!w) { out[k][i] = u; return; } const f = this.filt[k][i], acc = w * w * (u - f[0]) - 2 * (p.filter.zeta ?? 1) * w * f[1]; f[1] += h * acc; f[0] += h * f[1]; out[k][i] = f[0]; }));
+     // (5) motor noise at the force level: signal-dependent, SD = cv·√(F⁺² + F⁻²) per axis (entry forces), low-pass τ; independent of any disturbance
+     if (p.noise) { const a = Math.exp(-h / p.noise.tau), g = Math.sqrt(1 - a * a); this.body.ax.forEach(ax => ax.rows.forEach((r, i) => { if (!r || (p.noise.axes && !p.noise.axes.includes(ax.fam + "." + r.key))) return; const sd = p.noise.sdNm != null ? p.noise.sdNm : p.noise.cv * Math.hypot(r.u0[0] * r.cP, r.u0[1] * r.cM), id = ax.k * 3 + i, v = a * (this.nz.get(id) || 0) + g * sd * this.gauss(); this.nz.set(id, v); out[ax.k][i] += v; })); }
+     return { dTau: out, flat: Float64Array.from(out.flat()) }; }

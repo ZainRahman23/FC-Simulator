@@ -1,0 +1,290 @@
+[
+ {
+  "id": "STAND_normal",
+  "panels": [
+   {
+    "k": "STAND_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "STAND_S2",
+    "l": "S2 alone (no feedback)"
+   },
+   {
+    "k": "STAND_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 0,
+  "to": 1440,
+  "note": "undisturbed standing from the PPR-3 entry, 0–6 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "STAND_slow",
+  "panels": [
+   {
+    "k": "STAND_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "STAND_S2",
+    "l": "S2 alone (no feedback)"
+   },
+   {
+    "k": "STAND_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 0,
+  "to": 360,
+  "note": "undisturbed standing, first 1.5 s (start-up audit window)",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHF_normal",
+  "panels": [
+   {
+    "k": "PUSHF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHF_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHF_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate FORWARD push 9.7 N·s at the pelvis, 50 ms, at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHF_slow",
+  "panels": [
+   {
+    "k": "PUSHF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHF_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHF_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "moderate FORWARD push 9.7 N·s at the pelvis, 50 ms, at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHL_normal",
+  "panels": [
+   {
+    "k": "PUSHL_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHL_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHL_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate LATERAL (left) push 24.9 N·s at the pelvis, 50 ms, at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHL_slow",
+  "panels": [
+   {
+    "k": "PUSHL_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHL_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHL_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "moderate LATERAL (left) push 24.9 N·s at the pelvis, 50 ms, at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_normal",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "UNRECOVERABLE forward push 36.4 N·s (1.5 × the zero-delay no-step limit), at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_slow",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2R",
+    "l": "S2 · replayed commands"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + P2 (delayed control)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "UNRECOVERABLE forward push 36.4 N·s (1.5 × the zero-delay no-step limit), at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ }
+]
