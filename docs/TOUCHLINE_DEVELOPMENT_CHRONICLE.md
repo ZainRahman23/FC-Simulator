@@ -2821,6 +2821,122 @@ What was done is not reconstructed here.
   - PVP-1A is BLOCKED and its DX diagnostics are complete. Pending owner decisions: the visual review, whether IB1-SR's STUMBLE should be physically explicable at all, and PVP-1A-R1.
 - **Publication:** 34 V2 commits above the published `c647f4c`, 30 RUN-1 commits above `affc30b` and the baseline tag. Pushed in the 11 Oct housekeeping.
 
+## Sunday 11 October 2026 — Active balance, the collision audit, a physiological standing body and the muscle layer
+
+**Evidence:** [FC-Sim Git] 32 commits on `prototype/physical-character-v2`, `64ce7d0` (13:34) → `6ac988e` (05:34, 12 Oct). The housekeeping commit `384c61d` (13:32) on `touchline-current` and the 13:32 – 13:33 pushes are in the remote-tracking reflog. None of the 32 commits was pushed by 06:00 on 12 Oct. [Doc] in `review_artifacts/physical_character_v2/`: `DECISIONS.md` (the sections from "ABI-1 active balance investigation" onward), `abi1/`, `cxa1/`, `trc1/`, `ppr1/`, `ppr2/`, `ppr3/`, `muscle1/` and `balance1/`. 8 user instructions and approvals saved verbatim in `sources/` (6 dated 11 Oct, 2 dated 12 Oct). [Session] the times of the user's messages, from the Claude Code session record (UTC + 1 h). [Astra] commit labels and file times of a separate slide workstream (below). No owner screenshots or screen recordings.
+
+**Publication housekeeping, 13:32** (`384c61d`).
+- `384c61d` added the 10 Oct entry and the Current state / open problems update, and noted one owner screen recording (kept outside Git).
+- **Pushed at 13:32 – 13:33, unchanged:**
+  - `prototype/locomotion-v2-run1` `affc30b` → `4a226b1` (30 commits), with the tag `locomotion-v2-straight-baseline-1` (on the remote; tag pushes are not in the reflog);
+  - `prototype/physical-character-v2` `c647f4c` → `1e39418` (34 commits);
+  - `touchline-current` `e57bf98` → `384c61d`.
+
+**ABI-1, the active balance investigation, early afternoon** (`64ce7d0` 13:34, `7ab2907` and `7cf107f` 14:05, `5a8704c` 14:12, `dc4da05` 14:15, `ea0b20f` 14:19, `984b466` 14:28).
+- User (13:23): "isolate whether the poor PVP response comes from inadequate impact or inadequate active control." And: "The controller must be outcome-blind."
+- **Research before code** (`7ab2907`): on the CF1 record the struck right foot unloads at 121 ms with the XcoM 0.19 m outside the remaining support. A's frozen SnapshotTone is a zero-latency, non-yielding 1.39 mgh at the ankles against a measured intrinsic 0.64 – 0.91 mgh, the literature's "pillar" pitfall. Literature timing: first corrective torque ≈ 120 – 160 ms, step onset ≥ 160 ms.
+- **Preregistered** (`7cf107f`) and frozen (`5a8704c`) before any contact run:
+  - A, the frozen SnapshotTone;
+  - B, A + GBC-1: the V2-G2 balance law on a 120.8 ms-delayed frame, applied as increments through the unchanged ActuatorLayer, with an outcome-blind input whitelist;
+  - C, B + an XcoM-triggered capture-point step.
+- **Results** (`dc4da05`, `ea0b20f`, `984b466`; VISUAL_PENDING, no adoption):
+  - validity V1 – V8 pass; B and C equal A through step 30, and the first contact-caused active response comes 120.8 ms after contact;
+  - **0 – 250 ms: B − A ≤ 0.57 px at the gameplay camera.** The support loss at 121 ms reaches the controller at 242 ms;
+  - EXT, a restricted contact set: B − A 3.4 px from step 88, carried by the arms and trunk; no condition recovers at 1.0×. EXT after step 60 was later withdrawn (CXA-1);
+  - C's step law, acting on delayed support state, re-lifts the passively re-planted foot;
+  - S-IMPACT at 0.75×: A's trunk folds progressively to 35 – 38° while B and C hold it (6.5 px);
+  - controller CPU 0.025 ms (B) / 0.21 ms (C) per step.
+- **Answer:** in the first 250 ms neither magnitude nor active control decides the look; the frozen passive tone and physiological latency do. After 250 ms active control is the missing ingredient. The collision is not too weak.
+- Review `abi1/review/ABI1_REVIEW.html` (A | B | C, gameplay 1×, close 6× slow, diagnostic overlays).
+
+**CXA-1, the collision-exclusion audit, mid-afternoon** (`f1933ad` 14:38, `d2c872a` 15:11; read-only, nothing fixed).
+- User (14:36): "This becomes priority zero. I would stop the passive-balance work for now." The question: "are the two V2 bodies actually maintaining rigid collision exclusion throughout the trustworthy interaction window?" And: "Not visually. Numerically."
+- **Measured:** the exact per-step signed separation of every runner × tackler collision-shape pair, matched to Jolt's manifolds (mean depth difference 0.008 mm).
+  - Maximum penetration: PVP-1A-DX ≤ 1.19 mm in the window, CF1 ≤ 3.30, ABI-1 B / C ≤ 3.52, a creation-order swap ≤ 2.78, S-IMPACT 0.75× ≤ 3.04. All are below Jolt's 5 mm penetration slop.
+  - No overlap without a contact, no side crossings or normal flips; 196 / 196 cross pairs enabled in the filter table; approach per step inside the speculative distance.
+- **The visible phasing is presentation:** the tackler was rendered 54 – 87 mm from its physics skeleton, and V2's colliders are inscribed in the meshes (the F0 boot is a sole-only slab), so the rendered players interpenetrated while the colliders only touched.
+- **Corrections to earlier readings:**
+  - the sustained 61.6 N·s contact is a heel sweep from behind and above, not the boot riding "under the foot";
+  - ABI-1's EXT window was blind to filtered non-leg pairs, which phase from step 61 by up to 154 mm. The erratum `abi1/ABI1_ERRATUM_CXA1.md` withdraws EXT after step 60.
+- `CXA1_REPORT.md` (ten answers; fixes M1 – M4 proposed, not implemented) and `cxa1/review/CXA1_REVIEW.html`.
+
+**TRC-1, the tackler render correction, late afternoon** (`3b86466` 15:21, `bf84bee` 16:16; presentation only).
+- User (15:19): "Approve the presentation-only tackler rendering correction recommended by CXA-1." The goal: "make the rendered tackler accurately follow the physical tackler that already exists in the committed PVP-1A-DX / ABI records."
+- **Render rule MC-1P** (`trc1/scripts/trc1_retarget.mjs`): Gabriel drawn on the tackler's actual V2 joints, limb bones stretched to the next joint, the pelvis scaled laterally × 0.588 (rig 323 mm against the V1-matched 190 mm, the one visible appearance cost). Records and final hashes are unchanged.
+- **Joint audit:** tackler joints 51 – 153 mm off before, 0.00 mm after.
+- **Remaining mesh overlap** (robust, window maximum, before → after): PVP-1A-DX 43 → 12 mm, ABI A / B / C 43 → 15 – 16 mm, S-IMPACT 0.75× 42 → 13 – 14 mm. Almost all of it is the tackler's left boot against the runner's right heel and ankle. The meshes first touch at the step Jolt builds the contact from, on the same anatomy.
+- Review `trc1/review/TRC1_REVIEW.html` (18 videos: gameplay 1×, 8× close, heel / shin close-up, mesh / colliders toggle, frame stepping). Remaining mesh penetration not fixed, as instructed.
+
+**PPR-1, the physiological pre-reflex response, late afternoon** (`468c897` 16:21, `d8849a6` 17:22, `e7afc26` 17:25, `06591e7` 17:40).
+- User (16:19): "Can V2's first ~0–120 ms after an unexpected collision behave like a physically compliant, pre-activated human athlete rather than a rigid pose-controlled mannequin, before any collision-triggered neural response is allowed?"
+- **Audit of CURRENT V2** (A, read-only): a pose spring to the frozen entry pose, K = 1.5 × supported load on every axis, damping ≈ 100× human, and an excitation computed from the same tick's servo request (zero neural latency). In the collision the struck ankle goes from 9 % to 96 % activation in ≈ 50 ms. A cannot stand from the PVP entry: it falls at 1.45 s.
+- **B, preregistered and frozen before any B code:** a collision-blind tonic drive from the runner's own state 125 ms earlier, with intrinsic, load-dependent short-range stiffness that yields at V2's eccentric plateau.
+- **Result: B FAILED its preregistration, 12 / 23** (preserved, diagnosed, not retuned).
+  - In the window B is compliant: struck ankle 16° against 5.5°, knee 19° against 3.2°; struck-leg torque change ≤ 10 against 69 N·m.
+  - H1 / H2 / H3 / PR3 fail because B's excitation divided the drive by the current-angle capacity, a specification error. A post-hoc diagnostic with entry-capacity normalisation leaves the window kinematics within 0.05°.
+  - B falls standing at 0.85 s; diagnostics show this is not latency but joint-space tone with thin yield margins.
+- Successor B′ proposed, not run. Review `ppr1/review/PPR1_REVIEW.html`.
+
+**PPR-2, the standing body, late evening** (`f1f2478` 21:50, `e454b06` 22:43, `03c4fe8` 22:58).
+- User (21:48): "PPR-1 is preserved as a failed preregistered experiment." And: "establish whether V2 can represent a mechanically plausible pre-reflex standing human at all." PVP-1A-DX sealed during calibration.
+- **Findings kept separate** (`e454b06`): A, excitation fixed from the pre-contact state; A2, new: the PostureDriver's leg-line statics are not a rest equilibrium (ankle 10 against 21 N·m), which made every compliant body fall from t = 0; B, passive mid-range elasticity from the literature; C, a strain-based short-range / eccentric reserve.
+- **Candidate S\* = A + A2 + B + C FAILED its frozen qualification, 36 / 45** (`03c4fe8`). It passes the ankle against human curves, the knee, the continuum, large-push loss, release, energy and determinism; it fails standing (envelope exit 0.26 s), hip intrinsic stiffness (16.6 against 30 – 91 N·m/rad), small lateral pushes and two further push rows.
+- **Decision C:** standing needs continuous delayed feedback as well as the substrate. Battery limitation reported: its 300 ms window exceeds the ≈ 175 ms loop delay.
+
+**PPR-3, the physiological standing foundation, around midnight** (`f7cef6b` 23:41; `594a6d3` 00:44, `ca7674b` 00:47, `932cd11` 01:24, `f53b791` 01:27, `391c4f0` 01:55, 12 Oct).
+- User (23:39): "A physically active footballer requires (1) a physiological mechanical substrate and (2) continuous delayed postural control." And: "We are NOT returning to PVP yet."
+- **S2, the substrate without feedback: QUALIFIED 18 / 18** (`594a6d3`, `ca7674b`). A flat-footed standing entry carries body weight within 4 steps. S2 = fixed excitation + minimum-effort rest statics + ready-stance tone T + passive B + relaxing strain arms C + a bidirectional short-range-stiffness cap. Ankle 0.78 – 1.21 × Vlutters; open-loop standing exits its envelope at 1.43 s (CURRENT V2 0.34 s). Ablations support T and C; B is not shown necessary.
+- **S2 + P2, continuous delayed control: FAILED 10 / 14** (`932cd11`, `f53b791`). It stands 60 s with motor noise, commands are bit-identical to an undisturbed twin until 29 ms on every push, and large pushes topple it. It fails lateral settling, the human-matched recovery and the thresholds (forward 1.00 × the zero-delay limit, over-robust; lateral 0.32 ×, fragile). Diagnosis: superhuman torque development and no COM acceleration feedback.
+- **P2b**, a labelled exploration with a physiological EMG → torque filter and acceleration feedback in three literature variants, diverges undisturbed (`391c4f0`). Stop condition B: owner decisions on where muscle contraction dynamics live and on P2's controller class. Review `ppr3/review/PPR3_REVIEW.html`.
+
+**MUSCLE-1, the muscle / actuator layer, small hours** (`4b8e665` 02:48, `77630dc` 04:05, `6c68177` 04:07, `ee2c146` 04:08, `bae8cea` 04:09, `f6cffbc` 04:13).
+- User (02:47): "Astra's independent architecture review raised a specific hypothesis: V2's activation dynamics may constrain the amount of torque available without sufficiently constraining how quickly actual physical torque changes inside that envelope." And: "MUSCLE-1 exists to test that hypothesis, not assume it."
+- **Audit** (`77630dc`): the hypothesis is exactly right for CURRENT V2's canonical actuator (activation bounds only the envelope; the motor changes torque in one tick inside it). PPR-3's S2 has no contraction dynamics either; its ankle torque rise was ≈ 87 % P2's own command.
+- **Design:** excitation → activation (V2's 15 / 50 ms, kept) → developed force through a contraction lag per muscle group, inverted from the literature → torque; the mechanical path (force–length, force–velocity, short-range stiffness, passive B, damping) stays immediate. S2's strain arms C were replaced by history-consistent force-based arms; the C audit found S2's law creates energy (0.026 J) and restores 51 % of abolished enhancement.
+- **M1 FAILED its frozen preregistration on one criterion** (`6c68177`, ankle 15 / 16): A4, a first-tick force change of 1.11 % against 1 %, because the cascade had no electrochemical latency. The 1.11 % was computable before the freeze: a preregistration error, preserved, not re-scored.
+- **M1b**, a labelled successor (`ee2c146`): M1 + an 8.33 ms electrochemical delay (Nordez 2009, 6.05 ms, rounded up to 2 steps). **PASSED: ankle 16 / 16, knee 14 / 14** (`bae8cea`). Replaying PPR-3's moderate forward push with P2's identical commands, the ankle torque slew goes 974 (command) → CURRENT V2 974 → S2 922 → M1b 256 active / 313 total N·m/s (human 372 ± 267). 19 µs per character-step.
+- Report `muscle1/MUSCLE1_REPORT.md` (seventeen answers) and `muscle1/review/MUSCLE1_REVIEW.html` (`f6cffbc`).
+
+**BALANCE-1 begins, before dawn** (`2f16fff` 05:02, `6ac988e` 05:34).
+- User (04:59): "You have approval to proceed from MUSCLE-1." "Decision: adopt M1b as the V2 muscle/actuator architecture." And: "Do not return to PVP tonight."
+- **The canonical muscle layer** (`6ac988e`): `sim/v2_muscle.js` and `spec/v2_muscles.js`.
+  - `MuscleLayer.compute()` accepts excitation only and throws on any torque command: no controller route to instantaneous physical torque.
+  - A strict lookup: an unparameterised muscle group throws, so ankle and knee constants cannot be silently generalised.
+  - The legacy ActuatorLayer is kept only to reproduce frozen evidence (PVP-1A, G1 – G3, PPR-1 … 3).
+  - The canonical layer reproduces the qualified M1b fixture byte for byte on every MUSCLE-1 experiment (`balance1/evidence/CANONICAL_M1B_EQUIVALENCE.json`).
+- The BALANCE-1 freeze (`01653ab`, 06:30) and results (`903c12d`, 06:47) belong to 12 Oct.
+
+**Parallel work outside this repository** ([Astra], commit labels and file times only; not investigated).
+- A separate slide workstream in the user's Codex workspace, `~/Documents/Codex/2026-10-12/new-chat/touchline-slide`: a clone of the local repository on branch `research/rds4-plant-launch`, whose merge base with the V2 branch is `4b8e665`. 22 own commits, 03:29 → 05:33 on 12 Oct, not pushed. Labels: ISL-1 … ISL-4 (isolated slide qualification), RDS-1 / RDS-2 (reference-driven slide), RDS4 / RDS4A / RDS4B (plant and launch, "import committed M1b").
+- Reports in the same folder: `Touchline_V2_Slide_Evidence_Report.html` (03:19), `Touchline_V2_Isolated_Slide_Qualification.html` (03:53; a copy in `~/Downloads` at 03:56), `Touchline_Reference_Driven_Slide_Report.html` (04:36) and `Touchline_RDS4_Plant_Launch_Report.html` (05:33, 29.7 MB).
+- `~/Downloads/slidetacklereference.mov` (04:07, 22.5 MB), a slide-tackle reference video, [Local]. Not archived: probably third-party footage.
+
+What was done there is not reconstructed here.
+
+**Corrections and process errors.**
+- **ABI-1.** Amendment AM-1, before any contact run (a wording defect in the validity claim; claim unchanged). EXT withdrawn after step 60 by the CXA-1 erratum.
+- **PVP-1A-DX post-hoc reading.** The 61.6 N·s "boot rides under the planted foot" is a heel sweep from behind and above (CXA-1).
+- **CXA-1.** Its interpolated-normal inside test gave false positives; its "25 – 81 mm" visible overlap reads ≈ 16 – 43 mm robust (erratum in `TRC1_REPORT.md` §2; CXA-1's conclusion unchanged, its files not edited).
+- **PPR-1.** The excitation specification error (H1 / H2 / H3 / PR3); PR1 / PR2 were partly criterion errors (yield demanded in unloading or ground-blocked directions).
+- **PPR-2.** Its 300 ms battery window exceeds the loop delay (reported, not changed). Its finding A2 also explains PPR-1's B falling from t = 0.
+- **PPR-3.** PPR-2's indefinite eccentric hold was overstated (its ablation fails 5 rows).
+- **MUSCLE-1.** M1's A4 threshold was not cross-checked against the design script, and the preregistered BC1 ratio did not discriminate S2's energy creation, which shows only in the exact ledger.
+
+**Adopted / not adopted.**
+- **Adopted (owner decision, 04:59 on 12 Oct):** M1b as V2's muscle / actuator architecture, canonical from `6ac988e`. The adopted force path is recorded in the V2 spec at `903c12d` (12 Oct).
+- **In use, review pending:** TRC-1's render rule MC-1P for the tackler; the user's 16:19 instruction lists the "corrected TRC-1 rendering" among the things to keep unchanged.
+- **Stopped by the owner:** ABI-1 (14:36), VISUAL_PENDING.
+- **Not adopted, kept as evidence:** GBC-1 and the step law (ABI-1); PPR-1's B and the proposed B′; PPR-2's S\*; PPR-3's S2 + P2 and the P2b exploration; MUSCLE-1's M1.
+- **Unchanged:** the simulation, RUN-1, the slide, PVP records and fixtures, V2 anatomy and colliders, the Jolt settings and every frozen criterion. PVP sealed from 21:48.
+
+**End-of-day state** (06:00, 12 Oct).
+- **Physical character:**
+  - M1b is the canonical V2 muscle layer, and controllers may command excitation only;
+  - the standing body: S2 qualified as a substrate; no delayed balance controller is qualified. BALANCE-1, the continuous delayed controller on M1b, is in progress; its freeze and results came after 06:00;
+  - no explicit review verdict is recorded for ABI-1, TRC-1, PPR-1, PPR-2, PPR-3 or MUSCLE-1. Each later instruction built on the previous result, and MUSCLE-1's recommendation was approved at 04:59;
+  - PVP-1A stays BLOCKED, and PVP is sealed until the receiving player is qualified.
+- **Publication:** 32 V2 commits above the published `1e39418`, and 2 more after 06:00. Pushed in the 12 Oct housekeeping.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -2834,7 +2950,7 @@ What was done is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `1e39418`, 11 Oct 05:39, pushed in the 11 Oct housekeeping; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `903c12d`, 12 Oct 06:47, pushed in the 12 Oct housekeeping; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -2866,6 +2982,11 @@ What was done is not reconstructed here.
 - **RH1**, the record-hinged runner (`fa5915b`): **verdict C, body invalid** (50 / 54 rows; two new G1 failures, three G3 failures shared with R0). Held for the independent architecture review, with a facts-only audit (`record_hinged/RH1_AUDIT_HANDOFF.md`).
 - **IFM-1** (`f22a914`, run 3): native contact is mechanically valid over 0 – 50 ms for the planted shank, shoulder and toe-pad stance, and continued contact matters for the first and last; at the gameplay camera no response exceeds 0.68 px. Every entry carries HANDOFF_FAILED. Visual review pending; nothing adopted.
 - **PVP-1A**, the first player-v-player test (IB1-SR, `pvp1/`): **BLOCKED at H2** (the simulation's slide primitives cannot be fitted by the tackler's body). The labelled diagnostic PVP-1A-DX made native two-body contact that matches the simulation's (CG-1 … 6) but is DX-BLOCKED by the tackler's entry pose. Post-hoc diagnostics and the PVP-1A-R1 draft await the owner (`PVP1A_MORNING_REPORT.md`).
+- **ABI-1**, active balance on the PVP-1A collision (`984b466`, 11 Oct): a 120.8 ms-delayed balance law changes the first 250 ms by ≤ 0.57 px at the gameplay camera; later, active control matters. Stopped by the owner for the collision audit; its EXT window is withdrawn after step 60.
+- **CXA-1 / TRC-1** (`d2c872a`, `bf84bee`): the colliders do not phase (≤ 3.3 mm on the frozen contact set, below Jolt's 5 mm slop); the visible phasing was presentation. The render rule MC-1P now draws the tackler on its V2 joints (0.00 mm); the remaining mesh overlap, ≤ 12 – 16 mm robust, is mostly the boot envelope and is not fixed.
+- **The physiological standing body** (11 – 12 Oct): PPR-1's pre-reflex B FAILED 12 / 23 (`06591e7`); PPR-2's S\* FAILED 36 / 45, decision C (`03c4fe8`); PPR-3's substrate S2 QUALIFIED 18 / 18, while S2 + P2 FAILED 10 / 14 on superhuman torque development (`391c4f0`).
+- **The muscle layer** (MUSCLE-1, `f6cffbc`): M1 failed one criterion (A4) and is preserved; M1b (M1 + an 8.33 ms electrochemical delay) passed ankle 16 / 16 and knee 14 / 14. **Adopted by the owner on 12 Oct as V2's canonical muscle layer** (`sim/v2_muscle.js`, `spec/v2_muscles.js`, `6ac988e`): controllers command excitation only, never physical torque.
+- **BALANCE-1** (`903c12d`, 12 Oct): a continuous, delayed, whole-body no-step controller on M1b. **Status B, promising but not qualified:** variants A and B each pass 13 / 16, and every failure is forward (the 12 N·s push does not settle in 4 s, the 20 N·s push falls, and the P4 criterion is flawed). B was adopted by the preregistered rule. Review pending. BALANCE-2, a forward-balance audit, was instructed on 12 Oct.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -2907,6 +3028,7 @@ What was done is not reconstructed here.
     - ITS-1's frozen-target posture tone opposes the initialized stance-leg rates: activation load 8.80 vs 6.04 N·s per step, slips of 12 – 18.8 mm.
     - The touchdown and late-stance states also fail. The ITS-1 amendment is paused.
   - **The handoff state is NOT READY** (verdict B, 10 Oct): V2's 23 → 14 upper-body mapping, and the rigid F0 boot against the frozen runner's heel-up / toe-pad stance (P-9, stance-contact consistency). RH1, the attempted body-spec fix, is invalid (verdict C).
+  - **Standing balance** (BALANCE-1, 12 Oct): the forward direction is not qualified. The 12 N·s push does not settle in 4 s, and the forward threshold is 14.4 N·s against a 16 – 23 N·s human comparison, with the toe edge 103 mm ahead of the COM. The receiving player is not yet qualified for PVP, and PVP stays sealed.
   - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
@@ -3051,6 +3173,14 @@ An index to the narrative above, not a substitute for it.
 | 7 Oct | D1 guard v1: DOES NOT VALIDATE; TD2C not run | FC-Sim Git | `8e0cf07`, `19eb4d5`, `20e782d` |
 | 7 Oct | DVG (D1G v2): erratum E1, first run aborted; combined qualification DOES NOT VALIDATE; TD-17 recorded | FC-Sim Git | `72506d0`, `f9e0a11`, `6b7ab90`, `d3f9bcc`, `b54bb6a` |
 | 8 Oct | Physical-character branches published with their original dates; the unpublished 33-commit tail replayed without a 105.8 MB generated archive (old → new map kept); chronicle caught up | FC-Sim Git | `11149df`, `9578ccf`, `21b6f06`; `PUBLICATION_REWRITE_2026-10-08.md` |
+| 11 Oct | ABI-1 active balance on the PVP-1A collision: B − A ≤ 0.57 px in 0 – 250 ms; stopped by the owner for CXA-1 | FC-Sim Git | `7cf107f`, `5a8704c`, `dc4da05`, `ea0b20f`, `984b466` |
+| 11 Oct | CXA-1 collision-exclusion audit: the colliders do not phase; ABI-1 EXT withdrawn after step 60 | FC-Sim Git | `d2c872a` |
+| 11 Oct | TRC-1 tackler render correction (MC-1P, presentation only) | FC-Sim Git | `bf84bee` |
+| 11 Oct | PPR-1 pre-reflex B FAILED its preregistration 12 / 23 | FC-Sim Git | `d8849a6`, `e7afc26`, `06591e7` |
+| 11 Oct | PPR-2 standing body S\* FAILED 36 / 45; decision C | FC-Sim Git | `e454b06`, `03c4fe8` |
+| 11 Oct | PPR-3: substrate S2 QUALIFIED 18 / 18; S2 + P2 FAILED 10 / 14; stop B (12 Oct 00:44 – 01:55) | FC-Sim Git | `594a6d3`, `ca7674b`, `932cd11`, `f53b791`, `391c4f0` |
+| 11 Oct | MUSCLE-1: M1 FAILED A4; successor M1b PASSES, ankle 16 / 16, knee 14 / 14 (12 Oct 04:05 – 04:13) | FC-Sim Git | `77630dc`, `6c68177`, `ee2c146`, `bae8cea`, `f6cffbc` |
+| 11 Oct | **M1b adopted by the owner** (12 Oct 04:59); the canonical V2 muscle layer, excitation only (05:34) | FC-Sim Git | `2f16fff`, `6ac988e` |
 
 ## Appendix B — Repository provenance
 
@@ -3145,6 +3275,7 @@ The FC-Simulator day headings were checked against every commit's recorded times
 | Mon 5 Oct | 35 | 06:36 → 05:26 on 6 Oct (+01:00) |
 | Tue 6 Oct | 20 | 12:19 → 04:35 on 7 Oct (+01:00) |
 | Wed 7 Oct | 11, then housekeeping | 12:33 → 02:19 on 8 Oct; then from 02:55 on 8 Oct: `9468ddd`, `e5ea11f`, `c1328ef`, `9e95b87`, and the publication repair `7ecd115`, `117168e`, `21b6f06` with its chronicle update (+01:00) |
+| Sun 11 Oct | 33: the housekeeping `384c61d` on `touchline-current`, then 32 on `prototype/physical-character-v2` | 13:32 → 05:34 on 12 Oct (+01:00) |
 
 **Where the evidence is incomplete or ambiguous.**
 1. **Before 18 Aug:** no evidence of any work. The conversation opens with the requirement itself, and the extraction finds nothing earlier.
