@@ -75,7 +75,7 @@ So the map defect is the entry point, and the upper-body orientation loops as a 
 | Side | Verdict | Evidence |
 |---|---|---|
 | **Controller** | **Yes: the cause** | A memoryless controller reproduces it (noise off, integrals held). It lives in the HAT lean about the hips, which the controller does not regulate in AP (latent BALANCE-1 map defect) |
-| Body | No | M1b's persistent strain arm resists the offset (removing it doubles the overshoot). The feet do not slip. There is no other long body memory |
+| Body | No | M1b's persistent strain arm resists the offset (removing it raises the overshoot from 0.287 to 0.477). The feet do not slip. There is no other long body memory |
 | Test | No | The offset is real relative to the feet, not noise, and inside the response window |
 
 **Is P8 appropriately matched?** Partly.
