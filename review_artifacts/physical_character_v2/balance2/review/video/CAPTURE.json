@@ -1,0 +1,496 @@
+{
+ "tool": "ppr3_capture.cjs",
+ "note": "index rebuilt from VIEWS.json + both capture logs (the first capture process aborted on memory after 8 views without writing its index; the remaining 6 views were captured one per process)",
+ "views": {
+  "QUIET_normal": {
+   "panels": [
+    {
+     "k": "QUIET_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "QUIET_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "QUIET_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "QUIET_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 4,
+   "from": 0,
+   "to": 1440,
+   "note": "undisturbed standing from the PPR-3 entry, 0\u20136 s (each controller with its own motor noise) \u2014 normal speed",
+   "videos": {
+    "clean": "QUIET_normal_clean.mp4",
+    "overlay": "QUIET_normal_overlay.mp4"
+   }
+  },
+  "QUIET_slow": {
+   "panels": [
+    {
+     "k": "QUIET_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "QUIET_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "QUIET_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "QUIET_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 1,
+   "from": 480,
+   "to": 720,
+   "note": "undisturbed standing from the PPR-3 entry, 0\u20136 s (each controller with its own motor noise) \u2014 0.25\u00d7 slow motion, steps 480\u2013720",
+   "videos": {
+    "clean": "QUIET_slow_clean.mp4",
+    "overlay": "QUIET_slow_overlay.mp4"
+   }
+  },
+  "SMALLF_normal": {
+   "panels": [
+    {
+     "k": "SMALLF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "SMALLF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "SMALLF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "SMALLF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 265,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1440,
+   "note": "small forward push 4.82 N\u00b7s (B2M small) at t = 2 s \u2014 normal speed",
+   "videos": {
+    "clean": "SMALLF_normal_clean.mp4",
+    "overlay": "SMALLF_normal_overlay.mp4"
+   }
+  },
+  "SMALLF_slow": {
+   "panels": [
+    {
+     "k": "SMALLF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "SMALLF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "SMALLF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "SMALLF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 696,
+   "note": "small forward push 4.82 N\u00b7s (B2M small) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013696",
+   "videos": {
+    "clean": "SMALLF_slow_clean.mp4",
+    "overlay": "SMALLF_slow_overlay.mp4"
+   }
+  },
+  "F12_normal": {
+   "panels": [
+    {
+     "k": "F12_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "F12_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "F12_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "F12_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 265,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1440,
+   "note": "forward push 12.0 N\u00b7s at t = 2 s (the BALANCE-1 moderate push that failed BALANCE-1 P2) \u2014 normal speed",
+   "videos": {
+    "clean": "F12_normal_clean.mp4",
+    "overlay": "F12_normal_overlay.mp4"
+   }
+  },
+  "F12_slow": {
+   "panels": [
+    {
+     "k": "F12_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "F12_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "F12_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "F12_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 481,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 936,
+   "note": "forward push 12.0 N\u00b7s at t = 2 s (the BALANCE-1 moderate push that failed BALANCE-1 P2) \u2014 0.25\u00d7 slow motion, steps 456\u2013936",
+   "videos": {
+    "clean": "F12_slow_clean.mp4",
+    "overlay": "F12_slow_overlay.mp4"
+   }
+  },
+  "BACKM_normal": {
+   "panels": [
+    {
+     "k": "BACKM_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "BACKM_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "BACKM_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "BACKM_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 265,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1440,
+   "note": "matched moderate backward push 11.69 N\u00b7s (B2M) at t = 2 s \u2014 normal speed",
+   "videos": {
+    "clean": "BACKM_normal_clean.mp4",
+    "overlay": "BACKM_normal_overlay.mp4"
+   }
+  },
+  "BACKM_slow": {
+   "panels": [
+    {
+     "k": "BACKM_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "BACKM_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "BACKM_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "BACKM_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 816,
+   "note": "matched moderate backward push 11.69 N\u00b7s (B2M) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816",
+   "videos": {
+    "clean": "BACKM_slow_clean.mp4",
+    "overlay": "BACKM_slow_overlay.mp4"
+   }
+  },
+  "LATM_normal": {
+   "panels": [
+    {
+     "k": "LATM_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "LATM_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "LATM_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "LATM_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 265,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1440,
+   "note": "matched moderate lateral (left) push 15.0 N\u00b7s (B2M) at t = 2 s \u2014 normal speed",
+   "videos": {
+    "clean": "LATM_normal_clean.mp4",
+    "overlay": "LATM_normal_overlay.mp4"
+   }
+  },
+  "LATM_slow": {
+   "panels": [
+    {
+     "k": "LATM_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "LATM_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "LATM_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "LATM_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 816,
+   "note": "matched moderate lateral (left) push 15.0 N\u00b7s (B2M) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816",
+   "videos": {
+    "clean": "LATM_slow_clean.mp4",
+    "overlay": "LATM_slow_overlay.mp4"
+   }
+  },
+  "NEARF_normal": {
+   "panels": [
+    {
+     "k": "NEARF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "NEARF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "NEARF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "NEARF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 265,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1440,
+   "note": "near-limit forward push 14.0 N\u00b7s (0.94 \u00d7 the matched T_fwd) at t = 2 s \u2014 normal speed",
+   "videos": {
+    "clean": "NEARF_normal_clean.mp4",
+    "overlay": "NEARF_normal_overlay.mp4"
+   }
+  },
+  "NEARF_slow": {
+   "panels": [
+    {
+     "k": "NEARF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "NEARF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "NEARF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "NEARF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 481,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 936,
+   "note": "near-limit forward push 14.0 N\u00b7s (0.94 \u00d7 the matched T_fwd) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013936",
+   "videos": {
+    "clean": "NEARF_slow_clean.mp4",
+    "overlay": "NEARF_slow_overlay.mp4"
+   }
+  },
+  "OVERF_normal": {
+   "panels": [
+    {
+     "k": "OVERF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "OVERF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "OVERF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "OVERF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 205,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "from": 384,
+   "to": 1200,
+   "note": "unrecoverable forward push 21.5 N\u00b7s (B2M over-limit) at t = 2 s \u2014 normal speed",
+   "videos": {
+    "clean": "OVERF_normal_clean.mp4",
+    "overlay": "OVERF_normal_overlay.mp4"
+   }
+  },
+  "OVERF_slow": {
+   "panels": [
+    {
+     "k": "OVERF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "OVERF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "OVERF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    },
+    {
+     "k": "OVERF_C2",
+     "l": "M1b + BALANCE-2 (C2)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1920,
+    544
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "from": 456,
+   "to": 816,
+   "note": "unrecoverable forward push 21.5 N\u00b7s (B2M over-limit) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816",
+   "videos": {
+    "clean": "OVERF_slow_clean.mp4",
+    "overlay": "OVERF_slow_overlay.mp4"
+   }
+  }
+ }
+}

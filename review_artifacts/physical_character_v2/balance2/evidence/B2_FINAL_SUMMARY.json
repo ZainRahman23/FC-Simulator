@@ -1,0 +1,822 @@
+{
+ "systems": {
+  "A": "CURRENT V2",
+  "S2P2": "S2 + old P2",
+  "B1": "M1b + BALANCE-1 B",
+  "C2": "M1b + BALANCE-2 C2"
+ },
+ "verdicts": {
+  "A": {
+   "n": "2 / 11",
+   "outcomeOnly": true,
+   "failed": [
+    "U1",
+    "U3",
+    "U4",
+    "P1",
+    "P2",
+    "P4",
+    "P8",
+    "M1",
+    "T1"
+   ],
+   "pass": {
+    "U1": false,
+    "U3": false,
+    "U4": false,
+    "P1": false,
+    "P2": false,
+    "P3": true,
+    "P4": false,
+    "P8": false,
+    "M1": false,
+    "T1": false,
+    "DET": true,
+    "U2": null,
+    "U5": null,
+    "U6": null,
+    "P5": null,
+    "P6": null,
+    "P7": null
+   }
+  },
+  "S2P2": {
+   "n": "6 / 11",
+   "outcomeOnly": true,
+   "failed": [
+    "P2",
+    "P3",
+    "P8",
+    "M1",
+    "T1"
+   ],
+   "pass": {
+    "U1": true,
+    "U3": true,
+    "U4": true,
+    "P1": true,
+    "P2": false,
+    "P3": false,
+    "P4": true,
+    "P8": false,
+    "M1": false,
+    "T1": false,
+    "DET": true,
+    "U2": null,
+    "U5": null,
+    "U6": null,
+    "P5": null,
+    "P6": null,
+    "P7": null
+   }
+  },
+  "B1": {
+   "n": "16 / 17",
+   "outcomeOnly": false,
+   "failed": [
+    "P8"
+   ],
+   "pass": {
+    "U1": true,
+    "U2": true,
+    "U3": true,
+    "U4": true,
+    "U5": true,
+    "U6": true,
+    "P5": true,
+    "P6": true,
+    "P7": true,
+    "DET": true,
+    "P1": true,
+    "P2": true,
+    "P3": true,
+    "P4": true,
+    "P8": false,
+    "M1": true,
+    "T1": true
+   }
+  },
+  "C2": {
+   "n": "16 / 17",
+   "outcomeOnly": false,
+   "failed": [
+    "P8"
+   ],
+   "pass": {
+    "U1": true,
+    "U2": true,
+    "U3": true,
+    "U4": true,
+    "U5": true,
+    "U6": true,
+    "P5": true,
+    "P6": true,
+    "P7": true,
+    "DET": true,
+    "P1": true,
+    "P2": true,
+    "P3": true,
+    "P4": true,
+    "P8": false,
+    "M1": true,
+    "T1": true
+   }
+  }
+ },
+ "thresholds": {
+  "A": {
+   "fwd": {
+    "Ns": 0.14,
+    "fracZeroDelay": 0.005
+   },
+   "back": {
+    "Ns": 0.17,
+    "fracZeroDelay": 0.005
+   },
+   "left": {
+    "Ns": 0.36,
+    "fracZeroDelay": 0.006
+   },
+   "right": {
+    "Ns": 0.36,
+    "fracZeroDelay": 0.006
+   }
+  },
+  "S2P2": {
+   "fwd": {
+    "Ns": 24.32,
+    "fracZeroDelay": 0.935
+   },
+   "back": {
+    "Ns": 20.23,
+    "fracZeroDelay": 0.641
+   },
+   "left": {
+    "Ns": 20.05,
+    "fracZeroDelay": 0.322
+   },
+   "right": {
+    "Ns": 20.05,
+    "fracZeroDelay": 0.322
+   }
+  },
+  "B1": {
+   "fwd": {
+    "Ns": 14.36,
+    "fracZeroDelay": 0.552
+   },
+   "back": {
+    "Ns": 18.19,
+    "fracZeroDelay": 0.577
+   },
+   "left": {
+    "Ns": 25.88,
+    "fracZeroDelay": 0.416
+   },
+   "right": {
+    "Ns": 27.34,
+    "fracZeroDelay": 0.439
+   }
+  },
+  "C2": {
+   "fwd": {
+    "Ns": 16.64,
+    "fracZeroDelay": 0.639
+   },
+   "back": {
+    "Ns": 19.55,
+    "fracZeroDelay": 0.62
+   },
+   "left": {
+    "Ns": 25.88,
+    "fracZeroDelay": 0.416
+   },
+   "right": {
+    "Ns": 26.61,
+    "fracZeroDelay": 0.428
+   }
+  }
+ },
+ "quietSway": {
+  "A": {
+   "comAPmm": 61.37,
+   "comMLmm": 0.22,
+   "freqHz": 0.01,
+   "stood60s": false
+  },
+  "S2P2": {
+   "comAPmm": 1.86,
+   "comMLmm": 0.62,
+   "freqHz": 1.37,
+   "stood60s": true
+  },
+  "B1": {
+   "comAPmm": 1.09,
+   "comMLmm": 0.97,
+   "freqHz": 0.72,
+   "stood60s": true
+  },
+  "C2": {
+   "comAPmm": 1.38,
+   "comMLmm": 1.03,
+   "freqHz": 0.51,
+   "stood60s": true
+  }
+ },
+ "human": {
+  "A": {
+   "fwd.small": {
+    "ankleAPslewNms": 8260,
+    "hipAPslewNms": 15560,
+    "muscleWorkPosJ": 40,
+    "muscleWorkNegJ": -161.9,
+    "headPeakDegS": 529.4,
+    "thoraxPeakDegS": 502.9,
+    "headOverThorax": 1.05,
+    "kneeExcursionDeg": 6.811,
+    "peakComMm": 28.3,
+    "overshoot": null
+   },
+   "fwd.moderate": {
+    "ankleAPslewNms": 10193,
+    "hipAPslewNms": 19426,
+    "muscleWorkPosJ": 40,
+    "muscleWorkNegJ": -153.9,
+    "headPeakDegS": 852.9,
+    "thoraxPeakDegS": 502.3,
+    "headOverThorax": 1.7,
+    "kneeExcursionDeg": 10.107,
+    "peakComMm": 54.7,
+    "overshoot": null
+   },
+   "back.small": {
+    "ankleAPslewNms": 8286,
+    "hipAPslewNms": 19976,
+    "muscleWorkPosJ": 41.2,
+    "muscleWorkNegJ": -187.4,
+    "headPeakDegS": 641.2,
+    "thoraxPeakDegS": 694.8,
+    "headOverThorax": 0.92,
+    "kneeExcursionDeg": -8.189,
+    "peakComMm": 35.3,
+    "overshoot": null
+   },
+   "back.moderate": {
+    "ankleAPslewNms": 9527,
+    "hipAPslewNms": 17286,
+    "muscleWorkPosJ": 42.1,
+    "muscleWorkNegJ": -205,
+    "headPeakDegS": 762.6,
+    "thoraxPeakDegS": 853.8,
+    "headOverThorax": 0.89,
+    "kneeExcursionDeg": -11.086,
+    "peakComMm": 71.4,
+    "overshoot": null
+   },
+   "left.small": {
+    "ankleAPslewNms": 5689,
+    "hipAPslewNms": 10101,
+    "muscleWorkPosJ": 39.5,
+    "muscleWorkNegJ": -164.7,
+    "headPeakDegS": 636.7,
+    "thoraxPeakDegS": 511.4,
+    "headOverThorax": 1.24,
+    "kneeExcursionDeg": 3.658,
+    "peakComMm": 36.6,
+    "overshoot": null
+   },
+   "left.moderate": {
+    "ankleAPslewNms": 5908,
+    "hipAPslewNms": 9210,
+    "muscleWorkPosJ": 41,
+    "muscleWorkNegJ": -166.1,
+    "headPeakDegS": 685.5,
+    "thoraxPeakDegS": 426,
+    "headOverThorax": 1.61,
+    "kneeExcursionDeg": 3.859,
+    "peakComMm": 83.8,
+    "overshoot": null
+   },
+   "right.small": {
+    "ankleAPslewNms": 5888,
+    "hipAPslewNms": 9543,
+    "muscleWorkPosJ": 39.5,
+    "muscleWorkNegJ": -165.9,
+    "headPeakDegS": 563.4,
+    "thoraxPeakDegS": 530,
+    "headOverThorax": 1.06,
+    "kneeExcursionDeg": -5.914,
+    "peakComMm": 37.5,
+    "overshoot": null
+   },
+   "right.moderate": {
+    "ankleAPslewNms": 5687,
+    "hipAPslewNms": 9388,
+    "muscleWorkPosJ": 41.1,
+    "muscleWorkNegJ": -168.8,
+    "headPeakDegS": 663,
+    "thoraxPeakDegS": 472.3,
+    "headOverThorax": 1.4,
+    "kneeExcursionDeg": -6.667,
+    "peakComMm": 84.8,
+    "overshoot": null
+   }
+  },
+  "S2P2": {
+   "fwd.small": {
+    "ankleAPslewNms": 602,
+    "hipAPslewNms": 350,
+    "muscleWorkPosJ": 26.8,
+    "muscleWorkNegJ": -23.6,
+    "headPeakDegS": 39.7,
+    "thoraxPeakDegS": 32.5,
+    "headOverThorax": 1.22,
+    "kneeExcursionDeg": -1.136,
+    "peakComMm": 11.7,
+    "overshoot": 0.221
+   },
+   "fwd.moderate": {
+    "ankleAPslewNms": 1115,
+    "hipAPslewNms": 538,
+    "muscleWorkPosJ": 28.8,
+    "muscleWorkNegJ": -27.3,
+    "headPeakDegS": 79.7,
+    "thoraxPeakDegS": 66.7,
+    "headOverThorax": 1.2,
+    "kneeExcursionDeg": 1.09,
+    "peakComMm": 25.9,
+    "overshoot": 0.334
+   },
+   "back.small": {
+    "ankleAPslewNms": 527,
+    "hipAPslewNms": 433,
+    "muscleWorkPosJ": 27.3,
+    "muscleWorkNegJ": -23.1,
+    "headPeakDegS": 47.3,
+    "thoraxPeakDegS": 34.4,
+    "headOverThorax": 1.38,
+    "kneeExcursionDeg": 1.385,
+    "peakComMm": 13.9,
+    "overshoot": 0.169
+   },
+   "back.moderate": {
+    "ankleAPslewNms": 1164,
+    "hipAPslewNms": 668,
+    "muscleWorkPosJ": 33.3,
+    "muscleWorkNegJ": -29.9,
+    "headPeakDegS": 88.7,
+    "thoraxPeakDegS": 65.7,
+    "headOverThorax": 1.35,
+    "kneeExcursionDeg": 2.27,
+    "peakComMm": 27.4,
+    "overshoot": 0
+   },
+   "left.small": {
+    "ankleAPslewNms": 180,
+    "hipAPslewNms": 168,
+    "muscleWorkPosJ": 29.3,
+    "muscleWorkNegJ": -25.6,
+    "headPeakDegS": 107.5,
+    "thoraxPeakDegS": 49.6,
+    "headOverThorax": 2.17,
+    "kneeExcursionDeg": 0.775,
+    "peakComMm": 17.5,
+    "overshoot": 0.378
+   },
+   "left.moderate": {
+    "ankleAPslewNms": 208,
+    "hipAPslewNms": 303,
+    "muscleWorkPosJ": 37.5,
+    "muscleWorkNegJ": -34,
+    "headPeakDegS": 176.9,
+    "thoraxPeakDegS": 87.1,
+    "headOverThorax": 2.03,
+    "kneeExcursionDeg": 1.185,
+    "peakComMm": 37.9,
+    "overshoot": 0
+   },
+   "right.small": {
+    "ankleAPslewNms": 156,
+    "hipAPslewNms": 162,
+    "muscleWorkPosJ": 29.2,
+    "muscleWorkNegJ": -25.3,
+    "headPeakDegS": 103.7,
+    "thoraxPeakDegS": 47.8,
+    "headOverThorax": 2.17,
+    "kneeExcursionDeg": 0.663,
+    "peakComMm": 17.8,
+    "overshoot": 0.334
+   },
+   "right.moderate": {
+    "ankleAPslewNms": 241,
+    "hipAPslewNms": 263,
+    "muscleWorkPosJ": 37.5,
+    "muscleWorkNegJ": -33.7,
+    "headPeakDegS": 170.2,
+    "thoraxPeakDegS": 85.1,
+    "headOverThorax": 2,
+    "kneeExcursionDeg": 2.003,
+    "peakComMm": 38.2,
+    "overshoot": 0
+   }
+  },
+  "B1": {
+   "fwd.small": {
+    "ankleAPslewNms": 154,
+    "hipAPslewNms": 166,
+    "muscleWorkPosJ": 4.4,
+    "muscleWorkNegJ": -5.1,
+    "headPeakDegS": 33.2,
+    "thoraxPeakDegS": 19.1,
+    "headOverThorax": 1.73,
+    "kneeExcursionDeg": 0.523,
+    "peakComMm": 16.4,
+    "overshoot": 0.284
+   },
+   "fwd.moderate": {
+    "ankleAPslewNms": 315,
+    "hipAPslewNms": 332,
+    "muscleWorkPosJ": 8.5,
+    "muscleWorkNegJ": -10.7,
+    "headPeakDegS": 66,
+    "thoraxPeakDegS": 38.6,
+    "headOverThorax": 1.71,
+    "kneeExcursionDeg": 0.969,
+    "peakComMm": 33.8,
+    "overshoot": 0.224
+   },
+   "back.small": {
+    "ankleAPslewNms": 248,
+    "hipAPslewNms": 201,
+    "muscleWorkPosJ": 5.4,
+    "muscleWorkNegJ": -5.3,
+    "headPeakDegS": 43.8,
+    "thoraxPeakDegS": 22.8,
+    "headOverThorax": 1.92,
+    "kneeExcursionDeg": 0.743,
+    "peakComMm": 17.9,
+    "overshoot": 0.609
+   },
+   "back.moderate": {
+    "ankleAPslewNms": 522,
+    "hipAPslewNms": 403,
+    "muscleWorkPosJ": 9.9,
+    "muscleWorkNegJ": -10.3,
+    "headPeakDegS": 82.5,
+    "thoraxPeakDegS": 45,
+    "headOverThorax": 1.83,
+    "kneeExcursionDeg": 1.108,
+    "peakComMm": 36.8,
+    "overshoot": 0.49
+   },
+   "left.small": {
+    "ankleAPslewNms": 26,
+    "hipAPslewNms": 27,
+    "muscleWorkPosJ": 5.7,
+    "muscleWorkNegJ": -6.2,
+    "headPeakDegS": 52.4,
+    "thoraxPeakDegS": 26.7,
+    "headOverThorax": 1.96,
+    "kneeExcursionDeg": 0.916,
+    "peakComMm": 21.7,
+    "overshoot": 0.038
+   },
+   "left.moderate": {
+    "ankleAPslewNms": 89,
+    "hipAPslewNms": 105,
+    "muscleWorkPosJ": 12.5,
+    "muscleWorkNegJ": -15.3,
+    "headPeakDegS": 84.5,
+    "thoraxPeakDegS": 45,
+    "headOverThorax": 1.88,
+    "kneeExcursionDeg": 2.097,
+    "peakComMm": 48.3,
+    "overshoot": 0.021
+   },
+   "right.small": {
+    "ankleAPslewNms": 26,
+    "hipAPslewNms": 23,
+    "muscleWorkPosJ": 5.4,
+    "muscleWorkNegJ": -5.8,
+    "headPeakDegS": 53,
+    "thoraxPeakDegS": 26.9,
+    "headOverThorax": 1.97,
+    "kneeExcursionDeg": 0.712,
+    "peakComMm": 21.7,
+    "overshoot": 0.049
+   },
+   "right.moderate": {
+    "ankleAPslewNms": 81,
+    "hipAPslewNms": 92,
+    "muscleWorkPosJ": 12.1,
+    "muscleWorkNegJ": -14.6,
+    "headPeakDegS": 87.3,
+    "thoraxPeakDegS": 45.2,
+    "headOverThorax": 1.93,
+    "kneeExcursionDeg": 2.093,
+    "peakComMm": 47.8,
+    "overshoot": 0.06
+   }
+  },
+  "C2": {
+   "fwd.small": {
+    "ankleAPslewNms": 198,
+    "hipAPslewNms": 166,
+    "muscleWorkPosJ": 5,
+    "muscleWorkNegJ": -5.9,
+    "headPeakDegS": 34.9,
+    "thoraxPeakDegS": 19.1,
+    "headOverThorax": 1.82,
+    "kneeExcursionDeg": 0.574,
+    "peakComMm": 15.4,
+    "overshoot": 0.05
+   },
+   "fwd.moderate": {
+    "ankleAPslewNms": 403,
+    "hipAPslewNms": 332,
+    "muscleWorkPosJ": 9.7,
+    "muscleWorkNegJ": -12.3,
+    "headPeakDegS": 71.5,
+    "thoraxPeakDegS": 38.6,
+    "headOverThorax": 1.85,
+    "kneeExcursionDeg": 1.043,
+    "peakComMm": 32.8,
+    "overshoot": 0
+   },
+   "back.small": {
+    "ankleAPslewNms": 318,
+    "hipAPslewNms": 201,
+    "muscleWorkPosJ": 6.4,
+    "muscleWorkNegJ": -6.2,
+    "headPeakDegS": 46.3,
+    "thoraxPeakDegS": 23.6,
+    "headOverThorax": 1.96,
+    "kneeExcursionDeg": 1.24,
+    "peakComMm": 16.6,
+    "overshoot": 0.287
+   },
+   "back.moderate": {
+    "ankleAPslewNms": 648,
+    "hipAPslewNms": 403,
+    "muscleWorkPosJ": 11.4,
+    "muscleWorkNegJ": -11.8,
+    "headPeakDegS": 86.8,
+    "thoraxPeakDegS": 45,
+    "headOverThorax": 1.93,
+    "kneeExcursionDeg": 1.88,
+    "peakComMm": 34,
+    "overshoot": 0.232
+   },
+   "left.small": {
+    "ankleAPslewNms": 27,
+    "hipAPslewNms": 27,
+    "muscleWorkPosJ": 5.8,
+    "muscleWorkNegJ": -6.2,
+    "headPeakDegS": 52.6,
+    "thoraxPeakDegS": 26.8,
+    "headOverThorax": 1.96,
+    "kneeExcursionDeg": 0.869,
+    "peakComMm": 21.6,
+    "overshoot": 0.033
+   },
+   "left.moderate": {
+    "ankleAPslewNms": 90,
+    "hipAPslewNms": 105,
+    "muscleWorkPosJ": 12.6,
+    "muscleWorkNegJ": -15.3,
+    "headPeakDegS": 84.7,
+    "thoraxPeakDegS": 45.1,
+    "headOverThorax": 1.88,
+    "kneeExcursionDeg": 2.048,
+    "peakComMm": 48.3,
+    "overshoot": 0.023
+   },
+   "right.small": {
+    "ankleAPslewNms": 26,
+    "hipAPslewNms": 23,
+    "muscleWorkPosJ": 5.5,
+    "muscleWorkNegJ": -5.9,
+    "headPeakDegS": 53.2,
+    "thoraxPeakDegS": 27,
+    "headOverThorax": 1.97,
+    "kneeExcursionDeg": 0.713,
+    "peakComMm": 21.6,
+    "overshoot": 0.04
+   },
+   "right.moderate": {
+    "ankleAPslewNms": 83,
+    "hipAPslewNms": 92,
+    "muscleWorkPosJ": 12.2,
+    "muscleWorkNegJ": -14.6,
+    "headPeakDegS": 87.6,
+    "thoraxPeakDegS": 45.3,
+    "headOverThorax": 1.93,
+    "kneeExcursionDeg": 2.072,
+    "peakComMm": 47.7,
+    "overshoot": 0.061
+   }
+  }
+ },
+ "review": {
+  "A": {
+   "SMALLF": {
+    "peakDeltaLinMomentumNs": 43.96,
+    "peakDeltaCentroidalAngMomentum": 55.82,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 4.1,
+    "footPitchOver1degS": 0.67,
+    "pelvisDrop150mmAtS": 0.38
+   },
+   "F12": {
+    "peakDeltaLinMomentumNs": 88.23,
+    "peakDeltaCentroidalAngMomentum": 74.94,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 11.7,
+    "footPitchOver1degS": 0.88,
+    "pelvisDrop150mmAtS": 0.36
+   },
+   "BACKM": {
+    "peakDeltaLinMomentumNs": 85.36,
+    "peakDeltaCentroidalAngMomentum": 56.05,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 12.9,
+    "footPitchOver1degS": 0.7,
+    "pelvisDrop150mmAtS": 0.42
+   },
+   "LATM": {
+    "peakDeltaLinMomentumNs": 26.78,
+    "peakDeltaCentroidalAngMomentum": 14.62,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 22.4,
+    "footPitchOver1degS": 3.81,
+    "pelvisDrop150mmAtS": 0.38
+   },
+   "NEARF": {
+    "peakDeltaLinMomentumNs": 94.96,
+    "peakDeltaCentroidalAngMomentum": 80.8,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 12.9,
+    "footPitchOver1degS": 0.72,
+    "pelvisDrop150mmAtS": 0.35
+   },
+   "OVERF": {
+    "peakDeltaLinMomentumNs": 105.11,
+    "peakDeltaCentroidalAngMomentum": 83.54,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 16.2,
+    "footPitchOver1degS": 1.08,
+    "pelvisDrop150mmAtS": 0.34
+   }
+  },
+  "S2P2": {
+   "SMALLF": {
+    "peakDeltaLinMomentumNs": 5.03,
+    "peakDeltaCentroidalAngMomentum": 3.7,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "F12": {
+    "peakDeltaLinMomentumNs": 12.51,
+    "peakDeltaCentroidalAngMomentum": 9.08,
+    "activeWorkDeltaJ": -0.1,
+    "maxFootPitchDeltaDeg": 5.1,
+    "footPitchOver1degS": 0.58,
+    "pelvisDrop150mmAtS": null
+   },
+   "BACKM": {
+    "peakDeltaLinMomentumNs": 12.26,
+    "peakDeltaCentroidalAngMomentum": 9.27,
+    "activeWorkDeltaJ": -0.1,
+    "maxFootPitchDeltaDeg": 0.7,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "LATM": {
+    "peakDeltaLinMomentumNs": 15.94,
+    "peakDeltaCentroidalAngMomentum": 12.08,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 1.4,
+    "footPitchOver1degS": 0.07,
+    "pelvisDrop150mmAtS": null
+   },
+   "NEARF": {
+    "peakDeltaLinMomentumNs": 14.58,
+    "peakDeltaCentroidalAngMomentum": 10.55,
+    "activeWorkDeltaJ": 0.1,
+    "maxFootPitchDeltaDeg": 7.3,
+    "footPitchOver1degS": 1.18,
+    "pelvisDrop150mmAtS": null
+   },
+   "OVERF": {
+    "peakDeltaLinMomentumNs": 22.35,
+    "peakDeltaCentroidalAngMomentum": 15.96,
+    "activeWorkDeltaJ": 0.3,
+    "maxFootPitchDeltaDeg": 10.3,
+    "footPitchOver1degS": 0.96,
+    "pelvisDrop150mmAtS": null
+   }
+  },
+  "B1": {
+   "SMALLF": {
+    "peakDeltaLinMomentumNs": 5.08,
+    "peakDeltaCentroidalAngMomentum": 3.8,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "F12": {
+    "peakDeltaLinMomentumNs": 12.62,
+    "peakDeltaCentroidalAngMomentum": 9.34,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 6.5,
+    "footPitchOver1degS": 2.31,
+    "pelvisDrop150mmAtS": null
+   },
+   "BACKM": {
+    "peakDeltaLinMomentumNs": 12.37,
+    "peakDeltaCentroidalAngMomentum": 9.56,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "LATM": {
+    "peakDeltaLinMomentumNs": 15.94,
+    "peakDeltaCentroidalAngMomentum": 12.07,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "NEARF": {
+    "peakDeltaLinMomentumNs": 14.71,
+    "peakDeltaCentroidalAngMomentum": 10.86,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 7.4,
+    "footPitchOver1degS": 1.88,
+    "pelvisDrop150mmAtS": null
+   },
+   "OVERF": {
+    "peakDeltaLinMomentumNs": 88.15,
+    "peakDeltaCentroidalAngMomentum": 54.42,
+    "activeWorkDeltaJ": 0.3,
+    "maxFootPitchDeltaDeg": 82.3,
+    "footPitchOver1degS": 3.78,
+    "pelvisDrop150mmAtS": 1.59
+   }
+  },
+  "C2": {
+   "SMALLF": {
+    "peakDeltaLinMomentumNs": 5.08,
+    "peakDeltaCentroidalAngMomentum": 3.8,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "F12": {
+    "peakDeltaLinMomentumNs": 12.62,
+    "peakDeltaCentroidalAngMomentum": 9.33,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 5,
+    "footPitchOver1degS": 0.96,
+    "pelvisDrop150mmAtS": null
+   },
+   "BACKM": {
+    "peakDeltaLinMomentumNs": 12.37,
+    "peakDeltaCentroidalAngMomentum": 9.56,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "LATM": {
+    "peakDeltaLinMomentumNs": 15.94,
+    "peakDeltaCentroidalAngMomentum": 12.06,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 0,
+    "footPitchOver1degS": 0,
+    "pelvisDrop150mmAtS": null
+   },
+   "NEARF": {
+    "peakDeltaLinMomentumNs": 14.71,
+    "peakDeltaCentroidalAngMomentum": 10.85,
+    "activeWorkDeltaJ": -0.1,
+    "maxFootPitchDeltaDeg": 7.3,
+    "footPitchOver1degS": 1.81,
+    "pelvisDrop150mmAtS": null
+   },
+   "OVERF": {
+    "peakDeltaLinMomentumNs": 22.54,
+    "peakDeltaCentroidalAngMomentum": 16.4,
+    "activeWorkDeltaJ": 0,
+    "maxFootPitchDeltaDeg": 16.1,
+    "footPitchOver1degS": 1.74,
+    "pelvisDrop150mmAtS": null
+   }
+  }
+ }
+}
