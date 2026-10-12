@@ -1,0 +1,39 @@
+{
+ "protocol": "BALANCE-2 flat-sole forward criterion B2F freeze — before the corrected criterion is applied to any candidate (C3 rerun follows)",
+ "files": {
+  "sources/2026-10-12_user_instruction_balance2_flat_sole_criterion_p8.md": "bc0c03d689f220f57aac3c8de884cd808236a3741af4d71f4df97677e197d289",
+  "balance2/BALANCE2_FLAT_SOLE_CRITERION.md": "282f7e2497ae703b8e55566dea51bd175cbe049010b1e39e434daf2fa262c138",
+  "balance2/criteria/b2f_eval.mjs": "bef56d42c047045c2a2b2bb06533e62fde1af653c30fdc326ce83d21dadd6a63"
+ },
+ "inheritedUnchanged": {
+  "balance2/BALANCE2_MATCHED_CRITERIA.md": {
+   "sha256": "a8388ba98998e8ee695fd27833403636892ac478d6974dbeba5920d7710b0fbd",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_qualify.mjs": {
+   "sha256": "da5b7e8fd5b150a778e65043c91ffd3e9de321b9be110694920aba2563fa0b47",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2_eval.mjs": {
+   "sha256": "f7afdd0f56c51afc2776b02825de4aa98c1a8b66eb74582a1b5a1dc4309d5f71",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2_p4prime.mjs": {
+   "sha256": "1f8a0d4628009deac44bfdd57807d04f8896c9c0aaa6b7e5a1c8c9e2bbba122f",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/evidence/B2_GEOMETRY.json": {
+   "sha256": "fb21e742fa730722b6a0b2142c465261a4ee2ca7eeee92793bdd58479ac5f2c9",
+   "matchesEarlierFreeze": "not in an earlier manifest (committed evidence)"
+  },
+  "balance2/evidence/B2M_Q_BALANCE2_C3.json": {
+   "sha256": "5887100205918bf8cc7eb8bc8788f3de36c584bdbc7adf7bf6eec607adbc1768",
+   "matchesEarlierFreeze": "not in an earlier manifest (committed evidence)"
+  },
+  "balance2/evidence/B2M_V_BALANCE2_C3.json": {
+   "sha256": "5a4319053e63b4f96f2cef572f7da1c28225a72f09b7a6d612d08ae620c29cb1",
+   "matchesEarlierFreeze": "not in an earlier manifest (committed evidence)"
+  }
+ },
+ "frozenAt": "2026-10-12T22:36:24.354Z"
+}
