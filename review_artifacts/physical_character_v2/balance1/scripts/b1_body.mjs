@@ -18,10 +18,12 @@ export class M1bBody {
       return { i, key, s: x.s, fl, tauStatic: this.rest.tff[k][i] - tauB0, tauB0 }; }) }; });
     // entry capacities come from the muscle layer itself (the allocator uses the character's own fixed scale)
     const u0 = this.ax.map(a => a.rows.map(() => null)); act.init(st, ev, u0, plant.dt);
-    for (const a of this.ax) a.rows.forEach((r, i) => { if (!r) return; const cc = act.entryCaps(a.k, i); r.cP = cc[0]; r.cM = cc[1]; r.u0 = MUS.solveFloors(r.tauStatic, r.fl[0], r.fl[1], cc[0], cc[1]); u0[a.k][i] = r.u0; });
+    // entry constants per axis from the muscle layer's own descriptors (also what PPR-3's P2 reads: kP / kM / I for its posture channel)
+    for (const a of this.ax) a.rows.forEach((r, i) => { if (!r) return; const cc = act.entryCaps(a.k, i), m = act.mx[a.k][i]; r.cP = cc[0]; r.cM = cc[1]; r.kP = m.d.kP; r.kM = m.d.kM; r.I = m.d.I; r.u0 = MUS.solveFloors(r.tauStatic, r.fl[0], r.fl[1], cc[0], cc[1]); u0[a.k][i] = r.u0; });
     this.last = null; if (this.ctrl) this.ctrl.attach(this, plant, c); }
   command(c, st, ev, n) { st = unitStates(st); ev = unitEv(ev); const dTau = this.ctrl ? this.ctrl.step(n, st, ev) : null, cmd = [], info = [];
-    for (const a of this.ax) cmd[a.k] = a.rows.map((r, i) => { if (!r) return null; const d = dTau && dTau[a.k] ? dTau[a.k][i] || 0 : 0, tgt = r.tauStatic + d, u = d === 0 ? r.u0 : MUS.solveFloors(tgt, r.fl[0], r.fl[1], r.cP, r.cM);
+    for (const a of this.ax) cmd[a.k] = a.rows.map((r, i) => { if (!r) return null; const v = dTau && dTau[a.k] ? dTau[a.k][i] : 0; if (v !== undefined && v !== null && !Number.isFinite(v)) throw new Error(`controller intent not finite at ${a.name}.${r.key}`);
+      const d = v || 0, tgt = r.tauStatic + d, u = d === 0 ? r.u0 : MUS.solveFloors(tgt, r.fl[0], r.fl[1], r.cP, r.cM);
       info.push([a.k, i, tgt, u[0], u[1], d]); return { uP: u[0], uM: u[1] }; });
     this.last = info; return { cmd }; }
   after(c, st, actRes, n) { if (this.ctrl && this.ctrl.after) this.ctrl.after(n, st); }

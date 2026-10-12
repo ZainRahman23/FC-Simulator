@@ -1,0 +1,380 @@
+{
+ "hip.abduction": {
+  "tauRiseMs": 125.9,
+  "tauFallMs": 54.2,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    181.1
+   ],
+   "tauFallMs": [
+    17.1,
+    95.3
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    280,
+    200,
+    400
+   ],
+   "fall90_10ms": [
+    175,
+    120,
+    250
+   ]
+  },
+  "label": "rise [E] low–moderate; fall [SENS] (no hip relaxation data)"
+ },
+ "hip.adduction": {
+  "tauRiseMs": 125.9,
+  "tauFallMs": 54.2,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    181.1
+   ],
+   "tauFallMs": [
+    17.1,
+    95.3
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    280,
+    200,
+    400
+   ],
+   "fall90_10ms": [
+    175,
+    120,
+    250
+   ]
+  },
+  "label": "rise [E] low–moderate; fall [SENS]"
+ },
+ "hip.extension": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 54.2,
+  "range": {
+   "tauRiseMs": [
+    98.1,
+    181.1
+   ],
+   "tauFallMs": [
+    17.1,
+    95.3
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    220,
+    400
+   ],
+   "fall90_10ms": [
+    175,
+    120,
+    250
+   ]
+  },
+  "label": "rise [E] low; fall [SENS]"
+ },
+ "hip.flexion": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 54.2,
+  "range": {
+   "tauRiseMs": [
+    98.1,
+    181.1
+   ],
+   "tauFallMs": [
+    17.1,
+    95.3
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    220,
+    400
+   ],
+   "fall90_10ms": [
+    175,
+    120,
+    250
+   ]
+  },
+  "label": "rise [E] low; fall [SENS]"
+ },
+ "trunk.extension": {
+  "tauRiseMs": 144.4,
+  "tauFallMs": 68.5,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    226.9
+   ],
+   "tauFallMs": [
+    17.1,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    320,
+    200,
+    500
+   ],
+   "fall90_10ms": [
+    200,
+    120,
+    300
+   ]
+  },
+  "label": "[SENS] conflicting evidence (§3.4); fall no data"
+ },
+ "trunk.flexion": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 68.5,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    204
+   ],
+   "tauFallMs": [
+    17.1,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    200,
+    450
+   ],
+   "fall90_10ms": [
+    200,
+    120,
+    300
+   ]
+  },
+  "label": "[SENS] fibre type only; no RTD, no relaxation"
+ },
+ "trunk.lateral": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 68.5,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    204
+   ],
+   "tauFallMs": [
+    17.1,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    200,
+    450
+   ],
+   "fall90_10ms": [
+    200,
+    120,
+    300
+   ]
+  },
+  "label": "[SENS] no group-specific data"
+ },
+ "trunk.rotation": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 68.5,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    204
+   ],
+   "tauFallMs": [
+    17.1,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    200,
+    450
+   ],
+   "fall90_10ms": [
+    200,
+    120,
+    300
+   ]
+  },
+  "label": "[SENS] no data"
+ },
+ "neck.all": {
+  "tauRiseMs": 107.4,
+  "tauFallMs": 79.4,
+  "range": {
+   "tauRiseMs": [
+    79.5,
+    135.2
+   ],
+   "tauFallMs": [
+    39,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    240,
+    180,
+    300
+   ],
+   "fall90_10ms": [
+    220,
+    150,
+    300
+   ]
+  },
+  "label": "rise [E] moderate (no direction separable); fall [SENS] (one SCM abstract)"
+ },
+ "ankle.frontal": {
+  "tauRiseMs": 135.2,
+  "tauFallMs": 68.5,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    204
+   ],
+   "tauFallMs": [
+    17.1,
+    120.9
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    300,
+    200,
+    450
+   ],
+   "fall90_10ms": [
+    200,
+    120,
+    300
+   ]
+  },
+  "label": "[SENS] evertors weak reflex-torque estimate; invertors no timing data"
+ },
+ "elbow.flexion": {
+  "tauRiseMs": 93.5,
+  "tauFallMs": 25.4,
+  "range": {
+   "tauRiseMs": [
+    65.4,
+    112.1
+   ],
+   "tauFallMs": [
+    2.7,
+    57.1
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    210,
+    150,
+    250
+   ],
+   "fall90_10ms": [
+    130,
+    110,
+    180
+   ]
+  },
+  "label": "[E] moderate (twitch + voluntary)"
+ },
+ "elbow.extension": {
+  "tauRiseMs": 102.8,
+  "tauFallMs": 32.5,
+  "range": {
+   "tauRiseMs": [
+    84.2,
+    130.5
+   ],
+   "tauFallMs": [
+    11.8,
+    57.1
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    230,
+    190,
+    290
+   ],
+   "fall90_10ms": [
+    140,
+    115,
+    180
+   ]
+  },
+  "label": "[E] low (twitch × adopted-group calibration)"
+ },
+ "shoulder.all": {
+  "tauRiseMs": 98.1,
+  "tauFallMs": 39,
+  "range": {
+   "tauRiseMs": [
+    65.4,
+    135.2
+   ],
+   "tauFallMs": [
+    2.7,
+    79.4
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    220,
+    150,
+    300
+   ],
+   "fall90_10ms": [
+    150,
+    110,
+    220
+   ]
+  },
+  "label": "[SENS] elbow values widened; no deltoid torque twitch"
+ },
+ "knee.flexion.refined": {
+  "tauRiseMs": 107.4,
+  "tauFallMs": 45.3,
+  "range": {
+   "tauRiseMs": [
+    88.8,
+    135.2
+   ],
+   "tauFallMs": [
+    17.1,
+    68.5
+   ]
+  },
+  "targets": {
+   "rise10_90ms": [
+    240,
+    200,
+    300
+   ],
+   "fall90_10ms": [
+    160,
+    120,
+    200
+   ]
+  },
+  "label": "[E] low (Kozinc 2021 same-protocol RTD) — sensitivity only; canonical knee.flexion stays MUSCLE-1's [D]"
+ }
+}

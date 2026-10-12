@@ -1,0 +1,38 @@
+{
+ "frozenAt": "2026-10-12T05:30:07.058Z",
+ "note": "BALANCE-1 freeze: nothing listed changes after the freeze commit; successors are new labelled files (BALANCE1_PREREGISTRATION.md §10)",
+ "env": {
+  "V2_KNEE_MODEL": "v2k",
+  "LV2_ARCHIVE": "IFM-1 tag archive (unchanged)"
+ },
+ "files": {
+  "sandbox/visual/physchar2/spec/v2_muscles.js": "6759f8da0955aaed5dea830339283d4949bd60ac3aee61b1f7e6a9f6ae24a055",
+  "sandbox/visual/physchar2/sim/v2_muscle.js": "b7ef47cb53bbfe4a16871a71a4af1dffc36a9755c6953437d7bca62e9311b022",
+  "sandbox/visual/physchar2/spec/v2_actuators.js": "99e865e95e501cc86d6597193890fea18c205efafba7bf46598da8e03f463695",
+  "sandbox/visual/physchar2/sim/v2_actuation.js": "dc63b383ebc53adfe14c0a314985466ee29dbfe244f61231b51ba33f21088ca1",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_ctrl.mjs": "d988115c2f1c6f61a68964249d0f0ef03f69574e1736ff128e2bb85440e0aa15",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_body.mjs": "d3adcaade5fe456e9b78f2687be9e85f113e932df1b342b4b9e96a239d85cf3e",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_run.mjs": "46ff45f2c49a8dbc05a0c9634eabe04e1a18c2729b8d0fa6fe87fa705a6e4980",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_qualify.mjs": "6ebaaa1581247a60d0426e43d7c761032562cf5c0a9e4eab025f802329bc2040",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_eval.mjs": "3acbdac47923a3d6ae030d90860121b8f690596f3577cf4bc4a4883b64857e25",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_decide.mjs": "c264ab180112f36c8e686b639619d571a4eaf4bf36d728bf593a780bbc2110af",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_compare.mjs": "af24e0f859084e1e3c7124a0614b761cec07a81954f35a3293e2b02011a0efbc",
+  "review_artifacts/physical_character_v2/balance1/scripts/b1_groups_derive.mjs": "0439872cfa1799761be7d8751eae39883750f29374e4651d6e5b76092318e0a1",
+  "review_artifacts/physical_character_v2/balance1/params/B1_A.json": "e041bab211055caeb37d45f391de5b629616f14c02244f5a1dd232b0c2673040",
+  "review_artifacts/physical_character_v2/balance1/params/B1_B.json": "4dc3584bafd3bfcb9f60ed08d76ffb34bacf9fa524d48321471fe77c1cfd63ad",
+  "review_artifacts/physical_character_v2/balance1/params/B1_BODY.json": "ce6c26ab520882a88fc762f4ce65d265b31077fe1c915e913ef1c117869477e8",
+  "review_artifacts/physical_character_v2/balance1/params/B1_BODY_SENS_LOW.json": "eef12f1d575bfd132d5141bcdb6d1af9e39b8a6cc8eae12cab6a1a0eaef46b8a",
+  "review_artifacts/physical_character_v2/balance1/params/B1_BODY_SENS_HIGH.json": "ca1490c6ca9f6eda717e63bbe7ee2084901ead3f53dccd56fc23503a15b6c1d8",
+  "review_artifacts/physical_character_v2/ppr3/scripts/ppr3_battery.mjs": "f6c433b865f8ad5428bcce60224c08d47551fdadf79e9f0f8489d5deec395d6a",
+  "review_artifacts/physical_character_v2/ppr3/scripts/ppr3_measure.mjs": "638c62f1b9d3c988827a231b6eab53daa9a42838c0f0d351a44c011b1cf69fd9",
+  "review_artifacts/physical_character_v2/ppr3/scripts/ppr3_statics.mjs": "86888c08177d61fa66c191771268d6e50379554f4ad02b4c6d35f32925efdc27",
+  "review_artifacts/physical_character_v2/ppr3/scripts/ppr3_body.mjs": "96e901a80865ee357965104bacdcf5a4109081e904464986162312d22cee1402",
+  "review_artifacts/physical_character_v2/ppr3/scripts/ppr3_run.mjs": "56ebce2115ae81f2954bf47a9ee16ce84f7accfaaa3a3822b0904b817c561566",
+  "review_artifacts/physical_character_v2/ppr3/fixture/PPR3_STANDING_ENTRY.json": "0400f0bb1fdfb760993ccce22bf46abe87d523d0176b799ea9273629bdac33b2",
+  "review_artifacts/physical_character_v2/ppr2/scripts/ppr2_plant.mjs": "435a9a392636ad0ac2b8ce297fcaa9d5a1fe2c47d7f049147448d56543b889b1",
+  "review_artifacts/physical_character_v2/ppr3/params/PPR3_S2_CANDIDATE.json": "9e3e04c25b9d0814c6815a156e99647c1fcfe8c68eb054bae952a88e21a97386",
+  "review_artifacts/physical_character_v2/ppr3/params/PPR3_P2_CANDIDATE.json": "2cf95f826d47b3edf0c11187cf22ecc32d742f68b43631b5ee33ae8ea86f3117",
+  "review_artifacts/physical_character_v2/balance1/research/BALANCE_MUSCLE_AND_BENCHMARK_LITERATURE.md": "b01ef3bd150900367641fada6cf5dfe67d7c43e47f7a30e20516e66e15020889",
+  "review_artifacts/physical_character_v2/balance1/BALANCE1_PREREGISTRATION.md": "edefa986b95b6da11d1c3945c3292884489bf74ed23c50fdbaf8c2cd7e8143ca"
+ }
+}
