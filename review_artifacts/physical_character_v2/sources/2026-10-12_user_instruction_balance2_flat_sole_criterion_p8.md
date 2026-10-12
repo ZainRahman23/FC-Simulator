@@ -1,4 +1,4 @@
-# User instruction, 2026-10-12 (received after the C3 report, ≈ 23:25 BST) (verbatim): retain the rigid flat foot; correct the forward criterion to the loadable flat-sole edge; investigate P8
+# User instruction, 2026-10-12, received after the C3 report and before 23:18 BST (exact time not shown) (verbatim): retain the rigid flat foot; correct the forward criterion to the loadable flat-sole edge; investigate P8
 
 ---
 
