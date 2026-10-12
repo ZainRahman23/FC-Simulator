@@ -1,0 +1,300 @@
+{
+ "criteria": {
+  "U1": "[D] undisturbed standing 60 s with motor noise: no fall (COM within 100 mm of entry, pelvis drop < 150 mm), no stop",
+  "U2": "[D/S] first 250 ms with P2 running: load steps 1–4 within ±10 % BW and steps 5–60 within ±1 %; penetration and separation ≤ 1 mm; COP within 5 mm of the COM projection from step 5; pelvis ≤ 1 mm, COM ≤ 2 mm, key-axis drift ≤ 0.5°",
+  "U3": "[D] no slow fold or creep: last-10-s mean vs 1–2 s mean — every key axis ≤ 3°, pelvis drop ≤ 10 mm, COM shift ≤ 15 mm",
+  "U4": "[M/E] alive but bounded: COM sway RMS AP within [1.0, 12.9] mm and ML within [0.43, 6.0] mm (human 4.1–4.3 / 1.7–2.0 mm, Foulger 2025, × [0.25, 3] for this wider, flexed stance)",
+  "U5": "[S] separation ≤ 5 mm transient and penetration ≤ 1 mm over 60 s",
+  "P1": "small pushes (4 directions): recovered without a step (no fall; COM within 10 mm of the undisturbed twin over the last 1 s; pelvis < 10 mm)",
+  "P2": "moderate pushes (4 directions): recovered without a step",
+  "P3": "large pushes (4 directions; 1.5 × the zero-delay limit): loss of no-step balance within 4 s — a controller that saves everything fails",
+  "P4": "continuum: COM peak excursion strictly increases small < moderate < large in every direction",
+  "P5": "[causality] every push: P2 commands bit-identical to the undisturbed twin until the disturbance reaches P2's delayed sensory state; first command difference ≥ onset + 1 step + the shortest channel delay (6 steps = 25 ms); first activation difference not before the first command difference",
+  "P6": "[M] latency: first neural torque change (> 0.1 N·m) at ankle / knee / hip / lumbar ≥ 60 ms after onset (earliest automatic postural EMG) and ≤ 200 ms for moderate pushes (active torque 100–160 ms, Horak 1989; Robinovitch 2002)",
+  "M1": "[M/E] Rietdyk-form pushes (20 N·s over 350 ms, AP and ML): recovered; COM peak within [24, 120] mm (Rietdyk 1999: 56–70 mm, × [0.4, 2]); time to peak within [0.25, 1.0] s; settled (within 10 mm) by 3.5 s (human 2–3 s)",
+  "T1": "[M/E] no-step failure threshold (50 ms pelvis pulse): forward within [8.5, 19.4] N·s and lateral within [21.8, 49.8] N·s (= [0.35, 0.80] × this stance's zero-delay XcoM limit; humans step at ≈ 0.44–0.56)",
+  "DET": "[S] bit-identical reruns (4 s standing, moderate forward push)"
+ },
+ "label": "S2+P2",
+ "pass": false,
+ "nPass": 10,
+ "n": 14,
+ "failed": [
+  "P1",
+  "P2",
+  "M1",
+  "T1"
+ ],
+ "results": {
+  "U1": {
+   "pass": true,
+   "value": "stood 60 s"
+  },
+  "U2": {
+   "pass": true,
+   "value": {
+    "feet": [
+     710.4,
+     740.4,
+     722.1,
+     727.8
+    ],
+    "pen": 0.007,
+    "sep": 0.004,
+    "copOff": 2.11,
+    "pelvis": 0.078,
+    "com": 0.27,
+    "drift": 0.3
+   }
+  },
+  "U3": {
+   "pass": true,
+   "value": {
+    "maxJointMeanDeg": 2.14,
+    "pelvisMeanDropMm": -0.15,
+    "comMeanShiftMm": 4.13
+   }
+  },
+  "U4": {
+   "pass": true,
+   "value": {
+    "comAP": 1.86,
+    "comML": 0.62,
+    "copAP": 4.92,
+    "copML": 5.56,
+    "copVel": 109.8
+   }
+  },
+  "U5": {
+   "pass": true,
+   "value": {
+    "sepMax": 0.011,
+    "penMax": 0.007
+   }
+  },
+  "P1": {
+   "pass": false,
+   "value": {
+    "fwd": {
+     "recovered": true,
+     "peakMm": 15,
+     "settleS": 0.6833333333333333
+    },
+    "back": {
+     "recovered": true,
+     "peakMm": 17,
+     "settleS": 0.6958333333333333
+    },
+    "left": {
+     "recovered": false,
+     "peakMm": 39.9,
+     "settleS": 4
+    },
+    "right": {
+     "recovered": false,
+     "peakMm": 40.2,
+     "settleS": 4
+    }
+   }
+  },
+  "P2": {
+   "pass": false,
+   "value": {
+    "fwd": {
+     "recovered": true,
+     "peakMm": 26.2,
+     "fall": null
+    },
+    "back": {
+     "recovered": true,
+     "peakMm": 27.1,
+     "fall": null
+    },
+    "left": {
+     "recovered": false,
+     "peakMm": 1381.9,
+     "fall": {
+      "t": 0.3958333333333333,
+      "cause": "a foot unloaded > 50 ms"
+     }
+    },
+    "right": {
+     "recovered": false,
+     "peakMm": 1392,
+     "fall": {
+      "t": 0.39166666666666666,
+      "cause": "a foot unloaded > 50 ms"
+     }
+    }
+   }
+  },
+  "P3": {
+   "pass": true,
+   "value": {
+    "fwd": {
+     "t": 0.25,
+     "cause": "COM beyond the base of support"
+    },
+    "back": {
+     "t": 0.225,
+     "cause": "COM beyond the base of support"
+    },
+    "left": {
+     "t": 0.225,
+     "cause": "COM beyond the base of support"
+    },
+    "right": {
+     "t": 0.22916666666666666,
+     "cause": "COM beyond the base of support"
+    }
+   }
+  },
+  "P4": {
+   "pass": true,
+   "value": {
+    "fwd": [
+     15,
+     26.2,
+     767.3
+    ],
+    "back": [
+     17,
+     27.1,
+     1058.5
+    ],
+    "left": [
+     39.9,
+     1381.9,
+     1793.4
+    ],
+    "right": [
+     40.2,
+     1392,
+     1778.3
+    ]
+   }
+  },
+  "P5": {
+   "pass": true,
+   "value": {
+    "fwd.small": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "fwd.moderate": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "fwd.large": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "back.small": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "back.moderate": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "back.large": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "left.small": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "left.moderate": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "left.large": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "right.small": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "right.moderate": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    },
+    "right.large": {
+     "ok": true,
+     "commandMs": 29.17,
+     "activationMs": 29.17
+    }
+   }
+  },
+  "P6": {
+   "pass": true,
+   "value": {
+    "fwd.small": 79.2,
+    "fwd.moderate": 79.2,
+    "fwd.large": 79.2,
+    "back.small": 79.2,
+    "back.moderate": 79.2,
+    "back.large": 79.2,
+    "left.small": 79.2,
+    "left.moderate": 79.2,
+    "left.large": 79.2,
+    "right.small": 79.2,
+    "right.moderate": 79.2,
+    "right.large": 79.2
+   }
+  },
+  "M1": {
+   "pass": false,
+   "value": {
+    "fwd": {
+     "recovered": false,
+     "peakMm": 83.4,
+     "tPeakS": 0.875,
+     "settleS": 4
+    },
+    "left": {
+     "recovered": false,
+     "peakMm": 35.1,
+     "tPeakS": 0.4166666666666667,
+     "settleS": 4
+    }
+   }
+  },
+  "T1": {
+   "pass": false,
+   "value": {
+    "fwd": 24.31,
+    "left": 20.04,
+    "fwdFrac": 1.002,
+    "leftFrac": 0.322
+   }
+  },
+  "DET": {
+   "pass": true,
+   "value": {
+    "standing": [
+     "a574337d3809985b",
+     "a574337d3809985b"
+    ],
+    "push": [
+     "4178181c7f012d8b",
+     "4178181c7f012d8b"
+    ],
+    "identical": true
+   }
+  }
+ }
+}
