@@ -14,7 +14,7 @@
 | Successor C2 preregistered and frozen, after development on a disjoint set | `4b6ebd98` |
 | C2 run on B2M, plus the causality re-audit | `b995c13f` |
 | Four-system battery | `ca218302` |
-| Review clips, post-hoc diagnostics, this report | final commit |
+| Review clips, post-hoc diagnostics, this report | `85792a65` |
 
 ---
 
@@ -249,7 +249,7 @@ Then the preregistered PVP entry and one out-of-sample replay.
 | `4b6ebd98` | C2 freeze |
 | `b995c13f` | C2 on B2M and causality |
 | `ca218302` | Four-system battery |
-| final commit | Review, diagnostics, report |
+| `85792a65` | Review, diagnostics, report |
 
 **Files** (`review_artifacts/physical_character_v2/balance2/`):
 - `BALANCE2_AUDIT.md`, `BALANCE2_MATCHED_CRITERIA.md`, `BALANCE2_SUCCESSOR_PREREGISTRATION.md`, `BALANCE2_REPORT.md`;
