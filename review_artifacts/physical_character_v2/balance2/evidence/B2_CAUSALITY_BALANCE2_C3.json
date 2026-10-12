@@ -1,0 +1,129 @@
+{
+ "minDelaySteps": 6,
+ "apDelaySteps": 18,
+ "onset": 480,
+ "pushes": {
+  "fwd.moderate": {
+   "J": 9.64,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": 511,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  },
+  "back.moderate": {
+   "J": 11.69,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": 512,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  },
+  "left.moderate": {
+   "J": 15,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": null,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  },
+  "right.moderate": {
+   "J": 15,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": null,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  },
+  "fwd.limit": {
+   "J": 14.83,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": 509,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  },
+  "fwd.over": {
+   "J": 21.5,
+   "firstCommandDiffStep": 487,
+   "firstCommandDiffMs": 29.166666666666668,
+   "C1_sensedIndexExact": true,
+   "C1_firstBad": null,
+   "C2_commandsIdenticalThroughSensing": true,
+   "C3_firstIntegralDiffStep": 505,
+   "C3_firstGateDiffStep": 508,
+   "C3_firstModelForceDiffStep": 507,
+   "C3_ok": true,
+   "ok": true,
+   "C4_firstGovernorDiffStep": {
+    "u": 505,
+    "g": 505,
+    "gH": 499,
+    "lim": 505
+   },
+   "C4_ok": true
+  }
+ },
+ "pass": true,
+ "label": "BALANCE2_C3"
+}

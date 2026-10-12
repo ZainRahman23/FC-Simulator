@@ -1,0 +1,562 @@
+[
+ {
+  "id": "QUIET_normal",
+  "panels": [
+   {
+    "k": "QUIET_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "QUIET_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "QUIET_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "QUIET_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 0,
+  "to": 1440,
+  "note": "undisturbed standing from the PPR-3 entry, 0\u20136 s (each controller with its own motor noise) \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "QUIET_slow",
+  "panels": [
+   {
+    "k": "QUIET_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "QUIET_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "QUIET_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "QUIET_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 480,
+  "to": 720,
+  "note": "undisturbed standing from the PPR-3 entry, 0\u20136 s (each controller with its own motor noise) \u2014 0.25\u00d7 slow motion, steps 480\u2013720 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "SMALLF_normal",
+  "panels": [
+   {
+    "k": "SMALLF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "SMALLF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "SMALLF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "SMALLF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1440,
+  "note": "small forward push 4.82 N\u00b7s (B2M small) at t = 2 s \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "SMALLF_slow",
+  "panels": [
+   {
+    "k": "SMALLF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "SMALLF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "SMALLF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "SMALLF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 696,
+  "note": "small forward push 4.82 N\u00b7s (B2M small) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013696 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "F12_normal",
+  "panels": [
+   {
+    "k": "F12_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "F12_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "F12_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "F12_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1440,
+  "note": "forward push 12.0 N\u00b7s at t = 2 s (the BALANCE-1 moderate push that failed BALANCE-1 P2) \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "F12_slow",
+  "panels": [
+   {
+    "k": "F12_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "F12_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "F12_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "F12_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 936,
+  "note": "forward push 12.0 N\u00b7s at t = 2 s (the BALANCE-1 moderate push that failed BALANCE-1 P2) \u2014 0.25\u00d7 slow motion, steps 456\u2013936 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "BACKM_normal",
+  "panels": [
+   {
+    "k": "BACKM_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "BACKM_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "BACKM_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "BACKM_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1440,
+  "note": "matched moderate backward push 11.69 N\u00b7s (B2M) at t = 2 s \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "BACKM_slow",
+  "panels": [
+   {
+    "k": "BACKM_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "BACKM_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "BACKM_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "BACKM_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 816,
+  "note": "matched moderate backward push 11.69 N\u00b7s (B2M) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "LATM_normal",
+  "panels": [
+   {
+    "k": "LATM_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "LATM_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "LATM_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "LATM_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1440,
+  "note": "matched moderate lateral (left) push 15.0 N\u00b7s (B2M) at t = 2 s \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "LATM_slow",
+  "panels": [
+   {
+    "k": "LATM_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "LATM_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "LATM_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "LATM_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 816,
+  "note": "matched moderate lateral (left) push 15.0 N\u00b7s (B2M) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "NEARF_normal",
+  "panels": [
+   {
+    "k": "NEARF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "NEARF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "NEARF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "NEARF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1440,
+  "note": "near-limit forward push 14.0 N\u00b7s (0.94 \u00d7 the matched T_fwd) at t = 2 s \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "NEARF_slow",
+  "panels": [
+   {
+    "k": "NEARF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "NEARF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "NEARF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "NEARF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 936,
+  "note": "near-limit forward push 14.0 N\u00b7s (0.94 \u00d7 the matched T_fwd) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013936 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "OVERF_normal",
+  "panels": [
+   {
+    "k": "OVERF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "OVERF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "OVERF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "OVERF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 4,
+  "from": 384,
+  "to": 1200,
+  "note": "unrecoverable forward push 21.5 N\u00b7s (B2M over-limit) at t = 2 s \u2014 normal speed \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "OVERF_slow",
+  "panels": [
+   {
+    "k": "OVERF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "OVERF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   },
+   {
+    "k": "OVERF_C2",
+    "l": "M1b + C2 (boot-tip support)"
+   },
+   {
+    "k": "OVERF_C3",
+    "l": "M1b + C3 (legitimate support)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 480,
+  "H": 480,
+  "every": 1,
+  "from": 456,
+  "to": 816,
+  "note": "unrecoverable forward push 21.5 N\u00b7s (B2M over-limit) at t = 2 s \u2014 0.25\u00d7 slow motion, steps 456\u2013816 \u00b7 C3 review: CURRENT V2 | BALANCE-1 B | C2 | C3",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ }
+]
