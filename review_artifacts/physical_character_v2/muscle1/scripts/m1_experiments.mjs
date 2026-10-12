@@ -21,7 +21,7 @@ export const PROTOCOL = Object.freeze({
 const P = PROTOCOL, dt = 1 / 240, R2D = 180 / Math.PI;
 const vlutters = (deg) => 0.93 * Math.pow(deg / 0.29, -0.271), sakanaka = (deg) => 0.94 * Math.pow(deg / 0.2, -0.321);
 export function sideOf(kit, params, group) { return params.dirToGroup[kit.fam][kit.x.plus.dir] === group ? 0 : 1; }
-function make(id, kit, params) { return id === "V2ENV" ? new M.V2EnvAxis(kit) : id === "V2ACT" ? new M.V2ActAxis(kit) : id === "M1a" ? new M.M1aAxis(kit, params) : id === "M1b" ? new M.M1bAxis(kit, params) : new M.M1Axis(kit, params); }
+function make(id, kit, params) { return id === "V2ENV" ? new M.V2EnvAxis(kit) : id === "V2ACT" ? new M.V2ActAxis(kit) : id === "M1a" ? new M.M1aAxis(kit, params) : id === "M1b" ? new M.M1bAxis(kit, params) : id === "CANON" ? new M.CanonAxis(kit, params) : new M.M1Axis(kit, params); }
 // steady isometric torque of an excitation pair at the operating point (what each actuator should settle to): u⁺·capIso⁺ − u⁻·capIso⁻ + τ_B0
 const tauSS = (kit, u) => u[0] * kit.capFull(1, kit.anat0, 0, kit.kneeDeg0) - u[1] * kit.capFull(-1, kit.anat0, 0, kit.kneeDeg0) - kit.kp * (kit.anat0 - kit.slack) * Math.PI / 180 * kit.s;
 const cmdOf = (id, kit, u) => (id === "V2ENV" ? { tau0: tauSS(kit, u), K: 0, D: 0 } : null);

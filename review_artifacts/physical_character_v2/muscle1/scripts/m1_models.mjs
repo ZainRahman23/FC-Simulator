@@ -114,3 +114,19 @@ export class M1bAxis extends M1Axis {
     this.line.push(u.slice()); const ud = this.line.shift(); return super.plan({ ...inp, u: ud, dTau: undefined }, false); }
   state() { return [...super.state(), ...this.line.flat()]; }
 }
+// ═══ CANON (equivalence test only): the canonical V2 MuscleAxis (sandbox/visual/physchar2/sim/v2_muscle.js) driven with the fixture kit's constants,
+// with the same excitation interface — must reproduce M1b exactly (canonical integration check, BALANCE-1 §1)
+const MUS = await import(PL.P2 + "sim/v2_muscle.js");
+export class CanonAxis {
+  constructor(kit, params) { this.kit = kit; this.id = "CANON"; const grp = (dir) => params.groups[params.dirToGroup[kit.fam][dir]];
+    this.m = new MUS.MuscleAxis({ capFull: kit.capFull, kP: kit.kP, kM: kit.kM, ePs: kit.ePs, ePm: kit.eMs, cP: kit.cP, cM: kit.cM, I: kit.I, kp: kit.kp, slackDeg: kit.slack, dp: kit.dp || 0, s: kit.s, dt: kit.dt, zeta: kit.zeta, Dmin: kit.Dmin,
+      tc: [grp(kit.x.plus.dir), grp(kit.x.minus.dir)].map(g => ({ up: g.tauRiseMs / 1000, dn: g.tauFallMs / 1000 })), dSteps: params.electrochemicalDelay.steps });
+    this.ePrev = 0; this.created = 0; }
+  get a() { return this.m.a; } get f() { return this.m.f; } get row() { return this.m.row; } get diss() { return this.m.diss; }
+  excite(dTau) { const k = this.kit; return dTau === 0 ? k.u0 : MUS.solveFloors(k.tauStatic + dTau, k.fl[0], k.fl[1], k.cP, k.cM); }
+  plan(inp, init = false) { const u = inp.u || this.excite(inp.dTau || 0); return this.m.plan(u, inp, init); }
+  torque(wEnd) { return this.m.torque(wEnd); }
+  after(e) { const de = e - this.ePrev; this.ePrev = e; return { slip: this.m.strain(de) }; }
+  storedElastic() { return this.m.storedElastic(); }
+  state() { return this.m.state(); }
+}

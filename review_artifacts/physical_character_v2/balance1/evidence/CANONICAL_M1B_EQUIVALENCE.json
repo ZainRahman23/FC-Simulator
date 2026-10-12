@@ -1,0 +1,25 @@
+{
+ "test": "canonical V2 MuscleAxis (sandbox/visual/physchar2/sim/v2_muscle.js) vs the qualified MUSCLE-1 fixture model M1b, every MUSCLE-1 experiment (A steps and ramps, B series / hold / release / C1 hold / shortening, BC1 / BC2, C replays of the frozen PPR-3 P2 commands), ankle and knee",
+ "identical": true,
+ "sha256": {
+  "M1b": "5807d481ff3a5d6a",
+  "CANON": "5807d481ff3a5d6a"
+ },
+ "bytes": 178694,
+ "source": "muscle1/scripts/m1_experiments.mjs --params params/MUSCLE1B_CANDIDATE.json --models M1b,CANON",
+ "DET": {
+  "run1": "8898221952031632",
+  "run2": "8898221952031632",
+  "identical": true
+ },
+ "CPU": {
+  "M1b": {
+   "usPerAxisStep": 0.5091881249999994,
+   "stateFloats": 13
+  },
+  "CANON": {
+   "usPerAxisStep": 0.44174791500000077,
+   "stateFloats": 12
+  }
+ }
+}
