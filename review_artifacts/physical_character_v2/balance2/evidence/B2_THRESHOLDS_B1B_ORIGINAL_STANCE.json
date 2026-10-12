@@ -1,0 +1,324 @@
+{
+ "baseHash": "4909ea42d8878d85",
+ "comEntry": [
+  0.026403475201909474,
+  0.9799661617572103,
+  0.0003789778233178094
+ ],
+ "omega0": 3.1639452798830523,
+ "marginsBatteryMm": {
+  "fwd": 102.95022916522883,
+  "back": 124.76046520929386,
+  "left": 265.71505759987696,
+  "right": 266.47271157890134
+ },
+ "marginsLoadedMm": {
+  "fwd": 80.29485780665941,
+  "back": 124.76046520929386,
+  "left": 265.71505759987696,
+  "right": 260.8222602894907
+ },
+ "JlimBattery": {
+  "fwd": 24.0746223803884,
+  "back": 29.174884915455625,
+  "left": 62.13672105803099,
+  "right": 62.31389631628842
+ },
+ "JlimLoaded": {
+  "fwd": 18.77672732209124,
+  "back": 29.174884915455625,
+  "left": 62.13672105803099,
+  "right": 60.99255412818104
+ },
+ "T": {
+  "fwd": {
+   "thresholdNs": 14.362910156249999,
+   "bracket": [
+    14.220703125,
+    14.5051171875
+   ],
+   "fracB1Lim": 0.591796875,
+   "fracLoadedLim": 0.7649314979054798,
+   "fracBatteryLim": 0.5965996030720827,
+   "tried": [
+    {
+     "J": 18.203,
+     "fall": {
+      "t": 0.567,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1590.6,
+     "settleS": null
+    },
+    {
+     "J": 9.101,
+     "fall": null,
+     "recovered": true,
+     "peakMm": 31.8,
+     "settleS": 0.9916666666666667
+    },
+    {
+     "J": 13.652,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 95.5,
+     "settleS": 4
+    },
+    {
+     "J": 15.927,
+     "fall": {
+      "t": 0.675,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 119.4,
+     "settleS": null
+    },
+    {
+     "J": 14.79,
+     "fall": {
+      "t": 0.821,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 105.3,
+     "settleS": null
+    },
+    {
+     "J": 14.221,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 98.3,
+     "settleS": 4
+    },
+    {
+     "J": 14.505,
+     "fall": {
+      "t": 1.163,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 101.9,
+     "settleS": null
+    }
+   ]
+  },
+  "back": {
+   "thresholdNs": 18.187910156250002,
+   "bracket": [
+    18.0179296875,
+    18.357890625000003
+   ],
+   "fracB1Lim": 0.626953125,
+   "fracLoadedLim": 0.6234098337990295,
+   "fracBatteryLim": 0.6234098337990295,
+   "tried": [
+    {
+     "J": 21.758,
+     "fall": {
+      "t": 0.629,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1760.9,
+     "settleS": null
+    },
+    {
+     "J": 10.879,
+     "fall": null,
+     "recovered": true,
+     "peakMm": 33.9,
+     "settleS": 1.8833333333333333
+    },
+    {
+     "J": 16.318,
+     "fall": null,
+     "recovered": true,
+     "peakMm": 58,
+     "settleS": 2.5041666666666664
+    },
+    {
+     "J": 19.038,
+     "fall": {
+      "t": 1.863,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1505.4,
+     "settleS": null
+    },
+    {
+     "J": 17.678,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 71,
+     "settleS": 3.6875
+    },
+    {
+     "J": 18.358,
+     "fall": {
+      "t": 2.317,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 111.4,
+     "settleS": null
+    },
+    {
+     "J": 18.018,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 75.2,
+     "settleS": 4
+    }
+   ]
+  },
+  "left": {
+   "thresholdNs": 25.8844921875,
+   "bracket": [
+    25.519921875,
+    26.2490625
+   ],
+   "fracB1Lim": 0.416015625,
+   "fracLoadedLim": 0.4165731912909573,
+   "fracBatteryLim": 0.4165731912909573,
+   "tried": [
+    {
+     "J": 46.665,
+     "fall": {
+      "t": 0.442,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1510,
+     "settleS": null
+    },
+    {
+     "J": 23.332,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 90,
+     "settleS": 4
+    },
+    {
+     "J": 34.999,
+     "fall": {
+      "t": 0.642,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "recovered": false,
+     "peakMm": 1523.3,
+     "settleS": null
+    },
+    {
+     "J": 29.166,
+     "fall": {
+      "t": 1.113,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1719,
+     "settleS": null
+    },
+    {
+     "J": 26.249,
+     "fall": {
+      "t": 2.013,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "recovered": false,
+     "peakMm": 1686.4,
+     "settleS": null
+    },
+    {
+     "J": 24.791,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 110.5,
+     "settleS": 4
+    },
+    {
+     "J": 25.52,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 142.8,
+     "settleS": 4
+    }
+   ]
+  },
+  "right": {
+   "thresholdNs": 27.3427734375,
+   "bracket": [
+    26.978203125,
+    27.70734375
+   ],
+   "fracB1Lim": 0.439453125,
+   "fracLoadedLim": 0.4482969081772971,
+   "fracBatteryLim": 0.43879094477924324,
+   "tried": [
+    {
+     "J": 46.665,
+     "fall": {
+      "t": 0.45,
+      "cause": "COM beyond the base of support"
+     },
+     "recovered": false,
+     "peakMm": 1514.7,
+     "settleS": null
+    },
+    {
+     "J": 23.332,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 86.3,
+     "settleS": 4
+    },
+    {
+     "J": 34.999,
+     "fall": {
+      "t": 0.646,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "recovered": false,
+     "peakMm": 1595.9,
+     "settleS": null
+    },
+    {
+     "J": 29.166,
+     "fall": {
+      "t": 1.212,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "recovered": false,
+     "peakMm": 1624.4,
+     "settleS": null
+    },
+    {
+     "J": 26.249,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 124,
+     "settleS": 4
+    },
+    {
+     "J": 27.707,
+     "fall": {
+      "t": 1.404,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "recovered": false,
+     "peakMm": 1617,
+     "settleS": null
+    },
+    {
+     "J": 26.978,
+     "fall": null,
+     "recovered": false,
+     "peakMm": 153.5,
+     "settleS": 4
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,930 @@
+{
+ "protocol": "BALANCE-2 §3 standing-geometry audit (frozen BALANCE-1 B, undisturbed, measured at the battery onset t = 2 s)",
+ "anatomy": {
+  "heightM": 1.76,
+  "massKg": 73.91,
+  "footLengthM": 0.26928,
+  "footLengthOverH": 0.153,
+  "anklePosFromHeelFrac": 0.22,
+  "ankleHeightM": 0.088000064,
+  "bootLengthM": 0.28428000000000003,
+  "bootHeelBehindAJC": 0.06424160000000001,
+  "bootTipAheadAJC": 0.22003840000000002,
+  "mtp1AheadAJC": 0.14029488,
+  "mtp5AheadAJC": 0.11040480000000001,
+  "footTipAheadAJC": 0.21003840000000001,
+  "footHeelBehindAJC": 0.059241600000000005,
+  "toeSpringM": 0.012,
+  "ballWidthM": 0.10919999999999999,
+  "heelWidthM": 0.08016000000000001,
+  "profile": {
+   "footLen": 0.153,
+   "ankleFromHeel": 0.22,
+   "mtp1FromHeel": 0.741,
+   "mtp5FromHeel": 0.63
+  },
+  "bootShapeNote": "rigid boot hull (anatomical outline, oblique MTP break, 12 mm toe spring) — convex piece 1/10 of the approved hull (D1a grid AP 5 × ML 2)"
+ },
+ "battery": {
+  "feet": {
+   "L": {
+    "ajc": [
+     -0.034121111035346985,
+     0.08799578249454498,
+     0.21043682098388672
+    ],
+    "fwdAxis": [
+     0.999954113014673,
+     0.00003200094384783281,
+     0.009593308484981411
+    ],
+    "yawOutDeg": 0.5496644476807229,
+    "soleHullAlong": {
+     "heel": -0.06423880059831279,
+     "front": 0.14029773253111616
+    },
+    "hullWithin5mmAlong": {
+     "heel": -0.06423880059831279,
+     "front": 0.1631851482560463
+    },
+    "hullFrontAtHeight": [
+     [
+      0.001,
+      0.14029773253111616
+     ],
+     [
+      0.002,
+      0.14029773253111616
+     ],
+     [
+      0.005,
+      0.1631851482560463
+     ],
+     [
+      0.008,
+      0.18415646246979206
+     ],
+     [
+      0.012,
+      0.21601159962834368
+     ]
+    ],
+    "contactAlong": {
+     "loadedHeel": -0.06423883811201961,
+     "loadedFront": 0.14029774495153777,
+     "bosFront": 0.1631851559813547
+    },
+    "worldX": {
+     "loadedFront": 0.10669394908633228,
+     "bosFront": 0.12934934138691567,
+     "loadedBack": -0.09835699000738439
+    },
+    "copAlong": 0.06298372855579532,
+    "loadN": 365.4985477893928
+   },
+   "R": {
+    "ajc": [
+     -0.034116148948669434,
+     0.08799755573272705,
+     -0.21043583750724792
+    ],
+    "fwdAxis": [
+     0.9999541066746881,
+     0.00002481796062838435,
+     -0.00959492676523288
+    ],
+    "yawOutDeg": 0.5497571675144114,
+    "soleHullAlong": {
+     "heel": -0.06423943388142143,
+     "front": 0.14029710301155054
+    },
+    "hullWithin5mmAlong": {
+     "heel": -0.06423943388142143,
+     "front": 0.16318454389516832
+    },
+    "hullFrontAtHeight": [
+     [
+      0.001,
+      0.14029710301155054
+     ],
+     [
+      0.002,
+      0.14029710301155054
+     ],
+     [
+      0.005,
+      0.16318454389516832
+     ],
+     [
+      0.008,
+      0.1841558825639262
+     ],
+     [
+      0.012,
+      0.21601105421403927
+     ]
+    ],
+    "contactAlong": {
+     "loadedHeel": -0.06423950679593221,
+     "loadedFront": 0.14029708650082304,
+     "bosFront": 0.16318451587360874
+    },
+    "worldX": {
+     "loadedFront": 0.10669833300856887,
+     "bosFront": 0.1293537043671383,
+     "loadedBack": -0.09835269977689307
+    },
+    "copAlong": 0.06046139196153095,
+    "loadN": 361.241104491055
+   }
+  },
+  "com": {
+   "pos": [
+    0.026403475201909474,
+    0.9799661617572103,
+    0.0003789778233178094
+   ],
+   "heightM": 0.9799661617572103,
+   "omega0": 3.1639452798830523,
+   "meanOver1to2s": [
+    0.026605793132447663,
+    0.9800491712145705,
+    0.00027409298728305417
+   ]
+  },
+  "cop": {
+   "pos": [
+    0.027854495045253037,
+    -0.000778479855578708
+   ],
+   "meanOver1to2s": [
+    0.026546802837147006,
+    0.00006321805533055591
+   ]
+  },
+  "distancesMm": {
+   "comAheadOfAJC": 60.52210519391768,
+   "copAheadOfAJC": 61.97312503726125,
+   "comToBattleryEdgeFwd": 102.95022916522883,
+   "comToLoadedFront": 80.29485780665941,
+   "comToHeelEdge": 124.76046520929386,
+   "comToMTP1": 79.77277480608232,
+   "comToMTP5": 49.882694806082334,
+   "comToBootTip": 159.51629480608236,
+   "comToAnatomicalToeTip": 149.51629480608233,
+   "comToAnatomicalHeel": 119.76370519391769,
+   "stanceWidthAJC": 420.87265849113464,
+   "comLateralOffset": 0.3784860849984124
+  },
+  "percentFootLengthFromAnatomicalHeel": {
+   "ajc": 22,
+   "com": 44.47552926096171,
+   "cop": 45.014380955608004,
+   "battleryEdgeFwd": 82.70719487490587,
+   "loadedFront": 74.29388109052921,
+   "mtp1": 74.1,
+   "mtp5": 63.000000000000014,
+   "bootTip": 103.71360665478313,
+   "bootHeel": -1.856803327391564
+  },
+  "zeroDelayLimitNs": {
+   "fwd_battleryEdge": 24.0746223803884,
+   "fwd_loadedFront": 18.77672732209124,
+   "back_heel": 29.174884915455625,
+   "fwd_MTP1": 18.654639676516982,
+   "fwd_anatomicalToeTip": 34.963966242311166
+  },
+  "posture": {
+   "jointsDeg": {
+    "ankle_L.df": 22.388543441753185,
+    "ankle_R.df": 22.445887111386785,
+    "ankle_L.inv": -1.4615681801320661,
+    "ankle_R.inv": 1.6615640910207723,
+    "knee_L.flex": -55.76964132267149,
+    "knee_R.flex": -55.771838841413015,
+    "hip_L.flex": -45.12729116792079,
+    "hip_R.flex": -45.176580286790816,
+    "hip_L.abd": 1.1147888318597576,
+    "hip_R.abd": -1.453180428186484,
+    "lumbar.flex": -14.999726199965341,
+    "lumbar.lat": 0.2571294851724865,
+    "thoracic.flex": -7.09624818972146,
+    "thoracic.lat": 0.007795748501886043,
+    "neck.flex": -0.2500633170451548,
+    "neck.lat": -0.09870173654134239
+   },
+   "tiltDeg": {
+    "pelvis": [
+     2.978954309162513,
+     0.03259029986241725
+    ],
+    "thorax": [
+     5.883643580445663,
+     0.28610971817680947
+    ],
+    "head": [
+     0.6334466803868776,
+     0.19079082631512498
+    ]
+   },
+   "pelvisHeightM": 0.9124241471290588,
+   "extra": {
+    "hip_L.rot": -7.2873110880829906,
+    "hip_R.rot": 7.1741321364789785,
+    "knee_L.rot": -0.5994788351018235,
+    "neck.rot": 0.43448893158301455
+   }
+  },
+  "load": {
+   "leftN": 365.4985477893928,
+   "rightN": 361.241104491055,
+   "leftShare": 0.5029291392625806,
+   "bodyWeightN": 725.0571
+  },
+  "actuation": {
+   "ankle_L.df": {
+    "axisSign": 1,
+    "positiveIs": "dorsiflexion",
+    "negativeIs": "plantarflexion",
+    "tauIntent": -14.819384,
+    "uPos": 0.01,
+    "uNeg": 0.089022,
+    "aPos": 0.01,
+    "aNeg": 0.086363,
+    "fPos": 0.01,
+    "fNeg": 0.083814,
+    "capIso": [
+     37.97751239945935,
+     170.73560821718732
+    ],
+    "tauStatic": -13.550974254025517,
+    "activeTorquePos": 0.3797751239945935,
+    "activeTorqueNeg": 14.745239332460947,
+    "Kmus": 258.8152,
+    "tauElastic": -0.28647,
+    "tauPassiveB": -7.95823,
+    "actuatorTau": -22.22235918045044,
+    "v2Passive": -0.00818,
+    "angleDeg": 22.388543441753185
+   },
+   "ankle_R.df": {
+    "axisSign": 1,
+    "positiveIs": "dorsiflexion",
+    "negativeIs": "plantarflexion",
+    "tauIntent": -13.096655,
+    "uPos": 0.01,
+    "uNeg": 0.078932,
+    "aPos": 0.01,
+    "aNeg": 0.078883,
+    "fPos": 0.01,
+    "fNeg": 0.076053,
+    "capIso": [
+     37.977837247190685,
+     170.7352776769308
+    ],
+    "tauStatic": -12.509005298815804,
+    "activeTorquePos": 0.3797783724719069,
+    "activeTorqueNeg": 13.468110908989331,
+    "Kmus": 235.3761,
+    "tauElastic": -0.38956,
+    "tauPassiveB": -8.00607,
+    "actuatorTau": -21.052908897399902,
+    "v2Passive": -0.00853,
+    "angleDeg": 22.445887111386785
+   },
+   "knee_L.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "hyperextension",
+    "tauIntent": -1.888236,
+    "uPos": 0.053684,
+    "uNeg": 0.085,
+    "aPos": 0.061598,
+    "aNeg": 0.085,
+    "fPos": 0.063238,
+    "fNeg": 0.085,
+    "capIso": [
+     150.82710381721398,
+     117.473792121619
+    ],
+    "tauStatic": -1.5503939767812134,
+    "activeTorquePos": 9.290647940932747,
+    "activeTorqueNeg": 9.985272330337615,
+    "Kmus": 334.5111,
+    "tauElastic": -0.5391,
+    "tauPassiveB": -0.06835,
+    "actuatorTau": -1.3366647809743881,
+    "v2Passive": -0.01667,
+    "angleDeg": -55.76964132267149
+   },
+   "knee_R.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "hyperextension",
+    "tauIntent": -2.567255,
+    "uPos": 0.049181,
+    "uNeg": 0.085,
+    "aPos": 0.056369,
+    "aNeg": 0.085,
+    "fPos": 0.057613,
+    "fNeg": 0.085,
+    "capIso": [
+     150.82680191623788,
+     117.47094356463184
+    ],
+    "tauStatic": -2.1231826966162686,
+    "activeTorquePos": 8.501955997216413,
+    "activeTorqueNeg": 9.985030202993707,
+    "Kmus": 317.4787,
+    "tauElastic": -0.6418,
+    "tauPassiveB": -0.0677,
+    "actuatorTau": -2.2827619314193726,
+    "v2Passive": -0.0164,
+    "angleDeg": -55.771838841413015
+   },
+   "hip_L.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -14.148746,
+    "uPos": 0.03,
+    "uNeg": 0.104278,
+    "aPos": 0.03,
+    "aNeg": 0.104759,
+    "fPos": 0.03,
+    "fNeg": 0.105921,
+    "capIso": [
+     193.17561278829803,
+     191.25869571600145
+    ],
+    "tauStatic": -14.180090702342582,
+    "activeTorquePos": 5.79526838364894,
+    "activeTorqueNeg": 20.0360697045126,
+    "Kmus": 373.0322,
+    "tauElastic": 0.28404,
+    "tauPassiveB": 6.43676,
+    "actuatorTau": -7.423972338438034,
+    "v2Passive": 0.01175,
+    "angleDeg": -45.12729116792079
+   },
+   "hip_R.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -14.025548,
+    "uPos": 0.03,
+    "uNeg": 0.103634,
+    "aPos": 0.03,
+    "aNeg": 0.102632,
+    "fPos": 0.03,
+    "fNeg": 0.101681,
+    "capIso": [
+     193.1756130675661,
+     191.25869437650218
+    ],
+    "tauStatic": -13.444050917362453,
+    "activeTorquePos": 5.7952683920269825,
+    "activeTorqueNeg": 19.629262321249172,
+    "Kmus": 361.0779,
+    "tauElastic": 0.39842,
+    "tauPassiveB": 6.46372,
+    "actuatorTau": -6.406512558460236,
+    "v2Passive": 0.01251,
+    "angleDeg": -45.176580286790816
+   },
+   "lumbar.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -19.22524,
+    "uPos": 0.025,
+    "uNeg": 0.103372,
+    "aPos": 0.025,
+    "aNeg": 0.107987,
+    "fPos": 0.025,
+    "fNeg": 0.113065,
+    "capIso": [
+     147.82,
+     221.73
+    ],
+    "tauStatic": -22.069841414612082,
+    "activeTorquePos": 3.6955,
+    "activeTorqueNeg": 23.943957509999997,
+    "Kmus": 137.3447,
+    "tauElastic": 0.17818,
+    "tauPassiveB": -0.43637,
+    "actuatorTau": -21.76373541355133,
+    "v2Passive": -0.00655,
+    "angleDeg": -14.999726199965341
+   },
+   "ankle_L.inv": {
+    "axisSign": -1,
+    "positiveIs": "inversion",
+    "negativeIs": "eversion",
+    "tauIntent": 2.48753,
+    "uPos": 0.097014,
+    "uNeg": 0.02,
+    "aPos": 0.095859,
+    "aNeg": 0.02,
+    "fPos": 0.096408,
+    "fNeg": 0.02,
+    "capIso": [
+     33.2595,
+     36.955
+    ],
+    "tauStatic": 2.5006882794421204,
+    "activeTorquePos": 3.1882224105000003,
+    "activeTorqueNeg": 0.7391,
+    "Kmus": 46.7384,
+    "tauElastic": -0.02331,
+    "tauPassiveB": 0,
+    "actuatorTau": 2.444937899708748,
+    "v2Passive": -0.02366,
+    "angleDeg": -1.4615681801320661
+   },
+   "hip_L.abd": {
+    "axisSign": 1,
+    "positiveIs": "abduction",
+    "negativeIs": "adduction",
+    "tauIntent": -2.481806,
+    "uPos": 0.04,
+    "uNeg": 0.052073,
+    "aPos": 0.04,
+    "aNeg": 0.053663,
+    "fPos": 0.04,
+    "fNeg": 0.054027,
+    "capIso": [
+     173.6885,
+     181.0795
+    ],
+    "tauStatic": -2.726784414589991,
+    "activeTorquePos": 6.94754,
+    "activeTorqueNeg": 9.7172692085,
+    "Kmus": 239.6505,
+    "tauElastic": 0.12226,
+    "tauPassiveB": 0,
+    "actuatorTau": -2.6867765933275223,
+    "v2Passive": 0.00145,
+    "angleDeg": 1.1147888318597576
+   }
+  },
+  "edges": {
+   "fwd": 0.1293537043671383,
+   "loadedFwd": 0.10669833300856887,
+   "back": -0.09835699000738439
+  }
+ },
+ "noiseFree": {
+  "feet": {
+   "L": {
+    "ajc": [
+     -0.034120842814445496,
+     0.08799567073583603,
+     0.21043699979782104
+    ],
+    "fwdAxis": [
+     0.9999541130050542,
+     0.00003257831477551372,
+     0.009593308475684625
+    ],
+    "yawOutDeg": 0.5496644471533678,
+    "soleHullAlong": {
+     "heel": -0.06423874978837926,
+     "front": 0.1402977833370985
+    },
+    "hullWithin5mmAlong": {
+     "heel": -0.06423874978837926,
+     "front": 0.1631851970730161
+    },
+    "hullFrontAtHeight": [
+     [
+      0.001,
+      0.1402977833370985
+     ],
+     [
+      0.002,
+      0.1402977833370985
+     ],
+     [
+      0.005,
+      0.1631851970730161
+     ],
+     [
+      0.008,
+      0.18415650935162847
+     ],
+     [
+      0.012,
+      0.2160116437837778
+     ]
+    ],
+    "contactAlong": {
+     "loadedHeel": -0.06423877617653632,
+     "loadedFront": 0.14029777894521317,
+     "bosFront": 0.16318518515629973
+    },
+    "worldX": {
+     "loadedFront": 0.10669425139395125,
+     "bosFront": 0.12934963901741137,
+     "loadedBack": -0.09835665975919894
+    },
+    "copAlong": 0.06102093343936962,
+    "loadN": 366.40406844351673
+   },
+   "R": {
+    "ajc": [
+     -0.03411749005317688,
+     0.0879959762096405,
+     -0.21043610572814941
+    ],
+    "fwdAxis": [
+     0.9999540235183831,
+     0.00003125007452797751,
+     -0.009594588009496086
+    ],
+    "yawOutDeg": 0.5497378048499542,
+    "soleHullAlong": {
+     "heel": -0.06423885675392421,
+     "front": 0.14029764480159407
+    },
+    "hullWithin5mmAlong": {
+     "heel": -0.06423885675392421,
+     "front": 0.1631850595752056
+    },
+    "hullFrontAtHeight": [
+     [
+      0.001,
+      0.14029764480159407
+     ],
+     [
+      0.002,
+      0.14029764480159407
+     ],
+     [
+      0.005,
+      0.1631850595752056
+     ],
+     [
+      0.008,
+      0.1841563730665852
+     ],
+     [
+      0.012,
+      0.2160115088398758
+     ]
+    ],
+    "contactAlong": {
+     "loadedHeel": -0.06423887967945459,
+     "loadedFront": 0.14029765534630562,
+     "bosFront": 0.16318505059048805
+    },
+    "worldX": {
+     "loadedFront": 0.10669755285138,
+     "bosFront": 0.12935290045591102,
+     "loadedBack": -0.0983534212694755
+    },
+    "copAlong": 0.05949099583093726,
+    "loadN": 359.21239487121056
+   }
+  },
+  "com": {
+   "pos": [
+    0.025999698737162298,
+    0.9800992975562828,
+    0.00008627350875001296
+   ],
+   "heightM": 0.9800992975562828,
+   "omega0": 3.163730378857154,
+   "meanOver1to2s": [
+    0.02605511761823276,
+    0.9801209656017321,
+    0.00007932119528879442
+   ]
+  },
+  "cop": {
+   "pos": [
+    0.026192827339711306,
+    0.00008823026963560296
+   ],
+   "meanOver1to2s": [
+    0.02605126490218783,
+    0.00008660428689570671
+   ]
+  },
+  "distancesMm": {
+   "comAheadOfAJC": 60.118865170973486,
+   "copAheadOfAJC": 60.31199377352249,
+   "comToBattleryEdgeFwd": 103.35320171874874,
+   "comToLoadedFront": 80.6978541142177,
+   "comToHeelEdge": 124.35635849636122,
+   "comToMTP1": 80.17601482902653,
+   "comToMTP5": 50.28593482902652,
+   "comToBootTip": 159.91953482902653,
+   "comToAnatomicalToeTip": 149.91953482902653,
+   "comToAnatomicalHeel": 119.36046517097348,
+   "stanceWidthAJC": 420.87310552597046,
+   "comLateralOffset": 0.08582647391419754
+  },
+  "percentFootLengthFromAnatomicalHeel": {
+   "ajc": 22,
+   "com": 44.325781777693656,
+   "cop": 44.39750214405915,
+   "battleryEdgeFwd": 82.70709554728246,
+   "loadedFront": 74.29379058422131,
+   "mtp1": 74.1,
+   "mtp5": 63.000000000000014,
+   "bootTip": 103.71360665478313,
+   "bootHeel": -1.856803327391564
+  },
+  "zeroDelayLimitNs": {
+   "fwd_battleryEdge": 24.16721478843932,
+   "fwd_loadedFront": 18.869685127428987,
+   "back_heel": 29.07841050021907,
+   "fwd_MTP1": 18.747662762562346,
+   "fwd_anatomicalToeTip": 35.055881568676554
+  },
+  "posture": {
+   "jointsDeg": {
+    "ankle_L.df": 22.335437281872235,
+    "ankle_R.df": 22.346123803826707,
+    "ankle_L.inv": -1.5481597902215658,
+    "ankle_R.inv": 1.5633423869985443,
+    "knee_L.flex": -55.83178407859367,
+    "knee_R.flex": -55.84643183835617,
+    "hip_L.flex": -45.07423653733791,
+    "hip_R.flex": -45.09597920200092,
+    "hip_L.abd": 1.2477514814170725,
+    "hip_R.abd": -1.2578434767944555,
+    "lumbar.flex": -14.909918670765267,
+    "lumbar.lat": 0.006573669962440067,
+    "thoracic.flex": -7.286323408577611,
+    "thoracic.lat": -0.009250689809261838,
+    "neck.flex": -0.30285816238007346,
+    "neck.lat": -0.004751647295944676
+   },
+   "tiltDeg": {
+    "pelvis": [
+     3.029350101030177,
+     -0.00014164609090407484
+    ],
+    "thorax": [
+     5.8331097831951,
+     -0.00434206666220624
+    ],
+    "head": [
+     0.5302524996453829,
+     -0.01036157062002819
+    ]
+   },
+   "pelvisHeightM": 0.9125170111656189,
+   "extra": {
+    "hip_L.rot": -7.3372862878555685,
+    "hip_R.rot": 7.419850198889535,
+    "knee_L.rot": -0.5717426233719544,
+    "neck.rot": -0.008802376283552031
+   }
+  },
+  "load": {
+   "leftN": 366.40406844351673,
+   "rightN": 359.21239487121056,
+   "leftShare": 0.504955561192378,
+   "bodyWeightN": 725.0571
+  },
+  "actuation": {
+   "ankle_L.df": {
+    "axisSign": 1,
+    "positiveIs": "dorsiflexion",
+    "negativeIs": "plantarflexion",
+    "tauIntent": -13.711263,
+    "uPos": 0.01,
+    "uNeg": 0.082531,
+    "aPos": 0.01,
+    "aNeg": 0.082347,
+    "fPos": 0.01,
+    "fNeg": 0.082085,
+    "capIso": [
+     37.97751239945935,
+     170.73560821718732
+    ],
+    "tauStatic": -13.550974254025517,
+    "activeTorquePos": 0.3797751239945935,
+    "activeTorqueNeg": 14.059565129860724,
+    "Kmus": 253.5376,
+    "tauElastic": -0.05494,
+    "tauPassiveB": -7.91631,
+    "actuatorTau": -21.619083881378174,
+    "v2Passive": -0.00238,
+    "angleDeg": 22.335437281872235
+   },
+   "ankle_R.df": {
+    "axisSign": 1,
+    "positiveIs": "dorsiflexion",
+    "negativeIs": "plantarflexion",
+    "tauIntent": -12.707509,
+    "uPos": 0.01,
+    "uNeg": 0.076653,
+    "aPos": 0.01,
+    "aNeg": 0.076496,
+    "fPos": 0.01,
+    "fNeg": 0.07624,
+    "capIso": [
+     37.977837247190685,
+     170.7352776769308
+    ],
+    "tauStatic": -12.509005298815804,
+    "activeTorquePos": 0.3797783724719069,
+    "activeTorqueNeg": 13.060565801174498,
+    "Kmus": 235.8386,
+    "tauElastic": -0.05854,
+    "tauPassiveB": -7.92503,
+    "actuatorTau": -20.634573698043823,
+    "v2Passive": -0.00236,
+    "angleDeg": 22.346123803826707
+   },
+   "knee_L.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "hyperextension",
+    "tauIntent": -1.50029,
+    "uPos": 0.056256,
+    "uNeg": 0.085,
+    "aPos": 0.058123,
+    "aNeg": 0.085,
+    "fPos": 0.058448,
+    "fNeg": 0.085,
+    "capIso": [
+     150.82710381721398,
+     117.473792121619
+    ],
+    "tauStatic": -1.5503939767812134,
+    "activeTorquePos": 8.766523755167928,
+    "activeTorqueNeg": 9.985272330337615,
+    "Kmus": 319.583,
+    "tauElastic": -0.08576,
+    "tauPassiveB": -0.04991,
+    "actuatorTau": -1.3550333306193352,
+    "v2Passive": -0.00408,
+    "angleDeg": -55.83178407859367
+   },
+   "knee_R.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "hyperextension",
+    "tauIntent": -2.040034,
+    "uPos": 0.052676,
+    "uNeg": 0.085,
+    "aPos": 0.054587,
+    "aNeg": 0.085,
+    "fPos": 0.054852,
+    "fNeg": 0.085,
+    "capIso": [
+     150.82680191623788,
+     117.47094356463184
+    ],
+    "tauStatic": -2.1231826966162686,
+    "activeTorquePos": 8.233182636201677,
+    "activeTorqueNeg": 9.985030202993707,
+    "Kmus": 308.6055,
+    "tauElastic": -0.07098,
+    "tauPassiveB": -0.04556,
+    "actuatorTau": -1.873958520591259,
+    "v2Passive": -0.0042,
+    "angleDeg": -55.84643183835617
+   },
+   "hip_L.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -14.238332,
+    "uPos": 0.03,
+    "uNeg": 0.104746,
+    "aPos": 0.03,
+    "aNeg": 0.104712,
+    "fPos": 0.03,
+    "fNeg": 0.104628,
+    "capIso": [
+     193.17561278829803,
+     191.25869571600145
+    ],
+    "tauStatic": -14.180090702342582,
+    "activeTorquePos": 5.79526838364894,
+    "activeTorqueNeg": 20.027080545813945,
+    "Kmus": 369.6673,
+    "tauElastic": -0.00643,
+    "tauPassiveB": 6.42343,
+    "actuatorTau": -7.764740288257599,
+    "v2Passive": 0.00131,
+    "angleDeg": -45.07423653733791
+   },
+   "hip_R.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -13.485746,
+    "uPos": 0.03,
+    "uNeg": 0.100811,
+    "aPos": 0.03,
+    "aNeg": 0.100777,
+    "fPos": 0.03,
+    "fNeg": 0.100689,
+    "capIso": [
+     193.1756130675661,
+     191.25869437650218
+    ],
+    "tauStatic": -13.444050917362453,
+    "activeTorquePos": 5.7952683920269825,
+    "activeTorqueNeg": 19.27447744318076,
+    "Kmus": 358.7796,
+    "tauElastic": 0.01437,
+    "tauPassiveB": 6.43093,
+    "actuatorTau": -6.988199204206467,
+    "v2Passive": 0.00085,
+    "angleDeg": -45.09597920200092
+   },
+   "lumbar.flex": {
+    "axisSign": 1,
+    "positiveIs": "flexion",
+    "negativeIs": "extension",
+    "tauIntent": -22.029738,
+    "uPos": 0.025,
+    "uNeg": 0.116021,
+    "aPos": 0.025,
+    "aNeg": 0.116259,
+    "fPos": 0.025,
+    "fNeg": 0.116355,
+    "capIso": [
+     147.82,
+     221.73
+    ],
+    "tauStatic": -22.069841414612082,
+    "activeTorquePos": 3.6955,
+    "activeTorqueNeg": 25.77810807,
+    "Kmus": 140.8273,
+    "tauElastic": 0.004,
+    "tauPassiveB": -0.45205,
+    "actuatorTau": -22.56087899208069,
+    "v2Passive": -0.00075,
+    "angleDeg": -14.909918670765267
+   },
+   "ankle_L.inv": {
+    "axisSign": -1,
+    "positiveIs": "inversion",
+    "negativeIs": "eversion",
+    "tauIntent": 2.511044,
+    "uPos": 0.097721,
+    "uNeg": 0.02,
+    "aPos": 0.09769,
+    "aNeg": 0.02,
+    "fPos": 0.097627,
+    "fNeg": 0.02,
+    "capIso": [
+     33.2595,
+     36.955
+    ],
+    "tauStatic": 2.5006882794421204,
+    "activeTorquePos": 3.249120555,
+    "activeTorqueNeg": 0.7391,
+    "Kmus": 47.2188,
+    "tauElastic": -0.00873,
+    "tauPassiveB": 0,
+    "actuatorTau": 2.4991127103567123,
+    "v2Passive": -0.02555,
+    "angleDeg": -1.5481597902215658
+   },
+   "hip_L.abd": {
+    "axisSign": 1,
+    "positiveIs": "abduction",
+    "negativeIs": "adduction",
+    "tauIntent": -2.68017,
+    "uPos": 0.04,
+    "uNeg": 0.053168,
+    "aPos": 0.04,
+    "aNeg": 0.053211,
+    "fPos": 0.04,
+    "fNeg": 0.053234,
+    "capIso": [
+     173.6885,
+     181.0795
+    ],
+    "tauStatic": -2.726784414589991,
+    "activeTorquePos": 6.94754,
+    "activeTorqueNeg": 9.6354212745,
+    "Kmus": 237.5925,
+    "tauElastic": -0.01466,
+    "tauPassiveB": 0,
+    "actuatorTau": -2.6817546039819717,
+    "v2Passive": 0.00116,
+    "angleDeg": 1.2477514814170725
+   }
+  },
+  "edges": {
+   "fwd": 0.12935290045591102,
+   "loadedFwd": 0.10669755285138,
+   "back": -0.09835665975919894
+  }
+ },
+ "hashes": {
+  "withNoise": "92a3e5a185d456ee",
+  "noiseFree": "fe3fc960b0acbb03"
+ }
+}

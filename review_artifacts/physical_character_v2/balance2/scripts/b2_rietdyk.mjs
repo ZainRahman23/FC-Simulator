@@ -1,0 +1,10 @@
+// BALANCE-2 §8 — the BALANCE-1 M1 "Rietdyk-form" forward push (20 N·s over 350 ms = 84 steps, pelvis COM) on the frozen B system: the outcome,
+// its decomposition summary, and the observed recoverable impulse for that pulse form (7-step bisection over [0, 30] N·s with the frozen fall
+// definition), next to the 50 ms threshold. Diagnostic. usage: node b2_rietdyk.mjs --out <json>
+import fs from "fs";
+const { trace } = await import(new URL("./b2_decompose.mjs", import.meta.url).href), { features } = await import(new URL("./b2_controls.mjs", import.meta.url).href);
+const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
+const T20 = await trace("B1_B", "fwd", 20, { pulse: 84 }), f20 = features(T20); let lo = 0, hi = 30; const tried = [];
+for (let it = 0; it < 7; it++) { const J = (lo + hi) / 2, T = await trace("B1_B", "fwd", J, { pulse: 84 }); tried.push({ J: +J.toFixed(3), fall: T.recovery.fall, recovered: T.recovery.recovered, peakMm: +T.recovery.comPeakMm.toFixed(1), settleS: T.recovery.settleS }); if (T.recovery.fall) hi = J; else lo = J; }
+const out = { protocol: "BALANCE-2 §8 Rietdyk-form forward (diagnostic, frozen B)", push20: { recovery: T20.recovery, features: f20, firstSecond: T20.series.filter(r => r.t >= 0 && r.t <= 1.2 && Math.round(r.t * 240) % 12 === 0).map(r => ({ t: r.t, dxMm: +(r.com.dx * 1000).toFixed(1), copAbsMm: r.cop.xAbs != null ? +(r.cop.xAbs * 1000).toFixed(1) : null, heelLift: +Math.max(r.feet.L.heelLiftMm, r.feet.R.heelLiftMm).toFixed(1), dTank: +(r.axes.ankL.dTauPhys + r.axes.ankR.dTauPhys).toFixed(1), dThip: +(r.axes.hipL.dTauPhys + r.axes.hipR.dTauPhys).toFixed(1), F: r.ctrl ? +r.ctrl.F.toFixed(1) : null })) }, threshold350ms: { Ns: (lo + hi) / 2, bracket: [lo, hi], tried } };
+fs.writeFileSync(arg("out"), JSON.stringify(out, null, 1)); console.log(JSON.stringify(out.push20.recovery), "thr350", out.threshold350ms.Ns.toFixed(2), JSON.stringify(out.threshold350ms.tried)); console.log(JSON.stringify(out.push20.firstSecond));

@@ -1,0 +1,641 @@
+{
+ "note": "P4′ applied post hoc to BALANCE-1 evidence, information only; BALANCE-1's recorded P4 result is unchanged",
+ "results": {
+  "B": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      17.84,
+      32.93,
+      55.99,
+      83.76
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.5208,
+      0.3167
+     ],
+     "peaksNonFallingMm": [
+      22.4,
+      69.2
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.87,
+      23.01,
+      37.21,
+      56.28
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      1.6333
+     ],
+     "peaksNonFallingMm": [
+      12.2,
+      26.1,
+      43.6
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.93,
+      41.63,
+      68.38,
+      102.53
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.675
+     ],
+     "peaksNonFallingMm": [
+      21.7,
+      48.3,
+      87.6
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.95,
+      41.42,
+      67.73,
+      101.76
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.675
+     ],
+     "peaksNonFallingMm": [
+      21.7,
+      47.8,
+      84.3
+     ]
+    }
+   }
+  },
+  "A": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      17.84,
+      32.93,
+      56,
+      83.78
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.5208,
+      0.3167
+     ],
+     "peaksNonFallingMm": [
+      22.4,
+      70.7
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.87,
+      23.02,
+      37.21,
+      56.27
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      1.6708
+     ],
+     "peaksNonFallingMm": [
+      12.2,
+      26.1,
+      43.6
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.44,
+      42.75,
+      70.16,
+      104.43
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.5875
+     ],
+     "peaksNonFallingMm": [
+      23.1,
+      52.2,
+      100
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.48,
+      42.7,
+      69.97,
+      104.27
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.6208
+     ],
+     "peaksNonFallingMm": [
+      23.1,
+      51.9,
+      95.4
+     ]
+    }
+   }
+  },
+  "B_SENS_LOW": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      17.16,
+      31.77,
+      54.04,
+      81.35
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.5125,
+      0.325
+     ],
+     "peaksNonFallingMm": [
+      23.6,
+      69.3
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.59,
+      22.68,
+      37.47,
+      57.2
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.9583
+     ],
+     "peaksNonFallingMm": [
+      12.8,
+      27.3,
+      45.8
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.28,
+      40.29,
+      66.33,
+      100.45
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.6
+     ],
+     "peaksNonFallingMm": [
+      20.2,
+      44.5,
+      82.9
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.33,
+      40.18,
+      65.6,
+      99.47
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.5958
+     ],
+     "peaksNonFallingMm": [
+      20.3,
+      44.5,
+      78.8
+     ]
+    }
+   }
+  },
+  "B_SENS_HIGH": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      18.08,
+      33.4,
+      56.4,
+      84.09
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.525,
+      0.3167
+     ],
+     "peaksNonFallingMm": [
+      22.5,
+      83.2
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.97,
+      23.31,
+      37.56,
+      56.34
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      2.0417
+     ],
+     "peaksNonFallingMm": [
+      12.6,
+      26.8,
+      43.9
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.44,
+      42.91,
+      70.54,
+      104.79
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.7458
+     ],
+     "peaksNonFallingMm": [
+      23.3,
+      53.7,
+      97.7
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.46,
+      42.58,
+      69.69,
+      103.9
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.8042
+     ],
+     "peaksNonFallingMm": [
+      23.3,
+      52.6,
+      94.1
+     ]
+    }
+   }
+  },
+  "A_SENS_LOW": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      17.15,
+      31.77,
+      54.04,
+      81.35
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.5125,
+      0.325
+     ],
+     "peaksNonFallingMm": [
+      23.6,
+      69.5
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.59,
+      22.68,
+      37.47,
+      57.2
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.9625
+     ],
+     "peaksNonFallingMm": [
+      12.8,
+      27.3,
+      45.8
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.94,
+      41.66,
+      68.53,
+      102.55
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.475
+     ],
+     "peaksNonFallingMm": [
+      21.6,
+      48,
+      94.3
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      19.99,
+      41.55,
+      67.89,
+      101.76
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.475
+     ],
+     "peaksNonFallingMm": [
+      21.7,
+      47.8,
+      87.3
+     ]
+    }
+   }
+  },
+  "A_SENS_HIGH": {
+   "id": "P4′",
+   "text": "P4′ continuum (corrected): per direction, with levels ordered by impulse — (a) falls are upward-closed; (b) peak COM excursion strictly increases across the non-falling levels; (c) time to failure is non-increasing across the falling levels (± 1/240 s); (d) |COM excursion| at a common pre-failure time t* (250 ms, or 25 ms before the direction's earliest failure) strictly increases across all levels",
+   "pass": true,
+   "perDirection": {
+    "fwd": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      18.09,
+      33.41,
+      56.41,
+      84.1
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      0.525,
+      0.3167
+     ],
+     "peaksNonFallingMm": [
+      22.5,
+      83.6
+     ]
+    },
+    "back": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      10.99,
+      23.33,
+      37.57,
+      56.34
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      2.0417
+     ],
+     "peaksNonFallingMm": [
+      12.7,
+      26.9,
+      43.9
+     ]
+    },
+    "left": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.88,
+      43.82,
+      72.12,
+      106.81
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.6917
+     ],
+     "peaksNonFallingMm": [
+      24.9,
+      58.1,
+      113
+     ]
+    },
+    "right": {
+     "pass": true,
+     "a": true,
+     "b": true,
+     "c": true,
+     "d": true,
+     "tStarMs": 250,
+     "excursionAtTStarMm": [
+      20.88,
+      43.69,
+      71.57,
+      106.3
+     ],
+     "fallTimesS": [
+      null,
+      null,
+      null,
+      0.7125
+     ],
+     "peaksNonFallingMm": [
+      24.9,
+      57.8,
+      108.2
+     ]
+    }
+   }
+  }
+ }
+}

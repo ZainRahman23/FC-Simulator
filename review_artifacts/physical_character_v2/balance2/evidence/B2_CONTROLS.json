@@ -1,0 +1,376 @@
+{
+ "protocol": "BALANCE-2 §7 controls (frozen BALANCE-1 B; diagnostic)",
+ "fractions": {
+  "fwdModerate": 0.6390890059889047,
+  "backModerate": 0.29134647915944506,
+  "leftModerate": 0.24140314687656492
+ },
+ "runs": [
+  {
+   "dir": "fwd",
+   "J": 12,
+   "normDifficulty": 0.6390890059889047,
+   "JlimLoaded": 18.77672732209124,
+   "marginLoadedMm": 80.29485780665941,
+   "recovery": {
+    "fall": null,
+    "recovered": false,
+    "comPeakMm": 69.19509310521774,
+    "tPeakS": 1.5125,
+    "settleS": 4,
+    "tailComMm": 48.69115607349703,
+    "tailDropMm": 1.7365217208862305
+   },
+   "comPeakMm": 69.13661562750022,
+   "tPeakS": 1.5083333333333333,
+   "overshootFrac": 0.7042725186024651,
+   "copMaxUse": 1.11981627382271,
+   "copAtEdgeS": 0.3333333333333333,
+   "lift": {
+    "heelMaxMm": 15.953505508259095,
+    "forefootMaxMm": 0.0018596302668039133,
+    "heelUpS": 2.3916666666666666,
+    "forefootUpS": 0,
+    "minFootLoadN": 311.4984029531479
+   },
+   "momentShare1s": {
+    "ankle": 0.4795109336704027,
+    "knee": 0.2116435522034821,
+    "hip": 0.1385530905017011,
+    "spine": 0.17029242362441396
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 8.33,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.10828063725244752,
+    "atReversal": 2.2771943606979463
+   },
+   "saturation": {
+    "ankleMaxActDrive": 0.598432,
+    "hipMaxAct": 0.150041
+   }
+  },
+  {
+   "dir": "back",
+   "J": 8.5,
+   "normDifficulty": 0.29134647915944506,
+   "JlimLoaded": 29.174884915455625,
+   "marginLoadedMm": 124.76046520929386,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 26.11300887768106,
+    "tPeakS": 0.3833333333333333,
+    "settleS": 1.8541666666666667,
+    "tailComMm": 4.838380276846402,
+    "tailDropMm": 0.6036162376403809
+   },
+   "comPeakMm": 26.112702751107772,
+   "tPeakS": 0.37916666666666665,
+   "overshootFrac": 0.5369533654022002,
+   "copMaxUse": 0.6027233241272512,
+   "copAtEdgeS": 0,
+   "lift": {
+    "heelMaxMm": 0.0006192516706776674,
+    "forefootMaxMm": 0.00017252417108815088,
+    "heelUpS": 0,
+    "forefootUpS": 0,
+    "minFootLoadN": 338.96526435390115
+   },
+   "momentShare1s": {
+    "ankle": 0.4307750599383497,
+    "knee": 0.2482268141857053,
+    "hip": 0.14480384595246115,
+    "spine": 0.17619427992348377
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 12.5,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.012140268740547152,
+    "atReversal": -0.3132792744386166
+   },
+   "saturation": {
+    "ankleMaxActDrive": 0.638411,
+    "hipMaxAct": 0.126932
+   }
+  },
+  {
+   "dir": "left",
+   "J": 15,
+   "normDifficulty": 0.24140314687656492,
+   "JlimLoaded": 62.13672105803099,
+   "marginLoadedMm": 265.71505759987696,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 48.332155011371434,
+    "tPeakS": 0.3875,
+    "settleS": 2.5041666666666664,
+    "tailComMm": 7.272300536161454,
+    "tailDropMm": 0.9214282035827637
+   },
+   "comPeakMm": 48.330490599677496,
+   "tPeakS": 0.38333333333333336,
+   "overshootFrac": 0.020665193235491403,
+   "copMaxUse": 0.448666883861829,
+   "copAtEdgeS": 0,
+   "lift": {
+    "heelMaxMm": 0.012160192545254689,
+    "forefootMaxMm": 0.00018247646652036487,
+    "heelUpS": 0,
+    "forefootUpS": 0,
+    "minFootLoadN": 137.42373302578926
+   },
+   "momentShare1s": {
+    "ankle": 0.12191657342308602,
+    "hip": 0.878083426576914
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 8.33,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.01866115057848131,
+    "atReversal": 0.567565819970928
+   },
+   "saturation": {
+    "ankleMaxActDrive": 0.721499,
+    "hipMaxAct": 0.3184
+   }
+  },
+  {
+   "dir": "fwd",
+   "J": 5.471,
+   "normDifficulty": 0.29137132931377485,
+   "JlimLoaded": 18.77672732209124,
+   "marginLoadedMm": 80.29485780665941,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 18.729161291446932,
+    "tPeakS": 0.5791666666666666,
+    "settleS": 0.9166666666666666,
+    "tailComMm": 3.424804812563548,
+    "tailDropMm": 0.4940629005432129
+   },
+   "comPeakMm": 18.729156054994064,
+   "tPeakS": 0.575,
+   "overshootFrac": 0.2701831847187459,
+   "copMaxUse": 0.5033571892787143,
+   "copAtEdgeS": 0,
+   "lift": {
+    "heelMaxMm": 0.00026048709859949337,
+    "forefootMaxMm": 0.00014733123707144635,
+    "heelUpS": 0,
+    "forefootUpS": 0,
+    "minFootLoadN": 344.75055630435236
+   },
+   "momentShare1s": {
+    "ankle": 0.4461422638661809,
+    "knee": 0.25447390218322186,
+    "hip": 0.1391522696392829,
+    "spine": 0.16023156431131436
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 16.67,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.03671807011777687,
+    "atReversal": -0.26904270793270163
+   },
+   "saturation": {
+    "ankleMaxActDrive": 0.16896,
+    "hipMaxAct": 0.123928
+   }
+  },
+  {
+   "dir": "fwd",
+   "J": 4.533,
+   "normDifficulty": 0.2414158720123088,
+   "JlimLoaded": 18.77672732209124,
+   "marginLoadedMm": 80.29485780665941,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 15.398957843309745,
+    "tPeakS": 0.5666666666666667,
+    "settleS": 0.875,
+    "tailComMm": 2.907255218872424,
+    "tailDropMm": 0.4032254219055176
+   },
+   "comPeakMm": 15.398950577257903,
+   "tPeakS": 0.5625,
+   "overshootFrac": 0.28973155937729844,
+   "copMaxUse": 0.4185386767584341,
+   "copAtEdgeS": 0,
+   "lift": {
+    "heelMaxMm": 0.00007830602699598899,
+    "forefootMaxMm": 0.00013694709019573814,
+    "heelUpS": 0,
+    "forefootUpS": 0,
+    "minFootLoadN": 347.90505331009626
+   },
+   "momentShare1s": {
+    "ankle": 0.4455405532380692,
+    "knee": 0.25494088367480744,
+    "hip": 0.1390937885390539,
+    "spine": 0.16042477454806947
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 16.67,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.03589772575058798,
+    "atReversal": -0.2776359429188624
+   },
+   "saturation": {
+    "ankleMaxActDrive": 0.153883,
+    "hipMaxAct": 0.120737
+   }
+  },
+  {
+   "dir": "back",
+   "J": 18.645,
+   "normDifficulty": 0.6390770710503356,
+   "JlimLoaded": 29.174884915455625,
+   "marginLoadedMm": 124.76046520929386,
+   "recovery": {
+    "fall": {
+     "t": 1.9583333333333333,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1471.426516552788,
+    "tPeakS": 4,
+    "settleS": null,
+    "tailComMm": 1471.426516552788,
+    "tailDropMm": 715.0589525699615
+   },
+   "comPeakMm": 84.24562399160399,
+   "tPeakS": 0.7125,
+   "overshootFrac": 16.925454640094344,
+   "copMaxUse": 1.0002338767212013,
+   "copAtEdgeS": 0.8041666666666667,
+   "lift": {
+    "heelMaxMm": null,
+    "forefootMaxMm": null,
+    "heelUpS": 2.5375,
+    "forefootUpS": 2.1708333333333334,
+    "minFootLoadN": 0
+   },
+   "momentShare1s": {
+    "ankle": 0.5490655826760806,
+    "knee": 0.2291634180364772,
+    "hip": 0.10136384824449439,
+    "spine": 0.1204071510429478
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 8.33,
+    "command": 29.17,
+    "command01": 33.33,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.04295510781355456,
+    "atReversal": -0.504380047495223
+   },
+   "saturation": {
+    "ankleMaxActDrive": 1,
+    "hipMaxAct": 0.999727
+   }
+  },
+  {
+   "dir": "left",
+   "J": 39.711,
+   "normDifficulty": 0.6390906910410179,
+   "JlimLoaded": 62.13672105803099,
+   "marginLoadedMm": 265.71505759987696,
+   "recovery": {
+    "fall": {
+     "t": 0.5541666666666667,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1640.8532630965867,
+    "tPeakS": 4,
+    "settleS": null,
+    "tailComMm": 1640.8532630965867,
+    "tailDropMm": 741.3027584552765
+   },
+   "comPeakMm": 1607.6317067429372,
+   "tPeakS": 3.995833333333333,
+   "overshootFrac": -1,
+   "copMaxUse": 7.262172622991473,
+   "copAtEdgeS": 3.066666666666667,
+   "lift": {
+    "heelMaxMm": null,
+    "forefootMaxMm": null,
+    "heelUpS": 3.5416666666666665,
+    "forefootUpS": 3.4458333333333333,
+    "minFootLoadN": 0
+   },
+   "momentShare1s": {
+    "ankle": 0.12726681028670422,
+    "hip": 0.8727331897132958
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 4.17,
+    "joint01": 4.17,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": -4.91941710465511,
+    "atReversal": null
+   },
+   "saturation": {
+    "ankleMaxActDrive": 1,
+    "hipMaxAct": 1
+   }
+  }
+ ]
+}

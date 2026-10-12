@@ -1,0 +1,369 @@
+{
+ "protocol": "BALANCE-2 §8 Rietdyk-form forward (diagnostic, frozen B)",
+ "push20": {
+  "recovery": {
+   "fall": {
+    "t": 0.7208333333333333,
+    "cause": "COM beyond the base of support"
+   },
+   "recovered": false,
+   "comPeakMm": 1548.227796412934,
+   "tPeakS": 4,
+   "settleS": null,
+   "tailComMm": 1548.227796412934,
+   "tailDropMm": 775.6734490394592
+  },
+  "features": {
+   "dir": "fwd",
+   "J": 20,
+   "normDifficulty": 1.0651483433148412,
+   "JlimLoaded": 18.77672732209124,
+   "marginLoadedMm": 80.29485780665941,
+   "recovery": {
+    "fall": {
+     "t": 0.7208333333333333,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1548.227796412934,
+    "tPeakS": 4,
+    "settleS": null,
+    "tailComMm": 1548.227796412934,
+    "tailDropMm": 775.6734490394592
+   },
+   "comPeakMm": 1489.603905888163,
+   "tPeakS": 3.995833333333333,
+   "overshootFrac": -1,
+   "copMaxUse": 19.631821103386283,
+   "copAtEdgeS": 3.45,
+   "lift": {
+    "heelMaxMm": null,
+    "forefootMaxMm": null,
+    "heelUpS": 3.658333333333333,
+    "forefootUpS": 1.275,
+    "minFootLoadN": 0
+   },
+   "momentShare1s": {
+    "ankle": 0.5605141871108129,
+    "knee": 0.24195340485506842,
+    "hip": 0.0968056019348531,
+    "spine": 0.10072680609926546
+   },
+   "latencyMs": {
+    "stateDiff": 4.17,
+    "joint001": 8.33,
+    "joint01": 20.83,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 50
+   },
+   "firstCommandDiffMs": 29.166666666666668,
+   "integralShare": {
+    "atPeak": 0.11772172868444515,
+    "atReversal": null
+   },
+   "saturation": {
+    "ankleMaxActDrive": 1,
+    "hipMaxAct": 0.576933
+   }
+  },
+  "firstSecond": [
+   {
+    "t": 0,
+    "dxMm": 0,
+    "copAbsMm": 60.4,
+    "heelLift": 0,
+    "dTank": 0,
+    "dThip": 0.6,
+    "F": 0
+   },
+   {
+    "t": 0.05,
+    "dxMm": 1.3,
+    "copAbsMm": 64.6,
+    "heelLift": 0,
+    "dTank": -1.3,
+    "dThip": 4.1,
+    "F": 0
+   },
+   {
+    "t": 0.1,
+    "dxMm": 4.5,
+    "copAbsMm": 68.9,
+    "heelLift": 0,
+    "dTank": -4.2,
+    "dThip": 7.4,
+    "F": 0
+   },
+   {
+    "t": 0.15,
+    "dxMm": 9.6,
+    "copAbsMm": 75.5,
+    "heelLift": 0,
+    "dTank": -9.1,
+    "dThip": 11,
+    "F": 16.1
+   },
+   {
+    "t": 0.2,
+    "dxMm": 16.2,
+    "copAbsMm": 88.3,
+    "heelLift": 0,
+    "dTank": -18.8,
+    "dThip": 14.1,
+    "F": 33.3
+   },
+   {
+    "t": 0.25,
+    "dxMm": 24,
+    "copAbsMm": 106.5,
+    "heelLift": 0,
+    "dTank": -32.3,
+    "dThip": 16.3,
+    "F": 51.2
+   },
+   {
+    "t": 0.3,
+    "dxMm": 32.6,
+    "copAbsMm": 125,
+    "heelLift": 0.1,
+    "dTank": -47.3,
+    "dThip": 16.3,
+    "F": 69.1
+   },
+   {
+    "t": 0.35,
+    "dxMm": 41.7,
+    "copAbsMm": 126,
+    "heelLift": 1.6,
+    "dTank": -55.7,
+    "dThip": 12.4,
+    "F": 85.3
+   },
+   {
+    "t": 0.4,
+    "dxMm": 50.6,
+    "copAbsMm": 126.1,
+    "heelLift": 6.2,
+    "dTank": -46.8,
+    "dThip": 4.4,
+    "F": 99
+   },
+   {
+    "t": 0.45,
+    "dxMm": 59,
+    "copAbsMm": 126.2,
+    "heelLift": 9.5,
+    "dTank": -41.1,
+    "dThip": -2.8,
+    "F": 113.5
+   },
+   {
+    "t": 0.5,
+    "dxMm": 67.2,
+    "copAbsMm": 126,
+    "heelLift": 13,
+    "dTank": -42.1,
+    "dThip": -7.4,
+    "F": 114.7
+   },
+   {
+    "t": 0.55,
+    "dxMm": 75.5,
+    "copAbsMm": 138.2,
+    "heelLift": 15.8,
+    "dTank": -45,
+    "dThip": -9.5,
+    "F": 118.3
+   },
+   {
+    "t": 0.6,
+    "dxMm": 83.9,
+    "copAbsMm": 151,
+    "heelLift": 17.1,
+    "dTank": -59,
+    "dThip": -10.8,
+    "F": 124.8
+   },
+   {
+    "t": 0.65,
+    "dxMm": 92.2,
+    "copAbsMm": 184.8,
+    "heelLift": 18.5,
+    "dTank": -68.2,
+    "dThip": -11.3,
+    "F": 134.1
+   },
+   {
+    "t": 0.7,
+    "dxMm": 100.1,
+    "copAbsMm": 191.2,
+    "heelLift": 18.8,
+    "dTank": -86.4,
+    "dThip": -11.9,
+    "F": 141
+   },
+   {
+    "t": 0.75,
+    "dxMm": 107.6,
+    "copAbsMm": 192.5,
+    "heelLift": 21,
+    "dTank": -93.2,
+    "dThip": -10.8,
+    "F": 149.3
+   },
+   {
+    "t": 0.8,
+    "dxMm": 114.6,
+    "copAbsMm": 217.7,
+    "heelLift": 25.1,
+    "dTank": -93.4,
+    "dThip": -9.2,
+    "F": 154.5
+   },
+   {
+    "t": 0.85,
+    "dxMm": 120.8,
+    "copAbsMm": 217.5,
+    "heelLift": 27.9,
+    "dTank": -96.2,
+    "dThip": -7.9,
+    "F": 160
+   },
+   {
+    "t": 0.9,
+    "dxMm": 126,
+    "copAbsMm": 217.3,
+    "heelLift": 30.4,
+    "dTank": -97.4,
+    "dThip": -6.9,
+    "F": 162
+   },
+   {
+    "t": 0.95,
+    "dxMm": 130.2,
+    "copAbsMm": 217.3,
+    "heelLift": 32.4,
+    "dTank": -97,
+    "dThip": -7.8,
+    "F": 161
+   },
+   {
+    "t": 1,
+    "dxMm": 133.6,
+    "copAbsMm": 217.3,
+    "heelLift": 33.8,
+    "dTank": -96.4,
+    "dThip": -10,
+    "F": 158.8
+   },
+   {
+    "t": 1.05,
+    "dxMm": 136.5,
+    "copAbsMm": 217.2,
+    "heelLift": 34.7,
+    "dTank": -96.8,
+    "dThip": -12.7,
+    "F": 156.4
+   },
+   {
+    "t": 1.1,
+    "dxMm": 139.1,
+    "copAbsMm": 217.1,
+    "heelLift": 35.5,
+    "dTank": -97.7,
+    "dThip": -15,
+    "F": 154.9
+   },
+   {
+    "t": 1.15,
+    "dxMm": 141.6,
+    "copAbsMm": 217.1,
+    "heelLift": 36.4,
+    "dTank": -98.3,
+    "dThip": -16.1,
+    "F": 155.1
+   },
+   {
+    "t": 1.2,
+    "dxMm": 144,
+    "copAbsMm": 217.1,
+    "heelLift": 37.5,
+    "dTank": -98.2,
+    "dThip": -15.6,
+    "F": 156.8
+   }
+  ]
+ },
+ "threshold350ms": {
+  "Ns": 16.2890625,
+  "bracket": [
+   16.171875,
+   16.40625
+  ],
+  "tried": [
+   {
+    "J": 15,
+    "fall": null,
+    "recovered": false,
+    "peakMm": 93,
+    "settleS": 4
+   },
+   {
+    "J": 22.5,
+    "fall": {
+     "t": 0.6375,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "peakMm": 1558.7,
+    "settleS": null
+   },
+   {
+    "J": 18.75,
+    "fall": {
+     "t": 0.775,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "peakMm": 125.7,
+    "settleS": null
+   },
+   {
+    "J": 16.875,
+    "fall": {
+     "t": 0.9166666666666666,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "peakMm": 107.5,
+    "settleS": null
+   },
+   {
+    "J": 15.938,
+    "fall": null,
+    "recovered": false,
+    "peakMm": 98.3,
+    "settleS": 4
+   },
+   {
+    "J": 16.406,
+    "fall": {
+     "t": 1.0083333333333333,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "peakMm": 103.5,
+    "settleS": null
+   },
+   {
+    "J": 16.172,
+    "fall": null,
+    "recovered": false,
+    "peakMm": 101,
+    "settleS": 4
+   }
+  ]
+ }
+}

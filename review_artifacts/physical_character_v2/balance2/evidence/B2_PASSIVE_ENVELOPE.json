@@ -1,0 +1,345 @@
+{
+ "protocol": "BALANCE-2 §5 passive forward envelope (diagnostic)",
+ "support": {
+  "soleFrontAlongM": 0.14029488,
+  "soleHeelAlongM": -0.06424160000000001,
+  "toeSpringM": 0.012,
+  "mtp1AlongM": 0.14029488,
+  "mtp5AlongM": 0.11040480000000001,
+  "rockerProfile": [
+   {
+    "hMm": 0,
+    "along": 0.14029488
+   },
+   {
+    "hMm": 1,
+    "along": 0.14029488
+   },
+   {
+    "hMm": 2,
+    "along": 0.14029488
+   },
+   {
+    "hMm": 4,
+    "along": 0.16318240000000003
+   },
+   {
+    "hMm": 6,
+    "along": 0.16318240000000003
+   },
+   {
+    "hMm": 8,
+    "along": 0.18415381600000003
+   },
+   {
+    "hMm": 10,
+    "along": 0.19220094691086695
+   },
+   {
+    "hMm": 12,
+    "along": 0.22003840000000002
+   }
+  ],
+  "rocking": [
+   {
+    "hMm": 1,
+    "along": 0.14029488,
+    "pitchDeg": 90,
+    "heelLiftMm": 204.53648,
+    "comToContactMm": 79.77277480608232
+   },
+   {
+    "hMm": 2,
+    "along": 0.14029488,
+    "pitchDeg": 90,
+    "heelLiftMm": 204.53648,
+    "comToContactMm": 79.77277480608232
+   },
+   {
+    "hMm": 4,
+    "along": 0.16318240000000003,
+    "pitchDeg": 9.913332561215524,
+    "heelLiftMm": 35.21265834982815,
+    "comToContactMm": 102.66029480608235
+   },
+   {
+    "hMm": 6,
+    "along": 0.16318240000000003,
+    "pitchDeg": 14.68962730668841,
+    "heelLiftMm": 51.866939139221856,
+    "comToContactMm": 102.66029480608235
+   },
+   {
+    "hMm": 8,
+    "along": 0.18415381600000003,
+    "pitchDeg": 10.337276596596645,
+    "heelLiftMm": 36.70249480774109,
+    "comToContactMm": 123.63171080608234
+   },
+   {
+    "hMm": 10,
+    "along": 0.19220094691086695,
+    "pitchDeg": 10.904754447746292,
+    "heelLiftMm": 38.69358254661604,
+    "comToContactMm": 131.67884171694928
+   },
+   {
+    "hMm": 12,
+    "along": 0.22003840000000002,
+    "pitchDeg": 8.557797593186958,
+    "heelLiftMm": 30.436462785049784,
+    "comToContactMm": 159.51629480608236
+   }
+  ],
+  "polygonWorld": {
+   "fwdLoaded": 0.10669833300856887,
+   "fwdBattery": 0.1293537043671383,
+   "back": -0.09835699000738439,
+   "lateral": [
+    -0.21043583750724792,
+    0.21043682098388672
+   ]
+  },
+  "comX": 0.026403475201909474,
+  "ajcX": -0.03411862999200821
+ },
+ "staticTipping": {
+  "comShiftToLoadedEdgeMm": 80.29485780665941,
+  "leanAboutAnkleDeg": 5.14390570446717,
+  "comShiftToBatteryEdgeMm": 102.95022916522883
+ },
+ "zeroDelayNs": {
+  "loadedEdge": 18.77672732209124,
+  "batteryEdge": 24.0746223803884,
+  "rocker5mm": 24.00682204358343,
+  "bootTip": 37.30243819867273,
+  "anatomicalToeTip": 34.963966242311166
+ },
+ "rigidStatue": {
+  "IcomPitch": 12.247888103624138,
+  "heightsM": {
+   "pelvisCOM": 0.9695690274238586,
+   "COM": 0.9799661617572103,
+   "abdomenCOM": 1.1774396896362305,
+   "thoraxCOM": 1.3949685096740723,
+   "shoulder": 1.4472095966339111
+  },
+  "Ns": {
+   "pelvisCOM": {
+    "loadedEdge": 20.591864421881265,
+    "batteryEdge": 26.436057361841932
+   },
+   "COM": {
+    "loadedEdge": 20.373391183800717,
+    "batteryEdge": 26.15557906538484
+   },
+   "abdomenCOM": {
+    "loadedEdge": 16.956481199080034,
+    "batteryEdge": 21.76891321980261
+   },
+   "thoraxCOM": {
+    "loadedEdge": 14.312318752652098,
+    "batteryEdge": 18.37430898797215
+   },
+   "shoulder": {
+    "loadedEdge": 13.79567548944178,
+    "batteryEdge": 17.7110368013447
+   }
+  }
+ },
+ "intrinsicOnly": {
+  "note": "M1b body, tonic excitation at the entry rest statics (no controller); the twin's own drift is reported",
+  "twinDriftMmEvery0p25s": [
+   [
+    0.25,
+    -0.6
+   ],
+   [
+    0.5,
+    -0.2
+   ],
+   [
+    0.75,
+    0.7
+   ],
+   [
+    1,
+    2.4
+   ],
+   [
+    1.25,
+    5.5
+   ],
+   [
+    1.5,
+    11.2
+   ],
+   [
+    1.75,
+    21.8
+   ],
+   [
+    2,
+    41.1
+   ],
+   [
+    2.25,
+    75.9
+   ],
+   [
+    2.5,
+    139.1
+   ],
+   [
+    2.75,
+    261.1
+   ],
+   [
+    3,
+    545.8
+   ],
+   [
+    3.25,
+    949
+   ],
+   [
+    3.5,
+    1110.9
+   ],
+   [
+    3.75,
+    1106.2
+   ],
+   [
+    4,
+    1105.8
+   ]
+  ],
+  "crossWithin1sNs": 0.05859375,
+  "bracket": [
+   0,
+   0.1171875
+  ],
+  "tried": [
+   {
+    "J": 15,
+    "crossT": 0.12916666666666668,
+    "peakRelTwinMm": 300.83004105017596
+   },
+   {
+    "J": 7.5,
+    "crossT": 0.175,
+    "peakRelTwinMm": 156.66718684906522
+   },
+   {
+    "J": 3.75,
+    "crossT": 0.2125,
+    "peakRelTwinMm": 83.35264235369011
+   },
+   {
+    "J": 1.875,
+    "crossT": 0.2375,
+    "peakRelTwinMm": 43.42515466186126
+   },
+   {
+    "J": 0.9375,
+    "crossT": 0.25,
+    "peakRelTwinMm": 21.96247784212424
+   },
+   {
+    "J": 0.46875,
+    "crossT": 0.25833333333333336,
+    "peakRelTwinMm": 11.21273058422123
+   },
+   {
+    "J": 0.234375,
+    "crossT": 0.2625,
+    "peakRelTwinMm": 5.611118535634452
+   },
+   {
+    "J": 0.1171875,
+    "crossT": 0.26666666666666666,
+    "peakRelTwinMm": 2.886410013789642
+   }
+  ],
+  "twinCrossesEdge": true
+ },
+ "sensitivity": {
+  "comPlacement": [
+   {
+    "comShiftMm": -20,
+    "Ns": 23.45367123481437
+   },
+   {
+    "comShiftMm": -10,
+    "Ns": 21.115199278452803
+   },
+   {
+    "comShiftMm": -5,
+    "Ns": 19.945963300272023
+   },
+   {
+    "comShiftMm": 0,
+    "Ns": 18.77672732209124
+   },
+   {
+    "comShiftMm": 5,
+    "Ns": 17.607491343910457
+   },
+   {
+    "comShiftMm": 10,
+    "Ns": 16.438255365729677
+   },
+   {
+    "comShiftMm": 20,
+    "Ns": 14.099783409368111
+   }
+  ],
+  "comHeight": [
+   {
+    "comHeightChangeM": -0.04,
+    "Ns": 19.172084283738908
+   },
+   {
+    "comHeightChangeM": -0.02,
+    "Ns": 18.971316828090774
+   },
+   {
+    "comHeightChangeM": 0,
+    "Ns": 18.77672732209124
+   },
+   {
+    "comHeightChangeM": 0.02,
+    "Ns": 18.58800528667877
+   }
+  ],
+  "footToeOut": [
+   {
+    "toeOutDeg": 0,
+    "frontReachAlongM": 0.14029488,
+    "Ns": 18.77672732209124
+   },
+   {
+    "toeOutDeg": 5,
+    "frontReachAlongM": 0.14451971917943982,
+    "Ns": 19.764694116216997
+   },
+   {
+    "toeOutDeg": 10,
+    "frontReachAlongM": 0.14764467603253176,
+    "Ns": 20.495456512796537
+   },
+   {
+    "toeOutDeg": 15,
+    "frontReachAlongM": 0.14964596775072334,
+    "Ns": 20.963452968745504
+   },
+   {
+    "toeOutDeg": 20,
+    "frontReachAlongM": 0.15050836329562606,
+    "Ns": 21.16512174845012
+   }
+  ],
+  "note": "foot toe-out: the left foot's medial side is +lateral in the foot frame; toe-out rotates the MTP1 (medial, forward-most) corner forward / the MTP5 corner back; reach is the forward-most sole point"
+ }
+}
