@@ -3880,3 +3880,54 @@ Either is re-qualified on the same frozen S2 + P2 battery.
 **Review:** `ppr3/review/PPR3_REVIEW.html`. Clips are CURRENT V2 | S2 | S2 + P2 for STAND, PUSHF, PUSHL and PUSHX, each at normal and 4× slow speed, clean and with overlay.
 
 Records and clip data are outside Git (`ppr3/review/OUTSIDE_GIT.md`).
+
+## 2026-10-12: MUSCLE-1 physical muscle / actuator layer (source 4b8e6654; audit, design and freeze 77630dc8; M1 FAILED A4 6c68177b; successor M1b ee2c1460 PASSED bae8ceae); REVIEW_PENDING (owner decision)
+
+**Audit of Astra's hypothesis** (`muscle1/MUSCLE1_AUDIT.md`):
+- **Correct for CURRENT V2's canonical actuator.**
+  - Activation bounds only the envelope. The implicit motor delivers the request in one tick inside it.
+  - Step rise 12.5 ms; fall in one tick (12,000 N·m/s).
+- **Mechanism absent in PPR-3's S2,** where activation sets generated force. But S2 also has no contraction dynamics (33 ms rise).
+- **PPR-3's ankle torque rise** (moderate forward push): P2's command ≈ 87 % of the actual slew; activation attenuates it only 5 %; no servo; intrinsic mechanics +20 %.
+
+**Literature** (`muscle1/research/FORCE_PRODUCTION_LITERATURE.md`, 223 refs):
+- human step-drive 10–90 % torque rise: plantarflexors 0.25–0.45 s; dorsiflexors and knee extensors 0.15–0.25 s;
+- asymmetric relaxation;
+- short-range stiffness immediate and proportional to developed force.
+
+**Design** (`MUSCLE1_DESIGN.md`):
+- **Neural path:** excitation → activation (V2 15 / 50 ms, kept) → developed force f (contraction lag, τc,rise / τc,fall per muscle group, inverted from the literature) → active torque f·capIso(θ).
+- **Mechanical path, immediate:** force–length, force–velocity, short-range stiffness on f, passive B, damping.
+- **Two S2 mechanical corrections:**
+  - the window reserve for a non-shortening side. S2 clipped the loaded plantarflexors' first-tick stretch response to 19 % of intrinsic;
+  - history-consistent force-based strain arms (C).
+
+**M1 FAILED its frozen preregistration on one criterion** (ankle 15 / 16):
+- A4: first-tick force change 1.11 % against 1 %, for τc,rise = 88.8 ms groups.
+- Cause: no electrochemical latency. Own error: the 1 % threshold was not cross-checked against the design script's printed 1.11 %.
+- Preserved.
+
+**M1b** = M1 + the electrochemical delay (Nordez 2009 6.05 ms → 2 steps). **PASSED: ankle 16 / 16, knee 14 / 14.**
+- Plantarflexors rise / fall 325 / 175 ms; dorsiflexors 200 / 250; knee extensors 200 / 160. Onset 14–21 ms. First tick 0.
+- Stiffness = S2 (0.994–0.999); first-tick stretch response 1.00.
+- Energy residual ≤ 2e-15; no energy created; enhancement abolished at zero force (0.04 %).
+- Release stable; replay valid; deterministic; 19 µs per character-step.
+
+**C audit:**
+- S2's secant C law creates energy when activation rises (0.026 J against a 0.028 J stretch input).
+- It restores 51 % of abolished enhancement on reactivation. **Rejected; redesigned.**
+- Caveat: the preregistered BC1 ratio did not discriminate. The creation shows in the exact ledger.
+
+**PPR-3 replay (identical P2 commands):** ankle torque slew 974 (command) → CURRENT V2 974 → S2 922 → M1b 256 active / 313 total N·m/s (human plausibility 372 ± 267). Large push 3,645 → 864.
+
+**Recommendation (owner decision; nothing applied):**
+- **Adopt M1b as V2's actuator layer:** 13 floats per axis of character state.
+- **Controllers command excitation,** or a torque intent inverted by the body. Never physical torque.
+- **Next:** coordinated delayed balance designed on M1b.
+- **Open:**
+  - τc for hip, trunk, neck, arms and ankle inversion / eversion;
+  - tendon saturation of stiffness at high force.
+
+**Not touched:** PVP, tackle, slide, P2, RUN-1, simulation, V2 spec.
+
+**Report:** `muscle1/MUSCLE1_REPORT.md` (seventeen answers). **Review:** `muscle1/review/MUSCLE1_REVIEW.html`.
