@@ -105,3 +105,12 @@ export class M1aAxis extends V2ActAxis {
     return this._row(inp, u, f[0], f[1], f[0], f[1]); }
   state() { return [...super.state(), this.f[0], this.f[1]]; }
 }
+// ═══ M1b: the labelled successor (MUSCLE1_AMENDMENT_M1B.md) = M1 + a pure electrochemical delay on the excitation (EMG → fascicle motion, Nordez 2009
+// 6.05 ms, rounded up to whole steps). The delayed excitation drives activation; everything else is M1's, unchanged.
+export class M1bAxis extends M1Axis {
+  constructor(kit, params, opt = {}) { super(kit, params, opt); this.id = "M1b"; this.dSteps = params.electrochemicalDelay.steps; this.line = null; }
+  plan(inp, init = false) { const u = inp.u || this.excite(inp.dTau || 0);
+    if (init || !this.line) { this.line = Array.from({ length: this.dSteps }, () => u.slice()); return super.plan({ ...inp, u, dTau: undefined }, init); }
+    this.line.push(u.slice()); const ud = this.line.shift(); return super.plan({ ...inp, u: ud, dTau: undefined }, false); }
+  state() { return [...super.state(), ...this.line.flat()]; }
+}

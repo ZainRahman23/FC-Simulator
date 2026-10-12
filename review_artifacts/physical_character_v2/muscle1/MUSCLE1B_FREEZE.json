@@ -1,0 +1,39 @@
+{
+ "protocol": "MUSCLE-1 amendment M1b (frozen before the M1b run; same battery and criteria as MUSCLE1_FREEZE.json)",
+ "frozenAt": "2026-10-12T03:08:59.289Z",
+ "candidate": "params/MUSCLE1B_CANDIDATE.json",
+ "changedSinceM1Freeze": [
+  "scripts/m1_models.mjs",
+  "scripts/m1_experiments.mjs",
+  "scripts/m1_eval.mjs"
+ ],
+ "sha256": {
+  "MUSCLE1_DESIGN.md": "73ff24b419df15c7d075429cbe65b0adb8ef0345b9421e33e6c7f9ae70496168",
+  "MUSCLE1_PREREGISTRATION.md": "569109f335530e754ff9fc9ae6f7b8e3498b257357f8326b2a2c2cfae0b790ff",
+  "MUSCLE1_AUDIT.md": "9c780c033b1936ea9be96519cb54e1e5229a0631800215ca9918368bb5b86123",
+  "params/MUSCLE1_CANDIDATE.json": "c49d0422146e6abeecc4781fbb9bb6a59ffc10baa374f5344cb63005c9a197f4",
+  "scripts/m1_models.mjs": "fa284699e66139899a015af4764c5bbef52a368c5f8513fc6a5a0a04120a6cf7",
+  "scripts/m1_fixture.mjs": "1feefbd90fe0ae060629292bd2f1226be129046ed774a1ff241acb023ac7c11b",
+  "scripts/m1_experiments.mjs": "37d88dfae87fb8cd04e8faf197867bd921d59ede8f179c7cd2ea21aa3d038655",
+  "scripts/m1_eval.mjs": "faa113cc0fe2eeae5e7bb6c48a6ea46f56560d179004e5a4373e2eb1b0bcc3a0",
+  "scripts/m1_kit.mjs": "6d2d4ba781a3c0b97c00256744c3540e771858bc890a278405865260a30aba2e",
+  "scripts/m1_capture.mjs": "7781562efd04d6cb918636fafa3f246ad4d426c4b80f6c8bf202352a6aebcc5d",
+  "scripts/m1_design_derive.mjs": "39eff2896be2edcd223a427c58cf9f8cc9db6774d0623b5aed7317f62a918b77",
+  "scripts/m1_audit.mjs": "7ffe90160e84952d0e99783de0a82b21a3429c3487e85888bb96768f758de8ac",
+  "evidence/CAPTURE_INDEX.json": "5ce224818527a06e0de56a4fa051dea652c669812f66d13cb348c6cc9b870760",
+  "research/FORCE_PRODUCTION_LITERATURE.md": "7f71a1d93a7b4329a94fd72941e119a1515c243258906cd3329bdeb01d530f40",
+  "../ppr3/params/PPR3_S2_CANDIDATE.json": "9e3e04c25b9d0814c6815a156e99647c1fcfe8c68eb054bae952a88e21a97386",
+  "../ppr3/params/PPR3_P2_CANDIDATE.json": "2cf95f826d47b3edf0c11187cf22ecc32d742f68b43631b5ee33ae8ea86f3117",
+  "../ppr3/scripts/ppr3_body.mjs": "96e901a80865ee357965104bacdcf5a4109081e904464986162312d22cee1402",
+  "../ppr3/scripts/ppr3_run.mjs": "56ebce2115ae81f2954bf47a9ee16ce84f7accfaaa3a3822b0904b817c561566",
+  "../ppr3/scripts/ppr3_battery.mjs": "f6c433b865f8ad5428bcce60224c08d47551fdadf79e9f0f8489d5deec395d6a",
+  "../ppr3/scripts/ppr3_ctrl.mjs": "90d6f3e3484b34daffde113c1929e4cef566968ed2e9ac87dafc8d5866bf5f6f",
+  "../ppr3/fixture/PPR3_STANDING_ENTRY.json": "0400f0bb1fdfb760993ccce22bf46abe87d523d0176b799ea9273629bdac33b2",
+  "../../../sandbox/visual/physchar2/sim/v2_actuation.js": "dc63b383ebc53adfe14c0a314985466ee29dbfe244f61231b51ba33f21088ca1",
+  "../../../sandbox/visual/physchar2/spec/v2_actuators.js": "99e865e95e501cc86d6597193890fea18c205efafba7bf46598da8e03f463695",
+  "MUSCLE1_AMENDMENT_M1B.md": "ee7e5997ae9558fe37d8fdb161c857c2fcdff5f033fab1c38d05583a849ceadc",
+  "params/MUSCLE1B_CANDIDATE.json": "f28500e0f69e4e20dcc8a29a65af3f41642114c974f78f3a522047dfaa1fd398",
+  "evidence/MUSCLE1_VERDICT.json": "c623215e857118b85e188b249514ae2b8c95f03d7ac574721abff94913c410c7",
+  "evidence/MUSCLE1_RESULTS.json": "6111ff779246447e82497163e0b7261df2bf76b103b6760582a3e12c50dabbc3"
+ }
+}
