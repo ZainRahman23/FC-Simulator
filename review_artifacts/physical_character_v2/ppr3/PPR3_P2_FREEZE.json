@@ -1,0 +1,28 @@
+{
+ "protocol": "PPR-3 S2 + P2 qualification (frozen before the qualifying S2+P2 run)",
+ "frozenAt": "2026-10-12T00:24:22.638Z",
+ "body": "ppr3/params/PPR3_S2_CANDIDATE.json",
+ "ctrl": "ppr3/params/PPR3_P2_CANDIDATE.json",
+ "sha256": {
+  "ppr3/PPR3_P2_DESIGN.md": "9790dbdf86facfbac0984fe6d0c705ee5d43c20f78820aef3022cf6c6df37294",
+  "ppr3/PPR3_P2_PREREGISTRATION.md": "21099141bc32c23c9d91a1917f343209b06d73dfba314f7afb1ef079cecaa444",
+  "ppr3/params/PPR3_P2_CANDIDATE.json": "2cf95f826d47b3edf0c11187cf22ecc32d742f68b43631b5ee33ae8ea86f3117",
+  "ppr3/params/PPR3_S2_CANDIDATE.json": "9e3e04c25b9d0814c6815a156e99647c1fcfe8c68eb054bae952a88e21a97386",
+  "ppr3/fixture/PPR3_STANDING_ENTRY.json": "0400f0bb1fdfb760993ccce22bf46abe87d523d0176b799ea9273629bdac33b2",
+  "ppr3/scripts/ppr3_ctrl.mjs": "90d6f3e3484b34daffde113c1929e4cef566968ed2e9ac87dafc8d5866bf5f6f",
+  "ppr3/scripts/ppr3_statics.mjs": "86888c08177d61fa66c191771268d6e50379554f4ad02b4c6d35f32925efdc27",
+  "ppr3/scripts/ppr3_body.mjs": "96e901a80865ee357965104bacdcf5a4109081e904464986162312d22cee1402",
+  "ppr3/scripts/ppr3_run.mjs": "56ebce2115ae81f2954bf47a9ee16ce84f7accfaaa3a3822b0904b817c561566",
+  "ppr3/scripts/ppr3_measure.mjs": "638c62f1b9d3c988827a231b6eab53daa9a42838c0f0d351a44c011b1cf69fd9",
+  "ppr3/scripts/ppr3_battery.mjs": "f6c433b865f8ad5428bcce60224c08d47551fdadf79e9f0f8489d5deec395d6a",
+  "ppr3/scripts/ppr3_p2_qualify.mjs": "bed99512b58d00ea590d20c42a9be6182a06474a2f036a1aa5deea81da7c81fd",
+  "ppr3/scripts/ppr3_p2_eval.mjs": "f307453b69cddbc3da73dc41d086fef3b48daf5094399db48e4d7605f19a3146",
+  "ppr2/scripts/ppr2_substrate.mjs": "4ede077f68c1f4355da54e9570b7114816c9772f0a5fb157fae00ef22e345daa",
+  "ppr2/scripts/ppr2_plant.mjs": "435a9a392636ad0ac2b8ce297fcaa9d5a1fe2c47d7f049147448d56543b889b1",
+  "ppr1/scripts/ppr1_law.mjs": "6b2d6148d854c9681c12d0e64b108b66ef3e04da291a1d6cb4b49959e4beacb3",
+  "ppr1/scripts/ppr1_plant.mjs": "4b626426133e7d2b012ec71d10c22d9b90b741c114101f3ffb7685038a85d1cb",
+  "pvp1/scripts/pvp1a_sim.mjs": "a4d933b329e443f36088bd528b6854d7c979f2c1b932542a4bc9619e52c62e5e",
+  "pvp1/scripts/pvp1a_lib.mjs": "1cda6741f68582e284104cc7b6f11bfd6524fe1f26e96c399515cf8bcd993f24"
+ },
+ "note": "ppr3_statics.mjs, ppr3_battery.mjs, ppr3_ctrl.mjs changed after the S2 freeze (P2 design: probes, COP smoothing in sway(), the controller). The S2 qualification was re-run on this code and reproduced the committed S2 evidence byte for byte (excluding wall/cpu)."
+}

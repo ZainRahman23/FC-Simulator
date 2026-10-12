@@ -103,7 +103,10 @@ export function recovery(base, pert, onset, T, edges, crit) { const A = base.rec
 export function sway(o, a, b) { const F = o.recs.slice(a, b).map((r, q, arr) => MS.frame(r, q ? arr[q - 1] : null)), xs = (f) => F.map(f).filter(v => v != null);
   const stat = (v) => { const m = v.reduce((s, x) => s + x, 0) / v.length, rms = Math.sqrt(v.reduce((s, x) => s + (x - m) ** 2, 0) / v.length); return { mean: m, rms, range: Math.max(...v) - Math.min(...v) }; };
   const comAP = stat(xs(f => f.com[0] * 1000)), comML = stat(xs(f => f.com[2] * 1000)), copAP = stat(xs(f => (f.cop ? f.cop[0] * 1000 : null))), copML = stat(xs(f => (f.cop ? f.cop[1] * 1000 : null)));
-  const cv = xs(f => f.cop); let path = 0; for (let q = 1; q < cv.length; q++) path += Math.hypot(cv[q][0] - cv[q - 1][0], cv[q][1] - cv[q - 1][1]) * 1000; const vel = path / (cv.length * H);
+  // COP path velocity on a 100 ms moving average (−3 dB ≈ 4.4 Hz; human COP data are low-passed ≈ 5 Hz): the solver's per-step redistribution
+  // of contact-point forces is not body motion
+  const cv0 = xs(f => f.cop), NA = 24, cv = []; for (let q = NA - 1; q < cv0.length; q++) { let x = 0, z = 0; for (let j = q - NA + 1; j <= q; j++) { x += cv0[j][0]; z += cv0[j][1]; } cv.push([x / NA, z / NA]); }
+  let path = 0; for (let q = 1; q < cv.length; q++) path += Math.hypot(cv[q][0] - cv[q - 1][0], cv[q][1] - cv[q - 1][1]) * 1000; const vel = path / (cv.length * H);
   const ap = xs(f => f.com[0]), m = ap.reduce((s, x) => s + x, 0) / ap.length; let zc = 0; for (let q = 1; q < ap.length; q++) if ((ap[q] - m) * (ap[q - 1] - m) < 0) zc++;
   const th = MS.KEY_AXES.map(([nm]) => [nm, stat(F.map(f => f.th[nm])).rms]);
   return { comAPmm: comAP, comMLmm: comML, copAPmm: copAP, copMLmm: copML, copMeanVelMmS: vel, comAPfreqHz: zc / 2 / (ap.length * H), jointRmsDeg: Object.fromEntries(th), pelvisYmm: stat(F.map(f => f.pelvisY * 1000)) }; }

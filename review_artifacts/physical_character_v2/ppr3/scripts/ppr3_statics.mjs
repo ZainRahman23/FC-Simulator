@@ -38,9 +38,11 @@ export function rotateBodies(st, ids, pivot, axis, ang) { const q = [...V.sc(axi
 // squat-mode probe (closed chain, feet fixed): the pelvis and everything above translate down by dy (orientation kept); each leg's thigh and shank
 // are re-solved by two-link inverse kinematics in the plane of ankle, hip and the original knee; feet unchanged. Returns the probed state, the
 // constraint rotations and each knee's anatomical flexion change — so −∂τ_knee/∂θ_knee along the squat mode can be read from staticsG.
-export function squatProbe(c, st, dy) { st = unitStates(st); const spec = c.spec, B = spec.bodies, P = c.P, jA = (n) => spec.joints.find(j => j.name === n), jk = (n) => spec.joints.findIndex(j => j.name === n);
+export function squatProbe(c, st, dy) { return displaceProbe(c, st, [0, -dy, 0]); }
+// general closed-chain probe: pelvis + everything above translate by v (orientation kept); legs re-solved (two-link IK, feet fixed)
+export function displaceProbe(c, st, vDisp) { st = unitStates(st); const spec = c.spec, B = spec.bodies, P = c.P, jA = (n) => spec.joints.find(j => j.name === n), jk = (n) => spec.joints.findIndex(j => j.name === n);
   const between = (a, b) => { a = V.norm(a); b = V.norm(b); const cr = V.cross(a, b), d = V.dot(a, b), s = Math.sqrt(2 * (1 + d)); return Q.norm([cr[0] / s, cr[1] / s, cr[2] / s, s / 2]); };
-  const legBodies = new Set(); const out = st.map(s => ({ ...s })), down = [0, -dy, 0];
+  const legBodies = new Set(); const out = st.map(s => ({ ...s })), down = vDisp;
   for (const side of ["L", "R"]) { const hip = jA("hip_" + side), knee = jA("knee_" + side), ank = jA("ankle_" + side), th = hip.childIndex, sh = knee.childIndex;
     legBodies.add(th); legBodies.add(sh); legBodies.add(ank.childIndex);
     const H = c.ctrl.jointAt(st, jk("hip_" + side)), K = c.ctrl.jointAt(st, jk("knee_" + side)), A = c.ctrl.jointAt(st, jk("ankle_" + side)), Lt = V.dist(H, K), Ls = V.dist(K, A), H2 = V.add(H, down);
@@ -59,3 +61,24 @@ export function squatProbe(c, st, dy) { st = unitStates(st); const spec = c.spec
 export function minEffortStatics(c, st, caps) { const t0 = staticsG(c, st, [0, -9.81, 0], null, 0).tff, t1 = staticsG(c, st, [0, -9.81, 0], null, 1).tff; let num = 0, den = 0;
   t0.forEach((r, k) => r.forEach((a, i) => { const cp = caps[k] && caps[k][i]; if (!cp) return; const g = t1[k][i] - a; if (Math.abs(g) < 1e-9) return; const w = 1 / (cp * cp); num += w * g * a; den += w * g * g; }));
   const pair = den > 0 ? -num / den : 0; return { pair, ...staticsG(c, st, [0, -9.81, 0], null, pair) }; }
+// gravitational stiffness of a whole-body translation mode (closed chain, feet fixed): K = −∂²U/∂δ² (N/m; positive = destabilising),
+// U = Σ m_i g y_i over the probed states for displacement ±δ along unit vector u
+export function modeStiffness(c, st, u, delta = 0.002) { st = unitStates(st); const B = c.spec.bodies, U = (S) => S.reduce((a, b, i) => a + B[i].mass * 9.81 * b.com[1], 0);
+  const up = displaceProbe(c, st, V.sc(u, delta)).st, dn = displaceProbe(c, st, V.sc(u, -delta)).st, M = c.ctrl.M;
+  const comOf = (S) => V.sc(S.reduce((a, b, i) => V.add(a, V.sc(b.com, B[i].mass)), [0, 0, 0]), 1 / M), dCom = V.dot(V.sub(comOf(up), comOf(dn)), u) / 2;
+  return { K: -(U(up) + U(dn) - 2 * U(st)) / (delta * delta), comPerDisp: dCom / delta }; }
+// frontal-plane four-bar sway mode (wide stance): each leg (thigh + shank + foot, knee and ankle angles frozen) rotates rigidly about its ankle
+// about world x; the pelvis is the coupler (hip distance preserved), the rest of the body rides rigidly on the pelvis. Left-leg angle φ is the
+// input, the right-leg angle is solved from the hip-distance constraint. Returns K = −∂²U/∂z_COM² (N/m; positive = destabilising, negative =
+// stabilising like a hanging pendulum) and the COM shift per radian. Feet are not moved (no contact model; geometry only).
+export function fourBarML(c, st, phi = 0.004) { st = unitStates(st); const spec = c.spec, B = spec.bodies, jk = (n) => spec.joints.findIndex(j => j.name === n);
+  const kids = B.map(() => []); B.forEach((b, i) => { if (b.parentIndex >= 0) kids[b.parentIndex].push(i); }); const sub = (i) => [i, ...kids[i].flatMap(sub)];
+  const leg = { L: sub(spec.joints[jk("hip_L")].childIndex), R: sub(spec.joints[jk("hip_R")].childIndex) }, upper = B.map((_, i) => i).filter(i => !leg.L.includes(i) && !leg.R.includes(i));
+  const A = { L: c.ctrl.jointAt(st, jk("ankle_L")), R: c.ctrl.jointAt(st, jk("ankle_R")) }, Hp = { L: c.ctrl.jointAt(st, jk("hip_L")), R: c.ctrl.jointAt(st, jk("hip_R")) }, w = V.dist(Hp.L, Hp.R), X = [1, 0, 0];
+  const rotAbout = (p, piv, ang) => V.add(piv, Q.rot([Math.sin(ang / 2), 0, 0, Math.cos(ang / 2)], V.sub(p, piv)));
+  const pose = (pL) => { let lo = -0.2, hi = 0.2; const f = (pR) => V.dist(rotAbout(Hp.L, A.L, pL), rotAbout(Hp.R, A.R, pR)) - w; for (let it = 0; it < 80; it++) { const m = (lo + hi) / 2; if (f(lo) * f(m) <= 0) hi = m; else lo = m; } const pR = (lo + hi) / 2;
+    const HL = rotAbout(Hp.L, A.L, pL), HR = rotAbout(Hp.R, A.R, pR), d0 = V.sub(Hp.R, Hp.L), d1 = V.sub(HR, HL), ang = Math.atan2(d0[1] * d1[2] - d0[2] * d1[1], d0[1] * d1[1] + d0[2] * d1[2]), q = [Math.sin(ang / 2), 0, 0, Math.cos(ang / 2)];
+    return st.map((b, i) => { if (leg.L.includes(i)) return { com: rotAbout(b.com, A.L, pL) }; if (leg.R.includes(i)) return { com: rotAbout(b.com, A.R, pR) }; return { com: V.add(HL, Q.rot(q, V.sub(b.com, Hp.L))) }; }); };
+  const U = (S) => S.reduce((a, b, i) => a + B[i].mass * 9.81 * b.com[1], 0), M = c.ctrl.M, cz = (S) => S.reduce((a, b, i) => a + B[i].mass * b.com[2], 0) / M;
+  const S0 = pose(0), Sp = pose(phi), Sm = pose(-phi), dz = (cz(Sp) - cz(Sm)) / 2, d2U = (U(Sp) + U(Sm) - 2 * U(S0)) / (phi * phi);
+  return { K: -d2U / (dz / phi) ** 2, comPerRad: dz / phi, instantCentreNote: "legs rigid about the ankles; pelvis coupler" }; }

@@ -17,7 +17,8 @@ const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math
 const rotvec = (q) => { const s = q[3] < 0 ? -1 : 1, x = q.slice(0, 3).map(v => v * s), w = q[3] * s, n = V.len(x); if (n < 1e-12) return [0, 0, 0]; const ang = 2 * Math.atan2(n, w); return V.sc(x, ang / n); };
 export class P2Controller {
   // params: { id, delays: { com, seg, joint } (steps), com: { kP, kD } (× gravity normalisation), seg: { lumbar | thoracic | hip | neck: {kP,kD} }, knee: { kP, kD, G } }
-  constructor(params) { this.p = params; this.ring = new Map(); this.log = { n: [], cmd: [], sensed: [] }; this.maxD = Math.max(...Object.values(params.delays));
+  constructor(params) { this.p = params; this.ring = new Map(); this.log = { n: [], cmd: [], sensed: [] }; const D = params.delays;
+    this.maxD = Math.max(D.com, D.knee, D.joint || 0, ...Object.values(D.seg)); this.filt = null;
     if (params.noise) { const r = mulberry32(params.noise.seed >>> 0); this.gauss = () => { const u = Math.max(1e-12, r()), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }; this.nz = new Map(); } }
   attach(body, plant, c) { this.body = body; this.c = c; this.h = plant.dt; const st = unitStates(c.st), spec = c.spec, B = spec.bodies, M = c.ctrl.M, P = c.P;
     this.M = M; this.feet = c.ctrl.feet; this.ank = ["ankle_L", "ankle_R"].map(n => spec.joints.findIndex(j => j.name === n));
@@ -33,35 +34,62 @@ export class P2Controller {
     for (const [name, S] of Object.entries(this.segDef)) { const j0 = spec.joints[S.joints[0]], piv = S.joints.length === 1 ? c.ctrl.jointAt(st, S.joints[0]) : V.sc(V.add(c.ctrl.jointAt(st, S.joints[0]), c.ctrl.jointAt(st, S.joints[1])), 0.5);
       const axW = E.map(e => Q.rot(Q.mul(st[j0.childIndex].rot, P.jd[S.joints[0]].F2), e));
       S.pivot0 = piv; S.com0 = this._com(st, S.bodies); S.axW = axW;
-      // gravitational stiffness: rotate the supported bodies about the pivot around each world axis; G[axisIdx][joint k][i] = ∂τ_static/∂θ
-      S.G = [0, 1, 2].map(a => { const st2 = ST.rotateBodies(st, S.bodies, piv, axW[a], d), t2 = ST.staticsG(c, st2, [0, -9.81, 0]).tff; return S.joints.map(k => t2[k].map((t, i) => (t - base[k][i]) / d)); }); }
+      // gravitational stiffness: rotate the supported bodies about the pivot around each world axis; G[axisIdx][joint k][i] = ∂τ_static/∂θ (reported)
+      S.G = [0, 1, 2].map(a => { const st2 = ST.rotateBodies(st, S.bodies, piv, axW[a], d), t2 = ST.staticsG(c, st2, [0, -9.81, 0]).tff; return S.joints.map(k => t2[k].map((t, i) => (t - base[k][i]) / d)); });
+      // static load sensitivity to the supported mass's HORIZONTAL OFFSET from its joint (what gravity acts on): translate the supported bodies by δ
+      // along world x / z; Jd[0|1][joint][i] = ∂τ_static/∂d (N·m per m). P2 senses the offset change and supplies κ × the static load change.
+      const dd = 1e-4, shift = (v) => st.map((b, i) => (S.bodies.includes(i) ? { ...b, pos: V.add(b.pos, v), com: V.add(b.com, v) } : b));
+      S.Jd = [[dd, 0, 0], [0, 0, dd]].map(v => { const t2 = ST.staticsG(c, shift(v), [0, -9.81, 0]).tff; return S.joints.map(k => t2[k].map((t, i) => (t - base[k][i]) / dd)); }); }
+    // COM channel acts through the LEGS only (ankle / hip strategies; the spine is governed by the orientation channels)
+    const legJ = new Set(["ankle_L", "ankle_R", "knee_L", "knee_R", "hip_L", "hip_R"].map(jk)), comKeys = this.p.comAxes || null;
+    this.Jf = this.Jf.map((r, k) => (legJ.has(k) ? r.map((v, i) => (v && (!comKeys || (c.act.ax[k][i] && comKeys.includes(c.act.ax[k][i].key))) ? v : null)) : r.map(() => null)));
     this.entry = this._sample(st, unitEv(c.up.ev)); this.nAx = 0; }
   _com(st, ids) { const B = this.c.spec.bodies; let m = 0, x = [0, 0, 0]; for (const i of ids) { x = V.add(x, V.sc(st[i].com, B[i].mass)); m += B[i].mass; } return V.sc(x, 1 / m); }
   _sample(st, ev) { const B = this.c.spec.bodies, P = this.c.P, M = this.M; let cm = [0, 0, 0], vm = [0, 0, 0]; st.forEach((b, i) => { cm = V.add(cm, V.sc(b.com, B[i].mass)); vm = V.add(vm, V.sc(b.v, B[i].mass)); }); cm = V.sc(cm, 1 / M); vm = V.sc(vm, 1 / M);
     const am = V.sc(V.add(this.c.ctrl.jointAt(st, this.ank[0]), this.c.ctrl.jointAt(st, this.ank[1])), 0.5);
     const seg = {}; for (const [name, S] of Object.entries(this.segDef)) { const piv = S.joints.length === 1 ? this.c.ctrl.jointAt(st, S.joints[0]) : V.sc(V.add(this.c.ctrl.jointAt(st, S.joints[0]), this.c.ctrl.jointAt(st, S.joints[1])), 0.5);
       const r = V.norm(V.sub(this._com(st, S.bodies), piv)); let mm = 0, vv = [0, 0, 0]; for (const i of S.bodies) { vv = V.add(vv, V.sc(st[i].v, B[i].mass)); mm += B[i].mass; }
-      seg[name] = { r, vRel: V.sub(V.sc(vv, 1 / mm), this._pivVel(st, S)), L: V.len(V.sub(this._com(st, S.bodies), piv)) }; }
-    const joint = this.kneeJ.map(k => P.anat(P.jd[k], ev.qs[k], "flex"));
-    return { com: [cm[0] - am[0], cm[2] - am[2]], comV: [vm[0], vm[2]], seg, knee: joint, kneeQ: this.kneeJ.map(k => ev.qs[k].slice()) }; }
+      const off = V.sub(this._com(st, S.bodies), piv), vRel = V.sub(V.sc(vv, 1 / mm), this._pivVel(st, S));
+      seg[name] = { r, vRel, L: V.len(off), d: [off[0], off[2]], dd: [vRel[0], vRel[2]] }; }
+    const joint = this.kneeJ.map(k => P.anat(P.jd[k], ev.qs[k], "flex")), ang = this.c.spec.joints.map((j, k) => [0, 1, 2].map(i => { const x = this.c.act.ax[k][i]; return x ? P.anat(P.jd[k], ev.qs[k], x.key) : 0; }));
+    return { com: [cm[0] - am[0], cm[2] - am[2]], comV: [vm[0], vm[2]], seg, knee: joint, ang }; }
   _pivVel(st, S) { const vs = S.joints.map(k => { const j = this.c.spec.joints[k], b = st[j.parentIndex], p = this.c.ctrl.jointAt(st, k); return V.add(b.v, V.cross(b.w, V.sub(p, b.com))); }); return vs.length === 1 ? vs[0] : V.sc(V.add(vs[0], vs[1]), 0.5); }
   step(n, st, ev) { st = unitStates(st); ev = unitEv(ev); const s = this._sample(st, ev); this.ring.set(n, s); this.ring.delete(n - this.maxD - 3);
-    const D = this.p.delays, at = (dd) => (n - dd >= 0 ? this.ring.get(n - dd) : this.entry), view = Object.freeze({ com: at(D.com), seg: at(D.seg), joint: at(D.joint), comPrev: at(D.com + 1), segPrev: at(D.seg + 1), jointPrev: at(D.joint + 1) });
-    const cmd = this.control(view), sensed = [n - D.com, n - D.seg, n - D.joint];
+    // the frozen view: per channel, ONLY the sample (and the one before it) at that channel's delay; nothing newer exists in the view
+    const D = this.p.delays, at = (dd) => (n - dd >= 0 ? this.ring.get(n - dd) : this.entry), seg = {}, segPrev = {};
+    for (const name of Object.keys(D.seg)) { seg[name] = at(D.seg[name]); segPrev[name] = at(D.seg[name] + 1); }
+    const view = Object.freeze({ com: at(D.com), comPrev: at(D.com + 1), seg: Object.freeze(seg), segPrev: Object.freeze(segPrev), knee: at(D.knee), kneePrev: at(D.knee + 1), joint: D.joint ? at(D.joint) : null, jointPrev: D.joint ? at(D.joint + 1) : null });
+    const cmd = this.control(view), sensed = [n - D.com, ...Object.values(D.seg).map(d => n - d), n - D.knee, ...(D.joint ? [n - D.joint] : [])];
     this.log.n.push(n); this.log.cmd.push(cmd.flat); this.log.sensed.push(sensed); return cmd.dTau; }
   // the control law: a function of the delayed view only
-  control(vw) { const p = this.p, e = this.entry, h = this.h, out = this.c.spec.joints.map(() => [0, 0, 0]);
-    // (1) COM over the feet: virtual force f = K·Δx + B·v (N), K = kP·M·g/h_c, B = kD·M·g/h_c (Peterka's mgh-normalised gains per metre of COM), Δτ = J_f·f
-    const hc = 0.98, Kc = p.com.kP * this.M * 9.81 / hc, Bc = p.com.kD * this.M * 9.81 / hc, dx = vw.com.com[0] - e.com[0], dz = vw.com.com[1] - e.com[1], fx = Kc * dx + Bc * vw.com.comV[0], fz = Kc * dz + Bc * vw.com.comV[1];
-    this.Jf.forEach((r, k) => r.forEach((jj, i) => { if (jj) out[k][i] += jj[0] * fx + jj[1] * fz; }));
-    // (2) segmental orientation: rotation of the supported-mass line about its joint; Δτ = (kP·G)·θ + (kD·G)·θ̇ per axis (G = ∂τ_static/∂θ: gravity-normalised; kP > 1 stabilises)
-    for (const [name, S] of Object.entries(this.segDef)) { const g = p.seg[name]; if (!g) continue; const s1 = vw.seg.seg[name], s0 = e.seg[name], rv = V.cross(s0.r, s1.r), wv = V.sc(V.cross(s1.r, s1.vRel), 1 / Math.max(1e-6, s1.L));
-      for (let a = 0; a < 3; a++) { const th = V.dot(rv, S.axW[a]), om = V.dot(wv, S.axW[a]); S.joints.forEach((k, jI) => S.G[a][jI].forEach((G, i) => { if (Math.abs(G) > 1e-9 && this.c.act.ax[k][i]) out[k][i] += g.kP * G * th + g.kD * G * om; })); } }
-    // (3) knee (squat mode): joint angle and rate (proprioception); Δτ = −(kP·Gk)·Δθ − (kD·Gk)·θ̇, Gk = p.knee.G (N·m/rad, squat-mode gravitational stiffness per knee)
-    if (p.knee) this.kneeJ.forEach((k, jI) => { const s = this.c.act.ax[k][1].s, dth = (vw.joint.knee[jI] - e.knee[jI]) * Math.PI / 180, om = (vw.joint.knee[jI] - vw.jointPrev.knee[jI]) * Math.PI / 180 / h; out[k][1] += -s * (p.knee.kP * p.knee.G * dth + p.knee.kD * p.knee.G * om); });
-    // (4) motor noise: per listed axis "fam.key", low-pass filtered Gaussian (σ N·m after filtering, time constant τ s); independent of any disturbance
-    if (p.noise) { const a = Math.exp(-h / p.noise.tau), g = Math.sqrt(1 - a * a); this.c.spec.joints.forEach((j, k) => { const fam = j.name.replace(/_[LR]$/, "");
-      [0, 1, 2].forEach(i => { const x = this.c.act.ax[k][i]; if (!x || !p.noise.axes.includes(fam + "." + x.key)) return; const id = k * 3 + i, prev = this.nz.get(id) || 0, v = a * prev + g * p.noise.sigma * this.gauss(); this.nz.set(id, v); out[k][i] += v; }); }); }
+  control(vw) { const p = this.p, e = this.entry, h = this.h, raw = this.c.spec.joints.map(() => [0, 0, 0]), mgh = this.M * 9.81 * 0.892;
+    // (1) COM over the feet: virtual force f = K·Δx + B·v (N), K = kP·mgh/h², B = kD·mgh/h² (Peterka's mgh-normalised gains, h = COM height above
+    //     the ankles 0.892 m; kP, kD in mgh and mgh·s), mapped to joint torques by the static Jacobian transpose J_f (ppr3_statics.mjs)
+    // kP / kD may be [AP, ML]: each direction's gain = its own target minus that direction's measured intrinsic stiffness
+    const hc = 0.892, pick = (v, j) => (Array.isArray(v) ? v[j] : v), n2 = mgh / (hc * hc), dx = vw.com.com[0] - e.com[0], dz = vw.com.com[1] - e.com[1];
+    // optional integral term (Peterka 2002 PID, K_I in mgh/s): the integral of the DELAYED COM offset (accumulated once per step)
+    if (!this.ci) this.ci = [0, 0]; if (p.com.kI) { this.ci[0] += dx * h; this.ci[1] += dz * h; }
+    const fx = pick(p.com.kP, 0) * n2 * dx + pick(p.com.kD, 0) * n2 * vw.com.comV[0] + (p.com.kI ? pick(p.com.kI, 0) * n2 * this.ci[0] : 0), fz = pick(p.com.kP, 1) * n2 * dz + pick(p.com.kD, 1) * n2 * vw.com.comV[1] + (p.com.kI ? pick(p.com.kI, 1) * n2 * this.ci[1] : 0);
+    this.Jf.forEach((r, k) => r.forEach((jj, i) => { if (jj) raw[k][i] += jj[0] * fx + jj[1] * fz; }));
+    // (2) segmental posture: the supported mass's horizontal offset from its joint (relative to entry) and its rate; Δτ = kP·(Jd·Δd) + kD·(Jd·ḋ),
+    //     Jd = ∂τ_static/∂d (so kP = 1 supplies exactly the static gravity-load change; kP dimensionless, kD in s)
+    for (const [name, S] of Object.entries(this.segDef)) { const g = p.seg[name]; if (!g) continue; const s1 = vw.seg[name].seg[name], s0 = e.seg[name], dx = s1.d[0] - s0.d[0], dz = s1.d[1] - s0.d[1];
+      const kP = Array.isArray(g.kP) ? Math.max(...g.kP) : g.kP, kD = Array.isArray(g.kD) ? Math.max(...g.kD) : g.kD;
+      // g.axes (optional): the actuated axis keys this channel may command (distinct roles: e.g. the hip posture channel acts in flexion only;
+      // frontal-plane hip load/unload belongs to the COM channel)
+      S.joints.forEach((k, jI) => S.Jd[0][jI].forEach((jx, i) => { const x = this.c.act.ax[k][i]; if (!x || (g.axes && !g.axes.includes(x.key))) return; const jz = S.Jd[1][jI][i]; raw[k][i] += kP * (jx * dx + jz * dz) + kD * (jx * s1.dd[0] + jz * s1.dd[1]); })); }
+    // (3) knee squat mode: knee angle and rate (proprioception); Δτ = −(kP·Gk)·Δθ − (kD·Gk)·θ̇, Gk = squat-mode gravitational stiffness per knee
+    if (p.knee) this.kneeJ.forEach((k, jI) => { const s = this.c.act.ax[k][1].s, dth = (vw.knee.knee[jI] - e.knee[jI]) * Math.PI / 180, om = (vw.knee.knee[jI] - vw.kneePrev.knee[jI]) * Math.PI / 180 / h; raw[k][1] += -s * (p.knee.kP * p.knee.G * dth + p.knee.kD * p.knee.G * om); });
+    // (3b) joint posture (proprioception): every actuated axis is regulated toward its entry angle with the stiffness its muscles LOSE to stress
+    //      relaxation, K_j = kRelax·K_short-range(entry) (kRelax = 1 − fRes), damping 2ζ√(K_j·I); the low-frequency joint stiffness so returns to,
+    //      and never exceeds, the muscles' own short-range level. A frozen-pose element by construction — delayed, filtered, muscle-capped.
+    if (p.joint && vw.joint) { if (!this.jK) this.jK = this.body.ax.map(ax => ax.rows.map(r => { if (!r || (p.joint.axes && !p.joint.axes.includes(ax.fam + "." + r.key))) return null; const K = p.joint.kRelax * (r.kP * r.u0[0] * r.cP + r.kM * r.u0[1] * r.cM); return { K, D: 2 * p.joint.zeta * Math.sqrt(K * r.I), s: r.s }; }));
+      this.jK.forEach((row, k) => row.forEach((g, i) => { if (!g) return; const dth = (vw.joint.ang[k][i] - e.ang[k][i]) * Math.PI / 180, om = (vw.joint.ang[k][i] - vw.jointPrev.ang[k][i]) * Math.PI / 180 / h; raw[k][i] += -g.s * (g.K * dth + g.D * om); })); }
+    // (4) EMG → torque dynamics: critically damped second-order filter per axis (ω rad/s) on the neural command (POSTURAL_TIMING §controller delays)
+    if (!this.filt) this.filt = raw.map(r => r.map(() => [0, 0])); const out = raw.map(r => [0, 0, 0]), w = p.filter ? p.filter.omega : null;
+    raw.forEach((r, k) => r.forEach((u, i) => { if (!w) { out[k][i] = u; return; } const f = this.filt[k][i], acc = w * w * (u - f[0]) - 2 * w * f[1]; f[1] += h * acc; f[0] += h * f[1]; out[k][i] = f[0]; }));
+    // (5) motor noise at the force level: signal-dependent, SD = cv·√(F⁺² + F⁻²) per axis (entry forces), low-pass τ; independent of any disturbance
+    if (p.noise) { const a = Math.exp(-h / p.noise.tau), g = Math.sqrt(1 - a * a); this.body.ax.forEach(ax => ax.rows.forEach((r, i) => { if (!r || (p.noise.axes && !p.noise.axes.includes(ax.fam + "." + r.key))) return; const sd = p.noise.sdNm != null ? p.noise.sdNm : p.noise.cv * Math.hypot(r.u0[0] * r.cP, r.u0[1] * r.cM), id = ax.k * 3 + i, v = a * (this.nz.get(id) || 0) + g * sd * this.gauss(); this.nz.set(id, v); out[ax.k][i] += v; })); }
     return { dTau: out, flat: Float64Array.from(out.flat()) }; }
   meta() { return { params: this.p, steps: this.log.n.length }; }
 }
