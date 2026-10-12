@@ -1,0 +1,616 @@
+{
+ "criteria": {
+  "A1": "[E] PF step-up (excitation +0.05 / +0.25 / +0.50): 10–90 % torque rise within [250, 450] ms (human plantarflexor step-drive descriptors, FORCE_PRODUCTION_LITERATURE §9 / §12.2)",
+  "A2": "[E] PF step-down: 90–10 % torque fall within [120, 250] ms (§9 relaxation descriptors)",
+  "A3": "[E] DF step-up (+0.10 / +0.30): rise within [150, 250] ms; DF step-down: fall within [230, 360] ms (dorsiflexor descriptors; fall evidence weak)",
+  "A4": "[M/D] every neural step (both groups, up and down): time to 2 % of the change within [5, 30] ms (EMD 8.5–30 ms) and first-tick change ≤ 1 % of the final change — a neural command cannot change force instantly",
+  "A5": "[M] amplitude independence: per group and direction, the largest / smallest 10–90 % time across amplitudes ≤ 1.10 (ballistic time to peak constant across 5–75 % MVC, Van Cutsem)",
+  "A6": "[D] moderate ramps (200 ms up, hold, 200 ms down): overshoot ≤ 2 %, steady value within 1 % of the commanded torque at the end of the hold and after the ramp down",
+  "B1": "[D] immediate stiffness preserved and not duplicated: end-of-ramp (41.7 ms) stiffness of M1 / V2ACT within [0.95, 1.10] at all 5 amplitudes, and M1 within [0.5, 1.5] × Vlutters 2015 (fixture; V2's joint passive rows excluded)",
+  "B2": "[D] the intrinsic response is immediate: the first-tick torque change of a stretch ≥ 0.9 × the model's own unclipped intrinsic response −(D + dt·K_tot)·ω (small and moderate stretch)",
+  "B3": "[LIT-MODEL] eccentric hold on S2's C1 protocol (near-step 1° stretch of the loaded group, 2-step ramp, held): strain-torque fraction at 100 / 300 / 1000 ms within [0.25, 0.60] / [0.15, 0.45] / [0.08, 0.35] (S2's C1 bands)",
+  "B4": "[D] energy: ledger residual ≤ 1 % of the absorbed work (stretch–hold–return, small and moderate; quick release) and the stretch–hold–return cycle is net absorbing (no generation); no energy created by stiffness change",
+  "B5": "[D] quick release to the operating load: first motion toward return, no growing oscillation (no later half-cycle's largest |ω| exceeds the first recoil's; first 6 half-cycles above 1e-3 rad/s), settled (|ω| ≤ 0.05 rad/s over the last 0.25 s)",
+  "BC1": "[D/M] C history consistency: with the loaded group's excitation raised during the hold, the strain element returns no more work on the return than it absorbed in the stretch (ratio ≤ 1)",
+  "BC2": "[M] enhancement abolished when force returns to zero (Herzog 2018): strain torque after 0.5 s at zero excitation and reactivation ≤ 5 % of before",
+  "C0": "[S] replay validity: the V2ACT replay reproduces PPR-3's recorded excitation (≤ 1e-9) and applied torque (≤ 0.05 N·m; ≤ 0.6 N·m in fwd_large / left_moderate) — so all models see PPR-3's exact inputs",
+  "DET": "[S] bit-identical reruns of the whole experiment set",
+  "CPU": "[D] M1 cost per character (35 axes) ≤ 32.5 µs per step (5 % of PPR-3's measured 0.65 ms full step)"
+ },
+ "bands": {
+  "ankle": {
+   "PF": {
+    "rise": [
+     250,
+     450
+    ],
+    "fall": [
+     120,
+     250
+    ]
+   },
+   "DF": {
+    "rise": [
+     150,
+     250
+    ],
+    "fall": [
+     230,
+     360
+    ]
+   }
+  },
+  "knee": {
+   "KE": {
+    "rise": [
+     165,
+     235
+    ],
+    "fall": [
+     120,
+     200
+    ]
+   }
+  },
+  "onsetMs": [
+   5,
+   30
+  ],
+  "firstTickFrac": 0.01,
+  "ampSpread": 1.1,
+  "rampOvershoot": 0.02,
+  "rampErr": 0.01,
+  "stiffRatio": [
+   0.95,
+   1.1
+  ],
+  "vlutters": [
+   0.5,
+   1.5
+  ],
+  "firstTickStretch": 0.9,
+  "hold": {
+   "100": [
+    0.25,
+    0.6
+   ],
+   "300": [
+    0.15,
+    0.45
+   ],
+   "1000": [
+    0.08,
+    0.35
+   ]
+  },
+  "ledgerRel": 0.01,
+  "releaseTailW": 0.05,
+  "bcReturn": 1,
+  "bcMemory": 0.05,
+  "replay": {
+   "tight": 0.05,
+   "loose": 0.6,
+   "looseRuns": [
+    "fwd_large",
+    "left_moderate"
+   ],
+   "uErr": 1e-9
+  },
+  "cpuCharUs": 32.5,
+  "axesPerChar": 35
+ },
+ "ankle": {
+  "A1": {
+   "pass": true,
+   "value": [
+    [
+     0.05,
+     325
+    ],
+    [
+     0.25,
+     325
+    ],
+    [
+     0.5,
+     325
+    ]
+   ]
+  },
+  "A2": {
+   "pass": true,
+   "value": [
+    [
+     0.05,
+     175
+    ],
+    [
+     0.25,
+     175
+    ],
+    [
+     0.5,
+     175
+    ]
+   ]
+  },
+  "A3": {
+   "pass": true,
+   "value": [
+    [
+     0.1,
+     199.9,
+     249.9
+    ],
+    [
+     0.3,
+     199.9,
+     249.9
+    ]
+   ]
+  },
+  "A4": {
+   "pass": true,
+   "value": [
+    [
+     "PF",
+     0.05,
+     17.1,
+     0,
+     17.5,
+     0
+    ],
+    [
+     "PF",
+     0.25,
+     17.1,
+     0,
+     17.5,
+     0
+    ],
+    [
+     "PF",
+     0.5,
+     17.1,
+     0,
+     17.5,
+     0
+    ],
+    [
+     "DF",
+     0.1,
+     14.4,
+     0,
+     21.2,
+     0
+    ],
+    [
+     "DF",
+     0.3,
+     14.4,
+     0,
+     21.2,
+     0
+    ]
+   ]
+  },
+  "A5": {
+   "pass": true,
+   "value": {
+    "PF": [
+     1,
+     1
+    ],
+    "DF": [
+     1,
+     1
+    ]
+   }
+  },
+  "A6": {
+   "pass": true,
+   "value": {
+    "overshoot": 0,
+    "finalErr": 0,
+    "endErr": 0,
+    "lagAt50ms": 137.5
+   }
+  },
+  "B1": {
+   "pass": true,
+   "value": {
+    "M1overV2ACT": [
+     0.999,
+     0.999,
+     0.998,
+     0.999,
+     0.999
+    ],
+    "vlutters": [
+     0.817,
+     0.986,
+     1.191,
+     1.189,
+     1.06
+    ]
+   }
+  },
+  "B2": {
+   "pass": true,
+   "value": {
+    "small": 1,
+    "moderate": 1
+   }
+  },
+  "B3": {
+   "pass": true,
+   "value": {
+    "M1": [
+     0.465,
+     0.367,
+     0.223
+    ],
+    "V2ACT": [
+     0.465,
+     0.367,
+     0.223
+    ]
+   }
+  },
+  "B4": {
+   "pass": true,
+   "value": [
+    {
+     "absorbed": 0.02095,
+     "residualRel": 2.32e-15,
+     "created": 0
+    },
+    {
+     "absorbed": 0.348,
+     "residualRel": 3.19e-16,
+     "created": 0
+    },
+    {
+     "absorbed": 0.4697,
+     "residualRel": 2.25e-15,
+     "created": 0
+    }
+   ]
+  },
+  "B5": {
+   "pass": true,
+   "value": {
+    "recoil": true,
+    "nonGrowing": true,
+    "halfCyclePeakW": [
+     0.881389
+    ],
+    "tailMaxAbsW": 0.00712,
+    "finalOffsetFrac": 0.28
+   }
+  },
+  "BC1": {
+   "pass": true,
+   "value": {
+    "returnOverInput": -3.3956,
+    "created": 0,
+    "V2ACT": -1.4874
+   }
+  },
+  "BC2": {
+   "pass": true,
+   "value": {
+    "ratio": 0.0004,
+    "V2ACT": 0.5136
+   }
+  },
+  "C0": {
+   "pass": true,
+   "value": {
+    "fwd_small:ankle_L.df": 0.0102,
+    "fwd_small:ankle_R.df": 0.00417,
+    "fwd_moderate:ankle_L.df": 0.0404,
+    "fwd_moderate:ankle_R.df": 0.0398,
+    "fwd_large:ankle_L.df": 0.219,
+    "fwd_large:ankle_R.df": 0.306,
+    "back_moderate:ankle_L.df": 0.0298,
+    "back_moderate:ankle_R.df": 0.0219,
+    "left_small:ankle_L.df": 0.0208,
+    "left_small:ankle_R.df": 0.037,
+    "left_moderate:ankle_L.df": 0.176,
+    "left_moderate:ankle_R.df": 0.52
+   }
+  }
+ },
+ "global": {
+  "DET": {
+   "pass": true,
+   "value": {
+    "run1": "5a507b69e3dfd8a6",
+    "run2": "5a507b69e3dfd8a6",
+    "identical": true
+   }
+  },
+  "CPU": {
+   "pass": true,
+   "value": {
+    "usPerCharStep": 18.99,
+    "perAxis": {
+     "V2ENV": {
+      "usPerAxisStep": 0.27331687500000046,
+      "stateFloats": 2
+     },
+     "V2ACT": {
+      "usPerAxisStep": 0.32050437500000045,
+      "stateFloats": 7
+     },
+     "M1a": {
+      "usPerAxisStep": 0.32778812499999954,
+      "stateFloats": 9
+     },
+     "M1": {
+      "usPerAxisStep": 0.5115043749999996,
+      "stateFloats": 9
+     },
+     "M1b": {
+      "usPerAxisStep": 0.5424397900000008,
+      "stateFloats": 13
+     }
+    }
+   }
+  }
+ },
+ "anklePass": true,
+ "ankleFailed": [],
+ "knee": {
+  "K-A1": {
+   "pass": true,
+   "value": [
+    [
+     0.05,
+     199.9
+    ],
+    [
+     0.25,
+     199.9
+    ],
+    [
+     0.5,
+     199.9
+    ]
+   ],
+   "judged": true
+  },
+  "K-A2": {
+   "pass": true,
+   "value": [
+    [
+     0.05,
+     160.1
+    ],
+    [
+     0.25,
+     160.1
+    ],
+    [
+     0.5,
+     160.1
+    ]
+   ],
+   "judged": true
+  },
+  "K-A4": {
+   "pass": true,
+   "value": [
+    [
+     "KE",
+     0.05,
+     14.4,
+     0,
+     16.7,
+     0
+    ],
+    [
+     "KE",
+     0.25,
+     14.4,
+     0,
+     16.7,
+     0
+    ],
+    [
+     "KE",
+     0.5,
+     14.4,
+     0,
+     16.7,
+     0
+    ],
+    [
+     "KF",
+     0.1,
+     14.4,
+     0,
+     16.7,
+     0
+    ],
+    [
+     "KF",
+     0.3,
+     14.4,
+     0,
+     16.7,
+     0
+    ]
+   ],
+   "judged": true
+  },
+  "K-A5": {
+   "pass": true,
+   "value": {
+    "KE": [
+     1,
+     1
+    ],
+    "KF": [
+     1,
+     1
+    ]
+   },
+   "judged": true
+  },
+  "K-A6": {
+   "pass": true,
+   "value": {
+    "overshoot": 0,
+    "finalErr": 0,
+    "endErr": 0,
+    "lagAt50ms": 100
+   },
+   "judged": true
+  },
+  "K-B1": {
+   "pass": true,
+   "value": {
+    "M1overV2ACT": [
+     0.999,
+     0.997,
+     0.994,
+     0.998,
+     0.998
+    ],
+    "vlutters": [
+     1.2,
+     1.452,
+     1.761,
+     1.867,
+     1.509
+    ]
+   },
+   "judged": true
+  },
+  "K-B2": {
+   "pass": true,
+   "value": {
+    "small": 1,
+    "moderate": 1
+   },
+   "judged": true
+  },
+  "K-B3": {
+   "pass": true,
+   "value": {
+    "M1": [
+     0.464,
+     0.367,
+     0.223
+    ],
+    "V2ACT": [
+     0.465,
+     0.367,
+     0.223
+    ]
+   },
+   "judged": true
+  },
+  "K-B4": {
+   "pass": true,
+   "value": [
+    {
+     "absorbed": 0.04203,
+     "residualRel": 1.49e-15,
+     "created": 0
+    },
+    {
+     "absorbed": 0.6957,
+     "residualRel": 3.19e-16,
+     "created": 0
+    },
+    {
+     "absorbed": 0.4251,
+     "residualRel": 6.53e-16,
+     "created": 0
+    }
+   ],
+   "judged": true
+  },
+  "K-B5": {
+   "pass": true,
+   "value": {
+    "recoil": true,
+    "nonGrowing": true,
+    "halfCyclePeakW": [
+     0.215016,
+     0.0113432,
+     0.01444
+    ],
+    "tailMaxAbsW": 0.00779,
+    "finalOffsetFrac": 0.349
+   },
+   "judged": true
+  },
+  "K-BC1": {
+   "pass": true,
+   "value": {
+    "returnOverInput": -1.7719,
+    "created": 0,
+    "V2ACT": -0.8622
+   },
+   "judged": true
+  },
+  "K-BC2": {
+   "pass": true,
+   "value": {
+    "ratio": 0.0002,
+    "V2ACT": 0.5136
+   },
+   "judged": true
+  },
+  "K-C0": {
+   "pass": true,
+   "value": {
+    "fwd_small:knee_L.flex": 0.000923,
+    "fwd_small:knee_R.flex": 0.000636,
+    "fwd_moderate:knee_L.flex": 0.00167,
+    "fwd_moderate:knee_R.flex": 0.00159,
+    "fwd_large:knee_L.flex": 0.134,
+    "fwd_large:knee_R.flex": 0.265,
+    "back_moderate:knee_L.flex": 0.00174,
+    "back_moderate:knee_R.flex": 0.000931,
+    "left_small:knee_L.flex": 0.0189,
+    "left_small:knee_R.flex": 0.00735,
+    "left_moderate:knee_L.flex": 0.0912,
+    "left_moderate:knee_R.flex": 0.0848
+   },
+   "judged": true
+  }
+ },
+ "pass": true,
+ "kneeFailed": [],
+ "findings": {
+  "A7_currentV2": {
+   "pfRiseMs": [
+    3.333333333333333,
+    11.380858893968572,
+    14.331177734238855
+   ],
+   "pfFallMs": [
+    3.333333333333333,
+    3.333333333333333,
+    3.333333333333333
+   ],
+   "humanPF": {
+    "rise": [
+     250,
+     450
+    ],
+    "fall": [
+     120,
+     250
+    ]
+   },
+   "substantiallyFaster": true
+  }
+ },
+ "candidate": "M1b"
+}
