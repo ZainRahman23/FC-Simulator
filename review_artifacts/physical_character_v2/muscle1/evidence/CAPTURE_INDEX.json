@@ -1,0 +1,143 @@
+{
+ "protocol": "MUSCLE-1 capture of frozen PPR-3 S2 + P2 battery jobs (scripts/m1_capture.mjs): onset 480 (t = 2 s), 50 ms pelvis pulse, 1440 steps; the D job (720 steps, moderate forward) reproduced its committed hash 4178181c7f012d8b and equals the first 720 records of fwd_moderate",
+ "files": {
+  "BASE_undisturbed.json.gz": {
+   "sha256": "d78cde4bdd6ec994b6732fd857d040fdfed27be402efd0304503dc847bfc3e7e",
+   "finalHash": "2828c61abce31ffb",
+   "steps": 1440,
+   "perturb": []
+  },
+  "back_moderate.json.gz": {
+   "sha256": "803b4f38ad74271660143dc9f5acadd215b62a24639cfeb3a1c526ab6ab8e6f0",
+   "finalHash": "2a9d3cf0cb0c7a90",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      -231.99999999999997,
+      0,
+      0
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  },
+  "fwd_large.json.gz": {
+   "sha256": "b832ec909103dde3ab2416e16a95e8b761e77e2ef1d6cb18bba2acdb5b36fca9",
+   "finalHash": "43f21f8a07e9cf7f",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      727.9999999999999,
+      0,
+      0
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  },
+  "fwd_moderate.json.gz": {
+   "sha256": "555f353907db5139bd06a5f96d8b05e00f4d0fff7c702a2fced7bebfbf0bc131",
+   "finalHash": "2054a3595d22f890",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      193.99999999999997,
+      0,
+      0
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  },
+  "fwd_small.json.gz": {
+   "sha256": "2fbb39b58c78cea61570d3fbc3da64a22e782ef627a8358509c5e9bcea08160d",
+   "finalHash": "b9aab0eba69f764b",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      121.99999999999999,
+      0,
+      0
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  },
+  "left_moderate.json.gz": {
+   "sha256": "1dd06c4dd613c7f2c630358da880a6233959ab4716ca19f0f4f3068a6ecda7c5",
+   "finalHash": "b419d94ce6e74439",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      0,
+      0,
+      497.99999999999994
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  },
+  "left_small.json.gz": {
+   "sha256": "257a2d8625cad35c904e36294fddbc1f2a8f060471977406e8ebed5f07880e8a",
+   "finalHash": "5be7b5e8ebb3953b",
+   "steps": 1440,
+   "perturb": [
+    {
+     "from": 480,
+     "to": 492,
+     "body": "pelvis",
+     "F": [
+      0,
+      0,
+      312
+     ],
+     "pLocal": [
+      0,
+      0.05722218954623781,
+      0
+     ]
+    }
+   ]
+  }
+ }
+}

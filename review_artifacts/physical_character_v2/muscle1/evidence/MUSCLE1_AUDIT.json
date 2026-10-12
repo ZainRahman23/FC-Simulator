@@ -1,0 +1,292 @@
+{
+ "validation": {
+  "BASE_undisturbed": {
+   "ankle_L.df": {
+    "rows": 0.007708,
+    "tauMod": 0.01017,
+    "tauAll": 0.01017
+   },
+   "ankle_R.df": {
+    "rows": 0.003807,
+    "tauMod": 0.004127,
+    "tauAll": 0.004127
+   },
+   "ankle_L.inv": {
+    "rows": 0.0001236,
+    "tauMod": 0.0001674,
+    "tauAll": 0.0001674
+   },
+   "knee_L.flex": {
+    "rows": 0.0008672,
+    "tauMod": 0.0009231,
+    "tauAll": 0.0009231
+   },
+   "hip_L.flex": {
+    "rows": 0.0001246,
+    "tauMod": 0.0002517,
+    "tauAll": 0.0002517
+   }
+  },
+  "fwd_moderate": {
+   "ankle_L.df": {
+    "rows": 0.007708,
+    "tauMod": 0.04037,
+    "tauAll": 0.04037
+   },
+   "ankle_R.df": {
+    "rows": 0.003807,
+    "tauMod": 0.03982,
+    "tauAll": 0.03982
+   },
+   "ankle_L.inv": {
+    "rows": 0.0001236,
+    "tauMod": 0.0009936,
+    "tauAll": 0.0009936
+   },
+   "knee_L.flex": {
+    "rows": 0.0008672,
+    "tauMod": 0.001673,
+    "tauAll": 0.001673
+   },
+   "hip_L.flex": {
+    "rows": 0.0001246,
+    "tauMod": 0.001236,
+    "tauAll": 0.001236
+   }
+  },
+  "fwd_large": {
+   "ankle_L.df": {
+    "rows": 0.007708,
+    "tauMod": 0.2192,
+    "tauAll": 0.2192
+   },
+   "ankle_R.df": {
+    "rows": 0.003807,
+    "tauMod": 0.3062,
+    "tauAll": 0.3062
+   },
+   "ankle_L.inv": {
+    "rows": 0.0001236,
+    "tauMod": 0.01841,
+    "tauAll": 0.01841
+   },
+   "knee_L.flex": {
+    "rows": 0.0008672,
+    "tauMod": 0.01397,
+    "tauAll": 0.1342
+   },
+   "hip_L.flex": {
+    "rows": 0.0001246,
+    "tauMod": 0.0084,
+    "tauAll": 0.02371
+   }
+  },
+  "left_moderate": {
+   "ankle_L.df": {
+    "rows": 0.007708,
+    "tauMod": 0.1764,
+    "tauAll": 0.1764
+   },
+   "ankle_R.df": {
+    "rows": 0.003807,
+    "tauMod": 0.5199,
+    "tauAll": 0.5199
+   },
+   "ankle_L.inv": {
+    "rows": 0.0001236,
+    "tauMod": 0.008809,
+    "tauAll": 0.008809
+   },
+   "knee_L.flex": {
+    "rows": 0.0008672,
+    "tauMod": 0.09116,
+    "tauAll": 0.09116
+   },
+   "hip_L.flex": {
+    "rows": 0.0001246,
+    "tauMod": 0.2742,
+    "tauAll": 0.2742
+   }
+  }
+ },
+ "servo": {
+  "stepUp50": {
+   "from": -13.550974254025517,
+   "to": -63.55097425402552,
+   "currentV2": {
+    "rise10_90ms": 12.5,
+    "maxTickSlew": 5271,
+    "max25msSlew": 2000
+   },
+   "s2": {
+    "rise10_90ms": 33.33,
+    "maxTickSlew": 2910,
+    "max25msSlew": 1622
+   }
+  },
+  "stepDown50": {
+   "from": -63.55097425402552,
+   "to": -13.550974254025517,
+   "currentV2": {
+    "rise10_90ms": 0,
+    "maxTickSlew": 12000,
+    "max25msSlew": 2000
+   },
+   "s2": {
+    "rise10_90ms": 108.33,
+    "maxTickSlew": 959,
+    "max25msSlew": 787
+   }
+  },
+  "inEnvelope2": {
+   "from": -13.550974254025517,
+   "to": -15.550974254025517,
+   "currentV2": {
+    "rise10_90ms": 0,
+    "maxTickSlew": 480,
+    "max25msSlew": 80
+   },
+   "s2": {
+    "rise10_90ms": 33.33,
+    "maxTickSlew": 116,
+    "max25msSlew": 65
+   }
+  }
+ },
+ "decomposition": {
+  "fwd_moderate": {
+   "series": {
+    "cmd": {
+     "peak": -50.19,
+     "slew": {
+      "max": 974,
+      "tEndMs": 145.8
+     }
+    },
+    "drive": {
+     "peak": -51.52,
+     "slew": {
+      "max": 922,
+      "tEndMs": 145.8
+     }
+    },
+    "tauE": {
+     "peak": -14.5,
+     "slew": {
+      "max": 478,
+      "tEndMs": 212.5
+     }
+    },
+    "tauP": {
+     "peak": -3.44,
+     "slew": {
+      "max": 34,
+      "tEndMs": 445.8
+     }
+    },
+    "damp": {
+     "peak": 4.64,
+     "slew": {
+      "max": 120,
+      "tEndMs": 250
+     }
+    },
+    "clamp": {
+     "peak": 3.46,
+     "slew": {
+      "max": 151,
+      "tEndMs": 220.8
+     }
+    },
+    "act": {
+     "peak": -62.42,
+     "slew": {
+      "max": 1122,
+      "tEndMs": 145.8
+     }
+    }
+   },
+   "atActualMaxSlew": {
+    "windowMs": [
+     120.8,
+     145.8
+    ],
+    "act": -1122,
+    "drive": -922,
+    "tauE": -208,
+    "tauP": -13,
+    "damp": 11,
+    "clamp": 10,
+    "cmd": -974
+   },
+   "activationPassFraction": 0.947
+  },
+  "fwd_large": {
+   "series": {
+    "cmd": {
+     "peak": -355.77,
+     "slew": {
+      "max": 3645,
+      "tEndMs": 145.8
+     }
+    },
+    "drive": {
+     "peak": -187.52,
+     "slew": {
+      "max": 3418,
+      "tEndMs": 145.8
+     }
+    },
+    "tauE": {
+     "peak": 64.47,
+     "slew": {
+      "max": 3660,
+      "tEndMs": 162.5
+     }
+    },
+    "tauP": {
+     "peak": 72.03,
+     "slew": {
+      "max": 188,
+      "tEndMs": 170.8
+     }
+    },
+    "damp": {
+     "peak": 45.64,
+     "slew": {
+      "max": 1526,
+      "tEndMs": 158.3
+     }
+    },
+    "clamp": {
+     "peak": 17.13,
+     "slew": {
+      "max": 1177,
+      "tEndMs": 175
+     }
+    },
+    "act": {
+     "peak": -142.21,
+     "slew": {
+      "max": 3453,
+      "tEndMs": 133.3
+     }
+    }
+   },
+   "atActualMaxSlew": {
+    "windowMs": [
+     108.3,
+     133.3
+    ],
+    "act": -3453,
+    "drive": -3000,
+    "tauE": -777,
+    "tauP": -57,
+    "damp": 205,
+    "clamp": 176,
+    "cmd": -3593
+   },
+   "activationPassFraction": 0.938
+  }
+ }
+}

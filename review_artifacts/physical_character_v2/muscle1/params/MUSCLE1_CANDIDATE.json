@@ -1,0 +1,14 @@
+{
+ "id": "MUSCLE-1 candidate: activation (V2, unchanged) → developed force (contraction lag, asymmetric) → active torque; mechanical pathway immediate on developed force; history-consistent strain arms (C redesigned)",
+ "activation": { "tauActMs": 15, "tauDeactMs": 50, "src": "V2 spec/v2_actuators.js ACTIVATION (Thelen 2003) [MODEL], unchanged" },
+ "groups": {
+  "PF": { "tauRiseMs": 146.7, "tauFallMs": 54.2, "targets": { "rise10_90ms": 325, "fall90_10ms": 175 }, "src": "FORCE_PRODUCTION_LITERATURE §12.2 plantarflexors: step-drive 10–90 % rise 250–450 ms (central 300–350) [E §9]; relaxation 90–10 % 120–250 ms (central ≈ 175) [E]; τc by cascade inversion on the 240 Hz discrete cascade (m1_design_derive.mjs) [E]" },
+  "DF": { "tauRiseMs": 88.8, "tauFallMs": 95.3, "targets": { "rise10_90ms": 200, "fall90_10ms": 250 }, "src": "§12.2 dorsiflexors: rise 150–250 (central ≈ 200) [E]; relaxation 230–360 (central ≈ 250; weak) [E]" },
+  "KE": { "tauRiseMs": 88.8, "tauFallMs": 45.3, "targets": { "rise10_90ms": 200, "fall90_10ms": 160 }, "src": "§12.2 knee extensors: rise 165–235 (central ≈ 200) [E]; relaxation 120–200 (central ≈ 160) [E]" },
+  "KF": { "tauRiseMs": 88.8, "tauFallMs": 45.3, "targets": { "rise10_90ms": 200, "fall90_10ms": 160 }, "src": "[D] knee flexors: no step-drive or relaxation data (§10 gap); the knee-extensor values are borrowed (§12.2 'borrow knee-extensor structure with wider bounds')" }
+ },
+ "dirToGroup": { "ankle": { "plantarflexion": "PF", "dorsiflexion": "DF" }, "knee": { "extension": "KE", "flexion": "KF" } },
+ "stiffnessState": "developed force f (not activation a) — Hunter & Kearney 1983; Kirsch & Rymer 1992 [M]: stiffness follows developed torque, not EMG",
+ "strainArms": "force-based (incremental stiffness); detachment ∝ fall of developed force; attachment unstrained; persistent / slow / fast weights and time constants = S2's (fRes 0.15, wS 0.30 τ 0.5 s, wF 0.55 τ 20 ms), cap R⁺ + R⁻ from developed force",
+ "unchangedFromS2": ["excitation interface (solveFloors at entry capacities)", "tone floors T", "passive B", "ζ 0.2 damping law", "θ_y / short-range constants kP, kM", "minimum-effort rest statics", "force–length / force–velocity capacity (V2)"]
+}
