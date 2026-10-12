@@ -1,0 +1,876 @@
+{
+ "tip": {
+  "heightTolM": 0.001,
+  "forefootZ": 0.1063,
+  "shareTol": 0.02
+ },
+ "runs": {
+  "U": {
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.fwd.small": {
+   "J": 4.82,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.fwd.moderate": {
+   "J": 9.64,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.64,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.fwd.limit": {
+   "J": 14.83,
+   "fall": false,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.7708333333333334,
+   "tipLoadedS": 0.933,
+   "tipFirstS": 0.5458333333333333,
+   "heelLiftPeakDeg": 8.54,
+   "heelLiftOver1degS": 1.488,
+   "legitimate": false
+  },
+  "P.fwd.over": {
+   "J": 21.5,
+   "fall": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.3541666666666667,
+   "tipLoadedS": 1.554,
+   "tipFirstS": 0.2833333333333333,
+   "heelLiftPeakDeg": 16.13,
+   "heelLiftOver1degS": 1.738,
+   "legitimate": false
+  },
+  "P.back.small": {
+   "J": 5.84,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.back.moderate": {
+   "J": 11.69,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.back.limit": {
+   "J": 17.98,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 1.9,
+   "heelLiftOver1degS": 0.25,
+   "legitimate": true
+  },
+  "P.back.over": {
+   "J": 26.07,
+   "fall": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 83.13,
+   "heelLiftOver1degS": 3.75,
+   "legitimate": true
+  },
+  "P.left.small": {
+   "J": 7.5,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.left.moderate": {
+   "J": 15,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.02,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.left.limit": {
+   "J": 23,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.72,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.left.over": {
+   "J": 32.5,
+   "fall": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 2.941666666666667,
+   "tipLoadedS": 0.767,
+   "tipFirstS": 1.6541666666666666,
+   "heelLiftPeakDeg": 79.23,
+   "heelLiftOver1degS": 3.579,
+   "legitimate": false
+  },
+  "P.right.small": {
+   "J": 7.5,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.right.moderate": {
+   "J": 15,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.01,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.right.limit": {
+   "J": 23,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.6,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "P.right.over": {
+   "J": 32.5,
+   "fall": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 1.8208333333333333,
+   "tipLoadedS": 0.729,
+   "tipFirstS": 0.4583333333333333,
+   "heelLiftPeakDeg": 76.58,
+   "heelLiftOver1degS": 3.517,
+   "legitimate": false
+  },
+  "M.fwd": {
+   "J": 10.58,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.14,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "M.left": {
+   "J": 20,
+   "fall": false,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.36,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "T.fwd.18.2": {
+   "J": 18.2,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.43333333333333335,
+   "tipLoadedS": 0.883,
+   "tipFirstS": 0.32083333333333336,
+   "heelLiftPeakDeg": 10.64,
+   "heelLiftOver1degS": 1.304,
+   "legitimate": false
+  },
+  "T.fwd.9.1": {
+   "J": 9.1,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.27,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "T.fwd.13.65": {
+   "J": 13.65,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 1.2458333333333333,
+   "tipLoadedS": 0.938,
+   "tipFirstS": 0.6333333333333333,
+   "heelLiftPeakDeg": 7.21,
+   "heelLiftOver1degS": 1.875,
+   "legitimate": false
+  },
+  "T.fwd.15.93": {
+   "J": 15.93,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.6583333333333333,
+   "tipLoadedS": 0.912,
+   "tipFirstS": 0.4041666666666667,
+   "heelLiftPeakDeg": 9.11,
+   "heelLiftOver1degS": 1.367,
+   "legitimate": false
+  },
+  "T.fwd.17.06": {
+   "J": 17.06,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.6208333333333333,
+   "tipLoadedS": 0.871,
+   "tipFirstS": 0.3458333333333333,
+   "heelLiftPeakDeg": 9.96,
+   "heelLiftOver1degS": 1.333,
+   "legitimate": false
+  },
+  "T.fwd.16.5": {
+   "J": 16.5,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.6458333333333334,
+   "tipLoadedS": 0.863,
+   "tipFirstS": 0.37083333333333335,
+   "heelLiftPeakDeg": 9.52,
+   "heelLiftOver1degS": 1.35,
+   "legitimate": false
+  },
+  "T.fwd.16.78": {
+   "J": 16.78,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 0.6333333333333333,
+   "tipLoadedS": 0.863,
+   "tipFirstS": 0.35833333333333334,
+   "heelLiftPeakDeg": 9.7,
+   "heelLiftOver1degS": 1.346,
+   "legitimate": false
+  },
+  "T.back.21.76": {
+   "J": 21.76,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 3.3875,
+   "tipLoadedS": 0.613,
+   "tipFirstS": 3.3875,
+   "heelLiftPeakDeg": 86.53,
+   "heelLiftOver1degS": 3.725,
+   "legitimate": false
+  },
+  "T.back.10.88": {
+   "J": 10.88,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "T.back.16.32": {
+   "J": 16.32,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.81,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "T.back.19.04": {
+   "J": 19.04,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 5.93,
+   "heelLiftOver1degS": 0.783,
+   "legitimate": true
+  },
+  "T.back.20.4": {
+   "J": 20.4,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 3.2666666666666666,
+   "tipLoadedS": 0.125,
+   "tipFirstS": 3.2666666666666666,
+   "heelLiftPeakDeg": 80.73,
+   "heelLiftOver1degS": 3.717,
+   "legitimate": false
+  },
+  "T.back.19.72": {
+   "J": 19.72,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 2.3916666666666666,
+   "tipLoadedS": 1.017,
+   "tipFirstS": 2.1416666666666666,
+   "heelLiftPeakDeg": 67.33,
+   "heelLiftOver1degS": 3.429,
+   "legitimate": false
+  },
+  "T.back.19.38": {
+   "J": 19.38,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 8.11,
+   "heelLiftOver1degS": 0.946,
+   "legitimate": true
+  },
+  "T.left.46.66": {
+   "J": 46.66,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0.6241,
+   "tipPeakAtS": 1.2416666666666667,
+   "tipLoadedS": 0.004,
+   "tipFirstS": 1.2416666666666667,
+   "heelLiftPeakDeg": 66.59,
+   "heelLiftOver1degS": 3.592,
+   "legitimate": false
+  },
+  "T.left.23.33": {
+   "J": 23.33,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 1.11,
+   "heelLiftOver1degS": 0.029,
+   "legitimate": true
+  },
+  "T.left.35": {
+   "J": 35,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0.2485,
+   "tipPeakAtS": 1.75,
+   "tipLoadedS": 0.004,
+   "tipFirstS": 1.75,
+   "heelLiftPeakDeg": 68.91,
+   "heelLiftOver1degS": 3.583,
+   "legitimate": false
+  },
+  "T.left.29.17": {
+   "J": 29.17,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 3.4208333333333334,
+   "tipLoadedS": 0.204,
+   "tipFirstS": 2.1041666666666665,
+   "heelLiftPeakDeg": 58.16,
+   "heelLiftOver1degS": 3.542,
+   "legitimate": false
+  },
+  "T.left.26.25": {
+   "J": 26.25,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 69.33,
+   "heelLiftOver1degS": 3.492,
+   "legitimate": true
+  },
+  "T.left.24.79": {
+   "J": 24.79,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 3.65,
+   "heelLiftOver1degS": 0.287,
+   "legitimate": true
+  },
+  "T.left.25.52": {
+   "J": 25.52,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 5.64,
+   "heelLiftOver1degS": 0.592,
+   "legitimate": true
+  },
+  "T.right.46.66": {
+   "J": 46.66,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0.8731,
+   "tipPeakAtS": 1.2666666666666666,
+   "tipLoadedS": 0.021,
+   "tipFirstS": 0.4041666666666667,
+   "heelLiftPeakDeg": 80.43,
+   "heelLiftOver1degS": 3.587,
+   "legitimate": false
+  },
+  "T.right.23.33": {
+   "J": 23.33,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 0.58,
+   "heelLiftOver1degS": 0,
+   "legitimate": true
+  },
+  "T.right.35": {
+   "J": 35,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0.6169,
+   "tipPeakAtS": 1.6458333333333333,
+   "tipLoadedS": 0.196,
+   "tipFirstS": 0.43333333333333335,
+   "heelLiftPeakDeg": 50.48,
+   "heelLiftOver1degS": 3.542,
+   "legitimate": false
+  },
+  "T.right.29.17": {
+   "J": 29.17,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 1,
+   "tipPeakAtS": 3.7625,
+   "tipLoadedS": 0.237,
+   "tipFirstS": 3.7625,
+   "heelLiftPeakDeg": 65.96,
+   "heelLiftOver1degS": 3.513,
+   "legitimate": false
+  },
+  "T.right.26.25": {
+   "J": 26.25,
+   "fall": false,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 3.96,
+   "heelLiftOver1degS": 0.396,
+   "legitimate": true
+  },
+  "T.right.27.71": {
+   "J": 27.71,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 63.1,
+   "heelLiftOver1degS": 3.504,
+   "legitimate": true
+  },
+  "T.right.26.98": {
+   "J": 26.98,
+   "fall": true,
+   "fallMatchesEvidence": true,
+   "tipSharePeak": 0,
+   "tipPeakAtS": null,
+   "tipLoadedS": 0,
+   "tipFirstS": null,
+   "heelLiftPeakDeg": 41.17,
+   "heelLiftOver1degS": 3.492,
+   "legitimate": true
+  }
+ },
+ "hashMismatch": [],
+ "L1": {
+  "pass": false,
+  "nonFallRuns": 28,
+  "violations": [
+   {
+    "run": "P.fwd.limit",
+    "tipSharePeak": 1,
+    "tipLoadedS": 0.933
+   },
+   {
+    "run": "T.fwd.13.65",
+    "tipSharePeak": 1,
+    "tipLoadedS": 0.938
+   },
+   {
+    "run": "T.fwd.15.93",
+    "tipSharePeak": 1,
+    "tipLoadedS": 0.912
+   },
+   {
+    "run": "T.fwd.16.5",
+    "tipSharePeak": 1,
+    "tipLoadedS": 0.863
+   }
+  ]
+ },
+ "physicalBoundary": {
+  "fwd": {
+   "grid": [
+    {
+     "J": 14.83,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 97.4,
+     "peakFootPitchDeg": 8.5,
+     "frozenRuleFall": null
+    },
+    {
+     "J": 16.64,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 102.1,
+     "peakFootPitchDeg": 9.6,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 18.22,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 108.4,
+     "peakFootPitchDeg": 10.7,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 20,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 120.7,
+     "peakFootPitchDeg": 12.4,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 21.5,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 138.2,
+     "peakFootPitchDeg": 16.1,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 23,
+     "physicalFall": true,
+     "pelvisDropAtS": 1.6708333333333334,
+     "footUnloadAtS": 2.183333333333333,
+     "comBackWithin30mm": false,
+     "peakComMm": 1719.7,
+     "peakFootPitchDeg": 83.8,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 25,
+     "physicalFall": true,
+     "pelvisDropAtS": 1.2583333333333333,
+     "footUnloadAtS": 2,
+     "comBackWithin30mm": false,
+     "peakComMm": 1566.1,
+     "peakFootPitchDeg": 88.8,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 28,
+     "physicalFall": true,
+     "pelvisDropAtS": 1.0666666666666667,
+     "footUnloadAtS": 1.875,
+     "comBackWithin30mm": false,
+     "peakComMm": 1578.6,
+     "peakFootPitchDeg": 87.7,
+     "frozenRuleFall": "COM beyond the base of support"
+    }
+   ],
+   "physicalBoundaryNs": 21.62,
+   "bracket": [
+    21.45,
+    21.8
+   ]
+  },
+  "back": {
+   "grid": [
+    {
+     "J": 17.98,
+     "physicalFall": false,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": null,
+     "comBackWithin30mm": true,
+     "peakComMm": 71.4,
+     "peakFootPitchDeg": 1.9,
+     "frozenRuleFall": null
+    },
+    {
+     "J": 19.55,
+     "physicalFall": true,
+     "pelvisDropAtS": null,
+     "footUnloadAtS": 3.8041666666666667,
+     "comBackWithin30mm": false,
+     "peakComMm": 407.8,
+     "peakFootPitchDeg": 69,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 22.08,
+     "physicalFall": true,
+     "pelvisDropAtS": 1.225,
+     "footUnloadAtS": 1.7625,
+     "comBackWithin30mm": false,
+     "peakComMm": 1876.7,
+     "peakFootPitchDeg": 86.3,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 24,
+     "physicalFall": true,
+     "pelvisDropAtS": 1.0458333333333334,
+     "footUnloadAtS": 1.5541666666666667,
+     "comBackWithin30mm": false,
+     "peakComMm": 1367.4,
+     "peakFootPitchDeg": 82,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 26.07,
+     "physicalFall": true,
+     "pelvisDropAtS": 0.9333333333333333,
+     "footUnloadAtS": 1.4375,
+     "comBackWithin30mm": false,
+     "peakComMm": 1100.7,
+     "peakFootPitchDeg": 83.1,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 28,
+     "physicalFall": true,
+     "pelvisDropAtS": 0.8625,
+     "footUnloadAtS": 1.375,
+     "comBackWithin30mm": false,
+     "peakComMm": 1080.2,
+     "peakFootPitchDeg": 85.8,
+     "frozenRuleFall": "COM beyond the base of support"
+    },
+    {
+     "J": 31,
+     "physicalFall": true,
+     "pelvisDropAtS": 0.775,
+     "footUnloadAtS": 1.2916666666666667,
+     "comBackWithin30mm": false,
+     "peakComMm": 1075.6,
+     "peakFootPitchDeg": 89.2,
+     "frozenRuleFall": "COM beyond the base of support"
+    }
+   ],
+   "physicalBoundaryNs": 19.16,
+   "bracket": [
+    18.98,
+    19.34
+   ]
+  }
+ },
+ "L2": {
+  "pass": false,
+  "frozenRuleFwdThresholdNs": 16.64,
+  "physicalFwdBoundaryNs": 21.62,
+  "frozenFallButPhysicallyRecovered": [
+   16.64,
+   18.22,
+   20,
+   21.5
+  ]
+ },
+ "heel": {
+  "U": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.fwd.small": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.fwd.moderate": {
+   "peakDeg": 0.64,
+   "over1degS": 0
+  },
+  "P.fwd.limit": {
+   "peakDeg": 8.54,
+   "over1degS": 1.488
+  },
+  "P.back.small": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.back.moderate": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.back.limit": {
+   "peakDeg": 1.9,
+   "over1degS": 0.25
+  },
+  "P.left.small": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.left.moderate": {
+   "peakDeg": 0.02,
+   "over1degS": 0
+  },
+  "P.left.limit": {
+   "peakDeg": 0.72,
+   "over1degS": 0
+  },
+  "P.right.small": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "P.right.moderate": {
+   "peakDeg": 0.01,
+   "over1degS": 0
+  },
+  "P.right.limit": {
+   "peakDeg": 0.6,
+   "over1degS": 0
+  },
+  "M.fwd": {
+   "peakDeg": 0.14,
+   "over1degS": 0
+  },
+  "M.left": {
+   "peakDeg": 0.36,
+   "over1degS": 0
+  },
+  "T.fwd.9.1": {
+   "peakDeg": 0.27,
+   "over1degS": 0
+  },
+  "T.fwd.13.65": {
+   "peakDeg": 7.21,
+   "over1degS": 1.875
+  },
+  "T.fwd.15.93": {
+   "peakDeg": 9.11,
+   "over1degS": 1.367
+  },
+  "T.fwd.16.5": {
+   "peakDeg": 9.52,
+   "over1degS": 1.35
+  },
+  "T.back.10.88": {
+   "peakDeg": 0,
+   "over1degS": 0
+  },
+  "T.back.16.32": {
+   "peakDeg": 0.81,
+   "over1degS": 0
+  },
+  "T.back.19.04": {
+   "peakDeg": 5.93,
+   "over1degS": 0.783
+  },
+  "T.back.19.38": {
+   "peakDeg": 8.11,
+   "over1degS": 0.946
+  },
+  "T.left.23.33": {
+   "peakDeg": 1.11,
+   "over1degS": 0.029
+  },
+  "T.left.24.79": {
+   "peakDeg": 3.65,
+   "over1degS": 0.287
+  },
+  "T.left.25.52": {
+   "peakDeg": 5.64,
+   "over1degS": 0.592
+  },
+  "T.right.23.33": {
+   "peakDeg": 0.58,
+   "over1degS": 0
+  },
+  "T.right.26.25": {
+   "peakDeg": 3.96,
+   "over1degS": 0.396
+  }
+ },
+ "label": "C2_TOOLCHECK"
+}

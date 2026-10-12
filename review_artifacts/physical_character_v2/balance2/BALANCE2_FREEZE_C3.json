@@ -1,0 +1,71 @@
+{
+ "protocol": "BALANCE-2 successor C3 freeze — before C3 is run on the frozen matched battery B2M, the causality audit, the legitimacy evaluation and the review scenarios",
+ "files": {
+  "sources/2026-10-12_user_instruction_balance2_c3_legitimate_support.md": "1b12b7e29dac6654104bd6d2f99aca6a7474de1f7bd50c34ce3783657ccb5eb8",
+  "balance2/BALANCE2_C3_PREREGISTRATION.md": "8d296e8b21157af72e7709281e2d56b1c7a9e7412b147633e31e6009a388ca30",
+  "balance2/c3/C3_DESIGN_LOG.md": "81d4bbe52ade91c3e53447242d3840b392ddf047533280a0c88a938c7a0978f4",
+  "balance2/c3/c3_ctrl.mjs": "c7c260b5a6437a3ef1b44d3a433d2dbdd9c2e430bd45df2905f779e858415431",
+  "balance2/c3/params/C3.json": "25d2706ece86440e4ced14950b2c5a57f501661f4bebc72f7414cebefe56746e",
+  "balance2/c3/dev/DEV_R0.json": "345c5f80a0d15aca69598a9238dd6ca049c1d5e73c0bb26f4f5fcf0d8b69c483",
+  "balance2/c3/dev/DEV_Gc.json": "e75450ae8ebfdc62651dc11516c015641c9b6dd24455619a815439636c841139",
+  "balance2/c3/dev/DEV_Ga.json": "d6f329b9f48a804b6e01a1d1e925983bb2bb5878e0db5afd2966f0af751f683e",
+  "balance2/c3/dev/DEV_Gf.json": "c485289313726a4d89c773d700b5d43a373f7eff95e95b488a0fcbdb322df1ad",
+  "balance2/c3/dev/DEV_C3_FROM_FILE.json": "0988b8a51e55e62da13ec997bb8ae8ffeefa812b9d4f27045962e832bfa98cd4",
+  "balance2/scripts/c3_support.mjs": "57f7d37ffbe21827773e8497be6959063305e21b81ebddf1b166bd5c2e71bde0",
+  "balance2/scripts/c3_support_toolcheck.mjs": "c37ce63895b357900d6e57648609c1cb41bc98c6c1ae85d03da4aff9e9b18df4",
+  "balance2/scripts/c3_dev.mjs": "1917463425fba376559039ae8b7b8f808750ca78bbb9e75c6e5af176b804568a",
+  "balance2/scripts/c3_legit.mjs": "314f78c13c47777966cba134290f664bf6d3e0aa922e37d1c3f054082b80e243",
+  "balance2/scripts/c3_causality.mjs": "81f4de9c20e568158a31691446a8872ac98b12284df19beb4380d2b110b137d8",
+  "balance2/render/c3_save_runs.mjs": "ac708788dff226887af3c9dbb3f5cb53bef0f8466aa1471da9d7d9f7b40ba851",
+  "balance2/evidence/C3_SUPPORT_TOOLCHECK.json": "a00cff61bcfef38eb15d728b574872e8879302b04ef370c445b177011fbf3e19",
+  "balance2/evidence/C3_LEGIT_TOOLCHECK_ON_C2.json": "3a4cc8b84186ab6b09b3869973908d20acadd7501310a325c0d8556fc8de39ae"
+ },
+ "inheritedFrozen": {
+  "balance2/successor/b2_ctrl.mjs": {
+   "sha256": "053097c364813100839938891f97563e1b9ddccb747de3b5b1f5d0b3d313149f",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/successor/params/C2.json": {
+   "sha256": "e430e63bd893ddc4aa41396f1076796883f4540a0e7d99592adb2cc6b64605b6",
+   "matchesEarlierFreeze": true
+  },
+  "balance1/scripts/b1_ctrl.mjs": {
+   "sha256": "d988115c2f1c6f61a68964249d0f0ef03f69574e1736ff128e2bb85440e0aa15",
+   "matchesEarlierFreeze": true
+  },
+  "balance1/params/B1_BODY.json": {
+   "sha256": "ce6c26ab520882a88fc762f4ce65d265b31077fe1c915e913ef1c117869477e8",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_dev.mjs": {
+   "sha256": "987f59b3bb05ecaacd4cd479d16fb26e9d58fa6cd08fe51fe1d54b64614a835e",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_causality.mjs": {
+   "sha256": "91be89a29a42ac24f6a81a2946fe77d205ce150fd7f6d7e1334f8a86f8f776cb",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_physical_boundary.mjs": {
+   "sha256": "017174b0be743b027f7f99a35d06ae66fd907951767e15f3c6f8cf446b6e4743",
+   "matchesEarlierFreeze": "not in an earlier manifest"
+  },
+  "balance2/BALANCE2_MATCHED_CRITERIA.md": {
+   "sha256": "a8388ba98998e8ee695fd27833403636892ac478d6974dbeba5920d7710b0fbd",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_qualify.mjs": {
+   "sha256": "da5b7e8fd5b150a778e65043c91ffd3e9de321b9be110694920aba2563fa0b47",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2_eval.mjs": {
+   "sha256": "f7afdd0f56c51afc2776b02825de4aa98c1a8b66eb74582a1b5a1dc4309d5f71",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2_p4prime.mjs": {
+   "sha256": "1f8a0d4628009deac44bfdd57807d04f8896c9c0aaa6b7e5a1c8c9e2bbba122f",
+   "matchesEarlierFreeze": true
+  }
+ },
+ "inheritedAllMatch": true,
+ "frozenAt": "2026-10-12T21:34:22.623Z"
+}

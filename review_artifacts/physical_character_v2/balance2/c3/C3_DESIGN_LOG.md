@@ -77,3 +77,32 @@ C2's frozen DEV (`scripts/b2_dev.mjs`), disjoint from B2M, plus legitimacy metri
 - Preserved and documented, not repaired.
 - No hip transfer is a C3 candidate.
 - A hip strategy would need the HAT-map correction plus new trunk-loop gains, which the owner excluded unless separately preregistered and necessary.
+
+## D1. DEV results (`c3/dev/DEV_R0.json`, `DEV_Gc.json`, `DEV_Ga.json`, `DEV_Gf.json`)
+
+| | R0 (C2) | Gc command | Ga activation | **Gf force** |
+|---|---|---|---|---|
+| fwd 5 @ 100 ms | rec, os 0.045 | = | = | = |
+| fwd 10 @ 100 ms | rec, settled 2.69 s, heel 0.8° | rec 2.14 s | rec 2.14 s | rec 2.70 s, heel 0.4° |
+| back 6 / back 12 | os 0.311 / 0.223 | = | = | = (governor inactive) |
+| left 12 | os 0.046 | = | = | = |
+| fwd 12 @ 50 ms | rec 1.95 s, heel 5.0° on the MTP edge, tip 0 | **falls** | **falls** | **not settled** (COM within 10 mm only from 3.39 s), peak 59 mm, heel 1.7°, tip 0 |
+| fwd threshold, 100 ms | 16.64 | 11.48 | 11.48 | **12.42** |
+| Tip share at non-fall levels | **1.00 at 15.0, 15.9, 16.4** | 0 | 0 | 0 |
+| back threshold, 100 ms | 19.97 | 21.09 | 21.09 | 21.09 |
+| Quiet 20 s, COM RMS AP | 1.74 mm, tip 0 | = | = | = |
+
+**Eligibility.** R0 is not eligible: every non-fall forward bisection level at or above 15 N·s is 100 % on the boot tip. Gc, Ga and Gf are all eligible.
+
+**Selection.** Gf, with the highest eligible forward threshold (12.42 vs 11.48).
+
+**Reading.**
+- Gc reproduces the C2 design log's V5cap finding: clamping the command removes the lead the muscle lag needs.
+- Ga keeps that lead only up to the activation stage.
+- Gf lets the command lead until the modelled developed force reaches the flat-foot envelope.
+- With the envelope respected, every forward bisection level that falls is a genuine fall (heel 82–85° as the body goes over). None is a tip save.
+- The backward threshold rises slightly (19.97 → 21.09): limiting dorsiflexion to the heel edge removes toe-up rocking falls.
+
+**Near-limit forward recovery is slower.** At fwd 12 @ 50 ms, Gf holds the COM at the flat-foot limit and returns it slowly. It is recovered (no fall) but not settled within 10 mm by 3 s.
+
+**C3 = Gf** (`c3/params/C3.json`; `DEV_C3_FROM_FILE.json` is identical to `DEV_Gf.json`).
