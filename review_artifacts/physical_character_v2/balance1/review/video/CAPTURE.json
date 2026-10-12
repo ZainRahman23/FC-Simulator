@@ -1,0 +1,454 @@
+{
+ "tool": "ppr3_capture.cjs",
+ "views": {
+  "STAND_normal": {
+   "panels": [
+    {
+     "k": "STAND_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "STAND_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "STAND_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "STAND_normal_clean.mp4",
+    "overlay": "STAND_normal_overlay.mp4"
+   }
+  },
+  "STAND_slow": {
+   "panels": [
+    {
+     "k": "STAND_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "STAND_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "STAND_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front34",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "STAND_slow_clean.mp4",
+    "overlay": "STAND_slow_overlay.mp4"
+   }
+  },
+  "STAND_game": {
+   "panels": [
+    {
+     "k": "STAND_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "STAND_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "STAND_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 361,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "STAND_game_clean.mp4",
+    "overlay": "STAND_game_overlay.mp4"
+   }
+  },
+  "SMALLF_normal": {
+   "panels": [
+    {
+     "k": "SMALLF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "SMALLF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "SMALLF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "SMALLF_normal_clean.mp4",
+    "overlay": "SMALLF_normal_overlay.mp4"
+   }
+  },
+  "SMALLF_slow": {
+   "panels": [
+    {
+     "k": "SMALLF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "SMALLF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "SMALLF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "SMALLF_slow_clean.mp4",
+    "overlay": "SMALLF_slow_overlay.mp4"
+   }
+  },
+  "SMALLF_game": {
+   "panels": [
+    {
+     "k": "SMALLF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "SMALLF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "SMALLF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "SMALLF_game_clean.mp4",
+    "overlay": "SMALLF_game_overlay.mp4"
+   }
+  },
+  "PUSHF_normal": {
+   "panels": [
+    {
+     "k": "PUSHF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHF_normal_clean.mp4",
+    "overlay": "PUSHF_normal_overlay.mp4"
+   }
+  },
+  "PUSHF_slow": {
+   "panels": [
+    {
+     "k": "PUSHF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHF_slow_clean.mp4",
+    "overlay": "PUSHF_slow_overlay.mp4"
+   }
+  },
+  "PUSHF_game": {
+   "panels": [
+    {
+     "k": "PUSHF_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHF_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHF_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHF_game_clean.mp4",
+    "overlay": "PUSHF_game_overlay.mp4"
+   }
+  },
+  "PUSHL_normal": {
+   "panels": [
+    {
+     "k": "PUSHL_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHL_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHL_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHL_normal_clean.mp4",
+    "overlay": "PUSHL_normal_overlay.mp4"
+   }
+  },
+  "PUSHL_slow": {
+   "panels": [
+    {
+     "k": "PUSHL_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHL_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHL_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "front",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHL_slow_clean.mp4",
+    "overlay": "PUSHL_slow_overlay.mp4"
+   }
+  },
+  "PUSHL_game": {
+   "panels": [
+    {
+     "k": "PUSHL_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHL_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHL_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHL_game_clean.mp4",
+    "overlay": "PUSHL_game_overlay.mp4"
+   }
+  },
+  "PUSHX_normal": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHX_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHX_normal_clean.mp4",
+    "overlay": "PUSHX_normal_overlay.mp4"
+   }
+  },
+  "PUSHX_slow": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHX_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "side",
+   "zoom": 1,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHX_slow_clean.mp4",
+    "overlay": "PUSHX_slow_overlay.mp4"
+   }
+  },
+  "PUSHX_game": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHX_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 193,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 4,
+   "videos": {
+    "clean": "PUSHX_game_clean.mp4",
+    "overlay": "PUSHX_game_overlay.mp4"
+   }
+  },
+  "PUSHX_gameslow": {
+   "panels": [
+    {
+     "k": "PUSHX_A",
+     "l": "CURRENT V2"
+    },
+    {
+     "k": "PUSHX_S2P2",
+     "l": "S2 + old P2"
+    },
+    {
+     "k": "PUSHX_B1",
+     "l": "M1b + BALANCE-1 (B)"
+    }
+   ],
+   "frames": 241,
+   "size": [
+    1680,
+    624
+   ],
+   "camera": "game",
+   "zoom": 8,
+   "every": 1,
+   "videos": {
+    "clean": "PUSHX_gameslow_clean.mp4",
+    "overlay": "PUSHX_gameslow_overlay.mp4"
+   }
+  }
+ },
+ "logs": []
+}

@@ -688,6 +688,35 @@ f(ω) is the concentric fraction of T_iso at 3 / 6 / 10 rad/s.
 
 These are evidence corrections toward athletes, not tuning. G2–G4 report usage and saturation per axis, and those reports judge them.
 
+## 14A. Muscle force path (M1b) — ADOPTED 2026-10-12 (owner decision, `sources/2026-10-12_user_instruction_overnight_m1b_adoption_balance1.md`)
+
+### 14A.1 The force path
+
+**Status:** adopted by owner decision on the MUSCLE-1 evidence (`muscle1/MUSCLE1_REPORT.md`, M1b ankle 16 / 16, knee 14 / 14). It is canonical in `sandbox/visual/physchar2/sim/v2_muscle.js` (`MuscleLayer`), with constants in `spec/v2_muscles.js`. The legacy `ActuatorLayer` (§14.4–) is kept only to reproduce frozen evidence.
+
+**Stages, per motorised axis and direction (±):**
+1. **Excitation** u± ∈ [0, 1]: the only controller input. A torque, stiffness or damping command throws.
+2. **Electrochemical delay:** 2 steps at 240 Hz (Nordez 2009, 6.05 ms, rounded up).
+3. **Activation** a±: §14 activation dynamics (15 / 50 ms), the Ca²⁺ stage.
+4. **Developed force** f±: first-order contraction lag, τc,rise while a > f and τc,fall while a < f, per muscle group (`MUSCLE_GROUPS`; labels [E] / [SENS] / [D]; preregistered sensitivity ranges). An unparameterised group throws: no silent generalisation.
+5. **Active torque:** f⁺·capIso⁺(θ) − f⁻·capIso⁻(θ), using the §14.2 / 14.3 capacities.
+6. **Immediate mechanics, all body properties:**
+   - force–velocity window, with a reserve for a non-shortening side;
+   - short-range stiffness K = Σ(e − 1)·f·capIso/θ_y on developed force, over the energy-consistent history arms (persistent 0.15, slow 0.30 / 0.5 s, fast 0.55 / 20 ms; detachment as force falls, attachment unstrained, yield);
+   - passive B;
+   - damping D = 2ζ√(K·I).
+
+**Tone and rest:**
+- Tone floors T are a neural setting applied when a controller allocates excitation.
+- The rest intent comes from the minimum-effort statics.
+- The canonical intent → excitation allocator is `solveFloors`.
+
+**State:** 448 floats per character (delay line, a, f, arm forces, rotation history), included in snapshot / hash.
+
+### 14A.2 Balance control on this path
+
+**Not qualified.** BALANCE-1 (`balance1/BALANCE1_REPORT.md`) is a continuous, delayed, coordinated whole-body controller on this force path. It reached status B: promising, not qualified (it fails the moderate forward push, the Rietdyk-form forward push and the P4 continuum). Nothing in this spec adopts a controller.
+
 ## 15. Collider architecture
 
 ### 15.1 Principles

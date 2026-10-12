@@ -1,0 +1,578 @@
+[
+ {
+  "id": "STAND_normal",
+  "panels": [
+   {
+    "k": "STAND_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "STAND_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "STAND_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 0,
+  "to": 1440,
+  "note": "undisturbed standing from the PPR-3 entry, 0–6 s (each controller with its own motor noise)",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "STAND_slow",
+  "panels": [
+   {
+    "k": "STAND_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "STAND_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "STAND_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "front34",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 0,
+  "to": 360,
+  "note": "undisturbed standing, first 1.5 s, 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "STAND_game",
+  "panels": [
+   {
+    "k": "STAND_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "STAND_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "STAND_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 0,
+  "to": 1440,
+  "note": "undisturbed standing, gameplay camera",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "SMALLF_normal",
+  "panels": [
+   {
+    "k": "SMALLF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "SMALLF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "SMALLF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "small forward push 6.5 N·s at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "SMALLF_slow",
+  "panels": [
+   {
+    "k": "SMALLF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "SMALLF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "SMALLF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "small forward push 6.5 N·s at t = 0.5 s, 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "SMALLF_game",
+  "panels": [
+   {
+    "k": "SMALLF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "SMALLF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "SMALLF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "small forward push 6.5 N·s at t = 0.5 s, gameplay camera",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHF_normal",
+  "panels": [
+   {
+    "k": "PUSHF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate forward push 12.0 N·s at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHF_slow",
+  "panels": [
+   {
+    "k": "PUSHF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "moderate forward push 12.0 N·s at t = 0.5 s, 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHF_game",
+  "panels": [
+   {
+    "k": "PUSHF_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHF_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHF_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate forward push 12.0 N·s at t = 0.5 s, gameplay camera",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHL_normal",
+  "panels": [
+   {
+    "k": "PUSHL_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHL_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHL_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate lateral (left) push 15.0 N·s at t = 0.5 s",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHL_slow",
+  "panels": [
+   {
+    "k": "PUSHL_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHL_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHL_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "front",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "moderate lateral (left) push 15.0 N·s at t = 0.5 s, 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHL_game",
+  "panels": [
+   {
+    "k": "PUSHL_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHL_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHL_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "moderate lateral (left) push 15.0 N·s at t = 0.5 s, gameplay camera",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_normal",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHX_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "over-limit forward push 28.0 N·s at t = 0.5 s (humans step or fall)",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_slow",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHX_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "side",
+  "zoom": 1,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "over-limit forward push 28.0 N·s at t = 0.5 s (humans step or fall), 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_game",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHX_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 4,
+  "from": 72,
+  "to": 840,
+  "note": "over-limit forward push 28.0 N·s at t = 0.5 s (humans step or fall), gameplay camera",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ },
+ {
+  "id": "PUSHX_gameslow",
+  "panels": [
+   {
+    "k": "PUSHX_A",
+    "l": "CURRENT V2"
+   },
+   {
+    "k": "PUSHX_S2P2",
+    "l": "S2 + old P2"
+   },
+   {
+    "k": "PUSHX_B1",
+    "l": "M1b + BALANCE-1 (B)"
+   }
+  ],
+  "camera": "game",
+  "zoom": 8,
+  "W": 560,
+  "H": 560,
+  "every": 1,
+  "from": 108,
+  "to": 348,
+  "note": "over-limit forward push, gameplay camera, 0.25× slow motion",
+  "marks": [
+   0,
+   100,
+   175,
+   300
+  ],
+  "variants": [
+   "clean",
+   "overlay"
+  ],
+  "saveFrames": false
+ }
+]

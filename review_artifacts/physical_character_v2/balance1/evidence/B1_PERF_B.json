@@ -1,0 +1,27 @@
+{
+ "cpu": "Apple M4",
+ "node": "v22.19.0",
+ "steps": 7200,
+ "finalHash": "fa3581989c177e35",
+ "refHash": "fa3581989c177e35",
+ "hashUnchangedByTiming": true,
+ "usPerStep": {
+  "muscle": 29.21,
+  "controller": 19.03,
+  "solver": 348.66,
+  "passiveV2": 210.41,
+  "instrumentAndMeasure": 210.09,
+  "wallTotalInstrumented": 827.64
+ },
+ "stateFloats": {
+  "muscle": 448,
+  "controllerApprox": 2261
+ },
+ "snapshotUs": 7.247750000000451,
+ "restoreUs": 7.767334000000119,
+ "budgetMsPerStep": 4.166666666666667,
+ "estimate22": {
+  "bodyControlMsPerStep": 1.061,
+  "note": "M1b + controller scale linearly per character; the solver / contact cost for 22 characters is NOT measured here (1 character on the PPR-2 plant)"
+ }
+}

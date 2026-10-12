@@ -1,0 +1,94 @@
+{
+ "battery": {
+  "J": {
+   "fwd": {
+    "small": 6.5,
+    "moderate": 12,
+    "limit": 19.5,
+    "over": 28
+   },
+   "back": {
+    "small": 4,
+    "moderate": 8.5,
+    "limit": 13.5,
+    "over": 19.5
+   },
+   "left": {
+    "small": 7.5,
+    "moderate": 15,
+    "limit": 23,
+    "over": 32.5
+   },
+   "right": {
+    "small": 7.5,
+    "moderate": 15,
+    "limit": 23,
+    "over": 32.5
+   }
+  },
+  "onset": 480,
+  "pulse": 12
+ },
+ "runs": {
+  "S2P2": {
+   "fwd.small": {
+    "J": 6.5,
+    "ankleAPslewNms": 774.7033596038818,
+    "ankleAPpeakNm": 44.196857213974,
+    "hipAPslewNms": 418.03396940231323,
+    "fall": false
+   },
+   "fwd.moderate": {
+    "J": 12,
+    "ankleAPslewNms": 1365.6277656555176,
+    "ankleAPpeakNm": 70.78392148017883,
+    "hipAPslewNms": 723.6832916736603,
+    "fall": false
+   },
+   "back.small": {
+    "J": 4,
+    "ankleAPslewNms": 345.31145095825195,
+    "ankleAPpeakNm": 26.48326277732849,
+    "hipAPslewNms": 333.6825728416443,
+    "fall": false
+   },
+   "back.moderate": {
+    "J": 8.5,
+    "ankleAPslewNms": 807.8485250473022,
+    "ankleAPpeakNm": 57.48193681240082,
+    "hipAPslewNms": 552.7811855077744,
+    "fall": false
+   }
+  },
+  "M1B_B1": {
+   "fwd.small": {
+    "J": 6.5,
+    "ankleAPslewNms": 209.5067024230957,
+    "ankleAPpeakNm": 32.057873010635376,
+    "hipAPslewNms": 223.97876679897308,
+    "fall": false
+   },
+   "fwd.moderate": {
+    "J": 12,
+    "ankleAPslewNms": 399.89161491394043,
+    "ankleAPpeakNm": 51.74307346343994,
+    "hipAPslewNms": 413.35611194372177,
+    "fall": false
+   },
+   "back.small": {
+    "J": 4,
+    "ankleAPslewNms": 170.1005458831787,
+    "ankleAPpeakNm": 22.48992383480072,
+    "hipAPslewNms": 137.9098355770111,
+    "fall": false
+   },
+   "back.moderate": {
+    "J": 8.5,
+    "ankleAPslewNms": 364.0159249305725,
+    "ankleAPpeakNm": 46.71221874654293,
+    "hipAPslewNms": 293.1231200695038,
+    "fall": false
+   }
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "adopted": "B",
+ "conditions": {
+  "noRegression": true,
+  "materialGain": true,
+  "notSuperhuman": true
+ },
+ "why": {
+  "noRegression": [],
+  "gain": {
+   "criterionGained": [],
+   "mlDistance": [
+    1.6688120949523118,
+    0.880663530436894
+   ],
+   "settleMean": [
+    3.463541666666667,
+    2.701041666666667
+   ]
+  },
+  "superhuman": {
+   "thresholdsFrac": {
+    "fwd": 0.591796875,
+    "left": 0.416015625
+   },
+   "sway": [
+    1.091338951447028,
+    0.969336469563106
+   ],
+   "overLimitAllFall": true,
+   "earlierCommand": []
+  }
+ }
+}

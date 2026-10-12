@@ -3931,3 +3931,58 @@ Records and clip data are outside Git (`ppr3/review/OUTSIDE_GIT.md`).
 **Not touched:** PVP, tackle, slide, P2, RUN-1, simulation, V2 spec.
 
 **Report:** `muscle1/MUSCLE1_REPORT.md` (seventeen answers). **Review:** `muscle1/review/MUSCLE1_REVIEW.html`.
+
+## 2026-10-12: BALANCE-1 — M1b adopted as the V2 muscle layer + continuous delayed whole-body balance (source 2f16fff4; canonical layer 6ac988ef; freeze 01653ab4); status B (PROMISING BUT BALANCE NOT YET QUALIFIED); REVIEW_PENDING
+
+**M1b canonicalised:**
+- `sim/v2_muscle.js` `MuscleLayer` is excitation-only and throws on any torque. `spec/v2_muscles.js` is strict: an unparameterised group throws.
+- Byte-identical to the qualified M1b on every MUSCLE-1 experiment.
+
+**Muscle groups for balance added:** hip, trunk, neck, ankle frontal plane, shoulder, elbow, and axial rotations. Source: literature `balance1/research/BALANCE_MUSCLE_AND_BENCHMARK_LITERATURE.md` §19.1.
+- τc was inverted on the same cascade (`b1_groups_derive.mjs`).
+- Every value is labelled [E] / [SENS] / [D], with a preregistered sensitivity range.
+- MUSCLE-1 ankle / knee groups are unchanged.
+
+**BALANCE-1 controller** (`balance1/scripts/b1_ctrl.mjs`). It runs from t = 0, with no trigger. It commands net-torque intent → canonical allocator → EXCITATION only.
+
+| Element | Detail |
+|---|---|
+| COM objective | AP / ML, through the legs' COM-force Jacobian |
+| Upper-body orientation | gravity-load groups: hips, lumbar, thoracic |
+| Head | vestibulocollic |
+| Knees | per-leg support length |
+| Support symmetry | D11; kD 0, viscous mode measured |
+| Posture | weak; axial hip / knee rotation and arms only (D12) |
+| Delays | literature §19.2: COM → ankle 100 ms, → hip 75 ms; orientation 75 ms + proprioceptive rate 30 ms; vestibulocollic 22 ms |
+| Variant A | coordinated delayed feedback |
+| Variant B | A + ML internal model (efference copy + known mode dynamics, re-anchored on each delayed observation) |
+
+**Battery** (frozen before any run): literature human push levels (small / moderate / limit / over-limit), tiered latency (P6), joint SD (U6), torque slew (P7), A/B adoption rule.
+
+**Results** (central body):
+- **A and B each pass 13 / 16**, failing P2, P4 and M1. **B adopted** by rule: ML sway distance −47 %, settle −22 %, not superhuman.
+- **B passes:**
+  - quiet standing: 60 s, no creep, joint SDs 0.22–0.49°;
+  - all small pushes; moderate backward and lateral pushes;
+  - every over-limit push falls;
+  - causality: first command change at 29.2 ms;
+  - tiered latency; determinism.
+- **Torque rate:** ankle AP 400 N·m/s, against S2 + old P2's 1,366 at the same 12 N·s forward push (human 372 ± 267).
+- **Lateral:** hips 87 % of the ML moment (human 85–90 %); threshold 25.9 N·s.
+- **Forward failures:**
+  - the moderate 12 N·s push is not settled in 4 s (hangs near the toes, then 70 % overshoot);
+  - the forward threshold is 14.4 N·s (0.59 of the zero-delay limit; human absolute 16–23);
+  - the Rietdyk-form forward push falls.
+- **Causes:** the short forward base (toe edge 103 mm ahead of the COM) and the low large-amplitude net stiffness / integrator overshoot of human-normalised gains.
+- **P4** fails only through a criterion flaw (two falling levels; own error), kept as preregistered.
+- **Sensitivity:** U1 / P1 / P3 / P5 hold at both muscle-lag ends; P2 forward fails at both; U6 fails at the fast end.
+- **No successor built:** both fixes need an anatomy / stance decision or a gain search.
+
+**Performance:**
+- muscle 29 µs + controller 19 µs per character-step (22 players ≈ 1.06 ms of the 4.17 ms step, solver excluded);
+- muscle state 448 floats; snapshot / restore ≈ 7–8 µs;
+- deterministic.
+
+**Not touched:** PVP (sealed, not run), tackle, slide, Astra's worktree, RUN-1, simulation, collision geometry. V2 spec: §14A records the owner-adopted M1b force path; no controller adopted.
+
+**Report:** `balance1/BALANCE1_REPORT.md` (22 answers). **Review:** `balance1/review/BALANCE1_REVIEW.html`.
