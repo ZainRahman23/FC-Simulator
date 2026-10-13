@@ -1,0 +1,175 @@
+{
+ "amplitudeNm": 10,
+ "k": 1.2126145826489494,
+ "replayIdentity": true,
+ "cases": {
+  "hipOnly": {
+   "tauAnkleNm": 0,
+   "tauHipNm": 10,
+   "trace": [
+    {
+     "ms": 50,
+     "comMm": 0,
+     "pelvisPitchDeg": 0.031,
+     "thoraxPitchDeg": -0.005
+    },
+    {
+     "ms": 100,
+     "comMm": -0.04,
+     "pelvisPitchDeg": 0.183,
+     "thoraxPitchDeg": -0.019
+    },
+    {
+     "ms": 150,
+     "comMm": -0.14,
+     "pelvisPitchDeg": 0.424,
+     "thoraxPitchDeg": -0.001
+    },
+    {
+     "ms": 200,
+     "comMm": -0.3,
+     "pelvisPitchDeg": 0.693,
+     "thoraxPitchDeg": 0.08
+    },
+    {
+     "ms": 300,
+     "comMm": -0.66,
+     "pelvisPitchDeg": 0.962,
+     "thoraxPitchDeg": 0.486
+    },
+    {
+     "ms": 400,
+     "comMm": -0.79,
+     "pelvisPitchDeg": 0.834,
+     "thoraxPitchDeg": 1.045
+    }
+   ]
+  },
+  "ankleOnly": {
+   "tauAnkleNm": 10,
+   "tauHipNm": 0,
+   "trace": [
+    {
+     "ms": 50,
+     "comMm": 0.02,
+     "pelvisPitchDeg": -0.006,
+     "thoraxPitchDeg": -0.002
+    },
+    {
+     "ms": 100,
+     "comMm": 0.18,
+     "pelvisPitchDeg": -0.059,
+     "thoraxPitchDeg": -0.018
+    },
+    {
+     "ms": 150,
+     "comMm": 0.58,
+     "pelvisPitchDeg": -0.153,
+     "thoraxPitchDeg": -0.082
+    },
+    {
+     "ms": 200,
+     "comMm": 1.22,
+     "pelvisPitchDeg": -0.24,
+     "thoraxPitchDeg": -0.223
+    },
+    {
+     "ms": 300,
+     "comMm": 3.07,
+     "pelvisPitchDeg": -0.254,
+     "thoraxPitchDeg": -0.712
+    },
+    {
+     "ms": 400,
+     "comMm": 5.19,
+     "pelvisPitchDeg": 0.005,
+     "thoraxPitchDeg": -1.311
+    }
+   ]
+  },
+  "comNeutral": {
+   "tauAnkleNm": 12.13,
+   "tauHipNm": 10,
+   "trace": [
+    {
+     "ms": 50,
+     "comMm": 0.02,
+     "pelvisPitchDeg": 0.024,
+     "thoraxPitchDeg": -0.008
+    },
+    {
+     "ms": 100,
+     "comMm": 0.19,
+     "pelvisPitchDeg": 0.11,
+     "thoraxPitchDeg": -0.041
+    },
+    {
+     "ms": 150,
+     "comMm": 0.57,
+     "pelvisPitchDeg": 0.235,
+     "thoraxPitchDeg": -0.102
+    },
+    {
+     "ms": 200,
+     "comMm": 1.19,
+     "pelvisPitchDeg": 0.395,
+     "thoraxPitchDeg": -0.189
+    },
+    {
+     "ms": 300,
+     "comMm": 3.07,
+     "pelvisPitchDeg": 0.629,
+     "thoraxPitchDeg": -0.375
+    },
+    {
+     "ms": 400,
+     "comMm": 5.52,
+     "pelvisPitchDeg": 0.801,
+     "thoraxPitchDeg": -0.548
+    }
+   ]
+  },
+  "hipModal": {
+   "tauAnkleNm": -3.74,
+   "tauHipNm": 10,
+   "trace": [
+    {
+     "ms": 50,
+     "comMm": -0.01,
+     "pelvisPitchDeg": 0.033,
+     "thoraxPitchDeg": -0.005
+    },
+    {
+     "ms": 100,
+     "comMm": -0.09,
+     "pelvisPitchDeg": 0.199,
+     "thoraxPitchDeg": -0.015
+    },
+    {
+     "ms": 150,
+     "comMm": -0.3,
+     "pelvisPitchDeg": 0.467,
+     "thoraxPitchDeg": 0.021
+    },
+    {
+     "ms": 200,
+     "comMm": -0.64,
+     "pelvisPitchDeg": 0.762,
+     "thoraxPitchDeg": 0.141
+    },
+    {
+     "ms": 300,
+     "comMm": -1.53,
+     "pelvisPitchDeg": 1.045,
+     "thoraxPitchDeg": 0.685
+    },
+    {
+     "ms": 400,
+     "comMm": -2.24,
+     "pelvisPitchDeg": 0.836,
+     "thoraxPitchDeg": 1.412
+    }
+   ]
+  }
+ }
+}
