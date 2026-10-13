@@ -1,0 +1,70 @@
+[
+ {
+  "id": "X_NOM_SL_1x",
+  "panels": [
+   {
+    "k": "NOMINAL",
+    "l": "PVP-0 NOMINAL \u00b7 K tracker 6.7 m/s (belly-flop, pins the feet)"
+   },
+   {
+    "k": "SL674",
+    "l": "EXPLORATORY \u00b7 sliding body 6.7 m/s (sweeps the feet)"
+   }
+  ],
+  "zoom": 8,
+  "W": 720,
+  "H": 560,
+  "every": 4,
+  "note": "SUPPORT-1 EXPLORATORY two-body \u00b7 recipient = current V2 (C3 on M1b), unchanged \u00b7 left: PVP-0 K tracker \u00b7 right: passive sliding articulated body (V2 tackler spec in K's slide pose, lowered to the turf, SnapshotTone only, one launch velocity) \u00b7 NOT Astra's tackle"
+ },
+ {
+  "id": "X_NOM_SL_q",
+  "panels": [
+   {
+    "k": "NOMINAL",
+    "l": "PVP-0 NOMINAL \u00b7 0.25\u00d7"
+   },
+   {
+    "k": "SL674",
+    "l": "EXPLORATORY sliding body \u00b7 0.25\u00d7"
+   }
+  ],
+  "zoom": 8,
+  "W": 720,
+  "H": 560,
+  "every": 1,
+  "note": "SUPPORT-1 EXPLORATORY two-body \u00b7 recipient = current V2 (C3 on M1b), unchanged \u00b7 left: PVP-0 K tracker \u00b7 right: passive sliding articulated body (V2 tackler spec in K's slide pose, lowered to the turf, SnapshotTone only, one launch velocity) \u00b7 NOT Astra's tackle"
+ },
+ {
+  "id": "X_CLOSE_q",
+  "panels": [
+   {
+    "k": "NOMINAL_C",
+    "l": "PVP-0 NOMINAL \u00b7 close-up 0.25\u00d7 (from 12 steps before contact)"
+   },
+   {
+    "k": "SL674_C",
+    "l": "EXPLORATORY sliding body \u00b7 close-up 0.25\u00d7 (from 12 steps before contact)"
+   }
+  ],
+  "zoom": 8,
+  "W": 720,
+  "H": 560,
+  "every": 1,
+  "note": "SUPPORT-1 EXPLORATORY two-body \u00b7 recipient = current V2 (C3 on M1b), unchanged \u00b7 left: PVP-0 K tracker \u00b7 right: passive sliding articulated body (V2 tackler spec in K's slide pose, lowered to the turf, SnapshotTone only, one launch velocity) \u00b7 NOT Astra's tackle"
+ },
+ {
+  "id": "X_SL5_1x",
+  "panels": [
+   {
+    "k": "SL5",
+    "l": "EXPLORATORY \u00b7 sliding body 5 m/s"
+   }
+  ],
+  "zoom": 8,
+  "W": 720,
+  "H": 560,
+  "every": 4,
+  "note": "SUPPORT-1 EXPLORATORY two-body \u00b7 recipient = current V2 (C3 on M1b), unchanged \u00b7 left: PVP-0 K tracker \u00b7 right: passive sliding articulated body (V2 tackler spec in K's slide pose, lowered to the turf, SnapshotTone only, one launch velocity) \u00b7 NOT Astra's tackle"
+ }
+]

@@ -1,0 +1,410 @@
+[
+ {
+  "id": "SPEC_1x",
+  "panels": [
+   {
+    "k": "SP_LOW",
+    "l": "LOW \u00b7 8 kg bar at 2 m/s, shin 15 cm (16 N\u00b7s)"
+   },
+   {
+    "k": "SP_MOD",
+    "l": "MODERATE \u00b7 40 kg at 2 m/s (80 N\u00b7s)"
+   },
+   {
+    "k": "SP_MODF",
+    "l": "MODERATE+ \u00b7 20 kg at 4 m/s (80 N\u00b7s)"
+   },
+   {
+    "k": "SP_HEAVY",
+    "l": "HEAVY \u00b7 40 kg at 4 m/s (160 N\u00b7s)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 4,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   250,
+   500,
+   1000,
+   1500
+  ]
+ },
+ {
+  "id": "SPEC_q",
+  "panels": [
+   {
+    "k": "SP_LOW",
+    "l": "LOW \u00b7 8 kg bar at 2 m/s, shin 15 cm (16 N\u00b7s)"
+   },
+   {
+    "k": "SP_MOD",
+    "l": "MODERATE \u00b7 40 kg at 2 m/s (80 N\u00b7s)"
+   },
+   {
+    "k": "SP_MODF",
+    "l": "MODERATE+ \u00b7 20 kg at 4 m/s (80 N\u00b7s)"
+   },
+   {
+    "k": "SP_HEAVY",
+    "l": "HEAVY \u00b7 40 kg at 4 m/s (160 N\u00b7s)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   100,
+   200,
+   300,
+   500,
+   800,
+   1200
+  ]
+ },
+ {
+  "id": "DIR_1x",
+  "panels": [
+   {
+    "k": "D_PVP",
+    "l": "PVP-0 direction, 30 cm \u00b7 40 kg at 4 m/s"
+   },
+   {
+    "k": "D_R",
+    "l": "from the RIGHT, 15 cm \u00b7 40 kg at 4 m/s"
+   },
+   {
+    "k": "D_B",
+    "l": "from BEHIND, 15 cm \u00b7 40 kg at 4 m/s (side view)"
+   },
+   {
+    "k": "D_SLIDE",
+    "l": "ground-SLIDING body r 12 cm \u00b7 75 kg at 5 m/s"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 4,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   250,
+   500,
+   1000
+  ]
+ },
+ {
+  "id": "DIR_q",
+  "panels": [
+   {
+    "k": "D_PVP",
+    "l": "PVP-0 direction, 30 cm \u00b7 40 kg at 4 m/s"
+   },
+   {
+    "k": "D_R",
+    "l": "from the RIGHT, 15 cm \u00b7 40 kg at 4 m/s"
+   },
+   {
+    "k": "D_B",
+    "l": "from BEHIND, 15 cm \u00b7 40 kg at 4 m/s (side view)"
+   },
+   {
+    "k": "D_SLIDE",
+    "l": "ground-SLIDING body r 12 cm \u00b7 75 kg at 5 m/s"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   100,
+   200,
+   300,
+   500,
+   800,
+   1200
+  ]
+ },
+ {
+  "id": "REPN_1x",
+  "panels": [
+   {
+    "k": "R_NF",
+    "l": "PVP-0 NOMINAL tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_NS",
+    "l": "same, STRIKE only (first 100 ms)"
+   },
+   {
+    "k": "R_NH",
+    "l": "same, HORIZONTAL only (downward part removed)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 4,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": [
+   0,
+   500,
+   1000
+  ]
+ },
+ {
+  "id": "REPN_q",
+  "panels": [
+   {
+    "k": "R_NF",
+    "l": "PVP-0 NOMINAL tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_NS",
+    "l": "same, STRIKE only (first 100 ms)"
+   },
+   {
+    "k": "R_NH",
+    "l": "same, HORIZONTAL only (downward part removed)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": [
+   0,
+   100,
+   200,
+   300,
+   500,
+   800,
+   1200
+  ]
+ },
+ {
+  "id": "REPL_1x",
+  "panels": [
+   {
+    "k": "R_LF",
+    "l": "PVP-0 LIGHT tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_LS",
+    "l": "same, STRIKE only (first 100 ms)"
+   },
+   {
+    "k": "R_LH",
+    "l": "same, HORIZONTAL only (downward part removed)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 4,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": [
+   0,
+   500,
+   1000,
+   2000
+  ]
+ },
+ {
+  "id": "REPL_q",
+  "panels": [
+   {
+    "k": "R_LF",
+    "l": "PVP-0 LIGHT tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_LS",
+    "l": "same, STRIKE only (first 100 ms)"
+   },
+   {
+    "k": "R_LH",
+    "l": "same, HORIZONTAL only (downward part removed)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": []
+ },
+ {
+  "id": "REPH_1x",
+  "panels": [
+   {
+    "k": "R_HF",
+    "l": "PVP-0 HEAVY tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_HS",
+    "l": "same, STRIKE only (first 100 ms)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 4,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": []
+ },
+ {
+  "id": "REPH_q",
+  "panels": [
+   {
+    "k": "R_HF",
+    "l": "PVP-0 HEAVY tackler force, FULL (as recorded)"
+   },
+   {
+    "k": "R_HS",
+    "l": "same, STRIKE only (first 100 ms)"
+   }
+  ],
+  "zoom": 7,
+  "W": 460,
+  "H": 520,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 460,
+   "ch": 520,
+   "fy": 0.55
+  },
+  "note": "PVP-0 recorded tackler contact forces replayed open-loop on the lab recipient at the recorded points (no tackler body): valid until the recipient diverges from PVP-0 \u00b7 presentation yaw 75\u00b0",
+  "stillsMs": []
+ },
+ {
+  "id": "CLOSE_HEAVY_q",
+  "panels": [
+   {
+    "k": "SP_HEAVY",
+    "l": "HEAVY close-up \u00b7 0.25\u00d7"
+   }
+  ],
+  "zoom": 14,
+  "W": 620,
+  "H": 460,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 620,
+   "ch": 460,
+   "fy": 0.82
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   40,
+   80,
+   120,
+   200
+  ]
+ },
+ {
+  "id": "CLOSE_MODF_q",
+  "panels": [
+   {
+    "k": "SP_MODF",
+    "l": "MODERATE+ close-up \u00b7 0.25\u00d7"
+   }
+  ],
+  "zoom": 14,
+  "W": 620,
+  "H": 460,
+  "every": 1,
+  "crop": {
+   "W2": 1400,
+   "H2": 1000,
+   "cw": 620,
+   "ch": 460,
+   "fy": 0.82
+  },
+  "note": "current V2 recipient (frozen C3 on canonical M1b, frozen contact model) \u00b7 recipient-only lab, physically explicit impactor \u00b7 presentation yaw 75\u00b0 (front-quarter view)",
+  "stillsMs": [
+   0,
+   40,
+   80,
+   160,
+   400
+  ]
+ }
+]
