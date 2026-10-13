@@ -1,18 +1,8 @@
 {
- "consumed": "SLIDE-A1 candidate K (Astra / Codex workstream), the latest COMMITTED candidate at PVP-0 start (13 Oct 2026 ≈ 01:50 BST); K’s own REPORT.txt: ‘Gate A: OPEN, proposed K awaiting the user’s visual review’ — current, not approved",
- "repo": "~/Documents/Codex/2026-10-12/new-chat/touchline-slide",
- "branch": "research/slide-a1-authored",
- "commit": "59b7245cebef33862d56237a02833dde16b0bf2c",
- "path": "review_artifacts/physical_character_v2/slide_a1/k/",
- "extractedWith": "git show <commit>:<path> (committed bytes, not the working tree; the uncommitted slide_a1/l/ in progress was NOT read)",
- "sha256": {
-  "K.json": "dfe57992822bcb4b8d6418834ff8faef6abca9fdf3757370609186cef5d23fac",
-  "REPORT.txt": "9a83deb9208cb81c1310e57744e31b88f3866285082d5652f74d5382b9cd438e",
-  "joint_bounds.json": "7136b1c1523fdfd1be3153337b672737f676b14075cb4f06386c848f60c6fe9b",
-  "phases.json": "d3fe71e4d50845d942ea927c87ac1b82e9353896da4926b49a7a7bdbf99319db",
-  "provenance.json": "4911ac30c28a149b16ccaf9f5bbb0f38c45261b4699f1ab8c2fec7e04b01d88f",
-  "root_trajectory.json": "9827792a90186d0a8085334a9abe38c06d24f93455148462c797050cd7edd250",
-  "skeleton_bind.json": "135199de929fb82d4e6cfb0b161c54959f9581896bd693e1a6c845f8479604af",
-  "validation.json": "d3838596de92df47c361f849ab75efd0ed5d40982ca76a359c08da4ad4afb172"
- }
+  "baseCommit": "f9618f440186491a5fdee2174f8bc2e0f4336a98",
+  "sourceVideoSHA256": "ffdb91343eba9c5e749b7dff6cd3dfb9c701184435a5d8747073bc90ec7ebfb8",
+  "target": "Actual Touchline Gabriel; frozen copies preserve source bytes",
+  "field": "Exact ground texture functions copied from sandbox/visual/match.js; actual grass PNG and metadata; camera-projected mowing and markings port",
+  "rootAndAnimation": "New authored K; no pixel landmarks or G/H/I/J targets used by author_k.py",
+  "preserved": "G/H/I/J, Gate P, RDS; no writes to authoritative checkout or Claude worktree"
 }
