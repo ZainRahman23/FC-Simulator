@@ -1,0 +1,122 @@
+SLIDE-A1 K — TOUCHLINE AUTHORED TACKLE
+
+Review: http://127.0.0.1:8466/k/index.html
+Live authored rig and leg overlay: http://127.0.0.1:8466/k/render.html
+
+VERDICT
+Gate A: OPEN, proposed K awaiting the user's visual review.
+Gate P: preserved as supporting choreography research. K does not fit its
+landmarks or copy its reconstructed poses as mandatory coordinates.
+Physics / rigid-body motors / physical turf / perturbations / ragdoll:
+NOT STARTED. PVP and RUN-1 integration: NOT RUN / NOT ADDED.
+
+WHAT K AUTHORS
+Gabriel enters from a short compatible moving stance. The right thigh drives,
+the left leg opens back/down, the trunk opens and rolls, then the right knee
+extends as the pelvis descends. The left leg folds later into the side slide.
+The head follows the challenge and the arms counterbalance, briefly brace,
+and settle. Forward motion continues throughout the landing and follow-through.
+
+This is a rotation-only pose stream on the exact 23-bone Gabriel bind, plus a
+separate authored root trajectory. No limb lengths or mesh proportions change.
+Scalar authoring curves use C1 PCHIP interpolation. There is no explicit setup
+hold, transition blend, or phase-local root velocity reset. The entry is not a
+RUN-1 transition, and does not claim continuity with an unspecified live run.
+
+PHASE INTERFACE
+ENTRY           0.000 s
+COMMIT          0.100 s
+THIGH_DRIVE     0.180 s
+SCISSOR         0.270 s
+KNEE_EXTENSION  0.370 s
+GROUND_ENTRY    0.550 s
+SLIDE           0.720 s
+FOLLOW_THROUGH  1.200 s
+Clip endpoint   1.850 s
+
+ROOT INTENT
+7.874581 m forward travel, with a small authored lateral drift. Entry forward
+speed is approximately 2.50 m/s; endpoint speed remains approximately 1.21 m/s.
+The endpoint is an ongoing slide, not a seated rest or recovery pose.
+source/root_trajectory.json and .csv record positions and sampled velocities
+independently of the pose stream. These are future intent/target data, not
+unconditional physical transforms for authoritative gameplay.
+
+AUTHORED GROUND SEQUENCE
+The left boot approaches first and comes within 16 mm of the turf at 0.383 s.
+The outer left thigh comes within 16 mm at 0.550 s. This surface carries the
+visual landing while the pelvis rolls above it. The left forearm/hand comes
+within 16 mm at 0.608 s and then releases during the established slide.
+
+These timings use dominant-bone surface groups and geometric proximity, not
+simulated force. The pelvis-weighted mesh region remains about 78 mm clear,
+and the torso-weighted region about 154 mm clear. The leading boot remains
+raised (minimum approximately 156 mm after commitment). This is a left-thigh
+and side slide, not a claim that every named region physically contacts turf.
+
+The root height contains an offline smooth clearance bake against the complete
+skinned mesh. The lowest sampled surface is +4 mm at 120 Hz. Every vertex also stays inside the final detail crop, with at least
+39.7 pixels of bottom margin at 120 Hz. No triangles are
+hidden below the ground, no limb is shortened, and there is no runtime contact
+solver. Body-to-body collision and physically valid loads are later work.
+
+PRESENTATION
+Frozen, unmodified Gabriel rig.json / mesh.bin / atlas.png and the actual
+Touchline of_character / of_char_gl / gl_renderer code render the character.
+The accepted CAMERA_V1 uses 30 m height, 43 m behind the touchline, 22-degree
+pitch and 28-degree vertical FOV, zoom 1. Native review preserves 1280x720
+framing and a fixed rail. The labelled 10x detail view re-renders a crop of the
+same projection at higher resolution, following the root horizontally.
+
+The field uses Touchline's actual grass tile palette, exact copied ground
+texture functions, mowing boundaries, and a projection port of the pitch
+markings. It is an isolated field presentation, not a running match. Stadium
+props and other players are outside this harness. The planar shadow is a
+presentation aid and exerts no force.
+
+The secondary low three-quarter view is approximate and uncalibrated. It
+does not replace the primary gameplay camera or act as a pose-fitting target.
+
+REFERENCE COMPARISON
+The supplied reference.mov remains the source. Source n99 / 1.650 s aligns
+with K COMMIT / 0.100 s; elapsed time is unchanged. Source frames n93..n142
+are shown, then n142 is explicitly labelled HELD while K's longer authored
+follow-through continues. Later opponent-collapse footage is not presented
+as a target for this single-character authored action.
+
+REVIEW DELIVERABLES
+review/comparison_{1x,half,quarter}.mp4 — REFERENCE | K
+review/gameplay_{1x,half,quarter}.mp4 — K in native CAMERA_V1 framing
+review/detail_{1x,half,quarter}.mp4 — K in the labelled gameplay detail crop
+review/source_angle_{1x,half,quarter}.mp4 — secondary low-angle diagnostic
+The selected native reference frames are retained byte-for-byte under
+source/reference_frames with hashes. All clips contain 112 rendered frames. index.html adds frame stepping, a
+scrubber, all eight semantic-phase jumps and 1x / 0.5x / 0.25x playback.
+
+VISUAL ITERATION
+The full motion was reviewed through normal-speed browser playback and
+sampled screenshots. Internal candidates were rejected for a boot-supported
+high landing, an overly upright high-kick opening, and an early bracing hand
+that held the torso above the landing. The final candidate coordinates the
+pelvis, torso, both legs and arms; it is not another isolated shin correction.
+The earlier exact-landmark optimization is not called or imported by K.
+
+VALIDATION AND LIMITS
+evidence/validation.json records joint-bound checks, constant bind lengths,
+quaternion continuity, positive forward travel, asset identity, geometric
+ground proximity and decoding of every delivered video. These checks support
+review; they do not declare the visual gate passed or prove biomechanics.
+
+PRESERVATION
+All changes for this task are confined to the new slide_a1/k directory in the
+isolated research/slide-a1-authored checkout. G/H/I/J, Gate P and earlier RDS
+evidence are retained. The authoritative Downloads/FC Simulator checkout and
+Claude's physical-character-v2 worktree were not edited or used for execution.
+
+REPRODUCIBILITY
+scripts/author_k.py regenerates the 120-Hz pose stream, keys, root intent and
+geometry checks. render.html uses the frozen Touchline GPU pipeline. Its
+explicit local export button sends PNG frames only to the loopback exporter
+in scripts/export_server.py. scripts/package_review.py makes the review
+movies; scripts/validate_k.py validates their records and decoding. Raw
+intermediate frames are ignored by Git; the final videos and evidence are saved.

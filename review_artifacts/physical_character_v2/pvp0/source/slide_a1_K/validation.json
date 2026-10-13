@@ -1,0 +1,300 @@
+{
+  "gateA": "OPEN \u2014 proposed authored K, user visual approval required",
+  "gateP": "Preserved supporting research; no literal landmark fit used by K",
+  "physicsMotorTurfPerturbationRagdollPVP_RUN1": "NOT RUN / NOT INTEGRATED",
+  "sampleHz": 120,
+  "frameCount": 223,
+  "jointBoundsStatus": "Authoring constraints passed. Bounds alone do not prove biological plausibility.",
+  "jointChecks": {
+    "rightHip": {
+      "minDegrees": [
+        10.0,
+        -10.0,
+        -7.990027231467474
+      ],
+      "maxDegrees": [
+        99.93939779344161,
+        11.996464293770018,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "leftHip": {
+      "minDegrees": [
+        -34.0,
+        -6.996442165330043,
+        -22.0
+      ],
+      "maxDegrees": [
+        -8.0,
+        20.999999999999996,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "rightKnee": {
+      "minDegrees": 8.001331191588784,
+      "maxDegrees": 64.99194431955037,
+      "withinBounds": true
+    },
+    "leftKnee": {
+      "minDegrees": 12.0,
+      "maxDegrees": 112.0,
+      "withinBounds": true
+    },
+    "rightFoot": {
+      "minDegrees": [
+        -12.0,
+        0.0,
+        0.0
+      ],
+      "maxDegrees": [
+        7.993159066922558,
+        0.0,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "leftFoot": {
+      "minDegrees": [
+        -19.99716734675675,
+        0.0,
+        0.0
+      ],
+      "maxDegrees": [
+        6.0,
+        0.0,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "spine": {
+      "minDegrees": [
+        -17.989392881310053,
+        0.0,
+        -11.0
+      ],
+      "maxDegrees": [
+        3.9986688084112147,
+        9.0,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "chest": {
+      "minDegrees": [
+        -17.993494916837303,
+        0.0,
+        -11.0
+      ],
+      "maxDegrees": [
+        3.9986688084112147,
+        10.0,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "neck": {
+      "minDegrees": [
+        0.0,
+        -12.0,
+        0.0
+      ],
+      "maxDegrees": [
+        35.0,
+        0.0,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "headPitch": {
+      "minDegrees": 0.0,
+      "maxDegrees": 17.993238166791887,
+      "withinBounds": true
+    },
+    "rightArm": {
+      "minDegrees": [
+        12.0,
+        8.0,
+        -15.0
+      ],
+      "maxDegrees": [
+        54.99568965435774,
+        45.99661908339594,
+        0.0
+      ],
+      "withinBounds": true
+    },
+    "leftArm": {
+      "minDegrees": [
+        -23.968031425757836,
+        -40.0,
+        0.0
+      ],
+      "maxDegrees": [
+        38.0,
+        -8.0,
+        12.0
+      ],
+      "withinBounds": true
+    },
+    "rightElbow": {
+      "minDegrees": 55.0,
+      "maxDegrees": 94.0,
+      "withinBounds": true
+    },
+    "leftElbow": {
+      "minDegrees": 38.04514551635405,
+      "maxDegrees": 90.0,
+      "withinBounds": true
+    }
+  },
+  "maximumAdjacentLocalRotationDegreesAt120Hz": 6.780956637232978,
+  "quaternionUnitMaxError": 2.220446049250313e-16,
+  "constantBindLengthMaxErrorM": 4.690692279041286e-15,
+  "fullMeshMinimumYMetres": 0.003999999999999948,
+  "rootForwardSpeedMinMaxMps": [
+    1.210079296234312,
+    7.199755295206671
+  ],
+  "rootTravelM": 7.87458134080677,
+  "groundProximity": [
+    {
+      "regionByDominantSkinBone": "leftBoot",
+      "firstWithin16mmAfterCommitS": 0.3833333333333333,
+      "minimumAfterCommitM": 0.0040000135020096805,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    },
+    {
+      "regionByDominantSkinBone": "rightBoot",
+      "firstWithin16mmAfterCommitS": null,
+      "minimumAfterCommitM": 0.1564379952700563,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    },
+    {
+      "regionByDominantSkinBone": "leftThigh",
+      "firstWithin16mmAfterCommitS": 0.55,
+      "minimumAfterCommitM": 0.0040000000000000036,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    },
+    {
+      "regionByDominantSkinBone": "pelvis",
+      "firstWithin16mmAfterCommitS": null,
+      "minimumAfterCommitM": 0.07833380819129898,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    },
+    {
+      "regionByDominantSkinBone": "leftForearmHand",
+      "firstWithin16mmAfterCommitS": 0.6083333333333333,
+      "minimumAfterCommitM": 0.010043779461491043,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    },
+    {
+      "regionByDominantSkinBone": "torso",
+      "firstWithin16mmAfterCommitS": null,
+      "minimumAfterCommitM": 0.15378723127100896,
+      "meaning": "geometric proximity only, not contact force or physical support"
+    }
+  ],
+  "assetIdentity": {
+    "rig.json": {
+      "sha256": "f4a39915809ce013eeb5cfe0a52941a05af99c3c96450cb9d84a4bca5782142a",
+      "identicalToRepoGabriel": true
+    },
+    "mesh.bin": {
+      "sha256": "e73f47578d1fd26a00e786237845be0502f15c5f3be7ab1a1c7cd3587e8fb2bd",
+      "identicalToRepoGabriel": true
+    },
+    "atlas.png": {
+      "sha256": "112d92eeb14b7f0bc1cfce6e73d69b1c145e33213924ccebeb3175cae6950d69",
+      "identicalToRepoGabriel": true
+    }
+  },
+  "videos": {
+    "comparison_1x.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 1.866667,
+      "bytes": 1200879
+    },
+    "comparison_half.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 3.733333,
+      "bytes": 1581671
+    },
+    "comparison_quarter.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 7.466667,
+      "bytes": 2139292
+    },
+    "detail_1x.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 1.866667,
+      "bytes": 496017
+    },
+    "detail_half.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 3.733333,
+      "bytes": 663186
+    },
+    "detail_quarter.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 7.466667,
+      "bytes": 945993
+    },
+    "gameplay_1x.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 1.866667,
+      "bytes": 106916
+    },
+    "gameplay_half.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 3.733333,
+      "bytes": 133163
+    },
+    "gameplay_quarter.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 7.466667,
+      "bytes": 177516
+    },
+    "source_angle_1x.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 1.866667,
+      "bytes": 440479
+    },
+    "source_angle_half.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 3.733333,
+      "bytes": 650599
+    },
+    "source_angle_quarter.mp4": {
+      "decodeOK": true,
+      "decodedFrames": 112,
+      "durationS": 7.466667,
+      "bytes": 1079525
+    }
+  },
+  "limitations": [
+    "Authored ground clearance uses the skinned surface envelope; no load or friction is simulated.",
+    "Reference footage is unwarped through n142, then explicitly held during K follow-through.",
+    "Native game camera is the primary presentation; detail is an explicitly labelled magnified crop. Secondary low-angle camera is approximate and uncalibrated.",
+    "The clip ends with forward motion. Recovery and RUN-1 transition remain separate work."
+  ],
+  "scissor": {
+    "peak3DThighSeparationDegrees": 133.4360539154997,
+    "timeS": 0.275,
+    "rightKneeDegreesAtPeak": 64.86095453633078,
+    "leftKneeDegreesAtPeak": 18.180627782972014,
+    "meaning": "Authored geometry descriptor, not a reference-fit score or visual pass"
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "status": "FROZEN before any two-player run (after the single CALIB run, which had no recipient within 10 m)",
+ "t0": 0.3,
+ "t0Note": "K clip time of the tackler's start: the airborne scissor (lowest V2 point \u2248 0.17 m above the turf; K COM 6.7 m/s forward, 1.05 m high). K's authored run-up accelerates 2.5 \u2192 7 m/s in 0.25 s (\u2248 1.8 g from one stance leg), which no physical body can reproduce; the physical tackler therefore starts in the air at K's own dive state and receives NO root propulsion",
+ "activate": 408,
+ "activateNote": "step at which the parked tackler becomes dynamic (1.7 s): the recipient has stood under C3 for 1.7 s, as in the BALANCE battery's 2 s settle",
+ "steps": 1440,
+ "speeds": {
+  "LIGHT": 0.5,
+  "NOMINAL": 1.0,
+  "HEAVY": 1.25
+ },
+ "speedsNote": "the single varied external parameter: horizontal approach speed as a factor of K's own COM speed at t0 (6.7 m/s): 3.3 / 6.7 / 8.4 m/s; every body gets the same (s \u2212 1) \u00d7 horizontal COM velocity added (limb motion unchanged)",
+ "placement": {
+  "x": 0.29,
+  "yLift": 0,
+  "zBase": 2.42,
+  "dzComPerUnitSpeed": 1.43
+ },
+ "calib": {
+  "awayOffset": [
+   10,
+   0,
+   0
+  ],
+  "note": "CALIB: the tackler alone 10 m clear of the recipient (no contact), to measure the physical boot path from the start"
+ },
+ "placementRule": "From CALIB (NOMINAL speed, tackler alone): 0.22 s after activation the right boot (COM) is at 0.20 m height, just after landing, moving \u2212z at \u2248 5 m/s. Target: the boot passes through the recipient's LEFT shank axis (x \u22120.03, z +0.21 local, the lower shin) at t_c = 0.22 s. Lateral offset x = 0.29 m (the boot runs 0.32 m to the \u2212x side of the K pose offset). Along the line of travel: boot displacement over t_c = s\u00b7\u0394zCOM + (\u0394z_boot \u2212 \u0394zCOM) with \u0394zCOM = \u22121.43 m and \u0394z_boot \u2212 \u0394zCOM = \u22120.07 m measured in CALIB; the horizontal COM motion is ballistic until landing (\u2248 0.19 s), so the start moves back by 1.43 m per unit speed factor: offset z = 2.42 + 1.43\u00b7s. The same rule for every strength; nothing tuned per case.",
+ "contactTargetStep": 461,
+ "calibObservations": "CALIB (no recipient): flight 0.19 s, landing on the left upper arm / thigh / foot at \u2248 4.7 m/s vertical; slide decelerates \u2248 5\u20136 m/s\u00b2, stops 2.9 m from the start by +1.0 s; the right (tackling) boot comes down and drags on the turf from +0.25 s (authored: raised \u2248 0.16 m); tracking error 15\u201322\u00b0 RMS after landing; 4,135 M1b strain-arm yield events (tackler)"
+}
