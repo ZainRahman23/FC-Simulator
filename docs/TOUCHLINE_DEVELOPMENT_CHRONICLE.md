@@ -2937,6 +2937,147 @@ What was done there is not reconstructed here.
   - PVP-1A stays BLOCKED, and PVP is sealed until the receiving player is qualified.
 - **Publication:** 32 V2 commits above the published `1e39418`, and 2 more after 06:00. All 34 were pushed at 16:10 on 12 Oct (`1e39418` → `903c12d`), in the 12 Oct housekeeping; the push was delayed by a tool-permission block from 14:24 until the user's explicit authorization.
 
+## Monday 12 October 2026 — BALANCE-1 and BALANCE-2: a legitimate flat-foot balance controller, one gap left
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `prototype/physical-character-v2` has `01653ab` (06:30) and `903c12d` (06:47), both pushed at 16:10, then 22 commits, `4154eb4` (16:11) → `0055641` (00:59, 13 Oct).
+  - Those 22 were pushed at 01:04 on 13 Oct (below).
+  - `touchline-current` has the 11 Oct chronicle commits `23771df` (14:31) and `38496e4` (16:11), pushed 16:10 – 16:11.
+- **[Doc]** in `review_artifacts/physical_character_v2/`: `balance1/` and `balance2/` (`BALANCE2_AUDIT.md`, `BALANCE2_MATCHED_CRITERIA.md`, `BALANCE2_REPORT.md`, `BALANCE2_C3_PREREGISTRATION.md`, `BALANCE2_C3_REPORT.md`, `BALANCE2_FLAT_SOLE_CRITERION.md`, `BALANCE2_B2F_P8_REPORT.md`, `successor/`, `c3/`, `p8/`, `c4/`).
+- **[Doc]** 5 user instructions and the push authorization, saved verbatim in `sources/` (the authorization and 4 instructions dated 12 Oct, 1 instruction dated 13 Oct). The short ≈ 16:55 stop request was not saved as a source.
+- **[Session]** the times of the user's messages, from the Claude Code session record (UTC + 1 h).
+- **[Astra]** commit labels and file times of the separate slide workstream (below).
+- No owner screenshots or screen recordings.
+- **Run records outside Git** (`_preserved_2026-10-12_evidence_outside_git/…/balance2/records/`, `SHA256SUMS*`):
+  - 28 BALANCE-2 review runs, 413 MB;
+  - 7 C3 review runs, 113 MB;
+  - 2 P8 runs, 79 MB.
+
+**BALANCE-1 results, early morning** (`01653ab` 06:30 freeze; `903c12d` 06:47 results and close). The night's instruction was 04:59 (11 Oct entry).
+- **Variants:**
+  - A is a continuous, delayed, whole-body no-step controller on M1b;
+  - B is A plus an internal model of the ML COM mode.
+  - Both were frozen with the battery before any run.
+- **Status B, promising but not qualified:**
+  - A and B each pass 13 / 16;
+  - every failure is forward: the 12 N·s push does not settle in 4 s and the 20 N·s push falls;
+  - the P4 criterion itself was flawed.
+- B was adopted by the preregistered rule. The adopted M1b force path was recorded in the V2 spec (§14A).
+
+**Publication housekeeping for 11 Oct, afternoon.**
+- A tool-permission block stopped the push from 14:24.
+- User (16:09): "complete the overdue daily publication by pushing the already-approved local Physical Character V2 and touchline-current commits to their existing configured remote branches".
+- **Pushed:**
+  - `prototype/physical-character-v2` `1e39418` → `903c12d` (34 commits) at 16:10;
+  - `touchline-current` `384c61d` → `23771df` and then `38496e4`, whose chronicle fix records the real push time.
+
+**BALANCE-2, the forward audit, afternoon** (`4154eb4` 16:11, `ae48940` 16:53, `0c0f5f2` 16:56).
+- User (14:24): "BALANCE-1 is accepted as a promising result, but the recipient is not yet qualified for PVP." The task was a forward-balance audit, correction and qualification.
+- **Audit** (`ae48940`, diagnostic; BALANCE-1 and M1b untouched):
+  - the 16 – 23 N·s forward band was not a 50 ms feet-in-place threshold. Its sources were natural stepping, one subject's curve and sub-threshold pushes;
+  - duration and support distance were not matched;
+  - V2's anatomy is human; its support is not. The rigid F0 boot has no toe loading, so the flat-foot support ends at the oblique MTP break.
+  - The P4 test correction (P4′) was frozen before any successor used it.
+- **The matched battery B2M** (`0c0f5f2`, frozen before any candidate ran):
+  - human "try not to step" fractions (0.50 – 0.70) of the body's zero-delay limit, at the 102.95 mm battery edge;
+  - forward band 13.01 – 18.22 N·s;
+  - a new overshoot criterion, P8 (≤ 0.26 of the peak).
+- At ≈ 16:55 the user asked for a stop at the nearest exit within five minutes. Work paused at the B2M freeze.
+
+**BALANCE-2, the successor C2, early evening** (`36f2e63` 18:08, `a32506b` 18:11, `4b6ebd9` 18:40, `b995c13` 18:42, `ca21830` 18:45, `85792a6` and `01743ae` 18:58).
+- User (18:08): "Approved. Continue BALANCE-2 exactly from the frozen checkpoint." And: "The rigid-toe limitation remains a documented body limitation, not something to compensate for through stronger control."
+- **Unchanged BALANCE-1 B on B2M:** 16 / 17, failing only P8 (overshoot up to 0.61).
+- **C2** = B + three mechanisms:
+  - an AP integral confined to the quiet-stance band;
+  - a support-aware AP internal model, with a flat-foot envelope of [−124.76, +64.8] mm (Kim 2009);
+  - direction-specific muscle constants.
+- C2 was frozen before its B2M run.
+- **C2 result:** 16 / 17, failing only P8 (backward small 0.287). Causality re-audit PASS. Adopted by the frozen rule.
+- Four ankle → hip transitions and a corrected HAT map were tested on DEV and not adopted.
+- **A latent BALANCE-1 defect was found:** the trunk-lean loop is ≈ 0 at the hips in AP.
+- **Four-system battery:** CURRENT V2 2 / 11, S2 + P2 6 / 11.
+- **Post-hoc finding:** C2 recovers forward pushes up to 21.5 N·s by rocking onto its rigid boot tips, which the fall rule scores as falls.
+- Review: 28 clips (`balance2/review/BALANCE2_REVIEW.html`); a 23-question report.
+
+**The boot-tip decision and C3, late evening** (`fe301b3` 22:12, `727f475` 22:25, `d590fd4` 22:34, `2bc0275` 22:49).
+- User (22:12): "Decision: rigid boot-tip support is not legitimate toe support." And: "require the controller to respect the current rigid foot's legitimate support envelope."
+- **A boot-tip load measure** (`scripts/c3_support.mjs`):
+  - it classifies each contact as flat sole or raised tip, in the foot's own frame;
+  - **B and C2's in-band forward recoveries at 13.65 – 16.5 N·s were 100 % on the tip.**
+- **C3** = C2 + a support-envelope governor:
+  - the AP command is bounded so that the modelled developed force stays inside C2's own flat-foot envelope;
+  - the mode was chosen on DEV by a rule declared before any run;
+  - no gain, body or criterion changed.
+- **C3 results:**
+  - 15 / 17 on B2M, as preregistered;
+  - **legitimate support only:** no boot-tip load in any recovered run;
+  - its physical forward limit, 12.13 N·s, equals its fall-rule threshold of 12.09, with genuine falls beyond;
+  - it failed T1′ forward (12.09 < 13.01, a band scaled to the boot-rocker edge) and P8;
+  - status C.
+
+**The flat-sole criterion and the P8 diagnosis, around midnight** (`2b70f3d` and `5773306` 23:18, `44e782d` 23:36, `ae8177f` 23:38, `65373ab` 23:41, `010d03c` 23:42, `ae78010` 00:55 on 13 Oct).
+- User (23:16): "Decision: retain the rigid flat-foot body for the current no-step recipient baseline." And: "This is a criterion correction, not permission to tune C3."
+- **B2F, the criterion correction** (`44e782d`, frozen before use):
+  - the human fractions were normalised to each subject's *loadable* reach, so the fixture must use the loadable flat-sole edge, 80.29 mm;
+  - T1′ forward 13.01 – 18.22 → **10.15 – 14.21 N·s**;
+  - everything else is unchanged;
+  - B2M and C3's 15 / 17 are preserved.
+- **Unchanged C3 on B2F: 16 / 17, failing P8 only.** Every run is bit-identical to the original.
+- **P8 diagnosis** (`p8/P8_DIAGNOSIS.md`):
+  - after a backward push the trunk stays ≈ 1.2° forward about the hips (the HAT-map defect);
+  - the integrals turn the slow decay into a ≈ 9 s oscillation, against a human 2 – 3 s response;
+  - it is not noise, not body memory (the M1b strain arm resists it) and not the test (feet move < 0.1 mm);
+  - classified as controller-side.
+- **The one declared minimal successor** (`65373ab` declaration, `010d03c` result):
+  - it repaired the hip map with the declared P / D and no new integrator;
+  - it made overshoot worse on DEV (back 6: 0.311 → 0.455), so it was rejected;
+  - a fix needs coordinated ankle – hip control.
+- Report `BALANCE2_B2F_P8_REPORT.md`, which separates human anatomical, rigid-flat-foot and controller capability. Review `balance2/p8/review/`.
+
+**BALANCE-3 instructed** (00:58, 13 Oct; `0055641` 00:59).
+- User: "Approved: close the remaining P8 defect with a coordinated ankle–hip controller." And: "Also complete the due 12 Oct publication according to the existing project rule."
+- The housekeeping below came first. BALANCE-3 work after it belongs to this chronicle day (until 06:00) and will be added in the next housekeeping.
+
+**Parallel work outside this repository** ([Astra], commit labels and file times only; not investigated).
+- The slide workstream continued in the user's Codex workspace clone `~/Documents/Codex/2026-10-12/new-chat/touchline-slide`, branch `research/slide-a1-authored`.
+- 15 own commits, 16:05 → 00:47 (13 Oct), not pushed. Labels:
+  - SLIDE-A1 authored candidates A – E and Gate A partial (16:05 – 16:48);
+  - F, a pelvis-led hip turn (18:15);
+  - G, rebuilt from dense reference motion (22:57 – 23:01);
+  - H (23:29 – 23:58);
+  - I / J, the ground-side leg bend (00:20);
+  - a static Gate P source reconstruction (00:29 – 00:47).
+- Delivery packages in `~/Documents/Codex/2026-10-12/referenced-chatgpt-conversation-this-is-an/outputs/`: SLIDE_A1 (16:49), hip turn (18:15), G (23:02), H (23:30), I (23:59), J (00:21), GATE_P (00:48).
+
+What was done there is not reconstructed here.
+
+**Corrections and process errors.**
+- **The chronicle for 11 Oct** got a follow-up commit (`38496e4`) recording the real push time.
+- **BALANCE-2's own instruction file** for 23:16 first carried a wrong receipt time (≈ 23:25). It was corrected in `5773306`, body unchanged.
+- **The C3 legitimacy tool** first ran out of memory (it held the 60 s record). It was fixed before the freeze.
+- **The P8 diagnosis wording** "doubles" was corrected to "raises to 0.477" before the close.
+- **B2M's forward normalisation** was found inconsistent with the boot-tip decision. B2M is preserved; B2F corrects T1′ only.
+
+**Adopted / not adopted.**
+- **Adopted by frozen rules:**
+  - BALANCE-1 B (06:47);
+  - C2 (18:42), then not adopted as the recipient after the 22:12 decision.
+- **Owner decisions:**
+  - boot-tip support is not legitimate (22:12);
+  - the rigid flat foot is retained with no toes or stepping in BALANCE-2, and the corrected flat-sole forward criterion applies (23:16; confirmed 00:58).
+- **Current candidate:** C3, 16 / 17 on B2F, failing P8 only. Not qualified; C3 is preserved unchanged.
+- **Not adopted, kept as evidence:** C2, the C3 governor modes `command` / `activation`, the C4 hip-map repair H1 and the full-repair reference.
+- **Unchanged:** M1b, anatomy, stance, foot and colliders, the fall rule, every frozen battery. PVP sealed.
+
+**End-of-day state** (at the 13 Oct housekeeping, 01:04; the chronicle day runs to 06:00).
+- **Physical character:**
+  - the canonical M1b muscle layer;
+  - a legitimate flat-foot no-step balance controller, C3: forward threshold 12.09 N·s, a human-typical fraction of the rigid flat foot's limit, with no boot-tip support and genuine falls beyond;
+  - one gap, P8 (backward small 0.287 vs ≤ 0.26): a slow trunk-lean mode that needs coordinated ankle – hip control (BALANCE-3, in progress);
+  - PVP sealed.
+- **Publication:** the 22 commits above `903c12d` were pushed at 01:04 on 13 Oct (`903c12d` → `0055641`), in the 12 Oct housekeeping requested at 00:58. This chronicle entry was pushed straight after.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -2950,7 +3091,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `903c12d`, 12 Oct 06:47, pushed at 16:10 on 12 Oct; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `0055641`, 13 Oct 00:59, pushed at 01:04 on 13 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -2986,7 +3127,15 @@ What was done there is not reconstructed here.
 - **CXA-1 / TRC-1** (`d2c872a`, `bf84bee`): the colliders do not phase (≤ 3.3 mm on the frozen contact set, below Jolt's 5 mm slop); the visible phasing was presentation. The render rule MC-1P now draws the tackler on its V2 joints (0.00 mm); the remaining mesh overlap, ≤ 12 – 16 mm robust, is mostly the boot envelope and is not fixed.
 - **The physiological standing body** (11 – 12 Oct): PPR-1's pre-reflex B FAILED 12 / 23 (`06591e7`); PPR-2's S\* FAILED 36 / 45, decision C (`03c4fe8`); PPR-3's substrate S2 QUALIFIED 18 / 18, while S2 + P2 FAILED 10 / 14 on superhuman torque development (`391c4f0`).
 - **The muscle layer** (MUSCLE-1, `f6cffbc`): M1 failed one criterion (A4) and is preserved; M1b (M1 + an 8.33 ms electrochemical delay) passed ankle 16 / 16 and knee 14 / 14. **Adopted by the owner on 12 Oct as V2's canonical muscle layer** (`sim/v2_muscle.js`, `spec/v2_muscles.js`, `6ac988e`): controllers command excitation only, never physical torque.
-- **BALANCE-1** (`903c12d`, 12 Oct): a continuous, delayed, whole-body no-step controller on M1b. **Status B, promising but not qualified:** variants A and B each pass 13 / 16, and every failure is forward (the 12 N·s push does not settle in 4 s, the 20 N·s push falls, and the P4 criterion is flawed). B was adopted by the preregistered rule. Review pending. BALANCE-2, a forward-balance audit, was instructed on 12 Oct.
+- **BALANCE-1** (`903c12d`, 12 Oct): a continuous, delayed, whole-body no-step controller on M1b. **Status B, promising but not qualified:** variants A and B each pass 13 / 16, and every failure is forward (the 12 N·s push does not settle in 4 s, the 20 N·s push falls, and the P4 criterion is flawed). B was adopted by the preregistered rule.
+- **BALANCE-2** (12 – 13 Oct, `01743ae` → `ae78010`).
+  - The forward audit found the 16 – 23 N·s band mismatched. The matched battery B2M uses the human "try not to step" fraction.
+  - C2 = B + three mechanisms: quiet-band AP integral, support-aware internal model, direction-specific muscle constants. C2 scored 16 / 17, but its forward capacity rested on rigid boot-tip rocking.
+  - **Owner decisions:** boot-tip support is not legitimate (22:12); the rigid flat foot is retained with no toes or stepping (23:16).
+  - **C3** = C2 + a support-envelope governor. It uses legitimate support only: forward threshold 12.09 N·s, which equals its physical limit, with genuine falls beyond.
+  - **B2F** corrects T1′ forward to the loadable flat-sole edge (80.29 mm): 10.15 – 14.21 N·s.
+  - **Unchanged C3 on B2F: 16 / 17, status B, not qualified.** The one failure is P8, backward small 0.287 vs ≤ 0.26: a slow trunk-lean mode (the BALANCE-1 hip-map defect).
+  - The minimal hip-map repair made it worse and was rejected. **BALANCE-3** (coordinated ankle – hip control) was instructed at 00:58 on 13 Oct.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -3028,7 +3177,7 @@ What was done there is not reconstructed here.
     - ITS-1's frozen-target posture tone opposes the initialized stance-leg rates: activation load 8.80 vs 6.04 N·s per step, slips of 12 – 18.8 mm.
     - The touchdown and late-stance states also fail. The ITS-1 amendment is paused.
   - **The handoff state is NOT READY** (verdict B, 10 Oct): V2's 23 → 14 upper-body mapping, and the rigid F0 boot against the frozen runner's heel-up / toe-pad stance (P-9, stance-contact consistency). RH1, the attempted body-spec fix, is invalid (verdict C).
-  - **Standing balance** (BALANCE-1, 12 Oct): the forward direction is not qualified. The 12 N·s push does not settle in 4 s, and the forward threshold is 14.4 N·s against a 16 – 23 N·s human comparison, with the toe edge 103 mm ahead of the COM. The receiving player is not yet qualified for PVP, and PVP stays sealed.
+  - **Standing balance** (BALANCE-2, 12 – 13 Oct): the legitimate flat-foot controller C3 passes 16 / 17 on the corrected battery. The forward threshold of 12.09 N·s is inside the flat-sole band, with no boot-tip support. One gap remains, the backward-small overshoot P8 (0.287 vs ≤ 0.26): a slow trunk-lean mode that needs coordinated ankle – hip control (BALANCE-3). The receiving player is not yet qualified, and PVP stays sealed.
   - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
@@ -3181,6 +3330,11 @@ An index to the narrative above, not a substitute for it.
 | 11 Oct | PPR-3: substrate S2 QUALIFIED 18 / 18; S2 + P2 FAILED 10 / 14; stop B (12 Oct 00:44 – 01:55) | FC-Sim Git | `594a6d3`, `ca7674b`, `932cd11`, `f53b791`, `391c4f0` |
 | 11 Oct | MUSCLE-1: M1 FAILED A4; successor M1b PASSES, ankle 16 / 16, knee 14 / 14 (12 Oct 04:05 – 04:13) | FC-Sim Git | `77630dc`, `6c68177`, `ee2c146`, `bae8cea`, `f6cffbc` |
 | 11 Oct | **M1b adopted by the owner** (12 Oct 04:59); the canonical V2 muscle layer, excitation only (05:34) | FC-Sim Git | `2f16fff`, `6ac988e` |
+| 12 Oct | BALANCE-1, a continuous delayed no-step controller on M1b: status B (A and B 13 / 16, every failure forward); B adopted by rule | FC-Sim Git | `01653ab`, `903c12d` |
+| 12 Oct | BALANCE-2 forward audit (the 16 – 23 N·s band mismatched); matched battery B2M frozen | FC-Sim Git | `ae48940`, `0c0f5f2` |
+| 12 Oct | C2 16 / 17 on B2M (P8); post hoc: forward saves by rocking on the rigid boot tip | FC-Sim Git | `4b6ebd9`, `b995c13`, `85792a6` |
+| 12 Oct | **Owner: boot-tip support not legitimate** (22:12); C3, a support-envelope governor, uses legitimate support only, 15 / 17 on B2M | FC-Sim Git | `fe301b3`, `d590fd4`, `2bc0275` |
+| 12 Oct | **Owner: rigid flat foot retained** (23:16); B2F flat-sole forward criterion 10.15 – 14.21 N·s; unchanged C3 16 / 17 (P8 only); P8 diagnosed controller-side; minimal successor rejected (13 Oct 00:55) | FC-Sim Git | `44e782d`, `ae8177f`, `65373ab`, `010d03c`, `ae78010` |
 
 ## Appendix B — Repository provenance
 
@@ -3276,6 +3430,7 @@ The FC-Simulator day headings were checked against every commit's recorded times
 | Tue 6 Oct | 20 | 12:19 → 04:35 on 7 Oct (+01:00) |
 | Wed 7 Oct | 11, then housekeeping | 12:33 → 02:19 on 8 Oct; then from 02:55 on 8 Oct: `9468ddd`, `e5ea11f`, `c1328ef`, `9e95b87`, and the publication repair `7ecd115`, `117168e`, `21b6f06` with its chronicle update (+01:00) |
 | Sun 11 Oct | 33: the housekeeping `384c61d` on `touchline-current`, then 32 on `prototype/physical-character-v2` | 13:32 → 05:34 on 12 Oct (+01:00) |
+| Mon 12 Oct | 26: 2 on `prototype/physical-character-v2` (06:30, 06:47), the 11 Oct housekeeping `23771df` (14:31) and `38496e4` (16:11) on `touchline-current`, then 22 on `prototype/physical-character-v2` | 06:30 → 00:59 on 13 Oct (+01:00) |
 
 **Where the evidence is incomplete or ambiguous.**
 1. **Before 18 Aug:** no evidence of any work. The conversation opens with the requirement itself, and the extraction finds nothing earlier.
