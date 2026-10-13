@@ -1,0 +1,79 @@
+{
+ "protocol": "BALANCE-3 candidate B3 freeze — before any B3 performance run (battery, development, long-window, review); only the pre-freeze construction/sign check ran",
+ "files": {
+  "sources/2026-10-13_user_instruction_balance3_coordinated_ankle_hip.md": "0bcfe05bc1f9aa69c320f097fa814053fa187ea69ed58874fd5a105d919b9a1a",
+  "balance3/BALANCE3_PREREGISTRATION.md": "d934e95a15302f593d17c2b3463ded3de757125afef05afccc3d47a79920f66a",
+  "balance3/BALANCE3_BODY_AUDIT.md": "6d2a68917263743a5a5c8d73a517c42d96479f3000e8c477391e61c1635f995a",
+  "balance3/research/BALANCE3_ANKLE_HIP_LITERATURE.md": "b9bded1b73cc4703023272e2a4c4b75502ea586f614e3c9e4091d20540520eff",
+  "balance3/b3/b3_ctrl.mjs": "42c8b96e622a62cfb955a4d3cd53651bb4dd164181a40fdc53a42b1d90e1035c",
+  "balance3/b3/params/B3.json": "c957ecdc201c85e008d02ee02654886f3da142df45b40d541b19161082b172fc",
+  "balance3/scripts/b3_long.mjs": "13e1e8e73d7029824f350d6ed39e02f3e4c5a77e73422e8f7c037e6e08b0a78e",
+  "balance3/scripts/b3_causality.mjs": "ae9ed64314e651ff5a8f3e2af2960dff576843f5c30ff9926aba646aa6039619",
+  "balance3/scripts/b3_signcheck.mjs": "bca4c0ac1c1684fbd94a07cd411e673a7927a90aef9a209ae936ad24ac22c605",
+  "balance3/scripts/b3_identify.mjs": "02340507277ec055697609e7a9ce162debad124ea04a9206f89ccd3e48d3799a",
+  "balance3/scripts/b3_stiffness_audit.mjs": "61ac2d4c4ccf8c3546940d9263f0d9b25d952f5c9fdcd6215d85ade0d0e1e673",
+  "balance3/scripts/b3_sagittal_model.mjs": "64cca6ea94cc57e69491c457ab61612a708d8938fc3cb7c697e5ed51d1ae609b",
+  "balance3/scripts/b3_pattern_check.mjs": "642d4782c059cea8a85ce227f5a62a12acd5dd0c7682bcb36016ca945392eaa6",
+  "balance3/scripts/b3_h1_mechanism.mjs": "964689e1e44f0145a937d59686e9383b2d08e58295b084c6edba813d40037a66",
+  "balance3/render/b3_save_runs.mjs": "809eb2f59068171cedd556eb8229ae37eb8b8f6e1c13e250e5027639526f85b7",
+  "balance3/evidence/B3_PREFREEZE_SIGNCHECK.json": "0bec1faeec6840b17a8bf376acd55f6c75c7bf82d650f91b5e2295f76a11a1bb",
+  "balance3/evidence/B3_IDENTIFY_OPENLOOP.json": "63a65587282e5c676d7d5e501afe85aeacb796c391c62fed6e40250e392ffa46",
+  "balance3/evidence/B3_STIFFNESS_AUDIT.json": "4e85f44faffec3eecdd04d4c0f9b3773741409f800f10bb12dd90a894b6edcfc",
+  "balance3/evidence/B3_LONG_C3.json": "cdda0d496990b02ea3eca6db97f6b31b164b7e82efe06ecc98a870a55bbf9c00"
+ },
+ "inheritedUnchanged": {
+  "balance2/c3/c3_ctrl.mjs": {
+   "sha256": "c7c260b5a6437a3ef1b44d3a433d2dbdd9c2e430bd45df2905f779e858415431",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/c3/params/C3.json": {
+   "sha256": "25d2706ece86440e4ced14950b2c5a57f501661f4bebc72f7414cebefe56746e",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/successor/b2_ctrl.mjs": {
+   "sha256": "053097c364813100839938891f97563e1b9ddccb747de3b5b1f5d0b3d313149f",
+   "matchesEarlierFreeze": true
+  },
+  "balance1/scripts/b1_ctrl.mjs": {
+   "sha256": "d988115c2f1c6f61a68964249d0f0ef03f69574e1736ff128e2bb85440e0aa15",
+   "matchesEarlierFreeze": true
+  },
+  "balance1/params/B1_BODY.json": {
+   "sha256": "ce6c26ab520882a88fc762f4ce65d265b31077fe1c915e913ef1c117869477e8",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_qualify.mjs": {
+   "sha256": "da5b7e8fd5b150a778e65043c91ffd3e9de321b9be110694920aba2563fa0b47",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2_eval.mjs": {
+   "sha256": "f7afdd0f56c51afc2776b02825de4aa98c1a8b66eb74582a1b5a1dc4309d5f71",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/criteria/b2f_eval.mjs": {
+   "sha256": "bef56d42c047045c2a2b2bb06533e62fde1af653c30fdc326ce83d21dadd6a63",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/c3_legit.mjs": {
+   "sha256": "314f78c13c47777966cba134290f664bf6d3e0aa922e37d1c3f054082b80e243",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/c3_causality.mjs": {
+   "sha256": "81f4de9c20e568158a31691446a8872ac98b12284df19beb4380d2b110b137d8",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_causality.mjs": {
+   "sha256": "91be89a29a42ac24f6a81a2946fe77d205ce150fd7f6d7e1334f8a86f8f776cb",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/c3_support.mjs": {
+   "sha256": "57f7d37ffbe21827773e8497be6959063305e21b81ebddf1b166bd5c2e71bde0",
+   "matchesEarlierFreeze": true
+  },
+  "balance2/scripts/b2_physical_boundary.mjs": {
+   "sha256": "017174b0be743b027f7f99a35d06ae66fd907951767e15f3c6f8cf446b6e4743",
+   "matchesEarlierFreeze": true
+  }
+ },
+ "frozenAt": "2026-10-13T00:33:31.580Z"
+}
