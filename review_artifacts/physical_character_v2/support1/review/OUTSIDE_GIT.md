@@ -6,11 +6,15 @@
 |---|---|---|---|
 | `records/SLIDER_v6.74.json.gz` | 16 MB | Exploratory two-body run: passive sliding body at 6.74 m/s. Final hash b25add1c5ecf2afa | `records/SHA256SUMS` |
 | `records/SLIDER_v5.json.gz` | 16 MB | Exploratory two-body run at 5 m/s. Final hash 018cf4c760611a5f | `records/SHA256SUMS` |
+| `records/SLIDER_v3.37.json.gz` | ≈ 16 MB | Exploratory two-body run at 3.37 m/s (PVP-0 LIGHT speed). Final hash 35a5a033f6367684 | `records/SHA256SUMS` |
+| `records/SLIDER_v8.43.json.gz` | ≈ 16 MB | Exploratory two-body run at 8.43 m/s (PVP-0 HEAVY speed). Final hash ca30a74a2e29fc40 | `records/SHA256SUMS` |
 | `literature_raw/` | 69 MB | Source texts and PDFs fetched by the literature review: Blackburn 2012 thesis, FIFA Test Manual 2015, Grund 2010, 23 PMC full texts and others. Some are under copyright, so they are not committed | `literature_raw/SHA256SUMS` |
 
 **SHA-256 of the records:**
 - `SLIDER_v5.json.gz`: 415a2838f500c163b7a94eab76c4d2b71b4e4411e86685ae80f80c503fadfdae
 - `SLIDER_v6.74.json.gz`: 69eae67c11075728f549065caf68d85ed3566f018448da1828134ef15cd30399
+- `SLIDER_v3.37.json.gz`: 019cffc5943f91c6f56a50d1ac876f07b5ec62d216d99a303efbb5ed88ee6394
+- `SLIDER_v8.43.json.gz`: fee83f607de431fd78d4c00e4b22b65d1bd2ba88545a4011a15d68bfb85a0174
 
 **Not preserved, because each regenerates deterministically from committed code:**
 - The 341-run lab sweeps per candidate. Only their per-run metrics and hashes are committed, in `evidence/S1_SWEEP_<cand>.json`. Any run can be re-run, and the clip preparation checks its hash against that file.
@@ -22,7 +26,7 @@
 2. **Sweeps:** `support1/lab/s1_sweep.mjs --cand <V2|C3SC|C3UR|LDG|LDG_C3UR> --pvp0 <pvp0 records> --out evidence/S1_SWEEP_<cand>.json`. That file records the replacement of the LOAD family (±40 N); re-running it with `--families LOAD` reproduces those rows.
 3. **Regression:** `support1/scripts/s1_regress.mjs --cand <id> --out evidence/S1_REGRESS_<id>.json`. It writes `_Q.json` beside the output.
 4. **Comparison, CPU and summary:** `s1_compare.mjs`, `s1_cpu.mjs`, then `s1_summary.mjs --slider <records dir>`.
-5. **Exploratory two-body:** `support1/scripts/s1_slider_run.mjs --speed 6.74 --gap 0.45 --out <rec>`, and again with `--speed 5`.
+5. **Exploratory two-body:** `support1/scripts/s1_slider_run.mjs --speed <3.37|5|6.74|8.43> --gap 0.45 --out <rec>`.
 6. **Video:**
    - Lab clips: `support1/render/s1_clip_prep.mjs --runs key=CAND:LABEL,... --yaw 75 --range -24,600 --out <clips> --evidence <sweep jsons> [--pvp0 <records>]`, then `support1/render/s1_capture.cjs --views review/video/VIEWS_S1_*.json`.
    - Two-body clips: `pvp0/render/pvp0_clip_prep.mjs`, then `pvp0_capture.cjs` with `review/video/VIEWS_S1_SLIDER.json`.

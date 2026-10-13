@@ -815,6 +815,72 @@
   }
  },
  "slider": {
+  "SLIDER_v3.37": {
+   "hash": "35a5a033f6367684",
+   "speed": 3.37,
+   "firstContactT": 0.104,
+   "fallT": 2.188,
+   "trace": [
+    {
+     "t": 0.1,
+     "pelvisY": 0.913,
+     "footLdz": 0,
+     "footRdz": 0,
+     "comDz": 0,
+     "NL": 666,
+     "NR": 366
+    },
+    {
+     "t": 0.2,
+     "pelvisY": 0.919,
+     "footLdz": -0.13,
+     "footRdz": 0,
+     "comDz": -0.01,
+     "NL": 266,
+     "NR": 323
+    },
+    {
+     "t": 0.3,
+     "pelvisY": 0.91,
+     "footLdz": -0.17,
+     "footRdz": 0,
+     "comDz": -0.01,
+     "NL": 772,
+     "NR": 439
+    },
+    {
+     "t": 0.4,
+     "pelvisY": 0.909,
+     "footLdz": -0.17,
+     "footRdz": 0,
+     "comDz": -0.01,
+     "NL": 668,
+     "NR": 236
+    },
+    {
+     "t": 0.6,
+     "pelvisY": 0.907,
+     "footLdz": -0.17,
+     "footRdz": 0,
+     "comDz": 0.01,
+     "NL": 871,
+     "NR": 77
+    },
+    {
+     "t": 1,
+     "pelvisY": 0.906,
+     "footLdz": -0.17,
+     "footRdz": 0.03,
+     "comDz": 0.04,
+     "NL": 810,
+     "NR": 40
+    }
+   ],
+   "maxCrossPenMm": 10.91,
+   "recipientHardExcDeg": 8.74,
+   "sliderHardExcDeg": 3.17,
+   "eqOppMax": 0
+  },
   "SLIDER_v5": {
    "hash": "018cf4c760611a5f",
    "speed": 5,
@@ -945,6 +1011,72 @@
    "maxCrossPenMm": 6.17,
    "recipientHardExcDeg": 22.53,
    "sliderHardExcDeg": 3.71,
+   "eqOppMax": 0
+  },
+  "SLIDER_v8.43": {
+   "hash": "ca30a74a2e29fc40",
+   "speed": 8.43,
+   "firstContactT": 0.042,
+   "fallT": 0.283,
+   "trace": [
+    {
+     "t": 0.1,
+     "pelvisY": 0.935,
+     "footLdz": -0.39,
+     "footRdz": -0.02,
+     "comDz": -0.02,
+     "NL": 0,
+     "NR": 409
+    },
+    {
+     "t": 0.2,
+     "pelvisY": 0.871,
+     "footLdz": -0.77,
+     "footRdz": -0.52,
+     "comDz": -0.1,
+     "NL": 0,
+     "NR": 0
+    },
+    {
+     "t": 0.3,
+     "pelvisY": 0.727,
+     "footLdz": -1.07,
+     "footRdz": -0.85,
+     "comDz": -0.2,
+     "NL": 0,
+     "NR": 0
+    },
+    {
+     "t": 0.4,
+     "pelvisY": 0.543,
+     "footLdz": -1.3,
+     "footRdz": -1,
+     "comDz": -0.31,
+     "NL": 0,
+     "NR": 0
+    },
+    {
+     "t": 0.6,
+     "pelvisY": 0.243,
+     "footLdz": -1.55,
+     "footRdz": -1.11,
+     "comDz": -0.47,
+     "NL": 0,
+     "NR": 0
+    },
+    {
+     "t": 1,
+     "pelvisY": 0.255,
+     "footLdz": -1.52,
+     "footRdz": -1.06,
+     "comDz": -0.46,
+     "NL": 21,
+     "NR": 104
+    }
+   ],
+   "maxCrossPenMm": 2.49,
+   "recipientHardExcDeg": 7.27,
+   "sliderHardExcDeg": 5.71,
    "eqOppMax": 0
   }
  }
