@@ -1,0 +1,1997 @@
+{
+ "protocol": "PVP-0 tackler posture vs authored K",
+ "note": "belly = vertical component of the body's front (+z) axis: −1 face-down, 0 side, +1 face-up",
+ "kDuration": 1.85,
+ "cases": {
+  "CALIB": [
+   {
+    "msAfterActivation": 0,
+    "step": 408,
+    "kClipT": 0.3,
+    "kPhase": "SCISSOR",
+    "pelvisAngleDeg": 0,
+    "thoraxAngleDeg": 0,
+    "bellyPelvis": {
+     "K": 0.191,
+     "phys": 0.191
+    },
+    "bellyThorax": {
+     "K": 0.539,
+     "phys": 0.539
+    },
+    "pelvisY": {
+     "K": 0.944,
+     "phys": 0.944
+    },
+    "footR_Y": {
+     "K": 1.073,
+     "phys": 1.073
+    },
+    "footL_Y": {
+     "K": 0.315,
+     "phys": 0.315
+    },
+    "shankR_Y": {
+     "K": 1.13,
+     "phys": 1.13
+    },
+    "shankL_Y": {
+     "K": 0.57,
+     "phys": 0.57
+    }
+   },
+   {
+    "msAfterActivation": 100,
+    "step": 432,
+    "kClipT": 0.4,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 9.1,
+    "thoraxAngleDeg": 7.9,
+    "bellyPelvis": {
+     "K": 0.183,
+     "phys": 0.045
+    },
+    "bellyThorax": {
+     "K": 0.497,
+     "phys": 0.406
+    },
+    "pelvisY": {
+     "K": 0.656,
+     "phys": 0.624
+    },
+    "footR_Y": {
+     "K": 0.848,
+     "phys": 0.769
+    },
+    "footL_Y": {
+     "K": 0.233,
+     "phys": 0.198
+    },
+    "shankR_Y": {
+     "K": 0.81,
+     "phys": 0.735
+    },
+    "shankL_Y": {
+     "K": 0.371,
+     "phys": 0.333
+    }
+   },
+   {
+    "msAfterActivation": 150,
+    "step": 444,
+    "kClipT": 0.45,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 14.5,
+    "thoraxAngleDeg": 15.9,
+    "bellyPelvis": {
+     "K": 0.192,
+     "phys": -0.003
+    },
+    "bellyThorax": {
+     "K": 0.475,
+     "phys": 0.31
+    },
+    "pelvisY": {
+     "K": 0.567,
+     "phys": 0.421
+    },
+    "footR_Y": {
+     "K": 0.744,
+     "phys": 0.565
+    },
+    "footL_Y": {
+     "K": 0.227,
+     "phys": 0.138
+    },
+    "shankR_Y": {
+     "K": 0.711,
+     "phys": 0.529
+    },
+    "shankL_Y": {
+     "K": 0.322,
+     "phys": 0.203
+    }
+   },
+   {
+    "msAfterActivation": 200,
+    "step": 456,
+    "kClipT": 0.5,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 22.6,
+    "thoraxAngleDeg": 16,
+    "bellyPelvis": {
+     "K": 0.197,
+     "phys": -0.072
+    },
+    "bellyThorax": {
+     "K": 0.463,
+     "phys": 0.24
+    },
+    "pelvisY": {
+     "K": 0.461,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.613,
+     "phys": 0.341
+    },
+    "footL_Y": {
+     "K": 0.214,
+     "phys": 0.111
+    },
+    "shankR_Y": {
+     "K": 0.593,
+     "phys": 0.294
+    },
+    "shankL_Y": {
+     "K": 0.259,
+     "phys": 0.063
+    }
+   },
+   {
+    "msAfterActivation": 250,
+    "step": 468,
+    "kClipT": 0.55,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 52.9,
+    "thoraxAngleDeg": 48,
+    "bellyPelvis": {
+     "K": 0.201,
+     "phys": -0.634
+    },
+    "bellyThorax": {
+     "K": 0.442,
+     "phys": -0.294
+    },
+    "pelvisY": {
+     "K": 0.325,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.446,
+     "phys": 0.033
+    },
+    "footL_Y": {
+     "K": 0.213,
+     "phys": 0.255
+    },
+    "shankR_Y": {
+     "K": 0.442,
+     "phys": 0.072
+    },
+    "shankL_Y": {
+     "K": 0.188,
+     "phys": 0.098
+    }
+   },
+   {
+    "msAfterActivation": 300,
+    "step": 480,
+    "kClipT": 0.6,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 59.8,
+    "thoraxAngleDeg": 83.5,
+    "bellyPelvis": {
+     "K": 0.198,
+     "phys": -0.729
+    },
+    "bellyThorax": {
+     "K": 0.419,
+     "phys": -0.769
+    },
+    "pelvisY": {
+     "K": 0.292,
+     "phys": 0.211
+    },
+    "footR_Y": {
+     "K": 0.366,
+     "phys": 0.104
+    },
+    "footL_Y": {
+     "K": 0.272,
+     "phys": 0.366
+    },
+    "shankR_Y": {
+     "K": 0.385,
+     "phys": 0.089
+    },
+    "shankL_Y": {
+     "K": 0.205,
+     "phys": 0.154
+    }
+   },
+   {
+    "msAfterActivation": 400,
+    "step": 504,
+    "kClipT": 0.7,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 75.1,
+    "thoraxAngleDeg": 108.5,
+    "bellyPelvis": {
+     "K": 0.189,
+     "phys": -0.894
+    },
+    "bellyThorax": {
+     "K": 0.391,
+     "phys": -0.846
+    },
+    "pelvisY": {
+     "K": 0.284,
+     "phys": 0.188
+    },
+    "footR_Y": {
+     "K": 0.241,
+     "phys": 0.238
+    },
+    "footL_Y": {
+     "K": 0.327,
+     "phys": 0.537
+    },
+    "shankR_Y": {
+     "K": 0.318,
+     "phys": 0.144
+    },
+    "shankL_Y": {
+     "K": 0.253,
+     "phys": 0.219
+    }
+   },
+   {
+    "msAfterActivation": 500,
+    "step": 528,
+    "kClipT": 0.8,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 97.8,
+    "thoraxAngleDeg": 117.4,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.996
+    },
+    "bellyThorax": {
+     "K": 0.393,
+     "phys": -0.816
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.177
+    },
+    "footR_Y": {
+     "K": 0.208,
+     "phys": 0.205
+    },
+    "footL_Y": {
+     "K": 0.319,
+     "phys": 0.608
+    },
+    "shankR_Y": {
+     "K": 0.302,
+     "phys": 0.096
+    },
+    "shankL_Y": {
+     "K": 0.263,
+     "phys": 0.254
+    }
+   },
+   {
+    "msAfterActivation": 750,
+    "step": 588,
+    "kClipT": 1.05,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 171.5,
+    "thoraxAngleDeg": 142,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.368
+    },
+    "bellyThorax": {
+     "K": 0.412,
+     "phys": -0.863
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.216
+    },
+    "footR_Y": {
+     "K": 0.189,
+     "phys": 0.082
+    },
+    "footL_Y": {
+     "K": 0.29,
+     "phys": 0.158
+    },
+    "shankR_Y": {
+     "K": 0.293,
+     "phys": 0.095
+    },
+    "shankL_Y": {
+     "K": 0.272,
+     "phys": 0.156
+    }
+   },
+   {
+    "msAfterActivation": 1000,
+    "step": 648,
+    "kClipT": 1.3,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 174.3,
+    "thoraxAngleDeg": 170.2,
+    "bellyPelvis": {
+     "K": 0.184,
+     "phys": -0.115
+    },
+    "bellyThorax": {
+     "K": 0.423,
+     "phys": -0.686
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.209
+    },
+    "footR_Y": {
+     "K": 0.182,
+     "phys": 0.033
+    },
+    "footL_Y": {
+     "K": 0.281,
+     "phys": 0.077
+    },
+    "shankR_Y": {
+     "K": 0.291,
+     "phys": 0.071
+    },
+    "shankL_Y": {
+     "K": 0.28,
+     "phys": 0.082
+    }
+   },
+   {
+    "msAfterActivation": 1500,
+    "step": 768,
+    "kClipT": 1.8,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 177.2,
+    "thoraxAngleDeg": 164.6,
+    "bellyPelvis": {
+     "K": 0.156,
+     "phys": -0.143
+    },
+    "bellyThorax": {
+     "K": 0.418,
+     "phys": -0.717
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.209
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.032
+    },
+    "footL_Y": {
+     "K": 0.294,
+     "phys": 0.108
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.068
+    },
+    "shankL_Y": {
+     "K": 0.303,
+     "phys": 0.088
+    }
+   }
+  ],
+  "LIGHT": [
+   {
+    "msAfterActivation": 0,
+    "step": 408,
+    "kClipT": 0.3,
+    "kPhase": "SCISSOR",
+    "pelvisAngleDeg": 0,
+    "thoraxAngleDeg": 0,
+    "bellyPelvis": {
+     "K": 0.191,
+     "phys": 0.191
+    },
+    "bellyThorax": {
+     "K": 0.539,
+     "phys": 0.539
+    },
+    "pelvisY": {
+     "K": 0.944,
+     "phys": 0.944
+    },
+    "footR_Y": {
+     "K": 1.073,
+     "phys": 1.073
+    },
+    "footL_Y": {
+     "K": 0.315,
+     "phys": 0.315
+    },
+    "shankR_Y": {
+     "K": 1.13,
+     "phys": 1.13
+    },
+    "shankL_Y": {
+     "K": 0.57,
+     "phys": 0.57
+    }
+   },
+   {
+    "msAfterActivation": 100,
+    "step": 432,
+    "kClipT": 0.4,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 9.1,
+    "thoraxAngleDeg": 7.9,
+    "bellyPelvis": {
+     "K": 0.183,
+     "phys": 0.045
+    },
+    "bellyThorax": {
+     "K": 0.497,
+     "phys": 0.406
+    },
+    "pelvisY": {
+     "K": 0.656,
+     "phys": 0.624
+    },
+    "footR_Y": {
+     "K": 0.848,
+     "phys": 0.769
+    },
+    "footL_Y": {
+     "K": 0.233,
+     "phys": 0.198
+    },
+    "shankR_Y": {
+     "K": 0.81,
+     "phys": 0.735
+    },
+    "shankL_Y": {
+     "K": 0.371,
+     "phys": 0.333
+    }
+   },
+   {
+    "msAfterActivation": 150,
+    "step": 444,
+    "kClipT": 0.45,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 14.5,
+    "thoraxAngleDeg": 15.9,
+    "bellyPelvis": {
+     "K": 0.192,
+     "phys": -0.003
+    },
+    "bellyThorax": {
+     "K": 0.475,
+     "phys": 0.31
+    },
+    "pelvisY": {
+     "K": 0.567,
+     "phys": 0.421
+    },
+    "footR_Y": {
+     "K": 0.744,
+     "phys": 0.565
+    },
+    "footL_Y": {
+     "K": 0.227,
+     "phys": 0.138
+    },
+    "shankR_Y": {
+     "K": 0.711,
+     "phys": 0.529
+    },
+    "shankL_Y": {
+     "K": 0.322,
+     "phys": 0.203
+    }
+   },
+   {
+    "msAfterActivation": 200,
+    "step": 456,
+    "kClipT": 0.5,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 22.5,
+    "thoraxAngleDeg": 16.8,
+    "bellyPelvis": {
+     "K": 0.197,
+     "phys": -0.054
+    },
+    "bellyThorax": {
+     "K": 0.463,
+     "phys": 0.272
+    },
+    "pelvisY": {
+     "K": 0.461,
+     "phys": 0.211
+    },
+    "footR_Y": {
+     "K": 0.613,
+     "phys": 0.349
+    },
+    "footL_Y": {
+     "K": 0.214,
+     "phys": 0.104
+    },
+    "shankR_Y": {
+     "K": 0.593,
+     "phys": 0.295
+    },
+    "shankL_Y": {
+     "K": 0.259,
+     "phys": 0.065
+    }
+   },
+   {
+    "msAfterActivation": 250,
+    "step": 468,
+    "kClipT": 0.55,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 37.8,
+    "thoraxAngleDeg": 24.3,
+    "bellyPelvis": {
+     "K": 0.201,
+     "phys": -0.387
+    },
+    "bellyThorax": {
+     "K": 0.442,
+     "phys": 0.063
+    },
+    "pelvisY": {
+     "K": 0.325,
+     "phys": 0.212
+    },
+    "footR_Y": {
+     "K": 0.446,
+     "phys": 0.148
+    },
+    "footL_Y": {
+     "K": 0.213,
+     "phys": 0.209
+    },
+    "shankR_Y": {
+     "K": 0.442,
+     "phys": 0.136
+    },
+    "shankL_Y": {
+     "K": 0.188,
+     "phys": 0.079
+    }
+   },
+   {
+    "msAfterActivation": 300,
+    "step": 480,
+    "kClipT": 0.6,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 46.3,
+    "thoraxAngleDeg": 45.3,
+    "bellyPelvis": {
+     "K": 0.198,
+     "phys": -0.546
+    },
+    "bellyThorax": {
+     "K": 0.419,
+     "phys": -0.299
+    },
+    "pelvisY": {
+     "K": 0.292,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.366,
+     "phys": 0.141
+    },
+    "footL_Y": {
+     "K": 0.272,
+     "phys": 0.296
+    },
+    "shankR_Y": {
+     "K": 0.385,
+     "phys": 0.115
+    },
+    "shankL_Y": {
+     "K": 0.205,
+     "phys": 0.116
+    }
+   },
+   {
+    "msAfterActivation": 400,
+    "step": 504,
+    "kClipT": 0.7,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 44.5,
+    "thoraxAngleDeg": 49.5,
+    "bellyPelvis": {
+     "K": 0.189,
+     "phys": -0.547
+    },
+    "bellyThorax": {
+     "K": 0.391,
+     "phys": -0.395
+    },
+    "pelvisY": {
+     "K": 0.284,
+     "phys": 0.211
+    },
+    "footR_Y": {
+     "K": 0.241,
+     "phys": 0.16
+    },
+    "footL_Y": {
+     "K": 0.327,
+     "phys": 0.445
+    },
+    "shankR_Y": {
+     "K": 0.318,
+     "phys": 0.165
+    },
+    "shankL_Y": {
+     "K": 0.253,
+     "phys": 0.186
+    }
+   },
+   {
+    "msAfterActivation": 500,
+    "step": 528,
+    "kClipT": 0.8,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 43.1,
+    "thoraxAngleDeg": 47.1,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.524
+    },
+    "bellyThorax": {
+     "K": 0.393,
+     "phys": -0.352
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.212
+    },
+    "footR_Y": {
+     "K": 0.208,
+     "phys": 0.163
+    },
+    "footL_Y": {
+     "K": 0.319,
+     "phys": 0.58
+    },
+    "shankR_Y": {
+     "K": 0.302,
+     "phys": 0.181
+    },
+    "shankL_Y": {
+     "K": 0.263,
+     "phys": 0.253
+    }
+   },
+   {
+    "msAfterActivation": 750,
+    "step": 588,
+    "kClipT": 1.05,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 57.5,
+    "thoraxAngleDeg": 63.3,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.714
+    },
+    "bellyThorax": {
+     "K": 0.412,
+     "phys": -0.58
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.214
+    },
+    "footR_Y": {
+     "K": 0.189,
+     "phys": 0.176
+    },
+    "footL_Y": {
+     "K": 0.29,
+     "phys": 0.762
+    },
+    "shankR_Y": {
+     "K": 0.293,
+     "phys": 0.166
+    },
+    "shankL_Y": {
+     "K": 0.272,
+     "phys": 0.341
+    }
+   },
+   {
+    "msAfterActivation": 1000,
+    "step": 648,
+    "kClipT": 1.3,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 58.5,
+    "thoraxAngleDeg": 66.3,
+    "bellyPelvis": {
+     "K": 0.184,
+     "phys": -0.727
+    },
+    "bellyThorax": {
+     "K": 0.423,
+     "phys": -0.609
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.211
+    },
+    "footR_Y": {
+     "K": 0.182,
+     "phys": 0.175
+    },
+    "footL_Y": {
+     "K": 0.281,
+     "phys": 0.721
+    },
+    "shankR_Y": {
+     "K": 0.291,
+     "phys": 0.163
+    },
+    "shankL_Y": {
+     "K": 0.28,
+     "phys": 0.333
+    }
+   },
+   {
+    "msAfterActivation": 1500,
+    "step": 768,
+    "kClipT": 1.8,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 57.9,
+    "thoraxAngleDeg": 66.8,
+    "bellyPelvis": {
+     "K": 0.156,
+     "phys": -0.733
+    },
+    "bellyThorax": {
+     "K": 0.418,
+     "phys": -0.612
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.177
+    },
+    "footL_Y": {
+     "K": 0.294,
+     "phys": 0.68
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.16
+    },
+    "shankL_Y": {
+     "K": 0.303,
+     "phys": 0.317
+    }
+   },
+   {
+    "msAfterActivation": 2500,
+    "step": 1008,
+    "kClipT": 1.85,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 59.4,
+    "thoraxAngleDeg": 67.4,
+    "bellyPelvis": {
+     "K": 0.153,
+     "phys": -0.752
+    },
+    "bellyThorax": {
+     "K": 0.417,
+     "phys": -0.619
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.207
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.176
+    },
+    "footL_Y": {
+     "K": 0.296,
+     "phys": 0.672
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.153
+    },
+    "shankL_Y": {
+     "K": 0.306,
+     "phys": 0.308
+    }
+   }
+  ],
+  "NOMINAL": [
+   {
+    "msAfterActivation": 0,
+    "step": 408,
+    "kClipT": 0.3,
+    "kPhase": "SCISSOR",
+    "pelvisAngleDeg": 0,
+    "thoraxAngleDeg": 0,
+    "bellyPelvis": {
+     "K": 0.191,
+     "phys": 0.191
+    },
+    "bellyThorax": {
+     "K": 0.539,
+     "phys": 0.539
+    },
+    "pelvisY": {
+     "K": 0.944,
+     "phys": 0.944
+    },
+    "footR_Y": {
+     "K": 1.073,
+     "phys": 1.073
+    },
+    "footL_Y": {
+     "K": 0.315,
+     "phys": 0.315
+    },
+    "shankR_Y": {
+     "K": 1.13,
+     "phys": 1.13
+    },
+    "shankL_Y": {
+     "K": 0.57,
+     "phys": 0.57
+    }
+   },
+   {
+    "msAfterActivation": 100,
+    "step": 432,
+    "kClipT": 0.4,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 9.1,
+    "thoraxAngleDeg": 7.9,
+    "bellyPelvis": {
+     "K": 0.183,
+     "phys": 0.045
+    },
+    "bellyThorax": {
+     "K": 0.497,
+     "phys": 0.406
+    },
+    "pelvisY": {
+     "K": 0.656,
+     "phys": 0.624
+    },
+    "footR_Y": {
+     "K": 0.848,
+     "phys": 0.769
+    },
+    "footL_Y": {
+     "K": 0.233,
+     "phys": 0.198
+    },
+    "shankR_Y": {
+     "K": 0.81,
+     "phys": 0.735
+    },
+    "shankL_Y": {
+     "K": 0.371,
+     "phys": 0.333
+    }
+   },
+   {
+    "msAfterActivation": 150,
+    "step": 444,
+    "kClipT": 0.45,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 14.5,
+    "thoraxAngleDeg": 15.9,
+    "bellyPelvis": {
+     "K": 0.192,
+     "phys": -0.003
+    },
+    "bellyThorax": {
+     "K": 0.475,
+     "phys": 0.31
+    },
+    "pelvisY": {
+     "K": 0.567,
+     "phys": 0.421
+    },
+    "footR_Y": {
+     "K": 0.744,
+     "phys": 0.565
+    },
+    "footL_Y": {
+     "K": 0.227,
+     "phys": 0.138
+    },
+    "shankR_Y": {
+     "K": 0.711,
+     "phys": 0.529
+    },
+    "shankL_Y": {
+     "K": 0.322,
+     "phys": 0.203
+    }
+   },
+   {
+    "msAfterActivation": 200,
+    "step": 456,
+    "kClipT": 0.5,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 22.6,
+    "thoraxAngleDeg": 16.1,
+    "bellyPelvis": {
+     "K": 0.197,
+     "phys": -0.071
+    },
+    "bellyThorax": {
+     "K": 0.463,
+     "phys": 0.24
+    },
+    "pelvisY": {
+     "K": 0.461,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.613,
+     "phys": 0.343
+    },
+    "footL_Y": {
+     "K": 0.214,
+     "phys": 0.111
+    },
+    "shankR_Y": {
+     "K": 0.593,
+     "phys": 0.294
+    },
+    "shankL_Y": {
+     "K": 0.259,
+     "phys": 0.063
+    }
+   },
+   {
+    "msAfterActivation": 250,
+    "step": 468,
+    "kClipT": 0.55,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 49.3,
+    "thoraxAngleDeg": 47.2,
+    "bellyPelvis": {
+     "K": 0.201,
+     "phys": -0.576
+    },
+    "bellyThorax": {
+     "K": 0.442,
+     "phys": -0.289
+    },
+    "pelvisY": {
+     "K": 0.325,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.446,
+     "phys": 0.14
+    },
+    "footL_Y": {
+     "K": 0.213,
+     "phys": 0.253
+    },
+    "shankR_Y": {
+     "K": 0.442,
+     "phys": 0.104
+    },
+    "shankL_Y": {
+     "K": 0.188,
+     "phys": 0.092
+    }
+   },
+   {
+    "msAfterActivation": 300,
+    "step": 480,
+    "kClipT": 0.6,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 64.2,
+    "thoraxAngleDeg": 83.2,
+    "bellyPelvis": {
+     "K": 0.198,
+     "phys": -0.782
+    },
+    "bellyThorax": {
+     "K": 0.419,
+     "phys": -0.769
+    },
+    "pelvisY": {
+     "K": 0.292,
+     "phys": 0.197
+    },
+    "footR_Y": {
+     "K": 0.366,
+     "phys": 0.131
+    },
+    "footL_Y": {
+     "K": 0.272,
+     "phys": 0.363
+    },
+    "shankR_Y": {
+     "K": 0.385,
+     "phys": 0.074
+    },
+    "shankL_Y": {
+     "K": 0.205,
+     "phys": 0.15
+    }
+   },
+   {
+    "msAfterActivation": 400,
+    "step": 504,
+    "kClipT": 0.7,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 77.2,
+    "thoraxAngleDeg": 105.7,
+    "bellyPelvis": {
+     "K": 0.189,
+     "phys": -0.909
+    },
+    "bellyThorax": {
+     "K": 0.391,
+     "phys": -0.831
+    },
+    "pelvisY": {
+     "K": 0.284,
+     "phys": 0.183
+    },
+    "footR_Y": {
+     "K": 0.241,
+     "phys": 0.17
+    },
+    "footL_Y": {
+     "K": 0.327,
+     "phys": 0.523
+    },
+    "shankR_Y": {
+     "K": 0.318,
+     "phys": 0.084
+    },
+    "shankL_Y": {
+     "K": 0.253,
+     "phys": 0.212
+    }
+   },
+   {
+    "msAfterActivation": 500,
+    "step": 528,
+    "kClipT": 0.8,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 80.1,
+    "thoraxAngleDeg": 113.2,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.935
+    },
+    "bellyThorax": {
+     "K": 0.393,
+     "phys": -0.775
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.167
+    },
+    "footR_Y": {
+     "K": 0.208,
+     "phys": 0.185
+    },
+    "footL_Y": {
+     "K": 0.319,
+     "phys": 0.467
+    },
+    "shankR_Y": {
+     "K": 0.302,
+     "phys": 0.063
+    },
+    "shankL_Y": {
+     "K": 0.263,
+     "phys": 0.162
+    }
+   },
+   {
+    "msAfterActivation": 750,
+    "step": 588,
+    "kClipT": 1.05,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 71.7,
+    "thoraxAngleDeg": 93.7,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.846
+    },
+    "bellyThorax": {
+     "K": 0.412,
+     "phys": -0.863
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.192
+    },
+    "footR_Y": {
+     "K": 0.189,
+     "phys": 0.188
+    },
+    "footL_Y": {
+     "K": 0.29,
+     "phys": 0.642
+    },
+    "shankR_Y": {
+     "K": 0.293,
+     "phys": 0.112
+    },
+    "shankL_Y": {
+     "K": 0.272,
+     "phys": 0.237
+    }
+   },
+   {
+    "msAfterActivation": 1000,
+    "step": 648,
+    "kClipT": 1.3,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 77.7,
+    "thoraxAngleDeg": 107.4,
+    "bellyPelvis": {
+     "K": 0.184,
+     "phys": -0.876
+    },
+    "bellyThorax": {
+     "K": 0.423,
+     "phys": -0.983
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.201
+    },
+    "footR_Y": {
+     "K": 0.182,
+     "phys": 0.216
+    },
+    "footL_Y": {
+     "K": 0.281,
+     "phys": 0.805
+    },
+    "shankR_Y": {
+     "K": 0.291,
+     "phys": 0.157
+    },
+    "shankL_Y": {
+     "K": 0.28,
+     "phys": 0.363
+    }
+   },
+   {
+    "msAfterActivation": 1500,
+    "step": 768,
+    "kClipT": 1.8,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 83.2,
+    "thoraxAngleDeg": 113.4,
+    "bellyPelvis": {
+     "K": 0.156,
+     "phys": -0.952
+    },
+    "bellyThorax": {
+     "K": 0.418,
+     "phys": -0.987
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.175
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.178
+    },
+    "footL_Y": {
+     "K": 0.294,
+     "phys": 0.718
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.096
+    },
+    "shankL_Y": {
+     "K": 0.303,
+     "phys": 0.303
+    }
+   },
+   {
+    "msAfterActivation": 2500,
+    "step": 1008,
+    "kClipT": 1.85,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 82.8,
+    "thoraxAngleDeg": 111.1,
+    "bellyPelvis": {
+     "K": 0.153,
+     "phys": -0.953
+    },
+    "bellyThorax": {
+     "K": 0.417,
+     "phys": -0.986
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.169
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.166
+    },
+    "footL_Y": {
+     "K": 0.296,
+     "phys": 0.697
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.081
+    },
+    "shankL_Y": {
+     "K": 0.306,
+     "phys": 0.278
+    }
+   }
+  ],
+  "HEAVY": [
+   {
+    "msAfterActivation": 0,
+    "step": 408,
+    "kClipT": 0.3,
+    "kPhase": "SCISSOR",
+    "pelvisAngleDeg": 0,
+    "thoraxAngleDeg": 0,
+    "bellyPelvis": {
+     "K": 0.191,
+     "phys": 0.191
+    },
+    "bellyThorax": {
+     "K": 0.539,
+     "phys": 0.539
+    },
+    "pelvisY": {
+     "K": 0.944,
+     "phys": 0.944
+    },
+    "footR_Y": {
+     "K": 1.073,
+     "phys": 1.073
+    },
+    "footL_Y": {
+     "K": 0.315,
+     "phys": 0.315
+    },
+    "shankR_Y": {
+     "K": 1.13,
+     "phys": 1.13
+    },
+    "shankL_Y": {
+     "K": 0.57,
+     "phys": 0.57
+    }
+   },
+   {
+    "msAfterActivation": 100,
+    "step": 432,
+    "kClipT": 0.4,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 9.1,
+    "thoraxAngleDeg": 7.9,
+    "bellyPelvis": {
+     "K": 0.183,
+     "phys": 0.045
+    },
+    "bellyThorax": {
+     "K": 0.497,
+     "phys": 0.406
+    },
+    "pelvisY": {
+     "K": 0.656,
+     "phys": 0.624
+    },
+    "footR_Y": {
+     "K": 0.848,
+     "phys": 0.769
+    },
+    "footL_Y": {
+     "K": 0.233,
+     "phys": 0.198
+    },
+    "shankR_Y": {
+     "K": 0.81,
+     "phys": 0.735
+    },
+    "shankL_Y": {
+     "K": 0.371,
+     "phys": 0.333
+    }
+   },
+   {
+    "msAfterActivation": 150,
+    "step": 444,
+    "kClipT": 0.45,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 14.5,
+    "thoraxAngleDeg": 15.9,
+    "bellyPelvis": {
+     "K": 0.192,
+     "phys": -0.003
+    },
+    "bellyThorax": {
+     "K": 0.475,
+     "phys": 0.31
+    },
+    "pelvisY": {
+     "K": 0.567,
+     "phys": 0.421
+    },
+    "footR_Y": {
+     "K": 0.744,
+     "phys": 0.565
+    },
+    "footL_Y": {
+     "K": 0.227,
+     "phys": 0.138
+    },
+    "shankR_Y": {
+     "K": 0.711,
+     "phys": 0.529
+    },
+    "shankL_Y": {
+     "K": 0.322,
+     "phys": 0.203
+    }
+   },
+   {
+    "msAfterActivation": 200,
+    "step": 456,
+    "kClipT": 0.5,
+    "kPhase": "KNEE_EXTENSION",
+    "pelvisAngleDeg": 22.7,
+    "thoraxAngleDeg": 15.7,
+    "bellyPelvis": {
+     "K": 0.197,
+     "phys": -0.076
+    },
+    "bellyThorax": {
+     "K": 0.463,
+     "phys": 0.247
+    },
+    "pelvisY": {
+     "K": 0.461,
+     "phys": 0.21
+    },
+    "footR_Y": {
+     "K": 0.613,
+     "phys": 0.341
+    },
+    "footL_Y": {
+     "K": 0.214,
+     "phys": 0.116
+    },
+    "shankR_Y": {
+     "K": 0.593,
+     "phys": 0.294
+    },
+    "shankL_Y": {
+     "K": 0.259,
+     "phys": 0.063
+    }
+   },
+   {
+    "msAfterActivation": 250,
+    "step": 468,
+    "kClipT": 0.55,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 53.6,
+    "thoraxAngleDeg": 46.5,
+    "bellyPelvis": {
+     "K": 0.201,
+     "phys": -0.633
+    },
+    "bellyThorax": {
+     "K": 0.442,
+     "phys": -0.29
+    },
+    "pelvisY": {
+     "K": 0.325,
+     "phys": 0.214
+    },
+    "footR_Y": {
+     "K": 0.446,
+     "phys": 0.144
+    },
+    "footL_Y": {
+     "K": 0.213,
+     "phys": 0.275
+    },
+    "shankR_Y": {
+     "K": 0.442,
+     "phys": 0.097
+    },
+    "shankL_Y": {
+     "K": 0.188,
+     "phys": 0.099
+    }
+   },
+   {
+    "msAfterActivation": 300,
+    "step": 480,
+    "kClipT": 0.6,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 70,
+    "thoraxAngleDeg": 85.2,
+    "bellyPelvis": {
+     "K": 0.198,
+     "phys": -0.845
+    },
+    "bellyThorax": {
+     "K": 0.419,
+     "phys": -0.785
+    },
+    "pelvisY": {
+     "K": 0.292,
+     "phys": 0.189
+    },
+    "footR_Y": {
+     "K": 0.366,
+     "phys": 0.143
+    },
+    "footL_Y": {
+     "K": 0.272,
+     "phys": 0.384
+    },
+    "shankR_Y": {
+     "K": 0.385,
+     "phys": 0.06
+    },
+    "shankL_Y": {
+     "K": 0.205,
+     "phys": 0.157
+    }
+   },
+   {
+    "msAfterActivation": 400,
+    "step": 504,
+    "kClipT": 0.7,
+    "kPhase": "GROUND_ENTRY",
+    "pelvisAngleDeg": 79.7,
+    "thoraxAngleDeg": 111.6,
+    "bellyPelvis": {
+     "K": 0.189,
+     "phys": -0.926
+    },
+    "bellyThorax": {
+     "K": 0.391,
+     "phys": -0.78
+    },
+    "pelvisY": {
+     "K": 0.284,
+     "phys": 0.18
+    },
+    "footR_Y": {
+     "K": 0.241,
+     "phys": 0.182
+    },
+    "footL_Y": {
+     "K": 0.327,
+     "phys": 0.507
+    },
+    "shankR_Y": {
+     "K": 0.318,
+     "phys": 0.078
+    },
+    "shankL_Y": {
+     "K": 0.253,
+     "phys": 0.204
+    }
+   },
+   {
+    "msAfterActivation": 500,
+    "step": 528,
+    "kClipT": 0.8,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 76.4,
+    "thoraxAngleDeg": 110.2,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.895
+    },
+    "bellyThorax": {
+     "K": 0.393,
+     "phys": -0.846
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.224
+    },
+    "footR_Y": {
+     "K": 0.208,
+     "phys": 0.182
+    },
+    "footL_Y": {
+     "K": 0.319,
+     "phys": 0.578
+    },
+    "shankR_Y": {
+     "K": 0.302,
+     "phys": 0.156
+    },
+    "shankL_Y": {
+     "K": 0.263,
+     "phys": 0.245
+    }
+   },
+   {
+    "msAfterActivation": 750,
+    "step": 588,
+    "kClipT": 1.05,
+    "kPhase": "SLIDE",
+    "pelvisAngleDeg": 91.9,
+    "thoraxAngleDeg": 109.4,
+    "bellyPelvis": {
+     "K": 0.188,
+     "phys": -0.909
+    },
+    "bellyThorax": {
+     "K": 0.412,
+     "phys": -0.992
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.189
+    },
+    "footR_Y": {
+     "K": 0.189,
+     "phys": 0.152
+    },
+    "footL_Y": {
+     "K": 0.29,
+     "phys": 0.674
+    },
+    "shankR_Y": {
+     "K": 0.293,
+     "phys": 0.143
+    },
+    "shankL_Y": {
+     "K": 0.272,
+     "phys": 0.269
+    }
+   },
+   {
+    "msAfterActivation": 1000,
+    "step": 648,
+    "kClipT": 1.3,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 86.8,
+    "thoraxAngleDeg": 110,
+    "bellyPelvis": {
+     "K": 0.184,
+     "phys": -0.869
+    },
+    "bellyThorax": {
+     "K": 0.423,
+     "phys": -0.995
+    },
+    "pelvisY": {
+     "K": 0.285,
+     "phys": 0.195
+    },
+    "footR_Y": {
+     "K": 0.182,
+     "phys": 0.148
+    },
+    "footL_Y": {
+     "K": 0.281,
+     "phys": 0.694
+    },
+    "shankR_Y": {
+     "K": 0.291,
+     "phys": 0.139
+    },
+    "shankL_Y": {
+     "K": 0.28,
+     "phys": 0.271
+    }
+   },
+   {
+    "msAfterActivation": 1500,
+    "step": 768,
+    "kClipT": 1.8,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 66,
+    "thoraxAngleDeg": 107.1,
+    "bellyPelvis": {
+     "K": 0.156,
+     "phys": -0.643
+    },
+    "bellyThorax": {
+     "K": 0.418,
+     "phys": -0.99
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.207
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.094
+    },
+    "footL_Y": {
+     "K": 0.294,
+     "phys": 0.585
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.146
+    },
+    "shankL_Y": {
+     "K": 0.303,
+     "phys": 0.264
+    }
+   },
+   {
+    "msAfterActivation": 2500,
+    "step": 1008,
+    "kClipT": 1.85,
+    "kPhase": "FOLLOW_THROUGH",
+    "pelvisAngleDeg": 40.4,
+    "thoraxAngleDeg": 67.2,
+    "bellyPelvis": {
+     "K": 0.153,
+     "phys": -0.072
+    },
+    "bellyThorax": {
+     "K": 0.417,
+     "phys": -0.615
+    },
+    "pelvisY": {
+     "K": 0.287,
+     "phys": 0.196
+    },
+    "footR_Y": {
+     "K": 0.176,
+     "phys": 0.049
+    },
+    "footL_Y": {
+     "K": 0.296,
+     "phys": 0.284
+    },
+    "shankR_Y": {
+     "K": 0.29,
+     "phys": 0.168
+    },
+    "shankL_Y": {
+     "K": 0.306,
+     "phys": 0.179
+    }
+   }
+  ]
+ },
+ "authored": [
+  {
+   "t": 0.3,
+   "phase": "SCISSOR",
+   "bellyPelvis": 0.191,
+   "bellyThorax": 0.539,
+   "pelvisY": 0.944,
+   "footR_Y": 1.073,
+   "footL_Y": 0.315
+  },
+  {
+   "t": 0.35,
+   "phase": "SCISSOR",
+   "bellyPelvis": 0.18,
+   "bellyThorax": 0.52,
+   "pelvisY": 0.786,
+   "footR_Y": 0.963,
+   "footL_Y": 0.275
+  },
+  {
+   "t": 0.4,
+   "phase": "KNEE_EXTENSION",
+   "bellyPelvis": 0.183,
+   "bellyThorax": 0.497,
+   "pelvisY": 0.656,
+   "footR_Y": 0.848,
+   "footL_Y": 0.233
+  },
+  {
+   "t": 0.45,
+   "phase": "KNEE_EXTENSION",
+   "bellyPelvis": 0.192,
+   "bellyThorax": 0.475,
+   "pelvisY": 0.567,
+   "footR_Y": 0.744,
+   "footL_Y": 0.227
+  },
+  {
+   "t": 0.5,
+   "phase": "KNEE_EXTENSION",
+   "bellyPelvis": 0.197,
+   "bellyThorax": 0.463,
+   "pelvisY": 0.461,
+   "footR_Y": 0.613,
+   "footL_Y": 0.214
+  },
+  {
+   "t": 0.55,
+   "phase": "GROUND_ENTRY",
+   "bellyPelvis": 0.201,
+   "bellyThorax": 0.442,
+   "pelvisY": 0.325,
+   "footR_Y": 0.446,
+   "footL_Y": 0.213
+  },
+  {
+   "t": 0.6,
+   "phase": "GROUND_ENTRY",
+   "bellyPelvis": 0.198,
+   "bellyThorax": 0.419,
+   "pelvisY": 0.292,
+   "footR_Y": 0.366,
+   "footL_Y": 0.272
+  },
+  {
+   "t": 0.65,
+   "phase": "GROUND_ENTRY",
+   "bellyPelvis": 0.192,
+   "bellyThorax": 0.402,
+   "pelvisY": 0.285,
+   "footR_Y": 0.295,
+   "footL_Y": 0.311
+  },
+  {
+   "t": 0.7,
+   "phase": "GROUND_ENTRY",
+   "bellyPelvis": 0.189,
+   "bellyThorax": 0.391,
+   "pelvisY": 0.284,
+   "footR_Y": 0.241,
+   "footL_Y": 0.327
+  },
+  {
+   "t": 0.75,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.391,
+   "pelvisY": 0.285,
+   "footR_Y": 0.221,
+   "footL_Y": 0.326
+  },
+  {
+   "t": 0.8,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.393,
+   "pelvisY": 0.285,
+   "footR_Y": 0.208,
+   "footL_Y": 0.319
+  },
+  {
+   "t": 0.85,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.397,
+   "pelvisY": 0.285,
+   "footR_Y": 0.199,
+   "footL_Y": 0.31
+  },
+  {
+   "t": 0.9,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.401,
+   "pelvisY": 0.285,
+   "footR_Y": 0.193,
+   "footL_Y": 0.303
+  },
+  {
+   "t": 0.95,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.404,
+   "pelvisY": 0.285,
+   "footR_Y": 0.192,
+   "footL_Y": 0.298
+  },
+  {
+   "t": 1,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.407,
+   "pelvisY": 0.285,
+   "footR_Y": 0.19,
+   "footL_Y": 0.294
+  },
+  {
+   "t": 1.05,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.412,
+   "pelvisY": 0.285,
+   "footR_Y": 0.189,
+   "footL_Y": 0.29
+  },
+  {
+   "t": 1.1,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.188,
+   "bellyThorax": 0.416,
+   "pelvisY": 0.285,
+   "footR_Y": 0.187,
+   "footL_Y": 0.287
+  },
+  {
+   "t": 1.15,
+   "phase": "SLIDE",
+   "bellyPelvis": 0.187,
+   "bellyThorax": 0.42,
+   "pelvisY": 0.285,
+   "footR_Y": 0.186,
+   "footL_Y": 0.284
+  },
+  {
+   "t": 1.2,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.187,
+   "bellyThorax": 0.422,
+   "pelvisY": 0.285,
+   "footR_Y": 0.184,
+   "footL_Y": 0.282
+  },
+  {
+   "t": 1.25,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.186,
+   "bellyThorax": 0.423,
+   "pelvisY": 0.285,
+   "footR_Y": 0.183,
+   "footL_Y": 0.281
+  },
+  {
+   "t": 1.3,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.184,
+   "bellyThorax": 0.423,
+   "pelvisY": 0.285,
+   "footR_Y": 0.182,
+   "footL_Y": 0.281
+  },
+  {
+   "t": 1.35,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.182,
+   "bellyThorax": 0.423,
+   "pelvisY": 0.285,
+   "footR_Y": 0.181,
+   "footL_Y": 0.282
+  },
+  {
+   "t": 1.4,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.179,
+   "bellyThorax": 0.422,
+   "pelvisY": 0.286,
+   "footR_Y": 0.18,
+   "footL_Y": 0.283
+  },
+  {
+   "t": 1.45,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.176,
+   "bellyThorax": 0.421,
+   "pelvisY": 0.286,
+   "footR_Y": 0.18,
+   "footL_Y": 0.285
+  },
+  {
+   "t": 1.5,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.173,
+   "bellyThorax": 0.42,
+   "pelvisY": 0.286,
+   "footR_Y": 0.18,
+   "footL_Y": 0.286
+  },
+  {
+   "t": 1.55,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.17,
+   "bellyThorax": 0.42,
+   "pelvisY": 0.286,
+   "footR_Y": 0.179,
+   "footL_Y": 0.288
+  },
+  {
+   "t": 1.6,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.167,
+   "bellyThorax": 0.419,
+   "pelvisY": 0.286,
+   "footR_Y": 0.178,
+   "footL_Y": 0.289
+  },
+  {
+   "t": 1.65,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.165,
+   "bellyThorax": 0.419,
+   "pelvisY": 0.286,
+   "footR_Y": 0.178,
+   "footL_Y": 0.29
+  },
+  {
+   "t": 1.7,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.162,
+   "bellyThorax": 0.418,
+   "pelvisY": 0.286,
+   "footR_Y": 0.177,
+   "footL_Y": 0.291
+  },
+  {
+   "t": 1.75,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.159,
+   "bellyThorax": 0.418,
+   "pelvisY": 0.286,
+   "footR_Y": 0.177,
+   "footL_Y": 0.293
+  },
+  {
+   "t": 1.8,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.156,
+   "bellyThorax": 0.418,
+   "pelvisY": 0.287,
+   "footR_Y": 0.176,
+   "footL_Y": 0.294
+  },
+  {
+   "t": 1.85,
+   "phase": "FOLLOW_THROUGH",
+   "bellyPelvis": 0.153,
+   "bellyThorax": 0.417,
+   "pelvisY": 0.287,
+   "footR_Y": 0.176,
+   "footL_Y": 0.296
+  }
+ ]
+}

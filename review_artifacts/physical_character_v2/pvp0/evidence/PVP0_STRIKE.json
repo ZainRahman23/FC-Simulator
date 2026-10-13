@@ -1,0 +1,163 @@
+{
+ "LIGHT": {
+  "firstContactStep": 454,
+  "strike100ms": {
+   "impulseOnRecipientNs": [
+    -18.32,
+    -39.37,
+    -62.09
+   ],
+   "recipientDPvsTwinNs": [
+    -0.91,
+    -0.74,
+    -15.57
+   ],
+   "tacklerCrossNs": [
+    18.32,
+    39.37,
+    62.09
+   ],
+   "tacklerTurfNs": [
+    11.86,
+    451.52,
+    129.16
+   ],
+   "peakStepImpulseNs": 5.919,
+   "peakForceN": 1421,
+   "peakStep": 458,
+   "peakCrossPenMm": 1.73
+  },
+  "tacklerAngResPeak": {
+   "value": 0.244,
+   "step": 456,
+   "turfNormalImpulseThatStepNs": 103.41
+  },
+  "penetrationOver5mm": {}
+ },
+ "NOMINAL": {
+  "firstContactStep": 456,
+  "strike100ms": {
+   "impulseOnRecipientNs": [
+    -15.83,
+    -42.04,
+    -58.48
+   ],
+   "recipientDPvsTwinNs": [
+    -7.59,
+    -38.44,
+    -27.72
+   ],
+   "tacklerCrossNs": [
+    15.83,
+    42.04,
+    58.48
+   ],
+   "tacklerTurfNs": [
+    46.11,
+    322.33,
+    131.47
+   ],
+   "peakStepImpulseNs": 11.04,
+   "peakForceN": 2649,
+   "peakStep": 457,
+   "peakCrossPenMm": 3.66
+  },
+  "tacklerAngResPeak": {
+   "value": 0.35,
+   "step": 456,
+   "turfNormalImpulseThatStepNs": 103.17
+  },
+  "penetrationOver5mm": {
+   "shank_L × foot_R": {
+    "steps": 12,
+    "maxMm": 13.8,
+    "first": 531,
+    "last": 542
+   },
+   "foot_L × foot_R": {
+    "steps": 1,
+    "maxMm": 5.1,
+    "first": 543,
+    "last": 543
+   },
+   "pelvis × foot_L": {
+    "steps": 1,
+    "maxMm": 7.3,
+    "first": 624,
+    "last": 624
+   },
+   "abdomen × pelvis": {
+    "steps": 4,
+    "maxMm": 12.9,
+    "first": 716,
+    "last": 724
+   }
+  }
+ },
+ "HEAVY": {
+  "firstContactStep": 457,
+  "strike100ms": {
+   "impulseOnRecipientNs": [
+    -17.28,
+    -42.94,
+    -68.68
+   ],
+   "recipientDPvsTwinNs": [
+    -9.37,
+    -43.79,
+    -43.65
+   ],
+   "tacklerCrossNs": [
+    17.28,
+    42.94,
+    68.68
+   ],
+   "tacklerTurfNs": [
+    19.35,
+    222.57,
+    104.17
+   ],
+   "peakStepImpulseNs": 11.339,
+   "peakForceN": 2721,
+   "peakStep": 461,
+   "peakCrossPenMm": 3.95
+  },
+  "tacklerAngResPeak": {
+   "value": 0.4,
+   "step": 456,
+   "turfNormalImpulseThatStepNs": 102.92
+  },
+  "penetrationOver5mm": {
+   "shank_L × foot_R": {
+    "steps": 4,
+    "maxMm": 14.2,
+    "first": 501,
+    "last": 504
+   },
+   "foot_L × foot_R": {
+    "steps": 1,
+    "maxMm": 5.3,
+    "first": 511,
+    "last": 511
+   },
+   "abdomen × foot_L": {
+    "steps": 4,
+    "maxMm": 10.2,
+    "first": 605,
+    "last": 606
+   },
+   "thorax × pelvis": {
+    "steps": 20,
+    "maxMm": 12.1,
+    "first": 719,
+    "last": 756
+   },
+   "pelvis × foot_L": {
+    "steps": 33,
+    "maxMm": 7.3,
+    "first": 899,
+    "last": 963
+   }
+  }
+ }
+}

@@ -1,0 +1,456 @@
+{
+ "twin": {
+  "hash": "2960efa781b24fb1"
+ },
+ "cases": {
+  "LIGHT": {
+   "speedFactor": 0.5,
+   "approachSpeedMs": 3.37,
+   "offset": [
+    0.29,
+    0,
+    3.135
+   ],
+   "hash": "363ec994c97bad90",
+   "wallMs": 3493,
+   "stepsPerS": 412,
+   "firstContact": {
+    "step": 454,
+    "t": 1.8917,
+    "sinceActivationS": 0.1917,
+    "recipientBody": "shank_L",
+    "tacklerBody": "foot_R",
+    "point": [
+     0.01618700249047147,
+     0.3457402920670749,
+     0.24242882313029118
+    ],
+    "normal": [
+     0.3020767560677031,
+     -0.041934637367806754,
+     0.9523608137845887
+    ]
+   },
+   "contactPairsImpulseNs": {
+    "runner.shank_L × tackler.foot_R": 788.22,
+    "runner.foot_L × tackler.foot_R": 743.28,
+    "runner.thigh_L × tackler.foot_R": 0
+   },
+   "peakStepImpulseNs": 5.919,
+   "peakForceN": 1421,
+   "peakAtStep": 458,
+   "totalCrossImpulseOnRecipientNs": [
+    -232.7,
+    -512.49,
+    -511.75
+   ],
+   "peakCrossPenMm": 1.73,
+   "peakCrossPenStep": 458,
+   "peakCrossPenPair": "shank_L × foot_R",
+   "selfPenMm": [
+    0,
+    0.45
+   ],
+   "turfPenMm": [
+    0.04,
+    1.44
+   ],
+   "eqOppMax": {
+    "dJ": 0,
+    "dH": 0
+   },
+   "ledgerMax": {
+    "systemLin": 0.00017211518898479987,
+    "systemAng": 0.24366784730679858,
+    "systemEnergy": 397.83235738953977,
+    "recipientLin": 0.00002281140630411282,
+    "tacklerLin": 0.00017183441546720079,
+    "recipientAng": 0.0023566916941502756,
+    "tacklerAng": 0.24371612438047643
+   },
+   "recipient": {
+    "comPeakDevMm": 120.1,
+    "comPeakAtS": 1.67,
+    "comVelPeakDevMs": 0.266,
+    "pelvisDropPeakMm": 0,
+    "fallAtSAfterActivation": null,
+    "end": {
+     "comOffsetMm": 95.1,
+     "pelvisDropMm": -5.9,
+     "pelvisHeightM": 0.918,
+     "trunkTiltDeg": 7.7,
+     "feetN": [
+      306,
+      529
+     ],
+     "nonFootTurf": []
+    },
+    "struckLegPeakDevDeg": {
+     "ankle_L": 36.9,
+     "knee_L": 16.3,
+     "hip_L": 7.7
+    },
+    "propagationMsAfterContact": {
+     "shank_L": 0,
+     "thigh_L": 0,
+     "pelvis": 16.7,
+     "abdomen": 16.7,
+     "thorax": 37.5,
+     "head": 58.3
+    },
+    "slips": 871,
+    "satSteps": 0,
+    "satAxesMax": 0,
+    "hardLimitExcessDeg": 3.01
+   },
+   "tackler": {
+    "vBefore": [
+     -0.13,
+     -4.82,
+     -3.33
+    ],
+    "vAfter100ms": [
+     0.27,
+     0.25,
+     -0.84
+    ],
+    "dvMs": 5.66,
+    "end": {
+     "comM": [
+      0.49,
+      0.21,
+      1.09
+     ],
+     "speedMs": 0.01,
+     "pelvisHeightM": 0.205
+    },
+    "slips": 2683,
+    "satSteps": 203,
+    "satAxesMax": 7,
+    "hardLimitExcessDeg": 13.35,
+    "trackErrDeg": {
+     "at0": 0,
+     "at015": 5.828,
+     "atContact": 6.721,
+     "at05": 16.027,
+     "at10": 13.53
+    }
+   },
+   "cpu": {
+    "step": 1129.041712000004,
+    "passive": 962.6684429999934,
+    "act": 206.00136300000003,
+    "tone": 153.53985999999605,
+    "instrument": 281.41540000000174,
+    "measure": 728.8853160000007,
+    "law": 124.53277200000639,
+    "lawT": 29.595801000019776
+   }
+  },
+  "NOMINAL": {
+   "speedFactor": 1,
+   "approachSpeedMs": 6.74,
+   "offset": [
+    0.29,
+    0,
+    3.8499999999999996
+   ],
+   "hash": "80fe925d6380b67b",
+   "wallMs": 3295,
+   "stepsPerS": 437,
+   "firstContact": {
+    "step": 456,
+    "t": 1.9,
+    "sinceActivationS": 0.2,
+    "recipientBody": "shank_L",
+    "tacklerBody": "foot_R",
+    "point": [
+     0.014088427747750733,
+     0.2824670560185131,
+     0.24341246392783453
+    ],
+    "normal": [
+     0.4590751504622198,
+     -0.07346167600728878,
+     0.8853549505064566
+    ]
+   },
+   "contactPairsImpulseNs": {
+    "runner.foot_L × tackler.foot_R": 286.85,
+    "runner.shank_L × tackler.foot_R": 255.45,
+    "runner.abdomen × tackler.pelvis": 53.22,
+    "runner.thigh_L × tackler.shank_L": 39.04,
+    "runner.abdomen × tackler.thorax": 29.04,
+    "runner.thorax × tackler.thorax": 27.4,
+    "runner.forearm_R × tackler.upperArm_R": 25.67,
+    "runner.thorax × tackler.upperArm_R": 22.58
+   },
+   "peakStepImpulseNs": 35.414,
+   "peakForceN": 8499,
+   "peakAtStep": 716,
+   "totalCrossImpulseOnRecipientNs": [
+    -68.1,
+    9.25,
+    -323.59
+   ],
+   "peakCrossPenMm": 13.8,
+   "peakCrossPenStep": 531,
+   "peakCrossPenPair": "shank_L × foot_R",
+   "selfPenMm": [
+    1.24,
+    0.85
+   ],
+   "turfPenMm": [
+    1.65,
+    1.71
+   ],
+   "eqOppMax": {
+    "dJ": 0,
+    "dH": 0
+   },
+   "ledgerMax": {
+    "systemLin": 0.00021357536219205516,
+    "systemAng": 0.35039074407626414,
+    "systemEnergy": 543.2861811219805,
+    "recipientLin": 0.00018223120118576394,
+    "tacklerLin": 0.00021881940815269858,
+    "recipientAng": 0.016617160653501432,
+    "tacklerAng": 0.35037759095053467
+   },
+   "recipient": {
+    "comPeakDevMm": 1404.1,
+    "comPeakAtS": 4.16,
+    "comVelPeakDevMs": 2.695,
+    "pelvisDropPeakMm": 788,
+    "fallAtSAfterActivation": 0.958,
+    "end": {
+     "comOffsetMm": 1403.5,
+     "pelvisDropMm": 787.1,
+     "pelvisHeightM": 0.125,
+     "trunkTiltDeg": 88.3,
+     "feetN": [
+      0,
+      0
+     ],
+     "nonFootTurf": [
+      "pelvis",
+      "forearm_R",
+      "shank_L"
+     ]
+    },
+    "struckLegPeakDevDeg": {
+     "ankle_L": 32.9,
+     "knee_L": 21.4,
+     "hip_L": 50.1
+    },
+    "propagationMsAfterContact": {
+     "shank_L": 0,
+     "thigh_L": 0,
+     "pelvis": 4.2,
+     "abdomen": 4.2,
+     "thorax": 25,
+     "head": 41.7
+    },
+    "slips": 7602,
+    "satSteps": 907,
+    "satAxesMax": 6,
+    "hardLimitExcessDeg": 6.46
+   },
+   "tackler": {
+    "vBefore": [
+     -0.27,
+     -4.9,
+     -6.7
+    ],
+    "vAfter100ms": [
+     0.46,
+     0.1,
+     -3.47
+    ],
+    "dvMs": 5.99,
+    "end": {
+     "comM": [
+      0.74,
+      0.18,
+      0.48
+     ],
+     "speedMs": 0,
+     "pelvisHeightM": 0.169
+    },
+    "slips": 4148,
+    "satSteps": 271,
+    "satAxesMax": 7,
+    "hardLimitExcessDeg": 16.77,
+    "trackErrDeg": {
+     "at0": 0,
+     "at015": 5.828,
+     "atContact": 11.341,
+     "at05": 18.546,
+     "at10": 18.407
+    }
+   },
+   "cpu": {
+    "step": 1003.0517790000022,
+    "passive": 965.0942869999951,
+    "act": 196.54877500001334,
+    "tone": 206.64112200000483,
+    "instrument": 223.33254699999827,
+    "measure": 673.9471639999952,
+    "law": 160.58313299999452,
+    "lawT": 46.16308599999911
+   }
+  },
+  "HEAVY": {
+   "speedFactor": 1.25,
+   "approachSpeedMs": 8.43,
+   "offset": [
+    0.29,
+    0,
+    4.2075
+   ],
+   "hash": "9376fd891f4c9cbd",
+   "wallMs": 3402,
+   "stepsPerS": 423,
+   "firstContact": {
+    "step": 457,
+    "t": 1.9042,
+    "sinceActivationS": 0.2042,
+    "recipientBody": "shank_L",
+    "tacklerBody": "foot_R",
+    "point": [
+     0.006789930744124241,
+     0.26411898170449694,
+     0.2378906559192028
+    ],
+    "normal": [
+     0.44983944711295054,
+     -0.07159774493593282,
+     0.8902349323303395
+    ]
+   },
+   "contactPairsImpulseNs": {
+    "runner.pelvis × tackler.shank_L": 521.69,
+    "runner.shank_R × tackler.shank_R": 305,
+    "runner.foot_R × tackler.thigh_R": 300.99,
+    "runner.upperArm_R × tackler.pelvis": 289.44,
+    "runner.thorax × tackler.pelvis": 213.51,
+    "runner.shank_R × tackler.thigh_R": 148.67,
+    "runner.shank_L × tackler.foot_R": 132.21,
+    "runner.foot_L × tackler.foot_R": 118.75
+   },
+   "peakStepImpulseNs": 33.217,
+   "peakForceN": 7972,
+   "peakAtStep": 512,
+   "totalCrossImpulseOnRecipientNs": [
+    -84.8,
+    639.26,
+    -33.82
+   ],
+   "peakCrossPenMm": 14.15,
+   "peakCrossPenStep": 501,
+   "peakCrossPenPair": "shank_L × foot_R",
+   "selfPenMm": [
+    5.51,
+    0.15
+   ],
+   "turfPenMm": [
+    7.5,
+    2.33
+   ],
+   "eqOppMax": {
+    "dJ": 0,
+    "dH": 0
+   },
+   "ledgerMax": {
+    "systemLin": 0.0003651365341205351,
+    "systemAng": 0.399846163991674,
+    "systemEnergy": 633.3212355788202,
+    "recipientLin": 0.00009926424851521816,
+    "tacklerLin": 0.00036542675381012675,
+    "recipientAng": 0.05247873112218576,
+    "tacklerAng": 0.39984613644804734
+   },
+   "recipient": {
+    "comPeakDevMm": 787,
+    "comPeakAtS": 1.91,
+    "comVelPeakDevMs": 1.377,
+    "pelvisDropPeakMm": 421,
+    "fallAtSAfterActivation": 1.496,
+    "end": {
+     "comOffsetMm": 768.4,
+     "pelvisDropMm": 406.7,
+     "pelvisHeightM": 0.506,
+     "trunkTiltDeg": 143.3,
+     "feetN": [
+      23,
+      0
+     ],
+     "nonFootTurf": [
+      "head",
+      "upperArm_L"
+     ]
+    },
+    "struckLegPeakDevDeg": {
+     "ankle_L": 35.8,
+     "knee_L": 18.8,
+     "hip_L": 52
+    },
+    "propagationMsAfterContact": {
+     "shank_L": 0,
+     "thigh_L": 0,
+     "pelvis": 4.2,
+     "abdomen": 4.2,
+     "thorax": 16.7,
+     "head": 37.5
+    },
+    "slips": 7492,
+    "satSteps": 882,
+    "satAxesMax": 5,
+    "hardLimitExcessDeg": 8.87
+   },
+   "tackler": {
+    "vBefore": [
+     -0.34,
+     -4.94,
+     -8.38
+    ],
+    "vAfter100ms": [
+     0.46,
+     0.08,
+     -4.83
+    ],
+    "dvMs": 6.19,
+    "end": {
+     "comM": [
+      0.55,
+      0.21,
+      0.07
+     ],
+     "speedMs": 0,
+     "pelvisHeightM": 0.197
+    },
+    "slips": 4949,
+    "satSteps": 458,
+    "satAxesMax": 7,
+    "hardLimitExcessDeg": 18.46,
+    "trackErrDeg": {
+     "at0": 0,
+     "at015": 5.828,
+     "atContact": 14.573,
+     "at05": 17.92,
+     "at10": 21.923
+    }
+   },
+   "cpu": {
+    "step": 1079.1666879999966,
+    "passive": 960.303872000005,
+    "act": 187.93155600000625,
+    "tone": 196.37162899999942,
+    "instrument": 261.5454929999989,
+    "measure": 690.295489000002,
+    "law": 165.6793810000068,
+    "lawT": 30.303676000004998
+   }
+  }
+ }
+}

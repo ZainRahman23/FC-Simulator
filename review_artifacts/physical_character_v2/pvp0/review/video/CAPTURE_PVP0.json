@@ -1,0 +1,361 @@
+{
+ "tool": "pvp0_capture.cjs (trc1_capture.cjs with --views)",
+ "views": {
+  "G1_LIGHT": {
+   "panels": [
+    {
+     "k": "LIGHT",
+     "l": "LIGHT \u00b7 approach 3.4 m/s \u00b7 1\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 4,
+   "window": 0,
+   "firstContact": 454,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "G1_LIGHT_mesh.mp4",
+    "colliders": "G1_LIGHT_colliders.mp4"
+   }
+  },
+  "GQ_LIGHT": {
+   "panels": [
+    {
+     "k": "LIGHT",
+     "l": "LIGHT \u00b7 approach 3.4 m/s \u00b7 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 745,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 1,
+   "window": 0,
+   "firstContact": 454,
+   "index": "745 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "GQ_LIGHT_mesh.mp4",
+    "colliders": "GQ_LIGHT_colliders.mp4"
+   }
+  },
+  "K_LIGHT": {
+   "panels": [
+    {
+     "k": "LIGHT_C",
+     "l": "LIGHT \u00b7 approach 3.4 m/s \u00b7 close-up 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 157,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 1,
+   "window": 0,
+   "firstContact": 454,
+   "index": "157 frames: [step, ms after activation, window] first [444, 150, 'active'] last [600, 800, 'active']",
+   "videos": {
+    "mesh": "K_LIGHT_mesh.mp4",
+    "colliders": "K_LIGHT_colliders.mp4"
+   }
+  },
+  "G1_ALL": {
+   "panels": [
+    {
+     "k": "LIGHT",
+     "l": "LIGHT 3.4 m/s",
+     "old": false
+    },
+    {
+     "k": "NOMINAL",
+     "l": "NOMINAL 6.7 m/s",
+     "old": false
+    },
+    {
+     "k": "HEAVY",
+     "l": "HEAVY 8.4 m/s",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    1860,
+    590
+   ],
+   "zoom": 1,
+   "every": 4,
+   "window": 0,
+   "firstContact": 457,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "G1_ALL_mesh.mp4",
+    "colliders": "G1_ALL_colliders.mp4"
+   }
+  },
+  "KL_LIGHT": {
+   "panels": [
+    {
+     "k": "LIGHT",
+     "l": "LIGHT \u00b7 approach 3.4 m/s \u00b7 close-up 1\u00d7 (whole run)",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 4,
+   "window": 0,
+   "firstContact": 454,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "KL_LIGHT_mesh.mp4",
+    "colliders": "KL_LIGHT_colliders.mp4"
+   }
+  },
+  "G1_NOMINAL": {
+   "panels": [
+    {
+     "k": "NOMINAL",
+     "l": "NOMINAL \u00b7 approach 6.7 m/s (K's authored dive speed) \u00b7 1\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 4,
+   "window": 0,
+   "firstContact": 456,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "G1_NOMINAL_mesh.mp4",
+    "colliders": "G1_NOMINAL_colliders.mp4"
+   }
+  },
+  "GQ_NOMINAL": {
+   "panels": [
+    {
+     "k": "NOMINAL",
+     "l": "NOMINAL \u00b7 approach 6.7 m/s (K's authored dive speed) \u00b7 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 745,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 1,
+   "window": 0,
+   "firstContact": 456,
+   "index": "745 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "GQ_NOMINAL_mesh.mp4",
+    "colliders": "GQ_NOMINAL_colliders.mp4"
+   }
+  },
+  "K_NOMINAL": {
+   "panels": [
+    {
+     "k": "NOMINAL_C",
+     "l": "NOMINAL \u00b7 approach 6.7 m/s (K's authored dive speed) \u00b7 close-up 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 157,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 1,
+   "window": 0,
+   "firstContact": 456,
+   "index": "157 frames: [step, ms after activation, window] first [444, 150, 'active'] last [600, 800, 'active']",
+   "videos": {
+    "mesh": "K_NOMINAL_mesh.mp4",
+    "colliders": "K_NOMINAL_colliders.mp4"
+   }
+  },
+  "KL_NOMINAL": {
+   "panels": [
+    {
+     "k": "NOMINAL",
+     "l": "NOMINAL \u00b7 approach 6.7 m/s (K's authored dive speed) \u00b7 close-up 1\u00d7 (whole run)",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 4,
+   "window": 0,
+   "firstContact": 456,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "KL_NOMINAL_mesh.mp4",
+    "colliders": "KL_NOMINAL_colliders.mp4"
+   }
+  },
+  "G1_HEAVY": {
+   "panels": [
+    {
+     "k": "HEAVY",
+     "l": "HEAVY \u00b7 approach 8.4 m/s \u00b7 1\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 4,
+   "window": 0,
+   "firstContact": 457,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "G1_HEAVY_mesh.mp4",
+    "colliders": "G1_HEAVY_colliders.mp4"
+   }
+  },
+  "GQ_HEAVY": {
+   "panels": [
+    {
+     "k": "HEAVY",
+     "l": "HEAVY \u00b7 approach 8.4 m/s \u00b7 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 745,
+   "size": [
+    960,
+    630
+   ],
+   "zoom": 1,
+   "every": 1,
+   "window": 0,
+   "firstContact": 457,
+   "index": "745 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "GQ_HEAVY_mesh.mp4",
+    "colliders": "GQ_HEAVY_colliders.mp4"
+   }
+  },
+  "K_HEAVY": {
+   "panels": [
+    {
+     "k": "HEAVY_C",
+     "l": "HEAVY \u00b7 approach 8.4 m/s \u00b7 close-up 0.25\u00d7",
+     "old": false
+    }
+   ],
+   "frames": 157,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 1,
+   "window": 0,
+   "firstContact": 457,
+   "index": "157 frames: [step, ms after activation, window] first [444, 150, 'active'] last [600, 800, 'active']",
+   "videos": {
+    "mesh": "K_HEAVY_mesh.mp4",
+    "colliders": "K_HEAVY_colliders.mp4"
+   }
+  },
+  "KL_HEAVY": {
+   "panels": [
+    {
+     "k": "HEAVY",
+     "l": "HEAVY \u00b7 approach 8.4 m/s \u00b7 close-up 1\u00d7 (whole run)",
+     "old": false
+    }
+   ],
+   "frames": 187,
+   "size": [
+    840,
+    670
+   ],
+   "zoom": 8,
+   "every": 4,
+   "window": 0,
+   "firstContact": 457,
+   "index": "187 frames: [step, ms after activation, window] first [396, -50, 'parked'] last [1140, 3050, 'active']",
+   "videos": {
+    "mesh": "KL_HEAVY_mesh.mp4",
+    "colliders": "KL_HEAVY_colliders.mp4"
+   }
+  }
+ },
+ "logs": {
+  "a": [
+   "G1_LIGHT_mesh: 187 frames 960\u00d7630 (6.1 s)",
+   "G1_LIGHT_colliders: 187 frames 960\u00d7630 (6.2 s)",
+   "G1_LIGHT exit 0",
+   "GQ_LIGHT_mesh: 745 frames 960\u00d7630 (25.3 s)",
+   "GQ_LIGHT_colliders: 745 frames 960\u00d7630 (25.0 s)",
+   "GQ_LIGHT exit 0",
+   "K_LIGHT_mesh: 157 frames 840\u00d7670 (2.2 s)",
+   "K_LIGHT_colliders: 157 frames 840\u00d7670 (2.2 s)",
+   "K_LIGHT exit 0",
+   "G1_ALL_mesh: 187 frames 1860\u00d7590 (7.6 s)",
+   "G1_ALL_colliders: 187 frames 1860\u00d7590 (8.1 s)",
+   "G1_ALL exit 0",
+   "LANE_DONE",
+   "KL_LIGHT_mesh: 187 frames 840\u00d7670 (3.4 s)",
+   "KL_LIGHT_colliders: 187 frames 840\u00d7670 (3.3 s)"
+  ],
+  "b": [
+   "G1_NOMINAL_mesh: 187 frames 960\u00d7630 (6.4 s)",
+   "G1_NOMINAL_colliders: 187 frames 960\u00d7630 (6.1 s)",
+   "G1_NOMINAL exit 0",
+   "GQ_NOMINAL_mesh: 745 frames 960\u00d7630 (25.0 s)",
+   "GQ_NOMINAL_colliders: 745 frames 960\u00d7630 (25.0 s)",
+   "GQ_NOMINAL exit 0",
+   "K_NOMINAL_mesh: 157 frames 840\u00d7670 (2.5 s)",
+   "K_NOMINAL_colliders: 157 frames 840\u00d7670 (2.6 s)",
+   "K_NOMINAL exit 0",
+   "LANE_DONE",
+   "KL_NOMINAL_mesh: 187 frames 840\u00d7670 (3.4 s)",
+   "KL_NOMINAL_colliders: 187 frames 840\u00d7670 (3.3 s)"
+  ],
+  "c": [
+   "G1_HEAVY_mesh: 187 frames 960\u00d7630 (6.2 s)",
+   "G1_HEAVY_colliders: 187 frames 960\u00d7630 (6.2 s)",
+   "G1_HEAVY exit 0",
+   "GQ_HEAVY_mesh: 745 frames 960\u00d7630 (25.2 s)",
+   "GQ_HEAVY_colliders: 745 frames 960\u00d7630 (25.0 s)",
+   "GQ_HEAVY exit 0",
+   "K_HEAVY_mesh: 157 frames 840\u00d7670 (2.6 s)",
+   "K_HEAVY_colliders: 157 frames 840\u00d7670 (2.6 s)",
+   "K_HEAVY exit 0",
+   "LANE_DONE",
+   "KL_HEAVY_mesh: 187 frames 840\u00d7670 (3.4 s)",
+   "KL_HEAVY_colliders: 187 frames 840\u00d7670 (3.3 s)"
+  ]
+ }
+}

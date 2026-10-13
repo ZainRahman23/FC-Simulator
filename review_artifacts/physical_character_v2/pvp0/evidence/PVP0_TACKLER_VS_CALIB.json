@@ -1,0 +1,102 @@
+{
+ "protocol": "PVP-0 tackler contact vs no-contact (CALIB)",
+ "tacklerMassKg": 78.91,
+ "cases": {
+  "CALIB": {
+   "vBefore": [
+    -0.27,
+    -4.86,
+    -6.7
+   ],
+   "vAfter100ms": [
+    0.48,
+    0.25,
+    -3.7
+   ],
+   "dvHorizMs": 3.09,
+   "travelM": 2.95,
+   "lateralM": 0.33,
+   "stopSAfterActivation": 1.058
+  },
+  "LIGHT": {
+   "vBefore": [
+    -0.13,
+    -4.85,
+    -3.33
+   ],
+   "vAfter100ms": [
+    0.29,
+    0.25,
+    -0.79
+   ],
+   "dvHorizMs": 2.57,
+   "travelM": 0.82,
+   "lateralM": 0.12,
+   "stopSAfterActivation": 0.667
+  },
+  "NOMINAL": {
+   "vBefore": [
+    -0.27,
+    -4.86,
+    -6.7
+   ],
+   "vAfter100ms": [
+    0.46,
+    0.07,
+    -3.52
+   ],
+   "dvHorizMs": 3.27,
+   "travelM": 2.14,
+   "lateralM": 0.38,
+   "stopSAfterActivation": 1.108
+  },
+  "HEAVY": {
+   "vBefore": [
+    -0.34,
+    -4.86,
+    -8.39
+   ],
+   "vAfter100ms": [
+    0.46,
+    0.07,
+    -4.93
+   ],
+   "dvHorizMs": 3.55,
+   "travelM": 2.9,
+   "lateralM": 0.19,
+   "stopSAfterActivation": 0.833
+  }
+ },
+ "limbDeflectionNominalVsCalibDeg": {
+  "hip_R": {
+   "preContact": 0,
+   "peak50ms": 3,
+   "peak100ms": 5,
+   "peak300ms": 18.8
+  },
+  "knee_R": {
+   "preContact": 0,
+   "peak50ms": 18.9,
+   "peak100ms": 18.9,
+   "peak300ms": 43.1
+  },
+  "ankle_R": {
+   "preContact": 0,
+   "peak50ms": 53.3,
+   "peak100ms": 53.3,
+   "peak300ms": 67.9
+  },
+  "hip_L": {
+   "preContact": 0,
+   "peak50ms": 2.7,
+   "peak100ms": 3.2,
+   "peak300ms": 19.3
+  },
+  "knee_L": {
+   "preContact": 0,
+   "peak50ms": 1.5,
+   "peak100ms": 1.5,
+   "peak300ms": 10.8
+  }
+ }
+}

@@ -1,0 +1,17 @@
+// PVP-0 detail (read-only): per strength, time traces every 0.1 s from the tackler's activation — recipient COM offset from the twin (mm), pelvis
+// drop (mm), foot loads (N), cross-contact force on the recipient (N, per step) and the recipient's struck-side ankle / knee / hip deviation (deg);
+// the joints with hard-limit excess (> 1°) for each character (peak, which joint, when); the CPU breakdown (ms per step).
+// usage (worktree root): node .../pvp0_detail.mjs --dir <records dir> --out <json>
+import fs from "fs"; import zlib from "zlib"; import path from "path";
+const RA = new URL("../../", import.meta.url).href, PL = await import(RA + "pvp1/scripts/pvp1a_lib.mjs"), { V } = PL, SR = PL.SPEC_R(), ST = PL.SPEC_T();
+const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, DIR = arg("dir"), load = (k) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(DIR, k + ".json.gz"))));
+const TW = load("TWIN"), out = {}, D2R = Math.PI / 180, KEYS = ["x", "y", "z"];
+const limits = (spec, th, k) => { const j = spec.joints[k]; let ex = 0, ax = null; for (let i = 0; i < 3; i++) { if (j.locked && j.locked.includes(KEYS[i])) continue; const e = Math.max(j.limits.hard.lo[i] - th[i], th[i] - j.limits.hard.hi[i], 0); if (e > ex) { ex = e; ax = j.def.axes[KEYS[i]] ? j.def.axes[KEYS[i]].key : KEYS[i]; } } return [ex / D2R, ax]; };
+for (const cse of ["LIGHT", "NOMINAL", "HEAVY"]) { const o = load(cse), R = o.recs, A = o.setup.activate, n = Math.min(R.length, TW.recs.length), jk = (nm) => SR.joints.findIndex(j => j.name === nm);
+  const trace = []; for (let q = A; q < n; q += 24) { const r = R[q], t = TW.recs[q], cross = (r.contacts || []).filter(m => m.kind === "cross"), F = cross.reduce((s, m) => s + m.Jn, 0) * 240;
+    const dev = (nm) => Math.max(...[0, 1, 2].map(i => Math.abs(r.chars.runner.th[jk(nm)][i] - t.chars.runner.th[jk(nm)][i]))) / D2R;
+    trace.push({ t: +((q - A) / 240).toFixed(1), comMm: +(V.len(V.sub(r.chars.runner.com, t.chars.runner.com)) * 1000).toFixed(0), dropMm: +((t.S[0].pos[1] - r.S[0].pos[1]) * 1000).toFixed(0), feetN: [+(r.chars.runner.feet.L * 240).toFixed(0), +(r.chars.runner.feet.R * 240).toFixed(0)], crossN: +F.toFixed(0), ankleL: +dev("ankle_L").toFixed(1), kneeL: +dev("knee_L").toFixed(1), hipL: +dev("hip_L").toFixed(1) }); }
+  const lim = { recipient: {}, tackler: {} }; for (let q = A; q < n; q++) for (const [who, spec] of [["recipient", SR], ["tackler", ST]]) { const th = R[q].chars[who === "recipient" ? "runner" : "tackler"].th; spec.joints.forEach((j, k) => { const [e, ax] = limits(spec, th[k], k); if (e > 1 && (!lim[who][j.name] || e > lim[who][j.name].peakDeg)) lim[who][j.name] = { peakDeg: +e.toFixed(1), axis: ax, atS: +((q - A) / 240).toFixed(2) }; }); }
+  const cpu = o.cpu, N = R.length; out[cse] = { trace, hardLimitExcess: lim, cpuMsPerStep: Object.fromEntries(Object.entries(cpu).map(([k, v]) => [k, +(v / N).toFixed(3)])), wallMsPerStep: +(o.wallMs / N).toFixed(3) }; }
+fs.writeFileSync(arg("out"), JSON.stringify(out, null, 1));
+for (const [k, c] of Object.entries(out)) { console.log("=====", k, "cpu ms/step", JSON.stringify(c.cpuMsPerStep), "wall", c.wallMsPerStep); console.log(" limits", JSON.stringify(c.hardLimitExcess)); console.log(" trace", c.trace.slice(0, 26).map(x => `${x.t}:${x.comMm}mm/d${x.dropMm}/F${x.crossN}/f${x.feetN.join(",")}/a${x.ankleL}k${x.kneeL}h${x.hipL}`).join("  ")); }
