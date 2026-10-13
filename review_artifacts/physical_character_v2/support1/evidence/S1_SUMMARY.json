@@ -1,0 +1,951 @@
+{
+ "pvp0": {
+  "LIGHT": {
+   "firstContactT": 0.192,
+   "strikeDir": {
+    "forward": -0.279,
+    "towardLeft": -0.959
+   },
+   "struck": {
+    "slipMm": 31.2,
+    "peakRatio": 1.2,
+    "peakN": 1144,
+    "maxRollDeg": 35.6,
+    "unloadS": null
+   },
+   "far": {
+    "slipMm": 0,
+    "peakRatio": 0.172,
+    "peakN": 750,
+    "maxRollDeg": 0,
+    "maxYawDeg": 0,
+    "unloadS": null,
+    "liftS": null
+   },
+   "downwardPins": [
+    {
+     "pair": "shank_L<foot_R",
+     "downNs": 20.8,
+     "horizNs": 412.2
+    },
+    {
+     "pair": "foot_L<foot_R",
+     "downNs": 333.8,
+     "horizNs": 111
+    }
+   ]
+  },
+  "NOMINAL": {
+   "firstContactT": 0.2,
+   "strikeDir": {
+    "forward": -0.258,
+    "towardLeft": -0.965
+   },
+   "struck": {
+    "slipMm": 524.3,
+    "peakRatio": 1.213,
+    "peakN": 7216,
+    "maxRollDeg": 54.7,
+    "unloadS": 0.233
+   },
+   "far": {
+    "slipMm": 89.8,
+    "peakRatio": 1.2,
+    "peakN": 1840,
+    "maxRollDeg": 75.6,
+    "maxYawDeg": 150.2,
+    "unloadS": 0.767,
+    "liftS": 1.354
+   },
+   "downwardPins": [
+    {
+     "pair": "foot_L<foot_R",
+     "downNs": 273.7,
+     "horizNs": 86.2
+    }
+   ]
+  },
+  "HEAVY": {
+   "firstContactT": 0.204,
+   "strikeDir": {
+    "forward": -0.24,
+    "towardLeft": -0.97
+   },
+   "struck": {
+    "slipMm": 1042.7,
+    "peakRatio": 1.202,
+    "peakN": 3430,
+    "maxRollDeg": 60.9,
+    "unloadS": 0.225
+   },
+   "far": {
+    "slipMm": 88.2,
+    "peakRatio": 1.2,
+    "peakN": 3763,
+    "maxRollDeg": 43.7,
+    "maxYawDeg": 40.1,
+    "unloadS": 0.313,
+    "liftS": 1.542
+   },
+   "downwardPins": [
+    {
+     "pair": "foot_R<thigh_R",
+     "downNs": 246.7,
+     "horizNs": 169.1
+    },
+    {
+     "pair": "foot_L<foot_R",
+     "downNs": 111.8,
+     "horizNs": 47.1
+    }
+   ]
+  }
+ },
+ "compare": {
+  "V2": {
+   "describe": "current V2 recipient: frozen C3 on canonical M1b, frozen contact model (boot|turf 1.2)",
+   "runs": 341,
+   "twinHash": "8ef0ed97f8abe751",
+   "determinism": {
+    "twin": [
+     "8ef0ed97f8abe751",
+     "8ef0ed97f8abe751"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "4d5bf4969ad0114e",
+     "4d5bf4969ad0114e"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.69,
+    "stop": null
+   },
+   "cpuMsPerStep": 0.853,
+   "classes": {
+    "ABS": 44,
+    "DISP": 75,
+    "FAST": 115,
+    "SLOW": 107
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 54,
+     "FAST": 91,
+     "SLOW": 79
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 7,
+     "SLOW": 5
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 6,
+     "FAST": 14,
+     "SLOW": 6
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 1,
+     "SLOW": 6
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 2,
+     "SLOW": 11
+    }
+   },
+   "transitionsFromV2": {},
+   "meanFallShiftS": 0,
+   "meanStruckKneeYield05Deg": 15.541,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 48.915,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 132,
+    "mid": 18,
+    "hinged": 72
+   },
+   "maxHardExcDeg": 20.73,
+   "maxSelfPenMm": 39.57,
+   "maxTurfPenMm": 11.26,
+   "maxSepMm": 14.178,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "C3SC": {
+   "describe": "C3 + support confidence (per-leg loadability from the leg's own sensed load / slip / tilt scales that leg's stance intent)",
+   "runs": 341,
+   "twinHash": "be53de393f86d203",
+   "determinism": {
+    "twin": [
+     "be53de393f86d203",
+     "be53de393f86d203"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "769a3ec5b7a0246a",
+     "769a3ec5b7a0246a"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.85,
+    "comXZRangeMm": 2.63,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.434,
+   "classes": {
+    "ABS": 44,
+    "DISP": 66,
+    "FAST": 125,
+    "SLOW": 106
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 47,
+     "FAST": 101,
+     "SLOW": 76
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 7,
+     "SLOW": 5
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 5,
+     "FAST": 14,
+     "SLOW": 7
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 1,
+     "FAST": 1,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 2,
+     "SLOW": 11
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→SLOW": 10,
+    "SLOW→FAST": 10,
+    "SLOW→DISP": 1
+   },
+   "meanFallShiftS": -0.079,
+   "meanStruckKneeYield05Deg": 17.203,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 47.963,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 138,
+    "mid": 25,
+    "hinged": 68
+   },
+   "maxHardExcDeg": 20.34,
+   "maxSelfPenMm": 39.41,
+   "maxTurfPenMm": 10.55,
+   "maxSepMm": 11.705,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "C3UR": {
+   "describe": "C3 + unloading response to sudden ankle rotation (Konradsen & Ravn 1990; 67 ms proprioceptive channel; graded 85–300 °/s; stance intent withdrawn; peroneal reflex 0.3 × capacity)",
+   "runs": 341,
+   "twinHash": "8ef0ed97f8abe751",
+   "determinism": {
+    "twin": [
+     "8ef0ed97f8abe751",
+     "8ef0ed97f8abe751"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "4d5bf4969ad0114e",
+     "4d5bf4969ad0114e"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.69,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.428,
+   "classes": {
+    "ABS": 44,
+    "DISP": 58,
+    "FAST": 121,
+    "SLOW": 118
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 41,
+     "FAST": 96,
+     "SLOW": 87
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 8,
+     "SLOW": 4
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 4,
+     "FAST": 14,
+     "SLOW": 8
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 1,
+     "FAST": 1,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 2,
+     "SLOW": 12
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→SLOW": 17,
+    "SLOW→FAST": 6
+   },
+   "meanFallShiftS": -0.059,
+   "meanStruckKneeYield05Deg": 16.262,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 48.132,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 142,
+    "mid": 16,
+    "hinged": 81
+   },
+   "maxHardExcDeg": 22.21,
+   "maxSelfPenMm": 39.57,
+   "maxTurfPenMm": 11.25,
+   "maxSepMm": 13.983,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "LDG": {
+   "describe": "V2 + load-dependent studded-boot traction (Blackburn 2012 fit, µ 2.7 cap) + natural-grass divot cap 3 kN per foot",
+   "runs": 341,
+   "twinHash": "86bb13185bbc3647",
+   "determinism": {
+    "twin": [
+     "86bb13185bbc3647",
+     "86bb13185bbc3647"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "774cbefb4d9e65a8",
+     "774cbefb4d9e65a8"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.7,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.289,
+   "classes": {
+    "ABS": 64,
+    "DISP": 95,
+    "FAST": 76,
+    "SLOW": 106
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 44,
+     "DISP": 63,
+     "FAST": 63,
+     "SLOW": 82
+    },
+    "SLIDE": {
+     "ABS": 3,
+     "DISP": 17,
+     "FAST": 1,
+     "SLOW": 3
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 7,
+     "FAST": 10,
+     "SLOW": 9
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 1,
+     "SLOW": 5
+    },
+    "LOAD": {
+     "ABS": 3,
+     "DISP": 5,
+     "FAST": 1,
+     "SLOW": 7
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→ABS": 19,
+    "SLOW→DISP": 28,
+    "FAST→DISP": 11,
+    "FAST→SLOW": 29,
+    "SLOW→FAST": 1,
+    "DISP→SLOW": 1,
+    "ABS→DISP": 1,
+    "SLOW→ABS": 2
+   },
+   "meanFallShiftS": 0.147,
+   "meanStruckKneeYield05Deg": 15.706,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 40.444,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 96,
+    "mid": 22,
+    "hinged": 64
+   },
+   "maxHardExcDeg": 20.78,
+   "maxSelfPenMm": 40.64,
+   "maxTurfPenMm": 9.74,
+   "maxSepMm": 39.443,
+   "stops": []
+  },
+  "LDG_C3UR": {
+   "describe": "LDG contact model + C3-UR controller",
+   "runs": 341,
+   "twinHash": "86bb13185bbc3647",
+   "determinism": {
+    "twin": [
+     "86bb13185bbc3647",
+     "86bb13185bbc3647"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "94cb03d5d7cdacea",
+     "94cb03d5d7cdacea"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.7,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.431,
+   "classes": {
+    "ABS": 63,
+    "DISP": 72,
+    "FAST": 84,
+    "SLOW": 122
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 43,
+     "DISP": 46,
+     "FAST": 72,
+     "SLOW": 91
+    },
+    "SLIDE": {
+     "ABS": 3,
+     "DISP": 16,
+     "FAST": 1,
+     "SLOW": 4
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 6,
+     "FAST": 10,
+     "SLOW": 10
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 0,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 3,
+     "DISP": 2,
+     "FAST": 1,
+     "SLOW": 10
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→ABS": 18,
+    "SLOW→DISP": 21,
+    "FAST→DISP": 10,
+    "FAST→SLOW": 29,
+    "DISP→SLOW": 17,
+    "SLOW→FAST": 8,
+    "ABS→DISP": 1,
+    "SLOW→ABS": 2
+   },
+   "meanFallShiftS": 0.107,
+   "meanStruckKneeYield05Deg": 17.452,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 39.884,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 104,
+    "mid": 18,
+    "hinged": 84
+   },
+   "maxHardExcDeg": 23.69,
+   "maxSelfPenMm": 40.64,
+   "maxTurfPenMm": 7.55,
+   "maxSepMm": 23.971,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  }
+ },
+ "labV2": {
+  "twinQuiet": {
+   "pelvisYRangeMm": 0.8,
+   "comXZRangeMm": 2.69,
+   "stop": null
+  },
+  "determinism": {
+   "twin": [
+    "8ef0ed97f8abe751",
+    "8ef0ed97f8abe751"
+   ],
+   "disturbed": [
+    "G_L_h5_m8_v2",
+    "4d5bf4969ad0114e",
+    "4d5bf4969ad0114e"
+   ]
+  },
+  "runs": 341,
+  "fallOnset": {
+   "L_h5": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "L_h15": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "L_h30": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "L_h45": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 240,
+    "n": 12
+   },
+   "PVP_h30": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "R_h5": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "R_h15": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "R_h30": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "R_h45": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 240,
+    "n": 12
+   },
+   "B_h5": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "B_h15": {
+    "lowestFallingMomentumNs": 120,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "B_h30": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 240,
+    "n": 12
+   },
+   "B_h45": {
+    "lowestFallingMomentumNs": 32,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "F_h5": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 160,
+    "n": 12
+   },
+   "F_h15": {
+    "lowestFallingMomentumNs": 32,
+    "lowestFastFallMomentumNs": 160,
+    "n": 12
+   },
+   "F_h30": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "F_h45": {
+    "lowestFallingMomentumNs": 32,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "BL_h5": {
+    "lowestFallingMomentumNs": 48,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "BL_h15": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "BL_h30": {
+    "lowestFallingMomentumNs": 80,
+    "lowestFastFallMomentumNs": 120,
+    "n": 12
+   },
+   "BL_h45": {
+    "lowestFallingMomentumNs": 40,
+    "lowestFastFallMomentumNs": 240,
+    "n": 12
+   }
+  },
+  "replay": {
+   "R_LIGHT_FULL": {
+    "cls": "DISPLACED-RECOVERED",
+    "fallS": null,
+    "impulseNs": 434.435,
+    "footL": 0.071,
+    "footR": 0
+   },
+   "R_LIGHT_HORIZ": {
+    "cls": "FALL",
+    "fallS": 0.608,
+    "impulseNs": 341.49,
+    "footL": 2.671,
+    "footR": 0.493
+   },
+   "R_LIGHT_STRIKE": {
+    "cls": "DISPLACED-RECOVERED",
+    "fallS": null,
+    "impulseNs": 75.766,
+    "footL": 0.032,
+    "footR": 0
+   },
+   "R_NOMINAL_FULL": {
+    "cls": "FALL",
+    "fallS": 0.958,
+    "impulseNs": 342.208,
+    "footL": 1.165,
+    "footR": 0.631
+   },
+   "R_NOMINAL_HORIZ": {
+    "cls": "FALL",
+    "fallS": 0.504,
+    "impulseNs": 342.194,
+    "footL": 2.59,
+    "footR": 0.606
+   },
+   "R_NOMINAL_STRIKE": {
+    "cls": "FALL",
+    "fallS": 1.633,
+    "impulseNs": 73.74,
+    "footL": 0.618,
+    "footR": 1.007
+   },
+   "R_HEAVY_FULL": {
+    "cls": "FALL",
+    "fallS": 0.842,
+    "impulseNs": 417.168,
+    "footL": 1.953,
+    "footR": 2.117
+   },
+   "R_HEAVY_HORIZ": {
+    "cls": "FALL",
+    "fallS": 0.229,
+    "impulseNs": 213.054,
+    "footL": 1.252,
+    "footR": 0.705
+   },
+   "R_HEAVY_STRIKE": {
+    "cls": "FALL",
+    "fallS": 0.9,
+    "impulseNs": 82.82,
+    "footL": 1.255,
+    "footR": 1.54
+   }
+  }
+ },
+ "regress": {
+  "C3SC": {
+   "pass": false,
+   "nPass": 16,
+   "n": 17,
+   "failed": [
+    "P8"
+   ],
+   "thresholds": {
+    "fwd": 12.09,
+    "back": 20.23,
+    "left": 26.61,
+    "right": 27.34
+   },
+   "uHash": "433292114f1077e2",
+   "det": true,
+   "sway": {
+    "AP": 3.037437740664135,
+    "ML": 5.970421348301067
+   },
+   "wallS": 141.228
+  },
+  "C3UR": {
+   "pass": false,
+   "nPass": 16,
+   "n": 17,
+   "failed": [
+    "P8"
+   ],
+   "thresholds": {
+    "fwd": 12.09,
+    "back": 20.23,
+    "left": 25.88,
+    "right": 26.61
+   },
+   "uHash": "bf92ac5126c188af",
+   "det": true,
+   "sway": {
+    "AP": 3.033410438651647,
+    "ML": 6.2046754272606846
+   },
+   "wallS": 293.827
+  },
+  "LDG": {
+   "pass": false,
+   "nPass": 16,
+   "n": 17,
+   "failed": [
+    "P8"
+   ],
+   "thresholds": {
+    "fwd": 12.09,
+    "back": 20.23,
+    "left": 25.16,
+    "right": 28.07
+   },
+   "uHash": "961f2e9916fd6f05",
+   "det": true,
+   "sway": {
+    "AP": 3.033312631749115,
+    "ML": 6.20675380167685
+   },
+   "wallS": 292.208
+  },
+  "LDG_C3UR": {
+   "pass": false,
+   "nPass": 16,
+   "n": 17,
+   "failed": [
+    "P8"
+   ],
+   "thresholds": {
+    "fwd": 12.09,
+    "back": 20.23,
+    "left": 25.16,
+    "right": 26.61
+   },
+   "uHash": "961f2e9916fd6f05",
+   "det": true,
+   "sway": {
+    "AP": 3.033312631749115,
+    "ML": 6.20675380167685
+   },
+   "wallS": 161.869
+  },
+  "V2": {
+   "pass": false,
+   "nPass": 16,
+   "n": 17,
+   "failed": [
+    "P8"
+   ],
+   "thresholds": {
+    "fwd": 12.09,
+    "back": 20.23,
+    "left": 25.88,
+    "right": 26.61
+   },
+   "uHash": "bf92ac5126c188af",
+   "det": true,
+   "sway": {
+    "AP": 3.033410438651647,
+    "ML": 6.2046754272606846
+   },
+   "wallS": 286.121
+  }
+ },
+ "slider": {
+  "SLIDER_v5": {
+   "hash": "018cf4c760611a5f",
+   "speed": 5,
+   "firstContactT": 0.071,
+   "fallT": 0.733,
+   "trace": [
+    {
+     "t": 0.1,
+     "pelvisY": 0.924,
+     "footLdz": -0.11,
+     "footRdz": 0,
+     "comDz": -0.01,
+     "NL": 21,
+     "NR": 169
+    },
+    {
+     "t": 0.2,
+     "pelvisY": 0.907,
+     "footLdz": -0.41,
+     "footRdz": -0.06,
+     "comDz": -0.03,
+     "NL": 23,
+     "NR": 100
+    },
+    {
+     "t": 0.3,
+     "pelvisY": 0.854,
+     "footLdz": -0.54,
+     "footRdz": -0.16,
+     "comDz": -0.05,
+     "NL": 494,
+     "NR": 147
+    },
+    {
+     "t": 0.4,
+     "pelvisY": 0.843,
+     "footLdz": -0.55,
+     "footRdz": -0.18,
+     "comDz": -0.03,
+     "NL": 674,
+     "NR": 65
+    },
+    {
+     "t": 0.6,
+     "pelvisY": 0.807,
+     "footLdz": -0.55,
+     "footRdz": -0.15,
+     "comDz": 0.09,
+     "NL": 726,
+     "NR": 85
+    },
+    {
+     "t": 1,
+     "pelvisY": 0.553,
+     "footLdz": -0.43,
+     "footRdz": 0.16,
+     "comDz": 0.67,
+     "NL": 96,
+     "NR": 0
+    }
+   ],
+   "maxCrossPenMm": 8.8,
+   "recipientHardExcDeg": 3.83,
+   "sliderHardExcDeg": 9.44,
+   "eqOppMax": 0
+  },
+  "SLIDER_v6.74": {
+   "hash": "b25add1c5ecf2afa",
+   "speed": 6.74,
+   "firstContactT": 0.054,
+   "fallT": 0.3,
+   "trace": [
+    {
+     "t": 0.1,
+     "pelvisY": 0.923,
+     "footLdz": -0.28,
+     "footRdz": 0,
+     "comDz": -0.02,
+     "NL": 10,
+     "NR": 135
+    },
+    {
+     "t": 0.2,
+     "pelvisY": 0.888,
+     "footLdz": -0.58,
+     "footRdz": -0.29,
+     "comDz": -0.06,
+     "NL": 0,
+     "NR": 66
+    },
+    {
+     "t": 0.3,
+     "pelvisY": 0.753,
+     "footLdz": -0.81,
+     "footRdz": -0.56,
+     "comDz": -0.11,
+     "NL": 0,
+     "NR": 0
+    },
+    {
+     "t": 0.4,
+     "pelvisY": 0.553,
+     "footLdz": -1,
+     "footRdz": -0.75,
+     "comDz": -0.19,
+     "NL": 201,
+     "NR": 0
+    },
+    {
+     "t": 0.6,
+     "pelvisY": 0.261,
+     "footLdz": -1.07,
+     "footRdz": -0.65,
+     "comDz": -0.14,
+     "NL": 81,
+     "NR": 0
+    },
+    {
+     "t": 1,
+     "pelvisY": 0.256,
+     "footLdz": -1.02,
+     "footRdz": -0.57,
+     "comDz": -0.02,
+     "NL": 11,
+     "NR": 139
+    }
+   ],
+   "maxCrossPenMm": 6.17,
+   "recipientHardExcDeg": 22.53,
+   "sliderHardExcDeg": 3.71,
+   "eqOppMax": 0
+  }
+ }
+}

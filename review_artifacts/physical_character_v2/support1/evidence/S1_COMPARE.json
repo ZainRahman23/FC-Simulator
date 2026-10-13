@@ -1,0 +1,418 @@
+{
+ "cands": {
+  "V2": {
+   "describe": "current V2 recipient: frozen C3 on canonical M1b, frozen contact model (boot|turf 1.2)",
+   "runs": 341,
+   "twinHash": "8ef0ed97f8abe751",
+   "determinism": {
+    "twin": [
+     "8ef0ed97f8abe751",
+     "8ef0ed97f8abe751"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "4d5bf4969ad0114e",
+     "4d5bf4969ad0114e"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.69,
+    "stop": null
+   },
+   "cpuMsPerStep": 0.853,
+   "classes": {
+    "ABS": 44,
+    "DISP": 75,
+    "FAST": 115,
+    "SLOW": 107
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 54,
+     "FAST": 91,
+     "SLOW": 79
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 7,
+     "SLOW": 5
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 6,
+     "FAST": 14,
+     "SLOW": 6
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 1,
+     "SLOW": 6
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 2,
+     "SLOW": 11
+    }
+   },
+   "transitionsFromV2": {},
+   "meanFallShiftS": 0,
+   "meanStruckKneeYield05Deg": 15.541,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 48.915,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 132,
+    "mid": 18,
+    "hinged": 72
+   },
+   "maxHardExcDeg": 20.73,
+   "maxSelfPenMm": 39.57,
+   "maxTurfPenMm": 11.26,
+   "maxSepMm": 14.178,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "C3SC": {
+   "describe": "C3 + support confidence (per-leg loadability from the leg's own sensed load / slip / tilt scales that leg's stance intent)",
+   "runs": 341,
+   "twinHash": "be53de393f86d203",
+   "determinism": {
+    "twin": [
+     "be53de393f86d203",
+     "be53de393f86d203"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "769a3ec5b7a0246a",
+     "769a3ec5b7a0246a"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.85,
+    "comXZRangeMm": 2.63,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.434,
+   "classes": {
+    "ABS": 44,
+    "DISP": 66,
+    "FAST": 125,
+    "SLOW": 106
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 47,
+     "FAST": 101,
+     "SLOW": 76
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 7,
+     "SLOW": 5
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 5,
+     "FAST": 14,
+     "SLOW": 7
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 1,
+     "FAST": 1,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 2,
+     "SLOW": 11
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→SLOW": 10,
+    "SLOW→FAST": 10,
+    "SLOW→DISP": 1
+   },
+   "meanFallShiftS": -0.079,
+   "meanStruckKneeYield05Deg": 17.203,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 47.963,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 138,
+    "mid": 25,
+    "hinged": 68
+   },
+   "maxHardExcDeg": 20.34,
+   "maxSelfPenMm": 39.41,
+   "maxTurfPenMm": 10.55,
+   "maxSepMm": 11.705,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "C3UR": {
+   "describe": "C3 + unloading response to sudden ankle rotation (Konradsen & Ravn 1990; 67 ms proprioceptive channel; graded 85–300 °/s; stance intent withdrawn; peroneal reflex 0.3 × capacity)",
+   "runs": 341,
+   "twinHash": "8ef0ed97f8abe751",
+   "determinism": {
+    "twin": [
+     "8ef0ed97f8abe751",
+     "8ef0ed97f8abe751"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "4d5bf4969ad0114e",
+     "4d5bf4969ad0114e"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.69,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.428,
+   "classes": {
+    "ABS": 44,
+    "DISP": 58,
+    "FAST": 121,
+    "SLOW": 118
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 28,
+     "DISP": 41,
+     "FAST": 96,
+     "SLOW": 87
+    },
+    "SLIDE": {
+     "ABS": 2,
+     "DISP": 10,
+     "FAST": 8,
+     "SLOW": 4
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 4,
+     "FAST": 14,
+     "SLOW": 8
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 1,
+     "FAST": 1,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 2,
+     "SLOW": 12
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→SLOW": 17,
+    "SLOW→FAST": 6
+   },
+   "meanFallShiftS": -0.059,
+   "meanStruckKneeYield05Deg": 16.262,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 48.132,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 142,
+    "mid": 16,
+    "hinged": 81
+   },
+   "maxHardExcDeg": 22.21,
+   "maxSelfPenMm": 39.57,
+   "maxTurfPenMm": 11.25,
+   "maxSepMm": 13.983,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  },
+  "LDG": {
+   "describe": "V2 + load-dependent studded-boot traction (Blackburn 2012 fit, µ 2.7 cap) + natural-grass divot cap 3 kN per foot",
+   "runs": 341,
+   "twinHash": "86bb13185bbc3647",
+   "determinism": {
+    "twin": [
+     "86bb13185bbc3647",
+     "86bb13185bbc3647"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "774cbefb4d9e65a8",
+     "774cbefb4d9e65a8"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.7,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.289,
+   "classes": {
+    "ABS": 64,
+    "DISP": 95,
+    "FAST": 76,
+    "SLOW": 106
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 44,
+     "DISP": 63,
+     "FAST": 63,
+     "SLOW": 82
+    },
+    "SLIDE": {
+     "ABS": 3,
+     "DISP": 17,
+     "FAST": 1,
+     "SLOW": 3
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 7,
+     "FAST": 10,
+     "SLOW": 9
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 3,
+     "FAST": 1,
+     "SLOW": 5
+    },
+    "LOAD": {
+     "ABS": 3,
+     "DISP": 5,
+     "FAST": 1,
+     "SLOW": 7
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→ABS": 19,
+    "SLOW→DISP": 28,
+    "FAST→DISP": 11,
+    "FAST→SLOW": 29,
+    "SLOW→FAST": 1,
+    "DISP→SLOW": 1,
+    "ABS→DISP": 1,
+    "SLOW→ABS": 2
+   },
+   "meanFallShiftS": 0.147,
+   "meanStruckKneeYield05Deg": 15.706,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 40.444,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 96,
+    "mid": 22,
+    "hinged": 64
+   },
+   "maxHardExcDeg": 20.78,
+   "maxSelfPenMm": 40.64,
+   "maxTurfPenMm": 9.74,
+   "maxSepMm": 39.443,
+   "stops": []
+  },
+  "LDG_C3UR": {
+   "describe": "LDG contact model + C3-UR controller",
+   "runs": 341,
+   "twinHash": "86bb13185bbc3647",
+   "determinism": {
+    "twin": [
+     "86bb13185bbc3647",
+     "86bb13185bbc3647"
+    ],
+    "disturbed": [
+     "G_L_h5_m8_v2",
+     "94cb03d5d7cdacea",
+     "94cb03d5d7cdacea"
+    ]
+   },
+   "twinQuiet": {
+    "pelvisYRangeMm": 0.8,
+    "comXZRangeMm": 2.7,
+    "stop": null
+   },
+   "cpuMsPerStep": 2.431,
+   "classes": {
+    "ABS": 63,
+    "DISP": 72,
+    "FAST": 84,
+    "SLOW": 122
+   },
+   "byFamily": {
+    "GRID": {
+     "ABS": 43,
+     "DISP": 46,
+     "FAST": 72,
+     "SLOW": 91
+    },
+    "SLIDE": {
+     "ABS": 3,
+     "DISP": 16,
+     "FAST": 1,
+     "SLOW": 4
+    },
+    "PULSE": {
+     "ABS": 14,
+     "DISP": 6,
+     "FAST": 10,
+     "SLOW": 10
+    },
+    "REPLAY": {
+     "ABS": 0,
+     "DISP": 2,
+     "FAST": 0,
+     "SLOW": 7
+    },
+    "LOAD": {
+     "ABS": 3,
+     "DISP": 2,
+     "FAST": 1,
+     "SLOW": 10
+    }
+   },
+   "transitionsFromV2": {
+    "DISP→ABS": 18,
+    "SLOW→DISP": 21,
+    "FAST→DISP": 10,
+    "FAST→SLOW": 29,
+    "DISP→SLOW": 17,
+    "SLOW→FAST": 8,
+    "ABS→DISP": 1,
+    "SLOW→ABS": 2
+   },
+   "meanFallShiftS": 0.107,
+   "meanStruckKneeYield05Deg": 17.452,
+   "meanStruckKneeYieldV2": 15.541,
+   "meanPelvisRot06Deg": 39.884,
+   "meanPelvisRotV2": 48.915,
+   "fallsSlicedMidHinged": {
+    "sliced": 104,
+    "mid": 18,
+    "hinged": 84
+   },
+   "maxHardExcDeg": 23.69,
+   "maxSelfPenMm": 40.64,
+   "maxTurfPenMm": 7.55,
+   "maxSepMm": 23.971,
+   "stops": [
+    "R_HEAVY_HORIZ"
+   ]
+  }
+ },
+ "note": "classes: ABS absorbed (no foot moved > 2 cm, COM < 5 cm), DISP displaced and recovered, FAST fall < 0.5 s, SLOW fall ≥ 0.5 s after contact"
+}

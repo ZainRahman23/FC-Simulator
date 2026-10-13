@@ -1,0 +1,1241 @@
+{
+ "candidate": "LDG",
+ "describe": "V2 + load-dependent studded-boot traction (Blackburn 2012 fit, µ 2.7 cap) + natural-grass divot cap 3 kN per foot",
+ "contactPatch": true,
+ "ctrl": [
+  "file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/review_artifacts/physical_character_v2/balance2/c3/c3_ctrl.mjs",
+  "C3Controller"
+ ],
+ "wallS": 292.208,
+ "verdict": {
+  "label": "SUPPORT-1 LDG",
+  "criteria": "B2F",
+  "pass": false,
+  "nPass": 16,
+  "n": 17,
+  "failed": [
+   "P8"
+  ],
+  "results": {
+   "U1": {
+    "pass": true,
+    "value": "stood 60 s"
+   },
+   "U2": {
+    "pass": true,
+    "value": {
+     "feet": [
+      710.4,
+      740.4
+     ],
+     "pen": 0.007,
+     "sep": 0.004,
+     "copOff": 2.11,
+     "pelvis": 0.123,
+     "com": 0.301,
+     "drift": 0.215
+    }
+   },
+   "U3": {
+    "pass": true,
+    "value": {
+     "maxJointMeanDeg": 0.62,
+     "pelvisMeanDropMm": 0.73,
+     "comMeanShiftMm": 1.19
+    }
+   },
+   "U4": {
+    "pass": true,
+    "value": {
+     "comAP": 1.38,
+     "comML": 1.03,
+     "copAP": 3.12,
+     "copML": 6.35,
+     "freqHz": 0.51
+    }
+   },
+   "U5": {
+    "pass": true,
+    "value": {
+     "sepMax": 0.014,
+     "penMax": 0.769
+    }
+   },
+   "U6": {
+    "pass": true,
+    "value": {
+     "ankle_L.df": 0.235,
+     "ankle_R.df": 0.245,
+     "knee_L.flex": 0.307,
+     "knee_R.flex": 0.321,
+     "hip_L.flex": 0.216,
+     "hip_R.flex": 0.24,
+     "neck.flex": 0.438
+    }
+   },
+   "P5": {
+    "pass": true,
+    "value": {
+     "fwd.small": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "fwd.moderate": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "fwd.limit": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "fwd.over": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "back.small": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "back.moderate": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "back.limit": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "back.over": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "left.small": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "left.moderate": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "left.limit": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "left.over": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "right.small": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "right.moderate": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "right.limit": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     },
+     "right.over": {
+      "ok": true,
+      "commandMs": 29.17,
+      "activationMs": 29.17
+     }
+    }
+   },
+   "P6": {
+    "pass": true,
+    "value": {
+     "fwd.small": {
+      "ankle": 125,
+      "knee": 116.7,
+      "hip": 104.2,
+      "lumbar": 58.3,
+      "thoracic": 75,
+      "neck": 120.8
+     },
+     "fwd.moderate": {
+      "ankle": 120.8,
+      "knee": 116.7,
+      "hip": 100,
+      "lumbar": 54.2,
+      "thoracic": 66.7,
+      "neck": 112.5
+     },
+     "fwd.limit": {
+      "ankle": 120.8,
+      "knee": 116.7,
+      "hip": 91.7,
+      "lumbar": 50,
+      "thoracic": 66.7,
+      "neck": 108.3
+     },
+     "fwd.over": {
+      "ankle": 116.7,
+      "knee": 112.5,
+      "hip": 87.5,
+      "lumbar": 50,
+      "thoracic": 62.5,
+      "neck": 108.3
+     },
+     "back.small": {
+      "ankle": 120.8,
+      "knee": 120.8,
+      "hip": 104.2,
+      "lumbar": 54.2,
+      "thoracic": 70.8,
+      "neck": 125
+     },
+     "back.moderate": {
+      "ankle": 120.8,
+      "knee": 116.7,
+      "hip": 95.8,
+      "lumbar": 50,
+      "thoracic": 62.5,
+      "neck": 116.7
+     },
+     "back.limit": {
+      "ankle": 116.7,
+      "knee": 116.7,
+      "hip": 91.7,
+      "lumbar": 50,
+      "thoracic": 62.5,
+      "neck": 116.7
+     },
+     "back.over": {
+      "ankle": 116.7,
+      "knee": 116.7,
+      "hip": 87.5,
+      "lumbar": 50,
+      "thoracic": 58.3,
+      "neck": 83.3
+     },
+     "left.small": {
+      "ankle": 125,
+      "knee": 125,
+      "hip": 75,
+      "lumbar": 54.2,
+      "thoracic": 70.8,
+      "neck": 108.3
+     },
+     "left.moderate": {
+      "ankle": 120.8,
+      "knee": 120.8,
+      "hip": 66.7,
+      "lumbar": 50,
+      "thoracic": 66.7,
+      "neck": 91.7
+     },
+     "left.limit": {
+      "ankle": 116.7,
+      "knee": 120.8,
+      "hip": 62.5,
+      "lumbar": 50,
+      "thoracic": 62.5,
+      "neck": 87.5
+     },
+     "left.over": {
+      "ankle": 116.7,
+      "knee": 116.7,
+      "hip": 62.5,
+      "lumbar": 50,
+      "thoracic": 58.3,
+      "neck": 83.3
+     },
+     "right.small": {
+      "ankle": 125,
+      "knee": 129.2,
+      "hip": 70.8,
+      "lumbar": 54.2,
+      "thoracic": 70.8,
+      "neck": 108.3
+     },
+     "right.moderate": {
+      "ankle": 120.8,
+      "knee": 120.8,
+      "hip": 62.5,
+      "lumbar": 50,
+      "thoracic": 66.7,
+      "neck": 91.7
+     },
+     "right.limit": {
+      "ankle": 116.7,
+      "knee": 120.8,
+      "hip": 58.3,
+      "lumbar": 50,
+      "thoracic": 62.5,
+      "neck": 87.5
+     },
+     "right.over": {
+      "ankle": 116.7,
+      "knee": 116.7,
+      "hip": 58.3,
+      "lumbar": 50,
+      "thoracic": 58.3,
+      "neck": 83.3
+     }
+    },
+    "reportedPPR3Form": {
+     "rule": "≥ 60 ms in ankle / knee / hip / lumbar (PPR-3 P6)",
+     "pass": false
+    }
+   },
+   "P7": {
+    "pass": true,
+    "value": {
+     "fwd.small": 198,
+     "fwd.moderate": 402,
+     "back.small": 318,
+     "back.moderate": 648
+    }
+   },
+   "DET": {
+    "pass": true,
+    "value": {
+     "standing": [
+      "befb3efeb87b5ff9",
+      "befb3efeb87b5ff9"
+     ],
+     "push": [
+      "058009074af25a59",
+      "058009074af25a59"
+     ],
+     "identical": true
+    }
+   },
+   "P1": {
+    "pass": true,
+    "value": {
+     "fwd": {
+      "recovered": true,
+      "peakMm": 15.4,
+      "settleS": 0.9791666666666666,
+      "fall": null
+     },
+     "back": {
+      "recovered": true,
+      "peakMm": 16.6,
+      "settleS": 0.95,
+      "fall": null
+     },
+     "left": {
+      "recovered": true,
+      "peakMm": 21.6,
+      "settleS": 0.6375,
+      "fall": null
+     },
+     "right": {
+      "recovered": true,
+      "peakMm": 21.6,
+      "settleS": 0.6291666666666667,
+      "fall": null
+     }
+    }
+   },
+   "P2": {
+    "pass": true,
+    "value": {
+     "fwd": {
+      "recovered": true,
+      "peakMm": 33.9,
+      "settleS": 2.6958333333333333,
+      "fall": null
+     },
+     "back": {
+      "recovered": true,
+      "peakMm": 34,
+      "settleS": 1.4625,
+      "fall": null
+     },
+     "left": {
+      "recovered": true,
+      "peakMm": 48.3,
+      "settleS": 2.5208333333333335,
+      "fall": null
+     },
+     "right": {
+      "recovered": true,
+      "peakMm": 47.7,
+      "settleS": 2.4541666666666666,
+      "fall": null
+     }
+    }
+   },
+   "P3": {
+    "pass": true,
+    "value": {
+     "fwd": {
+      "t": 0.4583333333333333,
+      "cause": "COM beyond the base of support"
+     },
+     "back": {
+      "t": 0.43333333333333335,
+      "cause": "COM beyond the base of support"
+     },
+     "left": {
+      "t": 0.46249999999999997,
+      "cause": "a foot unloaded > 50 ms"
+     },
+     "right": {
+      "t": 0.49166666666666664,
+      "cause": "a foot unloaded > 50 ms"
+     }
+    }
+   },
+   "P4": {
+    "pass": true,
+    "value": {
+     "fwd": {
+      "pass": true,
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "tStarMs": 250,
+      "excursionAtTStarMm": [
+       13.06,
+       25.97,
+       41.09,
+       61.96
+      ],
+      "fallTimesS": [
+       null,
+       null,
+       0.7833,
+       0.4583
+      ],
+      "peaksNonFallingMm": [
+       15.4,
+       33.9
+      ]
+     },
+     "back": {
+      "pass": true,
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "tStarMs": 250,
+      "excursionAtTStarMm": [
+       15.48,
+       31.23,
+       50.83,
+       79.02
+      ],
+      "fallTimesS": [
+       null,
+       null,
+       null,
+       0.4333
+      ],
+      "peaksNonFallingMm": [
+       16.6,
+       34,
+       69.1
+      ]
+     },
+     "left": {
+      "pass": true,
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "tStarMs": 250,
+      "excursionAtTStarMm": [
+       19.91,
+       41.61,
+       68.38,
+       102.19
+      ],
+      "fallTimesS": [
+       null,
+       null,
+       null,
+       0.4625
+      ],
+      "peaksNonFallingMm": [
+       21.6,
+       48.3,
+       86.2
+      ]
+     },
+     "right": {
+      "pass": true,
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "tStarMs": 250,
+      "excursionAtTStarMm": [
+       19.94,
+       41.41,
+       67.71,
+       101.51
+      ],
+      "fallTimesS": [
+       null,
+       null,
+       null,
+       0.4917
+      ],
+      "peaksNonFallingMm": [
+       21.6,
+       47.7,
+       84
+      ]
+     }
+    }
+   },
+   "P8": {
+    "pass": false,
+    "value": {
+     "fwd.small": {
+      "frac": 0.051,
+      "peakMm": 15.4,
+      "oppositeMm": 0.8
+     },
+     "fwd.moderate": {
+      "frac": 0,
+      "peakMm": 33.9,
+      "oppositeMm": 0
+     },
+     "back.small": {
+      "frac": 0.286,
+      "peakMm": 16.6,
+      "oppositeMm": 4.8
+     },
+     "back.moderate": {
+      "frac": 0.232,
+      "peakMm": 34,
+      "oppositeMm": 7.9
+     },
+     "left.small": {
+      "frac": 0.033,
+      "peakMm": 21.6,
+      "oppositeMm": 0.7
+     },
+     "left.moderate": {
+      "frac": 0.023,
+      "peakMm": 48.3,
+      "oppositeMm": 1.1
+     },
+     "right.small": {
+      "frac": 0.04,
+      "peakMm": 21.6,
+      "oppositeMm": 0.9
+     },
+     "right.moderate": {
+      "frac": 0.06,
+      "peakMm": 47.7,
+      "oppositeMm": 2.9
+     }
+    }
+   },
+   "M1": {
+    "pass": true,
+    "value": {
+     "fwd": {
+      "J": 10.58,
+      "steps": 88,
+      "recovered": true,
+      "peakMm": 30.8,
+      "tPeakS": 0.6458333333333334,
+      "settleS": 1.7125
+     },
+     "left": {
+      "J": 20,
+      "steps": 84,
+      "recovered": true,
+      "peakMm": 52.8,
+      "tPeakS": 0.5166666666666666,
+      "settleS": 2.5625
+     }
+    }
+   },
+   "T1": {
+    "pass": true,
+    "value": {
+     "fwd": 12.09,
+     "back": 20.23,
+     "left": 25.16,
+     "right": 28.07
+    }
+   }
+  }
+ },
+ "U": {
+  "fall": null,
+  "sway": {
+   "comAPmm": {
+    "mean": 25.99970015265221,
+    "rms": 1.3764666974992106,
+    "range": 7.6529416528382335
+   },
+   "comMLmm": {
+    "mean": 0.008745274072284847,
+    "rms": 1.0294555127674827,
+    "range": 5.926271856538266
+   },
+   "copAPmm": {
+    "mean": 25.996622511969196,
+    "rms": 3.121907257456551,
+    "range": 18.733072108491307
+   },
+   "copMLmm": {
+    "mean": 0.004161776182894366,
+    "rms": 6.3510466524862155,
+    "range": 38.66455397880233
+   },
+   "copMeanVelMmS": 44.671618437982545,
+   "comAPfreqHz": 0.5086206896551724,
+   "jointRmsDeg": {
+    "ankle_L.df": 0.23548263146087295,
+    "ankle_R.df": 0.24507995943691938,
+    "ankle_L.inv": 0.09469621965593614,
+    "ankle_R.inv": 0.09330043801997512,
+    "knee_L.flex": 0.30732136481030026,
+    "knee_R.flex": 0.32120081433705683,
+    "hip_L.flex": 0.21602009214564866,
+    "hip_R.flex": 0.2401602061396047,
+    "hip_L.abd": 0.14106650039208737,
+    "hip_R.abd": 0.14218748718881927,
+    "lumbar.flex": 0.2533959813918554,
+    "lumbar.lat": 0.28532019048139257,
+    "thoracic.flex": 0.4565317792933793,
+    "thoracic.lat": 0.41646361312646796,
+    "neck.flex": 0.43763907327379564,
+    "neck.lat": 0.19443315369432831
+   },
+   "pelvisYmm": {
+    "mean": 912.3869060356726,
+    "rms": 0.38602336827937267,
+    "range": 2.0425915718078613
+   }
+  },
+  "copLowpassRmsMm": {
+   "AP": 3.033312631749115,
+   "ML": 6.20675380167685
+  },
+  "postureDrift": {
+   "maxJointMeanDeg": 0.6208540343806458,
+   "pelvisMeanDropMm": 0.7294887801011507,
+   "comMeanShiftMm": 1.1875935045468653
+  },
+  "finalHash": "961f2e9916fd6f05"
+ },
+ "pushes": {
+  "fwd.small": {
+   "J": 4.82,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 15.369168534356245,
+    "tPeakS": 0.7375,
+    "settleS": 0.9791666666666666,
+    "tailComMm": 2.311625418708151,
+    "tailDropMm": 0.6858110427856445
+   },
+   "overshoot": {
+    "peakMm": 15.36910146685587,
+    "oppositeMm": 0.7831027998115858,
+    "frac": 0.05095306329393301
+   }
+  },
+  "fwd.moderate": {
+   "J": 9.64,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 33.917317797652224,
+    "tPeakS": 0.7125,
+    "settleS": 2.6958333333333333,
+    "tailComMm": 8.948430044428957,
+    "tailDropMm": 1.1184215545654297
+   },
+   "overshoot": {
+    "peakMm": 33.91714048842673,
+    "oppositeMm": 0,
+    "frac": 0
+   }
+  },
+  "fwd.limit": {
+   "J": 14.83,
+   "fall": true,
+   "recovery": {
+    "fall": {
+     "t": 0.7833333333333333,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1312.047785192323,
+    "tPeakS": 3.7375,
+    "settleS": null,
+    "tailComMm": 1312.047785192323,
+    "tailDropMm": 738.1243258714676
+   },
+   "overshoot": null
+  },
+  "fwd.over": {
+   "J": 21.5,
+   "fall": true,
+   "recovery": {
+    "fall": {
+     "t": 0.4583333333333333,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1318.1937215933467,
+    "tPeakS": 3.7916666666666665,
+    "settleS": null,
+    "tailComMm": 1318.1937215933467,
+    "tailDropMm": 737.5708818435669
+   },
+   "overshoot": null
+  },
+  "back.small": {
+   "J": 5.84,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 16.618742202023927,
+    "tPeakS": 0.32916666666666666,
+    "settleS": 0.95,
+    "tailComMm": 4.2382124154090075,
+    "tailDropMm": 0.4679560661315918
+   },
+   "overshoot": {
+    "peakMm": 16.618577054198965,
+    "oppositeMm": 4.761119207978493,
+    "frac": 0.286493795013305
+   }
+  },
+  "back.moderate": {
+   "J": 11.69,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 34.0381514830213,
+    "tPeakS": 0.3458333333333333,
+    "settleS": 1.4625,
+    "tailComMm": 7.466735571912941,
+    "tailDropMm": 0.1773834228515625
+   },
+   "overshoot": {
+    "peakMm": 34.037829977251036,
+    "oppositeMm": 7.881375054532139,
+    "frac": 0.2315475181525851
+   }
+  },
+  "back.limit": {
+   "J": 17.98,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 69.06506918371991,
+    "tPeakS": 0.6125,
+    "settleS": 1.3375,
+    "tailComMm": 8.137060514793784,
+    "tailDropMm": -1.3363361358642578
+   },
+   "overshoot": {
+    "peakMm": 69.06456755816195,
+    "oppositeMm": 8.227160300025183,
+    "frac": 0.11912273675060328
+   }
+  },
+  "back.over": {
+   "J": 26.07,
+   "fall": true,
+   "recovery": {
+    "fall": {
+     "t": 0.43333333333333335,
+     "cause": "COM beyond the base of support"
+    },
+    "recovered": false,
+    "comPeakMm": 1359.6855889946296,
+    "tPeakS": 3.620833333333333,
+    "settleS": null,
+    "tailComMm": 1359.6855889946296,
+    "tailDropMm": 734.3171834945679
+   },
+   "overshoot": null
+  },
+  "left.small": {
+   "J": 7.5,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 21.620374969774304,
+    "tPeakS": 0.3375,
+    "settleS": 0.6375,
+    "tailComMm": 2.9871126117241285,
+    "tailDropMm": 0.48285722732543945
+   },
+   "overshoot": {
+    "peakMm": 21.618855038353956,
+    "oppositeMm": 0.7082070387682724,
+    "frac": 0.032758767173924994
+   }
+  },
+  "left.moderate": {
+   "J": 15,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 48.262212344842446,
+    "tPeakS": 0.3875,
+    "settleS": 2.5208333333333335,
+    "tailComMm": 9.023452769710635,
+    "tailDropMm": 0.7747411727905273
+   },
+   "overshoot": {
+    "peakMm": 48.26012383014741,
+    "oppositeMm": 1.0996039528001416,
+    "frac": 0.02278493848607232
+   }
+  },
+  "left.limit": {
+   "J": 23,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": false,
+    "comPeakMm": 86.19422456729166,
+    "tPeakS": 0.46249999999999997,
+    "settleS": 4,
+    "tailComMm": 37.68721697269102,
+    "tailDropMm": 0.8662939071655273
+   },
+   "overshoot": {
+    "peakMm": 86.04485676203832,
+    "oppositeMm": 0,
+    "frac": 0
+   }
+  },
+  "left.over": {
+   "J": 32.5,
+   "fall": true,
+   "recovery": {
+    "fall": {
+     "t": 0.46249999999999997,
+     "cause": "a foot unloaded > 50 ms"
+    },
+    "recovered": false,
+    "comPeakMm": 1523.3833806095713,
+    "tPeakS": 2.775,
+    "settleS": null,
+    "tailComMm": 1519.4220604670425,
+    "tailDropMm": 646.748811006546
+   },
+   "overshoot": null
+  },
+  "right.small": {
+   "J": 7.5,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 21.627022963585087,
+    "tPeakS": 0.3333333333333333,
+    "settleS": 0.6291666666666667,
+    "tailComMm": 1.6904534590743325,
+    "tailDropMm": 0.453948974609375
+   },
+   "overshoot": {
+    "peakMm": 21.62433437034198,
+    "oppositeMm": 0.8616590849081144,
+    "frac": 0.03984673332141449
+   }
+  },
+  "right.moderate": {
+   "J": 15,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 47.69149780344998,
+    "tPeakS": 0.3833333333333333,
+    "settleS": 2.4541666666666666,
+    "tailComMm": 7.99366198428628,
+    "tailDropMm": 0.9142756462097168
+   },
+   "overshoot": {
+    "peakMm": 47.69135257148162,
+    "oppositeMm": 2.8833469917266266,
+    "frac": 0.060458486418579885
+   }
+  },
+  "right.limit": {
+   "J": 23,
+   "fall": false,
+   "recovery": {
+    "fall": null,
+    "recovered": false,
+    "comPeakMm": 84.03452839740905,
+    "tPeakS": 0.4458333333333333,
+    "settleS": 4,
+    "tailComMm": 27.46822994054983,
+    "tailDropMm": 0.9055137634277344
+   },
+   "overshoot": {
+    "peakMm": 83.96418894383291,
+    "oppositeMm": 0,
+    "frac": 0
+   }
+  },
+  "right.over": {
+   "J": 32.5,
+   "fall": true,
+   "recovery": {
+    "fall": {
+     "t": 0.49166666666666664,
+     "cause": "a foot unloaded > 50 ms"
+    },
+    "recovered": false,
+    "comPeakMm": 1642.5710233389727,
+    "tPeakS": 2.5791666666666666,
+    "settleS": null,
+    "tailComMm": 1638.8246718768269,
+    "tailDropMm": 722.770482301712
+   },
+   "overshoot": null
+  }
+ },
+ "M": {
+  "fwd": {
+   "J": 10.58,
+   "steps": 88,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 30.759786691013897,
+    "tPeakS": 0.6458333333333334,
+    "settleS": 1.7125,
+    "tailComMm": 2.902973428677964,
+    "tailDropMm": 1.0694265365600586
+   },
+   "chronology": {
+    "stateDiff": 4.17,
+    "joint001": 8.33,
+    "joint01": 33.33,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 50
+   },
+   "human": {
+    "torqueSlew": {
+     "ankleAP": 173.06220531463623,
+     "ankleML": 0.8455350995063782,
+     "knee": 111.43487244844437,
+     "hipAP": 117.38188862800598,
+     "hipML": 31.28713220357895,
+     "lumbar": 103.68754863739014
+    },
+    "torquePeak": {
+     "ankleAP": 45.8839613199234,
+     "ankleML": 0.20439829677343369,
+     "knee": 29.96857350692153,
+     "hipAP": 16.732054352760315,
+     "hipML": 0.8061404898762703,
+     "lumbar": 12.749825119972229
+    },
+    "excursion": {
+     "ankle": {
+      "deg": 2.067,
+      "ms": 929
+     },
+     "knee": {
+      "deg": -0.861,
+      "ms": 729
+     },
+     "hip": {
+      "deg": -1.536,
+      "ms": 383
+     },
+     "lumbar": {
+      "deg": -1.54,
+      "ms": 313
+     },
+     "neck": {
+      "deg": -0.991,
+      "ms": 325
+     }
+    },
+    "head": {
+     "headPeakDegS": 34.31385023245893,
+     "thoraxPeakDegS": 24.126874675653717
+    },
+    "load": {
+     "footMinN": 349.8985183238983,
+     "maxAsymmetry": 0.0779497082624585
+    },
+    "muscleWork": {
+     "positiveJ": 3.5916319124898384,
+     "negativeJ": -5.3721848357067055
+    }
+   }
+  },
+  "left": {
+   "J": 20,
+   "steps": 84,
+   "recovery": {
+    "fall": null,
+    "recovered": true,
+    "comPeakMm": 52.77708697450137,
+    "tPeakS": 0.5166666666666666,
+    "settleS": 2.5625,
+    "tailComMm": 8.275512055299174,
+    "tailDropMm": 0.372469425201416
+   },
+   "chronology": {
+    "stateDiff": 4.17,
+    "joint001": 8.33,
+    "joint01": 25,
+    "command": 29.17,
+    "command01": 37.5,
+    "activation": 29.17,
+    "neuralTorque01": 45.83
+   },
+   "human": {
+    "torqueSlew": {
+     "ankleAP": 86.34642362594604,
+     "ankleML": 39.63335305452347,
+     "knee": 52.59518763050437,
+     "hipAP": 62.35363706946373,
+     "hipML": 298.73259365558624,
+     "lumbar": 175.59864758513868
+    },
+    "torquePeak": {
+     "ankleAP": 9.120337665081024,
+     "ankleML": 10.784972906112671,
+     "knee": 8.944965982809663,
+     "hipAP": 10.093719363212585,
+     "hipML": 75.91466702520847,
+     "lumbar": 23.06280182674527
+    },
+    "excursion": {
+     "ankle": {
+      "deg": 5.665,
+      "ms": 438
+     },
+     "knee": {
+      "deg": 1.597,
+      "ms": 796
+     },
+     "hip": {
+      "deg": -6.464,
+      "ms": 417
+     },
+     "lumbar": {
+      "deg": -3.687,
+      "ms": 658
+     },
+     "neck": {
+      "deg": -2.198,
+      "ms": 604
+     }
+    },
+    "head": {
+     "headPeakDegS": 67.8249910621326,
+     "thoraxPeakDegS": 37.5244965670844
+    },
+    "load": {
+     "footMinN": 90.61370015144348,
+     "maxAsymmetry": 0.7514115206161537
+    },
+    "muscleWork": {
+     "positiveJ": 8.461823974013026,
+     "negativeJ": -11.691013020935788
+    }
+   }
+  }
+ },
+ "T": {
+  "fwd": {
+   "thresholdNs": 12.08759765625,
+   "bracket": [
+    11.945390625000002,
+    12.229804687500001
+   ],
+   "fracOfJlim": 0.49804687500000006,
+   "tried": [
+    [
+     18.2,
+     true
+    ],
+    [
+     9.1,
+     false
+    ],
+    [
+     13.65,
+     true
+    ],
+    [
+     11.38,
+     false
+    ],
+    [
+     12.51,
+     true
+    ],
+    [
+     11.95,
+     false
+    ],
+    [
+     12.23,
+     true
+    ]
+   ]
+  },
+  "back": {
+   "thresholdNs": 20.22767578125,
+   "bracket": [
+    20.0576953125,
+    20.39765625
+   ],
+   "fracOfJlim": 0.6972656249999999,
+   "tried": [
+    [
+     21.76,
+     true
+    ],
+    [
+     10.88,
+     false
+    ],
+    [
+     16.32,
+     false
+    ],
+    [
+     19.04,
+     false
+    ],
+    [
+     20.4,
+     true
+    ],
+    [
+     19.72,
+     false
+    ],
+    [
+     20.06,
+     false
+    ]
+   ]
+  },
+  "left": {
+   "thresholdNs": 25.1553515625,
+   "bracket": [
+    24.790781250000002,
+    25.519921875
+   ],
+   "fracOfJlim": 0.40429687500000006,
+   "tried": [
+    [
+     46.66,
+     true
+    ],
+    [
+     23.33,
+     false
+    ],
+    [
+     35,
+     true
+    ],
+    [
+     29.17,
+     true
+    ],
+    [
+     26.25,
+     true
+    ],
+    [
+     24.79,
+     false
+    ],
+    [
+     25.52,
+     true
+    ]
+   ]
+  },
+  "right": {
+   "thresholdNs": 28.0719140625,
+   "bracket": [
+    27.70734375,
+    28.436484375
+   ],
+   "fracOfJlim": 0.451171875,
+   "tried": [
+    [
+     46.66,
+     true
+    ],
+    [
+     23.33,
+     false
+    ],
+    [
+     35,
+     true
+    ],
+    [
+     29.17,
+     true
+    ],
+    [
+     26.25,
+     false
+    ],
+    [
+     27.71,
+     false
+    ],
+    [
+     28.44,
+     true
+    ]
+   ]
+  }
+ },
+ "D": {
+  "standing": [
+   "befb3efeb87b5ff9",
+   "befb3efeb87b5ff9"
+  ],
+  "push": [
+   "058009074af25a59",
+   "058009074af25a59"
+  ],
+  "identical": true
+ }
+}
