@@ -1,0 +1,316 @@
+{
+ "ampNmPerPair": 5,
+ "pulseMs": 200,
+ "responses": {
+  "ankle": [
+   {
+    "ms": 100,
+    "comMm": 0.082,
+    "hatDeg": -0.019,
+    "pelvis": -0.027,
+    "abdomen": -0.017,
+    "thorax": -0.008,
+    "thigh": -0.029,
+    "shank": 0.048
+   },
+   {
+    "ms": 200,
+    "comMm": 0.59,
+    "hatDeg": -0.141,
+    "pelvis": -0.12,
+    "abdomen": -0.158,
+    "thorax": -0.105,
+    "thigh": -0.077,
+    "shank": 0.236
+   },
+   {
+    "ms": 300,
+    "comMm": 1.519,
+    "hatDeg": -0.311,
+    "pelvis": -0.132,
+    "abdomen": -0.377,
+    "thorax": -0.35,
+    "thigh": -0.003,
+    "shank": 0.406
+   },
+   {
+    "ms": 400,
+    "comMm": 2.588,
+    "hatDeg": -0.412,
+    "pelvis": -0.004,
+    "abdomen": -0.517,
+    "thorax": -0.652,
+    "thigh": 0.176,
+    "shank": 0.466
+   },
+   {
+    "ms": 500,
+    "comMm": 3.762,
+    "hatDeg": -0.466,
+    "pelvis": 0.153,
+    "abdomen": -0.598,
+    "thorax": -0.948,
+    "thigh": 0.353,
+    "shank": 0.521
+   },
+   {
+    "ms": 600,
+    "comMm": 5.088,
+    "hatDeg": -0.526,
+    "pelvis": 0.304,
+    "abdomen": -0.686,
+    "thorax": -1.275,
+    "thigh": 0.527,
+    "shank": 0.608
+   }
+  ],
+  "knee": [
+   {
+    "ms": 100,
+    "comMm": 0.049,
+    "hatDeg": -0.011,
+    "pelvis": -0.052,
+    "abdomen": 0.007,
+    "thorax": 0.012,
+    "thigh": -0.089,
+    "shank": 0.096
+   },
+   {
+    "ms": 200,
+    "comMm": 0.108,
+    "hatDeg": -0.098,
+    "pelvis": -0.225,
+    "abdomen": -0.067,
+    "thorax": 0.025,
+    "thigh": -0.269,
+    "shank": 0.314
+   },
+   {
+    "ms": 300,
+    "comMm": -0.129,
+    "hatDeg": -0.194,
+    "pelvis": -0.323,
+    "abdomen": -0.185,
+    "thorax": -0.025,
+    "thigh": -0.317,
+    "shank": 0.369
+   },
+   {
+    "ms": 400,
+    "comMm": -0.735,
+    "hatDeg": -0.216,
+    "pelvis": -0.263,
+    "abdomen": -0.231,
+    "thorax": -0.106,
+    "thigh": -0.23,
+    "shank": 0.203
+   },
+   {
+    "ms": 500,
+    "comMm": -1.469,
+    "hatDeg": -0.225,
+    "pelvis": -0.238,
+    "abdomen": -0.241,
+    "thorax": -0.154,
+    "thigh": -0.215,
+    "shank": 0.078
+   },
+   {
+    "ms": 600,
+    "comMm": -2.277,
+    "hatDeg": -0.275,
+    "pelvis": -0.28,
+    "abdomen": -0.294,
+    "thorax": -0.212,
+    "thigh": -0.257,
+    "shank": 0.019
+   }
+  ],
+  "hip": [
+   {
+    "ms": 100,
+    "comMm": -0.018,
+    "hatDeg": 0.041,
+    "pelvis": 0.089,
+    "abdomen": 0.024,
+    "thorax": -0.009,
+    "thigh": -0.031,
+    "shank": 0.003
+   },
+   {
+    "ms": 200,
+    "comMm": -0.141,
+    "hatDeg": 0.206,
+    "pelvis": 0.328,
+    "abdomen": 0.183,
+    "thorax": 0.04,
+    "thigh": -0.1,
+    "shank": -0.044
+   },
+   {
+    "ms": 300,
+    "comMm": -0.308,
+    "hatDeg": 0.397,
+    "pelvis": 0.445,
+    "abdomen": 0.418,
+    "thorax": 0.232,
+    "thigh": -0.139,
+    "shank": -0.136
+   },
+   {
+    "ms": 400,
+    "comMm": -0.364,
+    "hatDeg": 0.513,
+    "pelvis": 0.378,
+    "abdomen": 0.581,
+    "thorax": 0.492,
+    "thigh": -0.159,
+    "shank": -0.184
+   },
+   {
+    "ms": 500,
+    "comMm": -0.315,
+    "hatDeg": 0.604,
+    "pelvis": 0.286,
+    "abdomen": 0.706,
+    "thorax": 0.767,
+    "thigh": -0.18,
+    "shank": -0.203
+   },
+   {
+    "ms": 600,
+    "comMm": -0.197,
+    "hatDeg": 0.723,
+    "pelvis": 0.224,
+    "abdomen": 0.856,
+    "thorax": 1.081,
+    "thigh": -0.201,
+    "shank": -0.227
+   }
+  ],
+  "lumbar": [
+   {
+    "ms": 100,
+    "comMm": -0.027,
+    "hatDeg": 0.032,
+    "pelvis": -0.09,
+    "abdomen": 0.155,
+    "thorax": 0.014,
+    "thigh": -0.033,
+    "shank": 0.009
+   },
+   {
+    "ms": 200,
+    "comMm": -0.297,
+    "hatDeg": 0.298,
+    "pelvis": -0.331,
+    "abdomen": 0.85,
+    "thorax": 0.317,
+    "thigh": -0.193,
+    "shank": -0.031
+   },
+   {
+    "ms": 300,
+    "comMm": -0.915,
+    "hatDeg": 0.85,
+    "pelvis": -0.441,
+    "abdomen": 1.8,
+    "thorax": 1.118,
+    "thigh": -0.403,
+    "shank": -0.233
+   },
+   {
+    "ms": 400,
+    "comMm": -1.588,
+    "hatDeg": 1.481,
+    "pelvis": -0.412,
+    "abdomen": 2.584,
+    "thorax": 2.228,
+    "thigh": -0.591,
+    "shank": -0.503
+   },
+   {
+    "ms": 500,
+    "comMm": -2.108,
+    "hatDeg": 2.136,
+    "pelvis": -0.401,
+    "abdomen": 3.302,
+    "thorax": 3.551,
+    "thigh": -0.791,
+    "shank": -0.743
+   },
+   {
+    "ms": 600,
+    "comMm": -2.433,
+    "hatDeg": 2.879,
+    "pelvis": -0.407,
+    "abdomen": 4.1,
+    "thorax": 5.118,
+    "thigh": -1.004,
+    "shank": -0.983
+   }
+  ],
+  "thoracic": [
+   {
+    "ms": 100,
+    "comMm": -0.005,
+    "hatDeg": -0.024,
+    "pelvis": -0.022,
+    "abdomen": -0.163,
+    "thorax": 0.261,
+    "thigh": 0.007,
+    "shank": 0.007
+   },
+   {
+    "ms": 200,
+    "comMm": -0.121,
+    "hatDeg": -0.077,
+    "pelvis": -0.159,
+    "abdomen": -0.705,
+    "thorax": 1.323,
+    "thigh": -0.027,
+    "shank": 0.052
+   },
+   {
+    "ms": 300,
+    "comMm": -0.567,
+    "hatDeg": 0.014,
+    "pelvis": -0.323,
+    "abdomen": -1.03,
+    "thorax": 2.622,
+    "thigh": -0.136,
+    "shank": 0.037
+   },
+   {
+    "ms": 400,
+    "comMm": -1.335,
+    "hatDeg": 0.343,
+    "pelvis": -0.389,
+    "abdomen": -0.768,
+    "thorax": 3.676,
+    "thigh": -0.285,
+    "shank": -0.121
+   },
+   {
+    "ms": 500,
+    "comMm": -2.232,
+    "hatDeg": 0.832,
+    "pelvis": -0.441,
+    "abdomen": -0.201,
+    "thorax": 4.76,
+    "thigh": -0.481,
+    "shank": -0.34
+   },
+   {
+    "ms": 600,
+    "comMm": -3.147,
+    "hatDeg": 1.447,
+    "pelvis": -0.517,
+    "abdomen": 0.526,
+    "thorax": 5.981,
+    "thigh": -0.721,
+    "shank": -0.585
+   }
+  ]
+ }
+}
