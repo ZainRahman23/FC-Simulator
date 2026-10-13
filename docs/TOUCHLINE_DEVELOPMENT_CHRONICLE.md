@@ -3052,6 +3052,39 @@ What was done there is not reconstructed here.
 
 What was done there is not reconstructed here.
 
+**Addendum, written at the 13 Oct housekeeping (23:45 on 13 Oct): the rest of the chronicle day, 01:05 → 06:00.**
+
+*Evidence for the addendum.*
+- **[FC-Sim Git]** `prototype/physical-character-v2`, 12 commits `9662f99` (01:15) → `8aa4eba` (04:48), all local until this housekeeping.
+- **[Doc]** `balance3/`, `pvp0/` and `support1/` in `review_artifacts/physical_character_v2/`, each with a report and a review page; 2 user instructions saved verbatim in `sources/` (PVP-0 ≈ 01:50, SUPPORT-1 ≈ 03:41).
+- **[Astra]** commit labels only (below).
+- No owner screenshots in this window. Run records are outside Git (`_preserved_2026-10-12_evidence_outside_git/…/balance3`, `…/pvp0`, `…/support1`).
+
+**BALANCE-3 results** (`9662f99` 01:15, `ba2ce96` 01:18 audit; `42130c7` 01:33 freeze; `0befb6b` 01:46 results and close).
+- **Audit:** the rigid two-segment ankle – hip reduction is wrong for this body (hip torque moves the COM ≈ 7× less than predicted); the low-frequency HAT-at-hips stiffness is neutral (the P8 mechanism); the spine, not the hips, is the soft link for trunk orientation.
+- **B3** = C3's A-mode unchanged + an H-mode objective on the hip angle (Alexandrov 2005 eigenmovement control) with a COM-neutral ankle companion, frozen before any run.
+- **Result: NOT QUALIFIED.** B2F 14 / 17 (P8 back small 0.34, worse than C3's 0.287; P2; P6 from a preregistration error); hip – ankle torque correlation −0.77 (the loops fight); the forward 12 N·s push now falls. A post-hoc diagnostic was also worse, so the failure is architectural.
+- Stop condition: a working modal controller needs a COM pattern from an identified multi-segment model. **C3 stays the 16 / 17 baseline.** Owner decision pending.
+
+**PVP-0, the first two-player physical contact** (user ≈ 01:50: "We are ready for the first controlled two-player integration diagnostic." `64459a7` 01:52 instruction; `d43958e` 02:06 setup freeze; `200eedd` 02:36 erratum; `052b41a` 02:40 results).
+- **Inputs:** C3 exactly as frozen (`d590fd4`) × Astra's SLIDE-A1 **K** (`59b7245`, Gate A open: current, not approved), physicalized by a pose tracker through M1b with constant finite authority and no root drive; airborne start at K t 0.30 s (K's run-up is unphysical); three strengths around 6.74 m/s; TWIN and CALIB (no contact) references.
+- **Verdicts:** contact physics PARTIAL (a real strike, exact equal-and-opposite, but 12 – 14 mm in sustained crush); visual response FAIL; tackler recognizable NO; recipient plausible NO; ready for the next PVP NO.
+- **Three problems:** the tackler belly-flops face-down even with nobody there (CALIB); the bodies lock because constant authority keeps pressing the boot into the pinned foot; the recipient reads as a mannequin.
+- **Process error:** the volume is case-insensitive, and PVP-0's `PROVENANCE.json` overwrote K's `provenance.json`; fixed in `200eedd` with no effect on any run.
+
+**SUPPORT-1, the receiver's support loss** (user ≈ 03:41, an overnight mission; `7fa9289` 03:44 instruction; `ca82716` 04:42 audit, lab and successors; `223bba3` 04:42 review media; `8aa4eba` 04:48 report).
+- The attached reference recording sat in macOS's protected screen-capture temporary folder and could not be read; no saved copy existed.
+- **PVP-0 audit:** the anchored look was the tackler pinning the recipient's feet from above (downward 274 – 334 N·s; a 7.2 kN crush in NOMINAL), not turf friction: the far foot's friction demand peaked at 0.17 of μ 1.2.
+- **Literature:** studded traction is if anything higher than V2's (≈ 1.9 – 2.7 at standing loads); rotational traction and ankle stiffness are realistic.
+- **Lab:** the unchanged V2 recipient already releases its support passively and produces absorbed / displaced / sliced-out responses. An exploratory sliding body (K's slide pose lowered to the turf) at 6.74 – 8.43 m/s sliced the recipient out in ≈ 0.3 s; at 3.37 m/s it stopped on the feet. K's slide pose floats 85 mm above the turf.
+- Four successors were tested: load-scaled stance, an unloading reflex, a load-dependent traction law (LDG), and LDG with the reflex. None beats V2; LDG is more realistic but makes planted feet harder to sweep. **Verdict:** mechanics understood YES; plausible PARTIAL; regressions PASS; visual improvement over PVP-0 NO; canonical NOT YET.
+- **Process error:** the disk filled at ≈ 04:19 (per-frame PNG capture dumps); regenerable dumps were deleted.
+
+**Parallel work outside this repository, after 00:47** ([Astra], commit labels only; not investigated).
+- `research/slide-a1-authored` in `~/Documents/Codex/2026-10-12/new-chat/touchline-slide`: `071312f` and `59b7245` (01:36), "Author SLIDE-A1 K and add Touchline motion review" (the K consumed by PVP-0), then `3aa0d16` (02:12), "Refine authored tackle entry, arm swing and partial slide roll" (`slide_a1/l/`). Not pushed.
+
+**End-of-day state, corrected** (06:00, 13 Oct). C3 remains the 16 / 17 recipient baseline (BALANCE-3 not qualified). PVP-0 showed the tackler, not the recipient or the turf, is the binding problem; SUPPORT-1 confirmed it. Owner decisions pending on BALANCE-3 and on the tackler. The 12 commits were pushed at 23:45 on 13 Oct in two batches (`0055641` → `052b41a` → `8aa4eba`), verified by a fetch of the remote branch; this chronicle addendum was pushed straight after.
+
 **Corrections and process errors.**
 - **The chronicle for 11 Oct** got a follow-up commit (`38496e4`) recording the real push time.
 - **BALANCE-2's own instruction file** for 23:16 first carried a wrong receipt time (≈ 23:25). It was corrected in `5773306`, body unchanged.
@@ -3091,7 +3124,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `0055641`, 13 Oct 00:59, pushed at 01:04 on 13 Oct; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `8aa4eba`, 13 Oct 04:48, pushed at 23:45 on 13 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -3136,6 +3169,9 @@ What was done there is not reconstructed here.
   - **B2F** corrects T1′ forward to the loadable flat-sole edge (80.29 mm): 10.15 – 14.21 N·s.
   - **Unchanged C3 on B2F: 16 / 17, status B, not qualified.** The one failure is P8, backward small 0.287 vs ≤ 0.26: a slow trunk-lean mode (the BALANCE-1 hip-map defect).
   - The minimal hip-map repair made it worse and was rejected. **BALANCE-3** (coordinated ankle – hip control) was instructed at 00:58 on 13 Oct.
+- **BALANCE-3** (`0befb6b`, 13 Oct): the coordinated ankle – hip candidate B3 is **NOT QUALIFIED** (14 / 17, worse than C3; the hip and ankle loops fight). C3 stays the 16 / 17 baseline; owner decision pending.
+- **PVP-0** (`052b41a`, 13 Oct): the first two-player physical contact, C3 × Astra's SLIDE-A1 K. Contact physics PARTIAL, visual FAIL: the tracked K tackler belly-flops even alone, and constant authority pins the recipient's feet.
+- **SUPPORT-1** (`8aa4eba`, 13 Oct): the anchored look was the tackler pressing down on the feet, not turf friction. The unchanged V2 recipient already releases support, and an exploratory sliding body at 6.74 – 8.43 m/s slices it out in ≈ 0.3 s. No recipient successor beats V2; canonical NOT YET.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -3177,7 +3213,8 @@ What was done there is not reconstructed here.
     - ITS-1's frozen-target posture tone opposes the initialized stance-leg rates: activation load 8.80 vs 6.04 N·s per step, slips of 12 – 18.8 mm.
     - The touchdown and late-stance states also fail. The ITS-1 amendment is paused.
   - **The handoff state is NOT READY** (verdict B, 10 Oct): V2's 23 → 14 upper-body mapping, and the rigid F0 boot against the frozen runner's heel-up / toe-pad stance (P-9, stance-contact consistency). RH1, the attempted body-spec fix, is invalid (verdict C).
-  - **Standing balance** (BALANCE-2, 12 – 13 Oct): the legitimate flat-foot controller C3 passes 16 / 17 on the corrected battery. The forward threshold of 12.09 N·s is inside the flat-sole band, with no boot-tip support. One gap remains, the backward-small overshoot P8 (0.287 vs ≤ 0.26): a slow trunk-lean mode that needs coordinated ankle – hip control (BALANCE-3). The receiving player is not yet qualified, and PVP stays sealed.
+  - **Standing balance** (BALANCE-2, 12 – 13 Oct): the legitimate flat-foot controller C3 passes 16 / 17 on the corrected battery. The forward threshold of 12.09 N·s is inside the flat-sole band, with no boot-tip support. One gap remains, the backward-small overshoot P8 (0.287 vs ≤ 0.26): a slow trunk-lean mode that needs coordinated ankle – hip control (BALANCE-3). The receiving player is not yet qualified. BALANCE-3 (B3) did not qualify (13 Oct).
+  - **The tackler** (PVP-0 / SUPPORT-1, 13 Oct): no physically executable slide tackle exists yet. The tracked SLIDE-A1 K belly-flops alone and pins the recipient's feet from above; the recipient and turf are not the binding problem.
   - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
