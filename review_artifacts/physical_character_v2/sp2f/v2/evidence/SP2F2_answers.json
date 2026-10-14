@@ -1,0 +1,74 @@
+{
+ "checklist": [
+  [
+   "IMMEDIATE LATERAL SLIDE / NO UPRIGHT HOLD",
+   "<b>PARTIAL.</b> Time with the trunk within 30° of vertical after the fold-side landing: <b>0.12 / 0.23 / 0.26 s</b> (SP2F 0.40 / 0.42 / 0.46 s). It is no longer a hold: the trunk arrives leaning toward the TACKLING side (SP2C's in-air counter-lean, which lands the pelvis on the folded side) and now swings through vertical once, onto the folded side, as the hand lands. The pelvis rolls onto the folded side progressively (≈ 20° at landing → ≈ 30° at +0.5 s → 50–58° at +1.0 s). Leaning onto the folded side in the air (as REFERENCE3 does) would remove the rest, but it twists the folded knee further past its stop (log §4)."
+  ],
+  [
+   "REMAINS LATERAL (no excursion toward seated-upright or chest-down once established)",
+   "<b>YES.</b> After the lateral slide is established (+0.56 / 0.56 / 0.48 s) excursions: 0.0 / 0.0 / 0.0 s; chest-down never; the folded-side shoulder and hip stay the lower ones 100% of the time; lying direction ψ stays within 42…59° / 28…47° / 0…43° (0 = on the folded side, 90 = on the back) — one continuous side / back-side manifold."
+  ],
+  [
+   "TORSO LOWERS PROGRESSIVELY WITHIN THAT MANIFOLD",
+   "<b>YES.</b> Trunk tilt after establishment 56 → 71° / 56 → 75° / 51 → 85°; no backward rock larger than 2.7° (SP2F 5.5°)."
+  ],
+  [
+   "NO DISCRETE FALL-OVER MOMENT",
+   "<b>YES</b> by the traces: peak trunk rate after landing 120 / 133 / 182°/s (SP2E 263 / 239 / 324); the 5.5 m/s peak is the swing through vertical at ≈ +0.1 s, not a fall; landing pelvis-roll kick -98 / -75 / -64°/s (SP2F -179 / -245 / -267). Please judge the 5.5 m/s landing visually."
+  ],
+  [
+   "POSTING ARM REACHES THE TURF ONCE AND ESTABLISHES SUPPORT",
+   "<b>YES.</b> First hand contact +0.08 / 0.12 / 0.15 s (SP2F +0.10 / 0.22 / 0.28 s)."
+  ],
+  [
+   "HAND / FOREARM STAYS IN SLIDING CONTACT (hard requirement)",
+   "<b>YES.</b> Continuous from first contact to the end of the slide (1.91 / 2.15 / 2.47 s), no gaps at any speed and in none of the 27 perturbed runs; it slides 3.26 / 4.25 / 5.42 m along the turf."
+  ],
+  [
+   "HAND REPEATEDLY TOUCHING / LEAVING",
+   "<b>NO</b> (diagnosed and corrected: the early variants' hover / rebound came from a reach target that finished before contact and held the hand ≈ 1 cm up through the 80 ms target blend, and at 5.5 m/s a 46 ms rebound after the first-touch impact; fixed by a reach still moving at contact, a 30 ms blend and the contact press)."
+  ],
+  [
+   "ARM GEOMETRY ADAPTS AS THE TORSO LOWERS",
+   "<b>YES.</b> No authored arm angles after contact. Shoulder elevation 46° → 107° → 124° (5.0 m/s); the elbow straightens within ≈ 0.3 s and stays nearly straight (a long arm, as in REFERENCE3); normal load varies continuously (see plots). The hand is part of the forearm body (no wrist joint), so wrist / hand organisation is not represented."
+  ],
+  [
+   "ARM DOES NOT HOLD THE TORSO UP",
+   "<b>YES (qualified).</b> The press is a two-sided load-aware regulator around the intended lowering: 34–126 N (mean 63) / 46–130 N (mean 71) / 63–130 N (mean 97); lowest when the trunk is behind its intended lowering, so the descent continues (trunk to 71 / 75 / 85°). Shoulder effort mean 0.37 / 0.42 / 0.47 of capacity (SP2F's constant 150 N press: 0.56 / 0.57 / 0.59)."
+  ],
+  [
+   "NO RIGID PROP / NO POSE LOCK / NO HAND CONSTRAINT",
+   "<b>YES.</b> After contact the arm has only its joint damping, the regulated press (Jacobian transpose) and a soft end-range shoulder stabiliser that acts only beyond 115° elevation (≤ 60 N·m, scaled by authority). Finite M1c muscles; contacts win."
+  ],
+  [
+   "NO ARM FLOATING · NO CHEST-FIRST ROLL · NO PASSIVE RAGDOLL",
+   "<b>YES.</b> Chest-down never (also 0 / 27 perturbed runs); no regional failure, no whole-body fallback, authority ≥ 0.54."
+  ],
+  [
+   "FOLDED-LEG / TACKLE ENTRY PRESERVED",
+   "<b>PARTIAL.</b> Tuck, boot, studs (0 stud steps) and the knee position at contact are unchanged, BUT the folded knee's tibial axial rotation goes past its hard stop by <b>7.6 / 6.4 / 5.1°</b> for 0.24–0.36 s at the landing (SP2F 1.7 / 1.0 / 1.5°, SP2E 4.0 / 4.2 / 1.1°): releasing SP2C's counter-lean in the air changes how the folded shin lands."
+  ],
+  [
+   "PHYSICAL SLIDE PRESERVED",
+   "<b>YES.</b> 4.09 / 5.33 / 6.79 m (SP2F 4.10 / 5.38 / 6.75 m); horizontal closure ≤ 0.0040 N·s; deterministic (<code>badcc352f5a35170</code> ×2)."
+  ]
+ ],
+ "reviewNote": "I cannot play video in real time: I reviewed 30 fps consecutive frame strips (rear 3/4 and side) and the traces. Nothing beyond SP2F has been started (no friction calibration, no recipient work).",
+ "reference": [
+  "REFERENCE3 (as recorded): the slider goes onto his folded side DURING the drop (the trunk already tilted ≈ 30–45° toward the folded side when the hip lands), the folded-side hand reaches the turf at about the hip landing, a long, nearly straight arm out to the side / behind, and the body then slides on that side with the trunk lowering slowly while the arm opens; the other arm is raised (incidental, not copied)."
+ ],
+ "changes": [
+  "Lateral establishment: SP2C's in-air counter-lean is released earlier (lumbar / thoracic lateral flexion toward the folded side over 0.25 → 0.40 s, thoracic-led) so the trunk swings onto the folded side as it lands, then continues along the slow recline (one curve, no pause).",
+  "Posting arm reach: still moving toward the turf through the contact (0.25 → 0.70 s), targets released 30 ms after the first forearm contact.",
+  "Active load-aware arm support (new opt-in sp2_ctrl post.support): the press is a two-sided feedback of the sensed trunk lowering (tilt + 0.12 s × rate, 25 ms sensing delay, 40 ms activation) against the SAME intended lowering the trunk targets follow: 130 N on the intended lowering, down to 30 N when the trunk is behind it (yields to the descent), up to 300 N if it runs ahead (brakes a fall). A soft end-range shoulder stabiliser stops the turf dragging the arm overhead (it buckled the elbow at 4.5 m/s).",
+  "Final organisation: pelvis-roll objective to 70° (SP2F 75°) — robust: with the earlier lateral establishment 75° rolled the body chest-down at 5.5 m/s in nearby variants.",
+  "Persistent-lateral-orientation diagnostic (pelvis roll, chest normal, trunk roll, shoulder / hip heights, contact regions, classification) and arm effort / load series added to the evaluation."
+ ],
+ "notes": [
+  "First touch of the hand is an impact: 2.64 / 2.03 / 2.00 BW for one 8 ms sample as the leaning trunk lands onto the arm (SP2F 1.25 / 0.64 / 0.78); afterwards the load is 0.1–0.15 BW on average.",
+  "The pelvis reaches its side more slowly than the trunk: the trunk is lateral from ≈ +0.15–0.25 s, the pelvis roll passes 35° only at ≈ +0.5 s (my diagnostic's 'established' therefore reads +0.48–0.56 s).",
+  "The trunk ends propped at ≈ 70–85° tilt on the long arm (REFERENCE3 also ends propped on the arm); it does not lie flat within the slide.",
+  "5.5 m/s: peak trunk rate 182°/s at the swing through vertical (+0.1 s). 4.5 m/s: the shoulder opens to ≈ 134° before the end-range stabiliser holds it.",
+  "Friction F37.5 is temporary and unchanged; nothing calibrated. The first-pass SP2F (28491975) is preserved unchanged."
+ ]
+}

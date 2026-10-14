@@ -56,6 +56,28 @@ export class RegionalTracker extends CT.SlideTracker {
   // τ_axis = axis · (r_hand − r_joint) × F). The arm geometry is left free: the contact and the moving body determine the shoulder / elbow angles; the
   // press scales with the region's authority (yielding / failure / fallback unchanged); optional P.pressRampS: the press builds over that time from the
   // contact (smoothstep) instead of with the blend. Contacts win; no world-space target, no anchoring term.
+  // SP2F addendum (opts.post.support = { Fmin, Fmax, Ka, Kr, sched, delayS, tauS, yieldN, dMin }; inert when absent): the press becomes an ACTIVE,
+  // LOAD-AWARE SUPPORT REGULATOR instead of a constant. Its magnitude is a feedback of the sensed trunk lowering (thorax up-axis tilt from vertical
+  // and its rate, from the plant records delayS late) against the athlete's intended lowering schedule sched ([[t, deg], …], the same recline
+  // intention the trunk targets follow): F = Fmin + Ka·max(0, tilt − ref) + Kr·max(0, rate − refRate), clamped to [Fmin, Fmax] and filtered
+  // (activation, tauS). With Tp (s) the braking acts on the PREDICTED lowering error e = (tilt − ref) + Tp·(rate − refRate):
+  // F = Fmin + Ka·max(0, e) (+ Kr·max(0, rate − refRate) when Kr is given) — a trunk that is behind its intended lowering is not braked even
+  // while it catches up quickly (a pure rate term brakes it there and the descent stalls in steps). It never holds the torso up: a trunk on or
+  // behind its intended lowering gets only the light contact press Fmin, so the descent continues and the arm geometry follows it.
+  // TWO-SIDED (Flo given): F = clamp(Fmin + Ka·e, Flo, Fmax) — Fmin is then the nominal press ON the intended lowering; a trunk BEHIND it (higher
+  // than intended) gets LESS press, down to the light contact floor Flo, so the arm yields to the descent instead of propping the torso up.
+  // Load-aware yielding (optional yieldN): when the sensed hand normal load exceeds the commanded press, the post joints' damping is scaled by
+  // max(dMin, 1 − excess / yieldN), so an impact or a push moves the arm instead of being resisted. Contacts win; no world-space or height target.
+  // Optional end-range shoulder stabiliser (support.elevMax °, kR N·m/rad, capR N·m): when the posting upper arm's elevation from the thorax's down
+  // axis exceeds elevMax (the hand being dragged toward the head by the turf), the shoulder applies a bounded restoring torque about the axis that
+  // brings the arm back toward the trunk — the shoulder stabilisers resisting end range, not a pose target (inactive inside the range).
+  _postSupport(t) { const P = this.o.post, Sp = P.support, s = this._post, recs = this.plant && this.plant.recs, d = Math.round((Sp.delayS ?? 0.025) / this.h), r = recs && recs[recs.length - 1 - d];
+    if (!r) return { F: Sp.Fmin, dS: 1 }; const th = r.S[L.bi("thorax")], up = Q.rot(th.rot, [0, 1, 0]), tilt = Math.acos(Math.max(-1, Math.min(1, up[1]))), dUp = V.cross(th.w, up)[1], rate = -dUp / Math.max(0.05, Math.sin(tilt));
+    const va = (x) => { const k = Sp.sched; let i = 0; while (i + 1 < k.length && k[i + 1][0] <= x) i++; const a = k[i], b = k[Math.min(i + 1, k.length - 1)]; return b[0] > a[0] ? a[1] + (b[1] - a[1]) * Math.min(1, Math.max(0, (x - a[0]) / (b[0] - a[0]))) : a[1]; };
+    const ref = va(t) * D2R, refRate = (va(t + 0.0125) - va(t - 0.0125)) / 0.025 * D2R, ep = (tilt - ref) + (Sp.Tp ?? 0) * (rate - refRate), Fd = Sp.Flo != null ? Math.max(Sp.Flo, Math.min(Sp.Fmax, Sp.Fmin + (Sp.Ka ?? 0) / D2R * ep)) : Math.min(Sp.Fmax, Sp.Fmin + (Sp.Ka ?? 0) / D2R * Math.max(0, ep) + (Sp.Kr ?? 0) / D2R * Math.max(0, rate - refRate));
+    s.F = s.F == null ? Sp.Fmin : s.F + (Fd - s.F) * (1 - Math.exp(-this.h / (Sp.tauS ?? 0.04)));
+    let N = 0; for (const c of r.contacts || []) { if (!c.kind.startsWith("turf") || !(c.Jn > 0)) continue; const sd = c.a === "turf" ? c.b : c.a; if (Array.isArray(sd) && sd[0] === (this.c && this.c.role || "tackler") && sd[1] === P.body) N += c.Jn / this.h; }
+    const dS = Sp.yieldN ? Math.max(Sp.dMin ?? 0.3, 1 - Math.max(0, N - s.F) / Sp.yieldN) : 1; s.log = { F: +s.F.toFixed(1), tilt: +(tilt / D2R).toFixed(1), ref: +(ref / D2R).toFixed(1), rate: +(rate / D2R).toFixed(0), N: +N.toFixed(0), dS: +dS.toFixed(2) }; return { F: s.F, dS }; }
   _postTrigger(t) { const P = this.o.post, s = this._post; if (!s || s.tc != null) return; const recs = this.plant && this.plant.recs, role = this.c && this.c.role || "tackler";
     const r = recs && recs[recs.length - 1 - Math.round((P.delayS ?? 0.025) / this.h)]; if (!r) return;
     for (const c of r.contacts || []) { if (!c.kind.startsWith("turf") || !(c.Jn > 0)) continue; const sd = c.a === "turf" ? c.b : c.a; if (Array.isArray(sd) && sd[0] === role && sd[1] === P.body) { s.tc = t; break; } } }
@@ -63,7 +85,11 @@ export class RegionalTracker extends CT.SlideTracker {
     const recs = this.plant && this.plant.recs, r = recs && recs[recs.length - 1 - Math.round((R0.delayS ?? 0.025) / this.h)], role = this.c && this.c.role || "tackler";
     if (!r || !r.chars || !r.chars[role]) return; const P = r.chars[role].P; if (Math.hypot(P[0], P[2]) / L.M < R0.vh) rs.tr = t + this.lead; }
   step(n, st, ev) { this._n = n; const t = n * this.h + (this.o.t0 || 0), init = n === 0 && !!this.o.initChor, tt = init ? t : t + this.lead, R = this.R, CAf = this._contactAuth(t); if (this._rec) this._recoverTrigger(t); if (this._post) this._postTrigger(t);
-    const PO = this._post && this._post.tc != null ? (() => { const P = this.o.post, u = Math.min(1, (t - this._post.tc) / Math.max(1e-6, P.blendS ?? 0.1)), Kp = L.skel(st); const v = P.pressRampS ? Math.min(1, (t - this._post.tc) / P.pressRampS) : null; return { P, u: u * u * (3 - 2 * u), K: Kp, F: [0, -(P.pressN ?? 0) * (v == null ? 1 : v * v * (3 - 2 * v)), 0], set: new Set(P.joints) }; })() : null;
+    const PO = this._post && this._post.tc != null ? (() => { const P = this.o.post, u = Math.min(1, (t - this._post.tc) / Math.max(1e-6, P.blendS ?? 0.1)), Kp = L.skel(st); const v = P.pressRampS ? Math.min(1, (t - this._post.tc) / P.pressRampS) : null;
+      const su = P.support ? this._postSupport(t) : null; let TR = null;
+      if (su && P.support.elevMax != null) { const sd = P.side || "L", dn = Q.rot(st[L.bi("thorax")].rot, [0, -1, 0]), ua = V.sub(Kp["elbow_" + sd], Kp["shoulder_" + sd]), ul = V.len(ua), uh = V.sc(ua, 1 / ul), el = Math.acos(Math.max(-1, Math.min(1, V.dot(dn, uh)))), ex = el - P.support.elevMax * D2R;
+        if (ex > 0) { const nx = V.cross(uh, dn), nl = V.len(nx); if (nl > 1e-6) { TR = { joint: "shoulder_" + sd, T: V.sc(nx, Math.min(P.support.capR ?? 40, (P.support.kR ?? 60) * ex) / nl) }; this._post.log = { ...(this._post.log || {}), rangeNm: +Math.min(P.support.capR ?? 40, (P.support.kR ?? 60) * ex).toFixed(1) }; } } }
+      return { P, u: u * u * (3 - 2 * u), K: Kp, F: [0, -(su ? su.F : (P.pressN ?? 0)) * (v == null ? 1 : v * v * (3 - 2 * v)), 0], dS: su ? su.dS : 1, TR, set: new Set(P.joints) }; })() : null;
     // (init: the incoming motion evaluated at the PRESENT instant — position error and rate error are ≈ 0 because the entry is that motion, so
     //  the steady state is the motion's own inverse dynamics + the support objective: e.g. a stance knee's extensors are pre-activated at the
     //  touchdown, as in running, instead of its flexors pulling toward where the knee will be 70 ms later)
@@ -82,7 +108,8 @@ export class RegionalTracker extends CT.SlideTracker {
         const touched = reg && touch[reg] > R.touchNs; if (touched) dReg[reg] = Math.max(dReg[reg], ae);         // a touched region's error = how far it is overpowered
         if (touched && ae > e0) { kp *= e0 / ae; row.yieldN = (row.yieldN || 0) + 1; }                       // local yield while touched
         if (PO && PO.set.has(j.name)) { const u = PO.u, rj = V.sub(PO.K["hand_" + (PO.P.side || "L")], PO.K[j.name]), tp = V.dot(axW[i], V.cross(rj, PO.F));
-          pd[k][i] = al * ((1 - u) * kp * err[i] + g.D * ((1 - u) * wRef[i] - w[i]) + u * tp); row.err.push(err[i]); continue; }
+          const tr = PO.TR && PO.TR.joint === j.name ? V.dot(axW[i], PO.TR.T) : 0;
+          pd[k][i] = al * ((1 - u) * kp * err[i] + g.D * (PO.dS === 1 ? (1 - u) * wRef[i] - w[i] : (1 - u) * wRef[i] - w[i] * (1 - u + u * PO.dS)) + u * (tp + tr)); row.err.push(err[i]); continue; }
         pd[k][i] = al * (kp * err[i] + g.D * (wRef[i] - w[i])); row.err.push(err[i]); } }
     // (init: fresh chain-ID closures each call — the entry makes two calls at step 0, before and after the velocities are written, and a
     //  closure that remembered the first would read that write as a ≈ 10³ m/s² base acceleration)
@@ -100,6 +127,7 @@ export class RegionalTracker extends CT.SlideTracker {
     row.errDeg = Math.sqrt(row.err.reduce((s, x) => s + x * x, 0) / row.err.length) * 180 / Math.PI; delete row.err; if (row.yieldN) row.yield = row.yieldN;
     row.touch = Object.fromEntries(Object.entries(touch).filter(([, x]) => x > 0).map(([r, x]) => [r, +x.toFixed(2)])); row.dist = Object.fromEntries(Object.entries(dReg).map(([r, d]) => [r, +(d / D2R).toFixed(1)])); row.regF = Object.fromEntries(Object.entries(this.reg).map(([r, s]) => [r, +s.f.toFixed(3)])); row.gF = +this.g.f.toFixed(3); if (this.g.on) row.ragdoll = true; if (CAf) { row.contactAuth = Object.fromEntries(Object.entries(CAf).map(([r, a]) => [r, +a.toFixed(3)])); row.tc = this.tc; }
     if (vf && vf.info) row.vf = { F: vf.info.F.map(x => +x.toFixed(1)), T: vf.info.T ? vf.info.T.map(x => +x.toFixed(1)) : null, w: vf.info.w };
+    if (this._post && this._post.log) row.post = this._post.log;
     this.log.push(row); return out; }
   meta() { return { tracker: "SLIDE-PHYS-2 RegionalTracker", lead: this.lead, gains: this.o.gains, chor: this.o.chor.name, regional: this.R,
     failures: Object.fromEntries(Object.entries(this.reg).filter(([, s]) => s.failed).map(([r, s]) => [r, s.t])), wholeBody: this.g.on ? this.g.t : null, contactAuthFrom: this.tc ?? null, contactAuthBody: this.tcBody ?? null, ...(this._rec ? { recoverFrom: this._rec.tr } : {}), ...(this._post ? { postFrom: this._post.tc } : {}) }; }
