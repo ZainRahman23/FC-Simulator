@@ -489,7 +489,8 @@ That leaves ≈ 0.75 ms per step at runtime, ≈ 18 % of one core per character 
 
 **Commits:**
 - `b6fc8180` — 14 Oct 01:10 checkpoint: scripts, G1–G24, S1.
-- The final SLIDE-PHYS-1 commit — its hash is in the commit message and in memory.
+- `a4cbf503` — 14 Oct ≈ 02:58, the final SLIDE-PHYS-1 commit: SP1, G25, Stage 2, Stage 3 (including GRAZE), review page, this report.
+- The follow-up commit that fills in this hash.
 
 **Files:**
 - **Reports:** `review_artifacts/physical_character_v2/slide_phys1/`: `SLIDE_PHYS1_REPORT.md`, `SLIDE_PHYS1_LOG.md`, `REFERENCE_ANALYSIS.md`.
