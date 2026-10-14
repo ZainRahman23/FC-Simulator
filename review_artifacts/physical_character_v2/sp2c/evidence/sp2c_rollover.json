@@ -1,0 +1,1297 @@
+{
+ "tool": "sp2c_rollover.mjs",
+ "friction": "F37.5 temporary",
+ "base": "SP2A_opts.json (unchanged)",
+ "factors": {
+  "baseline": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "5a04f7b6fa062fc3",
+    "proneT": 1.146,
+    "firstFoldContactT": 0.446,
+    "slide": 4.262,
+    "final": "prone (face-down)",
+    "headTurfT": 1.2,
+    "rollLedger": {
+     "torso": -63.921,
+     "knee_L": 53.916,
+     "hip/pelvis": 18.242,
+     "upperArm": -10.101,
+     "shin_L": 8.811,
+     "head": -8.09,
+     "thigh_L": -5.818,
+     "boot_R:toe": -5.159,
+     "boot_R:upper": 3.829,
+     "hand": -2.952,
+     "boot_L:sole": 2.433,
+     "boot_R:heel": 2.31,
+     "boot_L:toe": 0.304,
+     "boot_R:sole": 0.119
+    },
+    "at500": {
+     "pelvisRoll": 61.132,
+     "bellyDownY": -0.224,
+     "Lroll": 9.962
+    },
+    "at1s": {
+     "pelvisRoll": 110.932,
+     "bellyDownY": -0.819,
+     "Lroll": -0.873
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "4821b299087f258d",
+    "proneT": 1.196,
+    "firstFoldContactT": 0.417,
+    "slide": 5.475,
+    "final": "prone (face-down)",
+    "headTurfT": 1.271,
+    "rollLedger": {
+     "torso": -49.385,
+     "knee_L": 35.723,
+     "hip/pelvis": 19.715,
+     "shin_L": 8.954,
+     "thigh_L": -8.523,
+     "upperArm": -8.212,
+     "boot_R:toe": -7.64,
+     "head": -7.26,
+     "boot_R:heel": 5.661,
+     "boot_L:sole": 2.241,
+     "boot_R:upper": 1.577,
+     "boot_R:sole": 0.944,
+     "boot_L:toe": 0.709,
+     "hand": -0.407,
+     "boot_L:upper": 0.061
+    },
+    "at500": {
+     "pelvisRoll": 50.644,
+     "bellyDownY": -0.14,
+     "Lroll": 6.183
+    },
+    "at1s": {
+     "pelvisRoll": 111.43,
+     "bellyDownY": -0.836,
+     "Lroll": 1.224
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "1709537e866c8261",
+    "proneT": 1.371,
+    "firstFoldContactT": 0.396,
+    "slide": 6.936,
+    "final": "prone (face-down)",
+    "headTurfT": 1.425,
+    "rollLedger": {
+     "torso": -43.088,
+     "knee_L": 27.006,
+     "hip/pelvis": 18.291,
+     "upperArm": -11.839,
+     "shin_L": 8.864,
+     "boot_R:heel": 7.717,
+     "thigh_L": -6.336,
+     "head": -5.925,
+     "boot_R:toe": -5.076,
+     "boot_R:sole": 1.503,
+     "boot_L:sole": 1.469,
+     "hand": 0.912,
+     "boot_L:toe": 0.903,
+     "boot_L:upper": 0.154,
+     "boot_R:upper": 0.067
+    },
+    "at500": {
+     "pelvisRoll": 45.142,
+     "bellyDownY": 0.099,
+     "Lroll": 4.964
+    },
+    "at1s": {
+     "pelvisRoll": 93.44,
+     "bellyDownY": -0.631,
+     "Lroll": 11.542
+    }
+   }
+  ],
+  "authority": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "eb5ce04945516ac7",
+    "proneT": 1.175,
+    "firstFoldContactT": 0.446,
+    "slide": 4.257,
+    "final": "prone (face-down)",
+    "headTurfT": 1.225,
+    "rollLedger": {
+     "knee_L": 51.294,
+     "upperArm": -43.055,
+     "torso": -37.389,
+     "hip/pelvis": 23.983,
+     "shin_L": 8.378,
+     "head": -7.594,
+     "thigh_L": -5.901,
+     "boot_R:upper": 3.952,
+     "boot_R:heel": 2.332,
+     "boot_R:toe": -1.874,
+     "boot_L:sole": 1.612,
+     "hand": -1.524,
+     "boot_R:sole": 0.099,
+     "boot_L:toe": 0.09
+    },
+    "at500": {
+     "pelvisRoll": 60.886,
+     "bellyDownY": -0.131,
+     "Lroll": 9.26
+    },
+    "at1s": {
+     "pelvisRoll": 116.099,
+     "bellyDownY": -0.768,
+     "Lroll": -1.016
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "bcce535f83dd4fc3",
+    "proneT": 1.254,
+    "firstFoldContactT": 0.417,
+    "slide": 5.478,
+    "final": "prone (face-down)",
+    "headTurfT": 1.3,
+    "rollLedger": {
+     "knee_L": 45.142,
+     "upperArm": -40.044,
+     "torso": -35.315,
+     "hip/pelvis": 21.979,
+     "shin_L": 8.687,
+     "thigh_L": -8.278,
+     "head": -6.291,
+     "boot_R:heel": 5.757,
+     "boot_R:toe": -2.367,
+     "boot_R:upper": 1.768,
+     "boot_L:sole": 1.332,
+     "boot_R:sole": 1.074,
+     "hand": 0.672,
+     "boot_L:toe": 0.593
+    },
+    "at500": {
+     "pelvisRoll": 49.304,
+     "bellyDownY": -0.077,
+     "Lroll": 7.037
+    },
+    "at1s": {
+     "pelvisRoll": 113.312,
+     "bellyDownY": -0.8,
+     "Lroll": 2.393
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "671ab33fc82f75f7",
+    "proneT": 1.8,
+    "firstFoldContactT": 0.396,
+    "slide": 6.932,
+    "final": "prone (face-down)",
+    "headTurfT": 1.863,
+    "rollLedger": {
+     "torso": -30.158,
+     "upperArm": -25.678,
+     "hip/pelvis": 24.952,
+     "knee_L": 20.326,
+     "thigh_L": -9.149,
+     "shin_L": 8.413,
+     "boot_R:heel": 7.793,
+     "head": -6.885,
+     "boot_R:toe": 2.231,
+     "boot_R:sole": 1.506,
+     "hand": -1.095,
+     "boot_L:sole": 0.976,
+     "boot_L:toe": 0.734,
+     "boot_R:upper": 0.433,
+     "boot_L:upper": 0.177
+    },
+    "at500": {
+     "pelvisRoll": 41.781,
+     "bellyDownY": 0.05,
+     "Lroll": 2.879
+    },
+    "at1s": {
+     "pelvisRoll": 53.073,
+     "bellyDownY": -0.086,
+     "Lroll": 3.514
+    }
+   }
+  ],
+  "armLimp": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "37dfe44cb9301bc8",
+    "proneT": 1.138,
+    "firstFoldContactT": 0.446,
+    "slide": 4.258,
+    "final": "prone (face-down)",
+    "headTurfT": 1.183,
+    "rollLedger": {
+     "torso": -37.806,
+     "knee_L": 36.109,
+     "hip/pelvis": 23.847,
+     "upperArm": -17.935,
+     "boot_R:toe": -11.093,
+     "shin_L": 8.672,
+     "head": -7.314,
+     "thigh_L": -5.721,
+     "boot_R:upper": 3.818,
+     "hand": -3.227,
+     "boot_R:heel": 2.349,
+     "boot_L:sole": 2.202,
+     "boot_L:toe": 0.213,
+     "boot_R:sole": 0.073
+    },
+    "at500": {
+     "pelvisRoll": 63.091,
+     "bellyDownY": -0.309,
+     "Lroll": 11.198
+    },
+    "at1s": {
+     "pelvisRoll": 104.333,
+     "bellyDownY": -0.731,
+     "Lroll": -1.909
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "16d3e4ec10108dd7",
+    "proneT": 1.271,
+    "firstFoldContactT": 0.417,
+    "slide": 5.456,
+    "final": "prone (face-down)",
+    "headTurfT": 1.317,
+    "rollLedger": {
+     "torso": -42.904,
+     "knee_L": 34.236,
+     "hip/pelvis": 21.682,
+     "upperArm": -14.965,
+     "shin_L": 9.05,
+     "thigh_L": -8.497,
+     "head": -7.153,
+     "boot_R:toe": -6.715,
+     "boot_R:heel": 5.618,
+     "boot_L:sole": 2.196,
+     "boot_R:upper": 1.518,
+     "hand": -1.085,
+     "boot_R:sole": 0.855,
+     "boot_L:toe": 0.758
+    },
+    "at500": {
+     "pelvisRoll": 49.126,
+     "bellyDownY": -0.163,
+     "Lroll": 5.216
+    },
+    "at1s": {
+     "pelvisRoll": 107.35,
+     "bellyDownY": -0.845,
+     "Lroll": 2.066
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "b0df2d3e9c9c802a",
+    "proneT": 1.529,
+    "firstFoldContactT": 0.396,
+    "slide": 6.907,
+    "final": "prone (face-down)",
+    "headTurfT": 1.575,
+    "rollLedger": {
+     "torso": -24.791,
+     "hip/pelvis": 21.273,
+     "upperArm": -15.166,
+     "knee_L": 10.863,
+     "shin_L": 9.155,
+     "boot_R:heel": 7.688,
+     "thigh_L": -6.334,
+     "boot_R:toe": -5.999,
+     "head": -5.467,
+     "boot_L:sole": 1.491,
+     "boot_R:sole": 1.385,
+     "boot_L:toe": 0.969,
+     "hand": -0.352,
+     "boot_L:upper": 0.289,
+     "boot_R:upper": 0.046
+    },
+    "at500": {
+     "pelvisRoll": 42.174,
+     "bellyDownY": 0.15,
+     "Lroll": 3.08
+    },
+    "at1s": {
+     "pelvisRoll": 78.27,
+     "bellyDownY": -0.155,
+     "Lroll": 11.055
+    }
+   }
+  ],
+  "armWide": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "3185456a6eb42347",
+    "proneT": 0.967,
+    "firstFoldContactT": 0.438,
+    "slide": 4.298,
+    "final": "prone (face-down)",
+    "headTurfT": 1.071,
+    "rollLedger": {
+     "torso": -47.173,
+     "knee_L": 44.41,
+     "hip/pelvis": 14.209,
+     "boot_R:toe": -14.177,
+     "head": -11.132,
+     "shin_L": 9.268,
+     "thigh_L": -4.364,
+     "boot_R:upper": 3.877,
+     "hand": -3.806,
+     "boot_R:heel": 3.022,
+     "boot_R:sole": -2.253,
+     "boot_L:sole": 2.139,
+     "upperArm": -0.41,
+     "boot_L:upper": 0.19,
+     "boot_L:toe": 0.147,
+     "forearm": -0.039
+    },
+    "at500": {
+     "pelvisRoll": 78.365,
+     "bellyDownY": -0.45,
+     "Lroll": 16.365
+    },
+    "at1s": {
+     "pelvisRoll": 106.617,
+     "bellyDownY": -0.823,
+     "Lroll": -1.88
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "20ad592374c33dfa",
+    "proneT": 1.013,
+    "firstFoldContactT": 0.413,
+    "slide": 5.502,
+    "final": "prone (face-down)",
+    "headTurfT": 1.092,
+    "rollLedger": {
+     "torso": -57.411,
+     "knee_L": 51.22,
+     "hip/pelvis": 13.101,
+     "head": -11.677,
+     "boot_R:toe": -10.264,
+     "shin_L": 9.095,
+     "boot_R:heel": 7.053,
+     "thigh_L": -6.276,
+     "hand": -3.962,
+     "boot_L:sole": 2.037,
+     "boot_R:upper": 1.115,
+     "boot_L:toe": 0.671,
+     "upperArm": -0.465,
+     "boot_R:sole": 0.235,
+     "forearm": -0.18,
+     "boot_L:upper": 0.164
+    },
+    "at500": {
+     "pelvisRoll": 71.107,
+     "bellyDownY": -0.307,
+     "Lroll": 15.315
+    },
+    "at1s": {
+     "pelvisRoll": 110.045,
+     "bellyDownY": -0.84,
+     "Lroll": -1.894
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "797f79f2195a23fb",
+    "proneT": 1.188,
+    "firstFoldContactT": 0.392,
+    "slide": 6.927,
+    "final": "prone (face-down)",
+    "headTurfT": 1.275,
+    "rollLedger": {
+     "torso": -54.245,
+     "knee_L": 36.195,
+     "hip/pelvis": 19.803,
+     "boot_R:heel": 8.909,
+     "shin_L": 8.58,
+     "head": -7.997,
+     "hand": -7.489,
+     "boot_R:toe": -7.012,
+     "thigh_L": -4.108,
+     "boot_L:sole": 1.859,
+     "boot_R:sole": 1.562,
+     "upperArm": -1.541,
+     "boot_L:toe": 0.966,
+     "forearm": -0.182,
+     "boot_L:upper": 0.174
+    },
+    "at500": {
+     "pelvisRoll": 55.448,
+     "bellyDownY": 0.117,
+     "Lroll": 9.504
+    },
+    "at1s": {
+     "pelvisRoll": 114.825,
+     "bellyDownY": -0.871,
+     "Lroll": 2.959
+    }
+   }
+  ],
+  "foldTuck": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "c8e69b656d463038",
+    "proneT": 1.513,
+    "firstFoldContactT": 0.446,
+    "slide": 4.301,
+    "final": "prone (face-down)",
+    "headTurfT": 1.542,
+    "rollLedger": {
+     "knee_L": 46.777,
+     "shin_L": 35.877,
+     "hip/pelvis": -27.263,
+     "boot_R:toe": -20.702,
+     "hand": -16.318,
+     "torso": -16.206,
+     "head": -11.439,
+     "upperArm": -8.886,
+     "boot_L:sole": 6.454,
+     "boot_L:upper": 4.163,
+     "boot_R:heel": 1.981,
+     "boot_R:sole": -0.887,
+     "thigh_L": 0.132
+    },
+    "at500": {
+     "pelvisRoll": 34.72,
+     "bellyDownY": 0.319,
+     "Lroll": 8.342
+    },
+    "at1s": {
+     "pelvisRoll": 89.419,
+     "bellyDownY": -0.161,
+     "Lroll": 18.195
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "7670b803ca4b1cb1",
+    "proneT": 1.354,
+    "firstFoldContactT": 0.421,
+    "slide": 5.497,
+    "final": "prone (face-down)",
+    "headTurfT": 1.4,
+    "rollLedger": {
+     "knee_L": 87.404,
+     "torso": -61.444,
+     "head": -33.08,
+     "shin_L": 30.469,
+     "hip/pelvis": -25.281,
+     "hand": -14.009,
+     "upperArm": -7.922,
+     "thigh_L": 5.928,
+     "boot_R:toe": 4.572,
+     "boot_L:sole": 4.476,
+     "boot_R:heel": 3.811,
+     "boot_L:toe": 0.183,
+     "boot_R:sole": -0.162
+    },
+    "at500": {
+     "pelvisRoll": 33.975,
+     "bellyDownY": 0.125,
+     "Lroll": 8.918
+    },
+    "at1s": {
+     "pelvisRoll": 99.284,
+     "bellyDownY": -0.834,
+     "Lroll": 5.79
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "081a398ffdc01dcf",
+    "proneT": 1.246,
+    "firstFoldContactT": 0.4,
+    "slide": 6.927,
+    "final": "prone (face-down)",
+    "headTurfT": 1.288,
+    "rollLedger": {
+     "knee_L": 99.405,
+     "torso": -71.898,
+     "head": -35.735,
+     "hip/pelvis": -21.344,
+     "shin_L": 18.97,
+     "hand": -13.017,
+     "boot_R:toe": 9.917,
+     "thigh_L": 8.998,
+     "upperArm": -7.881,
+     "boot_R:heel": 3.078,
+     "boot_L:sole": 2.938,
+     "boot_L:toe": 0.296,
+     "boot_R:sole": -0.22
+    },
+    "at500": {
+     "pelvisRoll": 39.636,
+     "bellyDownY": 0.114,
+     "Lroll": 11.03
+    },
+    "at1s": {
+     "pelvisRoll": 115.344,
+     "bellyDownY": -0.971,
+     "Lroll": 3.53
+    }
+   }
+  ],
+  "trunkMore": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "473d4c7c149c6969",
+    "proneT": null,
+    "firstFoldContactT": 0.438,
+    "slide": 4.341,
+    "final": "seated / reclined",
+    "headTurfT": null,
+    "rollLedger": {
+     "thigh_L": -23.491,
+     "shin_L": 20.583,
+     "boot_R:heel": -19.702,
+     "boot_L:upper": 15.778,
+     "knee_L": -2.447,
+     "boot_R:upper": 1.606,
+     "boot_L:sole": 1.134,
+     "boot_R:sole": 0.89,
+     "boot_L:heel": 0.788,
+     "hip/pelvis": 0.096
+    },
+    "at500": {
+     "pelvisRoll": 29.229,
+     "bellyDownY": 0.041,
+     "Lroll": -2.413
+    },
+    "at1s": {
+     "pelvisRoll": 33.094,
+     "bellyDownY": -0.031,
+     "Lroll": -0.991
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "f34be04177721a36",
+    "proneT": null,
+    "firstFoldContactT": 0.413,
+    "slide": 5.686,
+    "final": "seated / reclined",
+    "headTurfT": null,
+    "rollLedger": {
+     "thigh_L": -56.311,
+     "shin_L": 53.954,
+     "hip/pelvis": -31.692,
+     "boot_R:heel": 13.776,
+     "boot_R:upper": 10.336,
+     "boot_L:upper": 8.434,
+     "knee_L": -5.849,
+     "boot_L:sole": 1.352,
+     "boot_L:toe": 0.292,
+     "boot_R:sole": 0.131
+    },
+    "at500": {
+     "pelvisRoll": 29.521,
+     "bellyDownY": -0.023,
+     "Lroll": 0.055
+    },
+    "at1s": {
+     "pelvisRoll": 30.518,
+     "bellyDownY": -0.093,
+     "Lroll": 0.163
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "9fc77f0f83aaf3d9",
+    "proneT": null,
+    "firstFoldContactT": 0.392,
+    "slide": 6.946,
+    "final": "seated / reclined",
+    "headTurfT": null,
+    "rollLedger": {
+     "thigh_L": -67.507,
+     "shin_L": 54.829,
+     "hip/pelvis": -30.232,
+     "boot_R:heel": 19.431,
+     "boot_R:upper": 12.56,
+     "knee_L": -5.737,
+     "boot_L:upper": 5.707,
+     "boot_L:sole": 3.842,
+     "boot_R:sole": 1.526,
+     "boot_L:toe": 0.624
+    },
+    "at500": {
+     "pelvisRoll": 29.042,
+     "bellyDownY": 0.182,
+     "Lroll": 1.483
+    },
+    "at1s": {
+     "pelvisRoll": 29.087,
+     "bellyDownY": -0.107,
+     "Lroll": -0.662
+    }
+   }
+  ],
+  "trunkNone": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "c3a27e3c1d110786",
+    "proneT": 0.817,
+    "firstFoldContactT": 0.429,
+    "slide": 4.39,
+    "final": "prone (face-down)",
+    "headTurfT": 0.883,
+    "rollLedger": {
+     "knee_L": 80.848,
+     "torso": -80.038,
+     "upperArm": -32.484,
+     "hip/pelvis": 14.971,
+     "hand": -10.492,
+     "head": -8.413,
+     "shin_L": 5.521,
+     "boot_R:heel": 5.24,
+     "boot_L:upper": 5.166,
+     "boot_R:upper": 3.346,
+     "boot_R:sole": 2.546,
+     "thigh_L": 1.599,
+     "boot_L:toe": 1.384,
+     "boot_L:sole": 1.369,
+     "boot_L:heel": 0.74,
+     "boot_R:toe": -0.39
+    },
+    "at500": {
+     "pelvisRoll": 91.997,
+     "bellyDownY": -0.879,
+     "Lroll": 2.642
+    },
+    "at1s": {
+     "pelvisRoll": 92.182,
+     "bellyDownY": -0.734,
+     "Lroll": 0.273
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "9281076aab2e17fd",
+    "proneT": 0.796,
+    "firstFoldContactT": 0.408,
+    "slide": 5.514,
+    "final": "prone (face-down)",
+    "headTurfT": 0.871,
+    "rollLedger": {
+     "torso": -66.047,
+     "knee_L": 59.545,
+     "upperArm": -28.31,
+     "hip/pelvis": 16.283,
+     "hand": -7.733,
+     "boot_R:heel": 7.202,
+     "shin_L": 6.793,
+     "head": -6.069,
+     "boot_L:upper": 3.117,
+     "boot_R:sole": 2.014,
+     "boot_R:toe": -1.839,
+     "boot_L:sole": 1.608,
+     "boot_L:toe": 1.542,
+     "thigh_L": 1.372,
+     "boot_L:heel": 0.747,
+     "boot_R:upper": 0.727
+    },
+    "at500": {
+     "pelvisRoll": 93.681,
+     "bellyDownY": -0.857,
+     "Lroll": 7.076
+    },
+    "at1s": {
+     "pelvisRoll": 91.767,
+     "bellyDownY": -0.735,
+     "Lroll": 0.392
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "3cfd3e4ac70203e1",
+    "proneT": 0.821,
+    "firstFoldContactT": 0.392,
+    "slide": 6.942,
+    "final": "prone (face-down)",
+    "headTurfT": 0.883,
+    "rollLedger": {
+     "torso": -48.508,
+     "knee_L": 41.998,
+     "upperArm": -25.126,
+     "hip/pelvis": 14.365,
+     "shin_L": 8.773,
+     "boot_R:heel": 7.701,
+     "head": -5.846,
+     "boot_R:toe": -5.687,
+     "hand": -2.83,
+     "thigh_L": 2.499,
+     "boot_L:sole": 1.492,
+     "boot_L:toe": 1.343,
+     "boot_R:sole": 0.785,
+     "boot_L:upper": 0.077
+    },
+    "at500": {
+     "pelvisRoll": 93.329,
+     "bellyDownY": -0.765,
+     "Lroll": 7.602
+    },
+    "at1s": {
+     "pelvisRoll": 92.493,
+     "bellyDownY": -0.721,
+     "Lroll": 0.976
+    }
+   }
+  ],
+  "tackLow": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "95baefe4f9ac8afa",
+    "proneT": 1.15,
+    "firstFoldContactT": 0.446,
+    "slide": 4.242,
+    "final": "prone (face-down)",
+    "headTurfT": 1.217,
+    "rollLedger": {
+     "torso": -86.917,
+     "knee_L": 77.716,
+     "hip/pelvis": 16.813,
+     "head": -15.718,
+     "hand": -9.562,
+     "shin_L": 9.462,
+     "thigh_L": -5.859,
+     "upperArm": -5.402,
+     "boot_R:upper": 3.546,
+     "boot_R:toe": 3.329,
+     "boot_R:heel": 2.485,
+     "boot_L:sole": 2.384,
+     "boot_L:upper": 0.909,
+     "boot_R:sole": 0.136,
+     "boot_L:toe": 0.092
+    },
+    "at500": {
+     "pelvisRoll": 59.192,
+     "bellyDownY": -0.209,
+     "Lroll": 9.601
+    },
+    "at1s": {
+     "pelvisRoll": 127.106,
+     "bellyDownY": -0.895,
+     "Lroll": 0.993
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "3c8b2706f5a938b2",
+    "proneT": 1.188,
+    "firstFoldContactT": 0.417,
+    "slide": 5.476,
+    "final": "prone (face-down)",
+    "headTurfT": 1.283,
+    "rollLedger": {
+     "torso": -65.795,
+     "knee_L": 52.002,
+     "hip/pelvis": 17.215,
+     "head": -11.953,
+     "shin_L": 9.897,
+     "thigh_L": -8.439,
+     "hand": -6.516,
+     "boot_R:heel": 5.738,
+     "upperArm": -4.66,
+     "boot_L:sole": 2.854,
+     "boot_R:upper": 1.432,
+     "boot_R:sole": 0.882,
+     "boot_L:toe": 0.598,
+     "boot_R:toe": 0.482,
+     "boot_L:upper": 0.272
+    },
+    "at500": {
+     "pelvisRoll": 50.13,
+     "bellyDownY": -0.126,
+     "Lroll": 6.304
+    },
+    "at1s": {
+     "pelvisRoll": 119.978,
+     "bellyDownY": -0.866,
+     "Lroll": 2.431
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "7ed264c32477d693",
+    "proneT": 1.475,
+    "firstFoldContactT": 0.396,
+    "slide": 6.939,
+    "final": "prone (face-down)",
+    "headTurfT": 1.538,
+    "rollLedger": {
+     "torso": -43.568,
+     "knee_L": 32.135,
+     "hip/pelvis": 13.846,
+     "head": -12.914,
+     "shin_L": 9.213,
+     "boot_R:heel": 8.049,
+     "upperArm": -7.691,
+     "thigh_L": -6.859,
+     "hand": -3.756,
+     "boot_L:sole": 1.802,
+     "boot_R:sole": 1.248,
+     "boot_L:toe": 0.739,
+     "boot_R:toe": 0.371,
+     "boot_L:upper": 0.138,
+     "boot_R:upper": 0.008
+    },
+    "at500": {
+     "pelvisRoll": 44.681,
+     "bellyDownY": 0.106,
+     "Lroll": 3.889
+    },
+    "at1s": {
+     "pelvisRoll": 84.6,
+     "bellyDownY": -0.293,
+     "Lroll": 12.216
+    }
+   }
+  ],
+  "seatStrong": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "4c185c9290bf734c",
+    "proneT": 1.538,
+    "firstFoldContactT": 0.442,
+    "slide": 4.212,
+    "final": "prone (face-down)",
+    "headTurfT": 2.5,
+    "rollLedger": {
+     "knee_L": 66.898,
+     "upperArm": -48.196,
+     "torso": -45.782,
+     "hip/pelvis": 11.697,
+     "shin_L": 7.653,
+     "thigh_L": -5.84,
+     "hand": -3.606,
+     "boot_L:upper": 3.4,
+     "boot_R:upper": 2.743,
+     "boot_R:heel": 2.586,
+     "boot_R:toe": 1.753,
+     "boot_L:sole": 1.157,
+     "boot_R:sole": 0.463,
+     "boot_L:toe": 0.167
+    },
+    "at500": {
+     "pelvisRoll": 46.409,
+     "bellyDownY": 0.174,
+     "Lroll": 2.497
+    },
+    "at1s": {
+     "pelvisRoll": 92.085,
+     "bellyDownY": -0.194,
+     "Lroll": 16.307
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "2a8494a1bb840e5e",
+    "proneT": null,
+    "firstFoldContactT": 0.417,
+    "slide": 5.495,
+    "final": "on its side",
+    "headTurfT": null,
+    "rollLedger": {
+     "hip/pelvis": 80.26,
+     "knee_L": -79.805,
+     "upperArm": -15.603,
+     "shin_L": 7.065,
+     "boot_R:heel": 6.552,
+     "thigh_L": -4.15,
+     "hand": -3.502,
+     "boot_L:upper": 1.841,
+     "boot_L:sole": 1.164,
+     "boot_R:sole": 0.972,
+     "boot_L:toe": 0.654,
+     "boot_R:upper": 0.512,
+     "boot_L:heel": 0.058,
+     "forearm": -0.034
+    },
+    "at500": {
+     "pelvisRoll": 42.536,
+     "bellyDownY": 0.199,
+     "Lroll": 0.915
+    },
+    "at1s": {
+     "pelvisRoll": 48.805,
+     "bellyDownY": 0.001,
+     "Lroll": -0.074
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "5445ddc129bd7277",
+    "proneT": null,
+    "firstFoldContactT": 0.396,
+    "slide": 6.901,
+    "final": "on its side",
+    "headTurfT": null,
+    "rollLedger": {
+     "knee_L": -110.035,
+     "hip/pelvis": 95.579,
+     "thigh_L": -10.407,
+     "shin_L": 10.045,
+     "boot_R:heel": 8.864,
+     "hand": -4.715,
+     "boot_L:toe": 2.322,
+     "boot_L:sole": 1.797,
+     "boot_R:sole": 1.422,
+     "boot_L:upper": 1.326,
+     "boot_L:heel": 0.18
+    },
+    "at500": {
+     "pelvisRoll": 40.271,
+     "bellyDownY": 0.253,
+     "Lroll": 2.389
+    },
+    "at1s": {
+     "pelvisRoll": 46.991,
+     "bellyDownY": -0.006,
+     "Lroll": -0.404
+    }
+   }
+  ],
+  "seatOff": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "1c544a835d0d3e9c",
+    "proneT": 1.083,
+    "firstFoldContactT": 0.442,
+    "slide": 4.338,
+    "final": "prone (face-down)",
+    "headTurfT": 1.142,
+    "rollLedger": {
+     "hip/pelvis": 45.518,
+     "torso": -22.791,
+     "boot_R:toe": -13.433,
+     "upperArm": -9.755,
+     "knee_L": -9.077,
+     "shin_L": 8.661,
+     "head": -6.563,
+     "thigh_L": -6.466,
+     "boot_R:upper": 3.409,
+     "boot_L:upper": 2.504,
+     "boot_R:heel": 1.895,
+     "boot_L:sole": 1.56,
+     "boot_R:sole": -1.062,
+     "boot_L:toe": 0.436,
+     "hand": -0.027
+    },
+    "at500": {
+     "pelvisRoll": 66.862,
+     "bellyDownY": -0.381,
+     "Lroll": 11.737
+    },
+    "at1s": {
+     "pelvisRoll": 98.848,
+     "bellyDownY": -0.774,
+     "Lroll": -2.71
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "2f0029a9428c6313",
+    "proneT": 1.096,
+    "firstFoldContactT": 0.417,
+    "slide": 5.515,
+    "final": "prone (face-down)",
+    "headTurfT": 1.163,
+    "rollLedger": {
+     "hip/pelvis": 40.189,
+     "torso": -33.753,
+     "upperArm": -13.24,
+     "head": -7.371,
+     "thigh_L": -7.115,
+     "boot_R:toe": -6.685,
+     "shin_L": 6.359,
+     "boot_R:heel": 6.027,
+     "boot_L:upper": 3.727,
+     "boot_R:upper": 2.322,
+     "knee_L": 1.465,
+     "boot_L:toe": 1.058,
+     "boot_L:sole": 0.96,
+     "hand": 0.738,
+     "boot_R:sole": 0.551
+    },
+    "at500": {
+     "pelvisRoll": 58.466,
+     "bellyDownY": -0.343,
+     "Lroll": 12.04
+    },
+    "at1s": {
+     "pelvisRoll": 101.932,
+     "bellyDownY": -0.802,
+     "Lroll": -2.226
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "a2e4a06b61e8383c",
+    "proneT": 1.108,
+    "firstFoldContactT": 0.396,
+    "slide": 6.955,
+    "final": "prone (face-down)",
+    "headTurfT": 1.188,
+    "rollLedger": {
+     "hip/pelvis": 37.878,
+     "torso": -37.152,
+     "upperArm": -12.412,
+     "head": -8.503,
+     "boot_R:heel": 8.22,
+     "thigh_L": -8.012,
+     "shin_L": 6.829,
+     "boot_R:toe": -4.44,
+     "boot_L:upper": 3.657,
+     "knee_L": 2.417,
+     "hand": 1.589,
+     "boot_R:sole": 1.464,
+     "boot_R:upper": 1.425,
+     "boot_L:toe": 1.279,
+     "boot_L:sole": 0.835
+    },
+    "at500": {
+     "pelvisRoll": 52.936,
+     "bellyDownY": -0.233,
+     "Lroll": 10.748
+    },
+    "at1s": {
+     "pelvisRoll": 103.68,
+     "bellyDownY": -0.837,
+     "Lroll": -1.174
+    }
+   }
+  ],
+  "neckUp": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "386fd37d5feb2790",
+    "proneT": 1.138,
+    "firstFoldContactT": 0.446,
+    "slide": 4.259,
+    "final": "prone (face-down)",
+    "headTurfT": 1.192,
+    "rollLedger": {
+     "torso": -58.58,
+     "knee_L": 53.381,
+     "hip/pelvis": 18.284,
+     "head": -13.195,
+     "upperArm": -9.45,
+     "shin_L": 8.875,
+     "thigh_L": -6.037,
+     "boot_R:toe": -5.654,
+     "boot_R:upper": 3.96,
+     "hand": -2.9,
+     "boot_R:heel": 2.419,
+     "boot_L:sole": 2.368,
+     "boot_L:toe": 0.271,
+     "boot_R:sole": 0.021,
+     "boot_L:upper": 0.01
+    },
+    "at500": {
+     "pelvisRoll": 61.033,
+     "bellyDownY": -0.244,
+     "Lroll": 10.952
+    },
+    "at1s": {
+     "pelvisRoll": 110.62,
+     "bellyDownY": -0.814,
+     "Lroll": -0.813
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "26c375b2386585b2",
+    "proneT": 1.196,
+    "firstFoldContactT": 0.417,
+    "slide": 5.484,
+    "final": "prone (face-down)",
+    "headTurfT": 1.263,
+    "rollLedger": {
+     "torso": -35.414,
+     "knee_L": 24.523,
+     "hip/pelvis": 22.309,
+     "boot_R:toe": -11.05,
+     "head": -10.762,
+     "shin_L": 8.605,
+     "thigh_L": -8.515,
+     "upperArm": -7.242,
+     "boot_R:heel": 5.979,
+     "boot_L:sole": 1.902,
+     "boot_R:upper": 1.295,
+     "boot_R:sole": 0.947,
+     "hand": 0.74,
+     "boot_L:toe": 0.721,
+     "boot_L:upper": 0.134
+    },
+    "at500": {
+     "pelvisRoll": 49.93,
+     "bellyDownY": -0.159,
+     "Lroll": 5.796
+    },
+    "at1s": {
+     "pelvisRoll": 110.471,
+     "bellyDownY": -0.828,
+     "Lroll": 1.149
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "e48e784ae478cbc4",
+    "proneT": 1.358,
+    "firstFoldContactT": 0.396,
+    "slide": 6.939,
+    "final": "prone (face-down)",
+    "headTurfT": 1.408,
+    "rollLedger": {
+     "torso": -37.733,
+     "knee_L": 23.758,
+     "hip/pelvis": 19.577,
+     "upperArm": -10.901,
+     "shin_L": 8.671,
+     "head": -8.494,
+     "boot_R:heel": 7.939,
+     "thigh_L": -7.637,
+     "boot_R:toe": -6.372,
+     "hand": 1.827,
+     "boot_R:sole": 1.527,
+     "boot_L:sole": 1.304,
+     "boot_L:toe": 0.925,
+     "boot_L:upper": 0.14
+    },
+    "at500": {
+     "pelvisRoll": 46.027,
+     "bellyDownY": 0.081,
+     "Lroll": 4.58
+    },
+    "at1s": {
+     "pelvisRoll": 94.686,
+     "bellyDownY": -0.673,
+     "Lroll": 11.405
+    }
+   }
+  ],
+  "tracksHeld": [
+   {
+    "runin": "run1g_4.147.json",
+    "hash": "b77337d933432ad8",
+    "proneT": 1.067,
+    "firstFoldContactT": 0.446,
+    "slide": 4.243,
+    "final": "prone (face-down)",
+    "headTurfT": 1.121,
+    "rollLedger": {
+     "knee_L": 49.549,
+     "torso": -48.037,
+     "upperArm": -13.01,
+     "hip/pelvis": 10.01,
+     "shin_L": 8.05,
+     "head": -7.822,
+     "boot_R:toe": -7.752,
+     "thigh_L": -5.52,
+     "boot_R:upper": 3.994,
+     "boot_R:heel": 2.451,
+     "boot_L:upper": 2.213,
+     "boot_L:sole": 1.373,
+     "hand": -1.211,
+     "boot_L:toe": 0.105,
+     "boot_R:sole": -0.103
+    },
+    "at500": {
+     "pelvisRoll": 71.612,
+     "bellyDownY": -0.278,
+     "Lroll": 14.085
+    },
+    "at1s": {
+     "pelvisRoll": 105.359,
+     "bellyDownY": -0.777,
+     "Lroll": -2.117
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "hash": "9b3f4e1afb2b7637",
+    "proneT": 1.071,
+    "firstFoldContactT": 0.417,
+    "slide": 5.479,
+    "final": "prone (face-down)",
+    "headTurfT": 1.121,
+    "rollLedger": {
+     "torso": -60.62,
+     "knee_L": 60.212,
+     "upperArm": -10.282,
+     "head": -9.44,
+     "hip/pelvis": 7.62,
+     "shin_L": 7.229,
+     "thigh_L": -6.713,
+     "boot_R:heel": 6.352,
+     "boot_R:toe": -5.657,
+     "boot_L:upper": 3.451,
+     "hand": -1.57,
+     "boot_R:upper": 1.382,
+     "boot_L:sole": 1.359,
+     "boot_R:sole": 0.907,
+     "boot_L:toe": 0.622
+    },
+    "at500": {
+     "pelvisRoll": 64.121,
+     "bellyDownY": -0.216,
+     "Lroll": 14.447
+    },
+    "at1s": {
+     "pelvisRoll": 108.165,
+     "bellyDownY": -0.837,
+     "Lroll": -1.71
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "hash": "2453e69b0dd9ca82",
+    "proneT": 1.258,
+    "firstFoldContactT": 0.396,
+    "slide": 6.93,
+    "final": "prone (face-down)",
+    "headTurfT": 1.317,
+    "rollLedger": {
+     "torso": -34.746,
+     "knee_L": 24.956,
+     "upperArm": -12.752,
+     "hip/pelvis": 11.652,
+     "thigh_L": -8.509,
+     "boot_R:heel": 8.347,
+     "shin_L": 8.27,
+     "head": -5.785,
+     "hand": 3.956,
+     "boot_R:toe": -3.82,
+     "boot_R:sole": 1.64,
+     "boot_L:sole": 1.638,
+     "boot_L:toe": 0.762,
+     "boot_L:upper": 0.053,
+     "boot_R:upper": 0.011
+    },
+    "at500": {
+     "pelvisRoll": 48.058,
+     "bellyDownY": 0.05,
+     "Lroll": 5.08
+    },
+    "at1s": {
+     "pelvisRoll": 105.987,
+     "bellyDownY": -0.778,
+     "Lroll": 3.232
+    }
+   }
+  ]
+ }
+}

@@ -26,7 +26,14 @@ export class RegionalTracker extends CT.SlideTracker {
   // SP2A (opts.initChor, compiled): the entry's activation re-initialisation ("as if commanding this for a while") uses the INCOMING motion's
   // continuation (the run the body arrives with), not the commitment the lead already anticipates — the commitment then develops through the
   // muscles' own excitation / activation dynamics (inert when absent).
-  constructor(opts) { super(opts); this.R = { ...DEFAULT_REG, ...(opts.regional || {}) }; this.reg = Object.fromEntries(Object.keys(REGIONS).map(r => [r, { f: 1, over: 0, failed: false, t: null }])); this.g = { f: 1, on: false, t: null }; this.base = null; }
+  // SP2C (opts.recover = { vh, minAfterS, delayS, blendS, chor (compiled; time from the trigger) }; inert when absent): a STATE-triggered follow-through
+  // phase. Once the slide is ending — the body's own horizontal COM speed (sensed with delayS from the plant's records) falls below vh, at least
+  // minAfterS after the first legitimate fold-side contact (contactAuth) — every target blends (smoothstep, blendS) from the tackle choreography
+  // into the recovery choreography. Targets only: authority, yielding, failure and fallback are unchanged; no root, COM or propulsion objective.
+  constructor(opts) { const rs = { tr: null }, R0 = opts.recover, base = opts.chor, sm = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+    const chor = R0 ? { ...base, anatAt: (t) => { const a = base.anatAt(t); if (rs.tr == null || t <= rs.tr) return a; const u = sm((t - rs.tr) / R0.blendS), b = R0.chor.anatAt(t - rs.tr);
+      for (const [jn, o] of Object.entries(b)) for (const [k, v] of Object.entries(o)) { const x = a[jn] && a[jn][k]; (a[jn] = a[jn] || {})[k] = x == null ? v : x + (v - x) * u; } return a; } } : base;
+    super(R0 ? { ...opts, chor } : opts); this._rec = R0 ? rs : null; this.R = { ...DEFAULT_REG, ...(opts.regional || {}) }; this.reg = Object.fromEntries(Object.keys(REGIONS).map(r => [r, { f: 1, over: 0, failed: false, t: null }])); this.g = { f: 1, on: false, t: null }; this.base = null; }
   // tactile sensing: non-ground contact impulse (N·s) on each region over the window [now − delay − win, now − delay], from the plant's records
   _touch(R) { const out = Object.fromEntries(Object.keys(REGIONS).map(r => [r, 0])), recs = this.plant && this.plant.recs; if (!recs || !recs.length) return out;
     const role = this.c && this.c.role || "tackler", d = Math.round(R.delayS / this.h), w = Math.max(1, Math.round(R.touchWinS / this.h));
@@ -43,7 +50,10 @@ export class RegionalTracker extends CT.SlideTracker {
     if (this.tc == null) return null; const dt = t - this.tc, S = CA.schedule; let a = S[0][1], b = S[S.length - 1][1], u = 1;
     for (let i = 0; i < S.length - 1; i++) if (dt >= S[i][0] && dt <= S[i + 1][0]) { a = S[i][1]; b = S[i + 1][1]; u = (dt - S[i][0]) / Math.max(1e-9, S[i + 1][0] - S[i][0]); break; }
     if (dt > S[S.length - 1][0]) { a = b; u = 1; } const out = {}; for (const r of Object.keys(REGIONS)) out[r] = (a[r] ?? 1) + ((b[r] ?? 1) - (a[r] ?? 1)) * u; return out; }
-  step(n, st, ev) { this._n = n; const t = n * this.h + (this.o.t0 || 0), init = n === 0 && !!this.o.initChor, tt = init ? t : t + this.lead, R = this.R, CAf = this._contactAuth(t);
+  _recoverTrigger(t) { const R0 = this.o.recover, rs = this._rec; if (!rs || rs.tr != null || this.tc == null || t < this.tc + (R0.minAfterS ?? 0.3)) return;
+    const recs = this.plant && this.plant.recs, r = recs && recs[recs.length - 1 - Math.round((R0.delayS ?? 0.025) / this.h)], role = this.c && this.c.role || "tackler";
+    if (!r || !r.chars || !r.chars[role]) return; const P = r.chars[role].P; if (Math.hypot(P[0], P[2]) / L.M < R0.vh) rs.tr = t + this.lead; }
+  step(n, st, ev) { this._n = n; const t = n * this.h + (this.o.t0 || 0), init = n === 0 && !!this.o.initChor, tt = init ? t : t + this.lead, R = this.R, CAf = this._contactAuth(t); if (this._rec) this._recoverTrigger(t);
     // (init: the incoming motion evaluated at the PRESENT instant — position error and rate error are ≈ 0 because the entry is that motion, so
     //  the steady state is the motion's own inverse dynamics + the support objective: e.g. a stance knee's extensors are pre-activated at the
     //  touchdown, as in running, instead of its flexors pulling toward where the knee will be 70 ms later)
@@ -80,7 +90,7 @@ export class RegionalTracker extends CT.SlideTracker {
     if (vf && vf.info) row.vf = { F: vf.info.F.map(x => +x.toFixed(1)), T: vf.info.T ? vf.info.T.map(x => +x.toFixed(1)) : null, w: vf.info.w };
     this.log.push(row); return out; }
   meta() { return { tracker: "SLIDE-PHYS-2 RegionalTracker", lead: this.lead, gains: this.o.gains, chor: this.o.chor.name, regional: this.R,
-    failures: Object.fromEntries(Object.entries(this.reg).filter(([, s]) => s.failed).map(([r, s]) => [r, s.t])), wholeBody: this.g.on ? this.g.t : null, contactAuthFrom: this.tc ?? null, contactAuthBody: this.tcBody ?? null }; }
+    failures: Object.fromEntries(Object.entries(this.reg).filter(([, s]) => s.failed).map(([r, s]) => [r, s.t])), wholeBody: this.g.on ? this.g.t : null, contactAuthFrom: this.tc ?? null, contactAuthBody: this.tcBody ?? null, ...(this._rec ? { recoverFrom: this._rec.tr } : {}) }; }
 }
 // G23's controller assembly (plant VF, press, seat), with the RegionalTracker in place of the SlideTracker
-export function makeCtrlRegional(cand, chor, E) { const ctrl = CD.G23.makeCtrl(cand, chor, E); return new RegionalTracker({ ...ctrl.o, regional: cand.regional || {}, contactAuth: cand.contactAuth || null, initChor: cand.initChor ? C.compile(cand.initChor) : null, initTau: cand.initTau || null, initMix: cand.initMix ?? 1, rateLead: cand.rateLead ?? null }); }
+export function makeCtrlRegional(cand, chor, E) { const ctrl = CD.G23.makeCtrl(cand, chor, E); return new RegionalTracker({ ...ctrl.o, regional: cand.regional || {}, contactAuth: cand.contactAuth || null, initChor: cand.initChor ? C.compile(cand.initChor) : null, initTau: cand.initTau || null, initMix: cand.initMix ?? 1, rateLead: cand.rateLead ?? null, ...(cand.recover ? { recover: { ...cand.recover, chor: C.compile(cand.recover.chor) } } : {}) }); }

@@ -29,8 +29,10 @@ let INT = null; if (arg("intent")) { const SL = new URL("../scripts/", import.me
 const WIRE = arg("wire") ? await import(new URL("./sp_wire.mjs", import.meta.url).href) : null, r4 = (x) => Math.round(x * 1e4) / 1e4, toWp = (p) => T.toW(p).map(r4);   // states passed in are already placed
 const wireF = (S) => WIRE ? { wire: WIRE.wireOf(S).map(pl => pl.map(toWp)), skel: WIRE.skelOf(S).map(sg => sg.map(toWp)) } : {};
 let INT2 = null; if (arg("intent2a")) { const AA = await import(new URL("../../sp2a/scripts/sp2a_author.mjs", import.meta.url).href), C = await import(new URL("../scripts/sp_chor.mjs", import.meta.url).href), L = await import(new URL("../scripts/sp_lib.mjs", import.meta.url).href);
-  const O2 = JSON.parse(arg("intent2a")), FL = O2.mode === "flight" ? await import(new URL("../../sp2a/scripts/sp2a_flight.mjs", import.meta.url).href) : null;
-  const RI = AA.loadRunIn(arg("runin"), arg("td") ? +arg("td") : null, FL ? 0.9 : 0.66, FL ? 0 : (O2.takeover ?? -0.075)), cand = FL ? FL.tackleCand(+(RI.d.speed * AA.LEGR).toFixed(3), O2) : AA.makeSP2A(RI, O2), ch = C.compile(cand.chor), cps = cand.couple || [];
+  const O2 = JSON.parse(arg("intent2a")), FL = O2.mode === "flight" || O2.mode === "sp2c" ? await import(new URL("../../sp2a/scripts/sp2a_flight.mjs", import.meta.url).href) : null;
+  // SP2C (opt-in, mode "sp2c"): the intent ghost of the SP2C candidate (sp2c/scripts/sp2c_cand.mjs)
+  const SCm = O2.mode === "sp2c" ? await import(new URL("../../sp2c/scripts/sp2c_cand.mjs", import.meta.url).href) : null;
+  const RI = AA.loadRunIn(arg("runin"), arg("td") ? +arg("td") : null, FL ? 0.9 : 0.66, FL ? 0 : (O2.takeover ?? -0.075)), cand = SCm ? SCm.sp2cCand(+(RI.d.speed * AA.LEGR).toFixed(3), O2) : FL ? FL.tackleCand(+(RI.d.speed * AA.LEGR).toFixed(3), O2) : AA.makeSP2A(RI, O2), ch = C.compile(cand.chor), cps = cand.couple || [];
   // (controller clock = sim time + tOffset)
   INT2 = (S, ts) => { const t = ts + (cand.tOffset || 0), an = ch.anatAt(t + (cand.lead || 0)), act = L.anatOf(S); for (const cp of cps) { if (t < cp.window[0] || t > cp.window[1]) continue; const x = act[cp.from[0]][cp.from[1]], m = cp.map; let y = x <= m[0][0] ? m[0][1] : x >= m[m.length - 1][0] ? m[m.length - 1][1] : null;
       if (y == null) { let i = 0; while (x > m[i + 1][0]) i++; y = m[i][1] + (x - m[i][0]) / (m[i + 1][0] - m[i][0]) * (m[i + 1][1] - m[i][1]); } an[cp.joint] = { ...(an[cp.joint] || {}), [cp.key]: y }; }

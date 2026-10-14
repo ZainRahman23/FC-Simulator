@@ -1,0 +1,101 @@
+{
+ "id": "SP2C",
+ "mode": "sp2c",
+ "tEnd": 6,
+ "fold": {
+  "t0": 0.0856,
+  "tuckT": 0.2914,
+  "hipFlex": 62.4097,
+  "hipAbd": 12,
+  "hipRot": -25.005,
+  "knee": 138.3202,
+  "ankDf": -43.4931,
+  "ankInv": 11.4066
+ },
+ "trunk": {
+  "lumbarLat": 29.5424,
+  "thoracicLat": 17.925,
+  "lumbarFlex": 5.3428,
+  "neck": 16.3047
+ },
+ "seat": {
+  "ko": 55.8996,
+  "pitch": -4.7842,
+  "roll": 24.7692
+ },
+ "arms": {
+  "shoulder_L.flex": -80,
+  "shoulder_L.abd": 20,
+  "elbow_L.flex": 0,
+  "shoulder_R.flex": 34.8265,
+  "shoulder_R.abd": 50.5593,
+  "elbow_R.flex": 13.1551
+ },
+ "tack": {
+  "hip": 65.4295,
+  "knee": 3.7185
+ },
+ "auth": [
+  [
+   0.06,
+   {
+    "tackLeg": 0.769,
+    "trailLeg": 0.959,
+    "trunk": 0.916,
+    "armL": 0.8,
+    "armR": 0.908
+   }
+  ],
+  [
+   0.3,
+   {
+    "tackLeg": 0.5379,
+    "trailLeg": 0.9171,
+    "trunk": 0.8323,
+    "armL": 0.6006,
+    "armR": 0.8155
+   }
+  ]
+ ],
+ "recover": {
+  "vh": 0.8,
+  "shoulder_L.flex": -35,
+  "shoulder_L.abd": 35,
+  "elbow_L.flex": 10,
+  "shoulder_R.flex": 30,
+  "shoulder_R.abd": 20,
+  "elbow_R.flex": 60,
+  "lumbar.flex": 12,
+  "thoracic.flex": 5
+ },
+ "phys": {
+  "foldT0": 0.0856,
+  "tuckT": 0.2914,
+  "hipFlex": 62.4097,
+  "hipAbd": 12,
+  "hipRot": -25.005,
+  "knee": 138.3202,
+  "ankDf": -43.4931,
+  "ankInv": 11.4066,
+  "lumbarLat": 29.5424,
+  "thoracicLat": 17.925,
+  "lumbarFlex": 5.3428,
+  "neck": 16.3047,
+  "seatKo": 55.8996,
+  "seatPitch": -4.7842,
+  "seatRoll": 24.7692,
+  "shLFlex": -80,
+  "shLAbd": 20,
+  "elLFlex": 0,
+  "shRFlex": 34.8265,
+  "shRAbd": 50.5593,
+  "elRFlex": 13.1551,
+  "tackHip": 65.4295,
+  "tackKnee": 3.7185,
+  "aTack": 0.5379,
+  "aTrail": 0.9171,
+  "aTrunk": 0.8323,
+  "aArmL": 0.6006,
+  "aArmR": 0.8155
+ }
+}

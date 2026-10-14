@@ -1,0 +1,1042 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "CLOSE_1x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 752
+  },
+  "GAME_1x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "game",
+     "zoom": 4.5,
+     "angle": null
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 627
+  },
+  "SIDE_025x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 687
+  },
+  "R34_025x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 610
+  },
+  "DIAG_025x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 695
+  },
+  "FOLD_025x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 628
+  },
+  "FOLDS_025x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 657
+  },
+  "END_1x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 121,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 357,
+   "last": 837,
+   "ms": 338
+  },
+  "END_05x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 357,
+   "last": 837,
+   "ms": 576
+  },
+  "END_R34_05x_A100": {
+   "panels": [
+    {
+     "k": "A100",
+     "l": "SP2A · F100 (friction ×1.00)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 357,
+   "last": 837,
+   "ms": 532
+  },
+  "CLOSE_1x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 789
+  },
+  "GAME_1x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "game",
+     "zoom": 4.5,
+     "angle": null
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 725
+  },
+  "SIDE_025x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 825
+  },
+  "R34_025x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 785
+  },
+  "DIAG_025x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 818
+  },
+  "FOLD_025x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 740
+  },
+  "FOLDS_025x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 749
+  },
+  "END_1x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 121,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 279,
+   "last": 759,
+   "ms": 353
+  },
+  "END_05x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 279,
+   "last": 759,
+   "ms": 608
+  },
+  "END_R34_05x_A50": {
+   "panels": [
+    {
+     "k": "A50",
+     "l": "SP2A · F50 (×0.50)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 279,
+   "last": 759,
+   "ms": 550
+  },
+  "CLOSE_1x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 809
+  },
+  "GAME_1x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "game",
+     "zoom": 4.5,
+     "angle": null
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 715
+  },
+  "SIDE_025x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 774
+  },
+  "R34_025x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 722
+  },
+  "DIAG_025x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 821
+  },
+  "FOLD_025x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 759
+  },
+  "FOLDS_025x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 759
+  },
+  "END_1x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 121,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 749,
+   "last": 1229,
+   "ms": 356
+  },
+  "END_05x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 749,
+   "last": 1229,
+   "ms": 604
+  },
+  "END_R34_05x_A25": {
+   "panels": [
+    {
+     "k": "A25",
+     "l": "SP2A · F25 (×0.25)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 749,
+   "last": 1229,
+   "ms": 584
+  },
+  "CLOSE_1x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 827
+  },
+  "GAME_1x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "game",
+     "zoom": 4.5,
+     "angle": null
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 650
+  },
+  "SIDE_025x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 744
+  },
+  "R34_025x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 724
+  },
+  "DIAG_025x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 826
+  },
+  "FOLD_025x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 785
+  },
+  "FOLDS_025x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 786
+  },
+  "END_1x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 121,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 429,
+   "last": 909,
+   "ms": 368
+  },
+  "END_05x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 429,
+   "last": 909,
+   "ms": 643
+  },
+  "END_R34_05x_A37": {
+   "panels": [
+    {
+     "k": "A37",
+     "l": "SP2A · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 429,
+   "last": 909,
+   "ms": 590
+  },
+  "CLOSE_1x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 883
+  },
+  "GAME_1x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "game",
+     "zoom": 4.5,
+     "angle": null
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 688
+  },
+  "SIDE_025x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 842
+  },
+  "R34_025x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 788
+  },
+  "DIAG_025x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -48,
+   "last": 240,
+   "ms": 890
+  },
+  "FOLD_025x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 811
+  },
+  "FOLDS_025x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 293,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": -72,
+   "last": 220,
+   "ms": 837
+  },
+  "END_1x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 121,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 433,
+   "last": 913,
+   "ms": 391
+  },
+  "END_05x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 433,
+   "last": 913,
+   "ms": 676
+  },
+  "END_R34_05x_C37": {
+   "panels": [
+    {
+     "k": "C37",
+     "l": "SP2C · F37.5 (temporary ×0.375)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 241,
+   "every": 2,
+   "size": [
+    480,
+    434
+   ],
+   "first": 433,
+   "last": 913,
+   "ms": 708
+  },
+  "SPEEDS_1x": {
+   "panels": [
+    {
+     "k": "C37s",
+     "l": "SP2C · 4.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "C37",
+     "l": "SP2C · 5.0 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "C37f",
+     "l": "SP2C · 5.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 289,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": -72,
+   "last": 1080,
+   "ms": 2680
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}
