@@ -1,0 +1,536 @@
+{
+ "tool": "pvp1_capture.cjs (sp_capture.cjs + two-player overlays)",
+ "views": {
+  "CANON_R34_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1390
+  },
+  "CANON_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1084
+  },
+  "CANON_RFRONT34_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1043
+  },
+  "CANON_GAME_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "game",
+     "zoom": 1.6,
+     "angle": null
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "game",
+     "zoom": 1.6,
+     "angle": null
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1454
+  },
+  "CANON_R34_025x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 601,
+   "every": 1,
+   "size": [
+    960,
+    434
+   ],
+   "first": -2,
+   "last": 598,
+   "ms": 4838
+  },
+  "CANON_RSIDE_025x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 601,
+   "every": 1,
+   "size": [
+    960,
+    434
+   ],
+   "first": -2,
+   "last": 598,
+   "ms": 4325
+  },
+  "CANON_DIAG_RSIDE_025x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2) · diagnostic",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3) · diagnostic",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 601,
+   "every": 1,
+   "size": [
+    960,
+    434
+   ],
+   "first": -2,
+   "last": 598,
+   "ms": 4930
+  },
+  "CANON_DIAG_R34_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2) · diagnostic",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3) · diagnostic",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1125
+  },
+  "CANON_TWIN3_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "CANON_TWIN",
+     "l": "TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1875
+  },
+  "CANON_TWIN3_R34_1x": {
+   "panels": [
+    {
+     "k": "CANON_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "CANON_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "CANON_TWIN",
+     "l": "TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1615
+  },
+  "EARLY_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "EARLY_F2",
+     "l": "EARLY · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "EARLY_F3",
+     "l": "EARLY · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "EARLY_TWIN",
+     "l": "EARLY · TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 2244
+  },
+  "EARLY_R34_1x": {
+   "panels": [
+    {
+     "k": "EARLY_F2",
+     "l": "EARLY · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "EARLY_F3",
+     "l": "EARLY · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1374
+  },
+  "LATE_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "LATE_F2",
+     "l": "LATE · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "LATE_F3",
+     "l": "LATE · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "LATE_TWIN",
+     "l": "LATE · TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1917
+  },
+  "LATE_R34_1x": {
+   "panels": [
+    {
+     "k": "LATE_F2",
+     "l": "LATE · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "LATE_F3",
+     "l": "LATE · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 0,
+   "last": 596,
+   "ms": 1246
+  },
+  "LIGHT_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "LIGHT_F2",
+     "l": "LIGHT · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "LIGHT_F3",
+     "l": "LIGHT · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "LIGHT_TWIN",
+     "l": "LIGHT · TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 8,
+   "last": 604,
+   "ms": 1930
+  },
+  "LIGHT_R34_1x": {
+   "panels": [
+    {
+     "k": "LIGHT_F2",
+     "l": "LIGHT · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "LIGHT_F3",
+     "l": "LIGHT · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 150,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": 8,
+   "last": 604,
+   "ms": 1328
+  },
+  "STRONG_RSIDE_1x": {
+   "panels": [
+    {
+     "k": "STRONG_F2",
+     "l": "STRONG · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "STRONG_F3",
+     "l": "STRONG · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "STRONG_TWIN",
+     "l": "STRONG · TWIN: same recipient, no tackle",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 151,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": -4,
+   "last": 596,
+   "ms": 1900
+  },
+  "STRONG_R34_1x": {
+   "panels": [
+    {
+     "k": "STRONG_F2",
+     "l": "STRONG · PVP-F2 (SP2F2)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "STRONG_F3",
+     "l": "STRONG · PVP-F3 (SP2F3)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 151,
+   "every": 4,
+   "size": [
+    960,
+    434
+   ],
+   "first": -4,
+   "last": 596,
+   "ms": 1291
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

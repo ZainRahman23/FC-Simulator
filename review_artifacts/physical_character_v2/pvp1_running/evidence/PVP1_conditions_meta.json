@@ -1,0 +1,352 @@
+{
+ "CANON": {
+  "cond": "CANON",
+  "C": {
+   "phase": 0.5,
+   "lam": 0,
+   "note": "canonical: first contact at mid-stance of the loaded right foot; the boot's line through the foot's sole centre"
+  },
+  "kC": 580,
+  "kH": 568,
+  "kTD": 554,
+  "stanceN": 52,
+  "actR": 106,
+  "tFC": 0.49166666666666664,
+  "offR": [
+   0.18396235472137362,
+   0,
+   3.638822514355426
+  ],
+  "qR": [
+   0,
+   -0.9238795325112867,
+   0,
+   0.38268343236508984
+  ],
+  "psi": -135,
+  "target": [
+   0.19106939435005188,
+   0,
+   3.5894417762756348
+  ],
+  "soleWorld": [
+   0.19106939435005188,
+   0.01994609569969437,
+   3.5894417762756348
+  ],
+  "firstContact": {
+   "F2": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   },
+   "F3": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   }
+  },
+  "hashes": {
+   "F2": "7706ea69409e0bfa",
+   "F3": "c03c6f78f2a78ecd",
+   "TWIN": "0ae8181ea74a7783"
+  },
+  "recipientOpts": {
+   "muscle": "M1c",
+   "catch": {},
+   "support": {
+    "capScale": false
+   }
+  }
+ },
+ "EARLY": {
+  "cond": "EARLY",
+  "C": {
+   "phase": 0.3,
+   "lam": 0,
+   "note": "TIMING EARLY: first contact at 30 % of the right stance (the foot just loaded)"
+  },
+  "kC": 570,
+  "kH": 560,
+  "kTD": 554,
+  "stanceN": 52,
+  "actR": 108,
+  "tFC": 0.49166666666666664,
+  "offR": [
+   0.2937725853348771,
+   0,
+   3.7466697039694754
+  ],
+  "qR": [
+   0,
+   -0.9238795325112867,
+   0,
+   0.38268343236508984
+  ],
+  "psi": -135,
+  "target": [
+   0.19106939435005188,
+   0,
+   3.5894417762756348
+  ],
+  "soleWorld": [
+   0.19106939435005188,
+   0.00893615316525094,
+   3.5894417762756348
+  ],
+  "firstContact": {
+   "F2": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   },
+   "F3": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   }
+  },
+  "hashes": {
+   "F2": "4d2c2264510930d6",
+   "F3": "82b426be80f5ad24",
+   "TWIN": "6fd117f88aa5fa63"
+  },
+  "recipientOpts": {
+   "muscle": "M1c",
+   "catch": {},
+   "support": {
+    "capScale": false
+   }
+  }
+ },
+ "LATE": {
+  "cond": "LATE",
+  "C": {
+   "phase": 0.7,
+   "lam": 0,
+   "note": "TIMING LATE: first contact at 70 % of the right stance (heel rising, unloading toward push-off)"
+  },
+  "kC": 590,
+  "kH": 578,
+  "kTD": 554,
+  "stanceN": 52,
+  "actR": 106,
+  "tFC": 0.49166666666666664,
+  "offR": [
+   0.05890910251998649,
+   0,
+   3.5118422816287063
+  ],
+  "qR": [
+   0,
+   -0.9238795325112867,
+   0,
+   0.38268343236508984
+  ],
+  "psi": -135,
+  "target": [
+   0.19106939435005188,
+   0,
+   3.5894417762756348
+  ],
+  "soleWorld": [
+   0.19106939435005188,
+   0.04865302094531215,
+   3.5894417762756348
+  ],
+  "firstContact": {
+   "F2": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   },
+   "F3": {
+    "t": 0.49166666666666664,
+    "n": 118,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   }
+  },
+  "hashes": {
+   "F2": "2018d2b50a3c4305",
+   "F3": "24a90b81ee2cc2d4",
+   "TWIN": "c963260768413b00"
+  },
+  "recipientOpts": {
+   "muscle": "M1c",
+   "catch": {},
+   "support": {
+    "capScale": false
+   }
+  }
+ },
+ "LIGHT": {
+  "cond": "LIGHT",
+  "C": {
+   "phase": 0.5,
+   "lam": 0.16,
+   "note": "LIGHT / GLANCING: the boot's line 0.16 m toward the toes (it passes across the toe box and the ball area)"
+  },
+  "kC": 580,
+  "kH": 568,
+  "kTD": 554,
+  "stanceN": 52,
+  "actR": 113,
+  "tFC": 0.5208333333333334,
+  "offR": [
+   0.3087260065381424,
+   0,
+   3.7389925257627534
+  ],
+  "qR": [
+   0,
+   -0.9238795325112867,
+   0,
+   0.38268343236508984
+  ],
+  "psi": -135,
+  "target": [
+   0.19106939435005188,
+   0,
+   3.5894417762756348
+  ],
+  "soleWorld": [
+   0.3158330461668207,
+   0.01994609569969437,
+   3.689611787682962
+  ],
+  "firstContact": {
+   "F2": {
+    "t": 0.5208333333333334,
+    "n": 125,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   },
+   "F3": {
+    "t": 0.5208333333333334,
+    "n": 125,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   }
+  },
+  "hashes": {
+   "F2": "f0e2d732d5324ba0",
+   "F3": "29e53d60f314408d",
+   "TWIN": "d1234683acf84504"
+  },
+  "recipientOpts": {
+   "muscle": "M1c",
+   "catch": {},
+   "support": {
+    "capScale": false
+   }
+  }
+ },
+ "STRONG": {
+  "cond": "STRONG",
+  "C": {
+   "phase": 0.5,
+   "lam": -0.07,
+   "note": "STRONG: the boot's line 0.07 m behind the sole centre (heel / ankle: a direct sweep of the base of the stance leg)"
+  },
+  "kC": 580,
+  "kH": 568,
+  "kTD": 554,
+  "stanceN": 52,
+  "actR": 105,
+  "tFC": 0.48541666666666666,
+  "offR": [
+   0.1293782570515373,
+   0,
+   3.59499813436472
+  ],
+  "qR": [
+   0,
+   -0.9238795325112867,
+   0,
+   0.38268343236508984
+  ],
+  "psi": -135,
+  "target": [
+   0.19106939435005188,
+   0,
+   3.5894417762756348
+  ],
+  "soleWorld": [
+   0.13648529668021553,
+   0.01994609569969437,
+   3.545617396284929
+  ],
+  "firstContact": {
+   "F2": {
+    "t": 0.4875,
+    "n": 117,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   },
+   "F3": {
+    "t": 0.48333333333333334,
+    "n": 116,
+    "pairs": [
+     [
+      "foot_R",
+      "foot_R"
+     ]
+    ]
+   }
+  },
+  "hashes": {
+   "F2": "7ffc9aac7f45a7a2",
+   "F3": "18b239e1d38bf1f3",
+   "TWIN": "41df9ec4d8a015bc"
+  },
+  "recipientOpts": {
+   "muscle": "M1c",
+   "catch": {},
+   "support": {
+    "capScale": false
+   }
+  }
+ }
+}
