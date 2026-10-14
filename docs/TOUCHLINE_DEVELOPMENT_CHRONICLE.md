@@ -3111,6 +3111,88 @@ What was done there is not reconstructed here.
   - PVP sealed.
 - **Publication:** the 22 commits above `903c12d` were pushed at 01:04 on 13 Oct (`903c12d` → `0055641`), in the 12 Oct housekeeping requested at 00:58. This chronicle entry was pushed straight after.
 
+## Tuesday 13 October 2026 — A physical slide tackle: SLIDE-PHYS-1 (SP1) and SLIDE-PHYS-2 (SP2)
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `prototype/physical-character-v2` has 7 commits, `fdbc14d` (23:48) → `b6fc818` (01:10, 14 Oct) → `a4cbf50` and `c7ac9aa` (02:24) → `c12d879` (03:51) → `a730e69` (04:53) → `a59d84b` (05:03).
+  - They were pushed at the 14 Oct housekeeping (12:23 on 14 Oct) and verified by fetch.
+  - `touchline-current` has `65a6fa8` (23:45, the 12 Oct addendum), pushed at 23:45.
+- **[Doc]** in `review_artifacts/physical_character_v2/`:
+  - `slide_phys1/`: `SLIDE_PHYS1_REPORT.md` (40 answers), `SLIDE_PHYS1_LOG.md`, `REFERENCE_ANALYSIS.md`, scripts, evidence, review page.
+  - `slide_phys2/`: `SLIDE_PHYS2_REPORT.md` (48 answers), `SLIDE_PHYS2_LOG.md`, `REFERENCE2_ANALYSIS.md`, `RECEIVER_PREREG.md`, `research/SLIDE2_LITERATURE.md`, scripts, evidence, review page.
+  - 2 user instructions saved verbatim in `sources/` (13 Oct ≈ 23:30; 14 Oct 03:50).
+- **[Session]** the times of the user's messages, from the Claude Code session record (UTC + 1 h).
+- **[Codex workspace]** file times only (below).
+- **Owner screenshots:** 4, archived in `review_artifacts/chronicle_screens/2026-10-13_manager_ui/` (18:58, 19:01, 19:10, 00:35).
+- **Screen recordings, not archived (third-party footage):**
+  - 19:40, the EA FC playstyle tutorial: the SLIDE-PHYS-1 reference;
+  - 23:54 and 23:56, two Rainbow Six pack-opening clips: references for the pack work;
+  - 03:49, a broadcast slide-tackle clip: the SLIDE-PHYS-2 reference.
+  - The two tackle references and their analyses are preserved outside Git (`_preserved_2026-10-13_evidence_outside_git/slide_phys1/reference/`, `_preserved_2026-10-14_evidence_outside_git/slide_phys2/reference/`).
+- **Run records outside Git** (`SHA256SUMS*`):
+  - SLIDE-PHYS-1: 342 MB;
+  - SLIDE-PHYS-2: 385 MB.
+
+**The 13 Oct housekeeping (23:45).** The 12 Oct day and its addendum were published: V2 → `8aa4eba`, and the chronicle `65a6fa8`.
+
+**SLIDE-PHYS-1** (instructed ≈ 23:30, `fdbc14d`): a physically executable slide tackle for the V2 tackler.
+- **Reference first.**
+  - The EA FC tutorial clip: a bent-leg slide on the trailing hip and thigh, with the trailing hand posting.
+  - Slow approach; the hip accelerates horizontally while it descends, with no spring.
+- **Astra's K was audited and replaced:** its root accelerates from 2.5 to 7 m/s at up to 3.1 g, 63 % of that airborne.
+- **Findings along the way:**
+  - **M1b's high-velocity defect:** a shortening group's torque is ≈ 0 above 4–5 rad/s. The M1c candidate (tackler only) fixes it; not adopted.
+  - **The entry muscle-state fix.**
+  - **TCF-1:** sole-orientation boot friction, tackler only.
+  - **G1–G24:** 24 hand-built generations.
+  - **Search:** a disclosed CMA-ES authoring search.
+- **SP1** (`a4cbf50`):
+  - **What works:** a recognisable bent-leg slide from a 4.5–5.5 m/s plant-foot touchdown, with no belly-flop, hover or phasing; deterministic.
+  - **Defects:** the tackling heel lands first and the ankle goes 13.5° past its hard limit; the slide is ≈ 0.5 m; it lies back at 5.25 m/s.
+  - **Obstacles:** the leg yields; A5's whole-body fallback never fired.
+  - **Against unchanged C3:** STRONG gave an unscripted sliced-out fall; LIGHT and MODERATE gave slow falls; GRAZE was absorbed only because the slider's boots pressed the recipient's boots down.
+  - **Verdict:** single-player PARTIAL; canonical NOT YET.
+
+**SLIDE-PHYS-2** (instructed 03:50, `c12d879`): the owner's bent-leg / thigh-slide hypothesis.
+- **Phase 1 ledger:** the tackling boot gave 71 % of SP1's braking, and it was also SP1's kickstand.
+- **Reference 2** (a broadcast clip; ≈ 0.4× slow motion, so a ≈ 9 m/s sprint):
+  - trailing instep and shin first, then the knee (+0.04 s), the outer thigh, the hip (+0.24 s), and the hand;
+  - the tackling boot never plants; it skims.
+  - Literature round 2 agrees.
+- **What was tried:**
+  - fixtures F1–F3R;
+  - hand candidates H1 and H2;
+  - searches H1–H6;
+  - an A6 RegionalTracker with tactile regional yielding, after two rejected detectors.
+- **SP2** (`a730e69`):
+  - **Contact:** the folded knee lands first (1.3–2.6 kN over 29 ms), the outer thigh and hip within ≈ 0.1 s. The tackling boot carries ≤ 6 % of the support and its studs never engage.
+  - **Slide:** 1.0–1.8 m (SP1: 0.45 m), from 4.25 to 5.5 m/s; deterministic. The mirrored side is neutral (≤ 2.3 mm, `a59d84b`).
+  - **Defects:** the fold-hip adduction goes 4–8° past its stop for ≈ 1 s; the knee carries ≈ 50 % of the glide; it fails at ≥ 5.75 m/s.
+  - **Requirements:** M1c and TCF-1 are both required, and neither is adopted.
+- **Against unchanged C3:** the response is a geometric spectrum (passes, absorbed, displaced-recovered, slow fall), with no sliced-out fall, and the recipient looks rigid. A running, single-support recipient was preregistered (`RECEIVER_PREREG.md`) and not developed.
+- **Verdict:**
+  - hypothesis CONFIRMED;
+  - SP2 PARTIAL;
+  - ground entry PASS;
+  - slide mechanics PARTIAL;
+  - local yielding PASS;
+  - graded two-player response PARTIAL;
+  - sliced-out NO;
+  - SP2 recommended as the development baseline;
+  - not ready for the next integration milestone.
+
+**In parallel: the user's Codex workspace** (file times only). None of it is in Git: the card images and HTML that embed real players' photos stay unpublished under the 8 Oct decision.
+- **`~/Documents/Codex/2026-10-13/new-chat`** (15:40): input `Touchline_Playable_Statistics.html` plus three reference images (15:43). A Desktop copy of the statistics page is dated 19:42.
+- **`…/i-want-you-to-study-games`** (19:17 → 04:06): a pack-opening study.
+  - Sub-folders: `touchline-packs` (its own git repository, `dist` 19:47), `r6-reference`, `r6-procedural`.
+  - Outputs: `Touchline_Pack_Opening_Heavy` (23:18), `…_R6_Tear` (23:49), `…_Reference` (00:12), `…_Premium` (00:20), `R6_Alpha_Pack_Opening` (00:29), `R6_Alpha_Pack_Procedural` (01:17), `Touchline_Pack_Opening` (04:06).
+  - Desktop copies: Reference 00:13, Premium 00:21, R6 Alpha 00:31.
+- **`~/Documents/Codex/2026-10-14/new-chat`** (01:33): four generated images (01:34 – 01:42).
+- **The owner's screenshots** show the manager UI: a player-card grid, the Club overview (twice), and Club → Staff.
+
+**End-of-day state.** 7 V2 commits, all pushed at the 14 Oct housekeeping. Nothing changed in `touchline-current` except this chronicle.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3124,7 +3206,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `8aa4eba`, 13 Oct 04:48, pushed at 23:45 on 13 Oct; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `a59d84b`, 14 Oct 05:03, pushed at 12:23 on 14 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -3172,6 +3254,11 @@ What was done there is not reconstructed here.
 - **BALANCE-3** (`0befb6b`, 13 Oct): the coordinated ankle – hip candidate B3 is **NOT QUALIFIED** (14 / 17, worse than C3; the hip and ankle loops fight). C3 stays the 16 / 17 baseline; owner decision pending.
 - **PVP-0** (`052b41a`, 13 Oct): the first two-player physical contact, C3 × Astra's SLIDE-A1 K. Contact physics PARTIAL, visual FAIL: the tracked K tackler belly-flops even alone, and constant authority pins the recipient's feet.
 - **SUPPORT-1** (`8aa4eba`, 13 Oct): the anchored look was the tackler pressing down on the feet, not turf friction. The unchanged V2 recipient already releases support, and an exploratory sliding body at 6.74 – 8.43 m/s slices it out in ≈ 0.3 s. No recipient successor beats V2; canonical NOT YET.
+- **SLIDE-PHYS-1** (`a4cbf50`, 14 Oct, 13 Oct day): SP1, the first muscle-driven slide tackle. It works from 4.25 to 5.5 m/s, but the tackling heel acts as a stud strut: 71 % of the braking, an ankle 13.5° past its stop, a 0.5 m slide. Against C3 it gave an unscripted STRONG sliced-out fall.
+- **SLIDE-PHYS-2** (`a730e69` / `a59d84b`): SP2 rebuilt the ground entry on the owner's bent-leg / thigh-slide hypothesis, which was CONFIRMED.
+  - **What works:** the folded knee lands first and the outer thigh and hip take over; the tackling boot only skims (≤ 6 %); the slide is 1.0–1.8 m; tactile regional yielding (A6). SP2 is the single-player development baseline.
+  - **Not solved:** the fold hip goes past its adduction stop; the knee carries ≈ 50 % of the glide; it fails at ≥ 5.75 m/s; against standing C3 there is no sliced-out fall.
+  - M1c and TCF-1 are required by the tackler and not adopted.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -3190,6 +3277,7 @@ What was done there is not reconstructed here.
   - **Design packages:** exposure; aging / Fitness.
   - **Location:** the user's Codex workspace (`~/Documents/Codex/2026-10-0X/`) and `~/Downloads`.
   - **Later file activity** (9 – 11 Oct, file times only): statistics, transfers, club, overview, home and matchday pages in `~/Documents/Codex/2026-10-10/new-chat/`, and further ratings and stamina workbooks in `~/Downloads`.
+  - **13 Oct file activity** (file times only): the statistics page and a pack-opening study, with Touchline and Rainbow Six-style pack-opening pages, in `~/Documents/Codex/2026-10-13/`; generated images in `~/Documents/Codex/2026-10-14/new-chat/`.
 - **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip. It was extended on 8 Oct with stages 23 – 29 for the 1 – 7 Oct work (Appendix G).
 - **One generated evidence archive** (`runs_records_240_REF_165.tgz`, 105.8 MB), removed from the V2 history for publication on 8 Oct, is kept locally outside Git (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
@@ -3214,7 +3302,12 @@ What was done there is not reconstructed here.
     - The touchdown and late-stance states also fail. The ITS-1 amendment is paused.
   - **The handoff state is NOT READY** (verdict B, 10 Oct): V2's 23 → 14 upper-body mapping, and the rigid F0 boot against the frozen runner's heel-up / toe-pad stance (P-9, stance-contact consistency). RH1, the attempted body-spec fix, is invalid (verdict C).
   - **Standing balance** (BALANCE-2, 12 – 13 Oct): the legitimate flat-foot controller C3 passes 16 / 17 on the corrected battery. The forward threshold of 12.09 N·s is inside the flat-sole band, with no boot-tip support. One gap remains, the backward-small overshoot P8 (0.287 vs ≤ 0.26): a slow trunk-lean mode that needs coordinated ankle – hip control (BALANCE-3). The receiving player is not yet qualified. BALANCE-3 (B3) did not qualify (13 Oct).
-  - **The tackler** (PVP-0 / SUPPORT-1, 13 Oct): no physically executable slide tackle exists yet. The tracked SLIDE-A1 K belly-flops alone and pins the recipient's feet from above; the recipient and turf are not the binding problem.
+  - **The tackler** (SLIDE-PHYS-1 / -2, 13 Oct day). SP2 is a physical bent-leg slide at 4.25–5.5 m/s, but it is PARTIAL:
+    - the fold hip goes 4–8° past its adduction stop for about a second;
+    - the knee carries about half of the glide;
+    - there is no sprint commit or sprint entry, while the reference tackle is a ≈ 9 m/s sprint;
+    - M1c and TCF-1 are required and not adopted.
+    - Against the standing C3 there is no fast sliced-out fall. The next decision is a running, single-support recipient (`slide_phys2/RECEIVER_PREREG.md`).
   - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
