@@ -1,0 +1,46 @@
+{
+ "id": "SP2E",
+ "mode": "sp2e",
+ "commit": {
+  "t0": 0.18,
+  "t1": 0.38,
+  "lumbarLat": -15,
+  "thoracicLat": -10,
+  "thoracicRot": 30
+ },
+ "descent": {
+  "t0": 0.4,
+  "t1": 0.58,
+  "lumbarFlex": -10.1199,
+  "thoracicFlex": -8.018,
+  "lumbarLat": -5,
+  "thoracicLat": -2.5853,
+  "thoracicRot": 33
+ },
+ "pelvis": {
+  "t0": 0.38,
+  "t1": 0.5499999999999999,
+  "ko": 620.9764,
+  "roll": 82.7634
+ },
+ "arm": {
+  "t0": 0.45,
+  "reachT": 0.5708,
+  "reachAbd": 28.854,
+  "openT": 0.8949,
+  "openAbd": 114.4628,
+  "reachElbow": 25,
+  "openElbow": 25
+ },
+ "auth": {
+  "trailLeg": 0.5924,
+  "from": 0.06,
+  "until": 0.6
+ },
+ "settle": {
+  "t0": 0.9,
+  "t1": 1.3,
+  "lumbarFlex": -2,
+  "thoracicFlex": 2
+ }
+}

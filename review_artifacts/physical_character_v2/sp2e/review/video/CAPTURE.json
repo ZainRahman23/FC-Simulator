@@ -1,0 +1,442 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "CLEAN_1x_A": {
+   "panels": [
+    {
+     "k": "A",
+     "l": "A = SP2A · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 107,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 287
+  },
+  "SIDE_025x_A": {
+   "panels": [
+    {
+     "k": "A",
+     "l": "A = SP2A · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1025
+  },
+  "R34_025x_A": {
+   "panels": [
+    {
+     "k": "A",
+     "l": "A = SP2A · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 929
+  },
+  "F34_025x_A": {
+   "panels": [
+    {
+     "k": "A",
+     "l": "A = SP2A · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 909
+  },
+  "DIAG_025x_A": {
+   "panels": [
+    {
+     "k": "A",
+     "l": "A = SP2A · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1016
+  },
+  "CLEAN_1x_C": {
+   "panels": [
+    {
+     "k": "C",
+     "l": "SP2C · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 107,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 270
+  },
+  "SIDE_025x_C": {
+   "panels": [
+    {
+     "k": "C",
+     "l": "SP2C · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1011
+  },
+  "R34_025x_C": {
+   "panels": [
+    {
+     "k": "C",
+     "l": "SP2C · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 917
+  },
+  "F34_025x_C": {
+   "panels": [
+    {
+     "k": "C",
+     "l": "SP2C · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 894
+  },
+  "DIAG_025x_C": {
+   "panels": [
+    {
+     "k": "C",
+     "l": "SP2C · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 997
+  },
+  "CLEAN_1x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 107,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 269
+  },
+  "SIDE_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 983
+  },
+  "R34_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 897
+  },
+  "F34_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 877
+  },
+  "DIAG_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1012
+  },
+  "CLEAN_1x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 107,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 263
+  },
+  "SIDE_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1022
+  },
+  "R34_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 917
+  },
+  "F34_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 930
+  },
+  "DIAG_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 425,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 1027
+  },
+  "SPEEDS_1x": {
+   "panels": [
+    {
+     "k": "Es",
+     "l": "SP2E · 4.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "E",
+     "l": "SP2E · 5.0 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "Ef",
+     "l": "SP2E · 5.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 107,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 80,
+   "last": 504,
+   "ms": 760
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}
