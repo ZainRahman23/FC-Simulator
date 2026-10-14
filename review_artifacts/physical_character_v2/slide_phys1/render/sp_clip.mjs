@@ -27,7 +27,12 @@ let INT = null; if (arg("intent")) { const SL = new URL("../scripts/", import.me
 // the record's kinematic RUN-1 run-in (run.runIn, negative steps: the animation before the commitment touchdown); --intent2a '<opts json>'
 // --runin <file> adds the SP2A AUTHORED intent skeleton (its choreography + knee coupling on the recorded hip angle, V2 FK on the recorded pelvis)
 const WIRE = arg("wire") ? await import(new URL("./sp_wire.mjs", import.meta.url).href) : null, r4 = (x) => Math.round(x * 1e4) / 1e4, toWp = (p) => T.toW(p).map(r4);   // states passed in are already placed
-const wireF = (S) => WIRE ? { wire: WIRE.wireOf(S).map(pl => pl.map(toWp)), skel: WIRE.skelOf(S).map(sg => sg.map(toWp)) } : {};
+// SP2F (opt-in --wireBodies a,b,…): the wireframe / skeleton restricted to the named bodies (e.g. pelvis, abdomen, thorax, head, upperArm_L, forearm_L — a
+// torso + pelvis + posting-arm view without the legs); skeleton segments are kept when both of their points belong to those bodies
+const WB = arg("wireBodies") ? new Set(arg("wireBodies").split(",")) : null, SEGPT = { pelvisL: "pelvis", pelvisR: "pelvis", pelvisM: "pelvis", lumbar: "abdomen", thoracic: "thorax", neck: "thorax", headTop: "head", shoulder_L: "thorax", shoulder_R: "thorax", elbow_L: "upperArm_L", hand_L: "forearm_L", elbow_R: "upperArm_R", hand_R: "forearm_R" };
+const wireF = (S) => { if (!WIRE) return {}; if (!WB) return { wire: WIRE.wireOf(S).map(pl => pl.map(toWp)), skel: WIRE.skelOf(S).map(sg => sg.map(toWp)) };
+  const L2 = WIRE.Lref, Ss = S.map((b, i) => WB.has(L2.B[i].name) ? b : null), wire = []; for (let i = 0; i < L2.B.length; i++) if (Ss[i]) for (const s of L2.B[i].shapes || []) for (const pl of WIRE.shapeLinesOf(s, S[i].pos, S[i].rot)) wire.push(pl.map(toWp));
+  const K = L2.skel(S), skel = L2.SEGS.filter(([a, c]) => K[a] && K[c] && WB.has(SEGPT[a]) && WB.has(SEGPT[c])).map(([a, c]) => [K[a], K[c]].map(toWp)); return { wire, skel }; };
 let INT2 = null; if (arg("intent2a")) { const AA = await import(new URL("../../sp2a/scripts/sp2a_author.mjs", import.meta.url).href), C = await import(new URL("../scripts/sp_chor.mjs", import.meta.url).href), L = await import(new URL("../scripts/sp_lib.mjs", import.meta.url).href);
   const O2 = JSON.parse(arg("intent2a")), FL = O2.mode === "flight" || O2.mode === "sp2c" ? await import(new URL("../../sp2a/scripts/sp2a_flight.mjs", import.meta.url).href) : null;
   // SP2C (opt-in, mode "sp2c"): the intent ghost of the SP2C candidate (sp2c/scripts/sp2c_cand.mjs)

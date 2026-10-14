@@ -24,3 +24,5 @@ function shapeLines(s, pos, rot) { const R = Q.norm(Q.mul(rot, s.rot || [0, 0, 0
 // polylines (local frame) of every collision shape of the 14 tackler bodies in state S, and the joint skeleton segments
 export function wireOf(S) { const lines = []; for (let i = 0; i < B.length; i++) for (const s of B[i].shapes || []) for (const pl of shapeLines(s, S[i].pos, S[i].rot)) lines.push(pl); return lines; }
 export function skelOf(S) { const K = L.skel(S); return L.SEGS.filter(([a, b]) => K[a] && K[b]).map(([a, b]) => [K[a], K[b]]); }
+// SP2F (presentation): exported for body-filtered wireframes (sp_clip --wireBodies)
+export const Lref = L; export const shapeLinesOf = (s, pos, rot) => shapeLines(s, pos, rot);

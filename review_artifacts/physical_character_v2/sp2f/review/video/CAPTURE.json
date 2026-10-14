@@ -1,0 +1,582 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "CLEAN_1x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 377
+  },
+  "SIDE_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1434
+  },
+  "R34_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1489
+  },
+  "F34_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1504
+  },
+  "DIAG_025x_D": {
+   "panels": [
+    {
+     "k": "D",
+     "l": "SP2D · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1480
+  },
+  "FOCUS_SIDE_1x_D": {
+   "panels": [
+    {
+     "k": "Du",
+     "l": "SP2D · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 250
+  },
+  "FOCUS_R34_1x_D": {
+   "panels": [
+    {
+     "k": "Du",
+     "l": "SP2D · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 313
+  },
+  "FOCUS_SIDE_025x_D": {
+   "panels": [
+    {
+     "k": "Du",
+     "l": "SP2D · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1147
+  },
+  "FOCUS_R34_025x_D": {
+   "panels": [
+    {
+     "k": "Du",
+     "l": "SP2D · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1295
+  },
+  "CLEAN_1x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 312
+  },
+  "SIDE_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1514
+  },
+  "R34_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1507
+  },
+  "F34_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1481
+  },
+  "DIAG_025x_E": {
+   "panels": [
+    {
+     "k": "E",
+     "l": "SP2E · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1584
+  },
+  "FOCUS_SIDE_1x_E": {
+   "panels": [
+    {
+     "k": "Eu",
+     "l": "SP2E · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 234
+  },
+  "FOCUS_R34_1x_E": {
+   "panels": [
+    {
+     "k": "Eu",
+     "l": "SP2E · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 317
+  },
+  "FOCUS_SIDE_025x_E": {
+   "panels": [
+    {
+     "k": "Eu",
+     "l": "SP2E · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1240
+  },
+  "FOCUS_R34_025x_E": {
+   "panels": [
+    {
+     "k": "Eu",
+     "l": "SP2E · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1359
+  },
+  "CLEAN_1x_F": {
+   "panels": [
+    {
+     "k": "F",
+     "l": "SP2F · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 350
+  },
+  "SIDE_025x_F": {
+   "panels": [
+    {
+     "k": "F",
+     "l": "SP2F · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1506
+  },
+  "R34_025x_F": {
+   "panels": [
+    {
+     "k": "F",
+     "l": "SP2F · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1377
+  },
+  "F34_025x_F": {
+   "panels": [
+    {
+     "k": "F",
+     "l": "SP2F · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1366
+  },
+  "DIAG_025x_F": {
+   "panels": [
+    {
+     "k": "F",
+     "l": "SP2F · F37.5",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1584
+  },
+  "FOCUS_SIDE_1x_F": {
+   "panels": [
+    {
+     "k": "Fu",
+     "l": "SP2F · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 295
+  },
+  "FOCUS_R34_1x_F": {
+   "panels": [
+    {
+     "k": "Fu",
+     "l": "SP2F · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 322
+  },
+  "FOCUS_SIDE_025x_F": {
+   "panels": [
+    {
+     "k": "Fu",
+     "l": "SP2F · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1233
+  },
+  "FOCUS_R34_025x_F": {
+   "panels": [
+    {
+     "k": "Fu",
+     "l": "SP2F · F37.5 · torso + pelvis + posting arm only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 457,
+   "every": 1,
+   "size": [
+    480,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 1125
+  },
+  "SPEEDS_1x": {
+   "panels": [
+    {
+     "k": "Fs",
+     "l": "SP2F · 4.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F",
+     "l": "SP2F · 5.0 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "Ff",
+     "l": "SP2F · 5.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 115,
+   "every": 4,
+   "size": [
+    1440,
+    434
+   ],
+   "first": 72,
+   "last": 528,
+   "ms": 896
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}
