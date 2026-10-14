@@ -110,13 +110,19 @@ READY FOR NEXT INTEGRATION MILESTONE:       NO</div>
 <figure class="vid local"><figcaption><b>REFERENCE RECEIVER · SP2 + C3 (MODERATE, line +0.20 m)</b> <span class="tog"><button data-src="local_reference/CMP_REF_RECV_1x.mp4">1×</button><button data-src="local_reference/CMP_REF_RECV_05x.mp4" class="on">0.5×</button><button data-src="local_reference/CMP_REF_RECV_025x.mp4">0.25×</button></span></figcaption>
 <video controls loop muted playsinline preload="metadata" src="local_reference/CMP_REF_RECV_05x.mp4"></video><p class="miss">This video contains the third-party reference footage. It is kept outside Git in <code>review/local_reference/</code> and only plays on the machine that built it.</p><p class="cap">The reference dribbler is running, and his swept foot is the one landing. He is seated in ≈ 0.2 s. Our standing C3 holds on its other loaded foot for 1–2 s, then topples: the "mannequin" look.</p></figure>
 
+<h3>Variations (Phase 19)</h3>
+<p><b>Mirrored tackle</b> (folding the right leg, tackling with the left): it reproduces the original to within 2.3 mm of centre-of-mass position over 2 s, with identical contact timings. The architecture is side-neutral.</p>
+<p><b>Entry speed:</b> qualified from 4.25 to 5.5 m/s; at 5.75 m/s and above the boot lands first.</p>
+<ul><li>Scaling the commit timing with speed does not help.</li>
+<li>A dedicated search at 6–7 m/s keeps the body organised (2.2–3.2 m), but the tackling heel lands 15–20 ms before the knee and carries 26–31 % of the glide. Not qualified.</li></ul>
+<p>A sprint tackle like the reference's needs its own commit and a sprint plant state from RUN.</p>
 <h2 id="failed">7 · Failed and intermediate candidates (preserved)</h2>
 <figure class="vid"><figcaption><b>H1 · H2 · H3 (knee slide) · H3 + seat objective · H5 mid-search</b> <span class="tog"><button data-src="video/GEN_1x.mp4" class="on">▶</button></span></figcaption>
 <video controls loop muted playsinline preload="metadata" src="video/GEN_1x.mp4"></video><p class="cap">H1 / H2: the tackling boot still lands first, because the pelvis pitches forward as the leg swings up. H3: a kneel-glide in which the knee carries 63 % of the glide. A seat objective with real gain moved the glide onto the hip.</p></figure>
 <p>Searches H1–H6 (logs in <code>evidence/</code>) and fixtures F1–F3R are all listed with their lessons in <code>SLIDE_PHYS2_LOG.md</code>.</p>
 
 <h2 id="next">8 · What needs your decision</h2>
-<ol><li><b>Receiver.</b> The decisive missing piece is a <b>running, single-support recipient</b> with protective stepping and arms. The reference's dribbler was swept mid-stride, while C3 is a standing controller. Building one needs a preregistered successor (stop condition B). I did not modify C3.</li>
+<ol><li><b>Receiver</b> (preregistered in <code>RECEIVER_PREREG.md</code>, not developed). The decisive missing piece is a <b>running, single-support recipient</b> with protective stepping and arms. The reference's dribbler was swept mid-stride, while C3 is a standing controller. Building one needs a preregistered successor (stop condition B). I did not modify C3.</li>
 <li><b>Sprint slides.</b> The real tackle is ≈ 9 m/s. SP2 is qualified for 4.25–5.5 m/s from a 5 m/s entry. Going faster needs a speed-indexed commit and a sprint plant state from RUN.</li>
 <li><b>Fold-hip adduction.</b> Side-sitting on the folded thigh presses the hip 4–8° past V2's 35° adduction stop. Either the slide posture changes, or the hip's passive end-range is re-examined for this loading.</li>
 <li><b>Adoption.</b> M1c and TCF-1 are both needed by SP2. Neither has been regression-tested on other domains, so I am not recommending canonical adoption yet.</li></ol>

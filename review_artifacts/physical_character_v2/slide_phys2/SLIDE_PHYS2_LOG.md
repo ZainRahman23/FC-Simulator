@@ -83,3 +83,10 @@ Instruction: `sources/2026-10-14_user_instruction_slide_phys2_complete_slide_tac
 - 30 own views + 6 aligned comparison sources; reference composites (REFERENCE · SP1 · SP2, REFERENCE RECEIVER · SP2 + C3, the reference itself at real-time rates) in the gitignored `review/local_reference/`.
 - Watched (contact sheets at 1× / 0.5×): SP2 clean / entry close-up / Stage 3 MODERATE / sweep / composites.
 - Report `SLIDE_PHYS2_REPORT.md` (48 answers + verdict). Review `review/SLIDE_PHYS2_REVIEW.html`.
+
+## 11. Phase 19 variations and the receiver preregistration (≈ 05:15 → 05:45)
+
+- **Mirrored tackle** (scripts/sp2_mirror.mjs: fold = right, tackling = left; L ↔ R tracks, trunk lateral / axial angles, pelvis roll / yaw, lateral push and every side flag reflected): COM deviates ≤ 2.3 mm from the reflected original over 2 s, identical contact timings (`ca94f593…` vs `792ce24e…`). The architecture is side-neutral; the residual is solver ordering.
+- **Entry speed**: SP2 qualified 4.25–5.5; ≥ 5.75 fails (boot first, face-down). Scaling the commit's times by (5/v)^a (a = 0.5, 1) does not help (scripts: scratch tscale). A separate seeded search at 6.0 / 6.5 / 7.0 m/s (**search F1**, evidence/searchF1_fast_log.json) reaches 34 → ≈ 14.6: no face-down / head, pelvis carries 33–61 % of the glide, slide 2.2–3.2 m — but the tackling boot touches 15–20 ms before the knee and its heel carries 26–31 % of the glide (a sliding heel support, not a stud strut). NOT qualified; preserved as the evidence that a sprint tackle needs its own commit (and a sprint plant state from RUN).
+- **Recipient alignment**: the lateral sweep (§9). **Obstruction**: Stage 2 (§9).
+- **Receiver preregistration** `RECEIVER_PREREG.md` (not developed): H-R1 running single-support recipient (state, not law), H-R2 protective arms, H-R3 stepping; acceptance criteria fixed.

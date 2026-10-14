@@ -323,7 +323,7 @@ The slower SP2 contact (≈ 3–4 m/s at the feet) also delivers less of a sweep
 
 ### 35. If yes, what evidence justified it?
 
-Not applicable. The evidence for a successor is Q32–33: a running, single-support recipient, protective stepping and arms. The brief requires research and preregistration first, so it is a decision for you.
+Not applicable. The evidence for a successor is Q32–33: a running, single-support recipient, protective stepping and arms. The successor is preregistered in `RECEIVER_PREREG.md` (hypotheses, acceptance criteria, owner decisions) but not developed.
 
 ### 36. Is stepping necessary now or can it wait?
 
@@ -392,6 +392,19 @@ M1c stays the tackler's experimental actuator. It is not regression-tested on ot
 - **Disturbance must be sensed by touch,** not inferred from tracking error. An athlete's own explosive motion looks like a disturbance to proprioception.
 - **Real slides are not 5 m/s:** the reference is a 9 m/s sprint seen in slow motion.
 
+### 43b. Phase 19: variations probed
+
+**Mirror (side neutrality).** The mirrored tackle (fold right, tackle left) reproduces the original to within 2.3 mm of centre-of-mass position over 2 s, with identical contact timings.
+
+**Entry speed.** SP2 is qualified from 4.25 to 5.5 m/s.
+- Scaling the commit timing with speed does not extend it.
+- A separate search at 6–7 m/s keeps the body organised (the pelvis carries the glide; 2.2–3.2 m), but the tackling heel touches 15–20 ms before the knee and carries 26–31 % of the glide. A sprint tackle needs its own commit and a sprint plant state from RUN.
+
+**Other variations.**
+- Recipient alignment: the lateral sweep (Q25–28).
+- Obstruction: Stage 2 (Q21–22).
+- Not probed: other tackle directions (the plant's lateral push) and body orientations.
+
 ### 44. What remains before RUN → SLIDE integration?
 
 - **Hand-over:** a module that takes RUN-1's actual fold-side plant touchdown and starts SP2 from it with muscle-state continuity.
@@ -423,7 +436,8 @@ M1c stays the tackler's experimental actuator. It is not regression-tested on ot
 
 **Commits:**
 - `c12d879f` — the instruction, verbatim.
-- The final SLIDE-PHYS-2 commit, recorded in `SLIDE_PHYS2_LOG.md` §10 and in memory.
+- `a730e697` — SLIDE-PHYS-2: SP2, A6, Stage 2/3, review page and report.
+- A follow-up commit adds the mirror test, the speed exploration and the receiver preregistration (`RECEIVER_PREREG.md`).
 
 **Files** (all under `review_artifacts/physical_character_v2/slide_phys2/`):
 - `SLIDE_PHYS2_REPORT.md`, `SLIDE_PHYS2_LOG.md`, `REFERENCE2_ANALYSIS.md`, `research/SLIDE2_LITERATURE.md`.
