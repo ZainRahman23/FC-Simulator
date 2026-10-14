@@ -7,7 +7,7 @@ export const pelvisRot = (p) => Q.norm(Q.mul(L.axisQ([0, 1, 0], p.yawDeg || 0), 
 const add = (a, r, s) => { const o = {}; for (const j of new Set([...Object.keys(a), ...Object.keys(r)])) { o[j] = { ...(a[j] || {}) }; for (const [k, v] of Object.entries(r[j] || {})) o[j][k] = (o[j][k] || 0) + s * v; } return o; };
 export function buildEntry(E, h = 1e-3) { const R0 = pelvisRot(E.pelvis), w = E.pelvisW || [0, 0, 0];
   const rotStep = (s) => { const a = V.len(w) * s; return a === 0 ? R0 : Q.norm(Q.mul(Q.axis(V.norm(w), a), R0)); };
-  const raw = L.fk({ pos: [0, 1, 0], rot: R0 }, E.anat), lo = L.lowestOf(raw), off = [0, 0.0005 - lo.y, 0], root0 = V.add([0, 1, 0], off);
+  const raw = L.fk({ pos: [0, 1, 0], rot: R0 }, E.anat), lo = L.lowestOf(raw), off = [0, (E.lowestY ?? 0.0005) - lo.y, 0], root0 = V.add([0, 1, 0], off);   // E.lowestY (SP2A; default 0.5 mm): an airborne entry
   const pose = L.fk({ pos: root0, rot: R0 }, E.anat), vr = E.vRoot;
   const pa = L.fk({ pos: V.add(root0, V.sc(vr, -h)), rot: rotStep(-h) }, add(E.anat, E.rate || {}, -h)), pb = L.fk({ pos: V.add(root0, V.sc(vr, h)), rot: rotStep(h) }, add(E.anat, E.rate || {}, h));
   const velO = L.bodyVels(pa, pb, 2 * h), vel = L.comVels(pose, velO);

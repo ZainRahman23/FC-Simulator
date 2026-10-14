@@ -1,0 +1,94 @@
+[
+ {
+  "run": "SP2A",
+  "events": {
+   "takeoff": 0.14166666666666666,
+   "airUntil": 0.30833333333333335,
+   "airBodies": [
+    "foot_L"
+   ],
+   "firstBody": {
+    "t": 0.4125,
+    "bodies": [
+     "thigh_L"
+    ]
+   },
+   "freeBootFirst": 0.425
+  },
+  "continuity": {
+   "lastAnimT": -0.00417,
+   "maxDeltaAngleDeg": 1.81,
+   "worstAngle": "hip_R.flex",
+   "maxDeltaRateDegS": 230.9,
+   "worstRate": "knee_R.flex",
+   "comJumpMM": 0.1,
+   "comVelJump": 0.041
+  },
+  "seam": null,
+  "spikes": {
+   "runStrideMaxDegS2": 646439,
+   "atToeOff": 646439,
+   "atTouchdown": 187084
+  },
+  "flight": {
+   "steps": 37,
+   "meanAy": -9.81,
+   "maxAyDev": 0,
+   "maxAh": 0
+  },
+  "authoredFlight": {
+   "T": 0.10008000000000017,
+   "nF": 24,
+   "v0": [
+    -0.13260756366356308,
+    0.47600101491483526,
+    5.059734266185438
+   ],
+   "vT": [
+    -0.13260756366356308,
+    -0.5057837850851664,
+    5.059734266185438
+   ],
+   "kTO": 282
+  }
+ },
+ {
+  "run": "SP2 (no run-in: entry state)",
+  "events": {
+   "takeoff": 0.14583333333333334,
+   "airUntil": 0.30833333333333335,
+   "airBodies": [
+    "foot_L"
+   ],
+   "firstBody": {
+    "t": 0.4125,
+    "bodies": [
+     "thigh_L"
+    ]
+   },
+   "freeBootFirst": 0.43333333333333335
+  },
+  "continuity": {
+   "lastAnimT": null,
+   "maxDeltaAngleDeg": 0,
+   "worstAngle": null,
+   "maxDeltaRateDegS": 0,
+   "worstRate": null,
+   "comJumpMM": null,
+   "comVelJump": null
+  },
+  "seam": null,
+  "spikes": {
+   "runStrideMaxDegS2": 0,
+   "atToeOff": null,
+   "atTouchdown": 35675
+  },
+  "flight": {
+   "steps": 36,
+   "meanAy": -9.81,
+   "maxAyDev": 0,
+   "maxAh": 0
+  },
+  "authoredFlight": null
+ }
+]

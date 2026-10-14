@@ -1,0 +1,408 @@
+{
+ "search": "S4",
+ "tool": "sp2a_search.mjs (CMA-ES)",
+ "params": [
+  [
+   "plantK1",
+   1.4,
+   2.8
+  ],
+  [
+   "plantK2",
+   1,
+   2.6
+  ],
+  [
+   "plantT1",
+   0.05,
+   0.12
+  ],
+  [
+   "plantEnd",
+   0.15,
+   0.22
+  ],
+  [
+   "aimZ",
+   -0.1,
+   0.35
+  ],
+  [
+   "aimX",
+   -0.25,
+   0.2
+  ],
+  [
+   "plantAuth",
+   0.2,
+   1
+  ],
+  [
+   "plantPitch",
+   -20,
+   8
+  ],
+  [
+   "plantRoll",
+   0,
+   18
+  ],
+  [
+   "plantKo",
+   50,
+   900
+  ],
+  [
+   "tackKneeHold",
+   0,
+   70
+  ],
+  [
+   "hipRPeak",
+   70,
+   125
+  ],
+  [
+   "hipRPeakT",
+   0.3,
+   0.6
+  ],
+  [
+   "tackExt0",
+   0.45,
+   0.85
+  ],
+  [
+   "seatKo",
+   30,
+   500
+  ],
+  [
+   "recline",
+   -20,
+   15
+  ],
+  [
+   "foldT",
+   0.12,
+   0.5
+  ],
+  [
+   "tuckRoll",
+   12,
+   35
+  ],
+  [
+   "tuckKnee",
+   105,
+   142
+  ],
+  [
+   "tuckHip",
+   45,
+   95
+  ],
+  [
+   "tuckAbd",
+   -27,
+   0
+  ],
+  [
+   "tuckRot",
+   -42,
+   5
+  ],
+  [
+   "trunkLat",
+   -8,
+   14
+  ],
+  [
+   "lead",
+   0.02,
+   0.09
+  ],
+  [
+   "reachHip",
+   -5,
+   20
+  ],
+  [
+   "reachKnee",
+   -5,
+   20
+  ],
+  [
+   "ankRpass",
+   0,
+   35
+  ],
+  [
+   "takeover",
+   -0.1,
+   -0.02
+  ]
+ ],
+ "runins": [
+  "run1g_4.147.json",
+  "run1g_4.608.json",
+  "run1g_5.069.json"
+ ],
+ "lambda": 24,
+ "gensRun": 15,
+ "gensPlanned": 45,
+ "seed": 4,
+ "start": {
+  "cost": 53.588,
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 42.086,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.911,
+     "firstRegion": 2,
+     "faceDown": 4.026,
+     "head": 2.5,
+     "torso": 0.548,
+     "slide": 0.76,
+     "retention": 0.126,
+     "kneeGlide": 0.129,
+     "lying": 1.104,
+     "limits": 4.665,
+     "total": 42.086,
+     "seam": 0.978,
+     "landPitch": 4.438,
+     "ankleLimit": 13.447,
+     "hipSustained": 3.453
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 24.719,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.456,
+     "firstRegion": 2,
+     "faceDown": 4.41,
+     "head": 2.5,
+     "torso": 0.856,
+     "kneeGlide": 1.173,
+     "handOver": 0.216,
+     "lying": 1.872,
+     "limits": 2.064,
+     "total": 24.719,
+     "seam": 1.31,
+     "landPitch": 3.169,
+     "ankleLimit": 1.692
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 30.832,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.552,
+     "firstRegion": 2,
+     "faceDown": 4.416,
+     "head": 2.5,
+     "torso": 0.992,
+     "kneeGlide": 1.122,
+     "handOver": 2.136,
+     "lying": 1.59,
+     "limits": 5.512,
+     "total": 30.832,
+     "seam": 1.292,
+     "landPitch": 3.156,
+     "ankleLimit": 1.08,
+     "hipSustained": 1.483
+    }
+   }
+  ]
+ },
+ "perGeneration": [
+  {
+   "g": 1,
+   "best": 34.249,
+   "mean": 50.96,
+   "sigma": 0.2376
+  },
+  {
+   "g": 2,
+   "best": 32.346,
+   "mean": 44.614,
+   "sigma": 0.2376
+  },
+  {
+   "g": 3,
+   "best": 32.596,
+   "mean": 43.52,
+   "sigma": 0.2386
+  },
+  {
+   "g": 4,
+   "best": 33.225,
+   "mean": 43.438,
+   "sigma": 0.2327
+  },
+  {
+   "g": 5,
+   "best": 34.061,
+   "mean": 39.391,
+   "sigma": 0.2213
+  },
+  {
+   "g": 6,
+   "best": 32.672,
+   "mean": 40.869,
+   "sigma": 0.2195
+  },
+  {
+   "g": 7,
+   "best": 29.13,
+   "mean": 38.958,
+   "sigma": 0.2165
+  },
+  {
+   "g": 8,
+   "best": 30.714,
+   "mean": 36.173,
+   "sigma": 0.2157
+  },
+  {
+   "g": 9,
+   "best": 30.678,
+   "mean": 37.511,
+   "sigma": 0.2049
+  },
+  {
+   "g": 10,
+   "best": 30.157,
+   "mean": 35.883,
+   "sigma": 0.1921
+  },
+  {
+   "g": 11,
+   "best": 29.047,
+   "mean": 34.488,
+   "sigma": 0.1811
+  },
+  {
+   "g": 12,
+   "best": 29.205,
+   "mean": 35.16,
+   "sigma": 0.1706
+  },
+  {
+   "g": 13,
+   "best": 29.896,
+   "mean": 33.789,
+   "sigma": 0.1608
+  },
+  {
+   "g": 14,
+   "best": 30.871,
+   "mean": 33.309,
+   "sigma": 0.1551
+  },
+  {
+   "g": 15,
+   "best": 27.14,
+   "mean": 33.792,
+   "sigma": 0.153
+  }
+ ],
+ "best": {
+  "cost": 27.14,
+  "tag": "g15_19",
+  "phys": {
+   "plantK1": 1.96,
+   "plantK2": 1.5289,
+   "plantT1": 0.0733,
+   "plantEnd": 0.1679,
+   "aimZ": 0.35,
+   "aimX": -0.1084,
+   "plantAuth": 0.3854,
+   "plantPitch": -0.144,
+   "plantRoll": 3.9552,
+   "plantKo": 117.6017,
+   "tackKneeHold": 66.275,
+   "hipRPeak": 77.6739,
+   "hipRPeakT": 0.5223,
+   "tackExt0": 0.7406,
+   "seatKo": 30,
+   "recline": 2.7275,
+   "foldT": 0.386,
+   "tuckRoll": 24.2993,
+   "tuckKnee": 133.3758,
+   "tuckHip": 74.7112,
+   "tuckAbd": -20.1673,
+   "tuckRot": -27.583,
+   "trunkLat": 7.6642,
+   "lead": 0.0266,
+   "reachHip": 3.5902,
+   "reachKnee": 2.9511,
+   "ankRpass": 19.4002,
+   "takeover": -0.0811
+  },
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 18.3,
+    "parts": {
+     "bootFirst": 3,
+     "faceDown": 3.981,
+     "head": 2.5,
+     "torso": 0.828,
+     "slide": 0.315,
+     "kneeGlide": 0.816,
+     "handOver": 0.064,
+     "lying": 1.395,
+     "limits": 0.684,
+     "total": 18.3,
+     "seam": 0.634,
+     "landPitch": 2.522,
+     "ankleLimit": 1.56
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 18.106,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.104,
+     "faceDown": 4.014,
+     "head": 2.5,
+     "torso": 0.836,
+     "slide": 0.009,
+     "kneeGlide": 1.032,
+     "handOver": 0.068,
+     "lying": 1.554,
+     "limits": 0.473,
+     "total": 18.106,
+     "seam": 1.184,
+     "landPitch": 2.816,
+     "ankleLimit": 0.516
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 17.563,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.072,
+     "faceDown": 4.02,
+     "head": 2.5,
+     "torso": 0.884,
+     "kneeGlide": 1.038,
+     "handOver": 0.068,
+     "lying": 1.617,
+     "limits": 0.451,
+     "total": 17.563,
+     "seam": 1.107,
+     "landPitch": 2.806
+    }
+   }
+  ]
+ }
+}

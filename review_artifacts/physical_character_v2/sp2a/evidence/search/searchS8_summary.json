@@ -1,0 +1,330 @@
+{
+ "search": "S8",
+ "tool": "sp2a_search.mjs (CMA-ES)",
+ "params": [
+  [
+   "tA",
+   0.25,
+   0.55
+  ],
+  [
+   "dT",
+   0.08,
+   0.5
+  ],
+  [
+   "hipFlex",
+   40,
+   85
+  ],
+  [
+   "hipAbd",
+   -27,
+   25
+  ],
+  [
+   "hipRot",
+   -42,
+   0
+  ],
+  [
+   "knee",
+   105,
+   145
+  ],
+  [
+   "ankDf",
+   -38,
+   0
+  ],
+  [
+   "ankInv",
+   0,
+   28
+  ],
+  [
+   "seatPitch",
+   -32,
+   0
+  ],
+  [
+   "seatRoll",
+   8,
+   40
+  ],
+  [
+   "seatKo",
+   50,
+   400
+  ]
+ ],
+ "runins": [
+  "run1g_4.147.json",
+  "run1g_4.608.json",
+  "run1g_5.069.json"
+ ],
+ "lambda": 16,
+ "gensRun": 25,
+ "gensPlanned": 25,
+ "seed": 8,
+ "start": {
+  "cost": 25.853,
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 7.759,
+    "parts": {
+     "bootLoad": 0.083,
+     "faceDown": 3.069,
+     "slide": 0.702,
+     "retention": 0.016,
+     "kneeGlide": 2.37,
+     "limits": 0.361,
+     "total": 7.759,
+     "hipSustained": 1.159
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 18.89,
+    "parts": {
+     "bootLoad": 0.096,
+     "slide": 0.206,
+     "kneeGlide": 2.58,
+     "limits": 1.552,
+     "total": 18.89,
+     "ankleLimit": 4.199,
+     "hipSustained": 10.258
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 20.363,
+    "parts": {
+     "bootLoad": 0.56,
+     "knee": 0.608,
+     "kneeGlide": 0.471,
+     "handOver": 0.084,
+     "lying": 0.027,
+     "limits": 3.432,
+     "total": 20.363,
+     "ankleLimit": 6.827,
+     "hipSustained": 8.354
+    }
+   }
+  ]
+ },
+ "perGeneration": [
+  {
+   "g": 1,
+   "best": 27.643,
+   "mean": 33.836,
+   "sigma": 0.1512
+  },
+  {
+   "g": 2,
+   "best": 28.078,
+   "mean": 32.725,
+   "sigma": 0.1494
+  },
+  {
+   "g": 3,
+   "best": 27.133,
+   "mean": 32.599,
+   "sigma": 0.1364
+  },
+  {
+   "g": 4,
+   "best": 25.448,
+   "mean": 32.948,
+   "sigma": 0.1226
+  },
+  {
+   "g": 5,
+   "best": 25.703,
+   "mean": 31.339,
+   "sigma": 0.1189
+  },
+  {
+   "g": 6,
+   "best": 26.205,
+   "mean": 31.073,
+   "sigma": 0.1318
+  },
+  {
+   "g": 7,
+   "best": 25.745,
+   "mean": 30.081,
+   "sigma": 0.1438
+  },
+  {
+   "g": 8,
+   "best": 26.194,
+   "mean": 31.897,
+   "sigma": 0.1566
+  },
+  {
+   "g": 9,
+   "best": 25.398,
+   "mean": 31.986,
+   "sigma": 0.1671
+  },
+  {
+   "g": 10,
+   "best": 23.846,
+   "mean": 33.212,
+   "sigma": 0.1711
+  },
+  {
+   "g": 11,
+   "best": 26.421,
+   "mean": 32.485,
+   "sigma": 0.1632
+  },
+  {
+   "g": 12,
+   "best": 24.837,
+   "mean": 30.644,
+   "sigma": 0.1521
+  },
+  {
+   "g": 13,
+   "best": 26.51,
+   "mean": 32.47,
+   "sigma": 0.1478
+  },
+  {
+   "g": 14,
+   "best": 26.366,
+   "mean": 32.626,
+   "sigma": 0.1472
+  },
+  {
+   "g": 15,
+   "best": 24.896,
+   "mean": 30.412,
+   "sigma": 0.132
+  },
+  {
+   "g": 16,
+   "best": 24.802,
+   "mean": 31.778,
+   "sigma": 0.1268
+  },
+  {
+   "g": 17,
+   "best": 26.156,
+   "mean": 32.655,
+   "sigma": 0.1125
+  },
+  {
+   "g": 18,
+   "best": 24.511,
+   "mean": 29.261,
+   "sigma": 0.1039
+  },
+  {
+   "g": 19,
+   "best": 25.452,
+   "mean": 31.263,
+   "sigma": 0.0971
+  },
+  {
+   "g": 20,
+   "best": 24.7,
+   "mean": 29.055,
+   "sigma": 0.0928
+  },
+  {
+   "g": 21,
+   "best": 23.859,
+   "mean": 31.254,
+   "sigma": 0.0846
+  },
+  {
+   "g": 22,
+   "best": 19.34,
+   "mean": 29.001,
+   "sigma": 0.0804
+  },
+  {
+   "g": 23,
+   "best": 23.598,
+   "mean": 28.631,
+   "sigma": 0.0803
+  },
+  {
+   "g": 24,
+   "best": 24.03,
+   "mean": 28.65,
+   "sigma": 0.0861
+  },
+  {
+   "g": 25,
+   "best": 23.055,
+   "mean": 29.787,
+   "sigma": 0.0845
+  }
+ ],
+ "best": {
+  "cost": 19.34,
+  "tag": "g22_7",
+  "phys": {
+   "tA": 0.4824,
+   "dT": 0.1049,
+   "hipFlex": 85,
+   "hipAbd": -17.2768,
+   "hipRot": -35.1593,
+   "knee": 132.2714,
+   "ankDf": 0,
+   "ankInv": 5.7241,
+   "seatPitch": -26.5937,
+   "seatRoll": 20.6986,
+   "seatKo": 96.8497
+  },
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 14.439,
+    "parts": {
+     "bootLoad": 0.23,
+     "faceDown": 3.309,
+     "head": 2.5,
+     "torso": 0.012,
+     "slide": 0.777,
+     "retention": 0.062,
+     "kneeGlide": 3.303,
+     "limits": 0.62,
+     "total": 14.439,
+     "hipSustained": 3.626
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 13.606,
+    "parts": {
+     "bootLoad": 0.176,
+     "slide": 0.225,
+     "kneeGlide": 2.196,
+     "limits": 1.058,
+     "total": 13.606,
+     "ankleLimit": 4.014,
+     "hipSustained": 5.937
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 8.316,
+    "parts": {
+     "bootLoad": 0.464,
+     "knee": 0.571,
+     "kneeGlide": 2.64,
+     "handOver": 0.048,
+     "limits": 1.464,
+     "total": 8.316,
+     "ankleLimit": 3.129
+    }
+   }
+  ]
+ }
+}

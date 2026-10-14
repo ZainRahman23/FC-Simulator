@@ -1,0 +1,274 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "SP2A_MAIN_1x": {
+   "panels": [
+    {
+     "k": "SP2A",
+     "l": "SP2A · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · same camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4 · colliders, skeleton (yellow), intent (magenta)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 112,
+   "every": 4,
+   "size": [
+    1880,
+    434
+   ],
+   "first": -60,
+   "last": 384,
+   "ms": 1129
+  },
+  "SP2A_MAIN_05x": {
+   "panels": [
+    {
+     "k": "SP2A",
+     "l": "SP2A · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · same camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4 · colliders, skeleton (yellow), intent (magenta)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 223,
+   "every": 2,
+   "size": [
+    1880,
+    434
+   ],
+   "first": -60,
+   "last": 384,
+   "ms": 1835
+  },
+  "SP2A_MAIN_025x": {
+   "panels": [
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4 · colliders, skeleton, intent",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1560,
+    454
+   ],
+   "first": -60,
+   "last": 300,
+   "ms": 2555
+  },
+  "START_1x": {
+   "panels": [
+    {
+     "k": "SP2",
+     "l": "SP2 · gameplay camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · gameplay camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · side diagnostic",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 73,
+   "every": 4,
+   "size": [
+    1560,
+    454
+   ],
+   "first": -168,
+   "last": 120,
+   "ms": 493
+  },
+  "START_025x": {
+   "panels": [
+    {
+     "k": "SP2",
+     "l": "SP2 · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4 · colliders, skeleton, intent",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 289,
+   "every": 1,
+   "size": [
+    1560,
+    454
+   ],
+   "first": -168,
+   "last": 120,
+   "ms": 1873
+  },
+  "CMP_1x": {
+   "panels": [
+    {
+     "k": "SP2",
+     "l": "SP2 · gameplay crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · gameplay crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP2",
+     "l": "SP2 · rear 3/4 colliders",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4 colliders",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 96,
+   "every": 4,
+   "size": [
+    1920,
+    434
+   ],
+   "first": 1,
+   "last": 381,
+   "ms": 850
+  },
+  "CMP_025x": {
+   "panels": [
+    {
+     "k": "SP2",
+     "l": "SP2 · rear 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · rear 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    },
+    {
+     "k": "SP2",
+     "l": "SP2 · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2A",
+     "l": "SP2A · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 300,
+   "every": 1,
+   "size": [
+    1920,
+    434
+   ],
+   "first": 1,
+   "last": 300,
+   "ms": 2557
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

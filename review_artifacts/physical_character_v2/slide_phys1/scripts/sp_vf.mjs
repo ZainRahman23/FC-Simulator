@@ -37,11 +37,30 @@ export function makeSupportVF(plan) { const s = plan.side, jA = ji("ankle_" + s)
     let chain = [jA, jK, jH];
     if (plan.contactFrom === "lowest") { let best = null; for (const nm of ["foot_" + s, "shank_" + s, "thigh_" + s]) { const i = bi(nm), lo = L.PL.bodyLowest(B[i], st[i]); if (!best || lo.y < best.y) best = { ...lo, nm }; }
       if (!best.nm.startsWith("foot")) { const c2 = st[bi(best.nm)].com; cpt = [c2[0], Math.max(0, best.y), c2[2]]; } if (best.nm.startsWith("shank")) chain = [jK, jH]; else if (best.nm.startsWith("thigh")) chain = [jH]; }
+    // plan.alongLeg (SP2A; inert when absent): the sagittal (world z) part of the support force is directed along the line contact → COM (the
+    // spring-mass direction of a running stance: no pitching moment about the COM, small knee / hip moments) instead of purely vertical
+    //   alongLeg = { from, to } (s): the along-leg direction has weight 1 until `from` and blends (smoothstep) into the planned direction by `to`
+    //   — the takeover starts with the running ground-reaction direction and the commitment objective takes over without a step change
+    //   alongLeg.aim = [x, z] (m, world) with alongLeg.keep: the WHOLE stance uses the contact → (COM + aim) direction (centroidal control: the
+    //   support force passes |aim| beside / in front of the COM, a controlled pitch / roll moment with small hip torques); planned ax / az unused
+    if (plan.alongLeg && plan.alongLeg.keep) { const d = V.sub(com, cpt), a = plan.alongLeg.aim || [0, 0]; if (d[1] > 0.2) { F[0] = F[1] * (d[0] + a[0]) / d[1]; F[2] = F[1] * (d[2] + a[1]) / d[1]; } }
+    else if (plan.alongLeg) { const d = V.sub(com, cpt), A = plan.alongLeg, u = A.to > A.from ? Math.max(0, Math.min(1, (t - A.from) / (A.to - A.from))) : (t >= (A.from ?? 0) ? 1 : 0), wa = 1 - u * u * (3 - 2 * u);
+      if (d[1] > 0.2) { F[2] = (1 - wa) * F[2] + wa * F[1] * d[2] / d[1]; F[0] = (1 - wa) * F[0] + wa * F[1] * d[0] / d[1]; } }
     const out = JN.map(() => [0, 0, 0]), add = (k, tw) => { const ax3 = axesW(st, JN[k]); for (let i = 0; i < 3; i++) out[k][i] += V.dot(tw, ax3[i]); };
+    // plan.capScale (SP2A; inert when absent): the support force is scaled to the largest magnitude the support chain can actually produce this
+    // step (each main axis' muscle capacity [lo, hi] from the muscle layer, net of the tracker's own intent on that axis), so the delivered
+    // ground reaction keeps the COMMANDED direction instead of being distorted by whichever joint saturates first
+    if (plan.capScale && tr.m) { let s = 1; for (const k of chain) { const tw = V.sc(V.cross(V.sub(cpt, jointPos(st, JN[k])), F), -1), ax3 = axesW(st, JN[k]);
+        for (let i = 0; i < 3; i++) { const mr = tr.m[k] && tr.m[k][i] && tr.m[k][i].row; if (!mr || !/flex|df|abd/.test(tr.m[k][i].d.key)) continue; const need = V.dot(tw, ax3[i]); if (Math.abs(need) < 15) continue;
+          const own = tr.lastIntent && tr.lastIntent[k] ? tr.lastIntent[k][i] || 0 : 0, hiF = mr.capP + mr.tauP, loF = -mr.capM + mr.tauP;   // FULL-activation capacity (the muscles ramp toward it)
+          const avail = need > 0 ? hiF - Math.max(0, Math.min(hiF, own)) : loF - Math.min(0, Math.max(loF, own)); s = Math.min(s, Math.max(0, avail / need)); } }
+      if (s < 1) { for (let q = 0; q < 3; q++) F[q] *= s; } }
     for (const k of chain) add(k, V.sc(V.cross(V.sub(cpt, jointPos(st, JN[k])), F), -1));
     // pelvis orientation torque through the support hip (net of the free hip / lumbar intents already planned this step: their reaction on the pelvis)
     if (plan.pelvis && g.ko) { const pd = plan.pelvis(t), pel = st[0], T = V.sc(V.add(V.sc(rotvec(pd.R, pel.rot), g.ko), V.sc(V.sub(pd.w || [0, 0, 0], pel.w), g.do)), w);
-      let other = [0, 0, 0]; for (const k of [jHo, jLu]) { const ax3 = axesW(st, JN[k]), it = tr.lastIntent && tr.lastIntent[k]; if (!it) continue; for (let i = 0; i < 3; i++) other = V.sub(other, V.sc(ax3[i], it[i] || 0)); }   // torque those joints put on the pelvis
+      let other = [0, 0, 0]; for (const k of [jHo, jLu]) { const ax3 = axesW(st, JN[k]), it = tr.lastIntent && tr.lastIntent[k]; if (!it) continue; for (let i = 0; i < 3; i++) { let v = it[i] || 0; const mr = plan.otherCap && tr.m && tr.m[k] && tr.m[k][i] && tr.m[k][i].row; if (mr) v = Math.max(mr.lo, Math.min(mr.hi, v)); other = V.sub(other, V.sc(ax3[i], v)); } }   // torque those joints put on the pelvis
+      // (plan.otherCap, SP2A; inert when absent: those joints' reaction is estimated from their intents CLAMPED to each axis' current muscle
+      //  capacity — an unbounded intent of 10³ N·m is not a torque the free hip can put on the pelvis)
       add(jH, V.sc(V.sub(T, other), -1)); out.info = { F, Fraw, T, w }; }
     else out.info = { F, Fraw, w };
     return out; };

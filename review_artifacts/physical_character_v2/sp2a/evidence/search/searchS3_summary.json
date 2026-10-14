@@ -1,0 +1,465 @@
+{
+ "search": "S3",
+ "tool": "sp2a_search.mjs (CMA-ES)",
+ "params": [
+  [
+   "plantK1",
+   1.2,
+   2.8
+  ],
+  [
+   "plantK2",
+   1,
+   2.6
+  ],
+  [
+   "plantEnd",
+   0.08,
+   0.18
+  ],
+  [
+   "plantFwd",
+   0,
+   26
+  ],
+  [
+   "lateral",
+   0,
+   10
+  ],
+  [
+   "plantAuth",
+   0.2,
+   1
+  ],
+  [
+   "plantPitch",
+   -20,
+   8
+  ],
+  [
+   "plantRoll",
+   0,
+   18
+  ],
+  [
+   "plantKo",
+   50,
+   900
+  ],
+  [
+   "tackKneeHold",
+   0,
+   70
+  ],
+  [
+   "hipRPeak",
+   70,
+   125
+  ],
+  [
+   "hipRPeakT",
+   0.3,
+   0.6
+  ],
+  [
+   "tackExt0",
+   0.45,
+   0.85
+  ],
+  [
+   "seatKo",
+   30,
+   500
+  ],
+  [
+   "recline",
+   -20,
+   15
+  ],
+  [
+   "foldT",
+   0.12,
+   0.5
+  ],
+  [
+   "tuckRoll",
+   12,
+   35
+  ],
+  [
+   "tuckKnee",
+   105,
+   142
+  ],
+  [
+   "tuckHip",
+   45,
+   95
+  ],
+  [
+   "tuckAbd",
+   -27,
+   0
+  ],
+  [
+   "tuckRot",
+   -42,
+   5
+  ],
+  [
+   "trunkLat",
+   -8,
+   14
+  ],
+  [
+   "lead",
+   0.02,
+   0.09
+  ],
+  [
+   "blendIn",
+   0.02,
+   0.1
+  ]
+ ],
+ "runins": [
+  "run1g_4.147.json",
+  "run1g_4.608.json",
+  "run1g_5.069.json"
+ ],
+ "lambda": 20,
+ "gensRun": 30,
+ "gensPlanned": 40,
+ "seed": 3,
+ "start": {
+  "cost": 35.466,
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 24.312,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.456,
+     "firstRegion": 2,
+     "faceDown": 4.173,
+     "head": 2.5,
+     "torso": 0.216,
+     "slide": 0.543,
+     "retention": 0.064,
+     "lying": 0.828,
+     "limits": 1.842,
+     "total": 24.312,
+     "seam": 0.701,
+     "ankleLimit": 7.989
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 21.661,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.376,
+     "firstRegion": 2,
+     "faceDown": 4.155,
+     "head": 2.5,
+     "torso": 0.4,
+     "slide": 0.188,
+     "lying": 0.648,
+     "limits": 1.856,
+     "total": 21.661,
+     "seam": 0.307,
+     "ankleLimit": 6.231
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 23.956,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.4,
+     "firstRegion": 2,
+     "faceDown": 4.197,
+     "head": 2.5,
+     "torso": 0.164,
+     "lying": 0.813,
+     "limits": 2.532,
+     "total": 23.956,
+     "seam": 1.008,
+     "ankleLimit": 7.342
+    }
+   }
+  ]
+ },
+ "perGeneration": [
+  {
+   "g": 1,
+   "best": 29.447,
+   "mean": 38.39,
+   "sigma": 0.2329
+  },
+  {
+   "g": 2,
+   "best": 30.784,
+   "mean": 35.871,
+   "sigma": 0.2252
+  },
+  {
+   "g": 3,
+   "best": 25.448,
+   "mean": 32.458,
+   "sigma": 0.2236
+  },
+  {
+   "g": 4,
+   "best": 25.469,
+   "mean": 30.944,
+   "sigma": 0.2254
+  },
+  {
+   "g": 5,
+   "best": 24.951,
+   "mean": 29.729,
+   "sigma": 0.2315
+  },
+  {
+   "g": 6,
+   "best": 27.492,
+   "mean": 31.923,
+   "sigma": 0.2381
+  },
+  {
+   "g": 7,
+   "best": 26.804,
+   "mean": 29.877,
+   "sigma": 0.2385
+  },
+  {
+   "g": 8,
+   "best": 26.687,
+   "mean": 32.585,
+   "sigma": 0.2253
+  },
+  {
+   "g": 9,
+   "best": 26.568,
+   "mean": 32.311,
+   "sigma": 0.2125
+  },
+  {
+   "g": 10,
+   "best": 25.746,
+   "mean": 29.588,
+   "sigma": 0.2024
+  },
+  {
+   "g": 11,
+   "best": 24.453,
+   "mean": 30.123,
+   "sigma": 0.1984
+  },
+  {
+   "g": 12,
+   "best": 25.868,
+   "mean": 28.461,
+   "sigma": 0.1933
+  },
+  {
+   "g": 13,
+   "best": 24.715,
+   "mean": 28.405,
+   "sigma": 0.1865
+  },
+  {
+   "g": 14,
+   "best": 23.599,
+   "mean": 28.008,
+   "sigma": 0.1768
+  },
+  {
+   "g": 15,
+   "best": 24.41,
+   "mean": 27.741,
+   "sigma": 0.1669
+  },
+  {
+   "g": 16,
+   "best": 24.493,
+   "mean": 26.765,
+   "sigma": 0.1599
+  },
+  {
+   "g": 17,
+   "best": 24.467,
+   "mean": 27.144,
+   "sigma": 0.1519
+  },
+  {
+   "g": 18,
+   "best": 24.413,
+   "mean": 27.887,
+   "sigma": 0.1476
+  },
+  {
+   "g": 19,
+   "best": 23.931,
+   "mean": 26.458,
+   "sigma": 0.1429
+  },
+  {
+   "g": 20,
+   "best": 24.308,
+   "mean": 25.441,
+   "sigma": 0.1346
+  },
+  {
+   "g": 21,
+   "best": 24.225,
+   "mean": 25.931,
+   "sigma": 0.1287
+  },
+  {
+   "g": 22,
+   "best": 24.129,
+   "mean": 25.854,
+   "sigma": 0.123
+  },
+  {
+   "g": 23,
+   "best": 23.266,
+   "mean": 25.455,
+   "sigma": 0.1199
+  },
+  {
+   "g": 24,
+   "best": 24.236,
+   "mean": 25.914,
+   "sigma": 0.1194
+  },
+  {
+   "g": 25,
+   "best": 24.634,
+   "mean": 26.276,
+   "sigma": 0.1173
+  },
+  {
+   "g": 26,
+   "best": 24.212,
+   "mean": 25.943,
+   "sigma": 0.113
+  },
+  {
+   "g": 27,
+   "best": 24.147,
+   "mean": 25.969,
+   "sigma": 0.1098
+  },
+  {
+   "g": 28,
+   "best": 24.323,
+   "mean": 25.732,
+   "sigma": 0.1057
+  },
+  {
+   "g": 29,
+   "best": 23.589,
+   "mean": 25.896,
+   "sigma": 0.1028
+  },
+  {
+   "g": 30,
+   "best": 23.761,
+   "mean": 26.131,
+   "sigma": 0.0996
+  }
+ ],
+ "best": {
+  "cost": 23.266,
+  "tag": "g23_19",
+  "phys": {
+   "plantK1": 1.9937,
+   "plantK2": 1.9242,
+   "plantEnd": 0.08,
+   "plantFwd": 17.8488,
+   "lateral": 1.5994,
+   "plantAuth": 0.7152,
+   "plantPitch": -2.2668,
+   "plantRoll": 15.5119,
+   "plantKo": 247.048,
+   "tackKneeHold": 70,
+   "hipRPeak": 123.5785,
+   "hipRPeakT": 0.4529,
+   "tackExt0": 0.7282,
+   "seatKo": 265.0984,
+   "recline": 0.9807,
+   "foldT": 0.12,
+   "tuckRoll": 16.5747,
+   "tuckKnee": 125.9926,
+   "tuckHip": 50.743,
+   "tuckAbd": -24.0025,
+   "tuckRot": -13.7424,
+   "trunkLat": -6.9366,
+   "lead": 0.0722,
+   "blendIn": 0.0892
+  },
+  "per": [
+   {
+    "runin": "run1g_4.147.json",
+    "total": 15.91,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.496,
+     "firstRegion": 2,
+     "faceDown": 4.065,
+     "head": 2.5,
+     "torso": 0.168,
+     "slide": 0.898,
+     "decel": 0.02,
+     "retention": 0.106,
+     "kneeGlide": 0.372,
+     "lying": 1.179,
+     "limits": 0.409,
+     "total": 15.91,
+     "seam": 0.697
+    }
+   },
+   {
+    "runin": "run1g_4.608.json",
+    "total": 14.904,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.488,
+     "firstRegion": 2,
+     "faceDown": 4.182,
+     "head": 2.5,
+     "torso": 0.1,
+     "slide": 0.523,
+     "retention": 0.06,
+     "kneeGlide": 0.243,
+     "lying": 1.083,
+     "limits": 0.487,
+     "total": 14.904,
+     "seam": 0.237
+    }
+   },
+   {
+    "runin": "run1g_5.069.json",
+    "total": 15.119,
+    "parts": {
+     "bootFirst": 3,
+     "bootLoad": 0.408,
+     "firstRegion": 2,
+     "faceDown": 4.269,
+     "head": 2.5,
+     "torso": 0.06,
+     "slide": 0.006,
+     "kneeGlide": 0.51,
+     "lying": 1.293,
+     "limits": 0.606,
+     "total": 15.119,
+     "seam": 0.467
+    }
+   }
+  ]
+ }
+}

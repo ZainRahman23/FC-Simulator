@@ -281,9 +281,11 @@ export const G23 = { ...G22, id: "G23",
   // frameYaw (deg): the world-frame parts of the intent (lateral support force, planned pelvis orientation) rotate with a scene placement; tOffset:
   // controller clock offset (t = 0 at the activation step when the tackler is parked first, Stage 3). Defaults reproduce Stage 1 exactly.
   makeCtrl(cand, chor, E) { const p = cand.vfPlan, base = kappaPlan(E.com[1], E.comVel[1], p.kappa), fy = (cand.frameYaw || 0) * Math.PI / 180, qf = [0, Math.sin(fy / 2), 0, Math.cos(fy / 2)];
-    const lat = Q.rot(qf, [p.lateral || 0, 0, 0]), plan = (t) => ({ ...base(t), ax: lat[0], az: lat[2] || undefined });
+    const lat = Q.rot(qf, [p.lateral || 0, 0, p.forward || 0]), sm = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x), dr = (t) => p.driveRamp ? sm((t - p.driveRamp[0]) / (p.driveRamp[1] - p.driveRamp[0])) : 1;
+    // p.forward / p.driveRamp (SP2A; inert when absent): forward drive (m/s²); the lateral / forward drive ramps in over driveRamp [t0, t1]
+    const plan = (t) => ({ ...base(t), ax: lat[0] * dr(t), az: (lat[2] * dr(t)) || undefined });
     const rotP = (pp) => (t) => { const o = pp(t); return { R: Q.norm(Q.mul(qf, o.R)), w: Q.rot(qf, o.w) }; };
-    const vf = VF.makeSupportVF({ side: p.side, window: p.window, ramp: p.ramp, lead: p.lead, contactFrom: p.contactFrom, com: plan, pelvis: rotP(pelvisPlan(cand.pelvis)), gains: p.gains });
+    const vf = VF.makeSupportVF({ side: p.side, window: p.window, ramp: p.ramp, lead: p.lead, contactFrom: p.contactFrom, alongLeg: p.alongLeg, otherCap: p.otherCap, gate: p.gate, capScale: p.capScale, com: plan, pelvis: rotP(pelvisPlan(cand.pelvis)), gains: p.gains });
     const q = cand.press, pp = rotP(pelvisPlan(q.pelvis)), vf2 = VF.makeSupportVF({ side: q.side, window: q.window, ramp: q.ramp, contactFrom: q.contactFrom, gate: q.gate, com: () => ({ press: q.fy }), pelvis: (t) => { const o = pp(t); return { R: o.R, w: [0, 0, 0] }; }, gains: q.gains });
     // optional SEAT objective (cand.seat, SP1): the same pelvis-orientation objective realised through the FOLD leg's hip while that leg's lowest
     // body (thigh / shank) is on the turf and the tackling-leg press is not engaged (yieldTo: it takes only the share the press leaves) — no support

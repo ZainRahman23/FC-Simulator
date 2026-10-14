@@ -24,7 +24,7 @@ const VIEWS = JSON.parse(fs.readFileSync(arg("views")));
   await page.evaluate(async () => { window.__gab = await ofCharLoad("gabriel"); Object.assign(RV1, { labels: false, blind: 0, rate: 1 }); Object.assign(RV1.ov, { skel: false, feet: false, com: false, trail: false }); });
   const capture = { tool: "sp_capture.cjs", views: {} }, STRIP = 34;
   for (const V0 of VIEWS) { if (ONLY && !ONLY.split(",").includes(V0.id)) continue;
-    const seqs = V0.panels.map(p => load(p.k).filter(f => f.n >= (p.from || V0.from || 1) && f.n <= (p.to || V0.to || 1e9) && (f.n - (p.from || V0.from || 1)) % V0.every === 0)), N = Math.min(...seqs.map(s => s.length)), CW = V0.W * V0.panels.length, CH = V0.H + STRIP;
+    const fr0 = (p) => p.fromN ?? V0.fromN ?? (p.from || V0.from || 1), seqs = V0.panels.map(p => load(p.k).filter(f => f.n >= fr0(p) && f.n <= (p.to || V0.to || 1e9) && (f.n - fr0(p)) % V0.every === 0)), N = Math.min(...seqs.map(s => s.length)), CW = V0.W * V0.panels.length, CH = V0.H + STRIP;
     await page.evaluate((CW, CH) => { const muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: "avc", width: CW, height: CH, frameRate: 60 }, fastStart: "in-memory" });
       const enc = new VideoEncoder({ output: (c, m) => muxer.addVideoChunk(c, m), error: (e) => { window.__encErr = String(e); } }); enc.configure({ codec: "avc1.640028", width: CW, height: CH, bitrate: Math.round(CW * CH * 60 * 0.14), framerate: 60, hardwareAcceleration: "prefer-software", latencyMode: "quality", avc: { format: "avc" } }); window.__enc = { muxer, enc };
       window.__comp = document.createElement("canvas"); window.__comp.width = CW; window.__comp.height = CH; }, CW, CH);
@@ -41,7 +41,7 @@ const VIEWS = JSON.parse(fs.readFileSync(arg("views")));
           else S.fixedLayout = { W: W, H: H, views: [{ id: "game", x: 0, y: 0, w: W, h: H }] };
           S.zoom = P0.zoom || 1; S.lanes = lanes; S.run1 = null; rv1Render();
           const vw = S.fixedLayout.views[0], cam = vw.cam; gl.viewport(0, 0, W, H); gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
-          const SK = P0.show === "intent" && F.intent ? F.intent : F.tackler; ofCharDraw(S.R, window.__gab, new Float32Array(SK.skin), cam.view, cam.proj); if (F.runner) ofCharDraw(S.R, S.entry || window.__vin, new Float32Array(F.runner.skin), cam.view, cam.proj); gl.finish();
+          const SK = P0.show === "intent" && F.intent ? F.intent : F.tackler; if (P0.mesh !== false) ofCharDraw(S.R, window.__gab, new Float32Array(SK.skin), cam.view, cam.proj); if (F.runner) ofCharDraw(S.R, S.entry || window.__vin, new Float32Array(F.runner.skin), cam.view, cam.proj); gl.finish();
           if (P0.crop) c.drawImage(document.getElementById("gl"), P0.crop[0], P0.crop[1], P0.crop[2], P0.crop[3], x0, 0, W, H); else c.drawImage(document.getElementById("gl"), 0, 0, W, H, x0, 0, W, H);
           if (F.obst && F.obst.length) { const Pj = (q) => rv1Proj(cam, vw, 1, q); c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
             for (const ob of F.obst) { const pts = ob.c.map(Pj).filter(Boolean).map(a => [x0 + a[0], a[1]]); if (pts.length < 3) continue; pts.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
@@ -50,7 +50,13 @@ const VIEWS = JSON.parse(fs.readFileSync(arg("views")));
               c.beginPath(); hull.forEach((q, i) => i ? c.lineTo(q[0], q[1]) : c.moveTo(q[0], q[1])); c.closePath(); c.fillStyle = ob.dyn ? "rgba(255,150,40,0.55)" : "rgba(170,170,190,0.6)"; c.fill(); c.strokeStyle = "rgba(20,20,20,0.9)"; c.lineWidth = 1.5; c.stroke(); } c.restore(); }
           if (P0.contacts) { const Pj = (q) => rv1Proj(cam, vw, 1, q); c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
             for (const ct of F.turf || []) for (const q of ct.pts) { const a = Pj(q); if (!a) continue; c.fillStyle = /^foot_/.test(ct.body) ? "rgba(255,215,60,0.95)" : /^forearm_/.test(ct.body) ? "rgba(120,200,255,0.95)" : "rgba(255,90,90,0.95)"; c.beginPath(); c.arc(x0 + a[0], a[1], ct.J > 0 ? 3.2 : 1.8, 0, 7); c.fill(); } c.restore(); }
-          if (P0.hud && F.hud) { box(`v_h ${F.hud.vh.toFixed(2)} m/s   v_y ${F.hud.vy.toFixed(2)} m/s`, x0 + 10, H - 40, 13, "#ffe7a3");
+          // SP2A (opt-in): collision-shape wireframe + physical joint skeleton (P0.wire), authored-intent skeleton ghost (P0.ghost)
+          if ((P0.wire && F.wire) || (P0.ghost && F.intentSkel)) { const Pj = (q) => rv1Proj(cam, vw, 1, q); c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
+            const poly = (pl, col, lw, dash) => { c.strokeStyle = col; c.lineWidth = lw; c.setLineDash(dash || []); c.beginPath(); let on = false; for (const q of pl) { const a = Pj(q); if (!a) { on = false; continue; } if (on) c.lineTo(x0 + a[0], a[1]); else c.moveTo(x0 + a[0], a[1]); on = true; } c.stroke(); };
+            if (P0.wire && F.wire) { for (const pl of F.wire) poly(pl, P0.wireCol || "rgba(90,230,255,0.55)", 1); for (const sg of F.skel || []) poly(sg, "rgba(255,230,80,0.95)", 2.4); }
+            if (P0.ghost && F.intentSkel) for (const sg of F.intentSkel) poly(sg, "rgba(255,80,220,0.9)", 2, [5, 4]); c.setLineDash([]); c.restore(); }
+          if (P0.hud && F.hud && F.hud.kin) box(F.hud.label || ((F.hud.phase === "flight" ? "authored final flight (kinematic, ballistic COM)" : "RUN-1 run-in (authored animation, kinematic)") + (F.hud.stance ? "  stance: " + (F.hud.stance.L ? "L " : "") + (F.hud.stance.R ? "R" : "") : "")), x0 + 10, H - 16, 12, "#cfe9ff");
+          else if (P0.hud && F.hud) { box(`v_h ${F.hud.vh.toFixed(2)} m/s   v_y ${F.hud.vy.toFixed(2)} m/s`, x0 + 10, H - 40, 13, "#ffe7a3");
             box("turf: " + (F.hud.regions.length ? F.hud.regions.slice(0, 4).map(([k, v]) => `${k} ${v.toFixed(1)}BW`).join("  ") : "airborne"), x0 + 10, H - 16, 12, "#cfe9ff"); }
           if (P0.l) box(P0.l, x0 + 10, 24, 14, "#ffffff"); });
         const F = Fs[0], y0 = H; c.fillStyle = "#121a16"; c.fillRect(0, y0, comp.width, 34); const T = { x: 12, w: comp.width - 24, y: y0 + 6, h: 6 };
