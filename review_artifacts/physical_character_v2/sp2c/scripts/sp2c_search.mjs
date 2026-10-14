@@ -13,7 +13,7 @@
 //   compact    (S3) the folded knee stays folded ≥ 120° through the first second of contact; the ankle plantarflexed ≤ −15° at first contact
 //   limits     joint-limit excursions (V2 stops); a sustained hip overrun (≥ 0.15 s) and any ankle overrun weighted (S3: ×1.0 / ×0.6 per °)
 // usage (worktree root): node sp2c_search.mjs --runins a,b,c --out dir [--gens 30] [--lambda 16] [--workers 6] [--sigma 0.2] [--seed 1] [--start params.json] [--subset k1,k2,…]
-import fs from "fs"; import { Worker, isMainThread, parentPort } from "worker_threads";
+import fs from "fs"; import { Worker, isMainThread, parentPort, workerData } from "worker_threads";
 // S2 parameterisation (sp2c_cand.mjs groups on SP2A; search S1 used the abandoned sp2c_cand_v0 options — its log records them): the fold-leg tuck and
 // its timing; trunk counter-lean / flexion / neck; the seat objective; arm targets; the tackling leg after the strike; the held post-contact authority
 export const PARAMS = [["foldT0", 0.0, 0.1], ["tuckT", 0.16, 0.38], ["hipFlex", 30, 85], ["hipAbd", -18, 12], ["hipRot", -42, -10], ["knee", 120, 142], ["ankDf", -44, -10], ["ankInv", 0, 24],
@@ -56,7 +56,8 @@ export function costSP2C(o, d, m2, c2, L, RG) { const { Q, B, bi } = L, recs = o
   const cl = d.sweepMeasures.climits || []; c.limits = cl.reduce((s, e) => s + 0.25 * e.beyondDeg * (0.1 + Math.min(1, e.durS / 0.2)) + (e.id.startsWith("hip_") && e.durS >= 0.15 ? 1.0 * e.beyondDeg : 0) + (e.id.startsWith("ankle_") ? 0.6 * e.beyondDeg : 0), 0);
   c.total = Object.entries(c).filter(([k]) => k !== "total").reduce((s, [, x]) => s + x, 0);
   return { ...c, m: { knee0: ms.firstFoldContact.knee_inPelvis, foldToeSole: +((fb.toe + fb.sole) / Math.max(1e-9, fb.all)).toFixed(3), foldStud, minBelly: +minBelly.toFixed(3), upEnd: +upN.toFixed(3), headEnd: +headN6.toFixed(3), slide: d.sweepMeasures.slidePathM, proneT: d.proneT, headTurfT: d.sweepMeasures.finalState && d.sweepMeasures.finalState.headTurfT, final: d.sweepMeasures.finalState && d.sweepMeasures.finalState.class } }; }
-if (!isMainThread) { const B0 = new URL("../../", import.meta.url).href, RC = await import(new URL("./sp2c_run.mjs", import.meta.url).href), DG = await import(new URL("./sp2c_diag.mjs", import.meta.url).href);
+// (worker branch only in this tool's own workers: other tools import this module for its cost function)
+if (!isMainThread && workerData && workerData.tool === "sp2c_search") { const B0 = new URL("../../", import.meta.url).href, RC = await import(new URL("./sp2c_run.mjs", import.meta.url).href), DG = await import(new URL("./sp2c_diag.mjs", import.meta.url).href);
   const P2 = await import(B0 + "slide_phys2/scripts/sp2_param.mjs"), L = await import(B0 + "slide_phys1/scripts/sp_lib.mjs"), RG = await import(B0 + "slide_phys2/scripts/sp2_regions.mjs");
   parentPort.on("message", async (job) => { try { const op = toOpts(job.p || toPhys(job.u), job.id), o = await RC.runC(job.runin, op, RC.TEMP_M, job.steps), d = DG.diagnose(o, RC.TEMP_M), m2 = P2.M.measure(o), c2 = P2.cost(m2, o.climits), c = costSP2C(o, d, m2, c2, L, RG);
     parentPort.postMessage({ ok: true, key: job.key, runin: job.runin, cost: c, hash: o.finalHash }); } catch (e) { parentPort.postMessage({ ok: false, key: job.key, err: String(e.stack || e) }); } }); }
@@ -67,7 +68,7 @@ else if (process.argv[1] && process.argv[1].endsWith("sp2c_search.mjs")) {
   const toUs = (p) => PS.map(([k, lo, hi]) => Math.max(0, Math.min(1, (p[k] - lo) / (hi - lo)))), toPs = (u) => ({ ...P0, ...Object.fromEntries(PS.map(([k, lo, hi], i) => [k, +(lo + u[i] * (hi - lo)).toFixed(4)])) });
   const n = PS.length, gens = +arg("gens", "30"), lam = +arg("lambda", "16"), nW = +arg("workers", "6"), runins = arg("runins").split(","), steps = +arg("steps", "1440");
   let seed = +arg("seed", "1"); const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }, gauss = () => { let u = 0, v = 0; while (u === 0) u = rnd(); v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-  const workers = Array.from({ length: nW }, () => new Worker(new URL(import.meta.url))), queue = [], pending = new Map();
+  const workers = Array.from({ length: nW }, () => new Worker(new URL(import.meta.url), { workerData: { tool: "sp2c_search" } })), queue = [], pending = new Map();
   workers.forEach(w => w.on("message", (r) => { const cb = pending.get(r.key); pending.delete(r.key); cb(r); w.busy = false; pump(); }));
   const pump = () => { for (const w of workers) if (!w.busy && queue.length) { const j = queue.shift(); w.busy = true; pending.set(j.key, j.cb); w.postMessage({ key: j.key, p: toPs(j.u), runin: j.runin, id: j.id, steps }); } };
   const evalU = (u, tag) => Promise.all(runins.map((ri, i) => new Promise(res => { queue.push({ key: tag + "_" + i, u, runin: ri, id: tag, cb: res }); pump(); }))).then(rs => { const cs = rs.map(r => r.ok ? r.cost.total : 60);

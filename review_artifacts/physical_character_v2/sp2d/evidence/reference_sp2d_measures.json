@@ -1,0 +1,144 @@
+{
+ "source": "broadcast slide-tackle reference (outside Git); time base t_real = 0.4\u00b7\u0394video from the first non-sole turf contact f278 (REFERENCE2_ANALYSIS.md)",
+ "uncertainty": "image plane; points \u00b12\u20134 px \u2192 angles \u00b110\u201315\u00b0; the slider lies roughly in the image plane from f323",
+ "trunk_early_REFERENCE2": [
+  {
+   "frame": 273,
+   "real_t": -0.033,
+   "trunk_from_vertical_deg": 8
+  },
+  {
+   "frame": "278-288",
+   "real_t": "0.00-0.07",
+   "trunk_from_vertical_deg": "13-18"
+  },
+  {
+   "frame": "293-313",
+   "real_t": "0.10-0.23",
+   "trunk_from_vertical_deg": 30
+  }
+ ],
+ "measured": [
+  {
+   "frame": 318,
+   "real_t": 0.267,
+   "shoulder_px": [
+    432,
+    439
+   ],
+   "hip_px": [
+    450,
+    463
+   ],
+   "hand_px": [
+    436,
+    485
+   ],
+   "trunk_from_vertical_deg": 37,
+   "shoulder_opening_deg": 32,
+   "source": "REFERENCE2"
+  },
+  {
+   "frame": 323,
+   "real_t": 0.3,
+   "shoulder_px": [
+    424,
+    452
+   ],
+   "hip_px": [
+    465,
+    468
+   ],
+   "hand_px": [
+    417.5,
+    490
+   ],
+   "trunk_from_vertical_deg": 69,
+   "shoulder_opening_deg": 78,
+   "source": "SP2D read + REFERENCE2 hand"
+  },
+  {
+   "frame": 333,
+   "real_t": 0.367,
+   "shoulder_px": [
+    415,
+    455
+   ],
+   "hip_px": [
+    470,
+    470
+   ],
+   "hand_px": [
+    400,
+    491
+   ],
+   "trunk_from_vertical_deg": 75,
+   "shoulder_opening_deg": 97,
+   "source": "SP2D read + REFERENCE2 hand"
+  },
+  {
+   "frame": 343,
+   "real_t": 0.433,
+   "shoulder_px": [
+    412,
+    462
+   ],
+   "hip_px": [
+    470,
+    470
+   ],
+   "hand_px": [
+    380,
+    492
+   ],
+   "trunk_from_vertical_deg": 82,
+   "shoulder_opening_deg": 129,
+   "source": "SP2D read"
+  },
+  {
+   "frame": 353,
+   "real_t": 0.5,
+   "shoulder_px": [
+    418,
+    462
+   ],
+   "hip_px": [
+    470,
+    468
+   ],
+   "hand_px": [
+    382,
+    493
+   ],
+   "trunk_from_vertical_deg": 83,
+   "shoulder_opening_deg": 133,
+   "source": "SP2D read"
+  },
+  {
+   "frame": 363,
+   "real_t": 0.567,
+   "shoulder_px": [
+    420,
+    463
+   ],
+   "hip_px": [
+    470,
+    468
+   ],
+   "hand_px": [
+    388,
+    492
+   ],
+   "trunk_from_vertical_deg": 84,
+   "shoulder_opening_deg": 132,
+   "source": "SP2D read"
+  }
+ ],
+ "events": {
+  "posting_hand_first_turf": "f313\u2013f318 (+0.24\u2026+0.27 s), beside / behind the hip (REFERENCE2)",
+  "torso_on_turf_lying_on_fold_side": "f323 (+0.30 s) (REFERENCE2)",
+  "get_up_onset": "f448 (+1.13 s) (REFERENCE2)",
+  "posting_arm": "the near / bottom arm = the folded-leg side arm (fold leg and posting hand are both the near side in every frame; independent of the L/R shirt-reading caveat)",
+  "other_arm": "stays up / over the body; no turf contact (REFERENCE2)"
+ }
+}
