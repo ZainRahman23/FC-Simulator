@@ -35,6 +35,18 @@ let INT2 = null; if (arg("intent2a")) { const AA = await import(new URL("../../s
   INT2 = (S, ts) => { const t = ts + (cand.tOffset || 0), an = ch.anatAt(t + (cand.lead || 0)), act = L.anatOf(S); for (const cp of cps) { if (t < cp.window[0] || t > cp.window[1]) continue; const x = act[cp.from[0]][cp.from[1]], m = cp.map; let y = x <= m[0][0] ? m[0][1] : x >= m[m.length - 1][0] ? m[m.length - 1][1] : null;
       if (y == null) { let i = 0; while (x > m[i + 1][0]) i++; y = m[i][1] + (x - m[i][0]) / (m[i + 1][0] - m[i][0]) * (m[i + 1][1] - m[i][1]); } an[cp.joint] = { ...(an[cp.joint] || {}), [cp.key]: y }; }
     return L.fk({ pos: S[0].pos, rot: S[0].rot }, an); }; }
+// SP2A body-friction sweep (opt-in --fsweep 1): per-frame diagnostic data — COM (viewer world), v_h, cumulative horizontal COM path since the first
+// non-boot turf contact, the run's non-stud friction multiplier, and every tackler turf contact with its region, normal force, friction force
+// (N, from the recorded impulses / step) and, for boots, TCF-1's sole weight k (1 = legitimate stud engagement)
+const FSW = arg("fsweep") ? { RG: await import(new URL("../../slide_phys2/scripts/sp2_regions.mjs", import.meta.url).href), FC: await import(new URL("../../sp2a/fsweep/scripts/fs_contact.mjs", import.meta.url).href), L: await import(new URL("../scripts/sp_lib.mjs", import.meta.url).href) } : null;
+let fsDist = 0, fsEntered = false, fsPrev = null; const fsM = run.fsweep ? run.fsweep.m : null;
+const fsDiag = (n) => { if (!FSW || n < 1) return null; const { RG, FC, L } = FSW, k = n - 1, r = run.recs[k], Spre = (k > 0 ? run.recs[k - 1] : r).S, S = r.S.slice(nR, nR + nT), c = L.comOf(S), P = r.chars.tackler.P, vh = Math.hypot(P[0], P[2]) / L.M, h = 1 / 240;
+  const cs = RG.turfContacts(r, Spre, "tackler", nR, null).filter(x => x.Jn > 0 || Math.hypot(x.J[0], x.J[2]) > 1e-6);
+  if (!fsEntered && cs.some(x => !x.body.startsWith("foot") && x.Jn > 0)) { fsEntered = true; fsDiag.entry = c; }
+  if (fsEntered && fsPrev) fsDist += Math.hypot(c[0] - fsPrev[0], c[2] - fsPrev[2]); fsPrev = c;
+  const W = (p) => T.toW(V.add(Q.rot(qy, p), offL)).map(r4), Wv = (v) => Q.rot(qy, v).map(r4);
+  return { m: fsM, com: W(c), vh: r4(vh), dist: r4(fsDist), entry: fsDiag.entry ? W([fsDiag.entry[0], 0, fsDiag.entry[2]]) : null, dir: Wv([P[0] / (Math.hypot(P[0], P[2]) || 1), 0, P[2] / (Math.hypot(P[0], P[2]) || 1)]),
+    cs: cs.map(x => ({ reg: x.region, p: W(x.p), N: r4(x.Jn / h), F: Wv([x.J[0] / h, 0, x.J[2] / h]), k: x.body.startsWith("foot") ? r4(FC.soleK(Spre[nR + L.bi(x.body)].rot)) : null })) }; };
 const [s0, s1] = arg("steps", `0-${run.recs.length}`).split("-").map(Number), frames = [], T0 = +arg("t0", "0");   // t0: clock origin step (Stage 3: the activation step)
 if (arg("prefix") && run.runIn) for (const f of run.runIn) { const n = Math.round(f.t * 240), S = f.S.map(place), ST = S.slice(0, nT), pel = T.toW(ST[0].pos);
   frames.push({ n, t: r5(n / 240), obst: null, hud: { kin: true, stance: f.stance, phase: f.phase || "run" }, tackler: pack(T.posePhys(RT, ST)), intent: null, runner: null, pel: rv(pel), pitch: rv([pel[0], -pel[2]]), turf: [], feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))], ...wireF(ST) }); }
@@ -48,7 +60,8 @@ for (let n = s0; n <= Math.min(s1, run.recs.length); n++) { const r = run.recs[M
   let hud = null; if (HUD && n >= 1) { const c = r.chars.tackler, M = 78.9, P = c.P, vh = Math.hypot(P[0], P[2]) / M, vy = P[1] / M, cs = HUD.turfContacts(r, (run.recs[Math.max(0, n - 2)] || r).S, "tackler", nR, rule);
     const g = {}; for (const x of cs) if (x.Jn > 0) g[x.region] = (g[x.region] || 0) + x.Jn * 240 / (M * 9.81); hud = { vh: r5(vh), vy: r5(vy), regions: Object.entries(g).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, +v.toFixed(2)]) }; }
   const int2 = INT2 && n >= 1 ? WIRE.skelOf(INT2(r.S.slice(nR, nR + nT), (n - 1) / 240).map(place)).map(sg => sg.map(toWp)) : null;
-  frames.push({ n, t: r5((n - T0) / 240), obst, hud, tackler: pack(T.posePhys(RT, ST)), intent, runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))], ...wireF(ST), ...(int2 ? { intentSkel: int2 } : {}) }); }
+  const fsd = fsDiag(n);
+  frames.push({ n, t: r5((n - T0) / 240), obst, hud, tackler: pack(T.posePhys(RT, ST)), intent, runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))], ...wireF(ST), ...(int2 ? { intentSkel: int2 } : {}), ...(fsd ? { fsd } : {}) }); }
 fs.writeFileSync(path.join(OUT, key + ".json"), JSON.stringify({ key, frames }));
 const mf = path.join(OUT, "meta.json"), M0 = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf)) : { runs: {} }; M0.runs[key] = { frames: frames.length, steps: [s0, s1], cand: run.cand, finalHash: run.finalHash, two, yawDeg: yaw * 180 / Math.PI, at };
 fs.writeFileSync(mf, JSON.stringify(M0, null, 1)); console.log(key, frames.length, "frames", two ? "(two characters)" : "(tackler)");

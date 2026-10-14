@@ -6,6 +6,8 @@
 - **Review page:** `review/SP2A_REVIEW.html`.
 - **Candidate:** `evidence/SP2A_opts.json`.
 
+> **Correction (14 Oct, from the body-friction sweep `fsweep/FSWEEP_REPORT.md`):** "no face-down at 5.0 m/s" below holds only inside the 2 s evaluation window. Simulated for 6 s, the 5.0 m/s run keeps rolling toward the fold side (pelvis roll 17° at 0.5 s → 62° at 2.0 s) and passes onto its front at **2.31 s**, after the slide has nearly stopped. Every other figure in this report is unchanged.
+
 ## Verdict: architecture established and demonstrated; tackle PARTIAL, not qualified, not frozen
 
 **What works:**

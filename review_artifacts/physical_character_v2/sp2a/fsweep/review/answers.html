@@ -1,0 +1,80 @@
+<ol>
+<li><b>Does reducing non-stud body friction materially increase slide distance?</b> Yes. The COM path from ground entry to stop is:
+<ul>
+<li>F100: 1.80 m</li>
+<li>F75: 2.39 m</li>
+<li>F50: 3.86 m</li>
+<li>F25: 8.86 m</li>
+<li>F10: ≥ 19.6 m, still moving at 6 s</li>
+<li>F0: ≥ 28.1 m, still moving at 6 s</li>
+</ul>
+F0 does not decelerate at all after ground entry (v_h stays 5.03 m/s).</li>
+<li><b>Is the relationship approximately monotonic?</b> Yes for distance, and for the time to lose 50% / 90% of the entry speed:
+<ul>
+<li>F100: 0.24 / 0.64 s</li>
+<li>F75: 0.39 / 0.95 s</li>
+<li>F50: 0.78 / 1.57 s</li>
+<li>F25: 1.77 / 3.38 s</li>
+<li>F10: 4.83 s / not reached</li>
+<li>F0: neither reached</li>
+</ul>
+It is <i>not</i> monotonic for "stop time" or for the entry → stop average deceleration (F100: 2.49 s and 2.26 m/s²; F75: 1.93 s and 3.20; F50: 2.16 s and 2.78). F100 has shed 90% of its speed by 0.64 s, then creeps at 0.2–0.3 m/s for about 1.5 s while it rolls over, which stretches its stop time.</li>
+<li><b>Does the tackle begin to visually "glide" rather than grab the turf?</b> Partly.
+<ul>
+<li>F100 grabs: half the speed is gone 0.24 s after ground entry.</li>
+<li>F50 and F25 visibly keep sliding seated for longer.</li>
+<li>But the lower the friction, the sooner the body rolls past its side onto its front: F25 at 1.17 s, F10 at 1.12 s, F0 at 1.07 s, against F100 at 2.31 s. Much of the extra distance is covered lying face-down, not as a clean seated glide.</li>
+</ul></li>
+<li><b>Which body regions currently produce most of the braking?</b> F100, ground entry → stop, 383 N·s in total:
+<ul>
+<li><b>knee 189 N·s (50%)</b></li>
+<li>thigh 78 (20%)</li>
+<li>boots on heel/upper/side 69 (18%): the tackling boot's heel and upper about 49, the folded boot's upper about 23</li>
+<li>torso 28 (7%)</li>
+<li>shin/calf 17 (4%)</li>
+<li>hip/pelvis about 0</li>
+<li>arms about 0</li>
+<li>forearms/hands 5 (1%)</li>
+</ul>
+The braking is concentrated in the first 0.6 s (4.78 → 0.69 m/s), while the knee, thigh and boots are down. Each of them slides at the full Coulomb ratio (braking/normal ≈ 0.5).</li>
+<li><b>Are hands/forearms significant brakes in F100?</b> No: 4.8 N·s of braking (1%) for 61 N·s of normal impulse (3%), with upper arms about 0. The hands have the highest non-boot μ in the spec (0.7), but they touch mostly late, at low speed.</li>
+<li><b>Is the knee's ~50% load share responsible for substantial braking, or mainly normal support?</b> It is the main brake. Over the slide the knee carries 24% of the normal impulse (435 of 1845 N·s) but does 50% of the braking. It is the region on the turf during the fast phase right after entry, braking at 0.43 per unit of normal load (μ 0.5).
+<br>The hip/pelvis is the opposite case: 27% of the normal impulse (505 N·s) and about 0% of the braking, because it is loaded mostly after the body has already slowed. Load share and braking share differ because of <i>timing</i>.</li>
+<li><b>At what friction range does the slide begin to resemble the reference?</b> Around ×0.5 (F50; body μ ≈ 0.25, hands 0.35).
+<ul>
+<li>Its mean deceleration over the first second after entry is 3.1 m/s². The reference's lying phase is 2.5–3.3 m/s², μ_eff 0.26–0.34, on a pitch that looks wet.</li>
+<li>Its seated sliding phase lasts until about 1.2 s.</li>
+<li>F75 still sheds half its speed in 0.39 s.</li>
+<li>No condition ≥ F50 reproduces the reference's first 0.25 s of knee-glide with almost no speed loss: the landing itself costs F50 1.3 m/s in its first 0.25 s (the landing's normal impulse × μ).</li>
+</ul></li>
+<li><b>At what point does it become obviously too slippery?</b> F25 and below.
+<ul>
+<li>Mean deceleration: 1.3 m/s² (F25), 0.5 (F10), 0 (F0).</li>
+<li>One second after entry the body still moves at 3.4 m/s (F25), 4.4 m/s (F10) and 5.0 m/s (F0): ice-like.</li>
+<li>F25 slides 8.9 m from a 5 m/s entry. The reference covers 7.5 m from 9 m/s before getting up.</li>
+</ul></li>
+<li><b>Does lowering body friction expose another braking mechanism?</b> No.
+<ul>
+<li>On flat turf only contact tangential impulses can change the COM's horizontal momentum. The ledger closes against M·Δv_h to ≤ 0.19 N·s in every condition.</li>
+<li>At F0 the horizontal speed stays at 5.03 m/s for 5.6 s.</li>
+<li>Muscles, joint limits, impact redirection and the solver contribute nothing measurable to horizontal braking.</li>
+</ul>
+What lowering friction <i>does</i> expose is rotational: the body rolls onto its front earlier (prone at 2.31 s in F100, 1.07 s in F0), and the fold-hip limit excursion grows (3.0° → 10.0°).</li>
+<li><b>Do the tackling studs remain correctly disengaged in every normal run?</b> Yes. Neither boot engages its studs after the plant push-off in any condition (stud-engaged normal impulse 0 N·s for both boots). The tackling boot touches only on its heel, upper or side (220–270 N·s of normal impulse over the run), and those contacts belong to the scaled group.</li>
+<li><b>Does any condition introduce instability, pathological rotation or joint-limit problems?</b>
+<ul>
+<li><b>No numerical instability:</b> all six ran the full 6 s, finite and deterministic.</li>
+<li><b>Pathological rotation: yes, in every condition, F100 included.</b> F100 rolls onto its front at 2.31 s, just after SP2A's 2 s evaluation window, which corrects the SP2A report. It happens earlier as friction drops.</li>
+<li><b>Fold-hip constraint excursion grows:</b> 3.0° (F100), 5.0, 7.1, 9.0, 9.2, 10.0° (F0), each for about 1.1–1.3 s.</li>
+<li><b>Peak hip/pelvis load rises</b> from 1.3 to 5.2 BW (impacts while rolling).</li>
+<li><b>The tackling-ankle excursion shrinks</b> (2.5° → 1.6°).</li>
+</ul></li>
+<li><b>Based solely on this diagnostic, is non-stud body/turf friction the principal remaining cause of insufficient slide distance?</b> Yes.
+<ul>
+<li>The slide's braking is entirely non-stud body/turf friction (body μ 0.5, hands 0.7, boot upper 0.5), acting at the knee, thigh and boot uppers during the landing phase.</li>
+<li>The studs play no part after the push-off, and removing that friction removes all of the deceleration.</li>
+<li>Whether 0.5 is the right body|turf value is a separate calibration question: the reference suggests μ_eff ≈ 0.3 on a likely wet pitch.</li>
+<li>Lowering friction alone does not give a clean glide, because the roll onto the front (present at F100 too) arrives sooner.</li>
+</ul></li>
+</ol>
+<p>BODY FRICTION EXPLAINS SHORT SLIDE: <b>YES</b><br>LOW-FRICTION BODY CONTACT PRODUCES DESIRED GLIDE: <b>PARTIAL</b><br>OTHER MAJOR BRAKING MECHANISM FOUND: <b>NO</b><br>BEST VISUAL DIAGNOSTIC VARIANT: <b>F50</b> (visually and by its deceleration, the closest to the reference; that is not evidence that ×0.5 is the physically correct coefficient)<br><b>DO NOT ADOPT ANY VARIANT YET.</b></p>

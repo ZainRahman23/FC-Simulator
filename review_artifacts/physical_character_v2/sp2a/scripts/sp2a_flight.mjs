@@ -51,8 +51,9 @@ export function flightPlan(RI, cand) { const F = RI.F, kTD = RI.kTD, h = F[1].t 
   for (let f = 1; f < nF; f++) { const tau = f * h, an = flightAnat(tau), R0 = EN.pelvisRot(flightPelvis(tau)), S0 = L.fk({ pos: [0, 0, 0], rot: R0 }, an), c = V.add(V.add(c0, V.sc(v0, tau)), [0, -0.5 * G * tau * tau, 0]), off = V.sub(c, L.comOf(S0));
     out.push({ t: +(tau - T).toFixed(5), S: S0.map(s => ({ ...s, pos: V.add(s.pos, off) })), stance: { L: false, R: false }, phase: "flight" }); }
   return { frames: out, entry, T, nF, kTO, v0, vT, c0, c1, flightAnat, flightPelvis }; }
-export async function runFlight(runinFile, A = {}, steps = 480) { const RI = AA.loadRunIn(runinFile, null, 0.9, 0), speed = +(RI.d.speed * AA.LEGR).toFixed(3), cand = tackleCand(speed, A), plan = flightPlan(RI, cand);
-  const c2 = { ...cand, entry: plan.entry, id: A.id || "SP2A" }, o = await CL.auditRun(c2, { steps }); o.contactRule = c2.soleRule; o.candId = c2.id;
+// runOpts: passed to the run (e.g. a diagnostic setup hook); the motion itself is unchanged
+export async function runFlight(runinFile, A = {}, steps = 480, runOpts = {}) { const RI = AA.loadRunIn(runinFile, null, 0.9, 0), speed = +(RI.d.speed * AA.LEGR).toFixed(3), cand = tackleCand(speed, A), plan = flightPlan(RI, cand);
+  const c2 = { ...cand, entry: plan.entry, id: A.id || "SP2A" }, o = await CL.auditRun(c2, { steps, ...runOpts }); o.contactRule = c2.soleRule; o.candId = c2.id;
   o.runIn = plan.frames; o.entrySpec = plan.entry; o.flight = { T: plan.T, nF: plan.nF, v0: plan.v0, vT: plan.vT, kTO: plan.kTO }; o.tOffset = 0; o.speedTackler = speed; o.sp2aOpts = A; return o; }
 if (process.argv[1] && process.argv[1].endsWith("sp2a_flight.mjs")) { const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
   const o = await runFlight(arg("runin"), JSON.parse(arg("opts", "{}")), +arg("steps", "480")), m = P2.M.measure(o); if (arg("out")) L.writeGz(arg("out"), o);
