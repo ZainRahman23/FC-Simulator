@@ -1,0 +1,891 @@
+{
+ "hip flexion": {
+  "joint": "hip_R",
+  "key": "flex",
+  "anat": 30,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 181.2,
+    "clampLo": -1.1,
+    "capacityFV": 182.3,
+    "damping": 0,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 0.5,
+    "effective": 157.2,
+    "clampLo": -1.1,
+    "capacityFV": 166.9,
+    "damping": 24,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 1,
+    "effective": 133.1,
+    "clampLo": -1.1,
+    "capacityFV": 153.2,
+    "damping": 48.1,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 2,
+    "effective": 85,
+    "clampLo": -1.1,
+    "capacityFV": 129.9,
+    "damping": 96.2,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 3,
+    "effective": 36.9,
+    "clampLo": -1.1,
+    "capacityFV": 110.8,
+    "damping": 144.3,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 4,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 94.9,
+    "damping": 192.4,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 5,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 81.4,
+    "damping": 240.5,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 6,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 69.8,
+    "damping": 288.6,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 8,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 50.9,
+    "damping": 384.8,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 10,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 36.3,
+    "damping": 481,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 12,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 24.5,
+    "damping": 577.2,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   },
+   {
+    "w": 15,
+    "effective": -1.1,
+    "clampLo": -1.1,
+    "capacityFV": 10.7,
+    "damping": 721.5,
+    "D": 37.14,
+    "Ktot": 2630,
+    "I": 3.278
+   }
+  ]
+ },
+ "hip extension": {
+  "joint": "hip_R",
+  "key": "flex",
+  "anat": 30,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 263.7,
+    "clampLo": 1.1,
+    "capacityFV": 262.6,
+    "damping": 0,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 0.5,
+    "effective": 233.5,
+    "clampLo": 1.1,
+    "capacityFV": 240.5,
+    "damping": 30.1,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 1,
+    "effective": 203.4,
+    "clampLo": 1.1,
+    "capacityFV": 220.8,
+    "damping": 60.3,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 2,
+    "effective": 143.1,
+    "clampLo": 1.1,
+    "capacityFV": 187.2,
+    "damping": 120.6,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 3,
+    "effective": 82.8,
+    "clampLo": 1.1,
+    "capacityFV": 159.7,
+    "damping": 180.9,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 4,
+    "effective": 22.5,
+    "clampLo": 1.1,
+    "capacityFV": 136.7,
+    "damping": 241.1,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 5,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 117.3,
+    "damping": 301.4,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 6,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 100.6,
+    "damping": 361.7,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 8,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 73.4,
+    "damping": 482.3,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 10,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 52.2,
+    "damping": 602.8,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 12,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 35.3,
+    "damping": 723.4,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   },
+   {
+    "w": 15,
+    "effective": 1.1,
+    "clampLo": 1.1,
+    "capacityFV": 15.3,
+    "damping": 904.3,
+    "D": 44.53,
+    "Ktot": 3781,
+    "I": 3.278
+   }
+  ]
+ },
+ "knee extension": {
+  "joint": "knee_R",
+  "key": "flex",
+  "anat": 60,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 296.1,
+    "clampLo": 13.6,
+    "capacityFV": 282.4,
+    "damping": 0,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 0.5,
+    "effective": 274.5,
+    "clampLo": 13.6,
+    "capacityFV": 260.9,
+    "damping": 17.7,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 1,
+    "effective": 255.1,
+    "clampLo": 13.6,
+    "capacityFV": 241.5,
+    "damping": 35.4,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 2,
+    "effective": 221.6,
+    "clampLo": 13.6,
+    "capacityFV": 208,
+    "damping": 70.8,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 3,
+    "effective": 189.8,
+    "clampLo": 13.6,
+    "capacityFV": 180,
+    "damping": 106.3,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 4,
+    "effective": 154.4,
+    "clampLo": 13.6,
+    "capacityFV": 156.4,
+    "damping": 141.7,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 5,
+    "effective": 119,
+    "clampLo": 13.6,
+    "capacityFV": 136.2,
+    "damping": 177.1,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 6,
+    "effective": 83.5,
+    "clampLo": 13.6,
+    "capacityFV": 118.6,
+    "damping": 212.5,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 8,
+    "effective": 13.6,
+    "clampLo": 13.6,
+    "capacityFV": 89.7,
+    "damping": 283.4,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 10,
+    "effective": 13.6,
+    "clampLo": 13.6,
+    "capacityFV": 66.9,
+    "damping": 354.2,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 12,
+    "effective": 13.6,
+    "clampLo": 13.6,
+    "capacityFV": 48.4,
+    "damping": 425.1,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   },
+   {
+    "w": 15,
+    "effective": 13.6,
+    "clampLo": 13.6,
+    "capacityFV": 26.5,
+    "damping": 531.3,
+    "D": 18.49,
+    "Ktot": 4062,
+    "I": 0.526
+   }
+  ]
+ },
+ "knee flexion": {
+  "joint": "knee_R",
+  "key": "flex",
+  "anat": 40,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 156.1,
+    "clampLo": -7.7,
+    "capacityFV": 163.8,
+    "damping": 0,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 0.5,
+    "effective": 140.8,
+    "clampLo": -7.7,
+    "capacityFV": 154,
+    "damping": 15.2,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 1,
+    "effective": 125.6,
+    "clampLo": -7.7,
+    "capacityFV": 145.1,
+    "damping": 30.4,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 2,
+    "effective": 95.2,
+    "clampLo": -7.7,
+    "capacityFV": 129.1,
+    "damping": 60.9,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 3,
+    "effective": 64.8,
+    "clampLo": -7.7,
+    "capacityFV": 115.3,
+    "damping": 91.3,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 4,
+    "effective": 34.4,
+    "clampLo": -7.7,
+    "capacityFV": 103.3,
+    "damping": 121.7,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 5,
+    "effective": 3.9,
+    "clampLo": -7.7,
+    "capacityFV": 92.7,
+    "damping": 152.1,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 6,
+    "effective": -7.7,
+    "clampLo": -7.7,
+    "capacityFV": 83.3,
+    "damping": 182.6,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 8,
+    "effective": -7.7,
+    "clampLo": -7.7,
+    "capacityFV": 67.3,
+    "damping": 243.4,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 10,
+    "effective": -7.7,
+    "clampLo": -7.7,
+    "capacityFV": 54.3,
+    "damping": 304.3,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 12,
+    "effective": -7.7,
+    "clampLo": -7.7,
+    "capacityFV": 43.5,
+    "damping": 365.1,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   },
+   {
+    "w": 15,
+    "effective": -7.7,
+    "clampLo": -7.7,
+    "capacityFV": 30.4,
+    "damping": 456.4,
+    "D": 16.67,
+    "Ktot": 3301,
+    "I": 0.526
+   }
+  ]
+ },
+ "plantarflexion": {
+  "joint": "ankle_R",
+  "key": "df",
+  "anat": 0,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 150.5,
+    "clampLo": 0,
+    "capacityFV": 150.5,
+    "damping": 0,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 0.5,
+    "effective": 135.5,
+    "clampLo": 0,
+    "capacityFV": 135.5,
+    "damping": 7,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 1,
+    "effective": 122.4,
+    "clampLo": 0,
+    "capacityFV": 122.4,
+    "damping": 14,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 2,
+    "effective": 100.6,
+    "clampLo": 0,
+    "capacityFV": 100.6,
+    "damping": 28,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 3,
+    "effective": 83.4,
+    "clampLo": 0,
+    "capacityFV": 83.4,
+    "damping": 41.9,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 4,
+    "effective": 69.3,
+    "clampLo": 0,
+    "capacityFV": 69.3,
+    "damping": 55.9,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 5,
+    "effective": 57.6,
+    "clampLo": 0,
+    "capacityFV": 57.6,
+    "damping": 69.9,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 6,
+    "effective": 47.8,
+    "clampLo": 0,
+    "capacityFV": 47.8,
+    "damping": 83.9,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 8,
+    "effective": 32.1,
+    "clampLo": 0,
+    "capacityFV": 32.1,
+    "damping": 111.9,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 10,
+    "effective": 10.7,
+    "clampLo": 0,
+    "capacityFV": 20.2,
+    "damping": 139.8,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 12,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 10.8,
+    "damping": 167.8,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   },
+   {
+    "w": 15,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 0,
+    "damping": 209.7,
+    "D": 2.65,
+    "Ktot": 2720,
+    "I": 0.016
+   }
+  ]
+ },
+ "trunk extension": {
+  "joint": "lumbar",
+  "key": "flex",
+  "anat": 0,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 236.7,
+    "clampLo": 0,
+    "capacityFV": 236.7,
+    "damping": 0,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 0.5,
+    "effective": 213.1,
+    "clampLo": 0,
+    "capacityFV": 213.1,
+    "damping": 16.9,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 1,
+    "effective": 192.4,
+    "clampLo": 0,
+    "capacityFV": 192.4,
+    "damping": 33.8,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 2,
+    "effective": 158.3,
+    "clampLo": 0,
+    "capacityFV": 158.3,
+    "damping": 67.7,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 3,
+    "effective": 131.1,
+    "clampLo": 0,
+    "capacityFV": 131.1,
+    "damping": 101.5,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 4,
+    "effective": 101.4,
+    "clampLo": 0,
+    "capacityFV": 109,
+    "damping": 135.3,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 5,
+    "effective": 67.6,
+    "clampLo": 0,
+    "capacityFV": 90.7,
+    "damping": 169.1,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 6,
+    "effective": 33.8,
+    "clampLo": 0,
+    "capacityFV": 75.2,
+    "damping": 203,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 8,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 50.6,
+    "damping": 270.6,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 10,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 31.8,
+    "damping": 338.3,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 12,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 17,
+    "damping": 405.9,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   },
+   {
+    "w": 15,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 0,
+    "damping": 507.4,
+    "D": 29.07,
+    "Ktot": 1140,
+    "I": 4.633
+   }
+  ]
+ },
+ "shoulder flexion": {
+  "joint": "shoulder_R",
+  "key": "flex",
+  "anat": 30,
+  "rows": [
+   {
+    "w": 0,
+    "effective": 75,
+    "clampLo": 0,
+    "capacityFV": 75,
+    "damping": 0,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 0.5,
+    "effective": 67.5,
+    "clampLo": 0,
+    "capacityFV": 67.5,
+    "damping": 4.3,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 1,
+    "effective": 60.9,
+    "clampLo": 0,
+    "capacityFV": 60.9,
+    "damping": 8.6,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 2,
+    "effective": 50.1,
+    "clampLo": 0,
+    "capacityFV": 50.1,
+    "damping": 17.2,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 3,
+    "effective": 41.5,
+    "clampLo": 0,
+    "capacityFV": 41.5,
+    "damping": 25.8,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 4,
+    "effective": 34.5,
+    "clampLo": 0,
+    "capacityFV": 34.5,
+    "damping": 34.4,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 5,
+    "effective": 28.7,
+    "clampLo": 0,
+    "capacityFV": 28.7,
+    "damping": 43,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 6,
+    "effective": 23.3,
+    "clampLo": 0,
+    "capacityFV": 23.8,
+    "damping": 51.6,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 8,
+    "effective": 6.1,
+    "clampLo": 0,
+    "capacityFV": 16,
+    "damping": 68.8,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 10,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 10.1,
+    "damping": 86.1,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 12,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 5.4,
+    "damping": 103.3,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   },
+   {
+    "w": 15,
+    "effective": 0,
+    "clampLo": 0,
+    "capacityFV": 0,
+    "damping": 129.1,
+    "D": 6.57,
+    "Ktot": 488,
+    "I": 0.553
+   }
+  ]
+ }
+}

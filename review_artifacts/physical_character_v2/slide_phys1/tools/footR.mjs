@@ -1,0 +1,7 @@
+const L = await import("file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/review_artifacts/physical_character_v2/slide_phys1/scripts/sp_lib.mjs"), { B, bi } = L;
+const C = await import("file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/review_artifacts/physical_character_v2/slide_phys1/scripts/sp_chor.mjs");
+const CD = await import("file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/review_artifacts/physical_character_v2/slide_phys1/scripts/sp_cand.mjs");
+const o = L.readGz(process.argv[2]), cand = CD.CANDS[process.argv[3]], ch = C.compile(cand.chor), fR = bi("foot_R"), fL = bi("foot_L");
+for (const r of o.recs.filter((_, i) => i % 6 === 0 && i < 72)) { const S = r.S.slice(0, B.length), an = L.anatOf(S), tg = ch.anatAt(r.t);
+  const lowR = L.PL.bodyLowest(B[fR], S[fR]).y, lowL = L.PL.bodyLowest(B[fL], S[fL]).y;
+  console.log(r.t.toFixed(3), "pelY", S[0].pos[1].toFixed(3), "footR low", lowR.toFixed(3), "footL low", lowL.toFixed(3), "hipR", an.hip_R.flex.toFixed(0), "/", tg.hip_R.flex.toFixed(0), "kneeR", an.knee_R.flex.toFixed(0), "/", tg.knee_R.flex.toFixed(0), "ankR", an.ankle_R.df.toFixed(0), "| hipL", an.hip_L.flex.toFixed(0), "/", tg.hip_L.flex.toFixed(0), "kneeL", an.knee_L.flex.toFixed(0), "/", tg.knee_L.flex.toFixed(0), "pelPitch", (Math.atan2(L.Q.rot(S[0].rot, [0, 1, 0])[2], L.Q.rot(S[0].rot, [0, 1, 0])[1]) * 57.3).toFixed(0)); }
