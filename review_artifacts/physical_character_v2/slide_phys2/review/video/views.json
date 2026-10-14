@@ -1,0 +1,998 @@
+[
+ {
+  "id": "SP2_CLEAN_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "SP2 \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "SP2 \u00b7 same camera, crop \u00d75"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "STRONG \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP2_CLEAN_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "SP2 \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "SP2 \u00b7 same camera, crop \u00d75"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "STRONG \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP2_CLEAN_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "SP2 \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "SP2_5",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "SP2 \u00b7 same camera, crop \u00d75"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "angle": "side",
+    "zoom": 5,
+    "l": "STRONG \u00b7 crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP2_DIAG_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 side \u00b7 contacts (yellow boot, red body, blue hand)"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 front 3/4"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "rear34",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 rear 3/4"
+   }
+  ]
+ },
+ {
+  "id": "FIX_1x",
+  "every": 4,
+  "W": 480,
+  "H": 360,
+  "rate": "1\u00d7",
+  "to": 300,
+  "panels": [
+   {
+    "k": "F1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F1 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F2 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F3",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F3 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F3R",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F3R \u00b7 isolated fixture"
+   }
+  ]
+ },
+ {
+  "id": "ST2_1x",
+  "every": 4,
+  "W": 480,
+  "H": 360,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O1 glancing 5 kg"
+   },
+   {
+    "k": "ST2_O2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O2 moderate 20 kg"
+   },
+   {
+    "k": "ST2_O3",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O3 severe fixed post"
+   },
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 fixed bar, pelvis height"
+   }
+  ]
+ },
+ {
+  "id": "SWEEP_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after activation",
+  "panels": [
+   {
+    "k": "SW_-0.10",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line -0.10 m \u00b7 displaced, recovered"
+   },
+   {
+    "k": "SW_0.20",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line 0.20 m \u00b7 feet swept, slow fall"
+   },
+   {
+    "k": "SW_0.50",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line 0.50 m \u00b7 absorbed"
+   }
+  ]
+ },
+ {
+  "id": "SP2_DIAG_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 side \u00b7 contacts (yellow boot, red body, blue hand)"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 front 3/4"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "rear34",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 rear 3/4"
+   }
+  ]
+ },
+ {
+  "id": "FIX_025x",
+  "every": 1,
+  "W": 480,
+  "H": 360,
+  "rate": "0.25\u00d7",
+  "to": 300,
+  "panels": [
+   {
+    "k": "F1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F1 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F2 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F3",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F3 \u00b7 isolated fixture"
+   },
+   {
+    "k": "F3R",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "F3R \u00b7 isolated fixture"
+   }
+  ]
+ },
+ {
+  "id": "ST2_025x",
+  "every": 1,
+  "W": 480,
+  "H": 360,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O1 glancing 5 kg"
+   },
+   {
+    "k": "ST2_O2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O2 moderate 20 kg"
+   },
+   {
+    "k": "ST2_O3",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O3 severe fixed post"
+   },
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 fixed bar, pelvis height"
+   }
+  ]
+ },
+ {
+  "id": "SWEEP_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after activation",
+  "panels": [
+   {
+    "k": "SW_-0.10",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line -0.10 m \u00b7 displaced, recovered"
+   },
+   {
+    "k": "SW_0.20",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line 0.20 m \u00b7 feet swept, slow fall"
+   },
+   {
+    "k": "SW_0.50",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "sweep line 0.50 m \u00b7 absorbed"
+   }
+  ]
+ },
+ {
+  "id": "SP1_SP2_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP1 (SLIDE-PHYS-1) \u00b7 side"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 side"
+   }
+  ]
+ },
+ {
+  "id": "ST2_FALLBACK_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 \u00b7 default thresholds: local yield only"
+   },
+   {
+    "k": "ST2_O5_Dfail25",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 \u00b7 Dfail 25\u00b0 (diagnostic): regional \u2192 whole-body fallback"
+   }
+  ]
+ },
+ {
+  "id": "SP1_SP2_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP1 (SLIDE-PHYS-1) \u00b7 side"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "SP2 \u00b7 side"
+   }
+  ]
+ },
+ {
+  "id": "ST2_FALLBACK_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 \u00b7 default thresholds: local yield only"
+   },
+   {
+    "k": "ST2_O5_Dfail25",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "l": "O5 \u00b7 Dfail 25\u00b0 (diagnostic): regional \u2192 whole-body fallback"
+   }
+  ]
+ },
+ {
+  "id": "SP2_ENTRY_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 80,
+  "to": 220,
+  "panels": [
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "crop": [
+     128,
+     170,
+     384,
+     288
+    ],
+    "l": "ground entry \u00b7 side close-up \u00d71.7"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "hud": true,
+    "crop": [
+     128,
+     170,
+     384,
+     288
+    ],
+    "l": "ground entry \u00b7 front 3/4 close-up"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "rear34",
+    "contacts": true,
+    "hud": true,
+    "crop": [
+     128,
+     170,
+     384,
+     288
+    ],
+    "l": "ground entry \u00b7 rear 3/4 close-up"
+   }
+  ]
+ },
+ {
+  "id": "SP1_ENTRY_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 70,
+  "to": 210,
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "hud": true,
+    "crop": [
+     128,
+     170,
+     384,
+     288
+    ],
+    "l": "SP1 ground entry \u00b7 side close-up"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "hud": true,
+    "crop": [
+     128,
+     170,
+     384,
+     288
+    ],
+    "l": "SP1 ground entry \u00b7 front 3/4 close-up"
+   }
+  ]
+ },
+ {
+  "id": "GEN_1x",
+  "every": 4,
+  "W": 400,
+  "H": 300,
+  "rate": "1\u00d7",
+  "to": 420,
+  "panels": [
+   {
+    "k": "GEN_H1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "H1 rejected"
+   },
+   {
+    "k": "GEN_H2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "H2 rejected"
+   },
+   {
+    "k": "GEN_H3best",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "H3 (knee slide)"
+   },
+   {
+    "k": "GEN_H3seat",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "H3 + seat"
+   },
+   {
+    "k": "GEN_H5g16",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "H5 mid-search"
+   }
+  ]
+ }
+]

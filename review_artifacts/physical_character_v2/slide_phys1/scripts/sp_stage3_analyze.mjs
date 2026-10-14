@@ -9,10 +9,10 @@ const L = await import(new URL("./sp_lib.mjs", import.meta.url).href), { V } = L
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, D = arg("dir"), H = 1 / 240, r3 = (x) => Math.round(x * 1000) / 1000;
 const sR = L.PL.SPEC_R(), nR = sR.bodies.length, ri = (n) => sR.bodies.findIndex(b => b.name === n), PEL = ri("pelvis"), FL = ri("foot_L"), FR = ri("foot_R"), HEAD = ri("head");
 const TB = L.B.length, tb = (n) => nR + L.bi(n), sweep = [0, 0, -1];
-const tw = L.readGz(`${D}/CALIB.json.gz`), out = { tool: "sp_stage3_analyze.mjs", twin: { hash: tw.finalHash }, cases: {} };
+const tw = L.readGz(arg("twin") || `${D}/CALIB.json.gz`), out = { tool: "sp_stage3_analyze.mjs", twin: { hash: tw.finalHash }, cases: {} };
 const turfOf = (r, who, body) => r.contacts.some(c => c.kind.startsWith("turf") && c.Jn > 0 && ((c.a[0] === who && c.a[1] === body) || (c.b[0] === who && c.b[1] === body)));
 const footUp = (o, who, body, from) => { for (let k = from; k < o.recs.length; k++) { let up = true; for (let j = k; j < Math.min(k + 6, o.recs.length); j++) if (turfOf(o.recs[j], who, body)) { up = false; break; } if (up) return k; } return null; };
-for (const cs of ["GRAZE", "LIGHT", "MODERATE", "STRONG"]) { const f = `${D}/${cs}.json.gz`; if (!fs.existsSync(f)) continue; const o = L.readGz(f), R = o.recs, A = o.activate, n = Math.min(R.length, tw.recs.length);
+const CASES = arg("cases") ? arg("cases").split(",") : ["GRAZE", "LIGHT", "MODERATE", "STRONG"]; for (const cs of CASES) { const f = `${D}/${cs}.json.gz`; if (!fs.existsSync(f)) continue; const o = L.readGz(f), R = o.recs, A = o.activate, n = Math.min(R.length, tw.recs.length);
   const k0 = R.findIndex(r => r.contacts.some(c => c.kind === "cross" && c.Jn > 0)); if (k0 < 0) { out.cases[cs] = { contact: false, hash: o.finalHash }; continue; }
   let Jrec = [0, 0, 0], Fpk = 0, last = k0; const pairs = {}, recBodies = new Set();
   for (let k = k0; k < n; k++) for (const c of R[k].contacts) { if (c.kind !== "cross" || c.Jn <= 0) continue; const recSide = c.a[0] === "runner" ? c.a : c.b, tSide = c.a[0] === "runner" ? c.b : c.a;

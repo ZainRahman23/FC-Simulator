@@ -16,6 +16,8 @@ const LOCO = two ? PL.records().LOCO : null, qRef = two ? SKR.bones.map(b => MC.
 const pack = (P) => ({ skin: Array.from(P.skin, r5), joint: P.p.map(rv), tip: P.tip.map(rv) });
 // optional INTENT ghost (--intent <params.json> --speed v): the controller's target pose at each step (choreography tracks + the knee coupling
 // evaluated on the recorded hip angle) by V2 forward kinematics on the RECORDED pelvis pose — what was authored / commanded, not simulated
+// optional diagnostic HUD (--hud 1): COM horizontal / vertical speed and the turf-contact REGIONS of the tackler this step (SLIDE-PHYS-2 regions)
+const HUD = arg("hud") ? await import(new URL("../../slide_phys2/scripts/sp2_regions.mjs", import.meta.url).href) : null, rule = run.contactRule || run.soleRule || null;
 let INT = null; if (arg("intent")) { const SL = new URL("../scripts/", import.meta.url).href, P = await import(SL + "sp_param.mjs"), C = await import(SL + "sp_chor.mjs"), L = await import(SL + "sp_lib.mjs");
   const cand = P.makeCand(P.toPhys(JSON.parse(fs.readFileSync(arg("intent")))), +arg("speed", "5"), "intent"), ch = C.compile(cand.chor), cp = cand.couple && cand.couple[0];
   INT = (S, t) => { const an = ch.anatAt(t); if (cp && t >= cp.window[0] && t <= cp.window[1]) { const x = L.anatOf(S).hip_R.flex, m = cp.map; let y = x <= m[0][0] ? m[0][1] : x >= m[m.length - 1][0] ? m[m.length - 1][1] : null;
@@ -29,7 +31,9 @@ for (let n = s0; n <= Math.min(s1, run.recs.length); n++) { const r = run.recs[M
   // obstacles (Stage 2 records): the 8 box corners from the recorded obstacle state, same placement
   const obst = run.obstacles && r.obstState ? r.obstState.map((s, k) => { const he = run.obstacles[k].he; if (!he) return null; const c = [];
     for (const a of [-1, 1]) for (const b of [-1, 1]) for (const d of [-1, 1]) c.push(rv(T.toW(V.add(Q.rot(qy, V.add(s.com, Q.rot(s.rot, [a * he[0], b * he[1], d * he[2]]))), offL)))); return { c, dyn: run.obstacles[k].mass > 0 }; }).filter(Boolean) : null;
-  frames.push({ n, t: r5((n - T0) / 240), obst, tackler: pack(T.posePhys(RT, ST)), intent, runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))] }); }
+  let hud = null; if (HUD && n >= 1) { const c = r.chars.tackler, M = 78.9, P = c.P, vh = Math.hypot(P[0], P[2]) / M, vy = P[1] / M, cs = HUD.turfContacts(r, (run.recs[Math.max(0, n - 2)] || r).S, "tackler", nR, rule);
+    const g = {}; for (const x of cs) if (x.Jn > 0) g[x.region] = (g[x.region] || 0) + x.Jn * 240 / (M * 9.81); hud = { vh: r5(vh), vy: r5(vy), regions: Object.entries(g).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, +v.toFixed(2)]) }; }
+  frames.push({ n, t: r5((n - T0) / 240), obst, hud, tackler: pack(T.posePhys(RT, ST)), intent, runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))] }); }
 fs.writeFileSync(path.join(OUT, key + ".json"), JSON.stringify({ key, frames }));
 const mf = path.join(OUT, "meta.json"), M0 = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf)) : { runs: {} }; M0.runs[key] = { frames: frames.length, steps: [s0, s1], cand: run.cand, finalHash: run.finalHash, two, yawDeg: yaw * 180 / Math.PI, at };
 fs.writeFileSync(mf, JSON.stringify(M0, null, 1)); console.log(key, frames.length, "frames", two ? "(two characters)" : "(tackler)");

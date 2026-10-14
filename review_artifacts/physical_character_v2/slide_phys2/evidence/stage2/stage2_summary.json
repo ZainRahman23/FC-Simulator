@@ -1,0 +1,340 @@
+{
+ "tool": "sp2_stage2.mjs",
+ "speed": 5,
+ "ctrl": "A6",
+ "tHit": 0.513,
+ "bootAtHit": [
+  0.16772675514221191,
+  0.04670317471027374,
+  3.4020497798919678
+ ],
+ "bootLowAtHit": -0.000006674880641738268,
+ "dir": [
+  -0.0011880779735128088,
+  0,
+  0.9999992942351152
+ ],
+ "refHash": "792ce24ee2a3c678",
+ "cases": {
+  "O0": {
+   "obstacles": [],
+   "hash": "792ce24ee2a3c678",
+   "firstHit": null,
+   "obstImpulseNs": 0,
+   "obstImpulseByBody": {},
+   "maxObstDepthMm": 0,
+   "maxDeflDeg": {
+    "hip_R": 0,
+    "knee_R": 0,
+    "ankle_R": 0,
+    "hip_L": 0,
+    "knee_L": 0,
+    "lumbar": 0
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 0,
+    "trailLeg": 0,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 0
+   },
+   "yieldSteps": 0,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 0,
+   "slideDistM": 1.329,
+   "stopT": 1.063,
+   "minBelly": -0.168,
+   "headT": null
+  },
+  "O1": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.12,
+      0.1,
+      0.06
+     ],
+     "mass": 5,
+     "pos": [
+      0.33737021177012766,
+      0.101,
+      3.7022515414179997
+     ],
+     "rot": [
+      0,
+      -0.0005940390915693965,
+      0,
+      0.9999998235587633
+     ]
+    }
+   ],
+   "hash": "c547eb759a1b763e",
+   "firstHit": {
+    "t": 0.6166666666666667,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": 18.74,
+   "obstImpulseByBody": {
+    "foot_R": 3.88,
+    "foot_L": 40.6,
+    "shank_L": 3.03,
+    "shank_R": 36.04
+   },
+   "maxObstDepthMm": 6.83,
+   "maxDeflDeg": {
+    "hip_R": 6.2,
+    "knee_R": 2.5,
+    "ankle_R": 3.1,
+    "hip_L": 4.6,
+    "knee_L": 5.7,
+    "lumbar": 1.5
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 25.3,
+    "trailLeg": 39.1,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 0
+   },
+   "yieldSteps": 278,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 0.053,
+   "slideDistM": 1.292,
+   "stopT": 1.038,
+   "minBelly": -0.173,
+   "headT": null
+  },
+  "O2": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.25,
+      0.14,
+      0.08
+     ],
+     "mass": 20,
+     "pos": [
+      0.16737033175015806,
+      0.14100000000000001,
+      3.7020495681625025
+     ],
+     "rot": [
+      0,
+      -0.0005940390915693965,
+      0,
+      0.9999998235587633
+     ]
+    }
+   ],
+   "hash": "604258acecdaae5b",
+   "firstHit": {
+    "t": 0.5625,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": 52.58,
+   "obstImpulseByBody": {
+    "foot_R": 54.37
+   },
+   "maxObstDepthMm": 0.26,
+   "maxDeflDeg": {
+    "hip_R": 7.7,
+    "knee_R": 4.7,
+    "ankle_R": 19,
+    "hip_L": 14.5,
+    "knee_L": 7.6,
+    "lumbar": 2.9
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 25.8,
+    "trailLeg": 0,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 0
+   },
+   "yieldSteps": 114,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 0.531,
+   "slideDistM": 1.066,
+   "stopT": 0.954,
+   "minBelly": -0.796,
+   "headT": 1.958
+  },
+  "O3": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.25,
+      0.2,
+      0.08
+     ],
+     "mass": 0,
+     "pos": [
+      0.16737033175015806,
+      0.201,
+      3.7020495681625025
+     ],
+     "rot": [
+      0,
+      -0.0005940390915693965,
+      0,
+      0.9999998235587633
+     ]
+    }
+   ],
+   "hash": "8b63180bf9089324",
+   "firstHit": {
+    "t": 0.5625,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": 227.22,
+   "obstImpulseByBody": {
+    "foot_R": 221.74
+   },
+   "maxObstDepthMm": 0.03,
+   "maxDeflDeg": {
+    "hip_R": 20.4,
+    "knee_R": 17.4,
+    "ankle_R": 27.1,
+    "hip_L": 19.6,
+    "knee_L": 14.8,
+    "lumbar": 9.2
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 25.4,
+    "trailLeg": 0,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 0
+   },
+   "yieldSteps": 113,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 0.701,
+   "slideDistM": 0.798,
+   "stopT": 0.713,
+   "minBelly": -0.384,
+   "headT": null
+  },
+  "O4": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.9,
+      0.5,
+      0.08
+     ],
+     "mass": 0,
+     "pos": [
+      0.16719212005413114,
+      0.501,
+      3.85204946229777
+     ],
+     "rot": [
+      0,
+      -0.0005940390915693965,
+      0,
+      0.9999998235587633
+     ]
+    }
+   ],
+   "hash": "f7657fd47f2dfbd4",
+   "firstHit": {
+    "t": 0.6333333333333333,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": 212.87,
+   "obstImpulseByBody": {
+    "foot_R": 207.39
+   },
+   "maxObstDepthMm": 0.02,
+   "maxDeflDeg": {
+    "hip_R": 20,
+    "knee_R": 18.7,
+    "ankle_R": 22.8,
+    "hip_L": 14.1,
+    "knee_L": 13.8,
+    "lumbar": 8.1
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 23.6,
+    "trailLeg": 0,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 0
+   },
+   "yieldSteps": 95,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 1.037,
+   "slideDistM": 0.914,
+   "stopT": 0.746,
+   "minBelly": -0.271,
+   "headT": 1.75
+  },
+  "O5": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.7,
+      0.06,
+      0.06
+     ],
+     "mass": 0,
+     "pos": [
+      0.16772675514221191,
+      0.3,
+      3.4020497798919678
+     ],
+     "rot": [
+      0,
+      -0.0005940390915693965,
+      0,
+      0.9999998235587633
+     ]
+    }
+   ],
+   "hash": "fc30a22e4fe460f9",
+   "firstHit": {
+    "t": 0.6041666666666666,
+    "body": "forearm_R"
+   },
+   "obstImpulseNs": 813.77,
+   "obstImpulseByBody": {
+    "forearm_R": 38.24,
+    "thigh_R": 780.64
+   },
+   "maxObstDepthMm": 3.2,
+   "maxDeflDeg": {
+    "hip_R": 6.5,
+    "knee_R": 3.3,
+    "ankle_R": 2.3,
+    "hip_L": 6.2,
+    "knee_L": 9.3,
+    "lumbar": 6.6
+   },
+   "peakDisturbanceDeg": {
+    "tackLeg": 27.8,
+    "trailLeg": 0,
+    "trunk": 0,
+    "armL": 0,
+    "armR": 38.7
+   },
+   "yieldSteps": 320,
+   "regionalFailures": {},
+   "wholeBodyFallback": null,
+   "comShiftM": 0.445,
+   "slideDistM": 1.017,
+   "stopT": 0.792,
+   "minBelly": -0.202,
+   "headT": null
+  }
+ }
+}

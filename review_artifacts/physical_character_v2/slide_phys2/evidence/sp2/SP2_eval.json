@@ -1,0 +1,8376 @@
+{
+ "tool": "sp2_eval.mjs",
+ "phys": {
+  "plantK1": 1.3794837448495727,
+  "plantK2": 1.4253544852268367,
+  "plantEnd": 0.09067139450409442,
+  "plantPitch": -21.26288308351326,
+  "lateral": 3.5,
+  "plantRoll": 5.421270666014856,
+  "tackHip": 77.99448044517526,
+  "tackHipT": 0.1845172022627384,
+  "tackKneeHold": 21.95258115027387,
+  "tackKneeExtT": 0.6618240573735957,
+  "tackHipLate": 77.02095638999725,
+  "foldKnee90T": 0.1,
+  "foldKneeLate": 143.01067598371012,
+  "foldHipLate": 61.853038698099844,
+  "foldRot": -34.80950093831999,
+  "foldAbd": 27.947139444436594,
+  "recline": 0,
+  "reclineT": 0.5353905059977584,
+  "postArm": -46.59593335085323,
+  "postT": 0.42338138541955694,
+  "seatPitch": -26.610882172468312,
+  "seatRoll": 33.39082163385155,
+  "seatKo": 193.51069280786413,
+  "trailYieldT": 0.3359928734712358,
+  "trailYieldA": 0.638468898767547
+ },
+ "steps": 480,
+ "speeds": {
+  "5": {
+   "hash": "792ce24ee2a3c678",
+   "cost": 3.644,
+   "parts": {
+    "bootLoad": 0.04,
+    "slide": 0.257,
+    "kneeGlide": 2.013,
+    "limits": 1.334
+   },
+   "firstBodyT": 0.413,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.413
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.492
+    ],
+    [
+     "pelvis",
+     0.504
+    ],
+    [
+     "thigh_L",
+     0.508
+    ],
+    [
+     "hand",
+     0.983
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.828,
+    "vy": -2.771,
+    "comY": 0.578,
+    "pelY": 0.402
+   },
+   "retention": {
+    "+0.1s": 0.696,
+    "+0.2s": 0.525,
+    "+0.3s": 0.396,
+    "+0.5s": 0.221
+   },
+   "slideFromContactM": 1.329,
+   "slideFromCommitM": 3.358,
+   "stopT": 1.063,
+   "meanDecel": 6.995,
+   "glideShare": {
+    "knee_L": 0.506,
+    "thigh_L": 0.19,
+    "tackBoot": 0.138,
+    "pelvis": 0.127,
+    "hand": 0.017,
+    "shin_L": 0.013,
+    "foldBoot": 0.008
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.413,
+     "JnNs": 480.184,
+     "peakStepBW": 7.368,
+     "peak29msBW": 2.37,
+     "peak29msKN": 1.835,
+     "regions": {
+      "knee_L:posterior": 58.641,
+      "knee_L:lateral": 421.543
+     }
+    },
+    "pelvis": {
+     "first": 0.504,
+     "JnNs": 419.494,
+     "peakStepBW": 3.459,
+     "peak29msBW": 0.803,
+     "peak29msKN": 0.622,
+     "regions": {
+      "hip_pelvis:buttock": 397.725,
+      "hip_pelvis:left": 21.769
+     }
+    },
+    "thigh_L": {
+     "first": 0.508,
+     "JnNs": 208.558,
+     "peakStepBW": 21.574,
+     "peak29msBW": 5.676,
+     "peak29msKN": 4.394,
+     "regions": {
+      "thigh_L:lateral": 208.558
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 167.634,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 8.027,
+      "boot_L:sole": 71.496,
+      "boot_L:toe": 56.548,
+      "boot_L:upper": 31.563
+     }
+    },
+    "shin_L": {
+     "first": 0.492,
+     "JnNs": 129.858,
+     "peakStepBW": 1.455,
+     "peak29msBW": 1.042,
+     "peak29msKN": 0.807,
+     "regions": {
+      "shin_L:lateral": 129.277,
+      "shin_L:posterior": 0.581
+     }
+    },
+    "hand": {
+     "first": 0.983,
+     "JnNs": 92.531,
+     "peakStepBW": 1.257,
+     "peak29msBW": 0.266,
+     "peak29msKN": 0.206,
+     "regions": {
+      "hand_L": 92.531
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 87.281,
+     "peakStepBW": 0.816,
+     "peak29msBW": 0.468,
+     "peak29msKN": 0.362,
+     "regions": {
+      "boot_R:heel": 27.675,
+      "boot_R:sole": 10.176,
+      "boot_R:upper": 49.43
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.001,
+    "contactFracDuringGlide": 0.968,
+    "JnNs": 87.281,
+    "shareJn": 0.055,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.001,
+     "max": 0.044
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.475
+    },
+    "regions": {
+     "boot_R:heel": 27.675,
+     "boot_R:sole": 10.176,
+     "boot_R:upper": 49.43
+    }
+   },
+   "posture": {
+    "minBellyY": -0.168,
+    "reclAtStop": 20.452,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 8,
+     "at": 0.521,
+     "dur": 1.1,
+     "range": [
+      -17,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.8,
+     "at": 0.471,
+     "dur": 0.025,
+     "range": [
+      -36,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.4,
+     "at": 0.371,
+     "dur": 0.013,
+     "range": [
+      -76,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.2,
+     "at": 0.525,
+     "dur": 0.017,
+     "range": [
+      -16,
+      11
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.866,
+   "cpu": {
+    "step": 0.291,
+    "passive": 0.236,
+    "act": 0.035,
+    "tone": 0.114,
+    "instrument": 0.045,
+    "measure": 0.14,
+    "law": 0,
+    "lawT": 0.114
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.804,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.005,
+     "pelY": 0.862,
+     "recl": 12.877,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.198,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.082,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.942,
+     "vy": -2.433,
+     "comY": 0.736,
+     "pelY": 0.569,
+     "recl": 11.063,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.92,
+     "vy": -2.877,
+     "comY": 0.602,
+     "pelY": 0.427,
+     "recl": 11.866,
+     "bootLow": 0.062
+    },
+    {
+     "t": 0.454,
+     "vh": 4.454,
+     "vy": -2.421,
+     "comY": 0.476,
+     "pelY": 0.292,
+     "recl": 6.708,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.058,
+     "vy": -2.106,
+     "comY": 0.36,
+     "pelY": 0.16,
+     "recl": -0.66,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.846,
+     "vy": -0.154,
+     "comY": 0.34,
+     "pelY": 0.149,
+     "recl": -11.156,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.581,
+     "vy": -0.095,
+     "comY": 0.334,
+     "pelY": 0.156,
+     "recl": -21.307,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.302,
+     "vy": -0.015,
+     "comY": 0.332,
+     "pelY": 0.16,
+     "recl": -25.963,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.965,
+     "vy": 0.176,
+     "comY": 0.335,
+     "pelY": 0.161,
+     "recl": -24.458,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.677,
+     "vy": 0.266,
+     "comY": 0.347,
+     "pelY": 0.167,
+     "recl": -19.703,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.471,
+     "vy": 0.188,
+     "comY": 0.359,
+     "pelY": 0.174,
+     "recl": -13.086,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.33,
+     "vy": -0.02,
+     "comY": 0.363,
+     "pelY": 0.175,
+     "recl": -4.635,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.118,
+     "vy": -0.085,
+     "comY": 0.359,
+     "pelY": 0.172,
+     "recl": 3.013,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.862,
+     "vy": -0.062,
+     "comY": 0.356,
+     "pelY": 0.172,
+     "recl": 9.531,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.576,
+     "vy": 0.029,
+     "comY": 0.355,
+     "pelY": 0.174,
+     "recl": 16.387,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.323,
+     "vy": 0.047,
+     "comY": 0.357,
+     "pelY": 0.178,
+     "recl": 20.202,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.078,
+     "vy": 0.054,
+     "comY": 0.359,
+     "pelY": 0.183,
+     "recl": 20.126,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": -0.042,
+     "vy": -0.005,
+     "comY": 0.361,
+     "pelY": 0.188,
+     "recl": 17.554,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": -0.059,
+     "vy": -0.043,
+     "comY": 0.359,
+     "pelY": 0.191,
+     "recl": 16.743,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": -0.053,
+     "vy": -0.032,
+     "comY": 0.357,
+     "pelY": 0.192,
+     "recl": 17.134,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.304,
+     "vh": -0.062,
+     "vy": -0.02,
+     "comY": 0.356,
+     "pelY": 0.194,
+     "recl": 17.264,
+     "bootLow": 0.005
+    },
+    {
+     "t": 1.354,
+     "vh": -0.065,
+     "vy": 0.005,
+     "comY": 0.356,
+     "pelY": 0.195,
+     "recl": 17.378,
+     "bootLow": 0.009
+    },
+    {
+     "t": 1.404,
+     "vh": -0.055,
+     "vy": 0.031,
+     "comY": 0.357,
+     "pelY": 0.196,
+     "recl": 17.936,
+     "bootLow": 0.009
+    },
+    {
+     "t": 1.454,
+     "vh": -0.064,
+     "vy": 0.032,
+     "comY": 0.358,
+     "pelY": 0.196,
+     "recl": 18.837,
+     "bootLow": 0.008
+    },
+    {
+     "t": 1.504,
+     "vh": -0.081,
+     "vy": 0.041,
+     "comY": 0.36,
+     "pelY": 0.197,
+     "recl": 20.162,
+     "bootLow": 0.007
+    },
+    {
+     "t": 1.554,
+     "vh": -0.102,
+     "vy": 0.043,
+     "comY": 0.362,
+     "pelY": 0.198,
+     "recl": 22.228,
+     "bootLow": 0.008
+    },
+    {
+     "t": 1.604,
+     "vh": -0.111,
+     "vy": 0.04,
+     "comY": 0.364,
+     "pelY": 0.2,
+     "recl": 23.994,
+     "bootLow": 0.015
+    },
+    {
+     "t": 1.654,
+     "vh": -0.109,
+     "vy": 0.041,
+     "comY": 0.366,
+     "pelY": 0.202,
+     "recl": 24.974,
+     "bootLow": 0.031
+    },
+    {
+     "t": 1.704,
+     "vh": -0.109,
+     "vy": 0.036,
+     "comY": 0.368,
+     "pelY": 0.205,
+     "recl": 25.979,
+     "bootLow": 0.055
+    },
+    {
+     "t": 1.754,
+     "vh": -0.095,
+     "vy": 0.022,
+     "comY": 0.37,
+     "pelY": 0.207,
+     "recl": 27.388,
+     "bootLow": 0.084
+    },
+    {
+     "t": 1.804,
+     "vh": -0.079,
+     "vy": 0.024,
+     "comY": 0.371,
+     "pelY": 0.207,
+     "recl": 28.93,
+     "bootLow": 0.112
+    },
+    {
+     "t": 1.854,
+     "vh": -0.066,
+     "vy": 0.033,
+     "comY": 0.372,
+     "pelY": 0.207,
+     "recl": 29.625,
+     "bootLow": 0.129
+    },
+    {
+     "t": 1.904,
+     "vh": -0.044,
+     "vy": 0.02,
+     "comY": 0.374,
+     "pelY": 0.207,
+     "recl": 29.042,
+     "bootLow": 0.134
+    },
+    {
+     "t": 1.954,
+     "vh": -0.018,
+     "vy": -0.008,
+     "comY": 0.374,
+     "pelY": 0.206,
+     "recl": 28.721,
+     "bootLow": 0.13
+    }
+   ]
+  },
+  "4.25": {
+   "hash": "0863ed8b78e6a0f8",
+   "cost": 2.416,
+   "parts": {
+    "bootLoad": 0.266,
+    "slide": 0.786,
+    "retention": 0.062,
+    "kneeGlide": 0.384,
+    "limits": 0.918
+   },
+   "firstBodyT": 0.442,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.442
+    ],
+    [
+     "shin_L",
+     0.479
+    ],
+    [
+     "tackBoot",
+     0.483
+    ],
+    [
+     "pelvis",
+     0.496
+    ],
+    [
+     "thigh_L",
+     0.504
+    ],
+    [
+     "hand",
+     0.538
+    ],
+    [
+     "arm",
+     1.938
+    ],
+    [
+     "forearm",
+     1.938
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.158,
+    "vy": -3.071,
+    "comY": 0.526,
+    "pelY": 0.342
+   },
+   "retention": {
+    "+0.1s": 0.62,
+    "+0.2s": 0.469,
+    "+0.3s": 0.348,
+    "+0.5s": 0.133
+   },
+   "slideFromContactM": 0.976,
+   "slideFromCommitM": 2.827,
+   "stopT": 0.996,
+   "meanDecel": 7.002,
+   "glideShare": {
+    "thigh_L": 0.518,
+    "knee_L": 0.304,
+    "tackBoot": 0.084,
+    "pelvis": 0.057,
+    "hand": 0.024,
+    "shin_L": 0.01,
+    "foldBoot": 0.002
+   },
+   "loads": {
+    "thigh_L": {
+     "first": 0.504,
+     "JnNs": 755.764,
+     "peakStepBW": 10.979,
+     "peak29msBW": 4.032,
+     "peak29msKN": 3.121,
+     "regions": {
+      "thigh_L:lateral": 755.764
+     }
+    },
+    "knee_L": {
+     "first": 0.442,
+     "JnNs": 218.401,
+     "peakStepBW": 6.067,
+     "peak29msBW": 1.477,
+     "peak29msKN": 1.143,
+     "regions": {
+      "knee_L:lateral": 212.013,
+      "knee_L:anterior": 6.388
+     }
+    },
+    "pelvis": {
+     "first": 0.496,
+     "JnNs": 186.949,
+     "peakStepBW": 17.353,
+     "peak29msBW": 3.308,
+     "peak29msKN": 2.561,
+     "regions": {
+      "hip_pelvis:buttock": 170.957,
+      "hip_pelvis:left": 15.992
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 149.118,
+     "peakStepBW": 6.151,
+     "peak29msBW": 2.824,
+     "peak29msKN": 2.186,
+     "regions": {
+      "boot_L:heel": 7.946,
+      "boot_L:sole": 82.457,
+      "boot_L:toe": 55.84,
+      "boot_L:upper": 2.875
+     }
+    },
+    "hand": {
+     "first": 0.538,
+     "JnNs": 109.157,
+     "peakStepBW": 1.12,
+     "peak29msBW": 0.295,
+     "peak29msKN": 0.228,
+     "regions": {
+      "hand_L": 109.157
+     }
+    },
+    "tackBoot": {
+     "first": 0.483,
+     "JnNs": 58.328,
+     "peakStepBW": 1.695,
+     "peak29msBW": 0.677,
+     "peak29msKN": 0.524,
+     "regions": {
+      "boot_R:heel": 10.58,
+      "boot_R:upper": 38.566,
+      "boot_R:sole": 9.181
+     }
+    },
+    "arm": {
+     "first": 1.938,
+     "JnNs": 53.181,
+     "peakStepBW": 5.682,
+     "peak29msBW": 1.506,
+     "peak29msKN": 1.166,
+     "regions": {
+      "upperArm_L": 53.181
+     }
+    },
+    "shin_L": {
+     "first": 0.479,
+     "JnNs": 51.427,
+     "peakStepBW": 1.674,
+     "peak29msBW": 0.946,
+     "peak29msKN": 0.732,
+     "regions": {
+      "shin_L:lateral": 51.427
+     }
+    },
+    "forearm": {
+     "first": 1.938,
+     "JnNs": 0.324,
+     "peakStepBW": 0.1,
+     "peak29msBW": 0.014,
+     "peak29msKN": 0.011,
+     "regions": {
+      "forearm_L": 0.324
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.004,
+    "contactFracDuringGlide": 0.925,
+    "JnNs": 58.328,
+    "shareJn": 0.037,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.004,
+     "max": 0.104
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.234,
+     "max": 0.35
+    },
+    "regions": {
+     "boot_R:heel": 10.58,
+     "boot_R:upper": 38.566,
+     "boot_R:sole": 9.181
+    }
+   },
+   "posture": {
+    "minBellyY": -0.135,
+    "reclAtStop": 17.809,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 4.3,
+     "at": 0.525,
+     "dur": 1.054,
+     "range": [
+      -14,
+      49
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 2.4,
+     "at": 0.929,
+     "dur": 0.292,
+     "range": [
+      -77,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.3,
+     "at": 0.529,
+     "dur": 0.037,
+     "range": [
+      -16,
+      12
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "ankle_R.x",
+     "beyond": 0.7,
+     "at": 0.508,
+     "dur": 0.004,
+     "range": [
+      -11,
+      16
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "knee_L.x",
+     "beyond": 0.5,
+     "at": 0.054,
+     "dur": 0.079,
+     "range": [
+      -20,
+      14
+     ],
+     "hard": [
+      -21,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 1.121,
+   "cpu": {
+    "step": 0.316,
+    "passive": 0.335,
+    "act": 0.064,
+    "tone": 0.159,
+    "instrument": 0.048,
+    "measure": 0.186,
+    "law": 0,
+    "lawT": 0.159
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 4.29,
+     "vy": -0.32,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.09,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.19,
+     "vy": 0.099,
+     "comY": 1.064,
+     "pelY": 0.954,
+     "recl": -6.352,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.198,
+     "vy": -0.07,
+     "comY": 1.066,
+     "pelY": 0.955,
+     "recl": 7.296,
+     "bootLow": 0.037
+    },
+    {
+     "t": 0.154,
+     "vh": 4.245,
+     "vy": -0.456,
+     "comY": 1.052,
+     "pelY": 0.928,
+     "recl": 13.278,
+     "bootLow": 0.103
+    },
+    {
+     "t": 0.204,
+     "vh": 4.247,
+     "vy": -0.942,
+     "comY": 1.016,
+     "pelY": 0.874,
+     "recl": 13.224,
+     "bootLow": 0.191
+    },
+    {
+     "t": 0.254,
+     "vh": 4.247,
+     "vy": -1.432,
+     "comY": 0.956,
+     "pelY": 0.801,
+     "recl": 14.111,
+     "bootLow": 0.251
+    },
+    {
+     "t": 0.304,
+     "vh": 4.232,
+     "vy": -1.887,
+     "comY": 0.871,
+     "pelY": 0.708,
+     "recl": 14.226,
+     "bootLow": 0.279
+    },
+    {
+     "t": 0.354,
+     "vh": 4.206,
+     "vy": -2.32,
+     "comY": 0.766,
+     "pelY": 0.592,
+     "recl": 15.044,
+     "bootLow": 0.248
+    },
+    {
+     "t": 0.404,
+     "vh": 4.189,
+     "vy": -2.772,
+     "comY": 0.637,
+     "pelY": 0.456,
+     "recl": 16.287,
+     "bootLow": 0.177
+    },
+    {
+     "t": 0.454,
+     "vh": 3.999,
+     "vy": -2.873,
+     "comY": 0.491,
+     "pelY": 0.303,
+     "recl": 16.621,
+     "bootLow": 0.076
+    },
+    {
+     "t": 0.504,
+     "vh": 3.439,
+     "vy": -1.516,
+     "comY": 0.359,
+     "pelY": 0.158,
+     "recl": 13.699,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.466,
+     "vy": -0.058,
+     "comY": 0.336,
+     "pelY": 0.143,
+     "recl": 11.266,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.156,
+     "vy": 0.088,
+     "comY": 0.337,
+     "pelY": 0.149,
+     "recl": 2.101,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 1.881,
+     "vy": 0.158,
+     "comY": 0.344,
+     "pelY": 0.159,
+     "recl": -2.733,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.598,
+     "vy": 0.247,
+     "comY": 0.354,
+     "pelY": 0.17,
+     "recl": -2.663,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.409,
+     "vy": 0.141,
+     "comY": 0.364,
+     "pelY": 0.184,
+     "recl": 0.618,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.279,
+     "vy": -0.089,
+     "comY": 0.365,
+     "pelY": 0.189,
+     "recl": 5.592,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.063,
+     "vy": -0.146,
+     "comY": 0.356,
+     "pelY": 0.183,
+     "recl": 10.972,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 0.814,
+     "vy": -0.136,
+     "comY": 0.349,
+     "pelY": 0.182,
+     "recl": 16.126,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.487,
+     "vy": -0.003,
+     "comY": 0.346,
+     "pelY": 0.183,
+     "recl": 18.475,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.239,
+     "vy": 0.015,
+     "comY": 0.346,
+     "pelY": 0.186,
+     "recl": 17.624,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.054,
+     "vh": 0.025,
+     "vy": -0.009,
+     "comY": 0.346,
+     "pelY": 0.189,
+     "recl": 15.928,
+     "bootLow": 0.01
+    },
+    {
+     "t": 1.104,
+     "vh": -0.015,
+     "vy": -0.066,
+     "comY": 0.344,
+     "pelY": 0.191,
+     "recl": 14.035,
+     "bootLow": 0.021
+    },
+    {
+     "t": 1.154,
+     "vh": -0.019,
+     "vy": -0.088,
+     "comY": 0.34,
+     "pelY": 0.192,
+     "recl": 13.599,
+     "bootLow": 0.025
+    },
+    {
+     "t": 1.204,
+     "vh": -0.015,
+     "vy": -0.054,
+     "comY": 0.337,
+     "pelY": 0.192,
+     "recl": 13.539,
+     "bootLow": 0.024
+    },
+    {
+     "t": 1.254,
+     "vh": -0.021,
+     "vy": -0.025,
+     "comY": 0.335,
+     "pelY": 0.194,
+     "recl": 13.191,
+     "bootLow": 0.028
+    },
+    {
+     "t": 1.304,
+     "vh": -0.043,
+     "vy": -0.033,
+     "comY": 0.334,
+     "pelY": 0.195,
+     "recl": 13.275,
+     "bootLow": 0.032
+    },
+    {
+     "t": 1.354,
+     "vh": -0.077,
+     "vy": -0.037,
+     "comY": 0.332,
+     "pelY": 0.196,
+     "recl": 14.292,
+     "bootLow": 0.038
+    },
+    {
+     "t": 1.404,
+     "vh": -0.086,
+     "vy": -0.034,
+     "comY": 0.33,
+     "pelY": 0.197,
+     "recl": 16.214,
+     "bootLow": 0.045
+    },
+    {
+     "t": 1.454,
+     "vh": -0.078,
+     "vy": -0.044,
+     "comY": 0.328,
+     "pelY": 0.198,
+     "recl": 17.887,
+     "bootLow": 0.052
+    },
+    {
+     "t": 1.504,
+     "vh": -0.079,
+     "vy": -0.049,
+     "comY": 0.326,
+     "pelY": 0.2,
+     "recl": 18.696,
+     "bootLow": 0.059
+    },
+    {
+     "t": 1.554,
+     "vh": -0.082,
+     "vy": -0.07,
+     "comY": 0.323,
+     "pelY": 0.201,
+     "recl": 19.402,
+     "bootLow": 0.068
+    },
+    {
+     "t": 1.604,
+     "vh": -0.089,
+     "vy": -0.106,
+     "comY": 0.318,
+     "pelY": 0.202,
+     "recl": 20.403,
+     "bootLow": 0.079
+    },
+    {
+     "t": 1.654,
+     "vh": -0.103,
+     "vy": -0.124,
+     "comY": 0.313,
+     "pelY": 0.204,
+     "recl": 21.95,
+     "bootLow": 0.094
+    },
+    {
+     "t": 1.704,
+     "vh": -0.106,
+     "vy": -0.149,
+     "comY": 0.306,
+     "pelY": 0.205,
+     "recl": 23.756,
+     "bootLow": 0.111
+    },
+    {
+     "t": 1.754,
+     "vh": -0.106,
+     "vy": -0.205,
+     "comY": 0.297,
+     "pelY": 0.207,
+     "recl": 25.928,
+     "bootLow": 0.13
+    },
+    {
+     "t": 1.804,
+     "vh": -0.108,
+     "vy": -0.251,
+     "comY": 0.286,
+     "pelY": 0.208,
+     "recl": 29.509,
+     "bootLow": 0.15
+    },
+    {
+     "t": 1.854,
+     "vh": -0.104,
+     "vy": -0.328,
+     "comY": 0.271,
+     "pelY": 0.208,
+     "recl": 35.191,
+     "bootLow": 0.169
+    },
+    {
+     "t": 1.904,
+     "vh": -0.09,
+     "vy": -0.439,
+     "comY": 0.252,
+     "pelY": 0.208,
+     "recl": 43.611,
+     "bootLow": 0.185
+    },
+    {
+     "t": 1.954,
+     "vh": 0.032,
+     "vy": -0.203,
+     "comY": 0.23,
+     "pelY": 0.207,
+     "recl": 52.317,
+     "bootLow": 0.197
+    }
+   ]
+  },
+  "4.5": {
+   "hash": "edb117edb04e135d",
+   "cost": 2.334,
+   "parts": {
+    "bootLoad": 0.123,
+    "slide": 0.581,
+    "kneeGlide": 0.882,
+    "limits": 0.748
+   },
+   "firstBodyT": 0.433,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.433
+    ],
+    [
+     "tackBoot",
+     0.467
+    ],
+    [
+     "shin_L",
+     0.479
+    ],
+    [
+     "pelvis",
+     0.496
+    ],
+    [
+     "thigh_L",
+     0.504
+    ],
+    [
+     "hand",
+     0.55
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.249,
+    "vy": -2.758,
+    "comY": 0.529,
+    "pelY": 0.345
+   },
+   "retention": {
+    "+0.1s": 0.668,
+    "+0.2s": 0.512,
+    "+0.3s": 0.389,
+    "+0.5s": 0.187
+   },
+   "slideFromContactM": 1.113,
+   "slideFromCommitM": 3.05,
+   "stopT": 1.033,
+   "meanDecel": 6.654,
+   "glideShare": {
+    "thigh_L": 0.399,
+    "knee_L": 0.391,
+    "tackBoot": 0.106,
+    "pelvis": 0.075,
+    "hand": 0.022,
+    "shin_L": 0.006,
+    "foldBoot": 0.001
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.433,
+     "JnNs": 482.835,
+     "peakStepBW": 4.993,
+     "peak29msBW": 1.717,
+     "peak29msKN": 1.329,
+     "regions": {
+      "knee_L:posterior": 29.769,
+      "knee_L:lateral": 453.065
+     }
+    },
+    "thigh_L": {
+     "first": 0.504,
+     "JnNs": 425.481,
+     "peakStepBW": 14.022,
+     "peak29msBW": 4.142,
+     "peak29msKN": 3.206,
+     "regions": {
+      "thigh_L:lateral": 425.481
+     }
+    },
+    "pelvis": {
+     "first": 0.496,
+     "JnNs": 305.639,
+     "peakStepBW": 18.155,
+     "peak29msBW": 3.11,
+     "peak29msKN": 2.407,
+     "regions": {
+      "hip_pelvis:buttock": 295.716,
+      "hip_pelvis:left": 9.923
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 144.876,
+     "peakStepBW": 6.079,
+     "peak29msBW": 2.825,
+     "peak29msKN": 2.187,
+     "regions": {
+      "boot_L:heel": 7.688,
+      "boot_L:sole": 77.655,
+      "boot_L:toe": 56.69,
+      "boot_L:upper": 2.843
+     }
+    },
+    "hand": {
+     "first": 0.55,
+     "JnNs": 105.502,
+     "peakStepBW": 1.023,
+     "peak29msBW": 0.289,
+     "peak29msKN": 0.224,
+     "regions": {
+      "hand_L": 105.502
+     }
+    },
+    "tackBoot": {
+     "first": 0.467,
+     "JnNs": 69.563,
+     "peakStepBW": 1.611,
+     "peak29msBW": 0.582,
+     "peak29msKN": 0.451,
+     "regions": {
+      "boot_R:heel": 11.657,
+      "boot_R:upper": 52.4,
+      "boot_R:sole": 5.506
+     }
+    },
+    "shin_L": {
+     "first": 0.479,
+     "JnNs": 44.427,
+     "peakStepBW": 1.223,
+     "peak29msBW": 0.931,
+     "peak29msKN": 0.721,
+     "regions": {
+      "shin_L:lateral": 44.427
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.002,
+    "contactFracDuringGlide": 0.951,
+    "JnNs": 69.563,
+    "shareJn": 0.044,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.003,
+     "max": 0.08
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.198,
+     "max": 0.391
+    },
+    "regions": {
+     "boot_R:heel": 11.657,
+     "boot_R:upper": 52.4,
+     "boot_R:sole": 5.506
+    }
+   },
+   "posture": {
+    "minBellyY": -0.179,
+    "reclAtStop": 15.916,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 4.4,
+     "at": 0.521,
+     "dur": 1.292,
+     "range": [
+      -15,
+      49
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.5,
+     "at": 0.946,
+     "dur": 0.029,
+     "range": [
+      -77,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.2,
+     "at": 0.525,
+     "dur": 0.025,
+     "range": [
+      -16,
+      11
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.865,
+   "cpu": {
+    "step": 0.29,
+    "passive": 0.223,
+    "act": 0.043,
+    "tone": 0.124,
+    "instrument": 0.035,
+    "measure": 0.144,
+    "law": 0,
+    "lawT": 0.124
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 4.532,
+     "vy": -0.315,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.094,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.433,
+     "vy": 0.093,
+     "comY": 1.064,
+     "pelY": 0.954,
+     "recl": -6.307,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.449,
+     "vy": -0.084,
+     "comY": 1.065,
+     "pelY": 0.955,
+     "recl": 7.422,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.494,
+     "vy": -0.49,
+     "comY": 1.05,
+     "pelY": 0.926,
+     "recl": 13.412,
+     "bootLow": 0.101
+    },
+    {
+     "t": 0.204,
+     "vh": 4.494,
+     "vy": -0.98,
+     "comY": 1.013,
+     "pelY": 0.87,
+     "recl": 13.079,
+     "bootLow": 0.186
+    },
+    {
+     "t": 0.254,
+     "vh": 4.494,
+     "vy": -1.471,
+     "comY": 0.95,
+     "pelY": 0.796,
+     "recl": 13.431,
+     "bootLow": 0.241
+    },
+    {
+     "t": 0.304,
+     "vh": 4.48,
+     "vy": -1.93,
+     "comY": 0.864,
+     "pelY": 0.701,
+     "recl": 13.155,
+     "bootLow": 0.259
+    },
+    {
+     "t": 0.354,
+     "vh": 4.452,
+     "vy": -2.358,
+     "comY": 0.756,
+     "pelY": 0.585,
+     "recl": 13.74,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.404,
+     "vh": 4.435,
+     "vy": -2.809,
+     "comY": 0.626,
+     "pelY": 0.446,
+     "recl": 14.843,
+     "bootLow": 0.139
+    },
+    {
+     "t": 0.454,
+     "vh": 4.181,
+     "vy": -2.779,
+     "comY": 0.483,
+     "pelY": 0.295,
+     "recl": 13.781,
+     "bootLow": 0.032
+    },
+    {
+     "t": 0.504,
+     "vh": 3.427,
+     "vy": -1.095,
+     "comY": 0.358,
+     "pelY": 0.155,
+     "recl": 9.266,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.676,
+     "vy": -0.081,
+     "comY": 0.338,
+     "pelY": 0.143,
+     "recl": 4.935,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.36,
+     "vy": 0.075,
+     "comY": 0.338,
+     "pelY": 0.149,
+     "recl": -4.981,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.089,
+     "vy": 0.135,
+     "comY": 0.344,
+     "pelY": 0.159,
+     "recl": -10.463,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.795,
+     "vy": 0.245,
+     "comY": 0.354,
+     "pelY": 0.171,
+     "recl": -10.519,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.596,
+     "vy": 0.158,
+     "comY": 0.364,
+     "pelY": 0.182,
+     "recl": -6.115,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.454,
+     "vy": -0.048,
+     "comY": 0.367,
+     "pelY": 0.185,
+     "recl": -0.308,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.256,
+     "vy": -0.143,
+     "comY": 0.359,
+     "pelY": 0.18,
+     "recl": 5.438,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.009,
+     "vy": -0.137,
+     "comY": 0.352,
+     "pelY": 0.179,
+     "recl": 11.23,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.681,
+     "vy": 0.006,
+     "comY": 0.348,
+     "pelY": 0.18,
+     "recl": 15.675,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.426,
+     "vy": 0.029,
+     "comY": 0.349,
+     "pelY": 0.183,
+     "recl": 15.843,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.2,
+     "vy": 0.003,
+     "comY": 0.35,
+     "pelY": 0.186,
+     "recl": 15.909,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.03,
+     "vy": -0.037,
+     "comY": 0.349,
+     "pelY": 0.187,
+     "recl": 14.674,
+     "bootLow": 0.003
+    },
+    {
+     "t": 1.154,
+     "vh": 0.008,
+     "vy": -0.066,
+     "comY": 0.346,
+     "pelY": 0.188,
+     "recl": 12.636,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.204,
+     "vh": 0.005,
+     "vy": -0.054,
+     "comY": 0.343,
+     "pelY": 0.189,
+     "recl": 12.116,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": -0.006,
+     "vy": -0.026,
+     "comY": 0.341,
+     "pelY": 0.189,
+     "recl": 12.117,
+     "bootLow": 0.001
+    },
+    {
+     "t": 1.304,
+     "vh": -0.03,
+     "vy": -0.021,
+     "comY": 0.34,
+     "pelY": 0.19,
+     "recl": 11.946,
+     "bootLow": 0.006
+    },
+    {
+     "t": 1.354,
+     "vh": -0.055,
+     "vy": -0.024,
+     "comY": 0.339,
+     "pelY": 0.19,
+     "recl": 12.42,
+     "bootLow": 0.01
+    },
+    {
+     "t": 1.404,
+     "vh": -0.059,
+     "vy": -0.005,
+     "comY": 0.338,
+     "pelY": 0.191,
+     "recl": 13.978,
+     "bootLow": 0.013
+    },
+    {
+     "t": 1.454,
+     "vh": -0.042,
+     "vy": 0.011,
+     "comY": 0.339,
+     "pelY": 0.192,
+     "recl": 15.282,
+     "bootLow": 0.017
+    },
+    {
+     "t": 1.504,
+     "vh": -0.031,
+     "vy": 0.002,
+     "comY": 0.339,
+     "pelY": 0.194,
+     "recl": 15.504,
+     "bootLow": 0.023
+    },
+    {
+     "t": 1.554,
+     "vh": -0.019,
+     "vy": -0.002,
+     "comY": 0.339,
+     "pelY": 0.195,
+     "recl": 15.487,
+     "bootLow": 0.029
+    },
+    {
+     "t": 1.604,
+     "vh": -0.014,
+     "vy": -0.023,
+     "comY": 0.338,
+     "pelY": 0.196,
+     "recl": 15.172,
+     "bootLow": 0.033
+    },
+    {
+     "t": 1.654,
+     "vh": -0.014,
+     "vy": -0.042,
+     "comY": 0.337,
+     "pelY": 0.197,
+     "recl": 14.654,
+     "bootLow": 0.038
+    },
+    {
+     "t": 1.704,
+     "vh": -0.018,
+     "vy": -0.038,
+     "comY": 0.335,
+     "pelY": 0.197,
+     "recl": 14.302,
+     "bootLow": 0.04
+    },
+    {
+     "t": 1.754,
+     "vh": -0.028,
+     "vy": -0.057,
+     "comY": 0.332,
+     "pelY": 0.197,
+     "recl": 14.003,
+     "bootLow": 0.043
+    },
+    {
+     "t": 1.804,
+     "vh": -0.052,
+     "vy": -0.066,
+     "comY": 0.329,
+     "pelY": 0.198,
+     "recl": 14.104,
+     "bootLow": 0.044
+    },
+    {
+     "t": 1.854,
+     "vh": -0.078,
+     "vy": -0.074,
+     "comY": 0.326,
+     "pelY": 0.199,
+     "recl": 14.893,
+     "bootLow": 0.041
+    },
+    {
+     "t": 1.904,
+     "vh": -0.088,
+     "vy": -0.095,
+     "comY": 0.322,
+     "pelY": 0.201,
+     "recl": 16.372,
+     "bootLow": 0.038
+    },
+    {
+     "t": 1.954,
+     "vh": -0.102,
+     "vy": -0.105,
+     "comY": 0.316,
+     "pelY": 0.203,
+     "recl": 18.586,
+     "bootLow": 0.038
+    }
+   ]
+  },
+  "4.75": {
+   "hash": "ea3dbbb253bcca63",
+   "cost": 3.846,
+   "parts": {
+    "slide": 0.537,
+    "decel": 0.098,
+    "retention": 0.028,
+    "kneeGlide": 1.884,
+    "limits": 1.3
+   },
+   "firstBodyT": 0.421,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.421
+    ],
+    [
+     "tackBoot",
+     0.45
+    ],
+    [
+     "shin_L",
+     0.483
+    ],
+    [
+     "pelvis",
+     0.5
+    ],
+    [
+     "thigh_L",
+     0.504
+    ],
+    [
+     "hand",
+     0.971
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.624,
+    "vy": -2.897,
+    "comY": 0.565,
+    "pelY": 0.386
+   },
+   "retention": {
+    "+0.1s": 0.641,
+    "+0.2s": 0.486,
+    "+0.3s": 0.348,
+    "+0.5s": 0.181
+   },
+   "slideFromContactM": 1.142,
+   "slideFromCommitM": 3.11,
+   "stopT": 1.013,
+   "meanDecel": 7.326,
+   "glideShare": {
+    "knee_L": 0.507,
+    "thigh_L": 0.234,
+    "tackBoot": 0.135,
+    "pelvis": 0.102,
+    "hand": 0.02,
+    "foldBoot": 0.002,
+    "shin_L": 0
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.421,
+     "JnNs": 605.837,
+     "peakStepBW": 7.363,
+     "peak29msBW": 1.996,
+     "peak29msKN": 1.545,
+     "regions": {
+      "knee_L:posterior": 45.06,
+      "knee_L:lateral": 560.777
+     }
+    },
+    "pelvis": {
+     "first": 0.5,
+     "JnNs": 409.572,
+     "peakStepBW": 7.807,
+     "peak29msBW": 1.138,
+     "peak29msKN": 0.881,
+     "regions": {
+      "hip_pelvis:buttock": 389.284,
+      "hip_pelvis:left": 20.288
+     }
+    },
+    "thigh_L": {
+     "first": 0.504,
+     "JnNs": 219.03,
+     "peakStepBW": 19.128,
+     "peak29msBW": 5.676,
+     "peak29msKN": 4.394,
+     "regions": {
+      "thigh_L:lateral": 219.03
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 146.684,
+     "peakStepBW": 6.003,
+     "peak29msBW": 2.826,
+     "peak29msKN": 2.188,
+     "regions": {
+      "boot_L:heel": 7.431,
+      "boot_L:sole": 74.149,
+      "boot_L:toe": 57.143,
+      "boot_L:upper": 7.962
+     }
+    },
+    "hand": {
+     "first": 0.971,
+     "JnNs": 81.132,
+     "peakStepBW": 1.06,
+     "peak29msBW": 0.298,
+     "peak29msKN": 0.231,
+     "regions": {
+      "hand_L": 81.132
+     }
+    },
+    "tackBoot": {
+     "first": 0.45,
+     "JnNs": 79.853,
+     "peakStepBW": 1.275,
+     "peak29msBW": 0.485,
+     "peak29msKN": 0.375,
+     "regions": {
+      "boot_R:heel": 15.391,
+      "boot_R:sole": 9.083,
+      "boot_R:upper": 55.379
+     }
+    },
+    "shin_L": {
+     "first": 0.483,
+     "JnNs": 47.872,
+     "peakStepBW": 1.366,
+     "peak29msBW": 1.132,
+     "peak29msKN": 0.876,
+     "regions": {
+      "shin_L:lateral": 47.755,
+      "shin_L:posterior": 0.117
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.002,
+    "contactFracDuringGlide": 0.951,
+    "JnNs": 79.853,
+    "shareJn": 0.05,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.002,
+     "max": 0.065
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.127,
+     "max": 0.438
+    },
+    "regions": {
+     "boot_R:heel": 15.391,
+     "boot_R:sole": 9.083,
+     "boot_R:upper": 55.379
+    }
+   },
+   "posture": {
+    "minBellyY": -0.199,
+    "reclAtStop": 17.968,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 7.5,
+     "at": 0.521,
+     "dur": 1,
+     "range": [
+      -16,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.8,
+     "at": 0.525,
+     "dur": 0.025,
+     "range": [
+      -17,
+      12
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 1.8,
+     "at": 0.479,
+     "dur": 0.013,
+     "range": [
+      -35,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.7,
+     "at": 0.983,
+     "dur": 0.029,
+     "range": [
+      -77,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.857,
+   "cpu": {
+    "step": 0.293,
+    "passive": 0.232,
+    "act": 0.036,
+    "tone": 0.106,
+    "instrument": 0.04,
+    "measure": 0.143,
+    "law": 0,
+    "lawT": 0.106
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 4.774,
+     "vy": -0.31,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.098,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.675,
+     "vy": 0.081,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.253,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.699,
+     "vy": -0.105,
+     "comY": 1.064,
+     "pelY": 0.954,
+     "recl": 7.61,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.74,
+     "vy": -0.529,
+     "comY": 1.048,
+     "pelY": 0.923,
+     "recl": 13.591,
+     "bootLow": 0.098
+    },
+    {
+     "t": 0.204,
+     "vh": 4.74,
+     "vy": -1.02,
+     "comY": 1.008,
+     "pelY": 0.866,
+     "recl": 12.951,
+     "bootLow": 0.181
+    },
+    {
+     "t": 0.254,
+     "vh": 4.74,
+     "vy": -1.51,
+     "comY": 0.944,
+     "pelY": 0.79,
+     "recl": 12.749,
+     "bootLow": 0.23
+    },
+    {
+     "t": 0.304,
+     "vh": 4.73,
+     "vy": -1.979,
+     "comY": 0.855,
+     "pelY": 0.694,
+     "recl": 12.033,
+     "bootLow": 0.238
+    },
+    {
+     "t": 0.354,
+     "vh": 4.698,
+     "vy": -2.397,
+     "comY": 0.745,
+     "pelY": 0.576,
+     "recl": 12.351,
+     "bootLow": 0.188
+    },
+    {
+     "t": 0.404,
+     "vh": 4.678,
+     "vy": -2.845,
+     "comY": 0.613,
+     "pelY": 0.436,
+     "recl": 13.304,
+     "bootLow": 0.1
+    },
+    {
+     "t": 0.454,
+     "vh": 4.315,
+     "vy": -2.594,
+     "comY": 0.477,
+     "pelY": 0.291,
+     "recl": 10.341,
+     "bootLow": 0.001
+    },
+    {
+     "t": 0.504,
+     "vh": 3.432,
+     "vy": -1.302,
+     "comY": 0.358,
+     "pelY": 0.154,
+     "recl": 4.239,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.608,
+     "vy": -0.13,
+     "comY": 0.339,
+     "pelY": 0.144,
+     "recl": -4.998,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.348,
+     "vy": -0.084,
+     "comY": 0.334,
+     "pelY": 0.15,
+     "recl": -15.16,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.047,
+     "vy": 0.039,
+     "comY": 0.333,
+     "pelY": 0.155,
+     "recl": -20,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.71,
+     "vy": 0.237,
+     "comY": 0.34,
+     "pelY": 0.164,
+     "recl": -19.032,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.438,
+     "vy": 0.299,
+     "comY": 0.354,
+     "pelY": 0.175,
+     "recl": -14.134,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.269,
+     "vy": 0.148,
+     "comY": 0.366,
+     "pelY": 0.184,
+     "recl": -7.613,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.146,
+     "vy": -0.096,
+     "comY": 0.367,
+     "pelY": 0.186,
+     "recl": -0.637,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 0.92,
+     "vy": -0.133,
+     "comY": 0.358,
+     "pelY": 0.178,
+     "recl": 6.551,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.667,
+     "vy": -0.117,
+     "comY": 0.352,
+     "pelY": 0.177,
+     "recl": 13.076,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.33,
+     "vy": 0.05,
+     "comY": 0.351,
+     "pelY": 0.177,
+     "recl": 17.671,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.087,
+     "vy": 0.061,
+     "comY": 0.354,
+     "pelY": 0.181,
+     "recl": 18.209,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": -0.063,
+     "vy": 0.013,
+     "comY": 0.356,
+     "pelY": 0.185,
+     "recl": 16.593,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": -0.088,
+     "vy": -0.062,
+     "comY": 0.354,
+     "pelY": 0.189,
+     "recl": 15.522,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": -0.082,
+     "vy": -0.067,
+     "comY": 0.35,
+     "pelY": 0.192,
+     "recl": 16.226,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": -0.049,
+     "vy": -0.025,
+     "comY": 0.348,
+     "pelY": 0.194,
+     "recl": 15.981,
+     "bootLow": 0
+    },
+    {
+     "t": 1.304,
+     "vh": -0.026,
+     "vy": -0.016,
+     "comY": 0.348,
+     "pelY": 0.196,
+     "recl": 14.674,
+     "bootLow": 0.004
+    },
+    {
+     "t": 1.354,
+     "vh": -0.019,
+     "vy": -0.002,
+     "comY": 0.347,
+     "pelY": 0.197,
+     "recl": 14.539,
+     "bootLow": 0.013
+    },
+    {
+     "t": 1.404,
+     "vh": -0.02,
+     "vy": 0.012,
+     "comY": 0.347,
+     "pelY": 0.198,
+     "recl": 15.059,
+     "bootLow": 0.022
+    },
+    {
+     "t": 1.454,
+     "vh": -0.015,
+     "vy": 0.017,
+     "comY": 0.348,
+     "pelY": 0.198,
+     "recl": 15.413,
+     "bootLow": 0.027
+    },
+    {
+     "t": 1.504,
+     "vh": -0.014,
+     "vy": 0.016,
+     "comY": 0.349,
+     "pelY": 0.198,
+     "recl": 16.016,
+     "bootLow": 0.027
+    },
+    {
+     "t": 1.554,
+     "vh": -0.031,
+     "vy": 0.015,
+     "comY": 0.35,
+     "pelY": 0.198,
+     "recl": 16.923,
+     "bootLow": 0.023
+    },
+    {
+     "t": 1.604,
+     "vh": -0.047,
+     "vy": 0.017,
+     "comY": 0.351,
+     "pelY": 0.198,
+     "recl": 17.724,
+     "bootLow": 0.015
+    },
+    {
+     "t": 1.654,
+     "vh": -0.051,
+     "vy": 0.014,
+     "comY": 0.351,
+     "pelY": 0.199,
+     "recl": 18.519,
+     "bootLow": 0.007
+    },
+    {
+     "t": 1.704,
+     "vh": -0.04,
+     "vy": 0.005,
+     "comY": 0.352,
+     "pelY": 0.199,
+     "recl": 19.253,
+     "bootLow": 0
+    },
+    {
+     "t": 1.754,
+     "vh": -0.035,
+     "vy": 0.011,
+     "comY": 0.352,
+     "pelY": 0.2,
+     "recl": 19.686,
+     "bootLow": 0
+    },
+    {
+     "t": 1.804,
+     "vh": -0.049,
+     "vy": 0.014,
+     "comY": 0.353,
+     "pelY": 0.2,
+     "recl": 19.91,
+     "bootLow": 0.001
+    },
+    {
+     "t": 1.854,
+     "vh": -0.077,
+     "vy": 0.017,
+     "comY": 0.354,
+     "pelY": 0.2,
+     "recl": 20.146,
+     "bootLow": 0.007
+    },
+    {
+     "t": 1.904,
+     "vh": -0.106,
+     "vy": 0.049,
+     "comY": 0.355,
+     "pelY": 0.201,
+     "recl": 20.803,
+     "bootLow": 0.018
+    },
+    {
+     "t": 1.954,
+     "vh": -0.127,
+     "vy": 0.051,
+     "comY": 0.358,
+     "pelY": 0.203,
+     "recl": 21.667,
+     "bootLow": 0.031
+    }
+   ]
+  },
+  "5.25": {
+   "hash": "6bc1cb2a7563e14a",
+   "cost": 3.648,
+   "parts": {
+    "bootLoad": 0.048,
+    "kneeGlide": 2.319,
+    "limits": 1.281
+   },
+   "firstBodyT": 0.404,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.404
+    ],
+    [
+     "tackBoot",
+     0.417
+    ],
+    [
+     "shin_L",
+     0.496
+    ],
+    [
+     "pelvis",
+     0.517
+    ],
+    [
+     "thigh_L",
+     0.521
+    ],
+    [
+     "hand",
+     0.996
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.862,
+    "vy": -2.353,
+    "comY": 0.582,
+    "pelY": 0.408
+   },
+   "retention": {
+    "+0.1s": 0.861,
+    "+0.2s": 0.577,
+    "+0.3s": 0.449,
+    "+0.5s": 0.268
+   },
+   "slideFromContactM": 1.514,
+   "slideFromCommitM": 3.618,
+   "stopT": 1.108,
+   "meanDecel": 6.537,
+   "glideShare": {
+    "knee_L": 0.523,
+    "thigh_L": 0.206,
+    "tackBoot": 0.123,
+    "pelvis": 0.089,
+    "shin_L": 0.036,
+    "foldBoot": 0.012,
+    "hand": 0.011
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.404,
+     "JnNs": 477.839,
+     "peakStepBW": 7.768,
+     "peak29msBW": 2.874,
+     "peak29msKN": 2.225,
+     "regions": {
+      "knee_L:posterior": 79.195,
+      "knee_L:lateral": 398.644
+     }
+    },
+    "pelvis": {
+     "first": 0.517,
+     "JnNs": 350.412,
+     "peakStepBW": 1.467,
+     "peak29msBW": 0.625,
+     "peak29msKN": 0.484,
+     "regions": {
+      "hip_pelvis:buttock": 350.412
+     }
+    },
+    "thigh_L": {
+     "first": 0.521,
+     "JnNs": 205.952,
+     "peakStepBW": 21.842,
+     "peak29msBW": 5.005,
+     "peak29msKN": 3.874,
+     "regions": {
+      "thigh_L:lateral": 205.952
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 197.862,
+     "peakStepBW": 5.827,
+     "peak29msBW": 2.841,
+     "peak29msKN": 2.199,
+     "regions": {
+      "boot_L:heel": 8.092,
+      "boot_L:sole": 70.76,
+      "boot_L:toe": 55.438,
+      "boot_L:upper": 63.572
+     }
+    },
+    "shin_L": {
+     "first": 0.496,
+     "JnNs": 156.553,
+     "peakStepBW": 1.521,
+     "peak29msBW": 0.976,
+     "peak29msKN": 0.756,
+     "regions": {
+      "shin_L:lateral": 156.039,
+      "shin_L:posterior": 0.514
+     }
+    },
+    "hand": {
+     "first": 0.996,
+     "JnNs": 109.719,
+     "peakStepBW": 0.931,
+     "peak29msBW": 0.247,
+     "peak29msKN": 0.191,
+     "regions": {
+      "hand_L": 109.719
+     }
+    },
+    "tackBoot": {
+     "first": 0.417,
+     "JnNs": 88.125,
+     "peakStepBW": 1.043,
+     "peak29msBW": 0.475,
+     "peak29msKN": 0.368,
+     "regions": {
+      "boot_R:heel": 43.776,
+      "boot_R:sole": 12.989,
+      "boot_R:upper": 31.36
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0,
+    "contactFracDuringGlide": 0.988,
+    "JnNs": 88.125,
+    "shareJn": 0.056,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0,
+     "max": 0.022
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.511
+    },
+    "regions": {
+     "boot_R:heel": 43.776,
+     "boot_R:sole": 12.989,
+     "boot_R:upper": 31.36
+    }
+   },
+   "posture": {
+    "minBellyY": -0.089,
+    "reclAtStop": 21.747,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 7.5,
+     "at": 0.529,
+     "dur": 1.354,
+     "range": [
+      -20,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.9,
+     "at": 0.454,
+     "dur": 0.042,
+     "range": [
+      -36,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.4,
+     "at": 0.371,
+     "dur": 0.013,
+     "range": [
+      -76,
+      68
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 0.9,
+     "at": 0.537,
+     "dur": 0.013,
+     "range": [
+      -16,
+      11
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.887,
+   "cpu": {
+    "step": 0.295,
+    "passive": 0.231,
+    "act": 0.04,
+    "tone": 0.121,
+    "instrument": 0.046,
+    "measure": 0.148,
+    "law": 0,
+    "lawT": 0.121
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.257,
+     "vy": -0.299,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.106,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 5.159,
+     "vy": 0.065,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.148,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 5.199,
+     "vy": -0.148,
+     "comY": 1.063,
+     "pelY": 0.952,
+     "recl": 8.008,
+     "bootLow": 0.035
+    },
+    {
+     "t": 0.154,
+     "vh": 5.226,
+     "vy": -0.602,
+     "comY": 1.044,
+     "pelY": 0.918,
+     "recl": 14.042,
+     "bootLow": 0.092
+    },
+    {
+     "t": 0.204,
+     "vh": 5.226,
+     "vy": -1.093,
+     "comY": 1,
+     "pelY": 0.857,
+     "recl": 12.779,
+     "bootLow": 0.169
+    },
+    {
+     "t": 0.254,
+     "vh": 5.226,
+     "vy": -1.583,
+     "comY": 0.932,
+     "pelY": 0.779,
+     "recl": 11.574,
+     "bootLow": 0.205
+    },
+    {
+     "t": 0.304,
+     "vh": 5.226,
+     "vy": -2.074,
+     "comY": 0.84,
+     "pelY": 0.681,
+     "recl": 9.987,
+     "bootLow": 0.193
+    },
+    {
+     "t": 0.354,
+     "vh": 5.185,
+     "vy": -2.471,
+     "comY": 0.726,
+     "pelY": 0.561,
+     "recl": 9.567,
+     "bootLow": 0.124
+    },
+    {
+     "t": 0.404,
+     "vh": 5.024,
+     "vy": -2.636,
+     "comY": 0.592,
+     "pelY": 0.419,
+     "recl": 10.147,
+     "bootLow": 0.022
+    },
+    {
+     "t": 0.454,
+     "vh": 4.529,
+     "vy": -2.124,
+     "comY": 0.48,
+     "pelY": 0.298,
+     "recl": 2.246,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.21,
+     "vy": -1.966,
+     "comY": 0.378,
+     "pelY": 0.184,
+     "recl": -6.98,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.1,
+     "vy": -0.219,
+     "comY": 0.337,
+     "pelY": 0.151,
+     "recl": -16.757,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.825,
+     "vy": -0.137,
+     "comY": 0.328,
+     "pelY": 0.158,
+     "recl": -26.911,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.523,
+     "vy": 0.004,
+     "comY": 0.324,
+     "pelY": 0.159,
+     "recl": -31.319,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 2.208,
+     "vy": 0.162,
+     "comY": 0.329,
+     "pelY": 0.161,
+     "recl": -29.921,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.945,
+     "vy": 0.205,
+     "comY": 0.339,
+     "pelY": 0.164,
+     "recl": -25.1,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.715,
+     "vy": 0.178,
+     "comY": 0.349,
+     "pelY": 0.168,
+     "recl": -18.621,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.52,
+     "vy": 0.078,
+     "comY": 0.355,
+     "pelY": 0.17,
+     "recl": -10.747,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.322,
+     "vy": -0.017,
+     "comY": 0.356,
+     "pelY": 0.169,
+     "recl": -2,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 1.072,
+     "vy": -0.006,
+     "comY": 0.355,
+     "pelY": 0.168,
+     "recl": 6.98,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.785,
+     "vy": 0.072,
+     "comY": 0.356,
+     "pelY": 0.171,
+     "recl": 14.041,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.548,
+     "vy": 0.058,
+     "comY": 0.359,
+     "pelY": 0.176,
+     "recl": 19.287,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.306,
+     "vy": 0.056,
+     "comY": 0.362,
+     "pelY": 0.182,
+     "recl": 21.672,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": 0.078,
+     "vy": 0.026,
+     "comY": 0.364,
+     "pelY": 0.188,
+     "recl": 21.39,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": -0.067,
+     "vy": -0.014,
+     "comY": 0.364,
+     "pelY": 0.191,
+     "recl": 20.312,
+     "bootLow": 0.007
+    },
+    {
+     "t": 1.254,
+     "vh": -0.083,
+     "vy": -0.013,
+     "comY": 0.363,
+     "pelY": 0.194,
+     "recl": 20.214,
+     "bootLow": 0.019
+    },
+    {
+     "t": 1.304,
+     "vh": -0.075,
+     "vy": -0.008,
+     "comY": 0.363,
+     "pelY": 0.197,
+     "recl": 19.814,
+     "bootLow": 0.034
+    },
+    {
+     "t": 1.354,
+     "vh": -0.062,
+     "vy": 0.011,
+     "comY": 0.363,
+     "pelY": 0.199,
+     "recl": 19.095,
+     "bootLow": 0.05
+    },
+    {
+     "t": 1.404,
+     "vh": -0.066,
+     "vy": 0.033,
+     "comY": 0.364,
+     "pelY": 0.2,
+     "recl": 19.06,
+     "bootLow": 0.061
+    },
+    {
+     "t": 1.454,
+     "vh": -0.097,
+     "vy": 0.037,
+     "comY": 0.366,
+     "pelY": 0.202,
+     "recl": 20.095,
+     "bootLow": 0.067
+    },
+    {
+     "t": 1.504,
+     "vh": -0.121,
+     "vy": 0.035,
+     "comY": 0.367,
+     "pelY": 0.203,
+     "recl": 22.076,
+     "bootLow": 0.069
+    },
+    {
+     "t": 1.554,
+     "vh": -0.125,
+     "vy": 0.028,
+     "comY": 0.369,
+     "pelY": 0.204,
+     "recl": 24.49,
+     "bootLow": 0.071
+    },
+    {
+     "t": 1.604,
+     "vh": -0.11,
+     "vy": 0.019,
+     "comY": 0.37,
+     "pelY": 0.205,
+     "recl": 26.808,
+     "bootLow": 0.076
+    },
+    {
+     "t": 1.654,
+     "vh": -0.086,
+     "vy": 0.014,
+     "comY": 0.371,
+     "pelY": 0.207,
+     "recl": 28.722,
+     "bootLow": 0.087
+    },
+    {
+     "t": 1.704,
+     "vh": -0.07,
+     "vy": 0.017,
+     "comY": 0.372,
+     "pelY": 0.207,
+     "recl": 30.191,
+     "bootLow": 0.101
+    },
+    {
+     "t": 1.754,
+     "vh": -0.071,
+     "vy": 0.023,
+     "comY": 0.373,
+     "pelY": 0.207,
+     "recl": 30.875,
+     "bootLow": 0.115
+    },
+    {
+     "t": 1.804,
+     "vh": -0.053,
+     "vy": 0.02,
+     "comY": 0.374,
+     "pelY": 0.207,
+     "recl": 30.72,
+     "bootLow": 0.126
+    },
+    {
+     "t": 1.854,
+     "vh": -0.028,
+     "vy": -0.004,
+     "comY": 0.374,
+     "pelY": 0.205,
+     "recl": 30.631,
+     "bootLow": 0.131
+    },
+    {
+     "t": 1.904,
+     "vh": -0.027,
+     "vy": -0.011,
+     "comY": 0.374,
+     "pelY": 0.204,
+     "recl": 31.268,
+     "bootLow": 0.129
+    },
+    {
+     "t": 1.954,
+     "vh": -0.039,
+     "vy": -0.008,
+     "comY": 0.373,
+     "pelY": 0.203,
+     "recl": 32.145,
+     "bootLow": 0.12
+    }
+   ]
+  },
+  "5.5": {
+   "hash": "7c8ff04affff7bf6",
+   "cost": 3.548,
+   "parts": {
+    "bootLoad": 0.088,
+    "knee": 0.299,
+    "kneeGlide": 2.217,
+    "limits": 0.944
+   },
+   "firstBodyT": 0.396,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.396
+    ],
+    [
+     "tackBoot",
+     0.4
+    ],
+    [
+     "shin_L",
+     0.513
+    ],
+    [
+     "thigh_L",
+     0.538
+    ],
+    [
+     "hand",
+     1.021
+    ],
+    [
+     "pelvis",
+     1.025
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 5.369,
+    "vy": -2.791,
+    "comY": 0.605,
+    "pelY": 0.436
+   },
+   "retention": {
+    "+0.1s": 0.815,
+    "+0.2s": 0.581,
+    "+0.3s": 0.465,
+    "+0.5s": 0.291
+   },
+   "slideFromContactM": 1.765,
+   "slideFromCommitM": 3.902,
+   "stopT": 1.167,
+   "meanDecel": 6.585,
+   "glideShare": {
+    "knee_L": 0.458,
+    "thigh_L": 0.209,
+    "tackBoot": 0.119,
+    "pelvis": 0.092,
+    "shin_L": 0.087,
+    "foldBoot": 0.019,
+    "hand": 0.015
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.396,
+     "JnNs": 506.023,
+     "peakStepBW": 14.38,
+     "peak29msBW": 3.299,
+     "peak29msKN": 2.554,
+     "regions": {
+      "knee_L:posterior": 96.154,
+      "knee_L:lateral": 409.87
+     }
+    },
+    "pelvis": {
+     "first": 1.025,
+     "JnNs": 328.014,
+     "peakStepBW": 0.89,
+     "peak29msBW": 0.566,
+     "peak29msKN": 0.438,
+     "regions": {
+      "hip_pelvis:buttock": 328.014
+     }
+    },
+    "thigh_L": {
+     "first": 0.538,
+     "JnNs": 183.723,
+     "peakStepBW": 12.687,
+     "peak29msBW": 4.414,
+     "peak29msKN": 3.417,
+     "regions": {
+      "thigh_L:lateral": 183.723
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 183.544,
+     "peakStepBW": 5.851,
+     "peak29msBW": 2.847,
+     "peak29msKN": 2.204,
+     "regions": {
+      "boot_L:heel": 8.268,
+      "boot_L:sole": 70.514,
+      "boot_L:toe": 57.197,
+      "boot_L:upper": 47.565
+     }
+    },
+    "shin_L": {
+     "first": 0.513,
+     "JnNs": 179.83,
+     "peakStepBW": 1.133,
+     "peak29msBW": 0.774,
+     "peak29msKN": 0.599,
+     "regions": {
+      "shin_L:posterior": 0.022,
+      "shin_L:lateral": 179.808
+     }
+    },
+    "hand": {
+     "first": 1.021,
+     "JnNs": 107.575,
+     "peakStepBW": 1.551,
+     "peak29msBW": 0.265,
+     "peak29msKN": 0.205,
+     "regions": {
+      "hand_L": 107.575
+     }
+    },
+    "tackBoot": {
+     "first": 0.4,
+     "JnNs": 97.389,
+     "peakStepBW": 0.894,
+     "peak29msBW": 0.449,
+     "peak29msKN": 0.348,
+     "regions": {
+      "boot_R:heel": 54.859,
+      "boot_R:sole": 14.47,
+      "boot_R:upper": 28.06
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0,
+    "contactFracDuringGlide": 0.995,
+    "JnNs": 97.389,
+    "shareJn": 0.061,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0,
+     "max": 0.004
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.542
+    },
+    "regions": {
+     "boot_R:heel": 54.859,
+     "boot_R:sole": 14.47,
+     "boot_R:upper": 28.06
+    }
+   },
+   "posture": {
+    "minBellyY": -0.101,
+    "reclAtStop": 23.698,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 5.1,
+     "at": 0.542,
+     "dur": 1.329,
+     "range": [
+      -21,
+      50
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.1,
+     "at": 0.442,
+     "dur": 0.083,
+     "range": [
+      -35,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.4,
+     "at": 0.367,
+     "dur": 0.013,
+     "range": [
+      -76,
+      68
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "lumbar.x",
+     "beyond": 0.9,
+     "at": 0.417,
+     "dur": 0.021,
+     "range": [
+      -5,
+      11
+     ],
+     "hard": [
+      -10,
+      10
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.809,
+   "cpu": {
+    "step": 0.29,
+    "passive": 0.214,
+    "act": 0.034,
+    "tone": 0.099,
+    "instrument": 0.04,
+    "measure": 0.126,
+    "law": 0,
+    "lawT": 0.099
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.499,
+     "vy": -0.294,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.109,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 5.402,
+     "vy": 0.058,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.094,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 5.449,
+     "vy": -0.17,
+     "comY": 1.062,
+     "pelY": 0.951,
+     "recl": 8.196,
+     "bootLow": 0.035
+    },
+    {
+     "t": 0.154,
+     "vh": 5.47,
+     "vy": -0.635,
+     "comY": 1.041,
+     "pelY": 0.916,
+     "recl": 14.268,
+     "bootLow": 0.09
+    },
+    {
+     "t": 0.204,
+     "vh": 5.47,
+     "vy": -1.125,
+     "comY": 0.996,
+     "pelY": 0.853,
+     "recl": 12.721,
+     "bootLow": 0.164
+    },
+    {
+     "t": 0.254,
+     "vh": 5.47,
+     "vy": -1.616,
+     "comY": 0.927,
+     "pelY": 0.774,
+     "recl": 11.096,
+     "bootLow": 0.193
+    },
+    {
+     "t": 0.304,
+     "vh": 5.47,
+     "vy": -2.106,
+     "comY": 0.833,
+     "pelY": 0.675,
+     "recl": 9.119,
+     "bootLow": 0.172
+    },
+    {
+     "t": 0.354,
+     "vh": 5.429,
+     "vy": -2.503,
+     "comY": 0.717,
+     "pelY": 0.554,
+     "recl": 8.37,
+     "bootLow": 0.094
+    },
+    {
+     "t": 0.404,
+     "vh": 5.01,
+     "vy": -2.151,
+     "comY": 0.586,
+     "pelY": 0.415,
+     "recl": 8.468,
+     "bootLow": 0.001
+    },
+    {
+     "t": 0.454,
+     "vh": 4.626,
+     "vy": -1.866,
+     "comY": 0.487,
+     "pelY": 0.308,
+     "recl": -1.83,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.33,
+     "vy": -1.756,
+     "comY": 0.397,
+     "pelY": 0.212,
+     "recl": -12.735,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.411,
+     "vy": -0.389,
+     "comY": 0.336,
+     "pelY": 0.154,
+     "recl": -20.159,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 3.065,
+     "vy": -0.164,
+     "comY": 0.324,
+     "pelY": 0.158,
+     "recl": -30.913,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.749,
+     "vy": 0.011,
+     "comY": 0.32,
+     "pelY": 0.16,
+     "recl": -36.055,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 2.449,
+     "vy": 0.147,
+     "comY": 0.325,
+     "pelY": 0.161,
+     "recl": -35.081,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 2.196,
+     "vy": 0.175,
+     "comY": 0.334,
+     "pelY": 0.162,
+     "recl": -30.935,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.958,
+     "vy": 0.164,
+     "comY": 0.342,
+     "pelY": 0.163,
+     "recl": -24.513,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.747,
+     "vy": 0.096,
+     "comY": 0.349,
+     "pelY": 0.163,
+     "recl": -16.89,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.521,
+     "vy": 0.058,
+     "comY": 0.352,
+     "pelY": 0.163,
+     "recl": -8.696,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 1.283,
+     "vy": 0.044,
+     "comY": 0.355,
+     "pelY": 0.164,
+     "recl": 0.545,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 1.059,
+     "vy": 0.002,
+     "comY": 0.356,
+     "pelY": 0.167,
+     "recl": 9.815,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.806,
+     "vy": 0.074,
+     "comY": 0.359,
+     "pelY": 0.173,
+     "recl": 16.348,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.58,
+     "vy": 0.05,
+     "comY": 0.362,
+     "pelY": 0.18,
+     "recl": 21.066,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": 0.349,
+     "vy": 0.032,
+     "comY": 0.364,
+     "pelY": 0.187,
+     "recl": 23.492,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": 0.118,
+     "vy": 0.014,
+     "comY": 0.365,
+     "pelY": 0.192,
+     "recl": 23.833,
+     "bootLow": 0.01
+    },
+    {
+     "t": 1.254,
+     "vh": -0.038,
+     "vy": 0.017,
+     "comY": 0.366,
+     "pelY": 0.195,
+     "recl": 23.137,
+     "bootLow": 0.032
+    },
+    {
+     "t": 1.304,
+     "vh": -0.084,
+     "vy": 0.005,
+     "comY": 0.366,
+     "pelY": 0.198,
+     "recl": 22.064,
+     "bootLow": 0.053
+    },
+    {
+     "t": 1.354,
+     "vh": -0.096,
+     "vy": 0.003,
+     "comY": 0.366,
+     "pelY": 0.201,
+     "recl": 21.238,
+     "bootLow": 0.071
+    },
+    {
+     "t": 1.404,
+     "vh": -0.09,
+     "vy": 0.016,
+     "comY": 0.367,
+     "pelY": 0.203,
+     "recl": 20.945,
+     "bootLow": 0.086
+    },
+    {
+     "t": 1.454,
+     "vh": -0.105,
+     "vy": 0.024,
+     "comY": 0.368,
+     "pelY": 0.205,
+     "recl": 21.674,
+     "bootLow": 0.095
+    },
+    {
+     "t": 1.504,
+     "vh": -0.122,
+     "vy": 0.029,
+     "comY": 0.369,
+     "pelY": 0.206,
+     "recl": 23.344,
+     "bootLow": 0.102
+    },
+    {
+     "t": 1.554,
+     "vh": -0.118,
+     "vy": 0.028,
+     "comY": 0.371,
+     "pelY": 0.207,
+     "recl": 25.664,
+     "bootLow": 0.107
+    },
+    {
+     "t": 1.604,
+     "vh": -0.091,
+     "vy": 0.013,
+     "comY": 0.372,
+     "pelY": 0.207,
+     "recl": 28.001,
+     "bootLow": 0.112
+    },
+    {
+     "t": 1.654,
+     "vh": -0.06,
+     "vy": 0.006,
+     "comY": 0.372,
+     "pelY": 0.207,
+     "recl": 29.791,
+     "bootLow": 0.114
+    },
+    {
+     "t": 1.704,
+     "vh": -0.042,
+     "vy": 0.009,
+     "comY": 0.372,
+     "pelY": 0.207,
+     "recl": 30.592,
+     "bootLow": 0.111
+    },
+    {
+     "t": 1.754,
+     "vh": -0.021,
+     "vy": 0.005,
+     "comY": 0.373,
+     "pelY": 0.207,
+     "recl": 30.432,
+     "bootLow": 0.107
+    },
+    {
+     "t": 1.804,
+     "vh": 0.022,
+     "vy": -0.008,
+     "comY": 0.373,
+     "pelY": 0.206,
+     "recl": 30.073,
+     "bootLow": 0.102
+    },
+    {
+     "t": 1.854,
+     "vh": 0.052,
+     "vy": -0.018,
+     "comY": 0.372,
+     "pelY": 0.204,
+     "recl": 30.106,
+     "bootLow": 0.094
+    },
+    {
+     "t": 1.904,
+     "vh": 0.049,
+     "vy": -0.014,
+     "comY": 0.371,
+     "pelY": 0.202,
+     "recl": 29.978,
+     "bootLow": 0.083
+    },
+    {
+     "t": 1.954,
+     "vh": 0.041,
+     "vy": -0.013,
+     "comY": 0.37,
+     "pelY": 0.202,
+     "recl": 29.548,
+     "bootLow": 0.07
+    }
+   ]
+  },
+  "5.75": {
+   "hash": "38077bd7efa76c24",
+   "cost": 11.795,
+   "parts": {
+    "bootFirst": 3,
+    "bootLoad": 0.112,
+    "knee": 1.077,
+    "head": 2.5,
+    "kneeGlide": 3.054,
+    "handOver": 0.316,
+    "limits": 1.736
+   },
+   "firstBodyT": 0.392,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "tackBoot",
+     0.383
+    ],
+    [
+     "knee_L",
+     0.392
+    ],
+    [
+     "shin_L",
+     0.529
+    ],
+    [
+     "thigh_L",
+     0.621
+    ],
+    [
+     "hand",
+     0.654
+    ],
+    [
+     "pelvis",
+     1.458
+    ],
+    [
+     "torso",
+     1.667
+    ],
+    [
+     "forearm",
+     1.696
+    ],
+    [
+     "head",
+     1.704
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 5.36,
+    "vy": -2.276,
+    "comY": 0.609,
+    "pelY": 0.442
+   },
+   "retention": {
+    "+0.1s": 0.82,
+    "+0.2s": 0.685,
+    "+0.3s": 0.51,
+    "+0.5s": 0.321
+   },
+   "slideFromContactM": 2.048,
+   "slideFromCommitM": 4.249,
+   "stopT": 1.246,
+   "meanDecel": 5.94,
+   "glideShare": {
+    "knee_L": 0.418,
+    "foldBoot": 0.255,
+    "shin_L": 0.151,
+    "tackBoot": 0.1,
+    "thigh_L": 0.07,
+    "hand": 0.006
+   },
+   "loads": {
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 477.153,
+     "peakStepBW": 5.966,
+     "peak29msBW": 2.848,
+     "peak29msKN": 2.205,
+     "regions": {
+      "boot_L:heel": 16.687,
+      "boot_L:sole": 297.763,
+      "boot_L:toe": 60.511,
+      "boot_L:upper": 102.192
+     }
+    },
+    "knee_L": {
+     "first": 0.392,
+     "JnNs": 460.423,
+     "peakStepBW": 12.227,
+     "peak29msBW": 4.077,
+     "peak29msKN": 3.156,
+     "regions": {
+      "knee_L:posterior": 130.104,
+      "knee_L:lateral": 330.318
+     }
+    },
+    "pelvis": {
+     "first": 1.458,
+     "JnNs": 197.791,
+     "peakStepBW": 2.874,
+     "peak29msBW": 1.082,
+     "peak29msKN": 0.838,
+     "regions": {
+      "hip_pelvis:buttock": 197.791
+     }
+    },
+    "torso": {
+     "first": 1.667,
+     "JnNs": 149.165,
+     "peakStepBW": 5.018,
+     "peak29msBW": 1.794,
+     "peak29msKN": 1.389,
+     "regions": {
+      "torso:thorax": 147.616,
+      "torso:abdomen": 1.549
+     }
+    },
+    "tackBoot": {
+     "first": 0.383,
+     "JnNs": 100.651,
+     "peakStepBW": 1.622,
+     "peak29msBW": 0.447,
+     "peak29msKN": 0.346,
+     "regions": {
+      "boot_R:heel": 86.359,
+      "boot_R:sole": 11.488,
+      "boot_R:upper": 2.805
+     }
+    },
+    "shin_L": {
+     "first": 0.529,
+     "JnNs": 99.695,
+     "peakStepBW": 1.118,
+     "peak29msBW": 0.536,
+     "peak29msKN": 0.415,
+     "regions": {
+      "shin_L:lateral": 99.695
+     }
+    },
+    "thigh_L": {
+     "first": 0.621,
+     "JnNs": 44.346,
+     "peakStepBW": 4.985,
+     "peak29msBW": 1.964,
+     "peak29msKN": 1.52,
+     "regions": {
+      "thigh_L:lateral": 44.346
+     }
+    },
+    "forearm": {
+     "first": 1.696,
+     "JnNs": 26.356,
+     "peakStepBW": 2.074,
+     "peak29msBW": 0.431,
+     "peak29msKN": 0.334,
+     "regions": {
+      "forearm_L": 26.356
+     }
+    },
+    "hand": {
+     "first": 0.654,
+     "JnNs": 11.831,
+     "peakStepBW": 0.89,
+     "peak29msBW": 0.184,
+     "peak29msKN": 0.142,
+     "regions": {
+      "hand_R": 3.926,
+      "hand_L": 7.905
+     }
+    },
+    "head": {
+     "first": 1.704,
+     "JnNs": 11.043,
+     "peakStepBW": 2.839,
+     "peak29msBW": 0.489,
+     "peak29msKN": 0.379,
+     "regions": {
+      "head": 11.043
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0,
+    "contactFracDuringGlide": 0.981,
+    "JnNs": 100.651,
+    "shareJn": 0.064,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0,
+     "max": 0.008
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.499
+    },
+    "regions": {
+     "boot_R:heel": 86.359,
+     "boot_R:sole": 11.488,
+     "boot_R:upper": 2.805
+    }
+   },
+   "posture": {
+    "minBellyY": -0.124,
+    "reclAtStop": 13.129,
+    "headTurfT": 1.704
+   },
+   "limits": [
+    {
+     "id": "ankle_L.z",
+     "beyond": 4.5,
+     "at": 1.458,
+     "dur": 0.362,
+     "range": [
+      -37,
+      31
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "knee_L.x",
+     "beyond": 3.7,
+     "at": 1.308,
+     "dur": 0.425,
+     "range": [
+      -32,
+      13
+     ],
+     "hard": [
+      -21,
+      15
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 2.5,
+     "at": 1.283,
+     "dur": 0.45,
+     "range": [
+      -18,
+      11
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 1.8,
+     "at": 0.433,
+     "dur": 0.158,
+     "range": [
+      -35,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "lumbar.x",
+     "beyond": 1.5,
+     "at": 0.408,
+     "dur": 0.029,
+     "range": [
+      -4,
+      12
+     ],
+     "hard": [
+      -10,
+      10
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.5,
+     "at": 0.367,
+     "dur": 0.013,
+     "range": [
+      -76,
+      68
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "hip_L.x",
+     "beyond": 1.2,
+     "at": 0.883,
+     "dur": 0.213,
+     "range": [
+      -35,
+      46
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "knee_L.y",
+     "beyond": 0.6,
+     "at": 1.2,
+     "dur": 0.375,
+     "range": [
+      -46,
+      86
+     ],
+     "hard": [
+      -75,
+      85
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.855,
+   "cpu": {
+    "step": 0.292,
+    "passive": 0.227,
+    "act": 0.04,
+    "tone": 0.107,
+    "instrument": 0.039,
+    "measure": 0.144,
+    "law": 0,
+    "lawT": 0.107
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.741,
+     "vy": -0.289,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.112,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 5.646,
+     "vy": 0.053,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.039,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 5.698,
+     "vy": -0.195,
+     "comY": 1.061,
+     "pelY": 0.95,
+     "recl": 8.385,
+     "bootLow": 0.034
+    },
+    {
+     "t": 0.154,
+     "vh": 5.712,
+     "vy": -0.667,
+     "comY": 1.039,
+     "pelY": 0.913,
+     "recl": 14.424,
+     "bootLow": 0.086
+    },
+    {
+     "t": 0.204,
+     "vh": 5.712,
+     "vy": -1.158,
+     "comY": 0.992,
+     "pelY": 0.849,
+     "recl": 12.529,
+     "bootLow": 0.158
+    },
+    {
+     "t": 0.254,
+     "vh": 5.712,
+     "vy": -1.648,
+     "comY": 0.921,
+     "pelY": 0.769,
+     "recl": 10.452,
+     "bootLow": 0.181
+    },
+    {
+     "t": 0.304,
+     "vh": 5.712,
+     "vy": -2.139,
+     "comY": 0.826,
+     "pelY": 0.669,
+     "recl": 8.048,
+     "bootLow": 0.15
+    },
+    {
+     "t": 0.354,
+     "vh": 5.672,
+     "vy": -2.539,
+     "comY": 0.708,
+     "pelY": 0.548,
+     "recl": 6.947,
+     "bootLow": 0.064
+    },
+    {
+     "t": 0.404,
+     "vh": 5.1,
+     "vy": -1.876,
+     "comY": 0.585,
+     "pelY": 0.415,
+     "recl": 5.926,
+     "bootLow": 0
+    },
+    {
+     "t": 0.454,
+     "vh": 4.673,
+     "vy": -1.507,
+     "comY": 0.502,
+     "pelY": 0.329,
+     "recl": -7.101,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.321,
+     "vy": -1.284,
+     "comY": 0.434,
+     "pelY": 0.265,
+     "recl": -20.501,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.94,
+     "vy": -1.002,
+     "comY": 0.377,
+     "pelY": 0.214,
+     "recl": -29.339,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 3.582,
+     "vy": -0.76,
+     "comY": 0.333,
+     "pelY": 0.171,
+     "recl": -34.201,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 3.002,
+     "vy": -0.046,
+     "comY": 0.317,
+     "pelY": 0.157,
+     "recl": -38.429,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 2.654,
+     "vy": 0.184,
+     "comY": 0.323,
+     "pelY": 0.161,
+     "recl": -39.366,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 2.366,
+     "vy": 0.305,
+     "comY": 0.335,
+     "pelY": 0.166,
+     "recl": -36.485,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 2.107,
+     "vy": 0.363,
+     "comY": 0.352,
+     "pelY": 0.176,
+     "recl": -31.914,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.872,
+     "vy": 0.36,
+     "comY": 0.371,
+     "pelY": 0.188,
+     "recl": -26.905,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.673,
+     "vy": 0.285,
+     "comY": 0.387,
+     "pelY": 0.198,
+     "recl": -21.925,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 1.501,
+     "vy": 0.182,
+     "comY": 0.398,
+     "pelY": 0.205,
+     "recl": -15.804,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 1.366,
+     "vy": 0.045,
+     "comY": 0.404,
+     "pelY": 0.209,
+     "recl": -7.864,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 1.28,
+     "vy": -0.16,
+     "comY": 0.401,
+     "pelY": 0.207,
+     "recl": -1.09,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 1.106,
+     "vy": -0.259,
+     "comY": 0.389,
+     "pelY": 0.197,
+     "recl": 6.484,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": 0.866,
+     "vy": -0.269,
+     "comY": 0.374,
+     "pelY": 0.185,
+     "recl": 12.536,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": 0.519,
+     "vy": -0.062,
+     "comY": 0.364,
+     "pelY": 0.176,
+     "recl": 13.858,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": 0.248,
+     "vy": -0.004,
+     "comY": 0.363,
+     "pelY": 0.178,
+     "recl": 13,
+     "bootLow": 0.012
+    },
+    {
+     "t": 1.304,
+     "vh": 0.039,
+     "vy": -0.032,
+     "comY": 0.363,
+     "pelY": 0.18,
+     "recl": 12.996,
+     "bootLow": 0.061
+    },
+    {
+     "t": 1.354,
+     "vh": -0.103,
+     "vy": -0.173,
+     "comY": 0.357,
+     "pelY": 0.177,
+     "recl": 13.721,
+     "bootLow": 0.132
+    },
+    {
+     "t": 1.404,
+     "vh": -0.247,
+     "vy": -0.295,
+     "comY": 0.345,
+     "pelY": 0.167,
+     "recl": 12.659,
+     "bootLow": 0.207
+    },
+    {
+     "t": 1.454,
+     "vh": -0.332,
+     "vy": -0.443,
+     "comY": 0.326,
+     "pelY": 0.153,
+     "recl": 11.955,
+     "bootLow": 0.282
+    },
+    {
+     "t": 1.504,
+     "vh": -0.437,
+     "vy": -0.401,
+     "comY": 0.307,
+     "pelY": 0.149,
+     "recl": 15.093,
+     "bootLow": 0.349
+    },
+    {
+     "t": 1.554,
+     "vh": -0.469,
+     "vy": -0.414,
+     "comY": 0.287,
+     "pelY": 0.148,
+     "recl": 27.475,
+     "bootLow": 0.422
+    },
+    {
+     "t": 1.604,
+     "vh": -0.53,
+     "vy": -0.508,
+     "comY": 0.264,
+     "pelY": 0.145,
+     "recl": 48.702,
+     "bootLow": 0.515
+    },
+    {
+     "t": 1.654,
+     "vh": -0.563,
+     "vy": -0.683,
+     "comY": 0.234,
+     "pelY": 0.138,
+     "recl": 79.537,
+     "bootLow": 0.627
+    },
+    {
+     "t": 1.704,
+     "vh": -0.596,
+     "vy": 0.019,
+     "comY": 0.218,
+     "pelY": 0.129,
+     "recl": 91.147,
+     "bootLow": 0.752
+    },
+    {
+     "t": 1.754,
+     "vh": -0.434,
+     "vy": 0.218,
+     "comY": 0.228,
+     "pelY": 0.131,
+     "recl": 92.23,
+     "bootLow": 0.865
+    },
+    {
+     "t": 1.804,
+     "vh": -0.372,
+     "vy": 0.077,
+     "comY": 0.235,
+     "pelY": 0.134,
+     "recl": 96.548,
+     "bootLow": 0.936
+    },
+    {
+     "t": 1.854,
+     "vh": -0.216,
+     "vy": 0.012,
+     "comY": 0.236,
+     "pelY": 0.14,
+     "recl": 96.645,
+     "bootLow": 0.978
+    },
+    {
+     "t": 1.904,
+     "vh": -0.078,
+     "vy": 0.065,
+     "comY": 0.237,
+     "pelY": 0.148,
+     "recl": 100.908,
+     "bootLow": 0.992
+    },
+    {
+     "t": 1.954,
+     "vh": 0.075,
+     "vy": 0.004,
+     "comY": 0.239,
+     "pelY": 0.151,
+     "recl": 107.981,
+     "bootLow": 0.982
+    }
+   ]
+  }
+ },
+ "counterfactuals": {
+  "M1b": {
+   "hash": "a0afa93e0588a2d6",
+   "cost": 21.896,
+   "parts": {
+    "bootFirst": 3,
+    "bootLoad": 3.867,
+    "firstRegion": 2,
+    "faceDown": 4.14,
+    "head": 2.5,
+    "torso": 0.144,
+    "slide": 0.522,
+    "kneeGlide": 0.99,
+    "lying": 1.167,
+    "limits": 3.567
+   },
+   "firstBodyT": 0.746,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "tackBoot",
+     0.329
+    ],
+    [
+     "hand",
+     0.746
+    ],
+    [
+     "arm",
+     0.763
+    ],
+    [
+     "forearm",
+     0.763
+    ],
+    [
+     "head",
+     0.783
+    ],
+    [
+     "torso",
+     0.804
+    ],
+    [
+     "knee_L",
+     0.808
+    ],
+    [
+     "pelvis",
+     0.829
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 3.672,
+    "vy": -2.337,
+    "comY": 0.308,
+    "pelY": 0.409
+   },
+   "retention": {
+    "+0.1s": 0.723,
+    "+0.2s": 0.572,
+    "+0.3s": 0.454,
+    "+0.5s": 0.216
+   },
+   "slideFromContactM": 1.152,
+   "slideFromCommitM": 4.249,
+   "stopT": 1.354,
+   "meanDecel": 5.549,
+   "glideShare": {
+    "arm": 0.487,
+    "knee_L": 0.217,
+    "pelvis": 0.12,
+    "tackBoot": 0.069,
+    "foldBoot": 0.06,
+    "hand": 0.023,
+    "torso": 0.022
+   },
+   "loads": {
+    "tackBoot": {
+     "first": 0.329,
+     "JnNs": 346.138,
+     "peakStepBW": 5.509,
+     "peak29msBW": 2.187,
+     "peak29msKN": 1.693,
+     "regions": {
+      "boot_R:sole": 204.811,
+      "boot_R:heel": 4.739,
+      "boot_R:toe": 136.588
+     }
+    },
+    "arm": {
+     "first": 0.763,
+     "JnNs": 320.504,
+     "peakStepBW": 15.046,
+     "peak29msBW": 4.415,
+     "peak29msKN": 3.418,
+     "regions": {
+      "upperArm_L": 320.504
+     }
+    },
+    "pelvis": {
+     "first": 0.829,
+     "JnNs": 275.06,
+     "peakStepBW": 8.165,
+     "peak29msBW": 1.332,
+     "peak29msKN": 1.031,
+     "regions": {
+      "hip_pelvis:left": 275.06
+     }
+    },
+    "torso": {
+     "first": 0.804,
+     "JnNs": 216.332,
+     "peakStepBW": 3.376,
+     "peak29msBW": 1.225,
+     "peak29msKN": 0.948,
+     "regions": {
+      "torso:thorax": 216.332
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 177.377,
+     "peakStepBW": 6.495,
+     "peak29msBW": 3.164,
+     "peak29msKN": 2.449,
+     "regions": {
+      "boot_L:heel": 7.648,
+      "boot_L:sole": 84.456,
+      "boot_L:toe": 64.096,
+      "boot_L:upper": 21.177
+     }
+    },
+    "knee_L": {
+     "first": 0.808,
+     "JnNs": 174.554,
+     "peakStepBW": 2.355,
+     "peak29msBW": 1.069,
+     "peak29msKN": 0.828,
+     "regions": {
+      "knee_L:anterior": 31.887,
+      "knee_L:lateral": 142.667
+     }
+    },
+    "head": {
+     "first": 0.783,
+     "JnNs": 58.105,
+     "peakStepBW": 8.572,
+     "peak29msBW": 2.15,
+     "peak29msKN": 1.664,
+     "regions": {
+      "head": 58.105
+     }
+    },
+    "hand": {
+     "first": 0.746,
+     "JnNs": 25.011,
+     "peakStepBW": 2.59,
+     "peak29msBW": 0.492,
+     "peak29msKN": 0.381,
+     "regions": {
+      "hand_L": 23.49,
+      "hand_R": 1.521
+     }
+    },
+    "forearm": {
+     "first": 0.763,
+     "JnNs": 0.801,
+     "peakStepBW": 0.248,
+     "peak29msBW": 0.035,
+     "peak29msKN": 0.027,
+     "regions": {
+      "forearm_L": 0.801
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.009,
+    "contactFracDuringGlide": 0.816,
+    "JnNs": 346.138,
+    "shareJn": 0.217,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.009,
+     "max": 0.065
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.311,
+     "max": 0.047
+    },
+    "regions": {
+     "boot_R:sole": 204.811,
+     "boot_R:heel": 4.739,
+     "boot_R:toe": 136.588
+    }
+   },
+   "posture": {
+    "minBellyY": -0.88,
+    "reclAtStop": -80.208,
+    "headTurfT": 0.783
+   },
+   "limits": [
+    {
+     "id": "ankle_R.x",
+     "beyond": 6.5,
+     "at": 0.508,
+     "dur": 0.667,
+     "range": [
+      -16,
+      21
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "knee_R.x",
+     "beyond": 6.4,
+     "at": 0.583,
+     "dur": 0.217,
+     "range": [
+      -15,
+      35
+     ],
+     "hard": [
+      -10,
+      29
+     ]
+    },
+    {
+     "id": "shoulder_L.x",
+     "beyond": 5.7,
+     "at": 0.775,
+     "dur": 0.017,
+     "range": [
+      -86,
+      -22
+     ],
+     "hard": [
+      -80,
+      120
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 3.5,
+     "at": 0.479,
+     "dur": 0.117,
+     "range": [
+      -32,
+      36
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "lumbar.x",
+     "beyond": 2.9,
+     "at": 0.833,
+     "dur": 0.054,
+     "range": [
+      -13,
+      7
+     ],
+     "hard": [
+      -10,
+      10
+     ]
+    },
+    {
+     "id": "knee_L.x",
+     "beyond": 2.4,
+     "at": 0.317,
+     "dur": 0.096,
+     "range": [
+      -25,
+      13
+     ],
+     "hard": [
+      -21,
+      15
+     ]
+    },
+    {
+     "id": "neck.z",
+     "beyond": 2.2,
+     "at": 0.808,
+     "dur": 0.021,
+     "range": [
+      -47,
+      10
+     ],
+     "hard": [
+      -45,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.y",
+     "beyond": 2,
+     "at": 0.508,
+     "dur": 0.079,
+     "range": [
+      4,
+      60
+     ],
+     "hard": [
+      -48,
+      58
+     ]
+    },
+    {
+     "id": "hip_L.x",
+     "beyond": 1.5,
+     "at": 1.212,
+     "dur": 0.263,
+     "range": [
+      -52,
+      8
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.2,
+     "at": 0.771,
+     "dur": 0.017,
+     "range": [
+      -76,
+      52
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 0.7,
+     "at": 0.308,
+     "dur": 0.087,
+     "range": [
+      -15,
+      16
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "lumbar.z",
+     "beyond": 0.6,
+     "at": 0.45,
+     "dur": 0.062,
+     "range": [
+      0,
+      31
+     ],
+     "hard": [
+      -31,
+      31
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.845,
+   "cpu": {
+    "step": 0.288,
+    "passive": 0.225,
+    "act": 0.049,
+    "tone": 0.097,
+    "instrument": 0.042,
+    "measure": 0.137,
+    "law": 0,
+    "lawT": 0.097
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5,
+     "vy": -0.267,
+     "comY": 1.063,
+     "pelY": 0.946,
+     "recl": -7.16,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.812,
+     "vy": 0.205,
+     "comY": 1.069,
+     "pelY": 0.96,
+     "recl": -5.743,
+     "bootLow": 0.27
+    },
+    {
+     "t": 0.104,
+     "vh": 4.775,
+     "vy": 0.059,
+     "comY": 1.076,
+     "pelY": 0.971,
+     "recl": 3.983,
+     "bootLow": 0.047
+    },
+    {
+     "t": 0.154,
+     "vh": 4.779,
+     "vy": -0.33,
+     "comY": 1.07,
+     "pelY": 0.957,
+     "recl": 7.781,
+     "bootLow": 0.056
+    },
+    {
+     "t": 0.204,
+     "vh": 4.779,
+     "vy": -0.819,
+     "comY": 1.04,
+     "pelY": 0.92,
+     "recl": 5.732,
+     "bootLow": 0.077
+    },
+    {
+     "t": 0.254,
+     "vh": 4.774,
+     "vy": -1.301,
+     "comY": 0.986,
+     "pelY": 0.862,
+     "recl": 0.208,
+     "bootLow": 0.073
+    },
+    {
+     "t": 0.304,
+     "vh": 4.741,
+     "vy": -1.721,
+     "comY": 0.909,
+     "pelY": 0.784,
+     "recl": -5.682,
+     "bootLow": 0.031
+    },
+    {
+     "t": 0.354,
+     "vh": 4.261,
+     "vy": -1.601,
+     "comY": 0.819,
+     "pelY": 0.694,
+     "recl": -10.269,
+     "bootLow": 0
+    },
+    {
+     "t": 0.404,
+     "vh": 3.857,
+     "vy": -1.237,
+     "comY": 0.75,
+     "pelY": 0.634,
+     "recl": -19.355,
+     "bootLow": 0
+    },
+    {
+     "t": 0.454,
+     "vh": 3.673,
+     "vy": -1.013,
+     "comY": 0.694,
+     "pelY": 0.605,
+     "recl": -30.231,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 3.614,
+     "vy": -0.771,
+     "comY": 0.651,
+     "pelY": 0.595,
+     "recl": -40.482,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.668,
+     "vy": -0.858,
+     "comY": 0.612,
+     "pelY": 0.59,
+     "recl": -51.874,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 3.671,
+     "vy": -1.177,
+     "comY": 0.561,
+     "pelY": 0.575,
+     "recl": -60.908,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 3.686,
+     "vy": -1.557,
+     "comY": 0.492,
+     "pelY": 0.542,
+     "recl": -68.831,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 3.69,
+     "vy": -2.034,
+     "comY": 0.402,
+     "pelY": 0.482,
+     "recl": -79.492,
+     "bootLow": 0.015
+    },
+    {
+     "t": 0.754,
+     "vh": 3.67,
+     "vy": -2.409,
+     "comY": 0.288,
+     "pelY": 0.392,
+     "recl": -91.346,
+     "bootLow": 0.05
+    },
+    {
+     "t": 0.804,
+     "vh": 3.259,
+     "vy": -0.949,
+     "comY": 0.221,
+     "pelY": 0.295,
+     "recl": -85.167,
+     "bootLow": 0.059
+    },
+    {
+     "t": 0.854,
+     "vh": 2.609,
+     "vy": -0.107,
+     "comY": 0.201,
+     "pelY": 0.256,
+     "recl": -87.479,
+     "bootLow": 0.007
+    },
+    {
+     "t": 0.904,
+     "vh": 2.299,
+     "vy": 0.04,
+     "comY": 0.201,
+     "pelY": 0.265,
+     "recl": -91.073,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 2.065,
+     "vy": 0.044,
+     "comY": 0.203,
+     "pelY": 0.27,
+     "recl": -89.916,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 1.854,
+     "vy": -0.002,
+     "comY": 0.204,
+     "pelY": 0.264,
+     "recl": -86.434,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 1.63,
+     "vy": -0.03,
+     "comY": 0.203,
+     "pelY": 0.256,
+     "recl": -82.857,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 1.416,
+     "vy": -0.069,
+     "comY": 0.201,
+     "pelY": 0.25,
+     "recl": -80.701,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": 1.198,
+     "vy": -0.094,
+     "comY": 0.197,
+     "pelY": 0.247,
+     "recl": -79.976,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": 0.979,
+     "vy": -0.106,
+     "comY": 0.191,
+     "pelY": 0.243,
+     "recl": -80.119,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": 0.763,
+     "vy": -0.127,
+     "comY": 0.186,
+     "pelY": 0.233,
+     "recl": -79.187,
+     "bootLow": 0
+    },
+    {
+     "t": 1.304,
+     "vh": 0.527,
+     "vy": -0.068,
+     "comY": 0.182,
+     "pelY": 0.23,
+     "recl": -77.781,
+     "bootLow": 0
+    },
+    {
+     "t": 1.354,
+     "vh": 0.298,
+     "vy": 0.009,
+     "comY": 0.181,
+     "pelY": 0.228,
+     "recl": -80.208,
+     "bootLow": 0
+    },
+    {
+     "t": 1.404,
+     "vh": 0.09,
+     "vy": 0.029,
+     "comY": 0.182,
+     "pelY": 0.228,
+     "recl": -82.677,
+     "bootLow": 0
+    },
+    {
+     "t": 1.454,
+     "vh": -0.047,
+     "vy": -0.004,
+     "comY": 0.183,
+     "pelY": 0.228,
+     "recl": -84.062,
+     "bootLow": 0
+    },
+    {
+     "t": 1.504,
+     "vh": -0.136,
+     "vy": -0.024,
+     "comY": 0.182,
+     "pelY": 0.226,
+     "recl": -84.979,
+     "bootLow": 0
+    },
+    {
+     "t": 1.554,
+     "vh": -0.2,
+     "vy": -0.02,
+     "comY": 0.18,
+     "pelY": 0.225,
+     "recl": -85.462,
+     "bootLow": 0
+    },
+    {
+     "t": 1.604,
+     "vh": -0.206,
+     "vy": -0.019,
+     "comY": 0.18,
+     "pelY": 0.223,
+     "recl": -85.907,
+     "bootLow": 0
+    },
+    {
+     "t": 1.654,
+     "vh": -0.149,
+     "vy": -0.041,
+     "comY": 0.178,
+     "pelY": 0.221,
+     "recl": -85.592,
+     "bootLow": 0
+    },
+    {
+     "t": 1.704,
+     "vh": -0.074,
+     "vy": -0.058,
+     "comY": 0.175,
+     "pelY": 0.218,
+     "recl": -85.985,
+     "bootLow": 0
+    },
+    {
+     "t": 1.754,
+     "vh": -0.011,
+     "vy": 0.048,
+     "comY": 0.176,
+     "pelY": 0.221,
+     "recl": -88.362,
+     "bootLow": 0
+    },
+    {
+     "t": 1.804,
+     "vh": -0.022,
+     "vy": 0.101,
+     "comY": 0.18,
+     "pelY": 0.228,
+     "recl": -89.49,
+     "bootLow": 0
+    },
+    {
+     "t": 1.854,
+     "vh": -0.048,
+     "vy": 0.153,
+     "comY": 0.187,
+     "pelY": 0.24,
+     "recl": -88.176,
+     "bootLow": 0
+    },
+    {
+     "t": 1.904,
+     "vh": -0.042,
+     "vy": 0.136,
+     "comY": 0.194,
+     "pelY": 0.254,
+     "recl": -85.717,
+     "bootLow": 0
+    },
+    {
+     "t": 1.954,
+     "vh": -0.016,
+     "vy": 0.113,
+     "comY": 0.2,
+     "pelY": 0.266,
+     "recl": -84.113,
+     "bootLow": 0
+    }
+   ]
+  },
+  "noTCF1": {
+   "hash": "0e5177944b8fb582",
+   "cost": 15.523,
+   "parts": {
+    "bootLoad": 1.225,
+    "knee": 0.334,
+    "faceDown": 3.747,
+    "head": 2.5,
+    "torso": 0.096,
+    "slide": 0.893,
+    "decel": 0.513,
+    "retention": 0.08,
+    "kneeGlide": 3.372,
+    "handOver": 0.268,
+    "limits": 2.496
+   },
+   "firstBodyT": 0.404,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.404
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.521
+    ],
+    [
+     "thigh_L",
+     0.621
+    ],
+    [
+     "pelvis",
+     0.725
+    ],
+    [
+     "hand",
+     0.933
+    ],
+    [
+     "forearm",
+     1.129
+    ],
+    [
+     "arm",
+     1.138
+    ],
+    [
+     "torso",
+     1.475
+    ],
+    [
+     "head",
+     1.517
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.512,
+    "vy": -2.272,
+    "comY": 0.591,
+    "pelY": 0.416
+   },
+   "retention": {
+    "+0.1s": 0.72,
+    "+0.2s": 0.46,
+    "+0.3s": 0.234,
+    "+0.5s": 0.061
+   },
+   "slideFromContactM": 0.905,
+   "slideFromCommitM": 2.894,
+   "stopT": 0.892,
+   "meanDecel": 8.709,
+   "glideShare": {
+    "knee_L": 0.646,
+    "tackBoot": 0.226,
+    "thigh_L": 0.098,
+    "pelvis": 0.02,
+    "foldBoot": 0.01,
+    "shin_L": 0
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.404,
+     "JnNs": 610.821,
+     "peakStepBW": 12.778,
+     "peak29msBW": 3.334,
+     "peak29msKN": 2.581,
+     "regions": {
+      "knee_L:posterior": 116.169,
+      "knee_L:lateral": 308.664,
+      "knee_L:anterior": 185.988
+     }
+    },
+    "arm": {
+     "first": 1.138,
+     "JnNs": 233.771,
+     "peakStepBW": 6.762,
+     "peak29msBW": 1.998,
+     "peak29msKN": 1.547,
+     "regions": {
+      "upperArm_L": 233.771
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 199.285,
+     "peakStepBW": 4.539,
+     "peak29msBW": 0.911,
+     "peak29msKN": 0.705,
+     "regions": {
+      "boot_R:heel": 64.284,
+      "boot_R:sole": 51.838,
+      "boot_R:toe": 83.163
+     }
+    },
+    "torso": {
+     "first": 1.475,
+     "JnNs": 196.354,
+     "peakStepBW": 3.218,
+     "peak29msBW": 1.069,
+     "peak29msKN": 0.828,
+     "regions": {
+      "torso:thorax": 196.354
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 151.589,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 7.587,
+      "boot_L:sole": 69.469,
+      "boot_L:toe": 74.532
+     }
+    },
+    "thigh_L": {
+     "first": 0.621,
+     "JnNs": 77.175,
+     "peakStepBW": 4.343,
+     "peak29msBW": 1.312,
+     "peak29msKN": 1.016,
+     "regions": {
+      "thigh_L:lateral": 71.276,
+      "thigh_L:anterior": 5.899
+     }
+    },
+    "hand": {
+     "first": 0.933,
+     "JnNs": 59.714,
+     "peakStepBW": 3.758,
+     "peak29msBW": 0.83,
+     "peak29msKN": 0.643,
+     "regions": {
+      "hand_L": 58.138,
+      "hand_R": 1.576
+     }
+    },
+    "shin_L": {
+     "first": 0.521,
+     "JnNs": 35.885,
+     "peakStepBW": 4.391,
+     "peak29msBW": 1.584,
+     "peak29msKN": 1.226,
+     "regions": {
+      "shin_L:lateral": 35.768,
+      "shin_L:posterior": 0.117
+     }
+    },
+    "pelvis": {
+     "first": 0.725,
+     "JnNs": 11.834,
+     "peakStepBW": 0.865,
+     "peak29msBW": 0.269,
+     "peak29msKN": 0.208,
+     "regions": {
+      "hip_pelvis:left": 11.834
+     }
+    },
+    "head": {
+     "first": 1.517,
+     "JnNs": 6.571,
+     "peakStepBW": 1.274,
+     "peak29msBW": 0.291,
+     "peak29msKN": 0.225,
+     "regions": {
+      "head": 6.571
+     }
+    },
+    "forearm": {
+     "first": 1.129,
+     "JnNs": 4.005,
+     "peakStepBW": 0.712,
+     "peak29msBW": 0.177,
+     "peak29msKN": 0.137,
+     "regions": {
+      "forearm_L": 4.005
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": -0.001,
+    "meanLowDuringGlideM": 0.002,
+    "contactFracDuringGlide": 0.932,
+    "JnNs": 199.285,
+    "shareJn": 0.126,
+    "heightDuringGlide": {
+     "min": -0.001,
+     "mean": 0.002,
+     "max": 0.06
+    },
+    "soleDownCosDuringGlide": {
+     "min": 0.44,
+     "max": 0.864
+    },
+    "regions": {
+     "boot_R:heel": 64.284,
+     "boot_R:sole": 51.838,
+     "boot_R:toe": 83.163
+    }
+   },
+   "posture": {
+    "minBellyY": -0.749,
+    "reclAtStop": -35.291,
+    "headTurfT": 1.517
+   },
+   "limits": [
+    {
+     "id": "ankle_R.z",
+     "beyond": 6.3,
+     "at": 0.621,
+     "dur": 0.4,
+     "range": [
+      -10,
+      39
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "ankle_L.y",
+     "beyond": 5.1,
+     "at": 0.537,
+     "dur": 0.058,
+     "range": [
+      -53,
+      26
+     ],
+     "hard": [
+      -48,
+      58
+     ]
+    },
+    {
+     "id": "shoulder_L.y",
+     "beyond": 3.9,
+     "at": 1.142,
+     "dur": 0.133,
+     "range": [
+      -104,
+      -27
+     ],
+     "hard": [
+      -100,
+      92
+     ]
+    },
+    {
+     "id": "neck.z",
+     "beyond": 3.4,
+     "at": 1.212,
+     "dur": 0.033,
+     "range": [
+      -48,
+      17
+     ],
+     "hard": [
+      -45,
+      45
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 2.6,
+     "at": 1.075,
+     "dur": 0.171,
+     "range": [
+      -78,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "hip_L.x",
+     "beyond": 2.3,
+     "at": 1.008,
+     "dur": 1.212,
+     "range": [
+      -17,
+      47
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "lumbar.x",
+     "beyond": 1.3,
+     "at": 0.421,
+     "dur": 0.021,
+     "range": [
+      -6,
+      11
+     ],
+     "hard": [
+      -10,
+      10
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.799,
+   "cpu": {
+    "step": 0.273,
+    "passive": 0.218,
+    "act": 0.039,
+    "tone": 0.096,
+    "instrument": 0.034,
+    "measure": 0.132,
+    "law": 0,
+    "lawT": 0.096
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.801,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.004,
+     "pelY": 0.862,
+     "recl": 12.879,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.202,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.083,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.9,
+     "vy": -2.452,
+     "comY": 0.735,
+     "pelY": 0.569,
+     "recl": 11.083,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.78,
+     "vy": -2.758,
+     "comY": 0.601,
+     "pelY": 0.427,
+     "recl": 11.756,
+     "bootLow": 0.06
+    },
+    {
+     "t": 0.454,
+     "vh": 3.938,
+     "vy": -1.849,
+     "comY": 0.498,
+     "pelY": 0.313,
+     "recl": 2.914,
+     "bootLow": 0.001
+    },
+    {
+     "t": 0.504,
+     "vh": 3.318,
+     "vy": -1.446,
+     "comY": 0.414,
+     "pelY": 0.226,
+     "recl": -10.142,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.528,
+     "vy": -0.672,
+     "comY": 0.364,
+     "pelY": 0.183,
+     "recl": -21.276,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.112,
+     "vy": -0.525,
+     "comY": 0.334,
+     "pelY": 0.163,
+     "recl": -31.768,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 1.507,
+     "vy": -0.056,
+     "comY": 0.322,
+     "pelY": 0.161,
+     "recl": -39.185,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.084,
+     "vy": 0.127,
+     "comY": 0.325,
+     "pelY": 0.17,
+     "recl": -41.478,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 0.736,
+     "vy": 0.195,
+     "comY": 0.334,
+     "pelY": 0.184,
+     "recl": -40.512,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 0.512,
+     "vy": 0.082,
+     "comY": 0.341,
+     "pelY": 0.198,
+     "recl": -39.6,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 0.362,
+     "vy": -0.07,
+     "comY": 0.341,
+     "pelY": 0.208,
+     "recl": -37.57,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 0.28,
+     "vy": -0.26,
+     "comY": 0.333,
+     "pelY": 0.211,
+     "recl": -34.447,
+     "bootLow": 0.001
+    },
+    {
+     "t": 0.954,
+     "vh": 0.344,
+     "vy": -0.219,
+     "comY": 0.32,
+     "pelY": 0.211,
+     "recl": -30.921,
+     "bootLow": 0.001
+    },
+    {
+     "t": 1.004,
+     "vh": 0.299,
+     "vy": -0.391,
+     "comY": 0.304,
+     "pelY": 0.208,
+     "recl": -32.134,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.347,
+     "vy": -0.477,
+     "comY": 0.281,
+     "pelY": 0.206,
+     "recl": -37.732,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.47,
+     "vy": -0.516,
+     "comY": 0.257,
+     "pelY": 0.206,
+     "recl": -50.308,
+     "bootLow": 0.007
+    },
+    {
+     "t": 1.154,
+     "vh": 0.564,
+     "vy": -0.149,
+     "comY": 0.234,
+     "pelY": 0.203,
+     "recl": -64.825,
+     "bootLow": 0.049
+    },
+    {
+     "t": 1.204,
+     "vh": 0.411,
+     "vy": 0.045,
+     "comY": 0.23,
+     "pelY": 0.212,
+     "recl": -69.778,
+     "bootLow": 0.104
+    },
+    {
+     "t": 1.254,
+     "vh": 0.35,
+     "vy": 0.183,
+     "comY": 0.238,
+     "pelY": 0.238,
+     "recl": -77.519,
+     "bootLow": 0.122
+    },
+    {
+     "t": 1.304,
+     "vh": 0.358,
+     "vy": 0.112,
+     "comY": 0.246,
+     "pelY": 0.27,
+     "recl": -81.414,
+     "bootLow": 0.098
+    },
+    {
+     "t": 1.354,
+     "vh": 0.401,
+     "vy": -0.099,
+     "comY": 0.246,
+     "pelY": 0.289,
+     "recl": -85.449,
+     "bootLow": 0.046
+    },
+    {
+     "t": 1.404,
+     "vh": 0.413,
+     "vy": -0.239,
+     "comY": 0.236,
+     "pelY": 0.292,
+     "recl": -88.362,
+     "bootLow": 0
+    },
+    {
+     "t": 1.454,
+     "vh": 0.403,
+     "vy": -0.205,
+     "comY": 0.225,
+     "pelY": 0.291,
+     "recl": -91.382,
+     "bootLow": 0
+    },
+    {
+     "t": 1.504,
+     "vh": 0.294,
+     "vy": -0.033,
+     "comY": 0.22,
+     "pelY": 0.296,
+     "recl": -93.849,
+     "bootLow": 0
+    },
+    {
+     "t": 1.554,
+     "vh": 0.197,
+     "vy": -0.084,
+     "comY": 0.218,
+     "pelY": 0.296,
+     "recl": -93.711,
+     "bootLow": 0
+    },
+    {
+     "t": 1.604,
+     "vh": 0.085,
+     "vy": -0.069,
+     "comY": 0.213,
+     "pelY": 0.286,
+     "recl": -95.001,
+     "bootLow": 0
+    },
+    {
+     "t": 1.654,
+     "vh": -0.016,
+     "vy": 0.055,
+     "comY": 0.213,
+     "pelY": 0.284,
+     "recl": -95.188,
+     "bootLow": 0
+    },
+    {
+     "t": 1.704,
+     "vh": -0.113,
+     "vy": 0.066,
+     "comY": 0.217,
+     "pelY": 0.29,
+     "recl": -93.467,
+     "bootLow": 0
+    },
+    {
+     "t": 1.754,
+     "vh": -0.169,
+     "vy": 0.006,
+     "comY": 0.218,
+     "pelY": 0.294,
+     "recl": -91.848,
+     "bootLow": 0
+    },
+    {
+     "t": 1.804,
+     "vh": -0.221,
+     "vy": -0.018,
+     "comY": 0.218,
+     "pelY": 0.294,
+     "recl": -90.001,
+     "bootLow": 0
+    },
+    {
+     "t": 1.854,
+     "vh": -0.19,
+     "vy": 0.025,
+     "comY": 0.218,
+     "pelY": 0.297,
+     "recl": -90.001,
+     "bootLow": 0
+    },
+    {
+     "t": 1.904,
+     "vh": -0.144,
+     "vy": 0.08,
+     "comY": 0.221,
+     "pelY": 0.304,
+     "recl": -91.45,
+     "bootLow": 0
+    },
+    {
+     "t": 1.954,
+     "vh": -0.103,
+     "vy": 0.039,
+     "comY": 0.224,
+     "pelY": 0.309,
+     "recl": -93.196,
+     "bootLow": 0
+    }
+   ]
+  },
+  "bodyMu035": {
+   "hash": "5902ab3e309ead9e",
+   "cost": 9.855,
+   "parts": {
+    "bootLoad": 0.2,
+    "faceDown": 4.17,
+    "head": 2.5,
+    "torso": 0.044,
+    "kneeGlide": 0.993,
+    "lying": 0.336,
+    "limits": 1.612
+   },
+   "firstBodyT": 0.413,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.413
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.488
+    ],
+    [
+     "pelvis",
+     0.496
+    ],
+    [
+     "thigh_L",
+     0.5
+    ],
+    [
+     "hand",
+     0.908
+    ],
+    [
+     "arm",
+     1.325
+    ],
+    [
+     "forearm",
+     1.325
+    ],
+    [
+     "torso",
+     1.4
+    ],
+    [
+     "head",
+     1.683
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.866,
+    "vy": -2.805,
+    "comY": 0.578,
+    "pelY": 0.402
+   },
+   "retention": {
+    "+0.1s": 0.766,
+    "+0.2s": 0.643,
+    "+0.3s": 0.556,
+    "+0.5s": 0.431
+   },
+   "slideFromContactM": 2.348,
+   "slideFromCommitM": 4.368,
+   "stopT": 1.758,
+   "meanDecel": 3.399,
+   "glideShare": {
+    "knee_L": 0.353,
+    "thigh_L": 0.206,
+    "arm": 0.121,
+    "pelvis": 0.119,
+    "torso": 0.099,
+    "tackBoot": 0.057,
+    "hand": 0.033,
+    "head": 0.012,
+    "forearm": 0,
+    "foldBoot": 0
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.413,
+     "JnNs": 441.322,
+     "peakStepBW": 6.09,
+     "peak29msBW": 1.904,
+     "peak29msKN": 1.474,
+     "regions": {
+      "knee_L:posterior": 45.079,
+      "knee_L:lateral": 211.463,
+      "knee_L:anterior": 184.78
+     }
+    },
+    "thigh_L": {
+     "first": 0.5,
+     "JnNs": 329.047,
+     "peakStepBW": 17.252,
+     "peak29msBW": 4.918,
+     "peak29msKN": 3.807,
+     "regions": {
+      "thigh_L:lateral": 329.047
+     }
+    },
+    "torso": {
+     "first": 1.4,
+     "JnNs": 176.365,
+     "peakStepBW": 1.894,
+     "peak29msBW": 0.756,
+     "peak29msKN": 0.585,
+     "regions": {
+      "torso:thorax": 176.365
+     }
+    },
+    "pelvis": {
+     "first": 0.496,
+     "JnNs": 161.11,
+     "peakStepBW": 13.761,
+     "peak29msBW": 2.257,
+     "peak29msKN": 1.747,
+     "regions": {
+      "hip_pelvis:buttock": 128.728,
+      "hip_pelvis:left": 32.382
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 136.632,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 7.166,
+      "boot_L:sole": 71.718,
+      "boot_L:toe": 56.496,
+      "boot_L:upper": 1.252
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 119.028,
+     "peakStepBW": 0.812,
+     "peak29msBW": 0.441,
+     "peak29msKN": 0.341,
+     "regions": {
+      "boot_R:heel": 31.878,
+      "boot_R:sole": 10.866,
+      "boot_R:upper": 16.387,
+      "boot_R:toe": 59.897
+     }
+    },
+    "arm": {
+     "first": 1.325,
+     "JnNs": 111.937,
+     "peakStepBW": 6.694,
+     "peak29msBW": 1.71,
+     "peak29msKN": 1.324,
+     "regions": {
+      "upperArm_L": 111.937
+     }
+    },
+    "head": {
+     "first": 1.683,
+     "JnNs": 37.295,
+     "peakStepBW": 0.737,
+     "peak29msBW": 0.27,
+     "peak29msKN": 0.209,
+     "regions": {
+      "head": 37.295
+     }
+    },
+    "shin_L": {
+     "first": 0.488,
+     "JnNs": 36.402,
+     "peakStepBW": 1.209,
+     "peak29msBW": 1.057,
+     "peak29msKN": 0.818,
+     "regions": {
+      "shin_L:lateral": 36.402
+     }
+    },
+    "hand": {
+     "first": 0.908,
+     "JnNs": 35.926,
+     "peakStepBW": 0.879,
+     "peak29msBW": 0.349,
+     "peak29msKN": 0.27,
+     "regions": {
+      "hand_L": 28.31,
+      "hand_R": 7.616
+     }
+    },
+    "forearm": {
+     "first": 1.325,
+     "JnNs": 0.395,
+     "peakStepBW": 0.123,
+     "peak29msBW": 0.018,
+     "peak29msKN": 0.014,
+     "regions": {
+      "forearm_L": 0.395
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.059,
+    "contactFracDuringGlide": 0.5,
+    "JnNs": 119.028,
+    "shareJn": 0.075,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.059,
+     "max": 0.209
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.199,
+     "max": 0.475
+    },
+    "regions": {
+     "boot_R:heel": 31.878,
+     "boot_R:sole": 10.866,
+     "boot_R:upper": 16.387,
+     "boot_R:toe": 59.897
+    }
+   },
+   "posture": {
+    "minBellyY": -0.89,
+    "reclAtStop": 101.625,
+    "headTurfT": 1.683
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 8.1,
+     "at": 0.512,
+     "dur": 1.258,
+     "range": [
+      -17,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 3.5,
+     "at": 0.917,
+     "dur": 0.171,
+     "range": [
+      -78,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.5,
+     "at": 0.471,
+     "dur": 0.021,
+     "range": [
+      -35,
+      29
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "ankle_R.x",
+     "beyond": 0.8,
+     "at": 1.992,
+     "dur": 0.171,
+     "range": [
+      -11,
+      16
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    },
+    {
+     "id": "knee_R.x",
+     "beyond": 0.6,
+     "at": 2,
+     "dur": 0.058,
+     "range": [
+      0,
+      22
+     ],
+     "hard": [
+      -10,
+      29
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.798,
+   "cpu": {
+    "step": 0.28,
+    "passive": 0.217,
+    "act": 0.035,
+    "tone": 0.1,
+    "instrument": 0.03,
+    "measure": 0.132,
+    "law": 0,
+    "lawT": 0.1
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.804,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.005,
+     "pelY": 0.862,
+     "recl": 12.877,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.198,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.082,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.942,
+     "vy": -2.433,
+     "comY": 0.736,
+     "pelY": 0.569,
+     "recl": 11.063,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.92,
+     "vy": -2.877,
+     "comY": 0.602,
+     "pelY": 0.427,
+     "recl": 11.866,
+     "bootLow": 0.062
+    },
+    {
+     "t": 0.454,
+     "vh": 4.63,
+     "vy": -2.578,
+     "comY": 0.471,
+     "pelY": 0.285,
+     "recl": 7.46,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 3.836,
+     "vy": -0.811,
+     "comY": 0.356,
+     "pelY": 0.151,
+     "recl": 2.818,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.388,
+     "vy": -0.092,
+     "comY": 0.343,
+     "pelY": 0.149,
+     "recl": -2.395,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 3.165,
+     "vy": 0.034,
+     "comY": 0.341,
+     "pelY": 0.156,
+     "recl": -9.161,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.956,
+     "vy": 0.11,
+     "comY": 0.345,
+     "pelY": 0.163,
+     "recl": -10.925,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 2.737,
+     "vy": 0.213,
+     "comY": 0.354,
+     "pelY": 0.172,
+     "recl": -7.666,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 2.59,
+     "vy": 0.117,
+     "comY": 0.363,
+     "pelY": 0.181,
+     "recl": -0.75,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 2.49,
+     "vy": -0.1,
+     "comY": 0.363,
+     "pelY": 0.183,
+     "recl": 6.95,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 2.338,
+     "vy": -0.159,
+     "comY": 0.358,
+     "pelY": 0.186,
+     "recl": 14.665,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 2.169,
+     "vy": -0.163,
+     "comY": 0.35,
+     "pelY": 0.19,
+     "recl": 23.263,
+     "bootLow": 0.002
+    },
+    {
+     "t": 0.954,
+     "vh": 1.921,
+     "vy": -0.037,
+     "comY": 0.347,
+     "pelY": 0.195,
+     "recl": 26.05,
+     "bootLow": 0.016
+    },
+    {
+     "t": 1.004,
+     "vh": 1.749,
+     "vy": -0.056,
+     "comY": 0.345,
+     "pelY": 0.201,
+     "recl": 23.107,
+     "bootLow": 0.035
+    },
+    {
+     "t": 1.054,
+     "vh": 1.606,
+     "vy": -0.148,
+     "comY": 0.34,
+     "pelY": 0.203,
+     "recl": 20.598,
+     "bootLow": 0.071
+    },
+    {
+     "t": 1.104,
+     "vh": 1.463,
+     "vy": -0.246,
+     "comY": 0.33,
+     "pelY": 0.204,
+     "recl": 20.089,
+     "bootLow": 0.124
+    },
+    {
+     "t": 1.154,
+     "vh": 1.307,
+     "vy": -0.309,
+     "comY": 0.315,
+     "pelY": 0.204,
+     "recl": 20.674,
+     "bootLow": 0.172
+    },
+    {
+     "t": 1.204,
+     "vh": 1.157,
+     "vy": -0.388,
+     "comY": 0.298,
+     "pelY": 0.206,
+     "recl": 22.644,
+     "bootLow": 0.2
+    },
+    {
+     "t": 1.254,
+     "vh": 1.018,
+     "vy": -0.499,
+     "comY": 0.276,
+     "pelY": 0.207,
+     "recl": 27.577,
+     "bootLow": 0.209
+    },
+    {
+     "t": 1.304,
+     "vh": 0.896,
+     "vy": -0.651,
+     "comY": 0.247,
+     "pelY": 0.206,
+     "recl": 37.523,
+     "bootLow": 0.199
+    },
+    {
+     "t": 1.354,
+     "vh": 0.677,
+     "vy": -0.156,
+     "comY": 0.223,
+     "pelY": 0.207,
+     "recl": 41.541,
+     "bootLow": 0.189
+    },
+    {
+     "t": 1.404,
+     "vh": 0.5,
+     "vy": 0.011,
+     "comY": 0.219,
+     "pelY": 0.225,
+     "recl": 44.882,
+     "bootLow": 0.16
+    },
+    {
+     "t": 1.454,
+     "vh": 0.425,
+     "vy": 0.08,
+     "comY": 0.221,
+     "pelY": 0.25,
+     "recl": 64.751,
+     "bootLow": 0.121
+    },
+    {
+     "t": 1.504,
+     "vh": 0.437,
+     "vy": 0.082,
+     "comY": 0.226,
+     "pelY": 0.277,
+     "recl": 81.513,
+     "bootLow": 0.073
+    },
+    {
+     "t": 1.554,
+     "vh": 0.454,
+     "vy": 0.063,
+     "comY": 0.228,
+     "pelY": 0.299,
+     "recl": 91.652,
+     "bootLow": 0.016
+    },
+    {
+     "t": 1.604,
+     "vh": 0.427,
+     "vy": 0.031,
+     "comY": 0.23,
+     "pelY": 0.318,
+     "recl": 96.133,
+     "bootLow": 0
+    },
+    {
+     "t": 1.654,
+     "vh": 0.415,
+     "vy": -0.008,
+     "comY": 0.231,
+     "pelY": 0.33,
+     "recl": 99.565,
+     "bootLow": 0
+    },
+    {
+     "t": 1.704,
+     "vh": 0.37,
+     "vy": -0.064,
+     "comY": 0.229,
+     "pelY": 0.33,
+     "recl": 101.259,
+     "bootLow": 0
+    },
+    {
+     "t": 1.754,
+     "vh": 0.3,
+     "vy": -0.078,
+     "comY": 0.225,
+     "pelY": 0.323,
+     "recl": 101.626,
+     "bootLow": 0
+    },
+    {
+     "t": 1.804,
+     "vh": 0.241,
+     "vy": -0.014,
+     "comY": 0.222,
+     "pelY": 0.321,
+     "recl": 101.683,
+     "bootLow": 0
+    },
+    {
+     "t": 1.854,
+     "vh": 0.186,
+     "vy": 0.012,
+     "comY": 0.223,
+     "pelY": 0.326,
+     "recl": 101.654,
+     "bootLow": 0
+    },
+    {
+     "t": 1.904,
+     "vh": 0.131,
+     "vy": -0.018,
+     "comY": 0.223,
+     "pelY": 0.327,
+     "recl": 101.06,
+     "bootLow": 0
+    },
+    {
+     "t": 1.954,
+     "vh": 0.081,
+     "vy": -0.026,
+     "comY": 0.221,
+     "pelY": 0.326,
+     "recl": 100.682,
+     "bootLow": 0
+    }
+   ]
+  },
+  "bodyMu045": {
+   "hash": "a430f6ffb61bb4d5",
+   "cost": 3.626,
+   "parts": {
+    "bootLoad": 0.016,
+    "kneeGlide": 2.238,
+    "limits": 1.372
+   },
+   "firstBodyT": 0.413,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.413
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.488
+    ],
+    [
+     "pelvis",
+     0.504
+    ],
+    [
+     "thigh_L",
+     0.504
+    ],
+    [
+     "hand",
+     0.963
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.842,
+    "vy": -2.784,
+    "comY": 0.578,
+    "pelY": 0.402
+   },
+   "retention": {
+    "+0.1s": 0.717,
+    "+0.2s": 0.565,
+    "+0.3s": 0.444,
+    "+0.5s": 0.297
+   },
+   "slideFromContactM": 1.543,
+   "slideFromCommitM": 3.571,
+   "stopT": 1.167,
+   "meanDecel": 6.027,
+   "glideShare": {
+    "knee_L": 0.556,
+    "pelvis": 0.194,
+    "thigh_L": 0.122,
+    "tackBoot": 0.103,
+    "hand": 0.025,
+    "foldBoot": 0
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.413,
+     "JnNs": 574.97,
+     "peakStepBW": 6.886,
+     "peak29msBW": 2.192,
+     "peak29msKN": 1.697,
+     "regions": {
+      "knee_L:posterior": 54.259,
+      "knee_L:lateral": 520.71
+     }
+    },
+    "thigh_L": {
+     "first": 0.504,
+     "JnNs": 370.212,
+     "peakStepBW": 13.676,
+     "peak29msBW": 5.191,
+     "peak29msKN": 4.018,
+     "regions": {
+      "thigh_L:lateral": 370.212
+     }
+    },
+    "pelvis": {
+     "first": 0.504,
+     "JnNs": 253.098,
+     "peakStepBW": 10.202,
+     "peak29msBW": 1.457,
+     "peak29msKN": 1.128,
+     "regions": {
+      "hip_pelvis:buttock": 231.934,
+      "hip_pelvis:left": 21.164
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 137.726,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 7.261,
+      "boot_L:sole": 70.96,
+      "boot_L:toe": 56.574,
+      "boot_L:upper": 2.932
+     }
+    },
+    "hand": {
+     "first": 0.963,
+     "JnNs": 97.143,
+     "peakStepBW": 1.415,
+     "peak29msBW": 0.332,
+     "peak29msKN": 0.257,
+     "regions": {
+      "hand_L": 97.143
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 79.89,
+     "peakStepBW": 0.799,
+     "peak29msBW": 0.459,
+     "peak29msKN": 0.355,
+     "regions": {
+      "boot_R:heel": 21.971,
+      "boot_R:sole": 15.249,
+      "boot_R:upper": 42.669
+     }
+    },
+    "shin_L": {
+     "first": 0.488,
+     "JnNs": 35.878,
+     "peakStepBW": 1.394,
+     "peak29msBW": 1.068,
+     "peak29msKN": 0.827,
+     "regions": {
+      "shin_L:lateral": 35.878
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.003,
+    "contactFracDuringGlide": 0.835,
+    "JnNs": 79.89,
+    "shareJn": 0.052,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.003,
+     "max": 0.044
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.127,
+     "max": 0.475
+    },
+    "regions": {
+     "boot_R:heel": 21.971,
+     "boot_R:sole": 15.249,
+     "boot_R:upper": 42.669
+    }
+   },
+   "posture": {
+    "minBellyY": -0.22,
+    "reclAtStop": 15.57,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 8,
+     "at": 0.517,
+     "dur": 1.225,
+     "range": [
+      -17,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.7,
+     "at": 0.471,
+     "dur": 0.025,
+     "range": [
+      -36,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 2.2,
+     "at": 0.971,
+     "dur": 0.267,
+     "range": [
+      -77,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 0.9,
+     "at": 0.521,
+     "dur": 0.017,
+     "range": [
+      -16,
+      12
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.804,
+   "cpu": {
+    "step": 0.28,
+    "passive": 0.221,
+    "act": 0.034,
+    "tone": 0.098,
+    "instrument": 0.032,
+    "measure": 0.132,
+    "law": 0,
+    "lawT": 0.098
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.804,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.005,
+     "pelY": 0.862,
+     "recl": 12.877,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.198,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.082,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.942,
+     "vy": -2.433,
+     "comY": 0.736,
+     "pelY": 0.569,
+     "recl": 11.063,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.92,
+     "vy": -2.877,
+     "comY": 0.602,
+     "pelY": 0.427,
+     "recl": 11.866,
+     "bootLow": 0.062
+    },
+    {
+     "t": 0.454,
+     "vh": 4.522,
+     "vy": -2.481,
+     "comY": 0.474,
+     "pelY": 0.289,
+     "recl": 6.99,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 3.822,
+     "vy": -1.399,
+     "comY": 0.358,
+     "pelY": 0.155,
+     "recl": 0.544,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 3.042,
+     "vy": -0.163,
+     "comY": 0.341,
+     "pelY": 0.147,
+     "recl": -7.793,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.784,
+     "vy": -0.076,
+     "comY": 0.334,
+     "pelY": 0.152,
+     "recl": -17.53,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.497,
+     "vy": 0.065,
+     "comY": 0.334,
+     "pelY": 0.157,
+     "recl": -21.673,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 2.196,
+     "vy": 0.239,
+     "comY": 0.342,
+     "pelY": 0.166,
+     "recl": -20.375,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.954,
+     "vy": 0.281,
+     "comY": 0.356,
+     "pelY": 0.176,
+     "recl": -15.531,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.799,
+     "vy": 0.129,
+     "comY": 0.367,
+     "pelY": 0.184,
+     "recl": -8.485,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.681,
+     "vy": -0.105,
+     "comY": 0.367,
+     "pelY": 0.186,
+     "recl": -0.292,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.475,
+     "vy": -0.14,
+     "comY": 0.358,
+     "pelY": 0.179,
+     "recl": 7.886,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 1.252,
+     "vy": -0.138,
+     "comY": 0.351,
+     "pelY": 0.179,
+     "recl": 15.687,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.93,
+     "vy": 0.05,
+     "comY": 0.351,
+     "pelY": 0.182,
+     "recl": 21.116,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.704,
+     "vy": 0.064,
+     "comY": 0.354,
+     "pelY": 0.188,
+     "recl": 21.142,
+     "bootLow": 0.001
+    },
+    {
+     "t": 1.104,
+     "vh": 0.517,
+     "vy": -0.011,
+     "comY": 0.355,
+     "pelY": 0.193,
+     "recl": 18.659,
+     "bootLow": 0.012
+    },
+    {
+     "t": 1.154,
+     "vh": 0.345,
+     "vy": -0.074,
+     "comY": 0.353,
+     "pelY": 0.195,
+     "recl": 16.133,
+     "bootLow": 0.028
+    },
+    {
+     "t": 1.204,
+     "vh": 0.146,
+     "vy": -0.095,
+     "comY": 0.348,
+     "pelY": 0.195,
+     "recl": 13.862,
+     "bootLow": 0.039
+    },
+    {
+     "t": 1.254,
+     "vh": 0.035,
+     "vy": -0.079,
+     "comY": 0.344,
+     "pelY": 0.196,
+     "recl": 11.235,
+     "bootLow": 0.042
+    },
+    {
+     "t": 1.304,
+     "vh": -0.029,
+     "vy": -0.065,
+     "comY": 0.341,
+     "pelY": 0.197,
+     "recl": 10.157,
+     "bootLow": 0.043
+    },
+    {
+     "t": 1.354,
+     "vh": -0.106,
+     "vy": -0.073,
+     "comY": 0.337,
+     "pelY": 0.198,
+     "recl": 11.344,
+     "bootLow": 0.046
+    },
+    {
+     "t": 1.404,
+     "vh": -0.138,
+     "vy": -0.065,
+     "comY": 0.334,
+     "pelY": 0.199,
+     "recl": 13.983,
+     "bootLow": 0.034
+    },
+    {
+     "t": 1.454,
+     "vh": -0.115,
+     "vy": -0.022,
+     "comY": 0.332,
+     "pelY": 0.2,
+     "recl": 17.01,
+     "bootLow": 0.03
+    },
+    {
+     "t": 1.504,
+     "vh": -0.067,
+     "vy": -0.017,
+     "comY": 0.331,
+     "pelY": 0.202,
+     "recl": 19.077,
+     "bootLow": 0.041
+    },
+    {
+     "t": 1.554,
+     "vh": -0.033,
+     "vy": -0.037,
+     "comY": 0.329,
+     "pelY": 0.202,
+     "recl": 19.48,
+     "bootLow": 0.058
+    },
+    {
+     "t": 1.604,
+     "vh": -0.023,
+     "vy": -0.055,
+     "comY": 0.327,
+     "pelY": 0.203,
+     "recl": 19.601,
+     "bootLow": 0.076
+    },
+    {
+     "t": 1.654,
+     "vh": -0.024,
+     "vy": -0.093,
+     "comY": 0.324,
+     "pelY": 0.203,
+     "recl": 19.442,
+     "bootLow": 0.09
+    },
+    {
+     "t": 1.704,
+     "vh": -0.043,
+     "vy": -0.119,
+     "comY": 0.318,
+     "pelY": 0.203,
+     "recl": 19.115,
+     "bootLow": 0.099
+    },
+    {
+     "t": 1.754,
+     "vh": -0.054,
+     "vy": -0.138,
+     "comY": 0.312,
+     "pelY": 0.205,
+     "recl": 19.499,
+     "bootLow": 0.107
+    },
+    {
+     "t": 1.804,
+     "vh": -0.071,
+     "vy": -0.174,
+     "comY": 0.304,
+     "pelY": 0.206,
+     "recl": 21.316,
+     "bootLow": 0.115
+    },
+    {
+     "t": 1.854,
+     "vh": -0.082,
+     "vy": -0.227,
+     "comY": 0.294,
+     "pelY": 0.207,
+     "recl": 24.28,
+     "bootLow": 0.126
+    },
+    {
+     "t": 1.904,
+     "vh": -0.069,
+     "vy": -0.295,
+     "comY": 0.281,
+     "pelY": 0.209,
+     "recl": 27.954,
+     "bootLow": 0.137
+    },
+    {
+     "t": 1.954,
+     "vh": -0.047,
+     "vy": -0.38,
+     "comY": 0.264,
+     "pelY": 0.209,
+     "recl": 33.121,
+     "bootLow": 0.148
+    }
+   ]
+  },
+  "bodyMu055": {
+   "hash": "92dfa5e1ee82b231",
+   "cost": 4.974,
+   "parts": {
+    "bootLoad": 0.088,
+    "slide": 0.486,
+    "decel": 0.229,
+    "retention": 0.028,
+    "kneeGlide": 2.808,
+    "limits": 1.335
+   },
+   "firstBodyT": 0.413,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.413
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.496
+    ],
+    [
+     "pelvis",
+     0.508
+    ],
+    [
+     "thigh_L",
+     0.513
+    ],
+    [
+     "hand",
+     1.013
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.81,
+    "vy": -2.756,
+    "comY": 0.579,
+    "pelY": 0.402
+   },
+   "retention": {
+    "+0.1s": 0.69,
+    "+0.2s": 0.486,
+    "+0.3s": 0.357,
+    "+0.5s": 0.154
+   },
+   "slideFromContactM": 1.176,
+   "slideFromCommitM": 3.204,
+   "stopT": 0.996,
+   "meanDecel": 7.763,
+   "glideShare": {
+    "knee_L": 0.586,
+    "thigh_L": 0.22,
+    "tackBoot": 0.169,
+    "shin_L": 0.017,
+    "foldBoot": 0.008
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.413,
+     "JnNs": 458.88,
+     "peakStepBW": 7.924,
+     "peak29msBW": 2.577,
+     "peak29msKN": 1.995,
+     "regions": {
+      "knee_L:posterior": 63.765,
+      "knee_L:lateral": 395.115
+     }
+    },
+    "shin_L": {
+     "first": 0.496,
+     "JnNs": 270.916,
+     "peakStepBW": 1.536,
+     "peak29msBW": 1.001,
+     "peak29msKN": 0.775,
+     "regions": {
+      "shin_L:lateral": 270.916
+     }
+    },
+    "hand": {
+     "first": 1.013,
+     "JnNs": 253.959,
+     "peakStepBW": 1.987,
+     "peak29msBW": 0.414,
+     "peak29msKN": 0.32,
+     "regions": {
+      "hand_L": 253.959
+     }
+    },
+    "thigh_L": {
+     "first": 0.513,
+     "JnNs": 227.45,
+     "peakStepBW": 25.003,
+     "peak29msBW": 5.611,
+     "peak29msKN": 4.344,
+     "regions": {
+      "thigh_L:lateral": 227.45
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 191.993,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 7.601,
+      "boot_L:sole": 71.369,
+      "boot_L:toe": 56.577,
+      "boot_L:upper": 56.446
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 95.925,
+     "peakStepBW": 0.836,
+     "peak29msBW": 0.483,
+     "peak29msKN": 0.374,
+     "regions": {
+      "boot_R:heel": 35.357,
+      "boot_R:sole": 10.351,
+      "boot_R:upper": 50.216
+     }
+    },
+    "pelvis": {
+     "first": 0.508,
+     "JnNs": 85.146,
+     "peakStepBW": 2.903,
+     "peak29msBW": 0.462,
+     "peak29msKN": 0.358,
+     "regions": {
+      "hip_pelvis:buttock": 85.146
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.001,
+    "contactFracDuringGlide": 0.965,
+    "JnNs": 95.925,
+    "shareJn": 0.061,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.001,
+     "max": 0.044
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.475
+    },
+    "regions": {
+     "boot_R:heel": 35.357,
+     "boot_R:sole": 10.351,
+     "boot_R:upper": 50.216
+    }
+   },
+   "posture": {
+    "minBellyY": -0.148,
+    "reclAtStop": 8.034,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 7.7,
+     "at": 0.521,
+     "dur": 1.329,
+     "range": [
+      -17,
+      53
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 3,
+     "at": 0.467,
+     "dur": 0.025,
+     "range": [
+      -36,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.4,
+     "at": 0.371,
+     "dur": 0.013,
+     "range": [
+      -76,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.2,
+     "at": 0.529,
+     "dur": 0.017,
+     "range": [
+      -16,
+      11
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {
+    "failures": {},
+    "wholeBody": null
+   },
+   "cpuMsPerStep": 0.827,
+   "cpu": {
+    "step": 0.29,
+    "passive": 0.222,
+    "act": 0.04,
+    "tone": 0.096,
+    "instrument": 0.043,
+    "measure": 0.13,
+    "law": 0,
+    "lawT": 0.096
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.804,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.005,
+     "pelY": 0.862,
+     "recl": 12.877,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.198,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.082,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.942,
+     "vy": -2.433,
+     "comY": 0.736,
+     "pelY": 0.569,
+     "recl": 11.063,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.92,
+     "vy": -2.877,
+     "comY": 0.602,
+     "pelY": 0.427,
+     "recl": 11.866,
+     "bootLow": 0.062
+    },
+    {
+     "t": 0.454,
+     "vh": 4.376,
+     "vy": -2.352,
+     "comY": 0.479,
+     "pelY": 0.295,
+     "recl": 6.393,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.014,
+     "vy": -2.152,
+     "comY": 0.366,
+     "pelY": 0.168,
+     "recl": -2.301,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.693,
+     "vy": -0.199,
+     "comY": 0.338,
+     "pelY": 0.15,
+     "recl": -14.651,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.391,
+     "vy": -0.103,
+     "comY": 0.331,
+     "pelY": 0.16,
+     "recl": -26.393,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.077,
+     "vy": 0.012,
+     "comY": 0.329,
+     "pelY": 0.167,
+     "recl": -32.967,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.767,
+     "vy": 0.116,
+     "comY": 0.332,
+     "pelY": 0.17,
+     "recl": -32.928,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.499,
+     "vy": 0.133,
+     "comY": 0.339,
+     "pelY": 0.167,
+     "recl": -28.231,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.211,
+     "vy": 0.178,
+     "comY": 0.347,
+     "pelY": 0.166,
+     "recl": -21.855,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 0.991,
+     "vy": 0.093,
+     "comY": 0.353,
+     "pelY": 0.168,
+     "recl": -14.9,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 0.782,
+     "vy": -0.011,
+     "comY": 0.355,
+     "pelY": 0.167,
+     "recl": -7.031,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.504,
+     "vy": 0.013,
+     "comY": 0.355,
+     "pelY": 0.166,
+     "recl": 1.549,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.242,
+     "vy": 0.005,
+     "comY": 0.356,
+     "pelY": 0.169,
+     "recl": 9.159,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.038,
+     "vy": 0.053,
+     "comY": 0.358,
+     "pelY": 0.173,
+     "recl": 13.709,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": -0.096,
+     "vy": 0.061,
+     "comY": 0.36,
+     "pelY": 0.178,
+     "recl": 17.258,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": -0.17,
+     "vy": 0.06,
+     "comY": 0.364,
+     "pelY": 0.185,
+     "recl": 17.958,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": -0.123,
+     "vy": 0.026,
+     "comY": 0.366,
+     "pelY": 0.191,
+     "recl": 17.552,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.254,
+     "vh": -0.062,
+     "vy": 0.003,
+     "comY": 0.366,
+     "pelY": 0.195,
+     "recl": 18.053,
+     "bootLow": 0.015
+    },
+    {
+     "t": 1.304,
+     "vh": -0.035,
+     "vy": 0.002,
+     "comY": 0.366,
+     "pelY": 0.197,
+     "recl": 18.067,
+     "bootLow": 0.032
+    },
+    {
+     "t": 1.354,
+     "vh": -0.032,
+     "vy": 0.007,
+     "comY": 0.367,
+     "pelY": 0.198,
+     "recl": 17.809,
+     "bootLow": 0.046
+    },
+    {
+     "t": 1.404,
+     "vh": -0.032,
+     "vy": 0.016,
+     "comY": 0.367,
+     "pelY": 0.2,
+     "recl": 18.213,
+     "bootLow": 0.057
+    },
+    {
+     "t": 1.454,
+     "vh": -0.038,
+     "vy": 0.03,
+     "comY": 0.368,
+     "pelY": 0.201,
+     "recl": 19.025,
+     "bootLow": 0.063
+    },
+    {
+     "t": 1.504,
+     "vh": -0.036,
+     "vy": 0.045,
+     "comY": 0.37,
+     "pelY": 0.203,
+     "recl": 20.325,
+     "bootLow": 0.067
+    },
+    {
+     "t": 1.554,
+     "vh": -0.04,
+     "vy": 0.077,
+     "comY": 0.373,
+     "pelY": 0.206,
+     "recl": 22.094,
+     "bootLow": 0.068
+    },
+    {
+     "t": 1.604,
+     "vh": -0.018,
+     "vy": 0.086,
+     "comY": 0.377,
+     "pelY": 0.212,
+     "recl": 23.58,
+     "bootLow": 0.069
+    },
+    {
+     "t": 1.654,
+     "vh": 0.013,
+     "vy": 0.066,
+     "comY": 0.381,
+     "pelY": 0.217,
+     "recl": 24.25,
+     "bootLow": 0.074
+    },
+    {
+     "t": 1.704,
+     "vh": 0.026,
+     "vy": 0.038,
+     "comY": 0.384,
+     "pelY": 0.221,
+     "recl": 24.364,
+     "bootLow": 0.083
+    },
+    {
+     "t": 1.754,
+     "vh": 0.034,
+     "vy": -0.002,
+     "comY": 0.385,
+     "pelY": 0.221,
+     "recl": 24.181,
+     "bootLow": 0.09
+    },
+    {
+     "t": 1.804,
+     "vh": 0.038,
+     "vy": -0.063,
+     "comY": 0.383,
+     "pelY": 0.217,
+     "recl": 23.95,
+     "bootLow": 0.092
+    },
+    {
+     "t": 1.854,
+     "vh": 0.038,
+     "vy": -0.127,
+     "comY": 0.378,
+     "pelY": 0.21,
+     "recl": 23.235,
+     "bootLow": 0.083
+    },
+    {
+     "t": 1.904,
+     "vh": 0.036,
+     "vy": -0.122,
+     "comY": 0.371,
+     "pelY": 0.201,
+     "recl": 21.96,
+     "bootLow": 0.062
+    },
+    {
+     "t": 1.954,
+     "vh": 0.02,
+     "vy": -0.055,
+     "comY": 0.367,
+     "pelY": 0.198,
+     "recl": 22.024,
+     "bootLow": 0.029
+    }
+   ]
+  },
+  "A5": {
+   "hash": "8b98a213acd5ddae",
+   "cost": 3.613,
+   "parts": {
+    "bootLoad": 0.048,
+    "slide": 0.254,
+    "kneeGlide": 2.04,
+    "limits": 1.271
+   },
+   "firstBodyT": 0.413,
+   "sequence": [
+    [
+     "foldBoot",
+     0.004
+    ],
+    [
+     "knee_L",
+     0.413
+    ],
+    [
+     "tackBoot",
+     0.433
+    ],
+    [
+     "shin_L",
+     0.492
+    ],
+    [
+     "pelvis",
+     0.504
+    ],
+    [
+     "thigh_L",
+     0.508
+    ],
+    [
+     "hand",
+     0.992
+    ]
+   ],
+   "atFirstBody": {
+    "vh": 4.826,
+    "vy": -2.769,
+    "comY": 0.578,
+    "pelY": 0.402
+   },
+   "retention": {
+    "+0.1s": 0.694,
+    "+0.2s": 0.525,
+    "+0.3s": 0.395,
+    "+0.5s": 0.219
+   },
+   "slideFromContactM": 1.331,
+   "slideFromCommitM": 3.36,
+   "stopT": 1.067,
+   "meanDecel": 6.946,
+   "glideShare": {
+    "knee_L": 0.49,
+    "thigh_L": 0.226,
+    "tackBoot": 0.137,
+    "pelvis": 0.086,
+    "shin_L": 0.031,
+    "hand": 0.017,
+    "foldBoot": 0.013
+   },
+   "loads": {
+    "knee_L": {
+     "first": 0.413,
+     "JnNs": 503.253,
+     "peakStepBW": 7.341,
+     "peak29msBW": 2.38,
+     "peak29msKN": 1.842,
+     "regions": {
+      "knee_L:posterior": 58.957,
+      "knee_L:lateral": 444.296
+     }
+    },
+    "pelvis": {
+     "first": 0.504,
+     "JnNs": 407.577,
+     "peakStepBW": 3.103,
+     "peak29msBW": 0.875,
+     "peak29msKN": 0.677,
+     "regions": {
+      "hip_pelvis:buttock": 389.53,
+      "hip_pelvis:left": 18.047
+     }
+    },
+    "thigh_L": {
+     "first": 0.508,
+     "JnNs": 219.551,
+     "peakStepBW": 19.489,
+     "peak29msBW": 5.509,
+     "peak29msKN": 4.265,
+     "regions": {
+      "thigh_L:lateral": 219.551
+     }
+    },
+    "foldBoot": {
+     "first": 0.004,
+     "JnNs": 156.678,
+     "peakStepBW": 5.918,
+     "peak29msBW": 2.835,
+     "peak29msKN": 2.195,
+     "regions": {
+      "boot_L:heel": 8.187,
+      "boot_L:sole": 72.07,
+      "boot_L:toe": 57.978,
+      "boot_L:upper": 18.443
+     }
+    },
+    "shin_L": {
+     "first": 0.492,
+     "JnNs": 128.783,
+     "peakStepBW": 1.524,
+     "peak29msBW": 1.066,
+     "peak29msKN": 0.825,
+     "regions": {
+      "shin_L:lateral": 128.783
+     }
+    },
+    "tackBoot": {
+     "first": 0.433,
+     "JnNs": 88.548,
+     "peakStepBW": 0.817,
+     "peak29msBW": 0.466,
+     "peak29msKN": 0.361,
+     "regions": {
+      "boot_R:heel": 34.65,
+      "boot_R:sole": 10.617,
+      "boot_R:upper": 43.281
+     }
+    },
+    "hand": {
+     "first": 0.992,
+     "JnNs": 82.514,
+     "peakStepBW": 0.975,
+     "peak29msBW": 0.259,
+     "peak29msKN": 0.2,
+     "regions": {
+      "hand_L": 82.514
+     }
+    }
+   },
+   "tacklingBoot": {
+    "minLowDuringGlideM": 0,
+    "meanLowDuringGlideM": 0.001,
+    "contactFracDuringGlide": 0.968,
+    "JnNs": 88.548,
+    "shareJn": 0.056,
+    "heightDuringGlide": {
+     "min": 0,
+     "mean": 0.001,
+     "max": 0.044
+    },
+    "soleDownCosDuringGlide": {
+     "min": -0.125,
+     "max": 0.475
+    },
+    "regions": {
+     "boot_R:heel": 34.65,
+     "boot_R:sole": 10.617,
+     "boot_R:upper": 43.281
+    }
+   },
+   "posture": {
+    "minBellyY": -0.196,
+    "reclAtStop": 16.69,
+    "headTurfT": null
+   },
+   "limits": [
+    {
+     "id": "hip_L.x",
+     "beyond": 7.4,
+     "at": 0.521,
+     "dur": 0.554,
+     "range": [
+      -17,
+      52
+     ],
+     "hard": [
+      -50,
+      45
+     ]
+    },
+    {
+     "id": "ankle_R.z",
+     "beyond": 2.8,
+     "at": 0.471,
+     "dur": 0.025,
+     "range": [
+      -36,
+      9
+     ],
+     "hard": [
+      -33,
+      33
+     ]
+    },
+    {
+     "id": "elbow_L.y",
+     "beyond": 1.4,
+     "at": 0.371,
+     "dur": 0.013,
+     "range": [
+      -76,
+      67
+     ],
+     "hard": [
+      -75,
+      80
+     ]
+    },
+    {
+     "id": "ankle_L.x",
+     "beyond": 1.2,
+     "at": 0.525,
+     "dur": 0.017,
+     "range": [
+      -16,
+      10
+     ],
+     "hard": [
+      -15,
+      15
+     ]
+    }
+   ],
+   "ctrl": {},
+   "cpuMsPerStep": 0.855,
+   "cpu": {
+    "step": 0.295,
+    "passive": 0.231,
+    "act": 0.036,
+    "tone": 0.11,
+    "instrument": 0.044,
+    "measure": 0.133,
+    "law": 0,
+    "lawT": 0.11
+   },
+   "vSeries": [
+    {
+     "t": 0.004,
+     "vh": 5.016,
+     "vy": -0.304,
+     "comY": 1.063,
+     "pelY": 0.945,
+     "recl": -7.102,
+     "bootLow": 0.57
+    },
+    {
+     "t": 0.054,
+     "vh": 4.918,
+     "vy": 0.075,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": -6.207,
+     "bootLow": 0.249
+    },
+    {
+     "t": 0.104,
+     "vh": 4.949,
+     "vy": -0.123,
+     "comY": 1.064,
+     "pelY": 0.953,
+     "recl": 7.783,
+     "bootLow": 0.036
+    },
+    {
+     "t": 0.154,
+     "vh": 4.984,
+     "vy": -0.565,
+     "comY": 1.046,
+     "pelY": 0.921,
+     "recl": 13.804,
+     "bootLow": 0.096
+    },
+    {
+     "t": 0.204,
+     "vh": 4.984,
+     "vy": -1.056,
+     "comY": 1.005,
+     "pelY": 0.862,
+     "recl": 12.877,
+     "bootLow": 0.175
+    },
+    {
+     "t": 0.254,
+     "vh": 4.984,
+     "vy": -1.546,
+     "comY": 0.938,
+     "pelY": 0.785,
+     "recl": 12.198,
+     "bootLow": 0.218
+    },
+    {
+     "t": 0.304,
+     "vh": 4.984,
+     "vy": -2.037,
+     "comY": 0.848,
+     "pelY": 0.688,
+     "recl": 11.082,
+     "bootLow": 0.217
+    },
+    {
+     "t": 0.354,
+     "vh": 4.942,
+     "vy": -2.433,
+     "comY": 0.736,
+     "pelY": 0.569,
+     "recl": 11.063,
+     "bootLow": 0.157
+    },
+    {
+     "t": 0.404,
+     "vh": 4.92,
+     "vy": -2.876,
+     "comY": 0.602,
+     "pelY": 0.427,
+     "recl": 11.867,
+     "bootLow": 0.062
+    },
+    {
+     "t": 0.454,
+     "vh": 4.452,
+     "vy": -2.416,
+     "comY": 0.476,
+     "pelY": 0.292,
+     "recl": 6.696,
+     "bootLow": 0
+    },
+    {
+     "t": 0.504,
+     "vh": 4.058,
+     "vy": -2.107,
+     "comY": 0.361,
+     "pelY": 0.161,
+     "recl": -0.75,
+     "bootLow": 0
+    },
+    {
+     "t": 0.554,
+     "vh": 2.852,
+     "vy": -0.165,
+     "comY": 0.341,
+     "pelY": 0.149,
+     "recl": -10.668,
+     "bootLow": 0
+    },
+    {
+     "t": 0.604,
+     "vh": 2.58,
+     "vy": -0.094,
+     "comY": 0.334,
+     "pelY": 0.156,
+     "recl": -20.848,
+     "bootLow": 0
+    },
+    {
+     "t": 0.654,
+     "vh": 2.289,
+     "vy": 0.008,
+     "comY": 0.332,
+     "pelY": 0.16,
+     "recl": -25.667,
+     "bootLow": 0
+    },
+    {
+     "t": 0.704,
+     "vh": 1.958,
+     "vy": 0.186,
+     "comY": 0.337,
+     "pelY": 0.162,
+     "recl": -24.263,
+     "bootLow": 0
+    },
+    {
+     "t": 0.754,
+     "vh": 1.675,
+     "vy": 0.266,
+     "comY": 0.349,
+     "pelY": 0.169,
+     "recl": -19.778,
+     "bootLow": 0
+    },
+    {
+     "t": 0.804,
+     "vh": 1.473,
+     "vy": 0.181,
+     "comY": 0.361,
+     "pelY": 0.175,
+     "recl": -13.708,
+     "bootLow": 0
+    },
+    {
+     "t": 0.854,
+     "vh": 1.335,
+     "vy": -0.033,
+     "comY": 0.364,
+     "pelY": 0.177,
+     "recl": -6.183,
+     "bootLow": 0
+    },
+    {
+     "t": 0.904,
+     "vh": 1.099,
+     "vy": -0.049,
+     "comY": 0.359,
+     "pelY": 0.171,
+     "recl": 0.534,
+     "bootLow": 0
+    },
+    {
+     "t": 0.954,
+     "vh": 0.859,
+     "vy": -0.06,
+     "comY": 0.356,
+     "pelY": 0.172,
+     "recl": 6.068,
+     "bootLow": 0
+    },
+    {
+     "t": 1.004,
+     "vh": 0.598,
+     "vy": -0.008,
+     "comY": 0.354,
+     "pelY": 0.174,
+     "recl": 11.922,
+     "bootLow": 0
+    },
+    {
+     "t": 1.054,
+     "vh": 0.345,
+     "vy": 0.01,
+     "comY": 0.354,
+     "pelY": 0.176,
+     "recl": 15.921,
+     "bootLow": 0
+    },
+    {
+     "t": 1.104,
+     "vh": 0.094,
+     "vy": 0.036,
+     "comY": 0.355,
+     "pelY": 0.18,
+     "recl": 18.04,
+     "bootLow": 0
+    },
+    {
+     "t": 1.154,
+     "vh": -0.055,
+     "vy": 0.032,
+     "comY": 0.357,
+     "pelY": 0.184,
+     "recl": 16.829,
+     "bootLow": 0
+    },
+    {
+     "t": 1.204,
+     "vh": -0.049,
+     "vy": -0.014,
+     "comY": 0.357,
+     "pelY": 0.189,
+     "recl": 14.961,
+     "bootLow": 0
+    },
+    {
+     "t": 1.254,
+     "vh": -0.034,
+     "vy": -0.038,
+     "comY": 0.356,
+     "pelY": 0.191,
+     "recl": 14.829,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.304,
+     "vh": -0.039,
+     "vy": -0.029,
+     "comY": 0.354,
+     "pelY": 0.192,
+     "recl": 15.191,
+     "bootLow": 0.002
+    },
+    {
+     "t": 1.354,
+     "vh": -0.047,
+     "vy": -0.007,
+     "comY": 0.353,
+     "pelY": 0.193,
+     "recl": 15.872,
+     "bootLow": 0.001
+    },
+    {
+     "t": 1.404,
+     "vh": -0.039,
+     "vy": 0.023,
+     "comY": 0.354,
+     "pelY": 0.193,
+     "recl": 16.645,
+     "bootLow": 0
+    },
+    {
+     "t": 1.454,
+     "vh": -0.045,
+     "vy": 0.034,
+     "comY": 0.355,
+     "pelY": 0.194,
+     "recl": 17.121,
+     "bootLow": 0
+    },
+    {
+     "t": 1.504,
+     "vh": -0.065,
+     "vy": 0.025,
+     "comY": 0.357,
+     "pelY": 0.193,
+     "recl": 18.226,
+     "bootLow": 0
+    },
+    {
+     "t": 1.554,
+     "vh": -0.094,
+     "vy": 0.04,
+     "comY": 0.359,
+     "pelY": 0.193,
+     "recl": 20.043,
+     "bootLow": 0
+    },
+    {
+     "t": 1.604,
+     "vh": -0.128,
+     "vy": 0.04,
+     "comY": 0.361,
+     "pelY": 0.194,
+     "recl": 21.773,
+     "bootLow": 0
+    },
+    {
+     "t": 1.654,
+     "vh": -0.146,
+     "vy": 0.041,
+     "comY": 0.363,
+     "pelY": 0.196,
+     "recl": 23.141,
+     "bootLow": 0.004
+    },
+    {
+     "t": 1.704,
+     "vh": -0.143,
+     "vy": 0.047,
+     "comY": 0.365,
+     "pelY": 0.199,
+     "recl": 24.222,
+     "bootLow": 0.017
+    },
+    {
+     "t": 1.754,
+     "vh": -0.121,
+     "vy": 0.036,
+     "comY": 0.367,
+     "pelY": 0.202,
+     "recl": 25.078,
+     "bootLow": 0.041
+    },
+    {
+     "t": 1.804,
+     "vh": -0.101,
+     "vy": 0.023,
+     "comY": 0.368,
+     "pelY": 0.203,
+     "recl": 26.344,
+     "bootLow": 0.071
+    },
+    {
+     "t": 1.854,
+     "vh": -0.096,
+     "vy": 0.033,
+     "comY": 0.37,
+     "pelY": 0.204,
+     "recl": 27.61,
+     "bootLow": 0.098
+    },
+    {
+     "t": 1.904,
+     "vh": -0.076,
+     "vy": 0.033,
+     "comY": 0.371,
+     "pelY": 0.204,
+     "recl": 27.771,
+     "bootLow": 0.115
+    },
+    {
+     "t": 1.954,
+     "vh": -0.036,
+     "vy": 0.016,
+     "comY": 0.373,
+     "pelY": 0.205,
+     "recl": 27.322,
+     "bootLow": 0.124
+    }
+   ]
+  }
+ },
+ "determinism": {
+  "first": "792ce24ee2a3c678",
+  "rerun": "792ce24ee2a3c678",
+  "identical": true
+ }
+}

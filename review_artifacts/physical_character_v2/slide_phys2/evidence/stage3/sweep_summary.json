@@ -1,0 +1,542 @@
+{
+ "tool": "sp_stage3_analyze.mjs",
+ "twin": {
+  "hash": "d7b93dce87eae465",
+  "recipientStanding": {
+   "pelvisStartY": 0.912,
+   "pelvisEndY": 0.913
+  }
+ },
+ "cases": {
+  "X_5_-0.10": {
+   "hash": "85bf0490c1ca54dc",
+   "cond": {
+    "speed": 5,
+    "lateral": -0.1,
+    "note": "sweep: 5 m/s, line -0.10 m toward the toes"
+   },
+   "placement": {
+    "refT": 0.5333333333333333,
+    "refBoot": [
+     0.15802906453609467,
+     0.046704910695552826,
+     3.4546048641204834
+    ],
+    "refBootLow": -0.000002477432934633317,
+    "refFirstBody": 0.413,
+    "target": [
+     -0.1341185822290177,
+     0,
+     0.2104376067829659
+    ],
+    "offset": [
+     0.023910482307076958,
+     0,
+     3.6650424709034493
+    ],
+    "yawDeg": 180
+   },
+   "contact": true,
+   "firstContactS": 0.496,
+   "firstPair": [
+    "foot_L×foot_R"
+   ],
+   "contactDurS": 3.217,
+   "crossImpulseOnRecipientNs": [
+    13.96,
+    1.554,
+    -164.99
+   ],
+   "crossImpulseNs": 165.586,
+   "crossImpulseHorizNs": 165.579,
+   "crossImpulseAlongSweepNs": 164.99,
+   "crossImpulseVertNs": 1.554,
+   "horizWithin02sNs": 84.814,
+   "peakCrossForceN": 866,
+   "peakCrossForceBW_rec": 1.194,
+   "impulseByPair": {
+    "foot_L×foot_R": 80.449,
+    "thigh_L×forearm_R": 3.842,
+    "forearm_L×forearm_R": 0.171,
+    "shank_L×shank_R": 5.816,
+    "shank_L×thigh_R": 77.149
+   },
+   "recipient": {
+    "cls": "DISPLACED-RECOVERED",
+    "fallS": null,
+    "fallAfterContactS": null,
+    "endPelvisDropM": 0.004,
+    "comDispPkM": 0.029,
+    "footDispPkM": {
+     "L": 0.087,
+     "R": 0.001
+    },
+    "footAlongSweepPkM": {
+     "L": 0.086,
+     "R": 0
+    },
+    "footOffTurfS": {
+     "L": null,
+     "R": null
+    },
+    "headTurfS": null,
+    "fallDirAlongSweep": null,
+    "slicedOutSignature": false
+   },
+   "tackler": {
+    "vAtContact": [
+     0.008,
+     -2.217,
+     -4.092
+    ],
+    "vhAtContact": 4.092,
+    "travelAfterContactM": 0.858,
+    "calibTravelSameWindowM": 0.984,
+    "headTurfS": 1.908
+   },
+   "integrity": {
+    "maxHardExcDeg": 8.079,
+    "maxTurfPenMm": 3.137,
+    "eqOppMax": 0
+   },
+   "cpuMs": {
+    "step": 1162.0810480000123,
+    "passive": 1103.1196240000095,
+    "act": 292.13740600002075,
+    "tone": 591.6865879999923,
+    "instrument": 307.5851449999982,
+    "measure": 884.2000580000126,
+    "law": 227.92187300002797,
+    "lawT": 359.1053749999887
+   },
+   "wallMs": 4378
+  },
+  "X_5_0.05": {
+   "hash": "0244cb5cef2a0bc8",
+   "cond": {
+    "speed": 5,
+    "lateral": 0.05,
+    "note": "sweep: 5 m/s, line 0.05 m toward the toes"
+   },
+   "placement": {
+    "refT": 0.5333333333333333,
+    "refBoot": [
+     0.15802906453609467,
+     0.046704910695552826,
+     3.4546048641204834
+    ],
+    "refBootLow": -0.000002477432934633317,
+    "refFirstBody": 0.413,
+    "target": [
+     0.015881417770982308,
+     0,
+     0.2104376067829659
+    ],
+    "offset": [
+     0.17391048230707698,
+     0,
+     3.6650424709034493
+    ],
+    "yawDeg": 180
+   },
+   "contact": true,
+   "firstContactS": 0.496,
+   "firstPair": [
+    "foot_L×foot_R"
+   ],
+   "contactDurS": 3.217,
+   "crossImpulseOnRecipientNs": [
+    26.536,
+    533.233,
+    -315.625
+   ],
+   "crossImpulseNs": 620.21,
+   "crossImpulseHorizNs": 316.739,
+   "crossImpulseAlongSweepNs": 315.625,
+   "crossImpulseVertNs": 533.233,
+   "horizWithin02sNs": 87.333,
+   "peakCrossForceN": 1326,
+   "peakCrossForceBW_rec": 1.829,
+   "impulseByPair": {
+    "foot_L×foot_R": 152.691,
+    "forearm_L×foot_L": 14.829,
+    "upperArm_L×foot_L": 54.099,
+    "shank_R×thigh_R": 208.484,
+    "forearm_L×shank_L": 24.15,
+    "thigh_L×shank_R": 57.808,
+    "shank_L×foot_R": 10.69,
+    "foot_R×thigh_R": 126.568,
+    "thigh_L×foot_R": 296.231,
+    "forearm_L×thigh_L": 1.015
+   },
+   "recipient": {
+    "cls": "FALL",
+    "fallS": 1.583,
+    "fallAfterContactS": 1.088,
+    "endPelvisDropM": 0.59,
+    "comDispPkM": 1.226,
+    "footDispPkM": {
+     "L": 0.5,
+     "R": 0.961
+    },
+    "footAlongSweepPkM": {
+     "L": 0.231,
+     "R": 0
+    },
+    "footOffTurfS": {
+     "L": 1.825,
+     "R": 1.092
+    },
+    "headTurfS": 1.988,
+    "fallDirAlongSweep": -0.988,
+    "slicedOutSignature": false
+   },
+   "tackler": {
+    "vAtContact": [
+     0.011,
+     -2.217,
+     -4.086
+    ],
+    "vhAtContact": 4.086,
+    "travelAfterContactM": 0.656,
+    "calibTravelSameWindowM": 0.984,
+    "headTurfS": null
+   },
+   "integrity": {
+    "maxHardExcDeg": 8.696,
+    "maxTurfPenMm": 1.55,
+    "eqOppMax": 0
+   },
+   "cpuMs": {
+    "step": 1330.143757000004,
+    "passive": 1188.329539999996,
+    "act": 276.3964030000013,
+    "tone": 632.0050450000108,
+    "instrument": 288.2909190000014,
+    "measure": 883.5679720000023,
+    "law": 203.14023400001406,
+    "lawT": 424.7043049999918
+   },
+   "wallMs": 4637
+  },
+  "X_5_0.20": {
+   "hash": "346c37bf771ae367",
+   "cond": {
+    "speed": 5,
+    "lateral": 0.2,
+    "note": "sweep: 5 m/s, line 0.20 m toward the toes"
+   },
+   "placement": {
+    "refT": 0.5333333333333333,
+    "refBoot": [
+     0.15802906453609467,
+     0.046704910695552826,
+     3.4546048641204834
+    ],
+    "refBootLow": -0.000002477432934633317,
+    "refFirstBody": 0.413,
+    "target": [
+     0.1658814177709823,
+     0,
+     0.2104376067829659
+    ],
+    "offset": [
+     0.323910482307077,
+     0,
+     3.6650424709034493
+    ],
+    "yawDeg": 180
+   },
+   "contact": true,
+   "firstContactS": 0.508,
+   "firstPair": [
+    "foot_L×foot_R",
+    "foot_L×foot_R"
+   ],
+   "contactDurS": 3.204,
+   "crossImpulseOnRecipientNs": [
+    -84.164,
+    198.247,
+    -147.178
+   ],
+   "crossImpulseNs": 260.858,
+   "crossImpulseHorizNs": 169.543,
+   "crossImpulseAlongSweepNs": 147.178,
+   "crossImpulseVertNs": 198.247,
+   "horizWithin02sNs": 46.192,
+   "peakCrossForceN": 3298,
+   "peakCrossForceBW_rec": 4.549,
+   "impulseByPair": {
+    "foot_L×foot_R": 44.089,
+    "foot_R×foot_R": 97.561,
+    "forearm_L×forearm_R": 1.753,
+    "shank_R×foot_R": 22.591,
+    "thigh_L×thigh_R": 99.086,
+    "pelvis×forearm_R": 65.621,
+    "forearm_L×thorax": 3.996,
+    "shank_R×shank_R": 44.514,
+    "abdomen×forearm_R": 27.279,
+    "forearm_L×upperArm_R": 2.96
+   },
+   "recipient": {
+    "cls": "FALL",
+    "fallS": 2.358,
+    "fallAfterContactS": 1.85,
+    "endPelvisDropM": 0.712,
+    "comDispPkM": 1.12,
+    "footDispPkM": {
+     "L": 0.608,
+     "R": 0.505
+    },
+    "footAlongSweepPkM": {
+     "L": 0.545,
+     "R": 0.186
+    },
+    "footOffTurfS": {
+     "L": 2.6,
+     "R": 2.825
+    },
+    "headTurfS": 2.958,
+    "fallDirAlongSweep": -0.014,
+    "slicedOutSignature": false
+   },
+   "tackler": {
+    "vAtContact": [
+     0.009,
+     -0.771,
+     -3.316
+    ],
+    "vhAtContact": 3.316,
+    "travelAfterContactM": 0.849,
+    "calibTravelSameWindowM": 0.945,
+    "headTurfS": 3.113
+   },
+   "integrity": {
+    "maxHardExcDeg": 11.519,
+    "maxTurfPenMm": 4.034,
+    "eqOppMax": 0
+   },
+   "cpuMs": {
+    "step": 1253.5058700000004,
+    "passive": 1144.6229579999983,
+    "act": 301.94644199997947,
+    "tone": 576.7504280000019,
+    "instrument": 277.2206680000081,
+    "measure": 901.5712860000037,
+    "law": 199.20766500001014,
+    "lawT": 378.5817880000118
+   },
+   "wallMs": 4496
+  },
+  "X_5_0.35": {
+   "hash": "d92439f72b3aad5d",
+   "cond": {
+    "speed": 5,
+    "lateral": 0.35,
+    "note": "sweep: 5 m/s, line 0.35 m toward the toes"
+   },
+   "placement": {
+    "refT": 0.5333333333333333,
+    "refBoot": [
+     0.15802906453609467,
+     0.046704910695552826,
+     3.4546048641204834
+    ],
+    "refBootLow": -0.000002477432934633317,
+    "refFirstBody": 0.413,
+    "target": [
+     0.3158814177709823,
+     0,
+     0.2104376067829659
+    ],
+    "offset": [
+     0.47391048230707694,
+     0,
+     3.6650424709034493
+    ],
+    "yawDeg": 180
+   },
+   "contact": true,
+   "firstContactS": 0.721,
+   "firstPair": [
+    "foot_L×foot_L"
+   ],
+   "contactDurS": 2.992,
+   "crossImpulseOnRecipientNs": [
+    -31.071,
+    -134.569,
+    -152.457
+   ],
+   "crossImpulseNs": 205.712,
+   "crossImpulseHorizNs": 155.591,
+   "crossImpulseAlongSweepNs": 152.457,
+   "crossImpulseVertNs": -134.569,
+   "horizWithin02sNs": 23.139,
+   "peakCrossForceN": 1693,
+   "peakCrossForceBW_rec": 2.335,
+   "impulseByPair": {
+    "foot_L×foot_L": 91.207,
+    "shank_L×foot_L": 75.019,
+    "foot_L×shank_L": 129.234,
+    "shank_L×shank_L": 0.706
+   },
+   "recipient": {
+    "cls": "ABSORBED",
+    "fallS": null,
+    "fallAfterContactS": null,
+    "endPelvisDropM": 0,
+    "comDispPkM": 0.008,
+    "footDispPkM": {
+     "L": 0.008,
+     "R": 0
+    },
+    "footAlongSweepPkM": {
+     "L": 0.008,
+     "R": 0
+    },
+    "footOffTurfS": {
+     "L": null,
+     "R": null
+    },
+    "headTurfS": null,
+    "fallDirAlongSweep": null,
+    "slicedOutSignature": false
+   },
+   "tackler": {
+    "vAtContact": [
+     0.07,
+     0.247,
+     -1.736
+    ],
+    "vhAtContact": 1.737,
+    "travelAfterContactM": 0.558,
+    "calibTravelSameWindowM": 0.472,
+    "headTurfS": 3.262
+   },
+   "integrity": {
+    "maxHardExcDeg": 8.218,
+    "maxTurfPenMm": 1.316,
+    "eqOppMax": 0
+   },
+   "cpuMs": {
+    "step": 1325.2909700000002,
+    "passive": 1148.11713499999,
+    "act": 246.50934099999563,
+    "tone": 554.8985269999946,
+    "instrument": 304.8868569999952,
+    "measure": 891.9023999999929,
+    "law": 175.01941099999544,
+    "lawT": 374.97190000000023
+   },
+   "wallMs": 4506
+  },
+  "X_5_0.50": {
+   "hash": "75654330455280b9",
+   "cond": {
+    "speed": 5,
+    "lateral": 0.5,
+    "note": "sweep: 5 m/s, line 0.50 m toward the toes"
+   },
+   "placement": {
+    "refT": 0.5333333333333333,
+    "refBoot": [
+     0.15802906453609467,
+     0.046704910695552826,
+     3.4546048641204834
+    ],
+    "refBootLow": -0.000002477432934633317,
+    "refFirstBody": 0.413,
+    "target": [
+     0.4658814177709823,
+     0,
+     0.2104376067829659
+    ],
+    "offset": [
+     0.6239104823070769,
+     0,
+     3.6650424709034493
+    ],
+    "yawDeg": 180
+   },
+   "contact": true,
+   "firstContactS": 0.721,
+   "firstPair": [
+    "foot_L×foot_L"
+   ],
+   "contactDurS": 2.992,
+   "crossImpulseOnRecipientNs": [
+    -34.182,
+    -85.854,
+    -70.403
+   ],
+   "crossImpulseNs": 116.172,
+   "crossImpulseHorizNs": 78.262,
+   "crossImpulseAlongSweepNs": 70.403,
+   "crossImpulseVertNs": -85.854,
+   "horizWithin02sNs": 6.614,
+   "peakCrossForceN": 726,
+   "peakCrossForceBW_rec": 1.002,
+   "impulseByPair": {
+    "foot_L×foot_L": 6.321,
+    "foot_R×foot_L": 117.608
+   },
+   "recipient": {
+    "cls": "ABSORBED",
+    "fallS": null,
+    "fallAfterContactS": null,
+    "endPelvisDropM": 0,
+    "comDispPkM": 0.001,
+    "footDispPkM": {
+     "L": 0.002,
+     "R": 0
+    },
+    "footAlongSweepPkM": {
+     "L": 0.002,
+     "R": 0
+    },
+    "footOffTurfS": {
+     "L": null,
+     "R": null
+    },
+    "headTurfS": null,
+    "fallDirAlongSweep": null,
+    "slicedOutSignature": false
+   },
+   "tackler": {
+    "vAtContact": [
+     0.055,
+     0.254,
+     -1.8
+    ],
+    "vhAtContact": 1.801,
+    "travelAfterContactM": 0.408,
+    "calibTravelSameWindowM": 0.472,
+    "headTurfS": null
+   },
+   "integrity": {
+    "maxHardExcDeg": 8.218,
+    "maxTurfPenMm": 1.315,
+    "eqOppMax": 0
+   },
+   "cpuMs": {
+    "step": 1267.4919029999837,
+    "passive": 1204.9849060000008,
+    "act": 303.57770900001856,
+    "tone": 538.5842300000097,
+    "instrument": 303.8339480000225,
+    "measure": 925.9282350000062,
+    "law": 173.87215000001606,
+    "lawT": 363.24725200001876
+   },
+   "wallMs": 4583
+  },
+  "X_5_0.65": {
+   "contact": false,
+   "hash": "5f264a12b8c6566c"
+  },
+  "X_5_0.80": {
+   "contact": false,
+   "hash": "f9c6e1d1ce98468c"
+  }
+ }
+}

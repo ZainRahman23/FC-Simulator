@@ -1,0 +1,85 @@
+<h1>SLIDE-PHYS-2: the bent-leg slide, rebuilt</h1>
+<p class="mut">14 Oct 2026, overnight. Worktree <code>physical-character-v2</code>. The answers to the 48 questions are in <code>slide_phys2/SLIDE_PHYS2_REPORT.md</code>, and every candidate, rejection and search is in <code>SLIDE_PHYS2_LOG.md</code>. Character videos are rendered from recorded simulation states (frozen RUN-1 viewer, MC-1P gabriel on the V2 joints); nothing is posed or re-simulated. The default playback is 0.5× where a toggle offers it. Click 1× / 0.5× / 0.25× to switch.</p>
+<nav><a href="#verdict">Verdict</a><a href="#ref">1 Reference</a><a href="#p1">2 SP1's braking</a><a href="#p2">3 Isolated slide</a><a href="#sp2">4 SP2</a><a href="#obst">5 Obstacles</a><a href="#pvp">6 Two players</a><a href="#failed">7 Failed</a><a href="#next">8 Decisions</a></nav>
+<h2 id="verdict">Verdict</h2>
+<div class="verdict">{{VERDICT}}</div>
+<div class="box"><p><b>In one paragraph.</b> Your hypothesis holds. The tackling boot was SP1's kickstand and its brake: 71 % of SP1's braking came from it, as a heel strike followed by studs dragging. The reference shows a different entry: the trailing leg lands first, then the outer thigh and hip take over, and the tackling boot never plants. The force-plate literature agrees.</p>
+<p><b>SP2 rebuilds the ground entry around that mechanism:</b></p>
+<ul><li>The folded leg lands first, on the side of the knee (1.3–2.6 kN over 29 ms; the literature gives 1.0–2.3).</li>
+<li>The lateral thigh (3.2–4.4 kN) and the hip take over within about 0.1 s.</li>
+<li>The tackling leg stays extended low. It only skims on its heel or upper (≈ 0.1 BW, 4–6 % of the support), and its studs never engage.</li>
+<li>The body keeps organised without a kickstand. A pelvis-orientation objective works through the folded hip while it is on the turf.</li>
+<li>It slides 1.0–1.8 m from first contact (SP1: 0.45 m), slowing progressively, deterministically, from 4.25 to 5.5 m/s.</li>
+<li>Obstructions are handled by tactile, regional yielding, which escalates to a whole-body fallback only when regions are overpowered.</li></ul>
+<p><b>What is not solved:</b></p>
+<ul><li class="warn">The folded hip is pressed 4–8° past its adduction limit for about 1 s while the body sits on it.</li>
+<li class="warn">The lateral knee still carries about half of the glide at 5 m/s.</li>
+<li class="warn">SP2 fails at 5.75 m/s and above. The real tackle is a 9 m/s sprint: the clip is 0.4× slow motion.</li>
+<li class="warn">Against the unchanged, standing C3 the responses are graded by geometry (passes, absorbed, displaced-recovered, slow fall), but there is no fast sliced-out fall, and the recipient looks rigid. The reference's dribbler was mid-stride on one foot, which the standing C3 cannot be.</li></ul></div>
+
+<h2 id="ref">1 · The reference, and what it actually shows</h2>
+[[VID REFERENCE_tackle|Reference tackle, cropped (real-time rates: the recording is ≈ 0.4× slow motion)|local|At "1×" the clip plays at 2.5× its recorded speed. A background frame-by-frame analysis (outside Git: REFERENCE2_ANALYSIS.md) found 12 unique images per video-second and a 2-2-1 cadence, i.e. a 50 fps broadcast at 0.4×. The slider's stride (2.1 m, 4.3 Hz) gives ≈ 9 m/s.]]
+[[ONE local_reference/REFERENCE_as_recorded.mp4|The supplied recording, as recorded|local|10.3 s, 826 × 804, 60 fps; third-party broadcast footage.]]
+<div class="box"><p><b>Contact sequence</b> (manual annotation, ±0.04 s real; MediaPipe could not be used at this resolution):</p>
+<ol><li>The last running plant (−0.12 s).</li><li>The <b>trailing leg's instep and lower shin</b> reach the turf with the foot still on its plant spot (0 s).</li><li>The <b>knee</b> follows (+0.04 s) and the shin lies flat.</li><li>The <b>outer thigh, then the hip / buttock</b> (+0.10 to +0.24 s).</li><li>The <b>hand posts</b> (+0.25 s).</li><li>He is lying on his side by +0.30 s.</li></ol>
+<p>The tackling boot is in swing while the shin lands. It never plants: it skims within ≈ 0.1 m of the turf, reaches turf level at the ball, and its knee goes from 95° to straight in 0.2 s.</p>
+<p><b>Speeds:</b> ≈ 9 m/s through a 0.25 s knee-glide, then the side-lying slide decelerates at 2.5–3.3 m/s² (μ ≈ 0.3) for 7.5 m. He gets up while still moving.</p>
+<p><b>The dribbler</b> steps onto the slider's shin 40 ms after the ball is played. That foot is swept forward and up; he is seated 0.16–0.22 s and on his back 0.30–0.36 s after contact.</p></div>
+
+<h2 id="p1">2 · Phase 1: where SP1's horizontal momentum went</h2>
+<p>Whole-body horizontal momentum changes only through external impulses, so the ledger closes exactly: residual 0.0002 N·s over 417 N·s of braking, from 0.27 to 0.9 s at 5 m/s. Each N·s is attributed to the contact region that delivered it.</p>
+<div class="tw"><table><thead><tr><th>region group</th><th>braking N·s</th><th>share</th></tr></thead><tbody>{{ledRows}}</tbody></table></div>
+<p>The tackling boot landed heel-first at 0.367 s (9.6 BW in one step), then slid on its studs at μ ≈ 1.2. The first body contact, called "thigh" in SLIDE-PHYS-1, is the side of the bent knee.</p>
+<p><b>Counterfactuals</b> (diagnostic only: only the tackling boot's friction is changed):</p>
+<ul><li>boot μ 0.5: the slide grows 0.52 → 1.38 m;</li><li>frictionless boot: 1.79 m;</li><li>in both, the body then falls back until the head touches. The boot was SP1's brake <i>and</i> its kickstand.</li></ul>
+[[ONE video/SP1_ENTRY_025x.mp4|SP1 ground entry, close-up 0.25× (contacts: yellow = boot, red = body, blue = hand; the bottom line shows the turf regions in BW)|own|The heel lands first, then the sole studs, with a 13.5° ankle inversion past the hard limit.]]
+
+<h2 id="p2">3 · Phase 2: the isolated slide (fixtures)</h2>
+[[VID FIX|F1 kneel-glide · F2 + spin · F3 SP1's seated posture held · F3R reclined + posting|2r|Each fixture starts airborne just above the turf with one rigid-body velocity. After that only gravity, contacts and the character's own muscles act.]]
+<ul><li><b>F1:</b> pitches onto its face. Friction under a knee 0.55 m below the centre of mass is ≈ 200 N·m of forward torque.</li>
+<li><b>F2:</b> slams the pelvis first.</li>
+<li><b>F3:</b> slides at the Coulomb rate (4.8 m/s², 1.8 m) but rolls over onto its front.</li>
+<li><b>F3R:</b> 11 of 12 held postures roll over. Only the strongly reclined one with the hand posted stays organised (2.0 m at 5.0 m/s²).</li></ul>
+<p><b>Lesson:</b> a sliding body needs its centre of pressure ≈ μ·h ahead of its centre of mass. A held posture is marginal, so the slide needs feedback, not a pose.</p>
+
+<h2 id="sp2">4 · SP2: the full tackle</h2>
+[[VID SP2_CLEAN|SP2 · touchline gameplay camera · same camera ×5 · close side (clean)|h|5.0 m/s, unchanged SP1 entry (a 5 m/s running plant-foot touchdown), M1c tackler, TCF-1 boots, A6 regional controller.]]
+[[ONE video/SP2_ENTRY_025x.mp4|Ground entry, close-up, 0.25×: which surface is sliding?|own|The bottom line names every turf contact region with its load in BW: the folded knee (back, then the lateral side), the lateral shin and thigh, the hip and buttock. The tackling boot shows only heel or upper contacts at ≈ 0.1–0.3 BW, never its sole studs.]]
+[[VID SP2_DIAG|SP2 diagnostics: side · front ¾ · rear ¾, contact markers and live velocity / turf regions|2r|]]
+[[VID SP1_SP2|SP1 vs SP2 (close side, diagnostics)|half|SP1: heel strut, stud drag, 0.45 m. SP2: knee, then thigh / hip, with a boot skim; 1.33 m from first contact.]]
+[[VID CMP_REF_SP1_SP2|REFERENCE · SP1 · SP2 (each from 0.25 s before its first body contact)|local|The reference is a 9 m/s sprint on natural grass. Ours are 5 m/s from a 5 m/s running entry.]]
+<h3>Qualification, all speeds (A6)</h3>
+<div class="tw"><table><thead><tr><th>run m/s</th><th>hash</th><th>cost</th><th>contact sequence</th><th>v<sub>h</sub> / v<sub>y</sub> at first body contact</th><th>retained at +0.2 s</th><th>slide m (contact / commit)</th><th>mean decel m/s²</th><th>glide carried by</th><th>knee peak kN (29 ms)</th><th>tackling boot N·s (share)</th><th>head</th><th>worst limits</th></tr></thead><tbody>{{spRows}}</tbody></table></div>
+<p class="mut">Determinism: {{DET}}. CPU ≈ {{CPU}} ms per 240 Hz step, including ≈ 0.2 ms of research ledgers. Up to 5.5 m/s the cost is ≈ 2.3–3.6; the residual is mostly the knee's glide share and the fold-hip limit.</p>
+<h3>What SP2 needs (counterfactuals at 5.0 m/s)</h3>
+<div class="tw"><table><thead><tr><th>change</th><th>hash</th><th>cost</th><th>slide m</th><th>tackling boot N·s</th><th>glide carried by</th><th>face-down</th><th>head</th></tr></thead><tbody>{{cfRows}}</tbody></table></div>
+<p>M1c is required: with M1b the commit cannot drive the legs and the body ends face-down. TCF-1 is required: without it the heel skim grips on its studs, the slide stops and the body pitches over. Body friction across the literature bracket: 0.45–0.55 works; at 0.35 the slide is longer but tips forward.</p>
+
+<h2 id="obst">5 · Obstacles and regional yielding</h2>
+[[VID ST2|O1 glancing 5 kg · O2 moderate 20 kg · O3 severe fixed post · O5 fixed bar at pelvis height|2r|Obstacles sit in the extended leg's sweep path (boot / shin height), because SP2's boot rides above the turf. Orange = dynamic, grey = static.]]
+[[VID ST2_FALLBACK|O5 at default thresholds (local yield only) · O5 with the failure threshold lowered to 25° (diagnostic): regional → whole-body fallback|half|]]
+<div class="tw"><table><thead><tr><th>case</th><th>hash</th><th>first hit</th><th>|J| N·s</th><th>max depth mm</th><th>tackling hip / knee / ankle deflection °</th><th>peak touched-region error °</th><th>regional failures</th><th>whole-body</th><th>slide m</th><th>head</th></tr></thead><tbody>{{s2Rows}}</tbody></table></div>
+<p><b>Contacts win:</b> ≤ 0.3 mm penetration into anything heavier than the 5 kg box (6.8 mm). The tackling leg yields locally and the body stays organised.</p>
+<p><b>Earlier detectors, rejected:</b> an error baseline and a pure "pushback" both flagged the explosive commit itself.</p>
+<p><b>A6's tactile regions:</b> a limb yields only while a non-ground contact touches it, and goes limp when overpowered (> 40° for 60 ms). At default thresholds no obstacle overpowered a region. At 20–25° (diagnostic) the chain runs: the tackling leg alone goes limp on the post, then two regions fail on the bar and the whole-body fallback engages. Only authority changes, so transforms, velocities and contacts are preserved.</p>
+
+<h2 id="pvp">6 · Unchanged C3 against SP2</h2>
+[[VID ST3_MODERATE|MODERATE · touchline · ×5 · close front ¾|h|]]
+[[VID ST3_STRONG|STRONG · touchline · ×5 · close front ¾|h|]]
+[[VID ST3_LIGHT|LIGHT|h|]]
+[[VID ST3_GRAZE|GRAZE|h|]]
+<div class="tw"><table><thead><tr><th>case</th><th>line</th><th>first contact (s after activation)</th><th>horizontal impulse N·s (first 0.2 s)</th><th>vertical N·s</th><th>recipient</th><th>fall after contact</th><th>foot disp. L / R m</th><th>fall dir. along sweep</th><th>sliced-out</th><th>slider travel after contact / alone m</th></tr></thead><tbody>{{s3Rows}}</tbody></table></div>
+<p>These four conditions placed the <i>tackling boot's</i> line. But SP2's body sits beside that leg, so even GRAZE swept the slider's folded leg through the planted feet. The lateral sweep below places the whole slider and maps the response against geometry:</p>
+[[VID SWEEP|Lateral sweep at 5.0 m/s: line −0.10 · +0.20 · +0.50 m|2r|]]
+<div class="tw"><table><thead><tr><th>line</th><th></th><th>first contact</th><th>horizontal N·s (0.2 s)</th><th>vertical N·s</th><th>recipient</th><th>fall after</th><th>foot disp. m</th><th>fall dir.</th><th>sliced</th><th>slider travel / alone</th></tr></thead><tbody>{{swRows}}</tbody></table></div>
+[[VID CMP_REF_RECV|REFERENCE RECEIVER · SP2 + C3 (MODERATE, line +0.20 m)|local|The reference dribbler is running, and his swept foot is the one landing. He is seated in ≈ 0.2 s. Our standing C3 holds on its other loaded foot for 1–2 s, then topples: the "mannequin" look.]]
+
+<h2 id="failed">7 · Failed and intermediate candidates (preserved)</h2>
+[[ONE video/GEN_1x.mp4|H1 · H2 · H3 (knee slide) · H3 + seat objective · H5 mid-search|own|H1 / H2: the tackling boot still lands first, because the pelvis pitches forward as the leg swings up. H3: a kneel-glide in which the knee carries 63 % of the glide. A seat objective with real gain moved the glide onto the hip.]]
+<p>Searches H1–H6 (logs in <code>evidence/</code>) and fixtures F1–F3R are all listed with their lessons in <code>SLIDE_PHYS2_LOG.md</code>.</p>
+
+<h2 id="next">8 · What needs your decision</h2>
+<ol><li><b>Receiver.</b> The decisive missing piece is a <b>running, single-support recipient</b> with protective stepping and arms. The reference's dribbler was swept mid-stride, while C3 is a standing controller. Building one needs a preregistered successor (stop condition B). I did not modify C3.</li>
+<li><b>Sprint slides.</b> The real tackle is ≈ 9 m/s. SP2 is qualified for 4.25–5.5 m/s from a 5 m/s entry. Going faster needs a speed-indexed commit and a sprint plant state from RUN.</li>
+<li><b>Fold-hip adduction.</b> Side-sitting on the folded thigh presses the hip 4–8° past V2's 35° adduction stop. Either the slide posture changes, or the hip's passive end-range is re-examined for this loading.</li>
+<li><b>Adoption.</b> M1c and TCF-1 are both needed by SP2. Neither has been regression-tested on other domains, so I am not recommending canonical adoption yet.</li></ol>

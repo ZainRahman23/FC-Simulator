@@ -1,0 +1,1035 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "SP2_CLEAN_1x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "SP2 · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · same camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · close side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 734
+  },
+  "ST3_GRAZE_1x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1094
+  },
+  "ST3_LIGHT_1x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1396
+  },
+  "ST3_MODERATE_1x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1534
+  },
+  "ST3_STRONG_1x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1530
+  },
+  "SP2_CLEAN_05x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "SP2 · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · same camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · close side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 240,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 479,
+   "ms": 1391
+  },
+  "ST3_GRAZE_05x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 3008
+  },
+  "ST3_LIGHT_05x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 3085
+  },
+  "ST3_MODERATE_05x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 3008
+  },
+  "ST3_STRONG_05x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 2667
+  },
+  "SP2_CLEAN_025x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "SP2 · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · same camera, crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · close side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2792
+  },
+  "ST3_GRAZE_025x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5972
+  },
+  "ST3_LIGHT_025x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5833
+  },
+  "ST3_MODERATE_025x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 6216
+  },
+  "ST3_STRONG_025x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": "side"
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5959
+  },
+  "SP2_DIAG_1x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "SP2 · side · contacts (yellow boot, red body, blue hand)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · rear 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 695
+  },
+  "FIX_1x": {
+   "panels": [
+    {
+     "k": "F1",
+     "l": "F1 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F2",
+     "l": "F2 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F3",
+     "l": "F3 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F3R",
+     "l": "F3R · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 75,
+   "every": 4,
+   "size": [
+    1920,
+    394
+   ],
+   "first": 1,
+   "last": 297,
+   "ms": 370
+  },
+  "ST2_1x": {
+   "panels": [
+    {
+     "k": "ST2_O1",
+     "l": "O1 glancing 5 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O2",
+     "l": "O2 moderate 20 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O3",
+     "l": "O3 severe fixed post",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5",
+     "l": "O5 fixed bar, pelvis height",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1920,
+    394
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 741
+  },
+  "SWEEP_1x": {
+   "panels": [
+    {
+     "k": "SW_-0.10",
+     "l": "sweep line -0.10 m · displaced, recovered",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SW_0.20",
+     "l": "sweep line 0.20 m · feet swept, slow fall",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SW_0.50",
+     "l": "sweep line 0.50 m · absorbed",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1384
+  },
+  "SP2_DIAG_025x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "SP2 · side · contacts (yellow boot, red body, blue hand)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · rear 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2803
+  },
+  "FIX_025x": {
+   "panels": [
+    {
+     "k": "F1",
+     "l": "F1 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F2",
+     "l": "F2 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F3",
+     "l": "F3 · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "F3R",
+     "l": "F3R · isolated fixture",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 300,
+   "every": 1,
+   "size": [
+    1920,
+    394
+   ],
+   "first": 1,
+   "last": 300,
+   "ms": 1934
+  },
+  "ST2_025x": {
+   "panels": [
+    {
+     "k": "ST2_O1",
+     "l": "O1 glancing 5 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O2",
+     "l": "O2 moderate 20 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O3",
+     "l": "O3 severe fixed post",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5",
+     "l": "O5 fixed bar, pelvis height",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1920,
+    394
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 3007
+  },
+  "SWEEP_025x": {
+   "panels": [
+    {
+     "k": "SW_-0.10",
+     "l": "sweep line -0.10 m · displaced, recovered",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SW_0.20",
+     "l": "sweep line 0.20 m · feet swept, slow fall",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SW_0.50",
+     "l": "sweep line 0.50 m · absorbed",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5383
+  },
+  "SP1_SP2_05x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "SP1 (SLIDE-PHYS-1) · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 240,
+   "every": 2,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 479,
+   "ms": 1050
+  },
+  "ST2_FALLBACK_05x": {
+   "panels": [
+    {
+     "k": "ST2_O5",
+     "l": "O5 · default thresholds: local yield only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5_Dfail25",
+     "l": "O5 · Dfail 25° (diagnostic): regional → whole-body fallback",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 240,
+   "every": 2,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 479,
+   "ms": 1041
+  },
+  "SP1_SP2_025x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "SP1 (SLIDE-PHYS-1) · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "SP2 · side",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2186
+  },
+  "ST2_FALLBACK_025x": {
+   "panels": [
+    {
+     "k": "ST2_O5",
+     "l": "O5 · default thresholds: local yield only",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5_Dfail25",
+     "l": "O5 · Dfail 25° (diagnostic): regional → whole-body fallback",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2033
+  },
+  "SP2_ENTRY_025x": {
+   "panels": [
+    {
+     "k": "SP2_5",
+     "l": "ground entry · side close-up ×1.7",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP2_5",
+     "l": "ground entry · front 3/4 close-up",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    },
+    {
+     "k": "SP2_5",
+     "l": "ground entry · rear 3/4 close-up",
+     "view": "close",
+     "zoom": 1,
+     "angle": "rear34"
+    }
+   ],
+   "frames": 141,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 80,
+   "last": 220,
+   "ms": 818
+  },
+  "SP1_ENTRY_025x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "SP1 ground entry · side close-up",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "SP1 ground entry · front 3/4 close-up",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 141,
+   "every": 1,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 70,
+   "last": 210,
+   "ms": 636
+  },
+  "GEN_1x": {
+   "panels": [
+    {
+     "k": "GEN_H1",
+     "l": "H1 rejected",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "GEN_H2",
+     "l": "H2 rejected",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "GEN_H3best",
+     "l": "H3 (knee slide)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "GEN_H3seat",
+     "l": "H3 + seat",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "GEN_H5g16",
+     "l": "H5 mid-search",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 105,
+   "every": 4,
+   "size": [
+    2000,
+    334
+   ],
+   "first": 1,
+   "last": 417,
+   "ms": 746
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

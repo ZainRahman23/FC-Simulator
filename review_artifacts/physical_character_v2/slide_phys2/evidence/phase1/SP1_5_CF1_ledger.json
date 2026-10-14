@@ -1,0 +1,240 @@
+{
+ "tool": "sp2_ledger.mjs",
+ "rec": "CF1.json.gz",
+ "hash": "4b08261fe23ac974",
+ "window": [
+  0.2708,
+  0.9
+ ],
+ "travelDir": [
+  -0.0099,
+  0,
+  1
+ ],
+ "firstContact": {
+  "foot_L": 0.3667,
+  "foot_R": 0.3667,
+  "thigh_L": 0.4458,
+  "shank_L": 0.5417,
+  "pelvis": 0.6333,
+  "forearm_L": 0.7167
+ },
+ "momentum": {
+  "PhStartNs": 389.7165,
+  "PhEndNs": 95.9289,
+  "dPhNs": -293.7876,
+  "sumTurfBrakeNs": 293.7877,
+  "residualNs": 0.0001,
+  "vhStart": 4.9387,
+  "vhEnd": 1.2157
+ },
+ "byRegion": {
+  "knee_L:lateral": {
+   "brakeNs": 87.927,
+   "shareOfBraking": 0.2993,
+   "JnNs": 177.9314,
+   "JtNs": 88.9657,
+   "first": 0.4458,
+   "peakBW": 14.023,
+   "peakT": 0.45,
+   "slipFrac": 1,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "hip_pelvis:buttock": {
+   "brakeNs": 84.5028,
+   "shareOfBraking": 0.2876,
+   "JnNs": 169.3824,
+   "JtNs": 84.6913,
+   "first": 0.6333,
+   "peakBW": 4.8624,
+   "peakT": 0.6375,
+   "slipFrac": 1,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "shin_L:lateral": {
+   "brakeNs": 40.4288,
+   "shareOfBraking": 0.1376,
+   "JnNs": 86.0001,
+   "JtNs": 43.0006,
+   "first": 0.5417,
+   "peakBW": 0.7609,
+   "peakT": 0.65,
+   "slipFrac": 1,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "boot_R:heel": {
+   "brakeNs": 28.6512,
+   "shareOfBraking": 0.0975,
+   "JnNs": 57.5273,
+   "JtNs": 28.7636,
+   "first": 0.3667,
+   "peakBW": 3.1002,
+   "peakT": 0.3667,
+   "slipFrac": 0.8947,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "boot_R:sole": {
+   "brakeNs": 23.395,
+   "shareOfBraking": 0.0796,
+   "JnNs": 48.7766,
+   "JtNs": 24.3885,
+   "first": 0.3792,
+   "peakBW": 3.0047,
+   "peakT": 0.3833,
+   "slipFrac": 0.9914,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "boot_L:upper": {
+   "brakeNs": 16.8766,
+   "shareOfBraking": 0.0574,
+   "JnNs": 34.8944,
+   "JtNs": 17.4462,
+   "first": 0.6208,
+   "peakBW": 0.7377,
+   "peakT": 0.8875,
+   "slipFrac": 0.913,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "boot_L:toe": {
+   "brakeNs": 6.417,
+   "shareOfBraking": 0.0218,
+   "JnNs": 13.7088,
+   "JtNs": 6.8544,
+   "first": 0.3667,
+   "peakBW": 0.6212,
+   "peakT": 0.3667,
+   "slipFrac": 1,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  },
+  "hand_L": {
+   "brakeNs": 3.2657,
+   "shareOfBraking": 0.0111,
+   "JnNs": 5.3686,
+   "JtNs": 3.758,
+   "first": 0.7167,
+   "peakBW": 0.4862,
+   "peakT": 0.7167,
+   "slipFrac": 1,
+   "stickFrac": 0,
+   "mu": [
+    0.7
+   ]
+  },
+  "boot_L:sole": {
+   "brakeNs": 2.3237,
+   "shareOfBraking": 0.0079,
+   "JnNs": 4.7131,
+   "JtNs": 2.3566,
+   "first": 0.5,
+   "peakBW": 0.1252,
+   "peakT": 0.525,
+   "slipFrac": 0.9,
+   "stickFrac": 0,
+   "mu": [
+    0.5
+   ]
+  }
+ },
+ "energy": {
+  "EcomHStartJ": 962.3556,
+  "EcomHEndJ": 58.3092,
+  "actuatorWorkJ": -153.5263,
+  "passiveDissipationJ": 53.5455,
+  "turfContactWorkJ": -1261.5739,
+  "keStart": 1822.7392,
+  "keEnd": 354.0936
+ },
+ "pitchMomentum": {
+  "startNms": -10.4422,
+  "endNms": -0.3514,
+  "note": "about the COM, + = about the lateral axis (dir × up)"
+ },
+ "byGroup": {
+  "tackling boot (heel+sole+toe+upper)": {
+   "brakeNs": 52.0462,
+   "share": 0.1772,
+   "regions": [
+    "boot_R:heel",
+    "boot_R:sole"
+   ]
+  },
+  "bent-leg boot": {
+   "brakeNs": 25.6173,
+   "share": 0.0872,
+   "regions": [
+    "boot_L:upper",
+    "boot_L:toe",
+    "boot_L:sole"
+   ]
+  },
+  "shin/calf": {
+   "brakeNs": 40.4288,
+   "share": 0.1376,
+   "regions": [
+    "shin_L:lateral"
+   ]
+  },
+  "knee": {
+   "brakeNs": 87.927,
+   "share": 0.2993,
+   "regions": [
+    "knee_L:lateral"
+   ]
+  },
+  "thigh": {
+   "brakeNs": 0,
+   "share": 0,
+   "regions": []
+  },
+  "hip/pelvis": {
+   "brakeNs": 84.5028,
+   "share": 0.2876,
+   "regions": [
+    "hip_pelvis:buttock"
+   ]
+  },
+  "hand": {
+   "brakeNs": 3.2657,
+   "share": 0.0111,
+   "regions": [
+    "hand_L"
+   ]
+  },
+  "forearm": {
+   "brakeNs": 0,
+   "share": 0,
+   "regions": []
+  },
+  "torso": {
+   "brakeNs": 0,
+   "share": 0,
+   "regions": []
+  },
+  "upper arm / head": {
+   "brakeNs": 0,
+   "share": 0,
+   "regions": []
+  }
+ }
+}

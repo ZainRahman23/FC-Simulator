@@ -1,0 +1,164 @@
+[
+ {
+  "id": "CMPSRC_1x",
+  "every": 4,
+  "W": 576,
+  "H": 480,
+  "rate": "1\u00d7",
+  "tlabel": "(each from 0.25 s before its first body contact)",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 51,
+    "to": 400,
+    "l": "SP1 \u00b7 close side"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 39,
+    "to": 388,
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "CMPRECV_1x",
+  "every": 4,
+  "W": 576,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 455,
+  "to": 1007,
+  "tlabel": "after activation (contact at 0.50 s)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + unchanged C3 \u00b7 MODERATE"
+   },
+   {
+    "k": "SW_0.20",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + C3 \u00b7 sweep line +0.20 m"
+   }
+  ]
+ },
+ {
+  "id": "CMPSRC_05x",
+  "every": 2,
+  "W": 576,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "tlabel": "(each from 0.25 s before its first body contact)",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 51,
+    "to": 400,
+    "l": "SP1 \u00b7 close side"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 39,
+    "to": 388,
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "CMPRECV_05x",
+  "every": 2,
+  "W": 576,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 455,
+  "to": 1007,
+  "tlabel": "after activation (contact at 0.50 s)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + unchanged C3 \u00b7 MODERATE"
+   },
+   {
+    "k": "SW_0.20",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + C3 \u00b7 sweep line +0.20 m"
+   }
+  ]
+ },
+ {
+  "id": "CMPSRC_025x",
+  "every": 1,
+  "W": 576,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "tlabel": "(each from 0.25 s before its first body contact)",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 51,
+    "to": 400,
+    "l": "SP1 \u00b7 close side"
+   },
+   {
+    "k": "SP2_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "from": 39,
+    "to": 388,
+    "l": "SP2 \u00b7 close side"
+   }
+  ]
+ },
+ {
+  "id": "CMPRECV_025x",
+  "every": 1,
+  "W": 576,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 455,
+  "to": 1007,
+  "tlabel": "after activation (contact at 0.50 s)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + unchanged C3 \u00b7 MODERATE"
+   },
+   {
+    "k": "SW_0.20",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "SP2 + C3 \u00b7 sweep line +0.20 m"
+   }
+  ]
+ }
+]
