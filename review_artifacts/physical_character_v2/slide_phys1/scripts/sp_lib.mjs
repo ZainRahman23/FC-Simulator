@@ -52,7 +52,7 @@ export const yawQ = (deg) => { const a = deg * D2R / 2; return [0, Math.sin(a), 
 // velocity and becomes dynamic at step 0 with `vel` (one write per body), exactly the PVP-0 activation mechanism.
 export async function soloPlant(entry) { const J = await jolt();
   const entries = { tackler: { poses: entry.pose, vel: entry.pose.map(() => ({ v: [0, 0, 0], w: [0, 0, 0] })) } };
-  const sim = new SoloPlant(J, entries, { tackler: entry.flags || { L: false, R: false } }, "N2", { solo: "tackler", O: [0, 0, 0], instrument: entry.instrument !== false, maxSteps: entry.steps,
+  const PC = entry.PlantClass || SoloPlant, sim = new PC(J, entries, { tackler: entry.flags || { L: false, R: false } }, "N2", { solo: "tackler", O: [0, 0, 0], instrument: entry.instrument !== false, maxSteps: entry.steps,
     lawT: entry.law, activate: 0, tacklerVel: entry.vel, ...(entry.plantOpts || {}) });
   sim.reinitEntry = entry.reinitEntry !== false; return sim; }
 export const FIX = () => JSON.parse(fs.readFileSync(new URL("ppr3/fixture/PPR3_STANDING_ENTRY.json", RA)));

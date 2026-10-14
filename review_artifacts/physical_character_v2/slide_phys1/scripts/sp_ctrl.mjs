@@ -27,15 +27,17 @@ export class SlideTracker {
     for (let k = 0; k < JN.length; k++) { const j = JN[k], q = ev.qs[k], qr = q1[k], sg = q[0] * qr[0] + q[1] * qr[1] + q[2] * qr[2] + q[3] * qr[3] < 0 ? -1 : 1, dq = Q.mul(Q.conj(q), qr.map(x => x * sg)), err = [2 * dq[0], 2 * dq[1], 2 * dq[2]];
       const qn = q2[k], sn = qr[0] * qn[0] + qr[1] * qn[1] + qr[2] * qn[2] + qr[3] * qn[3] < 0 ? -1 : 1, dr = Q.mul(Q.conj(qr), qn.map(x => x * sn)), wRef = [2 * dr[0] / this.h, 2 * dr[1] / this.h, 2 * dr[2] / this.h];
       const R2F2 = Q.mul(st[j.childIndex].rot, j.F2), axW = E3.map(e => Q.rot(R2F2, e)), wr = V.sub(st[j.childIndex].w, st[j.parentIndex].w), w = axW.map(a => V.dot(wr, a));
-      const al = this.o.authority ? this.o.authority(t, j.name) : 1;
+      const al = (this.o.authority ? this.o.authority(t, j.name) : 1) * (this.rag ? this.rag.f : 1);
       for (let i = 0; i < 3; i++) { if (!this.gain[k][i]) continue; const g = this.gain[k][i]; let kp = g.K;
-        if (this.o.yield) { const e0 = this.o.yield.e0Deg * Math.PI / 180, ae = Math.abs(err[i]); if (ae > e0) kp *= e0 / ae; }
+        if (this.o.yield && (!this.o.yield.joints || this.o.yield.joints.has(j.name)) && t >= (this.o.yield.from || 0)) { const e0 = this.o.yield.e0Deg * Math.PI / 180, ae = Math.abs(err[i]); if (ae > e0) { kp *= e0 / ae; row.yieldN = (row.yieldN || 0) + 1; } }
         pd[k][i] = al * (kp * err[i] + g.D * (wRef[i] - w[i])); row.err.push(err[i]); } }
     for (const f of this.ff) { const wgt = f.weight(t); const fv = f.fn(st, t + (this.o.ffLead ?? this.lead)); if (!wgt) continue; for (const [k, v] of Object.entries(fv)) { const al = this.o.authority ? this.o.authority(t, JN[k].name) : 1; for (let i = 0; i < 3; i++) if (this.gain[k][i]) pd[k][i] += al * wgt * v[i]; } }
     this.lastIntent = pd; let vf = this.o.vf ? this.o.vf(this, t, st, ev) : null;
     for (const extra of this.o.vfs || []) { const v2 = extra(this, t, st, ev); if (!v2) continue; if (!vf) { vf = v2; continue; } for (let k = 0; k < JN.length; k++) for (let i = 0; i < 3; i++) vf[k][i] += v2[k][i]; vf.info2 = v2.info; }
     for (let k = 0; k < JN.length; k++) { const rows = this.body.ax.find(a => a.k === k).rows; for (let i = 0; i < 3; i++) { if (!rows[i]) continue; out[k][i] = pd[k][i] + (vf && vf[k] ? vf[k][i] || 0 : 0) - rows[i].tauStatic; } }
-    row.errDeg = Math.sqrt(row.err.reduce((s, x) => s + x * x, 0) / row.err.length) * 180 / Math.PI; delete row.err; if (vf && vf.info) row.vf = { F: vf.info.F.map(x => +x.toFixed(1)), Fraw: vf.info.Fraw ? vf.info.Fraw.map(x => +x.toFixed(1)) : null, T: vf.info.T ? vf.info.T.map(x => +x.toFixed(1)) : null, w: vf.info.w };
+    row.errDeg = Math.sqrt(row.err.reduce((s, x) => s + x * x, 0) / row.err.length) * 180 / Math.PI; delete row.err; if (row.yieldN) row.yield = row.yieldN;
+    if (this.o.ragdoll) { const R = this.o.ragdoll; this.rag = this.rag || { over: 0, on: false, f: 1 }; if (!this.rag.on) { this.rag.over = row.errDeg > R.errDeg ? this.rag.over + this.h : 0; if (this.rag.over >= R.holdS) { this.rag.on = true; this.rag.t = t; } }
+      if (this.rag.on) { this.rag.f = R.floor + (this.rag.f - R.floor) * Math.exp(-this.h / R.tauS); row.ragdoll = true; } } if (vf && vf.info) row.vf = { F: vf.info.F.map(x => +x.toFixed(1)), Fraw: vf.info.Fraw ? vf.info.Fraw.map(x => +x.toFixed(1)) : null, T: vf.info.T ? vf.info.T.map(x => +x.toFixed(1)) : null, w: vf.info.w };
     this.log.push(row); return out; }
   meta() { return { tracker: "SLIDE-PHYS-1 SlideTracker", lead: this.lead, gains: this.o.gains, chor: this.o.chor.name, yield: this.o.yield || null }; }
 }

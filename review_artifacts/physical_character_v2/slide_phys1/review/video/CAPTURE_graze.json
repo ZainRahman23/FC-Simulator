@@ -1,0 +1,110 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "ST3_GRAZE_1x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1422
+  },
+  "ST3_GRAZE_05x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 2823
+  },
+  "ST3_GRAZE_025x": {
+   "panels": [
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_GRAZE",
+     "l": "GRAZE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5763
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

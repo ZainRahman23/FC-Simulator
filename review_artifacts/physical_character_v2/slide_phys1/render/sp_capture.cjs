@@ -41,14 +41,19 @@ const VIEWS = JSON.parse(fs.readFileSync(arg("views")));
           else S.fixedLayout = { W: W, H: H, views: [{ id: "game", x: 0, y: 0, w: W, h: H }] };
           S.zoom = P0.zoom || 1; S.lanes = lanes; S.run1 = null; rv1Render();
           const vw = S.fixedLayout.views[0], cam = vw.cam; gl.viewport(0, 0, W, H); gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
-          ofCharDraw(S.R, window.__gab, new Float32Array(F.tackler.skin), cam.view, cam.proj); if (F.runner) ofCharDraw(S.R, S.entry || window.__vin, new Float32Array(F.runner.skin), cam.view, cam.proj); gl.finish();
+          const SK = P0.show === "intent" && F.intent ? F.intent : F.tackler; ofCharDraw(S.R, window.__gab, new Float32Array(SK.skin), cam.view, cam.proj); if (F.runner) ofCharDraw(S.R, S.entry || window.__vin, new Float32Array(F.runner.skin), cam.view, cam.proj); gl.finish();
           c.drawImage(document.getElementById("gl"), 0, 0, W, H, x0, 0, W, H);
+          if (F.obst && F.obst.length) { const Pj = (q) => rv1Proj(cam, vw, 1, q); c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
+            for (const ob of F.obst) { const pts = ob.c.map(Pj).filter(Boolean).map(a => [x0 + a[0], a[1]]); if (pts.length < 3) continue; pts.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+              const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), lo = [], hi = []; for (const q of pts) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q); }
+              for (let i = pts.length - 1; i >= 0; i--) { const q = pts[i]; while (hi.length >= 2 && cr(hi[hi.length - 2], hi[hi.length - 1], q) <= 0) hi.pop(); hi.push(q); } const hull = lo.slice(0, -1).concat(hi.slice(0, -1));
+              c.beginPath(); hull.forEach((q, i) => i ? c.lineTo(q[0], q[1]) : c.moveTo(q[0], q[1])); c.closePath(); c.fillStyle = ob.dyn ? "rgba(255,150,40,0.55)" : "rgba(170,170,190,0.6)"; c.fill(); c.strokeStyle = "rgba(20,20,20,0.9)"; c.lineWidth = 1.5; c.stroke(); } c.restore(); }
           if (P0.contacts) { const Pj = (q) => rv1Proj(cam, vw, 1, q); c.save(); c.beginPath(); c.rect(x0, 0, W, H); c.clip();
             for (const ct of F.turf || []) for (const q of ct.pts) { const a = Pj(q); if (!a) continue; c.fillStyle = /^foot_/.test(ct.body) ? "rgba(255,215,60,0.95)" : /^forearm_/.test(ct.body) ? "rgba(120,200,255,0.95)" : "rgba(255,90,90,0.95)"; c.beginPath(); c.arc(x0 + a[0], a[1], ct.J > 0 ? 3.2 : 1.8, 0, 7); c.fill(); } c.restore(); }
           if (P0.l) box(P0.l, x0 + 10, 24, 14, "#ffffff"); });
         const F = Fs[0], y0 = H; c.fillStyle = "#121a16"; c.fillRect(0, y0, comp.width, 34); const T = { x: 12, w: comp.width - 24, y: y0 + 6, h: 6 };
         c.fillStyle = "#2f4a3c"; c.fillRect(T.x, T.y, T.w, T.h); c.fillStyle = "#fff"; const xk = T.x + (k + 0.5) * T.w / N; c.fillRect(xk - 1.5, T.y - 3, 3, T.h + 6);
-        c.font = "600 12px -apple-system, Helvetica, Arial"; c.fillStyle = "#ffe7a3"; c.fillText(`t ${F.t.toFixed(3)} s after the plant touchdown · record step ${F.n} · ${V0.rate || ""}`, 12, y0 + 28);
+        c.font = "600 12px -apple-system, Helvetica, Arial"; c.fillStyle = "#ffe7a3"; c.fillText(`t ${F.t.toFixed(3)} s ${V0.tlabel || "after the plant touchdown"} · record step ${F.n} · ${V0.rate || ""}`, 12, y0 + 28);
         const vf = new VideoFrame(comp, { timestamp: Math.round(k * 1e6 / 60), duration: Math.round(1e6 / 60) }); window.__enc.enc.encode(vf, { keyFrame: k % 60 === 0 }); vf.close(); return { n: F.n };
       }, V0, seqs.map(s => s[k]), k, N);
       idx.push(r.n); }

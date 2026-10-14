@@ -1,0 +1,647 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "SP1_IP_1x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "INTENT · authored targets (V2 FK on the recorded pelvis)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "PHYSICAL · SP1 5.0 m/s, A5, M1c tackler",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 622
+  },
+  "SP1_GAME_1x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "same camera, subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "close · front 3/4 · turf contacts",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 772
+  },
+  "ST3_LIGHT_1x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1606
+  },
+  "ST3_MODERATE_1x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1429
+  },
+  "ST3_STRONG_1x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 236,
+   "every": 4,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 1509
+  },
+  "SP1_IP_05x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "INTENT · authored targets (V2 FK on the recorded pelvis)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "PHYSICAL · SP1 5.0 m/s, A5, M1c tackler",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 240,
+   "every": 2,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 479,
+   "ms": 1029
+  },
+  "SP1_GAME_05x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "same camera, subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "close · front 3/4 · turf contacts",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 240,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 479,
+   "ms": 1512
+  },
+  "ST3_LIGHT_05x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 2436
+  },
+  "ST3_MODERATE_05x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 2310
+  },
+  "ST3_STRONG_05x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 471,
+   "every": 2,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 3121
+  },
+  "SP1_IP_025x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "INTENT · authored targets (V2 FK on the recorded pelvis)",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "PHYSICAL · SP1 5.0 m/s, A5, M1c tackler",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1280,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2053
+  },
+  "SP1_GAME_025x": {
+   "panels": [
+    {
+     "k": "SP1_5",
+     "l": "touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "same camera, subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "SP1_5",
+     "l": "close · front 3/4 · turf contacts",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2439
+  },
+  "ST3_LIGHT_025x": {
+   "panels": [
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_LIGHT",
+     "l": "LIGHT · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5111
+  },
+  "ST3_MODERATE_025x": {
+   "panels": [
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_MODERATE",
+     "l": "MODERATE · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5325
+  },
+  "ST3_STRONG_025x": {
+   "panels": [
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · touchline gameplay camera",
+     "view": "game",
+     "zoom": 1,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · subject crop ×5",
+     "view": "game",
+     "zoom": 5,
+     "angle": null
+    },
+    {
+     "k": "ST3_STRONG",
+     "l": "STRONG · close front 3/4",
+     "view": "close",
+     "zoom": 1,
+     "angle": "front34"
+    }
+   ],
+   "frames": 941,
+   "every": 1,
+   "size": [
+    1920,
+    514
+   ],
+   "first": 360,
+   "last": 1300,
+   "ms": 5199
+  },
+  "SP1_SPEEDS_1x": {
+   "panels": [
+    {
+     "k": "SP1_4.5",
+     "l": "SP1 · 4.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "SP1 · 5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5.5",
+     "l": "SP1 · 5.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1680,
+    474
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 621
+  },
+  "SP1_SPEEDS_025x": {
+   "panels": [
+    {
+     "k": "SP1_4.5",
+     "l": "SP1 · 4.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5",
+     "l": "SP1 · 5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5.5",
+     "l": "SP1 · 5.5 m/s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1680,
+    474
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2451
+  },
+  "ST2_1x": {
+   "panels": [
+    {
+     "k": "ST2_O1",
+     "l": "O1 light 3 kg box",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O2",
+     "l": "O2 moderate 15 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O4",
+     "l": "O4 immovable box",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5",
+     "l": "O5 static wall",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1920,
+    434
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 784
+  },
+  "ST2_025x": {
+   "panels": [
+    {
+     "k": "ST2_O1",
+     "l": "O1 light 3 kg box",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O2",
+     "l": "O2 moderate 15 kg",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O4",
+     "l": "O4 immovable box",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "ST2_O5",
+     "l": "O5 static wall",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1920,
+    434
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 3010
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

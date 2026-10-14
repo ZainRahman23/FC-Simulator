@@ -16,7 +16,7 @@ export const axesW = (st, j) => { const R2F2 = Q.mul(st[j.childIndex].rot, j.F2)
 export function makeSupportVF(plan) { const s = plan.side, jA = ji("ankle_" + s), jK = ji("knee_" + s), jH = ji("hip_" + s), jHo = ji("hip_" + (s === "L" ? "R" : "L")), jLu = ji("lumbar"), foot = bi("foot_" + s);
   const g = plan.gains;
   let gateW = 0;
-  return (tr, t, st, ev) => { const [t0, t1] = plan.window, ramp = plan.ramp || 0.02; if (t < t0 || t > t1) return null;
+  const core = (tr, t, st, ev) => { const [t0, t1] = plan.window, ramp = plan.ramp || 0.02; if (t < t0 || t > t1) return null;
     let w = Math.min(1, (t - t0) / ramp, (t1 - t) / ramp); if (w <= 0) return null;
     // tactile gate (plan.gate = { clearM }): active only while the support leg touches the turf (its lowest point within clearM), ramped in/out
     if (plan.gate) { let lo = Infinity; for (const nm of ["foot_" + s, "shank_" + s, "thigh_" + s]) { const i = bi(nm); lo = Math.min(lo, L.PL.bodyLowest(B[i], st[i]).y); }
@@ -24,6 +24,8 @@ export function makeSupportVF(plan) { const s = plan.side, jA = ji("ankle_" + s)
       if (ok && plan.gate.aheadM != null) { let cm = [0, 0, 0], Pm = [0, 0, 0]; st.forEach((b, i) => { cm = V.add(cm, V.sc(b.com, B[i].mass)); Pm = V.add(Pm, V.sc(b.v, B[i].mass)); }); cm = V.sc(cm, 1 / M);
         const vh = [Pm[0], 0, Pm[2]], vn = V.len(vh) > 0.3 ? V.sc(vh, 1 / V.len(vh)) : [0, 0, 1], fo = st[bi("foot_" + s)].com, ahead = (fo[0] - cm[0]) * vn[0] + (fo[2] - cm[2]) * vn[2]; ok = ahead > plan.gate.aheadM; }
       gateW = Math.max(0, Math.min(1, gateW + (ok ? 1 : -1) * (1 / 240) / (plan.gate.ramp || 0.02))); w *= gateW; if (w <= 0) return null; }
+    // plan.yieldTo (another support VF evaluated earlier this step): this objective takes only the share the other leaves (seat ↔ press hand-over)
+    if (plan.yieldTo) { w *= 1 - (plan.yieldTo.lastW || 0); if (w <= 0) return null; }
     // whole-body COM state from the body states
     let com = [0, 0, 0], P = [0, 0, 0]; st.forEach((b, i) => { com = V.add(com, V.sc(b.com, B[i].mass)); P = V.add(P, V.sc(b.v, B[i].mass)); }); com = V.sc(com, 1 / M); const v = V.sc(P, 1 / M);
     const c = plan.com(t), cf = plan.lead ? plan.com(t + plan.lead) : c, ay = c.press != null ? (c.press - 1) * G : (cf.ay || 0) + g.ky * (c.y - com[1]) + g.dy * (c.vy - v[1]);   // feed-forward from the plan at t + lead (muscle lag), feedback on the present
@@ -42,4 +44,5 @@ export function makeSupportVF(plan) { const s = plan.side, jA = ji("ankle_" + s)
       let other = [0, 0, 0]; for (const k of [jHo, jLu]) { const ax3 = axesW(st, JN[k]), it = tr.lastIntent && tr.lastIntent[k]; if (!it) continue; for (let i = 0; i < 3; i++) other = V.sub(other, V.sc(ax3[i], it[i] || 0)); }   // torque those joints put on the pelvis
       add(jH, V.sc(V.sub(T, other), -1)); out.info = { F, Fraw, T, w }; }
     else out.info = { F, Fraw, w };
-    return out; }; }
+    return out; };
+  const fn = (tr, t, st, ev) => { const o = core(tr, t, st, ev); fn.lastW = o && o.info ? o.info.w : 0; return o; }; fn.lastW = 0; return fn; }

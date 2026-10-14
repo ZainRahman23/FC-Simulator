@@ -14,11 +14,22 @@ const sT = PL.SPEC_T(), nT = sT.bodies.length, SKT = T.rig("gabriel"), RT = T.bu
 const two = run.recs[0].S.length > nT, sR = two ? PL.SPEC_R() : null, nR = two ? sR.bodies.length : 0, SKR = two ? T.rig("vinicius") : null, mdR = two ? MC.model(sR) : null;
 const LOCO = two ? PL.records().LOCO : null, qRef = two ? SKR.bones.map(b => MC.m2q(LOCO.pres[50].world[LOCO.bones.findIndex(x => x.name === b.name)])) : null;
 const pack = (P) => ({ skin: Array.from(P.skin, r5), joint: P.p.map(rv), tip: P.tip.map(rv) });
-const [s0, s1] = arg("steps", `0-${run.recs.length}`).split("-").map(Number), frames = [];
+// optional INTENT ghost (--intent <params.json> --speed v): the controller's target pose at each step (choreography tracks + the knee coupling
+// evaluated on the recorded hip angle) by V2 forward kinematics on the RECORDED pelvis pose — what was authored / commanded, not simulated
+let INT = null; if (arg("intent")) { const SL = new URL("../scripts/", import.meta.url).href, P = await import(SL + "sp_param.mjs"), C = await import(SL + "sp_chor.mjs"), L = await import(SL + "sp_lib.mjs");
+  const cand = P.makeCand(P.toPhys(JSON.parse(fs.readFileSync(arg("intent")))), +arg("speed", "5"), "intent"), ch = C.compile(cand.chor), cp = cand.couple && cand.couple[0];
+  INT = (S, t) => { const an = ch.anatAt(t); if (cp && t >= cp.window[0] && t <= cp.window[1]) { const x = L.anatOf(S).hip_R.flex, m = cp.map; let y = x <= m[0][0] ? m[0][1] : x >= m[m.length - 1][0] ? m[m.length - 1][1] : null;
+      if (y == null) { let i = 0; while (x > m[i + 1][0]) i++; y = m[i][1] + (x - m[i][0]) / (m[i + 1][0] - m[i][0]) * (m[i + 1][1] - m[i][1]); } an.knee_R = { ...(an.knee_R || {}), flex: y }; }
+    return L.fk({ pos: S[0].pos, rot: S[0].rot }, an); }; }
+const [s0, s1] = arg("steps", `0-${run.recs.length}`).split("-").map(Number), frames = [], T0 = +arg("t0", "0");   // t0: clock origin step (Stage 3: the activation step)
 for (let n = s0; n <= Math.min(s1, run.recs.length); n++) { const r = run.recs[Math.max(0, n - 1)], S = (n === 0 && run.entryS ? run.entryS : r.S).map(place);
   const ST = S.slice(nR, nR + nT), SR = two ? S.slice(0, nR) : null, pel = T.toW(ST[0].pos), pitch = [pel[0], -pel[2]];
   const turf = (n >= 1 ? r.contacts : []).filter(c => c.kind.startsWith("turf")).map(c => { const side = c.a === "turf" ? c.b : c.a; return { who: side[0], body: side[1], pts: c.points.map(p => rv(T.toW(V.add(Q.rot(qy, p.p), offL)))), J: r5(c.Jn) }; });
-  frames.push({ n, t: r5(n / 240), tackler: pack(T.posePhys(RT, ST)), runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))] }); }
+  const intent = INT ? pack(T.posePhys(RT, INT(r.S.slice(nR, nR + nT), n / 240).map(place))) : null;
+  // obstacles (Stage 2 records): the 8 box corners from the recorded obstacle state, same placement
+  const obst = run.obstacles && r.obstState ? r.obstState.map((s, k) => { const he = run.obstacles[k].he; if (!he) return null; const c = [];
+    for (const a of [-1, 1]) for (const b of [-1, 1]) for (const d of [-1, 1]) c.push(rv(T.toW(V.add(Q.rot(qy, V.add(s.com, Q.rot(s.rot, [a * he[0], b * he[1], d * he[2]]))), offL)))); return { c, dyn: run.obstacles[k].mass > 0 }; }).filter(Boolean) : null;
+  frames.push({ n, t: r5((n - T0) / 240), obst, tackler: pack(T.posePhys(RT, ST)), intent, runner: two ? pack(T.poseMC1(SKR, mdR, SR, qRef)) : null, pel: rv(pel), pitch: rv(pitch), turf, feetT: [rv(T.toW(ST[10].pos)), rv(T.toW(ST[13].pos))] }); }
 fs.writeFileSync(path.join(OUT, key + ".json"), JSON.stringify({ key, frames }));
 const mf = path.join(OUT, "meta.json"), M0 = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf)) : { runs: {} }; M0.runs[key] = { frames: frames.length, steps: [s0, s1], cand: run.cand, finalHash: run.finalHash, two, yawDeg: yaw * 180 / Math.PI, at };
 fs.writeFileSync(mf, JSON.stringify(M0, null, 1)); console.log(key, frames.length, "frames", two ? "(two characters)" : "(tackler)");

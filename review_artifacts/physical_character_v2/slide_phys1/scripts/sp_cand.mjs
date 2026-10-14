@@ -257,7 +257,7 @@ export const G21 = { ...G20, id: "G21", chor: { name: "G21 leading-leg press + s
   makeCtrl(cand, chor, E) { const p = cand.vfPlan, plan = kappaPlan(E.com[1], E.comVel[1], p.kappa);
     const vf = VF.makeSupportVF({ side: p.side, window: p.window, ramp: p.ramp, lead: p.lead, contactFrom: p.contactFrom, com: plan, pelvis: pelvisPlan(cand.pelvis), gains: p.gains });
     const q = cand.press, pp = pelvisPlan(q.pelvis), vf2 = VF.makeSupportVF({ side: q.side, window: q.window, ramp: q.ramp, contactFrom: q.contactFrom, gate: q.gate, com: () => ({ press: q.fy }), pelvis: (t) => { const o = pp(t); return { R: o.R, w: [0, 0, 0] }; }, gains: q.gains });
-    return new CT.SlideTracker({ chor, lead: cand.lead, ffLead: cand.ffLead, gains: cand.gains, authority: cand.authority, yield: cand.yield, vf, vfs: [vf2], ff: cand.ff, couple: cand.couple }); } };
+    return new CT.SlideTracker({ chor, lead: cand.lead, ffLead: cand.ffLead, gains: cand.gains, authority: cand.authority, yield: cand.yield, ragdoll: cand.ragdoll, vf, vfs: [vf2], ff: cand.ff, couple: cand.couple }); } };
 
 // ── G22: G21 diagnosed — the tackling boot still touched under the body at 0.11 s and the new press then pushed it down there (+87). Kinematic
 // clearance analysis (hips ≈ 0.88 m): with the thigh at 40° the boot clears only for knee > 64° or < 16°; with the thigh ≥ 55° it clears at any knee
@@ -278,10 +278,19 @@ export const G23 = { ...G22, id: "G23",
   pelvis: { pitch: [[0, 2], [0.10, -4]], roll: [[0, 0], [0.10, 14]], yaw: [[0, 0], [0.10, 4]] },
   vfPlan: { ...G22.vfPlan, kappa: [[0.05, 1.7], [0.10, 1.4]], lateral: 3.5, gains: { ky: 158, dy: 25, ko: 900, do: 110 } },
   press: { ...G22.press, window: [0.35, 1.6] },
-  makeCtrl(cand, chor, E) { const p = cand.vfPlan, base = kappaPlan(E.com[1], E.comVel[1], p.kappa), plan = (t) => ({ ...base(t), ax: p.lateral || 0 });
-    const vf = VF.makeSupportVF({ side: p.side, window: p.window, ramp: p.ramp, lead: p.lead, contactFrom: p.contactFrom, com: plan, pelvis: pelvisPlan(cand.pelvis), gains: p.gains });
-    const q = cand.press, pp = pelvisPlan(q.pelvis), vf2 = VF.makeSupportVF({ side: q.side, window: q.window, ramp: q.ramp, contactFrom: q.contactFrom, gate: q.gate, com: () => ({ press: q.fy }), pelvis: (t) => { const o = pp(t); return { R: o.R, w: [0, 0, 0] }; }, gains: q.gains });
-    return new CT.SlideTracker({ chor, lead: cand.lead, ffLead: cand.ffLead, gains: cand.gains, authority: cand.authority, yield: cand.yield, vf, vfs: [vf2], ff: cand.ff, couple: cand.couple }); } };
+  // frameYaw (deg): the world-frame parts of the intent (lateral support force, planned pelvis orientation) rotate with a scene placement; tOffset:
+  // controller clock offset (t = 0 at the activation step when the tackler is parked first, Stage 3). Defaults reproduce Stage 1 exactly.
+  makeCtrl(cand, chor, E) { const p = cand.vfPlan, base = kappaPlan(E.com[1], E.comVel[1], p.kappa), fy = (cand.frameYaw || 0) * Math.PI / 180, qf = [0, Math.sin(fy / 2), 0, Math.cos(fy / 2)];
+    const lat = Q.rot(qf, [p.lateral || 0, 0, 0]), plan = (t) => ({ ...base(t), ax: lat[0], az: lat[2] || undefined });
+    const rotP = (pp) => (t) => { const o = pp(t); return { R: Q.norm(Q.mul(qf, o.R)), w: Q.rot(qf, o.w) }; };
+    const vf = VF.makeSupportVF({ side: p.side, window: p.window, ramp: p.ramp, lead: p.lead, contactFrom: p.contactFrom, com: plan, pelvis: rotP(pelvisPlan(cand.pelvis)), gains: p.gains });
+    const q = cand.press, pp = rotP(pelvisPlan(q.pelvis)), vf2 = VF.makeSupportVF({ side: q.side, window: q.window, ramp: q.ramp, contactFrom: q.contactFrom, gate: q.gate, com: () => ({ press: q.fy }), pelvis: (t) => { const o = pp(t); return { R: o.R, w: [0, 0, 0] }; }, gains: q.gains });
+    // optional SEAT objective (cand.seat, SP1): the same pelvis-orientation objective realised through the FOLD leg's hip while that leg's lowest
+    // body (thigh / shank) is on the turf and the tackling-leg press is not engaged (yieldTo: it takes only the share the press leaves) — no support
+    // force (fy 0), only the stance-hip orientation torque, the seated person's way of holding the trunk
+    const vfs = [vf2]; if (cand.seat) { const s = cand.seat, ps = rotP(pelvisPlan(s.pelvis || q.pelvis));
+      vfs.push(VF.makeSupportVF({ side: s.side || "L", window: s.window || q.window, ramp: s.ramp || q.ramp, contactFrom: "lowest", gate: s.gate || { clearM: 0.02, ramp: 0.03 }, yieldTo: vf2, com: () => ({ press: 0 }), pelvis: (t) => { const o = ps(t); return { R: o.R, w: [0, 0, 0] }; }, gains: s.gains || q.gains })); }
+    return new CT.SlideTracker({ chor, lead: cand.lead, ffLead: cand.ffLead, gains: cand.gains, authority: cand.authority, yield: cand.yield, ragdoll: cand.ragdoll, vf, vfs, ff: cand.ff, couple: cand.couple, t0: cand.tOffset || 0 }); } };
 
 // ── G24: G23 rendered — the first slide-tackle-like entry (tackling leg extended low ahead, fold leg tucked, trunk upright; pitch momentum balanced:
 // tackling heel −38 vs fold thigh +46 N·m·s), then an over-roll (Lz +48) onto the front. Less roll: lateral support 2.0 m/s², plant roll 8°, slide

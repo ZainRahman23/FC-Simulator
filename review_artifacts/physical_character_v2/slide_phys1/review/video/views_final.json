@@ -1,0 +1,649 @@
+[
+ {
+  "id": "SP1_IP_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "show": "intent",
+    "l": "INTENT \u00b7 authored targets (V2 FK on the recorded pelvis)"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "PHYSICAL \u00b7 SP1 5.0 m/s, A5, M1c tackler"
+   }
+  ]
+ },
+ {
+  "id": "SP1_GAME_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 1,
+    "l": "touchline gameplay camera"
+   },
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 5,
+    "l": "same camera, subject crop \u00d75"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "close \u00b7 front 3/4 \u00b7 turf contacts"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 5,
+    "l": "STRONG \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP1_IP_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "show": "intent",
+    "l": "INTENT \u00b7 authored targets (V2 FK on the recorded pelvis)"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "PHYSICAL \u00b7 SP1 5.0 m/s, A5, M1c tackler"
+   }
+  ]
+ },
+ {
+  "id": "SP1_GAME_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 1,
+    "l": "touchline gameplay camera"
+   },
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 5,
+    "l": "same camera, subject crop \u00d75"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "close \u00b7 front 3/4 \u00b7 turf contacts"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 5,
+    "l": "STRONG \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP1_IP_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "show": "intent",
+    "l": "INTENT \u00b7 authored targets (V2 FK on the recorded pelvis)"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "PHYSICAL \u00b7 SP1 5.0 m/s, A5, M1c tackler"
+   }
+  ]
+ },
+ {
+  "id": "SP1_GAME_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 1,
+    "l": "touchline gameplay camera"
+   },
+   {
+    "k": "SP1_5",
+    "view": "game",
+    "zoom": 5,
+    "l": "same camera, subject crop \u00d75"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "close \u00b7 front 3/4 \u00b7 turf contacts"
+   }
+  ]
+ },
+ {
+  "id": "ST3_LIGHT_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 1,
+    "l": "LIGHT \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "game",
+    "zoom": 5,
+    "l": "LIGHT \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_LIGHT",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "LIGHT \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_MODERATE_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 1,
+    "l": "MODERATE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "game",
+    "zoom": 5,
+    "l": "MODERATE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_MODERATE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "MODERATE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_STRONG_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 1,
+    "l": "STRONG \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "game",
+    "zoom": 5,
+    "l": "STRONG \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_STRONG",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "STRONG \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "SP1_SPEEDS_1x",
+  "every": 4,
+  "W": 560,
+  "H": 440,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "SP1_4.5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 4.5 m/s"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 5 m/s"
+   },
+   {
+    "k": "SP1_5.5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 5.5 m/s"
+   }
+  ]
+ },
+ {
+  "id": "SP1_SPEEDS_025x",
+  "every": 1,
+  "W": 560,
+  "H": 440,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "SP1_4.5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 4.5 m/s"
+   },
+   {
+    "k": "SP1_5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 5 m/s"
+   },
+   {
+    "k": "SP1_5.5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "SP1 \u00b7 5.5 m/s"
+   }
+  ]
+ },
+ {
+  "id": "ST2_1x",
+  "every": 4,
+  "W": 480,
+  "H": 400,
+  "rate": "1\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O1 light 3 kg box"
+   },
+   {
+    "k": "ST2_O2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O2 moderate 15 kg"
+   },
+   {
+    "k": "ST2_O4",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O4 immovable box"
+   },
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O5 static wall"
+   }
+  ]
+ },
+ {
+  "id": "ST2_025x",
+  "every": 1,
+  "W": 480,
+  "H": 400,
+  "rate": "0.25\u00d7",
+  "panels": [
+   {
+    "k": "ST2_O1",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O1 light 3 kg box"
+   },
+   {
+    "k": "ST2_O2",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O2 moderate 15 kg"
+   },
+   {
+    "k": "ST2_O4",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O4 immovable box"
+   },
+   {
+    "k": "ST2_O5",
+    "view": "close",
+    "angle": "side",
+    "contacts": true,
+    "l": "O5 static wall"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_1x",
+  "every": 4,
+  "W": 640,
+  "H": 480,
+  "rate": "1\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_05x",
+  "every": 2,
+  "W": 640,
+  "H": 480,
+  "rate": "0.5\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ },
+ {
+  "id": "ST3_GRAZE_025x",
+  "every": 1,
+  "W": 640,
+  "H": 480,
+  "rate": "0.25\u00d7",
+  "from": 360,
+  "tlabel": "after the tackler's plant touchdown (activation, step 408)",
+  "panels": [
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 1,
+    "l": "GRAZE \u00b7 touchline gameplay camera"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "game",
+    "zoom": 5,
+    "l": "GRAZE \u00b7 subject crop \u00d75"
+   },
+   {
+    "k": "ST3_GRAZE",
+    "view": "close",
+    "angle": "front34",
+    "contacts": true,
+    "l": "GRAZE \u00b7 close front 3/4"
+   }
+  ]
+ }
+]

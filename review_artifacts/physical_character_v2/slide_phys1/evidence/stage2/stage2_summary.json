@@ -1,0 +1,698 @@
+{
+ "tool": "sp_stage2.mjs",
+ "speed": 5,
+ "tHit": 0.4,
+ "authority": "A5",
+ "u": [
+  0.5146024364368813,
+  0.8790300361776874,
+  0.3488956449470725,
+  1,
+  0.678344950689124,
+  0.23502761569380504,
+  0.7205798880652675,
+  0.4775333791336131,
+  0,
+  0,
+  0.2565039676783786,
+  0.5672761646105281,
+  0.24976875967962345,
+  0.1499217297832463,
+  0.029443038437468306,
+  0.2717492119374077,
+  0,
+  0.42344717123114856,
+  0.4559444639122761,
+  0.9823243928606484,
+  0.299927032953516,
+  0.41060585792704546,
+  0.5805477130212264,
+  0.5042941649743902
+ ],
+ "refHash": "8f2fbbf0bed38c95",
+ "bootAtHit": [
+  0.03559962660074234,
+  0.04853210598230362,
+  2.7029049396514893
+ ],
+ "dir": [
+  -0.00829111042360629,
+  0,
+  0.9999656281532598
+ ],
+ "cases": {
+  "O0": {
+   "obstacles": [],
+   "hash": "8f2fbbf0bed38c95",
+   "firstHit": null,
+   "obstImpulseNs": [
+    0,
+    0,
+    0
+   ],
+   "obstImpulseByBody": {},
+   "maxObstDepthMm": 0,
+   "maxDeflDeg": {
+    "knee_R": 0,
+    "hip_R": 0,
+    "ankle_R": 0
+   },
+   "comEnd": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 0,
+   "errExcessMeanPostHitDeg": 0,
+   "extraYieldAxisSteps": 0,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.46249999999999997,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 28.29637573516194,
+    "footAhead": 0.864433765411377,
+    "vyEntry": -1.6709995367144497,
+    "vhEntry": 3.6723884209097672,
+    "slideDist": 0.48982857420327475,
+    "stopT": 1.4083333333333332,
+    "faceDown": 0,
+    "minBelly": -0.20792041535592187,
+    "reclineMean": 40.117096583638855,
+    "reclinePen": 0.13488773153401123,
+    "rollPen": 0,
+    "seatFrac": 0.9566563467492261,
+    "hardExcessDeg": 52.51723677899664,
+    "activeExcessDeg": 112.74056895502135,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.9335600238300277,
+    "tackleBootNs": 267.79029565379517,
+    "headT": null,
+    "chestT": null,
+    "finite": true
+   },
+   "stage1Cost": 11.081,
+   "obstEnd": []
+  },
+  "O1": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.3,
+      0.06,
+      0.06
+     ],
+     "mass": 3,
+     "pos": [
+      0.03269773795248014,
+      0.061,
+      3.0528929095051303
+     ],
+     "rot": [
+      0,
+      -0.004145590834859405,
+      0,
+      0.9999914070013951
+     ]
+    }
+   ],
+   "hash": "6b809b54a7057e94",
+   "firstHit": {
+    "t": 0.4375,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": [
+    1.38,
+    -0.63,
+    -11.49
+   ],
+   "obstImpulseByBody": {
+    "foot_R": 11.73
+   },
+   "maxObstDepthMm": 0.94,
+   "maxDeflDeg": {
+    "knee_R": 11.2,
+    "hip_R": 16.7,
+    "ankle_R": 28.7
+   },
+   "comEnd": [
+    -0.272,
+    0.301,
+    2.225
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0.335,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 15.3,
+   "errExcessMeanPostHitDeg": -2.47,
+   "extraYieldAxisSteps": 270,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.46249999999999997,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 39.19757209811514,
+    "footAhead": 0.8170657157897949,
+    "vyEntry": -1.5528774687838733,
+    "vhEntry": 3.368738223906748,
+    "slideDist": 0.3105019594699986,
+    "stopT": 1.5083333333333333,
+    "faceDown": 0,
+    "minBelly": -0.20792041535592187,
+    "reclineMean": 60.28192951405762,
+    "reclinePen": 1.1978586982383697,
+    "rollPen": 1.8936233049793647,
+    "seatFrac": 0.8933717579250721,
+    "hardExcessDeg": 73.84782535426847,
+    "activeExcessDeg": 147.76856732343478,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.9628501918191847,
+    "tackleBootNs": 326.9540320187463,
+    "headT": 1.3958333333333333,
+    "chestT": 1.3625,
+    "finite": true
+   },
+   "stage1Cost": 20.216,
+   "obstEnd": [
+    {
+     "k": 0,
+     "com": [
+      -0.08985710889101028,
+      0.05999762937426567,
+      4.591141700744629
+     ],
+     "rot": [
+      -0.6729574799537659,
+      0.2171272486448288,
+      0.21713580191135406,
+      0.6729309558868408
+     ],
+     "v": [
+      -2.459823178480036e-10,
+      3.584660307264695e-17,
+      -2.080099287260495e-11
+     ],
+     "w": [
+      -3.4669006554466364e-10,
+      4.167342212614809e-17,
+      4.0997858441471635e-9
+     ]
+    }
+   ]
+  },
+  "O2": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.3,
+      0.08,
+      0.08
+     ],
+     "mass": 15,
+     "pos": [
+      0.03269773795248014,
+      0.081,
+      3.0528929095051303
+     ],
+     "rot": [
+      0,
+      -0.004145590834859405,
+      0,
+      0.9999914070013951
+     ]
+    }
+   ],
+   "hash": "f5149f7cb96ea174",
+   "firstHit": {
+    "t": 0.43333333333333335,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": [
+    4.74,
+    2.45,
+    -20.7
+   ],
+   "obstImpulseByBody": {
+    "foot_R": 20.69
+   },
+   "maxObstDepthMm": 1.19,
+   "maxDeflDeg": {
+    "knee_R": 76.9,
+    "hip_R": 29.1,
+    "ankle_R": 74.3
+   },
+   "comEnd": [
+    -1.176,
+    0.218,
+    2.368
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0.699,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 21.2,
+   "errExcessMeanPostHitDeg": 1.93,
+   "extraYieldAxisSteps": 393,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.46249999999999997,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 47.01040448025555,
+    "footAhead": 0.7767171859741211,
+    "vyEntry": -1.6870144758299561,
+    "vhEntry": 3.340462951346875,
+    "slideDist": 1.1312478681546019,
+    "stopT": 1.8375,
+    "faceDown": 0.10019708271678959,
+    "minBelly": -0.9228156705077262,
+    "reclineMean": 44.98468512161193,
+    "reclinePen": 1.1296592922100681,
+    "rollPen": 0.9144382529062657,
+    "seatFrac": 0.727027027027027,
+    "hardExcessDeg": 68.69254430018853,
+    "activeExcessDeg": 180.6558043269507,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.8798494132087117,
+    "tackleBootNs": 535.4747962831354,
+    "headT": 1.6458333333333333,
+    "chestT": 1.5833333333333333,
+    "finite": true
+   },
+   "stage1Cost": 23.643,
+   "obstEnd": [
+    {
+     "k": 0,
+     "com": [
+      0.01555642206221819,
+      0.07999999821186066,
+      3.1872105598449707
+     ],
+     "rot": [
+      1.994339982047677e-8,
+      0.005090067628771067,
+      -4.423156951816054e-9,
+      0.9999870657920837
+     ],
+     "v": [
+      5.462934358352323e-12,
+      1.4531542023830127e-26,
+      -2.3278974303764244e-9
+     ],
+     "w": [
+      -2.909872165446359e-8,
+      -2.1518005036315968e-23,
+      -6.8286667986861e-11
+     ]
+    }
+   ]
+  },
+  "O3": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.3,
+      0.1,
+      0.1
+     ],
+     "mass": 60,
+     "pos": [
+      0.03269773795248014,
+      0.101,
+      3.0528929095051303
+     ],
+     "rot": [
+      0,
+      -0.004145590834859405,
+      0,
+      0.9999914070013951
+     ]
+    }
+   ],
+   "hash": "f1125c61006e8f99",
+   "firstHit": {
+    "t": 0.42916666666666664,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": [
+    10.4,
+    -15.69,
+    -99.29
+   ],
+   "obstImpulseByBody": {
+    "foot_R": 70.74,
+    "foot_L": 28.5,
+    "thigh_L": 0,
+    "shank_L": 0,
+    "shank_R": 0
+   },
+   "maxObstDepthMm": 0.8,
+   "maxDeflDeg": {
+    "knee_R": 128,
+    "hip_R": 24.4,
+    "ankle_R": 77.3
+   },
+   "comEnd": [
+    -0.691,
+    0.225,
+    2.351
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0.248,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 28.5,
+   "errExcessMeanPostHitDeg": 8.48,
+   "extraYieldAxisSteps": 276,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.4666666666666667,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 56.1642244501977,
+    "footAhead": 0.7375667095184326,
+    "vyEntry": -1.4044103039185882,
+    "vhEntry": 3.068722616477509,
+    "slideDist": 0.6035413666706284,
+    "stopT": 1.6458333333333333,
+    "faceDown": 0.02761370202287757,
+    "minBelly": -0.7541667732921287,
+    "reclineMean": 44.95335139030489,
+    "reclinePen": 0.7998550379701086,
+    "rollPen": 0.8865626184095176,
+    "seatFrac": 0.7642276422764228,
+    "hardExcessDeg": 71.27446259120528,
+    "activeExcessDeg": 209.13338895658916,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.8991034038780152,
+    "tackleBootNs": 459.7990792383522,
+    "headT": null,
+    "chestT": 1.5666666666666667,
+    "finite": true
+   },
+   "stage1Cost": 19.88,
+   "obstEnd": [
+    {
+     "k": 0,
+     "com": [
+      0.0317155197262764,
+      0.09999988973140717,
+      3.059985637664795
+     ],
+     "rot": [
+      3.879681287344283e-7,
+      -0.004336885642260313,
+      5.5318672309567773e-8,
+      0.9999906420707703
+     ],
+     "v": [
+      6.588823930897547e-11,
+      -6.208822345143972e-11,
+      2.143761973494307e-10
+     ],
+     "w": [
+      2.1437627228948486e-9,
+      -9.929600473295854e-24,
+      -6.588827816678133e-10
+     ]
+    }
+   ]
+  },
+  "O4": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.3,
+      0.1,
+      0.1
+     ],
+     "mass": 0,
+     "pos": [
+      0.03269773795248014,
+      0.101,
+      3.0528929095051303
+     ],
+     "rot": [
+      0,
+      -0.004145590834859405,
+      0,
+      0.9999914070013951
+     ]
+    }
+   ],
+   "hash": "33237a027562c2a7",
+   "firstHit": {
+    "t": 0.42916666666666664,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": [
+    1.32,
+    -32.31,
+    -219.92
+   ],
+   "obstImpulseByBody": {
+    "foot_R": 188.28,
+    "foot_L": 32.96,
+    "thigh_L": 0,
+    "shank_L": 0,
+    "shank_R": 0
+   },
+   "maxObstDepthMm": 1.16,
+   "maxDeflDeg": {
+    "knee_R": 131.1,
+    "hip_R": 23.8,
+    "ankle_R": 77.6
+   },
+   "comEnd": [
+    -0.705,
+    0.224,
+    2.361
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0.254,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 28.5,
+   "errExcessMeanPostHitDeg": 8.25,
+   "extraYieldAxisSteps": 280,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.4666666666666667,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 56.743595879596924,
+    "footAhead": 0.7345583438873291,
+    "vyEntry": -1.404363124100613,
+    "vhEntry": 3.0686650910550846,
+    "slideDist": 0.5977808414204877,
+    "stopT": 1.6125,
+    "faceDown": 0.031432460397700875,
+    "minBelly": -0.7971899246505565,
+    "reclineMean": 45.62787068761041,
+    "reclinePen": 0.8267023409818333,
+    "rollPen": 0.9308656451114474,
+    "seatFrac": 0.7615176151761518,
+    "hardExcessDeg": 71.58572353549329,
+    "activeExcessDeg": 212.13950239454985,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.8896344936928751,
+    "tackleBootNs": 483.8269271478367,
+    "headT": 1.5625,
+    "chestT": 1.5208333333333333,
+    "finite": true
+   },
+   "stage1Cost": 21.953,
+   "obstEnd": [
+    {
+     "k": 0,
+     "com": [
+      0.03269773721694946,
+      0.10100000351667404,
+      3.0528929233551025
+     ],
+     "rot": [
+      0,
+      -0.004145591054111719,
+      0,
+      0.9999914169311523
+     ],
+     "v": [
+      0,
+      0,
+      0
+     ],
+     "w": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  },
+  "O5": {
+   "obstacles": [
+    {
+     "type": "box",
+     "he": [
+      0.6,
+      0.35,
+      0.08
+     ],
+     "mass": 0,
+     "pos": [
+      0.030624960346578568,
+      0.351,
+      3.3028843165434454
+     ],
+     "rot": [
+      0,
+      -0.004145590834859405,
+      0,
+      0.9999914070013951
+     ]
+    }
+   ],
+   "hash": "b4b70b61e4040b39",
+   "firstHit": {
+    "t": 0.49583333333333335,
+    "body": "foot_R"
+   },
+   "obstImpulseNs": [
+    23.95,
+    -6.87,
+    -108.39
+   ],
+   "obstImpulseByBody": {
+    "foot_R": 108.58
+   },
+   "maxObstDepthMm": 0.95,
+   "maxDeflDeg": {
+    "knee_R": 31.4,
+    "hip_R": 27.1,
+    "ankle_R": 16.7
+   },
+   "comEnd": [
+    -0.14,
+    0.222,
+    1.885
+   ],
+   "comEndRef": [
+    -0.49,
+    0.29,
+    2.479
+   ],
+   "comShiftM": 0.693,
+   "errMaxDeg": 28.6,
+   "yieldSteps": 361,
+   "errMaxPostHitDeg": 18.1,
+   "errExcessMeanPostHitDeg": -2.54,
+   "extraYieldAxisSteps": 372,
+   "ragdollAt": null,
+   "measures": {
+    "entryT": 0.46249999999999997,
+    "first": [
+     "thigh_L"
+    ],
+    "kneeAtEntry": 28.29637573516194,
+    "footAhead": 0.864433765411377,
+    "vyEntry": -1.6709995367144497,
+    "vhEntry": 3.6723884209097672,
+    "slideDist": 0.3809611383440918,
+    "stopT": 1.5625,
+    "faceDown": 0,
+    "minBelly": -0.20792041535592187,
+    "reclineMean": 45.937057604982584,
+    "reclinePen": 1.0557880814465723,
+    "rollPen": 0.2794418294522096,
+    "seatFrac": 0.8222222222222222,
+    "hardExcessDeg": 92.96849468818138,
+    "activeExcessDeg": 178.15856113950545,
+    "worstHard": [
+     "shoulder_R.abd",
+     34.3
+    ],
+    "tackleStudFrac": 0.944951530400215,
+    "tackleBootNs": 382.07564668933173,
+    "headT": 1.5041666666666667,
+    "chestT": 1.4833333333333334,
+    "finite": true
+   },
+   "stage1Cost": 21.398,
+   "obstEnd": [
+    {
+     "k": 0,
+     "com": [
+      0.030624959617853165,
+      0.35100001096725464,
+      3.302884340286255
+     ],
+     "rot": [
+      0,
+      -0.004145591054111719,
+      0,
+      0.9999914169311523
+     ],
+     "v": [
+      0,
+      0,
+      0
+     ],
+     "w": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ }
+}

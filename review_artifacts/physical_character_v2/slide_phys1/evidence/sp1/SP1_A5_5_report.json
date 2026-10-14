@@ -1,0 +1,295 @@
+{
+ "tool": "sp_report1.mjs",
+ "rec": {
+  "cand": "SP1",
+  "hash": "8f2fbbf0bed38c95",
+  "steps": 480,
+  "entry": {
+   "com": [
+    0.0005669246297698773,
+    1.0642301019113118,
+    0.032765435718403776
+   ],
+   "comVel": [
+    -0.24537547853328798,
+    -0.4918260180125057,
+    5.02030705969432
+   ]
+  }
+ },
+ "comVelocity": [
+  {
+   "t": 0.004,
+   "vh": 5.017,
+   "vy": -0.324,
+   "vyOverVh": 0.065,
+   "comY": 1.063
+  },
+  {
+   "t": 0.05,
+   "vh": 4.89,
+   "vy": 0.062,
+   "vyOverVh": 0.013,
+   "comY": 1.062
+  },
+  {
+   "t": 0.1,
+   "vh": 4.852,
+   "vy": 0.001,
+   "vyOverVh": 0,
+   "comY": 1.064
+  },
+  {
+   "t": 0.15,
+   "vh": 4.915,
+   "vy": -0.267,
+   "vyOverVh": 0.054,
+   "comY": 1.058
+  },
+  {
+   "t": 0.2,
+   "vh": 4.939,
+   "vy": -0.718,
+   "vyOverVh": 0.145,
+   "comY": 1.033
+  },
+  {
+   "t": 0.25,
+   "vh": 4.939,
+   "vy": -1.209,
+   "vyOverVh": 0.245,
+   "comY": 0.984
+  },
+  {
+   "t": 0.3,
+   "vh": 4.939,
+   "vy": -1.699,
+   "vyOverVh": 0.344,
+   "comY": 0.91
+  },
+  {
+   "t": 0.35,
+   "vh": 4.939,
+   "vy": -2.19,
+   "vyOverVh": 0.443,
+   "comY": 0.812
+  },
+  {
+   "t": 0.4,
+   "vh": 4.109,
+   "vy": -1.718,
+   "vyOverVh": 0.418,
+   "comY": 0.707
+  },
+  {
+   "t": 0.462,
+   "vh": 3.672,
+   "vy": -1.671,
+   "vyOverVh": 0.455,
+   "comY": 0.585
+  },
+  {
+   "t": 0.6,
+   "vh": 1.616,
+   "vy": -0.666,
+   "vyOverVh": 0.412,
+   "comY": 0.444
+  },
+  {
+   "t": 0.8,
+   "vh": 0.61,
+   "vy": -0.263,
+   "vyOverVh": 0.431,
+   "comY": 0.366
+  },
+  {
+   "t": 1,
+   "vh": 0.631,
+   "vy": -0.038,
+   "vyOverVh": 0.061,
+   "comY": 0.336
+  },
+  {
+   "t": 1.4,
+   "vh": 0.314,
+   "vy": -0.105,
+   "vyOverVh": 0.334,
+   "comY": 0.306
+  }
+ ],
+ "entry": {
+  "firstContacts": [
+   [
+    "foot_L",
+    0.0042
+   ],
+   [
+    "foot_R",
+    0.3667
+   ],
+   [
+    "thigh_L",
+    0.4625
+   ],
+   [
+    "shank_L",
+    0.525
+   ],
+   [
+    "pelvis",
+    0.7458
+   ],
+   [
+    "forearm_L",
+    0.8208
+   ]
+  ],
+  "groundEntryT": 0.462,
+  "atEntry": {
+   "t": 0.462,
+   "vh": 3.672,
+   "vy": -1.671,
+   "comY": 0.585,
+   "bellyY": -0.107,
+   "reclineDeg": 23.012
+  },
+  "vhMaxBeforeEntry": 5.017
+ },
+ "tacklingLimb": {
+  "footPeak": {
+   "t": 0.096,
+   "h": 13.073,
+   "y": -3.174
+  },
+  "shankPeak": {
+   "t": 0.108,
+   "h": 8.665,
+   "y": 0.018
+  },
+  "bootTouchdownT": 0.367,
+  "atTouchdown": {
+   "foot": {
+    "h": 5.562,
+    "y": -4.949
+   },
+   "shank": {
+    "h": 4.946,
+    "y": -1.415
+   }
+  }
+ },
+ "ground": {
+  "byBody": {
+   "thigh_L": {
+    "JyNs": 447.158,
+    "JtanNs": 184.053,
+    "peakBW": 10.637,
+    "peakT": 0.462,
+    "hOverVAtPeak": 0.5,
+    "hOverVMaxLoaded": 0.5,
+    "slipMax": 5.204
+   },
+   "pelvis": {
+    "JyNs": 351.6,
+    "JtanNs": 100.36,
+    "peakBW": 3.832,
+    "peakT": 0.746,
+    "hOverVAtPeak": 0.5,
+    "hOverVMaxLoaded": 0.503,
+    "slipMax": 0.635
+   },
+   "forearm_L": {
+    "JyNs": 312.883,
+    "JtanNs": 117.128,
+    "peakBW": 3.491,
+    "peakT": 0.825,
+    "hOverVAtPeak": 0.637,
+    "hOverVMaxLoaded": 0.637,
+    "slipMax": 0.679
+   },
+   "foot_R": {
+    "JyNs": 267.79,
+    "JtanNs": 309.299,
+    "peakBW": 9.638,
+    "peakT": 0.4,
+    "hOverVAtPeak": 1.098,
+    "hOverVMaxLoaded": 1.441,
+    "slipMax": 6.235
+   },
+   "foot_L": {
+    "JyNs": 171.298,
+    "JtanNs": 70.58,
+    "peakBW": 5.418,
+    "peakT": 0.008,
+    "hOverVAtPeak": 0.581,
+    "hOverVMaxLoaded": 0.96,
+    "slipMax": 8.821
+   },
+   "shank_L": {
+    "JyNs": 32.091,
+    "JtanNs": 16.046,
+    "peakBW": 0.235,
+    "peakT": 0.529,
+    "hOverVAtPeak": 0.5,
+    "hOverVMaxLoaded": 0,
+    "slipMax": 3.798
+   },
+   "upperArm_L": {
+    "JyNs": 0,
+    "JtanNs": 0,
+    "peakBW": 0,
+    "peakT": null,
+    "hOverVAtPeak": null,
+    "hOverVMaxLoaded": 0,
+    "slipMax": 0
+   }
+  },
+  "peakTotalBW": 12.017,
+  "peakTotalT": 0.462,
+  "contactNormalMaxDeviationDeg": 0,
+  "totalJyNs": 1582.82,
+  "gravityImpulseNs": 1548.214
+ },
+ "integrity": {
+  "maxTurfPenMm": 2.481,
+  "maxHardExcDeg": 13.503,
+  "maxJointSepMm": 2.158,
+  "maxSpeed": 13.581,
+  "allFinite": true
+ },
+ "ledger": {
+  "activationStep": 0,
+  "activationLinNs": 398.52,
+  "activationEnergyJ": 1080.972,
+  "linResMaxNs": 0,
+  "angResMaxNms": 0.099,
+  "turfWorkJ": -1299.727,
+  "energyCreatedMaxStepJ": 0.548,
+  "energyCreatedSumJ": 1.469
+ },
+ "slide": {
+  "slideDistM": 0.517,
+  "stopT": 1.408,
+  "minBellyY": -0.208,
+  "faceDownSteps": 0,
+  "final": {
+   "t": 2,
+   "comY": 0.29
+  }
+ },
+ "cpu": {
+  "wallMs": 461,
+  "perStepMs": 0.96,
+  "byStage": {
+   "step": 0.303,
+   "passive": 0.261,
+   "act": 0.049,
+   "tone": 0.123,
+   "instrument": 0.047,
+   "measure": 0.167,
+   "law": 0,
+   "lawT": 0.123
+  },
+  "note": "ms per 1/240 s step; 'instrument' / 'measure' are the research ledgers, not needed at runtime"
+ }
+}

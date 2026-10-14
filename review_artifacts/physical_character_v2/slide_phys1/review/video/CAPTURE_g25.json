@@ -1,0 +1,76 @@
+{
+ "tool": "sp_capture.cjs",
+ "views": {
+  "G25_REJECTED_1x": {
+   "panels": [
+    {
+     "k": "G25_HOLD_5",
+     "l": "G25 hold (rejected) · 5.0 · falls back, head 1.25 s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "G25_HOLD_5.5",
+     "l": "G25 hold (rejected) · 5.5 · rolls face-down",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5.25",
+     "l": "SP1 · 5.25 · lies back, head 1.31 s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 120,
+   "every": 4,
+   "size": [
+    1680,
+    474
+   ],
+   "first": 1,
+   "last": 477,
+   "ms": 645
+  },
+  "G25_REJECTED_025x": {
+   "panels": [
+    {
+     "k": "G25_HOLD_5",
+     "l": "G25 hold (rejected) · 5.0 · falls back, head 1.25 s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "G25_HOLD_5.5",
+     "l": "G25 hold (rejected) · 5.5 · rolls face-down",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    },
+    {
+     "k": "SP1_5.25",
+     "l": "SP1 · 5.25 · lies back, head 1.31 s",
+     "view": "close",
+     "zoom": 1,
+     "angle": "side"
+    }
+   ],
+   "frames": 480,
+   "every": 1,
+   "size": [
+    1680,
+    474
+   ],
+   "first": 1,
+   "last": 480,
+   "ms": 2355
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

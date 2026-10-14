@@ -1,0 +1,96 @@
+# G25 explained single-variable variants (A0 authority; constraint-space limits >1°). Base 'hold' = search-5 start (S2 best + tackleRot 10, tackleDf 10, kneeFinal 15, hipRhold 0.25)
+== S2 best (SP1, A0)
+4.5 14f0de9e432af108 cost 10.53 | entry 0.467 thigh_L vh 3.33 vy -1.95 knee 30 | slide 0.40 m stop 0.72 | recl 31 head - belly -0.17 | stud 0.91 seat 1.00 | C-limits ankle_R.z 5.7°/267ms, hip_L.x 3.6°/1021ms, knee_L.x 2.7°/121ms
+   parts recline 0.02, slide 0.50, limits 8.19, stud 1.82
+5 0383f9521243968a cost 11.23 | entry 0.462 thigh_L vh 3.67 vy -1.67 knee 28 | slide 0.44 m stop 1.45 | recl 42 head - belly -0.21 | stud 0.93 seat 0.96 | C-limits ankle_R.z 13.5°/379ms, ankle_R.x 4.4°/121ms, knee_L.x 2.6°/142ms, hip_L.x 1.6°/275ms
+   parts recline 0.25, slide 0.48, limits 8.63, stud 1.86
+5.5 60fd4824a284fb99 cost 15.39 | entry 0.462 thigh_L vh 3.82 vy -1.58 knee 33 | slide 0.97 m stop 1.41 | recl 26 head - belly -0.25 | stud 0.94 seat 0.95 | C-limits ankle_R.z 16.6°/358ms, ankle_R.x 7.2°/258ms, knee_L.x 2.5°/171ms, hip_L.x 1.3°/46ms
+   parts knee 0.10, recline 0.34, slide 0.22, limits 12.85, stud 1.89
+== hold (search-5 start)
+4.5 d34f222a5835b42e cost 12.43 | entry 0.450 thigh_L vh 3.75 vy -2.28 knee 30 | slide 0.50 m stop 0.71 | recl 29 head 1.5 belly -0.18 | stud 0.93 seat 0.88 | C-limits hip_L.x 5.1°/196ms, ankle_R.z 4.9°/367ms, knee_L.x 2.7°/121ms
+   parts head 2.50, recline 0.10, roll 0.07, slide 0.45, limits 7.46, stud 1.85
+5 10f812db483ef151 cost 14.22 | entry 0.446 thigh_L vh 3.80 vy -1.60 knee 39 | slide 1.13 m stop 1.23 | recl 53 head 1.25 belly -0.21 | stud 0.32 seat 0.85 | C-limits ankle_R.z 6.6°/13ms, ankle_L.z 4.1°/254ms, knee_L.x 2.6°/142ms, hip_L.x 1.7°/313ms
+   parts head 2.50, knee 0.29, recline 1.49, roll 0.30, slide 0.13, limits 8.86, stud 0.65
+5.5 a09ba8bb9cbe9218 cost 23.76 | entry 0.450 thigh_L vh 4.01 vy -1.52 knee 31 | slide 1.18 m stop 1.38 | recl -57 head 1.6624999999999999 belly -0.79 | stud 0.83 seat 0.86 | C-limits ankle_R.z 16.2°/279ms, ankle_R.x 5.7°/396ms, knee_L.x 2.5°/171ms, hip_L.x 1.1°/167ms
+   parts faceDown 2.50, head 2.50, knee 0.04, recline 5.05, roll 0.55, slide 0.11, limits 11.37, stud 1.65
+== hold + lumbarLate=10 (trunk counter-flexion while the leg is held)
+4.5 e8ffdc5e7736d092 cost 12.44 | entry 0.450 thigh_L vh 3.75 vy -2.28 knee 30 | slide 0.50 m stop 0.71 | recl 29 head 1.5416666666666667 belly -0.18 | stud 0.93 seat 0.89 | C-limits hip_L.x 5.1°/196ms, ankle_R.z 4.9°/342ms, knee_L.x 2.7°/121ms
+   parts head 2.50, recline 0.10, roll 0.07, slide 0.45, limits 7.46, stud 1.85
+5 dfeed9323ffcb512 cost 14.35 | entry 0.446 thigh_L vh 3.80 vy -1.60 knee 39 | slide 1.11 m stop 1.28 | recl 54 head 1.2833333333333332 belly -0.21 | stud 0.33 seat 0.85 | C-limits ankle_R.z 6.6°/13ms, ankle_L.z 3.5°/263ms, knee_L.x 2.6°/142ms, hip_L.x 1.7°/233ms
+   parts head 2.50, knee 0.29, recline 1.47, roll 0.38, slide 0.15, limits 8.91, stud 0.65
+5.5 659df122525ee01d cost 22.94 | entry 0.450 thigh_L vh 4.01 vy -1.52 knee 31 | slide 1.17 m stop 1.37 | recl -58 head 1.675 belly -0.75 | stud 0.84 seat 0.86 | C-limits ankle_R.z 16.2°/279ms, ankle_R.x 5.7°/258ms, knee_L.x 2.5°/171ms, hip_L.x 1.1°/154ms
+   parts faceDown 1.97, head 2.50, knee 0.04, recline 5.08, roll 0.47, slide 0.11, limits 11.08, stud 1.69
+== hold + lumbarLate=15 (trunk counter-flexion while the leg is held)
+4.5 2d0d2799b6a7bb78 cost 12.44 | entry 0.450 thigh_L vh 3.75 vy -2.28 knee 30 | slide 0.50 m stop 0.71 | recl 28 head 1.5666666666666667 belly -0.18 | stud 0.93 seat 0.89 | C-limits hip_L.x 5.1°/229ms, ankle_R.z 4.9°/338ms, knee_L.x 2.7°/121ms
+   parts head 2.50, recline 0.10, roll 0.07, slide 0.45, limits 7.46, stud 1.85
+5 bc1650c9e5ee957a cost 14.50 | entry 0.446 thigh_L vh 3.80 vy -1.60 knee 39 | slide 1.06 m stop 1.42 | recl 57 head 1.3 belly -0.21 | stud 0.33 seat 0.86 | C-limits ankle_R.z 6.6°/13ms, ankle_L.z 3°/271ms, knee_L.x 2.6°/142ms, hip_L.x 1.7°/213ms
+   parts head 2.50, knee 0.29, recline 1.53, roll 0.49, slide 0.17, limits 8.86, stud 0.66
+5.5 3a7493135ff6b230 cost 22.15 | entry 0.450 thigh_L vh 4.01 vy -1.52 knee 31 | slide 1.17 m stop 1.35 | recl -57 head 1.7249999999999999 belly -0.71 | stud 0.86 seat 0.86 | C-limits ankle_R.z 16.2°/279ms, ankle_R.x 5.7°/233ms, knee_L.x 2.5°/171ms, hip_L.x 1.1°/146ms
+   parts faceDown 1.39, head 2.50, knee 0.04, recline 5.06, roll 0.41, slide 0.11, limits 10.91, stud 1.72
+== hold + lumbarLate=15,lumbarBack=-10 (trunk counter-flexion while the leg is held)
+4.5 c1b24ff0f5f8e25f cost 15.98 | entry 0.450 thigh_L vh 4.09 vy -2.45 knee 22 | slide 0.51 m stop 1.52 | recl 50 head 1.375 belly -0.14 | stud 0.90 seat 0.81 | C-limits hip_L.x 7.1°/458ms, ankle_R.z 5.7°/408ms, neck.y 3.3°/33ms, knee_L.x 2.7°/112ms, ankle_L.z 2.2°/238ms, ankle_L.x 1.4°/33ms
+   parts head 2.50, recline 1.44, roll 0.59, slide 0.44, limits 9.20, stud 1.81
+5 f257bb4d6c23068d cost 10.50 | entry 0.450 thigh_L vh 4.05 vy -2.12 knee 38 | slide 1.03 m stop 1.01 | recl 11 head - belly -0.18 | stud 0.33 seat 0.78 | C-limits ankle_R.z 4.8°/13ms, hip_L.x 4.1°/1312ms, ankle_L.z 2.8°/754ms, knee_L.x 2.6°/138ms
+   parts knee 0.27, recline 0.57, roll 0.26, slide 0.18, limits 8.55, stud 0.66
+5.5 23457f0c979e9b35 cost 18.76 | entry 0.446 thigh_L vh 4.25 vy -1.75 knee 36 | slide 1.85 m stop 1.45 | recl -85 head 1.2 belly -0.35 | stud 0.22 seat 0.45 | C-limits knee_R.x 5.9°/304ms, ankle_L.y 3.9°/71ms, ankle_R.z 3.7°/321ms, knee_L.x 2.5°/192ms, ankle_R.x 2.4°/313ms, hip_L.x 1.7°/54ms
+   parts faceDown 0.02, head 1.50, knee 0.18, recline 7.14, roll 0.17, seat 0.22, limits 9.09, stud 0.45
+== hold + seat objective (pelvis orientation through the fold leg, press pelvis plan)
+4.5 7d5de545f55a8ea6 cost 15.14 | entry 0.450 thigh_L vh 3.47 vy -1.79 knee 33 | slide 0.39 m stop 1.36 | recl 61 head 1.3166666666666667 belly -0.18 | stud 0.93 seat 0.89 | C-limits ankle_R.z 6.1°/313ms, hip_L.x 4°/575ms, ankle_L.z 2.9°/238ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.09, recline 1.40, roll 0.23, slide 0.51, limits 8.55, stud 1.86
+5 83b1e10e2e7a38e4 cost 14.55 | entry 0.442 thigh_L vh 3.87 vy -1.70 knee 40 | slide 1.00 m stop 1.58 | recl 49 head 1.4958333333333333 belly -0.22 | stud 0.25 seat 0.61 | C-limits ankle_R.z 6.6°/200ms, ankle_L.z 4.1°/417ms, hip_L.x 3.5°/658ms, knee_L.x 2.6°/142ms
+   parts head 2.50, knee 0.33, recline 1.47, roll 0.29, slide 0.20, limits 9.25, stud 0.50
+5.5 1fa3bafa5b58f534 cost 26.15 | entry 0.446 thigh_L vh 4.34 vy -1.93 knee 30 | slide 1.29 m stop 1.54 | recl -66 head 1.5041666666666667 belly -0.81 | stud 0.79 seat 0.61 | C-limits ankle_R.z 16.3°/275ms, knee_R.x 6°/288ms, ankle_R.x 5.9°/467ms, hip_L.x 2.6°/200ms, knee_L.x 2.5°/171ms
+   parts faceDown 3.96, head 2.50, recline 5.67, roll 0.64, slide 0.05, limits 11.75, stud 1.58
+== hold + seat objective, seated pelvis pitch -10°
+4.5 8bf9ab97950ec17b cost 15.15 | entry 0.450 thigh_L vh 3.48 vy -1.80 knee 33 | slide 0.40 m stop 1.33 | recl 60 head 1.3291666666666666 belly -0.18 | stud 0.93 seat 0.90 | C-limits ankle_R.z 6.1°/313ms, hip_L.x 4°/575ms, ankle_L.z 3.1°/250ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.09, recline 1.35, roll 0.22, slide 0.50, limits 8.63, stud 1.86
+5 c3fc584b51a45dc7 cost 14.57 | entry 0.442 thigh_L vh 3.87 vy -1.70 knee 40 | slide 1.00 m stop 1.57 | recl 48 head 1.4916666666666667 belly -0.22 | stud 0.25 seat 0.61 | C-limits ankle_R.z 6.6°/200ms, ankle_L.z 4.1°/408ms, hip_L.x 3.4°/654ms, knee_L.x 2.6°/142ms
+   parts head 2.50, knee 0.33, recline 1.47, roll 0.29, slide 0.20, limits 9.28, stud 0.50
+5.5 b73f3bef3926326e cost 26.31 | entry 0.446 thigh_L vh 4.34 vy -1.93 knee 30 | slide 1.29 m stop 1.57 | recl -66 head 1.5291666666666666 belly -0.82 | stud 0.79 seat 0.63 | C-limits ankle_R.z 16.3°/250ms, knee_R.x 6°/275ms, ankle_R.x 5.9°/446ms, hip_L.x 2.6°/175ms, knee_L.x 2.5°/171ms
+   parts faceDown 4.03, head 2.50, recline 5.73, roll 0.66, slide 0.06, limits 11.76, stud 1.58
+== hold + seat objective, seated pelvis pitch 0°
+4.5 677ce322412f0c2a cost 14.15 | entry 0.450 thigh_L vh 3.49 vy -1.82 knee 33 | slide 0.51 m stop 0.76 | recl 37 head 1.3416666666666666 belly -0.18 | stud 0.93 seat 0.92 | C-limits ankle_R.z 6.2°/300ms, hip_L.x 4°/579ms, ankle_L.z 3.1°/275ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.09, recline 0.38, roll 0.13, slide 0.44, limits 8.74, stud 1.85
+5 1b0dfe64fa8325b4 cost 14.58 | entry 0.442 thigh_L vh 3.87 vy -1.70 knee 40 | slide 1.01 m stop 1.56 | recl 48 head 1.4875 belly -0.22 | stud 0.25 seat 0.62 | C-limits ankle_R.z 6.6°/200ms, ankle_L.z 4.1°/400ms, hip_L.x 3.4°/650ms, knee_L.x 2.6°/142ms
+   parts head 2.50, knee 0.33, recline 1.46, roll 0.29, slide 0.20, limits 9.29, stud 0.50
+5.5 b187d5882e3579f5 cost 26.46 | entry 0.446 thigh_L vh 4.34 vy -1.93 knee 30 | slide 1.27 m stop 1.57 | recl -67 head 1.5291666666666666 belly -0.83 | stud 0.79 seat 0.64 | C-limits ankle_R.z 16.3°/250ms, knee_R.x 6°/267ms, ankle_R.x 5.9°/462ms, hip_L.x 2.5°/175ms, knee_L.x 2.5°/171ms
+   parts faceDown 4.09, head 2.50, recline 5.75, roll 0.66, slide 0.06, limits 11.82, stud 1.58
+== hold + seat objective, seated pelvis pitch 8°
+4.5 f049e6422e88638b cost 14.36 | entry 0.450 thigh_L vh 3.50 vy -1.84 knee 33 | slide 0.52 m stop 0.76 | recl 37 head 1.3541666666666667 belly -0.18 | stud 0.91 seat 0.94 | C-limits ankle_R.z 6.2°/288ms, hip_L.x 3.9°/587ms, ankle_L.z 3.6°/354ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.09, recline 0.34, roll 0.14, slide 0.44, limits 9.02, stud 1.82
+5 1bcb494ae75a4cb0 cost 14.56 | entry 0.442 thigh_L vh 3.87 vy -1.71 knee 40 | slide 1.00 m stop 1.57 | recl 48 head 1.4875 belly -0.22 | stud 0.25 seat 0.62 | C-limits ankle_R.z 6.6°/196ms, ankle_L.z 3.9°/392ms, hip_L.x 3.4°/654ms, knee_L.x 2.6°/142ms
+   parts head 2.50, knee 0.33, recline 1.47, roll 0.29, slide 0.20, limits 9.27, stud 0.50
+5.5 50670ca92989d4ff cost 26.38 | entry 0.446 thigh_L vh 4.34 vy -1.93 knee 30 | slide 1.24 m stop 1.54 | recl -66 head 1.3208333333333333 belly -0.82 | stud 0.79 seat 0.60 | C-limits ankle_R.z 16.3°/263ms, knee_R.x 6°/283ms, ankle_R.x 5.9°/467ms, hip_L.x 2.5°/192ms, knee_L.x 2.5°/171ms
+   parts faceDown 4.10, head 2.50, recline 5.71, roll 0.66, slide 0.08, limits 11.76, stud 1.58
+== S2 best + seat objective
+4.5 ad8caf853836391b cost 11.05 | entry 0.458 thigh_L vh 3.60 vy -2.16 knee 32 | slide 0.47 m stop 0.72 | recl 35 head - belly -0.17 | stud 0.89 seat 1.00 | C-limits ankle_R.z 12.4°/258ms, ankle_R.x 5.4°/46ms, hip_L.x 4°/1287ms, knee_L.x 2.7°/121ms
+   parts knee 0.07, recline 0.03, slide 0.47, limits 8.70, stud 1.78
+5 fd14ecc6c2260e08 cost 17.88 | entry 0.458 thigh_L vh 3.73 vy -1.68 knee 29 | slide 0.40 m stop 1.51 | recl 61 head 1.4041666666666666 belly -0.21 | stud 0.96 seat 0.76 | C-limits ankle_R.z 18°/437ms, ankle_R.x 6.6°/267ms, knee_L.x 2.6°/142ms, hip_L.x 2.6°/608ms, lumbar.x 2°/421ms
+   parts head 2.50, recline 1.85, roll 1.12, slide 0.50, limits 10.00, stud 1.92
+5.5 0f20865b19536648 cost 14.60 | entry 0.458 thigh_L vh 3.86 vy -1.51 knee 32 | slide 1.11 m stop 1.39 | recl -7 head - belly -0.25 | stud 0.98 seat 0.81 | C-limits ankle_R.z 16.7°/350ms, ankle_R.x 7.9°/183ms, knee_L.x 2.5°/171ms, hip_L.x 2.3°/158ms
+   parts knee 0.06, recline 1.39, slide 0.14, limits 11.04, stud 1.95
+== S2 best + hipRhold 0.12 only
+4.5 768ac74bdd6406e1 cost 14.76 | entry 0.454 thigh_L vh 3.47 vy -1.89 knee 36 | slide 0.63 m stop 0.88 | recl 32 head 1.6833333333333333 belly -0.18 | stud 0.59 seat 0.94 | C-limits ankle_R.z 6.2°/167ms, hip_L.x 5.1°/900ms, ankle_L.z 4.6°/479ms, hip_R.x 3.3°/188ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.21, recline 0.03, roll 0.18, slide 0.39, limits 10.26, stud 1.19
+5 86b94adc507121e7 cost 15.75 | entry 0.454 thigh_L vh 3.82 vy -1.75 knee 35 | slide 0.46 m stop 0.70 | recl 9 head 1.4833333333333334 belly -0.21 | stud 0.97 seat 0.51 | C-limits ankle_R.z 15.1°/471ms, ankle_R.x 6.1°/8ms, knee_L.x 2.6°/142ms, hip_L.x 1.4°/296ms, lumbar.x 1°/275ms
+   parts head 2.50, knee 0.17, recline 0.86, slide 0.47, seat 0.14, limits 9.66, stud 1.94
+5.5 9256e2460de3b205 cost 23.39 | entry 0.454 thigh_L vh 3.91 vy -1.38 knee 45 | slide 0.40 m stop 0.67 | recl -42 head - belly -0.65 | stud 0.98 seat 0.27 | C-limits ankle_R.z 16.9°/404ms, neck.z 8.8°/46ms, ankle_R.x 6.8°/279ms, knee_R.x 5.2°/179ms, knee_L.x 2.5°/171ms, hip_L.x 2.2°/233ms, ankle_L.x 1°/75ms
+   parts faceDown 1.08, knee 0.50, recline 3.89, slide 0.50, seat 0.49, limits 14.98, stud 1.96
+== S2 best + hipRhold 0.25 only
+4.5 ca45f04878a57257 cost 12.88 | entry 0.450 thigh_L vh 3.72 vy -2.20 knee 31 | slide 0.49 m stop 0.72 | recl 29 head 1.525 belly -0.18 | stud 0.89 seat 0.90 | C-limits hip_L.x 5.1°/288ms, ankle_R.z 4.8°/392ms, knee_L.x 2.7°/121ms
+   parts head 2.50, knee 0.02, recline 0.11, roll 0.13, slide 0.45, limits 7.88, stud 1.78
+5 75c45ac2dfe08067 cost 16.65 | entry 0.442 thigh_L vh 4.05 vy -1.96 knee 38 | slide 0.42 m stop 1.39 | recl 49 head 1.3083333333333333 belly -0.21 | stud 0.90 seat 0.58 | C-limits ankle_R.z 9.5°/417ms, hip_L.x 5.2°/300ms, knee_L.x 2.6°/142ms, ankle_L.z 1.9°/96ms
+   parts head 2.50, knee 0.27, recline 1.61, roll 0.54, slide 0.49, seat 0.03, limits 9.41, stud 1.80
+5.5 b9300f8a232f5db4 cost 21.37 | entry 0.454 thigh_L vh 4.02 vy -1.57 knee 41 | slide 1.02 m stop 1.47 | recl -56 head 1.8416666666666666 belly -0.77 | stud 0.93 seat 0.73 | C-limits ankle_R.z 16.5°/346ms, knee_R.x 5.9°/125ms, ankle_R.x 5.9°/246ms, knee_L.x 2.5°/171ms, hip_L.x 2.4°/179ms
+   parts faceDown 1.64, head 2.50, knee 0.36, recline 4.94, roll 0.47, slide 0.19, limits 9.41, stud 1.85
+== SP1 with A5 authority (the Stage-1 qualification runs)
+4.5 4eadeb5031232077 cost 10.22 | entry 0.467 thigh_L vh 3.33 vy -1.95 knee 30 | slide 0.40 m stop 0.74 | recl 33 head - belly -0.17 | stud 0.80 seat 1.00 | C-limits ankle_R.z 5.7°/279ms, hip_L.x 3.6°/313ms, knee_L.x 2.7°/121ms
+   parts recline 0.02, slide 0.50, limits 8.10, stud 1.60
+4.75 a7f8267e25e6946b cost 10.74 | entry 0.462 thigh_L vh 3.66 vy -1.94 knee 28 | slide 0.49 m stop 0.76 | recl 31 head - belly -0.19 | stud 0.76 seat 0.98 | C-limits ankle_R.z 12.5°/329ms, ankle_R.x 3.6°/13ms, hip_L.x 3.1°/333ms, knee_L.x 2.6°/129ms, hip_R.x 1.2°/150ms
+   parts recline 0.12, slide 0.45, limits 8.65, stud 1.52
+5 8f2fbbf0bed38c95 cost 11.08 | entry 0.462 thigh_L vh 3.67 vy -1.67 knee 28 | slide 0.49 m stop 1.41 | recl 40 head - belly -0.21 | stud 0.93 seat 0.96 | C-limits ankle_R.z 13.5°/396ms, ankle_R.x 4.4°/129ms, knee_L.x 2.6°/142ms, hip_L.x 1.5°/288ms
+   parts recline 0.20, slide 0.46, limits 8.56, stud 1.87
+5.25 c63fbd869b20e8c2 cost 15.67 | entry 0.458 thigh_L vh 3.97 vy -1.77 knee 25 | slide 0.47 m stop 0.71 | recl 21 head 1.3083333333333333 belly -0.23 | stud 1.00 seat 0.56 | C-limits ankle_R.z 15.1°/412ms, ankle_R.x 6.8°/8ms, knee_L.x 2.5°/154ms, hip_L.x 1.1°/329ms
+   parts head 2.50, recline 0.88, slide 0.46, seat 0.06, limits 9.77, stud 1.99
+5.5 53b5280cf952fc31 cost 16.10 | entry 0.462 thigh_L vh 3.82 vy -1.58 knee 33 | slide 1.06 m stop 1.44 | recl 26 head - belly -0.25 | stud 0.94 seat 0.91 | C-limits ankle_R.z 16.6°/367ms, ankle_R.x 7.2°/246ms, knee_L.x 2.5°/171ms, hip_L.x 1.3°/46ms, lumbar.x 1.1°/42ms
+   parts knee 0.10, recline 0.33, roll 0.17, slide 0.17, limits 13.46, stud 1.88
