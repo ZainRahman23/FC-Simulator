@@ -10,7 +10,8 @@ const L = await import(B0 + "slide_phys1/scripts/sp_lib.mjs"), FC = await import
 const S = "/private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/sp2a/";
 export const RUNINS = { "4.5": `${S}run1g_4.147.json`, "5.0": `${S}run1g_4.608.json`, "5.5": `${S}run1g_5.069.json` };
 const r3 = (x) => x == null || !Number.isFinite(x) ? null : Math.round(x * 1000) / 1000;
-export async function runX(runin, X) { if (X.mode === "sp2f2") { const o = await SF2.runSP2F2(runin, X, 1440, { setup: FC.sweepSetup(RF.TEMP_M) }); o.fsweep = { m: RF.TEMP_M, id: "F37.5", temporary: true }; o.chorForDiag = SF2.sp2f2Cand(o.speedTackler, X).chor; return o; }
+export async function runX(runin, X) { if (X.mode === "sp2f3") { const F3 = await import(new URL("../../v3/scripts/sp2f3_cand.mjs", import.meta.url).href), o = await F3.runSP2F3(runin, X, 1440, { setup: FC.sweepSetup(RF.TEMP_M) }); o.fsweep = { m: RF.TEMP_M, id: "F37.5", temporary: true }; o.chorForDiag = F3.sp2f3Cand(o.speedTackler, X).chor; return o; }
+  if (X.mode === "sp2f2") { const o = await SF2.runSP2F2(runin, X, 1440, { setup: FC.sweepSetup(RF.TEMP_M) }); o.fsweep = { m: RF.TEMP_M, id: "F37.5", temporary: true }; o.chorForDiag = SF2.sp2f2Cand(o.speedTackler, X).chor; return o; }
   return RF.runF(runin, X, RF.TEMP_M, 1440); }
 // posting-arm actuator effort and the support command, from the post trigger to the stop
 export function armRecord(o, f) { const JN = L.JN.map(j => j.name), t0 = f.firstFoldContactT, tEnd = t0 + f.stopRel, pf = (o.ctrl || {}).postFrom, out = { postFrom: pf != null ? r3(pf - t0) : null };

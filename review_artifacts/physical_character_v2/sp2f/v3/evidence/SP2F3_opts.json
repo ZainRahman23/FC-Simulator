@@ -1,0 +1,50 @@
+{
+ "id": "SP2F3",
+ "mode": "sp2f3",
+ "base": {
+  "id": "SP2F",
+  "mode": "sp2f",
+  "R": {
+   "t0": 0.2,
+   "t1": 1.5,
+   "prof": "sine",
+   "ko": 400,
+   "onsetS": 0.35,
+   "roll": 60,
+   "thoracicRot": 36
+  },
+  "A": {
+   "t0": 0.3,
+   "t1": 0.85,
+   "prof": "sine",
+   "blendS": 0.15,
+   "delayS": 0.0,
+   "pressN": 150
+  }
+ },
+ "E": {
+  "t0": 0.62,
+  "t1": 1.52,
+  "lumbarLat": -5,
+  "thoracicLat": -14
+ },
+ "A": {
+  "abd": 45,
+  "pressN": 60,
+  "t1": 0.62,
+  "elbow": 35
+ },
+ "H": {
+  "Kh": 600,
+  "Dh": 60,
+  "Fhmax": 120,
+  "elbowK": 0.3,
+  "shoulderK": 0,
+  "strut": {
+   "F0": 60,
+   "C": 1600,
+   "Fmax": 1000,
+   "cut": 0.15
+  }
+ }
+}

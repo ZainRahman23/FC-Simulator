@@ -1,0 +1,63 @@
+{
+ "checklist": [
+  [
+   "THE HAND COMES DOWN AND ESTABLISHES THE POST",
+   "<b>YES, later than the reference.</b> The arm reaches DOWN to beside / behind the hip with a bent elbow and the hand lands at +0.24 / 0.36 / 0.45 s (SP2F +0.10 / 0.22 / 0.28 s; REFERENCE3 ≈ at the hip landing)."
+  ],
+  [
+   "THE HAND STAYS LOW / ON THE TURF",
+   "<b>YES.</b> Continuous turf contact from first contact to the end of the slide at all speeds — no gaps (also none in 30 perturbed runs)."
+  ],
+  [
+   "THE HAND SLIDES WITH THE PLAYER (the relatively stable end of the chain)",
+   "<b>YES.</b> Its drift relative to the pelvis over the contact is <b>0.23 / 0.29 / 0.24 m</b> (SP2F 0.76 / 1.01 / 0.93 m, SP2F2 0.68 / 0.76 / 0.86 m), and it stays OUTBOARD of the posting shoulder throughout (≥ 0.27 / 0.39 / 0.41 m) — in SP2F / SP2F2 the shoulder ends up outside the hand (-0.10 / -0.22 / -0.31 m) as the hand is dragged back."
+  ],
+  [
+   "THE ARM ANGLE CHANGES BECAUSE THE TORSO LOWERS RELATIVE TO THE HAND",
+   "<b>YES.</b> The shoulder descends toward the hand (hand − shoulder height -0.62 → -0.21 / -0.62 → -0.29 / -0.60 → -0.36 m) while the upper arm keeps pointing DOWN (-78…-40 / -68…-44 / -54…-43°); in SP2F / SP2F2 the upper arm rises to -22 / -18 / -4° (≈ horizontal) as the long arm is swept back along the turf."
+  ],
+  [
+   "THE ELBOW FLEXES / EXTENDS COMPLIANTLY (not a straight spoke)",
+   "<b>YES.</b> Elbow 45 → 114 / 17 → 67 / 8 → 40°, progressive, as weight comes on; SP2F2: -7…-2 / -6…10 / -7…23° (straight)."
+  ],
+  [
+   "NO GIANT OVERHEAD SWEEP OF THE POSTING ARM",
+   "<b>YES</b> for the posting arm (it stays low and behind / beside the torso; no authored arm angles after contact). <b>Note:</b> the tall raised arm in all of these views is the TACKLING-SIDE arm, which SP2D–SP2F2 deliberately move up / over the body (REFERENCE3's other arm is raised too). It is unchanged here so the posting-arm correction can be judged alone; it can be lowered next."
+  ],
+  [
+   "TORSO RECLINES GRADUALLY · NO SUDDEN FALL",
+   "<b>YES.</b> Peak trunk rate after landing 116 / 125 / 157°/s (SP2F 98 / 107 / 143), backward rock ≤ 2.9°, never chest-down, no failure / fallback. The trunk still sits upright ≈ 0.4 s after landing (as in SP2F): the lean onto the arm starts once the hand is down."
+  ],
+  [
+   "FOLDED-KNEE OVERRUN",
+   "<b>REMOVED.</b> Folded-knee tibial rotation past its stop 1.9 / 1.0 / 1.7° (SP2F 1.7 / 1.0 / 1.5°, SP2F2 7.6 / 6.4 / 5.1°): no counter-lean is released in the air."
+  ],
+  [
+   "FROZEN / NOT STARTED",
+   "Run-to-tackle transition, dive / scissor, folded-leg tuck, boot, root / COM, body, recipient and C3 unchanged; F37.5 unchanged (temporary); no friction calibration, no recipient work."
+  ]
+ ],
+ "reviewNote": "I cannot play video in real time. I reviewed the focused side-by-side frame by frame at 30 fps (every frame of the 1× clip at 30 fps), plus the side and torso-only views and the traces.",
+ "diagnosis": [
+  "SP2F / SP2F2: after contact the posting hand is NOT the stable end of the chain. The turf drags it backward and outward relative to the pelvis by 0.68 / 0.76 / 0.86 m (SP2F2) while the elbow stays straight (-7…-2 / -6…10 / -7…23°) and the upper arm rises from pointing down to ≈ horizontal: a long straight lever swept back along the turf. The 120–135° \"shoulder angle\" was that sweep, not the torso lowering onto a planted hand.",
+  "The tall raised arm in the SP2F / SP2F2 rear and side views is the tackling-side arm (up / over the body since SP2D), not the posting arm."
+ ],
+ "reference": [
+  "REFERENCE3, 20 hand-annotated frames (evidence/REFERENCE3_arm_annotation.json): its player slides on his RIGHT side (we see his back; the posting arm is his right). His posting hand stays at a near-constant image offset beside / slightly behind the hip from the landing on; the shoulder descends toward the hand's height; the elbow bends progressively (≈ 9° → 79° in the image); the upper arm stays steep (≈ −65 … −87°) while the forearm flattens onto the turf (≈ −78° → −8°): a forearm post that the torso lowers onto."
+ ],
+ "changes": [
+  "The post built FROM THE HAND OUTWARD (new opt-in sp2_ctrl post.hold): at the first forearm contact the hand's horizontal offset from the pelvis is captured (translation only — the body may turn about it) and a compliant, capped spring-damper (600 N/m, 60 N·s/m, ≤ 120 N) keeps the hand there, so it slides with the player instead of being dragged toward the head. Its height is left to the turf contact and a light 60 N press.",
+  "The arm as an ECCENTRIC SUPPORT STRUT: an axial push (60 N) plus a damper on the shoulder's closing speed toward the hand (1600 N·s/m, ≤ 1000 N, only while the arm points upward from the hand) — it resists being compressed quickly (it manages the fall) but shortens as the torso lowers, and it does not resist the arm rotating about the hand. The elbow keeps 30 % of its stiffness toward its angle AT CONTACT (it yields progressively instead of locking straight and buckling); the shoulder has no angle target.",
+  "Reach: the hand goes DOWN beside / behind the hip with the elbow bent (abduction 45°, extension 35°, elbow 35°, by 0.62 s).",
+  "Torso: SP2F's (no in-air counter-lean release — so no folded-knee overrun) plus a gradual lean onto the planted arm after contact (lumbar −5°, thoracic −14° over 0.62 → 1.52 s); pelvis-roll objective 60° (75° rolled the trunk over the arm, onto it).",
+  "New: the hand-relative diagnostic (hand − pelvis, hand − shoulder, hand height, elbow, upper-arm / forearm orientation, shoulder / elbow angular velocity, hand speed, image-plane projection) and the REFERENCE3 annotation."
+ ],
+ "notes": [
+  "The hand plants later than in SP2F (+0.24 / 0.36 / 0.45 s): from an upright trunk a bent-elbow reach meets the turf only as the trunk starts to lean. A straighter reach plants earlier but locks the elbow straight and buckles it at 4.5 m/s (log §4).",
+  "The corrected forearm ends pointing back / down beside the hip (toward the camera) rather than straight out to the side as in REFERENCE3.",
+  "The upright seated phase after the landing (≈ 0.4 s, SP2F's) remains; the lateral lean onto the arm starts after the hand is down.",
+  "At 4.5 m/s the elbow ends at ≈ 114° (forearm flat on the turf, body low).",
+  "Sustained small excursions: posting shoulder_L.x ≈ 2° at 4.5 m/s; hip_L.x ≈ 1.5° (both ≤ SP2F-era levels except the shoulder, which is new: the strut loads the shoulder).",
+  "The image-plane comparison is qualitative: monocular, hand-annotated (±5 px), different camera and character proportions; it is mirrored so that the posting side is + in both."
+ ]
+}

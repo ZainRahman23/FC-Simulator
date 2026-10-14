@@ -33,7 +33,13 @@ export class RegionalTracker extends CT.SlideTracker {
   constructor(opts) { const rs = { tr: null }, R0 = opts.recover, base = opts.chor, sm = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
     const chor = R0 ? { ...base, anatAt: (t) => { const a = base.anatAt(t); if (rs.tr == null || t <= rs.tr) return a; const u = sm((t - rs.tr) / R0.blendS), b = R0.chor.anatAt(t - rs.tr);
       for (const [jn, o] of Object.entries(b)) for (const [k, v] of Object.entries(o)) { const x = a[jn] && a[jn][k]; (a[jn] = a[jn] || {})[k] = x == null ? v : x + (v - x) * u; } return a; } } : base;
-    super(R0 ? { ...opts, chor } : opts); this._rec = R0 ? rs : null; this._post = opts.post ? { tc: null } : null; this.R = { ...DEFAULT_REG, ...(opts.regional || {}) }; this.reg = Object.fromEntries(Object.keys(REGIONS).map(r => [r, { f: 1, over: 0, failed: false, t: null }])); this.g = { f: 1, on: false, t: null }; this.base = null; }
+    // SP2F3 (opts.post.lean = { offsets: { joint: { key: deg } }, durS, delayS }; inert when absent): a STATE-triggered lean ONTO the planted hand —
+    // from the post trigger (the first sensed forearm turf contact) + delayS, the listed anatomical targets move by the offsets along a smoothstep over
+    // durS, added to whatever the choreography commands (targets only).
+    const ps = opts.post ? { tc: null } : null, LN = opts.post && opts.post.lean, hold = { lead: opts.lead ?? 0 }, sm2 = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+    const chor2 = LN ? { ...chor, anatAt: (t) => { const a = chor.anatAt(t); if (ps.tc == null) return a; const u = sm2((t - hold.lead - ps.tc - (LN.delayS ?? 0)) / LN.durS); if (u <= 0) return a;
+      for (const [jn, o] of Object.entries(LN.offsets)) for (const [k, v] of Object.entries(o)) { a[jn] = a[jn] || {}; a[jn][k] = (a[jn][k] ?? 0) + v * u; } return a; } } : chor;
+    super(R0 || LN ? { ...opts, chor: chor2 } : opts); this._rec = R0 ? rs : null; this._post = ps; hold.lead = this.lead ?? hold.lead; this.R = { ...DEFAULT_REG, ...(opts.regional || {}) }; this.reg = Object.fromEntries(Object.keys(REGIONS).map(r => [r, { f: 1, over: 0, failed: false, t: null }])); this.g = { f: 1, on: false, t: null }; this.base = null; }
   // tactile sensing: non-ground contact impulse (N·s) on each region over the window [now − delay − win, now − delay], from the plant's records
   _touch(R) { const out = Object.fromEntries(Object.keys(REGIONS).map(r => [r, 0])), recs = this.plant && this.plant.recs; if (!recs || !recs.length) return out;
     const role = this.c && this.c.role || "tackler", d = Math.round(R.delayS / this.h), w = Math.max(1, Math.round(R.touchWinS / this.h));
@@ -89,7 +95,31 @@ export class RegionalTracker extends CT.SlideTracker {
       const su = P.support ? this._postSupport(t) : null; let TR = null;
       if (su && P.support.elevMax != null) { const sd = P.side || "L", dn = Q.rot(st[L.bi("thorax")].rot, [0, -1, 0]), ua = V.sub(Kp["elbow_" + sd], Kp["shoulder_" + sd]), ul = V.len(ua), uh = V.sc(ua, 1 / ul), el = Math.acos(Math.max(-1, Math.min(1, V.dot(dn, uh)))), ex = el - P.support.elevMax * D2R;
         if (ex > 0) { const nx = V.cross(uh, dn), nl = V.len(nx); if (nl > 1e-6) { TR = { joint: "shoulder_" + sd, T: V.sc(nx, Math.min(P.support.capR ?? 40, (P.support.kR ?? 60) * ex) / nl) }; this._post.log = { ...(this._post.log || {}), rangeNm: +Math.min(P.support.capR ?? 40, (P.support.kR ?? 60) * ex).toFixed(1) }; } } }
-      return { P, u: u * u * (3 - 2 * u), K: Kp, F: [0, -(su ? su.F : (P.pressN ?? 0)) * (v == null ? 1 : v * v * (3 - 2 * v)), 0], dS: su ? su.dS : 1, TR, set: new Set(P.joints) }; })() : null;
+      let F = [0, -(su ? su.F : (P.pressN ?? 0)) * (v == null ? 1 : v * v * (3 - 2 * v)), 0], HQ = null;
+      // SP2F3 (opts.post.hold = { Kh, Dh, Fhmax, driftS, elbowK, shoulderK, frame }; inert when absent): the post built FROM THE HAND OUTWARD. At the first
+      // forearm contact the hand's horizontal offset from the pelvis is captured — in world-horizontal axes (default frame "translation": the offset
+      // translates with the pelvis but does not rotate with it, so the body may turn / recline about the hand) or in the pelvis heading frame
+      // (frame "heading": the forward axis projected on the ground; the pelvis yaws ≈ 30° during a slide, which swings that target round the body);
+      // afterwards a compliant, capped horizontal spring-damper (Jacobian transpose, Kh N/m, Dh N·s/m on the hand-vs-pelvis velocity, |F| ≤ Fhmax) keeps
+      // the hand near that offset, so it SLIDES WITH THE PLAYER instead of being dragged toward the head by the turf (optional driftS: the offset
+      // relaxes toward the current one with that time constant). Its height is left to the contact and the press — no height or world-space target.
+      // elbowK / shoulderK: a compliant fraction of the joint's own stiffness toward its orientation AT CONTACT, so the elbow flexes / extends
+      // compliantly as weight comes on and the shoulder lowers toward the hand (0 = damping only). The shoulder / elbow angles therefore come from the
+      // torso moving relative to the hand. Scales with authority; contacts win.
+      if (P.hold) { const Hd = P.hold, sd = P.side || "L", hp = Kp["hand_" + sd], pel = st[0], fw = Q.rot(pel.rot, [0, 0, 1]), fn = Math.hypot(fw[0], fw[2]) || 1, f = [fw[0] / fn, 0, fw[2] / fn], l = [f[2], 0, -f[0]], d = V.sub(hp, pel.pos), dc = [V.dot(d, f), V.dot(d, l)], s = this._post;
+        if (!s.d0) { s.d0 = dc; s.dw = [d[0], d[2]]; s.q0 = Object.fromEntries(P.joints.map(jn => [jn, ev.qs[JN.findIndex(j => j.name === jn)].slice()])); }
+        if (Hd.driftS) { const a = 1 - Math.exp(-this.h / Hd.driftS); s.d0 = [s.d0[0] + (dc[0] - s.d0[0]) * a, s.d0[1] + (dc[1] - s.d0[1]) * a]; s.dw = [s.dw[0] + (d[0] - s.dw[0]) * a, s.dw[1] + (d[2] - s.dw[1]) * a]; }
+        const tg = Hd.frame === "heading" ? V.add(pel.pos, V.add(V.sc(f, s.d0[0]), V.sc(l, s.d0[1]))) : V.add(pel.pos, [s.dw[0], 0, s.dw[1]]), e = [tg[0] - hp[0], 0, tg[2] - hp[2]], fb = st[L.bi("forearm_" + sd)], vh = V.add(fb.v, V.cross(fb.w, V.sub(hp, fb.com || fb.pos))), vr = [vh[0] - pel.v[0], 0, vh[2] - pel.v[2]];
+        let Fh = [Hd.Kh * e[0] - (Hd.Dh ?? 0) * vr[0], 0, Hd.Kh * e[2] - (Hd.Dh ?? 0) * vr[2]]; const fm = Math.hypot(Fh[0], Fh[2]); if (fm > (Hd.Fhmax ?? 150)) Fh = V.sc(Fh, (Hd.Fhmax ?? 150) / fm);
+        // optional strut = { F0, C, Fmax }: the arm as an ECCENTRIC SUPPORT STRUT between the shoulder and the hand — an axial push F0 plus a damper on
+        // the shoulder's CLOSING speed toward the hand (C N·s/m): the arm resists being compressed quickly (it manages the fall) but shortens slowly
+        // as the torso lowers, and it does not resist the arm rotating about the hand. It adds to the light vertical press.
+        if (Hd.strut) { const sp = Kp["shoulder_" + sd], ua = st[L.bi("upperArm_" + sd)], vs = V.add(ua.v, V.cross(ua.w, V.sub(sp, ua.com || ua.pos))), a = V.sub(sp, hp), La = V.len(a) || 1, ah = V.sc(a, 1 / La);
+          // (it acts only as a SUPPORT: scaled by the arm's upward inclination max(0, â_y) — or, with strut.cut, on / off at â_y > cut — so it fades
+          //  as the arm lies down and never pushes the hand up off the turf when the shoulder is lower than the hand; the light press keeps the contact)
+          const close = -V.dot(V.sub(vs, vh), ah), Fs = Math.min(Hd.strut.Fmax ?? 400, (Hd.strut.F0 ?? 0) + (Hd.strut.C ?? 0) * Math.max(0, close)) * (Hd.strut.cut != null ? (ah[1] > Hd.strut.cut ? 1 : 0) : Math.max(0, ah[1])); F = V.add(F, V.sc(ah, -Fs)); s.log = { ...(s.log || {}), strut: +Fs.toFixed(0), close: +close.toFixed(2) }; }
+        F = V.add(F, Fh); HQ = { q0: s.q0, kf: { ["elbow_" + sd]: Hd.elbowK ?? 0, ["shoulder_" + sd]: Hd.shoulderK ?? 0 } }; s.log = { ...(s.log || {}), holdErr: +Math.hypot(e[0], e[2]).toFixed(3), Fh: +Math.min(fm, Hd.Fhmax ?? 150).toFixed(1) }; }
+      return { P, u: u * u * (3 - 2 * u), K: Kp, F, dS: su ? su.dS : 1, TR, HQ, set: new Set(P.joints) }; })() : null;
     // (init: the incoming motion evaluated at the PRESENT instant — position error and rate error are ≈ 0 because the entry is that motion, so
     //  the steady state is the motion's own inverse dynamics + the support objective: e.g. a stance knee's extensors are pre-activated at the
     //  touchdown, as in running, instead of its flexors pulling toward where the knee will be 70 ms later)
@@ -109,7 +139,8 @@ export class RegionalTracker extends CT.SlideTracker {
         if (touched && ae > e0) { kp *= e0 / ae; row.yieldN = (row.yieldN || 0) + 1; }                       // local yield while touched
         if (PO && PO.set.has(j.name)) { const u = PO.u, rj = V.sub(PO.K["hand_" + (PO.P.side || "L")], PO.K[j.name]), tp = V.dot(axW[i], V.cross(rj, PO.F));
           const tr = PO.TR && PO.TR.joint === j.name ? V.dot(axW[i], PO.TR.T) : 0;
-          pd[k][i] = al * ((1 - u) * kp * err[i] + g.D * (PO.dS === 1 ? (1 - u) * wRef[i] - w[i] : (1 - u) * wRef[i] - w[i] * (1 - u + u * PO.dS)) + u * (tp + tr)); row.err.push(err[i]); continue; }
+          let hc = 0; if (PO.HQ && PO.HQ.kf[j.name]) { const q0 = PO.HQ.q0[j.name], s0 = q[0] * q0[0] + q[1] * q0[1] + q[2] * q0[2] + q[3] * q0[3] < 0 ? -1 : 1, d0 = Q.mul(Q.conj(q), q0.map(x => x * s0)); hc = PO.HQ.kf[j.name] * kp * 2 * d0[i]; }
+          pd[k][i] = al * ((1 - u) * kp * err[i] + g.D * (PO.dS === 1 ? (1 - u) * wRef[i] - w[i] : (1 - u) * wRef[i] - w[i] * (1 - u + u * PO.dS)) + u * (tp + tr + hc)); row.err.push(err[i]); continue; }
         pd[k][i] = al * (kp * err[i] + g.D * (wRef[i] - w[i])); row.err.push(err[i]); } }
     // (init: fresh chain-ID closures each call — the entry makes two calls at step 0, before and after the velocities are written, and a
     //  closure that remembered the first would read that write as a ≈ 10³ m/s² base acceleration)
