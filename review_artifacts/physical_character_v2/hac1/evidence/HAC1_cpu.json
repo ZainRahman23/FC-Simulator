@@ -1,0 +1,75 @@
+{
+ "note": "HAC-1 CPU cost per step (ms), median of repeats; 240 Hz → a real-time budget of 4.17 ms per step for the whole world",
+ "machine": "darwin arm64 node v22.19.0",
+ "scenes": {
+  "NC": {
+   "steps": 783,
+   "repeats": 3,
+   "characters": "1 HAC-1 runner (+1 parked body)",
+   "wallPerStepMs": 1.0111,
+   "hacLawPerCharacterPerStepMs": {
+    "total": 0.1425,
+    "viability": 0.0012,
+    "recoveryPlanning": 0.0042,
+    "tracking": 0.0882,
+    "support": 0.0059
+   },
+   "plantPerStepMs": {
+    "step": 0.2874,
+    "passive": 0.3636,
+    "act": 0.0296,
+    "tone": 0.1563,
+    "instrument": 0.0413,
+    "measure": 0.1151,
+    "law": 0.1431,
+    "lawT": 0
+   }
+  },
+  "SH_BUMP": {
+   "steps": 783,
+   "repeats": 3,
+   "characters": "2 HAC-1 runners",
+   "wallPerStepMs": 1.3969,
+   "hacLawPerCharacterPerStepMs": {
+    "total": 0.1123,
+    "viability": 0.0008,
+    "recoveryPlanning": 0.0026,
+    "tracking": 0.0691,
+    "support": 0.003
+   },
+   "plantPerStepMs": {
+    "step": 0.5387,
+    "passive": 0.4239,
+    "act": 0.0166,
+    "tone": 0.2254,
+    "instrument": 0.0694,
+    "measure": 0.1125,
+    "law": 0.0929,
+    "lawT": 0.1323
+   }
+  },
+  "PVP_F2": {
+   "steps": 783,
+   "repeats": 3,
+   "characters": "1 HAC-1 runner + 1 M1b tackler (PVP-F2)",
+   "wallPerStepMs": 1.6199,
+   "hacLawPerCharacterPerStepMs": {
+    "total": 0.0955,
+    "viability": 0.0011,
+    "recoveryPlanning": 0.0028,
+    "tracking": 0.0513,
+    "support": 0.0016
+   },
+   "plantPerStepMs": {
+    "step": 0.5826,
+    "passive": 0.4339,
+    "act": 0.0475,
+    "tone": 0.2372,
+    "instrument": 0.0835,
+    "measure": 0.2018,
+    "law": 0.0965,
+    "lawT": 0.141
+   }
+  }
+ }
+}

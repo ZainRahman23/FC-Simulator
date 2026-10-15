@@ -18,8 +18,9 @@ clip --run $RUNS/NC.json.gz --key NC_O --out $Q/clips --mode original --refStep 
 clip --run $RUNS/NC.json.gz --key NC_H --out $Q/clips --refStep 0 --from 0.004 --to 3.0
 # B (each shoulder clip aligned on its own first contact, −0.4 → +2.0 s; the TWIN on the BUMP's clock)
 PN=180   # the push step (PUSH_T0 0.75 s)
-# (the camera follows the TWIN's path, so each pushed runner's displacement off the twin's line is visible)
-for s in BRUSH BUMP STRONG; do clip --run $RUNS/PUSH_$s.json.gz --key PUSH_$s --out $Q/clips --focus $RUNS/NC.json.gz --refStep $PN --from -0.4 --to 2.2; clip --run $RUNS/PUSH_${s}_OPP.json.gz --key PUSH_${s}_OPP --out $Q/clips --focus $RUNS/NC.json.gz --refStep $PN --from -0.4 --to 2.2; done
+# (each camera follows its own runner, so falls stay in frame; the diagnostic draws RUN-1's own pose at its intended position, dashed, so the
+#  displacement off the intended line is the gap between the body and that ghost)
+for s in BRUSH BUMP STRONG; do clip --run $RUNS/PUSH_$s.json.gz --key PUSH_$s --out $Q/clips --refStep $PN --from -0.4 --to 2.2; clip --run $RUNS/PUSH_${s}_OPP.json.gz --key PUSH_${s}_OPP --out $Q/clips --refStep $PN --from -0.4 --to 2.2; done
 clip --run $RUNS/NC.json.gz --key PUSH_TWIN --out $Q/clips --refStep $PN --from -0.4 --to 2.2
 for s in BRUSH BUMP STRONG; do clip --run $RUNS/SH_$s.json.gz --key SH_$s --out $Q/clips --who both --from -0.4 --to 2.0; done
 clip --run $RUNS/NC.json.gz --key SH_TWIN --out $Q/clips --refStep $(fcOf $RUNS/SH_BUMP.json.gz) --from -0.4 --to 2.0
@@ -40,7 +41,7 @@ for ang, az, el in [("BEHIND", 175, 12), ("FRONT", 5, 10)]:
     for every, rate, tag in SP:
         vid(f"B_PUSH_{ang}_{tag}", every, rate, 420, 400, [P("PUSH_TWIN", az, el, 4.2, "TWIN (no push)")] + [P(f"PUSH_{s}", az, el, 4.2, f"{s} · push {JS[s]} N·s") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
 for every, rate, tag in SP:
-    vid(f"B_PUSH_DIAG_{tag}", every, rate, 420, 400, [P("PUSH_TWIN", 170, 18, 4.4, "TWIN · diagnostic", hyb=True, ghost="joint")] + [P(f"PUSH_{s}", 170, 18, 4.4, f"{s} · diagnostic", hyb=True, ghost="joint") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
+    vid(f"B_PUSH_DIAG_{tag}", every, rate, 600, 540, [P(f"PUSH_{s}", 170, 24, 4.6, f"{s} {JS[s]} N·s · dashed = RUN-1 at its intended place", hyb=True, ghost="abs") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
 vid("B_PUSH_OPP_BEHIND_1x", 4, "1×", 420, 400, [P(f"PUSH_{s}_OPP", 175, 12, 4.2, f"{s} · from the left") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
 for ang, az, el in [("BEHIND", 165, 14)]:
     for every, rate, tag in SP:
@@ -50,7 +51,7 @@ for P_, pl in [("", "canonical phase"), ("_EARLY", "foot freshly loaded"), ("_UN
     views = [("CLOSE", 60, 12, 4.0, {}), ("SIDE", 90, 9, 4.0, {}), ("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })] if P_ == "" else [("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })]
     for name, az, el, d, ex in views:
         for every, rate, tag in (SP if not (P_ and name == "DIAG") else SP[:1]):
-            vid(f"C{P_}_{name}_{tag}", every, rate, 440, 420, [P(f"PVP_TWIN{P_}", az, el, d, f"TWIN · no tackle ({pl})", **ex), P(f"PVP_F2{P_}", az, el, d, f"PVP-F2 (SP2F2) · {pl}", **ex), P(f"PVP_F3{P_}", az, el, d, f"PVP-F3 (SP2F3) · {pl}", **ex)], tl="from first player contact")
+            vid(f"C{P_}_{name}_{tag}", every, rate, 440 if name != "DIAG" else 560, 420 if name != "DIAG" else 500, [P(f"PVP_TWIN{P_}", az, el, d, f"TWIN · no tackle ({pl})", **ex), P(f"PVP_F2{P_}", az, el, d, f"PVP-F2 (SP2F2) · {pl}", **ex), P(f"PVP_F3{P_}", az, el, d, f"PVP-F3 (SP2F3) · {pl}", **ex)], tl="from first player contact")
 json.dump(V, open(Q + "/views.json", "w"), indent=1)
 PY
 node $R/hac_capture.cjs --clips $Q/clips --views $Q/views.json --archive $S/lv2arch --out $Q/vid > $Q/capture.log 2>&1 || { tail -5 $Q/capture.log; exit 1; }

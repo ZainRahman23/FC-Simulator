@@ -114,12 +114,12 @@ const VIEWS = JSON.parse(fs.readFileSync(arg("views")));
           c.restore();
           if (F.isFirst) { box("FIRST PLAYER–PLAYER CONTACT", x0 + 18, 70, 22, "#ffffff", "rgba(210,20,20,0.92)"); if (F.first) box(`tackler ${tName(F.first.pairs[0][1])} → recipient ${rName(F.first.pairs[0][0])}`, x0 + 18, 102, 15, "#ffffff", "rgba(150,20,20,0.85)"); }
           box(P0.l, x0 + 10, 26, W < 400 ? 12 : 16, "#ffffff");
-          const tpx = W < 400 ? 13 : 20, tl = F.ms === 0 ? (W < 400 ? "0 ms" : "CONTACT  0 ms") : (F.ms > 0 ? "+" : "") + F.ms + " ms"; c.font = `700 ${tpx}px -apple-system, Helvetica, Arial`; const tw = c.measureText(tl).width; box(tl, x0 + W - tw - 12, W < 400 ? 48 : 28, tpx, F.ms === 0 ? "#fff" : F.ms < 0 ? "#cfe9ff" : "#ffe7a3", F.ms === 0 ? "rgba(210,20,20,0.92)" : undefined);
+          const tpx = W < 400 ? 13 : 20, tl = F.ms === 0 ? (W < 400 ? "0 ms" : (V0.tlabel === "from the push" ? "PUSH  0 ms" : "CONTACT  0 ms")) : (F.ms > 0 ? "+" : "") + F.ms + " ms"; c.font = `700 ${tpx}px -apple-system, Helvetica, Arial`; const tw = c.measureText(tl).width; box(tl, x0 + W - tw - 12, W < 400 ? 48 : 28, tpx, F.ms === 0 ? "#fff" : F.ms < 0 ? "#cfe9ff" : "#ffe7a3", F.ms === 0 ? "rgba(210,20,20,0.92)" : undefined);
           if (F.hud && F.hud.recKin) box(W < 400 ? "RUN-1 animation" : "recipient: RUN-1 animation (physical from −50 ms)", x0 + 10, H - 14, W < 400 ? 10 : 12, "#cfe9ff"); });
         const F = Fs[0], y0 = H; c.fillStyle = "#121a16"; c.fillRect(0, y0, comp.width, 34); const T = { x: 12, w: comp.width - 24, y: y0 + 6, h: 6 };
         c.fillStyle = "#2f4a3c"; c.fillRect(T.x, T.y, T.w, T.h); if (contactK >= 0) { c.fillStyle = "#ff2a2a"; const xc = T.x + (contactK + 0.5) * T.w / N; c.fillRect(xc - 2, T.y - 5, 4, T.h + 10); }
         c.fillStyle = "#fff"; const xk = T.x + (k + 0.5) * T.w / N; c.fillRect(xk - 1.5, T.y - 3, 3, T.h + 6);
-        c.font = "600 12px -apple-system, Helvetica, Arial"; c.fillStyle = "#ffe7a3"; c.fillText(`${F.ms >= 0 ? "+" : ""}${F.ms} ms from the first player–player contact (red tick) · sim step ${F.n} · ${V0.rate || ""}`, 12, y0 + 28);
+        c.font = "600 12px -apple-system, Helvetica, Arial"; c.fillStyle = "#ffe7a3"; c.fillText(`${F.ms >= 0 ? "+" : ""}${F.ms} ms ${V0.tlabel === "from the push" ? "from the push" : V0.tlabel === "from the start of the run" ? "from the start of the run" : "from the first player–player contact"} (red tick) · sim step ${F.n} · ${V0.rate || ""}`, 12, y0 + 28);
         const vf = new VideoFrame(comp, { timestamp: Math.round(k * 1e6 / 60), duration: Math.round(1e6 / 60) }); window.__enc.enc.encode(vf, { keyFrame: k % 60 === 0 }); vf.close(); return { n: F.n, still: wantStill ? comp.toDataURL("image/png") : null };
       }, V0, seqs.map(s => s[k]), k, N, stillsSet.has(seqs[0][k].n), contactK);
       if (r.still) fs.writeFileSync(path.join(OUT, "stills", `${V0.id}_n${r.n}.png`), Buffer.from(r.still.split(",")[1], "base64"));

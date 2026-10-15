@@ -1,0 +1,1111 @@
+{
+ "tool": "hac_capture.cjs",
+ "views": {
+  "A_SIDE_1x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HAC-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HAC-1 \u00b7 diagnostic",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 180,
+   "every": 4,
+   "size": [
+    1560,
+    494
+   ],
+   "first": 4,
+   "last": 720,
+   "ms": 1605
+  },
+  "A_SIDE_025x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HAC-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HAC-1 \u00b7 diagnostic",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 720,
+   "every": 1,
+   "size": [
+    1560,
+    494
+   ],
+   "first": 1,
+   "last": 720,
+   "ms": 6137
+  },
+  "B_PUSH_BEHIND_1x": {
+   "panels": [
+    {
+     "k": "PUSH_TWIN",
+     "l": "TWIN (no push)",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH \u00b7 push 30 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP \u00b7 push 60 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG \u00b7 push 100 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 157,
+   "every": 4,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 1666
+  },
+  "B_PUSH_BEHIND_025x": {
+   "panels": [
+    {
+     "k": "PUSH_TWIN",
+     "l": "TWIN (no push)",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH \u00b7 push 30 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP \u00b7 push 60 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG \u00b7 push 100 N\u00b7s",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 625,
+   "every": 1,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 6429
+  },
+  "B_PUSH_FRONT_1x": {
+   "panels": [
+    {
+     "k": "PUSH_TWIN",
+     "l": "TWIN (no push)",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH \u00b7 push 30 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP \u00b7 push 60 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG \u00b7 push 100 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 157,
+   "every": 4,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 1487
+  },
+  "B_PUSH_FRONT_025x": {
+   "panels": [
+    {
+     "k": "PUSH_TWIN",
+     "l": "TWIN (no push)",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH \u00b7 push 30 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP \u00b7 push 60 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG \u00b7 push 100 N\u00b7s",
+     "az": 5,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 625,
+   "every": 1,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 5805
+  },
+  "B_PUSH_DIAG_1x": {
+   "panels": [
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH 30 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP 60 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG 100 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 157,
+   "every": 4,
+   "size": [
+    1800,
+    574
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 1430
+  },
+  "B_PUSH_DIAG_025x": {
+   "panels": [
+    {
+     "k": "PUSH_BRUSH",
+     "l": "BRUSH 30 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP",
+     "l": "BUMP 60 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG",
+     "l": "STRONG 100 N\u00b7s \u00b7 dashed = RUN-1 at its intended place",
+     "az": 170,
+     "el": 24,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 625,
+   "every": 1,
+   "size": [
+    1800,
+    574
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 5490
+  },
+  "B_PUSH_OPP_BEHIND_1x": {
+   "panels": [
+    {
+     "k": "PUSH_BRUSH_OPP",
+     "l": "BRUSH \u00b7 from the left",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_BUMP_OPP",
+     "l": "BUMP \u00b7 from the left",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PUSH_STRONG_OPP",
+     "l": "STRONG \u00b7 from the left",
+     "az": 175,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 157,
+   "every": 4,
+   "size": [
+    1260,
+    434
+   ],
+   "first": 84,
+   "last": 708,
+   "ms": 1278
+  },
+  "B_SH_BEHIND_1x": {
+   "panels": [
+    {
+     "k": "SH_TWIN",
+     "l": "TWIN (A alone)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 141,
+   "every": 4,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 40,
+   "last": 600,
+   "ms": 2299
+  },
+  "B_SH_BEHIND_025x": {
+   "panels": [
+    {
+     "k": "SH_TWIN",
+     "l": "TWIN (A alone)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG (two runners)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 567,
+   "every": 1,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 38,
+   "last": 604,
+   "ms": 8963
+  },
+  "B_SH_DIAG_1x": {
+   "panels": [
+    {
+     "k": "SH_TWIN",
+     "l": "TWIN \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 141,
+   "every": 4,
+   "size": [
+    1680,
+    434
+   ],
+   "first": 40,
+   "last": 600,
+   "ms": 2023
+  },
+  "C_CLOSE_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 97,
+   "every": 4,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 1136
+  },
+  "C_CLOSE_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 4298
+  },
+  "C_SIDE_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 97,
+   "every": 4,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 981
+  },
+  "C_SIDE_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 3840
+  },
+  "C_REAR34_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 97,
+   "every": 4,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 992
+  },
+  "C_REAR34_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 3918
+  },
+  "C_DIAG_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 97,
+   "every": 4,
+   "size": [
+    1680,
+    534
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 1062
+  },
+  "C_DIAG_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle (canonical phase)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 canonical phase",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 canonical phase",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1680,
+    534
+   ],
+   "first": 48,
+   "last": 432,
+   "ms": 4238
+  },
+  "C_EARLY_REAR34_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_EARLY",
+     "l": "TWIN \u00b7 no tackle (foot freshly loaded)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_EARLY",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot freshly loaded",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_EARLY",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot freshly loaded",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 96,
+   "every": 4,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 428,
+   "ms": 1192
+  },
+  "C_EARLY_REAR34_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_EARLY",
+     "l": "TWIN \u00b7 no tackle (foot freshly loaded)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_EARLY",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot freshly loaded",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_EARLY",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot freshly loaded",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 47,
+   "last": 431,
+   "ms": 4322
+  },
+  "C_EARLY_DIAG_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_EARLY",
+     "l": "TWIN \u00b7 no tackle (foot freshly loaded)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_EARLY",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot freshly loaded",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_EARLY",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot freshly loaded",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 96,
+   "every": 4,
+   "size": [
+    1680,
+    534
+   ],
+   "first": 48,
+   "last": 428,
+   "ms": 1040
+  },
+  "C_UNLOAD_REAR34_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_UNLOAD",
+     "l": "TWIN \u00b7 no tackle (foot unloading)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_UNLOAD",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot unloading",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_UNLOAD",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot unloading",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 96,
+   "every": 4,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 48,
+   "last": 428,
+   "ms": 1139
+  },
+  "C_UNLOAD_REAR34_025x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_UNLOAD",
+     "l": "TWIN \u00b7 no tackle (foot unloading)",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_UNLOAD",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot unloading",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_UNLOAD",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot unloading",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 385,
+   "every": 1,
+   "size": [
+    1320,
+    454
+   ],
+   "first": 47,
+   "last": 431,
+   "ms": 4477
+  },
+  "C_UNLOAD_DIAG_1x": {
+   "panels": [
+    {
+     "k": "PVP_TWIN_UNLOAD",
+     "l": "TWIN \u00b7 no tackle (foot unloading)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F2_UNLOAD",
+     "l": "PVP-F2 (SP2F2) \u00b7 foot unloading",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3_UNLOAD",
+     "l": "PVP-F3 (SP2F3) \u00b7 foot unloading",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 96,
+   "every": 4,
+   "size": [
+    1680,
+    534
+   ],
+   "first": 48,
+   "last": 428,
+   "ms": 1038
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

@@ -1,0 +1,3569 @@
+{
+ "note": "HAC-1 analysis: disturbed cases against their no-contact twins",
+ "push": {
+  "PUSH_BRUSH": {
+   "hash": "7969e2d39d3644fc",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 30,
+    "body": "upperArm_R",
+    "durS": 0.1
+   },
+   "fall": null,
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": 0.775,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 1.7,
+     "behindCm": 0.06,
+     "latVelLeft": 0.33,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.907,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 5.41,
+     "behindCm": -0.09,
+     "latVelLeft": 0.17,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.962,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 9.99,
+     "behindCm": -0.59,
+     "latVelLeft": 0.22,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.928,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 12.53,
+     "behindCm": 0.34,
+     "latVelLeft": 0.05,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.902,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 13.39,
+     "behindCm": 0.46,
+     "latVelLeft": -0.07,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.922,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 13.22,
+     "behindCm": 2.43,
+     "latVelLeft": -0.05,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.93,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 11.91,
+     "behindCm": 3.76,
+     "latVelLeft": 0.16,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.929,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 1,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 0.984
+    },
+    "placementOffsetMaxDeg": 3.1,
+    "emergencyStepSteps": 1
+   }
+  },
+  "PUSH_BRUSH_OPP": {
+   "hash": "5f14bd9155fa0618",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 30,
+    "body": "upperArm_L",
+    "durS": 0.1
+   },
+   "fall": null,
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": 0.725,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": -1.69,
+     "behindCm": -0.03,
+     "latVelLeft": -0.3,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.908,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": -5.46,
+     "behindCm": 0.13,
+     "latVelLeft": -0.29,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.964,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": -9.96,
+     "behindCm": 0.56,
+     "latVelLeft": -0.02,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.935,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": -12.5,
+     "behindCm": 1.25,
+     "latVelLeft": -0.07,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.896,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": -14.51,
+     "behindCm": 2.74,
+     "latVelLeft": -0.17,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.926,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": -17.51,
+     "behindCm": 4.79,
+     "latVelLeft": -0.09,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.924,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": -20.18,
+     "behindCm": 7.41,
+     "latVelLeft": 0.13,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.932,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 1,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 1
+    },
+    "placementOffsetMaxDeg": 3.7,
+    "emergencyStepSteps": 3
+   }
+  },
+  "PUSH_BUMP": {
+   "hash": "6c87078afc7dd1a0",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 60,
+    "body": "upperArm_R",
+    "durS": 0.1
+   },
+   "fall": null,
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": 0.775,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 3.38,
+     "behindCm": 0.09,
+     "latVelLeft": 0.64,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.907,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 10.95,
+     "behindCm": -0.15,
+     "latVelLeft": 0.42,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.961,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 20.09,
+     "behindCm": -0.99,
+     "latVelLeft": 0.33,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.929,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 25.09,
+     "behindCm": -0.14,
+     "latVelLeft": 0.11,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.903,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 27.29,
+     "behindCm": -0.25,
+     "latVelLeft": -0.02,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.919,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 28.6,
+     "behindCm": 0.26,
+     "latVelLeft": -0.03,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.932,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 28.25,
+     "behindCm": 0.56,
+     "latVelLeft": 0.18,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.928,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 1,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 0.845
+    },
+    "placementOffsetMaxDeg": 4.3,
+    "emergencyStepSteps": 0
+   }
+  },
+  "PUSH_BUMP_OPP": {
+   "hash": "8b886d5e05f8c8ff",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 60,
+    "body": "upperArm_L",
+    "durS": 0.1
+   },
+   "fall": null,
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": 1,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": -3.39,
+     "behindCm": -0.06,
+     "latVelLeft": -0.61,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.909,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": -10.98,
+     "behindCm": 0.3,
+     "latVelLeft": -0.53,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.966,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": -20.11,
+     "behindCm": 1.25,
+     "latVelLeft": -0.14,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.936,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": -25.33,
+     "behindCm": 0.53,
+     "latVelLeft": -0.17,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.89,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": -28.34,
+     "behindCm": 0.73,
+     "latVelLeft": -0.19,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.925,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": -31.37,
+     "behindCm": 1.17,
+     "latVelLeft": -0.06,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.929,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": -32.78,
+     "behindCm": 1.94,
+     "latVelLeft": 0.16,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.928,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 1,
+     "trunk": 1,
+     "armL": 0.939,
+     "armR": 1
+    },
+    "placementOffsetMaxDeg": 6.7,
+    "emergencyStepSteps": 0
+   }
+  },
+  "PUSH_STRONG": {
+   "hash": "8ce4a8ea8ac3e0bf",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 100,
+    "body": "upperArm_R",
+    "durS": 0.1
+   },
+   "fall": {
+    "s": 1.787,
+    "afterS": 1.038,
+    "body": "forearm_L"
+   },
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": null,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 5.71,
+     "behindCm": 0.08,
+     "latVelLeft": 1.04,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.908,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 17.91,
+     "behindCm": 1.62,
+     "latVelLeft": 0.63,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 1,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 32.49,
+     "behindCm": 11.21,
+     "latVelLeft": 0.6,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.842,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 40.76,
+     "behindCm": 20.83,
+     "latVelLeft": 0.29,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.804,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 45.44,
+     "behindCm": 66.06,
+     "latVelLeft": 0.1,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.513,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 59.12,
+     "behindCm": 259.59,
+     "latVelLeft": 0.19,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.356,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 58.86,
+     "behindCm": 483.49,
+     "latVelLeft": 0,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.326,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 394,
+    "authorityMin": {
+     "legL": 0.349,
+     "legR": 0.399,
+     "trunk": 0.963,
+     "armL": 0.219,
+     "armR": 0.3
+    },
+    "placementOffsetMaxDeg": 7.1,
+    "emergencyStepSteps": 49
+   }
+  },
+  "PUSH_STRONG_OPP": {
+   "hash": "d143c5d8a998dfe6",
+   "disturbanceStep": 180,
+   "disturbance": {
+    "impulseNs": 100,
+    "body": "upperArm_L",
+    "durS": 0.1
+   },
+   "fall": {
+    "s": 2.567,
+    "afterS": 1.817,
+    "body": "forearm_L"
+   },
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": null,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": -5.67,
+     "behindCm": -0.08,
+     "latVelLeft": -1.04,
+     "latVelLeftTwin": 0.02,
+     "pelvisHeight": 0.91,
+     "pelvisHeightTwin": 0.907
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": -18.45,
+     "behindCm": 0.52,
+     "latVelLeft": -0.86,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.966,
+     "pelvisHeightTwin": 0.963
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": -33.92,
+     "behindCm": 2.5,
+     "latVelLeft": -0.29,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.94,
+     "pelvisHeightTwin": 0.932
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": -42.95,
+     "behindCm": 2.46,
+     "latVelLeft": -0.26,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.885,
+     "pelvisHeightTwin": 0.896
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": -50.12,
+     "behindCm": 8.85,
+     "latVelLeft": -0.41,
+     "latVelLeftTwin": -0.09,
+     "pelvisHeight": 0.991,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": -64.37,
+     "behindCm": 31.24,
+     "latVelLeft": -0.29,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.812,
+     "pelvisHeightTwin": 0.935
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": -77.91,
+     "behindCm": 154.2,
+     "latVelLeft": 0.03,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.331,
+     "pelvisHeightTwin": 0.927
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0.018,
+    "commitStep": 580,
+    "authorityMin": {
+     "legL": 0.325,
+     "legR": 0.417,
+     "trunk": 0.967,
+     "armL": 0.226,
+     "armR": 0.249
+    },
+    "placementOffsetMaxDeg": 10.8,
+    "emergencyStepSteps": 66
+   }
+  }
+ },
+ "sh": {
+  "SH_BRUSH": {
+   "hash": "8703084c22844cff",
+   "disturbanceStep": 220,
+   "disturbance": {
+    "firstContactS": 0.917
+   },
+   "fall": null,
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": 0.6,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 1.07,
+     "behindCm": 0.04,
+     "latVelLeft": 0.19,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.958,
+     "pelvisHeightTwin": 0.958
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 4.82,
+     "behindCm": -0.25,
+     "latVelLeft": 0.26,
+     "latVelLeftTwin": 0.1,
+     "pelvisHeight": 0.887,
+     "pelvisHeightTwin": 0.892
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 8.91,
+     "behindCm": 0.3,
+     "latVelLeft": 0.29,
+     "latVelLeftTwin": 0.18,
+     "pelvisHeight": 0.923,
+     "pelvisHeightTwin": 0.92
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 12.46,
+     "behindCm": 0.16,
+     "latVelLeft": 0.26,
+     "latVelLeftTwin": -0.04,
+     "pelvisHeight": 0.959,
+     "pelvisHeightTwin": 0.959
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 18.48,
+     "behindCm": -0.96,
+     "latVelLeft": 0.26,
+     "latVelLeftTwin": 0.1,
+     "pelvisHeight": 0.922,
+     "pelvisHeightTwin": 0.927
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 22.63,
+     "behindCm": -0.19,
+     "latVelLeft": -0.06,
+     "latVelLeftTwin": -0.07,
+     "pelvisHeight": 0.927,
+     "pelvisHeightTwin": 0.929
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 23.04,
+     "behindCm": 2.04,
+     "latVelLeft": -0.03,
+     "latVelLeftTwin": -0.04,
+     "pelvisHeight": 0.925,
+     "pelvisHeightTwin": 0.925
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 1,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 0.318
+    },
+    "placementOffsetMaxDeg": 3.2,
+    "emergencyStepSteps": 1
+   }
+  },
+  "SH_BUMP": {
+   "hash": "9810005784a03a28",
+   "disturbanceStep": 134,
+   "disturbance": {
+    "firstContactS": 0.558
+   },
+   "fall": {
+    "s": 1.608,
+    "afterS": 1.05,
+    "body": "forearm_L"
+   },
+   "fallB": null,
+   "lateralVelocityBackToTwinAfterS": null,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 0.54,
+     "behindCm": 0.06,
+     "latVelLeft": 0.16,
+     "latVelLeftTwin": 0.05,
+     "pelvisHeight": 0.951,
+     "pelvisHeightTwin": 0.951
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 3.9,
+     "behindCm": 0.87,
+     "latVelLeft": 0.32,
+     "latVelLeftTwin": -0.01,
+     "pelvisHeight": 0.896,
+     "pelvisHeightTwin": 0.895
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 15.93,
+     "behindCm": 2.36,
+     "latVelLeft": 0.46,
+     "latVelLeftTwin": -0.06,
+     "pelvisHeight": 0.976,
+     "pelvisHeightTwin": 0.933
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 27.22,
+     "behindCm": 18.05,
+     "latVelLeft": 0.53,
+     "latVelLeftTwin": 0.1,
+     "pelvisHeight": 0.788,
+     "pelvisHeightTwin": 0.954
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 35.34,
+     "behindCm": 61.34,
+     "latVelLeft": 0.27,
+     "latVelLeftTwin": -0.04,
+     "pelvisHeight": 0.491,
+     "pelvisHeightTwin": 0.921
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 40.59,
+     "behindCm": 254.16,
+     "latVelLeft": 0.18,
+     "latVelLeftTwin": 0.1,
+     "pelvisHeight": 0.286,
+     "pelvisHeightTwin": 0.931
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 48.89,
+     "behindCm": 476.18,
+     "latVelLeft": -0.01,
+     "latVelLeftTwin": 0.09,
+     "pelvisHeight": 0.324,
+     "pelvisHeightTwin": 0.906
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 355,
+    "authorityMin": {
+     "legL": 0.374,
+     "legR": 0.349,
+     "trunk": 0.871,
+     "armL": 0.214,
+     "armR": 0.216
+    },
+    "placementOffsetMaxDeg": 4.8,
+    "emergencyStepSteps": 48
+   }
+  },
+  "SH_STRONG": {
+   "hash": "2856af5d44e159e6",
+   "disturbanceStep": 87,
+   "disturbance": {
+    "firstContactS": 0.363
+   },
+   "fall": {
+    "s": 1.7,
+    "afterS": 1.338,
+    "body": "forearm_L"
+   },
+   "fallB": {
+    "s": 1.171,
+    "body": "forearm_R"
+   },
+   "lateralVelocityBackToTwinAfterS": null,
+   "series": [
+    {
+     "dt": 0.1,
+     "offLineLeftCm": 3.05,
+     "behindCm": -0.15,
+     "latVelLeft": 0.55,
+     "latVelLeftTwin": 0,
+     "pelvisHeight": 0.893,
+     "pelvisHeightTwin": 0.892
+    },
+    {
+     "dt": 0.25,
+     "offLineLeftCm": 12.44,
+     "behindCm": -0.9,
+     "latVelLeft": 0.63,
+     "latVelLeftTwin": 0.05,
+     "pelvisHeight": 0.954,
+     "pelvisHeightTwin": 0.952
+    },
+    {
+     "dt": 0.5,
+     "offLineLeftCm": 23.6,
+     "behindCm": 2,
+     "latVelLeft": 0.24,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.914,
+     "pelvisHeightTwin": 0.914
+    },
+    {
+     "dt": 0.75,
+     "offLineLeftCm": 31.56,
+     "behindCm": 7.56,
+     "latVelLeft": 0.34,
+     "latVelLeftTwin": -0.05,
+     "pelvisHeight": 0.917,
+     "pelvisHeightTwin": 0.898
+    },
+    {
+     "dt": 1,
+     "offLineLeftCm": 40.29,
+     "behindCm": 30.73,
+     "latVelLeft": 0.41,
+     "latVelLeftTwin": 0.1,
+     "pelvisHeight": 0.772,
+     "pelvisHeightTwin": 0.943
+    },
+    {
+     "dt": 1.5,
+     "offLineLeftCm": 54.76,
+     "behindCm": 142,
+     "latVelLeft": 0.44,
+     "latVelLeftTwin": 0.07,
+     "pelvisHeight": 0.492,
+     "pelvisHeightTwin": 0.9
+    },
+    {
+     "dt": 2,
+     "offLineLeftCm": 78.54,
+     "behindCm": 339.99,
+     "latVelLeft": 0.25,
+     "latVelLeftTwin": -0.03,
+     "pelvisHeight": 0.288,
+     "pelvisHeightTwin": 0.959
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 360,
+    "authorityMin": {
+     "legL": 0.341,
+     "legR": 0.502,
+     "trunk": 0.546,
+     "armL": 0.209,
+     "armR": 0.17
+    },
+    "placementOffsetMaxDeg": 8,
+    "emergencyStepSteps": 65
+   }
+  }
+ },
+ "pvp": {
+  "PVP_F2": {
+   "hash": "6a2c601b3b2bc7ee",
+   "phase": "CANON",
+   "firstContactStep": 120,
+   "struckFoot": {
+    "landingStep": 88,
+    "unloadAfterS": 0.092,
+    "unloadTwinAfterS": 0.092,
+    "supportDurationS": 0.225,
+    "supportDurationTwinS": 0.225
+   },
+   "farFootDownAfterS": 0.104,
+   "farFootDownTwinAfterS": 0.213,
+   "fall": {
+    "s": 1.175,
+    "afterS": 0.675,
+    "body": "thigh_L"
+   },
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      0.007,
+      -0.003,
+      0.016
+     ],
+     "struckFootFromLandingTwin": [
+      0.007,
+      -0.003,
+      0.016
+     ],
+     "loadBW": {
+      "R": 2.09,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.99,
+      "L": 0
+     },
+     "comV": [
+      4.304,
+      0.046,
+      0.279
+     ],
+     "comVTwin": [
+      4.303,
+      0.049,
+      0.277
+     ],
+     "pelvisHeight": 0.898,
+     "pelvisHeightTwin": 0.898,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      0.009,
+      0.002,
+      0.019
+     ],
+     "struckFootFromLandingTwin": [
+      0.009,
+      0.002,
+      0.019
+     ],
+     "loadBW": {
+      "R": 1.73,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.8,
+      "L": 0
+     },
+     "comV": [
+      4.271,
+      -0.059,
+      0.502
+     ],
+     "comVTwin": [
+      4.303,
+      0.018,
+      0.502
+     ],
+     "pelvisHeight": 0.908,
+     "pelvisHeightTwin": 0.908,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.88
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      0.01,
+      -0.016,
+      0.047
+     ],
+     "struckFootFromLandingTwin": [
+      0.015,
+      -0.001,
+      0.049
+     ],
+     "loadBW": {
+      "R": 1.09,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.27,
+      "L": 0
+     },
+     "comV": [
+      4.197,
+      -0.245,
+      0.577
+     ],
+     "comVTwin": [
+      4.369,
+      0.044,
+      0.624
+     ],
+     "pelvisHeight": 0.92,
+     "pelvisHeightTwin": 0.921,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.39
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      0.068,
+      -0.108,
+      0.119
+     ],
+     "struckFootFromLandingTwin": [
+      0.075,
+      -0.012,
+      0.144
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.252,
+      -0.39,
+      0.286
+     ],
+     "comVTwin": [
+      4.534,
+      0.05,
+      0.349
+     ],
+     "pelvisHeight": 0.944,
+     "pelvisHeightTwin": 0.948,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.17
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      0.173,
+      -0.21,
+      0.266
+     ],
+     "struckFootFromLandingTwin": [
+      0.189,
+      -0.062,
+      0.289
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.94
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.738,
+      -0.316,
+      0.482
+     ],
+     "comVTwin": [
+      4.526,
+      0.051,
+      -0.135
+     ],
+     "pelvisHeight": 0.971,
+     "pelvisHeightTwin": 0.953,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.89,
+      0.24
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.346,
+      -0.25,
+      0.449
+     ],
+     "struckFootFromLandingTwin": [
+      0.462,
+      -0.15,
+      0.371
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.42
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.655,
+      -0.281,
+      0.31
+     ],
+     "comVTwin": [
+      4.526,
+      0.051,
+      -0.625
+     ],
+     "pelvisHeight": 0.995,
+     "pelvisHeightTwin": 0.933,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.71,
+      0.35
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      0.989,
+      -0.21,
+      0.155
+     ],
+     "struckFootFromLandingTwin": [
+      1.184,
+      -0.217,
+      0.367
+     ],
+     "loadBW": {
+      "R": 0.81,
+      "L": 0.62
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.09
+     },
+     "comV": [
+      3.522,
+      -0.256,
+      -0.478
+     ],
+     "comVTwin": [
+      4.433,
+      0.003,
+      -0.097
+     ],
+     "pelvisHeight": 0.999,
+     "pelvisHeightTwin": 0.896,
+     "V": 0.686,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.44,
+      0.42
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      1.373,
+      -0.216,
+      0.259
+     ],
+     "struckFootFromLandingTwin": [
+      2.821,
+      0.016,
+      0.034
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.16
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.089,
+      -0.455,
+      -1.394
+     ],
+     "comVTwin": [
+      4.495,
+      -0.059,
+      -0.252
+     ],
+     "pelvisHeight": 0.796,
+     "pelvisHeightTwin": 0.963,
+     "V": 0.821,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.43,
+      0.43
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      1.742,
+      -0.367,
+      0.096
+     ],
+     "struckFootFromLandingTwin": [
+      3.012,
+      -0.011,
+      0.014
+     ],
+     "loadBW": {
+      "R": 0.53,
+      "L": 0.23
+     },
+     "loadTwinBW": {
+      "R": 1.85,
+      "L": 0
+     },
+     "comV": [
+      2.071,
+      -0.423,
+      -0.543
+     ],
+     "comVTwin": [
+      4.299,
+      0.075,
+      0.521
+     ],
+     "pelvisHeight": 0.484,
+     "pelvisHeightTwin": 0.904,
+     "V": 0.031,
+     "C": 0.6,
+     "wLoc": 0.4,
+     "legAuth": [
+      0.48,
+      0.38
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      2.023,
+      -0.549,
+      0.149
+     ],
+     "struckFootFromLandingTwin": [
+      4.309,
+      -0.201,
+      0.364
+     ],
+     "loadBW": {
+      "R": 0.16,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.15
+     },
+     "comV": [
+      0.97,
+      -0.802,
+      -0.539
+     ],
+     "comVTwin": [
+      4.315,
+      -0.034,
+      0.097
+     ],
+     "pelvisHeight": 0.392,
+     "pelvisHeightTwin": 0.896,
+     "V": 0,
+     "C": 0.98,
+     "wLoc": 0.02,
+     "legAuth": [
+      0.72,
+      0.71
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 283,
+    "authorityMin": {
+     "legL": 0.333,
+     "legR": 0.171,
+     "trunk": 0.94,
+     "armL": 0.313,
+     "armR": 0.223
+    },
+    "placementOffsetMaxDeg": 6.8,
+    "emergencyStepSteps": 91
+   }
+  },
+  "PVP_F3": {
+   "hash": "fc4f3d475d43292a",
+   "phase": "CANON",
+   "firstContactStep": 120,
+   "struckFoot": {
+    "landingStep": 88,
+    "unloadAfterS": 0.104,
+    "unloadTwinAfterS": 0.092,
+    "supportDurationS": 0.238,
+    "supportDurationTwinS": 0.225
+   },
+   "farFootDownAfterS": 0.104,
+   "farFootDownTwinAfterS": 0.213,
+   "fall": {
+    "s": 1.2,
+    "afterS": 0.7,
+    "body": "thigh_L"
+   },
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      0.007,
+      -0.003,
+      0.016
+     ],
+     "struckFootFromLandingTwin": [
+      0.007,
+      -0.003,
+      0.016
+     ],
+     "loadBW": {
+      "R": 2.32,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.99,
+      "L": 0
+     },
+     "comV": [
+      4.304,
+      0.048,
+      0.278
+     ],
+     "comVTwin": [
+      4.303,
+      0.049,
+      0.277
+     ],
+     "pelvisHeight": 0.898,
+     "pelvisHeightTwin": 0.898,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      0.009,
+      0.001,
+      0.018
+     ],
+     "struckFootFromLandingTwin": [
+      0.009,
+      0.002,
+      0.019
+     ],
+     "loadBW": {
+      "R": 1.74,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.8,
+      "L": 0
+     },
+     "comV": [
+      4.261,
+      -0.091,
+      0.501
+     ],
+     "comVTwin": [
+      4.303,
+      0.018,
+      0.502
+     ],
+     "pelvisHeight": 0.908,
+     "pelvisHeightTwin": 0.908,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.87
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      -0.001,
+      -0.021,
+      0.052
+     ],
+     "struckFootFromLandingTwin": [
+      0.015,
+      -0.001,
+      0.049
+     ],
+     "loadBW": {
+      "R": 1.66,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.27,
+      "L": 0
+     },
+     "comV": [
+      4.121,
+      -0.323,
+      0.602
+     ],
+     "comVTwin": [
+      4.369,
+      0.044,
+      0.624
+     ],
+     "pelvisHeight": 0.92,
+     "pelvisHeightTwin": 0.921,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.37
+     ],
+     "integR": 0.97,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      0.066,
+      -0.143,
+      0.113
+     ],
+     "struckFootFromLandingTwin": [
+      0.075,
+      -0.012,
+      0.144
+     ],
+     "loadBW": {
+      "R": 0.05,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.939,
+      -0.611,
+      0.222
+     ],
+     "comVTwin": [
+      4.534,
+      0.05,
+      0.349
+     ],
+     "pelvisHeight": 0.942,
+     "pelvisHeightTwin": 0.948,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.17
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      0.135,
+      -0.28,
+      0.28
+     ],
+     "struckFootFromLandingTwin": [
+      0.189,
+      -0.062,
+      0.289
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.91
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.445,
+      -0.467,
+      0.355
+     ],
+     "comVTwin": [
+      4.526,
+      0.051,
+      -0.135
+     ],
+     "pelvisHeight": 0.964,
+     "pelvisHeightTwin": 0.953,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.91,
+      0.17
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.297,
+      -0.329,
+      0.465
+     ],
+     "struckFootFromLandingTwin": [
+      0.462,
+      -0.15,
+      0.371
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.5
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.312,
+      -0.441,
+      0.176
+     ],
+     "comVTwin": [
+      4.526,
+      0.051,
+      -0.625
+     ],
+     "pelvisHeight": 0.98,
+     "pelvisHeightTwin": 0.933,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.75,
+      0.3
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      0.874,
+      -0.286,
+      0.168
+     ],
+     "struckFootFromLandingTwin": [
+      1.184,
+      -0.217,
+      0.367
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 2.21
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.09
+     },
+     "comV": [
+      3.065,
+      -0.436,
+      -0.301
+     ],
+     "comVTwin": [
+      4.433,
+      0.003,
+      -0.097
+     ],
+     "pelvisHeight": 0.98,
+     "pelvisHeightTwin": 0.896,
+     "V": 0.487,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.37,
+      0.41
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      1.181,
+      -0.262,
+      0.312
+     ],
+     "struckFootFromLandingTwin": [
+      2.821,
+      0.016,
+      0.034
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.16
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      2.497,
+      -0.615,
+      -1.259
+     ],
+     "comVTwin": [
+      4.495,
+      -0.059,
+      -0.252
+     ],
+     "pelvisHeight": 0.818,
+     "pelvisHeightTwin": 0.963,
+     "V": 0.71,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.35,
+      0.4
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      1.523,
+      -0.434,
+      0.093
+     ],
+     "struckFootFromLandingTwin": [
+      3.012,
+      -0.011,
+      0.014
+     ],
+     "loadBW": {
+      "R": 0.57,
+      "L": 0.49
+     },
+     "loadTwinBW": {
+      "R": 1.85,
+      "L": 0
+     },
+     "comV": [
+      1.526,
+      -0.556,
+      -1.741
+     ],
+     "comVTwin": [
+      4.299,
+      0.075,
+      0.521
+     ],
+     "pelvisHeight": 0.494,
+     "pelvisHeightTwin": 0.904,
+     "V": 0.057,
+     "C": 0.487,
+     "wLoc": 0.513,
+     "legAuth": [
+      0.42,
+      0.37
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      1.752,
+      -0.6,
+      0.184
+     ],
+     "struckFootFromLandingTwin": [
+      4.309,
+      -0.201,
+      0.364
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.15
+     },
+     "comV": [
+      1.285,
+      -0.692,
+      -0.2
+     ],
+     "comVTwin": [
+      4.315,
+      -0.034,
+      0.097
+     ],
+     "pelvisHeight": 0.524,
+     "pelvisHeightTwin": 0.896,
+     "V": 0,
+     "C": 0.974,
+     "wLoc": 0.026,
+     "legAuth": [
+      0.64,
+      0.65
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 289,
+    "authorityMin": {
+     "legL": 0.224,
+     "legR": 0.158,
+     "trunk": 0.975,
+     "armL": 0.345,
+     "armR": 0.205
+    },
+    "placementOffsetMaxDeg": 7.6,
+    "emergencyStepSteps": 114
+   }
+  },
+  "PVP_F2_EARLY": {
+   "hash": "7cfdbc1734efa9da",
+   "phase": "EARLY",
+   "firstContactStep": 119,
+   "struckFoot": {
+    "landingStep": 108,
+    "unloadAfterS": 0.171,
+    "unloadTwinAfterS": 0.171,
+    "supportDurationS": 0.217,
+    "supportDurationTwinS": 0.217
+   },
+   "farFootDownAfterS": 0.192,
+   "farFootDownTwinAfterS": 0.275,
+   "fall": {
+    "s": 1.483,
+    "afterS": 0.987,
+    "body": "forearm_R"
+   },
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      0,
+      0,
+      0.001
+     ],
+     "struckFootFromLandingTwin": [
+      0,
+      0,
+      0.001
+     ],
+     "loadBW": {
+      "R": 1.18,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.09,
+      "L": 0
+     },
+     "comV": [
+      4.451,
+      -0.133,
+      -0.472
+     ],
+     "comVTwin": [
+      4.451,
+      -0.133,
+      -0.473
+     ],
+     "pelvisHeight": 0.91,
+     "pelvisHeightTwin": 0.91,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      0,
+      0,
+      0.007
+     ],
+     "struckFootFromLandingTwin": [
+      0,
+      0,
+      0.006
+     ],
+     "loadBW": {
+      "R": 2.58,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.64,
+      "L": 0
+     },
+     "comV": [
+      4.433,
+      -0.11,
+      -0.253
+     ],
+     "comVTwin": [
+      4.454,
+      -0.039,
+      -0.277
+     ],
+     "pelvisHeight": 0.899,
+     "pelvisHeightTwin": 0.899,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.96
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      -0.001,
+      -0.008,
+      0.021
+     ],
+     "struckFootFromLandingTwin": [
+      0.001,
+      -0.002,
+      0.018
+     ],
+     "loadBW": {
+      "R": 2.05,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.94,
+      "L": 0
+     },
+     "comV": [
+      4.296,
+      -0.166,
+      -0.067
+     ],
+     "comVTwin": [
+      4.366,
+      0.022,
+      -0.063
+     ],
+     "pelvisHeight": 0.895,
+     "pelvisHeightTwin": 0.895,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.44
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      -0.005,
+      -0.014,
+      0.017
+     ],
+     "struckFootFromLandingTwin": [
+      0.002,
+      0.001,
+      0.014
+     ],
+     "loadBW": {
+      "R": 1.94,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.76,
+      "L": 0
+     },
+     "comV": [
+      4.187,
+      -0.327,
+      0.578
+     ],
+     "comVTwin": [
+      4.297,
+      0.035,
+      0.5
+     ],
+     "pelvisHeight": 0.911,
+     "pelvisHeightTwin": 0.908,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.19
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      0.012,
+      -0.01,
+      0.083
+     ],
+     "struckFootFromLandingTwin": [
+      0.022,
+      -0.002,
+      0.082
+     ],
+     "loadBW": {
+      "R": 0.37,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.5,
+      "L": 0
+     },
+     "comV": [
+      4.364,
+      -0.368,
+      0.612
+     ],
+     "comVTwin": [
+      4.495,
+      0.058,
+      0.59
+     ],
+     "pelvisHeight": 0.937,
+     "pelvisHeightTwin": 0.936,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.21
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.036,
+      -0.037,
+      0.237
+     ],
+     "struckFootFromLandingTwin": [
+      0.093,
+      -0.017,
+      0.201
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.65
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.887,
+      -0.609,
+      0.606
+     ],
+     "comVTwin": [
+      4.519,
+      0.062,
+      0.148
+     ],
+     "pelvisHeight": 0.972,
+     "pelvisHeightTwin": 0.957,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.71,
+      0.33
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      0.379,
+      -0.275,
+      0.587
+     ],
+     "struckFootFromLandingTwin": [
+      0.566,
+      -0.15,
+      0.397
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0.05
+     },
+     "comV": [
+      3.653,
+      -0.506,
+      0.152
+     ],
+     "comVTwin": [
+      4.304,
+      0.116,
+      -0.365
+     ],
+     "pelvisHeight": 1.026,
+     "pelvisHeightTwin": 0.933,
+     "V": 0.953,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.72,
+      0.5
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      1.598,
+      -0.297,
+      0.163
+     ],
+     "struckFootFromLandingTwin": [
+      2.032,
+      0.011,
+      0.121
+     ],
+     "loadBW": {
+      "R": 1.66,
+      "L": 1.27
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.736,
+      -0.481,
+      -0.924
+     ],
+     "comVTwin": [
+      4.525,
+      -0.083,
+      0.5
+     ],
+     "pelvisHeight": 0.856,
+     "pelvisHeightTwin": 0.938,
+     "V": 0.856,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.85,
+      0.67
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      1.984,
+      -0.31,
+      0.136
+     ],
+     "struckFootFromLandingTwin": [
+      2.972,
+      -0.007,
+      0.003
+     ],
+     "loadBW": {
+      "R": 0.22,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.71,
+      "L": 0
+     },
+     "comV": [
+      3.862,
+      -0.31,
+      -0.891
+     ],
+     "comVTwin": [
+      4.386,
+      -0.089,
+      -0.323
+     ],
+     "pelvisHeight": 0.822,
+     "pelvisHeightTwin": 0.903,
+     "V": 0.23,
+     "C": 0.118,
+     "wLoc": 0.882,
+     "legAuth": [
+      0.59,
+      0.46
+     ],
+     "integR": 0.04,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      2.435,
+      -0.587,
+      0.154
+     ],
+     "struckFootFromLandingTwin": [
+      3.701,
+      -0.192,
+      0.403
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0.83
+     },
+     "comV": [
+      1.967,
+      -0.173,
+      -1.672
+     ],
+     "comVTwin": [
+      4.351,
+      0.107,
+      -0.533
+     ],
+     "pelvisHeight": 0.501,
+     "pelvisHeightTwin": 0.916,
+     "V": 0.002,
+     "C": 0.939,
+     "wLoc": 0.061,
+     "legAuth": [
+      0.59,
+      0.6
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0,
+    "commitStep": 309,
+    "authorityMin": {
+     "legL": 0.503,
+     "legR": 0.171,
+     "trunk": 0.322,
+     "armL": 0.303,
+     "armR": 0.211
+    },
+    "placementOffsetMaxDeg": 6.1,
+    "emergencyStepSteps": 61
+   }
+  },
+  "PVP_F3_EARLY": {
+   "hash": "dc7d71133f351701",
+   "phase": "EARLY",
+   "firstContactStep": 119,
+   "struckFoot": {
+    "landingStep": 108,
+    "unloadAfterS": 0.175,
+    "unloadTwinAfterS": 0.171,
+    "supportDurationS": 0.221,
+    "supportDurationTwinS": 0.217
+   },
+   "farFootDownAfterS": 0.188,
+   "farFootDownTwinAfterS": 0.275,
+   "fall": {
+    "s": 1.617,
+    "afterS": 1.121,
+    "body": "forearm_R"
+   },
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      -0.001,
+      0,
+      0.001
+     ],
+     "struckFootFromLandingTwin": [
+      0,
+      0,
+      0.001
+     ],
+     "loadBW": {
+      "R": 1.45,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.09,
+      "L": 0
+     },
+     "comV": [
+      4.447,
+      -0.13,
+      -0.466
+     ],
+     "comVTwin": [
+      4.451,
+      -0.133,
+      -0.473
+     ],
+     "pelvisHeight": 0.91,
+     "pelvisHeightTwin": 0.91,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      -0.001,
+      0,
+      0.008
+     ],
+     "struckFootFromLandingTwin": [
+      0,
+      0,
+      0.006
+     ],
+     "loadBW": {
+      "R": 2.5,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.64,
+      "L": 0
+     },
+     "comV": [
+      4.42,
+      -0.122,
+      -0.252
+     ],
+     "comVTwin": [
+      4.454,
+      -0.039,
+      -0.277
+     ],
+     "pelvisHeight": 0.899,
+     "pelvisHeightTwin": 0.899,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.9
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      -0.005,
+      -0.023,
+      0.016
+     ],
+     "struckFootFromLandingTwin": [
+      0.001,
+      -0.002,
+      0.018
+     ],
+     "loadBW": {
+      "R": 2.13,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.94,
+      "L": 0
+     },
+     "comV": [
+      4.225,
+      -0.263,
+      -0.111
+     ],
+     "comVTwin": [
+      4.366,
+      0.022,
+      -0.063
+     ],
+     "pelvisHeight": 0.895,
+     "pelvisHeightTwin": 0.895,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.39
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      -0.012,
+      -0.047,
+      0.002
+     ],
+     "struckFootFromLandingTwin": [
+      0.002,
+      0.001,
+      0.014
+     ],
+     "loadBW": {
+      "R": 1.95,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.76,
+      "L": 0
+     },
+     "comV": [
+      3.9,
+      -0.596,
+      0.485
+     ],
+     "comVTwin": [
+      4.297,
+      0.035,
+      0.5
+     ],
+     "pelvisHeight": 0.908,
+     "pelvisHeightTwin": 0.908,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.17
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      -0.024,
+      -0.077,
+      0.067
+     ],
+     "struckFootFromLandingTwin": [
+      0.022,
+      -0.002,
+      0.082
+     ],
+     "loadBW": {
+      "R": 0.66,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.5,
+      "L": 0
+     },
+     "comV": [
+      3.9,
+      -1.08,
+      0.308
+     ],
+     "comVTwin": [
+      4.495,
+      0.058,
+      0.59
+     ],
+     "pelvisHeight": 0.924,
+     "pelvisHeightTwin": 0.936,
+     "V": 0.999,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.86,
+      0.15
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.044,
+      -0.115,
+      0.156
+     ],
+     "struckFootFromLandingTwin": [
+      0.093,
+      -0.017,
+      0.201
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.29
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.589,
+      -1.125,
+      0.309
+     ],
+     "comVTwin": [
+      4.519,
+      0.062,
+      0.148
+     ],
+     "pelvisHeight": 0.945,
+     "pelvisHeightTwin": 0.957,
+     "V": 0.921,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.88,
+      0.17
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      0.345,
+      -0.388,
+      0.455
+     ],
+     "struckFootFromLandingTwin": [
+      0.566,
+      -0.15,
+      0.397
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.03
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0.05
+     },
+     "comV": [
+      3.129,
+      -1.092,
+      -0.169
+     ],
+     "comVTwin": [
+      4.304,
+      0.116,
+      -0.365
+     ],
+     "pelvisHeight": 0.963,
+     "pelvisHeightTwin": 0.933,
+     "V": 0.94,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.4,
+      0.4
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      1.553,
+      -0.538,
+      0.109
+     ],
+     "struckFootFromLandingTwin": [
+      2.032,
+      0.011,
+      0.121
+     ],
+     "loadBW": {
+      "R": 1.76,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.108,
+      -1.106,
+      -0.649
+     ],
+     "comVTwin": [
+      4.525,
+      -0.083,
+      0.5
+     ],
+     "pelvisHeight": 0.827,
+     "pelvisHeightTwin": 0.938,
+     "V": 0.78,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.27,
+      0.6
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      1.858,
+      -0.608,
+      0.135
+     ],
+     "struckFootFromLandingTwin": [
+      2.972,
+      -0.007,
+      0.003
+     ],
+     "loadBW": {
+      "R": 0.09,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.71,
+      "L": 0
+     },
+     "comV": [
+      3.28,
+      -0.95,
+      -0.556
+     ],
+     "comVTwin": [
+      4.386,
+      -0.089,
+      -0.323
+     ],
+     "pelvisHeight": 0.866,
+     "pelvisHeightTwin": 0.903,
+     "V": 0.406,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      0.49,
+      0.42
+     ],
+     "integR": 0.05,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      2.371,
+      -0.848,
+      0.101
+     ],
+     "struckFootFromLandingTwin": [
+      3.701,
+      -0.192,
+      0.403
+     ],
+     "loadBW": {
+      "R": 0.85,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0.83
+     },
+     "comV": [
+      2.111,
+      -0.064,
+      -1.6
+     ],
+     "comVTwin": [
+      4.351,
+      0.107,
+      -0.533
+     ],
+     "pelvisHeight": 0.569,
+     "pelvisHeightTwin": 0.916,
+     "V": 0.05,
+     "C": 0.528,
+     "wLoc": 0.472,
+     "legAuth": [
+      0.4,
+      0.5
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 0,
+    "wLocMin": 0.001,
+    "commitStep": 358,
+    "authorityMin": {
+     "legL": 0.185,
+     "legR": 0.151,
+     "trunk": 0.907,
+     "armL": 0.277,
+     "armR": 0.222
+    },
+    "placementOffsetMaxDeg": 12.1,
+    "emergencyStepSteps": 53
+   }
+  },
+  "PVP_F2_UNLOAD": {
+   "hash": "8846d47bbc09d649",
+   "phase": "UNLOAD",
+   "firstContactStep": 119,
+   "struckFoot": {
+    "landingStep": 72,
+    "unloadAfterS": 0.025,
+    "unloadTwinAfterS": 0.029,
+    "supportDurationS": 0.221,
+    "supportDurationTwinS": 0.225
+   },
+   "farFootDownAfterS": 0.071,
+   "farFootDownTwinAfterS": 0.075,
+   "fall": null,
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      0.025,
+      -0.004,
+      0.069
+     ],
+     "struckFootFromLandingTwin": [
+      0.027,
+      -0.003,
+      0.069
+     ],
+     "loadBW": {
+      "R": 1,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.76,
+      "L": 0
+     },
+     "comV": [
+      4.449,
+      0.053,
+      0.622
+     ],
+     "comVTwin": [
+      4.46,
+      0.058,
+      0.616
+     ],
+     "pelvisHeight": 0.926,
+     "pelvisHeightTwin": 0.926,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      0.035,
+      -0.024,
+      0.127
+     ],
+     "struckFootFromLandingTwin": [
+      0.058,
+      -0.008,
+      0.114
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.16,
+      "L": 0
+     },
+     "comV": [
+      4.508,
+      0.008,
+      0.48
+     ],
+     "comVTwin": [
+      4.533,
+      0.061,
+      0.478
+     ],
+     "pelvisHeight": 0.941,
+     "pelvisHeightTwin": 0.941,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.92
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      0.037,
+      -0.073,
+      0.237
+     ],
+     "struckFootFromLandingTwin": [
+      0.101,
+      -0.019,
+      0.176
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.457,
+      -0.026,
+      0.23
+     ],
+     "comVTwin": [
+      4.533,
+      0.061,
+      0.232
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.951,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.46
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      0.178,
+      -0.145,
+      0.446
+     ],
+     "struckFootFromLandingTwin": [
+      0.244,
+      -0.081,
+      0.319
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.358,
+      -0.016,
+      -0.183
+     ],
+     "comVTwin": [
+      4.508,
+      0.061,
+      -0.237
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.95,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.38
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      0.479,
+      -0.207,
+      0.525
+     ],
+     "struckFootFromLandingTwin": [
+      0.544,
+      -0.169,
+      0.383
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 6.85
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 5.74
+     },
+     "comV": [
+      4.169,
+      0.09,
+      -0.143
+     ],
+     "comVTwin": [
+      4.452,
+      0.133,
+      -0.486
+     ],
+     "pelvisHeight": 0.933,
+     "pelvisHeightTwin": 0.927,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.47
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.85,
+      -0.25,
+      0.473
+     ],
+     "struckFootFromLandingTwin": [
+      0.92,
+      -0.222,
+      0.388
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.86
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1
+     },
+     "comV": [
+      4.258,
+      0.078,
+      -0.451
+     ],
+     "comVTwin": [
+      4.409,
+      0.151,
+      -0.419
+     ],
+     "pelvisHeight": 0.917,
+     "pelvisHeightTwin": 0.909,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.55
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      1.571,
+      -0.177,
+      0.286
+     ],
+     "struckFootFromLandingTwin": [
+      1.621,
+      -0.133,
+      0.274
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.82
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.54
+     },
+     "comV": [
+      4.266,
+      -0.075,
+      0.454
+     ],
+     "comVTwin": [
+      4.293,
+      -0.03,
+      0.606
+     ],
+     "pelvisHeight": 0.911,
+     "pelvisHeightTwin": 0.914,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.68
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      3.033,
+      -0.071,
+      -0.004
+     ],
+     "struckFootFromLandingTwin": [
+      3.007,
+      -0.002,
+      -0.004
+     ],
+     "loadBW": {
+      "R": 2.78,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 3.03,
+      "L": 0
+     },
+     "comV": [
+      4.374,
+      -0.18,
+      -0.433
+     ],
+     "comVTwin": [
+      4.398,
+      -0.081,
+      -0.587
+     ],
+     "pelvisHeight": 0.923,
+     "pelvisHeightTwin": 0.93,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.84
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      3.06,
+      -0.074,
+      0.101
+     ],
+     "struckFootFromLandingTwin": [
+      3.052,
+      -0.01,
+      0.112
+     ],
+     "loadBW": {
+      "R": 0.06,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.17,
+      "L": 0
+     },
+     "comV": [
+      4.485,
+      0.057,
+      0.527
+     ],
+     "comVTwin": [
+      4.527,
+      0.1,
+      0.51
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.939,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.92
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      4.742,
+      -0.138,
+      0.217
+     ],
+     "struckFootFromLandingTwin": [
+      4.793,
+      -0.056,
+      0.227
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.32
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.19
+     },
+     "comV": [
+      4.348,
+      -0.103,
+      0.662
+     ],
+     "comVTwin": [
+      4.341,
+      -0.038,
+      0.695
+     ],
+     "pelvisHeight": 0.913,
+     "pelvisHeightTwin": 0.927,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.97
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 0.368,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 1
+    },
+    "placementOffsetMaxDeg": 1.8,
+    "emergencyStepSteps": 1
+   }
+  },
+  "PVP_F3_UNLOAD": {
+   "hash": "2c679481879ed793",
+   "phase": "UNLOAD",
+   "firstContactStep": 119,
+   "struckFoot": {
+    "landingStep": 72,
+    "unloadAfterS": 0.025,
+    "unloadTwinAfterS": 0.029,
+    "supportDurationS": 0.221,
+    "supportDurationTwinS": 0.225
+   },
+   "farFootDownAfterS": 0.067,
+   "farFootDownTwinAfterS": 0.075,
+   "fall": null,
+   "twinFall": null,
+   "series": [
+    {
+     "ms": 0,
+     "struckFootFromLanding": [
+      0.024,
+      -0.004,
+      0.07
+     ],
+     "struckFootFromLandingTwin": [
+      0.027,
+      -0.003,
+      0.069
+     ],
+     "loadBW": {
+      "R": 0.97,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.76,
+      "L": 0
+     },
+     "comV": [
+      4.444,
+      0.054,
+      0.626
+     ],
+     "comVTwin": [
+      4.46,
+      0.058,
+      0.616
+     ],
+     "pelvisHeight": 0.926,
+     "pelvisHeightTwin": 0.926,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      1
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 25,
+     "struckFootFromLanding": [
+      0.024,
+      -0.03,
+      0.134
+     ],
+     "struckFootFromLandingTwin": [
+      0.058,
+      -0.008,
+      0.114
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.16,
+      "L": 0
+     },
+     "comV": [
+      4.497,
+      0.004,
+      0.487
+     ],
+     "comVTwin": [
+      4.533,
+      0.061,
+      0.478
+     ],
+     "pelvisHeight": 0.941,
+     "pelvisHeightTwin": 0.941,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.92
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 50,
+     "struckFootFromLanding": [
+      0.026,
+      -0.074,
+      0.251
+     ],
+     "struckFootFromLandingTwin": [
+      0.101,
+      -0.019,
+      0.176
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.45,
+      -0.028,
+      0.228
+     ],
+     "comVTwin": [
+      4.533,
+      0.061,
+      0.232
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.951,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.44
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 100,
+     "struckFootFromLanding": [
+      0.173,
+      -0.144,
+      0.453
+     ],
+     "struckFootFromLandingTwin": [
+      0.244,
+      -0.081,
+      0.319
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.339,
+      -0.014,
+      -0.173
+     ],
+     "comVTwin": [
+      4.508,
+      0.061,
+      -0.237
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.95,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.36
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 150,
+     "struckFootFromLanding": [
+      0.473,
+      -0.207,
+      0.533
+     ],
+     "struckFootFromLandingTwin": [
+      0.544,
+      -0.169,
+      0.383
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 6.91
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 5.74
+     },
+     "comV": [
+      4.15,
+      0.088,
+      -0.155
+     ],
+     "comVTwin": [
+      4.452,
+      0.133,
+      -0.486
+     ],
+     "pelvisHeight": 0.934,
+     "pelvisHeightTwin": 0.927,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.45
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 200,
+     "struckFootFromLanding": [
+      0.843,
+      -0.251,
+      0.481
+     ],
+     "struckFootFromLandingTwin": [
+      0.92,
+      -0.222,
+      0.388
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.87
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1
+     },
+     "comV": [
+      4.241,
+      0.077,
+      -0.458
+     ],
+     "comVTwin": [
+      4.409,
+      0.151,
+      -0.419
+     ],
+     "pelvisHeight": 0.918,
+     "pelvisHeightTwin": 0.909,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.54
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 300,
+     "struckFootFromLanding": [
+      1.566,
+      -0.179,
+      0.286
+     ],
+     "struckFootFromLandingTwin": [
+      1.621,
+      -0.133,
+      0.274
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.85
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.54
+     },
+     "comV": [
+      4.269,
+      -0.076,
+      0.456
+     ],
+     "comVTwin": [
+      4.293,
+      -0.03,
+      0.606
+     ],
+     "pelvisHeight": 0.911,
+     "pelvisHeightTwin": 0.914,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.67
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 500,
+     "struckFootFromLanding": [
+      3.035,
+      -0.073,
+      -0.004
+     ],
+     "struckFootFromLandingTwin": [
+      3.007,
+      -0.002,
+      -0.004
+     ],
+     "loadBW": {
+      "R": 2.15,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 3.03,
+      "L": 0
+     },
+     "comV": [
+      4.385,
+      -0.193,
+      -0.466
+     ],
+     "comVTwin": [
+      4.398,
+      -0.081,
+      -0.587
+     ],
+     "pelvisHeight": 0.923,
+     "pelvisHeightTwin": 0.93,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.83
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 700,
+     "struckFootFromLanding": [
+      3.06,
+      -0.076,
+      0.101
+     ],
+     "struckFootFromLandingTwin": [
+      3.052,
+      -0.01,
+      0.112
+     ],
+     "loadBW": {
+      "R": 0.06,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0.17,
+      "L": 0
+     },
+     "comV": [
+      4.478,
+      0.057,
+      0.531
+     ],
+     "comVTwin": [
+      4.527,
+      0.1,
+      0.51
+     ],
+     "pelvisHeight": 0.951,
+     "pelvisHeightTwin": 0.939,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.91
+     ],
+     "integR": 1,
+     "lost": null
+    },
+    {
+     "ms": 1000,
+     "struckFootFromLanding": [
+      4.739,
+      -0.138,
+      0.216
+     ],
+     "struckFootFromLandingTwin": [
+      4.793,
+      -0.056,
+      0.227
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.32
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.19
+     },
+     "comV": [
+      4.347,
+      -0.104,
+      0.665
+     ],
+     "comVTwin": [
+      4.341,
+      -0.038,
+      0.695
+     ],
+     "pelvisHeight": 0.913,
+     "pelvisHeightTwin": 0.927,
+     "V": 1,
+     "C": 0,
+     "wLoc": 1,
+     "legAuth": [
+      1,
+      0.97
+     ],
+     "integR": 1,
+     "lost": null
+    }
+   ],
+   "law": {
+    "vMin": 1,
+    "wLocMin": 1,
+    "commitStep": null,
+    "authorityMin": {
+     "legL": 1,
+     "legR": 0.339,
+     "trunk": 1,
+     "armL": 1,
+     "armR": 1
+    },
+    "placementOffsetMaxDeg": 1.7,
+    "emergencyStepSteps": 1
+   }
+  }
+ }
+}
