@@ -41,7 +41,7 @@ export const DEFAULTS = {
   drive: { kappa: 2 },
   // support: the stance leg's joints realise the ground reaction F at the contact point
   support: { Ky: 150, Dy: 25, mu: 0.9, FmaxBW: 3.5, contactN: 20, gateRampS: 0.01, stanceAuth: 0.3, minUy: 0.35, kvT: 0, align: true, comp: false, stanceHip: "rel", stanceHipAuth: 1.0, vlaw: "warp", warpMinS: 0.06, KyS: 20, chain: false, stanceRotAuth: 0.3, ftOn: true, mode: "pair", integ: { vA: 0.8, vB: 2.0, dA: 0.15, dB: 0.35, settleS: 0.02, tauS: 0.02, plantedFrac: 0.75 }, muUse: 0.7, missS: 0.06, proximityM: 0.004, stanceMarginS: 0.02, catchW: 1,
-    pairP: { floorBW: 0, floorLoadBW: 0.5, alignY: false, alignTolS: 0.042, KyS: 20, Ky: 150, Dy: 25, Kv: 4.0, KvFwd: 25, Ko: 2500, Do: 250, lever: 0.4, leverYaw: 0.2, acPR: 450, acYaw: 150, grfBeta: 1.0, grfTauS: 0.02, lean0: 35, lean1: 60, reachM: 1.15, tilt0: 35, tilt1: 70 }, supM: { on: false, Kp: 2500, Kd: 250, lFoot: 0.10, wFoot: 0.04, rFoot: 0.07, yawKp: 1200, yawKd: 150 },
+    pairP: { floorBW: 0, floorLoadBW: 0.5, alignY: false, alignTolS: 0.042, KyS: 20, Ky: 150, Dy: 25, Kv: 4.0, KvFwd: 25, Ko: 2500, Do: 250, lever: 0.4, leverYaw: 0.2, acPR: 450, acYaw: 150, grfBeta: 1.0, grfTauS: 0.02, latCentral: 0, lean0: 35, lean1: 60, reachM: 1.15, tilt0: 35, tilt1: 70 }, supM: { on: false, Kp: 2500, Kd: 250, lFoot: 0.10, wFoot: 0.04, rFoot: 0.07, yawKp: 1200, yawKd: 150 },
     att: { Kp: 2500, Kd: 250, maxNm: 600, footR: 0.05, yawKp: 400, yawKd: 40 } },
   // recovery placement (Δp = c·Δv at the free foot's RUN-1 touchdown)
   place: { on: true, cLat: 0.15, cFwd: 0, dvA: 5, dvB: 6, vDownMax: 2.5, reactS: 0.06, maxFlexDeg: 25, maxAbdDeg: 30, maxAddDeg: 15, rateDegS: 500, crossM: 0.05, reachM: 0.80, rampFrac: 0.35, decayS: 0.12, emergencyS: 0.06 },
@@ -49,7 +49,7 @@ export const DEFAULTS = {
   viab: { wFromC: true, qA: 0.7, qB: 1.4, dropA: 0.12, dropB: 0.30, tiltA: 32, tiltB: 58, tiltLookS: 0.15, tauDownS: 0.04, tauUpS: 0.35, cOn: 0.30, cOff: 0.65, cRiseS: 0.10, cFallS: 0.80, wLo: 0.15, wHi: 0.50, armLo: 0.45, armHi: 0.85 },
   // regional contact / error authority (HYBRID-RUN-1's law, measured against the blended target)
   authority: { eTolDeg: { legL: 11, legR: 11, trunk: 3, armL: 3, armR: 3 }, eScaleDeg: 15, jScaleNs: 4, floor: 0.15, tauDownS: 0.02, tauUpS: 0.3, delayS: 0.02, winS: 0.03 },
-  protect: { tone: 0.45 },
+  protect: { tone: 0.45, hipFlex: 15, kneeFlex: 20, ankleDf: -10 },
   armBal: { on: false, dvA: 0.2, dvB: 0.5, tauS: 0.15 },   // REJECTED (HAC1_LOG §9): any arm balance reaction made the 60 N·s push fall
   clear: { on: true, phase0: 0.1, phase1: 0.85, tolM: 0.03, degPerM: 200, maxDeg: 20, hipShare: 0.5, rateDegS: 600 },
   phase: { on: false, windowS: 0.15, minEarlyS: 0.04, lateClearM: 0.012, loadN: 200, kCatch: 4, rMax: 4, rLate: 0.25, holdS: 0.08 },
@@ -63,11 +63,11 @@ const jointAt = (st, j) => V.add(st[j.parentIndex].pos, Q.rot(st[j.parentIndex].
 function subtreeInertia(st, j) { const p = jointAt(st, j); let I = 0; for (const i of kids[j.childIndex]) { const c = L.comBody(st, i), d = V.sub(c, p), b = B[i], tr = (b.inertia[0][0] + b.inertia[1][1] + b.inertia[2][2]) / 3; I += b.mass * V.dot(d, d) + tr; } return I; }
 const hz = (v) => [v[0], 0, v[2]];
 // the PROTECT intent (anatomical degrees). fwd / side: the fall direction in the pelvis frame (unit, side > 0 = toward the athlete's right)
-export function protectAnat(fwd, side) { const sR = Math.max(0, side), sL = Math.max(0, -side), f = Math.max(0, fwd);
+export function protectAnat(fwd, side, P = {}) { const hf = P.hipFlex ?? 15, kf = P.kneeFlex ?? 20, af = P.ankleDf ?? -10, sR = Math.max(0, side), sL = Math.max(0, -side), f = Math.max(0, fwd);
   const arm = (s) => ({ flex: 40 + 40 * f + 15 * (sR + sL), abd: 20 + 50 * s, rot: 0 });
   return { lumbar: { flex: 10, lat: 0, rot: 0 }, thoracic: { flex: 10, lat: 0, rot: 0 }, neck: { flex: 22, lat: 0, rot: 0 },
     shoulder_L: arm(sL), shoulder_R: arm(sR), elbow_L: { flex: 25, pron: 0 }, elbow_R: { flex: 25, pron: 0 },
-    hip_L: { flex: 15, abd: 8, rot: 0 }, hip_R: { flex: 15, abd: 8, rot: 0 }, knee_L: { flex: 20, rot: 0 }, knee_R: { flex: 20, rot: 0 }, ankle_L: { df: -10, inv: 0, fabd: 0 }, ankle_R: { df: -10, inv: 0, fabd: 0 } }; }
+    hip_L: { flex: hf, abd: 8, rot: 0 }, hip_R: { flex: hf, abd: 8, rot: 0 }, knee_L: { flex: kf, rot: 0 }, knee_R: { flex: kf, rot: 0 }, ankle_L: { df: af, inv: 0, fabd: 0 }, ankle_R: { df: af, inv: 0, fabd: 0 } }; }
 
 export class HacRunner {
   constructor(intent, opts = {}) { this.I = intent; this.o = merge(DEFAULTS, opts); this.h = 1 / 240;
@@ -206,7 +206,7 @@ export class HacRunner {
       for (const s of ["L", "R"]) { const wA = 1 - this.gate[s]; if (wA <= 0.001) continue; const k = LEG[s].hip, j = JN[k];
         const qa = L.IL.qcs(j, pel.rot, L.childRotation(j, pRef1, an1[j.name] || {})), qb = L.IL.qcs(j, pel.rot, L.childRotation(j, pRef2, an2[j.name] || {}));
         qRun[k] = wA >= 0.999 ? qa : L.slerp(qRun[k], qa, wA); qRun2[k] = wA >= 0.999 ? qb : L.slerp(qRun2[k], qb, wA); } }
-    const vhP = Q.rot(Q.conj(pel.rot), hz(v)), vn = Math.hypot(vhP[0], vhP[2]) || 1, qPro = CH.jointTargets(protectAnat(vhP[2] / vn, vhP[0] / vn));
+    const vhP = Q.rot(Q.conj(pel.rot), hz(v)), vn = Math.hypot(vhP[0], vhP[2]) || 1, qPro = CH.jointTargets(protectAnat(vhP[2] / vn, vhP[0] / vn, this.o.protect));
     // STANCE-HIP ATTITUDE (SIMBICON): a supporting leg's hip target is "the pelvis at RUN-1's WORLD orientation, relative to the actual thigh":
     // the hip then servos the pelvis attitude (pitch, roll, yaw) against the planted leg, and the turf takes the reaction through the foot
     if (Sp.stanceHip === "world") for (const s of ["L", "R"]) { const g = this.gate[s]; if (g <= 0.001) continue; const k = LEG[s].hip, j = JN[k], qw = L.IL.qcs(j, pelI.R, st[j.childIndex].rot), qw2 = L.IL.qcs(j, I.pelvis(tau + 1).R, st[j.childIndex].rot);
@@ -326,6 +326,10 @@ export class HacRunner {
       const k = iv[0] + el, zRef = H0.zLand + (I.com(k)[1] - I.com(iv[0])[1]); return M * (G + I.comAcc(k)[1] + PS.Ky * (zRef - com[1]) + PS.Dy * (I.comVel(k)[1] - v[1]) + PS.KyS * (H0.zMid - com[1])); };
     if (wsum > 0) for (const s of ["L", "R"]) { const u = gE[s] / Math.max(1, wsum) * sup[s].sLean * sOrg * wLoc; if (u <= 0) continue; let F = V.sc(Fd, u); const fyA = fyAl(s);
       if (fyA != null) { F[1] = Math.max(0, fyA) * u; const fhh = Math.hypot(F[0], F[2]), cc = muU * F[1]; if (fhh > cc && fhh > 0) { F[0] *= cc / fhh; F[2] *= cc / fhh; } }
+      // CENTRAL LATERAL (V2 candidate, latCentral ∈ [0, 1]): the sideways part of this foot's support lies on the line foot → COM (an inverted
+      // pendulum: F_lat = F_y · Δlat / Δh), not HYBRID-RUN-1's sideways velocity servo; it carries no hidden roll moment, and sideways
+      // balance must then come from WHERE THE FOOT LANDS (the recovery placement), as in a real runner
+      if (PS.latCentral > 0) { const d = V.sub(com, feet[s].p), dh = Math.max(0.3, d[1]), fl0 = V.dot(F, ul), fl1 = F[1] * V.dot(d, ul) / dh, fl = fl0 + (fl1 - fl0) * PS.latCentral; F = V.add(F, V.sc(ul, fl - fl0)); }
       // LOADED-LEG FLOOR: a foot truly carrying load while the body descends onto it (an early or off-schedule stance) supports at least
       // floorBW of body weight: a loaded leg resists compression; it does not go limp because RUN-1's clock says "flight"
       if (PS.floorBW > 0 && feet[s].N > PS.floorLoadBW * M * G && v[1] < 0) { const fl = PS.floorBW * M * G * u; if (F[1] < fl) F[1] = fl; } if (PS.grfBeta) { F = V.add(F, V.sc(this.xL[s], PS.grfBeta * wLoc)); const fh2 = Math.hypot(F[0], F[2]), cone2 = muU * F[1]; if (fh2 > cone2 && fh2 > 0) { F[0] *= cone2 / fh2; F[2] *= cone2 / fh2; } }

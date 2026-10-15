@@ -187,6 +187,11 @@ Per active character ≈ 0.6 ms per 240 Hz step (physics ≈ 0.27, the V2 passiv
 - Every frozen expectation (hash, falls, first contact) is checked.
 - There are no random numbers.
 
+## After the report (15 Oct ≈ 05:40 – 05:57)
+
+- **Rejected: recovery carried by foot placement** (defect 2; `pairP.latCentral`, off). With the support's sideways part on the foot → COM line, the recovery step becomes visible, but every push falls, BRUSH included: the free foot touches down early, off RUN-1's schedule, and gets no support. A recovery that works by placement needs phase-adaptive locomotion (instruction §26). `HAC1_LOG.md` §10.
+- **Candidate V1.1, not adopted** (defect 3): the fall commits below V = 0.45 (was 0.30) with a 0.05 s rise (was 0.10). Falls start earlier with more speed: STRONG lands on the forearms with near-straight legs after 0.72 m; the canonical tackles land on the forearms instead of a thigh. Same fall / no-fall outcome in every battery scene, deterministic. The comparison videos are in review section I; the statuses above are V1's. `HAC1_LOG.md` §11.
+
 ## Authoritative-simulation boundary
 
 **Where it runs now:** HAC-1 runs in its own Jolt world in `review_artifacts/`, not in the match simulation. Nothing changes a match.

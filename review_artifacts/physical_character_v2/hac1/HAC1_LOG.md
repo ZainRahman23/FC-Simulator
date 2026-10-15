@@ -156,3 +156,51 @@ The struck foot unloads on the twin's schedule in all three phases.
 | Gentler: 0.3 → 0.8 m/s, τ 0.3 s | The 60 N·s push still falls (both sides). |
 
 **Reading:** the BUMP recovery is MARGINAL. Any change to the upper body's motion after a 60 N·s push tips the runner over. The reaction is off; the battery is unchanged (re-verified: 22 / 22 against `HAC1_expectations.json`).
+
+## 10. After the report (15 Oct, from ≈ 05:40): a visible recovery step through the stance's physics (rejected)
+
+**Question.** Can the 60 N·s push be recovered by WHERE THE FOOT LANDS instead of by the support's lateral velocity servo (`pairP.Kv` = 4 /s, the reason the recovery is not readable: defect 2)?
+
+**Candidate V2-lat** (`pairP.latCentral`, default 0 = off): the sideways part of each stance foot's support lies on the line foot → COM (an inverted pendulum, F_lat = F_y · Δlat / Δh) instead of the servo. It carries no hidden roll moment, so sideways balance has to come from the recovery placement (capture-point gain `place.cLat` up to 1/ω0 ≈ 0.31 s).
+
+| Variant | NC | Pushes (30 / 60 / 100 N·s, both sides) |
+|---|---|---|
+| latCentral 1, cLat 0.15 / 0.25 / 0.31 | runs | all fall, BRUSH included (0.8 – 1.2 s after the push) |
+| latCentral 0.5, same gains | runs | all fall |
+| latCentral 1 + touchdown-aligned support / loaded-leg floor | falls / runs | all fall |
+| latCentral 1, viability OFF (no commitment, no arm change) | runs | all fall: the falls are not caused by the viability layer |
+| servo kept but weakened (Kv 1 / 2) × cLat 0.15 / 0.25 / 0.31 | runs at 0.15; FALLS at 0.25 – 0.31 (Kv 1) | BRUSH sometimes runs on; BUMP falls in every variant |
+
+**Diagnosis** (BUMP, latCentral 1, cLat 0.31; trace in scratch):
+- The push lands in the LEFT stance and moves the COM 11 cm further left of that foot than RUN-1's own geometry. A central ground reaction then pushes the COM further left; only a right-foot crossover or the next left step can catch it.
+- The free right foot, dragged with the body, touches down **125 ms early** (step 222, RUN-1's touchdown 252), while RUN-1's clock still says flight. That stance gets almost no vertical support (the support's vertical law follows RUN-1's COM acceleration, ≈ −g in flight), so the body sinks.
+- The left recovery step does land 17 – 19 cm out (hip abduction 13 – 15°: a visible step), but the stance pattern has left RUN-1's schedule. From there, supported and unsupported stances alternate, the body sinks (COM 1.08 → 0.5 m) and pitches forward (15° → 46°).
+
+**Reading.** The servo is what keeps the feet on RUN-1's schedule after a push. A recovery carried by foot placement needs the support (and the leg cycle) to follow the PHYSICAL touchdowns: phase-adaptive locomotion, the same wall as the fully physical runner (§2, early touchdowns cascade). Building it is physics-generated locomotion (instruction §26), so I stopped. The option stays in the code, default off; nothing in the battery changed.
+
+## 11. After the report: earlier fall commitment, candidate V1.1 (not adopted; for the owner)
+
+**Problem** (defect 3). The falls look like slow folds onto hands and knees. Measured: when C commits, the COM is already down to 0.56 – 0.71 m and the speed has dropped from 4.5 to 1.4 – 2.8 m/s; in both canonical tackles a THIGH touches the turf at the moment of commitment (knee 80 – 88°). The fold happens BEFORE commitment, during a dead-band limbo (STRONG: V 0.31 – 0.38 for ≈ 0.1 s, C held at 0.12, support still at 88 %).
+
+**Protect pose is not the cause:** tone 0.3 / 0.45 / 0.7 and straighter legs (hips 5°, knees 8°) leave the commitment step and the first ground body unchanged (±4 steps) and move the COM travel by ≤ 4 cm (`protect.hipFlex` / `kneeFlex` / `ankleDf` exposed as options, defaults unchanged).
+
+**Candidate V1.1:** commitment threshold `viab.cOn` 0.30 → 0.45 (dead band [0.45, 0.65] instead of [0.30, 0.65]) and rise time `viab.cRiseS` 0.10 → 0.05 s. The cause addressed: a body whose viability is already below 0.45 no longer receives most of RUN's support for another 0.1 – 0.2 s.
+
+| | commit: COM height, speed | first ground body | knees at impact | COM travel commit → ground |
+|---|---|---|---|---|
+| STRONG push, V1 | 0.70 m, 2.4 m/s | forearm | 35 / 33° | 0.32 m |
+| STRONG push, V1.1 | 0.89 m, 3.7 m/s | forearm | 20 / 20° | 0.72 m |
+| PVP-F2 canonical, V1 | 0.56 m, 2.0 m/s | **thigh** | 83 / 69° | — |
+| PVP-F2 canonical, V1.1 | 0.67 m, 2.5 m/s | forearm | 34 / 29° | 0.36 m |
+| PVP-F3 canonical, V1 | 0.58 m, 1.6 m/s | **thigh** | 88 / 71° | — |
+| PVP-F3 canonical, V1.1 | 0.74 m, 1.9 m/s | forearm | 32 / 23° | 0.38 m |
+| PVP-F3 EARLY, V1 | 0.67 m, 2.2 m/s | forearm | 33 / 44° | 0.22 m |
+| PVP-F3 EARLY, V1.1 | 0.93 m, 3.2 m/s | forearm | 20 / 20° | 0.71 m |
+
+**Whole battery under V1.1:** deterministic; every fall / no-fall outcome is the same as V1's (NC, the twins, BRUSH, BUMP from both sides and UNLOAD still never fall); fall times move by −35 … +100 steps.
+
+**Frame strips** (1×, side, V1 | V1.1; I cannot play video in real time):
+- STRONG from the right: V1 drops onto its knees and then its hands. V1.1 carries its speed into a forward dive with near-straight legs and lands on its hands.
+- The canonical tackles: the difference is smaller; V1.1's recipient ends lower and flatter.
+
+**Not adopted.** The defaults (and the frozen battery, the review renders and the statuses) stay V1. V1.1 is `{ viab: { cOn: 0.45, cRiseS: 0.05 } }`; the comparison videos are on the review page (section I).
