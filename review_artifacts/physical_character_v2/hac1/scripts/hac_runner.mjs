@@ -46,7 +46,7 @@ export const DEFAULTS = {
   // recovery placement (Δp = c·Δv at the free foot's RUN-1 touchdown)
   place: { on: true, cLat: 0.15, cFwd: 0, dvA: 5, dvB: 6, vDownMax: 2.5, reactS: 0.06, maxFlexDeg: 25, maxAbdDeg: 30, maxAddDeg: 15, rateDegS: 500, crossM: 0.05, reachM: 0.80, rampFrac: 0.35, decayS: 0.12, emergencyS: 0.06 },
   // viability: instantaneous margins → filtered V → fall commitment C (dead band)
-  viab: { qA: 0.7, qB: 1.4, dropA: 0.12, dropB: 0.30, tiltA: 32, tiltB: 58, tiltLookS: 0.15, tauDownS: 0.04, tauUpS: 0.35, cOn: 0.30, cOff: 0.65, cRiseS: 0.10, cFallS: 0.80, wLo: 0.15, wHi: 0.50, armLo: 0.45, armHi: 0.85 },
+  viab: { wFromC: true, qA: 0.7, qB: 1.4, dropA: 0.12, dropB: 0.30, tiltA: 32, tiltB: 58, tiltLookS: 0.15, tauDownS: 0.04, tauUpS: 0.35, cOn: 0.30, cOff: 0.65, cRiseS: 0.10, cFallS: 0.80, wLo: 0.15, wHi: 0.50, armLo: 0.45, armHi: 0.85 },
   // regional contact / error authority (HYBRID-RUN-1's law, measured against the blended target)
   authority: { eTolDeg: { legL: 11, legR: 11, trunk: 3, armL: 3, armR: 3 }, eScaleDeg: 15, jScaleNs: 4, floor: 0.15, tauDownS: 0.02, tauUpS: 0.3, delayS: 0.02, winS: 0.03 },
   protect: { tone: 0.45 },
@@ -171,7 +171,9 @@ export class HacRunner {
     this.Vf += (Vi - this.Vf) * (1 - Math.exp(-h / (Vi < this.Vf ? VB.tauDownS : VB.tauUpS)));
     // fall commitment with a dead band: rises below cOn, decays above cOff, holds in between
     if (this.Vf < VB.cOn) this.C += (1 - this.C) * (1 - Math.exp(-h / VB.cRiseS)); else if (this.Vf > VB.cOff) this.C += (0 - this.C) * (1 - Math.exp(-h / VB.cFallS));
-    const wLoc = VB.off ? 1 : Math.min(1 - this.C, sstep(this.Vf, VB.wLo, VB.wHi)), wArm = VB.off ? 1 : Math.min(wLoc, sstep(this.Vf, VB.armLo, VB.armHi));
+    // locomotion weight: RUN keeps its full support until the (hysteresis-filtered) commitment to fall builds — a transient viability dip must
+    // not itself weaken the support (that is a positive feedback); the arms leave RUN earlier (balance / brace) as viability drops
+    const wLoc = VB.off ? 1 : VB.wFromC ? 1 - this.C : Math.min(1 - this.C, sstep(this.Vf, VB.wLo, VB.wHi)), wArm = VB.off ? 1 : Math.min(wLoc, sstep(this.Vf, VB.armLo, VB.armHi));
     const W = { legL: wLoc, legR: wLoc, trunk: wLoc, armL: wArm, armR: wArm };
     this.perf.viab += now() - T2;
     // ── TRACKING: blended targets (PROTECT ↔ RUN-1 + recovery), regional authority, PD + feed-forward ──

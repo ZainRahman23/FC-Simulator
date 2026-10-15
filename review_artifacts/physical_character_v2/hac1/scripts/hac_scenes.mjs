@@ -26,10 +26,27 @@ export function intentsSHopp(sev, steps) { const th = HS.SEV[sev], A = HI.makeIn
   const p = path(tc, nc), ac = A.com(nc), target = [ac[0] - HS.D_C, 0, ac[2]], offR = [target[0] - p[0], 0, target[2] - p[2]];
   const B = HI.makeIntent(run(), { kRef: HS.KREF, k0: HS.K0 + HS.PHASE_B, qR: qB, offR, nSteps: steps + 10, heading });
   return { A, B, theta: th, tc, dc: HS.D_C, d0: A.com(0)[0] - B.com(0)[0], offR }; }
+// SH2 (HAC-1 fixture, added because the HYBRID-RUN-1 fixture leaves B running PRESSED against A: it straightens onto a lane 0.42 m from A, so
+// the contact and leg interference never end). Same geometry and severities, but B's intent is a BUMP: heading +θ toward A until t_c − 0.1 s,
+// then straightens over [t_c − 0.1, t_c + 0.2] s (as before) and diverges 3° away from A from t_c + 0.3 s, so B leaves A's shoulder. t_c is solved as before (intended COMs 0.42 m apart).
+export const DIVERGE_DEG = 3;
+export function intentsSH2(sev, steps, side = "right") { const th = HS.SEV[sev], sg = side === "right" ? 1 : -1, A = HI.makeIntent(run(), { kRef: HS.KREF, k0: HS.K0, nSteps: steps + 10 }), smooth = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+  const qB = L.yawQ(-sg * th), B0 = HI.makeIntent(run(), { kRef: HS.KREF, k0: HS.K0 + HS.PHASE_B, qR: qB, offR: [0, 0, 0], nSteps: steps + 10 });
+  // extra yaw on top of qB (−sg·θ): straighten (+θ) over [t_c − 0.1, t_c + 0.2] as the HYBRID-RUN-1 fixture, then diverge gently (DIVERGE_DEG
+  // away from A over 0.4 s from t_c + 0.3), so B leaves A's shoulder instead of running pressed against it
+  const hdOf = (tc) => (t) => sg * (th * smooth((t - (tc - 0.1)) / 0.3) + DIVERGE_DEG * smooth((t - (tc + 0.3)) / 0.4));
+  const path = (tc, nEnd) => { const hd = hdOf(tc); let p = B0.com(0).slice(); for (let n = 0; n < nEnd; n++) p = V.add(p, V.sc(Q.rot(L.yawQ(hd(n / 240)), B0.comVel(n)), 1 / 240)); return p; };
+  const lat0 = path(9, 0)[0] - A.com(0)[0]; let lo = 0.2, hi = 3.0;
+  for (let it = 0; it < 30; it++) { const tc = (lo + hi) / 2, nc = Math.round(tc * 240), sepNow = sg * ((path(tc, nc)[0] - lat0 + sg * HS.D0) - (A.com(nc)[0] - A.com(0)[0])); if (sepNow > HS.D_C) lo = tc; else hi = tc; }
+  const tc = Math.round(((lo + hi) / 2) * 240) / 240, nc = Math.round(tc * 240), p = path(tc, nc), ac = A.com(nc), target = [ac[0] + sg * HS.D_C, 0, ac[2]], offR = [target[0] - p[0], 0, target[2] - p[2]];
+  const B = HI.makeIntent(run(), { kRef: HS.KREF, k0: HS.K0 + HS.PHASE_B, qR: qB, offR, nSteps: steps + 10, heading: hdOf(tc) });
+  return { A, B, theta: th, tc, dc: HS.D_C, d0: sg * (B.com(0)[0] - A.com(0)[0]), offR, side }; }
 export const intentPVPk = (k0, steps) => HI.makeIntent(run(), { kRef: HS.KREF, k0, qR: META.qR, offR: META.offR, nSteps: steps + 10 });
 export async function runScene(name, steps = 783, opts = {}) {
   if (name === "NC") return HW.runHac({ intent: HS.intentNC(steps), opts, steps });
   let m = /^NC_(\d+)$/.exec(name); if (m) return HW.runHac({ intent: HI.makeIntent(run(), { kRef: HS.KREF, k0: +m[1], nSteps: steps + 10 }), opts, steps });
+  m = /^SH2_(BRUSH|BUMP|STRONG)(_OPP)?$/.exec(name);
+  if (m) { const I = intentsSH2(m[1], steps, m[2] ? "left" : "right"), o = await HW.runHac({ intent: I.A, opts, second: { kind: "hac", intent: I.B, opts }, steps }); o.scene = { name, fixture: "SH2", theta: I.theta, tc: I.tc, dc: I.dc, d0: I.d0, offRB: I.offR, side: I.side }; return o; }
   m = /^SH_(BRUSH|BUMP|STRONG)(_OPP)?$/.exec(name);
   if (m) { const I = m[2] ? intentsSHopp(m[1], steps) : HS.intentsSH(m[1], steps), o = await HW.runHac({ intent: I.A, opts, second: { kind: "hac", intent: I.B, opts }, steps }); o.scene = { name, theta: I.theta, tc: I.tc, dc: I.dc, d0: I.d0, offRB: I.offR, side: m[2] ? "left" : "right" }; return o; }
   m = /^PVP_(F2|F3|TWIN)(?:_(CANON|EARLY|UNLOAD))?$/.exec(name);
