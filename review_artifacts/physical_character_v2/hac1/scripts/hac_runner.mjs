@@ -41,7 +41,7 @@ export const DEFAULTS = {
   drive: { kappa: 2 },
   // support: the stance leg's joints realise the ground reaction F at the contact point
   support: { Ky: 150, Dy: 25, mu: 0.9, FmaxBW: 3.5, contactN: 20, gateRampS: 0.01, stanceAuth: 0.3, minUy: 0.35, kvT: 0, align: true, comp: false, stanceHip: "rel", stanceHipAuth: 1.0, vlaw: "warp", warpMinS: 0.06, KyS: 20, chain: false, stanceRotAuth: 0.3, ftOn: true, mode: "pair", integ: { vA: 0.8, vB: 2.0, dA: 0.15, dB: 0.35, settleS: 0.02, tauS: 0.02, plantedFrac: 0.75 }, muUse: 0.7, missS: 0.06, proximityM: 0.004, stanceMarginS: 0.02, catchW: 1,
-    pairP: { alignY: false, alignTolS: 0.042, KyS: 20, Ky: 150, Dy: 25, Kv: 4.0, KvFwd: 25, Ko: 2500, Do: 250, lever: 0.4, leverYaw: 0.2, acPR: 450, acYaw: 150, grfBeta: 1.0, grfTauS: 0.02, lean0: 35, lean1: 60, reachM: 1.15, tilt0: 35, tilt1: 70 }, supM: { on: false, Kp: 2500, Kd: 250, lFoot: 0.10, wFoot: 0.04, rFoot: 0.07, yawKp: 1200, yawKd: 150 },
+    pairP: { floorBW: 0, floorLoadBW: 0.5, alignY: false, alignTolS: 0.042, KyS: 20, Ky: 150, Dy: 25, Kv: 4.0, KvFwd: 25, Ko: 2500, Do: 250, lever: 0.4, leverYaw: 0.2, acPR: 450, acYaw: 150, grfBeta: 1.0, grfTauS: 0.02, lean0: 35, lean1: 60, reachM: 1.15, tilt0: 35, tilt1: 70 }, supM: { on: false, Kp: 2500, Kd: 250, lFoot: 0.10, wFoot: 0.04, rFoot: 0.07, yawKp: 1200, yawKd: 150 },
     att: { Kp: 2500, Kd: 250, maxNm: 600, footR: 0.05, yawKp: 400, yawKd: 40 } },
   // recovery placement (Δp = c·Δv at the free foot's RUN-1 touchdown)
   place: { on: true, cLat: 0.15, cFwd: 0, dvA: 5, dvB: 6, vDownMax: 2.5, reactS: 0.06, maxFlexDeg: 25, maxAbdDeg: 30, maxAddDeg: 15, rateDegS: 500, crossM: 0.05, reachM: 0.80, rampFrac: 0.35, decayS: 0.12, emergencyS: 0.06 },
@@ -50,6 +50,8 @@ export const DEFAULTS = {
   // regional contact / error authority (HYBRID-RUN-1's law, measured against the blended target)
   authority: { eTolDeg: { legL: 11, legR: 11, trunk: 3, armL: 3, armR: 3 }, eScaleDeg: 15, jScaleNs: 4, floor: 0.15, tauDownS: 0.02, tauUpS: 0.3, delayS: 0.02, winS: 0.03 },
   protect: { tone: 0.45 },
+  clear: { on: true, phase0: 0.1, phase1: 0.85, tolM: 0.03, degPerM: 200, maxDeg: 20, hipShare: 0.5, rateDegS: 600 },
+  phase: { on: false, windowS: 0.15, minEarlyS: 0.04, lateClearM: 0.012, loadN: 200, kCatch: 4, rMax: 4, rLate: 0.25, holdS: 0.08 },
   aim: { on: false, mode: "yaw" },
   icm: { on: false, Kp: 2500, Kd: 250, capPR: 150, capYaw: 60, stanceOnly: true },
 };
@@ -69,7 +71,7 @@ export function protectAnat(fwd, side) { const sR = Math.max(0, side), sL = Math
 export class HacRunner {
   constructor(intent, opts = {}) { this.I = intent; this.o = merge(DEFAULTS, opts); this.h = 1 / 240;
     this.alpha = Object.fromEntries(Object.keys(REGIONS).map(r => [r, 1])); this.gate = { L: 0, R: 0 }; this.Vf = 1; this.C = 0; this.off = { L: { flex: 0, abd: 0 }, R: { flex: 0, abd: 0 } };
-    this.log = []; this.perf = { viab: 0, plan: 0, track: 0, support: 0, total: 0, n: 0 }; this.touched = false; this.onTurf = { L: false, R: false }; this.tdPhys = { L: 0, R: 0 }; this.stIv = { L: null, R: null }; this.hs = { L: null, R: null }; this.land = { L: null, R: null }; this.integ = { L: 1, R: 1 }; this.stOn = { L: false, R: false }; this.stT0 = { L: 0, R: 0 }; this.planted = { L: false, R: false }; this.lost = { L: false, R: false };
+    this.log = []; this.perf = { viab: 0, plan: 0, track: 0, support: 0, total: 0, n: 0 }; this.touched = false; this.onTurf = { L: false, R: false }; this.tdPhys = { L: 0, R: 0 }; this.stIv = { L: null, R: null }; this.hs = { L: null, R: null }; this.land = { L: null, R: null }; this.integ = { L: 1, R: 1 }; this.stOn = { L: false, R: false }; this.stT0 = { L: 0, R: 0 }; this.planted = { L: false, R: false }; this.lost = { L: false, R: false }; this.clr = { L: 0, R: 0 };
     this.ff = this.o.ffChains.map(ch => ({ chain: ch, fn: ID.makeChainID(ch, intent.chor) })); }
   attach(plant, c) { this.plant = plant; this.c = c; this.role = c.role; const st = c.st; if (this.o.drive) c.act = new DR.AnimationDrive(c.spec, c.view, c.P, this.o.drive);
     this.jdOf = {}; for (const d of c.P.jd) this.jdOf[d.k] = d;
@@ -87,8 +89,8 @@ export class HacRunner {
     if (stanceNow) { const cur = ivs.find(([a, b]) => tau >= a && tau <= b); return { nTd: tau + Math.round(this.o.place.emergencyS / this.h), nLo: cur ? cur[0] - 1 : tau - 1, emergency: true }; }
     const nx = ivs.find(([a]) => a > tau); if (!nx) return null; const prev = [...ivs].reverse().find(([, b]) => b < nx[0]); return { nTd: nx[0], nLo: prev ? prev[1] : tau - 1, emergency: false }; }
   command(c, st, ev, n) {
-    const T0 = now(), h = this.h, I = this.I, A = this.o.authority, Sp = this.o.support, PLc = this.o.place, VB = this.o.viab, tau = n;
-    if (n === 0) { this.Vf = 1; this.C = 0; this.touched = false; }
+    if (n === 0) { this.Vf = 1; this.C = 0; this.touched = false; this.tau = 0; this.catchUp = null; this.hold = 0; this.physTouch = { L: false, R: false }; }
+    const T0 = now(), h = this.h, I = this.I, A = this.o.authority, Sp = this.o.support, PLc = this.o.place, VB = this.o.viab, tau = this.o.phase.on ? this.tau : n;
     const row = { n, e: {}, a: {}, w: {} };
     // ── physical state ──
     let com = [0, 0, 0], P = [0, 0, 0]; st.forEach((b, i) => { com = V.add(com, V.sc(b.com, B[i].mass)); P = V.add(P, V.sc(b.v, B[i].mass)); }); com = V.sc(com, 1 / M); const v = V.sc(P, 1 / M);
@@ -177,6 +179,13 @@ export class HacRunner {
     const anR = { ...I.anat(tau) }, anR2 = { ...I.anat(tau + 1) }, addOff = (an) => { const o = {}; for (const [j, x] of Object.entries(an)) o[j] = { ...x }; for (const s of ["L", "R"]) { const hj = o["hip_" + s]; hj.flex = (hj.flex ?? 0) + this.off[s].flex; hj.abd = (hj.abd ?? 0) + this.off[s].abd; } return o; };
     // EMERGENCY STEP: a free leg whose step is advanced takes RUN-1's own TOUCHDOWN pose for that leg (RUN-1's leg cycle re-timed, not a new motion)
     for (const s of ["L", "R"]) { const pl = plan[s]; if (!pl || !pl.adv) continue; const aTd = I.anat(pl.nTd); for (const j of ["hip_", "knee_", "ankle_"]) { anR[j + s] = { ...aTd[j + s] }; anR2[j + s] = { ...aTd[j + s] }; } }
+    // SWING-FOOT CLEARANCE (the elevating response to a trip): in mid-swing (RUN-1 swing phase clrPhase0…1 of a free foot), a foot lower than
+    // RUN-1's own swing foot by more than clrTol gets extra hip and knee flexion ∝ the deficit (bounded, rate-limited). RUN-1's step is
+    // otherwise untouched.
+    const CL = this.o.clear; row.clr = {};
+    for (const s of ["L", "R"]) { let tgtC = 0; if (CL.on && !stanceI[s] && this.gate[s] < 0.5) { const nx = I.stances[s].find(([a0]) => a0 > tau), pv = [...I.stances[s]].reverse().find(([, b0]) => b0 < tau);
+        if (nx && pv) { const ph = (tau - pv[1]) / Math.max(1, nx[0] - pv[1]); if (ph > CL.phase0 && ph < CL.phase1) { const PI2 = I.pose(Math.round(tau)), fI = PI2[LEG[s].foot], loI = L.PL.bodyLowest(B[LEG[s].foot], fI).y, def = loI - feet[s].lo - CL.tolM; if (def > 0) tgtC = Math.min(CL.maxDeg, CL.degPerM * def); } } }
+      const r = CL.rateDegS * h; this.clr[s] += clamp(tgtC - this.clr[s], -r, r); if (this.clr[s] > 0.05) { for (const an of [anR, anR2]) { an["hip_" + s] = { ...an["hip_" + s], flex: (an["hip_" + s].flex ?? 0) + this.clr[s] * CL.hipShare }; an["knee_" + s] = { ...an["knee_" + s], flex: (an["knee_" + s].flex ?? 0) + this.clr[s] }; } row.clr[s] = +this.clr[s].toFixed(1); } }
     const qRun = CH.jointTargets(addOff(anR)), qRun2 = CH.jointTargets(addOff(anR2));
     // FREE-LEG AIMING (procedural adaptation of the intent to the physical pelvis): a free leg's hip target is RUN-1's thigh orientation in RUN-1's
     // pelvis frame, i.e. in the WORLD, expressed relative to the PHYSICAL pelvis, so a pelvis that deviates from RUN-1 (it must: RUN-1 is not
@@ -271,6 +280,16 @@ export class HacRunner {
     row.lo = { L: +feet.L.lo.toFixed(3), R: +feet.R.lo.toFixed(3) }; row.ej = Object.fromEntries(["hip_L", "knee_L", "ankle_L", "hip_R", "knee_R", "ankle_R"].map(jn => [jn, errs[ji(jn)].map(x => +(x / D2R).toFixed(1))])); row.stI = (stanceI.L ? "L" : "") + (stanceI.R ? "R" : "");
     row.sup = { L: +this.gate.L.toFixed(2), R: +this.gate.R.toFixed(2), NL: Math.round(feet.L.N), NR: Math.round(feet.R.N), iL: +feet.L.integ.toFixed(2), iR: +feet.R.integ.toFixed(2), slL: +feet.L.slide.toFixed(2), slR: +feet.R.slide.toFixed(2), dL: +feet.L.disp.toFixed(3), dR: +feet.R.disp.toFixed(3) }; row.F = Fout;
     row.v = v.map(x => +x.toFixed(3)); row.vd = vI.map(x => +x.toFixed(3)); row.com = com.map(x => +x.toFixed(4)); row.comd = comI.map(x => +x.toFixed(4)); row.tilt = +tilt.toFixed(1); row.tiltT = +tiltT.toFixed(1);
+    // ── PHASE RESYNCHRONISATION (HYBRID-RUN-1's rule, now on): RUN-1's clock follows the body's physical touchdowns. A foot that lands (load >
+    //    loadN) 40 ms … 0.15 s before RUN-1's touchdown of it advances the clock toward that touchdown (≤ rMax frames per step); a foot still
+    //    above the turf when RUN-1's stance of it begins holds the clock (rate rLate) for at most holdS. RUN-1 is re-timed, never edited.
+    const PH = this.o.phase; let rate = 1;
+    if (PH.on && n > 0) { for (const s2 of ["L", "R"]) { const f = feet[s2], touching = f.N > PH.loadN, rising = touching && !this.physTouch[s2], inSt = I.stances[s2].find(([a0, b0]) => tau >= a0 && tau <= b0), next = I.stances[s2].find(([a0]) => a0 > tau);
+        if (rising && !inSt && next && next[0] - tau <= PH.windowS / h && next[0] - tau > PH.minEarlyS / h) { this.catchUp = { s: s2, target: next[0] }; row.ph = "early " + s2; }
+        if (!touching && f.lo > PH.lateClearM && inSt && tau - inSt[0] <= 2 && this.hold < PH.holdS / h) { rate = Math.min(rate, PH.rLate); this.hold++; row.ph = "late " + s2; }
+        if (touching) this.hold = 0; this.physTouch[s2] = touching; }
+      if (this.catchUp) { const d = this.catchUp.target - tau; if (d <= 0.5) this.catchUp = null; else rate = Math.max(rate, Math.min(PH.rMax, 1 + d / PH.kCatch)); } }
+    if (PH.on) { this.tau = tau + rate; row.tau = +tau.toFixed(2); row.rate = +rate.toFixed(2); }
     this.perf.total += now() - T0; this.perf.n++;
     this.log.push(row); this.last = row; return { cmd }; }
   // PAIR MODE = HYBRID-RUN-1's gait support and balance moment (hr_runner.mjs §2, same law and parameters), every term × w_loc: the support
@@ -293,7 +312,10 @@ export class HacRunner {
       if (el > len) return M * (G + PS.Ky * (H0.zMid - com[1]) + PS.Dy * (0 - v[1]));
       const k = iv[0] + el, zRef = H0.zLand + (I.com(k)[1] - I.com(iv[0])[1]); return M * (G + I.comAcc(k)[1] + PS.Ky * (zRef - com[1]) + PS.Dy * (I.comVel(k)[1] - v[1]) + PS.KyS * (H0.zMid - com[1])); };
     if (wsum > 0) for (const s of ["L", "R"]) { const u = gE[s] / Math.max(1, wsum) * sup[s].sLean * sOrg * wLoc; if (u <= 0) continue; let F = V.sc(Fd, u); const fyA = fyAl(s);
-      if (fyA != null) { F[1] = Math.max(0, fyA) * u; const fhh = Math.hypot(F[0], F[2]), cc = muU * F[1]; if (fhh > cc && fhh > 0) { F[0] *= cc / fhh; F[2] *= cc / fhh; } } if (PS.grfBeta) { F = V.add(F, V.sc(this.xL[s], PS.grfBeta * wLoc)); const fh2 = Math.hypot(F[0], F[2]), cone2 = muU * F[1]; if (fh2 > cone2 && fh2 > 0) { F[0] *= cone2 / fh2; F[2] *= cone2 / fh2; } }
+      if (fyA != null) { F[1] = Math.max(0, fyA) * u; const fhh = Math.hypot(F[0], F[2]), cc = muU * F[1]; if (fhh > cc && fhh > 0) { F[0] *= cc / fhh; F[2] *= cc / fhh; } }
+      // LOADED-LEG FLOOR: a foot truly carrying load while the body descends onto it (an early or off-schedule stance) supports at least
+      // floorBW of body weight: a loaded leg resists compression; it does not go limp because RUN-1's clock says "flight"
+      if (PS.floorBW > 0 && feet[s].N > PS.floorLoadBW * M * G && v[1] < 0) { const fl = PS.floorBW * M * G * u; if (F[1] < fl) F[1] = fl; } if (PS.grfBeta) { F = V.add(F, V.sc(this.xL[s], PS.grfBeta * wLoc)); const fh2 = Math.hypot(F[0], F[2]), cone2 = muU * F[1]; if (fh2 > cone2 && fh2 > 0) { F[0] *= cone2 / fh2; F[2] *= cone2 / fh2; } }
       out.push({ side: s, foot: bi("foot_" + s), p: feet[s].p, F }); this.pairF[s] = F; Fy += F[1]; Fout.push([s, ...F.map(x => Math.round(x))]); }
     const pd = I.pelvis(tau), T = V.add(V.sc(rotvec(pd.R, pel.rot), PS.Ko), V.sc(V.sub(pd.w, pel.w), PS.Do)), clampHY = (x, lh, ly) => { const th = Math.hypot(x[0], x[2]), f = th > lh ? lh / th : 1; return [x[0] * f, clamp(x[1], -ly, ly), x[2] * f]; };
     const Tsup = Fy > 0 ? clampHY(T, PS.lever * Fy, PS.leverYaw * Fy) : [0, 0, 0], Tac = V.sc(clampHY(V.sub(T, Tsup), PS.acPR, PS.acYaw), (this.alpha.trunk ?? 1) * wLoc);
