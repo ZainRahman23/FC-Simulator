@@ -2,8 +2,8 @@
 # HAC-1 review renders (presentation only: reads the battery's records; nothing is re-simulated). Output → hac1/review/video, stills (Git);
 # REFERENCE3 composites → hac1/review/local_reference/ (gitignored).
 #   A  NO CONTACT     ORIGINAL RUN-1 | HAC-1 | HAC-1 diagnostic; side; 1× and 0.25×
-#   B  SHOULDER       TWIN (A alone) | BRUSH | BUMP | STRONG — fixture SH2 (bump and separate) and the HYBRID-RUN-1 fixture SH (pressed);
-#                     behind and in front, 1× and 0.25×; diagnostic 1× and 0.25×; the other side (OPP) 1×
+#   B  SHOULDER-TYPE  TWIN | BRUSH | BUMP | STRONG — the PUSH fixture (prescribed lateral impulse at the shoulder): behind and in front, 1× and
+#                     0.25×; diagnostic 1× and 0.25×; the other side 1×. Secondary: the HYBRID-RUN-1 two-runner fixture SH (behind 1× / 0.25×, diagnostic 1×)
 #   C  SLIDE TACKLE   TWIN | PVP-F2 | PVP-F3 at the canonical support phase: close (az 60), side (az 90), rear 3/4 (az 145) at 1× and 0.25×;
 #                     diagnostic 1× / 0.25×; EARLY (foot freshly loaded) and UNLOAD (unloading) rear 3/4 1× and 0.25× and diagnostic 1×;
 #                     stills grids; REFERENCE3 | TWIN | F2 | F3 (local only)
@@ -17,9 +17,12 @@ fcOf() { node -e 'const z=require("zlib"),f=require("fs");const o=JSON.parse(z.g
 clip --run $RUNS/NC.json.gz --key NC_O --out $Q/clips --mode original --refStep 0 --from 0.004 --to 3.0
 clip --run $RUNS/NC.json.gz --key NC_H --out $Q/clips --refStep 0 --from 0.004 --to 3.0
 # B (each shoulder clip aligned on its own first contact, −0.4 → +2.0 s; the TWIN on the BUMP's clock)
-for F in SH2 SH; do for s in BRUSH BUMP STRONG; do clip --run $RUNS/${F}_$s.json.gz --key ${F}_$s --out $Q/clips --who both --from -0.4 --to 2.0; done
-  clip --run $RUNS/NC.json.gz --key ${F}_TWIN --out $Q/clips --refStep $(fcOf $RUNS/${F}_BUMP.json.gz) --from -0.4 --to 2.0; done
-for s in BRUSH BUMP STRONG; do clip --run $RUNS/SH2_${s}_OPP.json.gz --key SH2_${s}_OPP --out $Q/clips --who both --from -0.4 --to 2.0; done
+PN=180   # the push step (PUSH_T0 0.75 s)
+# (the camera follows the TWIN's path, so each pushed runner's displacement off the twin's line is visible)
+for s in BRUSH BUMP STRONG; do clip --run $RUNS/PUSH_$s.json.gz --key PUSH_$s --out $Q/clips --focus $RUNS/NC.json.gz --refStep $PN --from -0.4 --to 2.2; clip --run $RUNS/PUSH_${s}_OPP.json.gz --key PUSH_${s}_OPP --out $Q/clips --focus $RUNS/NC.json.gz --refStep $PN --from -0.4 --to 2.2; done
+clip --run $RUNS/NC.json.gz --key PUSH_TWIN --out $Q/clips --refStep $PN --from -0.4 --to 2.2
+for s in BRUSH BUMP STRONG; do clip --run $RUNS/SH_$s.json.gz --key SH_$s --out $Q/clips --who both --from -0.4 --to 2.0; done
+clip --run $RUNS/NC.json.gz --key SH_TWIN --out $Q/clips --refStep $(fcOf $RUNS/SH_BUMP.json.gz) --from -0.4 --to 2.0
 # C (each tackle aligned on its own first contact, −0.3 → +1.3 s; each TWIN on its F2's clock and camera path)
 for P in "" _EARLY _UNLOAD; do N=$(fcOf $RUNS/PVP_F2$P.json.gz)
   for k in F2 F3; do clip --run $RUNS/PVP_$k$P.json.gz --key PVP_$k$P --out $Q/clips --who both --frame tackler --from -0.3 --to 1.3; done
@@ -32,14 +35,17 @@ def vid(id, every, rate, W, H, panels, tl=""): V.append({ "id": id, "every": eve
 SP = [(4, "1×", "1x"), (1, "0.25×", "025x")]
 for every, rate, tag in SP:
     vid(f"A_SIDE_{tag}", every, rate, 520, 460, [P("NC_O", 90, 8, 4.2, "ORIGINAL RUN-1"), P("NC_H", 90, 8, 4.2, "HAC-1"), P("NC_H", 90, 8, 4.2, "HAC-1 · diagnostic", hyb=True, ghost="abs")], tl="from the start of the run")
-for F, fl in [("SH2", "bump and separate"), ("SH", "HYBRID-RUN-1 fixture: B stays pressed")]:
-    for ang, az, el in [("BEHIND", 165, 14), ("FRONT", 15, 10)]:
-        for every, rate, tag in SP:
-            vid(f"B_{F}_{ang}_{tag}", every, rate, 420, 400, [P(f"{F}_TWIN", az, el, 4.6, "TWIN (A alone)")] + [P(f"{F}_{s}", az, el, 4.6, f"{s} ({fl})" if s == "BRUSH" else s) for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
+JS = {"BRUSH": 30, "BUMP": 60, "STRONG": 100}
+for ang, az, el in [("BEHIND", 175, 12), ("FRONT", 5, 10)]:
     for every, rate, tag in SP:
-        vid(f"B_{F}_DIAG_{tag}", every, rate, 420, 400, [P(f"{F}_TWIN", 160, 18, 4.6, "TWIN · diagnostic", hyb=True, ghost="joint")] + [P(f"{F}_{s}", 160, 18, 4.6, f"{s} · diagnostic", hyb=True, ghost="joint") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
-for every, rate, tag in SP[:1]:
-    vid(f"B_SH2_OPP_BEHIND_{tag}", every, rate, 420, 400, [P(f"SH2_{s}_OPP", 195, 14, 4.6, f"{s}, other side") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
+        vid(f"B_PUSH_{ang}_{tag}", every, rate, 420, 400, [P("PUSH_TWIN", az, el, 4.2, "TWIN (no push)")] + [P(f"PUSH_{s}", az, el, 4.2, f"{s} · push {JS[s]} N·s") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
+for every, rate, tag in SP:
+    vid(f"B_PUSH_DIAG_{tag}", every, rate, 420, 400, [P("PUSH_TWIN", 170, 18, 4.4, "TWIN · diagnostic", hyb=True, ghost="joint")] + [P(f"PUSH_{s}", 170, 18, 4.4, f"{s} · diagnostic", hyb=True, ghost="joint") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
+vid("B_PUSH_OPP_BEHIND_1x", 4, "1×", 420, 400, [P(f"PUSH_{s}_OPP", 175, 12, 4.2, f"{s} · from the left") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from the push")
+for ang, az, el in [("BEHIND", 165, 14)]:
+    for every, rate, tag in SP:
+        vid(f"B_SH_{ang}_{tag}", every, rate, 420, 400, [P("SH_TWIN", az, el, 4.6, "TWIN (A alone)")] + [P(f"SH_{s}", az, el, 4.6, f"{s} (two runners)") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
+vid("B_SH_DIAG_1x", 4, "1×", 420, 400, [P("SH_TWIN", 160, 18, 4.6, "TWIN · diagnostic", hyb=True, ghost="joint")] + [P(f"SH_{s}", 160, 18, 4.6, f"{s} · diagnostic", hyb=True, ghost="joint") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
 for P_, pl in [("", "canonical phase"), ("_EARLY", "foot freshly loaded"), ("_UNLOAD", "foot unloading")]:
     views = [("CLOSE", 60, 12, 4.0, {}), ("SIDE", 90, 9, 4.0, {}), ("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })] if P_ == "" else [("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })]
     for name, az, el, d, ex in views:
@@ -58,7 +64,8 @@ def grid(src, ms, pre, out, cols):
     subprocess.run([ff, "-loglevel", "error", "-y", "-i", src, "-vf", f"select='{sel}',scale=900:-1,tile={cols}x{(len(ms) + cols - 1) // cols}", "-frames:v", "1", "-q:v", "3", out], check=True)
 for name in ["CLOSE", "SIDE", "REAR34", "DIAG"]: grid(f"{dst}/../video/C_{name}_025x.mp4", [-100, 0, 50, 100, 200, 300, 500, 700, 1000, 1250], 72, f"{dst}/GRID_C_{name}.jpg", 2)
 for P_ in ["_EARLY", "_UNLOAD"]: grid(f"{dst}/../video/C{P_}_REAR34_025x.mp4", [-100, 0, 50, 100, 200, 300, 500, 700, 1000, 1250], 72, f"{dst}/GRID_C{P_}_REAR34.jpg", 2)
-for F in ["SH2", "SH"]: grid(f"{dst}/../video/B_{F}_BEHIND_025x.mp4", [0, 200, 400, 600, 800, 1000, 1300, 1600, 2000], 96, f"{dst}/GRID_B_{F}_BEHIND.jpg", 1)
+grid(f"{dst}/../video/B_PUSH_BEHIND_025x.mp4", [0, 100, 250, 500, 750, 1000, 1300, 1600, 2000], 96, f"{dst}/GRID_B_PUSH_BEHIND.jpg", 1)
+grid(f"{dst}/../video/B_SH_BEHIND_025x.mp4", [0, 200, 400, 600, 800, 1000, 1300, 1600, 2000], 96, f"{dst}/GRID_B_SH_BEHIND.jpg", 1)
 print("grids written")
 PY
 # REFERENCE3 | TWIN | F2 | F3 (LOCAL ONLY): REFERENCE3 mirrored, aligned on its first boot-to-foot contact (≈ 0.72 s ± 0.05 s), rear 3/4

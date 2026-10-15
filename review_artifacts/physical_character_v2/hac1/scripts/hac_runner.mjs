@@ -63,10 +63,10 @@ function subtreeInertia(st, j) { const p = jointAt(st, j); let I = 0; for (const
 const hz = (v) => [v[0], 0, v[2]];
 // the PROTECT intent (anatomical degrees). fwd / side: the fall direction in the pelvis frame (unit, side > 0 = toward the athlete's right)
 export function protectAnat(fwd, side) { const sR = Math.max(0, side), sL = Math.max(0, -side), f = Math.max(0, fwd);
-  const arm = (s) => ({ flex: 35 + 45 * f + 15 * (sR + sL), abd: 20 + 50 * s, rot: 0 });
+  const arm = (s) => ({ flex: 40 + 40 * f + 15 * (sR + sL), abd: 20 + 50 * s, rot: 0 });
   return { lumbar: { flex: 10, lat: 0, rot: 0 }, thoracic: { flex: 10, lat: 0, rot: 0 }, neck: { flex: 22, lat: 0, rot: 0 },
-    shoulder_L: arm(sL), shoulder_R: arm(sR), elbow_L: { flex: 35, pron: 0 }, elbow_R: { flex: 35, pron: 0 },
-    hip_L: { flex: 40, abd: 8, rot: 0 }, hip_R: { flex: 40, abd: 8, rot: 0 }, knee_L: { flex: 60, rot: 0 }, knee_R: { flex: 60, rot: 0 }, ankle_L: { df: 0, inv: 0, fabd: 0 }, ankle_R: { df: 0, inv: 0, fabd: 0 } }; }
+    shoulder_L: arm(sL), shoulder_R: arm(sR), elbow_L: { flex: 25, pron: 0 }, elbow_R: { flex: 25, pron: 0 },
+    hip_L: { flex: 15, abd: 8, rot: 0 }, hip_R: { flex: 15, abd: 8, rot: 0 }, knee_L: { flex: 20, rot: 0 }, knee_R: { flex: 20, rot: 0 }, ankle_L: { df: -10, inv: 0, fabd: 0 }, ankle_R: { df: -10, inv: 0, fabd: 0 } }; }
 
 export class HacRunner {
   constructor(intent, opts = {}) { this.I = intent; this.o = merge(DEFAULTS, opts); this.h = 1 / 240;
