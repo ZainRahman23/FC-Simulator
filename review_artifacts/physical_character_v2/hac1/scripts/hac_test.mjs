@@ -10,8 +10,10 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
 // the battery (instruction §15 A–I) and each scene's qualitative requirement on THIS candidate (what must keep holding)
 export const BATTERY = [
   ["NC", "A undisturbed", { noFall: ["runner"], vMin: 0.9 }], ["PVP_TWIN", "twin (CANON)", { noFall: ["runner"] }], ["PVP_TWIN_EARLY", "twin (EARLY)", { noFall: ["runner"] }], ["PVP_TWIN_UNLOAD", "twin (UNLOAD)", { noFall: ["runner"] }],
-  ["SH_BRUSH", "B brush", { noFall: ["runner", "tackler"] }], ["SH_BUMP", "C bump", {}], ["SH_STRONG", "D strong", {}],
-  ["SH_BRUSH_OPP", "E brush, other side", {}], ["SH_BUMP_OPP", "E bump, other side", {}], ["SH_STRONG_OPP", "E strong, other side", {}],
+  ["PUSH_BRUSH", "B brush (push 30 N·s)", { noFall: ["runner"] }], ["PUSH_BUMP", "C bump (push 60 N·s)", { noFall: ["runner"] }], ["PUSH_STRONG", "D strong (push 100 N·s)", {}],
+  ["PUSH_BRUSH_OPP", "E brush, other side", { noFall: ["runner"] }], ["PUSH_BUMP_OPP", "E bump, other side", { noFall: ["runner"] }], ["PUSH_STRONG_OPP", "E strong, other side", {}],
+  ["SH_BRUSH", "two runners: brush (HR1 fixture)", { noFall: ["runner", "tackler"] }], ["SH_BUMP", "two runners: bump (HR1 fixture)", {}], ["SH_STRONG", "two runners: strong (HR1 fixture)", {}],
+  ["SH2_BRUSH", "two runners: brush (SH2)", {}], ["SH2_BUMP", "two runners: bump (SH2)", {}], ["SH2_STRONG", "two runners: strong (SH2)", {}],
   ["PVP_F2", "F tackle F2 (CANON)", {}], ["PVP_F3", "G tackle F3 (CANON)", {}], ["PVP_F2_EARLY", "H tackle F2, early support", {}], ["PVP_F3_EARLY", "H tackle F3, early support", {}],
   ["PVP_F2_UNLOAD", "I tackle F2, unloading", {}], ["PVP_F3_UNLOAD", "I tackle F3, unloading", {}]];
 export function outcome(o) { const h = 1 / 240, fall = (role, nMax = 1e9) => { for (const r of o.recs) { if (r.t / h > nMax + 0.5) break; for (const c of r.contacts) { if (!c.kind.startsWith("turf") || !(c.Jn > 0)) continue; const x = c.a === "turf" ? c.b : c.a; if (x[0] === role && !/^foot_/.test(x[1])) return Math.round(r.t / h); } } return null; };

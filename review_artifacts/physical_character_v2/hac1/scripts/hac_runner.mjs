@@ -97,7 +97,11 @@ export class HacRunner {
     const feet = this._feet(st), pel = st[0], upP = Q.rot(pel.rot, [0, 1, 0]), tilt = Math.acos(clamp(upP[1], -1, 1)) / D2R, thor = st[bi("thorax")], upT = Q.rot(thor.rot, [0, 1, 0]), tiltT = Math.acos(clamp(upT[1], -1, 1)) / D2R;
     // tilt rate: the horizontal part of the pelvis angular velocity that increases its tilt (look-ahead)
     const tiltAxis = V.cross([0, 1, 0], upP), tiltRate = V.len(tiltAxis) > 1e-6 ? V.dot(pel.w, V.norm(tiltAxis)) / D2R : 0;
-    const stanceI = I.stance(tau), comI = I.com(tau), vI = I.comVel(tau), aI = I.comAcc(tau), pelI = I.pelvis(tau);
+    const stanceI = I.stance(tau), comI = I.com(tau), vI0 = I.comVel(tau), aI = I.comAcc(tau), pelI = I.pelvis(tau);
+    // ACTION INTENT MODIFIER "charge" (a lateral shoulder charge, SH3 fixture): a sine pulse of sideways velocity added to RUN-1's intended COM
+    // velocity, along the intent's own left axis (sign: +1 = toward the left); RUN-1's heading, steps and joint targets are unchanged
+    const CH0 = this.o.charge, chargeV = CH0 && n * h >= CH0.t0 && n * h <= CH0.t0 + CH0.dur ? CH0.vPeak * Math.sin(Math.PI * (n * h - CH0.t0) / CH0.dur) : 0;
+    const vI = chargeV ? V.add(vI0, V.sc(V.cross([vI0[0] / (Math.hypot(vI0[0], vI0[2]) || 1), 0, vI0[2] / (Math.hypot(vI0[0], vI0[2]) || 1)], [0, 1, 0]), chargeV * CH0.side)) : vI0; if (chargeV) row.charge = +chargeV.toFixed(2);
     const vhI = Math.hypot(vI[0], vI[2]), uf = vhI > 0.3 ? [vI[0] / vhI, 0, vI[2] / vhI] : [0, 0, 1], ul = V.cross(uf, [0, 1, 0]);   // ul = the athlete's anatomical left
     // support gates (real load only; ramped)
     const stM_ = I.stance(tau + Math.round(Sp.stanceMarginS / h)), stP_ = I.stance(tau - Math.round(Sp.stanceMarginS / h));
@@ -129,7 +133,8 @@ export class HacRunner {
       const td = this._nextTD(s, tau, !!stanceI[s]); if (!td) continue; const tRem = Math.max(h, (td.nTd - tau) * h), phi = clamp((tau - td.nLo) / Math.max(1, td.nTd - td.nLo), 0, 1);
       // RUN-1's own landing: sole relative to its COM, its pelvis, its hip; and its COM velocity at that touchdown
       const PI = I.pose(td.nTd), soleI = V.add(PI[LEG[s].foot].pos, Q.rot(PI[LEG[s].foot].rot, SOLE)), comTdI = I.com(td.nTd), vTdI = I.comVel(td.nTd), hipI = jointAt(PI, JN[LEG[s].hip]);
-      const relI = hz(V.sub(soleI, comTdI)), dv = hz(V.sub(v, vTdI)), dvF = V.dot(dv, uf), dvL = V.dot(dv, ul);
+      const tTd = td.nTd * h, chTd = CH0 && tTd >= CH0.t0 && tTd <= CH0.t0 + CH0.dur ? CH0.vPeak * Math.sin(Math.PI * (tTd - CH0.t0) / CH0.dur) * CH0.side : 0;   // the intent's own charge at that touchdown
+      const relI = hz(V.sub(soleI, comTdI)), dv = hz(V.sub(V.sub(v, vTdI), V.sc(ul, chTd))), dvF = V.dot(dv, uf), dvL = V.dot(dv, ul);
       // lateral gain: small velocity noise is absorbed by the stance (cLat); a real sideways disturbance gets the full capture-point step (1/ω0)
       const cLatE = cLat + (1 / w0 - cLat) * sstep(Math.abs(dvL), PLc.dvA, PLc.dvB), dP = V.add(V.sc(uf, PLc.cFwd * dvF), V.sc(ul, cLatE * dvL));
       // predicted physical COM and hip at touchdown (ballistic horizontally), desired landing point
@@ -224,7 +229,7 @@ export class HacRunner {
     this.perf.track += now() - T3;
     // ── SUPPORT: the intended ground reaction through the stance leg's joints (no external wrench) ──
     const T4 = now(), wsum = this.gate.L + this.gate.R, Fout = [], supM = []; this.pairs = []; this.legPairs = [];
-    if (Sp.mode === "pair") { if (wLoc > 0.001) this._pairSupport(st, com, v, feet, tau, wLoc, uf, row, Fout); }
+    if (Sp.mode === "pair") { if (wLoc > 0.001) this._pairSupport(st, com, v, feet, tau, wLoc, uf, row, Fout, vI); }
     else if (wsum > 0 && wLoc > 0.001) {
       // vertical: RUN-1's support profile aligned to each foot's PHYSICAL stance phase (RUN-1's own stance of that foot, from its physical
       // touchdown); past RUN-1's stance length (a prolonged stance after a disturbance) it holds RUN-1's mean stance height with no feed-forward
@@ -297,8 +302,8 @@ export class HacRunner {
   // PAIR MODE = HYBRID-RUN-1's gait support and balance moment (hr_runner.mjs §2, same law and parameters), every term × w_loc: the support
   // pair (−F at the stance foot, +F over the other bodies by mass: its linear momentum comes through the turf, its angular effect is the
   // virtual pivot at the COM) and the pelvis moment (supported part ≤ lever·F_y; animation-consistency part ≤ acPR / acYaw). Both are logged.
-  _pairSupport(st, com, v, feet, tau, wLoc, ufI, row, Fout) { const I = this.I, Sp = this.o.support, PS = Sp.pairP, h = this.h, pel = st[0];
-    const cs = I.com(tau), vs = I.comVel(tau), as = I.comAcc(tau), up = Q.rot(pel.rot, [0, 1, 0]), tilt = Math.acos(clamp(up[1], -1, 1)) / D2R, sOrg = smooth(1 - (tilt - PS.tilt0) / (PS.tilt1 - PS.tilt0));
+  _pairSupport(st, com, v, feet, tau, wLoc, ufI, row, Fout, vMod) { const I = this.I, Sp = this.o.support, PS = Sp.pairP, h = this.h, pel = st[0];
+    const cs = I.com(tau), vs = vMod || I.comVel(tau), as = I.comAcc(tau), up = Q.rot(pel.rot, [0, 1, 0]), tilt = Math.acos(clamp(up[1], -1, 1)) / D2R, sOrg = smooth(1 - (tilt - PS.tilt0) / (PS.tilt1 - PS.tilt0));
     const vh = Math.hypot(vs[0], vs[2]), uf = vh > 0.3 ? [vs[0] / vh, 0, vs[2] / vh] : [0, 0, 0], ul = [uf[2], 0, -uf[0]], dv = [vs[0] - v[0], 0, vs[2] - v[2]], ah = V.add(V.sc(uf, PS.KvFwd * V.dot(dv, uf)), V.sc(ul, PS.Kv * V.dot(dv, ul)));
     let Fd = [M * (as[0] + ah[0]), M * (G + as[1] + PS.Ky * (cs[1] - com[1]) + PS.Dy * (vs[1] - v[1])), M * (as[2] + ah[2])];
     const muU = Sp.muUse ?? Sp.mu;   // the controller's own friction budget (below the turf's): it must not make its own stance foot slip
