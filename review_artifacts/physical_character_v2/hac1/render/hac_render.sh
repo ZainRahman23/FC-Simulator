@@ -27,7 +27,10 @@ clip --run $RUNS/NC.json.gz --key SH_TWIN --out $Q/clips --refStep $(fcOf $RUNS/
 # C (each tackle aligned on its own first contact, −0.3 → +1.3 s; each TWIN on its F2's clock and camera path)
 for P in "" _EARLY _UNLOAD; do N=$(fcOf $RUNS/PVP_F2$P.json.gz)
   for k in F2 F3; do clip --run $RUNS/PVP_$k$P.json.gz --key PVP_$k$P --out $Q/clips --who both --frame tackler --from -0.3 --to 1.3; done
-  clip --run $RUNS/PVP_TWIN$P.json.gz --key PVP_TWIN$P --out $Q/clips --who both --frame tackler --focus $RUNS/PVP_F2$P.json.gz --refStep $N --from -0.3 --to 1.3; done
+  clip --run $RUNS/PVP_TWIN$P.json.gz --key PVP_TWIN$P --out $Q/clips --who both --frame tackler --focus $RUNS/PVP_F2$P.json.gz --refStep $N --from -0.3 --to 1.3
+  # recipient-following clips for the diagnostic views (the recipient's fall stays in frame)
+  for k in F2 F3; do clip --run $RUNS/PVP_$k$P.json.gz --key PVP_${k}${P}_R --out $Q/clips --who runner --frame tackler --from -0.3 --to 1.3; done
+  clip --run $RUNS/PVP_TWIN$P.json.gz --key PVP_TWIN${P}_R --out $Q/clips --who runner --frame tackler --refStep $N --from -0.3 --to 1.3; done
 python3 - "$Q" <<'PY'
 import json, sys
 Q = sys.argv[1]; V = []
@@ -48,10 +51,11 @@ for ang, az, el in [("BEHIND", 165, 14)]:
         vid(f"B_SH_{ang}_{tag}", every, rate, 420, 400, [P("SH_TWIN", az, el, 4.6, "TWIN (A alone)")] + [P(f"SH_{s}", az, el, 4.6, f"{s} (two runners)") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
 vid("B_SH_DIAG_1x", 4, "1×", 420, 400, [P("SH_TWIN", 160, 18, 4.6, "TWIN · diagnostic", hyb=True, ghost="joint")] + [P(f"SH_{s}", 160, 18, 4.6, f"{s} · diagnostic", hyb=True, ghost="joint") for s in ["BRUSH", "BUMP", "STRONG"]], tl="from first player contact")
 for P_, pl in [("", "canonical phase"), ("_EARLY", "foot freshly loaded"), ("_UNLOAD", "foot unloading")]:
-    views = [("CLOSE", 60, 12, 4.0, {}), ("SIDE", 90, 9, 4.0, {}), ("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })] if P_ == "" else [("REAR34", 145, 12, 4.2, {}), ("DIAG", 60, 18, 4.2, { "hyb": True, "ghost": "joint" })]
+    views = [("CLOSE", 60, 12, 4.0, {}), ("SIDE", 90, 9, 4.0, {}), ("REAR34", 145, 12, 4.2, {}), ("DIAG", 40, 20, 4.4, { "hyb": True, "ghost": "joint" })] if P_ == "" else [("REAR34", 145, 12, 4.2, {}), ("DIAG", 40, 20, 4.4, { "hyb": True, "ghost": "joint" })]
     for name, az, el, d, ex in views:
         for every, rate, tag in (SP if not (P_ and name == "DIAG") else SP[:1]):
-            vid(f"C{P_}_{name}_{tag}", every, rate, 440 if name != "DIAG" else 560, 420 if name != "DIAG" else 500, [P(f"PVP_TWIN{P_}", az, el, d, f"TWIN · no tackle ({pl})", **ex), P(f"PVP_F2{P_}", az, el, d, f"PVP-F2 (SP2F2) · {pl}", **ex), P(f"PVP_F3{P_}", az, el, d, f"PVP-F3 (SP2F3) · {pl}", **ex)], tl="from first player contact")
+            R_ = "_R" if name == "DIAG" else ""
+            vid(f"C{P_}_{name}_{tag}", every, rate, 440 if name != "DIAG" else 560, 420 if name != "DIAG" else 500, [P(f"PVP_TWIN{P_}{R_}", az, el, d, f"TWIN · no tackle ({pl})", **ex), P(f"PVP_F2{P_}{R_}", az, el, d, f"PVP-F2 (SP2F2) · {pl}", **ex), P(f"PVP_F3{P_}{R_}", az, el, d, f"PVP-F3 (SP2F3) · {pl}", **ex)], tl="from first player contact")
 json.dump(V, open(Q + "/views.json", "w"), indent=1)
 PY
 node $R/hac_capture.cjs --clips $Q/clips --views $Q/views.json --archive $S/lv2arch --out $Q/vid > $Q/capture.log 2>&1 || { tail -5 $Q/capture.log; exit 1; }
