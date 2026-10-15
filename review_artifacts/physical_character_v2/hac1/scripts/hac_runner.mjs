@@ -50,6 +50,7 @@ export const DEFAULTS = {
   // regional contact / error authority (HYBRID-RUN-1's law, measured against the blended target)
   authority: { eTolDeg: { legL: 11, legR: 11, trunk: 3, armL: 3, armR: 3 }, eScaleDeg: 15, jScaleNs: 4, floor: 0.15, tauDownS: 0.02, tauUpS: 0.3, delayS: 0.02, winS: 0.03 },
   protect: { tone: 0.45 },
+  armBal: { on: false, dvA: 0.2, dvB: 0.5, tauS: 0.15 },   // REJECTED (HAC1_LOG §9): any arm balance reaction made the 60 N·s push fall
   clear: { on: true, phase0: 0.1, phase1: 0.85, tolM: 0.03, degPerM: 200, maxDeg: 20, hipShare: 0.5, rateDegS: 600 },
   phase: { on: false, windowS: 0.15, minEarlyS: 0.04, lateClearM: 0.012, loadN: 200, kCatch: 4, rMax: 4, rLate: 0.25, holdS: 0.08 },
   aim: { on: false, mode: "yaw" },
@@ -71,7 +72,7 @@ export function protectAnat(fwd, side) { const sR = Math.max(0, side), sL = Math
 export class HacRunner {
   constructor(intent, opts = {}) { this.I = intent; this.o = merge(DEFAULTS, opts); this.h = 1 / 240;
     this.alpha = Object.fromEntries(Object.keys(REGIONS).map(r => [r, 1])); this.gate = { L: 0, R: 0 }; this.Vf = 1; this.C = 0; this.off = { L: { flex: 0, abd: 0 }, R: { flex: 0, abd: 0 } };
-    this.log = []; this.perf = { viab: 0, plan: 0, track: 0, support: 0, total: 0, n: 0 }; this.touched = false; this.onTurf = { L: false, R: false }; this.tdPhys = { L: 0, R: 0 }; this.stIv = { L: null, R: null }; this.hs = { L: null, R: null }; this.land = { L: null, R: null }; this.integ = { L: 1, R: 1 }; this.stOn = { L: false, R: false }; this.stT0 = { L: 0, R: 0 }; this.planted = { L: false, R: false }; this.lost = { L: false, R: false }; this.clr = { L: 0, R: 0 };
+    this.log = []; this.perf = { viab: 0, plan: 0, track: 0, support: 0, total: 0, n: 0 }; this.touched = false; this.onTurf = { L: false, R: false }; this.tdPhys = { L: 0, R: 0 }; this.stIv = { L: null, R: null }; this.hs = { L: null, R: null }; this.land = { L: null, R: null }; this.integ = { L: 1, R: 1 }; this.stOn = { L: false, R: false }; this.stT0 = { L: 0, R: 0 }; this.planted = { L: false, R: false }; this.lost = { L: false, R: false }; this.clr = { L: 0, R: 0 }; this.bal = 0;
     this.ff = this.o.ffChains.map(ch => ({ chain: ch, fn: ID.makeChainID(ch, intent.chor) })); }
   attach(plant, c) { this.plant = plant; this.c = c; this.role = c.role; const st = c.st; if (this.o.drive) c.act = new DR.AnimationDrive(c.spec, c.view, c.P, this.o.drive);
     this.jdOf = {}; for (const d of c.P.jd) this.jdOf[d.k] = d;
@@ -210,6 +211,11 @@ export class HacRunner {
     // the hip then servos the pelvis attitude (pitch, roll, yaw) against the planted leg, and the turf takes the reaction through the foot
     if (Sp.stanceHip === "world") for (const s of ["L", "R"]) { const g = this.gate[s]; if (g <= 0.001) continue; const k = LEG[s].hip, j = JN[k], qw = L.IL.qcs(j, pelI.R, st[j.childIndex].rot), qw2 = L.IL.qcs(j, I.pelvis(tau + 1).R, st[j.childIndex].rot);
       qRun[k] = g >= 0.999 ? qw : L.slerp(qRun[k], qw, g); qRun2[k] = g >= 0.999 ? qw2 : L.slerp(qRun2[k], qw2, g); }
+    // ARM BALANCE REACTION: when the body's sideways velocity departs from the intent's, the arms move toward a balance pose (abducted, elbows
+    // bent; the arm on the side the body is moving toward lifts more), proportionally, rate-limited; it fades as the deviation decays
+    const AB = this.o.armBal; if (AB.on) { const dvLat = V.dot(hz(V.sub(v, vI)), ul), tgtB = sstep(Math.abs(dvLat), AB.dvA, AB.dvB) * (1 - this.C), rB = h / AB.tauS; this.bal += clamp(tgtB - this.bal, -rB, rB); row.armBal = +this.bal.toFixed(2);
+      if (this.bal > 0.01) { const toL = dvLat > 0 ? 1 : 0, qB = CH.jointTargets({ ...anR, shoulder_L: { flex: 15, abd: 45 + 25 * toL, rot: 0 }, shoulder_R: { flex: 15, abd: 45 + 25 * (1 - toL), rot: 0 }, elbow_L: { flex: 70, pron: 0 }, elbow_R: { flex: 70, pron: 0 } });
+        for (const jn of ["shoulder_L", "shoulder_R", "elbow_L", "elbow_R"]) { const k = ji(jn); qRun[k] = L.slerp(qRun[k], qB[k], this.bal); } } }
     const qT = JN.map((j, k) => { const w = W[regionOfJoint[j.name]] ?? 1; return w >= 0.999 ? qRun[k] : w <= 0.001 ? qPro[k] : L.slerp(qPro[k], qRun[k], w); });
     const errs = JN.map((j, k) => { const q = ev.qs[k], qr = qT[k], sg = q[0] * qr[0] + q[1] * qr[1] + q[2] * qr[2] + q[3] * qr[3] < 0 ? -1 : 1, dq = Q.mul(Q.conj(q), qr.map(x => x * sg)); return [2 * dq[0], 2 * dq[1], 2 * dq[2]]; });
     for (const [r, js] of Object.entries(REGIONS)) { let s2 = 0, m = 0; for (const jn of js) { const k = ji(jn); for (let i = 0; i < 3; i++) if (c.act.ax[k][i]) { s2 += errs[k][i] ** 2; m++; } }

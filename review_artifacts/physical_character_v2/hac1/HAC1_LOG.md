@@ -145,3 +145,14 @@ The struck foot unloads on the twin's schedule in all three phases.
 | PVP_F3_EARLY | `dc7d7113` | 388 | n/a |
 | PVP_F2_UNLOAD | `8846d47b` | — | n/a |
 | PVP_F3_UNLOAD | `2c679481` | — | n/a |
+
+## 9. After the milestone commit (`4c3a2dd`): arm balance reaction (rejected)
+
+**What it is** (`armBal`): arms move toward a balance pose (abducted 45–70°, elbows 70°) in proportion to the sideways velocity's departure from the intent.
+
+| Variant | Result |
+|---|---|
+| Gain 0.2 → 0.5 m/s | The 60 N·s push and the mirrored 30 N·s push now fall. |
+| Gentler: 0.3 → 0.8 m/s, τ 0.3 s | The 60 N·s push still falls (both sides). |
+
+**Reading:** the BUMP recovery is MARGINAL. Any change to the upper body's motion after a 60 N·s push tips the runner over. The reaction is off; the battery is unchanged (re-verified: 22 / 22 against `HAC1_expectations.json`).

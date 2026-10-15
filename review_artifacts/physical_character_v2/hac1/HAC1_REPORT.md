@@ -208,7 +208,8 @@ Per active character ≈ 0.6 ms per 240 Hz step (physics ≈ 0.27, the V2 passiv
 1. **RUN-1 is not physically executable as authored** (angular momentum; yaw swing; mean pitch momentum). Fully physical support needs either a SIMBICON-class balance layer or an angular-momentum-consistent intent. *Owner decision:* which, if either.
 2. **RUN-1 cannot turn or sidestep:** a turning or sidestepping intent falls even without contact. This blocks two-runner shoulder fixtures and any change of direction under contact.
 3. **The tackle geometry sweeps an unloading foot but cannot take a loaded one.** A sliced-out fall needs the contact to act on the leg above the foot, or the tackler's body to block the next step. Both are tackle choices, and F2/F3 were not to be modified.
-4. **The recovery step is small.** Placement offsets are ≤ 4–7°; the push recovery comes mostly from the support's lateral velocity regulation. The full capture-point gain (1/ω0) destabilised normal running and was halved (tuned).
+4. **The recovery step is small, and BUMP recovery is marginal.** Adding an arm balance reaction made the 60 N·s push fall (HAC1_LOG §9).
+   - **The recovery step is small.** Placement offsets are ≤ 4–7°; the push recovery comes mostly from the support's lateral velocity regulation. The full capture-point gain (1/ω0) destabilised normal running and was halved (tuned).
 5. **Fall / protect is minimal:** one brace pose, scaled by the fall direction. There is no fall library and no get-up.
 6. **CPU:** ≈ 0.6 ms per active character per 240 Hz step, about 3.2 s of single-core CPU per simulated second for 22 players. The physics step and the passive-tissue layer dominate; the HAC-1 layer is ≈ 0.1 ms.
 
