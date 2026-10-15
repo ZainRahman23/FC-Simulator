@@ -156,3 +156,48 @@ The full tables are in `evidence/PVP1_analysis.json` and on the review page; the
 **Page:** `render/pvp1_review_build.mjs` → `review/PVP1_REVIEW.html`. All 21 videos load (checked headless).
 
 **Visual review:** I cannot play video in real time. I reviewed the canonical side, rear 3/4 and diagnostic views and the EARLY side view frame by frame, at 15–60 fps strips.
+
+## 7. Collision review (15 Oct ≈ 00:50 → 01:05, rendering only)
+
+**Instruction:** `sources/2026-10-15_user_instruction_pvp1_collision_review_render.md` (`218a5593`). Nothing was re-simulated. The frozen CANON records were read:
+- PVP-F2 `7706ea69409e0bfa`;
+- PVP-F3 `c03c6f78f2a78ecd`;
+- TWIN `0ae8181ea74a7783`.
+
+**Renders:** `render/pvp1_collision_render.sh` → `review/collision/`.
+- `pvp1_collision_clip.mjs`: the per-frame camera target (the smoothed 3-D midpoint of the two COMs, plus their separation), COMs, feet and turf loads, the tackling boot, player–player contacts (normal and force on the recipient), and the first contact.
+- `pvp1_collision_capture.cjs`:
+  - a per-panel camera at a set azimuth and elevation, at distance max(d, 1.3 × separation + 2.3 m);
+  - clean and diagnostic overlays;
+  - the first-contact frame marked with a red border, a banner and a timeline tick;
+  - PNG stills.
+- Layout: PVP-F2 | PVP-F3, 640 × 540 each, plus a TWIN inset, 320 × 270, on the PVP-F2 camera path.
+
+**Views** (window −0.30 → +0.75 s):
+
+| view | angle | speeds |
+|---|---|---|
+| CLOSE | az 60 | 1×, 0.25×, 0.10× |
+| SIDE | az 90, perpendicular to the tackle | 1×, 0.25× |
+| FRONT34 | az 35 | 1×, 0.25× |
+| REAR34 | az −140 | 1×, 0.25× |
+| DIAG | az 60 | 1×, 0.25×, 0.10× |
+| DIAGSIDE | az 90 | 1×, 0.25× |
+
+The 0.10× videos show each recorded step 2.5× longer; there is no interpolation.
+
+**Stills:** grids and single frames at −100 / −50 / 0 / +25 / +50 / +100 / +200 / +400 ms.
+
+**Camera match:** the PVP-F2 and PVP-F3 camera targets agree within 3 cm until +400 ms (11 cm at +750 ms).
+
+**Data:** `scripts/pvp1_collision_data.mjs` → `evidence/PVP1_collision.json`. It holds the contact log per body pair, the tackling-boot and struck-foot kinematics, and the turf loads.
+
+**What is visible:**
+- **First contact** at step 118: the tackling right boot against the recipient's loaded right boot (1.7 BW), in both.
+- **The same boot** then clips the swinging left boot: +29…+79 ms (F2), +29…+54 ms (F3).
+- **The tackling boot** slows to 2.9 m/s (F2) and 1.5 m/s (F3) at +25 ms, then accelerates through (3.6 / 4.8 m/s at +75 ms). F2's boot rides up about 6 cm.
+- **The struck foot** is pushed toward the other foot at 2.1 / 2.6 m/s by +50 ms (twin 0.2) and leaves the turf at about +75 ms.
+- **No turf support** from about +75 ms to +150 ms (F3) or +200 ms (F2).
+- **Later contacts:** the F2 head touches the recipient's forearm at +108…+121 ms. The recipient's left leg lands on F3's posting arm at +271…+367 ms.
+
+**Page:** `render/pvp1_collision_review_build.mjs` → `review/PVP1_COLLISION_REVIEW.html`. All 14 videos load (headless check). It is linked from `PVP1_REVIEW.html`.

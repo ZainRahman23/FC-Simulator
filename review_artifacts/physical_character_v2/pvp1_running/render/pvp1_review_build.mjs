@@ -42,6 +42,7 @@ table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}td,th{bord
 button{background:#22302a;color:var(--fg);border:1px solid var(--line);border-radius:5px;padding:4px 10px;margin-right:6px;cursor:pointer}button.on{background:var(--acc);color:#111}@media (max-width:800px){main{padding:10px 16px}}</style></head><body><main>
 <h1>PVP-1: SP2F2 and SP2F3 against the same running recipient</h1>
 <p class="mut">14–15 Oct 2026 · local, stopped for your visual review · instruction: <code>sources/2026-10-14_user_instruction_pvp1_running_recipient_f2_vs_f3.md</code> · report <code>pvp1_running/PVP1_REPORT.md</code> · log <code>PVP1_LOG.md</code> · I cannot play video in real time: everything below was reviewed frame by frame.</p>
+<p><b>Collision close-up (15 Oct, rendering only):</b> <a href="PVP1_COLLISION_REVIEW.html">PVP1_COLLISION_REVIEW.html</a>: PVP-F2 | PVP-F3 large in frame, 1× / 0.25× / 0.10×, side, 3/4, diagnostic, and frozen frames from −100 to +400 ms.</p>
 <div class="card verdict">${ul(ANS.headline)}</div>
 <h2>Verdicts</h2><div class="tw"><table>${verd}</table></div>
 <h2>1. Canonical collision: REFERENCE3 | PVP-F2 | PVP-F3 (local only)</h2>

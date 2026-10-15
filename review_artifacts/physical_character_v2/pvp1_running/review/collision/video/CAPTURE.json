@@ -1,0 +1,750 @@
+{
+ "tool": "pvp1_collision_capture.cjs",
+ "views": {
+  "CLOSE_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 564
+  },
+  "CLOSE_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 175
+  },
+  "CLOSE_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 2191
+  },
+  "CLOSE_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 656
+  },
+  "SIDE_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 467
+  },
+  "SIDE_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 147
+  },
+  "SIDE_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 1925
+  },
+  "SIDE_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 578
+  },
+  "FRONT34_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 466
+  },
+  "FRONT34_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 146
+  },
+  "FRONT34_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 1934
+  },
+  "FRONT34_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 35,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 578
+  },
+  "REAR34_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 459
+  },
+  "REAR34_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 144
+  },
+  "REAR34_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 1961
+  },
+  "REAR34_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": -140,
+     "el": 16,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 606
+  },
+  "DIAG_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 515
+  },
+  "DIAG_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 163
+  },
+  "DIAG_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 2106
+  },
+  "DIAG_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 639
+  },
+  "DIAGSIDE_1x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 489
+  },
+  "DIAGSIDE_1x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 64,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 152
+  },
+  "DIAGSIDE_025x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 2076
+  },
+  "DIAGSIDE_025x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 90,
+     "el": 10,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 622
+  },
+  "CLOSE_010x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 1794
+  },
+  "CLOSE_010x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 568
+  },
+  "DIAG_010x": {
+   "panels": [
+    {
+     "k": "C_F2",
+     "l": "PVP-F2 (SP2F2)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "C_F3",
+     "l": "PVP-F3 (SP2F3)",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 1953
+  },
+  "DIAG_010x_TWIN": {
+   "panels": [
+    {
+     "k": "C_TWIN",
+     "l": "TWIN · no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 253,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 46,
+   "last": 298,
+   "ms": 588
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

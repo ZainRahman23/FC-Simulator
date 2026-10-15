@@ -1,0 +1,1282 @@
+{
+ "note": "PVP-1 CANON collision review data (frozen records)",
+ "window": [
+  -0.3,
+  0.75
+ ],
+ "frames": {
+  "recipientFrame": "fwd = its running direction, left = its left",
+  "tacklerFrame": "along = its travel, side = its left"
+ },
+ "firstContactStep": 118,
+ "firstContactT": 0.492,
+ "F2": {
+  "first": {
+   "step": 118,
+   "ms": 0,
+   "contacts": [
+    {
+     "recipient": "foot_R",
+     "tackler": "foot_R",
+     "points": [
+      [
+       0.083,
+       0.04,
+       3.474
+      ],
+      [
+       0.101,
+       0.018,
+       3.463
+      ],
+      [
+       0.112,
+       0.012,
+       3.466
+      ]
+     ],
+     "normalOnRecipient": [
+      -0.467,
+      0.718,
+      -0.516
+     ],
+     "forceOnRecipientN": [
+      -203.898,
+      516.742,
+      -118.508
+     ],
+     "normalN": 527
+    }
+   ]
+  },
+  "log": [
+   {
+    "pair": "foot_R → foot_R",
+    "firstMs": 0,
+    "lastMs": 92,
+    "steps": 20,
+    "peakN": 1113,
+    "peakMs": 4,
+    "impulseOnRecipientNs": [
+     -12.236,
+     21.812,
+     -6.079
+    ]
+   },
+   {
+    "pair": "foot_R → foot_L",
+    "firstMs": 29,
+    "lastMs": 79,
+    "steps": 18,
+    "peakN": 650,
+    "peakMs": 29,
+    "impulseOnRecipientNs": [
+     -18.019,
+     8.806,
+     3.461
+    ]
+   },
+   {
+    "pair": "head → forearm_L",
+    "firstMs": 108,
+    "lastMs": 121,
+    "steps": 4,
+    "peakN": 706,
+    "peakMs": 108,
+    "impulseOnRecipientNs": [
+     -2.279,
+     3.547,
+     0.325
+    ]
+   }
+  ],
+  "bins": [
+   [
+    0,
+    [
+     "foot_R → foot_R"
+    ]
+   ],
+   [
+    25,
+    [
+     "foot_R → foot_R",
+     "foot_R → foot_L"
+    ]
+   ],
+   [
+    50,
+    [
+     "foot_R → foot_L",
+     "foot_R → foot_R"
+    ]
+   ],
+   [
+    75,
+    [
+     "foot_R → foot_L",
+     "foot_R → foot_R"
+    ]
+   ],
+   [
+    100,
+    [
+     "head → forearm_L"
+    ]
+   ]
+  ],
+  "kin": [
+   {
+    "ms": -100,
+    "tacklingBootV": [
+     6.102,
+     -1.476,
+     -2.496
+    ],
+    "tacklingBootSpeed": 6.756,
+    "tacklingBootHeight": 0.207,
+    "struckFootV": null,
+    "struckFootVTwin": null,
+    "bootToStruckFootM": 0.761,
+    "loads": null,
+    "loadsTwin": null,
+    "recipientComV": null,
+    "recipientComVTwin": null,
+    "tacklerComV": [
+     5.039,
+     0.096,
+     -2.813
+    ]
+   },
+   {
+    "ms": -50,
+    "tacklingBootV": [
+     5.745,
+     -1.73,
+     -1.092
+    ],
+    "tacklingBootSpeed": 6.098,
+    "tacklingBootHeight": 0.095,
+    "struckFootV": null,
+    "struckFootVTwin": null,
+    "bootToStruckFootM": 0.46,
+    "loads": null,
+    "loadsTwin": null,
+    "recipientComV": null,
+    "recipientComVTwin": null,
+    "tacklerComV": [
+     4.927,
+     0.093,
+     -2.706
+    ]
+   },
+   {
+    "ms": -25,
+    "tacklingBootV": [
+     5.58,
+     -2.136,
+     -1.119
+    ],
+    "tacklingBootSpeed": 6.079,
+    "tacklingBootHeight": 0.062,
+    "struckFootV": [
+     0.023,
+     -0.004,
+     0.196
+    ],
+    "struckFootVTwin": [
+     0.023,
+     -0.004,
+     0.196
+    ],
+    "bootToStruckFootM": 0.305,
+    "loads": {
+     "L": 0,
+     "R": 1.917
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 1.917
+    },
+    "recipientComV": [
+     4.496,
+     0.036,
+     -0.147
+    ],
+    "recipientComVTwin": [
+     4.496,
+     0.036,
+     -0.147
+    ],
+    "tacklerComV": [
+     4.805,
+     0.094,
+     -2.295
+    ]
+   },
+   {
+    "ms": 0,
+    "tacklingBootV": [
+     4.66,
+     -1.053,
+     0.404
+    ],
+    "tacklingBootSpeed": 4.795,
+    "tacklingBootHeight": 0.052,
+    "struckFootV": [
+     0.016,
+     0.04,
+     0.26
+    ],
+    "struckFootVTwin": [
+     0.019,
+     0.048,
+     0.261
+    ],
+    "bootToStruckFootM": 0.169,
+    "loads": {
+     "L": 0,
+     "R": 1.687
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 1.538
+    },
+    "recipientComV": [
+     4.467,
+     0.047,
+     0.035
+    ],
+    "recipientComVTwin": [
+     4.468,
+     0.048,
+     0.035
+    ],
+    "tacklerComV": [
+     4.478,
+     -0.014,
+     -0.78
+    ]
+   },
+   {
+    "ms": 25,
+    "tacklingBootV": [
+     2.921,
+     0.751,
+     1.061
+    ],
+    "tacklingBootSpeed": 3.197,
+    "tacklingBootHeight": 0.081,
+    "struckFootV": [
+     0.004,
+     0.248,
+     0.406
+    ],
+    "struckFootVTwin": [
+     0.044,
+     0.094,
+     0.432
+    ],
+    "bootToStruckFootM": 0.1,
+    "loads": {
+     "L": 0,
+     "R": 1.001
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.973
+    },
+    "recipientComV": [
+     4.471,
+     0.056,
+     0.097
+    ],
+    "recipientComVTwin": [
+     4.472,
+     0.048,
+     0.097
+    ],
+    "tacklerComV": [
+     4.2,
+     0.01,
+     -0.211
+    ]
+   },
+   {
+    "ms": 50,
+    "tacklingBootV": [
+     3.083,
+     0.997,
+     1.293
+    ],
+    "tacklingBootSpeed": 3.489,
+    "tacklingBootHeight": 0.099,
+    "struckFootV": [
+     0.083,
+     2.078,
+     0.424
+    ],
+    "struckFootVTwin": [
+     0.169,
+     0.204,
+     0.861
+    ],
+    "bootToStruckFootM": 0.096,
+    "loads": {
+     "L": 0,
+     "R": 0.364
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.429
+    },
+    "recipientComV": [
+     4.323,
+     0.126,
+     0.015
+    ],
+    "recipientComVTwin": [
+     4.465,
+     0.047,
+     0.011
+    ],
+    "tacklerComV": [
+     3.868,
+     -0.057,
+     0.127
+    ]
+   },
+   {
+    "ms": 75,
+    "tacklingBootV": [
+     3.604,
+     0.418,
+     0.073
+    ],
+    "tacklingBootSpeed": 3.629,
+    "tacklingBootHeight": 0.115,
+    "struckFootV": [
+     -0.173,
+     2.361,
+     1.727
+    ],
+    "struckFootVTwin": [
+     0.416,
+     0.107,
+     1.401
+    ],
+    "bootToStruckFootM": 0.141,
+    "loads": {
+     "L": 0,
+     "R": 0.045
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.069
+    },
+    "recipientComV": [
+     4.23,
+     0.194,
+     -0.175
+    ],
+    "recipientComVTwin": [
+     4.479,
+     0.051,
+     -0.184
+    ],
+    "tacklerComV": [
+     3.656,
+     -0.081,
+     0.187
+    ]
+   },
+   {
+    "ms": 100,
+    "tacklingBootV": [
+     5.143,
+     2.331,
+     -0.409
+    ],
+    "tacklingBootSpeed": 5.661,
+    "tacklingBootHeight": 0.115,
+    "struckFootV": [
+     -1.031,
+     3.189,
+     3.04
+    ],
+    "struckFootVTwin": [
+     -0.783,
+     -0.273,
+     2.432
+    ],
+    "bootToStruckFootM": 0.231,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.034,
+     "R": 0
+    },
+    "recipientComV": [
+     4.232,
+     0.201,
+     -0.415
+    ],
+    "recipientComVTwin": [
+     4.445,
+     0.028,
+     -0.341
+    ],
+    "tacklerComV": [
+     3.577,
+     -0.077,
+     0.286
+    ]
+   },
+   {
+    "ms": 150,
+    "tacklingBootV": [
+     3.507,
+     1.052,
+     0.066
+    ],
+    "tacklingBootSpeed": 3.662,
+    "tacklingBootHeight": 0.114,
+    "struckFootV": [
+     1.863,
+     2.416,
+     3.191
+    ],
+    "struckFootVTwin": [
+     1.891,
+     0.331,
+     2.64
+    ],
+    "bootToStruckFootM": 0.455,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.182,
+     "R": 0
+    },
+    "recipientComV": [
+     4.203,
+     0.246,
+     -0.901
+    ],
+    "recipientComVTwin": [
+     4.362,
+     -0.027,
+     -0.741
+    ],
+    "tacklerComV": [
+     3.428,
+     -0.063,
+     0.298
+    ]
+   },
+   {
+    "ms": 200,
+    "tacklingBootV": [
+     3.271,
+     1.08,
+     -0.157
+    ],
+    "tacklingBootSpeed": 3.449,
+    "tacklingBootHeight": 0.112,
+    "struckFootV": [
+     3.168,
+     1.918,
+     2.607
+    ],
+    "struckFootVTwin": [
+     3.495,
+     0.447,
+     1.268
+    ],
+    "bootToStruckFootM": 0.745,
+    "loads": {
+     "L": 0.133,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.184,
+     "R": 0
+    },
+    "recipientComV": [
+     4.132,
+     0.152,
+     -1.238
+    ],
+    "recipientComVTwin": [
+     4.26,
+     -0.079,
+     -1.135
+    ],
+    "tacklerComV": [
+     3.357,
+     -0.065,
+     0.171
+    ]
+   },
+   {
+    "ms": 300,
+    "tacklingBootV": [
+     3.343,
+     0.154,
+     -0.481
+    ],
+    "tacklingBootSpeed": 3.381,
+    "tacklingBootHeight": 0.075,
+    "struckFootV": [
+     4.79,
+     1.077,
+     0.268
+    ],
+    "struckFootVTwin": [
+     3.997,
+     2.226,
+     -0.294
+    ],
+    "bootToStruckFootM": 1.414,
+    "loads": {
+     "L": 0.059,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.055,
+     "R": 0
+    },
+    "recipientComV": [
+     4.03,
+     0.14,
+     -2.133
+    ],
+    "recipientComVTwin": [
+     4.18,
+     -0.1,
+     -2.046
+    ],
+    "tacklerComV": [
+     3.23,
+     -0.078,
+     -0.174
+    ]
+   },
+   {
+    "ms": 400,
+    "tacklingBootV": [
+     3.184,
+     -0.278,
+     0.179
+    ],
+    "tacklingBootSpeed": 3.202,
+    "tacklingBootHeight": 0.069,
+    "struckFootV": [
+     4.406,
+     -1.205,
+     0.434
+    ],
+    "struckFootVTwin": [
+     4.603,
+     0.855,
+     -0.047
+    ],
+    "bootToStruckFootM": 2.118,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.09,
+     "R": 0
+    },
+    "recipientComV": [
+     4.003,
+     0.15,
+     -3.089
+    ],
+    "recipientComVTwin": [
+     4.126,
+     -0.053,
+     -2.966
+    ],
+    "tacklerComV": [
+     3.079,
+     -0.089,
+     -0.42
+    ]
+   }
+  ]
+ },
+ "F3": {
+  "first": {
+   "step": 118,
+   "ms": 0,
+   "contacts": [
+    {
+     "recipient": "foot_R",
+     "tackler": "foot_R",
+     "points": [
+      [
+       0.102,
+       0.012,
+       3.466
+      ],
+      [
+       0.066,
+       0.034,
+       3.472
+      ],
+      [
+       0.08,
+       0.017,
+       3.469
+      ]
+     ],
+     "normalOnRecipient": [
+      -0.727,
+      0.674,
+      -0.129
+     ],
+     "forceOnRecipientN": [
+      -431.097,
+      911.734,
+      -99.418
+     ],
+     "normalN": 941
+    }
+   ]
+  },
+  "log": [
+   {
+    "pair": "foot_R → foot_R",
+    "firstMs": 0,
+    "lastMs": 96,
+    "steps": 25,
+    "peakN": 1074,
+    "peakMs": 29,
+    "impulseOnRecipientNs": [
+     -29.44,
+     38.991,
+     2.504
+    ]
+   },
+   {
+    "pair": "foot_R → foot_L",
+    "firstMs": 29,
+    "lastMs": 54,
+    "steps": 6,
+    "peakN": 604,
+    "peakMs": 29,
+    "impulseOnRecipientNs": [
+     -5.628,
+     2.388,
+     3.763
+    ]
+   },
+   {
+    "pair": "upperArm_L → shank_L",
+    "firstMs": 271,
+    "lastMs": 283,
+    "steps": 4,
+    "peakN": 390,
+    "peakMs": 275,
+    "impulseOnRecipientNs": [
+     -0.239,
+     3.664,
+     0.313
+    ]
+   },
+   {
+    "pair": "forearm_L → shank_L",
+    "firstMs": 288,
+    "lastMs": 313,
+    "steps": 7,
+    "peakN": 217,
+    "peakMs": 292,
+    "impulseOnRecipientNs": [
+     -1.233,
+     3.445,
+     1.394
+    ]
+   },
+   {
+    "pair": "forearm_L → foot_L",
+    "firstMs": 321,
+    "lastMs": 367,
+    "steps": 12,
+    "peakN": 1215,
+    "peakMs": 321,
+    "impulseOnRecipientNs": [
+     -21.315,
+     11.038,
+     -6.862
+    ]
+   },
+   {
+    "pair": "upperArm_L → foot_L",
+    "firstMs": 338,
+    "lastMs": 346,
+    "steps": 3,
+    "peakN": 360,
+    "peakMs": 338,
+    "impulseOnRecipientNs": [
+     -1.028,
+     2.238,
+     -1.867
+    ]
+   }
+  ],
+  "bins": [
+   [
+    0,
+    [
+     "foot_R → foot_R"
+    ]
+   ],
+   [
+    25,
+    [
+     "foot_R → foot_R",
+     "foot_R → foot_L"
+    ]
+   ],
+   [
+    50,
+    [
+     "foot_R → foot_R",
+     "foot_R → foot_L"
+    ]
+   ],
+   [
+    75,
+    [
+     "foot_R → foot_R"
+    ]
+   ],
+   [
+    250,
+    [
+     "upperArm_L → shank_L"
+    ]
+   ],
+   [
+    275,
+    [
+     "upperArm_L → shank_L",
+     "forearm_L → shank_L"
+    ]
+   ],
+   [
+    300,
+    [
+     "forearm_L → shank_L",
+     "forearm_L → foot_L"
+    ]
+   ],
+   [
+    325,
+    [
+     "forearm_L → foot_L",
+     "upperArm_L → foot_L"
+    ]
+   ],
+   [
+    350,
+    [
+     "forearm_L → foot_L"
+    ]
+   ]
+  ],
+  "kin": [
+   {
+    "ms": -100,
+    "tacklingBootV": [
+     5.933,
+     -1.572,
+     -2.484
+    ],
+    "tacklingBootSpeed": 6.621,
+    "tacklingBootHeight": 0.173,
+    "struckFootV": null,
+    "struckFootVTwin": null,
+    "bootToStruckFootM": 0.736,
+    "loads": null,
+    "loadsTwin": null,
+    "recipientComV": null,
+    "recipientComVTwin": null,
+    "tacklerComV": [
+     5.037,
+     0.097,
+     -2.806
+    ]
+   },
+   {
+    "ms": -50,
+    "tacklingBootV": [
+     5.738,
+     -1.804,
+     -1.266
+    ],
+    "tacklingBootSpeed": 6.147,
+    "tacklingBootHeight": 0.078,
+    "struckFootV": null,
+    "struckFootVTwin": null,
+    "bootToStruckFootM": 0.437,
+    "loads": null,
+    "loadsTwin": null,
+    "recipientComV": null,
+    "recipientComVTwin": null,
+    "tacklerComV": [
+     4.954,
+     0.088,
+     -2.848
+    ]
+   },
+   {
+    "ms": -25,
+    "tacklingBootV": [
+     5.431,
+     -1.855,
+     -0.898
+    ],
+    "tacklingBootSpeed": 5.808,
+    "tacklingBootHeight": 0.053,
+    "struckFootV": [
+     0.023,
+     -0.004,
+     0.196
+    ],
+    "struckFootVTwin": [
+     0.023,
+     -0.004,
+     0.196
+    ],
+    "bootToStruckFootM": 0.291,
+    "loads": {
+     "L": 0,
+     "R": 1.917
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 1.917
+    },
+    "recipientComV": [
+     4.496,
+     0.036,
+     -0.147
+    ],
+    "recipientComVTwin": [
+     4.496,
+     0.036,
+     -0.147
+    ],
+    "tacklerComV": [
+     4.865,
+     0.083,
+     -2.617
+    ]
+   },
+   {
+    "ms": 0,
+    "tacklingBootV": [
+     4.259,
+     -1.797,
+     0.128
+    ],
+    "tacklingBootSpeed": 4.624,
+    "tacklingBootHeight": 0.052,
+    "struckFootV": [
+     0.014,
+     0.053,
+     0.283
+    ],
+    "struckFootVTwin": [
+     0.019,
+     0.048,
+     0.261
+    ],
+    "bootToStruckFootM": 0.157,
+    "loads": {
+     "L": 0,
+     "R": 1.717
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 1.538
+    },
+    "recipientComV": [
+     4.468,
+     0.05,
+     0.037
+    ],
+    "recipientComVTwin": [
+     4.468,
+     0.048,
+     0.035
+    ],
+    "tacklerComV": [
+     4.502,
+     0.01,
+     -1.02
+    ]
+   },
+   {
+    "ms": 25,
+    "tacklingBootV": [
+     1.47,
+     0.087,
+     0.019
+    ],
+    "tacklingBootSpeed": 1.473,
+    "tacklingBootHeight": 0.051,
+    "struckFootV": [
+     -0.067,
+     0.508,
+     0.336
+    ],
+    "struckFootVTwin": [
+     0.044,
+     0.094,
+     0.432
+    ],
+    "bootToStruckFootM": 0.106,
+    "loads": {
+     "L": 0,
+     "R": 0.776
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.973
+    },
+    "recipientComV": [
+     4.471,
+     0.059,
+     0.097
+    ],
+    "recipientComVTwin": [
+     4.472,
+     0.048,
+     0.097
+    ],
+    "tacklerComV": [
+     4.113,
+     0.06,
+     -0.152
+    ]
+   },
+   {
+    "ms": 50,
+    "tacklingBootV": [
+     3.719,
+     1.034,
+     0.102
+    ],
+    "tacklingBootSpeed": 3.861,
+    "tacklingBootHeight": 0.052,
+    "struckFootV": [
+     -1.985,
+     2.627,
+     1.683
+    ],
+    "struckFootVTwin": [
+     0.169,
+     0.204,
+     0.861
+    ],
+    "bootToStruckFootM": 0.1,
+    "loads": {
+     "L": 0,
+     "R": 0.396
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.429
+    },
+    "recipientComV": [
+     4.329,
+     0.147,
+     0.075
+    ],
+    "recipientComVTwin": [
+     4.465,
+     0.047,
+     0.011
+    ],
+    "tacklerComV": [
+     3.678,
+     0.028,
+     0.063
+    ]
+   },
+   {
+    "ms": 75,
+    "tacklingBootV": [
+     4.811,
+     1.188,
+     0.153
+    ],
+    "tacklingBootSpeed": 4.958,
+    "tacklingBootHeight": 0.053,
+    "struckFootV": [
+     -2.825,
+     2.709,
+     3.558
+    ],
+    "struckFootVTwin": [
+     0.416,
+     0.107,
+     1.401
+    ],
+    "bootToStruckFootM": 0.097,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0,
+     "R": 0.069
+    },
+    "recipientComV": [
+     4.294,
+     0.177,
+     -0.113
+    ],
+    "recipientComVTwin": [
+     4.479,
+     0.051,
+     -0.184
+    ],
+    "tacklerComV": [
+     3.527,
+     0.017,
+     0.094
+    ]
+   },
+   {
+    "ms": 100,
+    "tacklingBootV": [
+     4.056,
+     0.98,
+     0.031
+    ],
+    "tacklingBootSpeed": 4.173,
+    "tacklingBootHeight": 0.061,
+    "struckFootV": [
+     -0.881,
+     1.742,
+     5.13
+    ],
+    "struckFootVTwin": [
+     -0.783,
+     -0.273,
+     2.432
+    ],
+    "bootToStruckFootM": 0.097,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.034,
+     "R": 0
+    },
+    "recipientComV": [
+     4.281,
+     0.188,
+     -0.362
+    ],
+    "recipientComVTwin": [
+     4.445,
+     0.028,
+     -0.341
+    ],
+    "tacklerComV": [
+     3.465,
+     0.009,
+     0.096
+    ]
+   },
+   {
+    "ms": 150,
+    "tacklingBootV": [
+     3.317,
+     0.434,
+     0.036
+    ],
+    "tacklingBootSpeed": 3.345,
+    "tacklingBootHeight": 0.059,
+    "struckFootV": [
+     2.445,
+     1.389,
+     3.44
+    ],
+    "struckFootVTwin": [
+     1.891,
+     0.331,
+     2.64
+    ],
+    "bootToStruckFootM": 0.244,
+    "loads": {
+     "L": 1.139,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.182,
+     "R": 0
+    },
+    "recipientComV": [
+     4.237,
+     0.111,
+     -0.72
+    ],
+    "recipientComVTwin": [
+     4.362,
+     -0.027,
+     -0.741
+    ],
+    "tacklerComV": [
+     3.385,
+     0,
+     0.037
+    ]
+   },
+   {
+    "ms": 200,
+    "tacklingBootV": [
+     3.302,
+     0.764,
+     -0.173
+    ],
+    "tacklingBootSpeed": 3.394,
+    "tacklingBootHeight": 0.055,
+    "struckFootV": [
+     3.955,
+     0.933,
+     1.838
+    ],
+    "struckFootVTwin": [
+     3.495,
+     0.447,
+     1.268
+    ],
+    "bootToStruckFootM": 0.545,
+    "loads": {
+     "L": 0.252,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.184,
+     "R": 0
+    },
+    "recipientComV": [
+     4.191,
+     0.062,
+     -1.074
+    ],
+    "recipientComVTwin": [
+     4.26,
+     -0.079,
+     -1.135
+    ],
+    "tacklerComV": [
+     3.299,
+     -0.008,
+     0.009
+    ]
+   },
+   {
+    "ms": 300,
+    "tacklingBootV": [
+     3.197,
+     1.052,
+     0.004
+    ],
+    "tacklingBootSpeed": 3.366,
+    "tacklingBootHeight": 0.051,
+    "struckFootV": [
+     4.884,
+     1.667,
+     -0.392
+    ],
+    "struckFootVTwin": [
+     3.997,
+     2.226,
+     -0.294
+    ],
+    "bootToStruckFootM": 1.292,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.055,
+     "R": 0
+    },
+    "recipientComV": [
+     4.132,
+     0.136,
+     -1.989
+    ],
+    "recipientComVTwin": [
+     4.18,
+     -0.1,
+     -2.046
+    ],
+    "tacklerComV": [
+     3.059,
+     0.017,
+     -0.031
+    ]
+   },
+   {
+    "ms": 400,
+    "tacklingBootV": [
+     2.814,
+     0.746,
+     0.668
+    ],
+    "tacklingBootSpeed": 2.987,
+    "tacklingBootHeight": 0.073,
+    "struckFootV": [
+     5.02,
+     0.801,
+     -0.865
+    ],
+    "struckFootVTwin": [
+     4.603,
+     0.855,
+     -0.047
+    ],
+    "bootToStruckFootM": 2.109,
+    "loads": {
+     "L": 0,
+     "R": 0
+    },
+    "loadsTwin": {
+     "L": 0.09,
+     "R": 0
+    },
+    "recipientComV": [
+     3.843,
+     0.32,
+     -3.073
+    ],
+    "recipientComVTwin": [
+     4.126,
+     -0.053,
+     -2.966
+    ],
+    "tacklerComV": [
+     2.585,
+     -0.072,
+     -0.172
+    ]
+   }
+  ]
+ }
+}
