@@ -3193,6 +3193,92 @@ What was done there is not reconstructed here.
 
 **End-of-day state.** 7 V2 commits, all pushed at the 14 Oct housekeeping. Nothing changed in `touchline-current` except this chronicle.
 
+## Wednesday 14 October 2026 — The tackler's follow-through (SP2A → SP2F3), the first running recipient (PVP-1) and an animation-driven, interruptible runner (HYBRID-RUN-1)
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `prototype/physical-character-v2` has 34 commits, `3fa9d39` (12:25) → `2a70c7d` (14:06) → `58b055d` (14:53) → `e66fe88` (16:56) → `ea7ce07` (18:12) → `be54722` (18:51) → `2849197` (21:29) → `44a80d3` (22:19) → `39a0446` (23:38) → `9d2e951` (00:42, 15 Oct) → `af04ffb` (01:05) → `6e425dd` (03:58) → `d0497c5` (04:17) → `00a9441` (04:51) → `70d4ef2` (05:00) → `d74c10d` (05:04) → `405f086` (05:09) → `fa06d61` (05:18) → `1aa3c60` (05:22) → `4c3a2dd` (05:36) → `68461e6` (05:38) → `bdc5680` (05:40) → `dbc8aa2` (05:57).
+  - They were pushed at the 15 Oct housekeeping (06:04 on 15 Oct) and verified by fetch.
+  - `touchline-current` has `33fe7f2` (12:24, the 13 Oct entry), pushed at 12:24.
+- **[Doc]** in `review_artifacts/physical_character_v2/`:
+  - `sp2a/` (with `fsweep/`), `sp2c/`, `sp2d/`, `sp2e/`, `sp2f/` (with `v2/`, `v3/`): a report, a log, scripts, evidence and a review page each.
+  - `pvp1_running/`: `PVP1_REPORT.md`, `PVP1_LOG.md`, the main review page and the collision review page.
+  - `hybrid_run1/`: `HYBRID_RUN1_REPORT.md` (15 answers), `HYBRID_RUN1_LOG.md`, review page.
+  - `hac1/`: `HAC1_REPORT.md` (statuses, defects, blockers), `HAC1_LOG.md` (every candidate, including the failed fully physical runner), scripts, the regression battery and its expectations, evidence, review page.
+  - 13 user instructions saved verbatim in `sources/` (14 Oct 12:19 → 15 Oct ≈ 04:15).
+- **[Session]** the times of the user's messages, from the Claude Code session record (UTC + 1 h).
+- **[Codex workspace]** file times only (below).
+- **Owner screenshots:** 2, archived in `review_artifacts/chronicle_screens/2026-10-14_physical_character/` (18:18, 18:19).
+- **Screen recording, not archived (third-party footage):** 21:06, a broadcast side-slide tackle clip, REFERENCE3. It is preserved outside Git (`_preserved_2026-10-14_evidence_outside_git/slide_phys2/reference/`); every composite with it stays in gitignored `local_reference/` folders.
+- **Run records outside Git:** `_preserved_2026-10-14_evidence_outside_git/` (SP2A … SP2F3, 1.1 GB) and `_preserved_2026-10-15_evidence_outside_git/` (PVP-1, HYBRID-RUN-1, HAC-1; 474 MB).
+
+**The 14 Oct housekeeping (12:23 – 12:24).** The 13 Oct day was published: V2 → `a59d84b`, and the chronicle `33fe7f2`. 4 owner screenshots were archived.
+
+**SP2A** (instructed 12:19, `2a70c7d`): the tackler's RUN → DIVE transition.
+- **Architecture:** RUN-1's run-in, read-only, to the last toe-off; an authored final flight on the exact ballistic arc; physics from the plant touchdown (SP2's tackle, a contact-authority rule, a searched 3D tuck).
+- **Finding:** physics cannot take over the run's last stride. About 60 variants all ended face-down: the limbs lag running-speed motion by 50–100 ms, and RUN-1's stance is not dynamically consistent (its centre of pressure is 0.27 m behind the heel).
+- **Result (5.0 m/s):** fold side first, studs away, a 1.35 m slide, deterministic. PARTIAL, not frozen: the knee carries 50 % of the glide, the fold hip overruns 3° for ≈ 1 s, and at 4.5 m/s the body ends face-down.
+- **The body-friction sweep** (instructed 14:30, `58b055d`, diagnostic only): non-stud body/turf friction ×1 … ×0. Body friction explains the short slide; F50 looked best; nothing adopted.
+
+**SP2C → SP2E: the follow-through** (all at a temporary body friction F37.5 = ×0.375, not canonical).
+- **SP2C** (instructed 15:53, `e66fe88`): a 3D folded-leg tuck before contact and an active follow-through. The universal face-down roll was a lateral trunk/pelvis organisation defect, removed by a stronger trunk counter-lean. Seated at all three speeds, never prone.
+- **SP2D** (instructed 17:19, `ea7ce07`): the owner found SP2C too upright, with a floating arm. SP2D lowers the torso onto the folded side / back with a physical folded-side arm post. The arm takes load only when the trunk leans toward the folded side. Never chest-down, but ≈ 3× slower than the reference. The owner's screenshots (18:18) capture this report; the owner approved the direction.
+- **SP2E** (instructed 18:22, `be54722`): the same follow-through at the reference's pace. Established +0.43–0.48 s (SP2D ≈ +1.1 s), an early physical post (hand 9–10 % of the load), the shoulder at 134–144°.
+
+**SP2F → SP2F3: the posting arm** (instructed 21:04, 22:18 and 22:59).
+- **SP2F** (`2849197`): one continuous recline and a persistent sliding arm post.
+- **SP2F2** (`44a80d3`, with REFERENCE3): an early in-air counter-lean release and a two-sided support regulator. **The owner rejected the arm**, and did not accept the folded-knee overrun.
+- **SP2F3** (`39a0446`): the post built from the hand outward. The hand's offset from the pelvis is held by a compliant spring, with an eccentric strut and a bent elbow. Hand drift 0.24–0.29 m (SP2F: 0.7–1.0 m); the knee overrun is gone; robust over 30 perturbed runs.
+
+**PVP-1** (instructed 23:47, `9d2e951`): SP2F2 vs SP2F3 against the same running recipient.
+- **Setup:** RUN-1 at 4.5 m/s on the tackler's V2 body, handed to a fully physical body 50 ms before contact. Five conditions, each with a no-tackle TWIN.
+- **Result:** the physical recipient cannot keep running. Its TWIN falls at +0.42 s, so the up-and-over fall is mostly its own collapse. Struck foot swept 16–40 cm; no pinning. Running recipient state valid: NO.
+- **The collision review** (instructed 00:46, `af04ffb`, rendering only): the first contact is the tackling boot against the loaded boot, a brief catch, then a sweep.
+
+**HYBRID-RUN-1** (instructed 02:35, `6e425dd`): RUN-1 stays the locomotor intent; a fully collidable V2 body tracks it with finite authority; contacts win.
+- **Works:** the no-contact run is preserved for all of RUN-1's data; contacts override the body region by region, with no ragdoll switch; the PVP rerun has a stable twin.
+- **Does not work yet:**
+  - a displaced runner never recovers: even after a light brush it falls about 2 s later;
+  - an external "animation-consistency" pelvis moment (≤ 450 N·m) has no physical source and props struck runners up;
+  - the tackled recipient keeps running about 1 s before falling.
+- **Verdicts:** coexistence YES; regional override YES; recovery NO; root motion PARTIAL; recommend NEEDS MORE EVIDENCE.
+- An erratum was found: PVP-1's collision review labels the recipient's right as "left". It is recorded in the report; PVP-1 is not edited.
+
+**HAC-1, the night mission** (instructed ≈ 04:15, `d0497c5`). Its WIP commits run 04:51 → 05:22, the milestone is `4c3a2dd` (05:36), then `68461e6` (05:38, an arm balance reaction tried and rejected), `bdc5680` (05:40, review renders) and `dbc8aa2` (05:57, after the report: a placement-carried recovery rejected, and a candidate V1.1 with an earlier fall commitment, not adopted). This is the hybrid active-physics character V1.
+- **What was built:**
+  - continuous action viability (placement feasibility of the next recovery step, height margin, trunk organisation; no collision-size term);
+  - a fall commitment with hysteresis;
+  - support-integrity and lost-support detection;
+  - a bounded recovery step and an emergency step;
+  - regional RUN-intent weights;
+  - an active protect intent;
+  - a deterministic 22-scene battery and CPU measurement.
+- **The fully physical runner fails.** Support only through joints and contact was built in over 20 documented candidates; none ran more than ≈ 2 s:
+  - RUN-1 is not angular-momentum consistent;
+  - touchdowns come early and cascade;
+  - the ankle rolls.
+  The hybrid keeps HYBRID-RUN-1's gait abstraction, now withdrawn whenever RUN is not viable.
+- **Found:** RUN-1 cannot turn. HYBRID-RUN-1's shoulder pusher B falls even alone, so the shoulder tests use a prescribed push.
+- **Push results:** 30 N·s runs on; 60 N·s is knocked 27–33 cm off line and recovers (marginally); 100 N·s falls. The same holds from both sides.
+- **The frozen tackle at three support phases:**
+  - unloading: absorbed;
+  - PVP-1's phase: stumble and forward fall at ≈ +0.7 s;
+  - freshly loaded: the boot holds and he runs on.
+- **CPU:** ≈ 0.6 ms per character per 240 Hz step.
+- **Statuses:** PASS / PARTIAL mix; "hybrid recommended" YES; ready for owner review.
+- **After the report** (`dbc8aa2`):
+  - **Rejected:** a recovery carried by foot placement instead of the support's sideways servo. The step became visible, but every push fell: the free foot lands off RUN-1's schedule and gets no support.
+  - **Candidate V1.1, not adopted:** an earlier fall commitment. Falls carry their speed onto the forearms instead of folding onto a thigh or knees; the battery outcomes are unchanged.
+
+**In parallel: the user's Codex workspace** (file times only; not in Git).
+- **`…/2026-10-13/i-want-you-to-study-games`:**
+  - 14:43–14:48: pack-opening audio checkpoints ("electrical tear", "rocket audio");
+  - 15 Oct 03:14–03:37: an audio-clarity pass, wand and roar reference audio, foil foley;
+  - output: `outputs/Touchline_Pack_Opening.html` (03:37).
+- **New empty chat folders:** `2026-10-14/new-chat-2` (23:52) and `2026-10-15/new-chat` (01:13).
+
+**End-of-day state.** 34 V2 commits, all pushed at the 15 Oct housekeeping. Nothing changed in `touchline-current` except this chronicle.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3206,7 +3292,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `a59d84b`, 14 Oct 05:03, pushed at 12:23 on 14 Oct; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `dbc8aa2`, 15 Oct 05:57, pushed at 06:04 on 15 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -3259,6 +3345,15 @@ What was done there is not reconstructed here.
   - **What works:** the folded knee lands first and the outer thigh and hip take over; the tackling boot only skims (≤ 6 %); the slide is 1.0–1.8 m; tactile regional yielding (A6). SP2 is the single-player development baseline.
   - **Not solved:** the fold hip goes past its adduction stop; the knee carries ≈ 50 % of the glide; it fails at ≥ 5.75 m/s; against standing C3 there is no sliced-out fall.
   - M1c and TCF-1 are required by the tackler and not adopted.
+- **The follow-through and the posting arm** (SP2A → SP2F3, 14 Oct): an authored RUN → DIVE flight; at a temporary body friction F37.5, a 3D tuck, a descent onto the folded side / back at the reference's pace (SP2E), and a posting arm built from the hand outward (SP2F3). All stopped for owner review; F37.5 is not canonical.
+- **PVP-1** (`9d2e951`): SP2F2 vs SP2F3 against the same running recipient. A recipient handed to a fully physical body cannot keep running (its no-tackle twin falls at +0.42 s), so the recipient was invalid.
+- **HYBRID-RUN-1** (`6e425dd`): RUN-1 stays the intent and a collidable V2 body tracks it with finite authority. Undisturbed running is preserved, and contacts override the body region by region. Two defects remain: there is no recovery from a lateral disturbance, and an external "animation-consistency" pelvis moment carries load.
+- **HAC-1** (`4c3a2dd`, the night mission, 15 Oct 05:36): continuous action viability, regional intent weights, a bounded recovery step, support integrity and an active protect intent, built on HYBRID-RUN-1's support (withdrawn whenever RUN is not viable).
+  - **Pushes:** 30 / 60 N·s at the shoulder recover; 100 N·s falls.
+  - **The frozen tackle's outcome depends on the support phase:** absorbed at unloading; a forward fall at PVP-1's phase; at the freshly loaded phase the boot holds.
+  - **Not achieved:** a fully physical RUN-1 runner (> 20 candidates, none longer than ≈ 2 s).
+  - **Found:** RUN-1 cannot turn.
+  - **Candidate V1.1** (earlier fall commitment) awaits the owner; the review page compares it with V1.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -3308,6 +3403,12 @@ What was done there is not reconstructed here.
     - there is no sprint commit or sprint entry, while the reference tackle is a ≈ 9 m/s sprint;
     - M1c and TCF-1 are required and not adopted.
     - Against the standing C3 there is no fast sliced-out fall. The next decision is a running, single-support recipient (`slide_phys2/RECEIVER_PREREG.md`).
+  - **The running recipient** (PVP-1, HYBRID-RUN-1, 14 Oct day). A body handed to physics cannot run. The hybrid that keeps RUN-1 as its intent runs, but has two gaps:
+    - it does not recover from lateral disturbances;
+    - it needs a non-physical pelvis moment, because RUN-1 is not angular-momentum consistent.
+    - A fully physical RUN-1 runner needs a balance controller of the SIMBICON class, and has not been achieved (HAC-1, 15 Oct).
+    - RUN-1 cannot turn or sidestep: a runner whose intent turns falls even without contact.
+    - The frozen tackle's boot-on-boot sweep cannot take a loaded foot.
   - **Player-v-player** (PVP-1A, 11 Oct): the simulation's slide primitives cannot be fitted by the tackler's body (hips 0.265 vs 0.190 m apart). Neither body has a stepping or sliding controller, so STUMBLE steps and the slide's continuation cannot be tested. Under the simulation's own balance law the standing runner's no-contact state is already FALL, and the physical contact push points 55° from the simulation's.
   - **Gameplay vs physical geometry.**
     - V1.3's character-derived capsules still disagree with the rigid F0 boot: front strikes hit the boot first (CG-1).
