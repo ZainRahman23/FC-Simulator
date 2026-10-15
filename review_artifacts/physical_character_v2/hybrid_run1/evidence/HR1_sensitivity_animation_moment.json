@@ -1,0 +1,281 @@
+{
+ "note": "sensitivity check only: the animation-consistency pelvis moment (Tac); nothing here is adopted",
+ "usageFirstSecond": {
+  "NC": {
+   "fromStep": 120,
+   "runner": {
+    "animationNm": {
+     "mean": 52,
+     "max": 292,
+     "angularImpulseNms": 52.231
+    },
+    "supportedNm": {
+     "mean": 109,
+     "max": 362,
+     "angularImpulseNms": 108.914
+    }
+   },
+   "second": null
+  },
+  "PVP_TWIN": {
+   "fromStep": 120,
+   "runner": {
+    "animationNm": {
+     "mean": 49,
+     "max": 287,
+     "angularImpulseNms": 48.719
+    },
+    "supportedNm": {
+     "mean": 107,
+     "max": 336,
+     "angularImpulseNms": 106.802
+    }
+   },
+   "second": null
+  },
+  "SH_BRUSH": {
+   "fromStep": 218,
+   "runner": {
+    "animationNm": {
+     "mean": 46,
+     "max": 308,
+     "angularImpulseNms": 45.754
+    },
+    "supportedNm": {
+     "mean": 87,
+     "max": 352,
+     "angularImpulseNms": 87.411
+    }
+   },
+   "second": {
+    "animationNm": {
+     "mean": 43,
+     "max": 313,
+     "angularImpulseNms": 43.412
+    },
+    "supportedNm": {
+     "mean": 94,
+     "max": 312,
+     "angularImpulseNms": 94.062
+    }
+   }
+  },
+  "SH_BUMP": {
+   "fromStep": 147,
+   "runner": {
+    "animationNm": {
+     "mean": 167,
+     "max": 458,
+     "angularImpulseNms": 167.162
+    },
+    "supportedNm": {
+     "mean": 148,
+     "max": 762,
+     "angularImpulseNms": 147.766
+    }
+   },
+   "second": {
+    "animationNm": {
+     "mean": 49,
+     "max": 224,
+     "angularImpulseNms": 49.272
+    },
+    "supportedNm": {
+     "mean": 115,
+     "max": 427,
+     "angularImpulseNms": 115.191
+    }
+   }
+  },
+  "SH_STRONG": {
+   "fromStep": 86,
+   "runner": {
+    "animationNm": {
+     "mean": 120,
+     "max": 440,
+     "angularImpulseNms": 120.31
+    },
+    "supportedNm": {
+     "mean": 108,
+     "max": 448,
+     "angularImpulseNms": 107.634
+    }
+   },
+   "second": {
+    "animationNm": {
+     "mean": 51,
+     "max": 242,
+     "angularImpulseNms": 51.453
+    },
+    "supportedNm": {
+     "mean": 86,
+     "max": 314,
+     "angularImpulseNms": 85.981
+    }
+   }
+  },
+  "PVP_F2": {
+   "fromStep": 120,
+   "runner": {
+    "animationNm": {
+     "mean": 201,
+     "max": 474,
+     "angularImpulseNms": 200.948
+    },
+    "supportedNm": {
+     "mean": 179,
+     "max": 669,
+     "angularImpulseNms": 178.541
+    }
+   },
+   "second": null
+  },
+  "PVP_F3": {
+   "fromStep": 119,
+   "runner": {
+    "animationNm": {
+     "mean": 249,
+     "max": 475,
+     "angularImpulseNms": 248.594
+    },
+    "supportedNm": {
+     "mean": 182,
+     "max": 603,
+     "angularImpulseNms": 181.825
+    }
+   },
+   "second": null
+  }
+ },
+ "noContactCut": [
+  {
+   "cutAtS": 0.358,
+   "hash": "f4b066e5d5f2e070",
+   "fall": {
+    "t": 2.404,
+    "body": "forearm_L"
+   },
+   "fallAfterCutS": 2.046
+  },
+  {
+   "cutAtS": 0.5,
+   "hash": "d48c0609eb1b11f7",
+   "fall": {
+    "t": 2.254,
+    "body": "thigh_R"
+   },
+   "fallAfterCutS": 1.754
+  },
+  {
+   "cutAtS": 0.9,
+   "hash": "cfb65dba8a2f99ab",
+   "fall": {
+    "t": 2.217,
+    "body": "thigh_R"
+   },
+   "fallAfterCutS": 1.317
+  }
+ ],
+ "contactCut": {
+  "SH_BRUSH": {
+   "hash": "43f45b33dd284ab8",
+   "firstContactS": 0.908,
+   "runner": {
+    "fallCut": {
+     "t": 2.083,
+     "body": "forearm_L"
+    },
+    "fallCutAfterContactS": 1.175,
+    "fallFrozen": null,
+    "fallFrozenAfterContactS": null
+   },
+   "second": {
+    "fallCut": {
+     "t": 2.275,
+     "body": "thigh_L"
+    },
+    "fallFrozen": null
+   }
+  },
+  "SH_BUMP": {
+   "hash": "2833f786f216d3e3",
+   "firstContactS": 0.613,
+   "runner": {
+    "fallCut": {
+     "t": 1.446,
+     "body": "forearm_L"
+    },
+    "fallCutAfterContactS": 0.833,
+    "fallFrozen": {
+     "t": 1.775,
+     "body": "thigh_L"
+    },
+    "fallFrozenAfterContactS": 1.162
+   },
+   "second": {
+    "fallCut": {
+     "t": 2.504,
+     "body": "forearm_L"
+    },
+    "fallFrozen": null
+   }
+  },
+  "SH_STRONG": {
+   "hash": "771b9a62f20b67e3",
+   "firstContactS": 0.358,
+   "runner": {
+    "fallCut": {
+     "t": 1.488,
+     "body": "forearm_L"
+    },
+    "fallCutAfterContactS": 1.13,
+    "fallFrozen": {
+     "t": 1.867,
+     "body": "thigh_L"
+    },
+    "fallFrozenAfterContactS": 1.509
+   },
+   "second": {
+    "fallCut": {
+     "t": 1.467,
+     "body": "forearm_R"
+    },
+    "fallFrozen": null
+   }
+  },
+  "PVP_F2": {
+   "hash": "6dd944eb78d7aa23",
+   "firstContactS": 0.5,
+   "runner": {
+    "fallCut": {
+     "t": 1.1,
+     "body": "forearm_R"
+    },
+    "fallCutAfterContactS": 0.6,
+    "fallFrozen": {
+     "t": 1.508,
+     "body": "thigh_R"
+    },
+    "fallFrozenAfterContactS": 1.008
+   },
+   "second": null
+  },
+  "PVP_F3": {
+   "hash": "5831539ee8c023df",
+   "firstContactS": 0.496,
+   "runner": {
+    "fallCut": {
+     "t": 1.071,
+     "body": "forearm_R"
+    },
+    "fallCutAfterContactS": 0.575,
+    "fallFrozen": {
+     "t": 1.458,
+     "body": "thigh_R"
+    },
+    "fallFrozenAfterContactS": 0.962
+   },
+   "second": null
+  }
+ }
+}

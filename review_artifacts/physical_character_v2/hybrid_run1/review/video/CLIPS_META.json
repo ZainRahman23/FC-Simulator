@@ -1,0 +1,151 @@
+{
+ "runs": {
+  "NC_O": {
+   "frames": 696,
+   "mode": "original",
+   "who": "runner",
+   "label2": "parked",
+   "finalHash": "52c3320ff30ae4b2",
+   "refStep": 0,
+   "firstContact": null,
+   "n0": 1,
+   "n1": 696
+  },
+  "NC_H": {
+   "frames": 696,
+   "mode": "physical",
+   "who": "runner",
+   "label2": "parked",
+   "finalHash": "52c3320ff30ae4b2",
+   "refStep": 0,
+   "firstContact": null,
+   "n0": 1,
+   "n1": 696
+  },
+  "SH_BRUSH": {
+   "frames": 601,
+   "mode": "physical",
+   "who": "both",
+   "label2": "hybrid",
+   "finalHash": "6e49d614e534744a",
+   "refStep": 218,
+   "firstContact": {
+    "n": 218,
+    "pairs": [
+     [
+      "runner:forearm_R",
+      "tackler:forearm_L"
+     ]
+    ]
+   },
+   "n0": 98,
+   "n1": 698
+  },
+  "SH_BUMP": {
+   "frames": 601,
+   "mode": "physical",
+   "who": "both",
+   "label2": "hybrid",
+   "finalHash": "971195aa8ebc2f63",
+   "refStep": 147,
+   "firstContact": {
+    "n": 147,
+    "pairs": [
+     [
+      "runner:upperArm_R",
+      "tackler:upperArm_L"
+     ]
+    ]
+   },
+   "n0": 27,
+   "n1": 627
+  },
+  "SH_STRONG": {
+   "frames": 566,
+   "mode": "physical",
+   "who": "both",
+   "label2": "hybrid",
+   "finalHash": "02626820ad824756",
+   "refStep": 86,
+   "firstContact": {
+    "n": 86,
+    "pairs": [
+     [
+      "runner:forearm_R",
+      "tackler:forearm_L"
+     ]
+    ]
+   },
+   "n0": 1,
+   "n1": 566
+  },
+  "PVP_F2": {
+   "frames": 361,
+   "mode": "physical",
+   "who": "both",
+   "label2": "PVP-F2",
+   "finalHash": "f36c9e7c2bc74a92",
+   "refStep": 120,
+   "firstContact": {
+    "n": 120,
+    "pairs": [
+     [
+      "runner:foot_R",
+      "tackler:foot_R"
+     ]
+    ]
+   },
+   "n0": 48,
+   "n1": 408
+  },
+  "PVP_F3": {
+   "frames": 361,
+   "mode": "physical",
+   "who": "both",
+   "label2": "PVP-F3",
+   "finalHash": "245cbc6ed895afe0",
+   "refStep": 119,
+   "firstContact": {
+    "n": 119,
+    "pairs": [
+     [
+      "runner:foot_R",
+      "tackler:foot_R"
+     ]
+    ]
+   },
+   "n0": 47,
+   "n1": 407
+  },
+  "PVP_TWIN": {
+   "frames": 361,
+   "mode": "physical",
+   "who": "both",
+   "label2": "parked",
+   "finalHash": "2de7a70fdf68397c",
+   "refStep": 120,
+   "firstContact": null,
+   "n0": 48,
+   "n1": 408
+  },
+  "SH_BRUSH_EXT": {
+   "frames": 373,
+   "mode": "physical",
+   "who": "both",
+   "label2": "hybrid",
+   "finalHash": "63ea944a7e048af7",
+   "refStep": 218,
+   "firstContact": {
+    "n": 218,
+    "pairs": [
+     [
+      "runner:forearm_R",
+      "tackler:forearm_L"
+     ]
+    ]
+   },
+   "n0": 410,
+   "n1": 782
+  }
+ }
+}

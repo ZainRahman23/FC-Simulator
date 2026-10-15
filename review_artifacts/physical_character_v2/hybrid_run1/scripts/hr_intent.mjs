@@ -38,5 +38,13 @@ export function makeIntent(run, { kRef, k0, qR = [0, 0, 0, 1], offR = [0, 0, 0],
   const entry = () => { const p0 = fr(-1).S, p1 = fr(0).S, p2 = fr(1).S, vel = L.comVels(p1, L.bodyVels(p0, p2, 2 * H)); return { pose: p1, vel }; };
   // stance schedule (intended): per foot, the RUN-1 stance flag at step n
   const stance = (n) => fr(n).stance, sole = (n, s) => { const f = fr(n).S[bi("foot_" + s)]; return V.add(f.pos, Q.rot(f.rot, [0, -0.09, 0.07])); };
-  return { k0, kRef, qR, offR, H, frame: fr, pose: (n) => fr(n).S, com: (n) => fr(n).com, comVel, comAcc, pelvis, jointTargets, chor, entry, stance, sole, anat: (n) => fr(n).anat, yawAt, E, SA };
+  // FRACTIONAL intent time (the hybrid runner's phase synchronisation plays RUN-1 at an adapted rate): every query at a non-integer τ blends the
+  // two neighbouring frames (linear for vectors, slerp for rotations); the stance flags are those of the nearest frame
+  const lerp = (a, b, u) => a.map((x, i) => x + (b[i] - x) * u), fx = (f) => (t) => { const i = Math.floor(t), u = t - i; return u < 1e-9 ? f(i) : lerp(f(i), f(i + 1), u); };
+  const jointTargetsF = (t) => { const i = Math.floor(t), u = t - i, a = jointTargets(i); if (u < 1e-9) return a; const b = jointTargets(i + 1); return a.map((q, k) => L.slerp(q, b[k], u)); };
+  const pelvisF = (t) => { const i = Math.floor(t), u = t - i, a = pelvis(i); if (u < 1e-9) return a; const b = pelvis(i + 1); return { R: L.slerp(a.R, b.R, u), w: lerp(a.w, b.w, u) }; };
+  const anatF = (t) => { const i = Math.floor(t), u = t - i, a = fr(i).anat; if (u < 1e-9) return a; const b = fr(i + 1).anat, o = {}; for (const [j, v] of Object.entries(a)) { o[j] = {}; for (const [k, x] of Object.entries(v)) o[j][k] = x + ((b[j] && b[j][k] != null ? b[j][k] : x) - x) * u; } return o; };
+  // RUN-1's stance intervals per foot, in intent frames from step 0 (for the phase synchronisation)
+  const stances = { L: [], R: [] }; for (const sd of ["L", "R"]) { let a = null; for (let n = Math.max(1, k0 - 4) - k0; n <= kMax - k0; n++) { const on = !!fr(n).stance[sd]; if (on && a == null) a = n; if (!on && a != null) { stances[sd].push([a, n - 1]); a = null; } } if (a != null) stances[sd].push([a, kMax - k0]); }
+  return { k0, kRef, qR, offR, H, frame: fr, pose: (n) => fr(Math.round(n)).S, com: fx((n) => fr(n).com), comVel: fx(comVel), comAcc: fx(comAcc), pelvis: pelvisF, jointTargets: jointTargetsF, chor, entry, stance: (n) => fr(Math.round(n)).stance, sole: (n, sd) => sole(Math.round(n), sd), anat: anatF, yawAt, E, SA, stances };
 }

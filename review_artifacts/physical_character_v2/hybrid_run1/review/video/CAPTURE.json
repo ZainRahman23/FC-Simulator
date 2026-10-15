@@ -1,0 +1,1018 @@
+{
+ "tool": "hr_capture.cjs",
+ "views": {
+  "A_SIDE_1x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID \u00b7 diagnostic",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 174,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 1,
+   "last": 693,
+   "ms": 1604
+  },
+  "A_SIDE_025x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID RUN-1",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID \u00b7 diagnostic",
+     "az": 90,
+     "el": 8,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 696,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 1,
+   "last": 696,
+   "ms": 6215
+  },
+  "A_FRONT34_1x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID RUN-1",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID \u00b7 diagnostic",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 174,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 1,
+   "last": 693,
+   "ms": 1507
+  },
+  "A_FRONT34_025x": {
+   "panels": [
+    {
+     "k": "NC_O",
+     "l": "ORIGINAL RUN-1",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID RUN-1",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "NC_H",
+     "l": "HYBRID \u00b7 diagnostic",
+     "az": 35,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 696,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 1,
+   "last": 696,
+   "ms": 5563
+  },
+  "B_BEHIND_1x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 141,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 100,
+   "last": 660,
+   "ms": 1965
+  },
+  "B_BEHIND_025x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG  (A left, B right)",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 566,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 98,
+   "last": 663,
+   "ms": 8130
+  },
+  "B_FRONT_1x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 141,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 100,
+   "last": 660,
+   "ms": 1767
+  },
+  "B_FRONT_025x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG  (A left, B right)",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 566,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 98,
+   "last": 663,
+   "ms": 6832
+  },
+  "B_DIAG_1x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 141,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 100,
+   "last": 660,
+   "ms": 1764
+  },
+  "B_DIAG_025x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH",
+     "l": "BRUSH \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BUMP",
+     "l": "BUMP \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_STRONG",
+     "l": "STRONG \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 566,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 98,
+   "last": 663,
+   "ms": 6886
+  },
+  "C_CLOSE_1x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 90,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 404,
+   "ms": 878
+  },
+  "C_CLOSE_1x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 91,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 324
+  },
+  "C_CLOSE_025x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3777
+  },
+  "C_CLOSE_025x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1098
+  },
+  "C_CLOSE_010x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3001
+  },
+  "C_CLOSE_010x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 12,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1189
+  },
+  "C_SIDE_1x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 90,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 404,
+   "ms": 753
+  },
+  "C_SIDE_1x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 91,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 260
+  },
+  "C_SIDE_025x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3201
+  },
+  "C_SIDE_025x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 90,
+     "el": 9,
+     "d": 4,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1163
+  },
+  "C_REAR34_1x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 90,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 404,
+   "ms": 789
+  },
+  "C_REAR34_1x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 91,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 277
+  },
+  "C_REAR34_025x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3793
+  },
+  "C_REAR34_025x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 145,
+     "el": 12,
+     "d": 4.2,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1062
+  },
+  "C_DIAG_1x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 90,
+   "every": 4,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 404,
+   "ms": 818
+  },
+  "C_DIAG_1x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 91,
+   "every": 4,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 281
+  },
+  "C_DIAG_025x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3184
+  },
+  "C_DIAG_025x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1104
+  },
+  "C_DIAG_010x": {
+   "panels": [
+    {
+     "k": "PVP_F2",
+     "l": "PVP-F2 (SP2F2) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    },
+    {
+     "k": "PVP_F3",
+     "l": "PVP-F3 (SP2F3) \u00b7 hybrid recipient",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    1280,
+    574
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 3174
+  },
+  "C_DIAG_010x_TWIN": {
+   "panels": [
+    {
+     "k": "PVP_TWIN",
+     "l": "TWIN \u00b7 no tackle",
+     "az": 60,
+     "el": 18,
+     "d": 4.2,
+     "fov": 34,
+     "diag": true
+    }
+   ],
+   "frames": 361,
+   "every": 1,
+   "size": [
+    320,
+    304
+   ],
+   "first": 48,
+   "last": 408,
+   "ms": 1128
+  },
+  "B_BRUSH_LATE_1x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 behind",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 in front",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 93,
+   "every": 4,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 412,
+   "last": 780,
+   "ms": 1535
+  },
+  "B_BRUSH_LATE_025x": {
+   "panels": [
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 behind",
+     "az": 165,
+     "el": 14,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 in front",
+     "az": 15,
+     "el": 10,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    },
+    {
+     "k": "SH_BRUSH_EXT",
+     "l": "BRUSH, late \u00b7 diagnostic",
+     "az": 160,
+     "el": 18,
+     "d": 4.6,
+     "fov": 34,
+     "diag": false
+    }
+   ],
+   "frames": 373,
+   "every": 1,
+   "size": [
+    1680,
+    514
+   ],
+   "first": 410,
+   "last": 782,
+   "ms": 5386
+  }
+ },
+ "logs": [
+  "error: Failed to load resource: the server responded with a status of 404 (File not found)"
+ ]
+}

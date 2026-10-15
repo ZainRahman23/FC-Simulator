@@ -1,0 +1,1590 @@
+{
+ "note": "HYBRID-RUN-1 analysis",
+ "A": {
+  "hash": "52c3320ff30ae4b2",
+  "steps": 720,
+  "falls": null,
+  "comError_cm_series": [
+   [
+    0.1,
+    -0.1,
+    -0.1,
+    -1.2
+   ],
+   [
+    0.2,
+    -0.6,
+    -0.9,
+    -1.7
+   ],
+   [
+    0.3,
+    -0.7,
+    -1.5,
+    -1.2
+   ],
+   [
+    0.4,
+    -2,
+    -0.4,
+    -2.1
+   ],
+   [
+    0.5,
+    -2.5,
+    0.1,
+    -3.4
+   ],
+   [
+    0.6,
+    -3.3,
+    -1.8,
+    -3.1
+   ],
+   [
+    0.7,
+    -3.2,
+    -2.1,
+    -2.6
+   ],
+   [
+    0.8,
+    -2.3,
+    0.9,
+    -4.8
+   ],
+   [
+    0.9,
+    -1.8,
+    -0.7,
+    -5.3
+   ],
+   [
+    1,
+    -1.5,
+    -1.5,
+    -4.6
+   ],
+   [
+    1.1,
+    -2.3,
+    0.2,
+    -6.5
+   ],
+   [
+    1.2,
+    -2.4,
+    -0.4,
+    -7.6
+   ],
+   [
+    1.3,
+    -2.9,
+    -2,
+    -7.1
+   ],
+   [
+    1.4,
+    -2.1,
+    -1.4,
+    -7.4
+   ],
+   [
+    1.5,
+    -1,
+    0.9,
+    -9.4
+   ],
+   [
+    1.6,
+    0,
+    -0.4,
+    -9.4
+   ],
+   [
+    1.7,
+    0.2,
+    -0.8,
+    -9
+   ],
+   [
+    1.8,
+    0,
+    0,
+    -10.6
+   ],
+   [
+    1.9,
+    0.1,
+    -1.3,
+    -11.1
+   ],
+   [
+    2,
+    0,
+    -2,
+    -10.4
+   ],
+   [
+    2.1,
+    1.2,
+    -0.2,
+    -11.5
+   ],
+   [
+    2.2,
+    1.9,
+    0.3,
+    -12.7
+   ],
+   [
+    2.3,
+    2.7,
+    -1.3,
+    -12.4
+   ],
+   [
+    2.4,
+    2.6,
+    -1.5,
+    -12.4
+   ],
+   [
+    2.5,
+    2.1,
+    0.6,
+    -14.6
+   ],
+   [
+    2.6,
+    1.8,
+    -1.5,
+    -14.9
+   ],
+   [
+    2.7,
+    1.9,
+    -2.2,
+    -14.1
+   ],
+   [
+    2.8,
+    3.3,
+    0.7,
+    -16.2
+   ],
+   [
+    2.9,
+    4,
+    0.1,
+    -17.2
+   ],
+   [
+    3,
+    4.9,
+    -1.2,
+    -16.7
+   ]
+  ],
+  "forwardLag_cm_per_s": 5.57,
+  "pelvisErrDeg": {
+   "median": 2.2,
+   "p95": 3.92,
+   "max": 4.07
+  },
+  "jointRmsDeg": {
+   "legL": {
+    "median": 1.74,
+    "p95": 4.92,
+    "max": 7.19
+   },
+   "legR": {
+    "median": 1.45,
+    "p95": 4.45,
+    "max": 6.44
+   },
+   "trunk": {
+    "median": 0.97,
+    "p95": 1.62,
+    "max": 1.79
+   },
+   "armL": {
+    "median": 0.34,
+    "p95": 0.85,
+    "max": 0.95
+   },
+   "armR": {
+    "median": 0.42,
+    "p95": 0.72,
+    "max": 0.82
+   }
+  },
+  "touchdownVsRun1_frames": {
+   "values": [
+    1,
+    -2,
+    -2,
+    -2,
+    -3,
+    -3,
+    -4,
+    -1,
+    -4
+   ],
+   "mean": -2.22,
+   "min": -4,
+   "max": 1
+  },
+  "plantedFootSlipMaxM": 0.035,
+  "minAuthority": 1,
+  "balanceMoment": {
+   "animationNm": {
+    "median": 0,
+    "p95": 174.3,
+    "max": 291.52
+   },
+   "supportedNm": {
+    "median": 104.81,
+    "p95": 273.72,
+    "max": 371.58
+   }
+  }
+ },
+ "B": {
+  "BRUSH": {
+   "hash": "6e49d614e534744a",
+   "theta": 6,
+   "tcPlanned": 1.4041666666666666,
+   "firstContact": {
+    "t": 0.908,
+    "n": 218,
+    "pairs": [
+     "runner:forearm_R × tackler:forearm_L"
+    ]
+   },
+   "pairs": {
+    "forearm_R×forearm_L": {
+     "first": 0.908,
+     "last": 1.733,
+     "Ns": 9.88
+    },
+    "upperArm_R×upperArm_L": {
+     "first": 0.975,
+     "last": 1.642,
+     "Ns": 36.04
+    },
+    "upperArm_R×forearm_L": {
+     "first": 1.142,
+     "last": 1.167,
+     "Ns": 0.32
+    },
+    "forearm_R×upperArm_L": {
+     "first": 1.396,
+     "last": 1.533,
+     "Ns": 1.21
+    }
+   },
+   "impulseOnA_Ns": {
+    "lateralLeft": 46.96,
+    "vertical": 4.1,
+    "forward": 1.51
+   },
+   "peakForceN": 2202,
+   "A_vsNC": [
+    {
+     "dt": 0.25,
+     "A_lateral_cm": 4.8,
+     "A_forward_cm": 0.03,
+     "A_lateralV": 0.26,
+     "NC_lateralV": 0.07,
+     "A_trunkTilt": 13.04,
+     "NC_trunkTilt": 13.84
+    },
+    {
+     "dt": 0.5,
+     "A_lateral_cm": 8.64,
+     "A_forward_cm": -0.09,
+     "A_lateralV": 0.32,
+     "NC_lateralV": 0.19,
+     "A_trunkTilt": 12.09,
+     "NC_trunkTilt": 11.62
+    },
+    {
+     "dt": 1,
+     "A_lateral_cm": 18.4,
+     "A_forward_cm": -0.04,
+     "A_lateralV": 0.27,
+     "NC_lateralV": 0.11,
+     "A_trunkTilt": 12.69,
+     "NC_trunkTilt": 13.82
+    },
+    {
+     "dt": 1.5,
+     "A_lateral_cm": 20.25,
+     "A_forward_cm": -5.02,
+     "A_lateralV": -0.25,
+     "NC_lateralV": -0.11,
+     "A_trunkTilt": 17.44,
+     "NC_trunkTilt": 12.22
+    }
+   ],
+   "authorityMin": {
+    "A": {
+     "armR": {
+      "a": 0.302,
+      "t": 1.65
+     },
+     "legR": {
+      "a": 0.423,
+      "t": 3
+     },
+     "legL": {
+      "a": 0.354,
+      "t": 2.867
+     }
+    },
+    "B": {
+     "armL": {
+      "a": 0.302,
+      "t": 1.65
+     }
+    }
+   },
+   "armRecoveryS": {
+    "A_armR": 1.254,
+    "B_armL": 1.254
+   },
+   "falls": {
+    "A": null,
+    "B": null
+   }
+  },
+  "BUMP": {
+   "hash": "971195aa8ebc2f63",
+   "theta": 10,
+   "tcPlanned": 0.8416666666666667,
+   "firstContact": {
+    "t": 0.613,
+    "n": 147,
+    "pairs": [
+     "runner:upperArm_R × tackler:upperArm_L"
+    ]
+   },
+   "pairs": {
+    "upperArm_R×upperArm_L": {
+     "first": 0.613,
+     "last": 1.033,
+     "Ns": 61.73
+    },
+    "upperArm_R×forearm_L": {
+     "first": 0.629,
+     "last": 0.667,
+     "Ns": 2.94
+    },
+    "forearm_R×forearm_L": {
+     "first": 0.663,
+     "last": 0.95,
+     "Ns": 11.31
+    },
+    "foot_R×foot_L": {
+     "first": 0.804,
+     "last": 0.817,
+     "Ns": 0.39
+    },
+    "pelvis×forearm_L": {
+     "first": 0.875,
+     "last": 0.896,
+     "Ns": 0.72
+    },
+    "thigh_R×forearm_L": {
+     "first": 1.004,
+     "last": 1.008,
+     "Ns": 0.44
+    },
+    "forearm_R×upperArm_L": {
+     "first": 1.038,
+     "last": 1.092,
+     "Ns": 1.22
+    }
+   },
+   "impulseOnA_Ns": {
+    "lateralLeft": 77.03,
+    "vertical": -23.38,
+    "forward": 9.24
+   },
+   "peakForceN": 424,
+   "A_vsNC": [
+    {
+     "dt": 0.25,
+     "A_lateral_cm": 5.55,
+     "A_forward_cm": -0.24,
+     "A_lateralV": 0.43,
+     "NC_lateralV": -0.04,
+     "A_trunkTilt": 14.11,
+     "NC_trunkTilt": 12.48
+    },
+    {
+     "dt": 0.5,
+     "A_lateral_cm": 19.29,
+     "A_forward_cm": -6.14,
+     "A_lateralV": 0.47,
+     "NC_lateralV": -0.07,
+     "A_trunkTilt": 22.02,
+     "NC_trunkTilt": 12.97
+    },
+    {
+     "dt": 1,
+     "A_lateral_cm": 32.47,
+     "A_forward_cm": -27.83,
+     "A_lateralV": 0.11,
+     "NC_lateralV": -0.04,
+     "A_trunkTilt": 18.73,
+     "NC_trunkTilt": 11.6
+    },
+    {
+     "dt": 1.5,
+     "A_lateral_cm": 33.95,
+     "A_forward_cm": -128.75,
+     "A_lateralV": 0.12,
+     "NC_lateralV": 0.15,
+     "A_trunkTilt": 91.51,
+     "NC_trunkTilt": 11.78
+    }
+   ],
+   "authorityMin": {
+    "A": {
+     "armR": {
+      "a": 0.192,
+      "t": 0.917
+     },
+     "legR": {
+      "a": 0.366,
+      "t": 1.817
+     },
+     "trunk": {
+      "a": 0.899,
+      "t": 0.925
+     },
+     "legL": {
+      "a": 0.374,
+      "t": 1.492
+     },
+     "armL": {
+      "a": 0.432,
+      "t": 2.333
+     }
+    },
+    "B": {
+     "armL": {
+      "a": 0.196,
+      "t": 0.921
+     },
+     "legL": {
+      "a": 0.942,
+      "t": 0.854
+     }
+    }
+   },
+   "armRecoveryS": {
+    "A_armR": 0.971,
+    "B_armL": 0.983
+   },
+   "falls": {
+    "A": {
+     "t": 1.775,
+     "body": "thigh_L"
+    },
+    "B": null
+   }
+  },
+  "STRONG": {
+   "hash": "02626820ad824756",
+   "theta": 15,
+   "tcPlanned": 0.5541666666666667,
+   "firstContact": {
+    "t": 0.358,
+    "n": 86,
+    "pairs": [
+     "runner:forearm_R × tackler:forearm_L"
+    ]
+   },
+   "pairs": {
+    "forearm_R×forearm_L": {
+     "first": 0.358,
+     "last": 0.933,
+     "Ns": 18.53
+    },
+    "upperArm_R×upperArm_L": {
+     "first": 0.388,
+     "last": 0.929,
+     "Ns": 74.48
+    },
+    "upperArm_R×forearm_L": {
+     "first": 0.513,
+     "last": 0.571,
+     "Ns": 0.36
+    },
+    "forearm_R×upperArm_L": {
+     "first": 0.646,
+     "last": 1.125,
+     "Ns": 6.5
+    },
+    "foot_R×foot_L": {
+     "first": 0.742,
+     "last": 0.746,
+     "Ns": 1.32
+    },
+    "thigh_R×forearm_L": {
+     "first": 1,
+     "last": 1.004,
+     "Ns": 0.38
+    }
+   },
+   "impulseOnA_Ns": {
+    "lateralLeft": 101.97,
+    "vertical": 0.29,
+    "forward": 10.95
+   },
+   "peakForceN": 2634,
+   "A_vsNC": [
+    {
+     "dt": 0.25,
+     "A_lateral_cm": 10.19,
+     "A_forward_cm": 0.06,
+     "A_lateralV": 0.45,
+     "NC_lateralV": 0.06,
+     "A_trunkTilt": 13.75,
+     "NC_trunkTilt": 13.76
+    },
+    {
+     "dt": 0.5,
+     "A_lateral_cm": 19.81,
+     "A_forward_cm": 0.08,
+     "A_lateralV": 0.41,
+     "NC_lateralV": -0.04,
+     "A_trunkTilt": 15.05,
+     "NC_trunkTilt": 12.45
+    },
+    {
+     "dt": 1,
+     "A_lateral_cm": 32.46,
+     "A_forward_cm": -11.16,
+     "A_lateralV": 0.19,
+     "NC_lateralV": 0.08,
+     "A_trunkTilt": 14.95,
+     "NC_trunkTilt": 11.48
+    },
+    {
+     "dt": 1.5,
+     "A_lateral_cm": 31.99,
+     "A_forward_cm": -56.53,
+     "A_lateralV": 0.02,
+     "NC_lateralV": 0.06,
+     "A_trunkTilt": 27.68,
+     "NC_trunkTilt": 13.67
+    }
+   ],
+   "authorityMin": {
+    "A": {
+     "armR": {
+      "a": 0.2,
+      "t": 0.492
+     },
+     "legR": {
+      "a": 0.347,
+      "t": 1.842
+     },
+     "legL": {
+      "a": 0.344,
+      "t": 1.508
+     },
+     "trunk": {
+      "a": 0.989,
+      "t": 2.35
+     }
+    },
+    "B": {
+     "armL": {
+      "a": 0.201,
+      "t": 0.492
+     },
+     "legL": {
+      "a": 0.82,
+      "t": 0.792
+     }
+    }
+   },
+   "armRecoveryS": {
+    "A_armR": 1.179,
+    "B_armL": 1.188
+   },
+   "falls": {
+    "A": {
+     "t": 1.867,
+     "body": "thigh_L"
+    },
+    "B": null
+   }
+  }
+ },
+ "C": {
+  "TWIN": {
+   "hash": "2de7a70fdf68397c",
+   "falls": null
+  },
+  "F2": {
+   "hash": "f36c9e7c2bc74a92",
+   "firstContact": {
+    "t": 0.5,
+    "n": 120,
+    "pairs": [
+     "runner:foot_R × tackler:foot_R"
+    ]
+   },
+   "pairs": {
+    "foot_R → foot_R": {
+     "firstMs": 0,
+     "lastMs": 92,
+     "peakN": 2253
+    },
+    "foot_R → foot_L": {
+     "firstMs": 29,
+     "lastMs": 29,
+     "peakN": 395
+    },
+    "head → forearm_L": {
+     "firstMs": 117,
+     "lastMs": 125,
+     "peakN": 554
+    }
+   },
+   "series": [
+    {
+     "ms": 0,
+     "struckFoot": [
+      0,
+      0,
+      0
+     ],
+     "struckFootTwin": [
+      0,
+      0,
+      0
+     ],
+     "loadBW": {
+      "R": 2.29,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.09,
+      "L": 0
+     },
+     "comV": [
+      4.3,
+      0.04,
+      0.26
+     ],
+     "comVTwin": [
+      4.3,
+      0.04,
+      0.26
+     ],
+     "pelvisHeight": 0.9,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 13.76,
+     "trunkTiltTwin": 13.76,
+     "authority": {
+      "legL": 1,
+      "legR": 1,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 4.4,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 25,
+     "struckFoot": [
+      0,
+      0,
+      0.01
+     ],
+     "struckFootTwin": [
+      0,
+      0,
+      0.01
+     ],
+     "loadBW": {
+      "R": 1.8,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.8,
+      "L": 0
+     },
+     "comV": [
+      4.27,
+      -0.05,
+      0.5
+     ],
+     "comVTwin": [
+      4.3,
+      0.02,
+      0.5
+     ],
+     "pelvisHeight": 0.9,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 14.18,
+     "trunkTiltTwin": 14.17,
+     "authority": {
+      "legL": 1,
+      "legR": 0.894,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 4.13,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 50,
+     "struckFoot": [
+      0,
+      -0.02,
+      0.03
+     ],
+     "struckFootTwin": [
+      0.01,
+      0,
+      0.04
+     ],
+     "loadBW": {
+      "R": 1.32,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.3,
+      "L": 0
+     },
+     "comV": [
+      4.21,
+      -0.19,
+      0.57
+     ],
+     "comVTwin": [
+      4.36,
+      0.05,
+      0.63
+     ],
+     "pelvisHeight": 0.92,
+     "pelvisHeightTwin": 0.92,
+     "trunkTilt": 14.28,
+     "trunkTiltTwin": 14.25,
+     "authority": {
+      "legL": 1,
+      "legR": 0.4,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 3.67,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 100,
+     "struckFoot": [
+      -0.01,
+      -0.13,
+      0.16
+     ],
+     "struckFootTwin": [
+      0.07,
+      -0.01,
+      0.13
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 1.22
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.07,
+      -0.3,
+      0.52
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      0.36
+     ],
+     "pelvisHeight": 0.94,
+     "pelvisHeightTwin": 0.95,
+     "trunkTilt": 14.45,
+     "trunkTiltTwin": 13.95,
+     "authority": {
+      "legL": 0.795,
+      "legR": 0.173,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 3.31,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 150,
+     "struckFoot": [
+      0.1,
+      -0.22,
+      0.37
+     ],
+     "struckFootTwin": [
+      0.19,
+      -0.06,
+      0.28
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.91
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.89,
+      -0.34,
+      0.49
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      -0.13
+     ],
+     "pelvisHeight": 0.97,
+     "pelvisHeightTwin": 0.95,
+     "trunkTilt": 15.53,
+     "trunkTiltTwin": 12.4,
+     "authority": {
+      "legL": 0.774,
+      "legR": 0.231,
+      "trunk": 1,
+      "armL": 0.77,
+      "armR": 1
+     },
+     "tacklerVh": 3.18,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 200,
+     "struckFoot": [
+      0.33,
+      -0.26,
+      0.54
+     ],
+     "struckFootTwin": [
+      0.46,
+      -0.15,
+      0.35
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.2
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.85,
+      -0.26,
+      0.24
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      -0.62
+     ],
+     "pelvisHeight": 0.99,
+     "pelvisHeightTwin": 0.93,
+     "trunkTilt": 17.91,
+     "trunkTiltTwin": 11.09,
+     "authority": {
+      "legL": 0.581,
+      "legR": 0.349,
+      "trunk": 1,
+      "armL": 0.623,
+      "armR": 1
+     },
+     "tacklerVh": 3.12,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 300,
+     "struckFoot": [
+      0.96,
+      -0.32,
+      0.54
+     ],
+     "struckFootTwin": [
+      1.18,
+      -0.23,
+      0.36
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.39
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.77
+     },
+     "comV": [
+      3.76,
+      -0.24,
+      -0.68
+     ],
+     "comVTwin": [
+      4.41,
+      -0.01,
+      -0.11
+     ],
+     "pelvisHeight": 0.97,
+     "pelvisHeightTwin": 0.89,
+     "trunkTilt": 18.71,
+     "trunkTiltTwin": 11.47,
+     "authority": {
+      "legL": 0.43,
+      "legR": 0.534,
+      "trunk": 1,
+      "armL": 0.73,
+      "armR": 1
+     },
+     "tacklerVh": 3.02,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 500,
+     "struckFoot": [
+      1.9,
+      -0.15,
+      0.13
+     ],
+     "struckFootTwin": [
+      2.82,
+      0.02,
+      0.01
+     ],
+     "loadBW": {
+      "R": 1.33,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.25,
+      -0.23,
+      0.11
+     ],
+     "comVTwin": [
+      4.53,
+      -0.06,
+      -0.26
+     ],
+     "pelvisHeight": 0.86,
+     "pelvisHeightTwin": 0.96,
+     "trunkTilt": 15.81,
+     "trunkTiltTwin": 11.61,
+     "authority": {
+      "legL": 0.539,
+      "legR": 0.589,
+      "trunk": 1,
+      "armL": 0.861,
+      "armR": 1
+     },
+     "tacklerVh": 2.65,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 750,
+     "struckFoot": [
+      2.45,
+      -0.15,
+      0.13
+     ],
+     "struckFootTwin": [
+      3.02,
+      0,
+      0.08
+     ],
+     "loadBW": {
+      "R": 0.04,
+      "L": 1.24
+     },
+     "loadTwinBW": {
+      "R": 0.52,
+      "L": 0
+     },
+     "comV": [
+      3.81,
+      0.09,
+      -0.94
+     ],
+     "comVTwin": [
+      4.53,
+      0.08,
+      0.57
+     ],
+     "pelvisHeight": 0.72,
+     "pelvisHeightTwin": 0.93,
+     "trunkTilt": 19.35,
+     "trunkTiltTwin": 14.19,
+     "authority": {
+      "legL": 0.573,
+      "legR": 0.394,
+      "trunk": 1,
+      "armL": 0.94,
+      "armR": 1
+     },
+     "tacklerVh": 2.11,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 1000,
+     "struckFoot": [
+      3.6,
+      -0.34,
+      0.13
+     ],
+     "struckFootTwin": [
+      4.34,
+      -0.21,
+      0.33
+     ],
+     "loadBW": {
+      "R": 0.46,
+      "L": 0.21
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.04
+     },
+     "comV": [
+      3.21,
+      0.1,
+      -1.58
+     ],
+     "comVTwin": [
+      4.33,
+      -0.03,
+      0.12
+     ],
+     "pelvisHeight": 0.5,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 35.17,
+     "trunkTiltTwin": 11.78,
+     "authority": {
+      "legL": 0.355,
+      "legR": 0.727,
+      "trunk": 1,
+      "armL": 0.974,
+      "armR": 1
+     },
+     "tacklerVh": 1.81,
+     "tacklerVhSolo": null
+    }
+   ],
+   "noFootSupportAfterS": 0.088,
+   "farFootDownAfterS": 0.096,
+   "farFootDownTwinAfterS": 0.213,
+   "fall": {
+    "t": 1.508,
+    "body": "thigh_R",
+    "afterContactS": 1.008
+   }
+  },
+  "F3": {
+   "hash": "245cbc6ed895afe0",
+   "firstContact": {
+    "t": 0.496,
+    "n": 119,
+    "pairs": [
+     "runner:foot_R × tackler:foot_R"
+    ]
+   },
+   "pairs": {
+    "foot_R → foot_R": {
+     "firstMs": 0,
+     "lastMs": 112,
+     "peakN": 1876
+    },
+    "forearm_L → shank_L": {
+     "firstMs": 233,
+     "lastMs": 337,
+     "peakN": 536
+    },
+    "forearm_L → foot_L": {
+     "firstMs": 271,
+     "lastMs": 412,
+     "peakN": 713
+    }
+   },
+   "series": [
+    {
+     "ms": 0,
+     "struckFoot": [
+      0,
+      0,
+      0
+     ],
+     "struckFootTwin": [
+      0,
+      0,
+      0
+     ],
+     "loadBW": {
+      "R": 2.06,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 2.05,
+      "L": 0
+     },
+     "comV": [
+      4.31,
+      0.04,
+      0.22
+     ],
+     "comVTwin": [
+      4.31,
+      0.04,
+      0.22
+     ],
+     "pelvisHeight": 0.89,
+     "pelvisHeightTwin": 0.89,
+     "trunkTilt": 13.66,
+     "trunkTiltTwin": 13.66,
+     "authority": {
+      "legL": 1,
+      "legR": 1,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 4.45,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 25,
+     "struckFoot": [
+      0,
+      0,
+      0
+     ],
+     "struckFootTwin": [
+      0,
+      0,
+      0
+     ],
+     "loadBW": {
+      "R": 1.9,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.89,
+      "L": 0
+     },
+     "comV": [
+      4.25,
+      -0.06,
+      0.46
+     ],
+     "comVTwin": [
+      4.29,
+      0.02,
+      0.47
+     ],
+     "pelvisHeight": 0.9,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 14.12,
+     "trunkTiltTwin": 14.12,
+     "authority": {
+      "legL": 1,
+      "legR": 0.963,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 4.06,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 50,
+     "struckFoot": [
+      0,
+      -0.02,
+      0.03
+     ],
+     "struckFootTwin": [
+      0.01,
+      0,
+      0.03
+     ],
+     "loadBW": {
+      "R": 1.81,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 1.4,
+      "L": 0
+     },
+     "comV": [
+      4.13,
+      -0.29,
+      0.55
+     ],
+     "comVTwin": [
+      4.35,
+      0.05,
+      0.62
+     ],
+     "pelvisHeight": 0.91,
+     "pelvisHeightTwin": 0.91,
+     "trunkTilt": 14.27,
+     "trunkTiltTwin": 14.27,
+     "authority": {
+      "legL": 1,
+      "legR": 0.403,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 3.32,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 100,
+     "struckFoot": [
+      0,
+      -0.15,
+      0.13
+     ],
+     "struckFootTwin": [
+      0.06,
+      -0.01,
+      0.12
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.03,
+      -0.67,
+      0.28
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      0.4
+     ],
+     "pelvisHeight": 0.94,
+     "pelvisHeightTwin": 0.94,
+     "trunkTilt": 14.47,
+     "trunkTiltTwin": 14.02,
+     "authority": {
+      "legL": 1,
+      "legR": 0.171,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 2.74,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 150,
+     "struckFoot": [
+      0.06,
+      -0.28,
+      0.37
+     ],
+     "struckFootTwin": [
+      0.18,
+      -0.06,
+      0.26
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.87
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.53,
+      -0.45,
+      0.35
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      -0.09
+     ],
+     "pelvisHeight": 0.96,
+     "pelvisHeightTwin": 0.95,
+     "trunkTilt": 15.13,
+     "trunkTiltTwin": 12.55,
+     "authority": {
+      "legL": 0.951,
+      "legR": 0.172,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 2.65,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 200,
+     "struckFoot": [
+      0.24,
+      -0.31,
+      0.55
+     ],
+     "struckFootTwin": [
+      0.44,
+      -0.14,
+      0.35
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0.48
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      3.34,
+      -0.37,
+      0.16
+     ],
+     "comVTwin": [
+      4.54,
+      0.06,
+      -0.58
+     ],
+     "pelvisHeight": 0.97,
+     "pelvisHeightTwin": 0.94,
+     "trunkTilt": 19.3,
+     "trunkTiltTwin": 11.06,
+     "authority": {
+      "legL": 0.75,
+      "legR": 0.286,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 2.59,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 300,
+     "struckFoot": [
+      0.76,
+      -0.35,
+      0.62
+     ],
+     "struckFootTwin": [
+      1.16,
+      -0.23,
+      0.36
+     ],
+     "loadBW": {
+      "R": 0,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 1.73
+     },
+     "comV": [
+      3.12,
+      -0.46,
+      -0.73
+     ],
+     "comVTwin": [
+      4.42,
+      0,
+      -0.15
+     ],
+     "pelvisHeight": 0.95,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 27.16,
+     "trunkTiltTwin": 11.41,
+     "authority": {
+      "legL": 0.413,
+      "legR": 0.488,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 2.22,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 500,
+     "struckFoot": [
+      1.7,
+      -0.24,
+      0.14
+     ],
+     "struckFootTwin": [
+      2.79,
+      0.03,
+      0.01
+     ],
+     "loadBW": {
+      "R": 0.29,
+      "L": 0
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 0
+     },
+     "comV": [
+      4.07,
+      -0.49,
+      0.1
+     ],
+     "comVTwin": [
+      4.53,
+      -0.06,
+      -0.22
+     ],
+     "pelvisHeight": 0.89,
+     "pelvisHeightTwin": 0.96,
+     "trunkTilt": 17.67,
+     "trunkTiltTwin": 11.69,
+     "authority": {
+      "legL": 0.398,
+      "legR": 0.498,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 1.82,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 750,
+     "struckFoot": [
+      2.23,
+      -0.32,
+      0.13
+     ],
+     "struckFootTwin": [
+      3.02,
+      0,
+      0.08
+     ],
+     "loadBW": {
+      "R": 0.17,
+      "L": 1.23
+     },
+     "loadTwinBW": {
+      "R": 0.64,
+      "L": 0
+     },
+     "comV": [
+      3.49,
+      -0.19,
+      -1.2
+     ],
+     "comVTwin": [
+      4.51,
+      0.08,
+      0.59
+     ],
+     "pelvisHeight": 0.69,
+     "pelvisHeightTwin": 0.93,
+     "trunkTilt": 18.22,
+     "trunkTiltTwin": 14.2,
+     "authority": {
+      "legL": 0.55,
+      "legR": 0.388,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 1.34,
+     "tacklerVhSolo": null
+    },
+    {
+     "ms": 1000,
+     "struckFoot": [
+      3.12,
+      -0.55,
+      0.12
+     ],
+     "struckFootTwin": [
+      4.31,
+      -0.21,
+      0.34
+     ],
+     "loadBW": {
+      "R": 0.01,
+      "L": 0.21
+     },
+     "loadTwinBW": {
+      "R": 0,
+      "L": 2.13
+     },
+     "comV": [
+      2.22,
+      -0.1,
+      -0.33
+     ],
+     "comVTwin": [
+      4.35,
+      -0.02,
+      0.08
+     ],
+     "pelvisHeight": 0.48,
+     "pelvisHeightTwin": 0.9,
+     "trunkTilt": 37.33,
+     "trunkTiltTwin": 11.7,
+     "authority": {
+      "legL": 0.345,
+      "legR": 0.661,
+      "trunk": 1,
+      "armL": 1,
+      "armR": 1
+     },
+     "tacklerVh": 1.01,
+     "tacklerVhSolo": null
+    }
+   ],
+   "noFootSupportAfterS": 0.092,
+   "farFootDownAfterS": 0.108,
+   "farFootDownTwinAfterS": 0.217,
+   "fall": {
+    "t": 1.458,
+    "body": "thigh_R",
+    "afterContactS": 0.962
+   }
+  }
+ }
+}

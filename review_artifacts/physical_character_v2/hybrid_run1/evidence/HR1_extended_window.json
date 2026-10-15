@@ -1,0 +1,121 @@
+{
+ "note": "scenes run to the end of the RUN-1 data",
+ "runinFrames": 1249,
+ "validStepsA": 783,
+ "validS_A": 3.262,
+ "validStepsB": 702,
+ "validS_B": 2.925,
+ "scenes": {
+  "NC": {
+   "hash": "3fbcc130a2f84dae",
+   "steps": 783,
+   "firstContactS": null,
+   "lastContactS": null,
+   "runnerA": {
+    "fall": null,
+    "fallAfterFirstContactS": null,
+    "validToS": 3.262
+   },
+   "runnerB": null
+  },
+  "PVP_TWIN": {
+   "hash": "b78ce9751693efd2",
+   "steps": 783,
+   "firstContactS": null,
+   "lastContactS": null,
+   "runnerA": {
+    "fall": null,
+    "fallAfterFirstContactS": null,
+    "validToS": 3.262
+   },
+   "runnerB": null
+  },
+  "SH_BRUSH": {
+   "hash": "63ea944a7e048af7",
+   "steps": 783,
+   "firstContactS": 0.908,
+   "lastContactS": 1.733,
+   "runnerA": {
+    "fall": {
+     "t": 3.158,
+     "body": "thigh_L"
+    },
+    "fallAfterFirstContactS": 2.25,
+    "validToS": 3.262
+   },
+   "runnerB": {
+    "fall": null,
+    "fallAfterFirstContactS": null,
+    "validToS": 2.925
+   }
+  },
+  "SH_BUMP": {
+   "hash": "823a494849bde54f",
+   "steps": 783,
+   "firstContactS": 0.613,
+   "lastContactS": 1.092,
+   "runnerA": {
+    "fall": {
+     "t": 1.775,
+     "body": "thigh_L"
+    },
+    "fallAfterFirstContactS": 1.162,
+    "validToS": 3.262
+   },
+   "runnerB": {
+    "fall": null,
+    "fallAfterFirstContactS": null,
+    "validToS": 2.925
+   }
+  },
+  "SH_STRONG": {
+   "hash": "89a466a49c948a72",
+   "steps": 783,
+   "firstContactS": 0.358,
+   "lastContactS": 1.125,
+   "runnerA": {
+    "fall": {
+     "t": 1.867,
+     "body": "thigh_L"
+    },
+    "fallAfterFirstContactS": 1.509,
+    "validToS": 3.262
+   },
+   "runnerB": {
+    "fall": null,
+    "fallAfterFirstContactS": null,
+    "validToS": 2.925
+   }
+  },
+  "PVP_F2": {
+   "hash": "51b3bb354076fb36",
+   "steps": 783,
+   "firstContactS": 0.5,
+   "lastContactS": 0.625,
+   "runnerA": {
+    "fall": {
+     "t": 1.508,
+     "body": "thigh_R"
+    },
+    "fallAfterFirstContactS": 1.008,
+    "validToS": 3.262
+   },
+   "runnerB": null
+  },
+  "PVP_F3": {
+   "hash": "39cbc36c3fb5800c",
+   "steps": 783,
+   "firstContactS": 0.496,
+   "lastContactS": 0.908,
+   "runnerA": {
+    "fall": {
+     "t": 1.458,
+     "body": "thigh_R"
+    },
+    "fallAfterFirstContactS": 0.962,
+    "validToS": 3.262
+   },
+   "runnerB": null
+  }
+ }
+}
