@@ -771,7 +771,7 @@ export class DribbleSim {
     const T = { id: P.id, k, t: k * DT, F, reg: P.reg, hull: P.hull, collider: `${this.pid}:${P.hull}_${F}`, swing: P.swing, w: clamp(A.legs[F].w || 0, 0, 1), weak, arch: this.arch,
       ball: ball.p.slice(), pre: { v: ball.v.slice(), w: ball.w.slice() }, gap, otherGap: other, nPhys: dq.n.slice(), bootVel: vB, desired: { v: [Math.cos(headingOf(P.launch.n)) * P.launch.speed, 0, -Math.sin(headingOf(P.launch.n)) * P.launch.speed], speed: P.launch.speed, maxSep: P.launch.maxSep, want: P.launch.want, kNext: P.launch.kNext, F2: P.launch.F2, target: P.launch.target },
       executed: { v: vOut.slice(), speed: Math.hypot(vOut[0], vOut[2]) }, error: { sigS, sigD, sigL, eS, eD, eL, keyId: this.rng.keyId(...key, "speed") }, phys, offset: P.geom.o, yaw: P.geom.yaw / DEG, pitch: P.geom.pitch / DEG,
-      expect: { F: P.launch.F2, swing: P.launch.swing2, k: P.launch.kNext }, release: P.release, contactAhead: V.dot(V.sub(ball.p, pitch2w(A.P[0], A.P[1], 0)), fwdW(A.psi)), com: [A.P[0], A.P[1]], speedPlayer: s, ctrl: this.ctrl.state, launched: false };
+      expect: { F: P.launch.F2, swing: P.launch.swing2, k: P.launch.kNext }, release: P.release, recovery: !!P.launch.recovery, contactAhead: V.dot(V.sub(ball.p, pitch2w(A.P[0], A.P[1], 0)), fwdW(A.psi)), com: [A.P[0], A.P[1]], speedPlayer: s, ctrl: this.ctrl.state, launched: false };
     this.touches.push(T);
     if (this.arch === "A") { T.launched = true; T.physical = true; this.lastTouch = T; this.cpu.commit += now() - c0; return; }   // pure physical: the boot alone
     const pre = this.contacts.find((c) => c.own && k - c.k <= 3 && (c.part === "boot_" + F || c.part === "toe_" + F));
