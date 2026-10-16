@@ -3,7 +3,7 @@
 const { loadTurn1 } = require("./t1_load.cjs");
 const X = loadTurn1(), T = X.TURN1, M4 = X.M4, DEG = Math.PI / 180, SCN = require("../turn1_scenarios.js");
 function measure(scn, opts) {
-  const o = opts || {}, A = T.t1Make(X.skel, scn.init), n = Math.round((scn.dur || 4) * 240), b = A.body, idx = b.idx; if (o.l11 || process.env.T11 === "1") X.TURN11.attach(A);   // TURN-1.1 body layer
+  const o = opts || {}, A = T.t1Make(X.skel, o.t12 || process.env.T12 === "1" ? Object.assign({}, scn.init, { turn12: true }) : scn.init), n = Math.round((scn.dur || 4) * 240), b = A.body, idx = b.idx; if (o.l11 || process.env.T11 === "1") X.TURN11.attach(A);   // TURN-1.1 body layer
   const hz = b.heelZ + 0.012, padLoc = [0, -(b.ankleH + b.mtp[1]), X.ctx.RUN1_V13.R1_MTP.padAhead];
   const st = { R: null, L: null }, stances = [], jr = { knee: [1e9, -1e9], hipFlex: [1e9, -1e9], hipAbd: [1e9, -1e9], psi: [1e9, -1e9] }; let reachMax = 0, reachN = 0;
   for (let k = 0; k < n; k++) {

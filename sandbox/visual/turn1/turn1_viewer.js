@@ -4,8 +4,11 @@
 // the input history on the fixed 1/240 s grid; trails come from that replay (60 Hz samples), never from the rendered frames.
 // URL: ?scn=<id> | ?v=5.5&turn=90&tc=1.0 · &views=game,A,B | game · &A=top &B=rear34 · &zoom=1|2.5 · &diag=1 (debug overlay) · &rate=0.25 · &t=…
 "use strict";
-const TV = { t: 0, rate: 1, playing: true, zoom: 1, diag: false, skel: false, A: "top", B: "rear34", scn: null, actor: null, ready: false, labels: true, loopT: 4.2, single: null, game: true, body: "t11" };   // body: "t11" = TURN-1.1 authored body layer, "t1" = TURN-1 procedural body (same path / plants)
-const tvMake = (skel, init) => { const A = TURN1.t1Make(skel, init); if (TV.body === "t11" && typeof TURN11 !== "undefined") TURN11.attach(A); return A; };
+const TV = { t: 0, rate: 1, playing: true, zoom: 1, diag: false, skel: false, A: "top", B: "rear34", scn: null, actor: null, ready: false, labels: true, loopT: 4.2, single: null, game: true, body: "t12" };   // body: "t11" = TURN-1.1 authored body layer, "t1" = TURN-1 procedural body (same path / plants)
+// body: "t1" = TURN-1 (7b58d1a) · "t11" = TURN-1 + the TURN-1.1 authored layer · "t12" = TURN-1.2 (the speed-dependent reversal family + its phase body)
+// · "t12e" = TURN-1.2's engine with TURN-1's body only (diagnostic)
+const tvMake = (skel, init) => { const v12 = TV.body === "t12" || TV.body === "t12e", A = TURN1.t1Make(skel, v12 ? Object.assign({}, init, { turn12: true }) : init);
+  if (typeof TURN11 !== "undefined") { if (TV.body === "t11") TURN11.attach(A); else if (TV.body === "t12") TURN11.attach(A, { mode: "t12" }); } return A; };
 function tvPersp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
 function tvLookAt(eye, at, up) {                        // the same handedness as run1_viewer.js rv1LookAt (the anim3d world is mirror-handed vs the screen)
   const fz = V3.norm(V3.sub(eye, at)), fx = V3.norm(V3.cross(fz, up)), fy = V3.cross(fx, fz), m = M4.ident();
@@ -117,6 +120,12 @@ function tvRender() {
   gl.disable(gl.SCISSOR_TEST);
 }
 const TV_COL = { R: "rgba(110,255,150,0.95)", L: "rgba(255,110,200,0.95)", ROLE: { RUN: "#bfe8ff", ARC: "#9fd8ff", BRAKE: "#ffb347", PLANT: "#ff4d4d", EXIT: "#ffe14d", ACCEL: "#7dff7d" } };
+const TV_BODY = { t1: ["TURN-1 — original", "rgba(170,215,255,0.95)", "rgba(20,70,140,0.95)"], t11: ["TURN-1.1 — authored cut layer", "rgba(255,214,94,0.95)", "rgba(150,95,0,0.95)"],
+  t12: ["TURN-1.2 — speed-dependent reversals", "rgba(140,255,170,0.95)", "rgba(10,110,40,0.95)"], t12e: ["TURN-1.2 engine (TURN-1 body)", "rgba(140,255,170,0.95)", "rgba(10,110,40,0.95)"] };
+// what the locomotion is doing (resolver family + the current step's role), for labels and the readout
+function tvFamily(A) { const m = A.man, r = A.st.role ? A.st.role.kind : "RUN", l = A.pose && A.pose.diag.l11;
+  if (m) { const fam = m.kind === "REVERSAL" ? m.tech : m.kind === "PIVOT" ? "TURN1_PIVOT" : "TURN1_CUT (" + m.tech + ")"; const rr = r === "REORG" ? `REORG ${A.st.role.j}/${A.st.role.k}` : r === "PLANT" && m.kind === "REVERSAL" ? "TURN" : r; return `${fam} · ${rr}${TV.body === "t11" && l && l.phase !== "—" ? " · " + l.phase : ""}`; }
+  return r === "ARC" ? "CURVE" : r; }
 function tvOverlay(ctx, vw, cam, dpr, label) {
   const A = TV.actor, P = (p) => tvProj(cam, vw, dpr, p), W3 = (x, y, h) => [x, h || 0, -y];
   ctx.save(); ctx.beginPath(); ctx.rect(vw.x * dpr, vw.y * dpr, vw.w * dpr, vw.h * dpr); ctx.clip();
@@ -137,27 +146,27 @@ function tvOverlay(ctx, vw, cam, dpr, label) {
   if (TV.skel) { const fk = A.fk, bones = A.body.skel.bones; ctx.lineWidth = 2 * dpr; ctx.strokeStyle = "#5ee0ff"; for (const b of bones) { if (!b.parent || b.name === "pelvis" || b.name === "hair") continue; const a = P(fk.joint[b.parent.idx]), c = P(fk.joint[b.idx]); if (a && c) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } } }
   if (TV.labels && TV.labMode === "short") {   // before / after panels: which body, the time and (TURN-1.1) the authored phase; big enough to read in a side-by-side
     const l11 = A.pose && A.pose.diag.l11, big = Math.max(13, Math.round(vw.h / 30));
-    ctx.font = `700 ${big * dpr}px -apple-system, Helvetica`; ctx.fillStyle = TV.sil ? (TV.body === "t11" ? "rgba(150,95,0,0.95)" : "rgba(20,70,140,0.95)") : TV.body === "t11" ? "rgba(255,214,94,0.95)" : "rgba(170,215,255,0.95)";
-    ctx.fillText(TV.body === "t11" ? "TURN-1.1 — authored body" : "TURN-1 — procedural body", (vw.x + 10) * dpr, (vw.y + big + 8) * dpr);
+    const bl = TV_BODY[TV.body] || TV_BODY.t1; ctx.font = `700 ${big * dpr}px -apple-system, Helvetica`; ctx.fillStyle = TV.sil ? bl[2] : bl[1];
+    ctx.fillText(bl[0], (vw.x + 10) * dpr, (vw.y + big + 8) * dpr);
     ctx.font = `600 ${Math.round(big * 0.8) * dpr}px -apple-system, Helvetica`; ctx.fillStyle = TV.sil ? "rgba(40,40,40,0.9)" : "rgba(235,242,238,0.9)";
-    ctx.fillText(`t ${A.t.toFixed(2)} s${TV.body === "t11" && l11 && l11.phase !== "—" ? "   " + l11.phase : ""}`, (vw.x + 10) * dpr, (vw.y + vw.h - 12) * dpr);
+    ctx.fillText(`t ${A.t.toFixed(2)} s   ${tvFamily(A)}`, (vw.x + 10) * dpr, (vw.y + vw.h - 12) * dpr);
     ctx.restore(); return; }
   if (TV.diag && TV.labels && (vw.id === "game" || TV.single)) {   // diagnostics readout (drawn into the frame, so it is in the renders)
     const M = tvMeasure(A), l = A.pose && A.pose.diag.l11, D = 180 / Math.PI, man = A.man, lines = [
-      `${TV.body === "t11" ? "TURN-1.1" : "TURN-1"} · phase ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""} · brake drive ${l ? l.brake.toFixed(2) : "–"} · exit drive ${l ? l.exit.toFixed(2) : "–"}`,
-      `cut family ${man ? man.tech : (l && l.fam) || "–"} · requested ${man ? (man.delta * D).toFixed(0) + "°" : "–"} · plant foot ${man ? man.plantFoot : "–"} · entry speed ${man ? man.sEntry.toFixed(1) : "–"} m/s`,
+      `${(TV_BODY[TV.body] || TV_BODY.t1)[0].split(" —")[0]} · ${tvFamily(A)} · layer ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""} · brake drive ${l ? l.brake.toFixed(2) : "–"} · exit drive ${l ? l.exit.toFixed(2) : "–"}`,
+      `requested ${man ? (man.delta * D).toFixed(0) + "°" : "–"} · plant foot ${man ? man.plantFoot : "–"} · ${man && man.kind === "REVERSAL" ? "braking " + man.nBrake + " · reorganisation " + man.nReorg + " · approach " + man.sApproach.toFixed(1) + " m/s" : "entry speed " + (man ? man.sEntry.toFixed(1) : "–") + " m/s"}`,
       `torso lean ${M.torsoLat.toFixed(0)}° side / ${M.torsoFwd.toFixed(0)}° fwd · pelvis ${(M.pelvisY * 100).toFixed(0)} cm (load ${(M.load * 100).toFixed(0)}) · knee R ${M.kneeR.toFixed(0)}° L ${M.kneeL.toFixed(0)}° · shoulders vs hips ${M.shoulderRot.toFixed(0)}°`];
     ctx.font = `600 ${11 * dpr}px Menlo, monospace`; ctx.fillStyle = "rgba(0,0,0,0.45)"; ctx.fillRect(vw.x * dpr, (vw.y + vw.h - 70) * dpr, vw.w * dpr, 46 * dpr);
     ctx.fillStyle = "rgba(255,236,160,0.95)"; lines.forEach((tx, i) => ctx.fillText(tx, (vw.x + 8) * dpr, (vw.y + vw.h - 56 + i * 14) * dpr)); }
   if (TV.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(label, (vw.x + 8) * dpr, (vw.y + 16) * dpr);
-    if (vw.id === "game" || TV.single) { const r = A.log[A.log.length - 1] || {}, D = 180 / Math.PI; const txt = `${TV.scn.label || ""}   t ${A.t.toFixed(2)} s   ${(r.s || 0).toFixed(2)} m/s   travel ${((r.thv || 0) * D).toFixed(0)}°   pelvis ${((r.psi || 0) * D).toFixed(0)}°   req ${((r.dir || 0) * D).toFixed(0)}°   ${r.role || ""} ${r.man ? "· " + r.man : ""}   ${TV.body === "t11" ? "[TURN-1.1 " + ((A.pose && A.pose.diag.l11) ? A.pose.diag.l11.phase : "—") + "]" : "[TURN-1 body]"}`;
+    if (vw.id === "game" || TV.single) { const r = A.log[A.log.length - 1] || {}, D = 180 / Math.PI; const txt = `${TV.scn.label || ""}   t ${A.t.toFixed(2)} s   ${(r.s || 0).toFixed(2)} m/s   travel ${((r.thv || 0) * D).toFixed(0)}°   pelvis ${((r.psi || 0) * D).toFixed(0)}°   req ${((r.dir || 0) * D).toFixed(0)}°   ${r.role || ""} ${r.man ? "· " + r.man : ""}   [${(TV_BODY[TV.body] || TV_BODY.t1)[0].split(" —")[0]} ${tvFamily(A)}]`;
       ctx.fillText(txt, (vw.x + 8) * dpr, (vw.y + vw.h - 10) * dpr); } }
   ctx.restore();
 }
 function tvHud() { const el = document.getElementById("hud"); if (!el) return; const A = TV.actor, r = A.log[A.log.length - 1]; if (!r) return; const D = 180 / Math.PI;
   const l = A.pose && A.pose.diag.l11, M = tvMeasure(A);
   el.textContent = `t ${A.t.toFixed(3)}  speed ${r.s.toFixed(2)}  travel ${(r.thv * D).toFixed(1)}°  pelvis ${(r.psi * D).toFixed(1)}°  gaze ${(r.gaze * D).toFixed(1)}°  role ${r.role}  ${r.man || ""}\n` +
-    `body ${TV.body === "t11" ? "TURN-1.1 authored" : "TURN-1 procedural"}  phase ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""}  brake ${l ? l.brake.toFixed(2) : "–"}  exit ${l ? l.exit.toFixed(2) : "–"}\n` +
+    `body ${(TV_BODY[TV.body] || TV_BODY.t1)[0]}  ${tvFamily(A)}  layer ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""}  brake ${l ? l.brake.toFixed(2) : "–"}  exit ${l ? l.exit.toFixed(2) : "–"}\n` +
     `torso lean ${M.torsoLat.toFixed(0)}° side / ${M.torsoFwd.toFixed(0)}° fwd  pelvis ${(M.pelvisY * 100).toFixed(0)} cm (load ${(M.load * 100).toFixed(0)} cm)  knee R ${M.kneeR.toFixed(0)}° L ${M.kneeL.toFixed(0)}°  shoulders vs hips ${M.shoulderRot.toFixed(0)}°`; }
 // body measurements from the posed skeleton (world): torso lean (pelvis → neck vs vertical, in the pelvis-heading frame), pelvis height and its load
 // below RUN-1's at this speed, knee flexion, shoulder line yaw relative to the hip line
@@ -187,7 +196,7 @@ function tvBoot() {
   TV.scn = q.get("scn") ? T1SCN.get(q.get("scn")) : T1SCN.make(+(q.get("v") || 5.5), +(q.get("turn") || 90), +(q.get("tc") || 1.0));
   for (const [k, key] of [["zoom", "zoom"], ["rate", "rate"]]) if (q.get(k)) TV[key] = +q.get(k);
   if (q.get("diag") === "1") TV.diag = true; if (q.get("diagViews")) { TV.diag = true; TV.diagViews = q.get("diagViews").split(","); } if (q.get("skel") === "1") TV.skel = true; if (q.get("labels") === "0") TV.labels = false;
-  if (q.get("body")) TV.body = q.get("body") === "t1" ? "t1" : "t11"; if (q.get("sil") === "1") TV.sil = true; if (q.get("lab")) TV.labMode = q.get("lab"); if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
+  if (q.get("body")) TV.body = ["t1", "t11", "t12", "t12e"].includes(q.get("body")) ? q.get("body") : "t12"; if (q.get("sil") === "1") TV.sil = true; if (q.get("lab")) TV.labMode = q.get("lab"); if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
   TV.loopT = TV.scn.dur || 4.2;
   // the rail: the gameplay camera follows the runner's x with a gentle lag-free rail (the match camera follows play along the touchline)
   TV.camX = () => TV.actor.P[0];

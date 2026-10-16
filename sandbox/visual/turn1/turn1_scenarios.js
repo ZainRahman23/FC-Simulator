@@ -38,6 +38,12 @@ var T1SCN = (function () {
   // the exact mirror of RUN_90R (start on the left foot, turn left): for the left / right mirroring review
   SC.RUN_90L_MIRROR = make(SPEEDS.RUN, -90, 1.0, { id: "RUN_90L_MIRROR", label: "RUN 7.8 m/s · 90° LEFT, starting on the left foot (the exact mirror of RUN_90R)", init: { v: SPEEDS.RUN, heading: 0, pos: [18, 34], foot: "L" } });
   SC.SPRINT_180L_MIRROR = make(SPEEDS.SPRINT, -180, 1.0, { id: "SPRINT_180L_MIRROR", label: "SPRINT 9.5 m/s · 180° LEFT, starting on the left foot (the exact mirror of SPRINT_180R)", init: { v: SPEEDS.SPRINT, heading: 0, pos: [18, 34], foot: "L" } });
+  // TURN-1.2 review additions: reversals changed during braking (aborted to a smaller cut, cancelled back onto the original line, retargeted, flipped)
+  seq("REV_ABORT_60", "SPRINT 9.5 · 180° right requested, changed to 60° right during the braking", 9.5, [{ t: 1.0, turn: 180 }, { t: 1.35, turn: 60 }], 4.4);
+  seq("REV_CANCEL", "SPRINT 9.5 · 180° right requested, cancelled back to the original line during the braking", 9.5, [{ t: 1.0, turn: 180 }, { t: 1.35, turn: 0 }], 4.4);
+  seq("REV_RETARGET", "SPRINT 9.5 · 180° right requested, retargeted to 135° right during the braking", 9.5, [{ t: 1.0, turn: 180 }, { t: 1.3, turn: 135 }], 4.4);
+  seq("REV_FLIP", "RUN 7.8 · 150° right requested, flipped to 150° left during the braking", 7.8, [{ t: 1.0, turn: 150 }, { t: 1.3, turn: -150 }], 4.6);
+  seq("REV_ABORT_RUN", "RUN 7.8 · 180° right requested, changed to 90° right during the braking", 7.8, [{ t: 1.0, turn: 180 }, { t: 1.3, turn: 90 }], 4.4);
   return { SPEEDS, ANGLES, make, get: (k) => SC[k] || SC.JOG_90R, list: () => Object.values(SC), all: SC };
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = T1SCN;

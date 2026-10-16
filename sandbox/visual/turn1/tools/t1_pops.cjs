@@ -5,7 +5,7 @@ const { loadTurn1 } = require("./t1_load.cjs"), X = loadTurn1(), T = X.TURN1, SC
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, thr = +arg("thr", 0.005);
 const J = ["pelvis", "foot_R", "foot_L", "toe_R", "toe_L", "hand_R", "hand_L", "head"];
 function pops(id) {
-  const scn = SCN.get(id), A = T.t1Make(X.skel, scn.init), n = Math.round(scn.dur * 240), idx = A.body.idx, hist = [], worst = {}, list = []; if (process.env.T11 === "1") X.TURN11.attach(A);   // TURN-1.1 body layer
+  const scn = SCN.get(id), A = T.t1Make(X.skel, process.env.T12 === "1" ? Object.assign({}, scn.init, { turn12: true }) : scn.init), n = Math.round(scn.dur * 240), idx = A.body.idx, hist = [], worst = {}, list = []; if (process.env.T11 === "1") X.TURN11.attach(A);   // TURN-1.1 body layer
   for (let k = 0; k < n; k++) { T.t1Step(A, T.t1Input(scn, k / 240)); const ev = T.t1Evaluate(A), P = {}; for (const j of J) P[j] = (j.startsWith("toe") ? ev.fk.tip : ev.fk.joint)[idx[j]].slice();
     hist.push({ t: A.t, P, seg: A.clk.seg, x: A.clk.x, role: A.st.role ? A.st.role.kind : "RUN" }); if (hist.length < 3) continue;
     const a = hist[hist.length - 3], b = hist[hist.length - 2], c = hist[hist.length - 1];

@@ -63,10 +63,10 @@ const T1 = {
   braketcK: 1.15, braketfK: 0.65,              // braking steps: longer contact, shorter flight than RUN-1 at that speed
   reactS: 0.09,                                // s: a touchdown closer than this to the decision cannot be the plant (it becomes the brake step)
   prefGainS: 0.2,                              // s: a non-preferred plant foot is taken if it is at least this much sooner
-  crouch: { BRAKE: 0.035, PLANT: [[45, 0.08], [90, 0.13], [135, 0.15], [180, 0.15]], EXIT: 0.06, ACCEL: 0.03 },
-  travelMax: { RUN: 1.0, BRAKE: 0.78, PLANT: 0.80, EXIT: 0.85, ACCEL: 0.9 },   // m of COM travel a single stance can span (two leg reaches)
-  heelStrike: { BRAKE: 14, PLANT: 10 },        // deg toes-up at touchdown: braking and plant steps land on the heel / rear foot
-  dropMax: 0.14, dropMaxRole: { BRAKE: 0.12, PLANT: 0.20, EXIT: 0.20 },   // a deep planted stance belongs to plants; braking steps stay athletic (no lunge)
+  crouch: { BRAKE: 0.035, PLANT: [[45, 0.08], [90, 0.13], [135, 0.15], [180, 0.15]], EXIT: 0.06, ACCEL: 0.03, BRAKEQ: 0.04, REORG: 0.06 },   // BRAKEQ / REORG: TURN-1.2
+  travelMax: { RUN: 1.0, BRAKE: 0.78, PLANT: 0.80, EXIT: 0.85, ACCEL: 0.9, BRAKEQ: 0.70, REORG: 0.45 },   // m of COM travel a single stance can span (two leg reaches)
+  heelStrike: { BRAKE: 14, PLANT: 10, BRAKEQ: 14 },        // deg toes-up at touchdown: braking and plant steps land on the heel / rear foot
+  dropMax: 0.14, dropMaxRole: { BRAKE: 0.12, PLANT: 0.20, EXIT: 0.20, BRAKEQ: 0.12, REORG: 0.16 },   // a deep planted stance belongs to plants; braking steps stay athletic (no lunge)
   reachWin: { lat: 0.35, td: 0.45, to: 0.80 },   // m: the plant relative to the COM: lateral; along-track ahead at touchdown, behind at toe-off (RUN / ARC)
   reachWinMan: { lat: 0.45, td: 0.36, to: 0.62, latInside: 0.25 },
   reachWinPivot: { lat: 0.18, td: 0.45, to: 0.45 },   // a reversal plant: ahead of the body, close to its line (the COM stops before it and comes back)   // latInside: the inside foot of an exit / arc step (no crossover)
@@ -78,8 +78,30 @@ const T1 = {
   yawWn: 2 * Math.PI * 2.6, yawWnCut: 2 * Math.PI * 3.6,   // pelvis heading follower (critically damped)
   gazeTau: 0.07, chestLead: 0.40, chestMax: 28 * DEG, headMax: 60 * DEG,
   leanTau: 0.05, leanK: 0.9, leanFwdK: 1.0, leanMax: 28 * DEG, leanFwdMax: 30 * DEG, leanBack: 16 * DEG, pelvisLat: 0.8, pelvisFwd: 0.55,
-  crouchTau: 0.06, armBal: { PLANT: 32, BRAKE: 14, EXIT: 18 }, armTau: 0.08,
+  crouchTau: 0.06, armBal: { PLANT: 32, BRAKE: 14, EXIT: 18, BRAKEQ: 16, REORG: 22 }, armTau: 0.08,
   toeOut: 7 * DEG,
+};
+// ── TURN-1.2 (opt-in per actor: init.turn12): a speed-dependent BRAKE → REORGANISE → TURN → ACCELERATE family for large direction changes under
+// substantial momentum. Everything it does not select is TURN-1 exactly (the same functions run). Provenance: review_artifacts/turn1/turn12/.
+const T12 = {
+  id: "TURN-1.2 V1",
+  // SELECTION — not by angle alone: a turn is "large" above aLarge(speed) (the threshold falls as momentum grows), and only if the momentum still
+  // to remove before a TURN-1 plant (s − sEntry(angle)) is at least brakeNeedMin. Inside ±aBand of aLarge the stride state decides: TURN-1's own
+  // plan for this request (its braking-stance count nB, which depends on which foot is next) keeps TURN-1 unless nB + 3·x ≥ 4 (x = 0 → 1 across the band)
+  aLarge: [[5.0, 118], [6.5, 110], [8.0, 105], [9.5, 102]], aBand: 10, brakeNeedMin: 3.6,
+  // QUICK BRAKING: short, choppy stances (contact ≤ bqTravel of COM travel, flights cut to bqTfK of the run's), each removing up to bqShare of the
+  // stance capacity — instead of TURN-1's long braking strides and its final waiting step
+  bqTravel: 0.70, bqTcK: 1.05, bqTfK: 0.42, bqTfMin: 0.028, bqTfMax: 0.07, bqShare: 0.88,
+  sTurn: [[110, 3.2], [135, 2.7], [150, 2.5], [180, 2.2]],          // m/s: braking hands over to the reorganisation / turn at this speed
+  // REORGANISATION: quick, short, wide steps that open the base toward the new direction (each up to reorgRot of rotation) and absorb what is
+  // left of the speed. Their number comes from the state: the rotation the turn plant cannot do itself (angle − turnMaxRot), the speed still to
+  // remove, never more than reorgMax
+  reorgTc: 0.13, reorgTf: 0.032, reorgRot: 50, reorgWiden: 0.10, reorgMax: 3, turnMaxRot: 105, reorgMinRot: 20, bqTcMax: 0.16, bqTolShuffle: 0.6,
+  sTurnPlant: [[110, 2.6], [135, 2.0], [150, 1.8], [180, 1.5]],    // m/s: the COM speed the turn plant is entered at
+  // THE TURN PLANT: shorter than TURN-1's reversal plant (the base is already open), a ball-of-foot pivot, the exit velocity in the new direction
+  turnTc: [[110, 0.19], [150, 0.21], [180, 0.23]], turnExit: [[110, 2.7], [150, 2.2], [180, 1.9]], turnPivotK: 0.55,
+  replanDeg: 25,
+  compactMargin: 0.6,                                               // m/s: a TURN-1 pivot plants as soon as a braking stance leaves ≤ sEntry + this (no waiting stride)                                                     // deg: a request moved this far from the plan during braking re-plans it
 };
 const tab = (T, x) => { if (x <= T[0][0]) return T[0][1]; for (let i = 1; i < T.length; i++) if (x <= T[i][0]) { const a = T[i - 1], b = T[i]; return a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); } return T[T.length - 1][1]; };
 const aAccAt = (s) => Math.max(0.4, T1.aAcc0 * (1 - s / T1.vTop));
@@ -92,6 +114,7 @@ function t1Make(skel, init) {
   const o = init || {}, s0 = o.v != null ? o.v : 5.5, th0 = o.heading || 0, P0 = o.pos ? o.pos.slice() : [20, 34];
   const A = { body, skel: sk, tabHost: skel, t: 0, n: 0, P: P0, V: v2.sc(fwd(th0), s0), psi: th0, psiD: 0, gaze: th0, chest: 0,
     lean: [0, 0], aF: [0, 0], crouch: 0, crouchD: 0, arm: 0, tdCount: 0, man: null, log: [], events: [], input: { dir: th0, v: s0 } };
+  if (o.turn12) A.v12 = true;                                                     // TURN-1.2 resolver (opt-in; TURN-1 otherwise)
   const p = t1G(A, s0);
   // clock: seg 0 R stance · 1 flight → L · 2 L stance · 3 flight → R; the right foot has just landed (as RUN-1's first call)
   // init.foot: which foot has just landed ("R" default; "L" = the mirrored stride phase, for exact mirror tests)
@@ -137,6 +160,12 @@ function t1StancePlan(A, F, P, V, idx) {
   } else if (role.kind === "PLANT") {
     tc = role.tc; tf = T1.plantTf;
     V1 = v2.sc(fwd(role.thIn + role.frac * role.delta), role.sExit);
+  } else if (role.kind === "BRAKEQ") {                                            // TURN-1.2 quick braking: short, choppy stances
+    tc = Math.min(p.tc * T12.bqTcK, T12.bqTravel / Math.max(1, s), T12.bqTcMax); tf = clamp((p.Ts - p.tc) * T12.bqTfK, T12.bqTfMin, T12.bqTfMax);
+    V1 = v2.sc(fwd(th + role.preTurn), Math.max(role.sTarget, s - T1.aStanceMax * T12.bqShare * tc));
+  } else if (role.kind === "REORG") {                                             // TURN-1.2 reorganisation: quick, short, wide steps
+    tc = T12.reorgTc; tf = T12.reorgTf;
+    V1 = v2.sc(fwd(th + role.preTurn), Math.max(role.sTarget, s - T1.aStanceMax * 0.85 * tc));
   } else if (role.kind === "EXIT") {
     tc = T1.accelTc; tf = T1.accelTf;
     const thO = role.thIn + role.delta, s1 = Math.min(sd, s + aAccAt(s) * (tc + tf) * 0.8);
@@ -145,7 +174,7 @@ function t1StancePlan(A, F, P, V, idx) {
   // a stance spans at most travelMax of COM travel (otherwise no leg can stay on its plant)
   { const sm = Math.max(0.5, (s + v2.len(V1)) / 2), tm = (T1.travelMax[role.kind] || T1.travelMax.RUN) / sm; if (tc > tm) tc = Math.max(0.08, tm); }
   // what one stance can deliver: |ΔV| ≤ aStanceMax · tc (the remainder is left to the next stance)
-  let dV = v2.sub(V1, V); const dm = v2.len(dV), cap = T1.aStanceMax * tc * (role.kind === "PLANT" || role.kind === "EXIT" ? 1 : role.kind === "BRAKE" ? 0.85 : 0.7);
+  let dV = v2.sub(V1, V); const dm = v2.len(dV), cap = T1.aStanceMax * tc * (role.kind === "PLANT" || role.kind === "EXIT" ? 1 : role.kind === "BRAKE" ? 0.85 : role.kind === "BRAKEQ" ? T12.bqShare : role.kind === "REORG" ? 0.85 : 0.7);
   if (dm > cap) dV = v2.sc(dV, cap / dm);
   return { role, tc, tf, dV, p };
 }
@@ -158,6 +187,7 @@ function t1PlaceDefault(A, F, P, V, dV, tc, Ts, p, role) {
   let off = v2.sc(aBar, -T1.hCom / (G * kv)); const om = v2.len(off); if (om > T1.offMax) off = v2.sc(off, T1.offMax / om);
   let lat = sg * p.footW, yaw = thm + sg * T1.toeOut;
   if (role && role.kind === "PLANT") { lat += sg * role.widen; yaw = role.thIn + role.footTurn * role.delta + sg * T1.toeOut; }
+  if (role && role.kind === "REORG") { lat += sg * T12.reorgWiden; yaw = role.thIn + role.baseRot + sg * T1.toeOut; }   // TURN-1.2: a wide base, opened toward the turn
   // the leg's reachable window: lateral ≤ reachWin.lat; along-track ≤ reachWin.td ahead of the COM at touchdown and ≥ reachWin.to behind it at toe-off
   // (RUN-1's straight geometry lies inside it; a brake or cut asking for more is clamped: the plant cannot be further than a leg can reach)
   const d = clamp(v2.len(Vm) * tc, 0, 2), W = role && role.kind === "PLANT" && role.pivot ? T1.reachWinPivot : role && role.kind !== "RUN" && role.kind !== "ARC" ? T1.reachWinMan : T1.reachWin;
@@ -189,6 +219,7 @@ function t1AnkleW(A, pl, beta, s) {
 function t1Resolve(A) {
   const inp = A.input, s = v2.len(A.V), th = s > 0.2 ? ang2(A.V) : A.psi, d = wrapA(inp.dir - th), ad = Math.abs(d) / DEG;
   const man = A.man;
+  if (man && man.kind === "REVERSAL") { t12Resolve(A, man, s); return; }            // TURN-1.2's family keeps its own continuous-input rules
   if (man) {
     if (man.phase === "PRE") {                                                       // before the plant: the maneuver may still change or be abandoned
       const dm = wrapA(inp.dir - man.thIn), adm = Math.abs(dm) / DEG;
@@ -203,7 +234,83 @@ function t1Resolve(A) {
     return;
   }
   if (s < 1.0 || ad <= tab(T1.arcLimit, s)) return;                                 // ARC (handled per stance)
+  if (A.v12) { const sel = t12Select(A, d, s, th); A.lastSel = sel; if (sel.brakeFamily) { t12PlanReversal(A, d, s, th); return; } }
   t1PlanManeuver(A, d, s, th);
+}
+// ── TURN-1.2: family selection, the reversal plan, its continuous-input rules ─────────────────────────────────────────────────────────
+// t12Select: CURVE is decided before (arc limit). Here: TURN1_CUT / TURN1_PIVOT (TURN-1's own plan, unchanged) or the brake family.
+function t12Select(A, d, s, th) {
+  const ad = Math.abs(d) / DEG, aL = tab(T12.aLarge, s), need = s - tab(T1.sEntry, ad), t1fam = ad >= T1.pivotFrom ? "TURN1_PIVOT" : "TURN1_CUT";
+  const out = { ad, speed: s, aLarge: aL, brakeNeed: need, t1fam };
+  if (need < T12.brakeNeedMin || ad < aL - T12.aBand) return Object.assign(out, { brakeFamily: false, why: need < T12.brakeNeedMin ? "low momentum" : "below the large-angle band" });
+  if (ad < aL + T12.aBand) {                                                         // the transition band: the stride state decides
+    const C = t1Clone(A); C.logOn = false; t1PlanManeuver(C, d, s, th); let nB = 0; for (const k in C.man.roles) if (C.man.roles[k].kind === "BRAKE") nB++;
+    const x = (ad - (aL - T12.aBand)) / (2 * T12.aBand), go = nB + 3 * x >= 4;
+    return Object.assign(out, { brakeFamily: go, nBturn1: nB, x: +x.toFixed(3), why: go ? "band: TURN-1 would need " + nB + " braking stances" : "band: TURN-1's plan is short (" + nB + " braking stances)" });
+  }
+  return Object.assign(out, { brakeFamily: true, why: "large angle under momentum" });
+}
+// the steps a quick braking sequence needs from speed v down to sT (each stance: contact ≤ bqTravel of travel, ΔV ≤ bqShare of its capacity)
+function t12BrakeCount(A, v, sT, tol) { let n = 0; while (v > sT + (tol || 0.05) && n < 10) { const pv = t1G(A, v), tc = Math.min(pv.tc * T12.bqTcK, T12.bqTravel / Math.max(1, v), T12.bqTcMax); v = Math.max(sT, v - T1.aStanceMax * T12.bqShare * tc); n++; } return { n, v }; }
+function t12PlanReversal(A, d, s, th) {
+  const man = { kind: "REVERSAL", delta: d, delta0: d, thIn: th, sg: Math.sign(d) || 1, tDecide: A.t, phase: "PRE", roles: {}, exitBoost: true, sApproach: s, rotHold: 0 };
+  A.man = man; t12Retarget(A, man);
+  A.events.push([+A.t.toFixed(4), "maneuver", man.kind, man.tech, +(d / DEG).toFixed(1), man.plantFoot, +(man.tPlantPred - A.t).toFixed(3), man.nBrake, man.nReorg]);
+}
+// (re)build the remaining roles from the CURRENT state: braking stances to sTurn, reorganisation steps (rotation the turn plant cannot do + speed
+// still to remove), the turn plant, the exit step. Steps already taken stay as they were.
+function t12Retarget(A, man) {
+  const ad = Math.abs(man.delta) / DEG, sg = Math.sign(man.delta) || man.sg, s = v2.len(A.V); man.sg = sg;
+  // the first touchdown this plan may shape: one too close to the decision keeps its role — unless it was already a quick-braking stance (of this
+  // plan, or carried over from a re-planned reversal): then it stays braking and counts as this plan's first braking stance
+  const up = t1Upcoming(A, 14), close = up[0] && up[0].t - A.t < T1.reactS, ci = close ? up[0].idx : -1, wasBQ = close && ((man.roles[ci] && man.roles[ci].kind === "BRAKEQ") || (A.carryRole && A.carryRole.idx === ci && A.carryRole.role.kind === "BRAKEQ"));
+  const kFirst = close && !wasBQ ? ci + 1 : close ? ci : A.tdCount + 1;
+  // the base rotation the turn plant cannot do itself; it needs reorganisation steps (≥ reorgMinRot), and then braking may leave the last scraps
+  // of speed to those quick steps instead of a slow final braking stride
+  const R0 = Math.max(0, ad - T12.turnMaxRot), R = R0 >= T12.reorgMinRot ? R0 : 0, kRot = Math.ceil(R / T12.reorgRot - 1e-9);
+  const sT = tab(T12.sTurn, ad), sTP = tab(T12.sTurnPlant, ad), br = t12BrakeCount(A, s, sT, kRot ? T12.bqTolShuffle : 0.15);
+  // speed still to remove before the turn plant: quick reorganisation steps take it — but a turn that needs no base rotation (BRAKE_TURN) enters its
+  // plant straight from the braking (the plant absorbs the rest)
+  const kSpd = kRot ? Math.ceil(Math.max(0, br.v - sTP) / (T1.aStanceMax * 0.85 * T12.reorgTc) - 1e-9) : 0;
+  let k = clamp(Math.max(kRot, kSpd), 0, T12.reorgMax), nB = br.n;
+  // WHICH FOOT TURNS: once the base is open toward the new direction (k ≥ 1), "ahead in the old direction" lies on the OUTSIDE foot's side — the
+  // turn plant must be the outside foot (an inside foot there would reach across the body). If the step count lands it on the inside foot, take the
+  // earliest alternative: one braking stance fewer (the reorganisation absorbs the extra speed, if it can), else one more reorganisation step
+  if (k >= 1) { const outside = sg > 0 ? "L" : "R", footAt = (i) => { const u = up.find(q => q.idx === i); return u ? u.foot : null; }, capR = T1.aStanceMax * 0.85 * T12.reorgTc;
+    if (footAt(kFirst + nB + k) !== outside) {
+      let vAfter = s; { let v = s, n = 0; while (n < nB - 1) { const pv = t1G(A, v), tc = Math.min(pv.tc * T12.bqTcK, T12.bqTravel / Math.max(1, v), T12.bqTcMax); v = Math.max(sT, v - T1.aStanceMax * T12.bqShare * tc); n++; } vAfter = v; }
+      if (nB >= 2 && vAfter - k * capR <= sTP + 0.3) nB -= 1; else if (k < T12.reorgMax) k += 1; else nB += 1; } }
+  const roles = {}, pre = (f) => sg * Math.min(5 * DEG, 0.04 * ad * DEG) * f;
+  let idx = kFirst;
+  for (let i = 0; i < nB; i++, idx++) roles[idx] = { kind: "BRAKEQ", sTarget: sT, preTurn: pre(i === nB - 1 && !k ? 1 : 0.3) };
+  for (let j = 1; j <= k; j++, idx++) roles[idx] = { kind: "REORG", j, k, sTarget: sTP, thIn: man.thIn, baseRot: sg * R * DEG * j / k, preTurn: pre(0.5) };
+  const turnRot = ad - R;   // what the turn plant (and its exit step) still has to turn
+  roles[idx] = { kind: "PLANT", tech: "TURN", thIn: man.thIn, delta: man.delta, frac: 1, tc: tab(T12.turnTc, ad), sExit: tab(T12.turnExit, ad), widen: 0.04,
+    footTurn: (R + 0.3 * turnRot) / Math.max(1, ad), pivot: sg * Math.min(85, turnRot * T12.turnPivotK) * DEG };
+  roles[idx + 1] = { kind: "EXIT", thIn: man.thIn, delta: man.delta };
+  man.roles = roles; man.plantIdx = idx; man.exitUntil = idx + 3; man.nBrake = nB; man.nReorg = k; man.R = R * DEG;
+  man.tech = k ? "BRAKE_SHUFFLE_TURN" : "BRAKE_TURN"; man.family = man.tech;
+  const pu = up.find(u => u.idx === idx) || up[up.length - 1]; man.plantFoot = pu.foot; man.tPlantPred = pu.t;   // (normal-stride prediction; the real one is sooner)
+}
+// continuous input during a reversal: before the turn plant the request may move (retarget), reverse, or drop back to the original line
+// (cancel → TURN-1 running, which re-accelerates); a request that moves far from the plan re-plans from the current state (TURN-1 or this family,
+// whatever the CURRENT speed and angle call for). After the turn plant: ±20° (TURN-1's commitment rule).
+function t12Resolve(A, man, s) {
+  const inp = A.input, dm = wrapA(inp.dir - man.thIn), adm = Math.abs(dm) / DEG;
+  if (man.phase === "PRE") {
+    if (adm <= tab(T1.arcLimit, s) * 0.8) { A.events.push([A.t, "cancel", +adm.toFixed(1)]); A.man = null; return; }
+    if (Math.sign(dm) !== Math.sign(man.delta) || Math.abs(dm - man.delta) > T12.replanDeg * DEG) {
+      A.events.push([A.t, "replan", +(dm / DEG).toFixed(1)]);
+      // the touchdown already committed (too close to re-plan) keeps the braking role it is landing into — it must not re-accelerate mid-braking
+      const up0 = t1Upcoming(A, 1)[0], ki = up0 && up0.t - A.t < T1.reactS ? up0.idx : null;
+      A.carryRole = ki != null && man.roles[ki] ? { idx: ki, role: man.roles[ki] } : null; A.man = null; t1Resolve(A);
+      if (A.man && A.carryRole && !A.man.roles[ki]) A.man.roles[ki] = Object.assign({}, A.carryRole.role);
+      A.carryRole = null; return; }
+    if (Math.abs(dm - man.delta) > 0.5 * DEG) { man.delta = dm; t12Retarget(A, man); }
+  } else if (man.phase === "PLANT") {
+    const lim = 20 * DEG, want = clamp(dm, man.delta0 - lim, man.delta0 + lim);
+    if (Math.abs(want - man.delta) > 0.5 * DEG && Math.sign(want) === Math.sign(man.delta0)) { man.delta = want; for (const k in man.roles) if (man.roles[k].delta != null) man.roles[k].delta = want; }
+  }
 }
 // upcoming touchdowns from the current clock: [{foot, t}] (predicted with the stance / flight durations the plan will use)
 function t1Upcoming(A, nMax) {
@@ -307,6 +414,10 @@ function t1Event(A) {
     L.stance = true; L.plant = plant; L.tTD = A.t; L.role = plan.role; L.tgt = null; A.lastRole = plan.role.kind; L.bLand = L.bStrike;
     A.st = { P0: Ptd, V0: Vtd, dV: plan.dV, tc: plan.tc, tf: plan.tf, role: plan.role, F };
     if (A.man && plan.role.kind === "PLANT") { A.man.phase = "PLANT"; A.man.tPlant = A.t; }
+    // TURN-1.2 COMPACT PIVOT (low-momentum large turns kept on TURN-1's pivot): when a braking stance already brings the speed to the pivot's entry
+    // speed, the pivot plants on the very next touchdown instead of after a slow, waiting braking stride
+    if (A.v12 && A.man && A.man.kind === "PIVOT" && A.man.phase === "PRE" && plan.role.kind === "BRAKE" && A.man.plantIdx > A.tdCount + 1 && v2.len(v2.add(Vtd, plan.dV)) <= A.man.sEntry + T12.compactMargin) {
+      A.man.plantIdx = A.tdCount + 1; A.man.plantFoot = F === "R" ? "L" : "R"; A.man.compact = true; t1Retarget(A, A.man); A.events.push([+A.t.toFixed(4), "compact", A.man.plantFoot]); }
     if (A.man && A.man.phase === "POST" && A.tdCount > A.man.exitUntil) { A.events.push([+A.t.toFixed(4), "maneuverEnd"]); A.man = null; }
     c.seg = (c.seg + 1) % 4; c.x = 0; c.T = plan.tc; c.t0 = A.t;
     A.events.push([+A.t.toFixed(4), "TD", F, plan.role.kind, +v2.len(plan.dV).toFixed(2)]);
@@ -334,6 +445,15 @@ function t1Body(A, dt) {
   let tgt = thv, wn = T1.yawWn;
   if (man) {
     wn = T1.yawWnCut;
+    if (man.kind === "REVERSAL") {                                                 // TURN-1.2: the hips open with the reorganisation steps, then turn on the plant
+      const rk = A.st.role && A.st.role.kind, inSt = A.clk.seg === 0 || A.clk.seg === 2, ad = Math.abs(man.delta);
+      if (rk === "REORG" && inSt) { const r0 = A.st.role.j > 1 ? Math.abs(man.roles[A.tdCount - 1] && man.roles[A.tdCount - 1].baseRot || 0) : 0; man.rotNow = lerpN(r0, Math.abs(A.st.role.baseRot), s5(A.clk.x)); }
+      else if (rk === "REORG") man.rotNow = Math.abs(A.st.role.baseRot);
+      const rot = man.rotNow || 0;
+      if (man.phase === "PRE") tgt = man.thIn + man.sg * Math.max(Math.min(ad * 0.10, 12 * DEG), rot);
+      else if (man.phase === "PLANT") { const pr = clamp((A.t - man.tPlant) / A.st.tc, 0, 1); tgt = man.thIn + man.sg * lerpN(Math.max(rot, ad * 0.15), ad * 0.85, s5(pr)); }
+      else tgt = man.thIn + man.delta;
+    } else
     if (man.phase === "PRE") tgt = man.thIn + man.sg * Math.min(Math.abs(man.delta) * 0.10, 12 * DEG);
     else if (man.phase === "PLANT") { const pr = clamp((A.t - man.tPlant) / A.st.tc, 0, 1); tgt = man.thIn + man.delta * lerpN(0.15, man.tech === "PIVOT" ? 0.72 : 0.82, s5(pr)); }
     else tgt = man.thIn + man.delta;
@@ -355,7 +475,7 @@ function t1Body(A, dt) {
   A.lean = [latL, fwdL];
   // crouch (role of the current stance, smoothed critically damped) and arm balance
   const role = A.st.role ? A.st.role.kind : "RUN", ad = man ? Math.abs(man.delta) / DEG : 0;
-  let cT = role === "PLANT" ? tab(T1.crouch.PLANT, ad) : role === "BRAKE" ? T1.crouch.BRAKE * (0.6 + 0.4 * sstep(45, 135, ad)) : role === "EXIT" ? T1.crouch.EXIT : role === "ACCEL" ? T1.crouch.ACCEL : 0;
+  let cT = role === "PLANT" ? (man && man.kind === "REVERSAL" ? T1.crouch.REORG + 0.03 : tab(T1.crouch.PLANT, ad)) : role === "BRAKE" ? T1.crouch.BRAKE * (0.6 + 0.4 * sstep(45, 135, ad)) : role === "EXIT" ? T1.crouch.EXIT : role === "ACCEL" ? T1.crouch.ACCEL : role === "BRAKEQ" ? T1.crouch.BRAKEQ : role === "REORG" ? T1.crouch.REORG : 0;
   if (man && man.phase === "PRE" && role !== "BRAKE") cT = Math.max(cT, 0.045);
   const wc = 1 / T1.crouchTau; A.crouchD += (wc * wc * (cT - A.crouch) - 2 * wc * A.crouchD) * dt; A.crouch += A.crouchD * dt;
   // ANTICIPATED PELVIS DROP: the lowering the current and the next stance will need to keep their plants (reach), predicted from the closed-form COM

@@ -106,11 +106,34 @@ const LIB = {
     fKnee:  [[-1, 0], [0, 0.06], [0.4, 0.10], [1, 0.05], [1.25, 0], [3, 0]],
   },
 };
+// TURN-1.2 (mode "t12"): the turn plant of the BRAKE → REORGANISE → TURN → ACCELERATE family. The engine already opens the hips with the reorganisation
+// steps and turns them on the plant; the base adds the upper body: shoulders leading, the outside arm sweeping across, the drive out. No cut lean.
+LIB.REVERSAL = {
+  note: "TURN-1.2 turn plant: compact base → shoulders and the outside arm lead the turn → drive out low and forward",
+  pY:     [[-1, 0], [-0.5, -0.015], [0, -0.025], [0.4, -0.035], [0.8, -0.02], [1.2, -0.015], [2, 0], [3, 0]],
+  tRoll:  [[-1, 0], [0, 3], [0.5, 6], [1, 4], [1.6, 0], [3, 0]],
+  tPitch: [[-1, 0], [-0.5, -3], [0, -2], [0.5, 7], [1, 14], [1.5, 9], [2.2, 3], [3, 0]],
+  tYaw:   [[-1, 0], [-0.6, 5], [0, 10], [0.4, 15], [0.8, 10], [1.2, 0], [1.8, -3], [3, 0]],
+  hPitch: [[-1, 0], [0, -4], [1, -6], [2, -3], [3, 0]],
+  hLev:   [[-1, 0], [-0.5, 0.5], [0, 0.6], [2, 0.5], [3, 0]],
+  aW:     [[-1, 0], [-0.6, 0.5], [0, 0.75], [0.4, 0.85], [0.9, 0.75], [1.4, 0.35], [2, 0.1], [2.5, 0], [3, 0]],
+  oAz:    [[-1, 45], [0, 55], [0.4, -5], [0.8, -15], [1.2, -5], [1.8, 10], [3, 10]],
+  oEl:    [[-1, 50], [0, 48], [0.4, 50], [0.8, 52], [1.2, 55], [1.8, 60], [3, 65]],
+  oElb:   [[-1, 65], [0, 70], [0.4, 90], [0.8, 95], [1.2, 90], [3, 85]],
+  iAz:    [[-1, 45], [0, 60], [0.4, 135], [0.8, 160], [1.2, 168], [1.8, 160], [3, 160]],
+  iEl:    [[-1, 50], [0, 50], [0.4, 52], [0.8, 55], [1.2, 58], [3, 65]],
+  iElb:   [[-1, 65], [0, 75], [0.4, 88], [0.8, 92], [1.2, 90], [3, 85]],
+  fAdv:   [[-1, 0], [0, 0.6], [0.6, 0.7], [1, 0.4], [1.25, 0], [3, 0]],
+  fKnee:  [[-1, 0], [0, 0.05], [0.5, 0.08], [1, 0.04], [1.25, 0], [3, 0]],
+};
 // step modifiers and the reaction (constant poses × their drive, right turn where sided)
 const MOD = {
   BRAKE: { pY: -0.025, pZ: 0.035, tPitch: -13, hPitch: -6, hLev: 0.5, aW: 0.85, oAz: 35, oEl: 32, oElb: 60, iAz: 35, iEl: 32, iElb: 60, swTuck: 0.25 },
   EXIT:  { pY: -0.04, hPitch: -8, armAmp: 0.5, armElb: 12, swLift: 0.05 },   // pY: the acceleration posture stays low and rises as the speed comes back
   REACT: { tYaw: 12, tPitch: -4, pY: -0.02, hLev: 0.4, aW: 0.5, oAz: 35, oEl: 50, oElb: 70, iAz: 35, iEl: 50, iElb: 70 },   // between the command and the first braking contact
+  // TURN-1.2: the quick braking (calmer than TURN-1.1's cut braking) and the reorganisation stance (compact, balanced, arms out, feet active)
+  BRAKE12: { pY: -0.02, pZ: 0.03, tPitch: -10, hPitch: -5, hLev: 0.5, aW: 0.65, oAz: 35, oEl: 38, oElb: 65, iAz: 35, iEl: 38, iElb: 65, swTuck: 0.2 },
+  REORG:   { pY: -0.02, tPitch: -4, hLev: 0.5, aW: 0.55, oAz: 55, oEl: 50, oElb: 75, iAz: 55, iEl: 50, iElb: 75, swTuck: 0.3 },
 };
 const CH = ["pY", "pX", "pZ", "pRoll", "pPitch", "pYaw", "tRoll", "tPitch", "tYaw", "hPitch", "hLev", "aW", "oAz", "oEl", "oElb", "iAz", "iEl", "iElb", "armAmp", "armElb"];
 const ANG = new Set(["pRoll", "pPitch", "pYaw", "tRoll", "tPitch", "tYaw", "hPitch", "oAz", "oEl", "oElb", "iAz", "iEl", "iElb", "armElb"]);
@@ -131,16 +154,16 @@ function evalK(C, t) {
   return (2 * s3 - 3 * s2 + 1) * y[i] + (s3 - 2 * s2 + s) * h * m[i] + (-2 * s3 + 3 * s2) * y[i + 1] + (s3 - s2) * h * m[i + 1];
 }
 const LIBP = {}; for (const f in LIB) { LIBP[f] = {}; for (const c in LIB[f]) if (Array.isArray(LIB[f][c])) LIBP[f][c] = prep(LIB[f][c]); }
-const FAMS = ["SIDESTEP", "XOVER", "PIVOT"];
+const FAMS = ["SIDESTEP", "XOVER", "PIVOT", "REVERSAL"];
 // intensity: continuous in the turn angle (a 60° and a 110° side-step are the same family at different strength) and the approach speed
-const angI = (fam, ad) => fam === "XOVER" ? 0.55 + 0.45 * sstep(20, 70, ad) : fam === "PIVOT" ? 0.85 + 0.15 * sstep(135, 180, ad) : 0.45 + 0.55 * sstep(30, 115, ad);
+const angI = (fam, ad) => fam === "XOVER" ? 0.55 + 0.45 * sstep(20, 70, ad) : fam === "PIVOT" ? 0.85 + 0.15 * sstep(135, 180, ad) : fam === "REVERSAL" ? 0.75 + 0.25 * sstep(110, 180, ad) : 0.45 + 0.55 * sstep(30, 115, ad);
 const spdI = (v) => 0.8 + 0.3 * sstep(4.5, 9.5, v);
 
 // ── state ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function init(A) {
-  const S = { t: A.t, c: {}, v: {}, clip: null, fam: { SIDESTEP: 0, XOVER: 0, PIVOT: 0 }, famV: { SIDESTEP: 0, XOVER: 0, PIVOT: 0 }, b: 0, bV: 0, e: 0, eV: 0, r: 0, rV: 0, wc: 0, wcV: 0,
+  const S = { t: A.t, c: {}, v: {}, clip: null, fam: { SIDESTEP: 0, XOVER: 0, PIVOT: 0, REVERSAL: 0 }, famV: { SIDESTEP: 0, XOVER: 0, PIVOT: 0, REVERSAL: 0 }, b: 0, bV: 0, e: 0, eV: 0, r: 0, rV: 0, wc: 0, wcV: 0,
     sw: { R: { tuck: 0, lift: 0, fwd: 0, cross: 0, adv: 0, knee: 0 }, L: { tuck: 0, lift: 0, fwd: 0, cross: 0, adv: 0, knee: 0 } }, swV: { R: { tuck: 0, lift: 0, fwd: 0, cross: 0, adv: 0, knee: 0 }, L: { tuck: 0, lift: 0, fwd: 0, cross: 0, adv: 0, knee: 0 } },
-    drop: 0, dropV: 0, W: 0, on: false, tau: null, phase: "—", lastPlantTO: null };
+    drop: 0, dropV: 0, W: 0, on: false, tau: null, phase: "—", lastPlantTO: null, g: 0, gV: 0, mode12: A.l11mode === "t12" };
   for (const k of CH) { S.c[k] = 0; S.v[k] = 0; }
   return S;
 }
@@ -161,12 +184,13 @@ function brakeOf(dV) { return 0.5 + 0.5 * sstep(0.4, 1.8, v2.len(dV)); }
 function step(A, dt) {
   let S = A.l11s; if (!S || S.t > A.t + 1e-9) S = A.l11s = init(A);
   S.t = A.t;
-  const man = A.man, s = v2.len(A.V), c = S.c, tgt = {};
+  // mode "t12" (TURN-1.2): the layer sees only the BRAKE → REORGANISE → TURN → ACCELERATE family; TURN-1's own curves, cuts and pivots keep TURN-1's body
+  const man = S.mode12 ? (A.man && A.man.kind === "REVERSAL" ? A.man : null) : A.man, s = v2.len(A.V), c = S.c, tgt = {};
   for (const k of CH) tgt[k] = 0;
   // 1. the clip (one per maneuver; it outlives TURN-1's maneuver record until the exit / acceleration keys are done)
   if (man) {
     if (!S.clip || S.clip.done || S.clip.cancelT != null) S.clip = { tDecide: man.tDecide, sApp: s, tTD: null, tTO: null, cancelT: null };
-    const C = S.clip; C.tech = man.tech; C.kind = man.kind; C.sg = man.sg; C.ad = Math.abs(man.delta) / DEG; C.plantFoot = man.plantFoot;
+    const C = S.clip; C.tech = S.mode12 ? "REVERSAL" : man.tech; C.kind = man.kind; C.sg = man.sg; C.ad = Math.abs(man.delta) / DEG; C.plantFoot = man.plantFoot;
     if (man.phase !== "PRE" && C.tTD == null) { C.tTD = man.tPlant; C.tc = A.st.tc; }
     if (man.phase === "POST" && C.tTO == null) { let te = null; for (let i = A.events.length - 1; i >= 0; i--) if (A.events[i][1] === "plantTO") { te = A.events[i][0]; break; } C.tTO = te != null ? te : C.tTD + C.tc; }
   } else if (S.clip && S.clip.tTD == null && S.clip.cancelT == null) S.clip.cancelT = A.t;   // abandoned before the plant: fades out
@@ -186,13 +210,15 @@ function step(A, dt) {
   // 2. drives
   const role = A.st.role ? A.st.role.kind : "RUN", inFlight = A.clk.seg === 1 || A.clk.seg === 3;
   const wPre = tau == null ? 0 : sstep(-0.7, -0.1, tau);
-  let bT = role === "BRAKE" ? brakeOf(A.st.dV) : 0;
-  if (inFlight) { const Fn = A.clk.seg === 1 ? "L" : "R", Ln = A.legs[Fn]; const bN = Ln.fcPlan && Ln.fcPlan.role && Ln.fcPlan.role.kind === "BRAKE" ? brakeOf(Ln.fcPlan.dV) : 0; bT = lerpN(bT, bN, sstep(0.3, 1, A.clk.x)); }
-  bT *= 1 - wPre;
+  const BR = S.mode12 ? "BRAKEQ" : "BRAKE";                                          // which braking stances this mode dresses
+  let bT = role === BR ? brakeOf(A.st.dV) : 0, gT = S.mode12 && role === "REORG" ? 1 : 0;
+  if (inFlight) { const Fn = A.clk.seg === 1 ? "L" : "R", Ln = A.legs[Fn], nk = Ln.fcPlan && Ln.fcPlan.role && Ln.fcPlan.role.kind, wf = sstep(0.3, 1, A.clk.x);
+    bT = lerpN(bT, nk === BR ? brakeOf(Ln.fcPlan.dV) : 0, wf); if (S.mode12) gT = lerpN(gT, nk === "REORG" ? 1 : 0, wf); }
+  bT *= 1 - wPre; gT *= 1 - sstep(-0.35, 0, tau == null ? -1 : tau);
   const Fnext = A.clk.seg === 1 ? "L" : "R", accRole = role === "EXIT" || role === "ACCEL" || (inFlight && (A.legs[Fnext].tgtRole === "EXIT" || A.legs[Fnext].tgtRole === "ACCEL"));   // in a flight: the foot about to land
-  const eT = accRole ? clamp((A.input.v - s) / 3, 0, 1) * (tau != null && tau > 0.8 ? 1 : 0.7) : 0;
+  const eT = accRole && (!S.mode12 || C) ? clamp((A.input.v - s) / 3, 0, 1) * (tau != null && tau > 0.8 ? 1 : 0.7) : 0;   // TURN-1.2: only out of its reversals
   const rT = man && man.phase === "PRE" ? 1 - wPre : 0;
-  [S.b, S.bV] = follow(S.b, S.bV, bT, 0.06, dt); [S.e, S.eV] = follow(S.e, S.eV, eT, 0.08, dt); [S.r, S.rV] = follow(S.r, S.rV, rT, 0.05, dt);
+  [S.b, S.bV] = follow(S.b, S.bV, bT, 0.06, dt); [S.e, S.eV] = follow(S.e, S.eV, eT, 0.08, dt); [S.r, S.rV] = follow(S.r, S.rV, rT, 0.05, dt); [S.g, S.gV] = follow(S.g, S.gV, gT, 0.05, dt);
   // 3. channel targets: Σ base(τ) · family weight · intensity + modifiers · drive; arm poses blend by their weights
   const sg = C ? C.sg : (S.sgLast || 1); S.sgLast = sg;
   const armAcc = { w: 0 }; for (const k of ARMS) armAcc[k] = 0;
@@ -211,8 +237,10 @@ function step(A, dt) {
         swT[F].tuck += wf * I * ev("fTuck"); swT[F].lift += wf * I * ev("fLift"); swT[F].fwd += wf * I * ev("fFwd"); swT[F].adv += wf * Math.min(1, I) * ev("fAdv"); swT[F].knee += wf * I * ev("fKnee"); swT[F].cross += wf * I * ev("fCross") * (F === (C.sg > 0 ? "L" : "R") ? C.sg : 0); }   // the outside leg crosses toward the new direction (+ right of its step)
     }
   }
-  const M = MOD.BRAKE; if (S.b > 1e-6) { for (const k of ["pY", "pZ", "tPitch", "hPitch"]) tgt[k] += S.b * M[k]; tgt.hLev += S.b * M.hLev; addArm(S.b * M.aW, M, (m, k) => m[k]);
-    for (const F of ["R", "L"]) { const L = A.legs[F]; if (!L.stance && L.tgtRole === "BRAKE") swT[F].tuck += S.b * M.swTuck; } }
+  const M = S.mode12 ? MOD.BRAKE12 : MOD.BRAKE; if (S.b > 1e-6) { for (const k of ["pY", "pZ", "tPitch", "hPitch"]) tgt[k] += S.b * M[k]; tgt.hLev += S.b * M.hLev; addArm(S.b * M.aW, M, (m, k) => m[k]);
+    for (const F of ["R", "L"]) { const L = A.legs[F]; if (!L.stance && L.tgtRole === BR) swT[F].tuck += S.b * M.swTuck; } }
+  const G = MOD.REORG; if (S.g > 1e-6) { tgt.pY += S.g * G.pY; tgt.tPitch += S.g * G.tPitch; tgt.hLev += S.g * G.hLev; addArm(S.g * G.aW, G, (m, k) => m[k]);
+    for (const F of ["R", "L"]) { const L = A.legs[F]; if (!L.stance && L.tgtRole === "REORG") swT[F].tuck += S.g * G.swTuck; } }
   const X = MOD.EXIT; if (S.e > 1e-6) { tgt.pY += S.e * X.pY; tgt.hPitch += S.e * X.hPitch; tgt.armAmp += S.e * X.armAmp; tgt.armElb += S.e * X.armElb;
     for (const F of ["R", "L"]) { const L = A.legs[F]; if (!L.stance && (L.tgtRole === "ACCEL" || L.tgtRole === "EXIT")) swT[F].lift += S.e * X.swLift; } }
   const Rr = MOD.REACT; if (S.r > 1e-6) { const Ia = C ? angI(C.tech || "SIDESTEP", C.ad) : 0.6; tgt.tYaw += S.r * Ia * Rr.tYaw; tgt.tPitch += S.r * Ia * Rr.tPitch; tgt.pY += S.r * Rr.pY; tgt.hLev += S.r * Rr.hLev; addArm(S.r * Rr.aW, Rr, (m, k) => m[k]); }
@@ -234,7 +262,7 @@ function step(A, dt) {
   for (const F of ["R", "L"]) for (const k of ["tuck", "lift", "fwd", "cross", "adv", "knee"]) { [S.sw[F][k], S.swV[F][k]] = follow(S.sw[F][k], S.swV[F][k], swT[F][k], 0.04, dt);
     if (rest(S.sw[F][k], S.swV[F][k], swT[F][k]) && swT[F][k] === 0) { S.sw[F][k] = 0; S.swV[F][k] = 0; } else busy = true; }
   // 5. activity weight: 1 while anything authored acts; exactly 0 (→ TURN-1's pose, bit for bit) once everything has settled
-  const Wt = Math.max(S.wc, S.b, S.e, S.r, clamp(c.aW, 0, 1));
+  const Wt = Math.max(S.wc, S.b, S.e, S.r, S.g, clamp(c.aW, 0, 1));
   S.Wt = clamp(Math.max(Wt * 3, 0), 0, 1); [S.W, S.WV] = follow(S.W, S.WV || 0, S.Wt > 1e-4 ? 1 : 0, 0.06, dt);
   if (rest(S.W, S.WV, 0) && S.Wt <= 1e-4) { S.W = 0; S.WV = 0; } else busy = true;
   S.on = busy || S.W > 0;
@@ -245,6 +273,9 @@ function step(A, dt) {
 }
 function phaseName(S) {
   const tau = S.tau, f = S.clip ? S.clip.tech : null;
+  if (S.mode12 && S.clip && tau != null && S.wc > 0.05) return "REVERSAL · " + (tau < -0.05 ? (S.b > 0.25 ? "BRAKE" : S.g > 0.25 ? "REORGANISE" : "PREP") : tau < 1 ? "TURN" : tau < 2 ? "FIRST STEP" : "ACCELERATE OUT");
+  if (S.mode12 && S.b > 0.25) return "REVERSAL · BRAKE";
+  if (S.mode12 && S.g > 0.25) return "REVERSAL · REORGANISE";
   if (S.clip && tau != null && S.wc > 0.05) { const ph = tau < -0.05 ? (S.b > 0.25 ? "BRAKE → PREP" : "PREP") : tau < 0.12 ? "PLANT" : tau < 0.5 ? "LOAD" : tau < 0.8 ? "REDIRECT" : tau < 1.0 ? "PUSH" : tau < 1.2 ? "PUSH → FIRST STEP" : tau < 2 ? "FIRST STEP" : "ACCELERATE OUT"; return f + " · " + ph; }
   if (S.b > 0.25) return "BRAKE";
   if (S.r > 0.25) return "REACT";
@@ -287,7 +318,7 @@ function pelvis(A, pel, latL, fwdL) {
   S._pLat = pLat; S._pFwd = pFwd; S._Rp = R;
   return { R, y, pos: [pel.pos[0] + c.pX, y, c.pZ], yaw: c.pYaw };
 }
-function kneeClear(A) { const S = A.l11s; return lerpN(T1.kneeClear, P11.kneeClear, clamp(Math.max(S.wc, S.b), 0, 1) * S.W); }
+function kneeClear(A) { const S = A.l11s; return lerpN(T1.kneeClear, P11.kneeClear, clamp(Math.max(S.wc, S.b, S.g || 0), 0, 1) * S.W); }
 function dropA(A) { const S = A.l11s; return (A.drop || 0) + S.W * (S.drop - (A.drop || 0)); }
 function trunk(A, rot, latL, fwdL) {
   const S = A.l11s, c = S.c, pLat = S._pLat, pFwd = S._pFwd;
@@ -340,7 +371,7 @@ function diag(A) {
     ch: { pY: c.pY, pX: c.pX, pZ: c.pZ, pYaw: c.pYaw * D, tRoll: c.tRoll * D, tPitch: c.tPitch * D, tYaw: c.tYaw * D, aW: c.aW }, drop: S.drop, need: S.need };
 }
 const LAYER = { step, active, pelvis, dropA, kneeClear, trunk, headWant, arms, swing, swingW, diag };
-function attach(A) { A.L11 = LAYER; A.l11s = init(A); return A; }
+function attach(A, opts) { A.L11 = LAYER; A.l11mode = opts && opts.mode === "t12" ? "t12" : "t11"; A.l11s = init(A); return A; }   // mode "t12": TURN-1.2's reversal family only
 return { P11, LIB, MOD, attach, LAYER, evalK, prep, angI, spdI };
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = TURN11;

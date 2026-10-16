@@ -8,7 +8,8 @@
 const { loadTurn1 } = require("./t1_load.cjs"), X = loadTurn1(), T = X.TURN1, L11 = X.TURN11, fs = require("fs"), D = 180 / Math.PI;
 const SIDED = new Set(["pX", "pRoll", "pYaw", "tRoll", "tYaw"]), Y0 = 34;
 function run(foot, turn, v, authored) {
-  const scn = { init: { v, heading: 0, pos: [20, Y0], foot }, v, heading: 0, cmds: [{ t: 1.0, turn }] }, A = T.t1Make(X.skel, scn.init); if (authored) L11.attach(A);
+  const M12 = process.env.T12 === "1", scn = { init: { v, heading: 0, pos: [20, Y0], foot }, v, heading: 0, cmds: [{ t: 1.0, turn }] }, A = T.t1Make(X.skel, M12 && authored ? Object.assign({}, scn.init, { turn12: true }) : scn.init);
+  if (authored) L11.attach(A, M12 ? { mode: "t12" } : undefined);   // T12=1: TURN-1.2 (its resolver + its phase body) instead of TURN-1.1
   const bones = A.body.skel.bones, out = [];
   for (let k = 0; k < 3.6 * 240; k++) { T.t1Step(A, T.t1Input(scn, k / 240)); if (k % 4) continue; const fk = T.t1Evaluate(A).fk, J = {}; for (const b of bones) J[b.name] = fk.joint[b.idx].slice();
     out.push({ P: A.P.slice(), psi: A.psi, J, c: A.l11s ? Object.assign({}, A.l11s.c) : null, sw: A.l11s ? JSON.parse(JSON.stringify(A.l11s.sw)) : null }); }
@@ -26,11 +27,14 @@ for (const v of [3.0, 5.5, 7.8, 9.5]) for (const a of [15, 45, 60, 90, 120, 150,
     const mj = (P, Q, out) => { let m = out; for (const n in P.J) { const p = P.J[n], q = Q.J[swapName(n)]; m = Math.max(m, Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - (-2 * Y0 - q[2]))); } return m; };
     jt = mj(A, B, jt); jt0 = mj(r0.out[i], l0.out[i], jt0);
   }
-  const sw2 = (e, x, y) => e.replace(/:R:/, ":#:").replace(/:L:/, ":" + y + ":").replace(/:#:/, ":" + x + ":"), evOk = JSON.stringify(r.ev.map(e => sw2(e, "X", "Y"))) === JSON.stringify(l.ev.map(e => sw2(e, "Y", "X").replace(/:-/, ":")));
+  // events: kinds, feet (R ↔ L) and roles identical; logged numbers equal within 0.011 (they are printed to 2 decimals: a value mirrored to
+  // floating-point precision can still round to the other side of a last digit)
+  const evKey = (e, swap) => e.split(":").map(x => swap && x === "R" ? "L" : swap && x === "L" ? "R" : x), num = (x) => x !== "" && !isNaN(+x);
+  const evOk = r.ev.length === l.ev.length && r.ev.every((e, i) => { const a = evKey(e, true), b = evKey(l.ev[i], false); return a.length === b.length && a.every((x, j) => num(x) && num(b[j]) ? Math.abs(Math.abs(+x) - Math.abs(+b[j])) <= 0.011 : x === b[j]); });
   res.push({ v, turn: a, comMirrorErrMm: +(com * 1000).toFixed(4), headingMirrorErrDeg: +(hd * D).toFixed(5), eventsMirrored: evOk, layerChannelMirrorErr: +ch.toExponential(2), freeLegMirrorErrM: +sw.toExponential(2),
     jointMirrorErrMm: { t11: +(jt * 1000).toFixed(2), t1Control: +(jt0 * 1000).toFixed(2) } });
-  const q = res[res.length - 1]; console.log(`v ${v} ${a}°  COM ${q.comMirrorErrMm} mm  events ${evOk ? "mirrored" : "DIFFER"}  layer channels ${q.layerChannelMirrorErr}  free leg ${q.freeLegMirrorErrM}  joints TURN-1.1 ${q.jointMirrorErrMm.t11} mm (TURN-1 control ${q.jointMirrorErrMm.t1Control} mm)`);
+  const q = res[res.length - 1]; console.log(`v ${v} ${a}°  COM ${q.comMirrorErrMm} mm  events ${evOk ? "mirrored" : "DIFFER"}  layer channels ${q.layerChannelMirrorErr}  free leg ${q.freeLegMirrorErrM}  joints with the layer ${q.jointMirrorErrMm.t11} mm (TURN-1 control ${q.jointMirrorErrMm.t1Control} mm)`);
 }
 const ok = res.every(r => r.comMirrorErrMm < 0.01 && r.eventsMirrored && r.layerChannelMirrorErr < 1e-9 && r.freeLegMirrorErrM < 1e-9), jmax = Math.max(...res.map(r => r.jointMirrorErrMm.t11)), j0 = Math.max(...res.map(r => r.jointMirrorErrMm.t1Control));
-console.log(ok ? `MIRROR EXACT (movement, layer channels, free leg) in all ${res.length} cases; joints: TURN-1.1 ≤ ${jmax} mm vs TURN-1 control ≤ ${j0} mm` : "MIRROR MISMATCH");
+console.log(ok ? `MIRROR EXACT (movement, layer channels, free leg) in all ${res.length} cases; joints with the layer ≤ ${jmax} mm vs TURN-1 control ≤ ${j0} mm` : "MIRROR MISMATCH");
 if (process.argv[2]) fs.writeFileSync(process.argv[2], JSON.stringify({ note: "TURN-1.1 mirroring (start R + turn right vs start L + turn left), authored body; joint error vs the TURN-1 body as control", exact: ok, jointMaxMm: { t11: jmax, t1Control: j0 }, cases: res }, null, 1));
