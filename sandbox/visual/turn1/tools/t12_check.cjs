@@ -37,7 +37,7 @@ function run(scn, body) {
   const slip = stances.map(S => { let ref = null, kind0 = null, mx = 0; for (const q of S.s) { if (q.x < 0.1 || q.x > 0.9) continue; const kind = q.pivot || q.beta < -0.5 * DEG ? "pad" : "heel", p = kind === "pad" ? q.pad : q.heel; if (kind !== kind0) { ref = p; kind0 = kind; continue; } mx = Math.max(mx, Math.hypot(p[0] - ref[0], p[2] - ref[2])); } return mx * 100; });
   const ev = A.events, tc = c0 ? c0.t : 0, mans = ev.filter(e => e[1] === "maneuver"), manLast = mans[mans.length - 1] || null;
   const td = ev.filter(e => e[1] === "TD" && e[0] >= tc), brakes = td.filter(e => e[3] === "BRAKE" || e[3] === "BRAKEQ"), reorg = td.filter(e => e[3] === "REORG"), plant = td.find(e => e[3] === "PLANT");
-  return { A, hash: h.digest("hex").slice(0, 16), family: fam(manLast), families: mans.map(fam), sel: A.lastSel ? A.lastSel.why : null, events: ev.filter(e => e[1] === "cancel" || e[1] === "replan").map(e => e[1] + "@" + e[0].toFixed(2)),
+  return { A, hash: h.digest("hex").slice(0, 16), family: fam(manLast), families: mans.map(fam), sel: A.lastSel ? A.lastSel.why : null, compact: ev.some(e => e[1] === "compact"), events: ev.filter(e => e[1] === "cancel" || e[1] === "replan" || e[1] === "compact").map(e => e[1] + "@" + e[0].toFixed(2)),
     sIn: sIn == null ? null : +sIn.toFixed(2), firstBrakeS: brakes.length ? +(brakes[0][0] - tc).toFixed(3) : null, brakeSteps: brakes.length, brakeKinds: [...new Set(brakes.map(e => e[3]))].join("+"),
     reorgSteps: reorg.length, reorgFeet: reorg.map(e => e[2]).join(""), turnPlantS: plant ? +(plant[0] - tc).toFixed(3) : null, faceS: tFace == null ? null : +tFace.toFixed(3), velS: tVel == null ? null : +tVel.toFixed(3),
     accS: tAcc == null ? null : +tAcc.toFixed(3), vMin: vmin > 1e8 ? null : +vmin.toFixed(2), slipMaxCm: +Math.max(0, ...slip).toFixed(2), pelvisMm: +((worst.pelvis || 0) * 1000).toFixed(1), jointMm: +(Math.max(...Object.values(worst)) * 1000).toFixed(1) };
@@ -51,17 +51,18 @@ function reaction(scn, body) {
   return null;
 }
 const out = { note: "TURN-1.2 regression and metrics (t12_check.cjs): family per scenario, identity with TURN-1 where TURN-1 is kept, the owner's metrics, determinism", scenarios: {} };
-let idOk = 0, idN = 0, nondet = 0;
+let idOk = 0, idN = 0, nondet = 0, nCompact = 0;
 const strip = (r) => { const o = Object.assign({}, r); delete o.A; delete o.hash; return o; };
 for (const id of ids) {
   const scn = SCN.get(id), t1 = run(scn, "t1"), t11 = run(scn, "t11"), t12 = run(scn, "t12"), t12b = run(scn, "t12");
-  const keepsT1 = !t12.families.some(f => f.startsWith("BRAKE")), identical = t1.hash === t12.hash, det = t12.hash === t12b.hash; if (!det) nondet++; if (keepsT1) { idN++; if (identical) idOk++; }
+  // TURN-1 kept: no reversal family; the compact pivot (TURN-1's pivot without its waiting stride) is a deliberate refinement, counted apart
+  const keepsT1 = !t12.families.some(f => f.startsWith("BRAKE")) && !t12.compact, identical = t1.hash === t12.hash, det = t12.hash === t12b.hash; if (!det) nondet++; if (keepsT1) { idN++; if (identical) idOk++; } if (t12.compact) nCompact++;
   const label = scn.cmds && scn.cmds.length ? { speed: scn.v, angle: scn.cmds.map(c => c.turn) } : { speed: scn.v, angle: [] };
   out.scenarios[id] = Object.assign({ label: scn.label }, label, { familyT1: t1.family, familyT12: t12.family, familiesT12: t12.families, selection: t12.sel, keepsTurn1: keepsT1, identicalToTurn1: identical, deterministic: det,
-    reactionS: { t1: reaction(scn, "t1"), t11: reaction(scn, "t11"), t12: reaction(scn, "t12") }, t1: strip(t1), t12: strip(t12), t11: { family: t11.family, slipMaxCm: t11.slipMaxCm, turnPlantS: t11.turnPlantS } });
+    compactPivot: t12.compact, reactionS: { t1: reaction(scn, "t1"), t11: reaction(scn, "t11"), t12: reaction(scn, "t12") }, t1: strip(t1), t12: strip(t12), t11: { family: t11.family, slipMaxCm: t11.slipMaxCm, turnPlantS: t11.turnPlantS } });
   const o = out.scenarios[id], f = (x) => x == null ? "–" : x;
-  console.log(`${(keepsT1 ? (identical ? "T1=" : "T1≠") : "NEW")} ${det ? "DET" : "NONDET"} ${id.padEnd(18)} ${t12.family.padEnd(19)} react ${f(o.reactionS.t1)}→${f(o.reactionS.t12)}  brake ${t1.brakeSteps}→${t12.brakeSteps}${t12.brakeKinds ? "(" + t12.brakeKinds + ")" : ""}  reorg ${t12.reorgSteps}${t12.reorgFeet ? "(" + t12.reorgFeet + ")" : ""}  plant ${f(t1.turnPlantS)}→${f(t12.turnPlantS)}  face ${f(t1.faceS)}→${f(t12.faceS)}  vel ${f(t1.velS)}→${f(t12.velS)}  acc ${f(t1.accS)}→${f(t12.accS)}  vmin ${f(t1.vMin)}→${f(t12.vMin)}  slip ${t1.slipMaxCm}→${t12.slipMaxCm}  pelvis ${t1.pelvisMm}→${t12.pelvisMm} joint ${t1.jointMm}→${t12.jointMm} ${t12.events.join(" ")}`);
+  console.log(`${(keepsT1 ? (identical ? "T1=" : "T1≠") : t12.compact ? "CMP" : "NEW")} ${det ? "DET" : "NONDET"} ${id.padEnd(18)} ${t12.family.padEnd(19)} react ${f(o.reactionS.t1)}→${f(o.reactionS.t12)}  brake ${t1.brakeSteps}→${t12.brakeSteps}${t12.brakeKinds ? "(" + t12.brakeKinds + ")" : ""}  reorg ${t12.reorgSteps}${t12.reorgFeet ? "(" + t12.reorgFeet + ")" : ""}  plant ${f(t1.turnPlantS)}→${f(t12.turnPlantS)}  face ${f(t1.faceS)}→${f(t12.faceS)}  vel ${f(t1.velS)}→${f(t12.velS)}  acc ${f(t1.accS)}→${f(t12.accS)}  vmin ${f(t1.vMin)}→${f(t12.vMin)}  slip ${t1.slipMaxCm}→${t12.slipMaxCm}  pelvis ${t1.pelvisMm}→${t12.pelvisMm} joint ${t1.jointMm}→${t12.jointMm} ${t12.events.join(" ")}`);
 }
-out.identityKept = { identical: idOk, of: idN }; out.nondeterministic = nondet;
+out.identityKept = { identical: idOk, of: idN }; out.compactPivots = nCompact; out.nondeterministic = nondet;
 if (arg("out")) fs.writeFileSync(arg("out"), JSON.stringify(out, null, 1));
-console.log(`TURN-1 kept and bit-identical in ${idOk} / ${idN} · ${nondet ? nondet + " NONDETERMINISTIC" : "all deterministic"}`);
+console.log(`TURN-1 kept and bit-identical in ${idOk} / ${idN} · compact TURN-1 pivots ${nCompact} · ${nondet ? nondet + " NONDETERMINISTIC" : "all deterministic"}`);

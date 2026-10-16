@@ -303,7 +303,7 @@ function t12Resolve(A, man, s) {
       A.events.push([A.t, "replan", +(dm / DEG).toFixed(1)]);
       // the touchdown already committed (too close to re-plan) keeps the braking role it is landing into — it must not re-accelerate mid-braking
       const up0 = t1Upcoming(A, 1)[0], ki = up0 && up0.t - A.t < T1.reactS ? up0.idx : null;
-      A.carryRole = ki != null && man.roles[ki] ? { idx: ki, role: man.roles[ki] } : null; A.man = null; t1Resolve(A);
+      A.carryRole = ki != null && man.roles[ki] ? { idx: ki, role: man.roles[ki] } : null; A.man = null; t1Resolve(A); if (A.man) A.man.fromRev = true;
       if (A.man && A.carryRole && !A.man.roles[ki]) A.man.roles[ki] = Object.assign({}, A.carryRole.role);
       A.carryRole = null; return; }
     if (Math.abs(dm - man.delta) > 0.5 * DEG) { man.delta = dm; t12Retarget(A, man); }
@@ -416,8 +416,12 @@ function t1Event(A) {
     if (A.man && plan.role.kind === "PLANT") { A.man.phase = "PLANT"; A.man.tPlant = A.t; }
     // TURN-1.2 COMPACT PIVOT (low-momentum large turns kept on TURN-1's pivot): when a braking stance already brings the speed to the pivot's entry
     // speed, the pivot plants on the very next touchdown instead of after a slow, waiting braking stride
-    if (A.v12 && A.man && A.man.kind === "PIVOT" && A.man.phase === "PRE" && plan.role.kind === "BRAKE" && A.man.plantIdx > A.tdCount + 1 && v2.len(v2.add(Vtd, plan.dV)) <= A.man.sEntry + T12.compactMargin) {
-      A.man.plantIdx = A.tdCount + 1; A.man.plantFoot = F === "R" ? "L" : "R"; A.man.compact = true; t1Retarget(A, A.man); A.events.push([+A.t.toFixed(4), "compact", A.man.plantFoot]); }
+    // (also a TURN-1 cut re-planned out of an aborted reversal — its speed is already low — when the next foot is the outside one: a side-step)
+    if (A.v12 && A.man && A.man.phase === "PRE" && (plan.role.kind === "BRAKE" || (A.man.fromRev && plan.role.kind === "BRAKEQ")) && A.man.plantIdx > A.tdCount + 1 && v2.len(v2.add(Vtd, plan.dV)) <= A.man.sEntry + T12.compactMargin) {
+      const Fn = F === "R" ? "L" : "R", outside = A.man.sg > 0 ? "L" : "R";
+      if (A.man.kind === "PIVOT" || (A.man.fromRev && A.man.kind === "CUT" && Fn === outside)) {
+        A.man.plantIdx = A.tdCount + 1; A.man.plantFoot = Fn; if (A.man.kind === "CUT") { A.man.tech = "SIDESTEP"; A.man.inside = false; }
+        A.man.compact = true; t1Retarget(A, A.man); A.events.push([+A.t.toFixed(4), "compact", A.man.plantFoot]); } }
     if (A.man && A.man.phase === "POST" && A.tdCount > A.man.exitUntil) { A.events.push([+A.t.toFixed(4), "maneuverEnd"]); A.man = null; }
     c.seg = (c.seg + 1) % 4; c.x = 0; c.T = plan.tc; c.t0 = A.t;
     A.events.push([+A.t.toFixed(4), "TD", F, plan.role.kind, +v2.len(plan.dV).toFixed(2)]);

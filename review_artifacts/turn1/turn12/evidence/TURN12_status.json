@@ -1,0 +1,95 @@
+{
+ "note": "TURN-1.2 final statuses and picks (review page source)",
+ "statuses": [
+  [
+   "ORIGINAL TURN-1 PRESERVED AS DEFAULT",
+   "YES"
+  ],
+  [
+   "SUB-90° TURN-1 FLOW PRESERVED",
+   "YES"
+  ],
+  [
+   "LOW-SPEED >90° TURN-1 FLOW PRESERVED WHERE APPROPRIATE",
+   "YES"
+  ],
+  [
+   "SPEED + ANGLE RESOLVER",
+   "PASS"
+  ],
+  [
+   "RUN >90° BRAKING",
+   "PASS"
+  ],
+  [
+   "SPRINT >90° BRAKING",
+   "PASS"
+  ],
+  [
+   "SHUFFLE / FOOT REORGANIZATION",
+   "PASS"
+  ],
+  [
+   "RUN 135–150°",
+   "PASS"
+  ],
+  [
+   "SPRINT 150°",
+   "PASS"
+  ],
+  [
+   "SPRINT 180°",
+   "PASS"
+  ],
+  [
+   "JOG 180°",
+   "PASS"
+  ],
+  [
+   "ACCELERATION OUT",
+   "PASS"
+  ],
+  [
+   "ABORTED REVERSAL",
+   "PASS"
+  ],
+  [
+   "RETARGET DURING BRAKING",
+   "PASS"
+  ],
+  [
+   "PLANT FOOT STABILITY",
+   "PASS"
+  ],
+  [
+   "CONTINUOUS INPUT",
+   "PASS"
+  ],
+  [
+   "DETERMINISM",
+   "PASS"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY FOR DRIBBLE-1 AFTER OWNER APPROVAL",
+   "YES"
+  ]
+ ],
+ "watchFirst": [
+  {
+   "id": "W3_SPRINT_180R",
+   "why": "SPRINT 180°: TURN-1 | TURN-1.1 | TURN-1.2 at the gameplay camera, synchronized 1× — TURN-1.2 brakes hard with quick steps, reorganises its base in two shuffle steps, turns decisively and drives back (plant +1.02 s vs TURN-1's +1.35 s)"
+  },
+  {
+   "id": "W3_RUN_135R",
+   "why": "RUN 135°: the intermediate case — three quick braking stances, one shuffle step, the turn, the drive (plant +0.91 s vs +1.32 s)"
+  },
+  {
+   "id": "W3_JOG_180R",
+   "why": "JOG 180°: the low-speed control — TURN-1's own pivot, no dramatic braking, only its waiting stride removed (plant +0.53 s vs +0.89 s)"
+  }
+ ]
+}

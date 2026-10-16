@@ -1,0 +1,3314 @@
+{
+ "note": "TURN-1.2 regression and metrics (t12_check.cjs): family per scenario, identity with TURN-1 where TURN-1 is kept, the owner's metrics, determinism",
+ "scenarios": {
+  "LOW_60R": {
+   "label": "LOW 3.0 m/s · 60° RIGHT (toward camera)",
+   "speed": 3,
+   "angle": [
+    60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.062,
+    "t11": 0.062,
+    "t12": 0.062
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.358,
+    "velS": 0.433,
+    "accS": 0.433,
+    "vMin": 2.48,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 1.7,
+    "jointMm": 10.4
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.358,
+    "velS": 0.433,
+    "accS": 0.433,
+    "vMin": 2.48,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 1.7,
+    "jointMm": 10.4
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.091
+   }
+  },
+  "LOW_90R": {
+   "label": "LOW 3.0 m/s · 90° RIGHT (toward camera)",
+   "speed": 3,
+   "angle": [
+    90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.062,
+    "t11": 0.062,
+    "t12": 0.062
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.425,
+    "velS": 0.504,
+    "accS": 0.45,
+    "vMin": 2.07,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.4,
+    "jointMm": 26.5
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.425,
+    "velS": 0.504,
+    "accS": 0.45,
+    "vMin": 2.07,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.4,
+    "jointMm": 26.5
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.091
+   }
+  },
+  "LOW_120R": {
+   "label": "LOW 3.0 m/s · 120° RIGHT (toward camera)",
+   "speed": 3,
+   "angle": [
+    120
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.062,
+    "t11": 0.062,
+    "t12": 0.062
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.462,
+    "velS": 0.542,
+    "accS": 0.467,
+    "vMin": 1.69,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.3,
+    "jointMm": 24.8
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.462,
+    "velS": 0.542,
+    "accS": 0.467,
+    "vMin": 1.69,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.3,
+    "jointMm": 24.8
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.091
+   }
+  },
+  "LOW_150R": {
+   "label": "LOW 3.0 m/s · 150° RIGHT (toward camera)",
+   "speed": 3,
+   "angle": [
+    150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "TURN1_PIVOT",
+   "familiesT12": [
+    "TURN1_PIVOT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.058,
+    "t11": 0.058,
+    "t12": 0.058
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.525,
+    "velS": 0.35,
+    "accS": 0.333,
+    "vMin": 0.38,
+    "slipMaxCm": 0.11,
+    "pelvisMm": 2.8,
+    "jointMm": 15.4
+   },
+   "t12": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.091,
+    "faceS": 0.525,
+    "velS": 0.35,
+    "accS": 0.333,
+    "vMin": 0.38,
+    "slipMaxCm": 0.11,
+    "pelvisMm": 2.8,
+    "jointMm": 15.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.11,
+    "turnPlantS": 0.091
+   }
+  },
+  "LOW_180R": {
+   "label": "LOW 3.0 m/s · 180° RIGHT (toward camera)",
+   "speed": 3,
+   "angle": [
+    180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "TURN1_PIVOT",
+   "familiesT12": [
+    "TURN1_PIVOT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.167,
+    "t11": 0.087,
+    "t12": 0.167
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": 0.091,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.452,
+    "faceS": 0.933,
+    "velS": 0.721,
+    "accS": 0.708,
+    "vMin": 0.07,
+    "slipMaxCm": 0.46,
+    "pelvisMm": 5.7,
+    "jointMm": 25.5
+   },
+   "t12": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 3,
+    "firstBrakeS": 0.091,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.452,
+    "faceS": 0.933,
+    "velS": 0.721,
+    "accS": 0.708,
+    "vMin": 0.07,
+    "slipMaxCm": 0.46,
+    "pelvisMm": 5.7,
+    "jointMm": 25.5
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.11,
+    "turnPlantS": 0.452
+   }
+  },
+  "JOG_60R": {
+   "label": "JOG 5.5 m/s · 60° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.2,
+    "t11": 0.075,
+    "t12": 0.2
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.25,
+    "faceS": 0.487,
+    "velS": 0.575,
+    "accS": 0.546,
+    "vMin": 4.52,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 11.6,
+    "jointMm": 25.8
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.25,
+    "faceS": 0.487,
+    "velS": 0.575,
+    "accS": 0.546,
+    "vMin": 4.52,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 11.6,
+    "jointMm": 25.8
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.25
+   }
+  },
+  "JOG_90R": {
+   "label": "JOG 5.5 m/s · 90° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.229,
+    "t11": 0.075,
+    "t12": 0.229
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 0.812,
+    "velS": 0.892,
+    "accS": 0.833,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.3,
+    "jointMm": 22.7
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 0.812,
+    "velS": 0.892,
+    "accS": 0.833,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.3,
+    "jointMm": 22.7
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.498
+   }
+  },
+  "JOG_120R": {
+   "label": "JOG 5.5 m/s · 120° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    120
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.212,
+    "t11": 0.075,
+    "t12": 0.212
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.514,
+    "faceS": 0.887,
+    "velS": 0.962,
+    "accS": 0.9,
+    "vMin": 1.97,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3,
+    "jointMm": 23.5
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.514,
+    "faceS": 0.887,
+    "velS": 0.962,
+    "accS": 0.9,
+    "vMin": 1.97,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3,
+    "jointMm": 23.5
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.514
+   }
+  },
+  "JOG_150R": {
+   "label": "JOG 5.5 m/s · 150° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "TURN1_PIVOT",
+   "familiesT12": [
+    "TURN1_PIVOT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": true,
+   "reactionS": {
+    "t1": 0.208,
+    "t11": 0.075,
+    "t12": 0.208
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.873,
+    "faceS": 1.308,
+    "velS": 1.138,
+    "accS": 1.125,
+    "vMin": 0.46,
+    "slipMaxCm": 1.48,
+    "pelvisMm": 5.8,
+    "jointMm": 23.9
+   },
+   "t12": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": "low momentum",
+    "compact": true,
+    "events": [
+     "compact@1.25"
+    ],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.525,
+    "faceS": 0.958,
+    "velS": 0.787,
+    "accS": 0.771,
+    "vMin": 0.4,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 2.7,
+    "jointMm": 23.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.12,
+    "turnPlantS": 0.873
+   }
+  },
+  "JOG_180R": {
+   "label": "JOG 5.5 m/s · 180° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "TURN1_PIVOT",
+   "familiesT12": [
+    "TURN1_PIVOT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": true,
+   "reactionS": {
+    "t1": 0.208,
+    "t11": 0.075,
+    "t12": 0.208
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.886,
+    "faceS": 1.371,
+    "velS": 1.154,
+    "accS": 1.146,
+    "vMin": 0.09,
+    "slipMaxCm": 2,
+    "pelvisMm": 5.6,
+    "jointMm": 31.7
+   },
+   "t12": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": "low momentum",
+    "compact": true,
+    "events": [
+     "compact@1.25"
+    ],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.525,
+    "faceS": 1.008,
+    "velS": 0.8,
+    "accS": 0.783,
+    "vMin": 0.03,
+    "slipMaxCm": 0.09,
+    "pelvisMm": 3.1,
+    "jointMm": 23.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.12,
+    "turnPlantS": 0.886
+   }
+  },
+  "RUN_60R": {
+   "label": "RUN 7.8 m/s · 60° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.204
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.434,
+    "faceS": 0.662,
+    "velS": 0.771,
+    "accS": 0.733,
+    "vMin": 5.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.4,
+    "jointMm": 51
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.434,
+    "faceS": 0.662,
+    "velS": 0.771,
+    "accS": 0.733,
+    "vMin": 5.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.4,
+    "jointMm": 51
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.434
+   }
+  },
+  "RUN_90R": {
+   "label": "RUN 7.8 m/s · 90° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.204
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.671,
+    "faceS": 0.983,
+    "velS": 1.062,
+    "accS": 1.008,
+    "vMin": 3.04,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.2,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.671,
+    "faceS": 0.983,
+    "velS": 1.062,
+    "accS": 1.008,
+    "vMin": 3.04,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.2,
+    "jointMm": 29.8
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.671
+   }
+  },
+  "RUN_120R": {
+   "label": "RUN 7.8 m/s · 120° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    120
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "BRAKE_TURN",
+   "familiesT12": [
+    "BRAKE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.977,
+    "faceS": 1.367,
+    "velS": 1.217,
+    "accS": 1.317,
+    "vMin": 0.95,
+    "slipMaxCm": 0.12,
+    "pelvisMm": 5.7,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "BRAKE_TURN",
+    "families": [
+     "BRAKE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.746,
+    "faceS": 1.054,
+    "velS": 1.108,
+    "accS": 1.025,
+    "vMin": 1.54,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 2.9,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.12,
+    "turnPlantS": 0.977
+   }
+  },
+  "RUN_150R": {
+   "label": "RUN 7.8 m/s · 150° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.349,
+    "faceS": 1.783,
+    "velS": 1.613,
+    "accS": 1.604,
+    "vMin": 0.5,
+    "slipMaxCm": 0.05,
+    "pelvisMm": 2.7,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 1,
+    "reorgFeet": "R",
+    "turnPlantS": 0.908,
+    "faceS": 1.238,
+    "velS": 1.075,
+    "accS": 1.033,
+    "vMin": 0.63,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 2.5,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.05,
+    "turnPlantS": 1.349
+   }
+  },
+  "RUN_180R": {
+   "label": "RUN 7.8 m/s · 180° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.374,
+    "faceS": 1.858,
+    "velS": 1.646,
+    "accS": 1.633,
+    "vMin": 0.13,
+    "slipMaxCm": 0.08,
+    "pelvisMm": 3.1,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "LR",
+    "turnPlantS": 0.858,
+    "faceS": 1.204,
+    "velS": 1,
+    "accS": 0.983,
+    "vMin": 0.12,
+    "slipMaxCm": 0.05,
+    "pelvisMm": 2.2,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.08,
+    "turnPlantS": 1.374
+   }
+  },
+  "SPRINT_60R": {
+   "label": "SPRINT 9.5 m/s · 60° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.456,
+    "faceS": 0.679,
+    "velS": 0.908,
+    "accS": 0.775,
+    "vMin": 5.35,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.1,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.456,
+    "faceS": 0.679,
+    "velS": 0.908,
+    "accS": 0.775,
+    "vMin": 5.35,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.1,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.456
+   }
+  },
+  "SPRINT_90R": {
+   "label": "SPRINT 9.5 m/s · 90° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "below the large-angle band",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.943,
+    "faceS": 1.258,
+    "velS": 1.333,
+    "accS": 1.283,
+    "vMin": 3.06,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.1,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "below the large-angle band",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.943,
+    "faceS": 1.258,
+    "velS": 1.333,
+    "accS": 1.283,
+    "vMin": 3.06,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.1,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.943
+   }
+  },
+  "SPRINT_120R": {
+   "label": "SPRINT 9.5 m/s · 120° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    120
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "BRAKE_TURN",
+   "familiesT12": [
+    "BRAKE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.964,
+    "faceS": 1.338,
+    "velS": 1.413,
+    "accS": 1.354,
+    "vMin": 2.01,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.8,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_TURN",
+    "families": [
+     "BRAKE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.901,
+    "faceS": 1.213,
+    "velS": 1.258,
+    "accS": 1.175,
+    "vMin": 1.6,
+    "slipMaxCm": 0.12,
+    "pelvisMm": 3.4,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.964
+   }
+  },
+  "SPRINT_150R": {
+   "label": "SPRINT 9.5 m/s · 150° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.333,
+    "faceS": 1.767,
+    "velS": 1.596,
+    "accS": 1.588,
+    "vMin": 0.51,
+    "slipMaxCm": 1.46,
+    "pelvisMm": 5.8,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 1,
+    "reorgFeet": "R",
+    "turnPlantS": 1.063,
+    "faceS": 1.392,
+    "velS": 1.229,
+    "accS": 1.188,
+    "vMin": 0.68,
+    "slipMaxCm": 0.07,
+    "pelvisMm": 2.5,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.05,
+    "turnPlantS": 1.333
+   }
+  },
+  "SPRINT_180R": {
+   "label": "SPRINT 9.5 m/s · 180° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.354,
+    "faceS": 1.838,
+    "velS": 1.629,
+    "accS": 1.617,
+    "vMin": 0.14,
+    "slipMaxCm": 1.89,
+    "pelvisMm": 5.6,
+    "jointMm": 38.2
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "LR",
+    "turnPlantS": 1.015,
+    "faceS": 1.363,
+    "velS": 1.167,
+    "accS": 1.142,
+    "vMin": 0.17,
+    "slipMaxCm": 0.04,
+    "pelvisMm": 2.8,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.06,
+    "turnPlantS": 1.354
+   }
+  },
+  "RUN_135R": {
+   "label": "RUN 7.8 m/s · 135° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    135
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.324,
+    "faceS": 1.729,
+    "velS": 1.575,
+    "accS": 1.583,
+    "vMin": 0.71,
+    "slipMaxCm": 0.1,
+    "pelvisMm": 2.6,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 1,
+    "reorgFeet": "R",
+    "turnPlantS": 0.908,
+    "faceS": 1.225,
+    "velS": 1.1,
+    "accS": 1.042,
+    "vMin": 0.95,
+    "slipMaxCm": 0.11,
+    "pelvisMm": 2.3,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.1,
+    "turnPlantS": 1.324
+   }
+  },
+  "RUN_45R": {
+   "label": "RUN 7.8 m/s · 45° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    45
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.196,
+    "t11": 0.071,
+    "t12": 0.196
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.239,
+    "faceS": 0.425,
+    "velS": 0.654,
+    "accS": 0.642,
+    "vMin": 6.87,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.8,
+    "jointMm": 31.7
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.239,
+    "faceS": 0.425,
+    "velS": 0.654,
+    "accS": 0.642,
+    "vMin": 6.87,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.8,
+    "jointMm": 31.7
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.239
+   }
+  },
+  "SPRINT_45R": {
+   "label": "SPRINT 9.5 m/s · 45° RIGHT (toward camera)",
+   "speed": 9.5,
+   "angle": [
+    45
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.062,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.266,
+    "faceS": 0.45,
+    "velS": 0.683,
+    "accS": 0.679,
+    "vMin": 7.14,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.9,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.266,
+    "faceS": 0.45,
+    "velS": 0.683,
+    "accS": 0.679,
+    "vMin": 7.14,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.9,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.266
+   }
+  },
+  "JOG_45R": {
+   "label": "JOG 5.5 m/s · 45° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    45
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.2,
+    "t11": 0.075,
+    "t12": 0.2
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.25,
+    "faceS": 0.467,
+    "velS": 0.546,
+    "accS": 0.537,
+    "vMin": 4.9,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 3.3,
+    "jointMm": 23.5
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.25,
+    "faceS": 0.467,
+    "velS": 0.546,
+    "accS": 0.537,
+    "vMin": 4.9,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 3.3,
+    "jointMm": 23.5
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.25
+   }
+  },
+  "RUN_150L": {
+   "label": "RUN 7.8 m/s · 150° LEFT (away)",
+   "speed": 7.8,
+   "angle": [
+    -150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.079,
+    "t12": 0.079
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.349,
+    "faceS": 1.783,
+    "velS": 1.613,
+    "accS": 1.604,
+    "vMin": 0.5,
+    "slipMaxCm": 1.48,
+    "pelvisMm": 5.8,
+    "jointMm": 30
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "RL",
+    "turnPlantS": 1.07,
+    "faceS": 1.4,
+    "velS": 1.238,
+    "accS": 1.196,
+    "vMin": 0.67,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 2.1,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.05,
+    "turnPlantS": 1.349
+   }
+  },
+  "SPRINT_180L": {
+   "label": "SPRINT 9.5 m/s · 180° LEFT (away)",
+   "speed": 9.5,
+   "angle": [
+    -180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.071,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.354,
+    "faceS": 1.838,
+    "velS": 1.629,
+    "accS": 1.617,
+    "vMin": 0.14,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 3,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "RL",
+    "turnPlantS": 1.225,
+    "faceS": 1.575,
+    "velS": 1.379,
+    "accS": 1.354,
+    "vMin": 0.19,
+    "slipMaxCm": 0.05,
+    "pelvisMm": 2.5,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.06,
+    "turnPlantS": 1.354
+   }
+  },
+  "SPRINT_180L_MIRROR": {
+   "label": "SPRINT 9.5 m/s · 180° LEFT, starting on the left foot (the exact mirror of SPRINT_180R)",
+   "speed": 9.5,
+   "angle": [
+    -180
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.354,
+    "faceS": 1.838,
+    "velS": 1.629,
+    "accS": 1.617,
+    "vMin": 0.14,
+    "slipMaxCm": 1.89,
+    "pelvisMm": 5.6,
+    "jointMm": 38.2
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "RL",
+    "turnPlantS": 1.015,
+    "faceS": 1.363,
+    "velS": 1.167,
+    "accS": 1.142,
+    "vMin": 0.17,
+    "slipMaxCm": 0.04,
+    "pelvisMm": 2.8,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.06,
+    "turnPlantS": 1.354
+   }
+  },
+  "JOG_30R": {
+   "label": "JOG 5.5 m/s · 30° RIGHT (toward camera)",
+   "speed": 5.5,
+   "angle": [
+    30
+   ],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.317,
+    "t11": 0.317,
+    "t12": 0.317
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.692,
+    "velS": 0.712,
+    "accS": null,
+    "vMin": 5.41,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.5,
+    "jointMm": 21.9
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.692,
+    "velS": 0.712,
+    "accS": null,
+    "vMin": 5.41,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.5,
+    "jointMm": 21.9
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  },
+  "RUN_30R": {
+   "label": "RUN 7.8 m/s · 30° RIGHT (toward camera)",
+   "speed": 7.8,
+   "angle": [
+    30
+   ],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.25,
+    "t11": 0.25,
+    "t12": 0.25
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.871,
+    "velS": 1.263,
+    "accS": null,
+    "vMin": 7.7,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 1.4,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.871,
+    "velS": 1.263,
+    "accS": null,
+    "vMin": 7.7,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 1.4,
+    "jointMm": 29.8
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.03,
+    "turnPlantS": null
+   }
+  },
+  "SLALOM_JOG": {
+   "label": "JOG 5.5 · gentle steering: ±15° every 0.8 s",
+   "speed": 5.5,
+   "angle": [
+    15,
+    -15,
+    15,
+    0
+   ],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.067,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 2.646,
+    "velS": 2.875,
+    "accS": null,
+    "vMin": 5.41,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 9.7,
+    "jointMm": 21.4
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 2.646,
+    "velS": 2.875,
+    "accS": null,
+    "vMin": 5.41,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 9.7,
+    "jointMm": 21.4
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  },
+  "SLALOM_SPRINT": {
+   "label": "SPRINT 9.5 · gentle steering: ±12° every 0.9 s",
+   "speed": 9.5,
+   "angle": [
+    12,
+    -12,
+    0
+   ],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.233,
+    "t11": 0.233,
+    "t12": 0.233
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 1.8,
+    "velS": 1.8,
+    "accS": null,
+    "vMin": 9.38,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 2,
+    "jointMm": 36.2
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 1.8,
+    "velS": 1.8,
+    "accS": null,
+    "vMin": 9.38,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 2,
+    "jointMm": 36.2
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.03,
+    "turnPlantS": null
+   }
+  },
+  "ZIGZAG_RUN": {
+   "label": "RUN 7.8 · cut 60° right, then back 60° left (RUN → CUT → RUN → CUT → RUN)",
+   "speed": 7.8,
+   "angle": [
+    60,
+    0
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT",
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.204
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.434,
+    "faceS": 2.267,
+    "velS": 2.375,
+    "accS": 0.733,
+    "vMin": 5.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.4,
+    "jointMm": 51
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.434,
+    "faceS": 2.267,
+    "velS": 2.375,
+    "accS": 0.733,
+    "vMin": 5.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.4,
+    "jointMm": 51
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.434
+   }
+  },
+  "ZIGZAG_JOG": {
+   "label": "JOG 5.5 · cut 90° right, then 90° left back to the original line",
+   "speed": 5.5,
+   "angle": [
+    90,
+    0
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT",
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.229,
+    "t11": 0.075,
+    "t12": 0.229
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 2.175,
+    "velS": 2.271,
+    "accS": 0.833,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.3,
+    "jointMm": 22.7
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 2.175,
+    "velS": 2.271,
+    "accS": 0.833,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.3,
+    "jointMm": 22.7
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.498
+   }
+  },
+  "CONT_PRE_RETARGET": {
+   "label": "RUN 7.8 · 90° right, retargeted to 50° right before the plant",
+   "speed": 7.8,
+   "angle": [
+    90,
+    50
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.204
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.671,
+    "faceS": 0.858,
+    "velS": 0.933,
+    "accS": 0.979,
+    "vMin": 3.81,
+    "slipMaxCm": 2.35,
+    "pelvisMm": 11.3,
+    "jointMm": 117.2
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.671,
+    "faceS": 0.858,
+    "velS": 0.933,
+    "accS": 0.979,
+    "vMin": 3.81,
+    "slipMaxCm": 2.35,
+    "pelvisMm": 11.3,
+    "jointMm": 117.2
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.66,
+    "turnPlantS": 0.671
+   }
+  },
+  "CONT_PRE_ABANDON": {
+   "label": "RUN 7.8 · 90° right, abandoned (back to 10° right) before the plant",
+   "speed": 7.8,
+   "angle": [
+    90,
+    10
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.204
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [
+     "cancel@1.25"
+    ],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.254,
+    "velS": 0.537,
+    "accS": 0.496,
+    "vMin": 6.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.9,
+    "jointMm": 29.8
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [
+     "cancel@1.25"
+    ],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.254,
+    "velS": 0.537,
+    "accS": 0.496,
+    "vMin": 6.1,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.9,
+    "jointMm": 29.8
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  },
+  "CONT_PRE_FLIP": {
+   "label": "JOG 5.5 · 90° right, flipped to 90° left before the plant",
+   "speed": 5.5,
+   "angle": [
+    90,
+    -90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT",
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.229,
+    "t11": 0.075,
+    "t12": 0.229
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.562,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.813,
+    "faceS": 1.125,
+    "velS": 1.204,
+    "accS": 1.158,
+    "vMin": 3.1,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 3.6,
+    "jointMm": 39.3
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT",
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.562,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.813,
+    "faceS": 1.125,
+    "velS": 1.204,
+    "accS": 1.158,
+    "vMin": 3.1,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 3.6,
+    "jointMm": 39.3
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.813
+   }
+  },
+  "CONT_POST": {
+   "label": "JOG 5.5 · 90° right, changed to 130° right after the plant began (committed: ±20°)",
+   "speed": 5.5,
+   "angle": [
+    90,
+    130
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.229,
+    "t11": 0.075,
+    "t12": 0.229
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 1.671,
+    "velS": 1.125,
+    "accS": 0.858,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.1,
+    "jointMm": 22.7
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": 0.25,
+    "brakeSteps": 1,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.498,
+    "faceS": 1.671,
+    "velS": 1.125,
+    "accS": 0.858,
+    "vMin": 3.02,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.1,
+    "jointMm": 22.7
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.498
+   }
+  },
+  "CONT_CURVE": {
+   "label": "JOG 5.5 · arc 30° right, then (during the curve) 60° left",
+   "speed": 5.5,
+   "angle": [
+    30,
+    -60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.317,
+    "t11": 0.317,
+    "t12": 0.317
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.562,
+    "faceS": 0.812,
+    "velS": 0.896,
+    "accS": 0.871,
+    "vMin": 4.37,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.1,
+    "jointMm": 48.6
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [],
+    "sIn": 5.5,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.562,
+    "faceS": 0.812,
+    "velS": 0.896,
+    "accS": 0.871,
+    "vMin": 4.37,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 3.1,
+    "jointMm": 48.6
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.562
+   }
+  },
+  "REV_ABORT_60": {
+   "label": "SPRINT 9.5 · 180° right requested, changed to 60° right during the braking",
+   "speed": 9.5,
+   "angle": [
+    180,
+    60
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN",
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_PIVOT",
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.456,
+    "faceS": 0.675,
+    "velS": 0.912,
+    "accS": 0.858,
+    "vMin": 5.44,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4.2,
+    "jointMm": 36.5
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "BRAKE_SHUFFLE_TURN",
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": false,
+    "events": [
+     "replan@1.35"
+    ],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.509,
+    "faceS": 0.737,
+    "velS": 0.812,
+    "accS": 0.792,
+    "vMin": 5.02,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 2.8,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": 0.456
+   }
+  },
+  "REV_CANCEL": {
+   "label": "SPRINT 9.5 · 180° right requested, cancelled back to the original line during the braking",
+   "speed": 9.5,
+   "angle": [
+    180,
+    0
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [
+     "cancel@1.35"
+    ],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.404,
+    "velS": 0.354,
+    "accS": 0.517,
+    "vMin": 6.57,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 1.4,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [
+     "cancel@1.35"
+    ],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": 0.396,
+    "velS": 0.354,
+    "accS": 0.429,
+    "vMin": 7.12,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 4,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  },
+  "REV_RETARGET": {
+   "label": "SPRINT 9.5 · 180° right requested, retargeted to 135° right during the braking",
+   "speed": 9.5,
+   "angle": [
+    180,
+    135
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN",
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.071,
+    "t11": 0.067,
+    "t12": 0.067
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.354,
+    "faceS": 1.696,
+    "velS": 1.604,
+    "accS": 1.704,
+    "vMin": 0.58,
+    "slipMaxCm": 0.07,
+    "pelvisMm": 5.4,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN",
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [
+     "replan@1.30"
+    ],
+    "sIn": 9.5,
+    "firstBrakeS": 0.099,
+    "brakeSteps": 5,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 1,
+    "reorgFeet": "R",
+    "turnPlantS": 1.063,
+    "faceS": 1.379,
+    "velS": 1.346,
+    "accS": 1.2,
+    "vMin": 1.03,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 2.5,
+    "jointMm": 35.9
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.07,
+    "turnPlantS": 1.354
+   }
+  },
+  "REV_FLIP": {
+   "label": "RUN 7.8 · 150° right requested, flipped to 150° left during the braking",
+   "speed": 7.8,
+   "angle": [
+    150,
+    -150
+   ],
+   "familyT1": "TURN1_PIVOT",
+   "familyT12": "BRAKE_SHUFFLE_TURN",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN",
+    "BRAKE_SHUFFLE_TURN"
+   ],
+   "selection": "large angle under momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_PIVOT",
+    "families": [
+     "TURN1_PIVOT",
+     "TURN1_PIVOT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 4,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 1.351,
+    "faceS": 1.788,
+    "velS": 1.613,
+    "accS": 1.604,
+    "vMin": 0.47,
+    "slipMaxCm": 2.14,
+    "pelvisMm": 5.7,
+    "jointMm": 35.9
+   },
+   "t12": {
+    "family": "BRAKE_SHUFFLE_TURN",
+    "families": [
+     "BRAKE_SHUFFLE_TURN",
+     "BRAKE_SHUFFLE_TURN"
+    ],
+    "sel": "large angle under momentum",
+    "compact": false,
+    "events": [
+     "replan@1.30"
+    ],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 3,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 2,
+    "reorgFeet": "RL",
+    "turnPlantS": 1.07,
+    "faceS": 1.4,
+    "velS": 1.238,
+    "accS": 1.196,
+    "vMin": 0.62,
+    "slipMaxCm": 0.06,
+    "pelvisMm": 2.4,
+    "jointMm": 35.4
+   },
+   "t11": {
+    "family": "TURN1_PIVOT",
+    "slipMaxCm": 0.06,
+    "turnPlantS": 1.351
+   }
+  },
+  "REV_ABORT_RUN": {
+   "label": "RUN 7.8 · 180° right requested, changed to 90° right during the braking",
+   "speed": 7.8,
+   "angle": [
+    180,
+    90
+   ],
+   "familyT1": "TURN1_CUT",
+   "familyT12": "TURN1_CUT",
+   "familiesT12": [
+    "BRAKE_SHUFFLE_TURN",
+    "TURN1_CUT"
+   ],
+   "selection": "low momentum",
+   "keepsTurn1": false,
+   "identicalToTurn1": false,
+   "deterministic": true,
+   "compactPivot": true,
+   "reactionS": {
+    "t1": 0.204,
+    "t11": 0.071,
+    "t12": 0.071
+   },
+   "t1": {
+    "family": "TURN1_CUT",
+    "families": [
+     "TURN1_PIVOT",
+     "TURN1_CUT"
+    ],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKE",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.671,
+    "faceS": 0.983,
+    "velS": 1.058,
+    "accS": 1.004,
+    "vMin": 3.07,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 4.2,
+    "jointMm": 30.9
+   },
+   "t12": {
+    "family": "TURN1_CUT",
+    "families": [
+     "BRAKE_SHUFFLE_TURN",
+     "TURN1_CUT"
+    ],
+    "sel": "low momentum",
+    "compact": true,
+    "events": [
+     "replan@1.30",
+     "compact@1.38"
+    ],
+    "sIn": 7.8,
+    "firstBrakeS": 0.239,
+    "brakeSteps": 2,
+    "brakeKinds": "BRAKEQ",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": 0.545,
+    "faceS": 0.846,
+    "velS": 0.933,
+    "accS": 0.887,
+    "vMin": 3.1,
+    "slipMaxCm": 0.03,
+    "pelvisMm": 10.1,
+    "jointMm": 35.3
+   },
+   "t11": {
+    "family": "TURN1_CUT",
+    "slipMaxCm": 0.03,
+    "turnPlantS": 0.671
+   }
+  },
+  "RUN_STRAIGHT": {
+   "label": "RUN 7.8 m/s · straight (RUN-1.3 control)",
+   "speed": 7.8,
+   "angle": [],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": null,
+    "t11": null,
+    "t12": null
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": null,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": null,
+    "velS": null,
+    "accS": null,
+    "vMin": null,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.5,
+    "jointMm": 30.3
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": null,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": null,
+    "velS": null,
+    "accS": null,
+    "vMin": null,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.5,
+    "jointMm": 30.3
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  },
+  "SPRINT_STRAIGHT": {
+   "label": "SPRINT 9.5 m/s · straight (RUN-1.3 control)",
+   "speed": 9.5,
+   "angle": [],
+   "familyT1": "CURVE",
+   "familyT12": "CURVE",
+   "familiesT12": [],
+   "selection": null,
+   "keepsTurn1": true,
+   "identicalToTurn1": true,
+   "deterministic": true,
+   "compactPivot": false,
+   "reactionS": {
+    "t1": null,
+    "t11": null,
+    "t12": null
+   },
+   "t1": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": null,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": null,
+    "velS": null,
+    "accS": null,
+    "vMin": null,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.5,
+    "jointMm": 36.8
+   },
+   "t12": {
+    "family": "CURVE",
+    "families": [],
+    "sel": null,
+    "compact": false,
+    "events": [],
+    "sIn": null,
+    "firstBrakeS": null,
+    "brakeSteps": 0,
+    "brakeKinds": "",
+    "reorgSteps": 0,
+    "reorgFeet": "",
+    "turnPlantS": null,
+    "faceS": null,
+    "velS": null,
+    "accS": null,
+    "vMin": null,
+    "slipMaxCm": 0.02,
+    "pelvisMm": 0.5,
+    "jointMm": 36.8
+   },
+   "t11": {
+    "family": "CURVE",
+    "slipMaxCm": 0.02,
+    "turnPlantS": null
+   }
+  }
+ },
+ "identityKept": {
+  "identical": 28,
+  "of": 28
+ },
+ "compactPivots": 3,
+ "nondeterministic": 0
+}

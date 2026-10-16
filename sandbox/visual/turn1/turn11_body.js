@@ -132,7 +132,7 @@ const MOD = {
   EXIT:  { pY: -0.04, hPitch: -8, armAmp: 0.5, armElb: 12, swLift: 0.05 },   // pY: the acceleration posture stays low and rises as the speed comes back
   REACT: { tYaw: 12, tPitch: -4, pY: -0.02, hLev: 0.4, aW: 0.5, oAz: 35, oEl: 50, oElb: 70, iAz: 35, iEl: 50, iElb: 70 },   // between the command and the first braking contact
   // TURN-1.2: the quick braking (calmer than TURN-1.1's cut braking) and the reorganisation stance (compact, balanced, arms out, feet active)
-  BRAKE12: { pY: -0.02, pZ: 0.03, tPitch: -10, hPitch: -5, hLev: 0.5, aW: 0.65, oAz: 35, oEl: 38, oElb: 65, iAz: 35, iEl: 38, iElb: 65, swTuck: 0.2 },
+  BRAKE12: { pY: -0.02, pZ: 0.03, tPitch: -10, hPitch: -5, hLev: 0.5, aW: 0.55, oAz: 48, oEl: 55, oElb: 85, iAz: 48, iEl: 55, iElb: 85, swTuck: 0.2 },   // arms forward-out, elbows bent: counterbalance, not reach
   REORG:   { pY: -0.02, tPitch: -4, hLev: 0.5, aW: 0.55, oAz: 55, oEl: 50, oElb: 75, iAz: 55, iEl: 50, iElb: 75, swTuck: 0.3 },
 };
 const CH = ["pY", "pX", "pZ", "pRoll", "pPitch", "pYaw", "tRoll", "tPitch", "tYaw", "hPitch", "hLev", "aW", "oAz", "oEl", "oElb", "iAz", "iEl", "iElb", "armAmp", "armElb"];
