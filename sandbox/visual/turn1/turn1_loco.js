@@ -60,13 +60,13 @@ const T1 = {
   exitSpeed: [[45, 0.92], [90, 0.72], [135, 0.55], [180, 0.40]],   // COM speed at plant toe-off / entry speed
   aStanceMax: 17.5,                            // m/s² mean horizontal acceleration a single stance can deliver (≈ 1.6 BW peak, dramatised)
   accelTc: 0.19, accelTf: 0.055,               // acceleration steps out of a cut (short flight, long contact)
-  braketcK: 1.35, braketfK: 0.55,              // braking steps: longer contact, shorter flight than RUN-1 at that speed
+  braketcK: 1.15, braketfK: 0.65,              // braking steps: longer contact, shorter flight than RUN-1 at that speed
   reactS: 0.09,                                // s: a touchdown closer than this to the decision cannot be the plant (it becomes the brake step)
   prefGainS: 0.2,                              // s: a non-preferred plant foot is taken if it is at least this much sooner
-  crouch: { BRAKE: 0.05, PLANT: [[45, 0.08], [90, 0.13], [135, 0.15], [180, 0.15]], EXIT: 0.06, ACCEL: 0.03 },
-  travelMax: { RUN: 1.0, BRAKE: 0.88, PLANT: 0.80, EXIT: 0.85, ACCEL: 0.9 },   // m of COM travel a single stance can span (two leg reaches)
+  crouch: { BRAKE: 0.035, PLANT: [[45, 0.08], [90, 0.13], [135, 0.15], [180, 0.15]], EXIT: 0.06, ACCEL: 0.03 },
+  travelMax: { RUN: 1.0, BRAKE: 0.78, PLANT: 0.80, EXIT: 0.85, ACCEL: 0.9 },   // m of COM travel a single stance can span (two leg reaches)
   heelStrike: { BRAKE: 14, PLANT: 10 },        // deg toes-up at touchdown: braking and plant steps land on the heel / rear foot
-  dropMax: 0.20,
+  dropMax: 0.14, dropMaxRole: { BRAKE: 0.12, PLANT: 0.20, EXIT: 0.20 },   // a deep planted stance belongs to plants; braking steps stay athletic (no lunge)
   reachWin: { lat: 0.35, td: 0.45, to: 0.80 },   // m: the plant relative to the COM: lateral; along-track ahead at touchdown, behind at toe-off (RUN / ARC)
   reachWinMan: { lat: 0.45, td: 0.36, to: 0.62, latInside: 0.25 },
   reachWinPivot: { lat: 0.18, td: 0.45, to: 0.45 },   // a reversal plant: ahead of the body, close to its line (the COM stops before it and comes back)   // latInside: the inside foot of an exit / arc step (no crossover)
@@ -94,15 +94,17 @@ function t1Make(skel, init) {
     lean: [0, 0], aF: [0, 0], crouch: 0, crouchD: 0, arm: 0, tdCount: 0, man: null, log: [], events: [], input: { dir: th0, v: s0 } };
   const p = t1G(A, s0);
   // clock: seg 0 R stance · 1 flight → L · 2 L stance · 3 flight → R; the right foot has just landed (as RUN-1's first call)
-  A.clk = { seg: 0, x: 0, T: p.tc, t0: 0 };
+  // init.foot: which foot has just landed ("R" default; "L" = the mirrored stride phase, for exact mirror tests)
+  const Fs = o.foot === "L" ? "L" : "R", Fo = Fs === "R" ? "L" : "R";
+  A.clk = { seg: Fs === "R" ? 0 : 2, x: 0, T: p.tc, t0: 0 };
   A.st = { P0: P0.slice(), V0: A.V.slice(), dV: [0, 0], tc: p.tc, tf: p.Ts - p.tc, role: { kind: "RUN" } };
-  const plantR = t1PlaceDefault(A, "R", P0, A.V, [0, 0], p.tc, p.Ts, p);
-  A.legs = { R: { stance: true, plant: plantR, tTD: 0, role: { kind: "RUN" } }, L: { stance: false, plant: null } };
-  // the left foot lifted off one flight ago, from RUN-1's own plant (straight running)
+  const plantS = t1PlaceDefault(A, Fs, P0, A.V, [0, 0], p.tc, p.Ts, p);
+  A.legs = {}; A.legs[Fs] = { stance: true, plant: plantS, tTD: 0, role: { kind: "RUN" } }; A.legs[Fo] = { stance: false, plant: null };
+  // the other foot lifted off one flight ago, from RUN-1's own plant (straight running)
   const tfL = p.Ts - p.tc, Pto = v2.sub(P0, v2.sc(A.V, tfL)), Vh = A.V;
-  const plantLprev = t1PlaceDefault(A, "L", v2.sub(Pto, v2.sc(Vh, p.tc / 2)), Vh, [0, 0], p.tc, p.Ts, p);
-  A.legs.L.prevPlant = plantLprev; A.legs.L.tTO = -tfL; A.legs.L.w = tfL / (p.Ts * 2 - p.tc); A.legs.L.A0 = t1AnkleW(A, plantLprev, -p.heelRiseTO * DEG, 1); A.legs.L.yaw0 = plantLprev.yaw;
-  A.legs.L.err = [0, 0, 0]; A.legs.L.errYaw = 0;
+  const plantOprev = t1PlaceDefault(A, Fo, v2.sub(Pto, v2.sc(Vh, p.tc / 2)), Vh, [0, 0], p.tc, p.Ts, p);
+  const Lo = A.legs[Fo]; Lo.prevPlant = plantOprev; Lo.tTO = -tfL; Lo.w = tfL / (p.Ts * 2 - p.tc); Lo.A0 = t1AnkleW(A, plantOprev, -p.heelRiseTO * DEG, 1); Lo.yaw0 = plantOprev.yaw;
+  Lo.err = [0, 0, 0]; Lo.errYaw = 0;
   return A;
 }
 function t1G(A, s) {                          // RUN-1.3's gait (timing, plant distance, pelvis height, swing knots) at speed s (clamped to its grid)
@@ -360,13 +362,13 @@ function t1Body(A, dt) {
     const leanOf = (dV, Ts) => { const a = v2.sc(dV, 1 / Math.max(0.12, Ts)); return [clamp(Math.atan(v2.dot(a, rgt(A.psi)) / G) * T1.leanK, -T1.leanMax, T1.leanMax), clamp(Math.atan(v2.dot(a, fwd(A.psi)) / G) * T1.leanFwdK, -T1.leanBack, T1.leanFwdMax)]; };
     let Rl = RlOf(A.lean);
     const needAt = (F, pl, Pc, psi, sx, role) => { const sg = F === "R" ? 1 : -1, ho = R3.v(Rl, [sg * b.hipX, 0, 0]), hip = v2.add(Pc, v2.add(v2.sc(rgt(psi), ho[0]), v2.sc(fwd(psi), ho[2]))), yH = y0 + ho[1]; let bt = t1Tab(A, F, s, "beta", sx); const hs = role && T1.heelStrike[role]; if (hs && sx < 0.28) { const k = 1 - sstep(0, 0.28, sx); bt = Math.max(bt, hs * DEG * k * k); }
-      const an = t1AnkleW(A, pl, bt, sx), dxz = Math.hypot(an[0] - hip[0], an[2] - hip[1]), dy = yH - an[1]; return Math.max(0, dy - Math.sqrt(Math.max(0, R * R - dxz * dxz))) * (1 - sstep(0.5, 0.8, sx)); };
+      const an = t1AnkleW(A, pl, bt, sx), dxz = Math.hypot(an[0] - hip[0], an[2] - hip[1]), dy = yH - an[1]; return Math.min(T1.dropMaxRole[role] || T1.dropMax, Math.max(0, dy - Math.sqrt(Math.max(0, R * R - dxz * dxz))) * (1 - sstep(0.5, 0.8, sx))); };
     const S = A.st, F0 = A.clk.seg === 0 ? "R" : A.clk.seg === 2 ? "L" : null;
     if (F0) for (let sx = A.clk.x; sx <= 0.62; sx += 0.08) { const tau = sx * S.tc, Pc = v2.add(S.P0, v2.add(v2.sc(S.V0, tau), v2.sc(S.dV, S.tc * Fp(sx)))); need = Math.max(need, needAt(F0, A.legs[F0].plant, Pc, A.psi, sx, S.role && S.role.kind)); }
     for (const F of ["R", "L"]) { const L = A.legs[F]; if (L.stance || !L.fcPlant || !L.fcP) continue; const wAnt = sstep(0.32, 0.12, L.tTDf - A.t); if (wAnt <= 0) continue;   // the next stance, ramped in over the 0.3 s before it lands
       const fp = L.fcPlan; Rl = RlOf(leanOf(fp.dV, fp.tc + (fp.tf || 0.05)));   // the lean that stance will have
       for (let sx = 0; sx <= 0.5; sx += 0.1) { const tau = sx * fp.tc, Pc = v2.add(L.fcP, v2.add(v2.sc(L.fcV, tau), v2.sc(fp.dV, fp.tc * Fp(sx)))); need = Math.max(need, wAnt * needAt(F, L.tgt ? { pos: [L.tgt[0], L.tgt[1]], yaw: L.tgt[2], pivot: L.fcPlant.pivot } : L.fcPlant, Pc, A.psi, sx, fp.role && fp.role.kind)); } }
-    need = Math.min(T1.dropMax, need); const wd = 2 * Math.PI * 6.5; A.dropD = (A.dropD || 0) + (wd * wd * (need - (A.drop || 0)) - 2 * wd * (A.dropD || 0)) * dt; A.drop = (A.drop || 0) + A.dropD * dt;
+    need = Math.min(0.20, need); const wd = 2 * Math.PI * 6.5; A.dropD = (A.dropD || 0) + (wd * wd * (need - (A.drop || 0)) - 2 * wd * (A.dropD || 0)) * dt; A.drop = (A.drop || 0) + A.dropD * dt;
     A.dropNeed = need; }
   const aT = (T1.armBal[role] || 0) * (role === "PLANT" ? 0.6 + 0.4 * sstep(45, 120, ad) : 1); { const wn = 1 / T1.armTau; A.armV = (A.armV || 0) + (wn * wn * (aT - A.arm) - 2 * wn * (A.armV || 0)) * dt; A.arm += A.armV * dt; }
   // swing aim: each swinging foot tracks the forecast of its plant; a forecast change is absorbed smoothly before the touchdown
@@ -442,7 +444,7 @@ function t1Pose(A) {
     let bt = t1Tab(A, F, s, "beta", sx); const hs = L.role && T1.heelStrike[L.role.kind]; if (hs && sx < 0.28) { const k = 1 - sstep(0, 0.28, sx); bt = Math.max(bt, hs * DEG * k * k); }
     const an = t1Loc(A, t1AnkleW(A, L.plant, bt, sx)), dx = an[0] - hip[0], dz = an[2] - hip[2], R = (b.thigh + b.shank) * 0.985, dy = hip[1] - an[1];
     const dyMax = Math.sqrt(Math.max(0, R * R - dx * dx - dz * dz)), need = Math.max(0, dy - dyMax) * (1 - sstep(0.5, 0.8, sx));
-    drop = Math.max(drop, Math.min(T1.dropMax, need));
+    drop = Math.max(drop, Math.min(T1.dropMaxRole[L.role && L.role.kind] || T1.dropMax, need));
   }
   const dropA = A.drop || 0; pelvisPos[1] -= Math.max(dropA, drop); diag.drop = Math.max(dropA, drop); diag.dropLate = Math.max(0, drop - dropA);
   for (const F of ["R", "L"]) {
@@ -461,7 +463,10 @@ function t1Pose(A) {
       const reach = b.thigh + b.shank - 0.004, distAt = (bb) => RV.len(RV.sub(t1Loc(A, t1AnkleW(A, L.plant, bb, sx)), hip)), bProf = beta;
       const wEarly = 1 - sstep(0.30, 0.50, sx);
       let bUp = bProf, bDn = bProf;
-      if (wEarly > 0 && distAt(bProf) > reach) { let lo = bProf, hi = Math.max(bProf, 30 * DEG); if (distAt(hi) <= reach) { for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (distAt(m) > reach) lo = m; else hi = m; } } bUp = hi; }
+      if (wEarly > 0) { const d0 = distAt(bProf); if (d0 > reach) { let lo = bProf, hi = Math.max(bProf, 30 * DEG); const dH = distAt(hi);
+        if (dH <= reach) { for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (distAt(m) > reach) lo = m; else hi = m; } bUp = hi; }
+        else if (dH < d0) bUp = bProf + (hi - bProf) * clamp((d0 - reach) / (d0 - dH), 0, 1);   // only as much as helps, continuous at the threshold
+      } }
       if (wEarly < 1 && distAt(Math.min(bProf, 0)) > reach) { let lo = -88 * DEG, hi = Math.min(bProf, 0); for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (distAt(m) > reach) hi = m; else lo = m; } bDn = lo; }
       beta = bProf + wEarly * (bUp - bProf) * s5(sx * A.st.tc / 0.035) + (1 - wEarly) * (bDn - bProf);   // eased in over 35 ms after the touchdown
       aw = t1AnkleW(A, L.plant, beta, sx); ankleL = t1Loc(A, aw);

@@ -13,5 +13,6 @@ function pops(id) {
       if (!worst[j] || e > worst[j].e) worst[j] = { e, t: b.t, seg: b.seg, x: b.x, role: b.role }; if (e > thr) list.push([+b.t.toFixed(4), j, +(e * 1000).toFixed(1), b.seg, +b.x.toFixed(2), b.role]); } }
   return { id, worst, list };
 }
-for (const id of process.argv[2].split(",")) { const r = pops(id); console.log(id, Object.entries(r.worst).map(([j, w]) => `${j} ${(w.e * 1000).toFixed(1)}mm@${w.t.toFixed(3)}(s${w.seg} ${w.x.toFixed(2)} ${w.role})`).join("  "));
+const OUT = {}; process.on("exit", () => { const o = arg("json"); if (o) require("fs").writeFileSync(o, JSON.stringify({ note: "TURN-1 pose continuity: per scenario the largest 240 Hz residual |p(t+h) − 2p(t) + p(t−h)| per joint (mm), with time, clock segment and step role", scenarios: OUT }, null, 1)); });
+for (const id of process.argv[2].split(",")) { const r = pops(id); OUT[id] = Object.fromEntries(Object.entries(r.worst).map(([j, w]) => [j, { mm: +(w.e * 1000).toFixed(1), t: +w.t.toFixed(3), seg: w.seg, x: +w.x.toFixed(2), role: w.role }])); console.log(id, Object.entries(r.worst).map(([j, w]) => `${j} ${(w.e * 1000).toFixed(1)}mm@${w.t.toFixed(3)}(s${w.seg} ${w.x.toFixed(2)} ${w.role})`).join("  "));
   if (r.list.length) console.log("   pops>", thr * 1000, "mm:", r.list.length, JSON.stringify(r.list.slice(0, 12))); }
