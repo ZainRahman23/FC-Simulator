@@ -84,7 +84,7 @@ export const D1 = {
   maxInterval: [[2.5, 1.4], [5.5, 2.1], [9.5, 2.9]],
   launchExtra: [[2.5, 2.6], [5.5, 3.6], [9.5, 5.0]],   // m/s: the largest dribble launch above the player's speed (beyond it a touch is a kick / pass)
   horizon: 3.2,
-  planTries: 24, planStep: 2, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
+  planTries: 24, planStep: 2, refineTries: 4, liftCarry: 0.22, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
   warp: { maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.4, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
   recover: { dth: 12, slow: 1.0, fast: 0.6, gain: 1.0, lag: 0.25, latDead: 0.05, fwdDead: 0.06, paceDead: 0.45 },   // carrier recovery: bend (deg) / pace (m/s) bounds, response model
@@ -473,7 +473,7 @@ export class DribbleSim {
     // lookahead: the contact search (1.6 s) + the longest interval to the next touch at this speed + margin; refreshed before the tail is needed
     const H = Math.round((1.6 + tab(D1.maxInterval, Math.max(s, A.input.v)) + 0.5) / DT), need = Math.round((1.0 + tab(D1.maxInterval, Math.max(s, A.input.v))) / DT);
     const key = this.inputKey();
-    if (!this.locoCache || this.locoCache.key !== key || this.locoCache.k0 + this.locoCache.n - need < k) this.locoCache = { key, k0: k, n: H, need, pred: this.predictLoco(k, this.input, H), alt: held ? this.predictLoco(k, held, H) : null };
+    if (!this.locoCache || this.locoCache.key !== key || this.locoCache.k0 + this.locoCache.n - need < k) this.locoCache = { key, k0: k, n: H, need, pred: this.predictLoco(k, this.input, H), alt: null };   // (release-NOW was tried and rejected: re-planned swings run into the placed ball)
     const LC = this.locoCache, off = k - LC.k0;
     if (!this.ballCache || this.ballChangedCache() || this.ballCache.k0 + this.ballCache.n - need < k) this.ballCache = { k0: k, n: H, map: this.predictBall(k, H) };
     // candidate contacts: the current motion; while a cut is held, also the motion with the cut released NOW (take the ball through the turn)
@@ -524,7 +524,8 @@ export class DribbleSim {
       const c = held && !c0c.release ? this.switchCand(c0c, k, held) : c0c; if (!c) { rj("cutGeom"); continue; }
       const sF = this.followMinSpeed(c, s); if (sF == null) { rj("followMin"); deadF.add(fk); continue; }
       if (sF > this.launchMax(s) * Math.cos(c.elev)) { rj("followHigh"); if (!recov) recov = { c, sF }; continue; }   // only a too-firm touch would clear the follow-through
-      const Lc = this.solveLaunch(c, s, sF); if (!Lc) { rj("solve"); if (!recov) recov = { c, sF }; continue; }
+      const Lc = this.solveLaunch(c, s, sF); if (this.dbgCut && c.release) console.log(`  cand ${c.F} k${c.smp.k} ${c.reg} e${(c.elev / DEG).toFixed(0)} n ${(headingOf(c.n) / DEG).toFixed(0)}° sF ${sF.toFixed(2)} -> ${Lc ? "speed " + Lc.speed.toFixed(2) + " next " + Lc.F2 + "@" + (Lc.kNext * DT).toFixed(2) : "null " + JSON.stringify(this._lastSolve || null)}`);
+      if (!Lc) { rj("solve"); if (!recov) recov = { c, sF }; continue; }
       let g = this.contactGeom(c.gs, c.F, c.reg, Lc.n, K(c.ballK.p), K(c.ballK.v), c.elev);
       if (!g) { for (const reg of Object.keys(D1.regions)) for (const e of D1.elevs) { const q = this.contactGeom(c.gs, c.F, reg, Lc.n, K(c.ballK.p), K(c.ballK.v), e * DEG); if (q) { q.cost = this.cost(q, c.F, reg, c.smp, c.close, s, Lc.n, c.release); if (!g || q.cost < g.cost) g = q; } } }
       if (!g) { rj("refine"); continue; }
@@ -660,34 +661,40 @@ export class DribbleSim {
     // through a cut: the ball is placed for the first outgoing steps (the body already on the new heading), close
     const wins = this.windowTargets(pred, j0 + Math.round(minI / DT), j0 + Math.round(maxI / DT), s).filter((w) => !(w.F === best.F && w.swing === best.smp.legs[best.F].swing)
       && (cut == null || (Math.abs(wrapA(headingOf([pred[w.j].V[0], 0, -pred[w.j].V[1]]) - cut)) < D1.cutWinTol * DEG && Math.hypot(pred[w.j].V[0], pred[w.j].V[1]) > 1.0)));
-    const want = this.wantSep(s) * (cut != null ? D1.cutSepK : 1); let pick = null; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
+    const want = this.wantSep(s) * (cut != null ? D1.cutSepK : 1); const picks = []; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
     for (const w of wins) {
       const d = V.sub(w.q, ball); d[1] = 0; const L = V.len(d), n = V.norm(d), nT = w.k - best.smp.k, sMin = Math.max(V.dot(vb, n) + D1.sepMin, sFollow);
       // speed for distance L in nT ticks (monotone): bisection on the roll table
       let lo = 0.2, hi = 30; for (let i = 0; i < 40; i++) { const m = (lo + hi) / 2; if (this.rollDist(m, nT).d < L) lo = m; else hi = m; }
       const sp = (lo + hi) / 2, end = this.rollDist(sp, nT), rj = this.rej && (this.rej.win = this.rej.win || []);
       if (rj && rj.length < 12) rj.push({ F: w.F, dt: +(nT * DT).toFixed(3), L: +L.toFixed(2), sp: +sp.toFixed(2), sMin: +sMin.toFixed(2), endV: +end.v.toFixed(2), vBootN: w.vBoot ? +V.dot(w.vBoot, n).toFixed(2) : null });
-      if (sp < sMin) continue;
+      if (sp * (1 - D1.liftCarry * Math.sin(elev)) < sMin) continue;                     // a lifted touch carries further than the rolling estimate (refined below)
       const closeN = w.vBoot ? V.dot(V.sub(w.vBoot, V.sc(n, end.v)), n) : 0;
       if (closeN < D1.closeMin + 0.25) continue;                                         // the next boot must be able to catch it (the warp can slow it, not speed it)
       if (!w.warped && closeN > 3.5) continue;                                           // un-warped, that would be a kick
       // separation profile (COM → ball, along the travel) between the touches
       let mx = 0; for (let t = 0; t <= nT; t += 6) { const jj = Math.min(pred.length - 1, j0 + t), p = pred[jj], bpos = V.add(ball, V.sc(n, this.rollDist(sp, t).d)); mx = Math.max(mx, Math.hypot(bpos[0] - p.P[0], bpos[2] + p.P[1])); }
       const c = Math.pow((mx - want) / (0.25 * want + 0.2), 2) + (w.warped ? 0.15 + 0.4 * (w.w - w.wp) : Math.pow((closeN - D1.closeWant) / 0.6, 2) * 0.6) + (w.F !== this.pref ? 0.15 * (5 - this.wf) / 4 : 0) + 0.8 * Math.max(0, 0.25 - (w.span || 0)) / 0.25;
-      if (!pick || c < pick.c) pick = { w, n, speed: sp, nT, maxSep: mx, c, endV: end.v, closeN };
+      picks.push({ w, n, speed: sp, nT, maxSep: mx, c, endV: end.v, closeN });
     }
-    if (!pick) { this.cpu.solve += now() - c0; return null; }
+    if (!picks.length) { this.cpu.solve += now() - c0; this._lastSolve = { why: "noPick", nwin: wins.length }; return null; }
     // exact refinement: the launch WITH its resolved lift through the real ball integrator (airborne hops, landing, rolling), secant on the speed so
     // the free ball reaches the window's target at the window's tick. This is a launch solve, not a path: nothing acts on the ball after the touch.
-    const d0 = V.sub(pick.w.q, ball); d0[1] = 0; const Ld = V.len(d0), nn = pick.n, vzOf = (sp) => clamp(sp * Math.sin(elev) * D1.liftK, 0, D1.liftMax);
-    const along = (sp) => { const tr = this.simLaunch(ball, [nn[0] * sp, vzOf(sp), nn[2] * sp], pick.nT); const e = tr[tr.length - 1]; return { d: V.dot(V.sub(e.p, ball), nn), tr }; };
-    let s0 = pick.speed, f0 = along(s0).d - Ld, s1 = s0 * (1 - 0.04), f1 = along(s1).d - Ld, it = 0;
-    while (Math.abs(f1) > 0.004 && it++ < 6 && Math.abs(f1 - f0) > 1e-9) { const s2 = clamp(s1 - f1 * (s1 - s0) / (f1 - f0), 0.3, 30); s0 = s1; f0 = f1; s1 = s2; f1 = along(s1).d - Ld; }
-    const fin = along(s1), endV = Math.hypot(fin.tr[fin.tr.length - 1].v[0], fin.tr[fin.tr.length - 1].v[2]);
-    let mx = 0; for (let t = 0; t < pick.nT; t += 4) { const p = pred[Math.min(pred.length - 1, j0 + t + 1)], b = fin.tr[t].p; mx = Math.max(mx, Math.hypot(b[0] - p.P[0], b[2] + p.P[1])); }
-    this.cpu.solve += now() - c0;
-    if (s1 < Math.max(V.dot(vb, nn) + D1.sepMin, sFollow * 0.98) || (pick.w.vBoot && V.dot(V.sub(pick.w.vBoot, V.sc(nn, endV)), nn) < D1.closeMin + 0.1)) { if (this.rej) this.rej.refineFail = (this.rej.refineFail || 0) + 1; return null; }
-    return { n: nn, speed: s1, target: pick.w.q, kNext: pick.w.k, F2: pick.w.F, swing2: pick.w.swing, maxSep: mx, want, nT: pick.nT, endV, solveErr: f1, elev };
+    // The ranked windows are refined in turn (the lift carries the ball further than the rolling estimate: a window can fall below the floors).
+    picks.sort((a, b) => a.c - b.c); const vzOf = (sp) => clamp(sp * Math.sin(elev) * D1.liftK, 0, D1.liftMax);
+    for (const pick of picks.slice(0, D1.refineTries)) {
+      const d0 = V.sub(pick.w.q, ball); d0[1] = 0; const Ld = V.len(d0), nn = pick.n;
+      const along = (sp) => { const tr = this.simLaunch(ball, [nn[0] * sp, vzOf(sp), nn[2] * sp], pick.nT); const e = tr[tr.length - 1]; return { d: V.dot(V.sub(e.p, ball), nn), tr }; };
+      let s0 = pick.speed, f0 = along(s0).d - Ld, s1 = s0 * (1 - 0.04), f1 = along(s1).d - Ld, it = 0;
+      while (Math.abs(f1) > 0.004 && it++ < 6 && Math.abs(f1 - f0) > 1e-9) { const s2 = clamp(s1 - f1 * (s1 - s0) / (f1 - f0), 0.3, 30); s0 = s1; f0 = f1; s1 = s2; f1 = along(s1).d - Ld; }
+      const fin = along(s1), endV = Math.hypot(fin.tr[fin.tr.length - 1].v[0], fin.tr[fin.tr.length - 1].v[2]);
+      this._lastSolve = { why: "refine", s1: +s1.toFixed(2), sF: +sFollow.toFixed(2), pickSp: +pick.speed.toFixed(2), endV: +endV.toFixed(2), dt: +(pick.nT * DT).toFixed(2) };
+      if (s1 < Math.max(V.dot(vb, nn) + D1.sepMin, sFollow * 0.98) || (pick.w.vBoot && V.dot(V.sub(pick.w.vBoot, V.sc(nn, endV)), nn) < D1.closeMin + 0.1)) { if (this.rej) this.rej.refineFail = (this.rej.refineFail || 0) + 1; continue; }
+      let mx = 0; for (let t = 0; t < pick.nT; t += 4) { const p = pred[Math.min(pred.length - 1, j0 + t + 1)], b = fin.tr[t].p; mx = Math.max(mx, Math.hypot(b[0] - p.P[0], b[2] + p.P[1])); }
+      this.cpu.solve += now() - c0;
+      return { n: nn, speed: s1, target: pick.w.q, kNext: pick.w.k, F2: pick.w.F, swing2: pick.w.swing, maxSep: mx, want, nT: pick.nT, endV, solveErr: f1, elev };
+    }
+    this.cpu.solve += now() - c0; return null;
   }
   // ── commit at the contact tick: final checks on the ACTUAL state, the touch error (keyed RNG), one authoritative launch (B / C) or none (A) ─────
   commit(k, P) {
