@@ -4,7 +4,7 @@
 import { makeSim, DT, D1 } from "./d1_env.mjs";
 const v = +(process.argv[2] || 5.5), F = process.argv[3] || "R";
 const S = makeSim({ id: "ENV", init: { v, heading: 0, pos: [10, 34] }, cmds: [], dur: 3, ball: { ahead: 30, speed: 0 } }, {});
-for (let i = 0; i < 240; i++) S.step();                                      // settle into the cycle
+for (let i = 0; i < 240 && !S.fault; i++) S.step();                                      // settle into the cycle
 const pred = S.predictLoco(S.k, S.input, 240), rows = [];
 let swing = null;
 for (let j = 0; j < pred.length - 1; j++) {

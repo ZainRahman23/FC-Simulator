@@ -7,7 +7,7 @@ for (let seed = 1; seed <= N; seed++) {
   const scn = { id: "STRAIGHT", init: { v, heading: 0, pos: [10, 34] }, cmds: [], dur, ball: { ahead: +(process.env.AHEAD || 1.4), speed: v * +(process.env.BSP || 0.55) } };
   const S = makeSim(scn, { seed, arch, player: prof, opts: { noError: !!process.env.NOERR, errScale: process.env.ERRK ? +process.env.ERRK : undefined } });
   let lastRej = null, loss = null; const orig = S.makePlan.bind(S); S.makePlan = (k) => { S.rej = {}; orig(k); lastRej = { k, plan: !!S.plan, rej: Object.fromEntries(Object.entries(S.rej).filter(([a]) => !["samples", "win", "fdbg"].includes(a))) }; };
-  while (S.k * DT < dur) { S.step(); if (!loss) { const c = S.contacts.find(c => c.own && !(S.lastTouch && c.k - S.lastTouch.k <= 3));
+  while (S.k * DT < dur && !S.fault) { S.step(); if (!loss) { const c = S.contacts.find(c => c.own && !(S.lastTouch && c.k - S.lastTouch.k <= 3));
       const b = S.W.ball, dx = b.p[0] - S.A.P[0], dy = b.p[2] - S.A.P[1], f = dx * Math.cos(S.A.psi) + dy * Math.sin(S.A.psi), l = -dx * Math.sin(S.A.psi) + dy * Math.cos(S.A.psi);
       if (c || f < -0.3) { loss = { t: +(S.k * DT).toFixed(3), why: c ? "contact " + c.part : "overrun", f: +f.toFixed(2), l: +l.toFixed(2), vb: +Math.hypot(b.v[0], b.v[2]).toFixed(2), wR: S.A.legs.R.stance ? "st" : +(S.A.legs.R.w).toFixed(2), wL: S.A.legs.L.stance ? "st" : +(S.A.legs.L.w).toFixed(2), last: lastRej }; break; } } }
   const T = S.touches.filter(t => t.launched);

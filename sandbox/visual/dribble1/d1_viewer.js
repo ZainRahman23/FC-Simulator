@@ -69,7 +69,7 @@ async function simulate(ent) {
   const q = new URLSearchParams(location.search), scn = get(q.get("scn") || "STRAIGHT_RUN"), arch = q.get("arch") || "B", prof = q.get("prof") || "HIGH", seed = +(q.get("seed") || 1);
   const colliders = await (await fetch("dribble1/d1_colliders.json")).json(), t0 = performance.now();
   const S = new DribbleSim({ T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch, seed, player: PROFILES[prof], scenario: scn, opts: { record: true, recViewer: true, errScale: q.get("err") != null ? +q.get("err") : undefined } });
-  S.run(); Vv.simMs = performance.now() - t0; Vv.S = S; Vv.scn = scn; Vv.arch = arch; Vv.prof = prof; Vv.seed = seed; Vv.rec = S.rec; Vv.dur = scn.dur;
+  S.run(); Vv.simMs = performance.now() - t0; Vv.S = S; Vv.scn = scn; Vv.arch = arch; Vv.prof = prof; Vv.seed = seed; Vv.rec = S.rec; Vv.dur = S.fault ? (S.rec.length - 1) * DT : scn.dur;
   // a determinism fingerprint of the run (ball + COM at every tick, touches): identical in Node for the same scenario / arch / profile / seed
   let h = 2166136261 >>> 0; const mix = (x) => { const s = x.toFixed(9); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } };
   for (const r of S.rec) { mix(r.ball.p[0]); mix(r.ball.p[1]); mix(r.ball.p[2]); mix(r.P[0]); mix(r.P[1]); } for (const T of S.touches) mix(T.k);
@@ -142,7 +142,7 @@ function overlay(ctx, vw, cam, dpr, i, r) {
 }
 function hud() { const el = document.getElementById("hud"); if (!el || !Vv.rec) return; const { r } = frameAt(Vv.t), S = Vv.S;
   el.textContent = `t ${r.t.toFixed(3)}  touches ${S.touches.filter(T => T.launched).length}  contacts ${S.contacts.length}  control changes ${S.ctrl.changes.map(c => c.t.toFixed(2) + " " + c.to).join(", ") || "—"}\n` +
-    `simulated in ${Vv.simMs.toFixed(0)} ms (${(Vv.simMs / Vv.dur / 10).toFixed(1)} % of real time) · fingerprint ${Vv.hash} · ball ${BALL_DEFAULT.id}`; }
+    (S.fault ? `BALL KERNEL FAULT at ${S.fault.t.toFixed(3)} s ("${S.fault.message}") — the run ends here\n` : "") + `simulated in ${Vv.simMs.toFixed(0)} ms (${(Vv.simMs / Vv.dur / 10).toFixed(1)} % of real time) · fingerprint ${Vv.hash} · ball ${BALL_DEFAULT.id}`; }
 function frame(now) { if (Vv.lastT == null) Vv.lastT = now; const dt = Math.min(0.05, (now - Vv.lastT) / 1000); Vv.lastT = now;
   if (Vv.playing) { Vv.t += dt * Vv.rate; if (Vv.t > Vv.dur) Vv.t = 0; } render(); hud(); if (!Vv.external) requestAnimationFrame(frame); }
 async function boot() {
