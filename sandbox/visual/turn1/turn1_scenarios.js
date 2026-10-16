@@ -27,6 +27,14 @@ var T1SCN = (function () {
   seq("CONT_PRE_ABANDON", "RUN 7.8 · 90° right, abandoned (back to 10° right) before the plant", 7.8, [{ t: 1.0, turn: 90 }, { t: 1.25, turn: 10 }], 4.4);
   seq("CONT_PRE_FLIP", "JOG 5.5 · 90° right, flipped to 90° left before the plant", 5.5, [{ t: 1.0, turn: 90 }, { t: 1.22, turn: -90 }], 4.6);
   seq("CONT_POST", "JOG 5.5 · 90° right, changed to 130° right after the plant began (committed: ±20°)", 5.5, [{ t: 1.0, turn: 90 }, { t: 1.6, turn: 130 }], 4.6);
+  // TURN-1.1 review additions: RUN 135° (the owner's 120–135° band), and the hero cut seen from the other two camera orientations (running TOWARD the
+  // gameplay camera and cutting to screen-right; running AWAY and cutting to screen-right) — a cut's lateral lean then lies across the screen
+  for (const s of ["R", "L"]) { const o = make(SPEEDS.RUN, s === "R" ? 135 : -135, 1.0); SC[o.id] = o; }
+  // a LEFT-turn variant starts on the left foot: the exact mirror of the right-turn hero's stride phase (same timing, the same plant 0.67 s after the request)
+  const orient = (id, label, v, heading, turn) => { const D = Math.PI / 180, o = make(v, turn, 1.0, { id, label, heading: heading * D, init: { v, heading: heading * D, pos: heading > 0 ? [30, 22] : [30, 48], foot: turn < 0 ? "L" : "R" } }); SC[id] = o; };
+  orient("RUN_90L_TOWARD", "RUN 7.8 m/s toward the camera · 90° LEFT (cuts to screen-right)", SPEEDS.RUN, 90, -90);
+  orient("RUN_90R_AWAY", "RUN 7.8 m/s away from the camera · 90° RIGHT (cuts to screen-right)", SPEEDS.RUN, -90, 90);
+  orient("SPRINT_90L_TOWARD", "SPRINT 9.5 m/s toward the camera · 90° LEFT (cuts to screen-right)", SPEEDS.SPRINT, 90, -90);
   return { SPEEDS, ANGLES, make, get: (k) => SC[k] || SC.JOG_90R, list: () => Object.values(SC), all: SC };
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = T1SCN;

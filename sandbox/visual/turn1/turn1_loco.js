@@ -276,6 +276,7 @@ function t1Step(A, input) {
   t1COMAt(A);
   // body organisation (filters)
   t1Body(A, dt);
+  if (A.L11) A.L11.step(A, dt);                                                    // TURN-1.1 authored body layer (presentation state only; never read by the dynamics)
   A.n++;
   if (A.logOn !== false) A.log.push(t1Row(A));
 }
@@ -431,10 +432,12 @@ function t1Pose(A) {
   const base = E.r1Pose(Gg, u, null), rot = base.rot, pel = base.pel;
   // pelvis: RUN-1's local oscillation, the body lean (about the root axes), crouch and lean lowering
   const [latL, fwdL] = A.lean, tilt = Math.hypot(latL, fwdL);
-  const Rlean = R3.mul(R3.z(-latL * T1.pelvisLat), R3.x(fwdL * T1.pelvisFwd));      // the pelvis takes part of the lean, the trunk the rest
-  const Rp = R3.mul(Rlean, pel.R);
-  const yP = pel.pos[1] - A.crouch;                                                  // (no lean lowering: a stance leg that needs it lowers the pelvis by reach, below)
-  const pelvisPos = [pel.pos[0], yP, 0];
+  // TURN-1.1 (A.L11): the authored body layer replaces the pelvis lean split / crouch and adds its pelvis offsets; without it this is TURN-1 exactly
+  const H = A.L11 && A.L11.active(A) ? A.L11 : null, HP = H ? H.pelvis(A, pel, latL, fwdL) : null;
+  const Rlean = H ? null : R3.mul(R3.z(-latL * T1.pelvisLat), R3.x(fwdL * T1.pelvisFwd));      // the pelvis takes part of the lean, the trunk the rest
+  const Rp = H ? HP.R : R3.mul(Rlean, pel.R);
+  const yP = H ? HP.y : pel.pos[1] - A.crouch;                                       // (no lean lowering: a stance leg that needs it lowers the pelvis by reach, below)
+  const pelvisPos = H ? HP.pos : [pel.pos[0], yP, 0];
   rot.pelvis = Rp;
   const legs = {}, diag = { feet: {} };
   // REACH-DRIVEN PELVIS DROP: in early / mid stance a plant beyond the leg's reach lowers the pelvis (more knee flexion) instead of sliding the foot;
@@ -448,7 +451,7 @@ function t1Pose(A) {
     const dyMax = Math.sqrt(Math.max(0, R * R - dx * dx - dz * dz)), need = Math.max(0, dy - dyMax) * (1 - sstep(0.5, 0.8, sx));
     drop = Math.max(drop, Math.min(T1.dropMaxRole[L.role && L.role.kind] || T1.dropMax, need));
   }
-  const dropA = A.drop || 0; pelvisPos[1] -= Math.max(dropA, drop); diag.drop = Math.max(dropA, drop); diag.dropLate = Math.max(0, drop - dropA);
+  const dropA = H ? H.dropA(A) : (A.drop || 0); pelvisPos[1] -= Math.max(dropA, drop); diag.drop = Math.max(dropA, drop); diag.dropLate = Math.max(0, drop - dropA);
   for (const F of ["R", "L"]) {
     const sg = F === "R" ? 1 : -1, L = A.legs[F], hip = RV.add(pelvisPos, R3.v(Rp, [sg * b.hipX, 0, 0]));
     let ankleL, Rf, beta = 0, wStance = null, mtp = 0;
@@ -477,7 +480,7 @@ function t1Pose(A) {
       diag.feet[F] = { stance: true, s: sx, plant: L.plant.pos.slice(), plantYaw: L.plant.yaw, beta, role: L.role ? L.role.kind : "RUN", Rw: R3.mul(R3.y(A.psi + Math.PI / 2), Rf) };
     } else {
       // swing: RUN-1's own swing path at this speed (root travel + FK ankle), warped from the actual toe-off point to the aimed plant
-      const w = clamp(L.w || 0, 0, 1), D = p.D, off = F === "R" ? 0 : 0.5, T = p.T, sv = clamp(s, T1.vMin, T1.vMax);
+      const w = H ? H.swingW(A, F, clamp(L.w || 0, 0, 1)) : clamp(L.w || 0, 0, 1), D = p.D, off = F === "R" ? 0 : 0.5, T = p.T, sv = clamp(s, T1.vMin, T1.vMax);   // TURN-1.1 may run the free leg's swing ahead in its own cycle (same end points)
       const ortho = (m) => { const x = RV.sc([m[0], m[3], m[6]], 1 / Math.hypot(m[0], m[3], m[6])); let y = [m[1], m[4], m[7]]; y = RV.sub(y, RV.sc(x, RV.dot(x, y))); y = RV.sc(y, 1 / RV.len(y)); const z = [x[1] * y[2] - x[2] * y[1], x[2] * y[0] - x[0] * y[2], x[0] * y[1] - x[1] * y[0]]; return [x[0], y[0], z[0], x[1], y[1], z[1], x[2], y[2], z[2]]; };
       const refAt = (ww) => { const q = t1Tab(A, F, s, "sw", ww); return { a: [q[0], q[1], q[2]], R: ortho(q.slice(3, 12)), toe: q[12] }; };
       const r0 = refAt(0), r1 = refAt(1), rw = refAt(w);
@@ -495,7 +498,7 @@ function t1Pose(A) {
       const rA = rgtOf(eA), wpos = [A0[0] + eA[0] * along * lA + rA[0] * latRight, A0[2] + eA[1] * along * lA + rA[1] * latRight];
       const lower = Math.max(0, pel.pos[1] - pelvisPos[1]);                         // how far the pelvis sits below RUN-1's (crouch, lean, drop)
       const vy = rw.a[1] - lerpN(r0.a[1], r1.a[1], along) + lerpN(A0[1], A1[1], along) - lower * Math.min(1, 4 * along * (1 - along)) * 0.6;
-      const aw = [wpos[0], vy, wpos[1]]; ankleL = t1Loc(A, aw);
+      let aw = [wpos[0], vy, wpos[1]]; if (H) aw = H.swing(A, F, w, aw, eA, rA); ankleL = t1Loc(A, aw);   // TURN-1.1: the free leg's authored path offset (zero at both ends)
       // foot orientation: the reference's (root frame) pitch / roll with a yaw blended from the toe-off yaw to the plant yaw
       // foot heading: from the toe-off heading, turned with the pelvis early in the swing, aimed at the plant's heading late; the foot's own pitch /
       // roll are RUN-1's (its rotation, yawed by the difference to RUN-1's straight-run heading = the toe-out)
@@ -510,7 +513,7 @@ function t1Pose(A) {
     // leg IK: knee plane = the foot's yaw in the pelvis frame (hip rotation range), then foot orientation relative to the shank
     // (yaw only, as RUN-1: the foot's heading minus the pelvis's — a pitched-up foot's 3D forward vector is ill-conditioned)
     const footYawW = L.stance ? t1AnkleW(A, L.plant, 0, wStance)[3] : L._yawW;
-    let psi = wrapA(footYawW - A.psi) - pel.yaw;
+    let psi = wrapA(footYawW - A.psi) - pel.yaw - (H ? HP.yaw : 0);
     psi = sg > 0 ? clamp(psi, -40 * DEG, 35 * DEG) : clamp(psi, -35 * DEG, 40 * DEG);   // hip rotation range (internal / external)
     if (!L.stance) {                                                               // swing hip range: the ankle target is pulled toward the hip's plane
       const Fm = R3.mul(Rp, R3.y(psi)), Dl = R3.v(R3.tr(Fm), RV.sub(ankleL, hip)), lim = T1.swingAbd, amx = (sg > 0 ? lim[1] : -lim[0]) * DEG, amn = (sg > 0 ? lim[0] : -lim[1]) * DEG;
@@ -519,7 +522,7 @@ function t1Pose(A) {
     }
     let ik = E.r1LegIK(b, Rp, psi, hip, ankleL);
     if (!L.stance) {                                                               // swing: knee clearance and toe clearance, ONE smooth correction (no toggling)
-      const kneeP = RV.add(hip, R3.v(R3.mul(Rp, ik.Rthigh), [0, -b.thigh, 0])), kDef = T1.kneeClear - kneeP[1], w = L.w || 0;
+      const kneeP = RV.add(hip, R3.v(R3.mul(Rp, ik.Rthigh), [0, -b.thigh, 0])), kDef = (H ? H.kneeClear(A) : T1.kneeClear) - kneeP[1], w = L.w || 0;   // TURN-1.1 may raise the floor (no kneeling look)
       const fl = b.ankleH + 0.05 * Math.sin(Math.PI * clamp(w, 0, 1)), aDef = fl - ankleL[1];
       const sp = (x, k) => k * Math.log1p(Math.exp(x / k));                          // softplus: smooth max(0, x)
       const lift = Math.max(sp(kDef, 0.02) * 1.3, sp(aDef, 0.01)) * sstep(0.02, 0.15, w) * (1 - sstep(0.85, 0.98, w));
@@ -532,18 +535,23 @@ function t1Pose(A) {
     legs[F] = { reach: ik.reach, knee: ik.k / DEG, hipFlex: ik.h / DEG, hipAbd: ik.a / DEG, psi: psi / DEG, stance: L.stance, s: wStance };
   }
   // trunk: the rest of the lean in the spine / chest, the chest's lead toward the gaze; head toward the gaze, levelled part of the lean
+  if (H) H.trunk(A, rot, latL, fwdL);
+  else {
   const extraRoll = -latL * (1 - T1.pelvisLat) * 1.3, extraPitch = fwdL * (1 - T1.pelvisFwd) * 1.2;
   rot.spine = R3.mul(R3.mul(R3.z(extraRoll * 0.4), R3.x(extraPitch * 0.45)), R3.mul(R3.y(A.chest * 0.3), rot.spine));
   rot.chest = R3.mul(R3.mul(R3.z(extraRoll * 0.6), R3.x(extraPitch * 0.55)), R3.mul(R3.y(A.chest * 0.7), rot.chest));
+  }
   const Rch = R3.mul3(Rp, rot.spine, rot.chest), gzRel = clamp(wrapA(A.gaze - A.psi), -T1.headMax - T1.chestMax, T1.headMax + T1.chestMax);
-  const want = R3.mul3(R3.y(gzRel), R3.x(p.gazeDown * DEG), R3.z(latL * 0.35)), Q = R3.mul(R3.tr(Rch), want), qa = R3.toYXZ(Q);
+  const want = H ? H.headWant(A, gzRel, p, latL) : R3.mul3(R3.y(gzRel), R3.x(p.gazeDown * DEG), R3.z(latL * 0.35)), Q = R3.mul(R3.tr(Rch), want), qa = R3.toYXZ(Q);
   rot.neck = R3.yxz(qa[0] * 0.4, qa[1] * 0.4, qa[2] * 0.4); rot.head = R3.mul(R3.tr(rot.neck), Q);
   // arms: balance abduction (both, more on the outside of the lean), elbows open a little
-  if (A.arm > 0.3) for (const F of ["R", "L"]) {
+  if (H) H.arms(A, rot, latL, p, u);
+  else if (A.arm > 0.3) for (const F of ["R", "L"]) {
     const sg = F === "R" ? 1 : -1, outside = 0.55 + 0.45 * sstep(-10 * DEG, 10 * DEG, -sg * latL), ab = A.arm * outside * DEG;   // continuous in the lean
     rot["upperArm_" + F] = R3.mul(R3.z(sg * ab), rot["upperArm_" + F]);
     rot["foreArm_" + F] = R3.mul(R3.x(ab * 0.35), rot["foreArm_" + F]);
   }
+  if (H) diag.l11 = H.diag(A);
   return { rot, pelvisPos, legs, diag, u, p };
 }
 function rgtOf(e) { return [-e[1], e[0]]; }
@@ -572,7 +580,7 @@ function t1Replay(A, scn, t) {
 // t1Clone: an independent copy of the presentation state (deterministic: advancing it with the same input reproduces the original exactly).
 function t1Clone(A) {
   const C = Object.assign({}, A), J = (x) => x == null ? x : JSON.parse(JSON.stringify(x));
-  for (const k of ["P", "V", "clk", "st", "legs", "man", "lean", "aF", "aFv", "input", "acc"]) C[k] = J(A[k]);
+  for (const k of ["P", "V", "clk", "st", "legs", "man", "lean", "aF", "aFv", "input", "acc", "l11s"]) C[k] = J(A[k]);   // l11s: the TURN-1.1 body layer state (absent in TURN-1)
   C.log = A.log.length ? [Object.assign({}, A.log[A.log.length - 1])] : []; C.events = []; C.fkBuf = null; C.skinMats = null; C.pose = null; C.fk = null; C.logOn = true;
   return C;
 }
@@ -608,6 +616,7 @@ function t1Predict(A, horizon, every) {
     for (const F of ["R", "L"]) { const f = t1FootPts(C, e.fk, F); o[F] = { ankle: f.ankle, toeTip: f.toeTip, ball: f.ball, stance: !!C.legs[F].stance }; } out.push(o); }
   return out;
 }
-return { T1, t1Make, t1Step, t1State, t1Predict, t1Clone, t1Evaluate, t1Pose, t1Replay, t1Input, t1Forecast, t1StancePlan, t1PlaceDefault, t1AnkleW, t1G, wrapA, fwd, rgt, DEG };
+return { T1, t1Make, t1Step, t1State, t1Predict, t1Clone, t1Evaluate, t1Pose, t1Replay, t1Input, t1Forecast, t1StancePlan, t1PlaceDefault, t1AnkleW, t1G, wrapA, fwd, rgt, DEG,
+  _in: { t1Tab, t1Loc, rSlerp, rLog, rExp, Fp, Fv, tab, sstep, s5, clamp, lerpN, v2, ang2 } };   // internals the TURN-1.1 body layer reuses (read-only)
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = TURN1;

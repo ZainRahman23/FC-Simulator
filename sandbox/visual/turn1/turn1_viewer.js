@@ -4,7 +4,8 @@
 // the input history on the fixed 1/240 s grid; trails come from that replay (60 Hz samples), never from the rendered frames.
 // URL: ?scn=<id> | ?v=5.5&turn=90&tc=1.0 · &views=game,A,B | game · &A=top &B=rear34 · &zoom=1|2.5 · &diag=1 (debug overlay) · &rate=0.25 · &t=…
 "use strict";
-const TV = { t: 0, rate: 1, playing: true, zoom: 1, diag: false, skel: false, A: "top", B: "rear34", scn: null, actor: null, ready: false, labels: true, loopT: 4.2, single: null, game: true };
+const TV = { t: 0, rate: 1, playing: true, zoom: 1, diag: false, skel: false, A: "top", B: "rear34", scn: null, actor: null, ready: false, labels: true, loopT: 4.2, single: null, game: true, body: "t11" };   // body: "t11" = TURN-1.1 authored body layer, "t1" = TURN-1 procedural body (same path / plants)
+const tvMake = (skel, init) => { const A = TURN1.t1Make(skel, init); if (TV.body === "t11" && typeof TURN11 !== "undefined") TURN11.attach(A); return A; };
 function tvPersp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
 function tvLookAt(eye, at, up) {                        // the same handedness as run1_viewer.js rv1LookAt (the anim3d world is mirror-handed vs the screen)
   const fz = V3.norm(V3.sub(eye, at)), fx = V3.norm(V3.cross(fz, up)), fy = V3.cross(fx, fz), m = M4.ident();
@@ -23,7 +24,8 @@ function tvGameCam(px, py, zoom, vw, vh) {
   return { view, proj, eye: C };
 }
 // close views: FIXED world azimuth (relative to the run's initial heading), following the runner — a turn is seen turning, not compensated
-const TV_ANG = { side: [90, 6, 6.0], sideR: [-90, 6, 6.0], rear34: [150, 14, 6.4], front34: [30, 12, 6.4], rear: [180, 10, 6.5], front: [0, 8, 6.5], top: [-90, 64, 7.5], topClose: [-90, 76, 5.0], low34: [-40, 8, 5.0], cam: [-90, 22, 9.0], camLow: [-90, 10, 6.5], near: [-90, 14, 4.6], nearR: [-60, 12, 4.6], nearL: [-120, 12, 4.6] };   // top / cam: from the gameplay camera's side (screen-up = away from it)
+const TV_ANG = { side: [90, 6, 6.0], sideR: [-90, 6, 6.0], rear34: [150, 14, 6.4], front34: [30, 12, 6.4], rear: [180, 10, 6.5], front: [0, 8, 6.5], top: [-90, 64, 7.5], topClose: [-90, 76, 5.0], low34: [-40, 8, 5.0], cam: [-90, 22, 9.0], camLow: [-90, 10, 6.5], near: [-90, 14, 4.6], nearR: [-60, 12, 4.6], nearL: [-120, 12, 4.6],
+  rearC: [180, 8, 3.6], frontC: [0, 8, 3.6], nearC: [-90, 12, 3.6], farC: [90, 8, 3.6], rearRC: [-135, 10, 3.6], frontRC: [-45, 10, 3.6] };   // TURN-1.1 close diagnostics (3.6 m)   // top / cam: from the gameplay camera's side (screen-up = away from it)
 function tvCloseCam(A, angle, heading0, vw, vh) {
   const a = TV_ANG[angle] || TV_ANG.side, tgt = [A.P[0], 0.85, -A.P[1]], f = [Math.cos(heading0), 0, -Math.sin(heading0)], l = [Math.sin(heading0), 0, Math.cos(heading0)];
   const az = a[0] * Math.PI / 180, el = a[1] * Math.PI / 180, d = a[2], hor = V3.add(V3.scale(f, Math.cos(az)), V3.scale(l, Math.sin(az)));
@@ -70,7 +72,7 @@ function tvGround(gl) {                                  // the RUN-1 viewer's p
 // ── replay with deterministic 60 Hz samples (feet, COM, root, headings) for trails and the debug view ─────────────────────────────────
 function tvAdvance(t) {
   const T = TURN1, A = TV.actor, scn = TV.scn;
-  if (A._rt == null || t < A._rt - 1e-9) { const fresh = T.t1Make(TV.entry.skel, scn.init); for (const k of Object.keys(A)) delete A[k]; Object.assign(A, fresh); A._rt = 0; A.samples = []; }
+  if (A._rt == null || t < A._rt - 1e-9) { const fresh = tvMake(TV.entry.skel, scn.init); for (const k of Object.keys(A)) delete A[k]; Object.assign(A, fresh); A._rt = 0; A.samples = []; }
   while (A._rt + T.T1.step <= t + 1e-9) {
     T.t1Step(A, T.t1Input(scn, A._rt)); A._rt += T.T1.step;
     if (A.n % 4 === 0) { const ev = T.t1Evaluate(A), B = A.body.idx, fk = ev.fk; A.samples.push({ t: A.t, P: A.P.slice(), V: A.V.slice(), psi: A.psi, gaze: A.gaze, dir: A.input.dir, aR: fk.joint[B.foot_R].slice(), aL: fk.joint[B.foot_L].slice(), tR: fk.tip[B.toe_R].slice(), tL: fk.tip[B.toe_L].slice(), feet: ev.pose.diag.feet, role: A.st.role ? A.st.role.kind : "RUN" }); }
@@ -133,12 +135,25 @@ function tvOverlay(ctx, vw, cam, dpr, label) {
   }
   if (TV.skel) { const fk = A.fk, bones = A.body.skel.bones; ctx.lineWidth = 2 * dpr; ctx.strokeStyle = "#5ee0ff"; for (const b of bones) { if (!b.parent || b.name === "pelvis" || b.name === "hair") continue; const a = P(fk.joint[b.parent.idx]), c = P(fk.joint[b.idx]); if (a && c) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } } }
   if (TV.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(label, (vw.x + 8) * dpr, (vw.y + 16) * dpr);
-    if (vw.id === "game" || TV.single) { const r = A.log[A.log.length - 1] || {}, D = 180 / Math.PI; const txt = `${TV.scn.label || ""}   t ${A.t.toFixed(2)} s   ${(r.s || 0).toFixed(2)} m/s   travel ${((r.thv || 0) * D).toFixed(0)}°   pelvis ${((r.psi || 0) * D).toFixed(0)}°   req ${((r.dir || 0) * D).toFixed(0)}°   ${r.role || ""} ${r.man ? "· " + r.man : ""}`;
+    if (vw.id === "game" || TV.single) { const r = A.log[A.log.length - 1] || {}, D = 180 / Math.PI; const txt = `${TV.scn.label || ""}   t ${A.t.toFixed(2)} s   ${(r.s || 0).toFixed(2)} m/s   travel ${((r.thv || 0) * D).toFixed(0)}°   pelvis ${((r.psi || 0) * D).toFixed(0)}°   req ${((r.dir || 0) * D).toFixed(0)}°   ${r.role || ""} ${r.man ? "· " + r.man : ""}   ${TV.body === "t11" ? "[TURN-1.1 " + ((A.pose && A.pose.diag.l11) ? A.pose.diag.l11.phase : "—") + "]" : "[TURN-1 body]"}`;
       ctx.fillText(txt, (vw.x + 8) * dpr, (vw.y + vw.h - 10) * dpr); } }
   ctx.restore();
 }
 function tvHud() { const el = document.getElementById("hud"); if (!el) return; const A = TV.actor, r = A.log[A.log.length - 1]; if (!r) return; const D = 180 / Math.PI;
-  el.textContent = `t ${A.t.toFixed(3)}  speed ${r.s.toFixed(2)}  travel ${(r.thv * D).toFixed(1)}°  pelvis ${(r.psi * D).toFixed(1)}°  gaze ${(r.gaze * D).toFixed(1)}°  lean ${(r.lean[0] * D).toFixed(1)}/${(r.lean[1] * D).toFixed(1)}°  crouch ${(r.crouch * 100).toFixed(1)} cm  role ${r.role}  ${r.man || ""}`; }
+  const l = A.pose && A.pose.diag.l11, M = tvMeasure(A);
+  el.textContent = `t ${A.t.toFixed(3)}  speed ${r.s.toFixed(2)}  travel ${(r.thv * D).toFixed(1)}°  pelvis ${(r.psi * D).toFixed(1)}°  gaze ${(r.gaze * D).toFixed(1)}°  role ${r.role}  ${r.man || ""}\n` +
+    `body ${TV.body === "t11" ? "TURN-1.1 authored" : "TURN-1 procedural"}  phase ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""}  brake ${l ? l.brake.toFixed(2) : "–"}  exit ${l ? l.exit.toFixed(2) : "–"}\n` +
+    `torso lean ${M.torsoLat.toFixed(0)}° side / ${M.torsoFwd.toFixed(0)}° fwd  pelvis ${(M.pelvisY * 100).toFixed(0)} cm (load ${(M.load * 100).toFixed(0)} cm)  knee R ${M.kneeR.toFixed(0)}° L ${M.kneeL.toFixed(0)}°  shoulders vs hips ${M.shoulderRot.toFixed(0)}°`; }
+// body measurements from the posed skeleton (world): torso lean (pelvis → neck vs vertical, in the pelvis-heading frame), pelvis height and its load
+// below RUN-1's at this speed, knee flexion, shoulder line yaw relative to the hip line
+function tvMeasure(A) {
+  const fk = A.fk, B = A.body.idx, D = 180 / Math.PI, pl = fk.joint[B.pelvis], nk = fk.joint[B.neck], th = A.psi, f = [Math.cos(th), 0, -Math.sin(th)], rt = [-Math.sin(th), 0, -Math.cos(th)];
+  const tv = [nk[0] - pl[0], nk[1] - pl[1], nk[2] - pl[2]], lg = A.pose.legs;
+  const line = (a, b) => Math.atan2(-(fk.joint[B[b]][2] - fk.joint[B[a]][2]), fk.joint[B[b]][0] - fk.joint[B[a]][0]);
+  const sh = line("upperArm_L", "upperArm_R"), hp = line("thigh_L", "thigh_R");
+  return { torsoLat: Math.atan2(tv[0] * rt[0] + tv[2] * rt[2], tv[1]) * D, torsoFwd: Math.atan2(tv[0] * f[0] + tv[2] * f[2], tv[1]) * D, pelvisY: pl[1], load: Math.max(0, A.pose.p.y0 - pl[1]),
+    kneeR: lg.R.knee, kneeL: lg.L.knee, shoulderRot: TURN1.wrapA(sh - hp) * D };
+}
 function tvUpdate(t) { tvAdvance(t); const A = TV.actor; A.plantHist = A.plantHist || []; tvPlants(); }
 function tvPlants() {                                    // plant history from the event log (deterministic)
   const A = TV.actor; A.plantHist = []; const seen = {};
@@ -157,7 +172,7 @@ function tvBoot() {
   TV.scn = q.get("scn") ? T1SCN.get(q.get("scn")) : T1SCN.make(+(q.get("v") || 5.5), +(q.get("turn") || 90), +(q.get("tc") || 1.0));
   for (const [k, key] of [["zoom", "zoom"], ["rate", "rate"]]) if (q.get(k)) TV[key] = +q.get(k);
   if (q.get("diag") === "1") TV.diag = true; if (q.get("diagViews")) { TV.diag = true; TV.diagViews = q.get("diagViews").split(","); } if (q.get("skel") === "1") TV.skel = true; if (q.get("labels") === "0") TV.labels = false;
-  if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
+  if (q.get("body")) TV.body = q.get("body") === "t1" ? "t1" : "t11"; if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
   TV.loopT = TV.scn.dur || 4.2;
   // the rail: the gameplay camera follows the runner's x with a gentle lag-free rail (the match camera follows play along the touchline)
   TV.camX = () => TV.actor.P[0];
@@ -165,10 +180,11 @@ function tvBoot() {
   document.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => { TV.rate = +b.dataset.rate; document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", x === b)); });
   const bp = document.getElementById("bPlay"); if (bp) bp.onclick = () => { TV.playing = !TV.playing; bp.textContent = TV.playing ? "❚❚ Pause" : "▶ Play"; };
   const cd = document.getElementById("cDiag"); if (cd) { cd.checked = TV.diag; cd.onchange = () => { TV.diag = cd.checked; }; }
+  const cb = document.getElementById("cBody"); if (cb) { cb.checked = TV.body === "t11"; cb.onchange = () => { const u = new URL(location.href); u.searchParams.set("body", cb.checked ? "t11" : "t1"); location.href = u.toString(); }; }
   const cs = document.getElementById("cSkel"); if (cs) { cs.checked = TV.skel; cs.onchange = () => { TV.skel = cs.checked; }; }
   window.addEventListener("keydown", (e) => { if (e.key === " ") { TV.playing = !TV.playing; e.preventDefault(); } if (e.key === ".") { TV.playing = false; TV.t += 1 / 60; tvUpdate(TV.t); } if (e.key === ",") { TV.playing = false; TV.t = Math.max(0, TV.t - 1 / 60); tvUpdate(TV.t); } if (e.key === "r") { TV.t = 0; tvUpdate(0); } });
   ofCharLoad(q.get("char") || "vinicius").then((ent) => {
-    TV.entry = ent; TV.actor = TURN1.t1Make(ent.skel, TV.scn.init); TV.actor._rt = 0; TV.actor.samples = [];
+    TV.entry = ent; TV.actor = tvMake(ent.skel, TV.scn.init); TV.actor._rt = 0; TV.actor.samples = [];
     tvUpdate(0); TV.ready = true; if (q.get("t")) { TV.t = +q.get("t"); tvUpdate(TV.t); }
     if (q.get("paused") === "1") TV.playing = false;
     if (q.get("external") === "1") { TV.external = true; tvRender(); tvHud(); } else requestAnimationFrame(tvFrame);

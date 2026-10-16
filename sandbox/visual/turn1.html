@@ -20,7 +20,7 @@
   <button id="bPlay" class="on">❚❚ Pause</button>
   <span>Speed</span><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button data-rate="0.1">0.1×</button>
   <span>Scenario</span><select id="selScn"></select>
-  <label><input type="checkbox" id="cDiag">path / foot debug</label><label><input type="checkbox" id="cSkel">skeleton</label>
+  <label><input type="checkbox" id="cDiag">path / foot debug</label><label><input type="checkbox" id="cSkel">skeleton</label><label><input type="checkbox" id="cBody">authored body (TURN-1.1)</label>
   <span style="color:var(--dim)">space play · . / , frame · r restart</span>
 </div>
 <div id="wrap"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
@@ -35,6 +35,7 @@
 <script src="anim3d/of_char_gl.js"></script>
 <script src="run1/run1_gait_v13.js"></script>
 <script src="turn1/turn1_loco.js"></script>
+<script src="turn1/turn11_body.js"></script>
 <script src="turn1/turn1_scenarios.js"></script>
 <script src="turn1/turn1_viewer.js"></script>
 </body>
