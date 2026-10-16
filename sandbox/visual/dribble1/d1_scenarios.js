@@ -22,7 +22,8 @@ add("REV135_RUN", "RUN 5.5 · 135° turn right (experimental)", "RUN", { group: 
 add("REV180_SPRINT", "SPRINT 9.5 · 180° reversal (experimental)", "SPRINT", { group: "REVERSAL", cmds: [{ t: 2.4, turn: 180 }], dur: 7 });
 add("CANCEL_RUN", "RUN 5.5 · 90° cut requested, cancelled before the touch", "RUN", { group: "INPUT", cmds: [{ t: 2.2, turn: 90 }, { t: 2.3, turn: 0 }], dur: 6 });
 add("RETARGET_RUN", "RUN 5.5 · cut right requested, changed to left before commitment", "RUN", { group: "INPUT", cmds: [{ t: 2.2, turn: 60 }, { t: 2.32, turn: -60 }], dur: 6 });
-add("INTERCEPT_RUN", "RUN 5.5 · a defender's leg sweeps across the ball between touches", "RUN", { group: "INTERRUPTION", dur: 6, fixture: "SWEEP" });
-add("TACKLE_RUN", "RUN 5.5 · a sliding tackle leg knocks the ball loose", "RUN", { group: "INTERRUPTION", dur: 6, fixture: "SLIDE" });
+// interruptions (timed on the deterministic STRAIGHT_RUN dribble, HIGH, seed 1: the ball is free 1.68 → 3.39 s and ~1 m ahead at 3.75 s)
+add("INTERCEPT_RUN", "RUN 5.5 · a defender's leg sweeps across the ball between touches", "RUN", { group: "INTERRUPTION", dur: 6, fixtures: [{ type: "SWEEP", id: "defender", x: 29.6, y0: 34.85, y1: 33.35, t0: 2.72, t1: 3.08 }] });
+add("TACKLE_RUN", "RUN 5.5 · a sliding tackle leg knocks the ball loose", "RUN", { group: "INTERRUPTION", dur: 6, fixtures: [{ type: "SLIDE", id: "tackler", x: 33.66, y0: 30.6, y1: 35.2, t0: 3.2, t1: 4.0 }] });
 export const list = () => Object.values(SCN);
 export const get = (id) => SCN[id] || SCN.STRAIGHT_RUN;

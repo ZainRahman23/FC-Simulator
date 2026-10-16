@@ -134,6 +134,26 @@ function boneFrames(A, fk) {
   return out;
 }
 
+// ── opponent fixtures: PRESCRIBED kinematic legs (no AI) — another physical body the ball can meet between touches; kernel frame [x, h, y] ─────────
+// SWEEP: a defender's leg (shin capsule + boot box) sweeps across the dribble line at ground level. SLIDE: a sliding-tackle leg (a horizontal capsule
+// along the turf + boot) arrives from the side. Both are ordinary BallWorld colliders: the ball's physics alone decides what happens.
+const smoothPath = (t, t0, t1, a, b) => { const u = s5((t - t0) / (t1 - t0)); return a + (b - a) * u; };
+export function makeFixture(def) {
+  const id = def.id || def.type.toLowerCase();
+  if (def.type === "SWEEP") {
+    const { x, y0, y1, t0, t1 } = def, ys = (t) => smoothPath(t, t0, t1, y0, y1);
+    return { id, def, colliders: [{ id: id + ":shin", p: [x, 0.30, y0], material: "body", shapes: [{ type: "capsule", r: 0.055, half: 0.17 }] }, { id: id + ":boot", p: [x, 0.06, y0], material: "boot", shapes: [{ type: "box", he: [0.13, 0.045, 0.05] }] }],
+      pose: (cid, t) => ({ p: cid.endsWith("shin") ? [x, 0.30, ys(t)] : [x, 0.06, ys(t)], q: [0, 0, 0, 1] }),
+      near: (t, b) => Math.hypot(b[0] - x, b[1] - ys(t)), viz: (t) => [{ p: [x, 0.30, ys(t)], r: 0.07 }, { p: [x, 0.18, ys(t)], r: 0.06 }, { p: [x, 0.06, ys(t)], r: 0.06 }, { p: [x + 0.08, 0.06, ys(t)], r: 0.05 }] };
+  }
+  if (def.type === "SLIDE") {
+    const { x, y0, y1, t0, t1 } = def, ys = (t) => smoothPath(t, t0, t1, y0, y1), qy = [Math.SQRT1_2, 0, 0, Math.SQRT1_2];   // capsule axis (local y) along pitch y (kernel z)
+    return { id, def, colliders: [{ id: id + ":leg", p: [x, 0.09, y0], q: qy, material: "body", shapes: [{ type: "capsule", r: 0.075, half: 0.32 }] }, { id: id + ":boot", p: [x, 0.08, y0 + 0.45], material: "boot", shapes: [{ type: "box", he: [0.05, 0.05, 0.13] }] }],
+      pose: (cid, t) => ({ p: cid.endsWith("leg") ? [x, 0.09, ys(t)] : [x, 0.08, ys(t) + 0.45], q: cid.endsWith("leg") ? qy : [0, 0, 0, 1] }),
+      near: (t, b) => Math.hypot(b[0] - x, b[1] - (ys(t) + 0.2)), viz: (t) => [-0.3, -0.1, 0.1, 0.3, 0.45].map((d) => ({ p: [x, 0.09, ys(t) + d], r: 0.075 })) };
+  }
+  throw Error("unknown fixture " + def.type);
+}
 // ── the simulation ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 export class DribbleSim {
   // cfg: { T1 (TURN1), E (RUN1_V13), M4, TURN11, skel, colliders (d1_colliders.json), ball (BALL_DEFAULT), arch ("B" | "A" | "C"), seed, player profile,
@@ -149,7 +169,7 @@ export class DribbleSim {
     // the ball starts ahead of the player (scenario): rolling-consistent spin for its speed
     const h0 = scn.init.heading || 0, f = [Math.cos(h0), Math.sin(h0)], r = [-Math.sin(h0), Math.cos(h0)], bs = scn.ball || {}, ah = bs.ahead != null ? bs.ahead : 1.0, lt = bs.lateral || 0, sp = bs.speed != null ? bs.speed : 0;
     const bx = scn.init.pos[0] + f[0] * ah + r[0] * lt, by = scn.init.pos[1] + f[1] * ah + r[1] * lt, bvk = [f[0] * sp, 0, f[1] * sp];
-    this.fixtures = (scn.fixtures || []).map((fx) => Object.assign({}, fx));
+    this.fixtures = (scn.fixtures || []).map((fx) => makeFixture(fx));
     const cols = playerColliders(this.J, this.pid); for (const fx of this.fixtures) for (const c of fx.colliders) cols.push(c);
     this.W = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: bvk, w: [bvk[2] / R, 0, -bvk[0] / R], dt: DT, substeps: 1, parameters: B.parameters, colliders: cols }));
     this.Wp = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: [0, 0, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }));   // free-ball predictor (no colliders)
