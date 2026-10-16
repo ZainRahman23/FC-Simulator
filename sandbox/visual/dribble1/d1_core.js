@@ -87,11 +87,12 @@ export const D1 = {
   planTries: 24, planStep: 2, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
   warp: { maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.4, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
-  recover: { dth: 12, slow: 1.0, fast: 0.6, gain: 1.0, lag: 0.25, latDead: 0.05, fwdDead: 0.06 },   // carrier recovery: bend (deg) / pace (m/s) bounds, response model
-  cutGate: 32,                          // deg: a requested direction change above this is held until a touch can take the ball through it
-  gateMax: 0.85,                        // s: … at most this long (then the turn is released without the ball)
+  recover: { dth: 12, slow: 1.0, fast: 0.6, gain: 1.0, lag: 0.25, latDead: 0.05, fwdDead: 0.06, paceDead: 0.45 },   // carrier recovery: bend (deg) / pace (m/s) bounds, response model
+  pursuitEvery: 60,                     // ticks: while no touch is planned the carrier re-aims his run at the free ball this often
+  cutGate: 32, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
+  gateMax: 1.2,                        // s: … at most this long (then the turn is released without the ball)
   // touch error σ for a neutral (g = 0) player on the preferred foot, LACES, at 5.5 m/s
-  errSpeed: 0.040, errDir: 2.4, errLift: 0.25,
+  errSpeed: 0.022, errDir: 1.5, errLift: 0.20, errSkill: 0.9,   // σ = base × (1 − errSkill · q), q = 0.5 g(Dribbling) + 0.3 g(Ball Control) + 0.2 g(Agility)
   hybrid: { speed: 0.20, dir: 9 },      // C: the physical estimate may move the launch within ±20 % speed and ±9° direction of the resolved launch
 };
 // SWING TIME-WARP: a monotone C1 map of the swing fraction, knots [w, w', slope]; the touching foot follows TURN-1.2's own swing path at w' (slower
@@ -117,6 +118,14 @@ export function playerColliders(J, pid) {
 function localHulls(J) { const H = {}; for (const S of SIDES) for (const part of ["boot", "toe"]) H[part + "_" + S] = { c: compileCollider({ id: "q:" + part + S, shapes: partShapes(J, S, part) }), pts: J.sides[S][part].points }; return H; }
 const hullAt = (h, p, Rm) => { const c = h.c; c.p = p.slice(); c.q = M.quat(Rm); c.v = [0, 0, 0]; c.w = [0, 0, 0]; c.epoch = 0; return c; };
 const gapTo = (h, p, Rm, ball) => hullDistance(hullAt(h, p, Rm), ball, 0).d - R;
+// fast clearance test: the largest face-plane distance is a LOWER bound of the distance to a convex hull; only when that bound is within the
+// threshold is the exact (closest-feature) query run. Returns a value > thr when clear, else the exact gap.
+const gapAtLeast = (h, p, Rm, ball, thr) => {
+  const F = h.faces || (h.faces = h.c.shapes[0].faces.map((f) => [f.n[0], f.n[1], f.n[2], f.d])), dx = ball[0] - p[0], dy = ball[1] - p[1], dz = ball[2] - p[2];
+  const qx = Rm[0] * dx + Rm[3] * dy + Rm[6] * dz, qy = Rm[1] * dx + Rm[4] * dy + Rm[7] * dz, qz = Rm[2] * dx + Rm[5] * dy + Rm[8] * dz; let m = -Infinity;
+  for (let i = 0; i < F.length; i++) { const f = F[i], v = f[0] * qx + f[1] * qy + f[2] * qz - f[3]; if (v > m) m = v; }
+  return m - R > thr ? m - R : gapTo(h, p, Rm, ball);
+};
 // world frames of the leg bones from a pose (fk.R / fk.P are RUN-1's root-frame values; world = root rotation · R, root rotation · P + root position)
 function boneFrames(A, fk) {
   const Rr = rootR(A.psi), T = [A.P[0], 0, -A.P[1]], ix = A.body.idx, out = {};
@@ -271,7 +280,8 @@ export class DribbleSim {
   }
   // ── the dribble resolver: plan / retarget / commit ───────────────────────────────────────────────────────────────────────────────────────────
   resolve(k) {
-    if (this.recoverAt === k) this.recovery(k);
+    if (this.recoverAt === k) { this.recovery(k); this.lastPursuit = k; }
+    else if (!this.plan && this.lastTouch && this.lastTouch.launched && k - (this.lastPursuit || 0) >= D1.pursuitEvery && this.ctrl.dist < 8) { this.recovery(k); this.lastPursuit = k; }   // no plan: keep chasing
     this.resolveTouch(k);
     if (k % 4 === 0 || this.clearDirty) { this.clearDirty = false; this.clearance(k); }
   }
@@ -292,16 +302,21 @@ export class DribbleSim {
   // ── carrier recovery: compare the free ball's predicted path with the launch's target at the aimed window; the error becomes a small run bend and
   // pace change for the gameplay intent (the ball is never touched by this — the player adapts, then the next touch takes the ball where it is)
   recovery(k) {
-    const T = this.lastTouch, prev = this.carry; this.carry = null; if (!T || !T.launched || !T.expect || T.expect.k <= k + 24) return;
+    const T = this.lastTouch, prev = this.carry; this.carry = null; if (!T || !T.launched) return;
     // PURSUIT: where must the body be at the aimed window for that foot to meet the ball where it will ACTUALLY be (its free path, error included)?
-    const nT = T.expect.k - k, map = this.predictBall(k, nT + 2), bk = map.get(T.expect.k); if (!bk) return;
+    // Without an aimed window (a recovery touch, a deflection): the earliest point where the player, at his pace, catches the free ball.
+    let kT = T.expect && T.expect.k > k + 24 ? T.expect.k : null;
+    if (kT == null) { const pm = this.predictBall(k, 480), P0 = pitch2w(this.A.P[0], this.A.P[1], 0), vr = Math.max(2.0, this.rawInput(k * DT).v);
+      for (let j = 36; j <= 480; j += 6) { const b = pm.get(k + j); if (!b) break; const bp = K(b.p); bp[1] = 0; if (V.len(V.sub(bp, P0)) - 0.6 <= vr * j * DT) { kT = k + j; break; } }
+      if (kT == null) return; }
+    const nT = kT - k, map = this.predictBall(k, nT + 2), bk = map.get(kT); if (!bk) return;
     const B = K(bk.p), vb = K(bk.v), hb = Math.hypot(vb[0], vb[2]) > 0.3 ? headingOf(vb) : this.A.psi, dc = clamp(T.contactAhead || 0.6, 0.35, 0.9);
     const goal = V.sub(B, V.sc(fwdW(hb), dc)), P = pitch2w(this.A.P[0], this.A.P[1], 0), d = V.sub(goal, P); d[1] = 0;
     const raw = this.rawInput(k * DT), dist = V.len(d), Tt = nT * DT, g = this.g, adapt = 0.75 + 0.25 * clamp(0.5 * g.reactions + 0.5 * g.agility, -1, 1);
     // straight to the goal point (TURN-1.2 resolves the bend as an arc); pace to arrive on time — scaled by how fully this player adapts
-    const dir = raw.dir + adapt * clamp(wrapA(headingOf(d) - raw.dir), -D1.recover.dth * DEG, D1.recover.dth * DEG), v = raw.v + adapt * clamp(dist / Math.max(0.3, Tt) - raw.v, -D1.recover.slow, D1.recover.fast);
+    const dir = raw.dir + adapt * clamp(wrapA(headingOf(d) - raw.dir), -D1.recover.dth * DEG, D1.recover.dth * DEG), dvn = dist / Math.max(0.3, Tt) - raw.v, v = raw.v + adapt * clamp(Math.sign(dvn) * Math.max(0, Math.abs(dvn) - D1.recover.paceDead), -D1.recover.slow, D1.recover.fast);
     const q = (x, st) => Math.round(x / st) * st;
-    this.carry = { raw: raw.dir, dir: q(dir, 0.5 * DEG), v: q(v, 0.1), until: T.expect.k + 120, k, goal, dist, Tt };
+    this.carry = { raw: raw.dir, dir: q(dir, 0.5 * DEG), v: q(v, 0.1), until: kT + 120, k, goal, dist, Tt };
     (this.carryLog = this.carryLog || []).push({ k, dth: this.carry.dir - raw.dir, dv: this.carry.v - raw.v, ef: dist - raw.v * Tt, el: 0 });
   }
   // ── clearance: a swing that is NOT making a deliberate touch must not sweep through the free ball. Its predicted path (TURN-1.2 + its current
@@ -321,7 +336,7 @@ export class DribbleSim {
       for (let j = off + 1; j < pred.length - 1; j++) { const smp = pred[j], Lp = smp.legs[F]; if (Lp.stance || Lp.swing !== swing) break; if (!smp.bones) continue; const bk = this.ballCache.map.get(smp.k); if (!bk) break;
         const b = K(bk.p), foot = smp.bones["foot_" + F]; if (Math.hypot(b[0] - foot.p[0], b[2] - foot.p[2]) > 0.55) continue;
         const q = a ? this.adjAt(a, Lp.w) : { o: [0, 0, 0], r: [0, 0, 0] }, Rw = M.exp(q.r), ank = V.add(foot.p, q.o), toe = smp.bones["toe_" + F], toeP = V.add(ank, M.v(Rw, V.sub(toe.p, foot.p)));
-        const gb = gapTo(this.hulls["boot_" + F], ank, M.mul(Rw, foot.R), b), gt = gapTo(this.hulls["toe_" + F], toeP, M.mul(Rw, toe.R), b), gmin = Math.min(gb, gt);
+        const gb = gapAtLeast(this.hulls["boot_" + F], ank, M.mul(Rw, foot.R), b, D1.clear.margin), gt = gapAtLeast(this.hulls["toe_" + F], toeP, M.mul(Rw, toe.R), b, D1.clear.margin), gmin = Math.min(gb, gt);
         if (!worst || gmin < worst.g) worst = { g: gmin, j, w: Lp.w, b, ank, smp }; }
       if (!worst || worst.g > D1.clear.margin) continue;
       if (a && a.avoid && worst.g > 0.004) continue;                                      // already avoiding and clear enough
@@ -416,9 +431,9 @@ export class DribbleSim {
     // reach of the leg to the moved ankle
     const hip = bn["thigh_" + F].p, tl = this.A.body.thigh + this.A.body.shank, reach = V.len(V.sub(V.add(ank, o), hip)) / tl; if (reach > D1.reach.ik) { if (rj) rj.ik = (rj.ik || 0) + 1; return null; }
     // the other hull of the same boot must not touch the ball (the kernel would call the launch contested)
-    const other = hullName === "toe" ? gapTo(HB, V.add(ank, o), RF, ball) : gapTo(HT, V.add(toeP, o), RT, ball);
+    const other = hullName === "toe" ? gapAtLeast(HB, V.add(ank, o), RF, ball, 0.002) : gapAtLeast(HT, V.add(toeP, o), RT, ball, 0.002);
     if (other < 0.002) { if (rj) rj.other = (rj.other || 0) + 1; return null; }
-    const gap = hullName === "toe" ? gapTo(HT, V.add(toeP, o), RT, ball) : gapTo(HB, V.add(ank, o), RF, ball);
+    const gap = D1.gap0;                                                                // by construction (support point + normal); the commit measures it exactly
     return { F, reg: regName, hull: hullName, o, of, ol, ov, yaw, pitch, rv, Rw, cW: V.add(cW, o), gap, other, reach, low, ank, nc: n, elev };
   }
   reachK() { return 1 + 0.25 * clamp(this.g.agility, -1, 1); }
@@ -501,13 +516,15 @@ export class DribbleSim {
     if (!cands.length) { fail(); return; }
     // the ranked candidates: the first whose launch solves and whose refined contact passes every check becomes the plan
     cands.sort((a, b) => a.cost - b.cost);
-    let best = null, L = null, g2 = null, vb2 = null, closeN = 0; const tried = new Set(), deadF = new Set();
-    for (const c of cands) {
-      const tk = c.F + c.smp.k + ":" + c.jp; if (tried.has(tk)) continue; const fk = c.F + c.smp.legs[c.F].swing + c.reg + Math.round(c.wp * 20);
+    let best = null, L = null, g2 = null, vb2 = null, closeN = 0, recov = null; const tried = new Set(), deadF = new Set();
+    for (const c0c of cands) {
+      const tk = c0c.F + c0c.smp.k + ":" + c0c.jp; if (tried.has(tk)) continue; const fk = c0c.F + c0c.smp.legs[c0c.F].swing + c0c.reg + Math.round(c0c.wp * 20);
       if (deadF.has(fk)) continue; tried.add(tk); if (tried.size > D1.planTries) break;
+      // a HELD cut: a touch in the current motion releases the cut at its contact tick — its follow-through and launch are judged in that motion
+      const c = held && !c0c.release ? this.switchCand(c0c, k, held) : c0c; if (!c) { rj("cutGeom"); continue; }
       const sF = this.followMinSpeed(c, s); if (sF == null) { rj("followMin"); deadF.add(fk); continue; }
-      if (sF > this.launchMax(s) * Math.cos(c.elev)) { rj("followHigh"); continue; }         // only a too-firm touch would clear the follow-through here
-      const Lc = this.solveLaunch(c, s, sF); if (!Lc) { rj("solve"); continue; }
+      if (sF > this.launchMax(s) * Math.cos(c.elev)) { rj("followHigh"); if (!recov) recov = { c, sF }; continue; }   // only a too-firm touch would clear the follow-through
+      const Lc = this.solveLaunch(c, s, sF); if (!Lc) { rj("solve"); if (!recov) recov = { c, sF }; continue; }
       let g = this.contactGeom(c.gs, c.F, c.reg, Lc.n, K(c.ballK.p), K(c.ballK.v), c.elev);
       if (!g) { for (const reg of Object.keys(D1.regions)) for (const e of D1.elevs) { const q = this.contactGeom(c.gs, c.F, reg, Lc.n, K(c.ballK.p), K(c.ballK.v), e * DEG); if (q) { q.cost = this.cost(q, c.F, reg, c.smp, c.close, s, Lc.n, c.release); if (!g || q.cost < g.cost) g = q; } } }
       if (!g) { rj("refine"); continue; }
@@ -517,6 +534,14 @@ export class DribbleSim {
       if (!this.approachClear(c.pred, c.j, c.F, g, c.off, c.warp)) { rj("early2"); continue; }
       best = c; L = Lc; g2 = g; vb2 = vb; closeN = cl; break;
     }
+    // RECOVERY TOUCH: the ball is coming into a foot and no touch with a guaranteed next window exists — rather than let the swing kick it, the player
+    // makes a deliberate settling push along his line, just firm enough to clear his own follow-through (no next window is promised)
+    if (!best && recov && this.recoverNeeded(recov.c)) {
+      const c = recov.c, sp = Math.min(this.launchMax(s) + D1.followExtra, recov.sF * 1.04), n = c.n, g = this.contactGeom(c.gs, c.F, c.reg, n, K(c.ballK.p), K(c.ballK.v), c.elev);
+      const Lr = { n, speed: sp, target: null, kNext: null, F2: null, swing2: null, maxSep: null, want: this.wantSep(s), nT: null, endV: null, recovery: true, elev: c.elev };
+      if (g && this.followClear(c.pred, c.j, c.F, g, Lr, K(c.ballK.p), c.warp, c.gs) && this.approachClear(c.pred, c.j, c.F, g, c.off, c.warp)) {
+        const vb = V.sc(this.bootVel(c.pred, c.jp, c.F, g.cW), c.rho); best = c; L = Lr; g2 = g; vb2 = vb; closeN = V.dot(V.sub(vb, K(c.ballK.v)), g.nc); rj("recovery"); }
+    }
     if (!best) { fail(); return; }
     const kc = best.smp.k, prevA = this.getAdj(best.F, best.smp.legs[best.F].swing), wNow = !this.A.legs[best.F].stance && Math.round(this.A.legs[best.F].tTO * 240) === best.smp.legs[best.F].swing ? clamp(this.A.legs[best.F].w || 0, 0, 1) : 0;
     const cur = prevA && prevA.swing === best.smp.legs[best.F].swing ? this.adjAt(prevA, wNow) : { o: [0, 0, 0], r: [0, 0, 0], yaw: 0 };
@@ -524,7 +549,7 @@ export class DribbleSim {
     this.setAdj(best.F, { swing: best.smp.legs[best.F].swing, ws: wNow, wc: best.smp.legs[best.F].w, o: g2.o, r: g2.rv, yaw: g2.yaw, oBase: cur.o, rBase: cur.r, yawBase: cur.yaw, kc, hold: this.holdOf(best.gs, best.F, g2.o), warp: best.warp || null });
     const ballAtK = new Map(); for (const [kk, v] of this.ballCache.map) if (kk <= kc) ballAtK.set(kk, v.p);
     this.plan = { id: `${this.pid}:T${kc}`, kc, F: best.F, reg: g2.reg, hull: g2.hull, swing: best.smp.legs[best.F].swing, wc: best.smp.legs[best.F].w, wp: best.wp, rho: best.rho, n: L.n, launch: L, geom: g2, vBoot: vb2, close: closeN, release: best.release, ballAtK, made: k, input: this.input, cost: g2.cost != null ? g2.cost : best.cost };
-    if (best.release && this.held) { this.held.released = true; this.held.releasedAt = k; }   // the cut is taken WITH the ball: release the turn now
+    if (best.release === true && this.held) { this.held.released = true; this.held.releasedAt = k; }   // the cut is taken WITH the ball: release the turn now
     this.cpu.plan += now() - c0;
   }
   // the swing's foot frames at path fraction w' (interpolated between the predicted samples of that swing): the warped foot's pose
@@ -553,6 +578,20 @@ export class DribbleSim {
   minInterval(s) { return tab(D1.minInterval, s); }
   launchVec(L, g) { const vz = clamp(L.speed * Math.sin(g.elev) * D1.liftK, 0, D1.liftMax); return [L.n[0] * L.speed, vz, L.n[2] * L.speed]; }   // the resolved launch (before execution error)
   launchMax(s) { return s + tab(D1.launchExtra, s); }
+  // the motion if a held cut is released at this candidate's contact (input held until the touch, the cut from the next tick); cached per contact tick
+  switchCand(c, k, held) {
+    const kc = c.smp.k, key = this.inputKey() + "@" + kc + "@" + k; this._swc = this._swc && this._swc.k === k ? this._swc : { k, m: new Map() };
+    let ps = this._swc.m.get(key); if (!ps) { ps = this.predictLoco(k, this.input, Math.round((1.6 + tab(D1.maxInterval, Math.hypot(this.A.V[0], this.A.V[1])) + 0.5) / DT), held, kc + 1); this._swc.m.set(key, ps); }
+    const ix = (kk) => kk - k - 1, j = ix(kc); if (j < 0 || j >= ps.length) return c;
+    // re-aim into the post-cut motion and redo the contact geometry for that direction (any region / elevation)
+    const ball = K(c.ballK.p), vBall = K(c.ballK.v), n = this.aimDir(ps, j, ball, Math.hypot(this.A.V[0], this.A.V[1]), true);
+    let g = null; for (const reg of [c.reg, ...Object.keys(D1.regions).filter((r) => r !== c.reg)]) { for (const e of D1.elevs) { g = this.contactGeom(c.gs, c.F, reg, n, ball, vBall, e * DEG); if (g) break; } if (g) break; }
+    if (!g) return null;
+    const vPath = this.bootVel(c.pred, c.jp, c.F, g.cW), vb = V.sc(vPath, c.rho);
+    return Object.assign({}, c, g, { pred: ps, j, smp: ps[j], jp: ix(c.pred[c.jp].k), off: 0, release: "contact", n, vb, gs: c.gs });
+  }
+  // a recovery touch only when the ball is actually coming into this foot's swing soon (otherwise keep looking for a proper touch)
+  recoverNeeded(c) { return (c.smp.k - this.k) * DT < 0.45; }
   // provisional launch direction for scoring: toward the predicted COM path ~0.6 s after the contact, a nominal contact distance ahead of it
   aimDir(pred, j, ball, s, release) {
     const j2 = Math.min(pred.length - 1, j + Math.round(0.6 / DT)), p2 = pred[j2], v2 = [p2.V[0], 0, -p2.V[1]], th = Math.hypot(v2[0], v2[2]) > 0.3 ? headingOf(v2) : p2.psi;
@@ -576,8 +615,8 @@ export class DribbleSim {
       const bones = wk ? this.pathFrames(pred, F, swing, warpAt(wk, L.w)) : smp.bones; if (!bones) continue;
       const q = this.adjAt(ad, L.w), foot = bones["foot_" + F], toe = bones["toe_" + F], Rw = M.exp(q.r), ank = V.add(foot.p, q.o), b = K(bk.p);
       if (Math.hypot(b[0] - ank[0], b[2] - ank[2]) > 0.6) continue;
-      if (gapTo(this.hulls["boot_" + F], ank, M.mul(Rw, foot.R), b) < 0.0015) return false;
-      if (gapTo(this.hulls["toe_" + F], V.add(ank, M.v(Rw, V.sub(toe.p, foot.p))), M.mul(Rw, toe.R), b) < 0.0015) return false; }
+      if (gapAtLeast(this.hulls["boot_" + F], ank, M.mul(Rw, foot.R), b, 0.0015) < 0.0015) return false;
+      if (gapAtLeast(this.hulls["toe_" + F], V.add(ank, M.v(Rw, V.sub(toe.p, foot.p))), M.mul(Rw, toe.R), b, 0.0015) < 0.0015) return false; }
     return true;
   }
   // after the launch the boot and toe follow through on the adjusted path (warp catching up, offset falling to zero by touchdown, the follow-through
@@ -592,7 +631,7 @@ export class DribbleSim {
       const fz = V.dot(V.sub(V.add(foot.p, o), com), f), rel = 1 - s5((w - D1.hold.from) / D1.hold.span); if (fz > hold && rel > 0) o = V.sub(o, V.sc(f, Math.min(fz - hold, D1.hold.max) * rel));
       const Rw = M.exp(V.sc(g.rv, u)), ank = V.add(foot.p, o), RF = M.mul(Rw, foot.R), toeP = V.add(ank, M.v(Rw, V.sub(toe.p, foot.p))), RT = M.mul(Rw, toe.R);
       const bp = V.add(ball, V.sc(L.n, this.rollDist(L.speed, i - j).d));
-      const gt = gapTo(this.hulls["toe_" + F], toeP, RT, bp), gb = gapTo(this.hulls["boot_" + F], ank, RF, bp);
+      const gt = gapAtLeast(this.hulls["toe_" + F], toeP, RT, bp, 0.004), gb = gapAtLeast(this.hulls["boot_" + F], ank, RF, bp, 0.004);
       const strike = g.hull === "toe" ? gt : gb, other = g.hull === "toe" ? gb : gt;
       if (other < 0.004) return false;
       if (i - j > 1 && strike < 0.004) return false;
@@ -603,7 +642,7 @@ export class DribbleSim {
   // the slowest launch along the provisional direction that the follow-through (warp catch-up to TURN-1.2's plant) can never re-contact, with a margin
   // for this player's execution error — the touch must be at least this firm (bisection on the real follow-through check)
   followMinSpeed(c, s) {
-    const ball = K(c.ballK.p), base = clamp(0.5 * this.g.dribbling + 0.3 * this.g.ball_control + 0.2 * this.g.agility, -1, 1), sig = D1.errSpeed * (1 - 0.55 * base), mk = 1 / (1 - 2 * sig);
+    const ball = K(c.ballK.p), base = clamp(0.5 * this.g.dribbling + 0.3 * this.g.ball_control + 0.2 * this.g.agility, -1, 1), sig = D1.errSpeed * (1 - D1.errSkill * base) * (c.F !== this.pref ? 1 + 0.30 * (5 - this.wf) : 1), mk = 1 / (1 - 2 * sig);
     const ok = (sp) => this.followClear(c.pred, c.j, c.F, c, { n: c.n, speed: sp / mk }, ball, c.warp, c.gs);
     let lo = Math.max(1, V.dot(c.vb, c.nc) + D1.sepMin), hi = this.launchMax(s) + D1.followExtra; if (!ok(hi)) return null; if (ok(lo)) return lo;
     for (let i = 0; i < 7; i++) { const m = (lo + hi) / 2; if (ok(m)) hi = m; else lo = m; } return hi;
@@ -612,9 +651,12 @@ export class DribbleSim {
     const elev = best.elev || 0;
     const c0 = now(), held = this.held && !this.held.released ? this.held.raw : null;
     // the motion that follows the contact: if this contact releases a held cut, the cut prediction; otherwise the current one
-    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = this.minInterval(s), maxI = tab(D1.maxInterval, s);
-    const wins = this.windowTargets(pred, j0 + Math.round(minI / DT), j0 + Math.round(maxI / DT), s).filter((w) => !(w.F === best.F && w.swing === best.smp.legs[best.F].swing));
-    const want = this.wantSep(s); let pick = null; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
+    const cut = best.release && this.held ? this.held.raw.dir : null;                     // this touch takes the ball through a requested cut
+    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = cut != null ? D1.cutMinInterval : this.minInterval(s), maxI = tab(D1.maxInterval, s);
+    // through a cut: the ball is placed for the first outgoing steps (the body already on the new heading), close
+    const wins = this.windowTargets(pred, j0 + Math.round(minI / DT), j0 + Math.round(maxI / DT), s).filter((w) => !(w.F === best.F && w.swing === best.smp.legs[best.F].swing)
+      && (cut == null || (Math.abs(wrapA(headingOf([pred[w.j].V[0], 0, -pred[w.j].V[1]]) - cut)) < D1.cutWinTol * DEG && Math.hypot(pred[w.j].V[0], pred[w.j].V[1]) > 1.0)));
+    const want = this.wantSep(s) * (cut != null ? D1.cutSepK : 1); let pick = null; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
     for (const w of wins) {
       const d = V.sub(w.q, ball); d[1] = 0; const L = V.len(d), n = V.norm(d), nT = w.k - best.smp.k, sMin = Math.max(V.dot(vb, n) + D1.sepMin, sFollow);
       // speed for distance L in nT ticks (monotone): bisection on the roll table
@@ -645,14 +687,16 @@ export class DribbleSim {
   }
   // ── commit at the contact tick: final checks on the ACTUAL state, the touch error (keyed RNG), one authoritative launch (B / C) or none (A) ─────
   commit(k, P) {
-    const c0 = now(); this.plan = null; const A = this.A, F = P.F, fr = this.framesPrev, ball = this.ballA(), foot = fr["foot_" + F], toe = fr["toe_" + F];
+    const c0 = now(); this.plan = null;
+    if (P.release === "contact" && this.held && !this.held.released) { this.held.released = true; this.held.releasedAt = k; this.held.byTouch = P.id; }   // the cut goes WITH this touch
+    const A = this.A, F = P.F, fr = this.framesPrev, ball = this.ballA(), foot = fr["foot_" + F], toe = fr["toe_" + F];
     const H = P.hull === "toe" ? this.hulls["toe_" + F] : this.hulls["boot_" + F], Rh = P.hull === "toe" ? toe.R : foot.R, ph = P.hull === "toe" ? toe.p : foot.p;
     const dq = hullDistance(hullAt(H, ph, Rh), ball.p, 0), gap = dq.d - R;
     const other = P.hull === "toe" ? gapTo(this.hulls["boot_" + F], foot.p, foot.R, ball.p) : gapTo(this.hulls["toe_" + F], toe.p, toe.R, ball.p);
     const s = Math.hypot(A.V[0], A.V[1]), reg = D1.regions[P.reg], weak = F !== this.pref;
     // execution error σ: attributes (dribbling, ball control, agility; balance in turns), foot, region, speed, urgency; keyed per touch
     const g = this.g, q = clamp(0.5 * g.dribbling + 0.3 * g.ball_control + 0.2 * g.agility, -1, 1), turnK = P.release || Math.abs(wrapA(P.n && headingOf(P.n) - A.psi)) > 25 * DEG ? 1 + 0.6 * (1 - 0.6 * g.balance) : 1;
-    const footK = weak ? 1 + 0.35 * (5 - this.wf) : 1, speedK = 1 + 0.07 * Math.max(0, s - 5.5), base = (1 - 0.55 * q) * footK * reg.err * speedK * turnK;
+    const footK = weak ? 1 + 0.30 * (5 - this.wf) : 1, speedK = 1 + 0.07 * Math.max(0, s - 5.5), base = (1 - D1.errSkill * q) * footK * reg.err * speedK * turnK;
     const key = ["DRIBBLE_TOUCH", this.pid, k, F], eS = this.rng.normal(...key, "speed"), eD = this.rng.normal(...key, "dir"), eL = this.rng.normal(...key, "lift");
     const ek = this.cfg.opts && this.cfg.opts.noError ? 0 : (this.cfg.opts && this.cfg.opts.errScale != null ? this.cfg.opts.errScale : 1), sigS = D1.errSpeed * base * ek, sigD = D1.errDir * base * ek, sigL = D1.errLift * base * ek;
     const vPlan = this.launchVec(P.launch, P.geom); let sp = P.launch.speed * (1 + sigS * eS), th = headingOf(P.launch.n) + sigD * eD * DEG, vz = clamp(vPlan[1] + sigL * eL * Math.min(1, s / 6), 0, D1.liftMax + 0.4);
