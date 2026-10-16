@@ -550,6 +550,10 @@ export class DribbleSim {
     const ballAtK = new Map(); for (const [kk, v] of this.ballCache.map) if (kk <= kc) ballAtK.set(kk, v.p);
     this.plan = { id: `${this.pid}:T${kc}`, kc, F: best.F, reg: g2.reg, hull: g2.hull, swing: best.smp.legs[best.F].swing, wc: best.smp.legs[best.F].w, wp: best.wp, rho: best.rho, n: L.n, launch: L, geom: g2, vBoot: vb2, close: closeN, release: best.release, ballAtK, made: k, input: this.input, cost: g2.cost != null ? g2.cost : best.cost };
     if (best.release === true && this.held) { this.held.released = true; this.held.releasedAt = k; }   // the cut is taken WITH the ball: release the turn now
+    if (this.cfg.opts && this.cfg.opts.recViewer) {                                       // diagnostic: the planned (warped) toe path to the contact and the contact point
+      const toe = []; for (let i = Math.max(best.off, 0); i <= Math.min(best.pred.length - 1, best.j + 30); i += 3) { const smp = best.pred[i], Lp = smp.legs[best.F]; if (Lp.stance || Lp.swing !== this.plan.swing) continue;
+        const bn = best.warp ? this.pathFrames(best.pred, best.F, this.plan.swing, warpAt(best.warp, Lp.w)) : smp.bones; if (bn) toe.push(V.add(bn["toe_" + best.F].p, M.v(bn["toe_" + best.F].R, [0, -0.02, 0.085]))); }
+      this.plan.viz = { toe, contact: g2.cW, ball: K(best.ballK.p), target: L.target || null }; }
     this.cpu.plan += now() - c0;
   }
   // the swing's foot frames at path fraction w' (interpolated between the predicted samples of that swing): the warped foot's pose
@@ -730,7 +734,10 @@ export class DribbleSim {
   record() {
     if (!this.rec) return; const A = this.A, b = this.W.ball;
     const fr = this.framesPrev, bones = fr && this.cfg.opts.recBones ? { fR: fr.foot_R, tR: fr.toe_R, fL: fr.foot_L, tL: fr.toe_L, wR: this.A.legs.R.stance ? -1 : this.A.legs.R.w, wL: this.A.legs.L.stance ? -1 : this.A.legs.L.w } : null;
-    this.rec.push({ k: this.k, t: this.k * DT, P: A.P.slice(), V: A.V.slice(), psi: A.psi, dir: this.input.dir, held: !!(this.held && !this.held.released), ball: { p: b.p.slice(), q: b.q.slice(), v: b.v.slice(), mode: b.mode }, ctrl: this.ctrl.state, adj: A.d1adj ? JSON.parse(JSON.stringify(A.d1adj)) : null, plan: this.plan ? { F: this.plan.F, reg: this.plan.reg, kc: this.plan.kc } : null, bones });
+    const vw = this.cfg.opts.recViewer, fb = vw && fr ? { R: fr.foot_R.p, L: fr.foot_L.p, tR: V.add(fr.toe_R.p, M.v(fr.toe_R.R, [0, -0.02, 0.085])), tL: V.add(fr.toe_L.p, M.v(fr.toe_L.R, [0, -0.02, 0.085])) } : null;
+    this.rec.push({ k: this.k, t: this.k * DT, P: A.P.slice(), V: A.V.slice(), psi: A.psi, dir: this.input.dir, raw: this.rawInput(this.k * DT).dir, held: !!(this.held && !this.held.released), ball: { p: b.p.slice(), q: b.q.slice(), v: b.v.slice(), mode: b.mode }, ctrl: this.ctrl.state, adj: A.d1adj ? JSON.parse(JSON.stringify(A.d1adj)) : null,
+      plan: this.plan ? { id: this.plan.id, F: this.plan.F, reg: this.plan.reg, kc: this.plan.kc, viz: vw ? this.plan.viz : null } : null, bones, feet: fb, skin: vw ? Float32Array.from(A.skinMats) : null, fx: vw ? this.fixtures.map((f) => f.viz ? f.viz(this.k * DT) : null) : null,
+      env: tab(D1.sepWant, Math.hypot(A.V[0], A.V[1])) * 0.0 + this.wantSep(Math.hypot(A.V[0], A.V[1])) });
   }
 }
 const now = (typeof performance !== "undefined" && performance.now) ? () => performance.now() : () => Date.now();
