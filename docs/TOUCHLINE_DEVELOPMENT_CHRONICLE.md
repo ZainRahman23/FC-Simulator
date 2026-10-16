@@ -3279,6 +3279,46 @@ What was done there is not reconstructed here.
 
 **End-of-day state.** 34 V2 commits, all pushed at the 15 Oct housekeeping. Nothing changed in `touchline-current` except this chronicle.
 
+## Thursday 15 October 2026 — The 14 Oct publication; TACKLE-REACTION-1 and the tackle lifecycle built in the Codex workspace while the Claude session was blocked; ball physics lab
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `f33bcf8` (06:04 BST, the 14 Oct entry), pushed at 06:04.
+  - `prototype/physical-character-v2`: no commits after the 06:04 push (head `dbc8aa2`).
+  - **[Local]** One linear chain of branches on top of `dbc8aa2`, made in a worktree of this repository inside the user's Codex workspace (`~/Documents/Codex/2026-10-15/files-pasted-by-the-user-astra/work/touchline-tackle-reaction1`). None was pushed:
+    - `prototype/tackle-reaction-1`: `859ef12` (10:47 BST), `741d086` (11:02);
+    - `prototype/tackle-impact-1`: `0a705cb`, `8b8d2cb` (11:58);
+    - `prototype/tackle-contact-v1`: `72f4069`, `da295a7` (13:00);
+    - `prototype/tackle-contact-v1-polish`: `6c051cd` (16 Oct 03:38 EEST);
+    - `prototype/tackle-recovery-v1`: `2ce6c44` (04:51 EEST);
+    - `prototype/tackle-recovery-v1-1` and `prototype/tackle-recovery-v1-2`: `dbc13ff` (05:33 EEST). An uncommitted `tackle_recovery_v1_2/` folder was still in progress at 06:00; it belongs to 16 Oct.
+  - **[Local]** A separate clone in the Codex workspace (`~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/work/touchline-ball-phys1`), also from `dbc8aa2`: `f3e2ff6` BALL-PHYS-1 (04:38 EEST) and `51bbcb2` BALL-FEEL-1 (05:37 EEST) on `prototype/ball-feel-1-1`; an uncommitted `sandbox/visual/ballfeel11/` was in progress.
+- **[Doc]** in those branches, under `review_artifacts/physical_character_v2/`: `tackle_reaction1/` (`TACKLE_REACTION1_REPORT.md`, `REFERENCE_RECIPIENT.md`, `STATE_RECONSTRUCTION.md`), `tackle_impact1/`, `tackle_contact_v1/`, `tackle_contact_polish/`, `tackle_recovery_v1/`, `tackle_recovery_v1_1/`: a report and a review page each. The Codex `outputs/` folders mirror them (TACKLE-REACTION-1 13:03 BST → TACKLE-RECOVERY-V1.1 05:36 EEST); ball review archives 04:42 and 05:40 EEST.
+- **[Session]** The owner's TACKLE-REACTION-1 instruction reached the Claude Code session at 09:47 BST. The session had hit its weekly usage limit and did nothing; a "test" message at 03:58 EEST met the same limit. The session resumed at 06:01 EEST on 16 Oct.
+- **Clock.** The machine's time zone changed from Europe/London to Europe/Athens at ≈ 23:27 UTC (the `/etc/localtime` link). Times after that are EEST (UTC + 3); this chronicle day ends at 06:00 local, 03:00 UTC.
+- **Owner screenshots:** none found.
+
+**The 15 Oct housekeeping (06:04 BST).** The 14 Oct day was published: V2 `a59d84b` → `dbc8aa2` in one ≈ 530 MB push (after a larger HTTP buffer) and the chronicle `f33bcf8`, both verified by fetch.
+
+**TACKLE-REACTION-1** (instructed 09:47 BST; built in the Codex workspace, `859ef12` / `741d086`). The owner moved the priority from general bump / recovery / balance work to the two-player slide tackle: authored athletic intent + rigid bodies + real contacts + finite active control. HAC-1 is frozen as research.
+- **Built:** a `TackledRunner` that runs HAC-1's RUN until an explicit tackle result, then commits RUN → TACKLED_FALL within one 240 Hz step, starting from the exact physical state (every segment's pose and velocity). After the commitment all RUN support and external pelvis moments are off. A protect response adapts to the measured trunk orientation (neck, arms; forearm turf friction 0.20).
+- **Candidate R6** (six versions; R1 – R4 rejected for head contact or joint range): F3 + R6 is preferred. Forward speed 4.45 m/s at contact, ≈ 96 % kept at +100 ms; ≈ 1 m of pelvis travel by +300 ms (2.6× the drop); first ground contact a forearm at +346 / +362 ms; no head contact; no kneeling.
+- **Contact height:** first contact switches between boot and shin; the ankle band was not resolved separately. Best current region: BOOT.
+- **Not solved:** a front-dominant, sharp landing (pelvis turf impulses 37.5 / 84.2 N·s in one step), early ankle range excursions, tackler over-capacity counters.
+
+**TACKLE-IMPACT-1** (`0a705cb`, `8b8d2cb`, 11:58 BST): a physical impact ledger. COMBO6_EARLY (F3 entering at 6 m/s) was selected, with stop condition B for the tested F3 family: the fixture's 135° near-opposing approach brakes the recipient, whereas the reference's paths cross at ≈ 25 – 35°.
+
+**TACKLE-CONTACT-V1** (`72f4069`, `da295a7`, 13:00 BST): a ten-case collision spectrum (five approach angles × NORMAL / HIGH speed) with a continuous TRIP / SLICE / IMPACT resolver fed by measured contact facts. The owner's review verdicts are preserved in the branch.
+
+**Overnight (16 Oct, EEST):**
+- **Polish** (`6c051cd`, 03:38): landing-protection candidate C10. The 135° HIGH head impact goes to zero; the F3 follow-through and entanglement remain partial.
+- **TACKLE-RECOVERY-V1** (`2ce6c44`, 04:51): the whole lifecycle (fall → active settle → orientation-classified authored get-up → IDLE) for all 20 players. Recovery availability is a gameplay input, never an animation output.
+- **TACKLE-RECOVERY-V1.1** (`dbc13ff`, 05:33): each player recovers independently, and the adjustment before the get-up is much shorter.
+- **BALL-PHYS-1** (`f3e2ff6`, 04:38) and **BALL-FEEL-1** (`51bbcb2`, 05:37), from their commit messages: a deterministic physical football lab with an authoritative launch hand-off, then turf and launch calibration with camera review evidence.
+- None of these branches was pushed, and none is integrated.
+
+**End-of-day state.** No V2 commits from the Claude session after the 06:04 push. The Codex tackle chain (9 commits) and the ball clone (2 commits) are local. Nothing changed in `touchline-current` except this chronicle.
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3354,6 +3394,7 @@ What was done there is not reconstructed here.
   - **Not achieved:** a fully physical RUN-1 runner (> 20 candidates, none longer than ≈ 2 s).
   - **Found:** RUN-1 cannot turn.
   - **Candidate V1.1** (earlier fall commitment) awaits the owner; the review page compares it with V1.
+- **The tackle line** (15 – 16 Oct, built in the Codex workspace; local branches on top of `dbc8aa2`, not pushed, not integrated): TACKLE-REACTION-1 (F3 + R6: RUN → TACKLED_FALL from the exact collision state) → TACKLE-IMPACT-1 → TACKLE-CONTACT-V1 (ten-case TRIP / SLICE / IMPACT spectrum) → polish C10 → TACKLE-RECOVERY-V1 / V1.1 (the get-up lifecycle to IDLE). HAC-1 is frozen as research.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
