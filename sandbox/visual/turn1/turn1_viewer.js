@@ -107,8 +107,9 @@ function tvRender() {
     else { const ang = vw.id === "A" ? TV.A : vw.id === "B" ? TV.B : vw.id; cam = tvCloseCam(A, ang, h0, vw.w, vw.h); label = ang; }
     vw.cam = cam;
     gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE); gl.disable(gl.BLEND);
-    const Gp = TV.ground; gl.useProgram(Gp.p); gl.uniformMatrix4fv(Gp.u.view, false, cam.view); gl.uniformMatrix4fv(Gp.u.proj, false, cam.proj); gl.uniform4fv(Gp.u.sh, sh); gl.uniform1i(Gp.u.nsh, ns);
-    gl.bindVertexArray(Gp.vao); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
+    if (TV.sil) { gl.clearColor(1.0, 0.0, 1.0, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); }   // silhouette test: no pitch, no shadows (the capture thresholds the figure)
+    else { const Gp = TV.ground; gl.useProgram(Gp.p); gl.uniformMatrix4fv(Gp.u.view, false, cam.view); gl.uniformMatrix4fv(Gp.u.proj, false, cam.proj); gl.uniform4fv(Gp.u.sh, sh); gl.uniform1i(Gp.u.nsh, ns);
+    gl.bindVertexArray(Gp.vao); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null); }
     gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
     ofCharDraw(TV.R, TV.entry, A.skinMats, cam.view, cam.proj);
     tvOverlay(ctx, vw, cam, dpr, label);
@@ -134,6 +135,20 @@ function tvOverlay(ctx, vw, cam, dpr, label) {
     arrow(A.P[0], A.P[1], A.psi, 1.4, "#ffd84d", 2.2); arrow(A.P[0], A.P[1], A.gaze, 1.0, "#c08bff", 1.6);
   }
   if (TV.skel) { const fk = A.fk, bones = A.body.skel.bones; ctx.lineWidth = 2 * dpr; ctx.strokeStyle = "#5ee0ff"; for (const b of bones) { if (!b.parent || b.name === "pelvis" || b.name === "hair") continue; const a = P(fk.joint[b.parent.idx]), c = P(fk.joint[b.idx]); if (a && c) { ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(c[0], c[1]); ctx.stroke(); } } }
+  if (TV.labels && TV.labMode === "short") {   // before / after panels: which body, the time and (TURN-1.1) the authored phase; big enough to read in a side-by-side
+    const l11 = A.pose && A.pose.diag.l11, big = Math.max(13, Math.round(vw.h / 30));
+    ctx.font = `700 ${big * dpr}px -apple-system, Helvetica`; ctx.fillStyle = TV.sil ? (TV.body === "t11" ? "rgba(150,95,0,0.95)" : "rgba(20,70,140,0.95)") : TV.body === "t11" ? "rgba(255,214,94,0.95)" : "rgba(170,215,255,0.95)";
+    ctx.fillText(TV.body === "t11" ? "TURN-1.1 — authored body" : "TURN-1 — procedural body", (vw.x + 10) * dpr, (vw.y + big + 8) * dpr);
+    ctx.font = `600 ${Math.round(big * 0.8) * dpr}px -apple-system, Helvetica`; ctx.fillStyle = TV.sil ? "rgba(40,40,40,0.9)" : "rgba(235,242,238,0.9)";
+    ctx.fillText(`t ${A.t.toFixed(2)} s${TV.body === "t11" && l11 && l11.phase !== "—" ? "   " + l11.phase : ""}`, (vw.x + 10) * dpr, (vw.y + vw.h - 12) * dpr);
+    ctx.restore(); return; }
+  if (TV.diag && TV.labels && (vw.id === "game" || TV.single)) {   // diagnostics readout (drawn into the frame, so it is in the renders)
+    const M = tvMeasure(A), l = A.pose && A.pose.diag.l11, D = 180 / Math.PI, man = A.man, lines = [
+      `${TV.body === "t11" ? "TURN-1.1" : "TURN-1"} · phase ${l ? l.phase : "—"}${l && l.tau != null ? " (τ " + l.tau.toFixed(2) + ")" : ""} · brake drive ${l ? l.brake.toFixed(2) : "–"} · exit drive ${l ? l.exit.toFixed(2) : "–"}`,
+      `cut family ${man ? man.tech : (l && l.fam) || "–"} · requested ${man ? (man.delta * D).toFixed(0) + "°" : "–"} · plant foot ${man ? man.plantFoot : "–"} · entry speed ${man ? man.sEntry.toFixed(1) : "–"} m/s`,
+      `torso lean ${M.torsoLat.toFixed(0)}° side / ${M.torsoFwd.toFixed(0)}° fwd · pelvis ${(M.pelvisY * 100).toFixed(0)} cm (load ${(M.load * 100).toFixed(0)}) · knee R ${M.kneeR.toFixed(0)}° L ${M.kneeL.toFixed(0)}° · shoulders vs hips ${M.shoulderRot.toFixed(0)}°`];
+    ctx.font = `600 ${11 * dpr}px Menlo, monospace`; ctx.fillStyle = "rgba(0,0,0,0.45)"; ctx.fillRect(vw.x * dpr, (vw.y + vw.h - 70) * dpr, vw.w * dpr, 46 * dpr);
+    ctx.fillStyle = "rgba(255,236,160,0.95)"; lines.forEach((tx, i) => ctx.fillText(tx, (vw.x + 8) * dpr, (vw.y + vw.h - 56 + i * 14) * dpr)); }
   if (TV.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(label, (vw.x + 8) * dpr, (vw.y + 16) * dpr);
     if (vw.id === "game" || TV.single) { const r = A.log[A.log.length - 1] || {}, D = 180 / Math.PI; const txt = `${TV.scn.label || ""}   t ${A.t.toFixed(2)} s   ${(r.s || 0).toFixed(2)} m/s   travel ${((r.thv || 0) * D).toFixed(0)}°   pelvis ${((r.psi || 0) * D).toFixed(0)}°   req ${((r.dir || 0) * D).toFixed(0)}°   ${r.role || ""} ${r.man ? "· " + r.man : ""}   ${TV.body === "t11" ? "[TURN-1.1 " + ((A.pose && A.pose.diag.l11) ? A.pose.diag.l11.phase : "—") + "]" : "[TURN-1 body]"}`;
       ctx.fillText(txt, (vw.x + 8) * dpr, (vw.y + vw.h - 10) * dpr); } }
@@ -172,7 +187,7 @@ function tvBoot() {
   TV.scn = q.get("scn") ? T1SCN.get(q.get("scn")) : T1SCN.make(+(q.get("v") || 5.5), +(q.get("turn") || 90), +(q.get("tc") || 1.0));
   for (const [k, key] of [["zoom", "zoom"], ["rate", "rate"]]) if (q.get(k)) TV[key] = +q.get(k);
   if (q.get("diag") === "1") TV.diag = true; if (q.get("diagViews")) { TV.diag = true; TV.diagViews = q.get("diagViews").split(","); } if (q.get("skel") === "1") TV.skel = true; if (q.get("labels") === "0") TV.labels = false;
-  if (q.get("body")) TV.body = q.get("body") === "t1" ? "t1" : "t11"; if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
+  if (q.get("body")) TV.body = q.get("body") === "t1" ? "t1" : "t11"; if (q.get("sil") === "1") TV.sil = true; if (q.get("lab")) TV.labMode = q.get("lab"); if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
   TV.loopT = TV.scn.dur || 4.2;
   // the rail: the gameplay camera follows the runner's x with a gentle lag-free rail (the match camera follows play along the touchline)
   TV.camX = () => TV.actor.P[0];

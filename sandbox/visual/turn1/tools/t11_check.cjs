@@ -53,6 +53,8 @@ function body(r, scn) {
   const W = r.samples.filter(q => q.t >= tD && q.t <= tD + 2.2), P = plantTD ? r.samples.filter(q => q.t >= plantTD[0] && q.t <= (plantTO ? plantTO[0] : plantTD[0] + 0.3)) : [];
   const pF = plantTD ? plantTD[2] : null, mx = (arr, f) => arr.length ? Math.max(...arr.map(f)) : null, mn = (arr, f) => arr.length ? Math.min(...arr.map(f)) : null;
   const deepS = W.filter(q => q.load >= 0.15).length * 2 / 240;
+  // SITTING: low (≥ 12 cm below RUN-1's pelvis) with the torso near upright (< 15° total inclination) — the squat look, not an athletic low posture
+  const sitS = W.filter(q => q.load >= 0.12 && Math.hypot(q.lat, q.fwd) < 15).length * 2 / 240;
   // visible body reaction (the same test for both bodies): the shoulder line turned ≥ 8° toward the turn (world, vs its offset from the travel direction
   // at the request), or the torso pitched ≥ 6° (vs the request instant), or the arm span grown ≥ 0.12 m
   const q0 = W[0], firstT = (f) => { const q = q0 ? W.find(x => x.t > tD && f(x)) : null; return q ? +(q.t - tD).toFixed(3) : null; };
@@ -61,7 +63,7 @@ function body(r, scn) {
   const atTD = plantTD ? r.samples.find(q => q.t >= plantTD[0]) : null, free = pF === "R" ? "L" : "R";
   const pushPk = P.length ? P.reduce((a, q) => q.acc > a.acc ? q : a, P[0]) : null;
   return { maneuver: man.slice(2), torsoLeanIntoTurnMaxDeg: +(mx(P.length ? P : W, q => sg * q.lat) || 0).toFixed(1), torsoFwdMaxDeg: +(mx(W, q => q.fwd) || 0).toFixed(1), torsoBackMaxDeg: +(-(mn(W, q => q.fwd) || 0)).toFixed(1),
-    pelvisMinM: +(mn(W, q => q.py) || 0).toFixed(3), loadMaxCm: +((mx(W, q => q.load) || 0) * 100).toFixed(1), deepS: +deepS.toFixed(3),
+    pelvisMinM: +(mn(W, q => q.py) || 0).toFixed(3), loadMaxCm: +((mx(W, q => q.load) || 0) * 100).toFixed(1), deepS: +deepS.toFixed(3), sitS: +sitS.toFixed(3),
     plantKneeMaxDeg: P.length ? +mx(P, q => pF === "R" ? q.kneeR : q.kneeL).toFixed(1) : null, freeKneeHeightAtPlantM: atTD ? +(free === "R" ? atTD.kneeYR : atTD.kneeYL).toFixed(3) : null,
     shoulderVsHipsMaxDeg: +(mx(W, q => sg * q.shoulder) || 0).toFixed(1), armSpanMaxM: +(mx(W, q => q.span) || 0).toFixed(2),
     plantToPushPeakS: pushPk ? +(pushPk.t - plantTD[0]).toFixed(3) : null, plantToToeOffS: plantTD && plantTO ? +(plantTO[0] - plantTD[0]).toFixed(3) : null, plantAfterRequestS: plantTD ? +(plantTD[0] - tD).toFixed(3) : null,
@@ -89,7 +91,7 @@ for (const id of ids) {
     slipMaxCm: { t1: t1.slipMaxCm, t11: a.slipMaxCm }, popsMm: { t1: t1.pops, t11: a.pops }, body: { t1: body(t1, scn), t11: body(a, scn) }, msStep: +a.msStep.toFixed(4), msPose: +a.msPose.toFixed(3) };
   const pw = (p) => Math.max(...Object.values(p).map(x => x.mm)).toFixed(1), B1 = r.body.t1, B2 = r.body.t11;
   console.log(`${same ? "SAME" : "DIFF"} ${det ? "DET" : "NONDET"} ${id.padEnd(18)} slip ${t1.slipMaxCm}→${a.slipMaxCm} cm  pops ${pw(t1.pops)}→${pw(a.pops)} mm (pelvis ${t1.pops.pelvis.mm}→${a.pops.pelvis.mm})` +
-    (B2 ? `  lean ${B1.torsoLeanIntoTurnMaxDeg}→${B2.torsoLeanIntoTurnMaxDeg}  back ${B1.torsoBackMaxDeg}→${B2.torsoBackMaxDeg}  deep ${B1.deepS}→${B2.deepS}s  shoulders ${B1.shoulderVsHipsMaxDeg}→${B2.shoulderVsHipsMaxDeg}  span ${B1.armSpanMaxM}→${B2.armSpanMaxM}  freeKnee ${B1.freeKneeHeightAtPlantM}→${B2.freeKneeHeightAtPlantM}  react ${rc.t1}→${rc.t11}s` : ""));
+    (B2 ? `  lean ${B1.torsoLeanIntoTurnMaxDeg}→${B2.torsoLeanIntoTurnMaxDeg}  back ${B1.torsoBackMaxDeg}→${B2.torsoBackMaxDeg}  deep ${B1.deepS}→${B2.deepS}s  sit ${B1.sitS}→${B2.sitS}s  shoulders ${B1.shoulderVsHipsMaxDeg}→${B2.shoulderVsHipsMaxDeg}  span ${B1.armSpanMaxM}→${B2.armSpanMaxM}  freeKnee ${B1.freeKneeHeightAtPlantM}→${B2.freeKneeHeightAtPlantM}  react ${rc.t1}→${rc.t11}s` : ""));
 }
 out.movementDiffs = moveDiff; out.nondeterministic = nondet;
 if (arg("out")) fs.writeFileSync(arg("out"), JSON.stringify(out, null, 1));

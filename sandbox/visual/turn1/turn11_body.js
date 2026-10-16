@@ -22,10 +22,10 @@ const { clamp, sstep, tab, v2, lerpN, rSlerp, t1Tab, Fp } = IN, wrapA = T.wrapA,
 // ── parameters ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const P11 = {
   id: "TURN-1.1 V1",
-  T_PRE: 0.30, T_POST: 0.25, lead: 0.03,      // s: the plant timeline before / after the plant; key poses are reached `lead` s early (follower lag)
-  fTau: 0.03, fTauPelvis: 0.04,               // s: channel followers (critically damped)
+  T_PRE: 0.30, T_POST: 0.25, lead: 0.05,      // s: the plant timeline before / after the plant; key poses are reached `lead` s early (follower lag)
+  fTau: 0.03, fTauPelvis: 0.04, fTauArm: 0.022,   // s: channel followers (critically damped); arms faster (their keys sit ~80 ms apart in a plant)
   pelvisLat: 0.45, pelvisFwd: 0.40,           // share of TURN-1's lean the pelvis takes while the layer acts (TURN-1: 0.8 / 0.55) — the trunk bends the rest
-  reachPlan: 0.955,                           // the reach the anticipated pelvis drop plans to (as TURN-1; the pose enforces 0.985)
+  reachPlan: 0.948,                           // the reach the anticipated pelvis drop plans to (TURN-1: 0.955, with its crouch as extra margin; the pose enforces 0.985)
   antWin: [0.22, 0.06],
   kneeClear: 0.34,                            // m: a swinging knee's floor while a maneuver acts (TURN-1: 0.24) — a trailing knee lifts, it never kneels                       // s before the next touchdown: its reach drop is ramped in over this window (TURN-1: 0.32 → 0.12)
   dropWn: 2 * Math.PI * 7.0,
@@ -39,16 +39,16 @@ const LIB = {
     pX:     [[-1, 0], [0, -0.02], [0.35, -0.045], [0.75, -0.03], [1.05, 0], [3, 0]],
     pZ:     [[-1, 0], [-0.4, 0.02], [0, 0.06], [0.3, 0.04], [0.6, 0], [3, 0]],
     pYaw:   [[-1, 0], [0, -3], [0.4, -2], [0.8, 4], [1.2, 2], [2, 0], [3, 0]],
-    tRoll:  [[-1, 0], [-0.5, 4], [0, 10], [0.35, 18], [0.7, 18], [1, 11], [1.4, 5], [2, 1], [3, 0]],
+    tRoll:  [[-1, 0], [-0.5, 4], [0, 12], [0.35, 22], [0.7, 21], [1, 13], [1.4, 5], [2, 1], [3, 0]],
     tPitch: [[-1, 0], [-0.5, -6], [0, -10], [0.3, 0], [0.7, 14], [1, 18], [1.4, 9], [2, 3], [3, 0]],
     tYaw:   [[-1, 0], [-0.5, 7], [0, 13], [0.35, 20], [0.7, 16], [1, 8], [1.4, 0], [2, -3], [3, 0]],
     hPitch: [[-1, 0], [0, -4], [1, -6], [2, -3], [3, 0]],
     hLev:   [[-1, 0], [-0.5, 0.5], [0, 0.7], [1.5, 0.6], [3, 0]],
     aW:     [[-1, 0], [-0.5, 0.5], [0, 0.8], [0.35, 1], [0.75, 1], [1, 0.85], [1.4, 0.5], [2, 0.15], [2.6, 0], [3, 0]],
     // arms as directions in the pelvis-heading frame: az 0 = forward, +90 = out to that arm's side, 180 = back; el = degrees below horizontal
-    oAz:    [[-1, 30], [-0.5, 45], [0, 80], [0.35, 85], [0.65, 45], [1, -20], [1.4, 0], [2, 10], [3, 10]],
-    oEl:    [[-1, 60], [-0.5, 45], [0, 30], [0.35, 25], [0.65, 40], [1, 45], [1.4, 55], [2, 65], [3, 65]],
-    oElb:   [[-1, 60], [-0.5, 50], [0, 35], [0.35, 30], [0.65, 70], [1, 95], [1.4, 90], [2, 85], [3, 85]],
+    oAz:    [[-1, 30], [-0.5, 50], [0, 88], [0.35, 92], [0.65, 50], [1, -20], [1.4, 0], [2, 10], [3, 10]],
+    oEl:    [[-1, 60], [-0.5, 40], [0, 22], [0.35, 18], [0.65, 38], [1, 45], [1.4, 55], [2, 65], [3, 65]],
+    oElb:   [[-1, 60], [-0.5, 40], [0, 25], [0.35, 20], [0.65, 65], [1, 95], [1.4, 90], [2, 85], [3, 85]],
     iAz:    [[-1, 150], [-0.5, 60], [0, 120], [0.35, 145], [0.65, 160], [1, 170], [1.4, 170], [2, 160], [3, 160]],
     iEl:    [[-1, 60], [-0.5, 55], [0, 55], [0.35, 55], [0.65, 55], [1, 50], [1.4, 60], [2, 65], [3, 65]],
     iElb:   [[-1, 70], [-0.5, 60], [0, 75], [0.35, 85], [0.65, 90], [1, 90], [1.4, 90], [2, 85], [3, 85]],
@@ -86,7 +86,7 @@ const LIB = {
     note: "reversal: brace and decelerate → plant ahead, sink briefly → shoulders and the outside arm lead the rotation → drive out low and forward",
     pY:     [[-1, 0], [-0.5, -0.02], [0, -0.04], [0.3, -0.07], [0.6, -0.06], [0.9, -0.02], [1.2, -0.02], [2, 0], [3, 0]],
     pZ:     [[-1, 0], [-0.4, 0.02], [0, 0.05], [0.3, 0.04], [0.6, 0], [3, 0]],
-    pYaw:   [[-1, 0], [-0.6, 10], [-0.3, 25], [0, 35], [0.3, 30], [0.6, 15], [1, 0], [3, 0]],   // side-on into the plant (505 technique): the hips turn before the foot lands
+    pYaw:   [[-1, 0], [-0.6, 10], [-0.3, 25], [0, 35], [0.3, 24], [0.6, 8], [0.9, 0], [3, 0]],   // side-on into the plant (505 technique): the hips turn before the foot lands
     tRoll:  [[-1, 0], [0, 4], [0.4, 10], [0.7, 12], [1, 8], [1.5, 3], [3, 0]],
     tPitch: [[-1, 0], [-0.5, -6], [0, -8], [0.3, -2], [0.6, 8], [1, 18], [1.5, 10], [2.2, 3], [3, 0]],
     tYaw:   [[-1, 0], [-0.5, 5], [0, 10], [0.3, 20], [0.6, 22], [0.9, 13], [1.2, 0], [1.8, -4], [3, 0]],
@@ -108,7 +108,7 @@ const LIB = {
 };
 // step modifiers and the reaction (constant poses × their drive, right turn where sided)
 const MOD = {
-  BRAKE: { pY: -0.025, pZ: 0.035, tPitch: -13, hPitch: -6, hLev: 0.5, aW: 0.75, oAz: 35, oEl: 40, oElb: 65, iAz: 35, iEl: 40, iElb: 65, swTuck: 0.25 },
+  BRAKE: { pY: -0.025, pZ: 0.035, tPitch: -13, hPitch: -6, hLev: 0.5, aW: 0.85, oAz: 35, oEl: 32, oElb: 60, iAz: 35, iEl: 32, iElb: 60, swTuck: 0.25 },
   EXIT:  { pY: -0.04, hPitch: -8, armAmp: 0.5, armElb: 12, swLift: 0.05 },   // pY: the acceleration posture stays low and rises as the speed comes back
   REACT: { tYaw: 12, tPitch: -4, pY: -0.02, hLev: 0.4, aW: 0.5, oAz: 35, oEl: 50, oElb: 70, iAz: 35, iEl: 50, iElb: 70 },   // between the command and the first braking contact
 };
@@ -220,10 +220,15 @@ function step(A, dt) {
   tgt.hLev = clamp(tgt.hLev, 0, 0.9);
   // mirror: lateral and about-vertical channels flip for a left turn (the arm / leg sides are mapped where they are applied)
   for (const k of SIDED) tgt[k] *= sg;
+  // HIPS OVER THE PUSHING FOOT: late in a plant / exit stance the pelvis is carried toward the stance foot (root frame, ≤ 7 cm) — the push leg works
+  // under the hips instead of trailing at full reach (less reach-driven depth, no skate)
+  { const F0 = A.clk.seg === 0 ? "R" : A.clk.seg === 2 ? "L" : null, rk = A.st.role ? A.st.role.kind : "RUN";
+    if (F0 && C && (rk === "PLANT" || rk === "EXIT") && A.legs[F0].plant) { const pl = A.legs[F0].plant.pos, d = v2.sub(pl, A.P), r = rgt(A.psi), f = fwd(A.psi), dl = [v2.dot(d, r), v2.dot(d, f)], m = Math.hypot(dl[0], dl[1]);
+      const k = (rk === "PLANT" ? 1 : 0.6) * sstep(0.35, 0.8, A.clk.x) * Math.min(1, S.wc * 1.2) * 0.07; if (m > 1e-6) { tgt.pX += dl[0] / m * k; tgt.pZ += dl[1] / m * k; } } }
   S.sideO = sg > 0 ? "L" : "R";                                                      // the arm on the OUTSIDE of the turn
   // 4. followers (radians for angles); arm pose values follow only while they carry weight (a held value is harmless at weight 0)
   let busy = false;
-  for (const k of CH) { const g = ANG.has(k) ? tgt[k] * DEG : tgt[k], tf = k[0] === "p" && !ANG.has(k) ? P11.fTauPelvis : P11.fTau;
+  for (const k of CH) { const g = ANG.has(k) ? tgt[k] * DEG : tgt[k], tf = ARMS.includes(k) || k === "aW" ? P11.fTauArm : k[0] === "p" && !ANG.has(k) ? P11.fTauPelvis : P11.fTau;
     [c[k], S.v[k]] = follow(c[k], S.v[k], g, tf, dt); if (!ARMS.includes(k)) { if (rest(c[k], S.v[k], g) && g === 0) { c[k] = 0; S.v[k] = 0; } else busy = true; } }
   if (c.aW === 0 && !busy) for (const k of ARMS) { c[k] = 0; S.v[k] = 0; }
   for (const F of ["R", "L"]) for (const k of ["tuck", "lift", "fwd", "cross", "adv", "knee"]) { [S.sw[F][k], S.swV[F][k]] = follow(S.sw[F][k], S.swV[F][k], swT[F][k], 0.04, dt);
@@ -261,11 +266,11 @@ function predDrop(A, S) {
     return Math.min((T1.dropMaxRole[role] || T1.dropMax) + xc, Math.max(0, dy - Math.sqrt(Math.max(0, R * R - dxz * dxz))) * (1 - sstep(0.5, 0.8, sx))); };
   const St = A.st, F0 = A.clk.seg === 0 ? "R" : A.clk.seg === 2 ? "L" : null;
   if (F0) for (let sx = A.clk.x; sx <= 0.62; sx += 0.08) { const tau = sx * St.tc, Pc = v2.add(St.P0, v2.add(v2.sc(St.V0, tau), v2.sc(St.dV, St.tc * Fp(sx)))); need = Math.max(need, needAt(F0, A.legs[F0].plant, Pc, A.psi, sx, St.role && St.role.kind)); }
-  // LATE-STANCE REACH GUARD (this layer only): the pushing foot must stay reachable with at most a 65° heel rise until toe-off (TURN-1 lets the late
+  // LATE-STANCE REACH GUARD (this layer only): the pushing foot must stay reachable with at most a 72° heel rise until toe-off (TURN-1 lets the late
   // stance rely on an unbounded heel rise; with this layer's higher, livelier pelvis a pivot push would otherwise out-reach the leg and skate)
   if (F0) { const Rl0 = Rl, R2 = (b.thigh + b.shank) * 0.975, cap = (T1.dropMaxRole[St.role && St.role.kind] || T1.dropMax) + xc;
     for (let sx = Math.max(A.clk.x, 0.45); sx <= 1.0001; sx += 0.0775) { const tau = sx * St.tc, Pc = v2.add(St.P0, v2.add(v2.sc(St.V0, tau), v2.sc(St.dV, St.tc * Fp(sx)))), sg = F0 === "R" ? 1 : -1, ho = R3.v(Rl0, [sg * b.hipX, 0, 0]);
-      const hip = v2.add(Pc, v2.add(v2.sc(rgt(A.psi), ho[0] + c.pX), v2.sc(fwd(A.psi), ho[2] + c.pZ))), yH = y0 + ho[1], an = T.t1AnkleW(A, A.legs[F0].plant, -65 * DEG, sx);
+      const hip = v2.add(Pc, v2.add(v2.sc(rgt(A.psi), ho[0] + c.pX), v2.sc(fwd(A.psi), ho[2] + c.pZ))), yH = y0 + ho[1], an = T.t1AnkleW(A, A.legs[F0].plant, -72 * DEG, sx);
       const dxz = Math.hypot(an[0] - hip[0], an[2] - hip[1]), dy = yH - an[1]; need = Math.max(need, Math.min(cap, Math.max(0, dy - Math.sqrt(Math.max(0, R2 * R2 - dxz * dxz))))); } }
   for (const F of ["R", "L"]) { const L = A.legs[F]; if (L.stance || !L.fcPlant || !L.fcP) continue; const wAnt = sstep(P11.antWin[0], P11.antWin[1], L.tTDf - A.t); if (wAnt <= 0) continue;
     const fp = L.fcPlan; Rl = RlOf(leanOf(fp.dV, fp.tc + (fp.tf || 0.05)));

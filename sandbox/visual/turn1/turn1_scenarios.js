@@ -35,6 +35,9 @@ var T1SCN = (function () {
   orient("RUN_90L_TOWARD", "RUN 7.8 m/s toward the camera · 90° LEFT (cuts to screen-right)", SPEEDS.RUN, 90, -90);
   orient("RUN_90R_AWAY", "RUN 7.8 m/s away from the camera · 90° RIGHT (cuts to screen-right)", SPEEDS.RUN, -90, 90);
   orient("SPRINT_90L_TOWARD", "SPRINT 9.5 m/s toward the camera · 90° LEFT (cuts to screen-right)", SPEEDS.SPRINT, 90, -90);
+  // the exact mirror of RUN_90R (start on the left foot, turn left): for the left / right mirroring review
+  SC.RUN_90L_MIRROR = make(SPEEDS.RUN, -90, 1.0, { id: "RUN_90L_MIRROR", label: "RUN 7.8 m/s · 90° LEFT, starting on the left foot (the exact mirror of RUN_90R)", init: { v: SPEEDS.RUN, heading: 0, pos: [18, 34], foot: "L" } });
+  SC.SPRINT_180L_MIRROR = make(SPEEDS.SPRINT, -180, 1.0, { id: "SPRINT_180L_MIRROR", label: "SPRINT 9.5 m/s · 180° LEFT, starting on the left foot (the exact mirror of SPRINT_180R)", init: { v: SPEEDS.SPRINT, heading: 0, pos: [18, 34], foot: "L" } });
   return { SPEEDS, ANGLES, make, get: (k) => SC[k] || SC.JOG_90R, list: () => Object.values(SC), all: SC };
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = T1SCN;

@@ -1,11 +1,11 @@
 // turn1/tools/t1_capture.cjs — deterministic, frame-exact capture of the TURN-1 viewer: for frame k the viewer time is SET to t0 + k·dt/rate (TURN1V.set),
 // the WebGL canvas and the diagnostic overlay are composited in the page and written as JPEG; ffmpeg encodes at a constant 60 fps (no retiming).
 // usage: PUPPETEER_NODE_MODULES=<dir> FFMPEG=<bin> node t1_capture.cjs --q "scn=JOG_90R&diag=1" --out <file.mp4|dir for --stills> [--t0 0.6] [--t1 3.6]
-//        [--rate 1|0.25] [--w 1600 --h 900] [--stills "1.0,1.2,…"] [--port 8360] [--frames <scratch dir>]
+//        [--rate 1|0.25] [--w 1600 --h 900] [--stills "1.0,1.2,…"] [--port 8360] [--frames <scratch dir>] [--sil]
 const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path"), cp = require("child_process");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
-const port = arg("port", "8360"), W = +arg("w", 1600), H = +arg("h", 900), rate = +arg("rate", 1), FF = process.env.FFMPEG || "ffmpeg";
+const SIL = process.argv.includes("--sil"), port = arg("port", "8360"), W = +arg("w", 1600), H = +arg("h", 900), rate = +arg("rate", 1), FF = process.env.FFMPEG || "ffmpeg";
 let browser;
 async function open() {
   browser = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: arg("profile", undefined),
@@ -19,7 +19,9 @@ async function open() {
   return { page, logs };
 }
 async function grab(page, t) {
-  return page.evaluate((tt) => { TURN1V.set(tt); const g = document.getElementById("gl"), o = document.getElementById("ov"), c = document.createElement("canvas"); c.width = g.width; c.height = g.height; const x = c.getContext("2d"); x.drawImage(g, 0, 0); x.drawImage(o, 0, 0); return c.toDataURL("image/jpeg", 0.93).split(",")[1]; }, t);
+  return page.evaluate((tt, sil) => { TURN1V.set(tt); const g = document.getElementById("gl"), o = document.getElementById("ov"), c = document.createElement("canvas"); c.width = g.width; c.height = g.height; const x = c.getContext("2d"); x.drawImage(g, 0, 0);
+    if (sil) { const im = x.getImageData(0, 0, c.width, c.height), d = im.data; for (let i = 0; i < d.length; i += 4) { const e = Math.abs(d[i] - 255) + d[i + 1] + Math.abs(d[i + 2] - 255), k = e > 90 ? 1 : e > 40 ? (e - 40) / 50 : 0; d[i] = d[i + 1] = d[i + 2] = Math.round(228 - k * 205); } x.putImageData(im, 0, 0); }   // --sil: the figure as a flat silhouette
+    x.drawImage(o, 0, 0); return c.toDataURL("image/jpeg", 0.93).split(",")[1]; }, t, SIL);
 }
 (async () => {
   const { page, logs } = await open();
