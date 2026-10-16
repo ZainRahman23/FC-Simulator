@@ -119,7 +119,7 @@ function tvOverlay(ctx, vw, cam, dpr, label) {
   ctx.save(); ctx.beginPath(); ctx.rect(vw.x * dpr, vw.y * dpr, vw.w * dpr, vw.h * dpr); ctx.clip();
   const line = (pts, col, wid, dash) => { ctx.beginPath(); let f = true; for (const q of pts) { const p = P(q); if (!p) continue; if (f) { ctx.moveTo(p[0], p[1]); f = false; } else ctx.lineTo(p[0], p[1]); } ctx.strokeStyle = col; ctx.lineWidth = wid * dpr; ctx.setLineDash(dash ? dash.map(d => d * dpr) : []); ctx.stroke(); ctx.setLineDash([]); };
   const arrow = (x, y, th, len, col, wid) => { const a = W3(x, y, 0.02), b = W3(x + Math.cos(th) * len, y + Math.sin(th) * len, 0.02), l1 = W3(x + Math.cos(th) * len - Math.cos(th - 0.4) * len * 0.18, y + Math.sin(th) * len - Math.sin(th - 0.4) * len * 0.18, 0.02), l2 = W3(x + Math.cos(th) * len - Math.cos(th + 0.4) * len * 0.18, y + Math.sin(th) * len - Math.sin(th + 0.4) * len * 0.18, 0.02); line([a, b], col, wid); line([l1, b, l2], col, wid); };
-  if (TV.diag) {
+  if (TV.diag && (!TV.diagViews || TV.diagViews.includes(vw.id))) {
     const S = A.samples, n = S.length;
     // COM ground track (past), foot trails (ankle), plants by role, swing aims
     line(S.map(q => W3(q.P[0], q.P[1], 0.01)), "rgba(255,255,255,0.75)", 1.4);
@@ -156,7 +156,7 @@ function tvBoot() {
   TV.gl = gl; TV.R = { gl }; TV.ground = tvGround(gl);
   TV.scn = q.get("scn") ? T1SCN.get(q.get("scn")) : T1SCN.make(+(q.get("v") || 5.5), +(q.get("turn") || 90), +(q.get("tc") || 1.0));
   for (const [k, key] of [["zoom", "zoom"], ["rate", "rate"]]) if (q.get(k)) TV[key] = +q.get(k);
-  if (q.get("diag") === "1") TV.diag = true; if (q.get("skel") === "1") TV.skel = true; if (q.get("labels") === "0") TV.labels = false;
+  if (q.get("diag") === "1") TV.diag = true; if (q.get("diagViews")) { TV.diag = true; TV.diagViews = q.get("diagViews").split(","); } if (q.get("skel") === "1") TV.skel = true; if (q.get("labels") === "0") TV.labels = false;
   if (q.get("A")) TV.A = q.get("A"); if (q.get("B")) TV.B = q.get("B"); if (q.get("single")) TV.single = q.get("single");
   TV.loopT = TV.scn.dur || 4.2;
   // the rail: the gameplay camera follows the runner's x with a gentle lag-free rail (the match camera follows play along the touchline)

@@ -57,6 +57,7 @@ const T1 = {
   accelTc: 0.19, accelTf: 0.055,               // acceleration steps out of a cut (short flight, long contact)
   braketcK: 1.35, braketfK: 0.55,              // braking steps: longer contact, shorter flight than RUN-1 at that speed
   reactS: 0.09,                                // s: a touchdown closer than this to the decision cannot be the plant (it becomes the brake step)
+  prefGainS: 0.2,                              // s: a non-preferred plant foot is taken if it is at least this much sooner
   crouch: { BRAKE: 0.05, PLANT: [[45, 0.08], [90, 0.13], [135, 0.17], [180, 0.20]], EXIT: 0.06, ACCEL: 0.03 },
   travelMax: { RUN: 1.0, BRAKE: 0.88, PLANT: 0.80, EXIT: 0.85, ACCEL: 0.9 },   // m of COM travel a single stance can span (two leg reaches)
   heelStrike: { BRAKE: 14, PLANT: 10 },        // deg toes-up at touchdown: braking and plant steps land on the heel / rear foot
@@ -69,7 +70,7 @@ const T1 = {
   offMax: 0.60,                                // m: largest acceleration offset of a plant from the COM path (leg reach)
   yawWn: 2 * Math.PI * 2.6, yawWnCut: 2 * Math.PI * 3.6,   // pelvis heading follower (critically damped)
   gazeTau: 0.07, chestLead: 0.40, chestMax: 28 * DEG, headMax: 60 * DEG,
-  leanTau: 0.05, leanK: 0.9, leanFwdK: 1.0, leanMax: 28 * DEG, leanFwdMax: 30 * DEG, leanBack: 10 * DEG, pelvisLat: 0.8, pelvisFwd: 0.55,
+  leanTau: 0.05, leanK: 0.9, leanFwdK: 1.0, leanMax: 28 * DEG, leanFwdMax: 30 * DEG, leanBack: 16 * DEG, pelvisLat: 0.8, pelvisFwd: 0.55,
   crouchTau: 0.06, armBal: { PLANT: 32, BRAKE: 14, EXIT: 18 }, armTau: 0.08,
   toeOut: 7 * DEG,
 };
@@ -78,10 +79,11 @@ const aAccAt = (s) => Math.max(0.4, T1.aAcc0 * (1 - s / T1.vTop));
 
 // ── actor ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function t1Make(skel, init) {
-  const sk = Object.assign({}, skel); delete sk._r1body;                  // the frozen engine caches its body / grid on its own skeleton copy
-  const body = E.r1Body(sk); sk._r1body = body;
+  // the frozen engine caches its body / speed grid on its own skeleton copy; one copy (and one solved grid) per rig, shared by every TURN-1 actor
+  if (!skel._t1sk) { const c = Object.assign({}, skel); delete c._r1body; c._r1body = E.r1Body(c); skel._t1sk = c; }
+  const sk = skel._t1sk, body = sk._r1body;
   const o = init || {}, s0 = o.v != null ? o.v : 5.5, th0 = o.heading || 0, P0 = o.pos ? o.pos.slice() : [20, 34];
-  const A = { body, skel: sk, t: 0, n: 0, P: P0, V: v2.sc(fwd(th0), s0), psi: th0, psiD: 0, gaze: th0, chest: 0,
+  const A = { body, skel: sk, tabHost: skel, t: 0, n: 0, P: P0, V: v2.sc(fwd(th0), s0), psi: th0, psiD: 0, gaze: th0, chest: 0,
     lean: [0, 0], aF: [0, 0], crouch: 0, crouchD: 0, arm: 0, tdCount: 0, man: null, log: [], events: [], input: { dir: th0, v: s0 } };
   const p = t1G(A, s0);
   // clock: seg 0 R stance · 1 flight → L · 2 L stance · 3 flight → R; the right foot has just landed (as RUN-1's first call)
@@ -210,17 +212,22 @@ function t1PlanManeuver(A, d, s, th) {
   const up = t1Upcoming(A, 5), p = t1G(A, s);
   // braking stances needed to reach the plant entry speed (each brake stance removes ≈ aBrake · Ts)
   const TsB = p.tc * T1.braketcK + (p.Ts - p.tc) * T1.braketfK, nBrake = Math.ceil(Math.max(0, s - sE) / (T1.aBrake * TsB) - 0.15);
-  let pick = null;
-  for (let i = 0; i < up.length && !pick; i++) {
-    const u = up[i]; if (u.t - A.t < T1.reactS) continue;                          // too soon to be the plant
-    const nB = i - (up[0].t - A.t < T1.reactS ? 1 : 0);                              // stances before it that can brake
-    const tech = kind === "PIVOT" ? "PIVOT" : (u.foot === outside ? "SIDESTEP" : (ad <= T1.xoverMax ? "XOVER" : null));
+  // candidates: every upcoming touchdown with enough braking before it; the PREFERRED technique (outside foot: side-step / outside pivot) wins
+  // unless another valid one is ≥ prefGainS earlier (responsiveness: never wait a whole stride for the textbook foot)
+  const cands = [];
+  for (let i = 0; i < up.length; i++) {
+    const u = up[i]; if (u.t - A.t < T1.reactS) continue;
+    const nB = i - (up[0].t - A.t < T1.reactS ? 1 : 0);
+    if (nB < Math.min(nBrake, 3) && !(ad < 70 && nB >= nBrake - 1)) continue;
+    const out = u.foot === outside;
+    const tech = kind === "PIVOT" ? "PIVOT" : (out ? "SIDESTEP" : (ad <= T1.xoverMax ? "XOVER" : null));
     if (!tech) continue;
-    if (nB < Math.min(nBrake, 3) && !(ad < 70 && nB >= nBrake - 1)) continue;        // not enough braking before it (small cuts tolerate one short)
-    pick = { u, tech, i };
+    cands.push({ u, tech, i, pref: out, inside: !out });
   }
-  if (!pick) { const u = up.find((q, i) => i >= 2 && q.foot === outside) || up[up.length - 1]; pick = { u, tech: kind === "PIVOT" ? "PIVOT" : (u.foot === outside ? "SIDESTEP" : "XOVER"), i: up.indexOf(u) }; }
-  const man = { kind, tech: pick.tech, delta: d, delta0: d, thIn: th, sg, plantFoot: pick.u.foot, plantIdx: pick.u.idx, tDecide: A.t, phase: "PRE", sEntry: sE, roles: {}, exitBoost: true };
+  let pick = cands.find(c => c.pref) || null; const alt = cands[0] || null;
+  if (alt && (!pick || alt.u.t < pick.u.t - T1.prefGainS)) pick = alt;
+  if (!pick) { const u = up.find((q, i) => i >= 2 && q.foot === outside) || up[up.length - 1]; pick = { u, tech: kind === "PIVOT" ? "PIVOT" : (u.foot === outside ? "SIDESTEP" : "XOVER"), i: up.indexOf(u), inside: u.foot !== outside }; }
+  const man = { kind, tech: pick.tech, inside: !!pick.inside, delta: d, delta0: d, thIn: th, sg, plantFoot: pick.u.foot, plantIdx: pick.u.idx, tDecide: A.t, phase: "PRE", sEntry: sE, roles: {}, exitBoost: true };
   A.man = man; t1Retarget(A, man);
   A.events.push([+A.t.toFixed(4), "maneuver", man.kind, man.tech, +(d / DEG).toFixed(1), man.plantFoot, +(pick.u.t - A.t).toFixed(3)]);
 }
@@ -354,6 +361,26 @@ function t1Row(A) {
     plantR: A.legs.R.plant ? A.legs.R.plant.pos.slice() : null, plantL: A.legs.L.plant ? A.legs.L.plant.pos.slice() : null };
 }
 
+// ── RUN-1.3 reference tables per speed-grid cell (pure functions of speed, foot and phase; built lazily, shared per body) ─────────────────
+// stance: the foot pitch β(s) RUN-1 uses (its knee-driven heel rise); swing: the ankle path (root frame + root travel), foot yaw / pitch / roll, toe.
+const T1_TAB_N = 32, T1_GRID = { v0: 2.5, dv: 0.25, n: 29 };   // 2.5 … 9.5 m/s
+function t1Cell(A, i, F) {
+  const H = A.tabHost || A.body, C = H._t1tab || (H._t1tab = {}), key = i + F; if (C[key]) return C[key];   // shared by every actor on this rig
+  const v = T1_GRID.v0 + i * T1_GRID.dv, b = A.body, Gg = { body: b, p: E.r1GaitAt(b, E.RUN1.ref, v), late: null, accLean: 0 }, p = Gg.p, D = p.D, off = F === "R" ? 0 : 0.5;
+  const beta = [], sw = [];
+  for (let j = 0; j <= T1_TAB_N; j++) {
+    const x = j / T1_TAB_N; beta.push(E.r1StanceLeg(Gg, F, x).beta);
+    const uu = (off + D + x * (1 - D)) % 1, ps = E.r1Pose(Gg, uu, null), fk = E.r1FK(Gg, ps, null), jt = fk.joint[b.idx["foot_" + F]], yr = R3.toYXZ(fk.R[b.idx["foot_" + F]]), tr = ps.rot["toe_" + F];
+    sw.push([jt[0], jt[1], jt[2] + v * x * (1 - D) * p.T, yr[0], yr[1], yr[2], Math.atan2(tr[7], tr[4])]);
+  }
+  return (C[key] = { beta, sw });
+}
+function t1Tab(A, F, s, kind, x) {                                                 // bilinear in (speed cell, phase)
+  const g = clamp((clamp(s, T1.vMin, T1.vMax) - T1_GRID.v0) / T1_GRID.dv, 0, T1_GRID.n - 1 - 1e-9), i = Math.floor(g), ti = g - i, xx = clamp(x, 0, 1) * T1_TAB_N, j = Math.min(T1_TAB_N - 1, Math.floor(xx)), tj = xx - j;
+  const a = t1Cell(A, i, F)[kind], c = t1Cell(A, i + 1, F)[kind];
+  if (kind === "beta") { const p0 = a[j] + (a[j + 1] - a[j]) * tj, p1 = c[j] + (c[j + 1] - c[j]) * tj; return p0 + (p1 - p0) * ti; }
+  const out = []; for (let k = 0; k < 7; k++) { const p0 = a[j][k] + (a[j + 1][k] - a[j][k]) * tj, p1 = c[j][k] + (c[j + 1][k] - c[j][k]) * tj; out.push(p0 + (p1 - p0) * ti); } return out;
+}
 // ── pose: RUN-1.3's base pose at the clock phase, the stance leg on its world plant, the swing leg on the warped path, the body organisation ──
 function t1Phase(A, p) {                                                            // RUN-1 global phase u from the clock (segment progress)
   const c = A.clk, D = p.D, st = [0, D, 0.5, 0.5 + D], ln = [D, 0.5 - D, D, 0.5 - D];
@@ -377,7 +404,7 @@ function t1Pose(A) {
   for (const F of ["R", "L"]) {
     const L = A.legs[F]; if (!L.stance) continue;
     const sg = F === "R" ? 1 : -1, sx = A.clk.seg === (F === "R" ? 0 : 2) ? A.clk.x : 1, hip = RV.add(pelvisPos, R3.v(Rp, [sg * b.hipX, 0, 0]));
-    let bt = E.r1StanceLeg(Gg, F, clamp(sx, 0, 1)).beta; const hs = L.role && T1.heelStrike[L.role.kind]; if (hs) { const k = 1 - sstep(0, 0.28, sx); bt = Math.max(bt, hs * DEG * k * k); }
+    let bt = t1Tab(A, F, s, "beta", sx); const hs = L.role && T1.heelStrike[L.role.kind]; if (hs) { const k = 1 - sstep(0, 0.28, sx); bt = Math.max(bt, hs * DEG * k * k); }
     const an = t1Loc(A, t1AnkleW(A, L.plant, bt, sx)), dx = an[0] - hip[0], dz = an[2] - hip[2], R = (b.thigh + b.shank) * 0.985, dy = hip[1] - an[1];
     const dyMax = Math.sqrt(Math.max(0, R * R - dx * dx - dz * dz)), need = Math.max(0, dy - dyMax) * (1 - sstep(0.5, 0.8, sx));
     drop = Math.max(drop, Math.min(T1.dropMax, need));
@@ -388,7 +415,7 @@ function t1Pose(A) {
     let ankleL, Rf, beta = 0, wStance = null, mtp = 0;
     if (L.stance) {
       const sx = A.clk.seg === (F === "R" ? 0 : 2) ? A.clk.x : 1;
-      const S0 = E.r1StanceLeg(Gg, F, clamp(sx, 0, 1)); beta = S0.beta;           // RUN-1's own foot roll profile at this stance fraction
+      beta = t1Tab(A, F, s, "beta", sx);                                          // RUN-1's own foot roll profile at this stance fraction
       const hs = L.role && T1.heelStrike[L.role.kind];                               // braking / plant steps land on the heel and roll forward
       if (hs) { const k = 1 - sstep(0, 0.28, sx); beta = Math.max(beta, hs * DEG * k * k); }
       let aw = t1AnkleW(A, L.plant, beta, sx); ankleL = t1Loc(A, aw);
@@ -405,8 +432,7 @@ function t1Pose(A) {
     } else {
       // swing: RUN-1's own swing path at this speed (root travel + FK ankle), warped from the actual toe-off point to the aimed plant
       const w = clamp(L.w || 0, 0, 1), D = p.D, off = F === "R" ? 0 : 0.5, T = p.T, sv = clamp(s, T1.vMin, T1.vMax);
-      const refAt = (ww) => { const uu = (off + D + ww * (1 - D)) % 1, ps = E.r1Pose(Gg, uu, null), fk = E.r1FK(Gg, ps, null), j = fk.joint[b.idx["foot_" + F]];
-        return { a: [j[0], j[1], j[2] + sv * ww * (1 - D) * T], R: fk.R[b.idx["foot_" + F]], toe: ps.rot["toe_" + F] }; };
+      const refAt = (ww) => { const q = t1Tab(A, F, s, "sw", ww); return { a: [q[0], q[1], q[2]], y: [q[3], q[4], q[5]], toe: q[6] }; };
       const r0 = refAt(0), r1 = refAt(1), rw = refAt(w);
       const A0 = L.A0, tg = L.tgt || [L.fcPlant ? L.fcPlant.pos[0] : A0[0], L.fcPlant ? L.fcPlant.pos[1] : A0[2], L.yaw0];
       const hsT = T1.heelStrike[L.tgtRole] ? T1.heelStrike[L.tgtRole] * DEG : null;
@@ -424,11 +450,11 @@ function t1Pose(A) {
       const vy = rw.a[1] - lerpN(r0.a[1], r1.a[1], along) + lerpN(A0[1], A1[1], along) - lower * Math.min(1, 4 * along * (1 - along)) * 0.9;
       const aw = [wpos[0], vy, wpos[1]]; ankleL = t1Loc(A, aw);
       // foot orientation: the reference's (root frame) pitch / roll with a yaw blended from the toe-off yaw to the plant yaw
-      const yR = R3.toYXZ(rw.R), y0 = R3.toYXZ(r0.R)[0], y1 = R3.toYXZ(r1.R)[0], bw = s5(sstep(0.0, 1.0, w));
+      const yR = rw.y, y0 = r0.y[0], y1 = r1.y[0], bw = s5(sstep(0.0, 1.0, w));
       const yMid = A.psi + (F === "R" ? 1 : -1) * T1.toeOut, yA = L.yaw0 + wrapA(yMid - L.yaw0) * s5(w / 0.35), yawW = yA + wrapA(tg[2] - yA) * s5((w - 0.45) / 0.55) + (yR[0] - lerpN(y0, y1, bw));
       Rf = R3.mul3(R3.y(wrapA(yawW - A.psi)), R3.x(yR[1]), R3.z(yR[2])); L._yawW = yawW;
       wStance = null; diag.feet[F] = { stance: false, w, aim: [tg[0], tg[1]], aimYaw: tg[2], tTD: L.tTDf };
-      rot["toe_" + F] = rw.toe;
+      rot["toe_" + F] = R3.x(rw.toe);
     }
     // leg IK: knee plane = the foot's yaw in the pelvis frame (hip rotation range), then foot orientation relative to the shank
     // (yaw only, as RUN-1: the foot's heading minus the pelvis's — a pitched-up foot's 3D forward vector is ill-conditioned)
@@ -473,15 +499,56 @@ function t1Evaluate(A) {
 // ── scenario input: a straight run, then (at tCmd) a requested heading change of dDeg (+ right), optionally changed again later ─────────────
 function t1Input(scn, t) {
   let dir = scn.heading || 0, v = scn.v;
-  for (const c of scn.cmds || []) if (t >= c.t - 1e-12) { if (c.turn != null) dir = (scn.heading || 0) + c.turn * DEG; if (c.v != null) v = c.v; }
+  // an exact reversal (|turn| = 180°) is ambiguous; the request keeps its side (the input device's last lateral component) by 0.5°
+  for (const c of scn.cmds || []) if (t >= c.t - 1e-12) { if (c.turn != null) dir = (scn.heading || 0) + clamp(c.turn, -179.5, 179.5) * DEG; if (c.v != null) v = c.v; }
   return { dir, v };
 }
 // deterministic replay to time t (fixed grid from 0; the partial step is not simulated: the pose is evaluated at the last grid step ≤ t)
 function t1Replay(A, scn, t) {
-  if (A._rt == null || t < A._rt - 1e-9) { const fresh = t1Make(A.skel, scn.init); Object.assign(A, fresh); A._rt = 0; A.fkBuf = null; A.skinMats = null; }
+  if (A._rt == null || t < A._rt - 1e-9) { const fresh = t1Make(A.tabHost, scn.init); Object.assign(A, fresh); A._rt = 0; A.fkBuf = null; A.skinMats = null; }
   while (A._rt + T1.step <= t + 1e-9) { t1Step(A, t1Input(scn, A._rt)); A._rt += T1.step; }
   return A;
 }
-return { T1, t1Make, t1Step, t1Evaluate, t1Pose, t1Replay, t1Input, t1Forecast, t1StancePlan, t1PlaceDefault, t1AnkleW, t1G, wrapA, fwd, rgt, DEG };
+// ── DRIBBLE-1 interface: the locomotion facts a physical ball system consumes (all world frame: anim3d x = pitch x, y = up, z = −pitch y) ────────
+// t1Clone: an independent copy of the presentation state (deterministic: advancing it with the same input reproduces the original exactly).
+function t1Clone(A) {
+  const C = Object.assign({}, A), J = (x) => x == null ? x : JSON.parse(JSON.stringify(x));
+  for (const k of ["P", "V", "clk", "st", "legs", "man", "lean", "aF", "input", "acc"]) C[k] = J(A[k]);
+  C.log = A.log.length ? [Object.assign({}, A.log[A.log.length - 1])] : []; C.events = []; C.fkBuf = null; C.skinMats = null; C.pose = null; C.fk = null; C.logOn = true;
+  return C;
+}
+const t1FootPts = (A, fk, F) => { const b = A.body, i = b.idx["foot_" + F], t = b.idx["toe_" + F], W = fk.world[i];
+  return { ankle: fk.joint[i].slice(), toeTip: fk.tip[t].slice(), heel: M4.transformPoint(W, [0, -b.ankleH, b.heelZ + 0.012]), ball: M4.transformPoint(fk.world[t], [0, -(b.ankleH + b.mtp[1]), 0.0]), world: Array.from(W) }; };
+// t1State: the facts at the current step: per foot transforms, linear / angular velocity (forward difference over one 240 Hz step of a clone advanced
+// with the same input), support state, stance / swing progress, the plant and the aimed next touchdown; pelvis and COM motion; desired vs actual
+// direction, body facing, gaze; the turn state (mode, technique, phase, requested change, plant foot).
+function t1State(A) {
+  const e0 = t1Evaluate(A), C = t1Clone(A); t1Step(C, A.input); const e1 = t1Evaluate(C), h = T1.step, b = A.body, out = { t: A.t, frame: "anim3d world (x = pitch x, y up, z = −pitch y)" };
+  const vel = (p0, p1) => [(p1[0] - p0[0]) / h, (p1[1] - p0[1]) / h, (p1[2] - p0[2]) / h];
+  const angVel = (W0, W1) => { const R = (W, r, c) => W[c * 4 + r], d = (r, c) => (R(W1, r, c) - R(W0, r, c)) / h, w = (r, k) => d(r, 0) * R(W0, k, 0) + d(r, 1) * R(W0, k, 1) + d(r, 2) * R(W0, k, 2); return [(w(2, 1) - w(1, 2)) / 2, (w(0, 2) - w(2, 0)) / 2, (w(1, 0) - w(0, 1)) / 2]; };
+  out.feet = {};
+  for (const F of ["R", "L"]) { const f0 = t1FootPts(A, e0.fk, F), f1 = t1FootPts(C, e1.fk, F), L = A.legs[F], d = e0.pose.diag.feet[F];
+    out.feet[F] = Object.assign(f0, { vel: { ankle: vel(f0.ankle, f1.ankle), toeTip: vel(f0.toeTip, f1.toeTip), ball: vel(f0.ball, f1.ball) }, angVel: angVel(f0.world, f1.world),
+      stance: !!L.stance, stanceFrac: L.stance ? d.s : null, swingFrac: L.stance ? null : d.w, role: L.stance ? (L.role ? L.role.kind : "RUN") : null,
+      plant: L.stance ? { pitch: L.plant.pos.slice(), yaw: L.plant.yaw, since: A.t - L.tTD } : null,
+      nextTouchdown: L.stance ? null : { t: L.tTDf, inS: L.tTDf - A.t, pitch: L.tgt ? [L.tgt[0], L.tgt[1]] : null, yaw: L.tgt ? L.tgt[2] : null, role: L.tgtRole || null } }); }
+  const pi = b.idx.pelvis, p0 = e0.fk.joint[pi], p1 = e1.fk.joint[pi];
+  out.pelvis = { pos: p0.slice(), vel: vel(p0, p1), yaw: A.psi, yawRate: wrapA(C.psi - A.psi) / h };
+  out.com = { pitch: A.P.slice(), vel: A.V.slice(), speed: v2.len(A.V), acc: A.acc.slice() };
+  out.direction = { desired: A.input.dir, desiredSpeed: A.input.v, actual: v2.len(A.V) > 0.2 ? ang2(A.V) : A.psi, facing: A.psi, gaze: A.gaze };
+  out.support = A.legs.R.stance ? "R" : A.legs.L.stance ? "L" : "flight";
+  out.stride = { seg: A.clk.seg, segFrac: A.clk.x, phase: e0.pose.u, touchdowns: A.tdCount };
+  out.turn = A.man ? { mode: A.man.kind, technique: A.man.tech, phase: A.man.phase, requested: A.man.delta, plantFoot: A.man.plantFoot, sinceDecision: A.t - A.man.tDecide } : { mode: A.st.role ? A.st.role.kind : "RUN" };
+  return out;
+}
+// t1Predict: where each foot WILL be over the next horizon seconds if the input does not change (a deterministic lookahead on a clone):
+// samples every `every` steps of the ankle, toe tip and ball of each foot with its support state — what DRIBBLE-1 needs to plan a touch.
+function t1Predict(A, horizon, every) {
+  const C = t1Clone(A), n = Math.round((horizon || 0.4) / T1.step), k = every || 4, out = [];
+  for (let i = 1; i <= n; i++) { t1Step(C, C.input); if (i % k) continue; const e = t1Evaluate(C); const o = { t: C.t, support: C.legs.R.stance ? "R" : C.legs.L.stance ? "L" : "flight", com: C.P.slice() };
+    for (const F of ["R", "L"]) { const f = t1FootPts(C, e.fk, F); o[F] = { ankle: f.ankle, toeTip: f.toeTip, ball: f.ball, stance: !!C.legs[F].stance }; } out.push(o); }
+  return out;
+}
+return { T1, t1Make, t1Step, t1State, t1Predict, t1Clone, t1Evaluate, t1Pose, t1Replay, t1Input, t1Forecast, t1StancePlan, t1PlaceDefault, t1AnkleW, t1G, wrapA, fwd, rgt, DEG };
 })();
 if (typeof module !== "undefined" && module.exports) module.exports = TURN1;
