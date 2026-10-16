@@ -85,6 +85,7 @@ export const D1 = {
   maxInterval: [[2.5, 1.4], [5.5, 2.1], [9.5, 2.9]],
   launchExtra: [[2.5, 2.6], [5.5, 3.6], [9.5, 5.0]],   // m/s: the largest dribble launch above the player's speed (beyond it a touch is a kick / pass)
   horizon: 3.2,
+  switchCache: 16, cloneStride: 12,                      // held cut: distinct post-cut predictions (switch ticks) kept per input
   planTries: 24, planStep: 2, refineTries: 4, liftCarry: 0.22, validKeep: 3, sepCostK: 0.6, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
   warp: { rhoMaxPhys: 1.8, maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.0, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
@@ -105,6 +106,7 @@ export function warpSlope(K, w) { if (!K || w <= K[0][0]) return 1; for (let i =
 const warpOk = (K) => { for (let i = 0; i < K.length - 1; i++) { const a = K[i], b = K[i + 1], d = (b[1] - a[1]) / (b[0] - a[0]); if (!(b[0] > a[0]) || !(d > 0)) return false; const al = a[2] / d, be = b[2] / d; if (al < 0 || be < 0 || al * al + be * be > 9) return false; } return true; };
 // continue a warp from its current state (w, w', slope) back to the identity at the swing's end — always monotone (slopes limited, Fritsch–Carlson)
 export function warpHome(K, w) { if (!K) return null; const y = warpAt(K, w); if (w >= 0.999 || Math.abs(y - w) < 1e-7) return null; const d = (1 - y) / (1 - w), s0 = Math.min(warpSlope(K, w), 2 * d), s1 = Math.min(1, 2 * d); return [[w, y, Math.max(0, s0)], [1, 1, s1]]; }
+const rjX = (S, key) => { if (S.rej) S.rej[key] = (S.rej[key] || 0) + 1; };
 const tab = (T, x) => { if (x <= T[0][0]) return T[0][1]; for (let i = 1; i < T.length; i++) if (x <= T[i][0]) { const a = T[i - 1], b = T[i]; return a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); } return T[T.length - 1][1]; };
 
 // ── colliders: the real boot mesh hulls (d1_colliders.json) + leg capsules, per player, through the BALL-PHYS adapter (fromTurn1Frame) ────────────────
@@ -378,10 +380,11 @@ export class DribbleSim {
   inputKey() { const i = this.input, h = this.held; return `${i.dir.toFixed(6)}|${i.v.toFixed(4)}|${h && !h.released ? h.raw.dir.toFixed(6) : "-"}`; }
   ballChanged(P) { const b = this.W.ball, q = P.ballAtK && P.ballAtK.get(this.k); return !q || Math.abs(q[0] - b.p[0]) + Math.abs(q[1] - b.p[1]) + Math.abs(q[2] - b.p[2]) > 1e-9; }
   // locomotion lookahead on a TURN-1.2 clone (input schedule: `inp` until tick kSwitch, then `inp2`); per tick COM / legs, per late-swing tick the boot
-  predictLoco(k, inp, n, inp2, kSwitch) {
-    const c0 = now(), T1 = this.T1, C = T1.t1Clone(this.A), out = []; C.input = inp;
+  predictLoco(k, inp, n, inp2, kSwitch, from) {
+    const c0 = now(), T1 = this.T1, C = T1.t1Clone(from || this.A), out = []; C.input = inp;
     for (let j = 1; j <= n; j++) {
       const ki = k + j, ii = inp2 && ki - 1 >= kSwitch ? inp2 : inp; T1.t1Step(C, ii);
+      if (!inp2 && j % D1.cloneStride === 0) out.clones = Object.assign(out.clones || {}, { [ki]: T1.t1Clone(C) });   // sparse states: later predictions branch from here
       const smp = { k: ki, P: C.P.slice(), V: C.V.slice(), psi: C.psi, legs: {} };
       for (const F of SIDES) { const L = C.legs[F]; smp.legs[F] = L.stance ? { stance: true, tTD: L.tTD, plant: L.plant.pos.slice() } : { stance: false, w: clamp(L.w || 0, 0, 1), swing: Math.round(L.tTO * 240), tTDf: L.tTDf, tgt: L.tgt ? L.tgt.slice() : null }; }
       const need = SIDES.some((F) => !C.legs[F].stance && (C.legs[F].w || 0) >= D1.wLo - 0.08 && (C.legs[F].w || 0) <= 0.995);
@@ -627,15 +630,24 @@ export class DribbleSim {
   launchMax(s) { return s + tab(D1.launchExtra, s); }
   // the motion if a held cut is released at this candidate's contact (input held until the touch, the cut from the next tick); cached per contact tick
   switchCand(c, k, held) {
-    const kc = c.smp.k, key = this.inputKey() + "@" + kc + "@" + k; this._swc = this._swc && this._swc.k === k ? this._swc : { k, m: new Map() };
-    let ps = this._swc.m.get(key); if (!ps) { ps = this.predictLoco(k, this.input, Math.round((1.6 + tab(D1.maxInterval, Math.hypot(this.A.V[0], this.A.V[1])) + 0.5) / DT), held, kc + 1); this._swc.m.set(key, ps); }
-    const ix = (kk) => kk - k - 1, j = ix(kc); if (j < 0 || j >= ps.length) return c;
+    // TURN-1.2 is deterministic: a switched prediction made at an earlier tick (same input, same switch tick) stays valid — cached across ticks
+    const kc = c.smp.k, ik = this.inputKey(), key = ik + "@" + kc; if (!this._swc || this._swc.ik !== ik) this._swc = { ik, m: new Map() };
+    let e = this._swc.m.get(key);
+    if (!e) { if (this._swc.m.size >= D1.switchCache) { rjX(this, "switchCap"); return null; }
+      // branch from the main prediction's nearest stored state at or before the contact (identical motion until the switch), not from now
+      const LC = this.locoCache, cl = LC && LC.key === ik && LC.pred.clones ? LC.pred.clones : null; let kb = k, from = null;
+      if (cl) for (const kk of Object.keys(cl)) { const v = +kk; if (v <= kc && v > kb) { kb = v; from = cl[kk]; } }
+      const nH = Math.round((1.6 + tab(D1.maxInterval, Math.hypot(this.A.V[0], this.A.V[1])) + 0.5) / DT) - (kb - k), head = from ? [] : null;
+      const tail = this.predictLoco(kb, this.input, Math.max(60, nH), held, kc + 1, from || null);
+      // samples before kb come from the main prediction (same motion)
+      const ps = from ? LC.pred.slice(k - LC.k0, kb - LC.k0).concat(tail) : tail; e = { k0: k, ps }; this._swc.m.set(key, e); }
+    const ps = e.ps, ix = (kk) => kk - e.k0 - 1, j = ix(kc); if (j < 0 || j >= ps.length) return c;
     // re-aim into the post-cut motion and redo the contact geometry for that direction (any region / elevation)
     const ball = K(c.ballK.p), vBall = K(c.ballK.v), n = this.aimDir(ps, j, ball, Math.hypot(this.A.V[0], this.A.V[1]), true);
     let g = null; for (const reg of [c.reg, ...Object.keys(D1.regions).filter((r) => r !== c.reg)]) { for (const e of this.elevs()) { g = this.contactGeom(c.gs, c.F, reg, n, ball, vBall, e * DEG); if (g) break; } if (g) break; }
     if (!g) return null;
     const vPath = this.bootVel(c.pred, c.jp, c.F, g.cW), vb = V.sc(vPath, c.rho);
-    return Object.assign({}, c, g, { pred: ps, j, smp: ps[j], jp: ix(c.pred[c.jp].k), off: 0, release: "contact", n, vb, gs: c.gs });
+    return Object.assign({}, c, g, { pred: ps, j, smp: ps[j], jp: ix(c.pred[c.jp].k), off: Math.max(0, ix(k + 1)), release: "contact", n, vb, gs: c.gs });
   }
   // a recovery touch only when the ball is actually coming into this foot's swing soon (otherwise keep looking for a proper touch)
   recoverNeeded(c) { return (c.smp.k - this.k) * DT < 0.45; }
