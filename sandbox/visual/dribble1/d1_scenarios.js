@@ -8,6 +8,8 @@ const base = (sp, extra) => Object.assign({ v: SPEEDS[sp], init: { v: SPEEDS[sp]
 export const SCN = {};
 const add = (id, label, sp, extra) => { SCN[id] = Object.assign(base(sp, extra), { id, label, group: extra.group, speed: sp }); };
 for (const sp of Object.keys(SPEEDS)) add(`STRAIGHT_${sp}`, `${sp} ${SPEEDS[sp]} m/s · straight`, sp, { group: "STRAIGHT", dur: 8 });
+add("STRAIGHT_RUN_FAR", "RUN 5.5 · straight, ball starting 2.4 m ahead (architecture comparison start)", "RUN", { group: "STRAIGHT", dur: 8, ball: { ahead: 2.4, speed: 3.6 } });
+add("CUT60_RUN_FAR", "RUN 5.5 · 60° cut right, ball starting 2.4 m ahead (architecture comparison start)", "RUN", { group: "CUT", cmds: [{ t: 2.4, turn: 60 }], dur: 6.5, ball: { ahead: 2.4, speed: 3.6 } });
 add("CURVE_RUN", "RUN 5.5 · gentle steering 20° right, then 20° left", "RUN", { group: "CURVE", cmds: [{ t: 1.8, turn: 20 }, { t: 3.6, turn: -5 }, { t: 5.4, turn: 15 }], dur: 8 });
 add("CURVE_JOG", "JOG 3.0 · gentle steering ±25°", "JOG", { group: "CURVE", cmds: [{ t: 1.6, turn: 25 }, { t: 3.6, turn: -10 }], dur: 7 });
 add("CUT45_RUN", "RUN 5.5 · 45° cut right", "RUN", { group: "CUT", cmds: [{ t: 2.2, turn: 45 }], dur: 6 });
