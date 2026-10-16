@@ -145,7 +145,7 @@ function t1StancePlan(A, F, P, V, idx) {
   // a stance spans at most travelMax of COM travel (otherwise no leg can stay on its plant)
   { const sm = Math.max(0.5, (s + v2.len(V1)) / 2), tm = (T1.travelMax[role.kind] || T1.travelMax.RUN) / sm; if (tc > tm) tc = Math.max(0.08, tm); }
   // what one stance can deliver: |ΔV| ≤ aStanceMax · tc (the remainder is left to the next stance)
-  let dV = v2.sub(V1, V); const dm = v2.len(dV), cap = T1.aStanceMax * tc * (role.kind === "PLANT" || role.kind === "EXIT" ? 1 : 0.7);
+  let dV = v2.sub(V1, V); const dm = v2.len(dV), cap = T1.aStanceMax * tc * (role.kind === "PLANT" || role.kind === "EXIT" ? 1 : role.kind === "BRAKE" ? 0.85 : 0.7);
   if (dm > cap) dV = v2.sc(dV, cap / dm);
   return { role, tc, tf, dV, p };
 }
@@ -218,24 +218,26 @@ function t1PlanManeuver(A, d, s, th) {
   const ad = Math.abs(d) / DEG, kind = ad >= T1.pivotFrom ? "PIVOT" : "CUT", sg = Math.sign(d);   // + right turn
   const outside = sg > 0 ? "L" : "R";                                               // a side-step cut to the right plants the LEFT foot
   const sE = Math.min(s, tab(T1.sEntry, ad));
-  const up = t1Upcoming(A, 5), p = t1G(A, s);
+  const up = t1Upcoming(A, 8), p = t1G(A, s);
   // braking stances needed to reach the plant entry speed (each brake stance removes ≈ aBrake · Ts)
-  const TsB = p.tc * T1.braketcK + (p.Ts - p.tc) * T1.braketfK, nBrake = Math.ceil(Math.max(0, s - sE) / (T1.aBrake * TsB) - 0.15);
+  // braking stances needed: each removes what one braking stance can actually deliver at this speed (short, travel-capped contacts at a sprint)
+  const tcB = Math.min(p.tc * T1.braketcK, T1.travelMax.BRAKE / Math.max(1, s)), TsB = tcB + (p.Ts - p.tc) * T1.braketfK, perStep = Math.min(T1.aBrake * TsB, T1.aStanceMax * 0.85 * tcB);
+  const nBrake = Math.ceil(Math.max(0, s - sE) / Math.max(0.3, perStep) - 0.15), nCap = kind === "PIVOT" ? 5 : 4;
   // candidates: every upcoming touchdown with enough braking before it; the PREFERRED technique (outside foot: side-step / outside pivot) wins
   // unless another valid one is ≥ prefGainS earlier (responsiveness: never wait a whole stride for the textbook foot)
   const cands = [];
   for (let i = 0; i < up.length; i++) {
     const u = up[i]; if (u.t - A.t < T1.reactS) continue;
     const nB = i - (up[0].t - A.t < T1.reactS ? 1 : 0);
-    if (nB < Math.min(nBrake, 3) && !(ad < 70 && nB >= nBrake - 1)) continue;
+    if (nB < Math.min(nBrake, nCap) && !(ad < 70 && nB >= nBrake - 1)) continue;
     const out = u.foot === outside;
-    const tech = kind === "PIVOT" ? "PIVOT" : (out ? "SIDESTEP" : (ad <= T1.xoverMax ? "XOVER" : null));
+    const tech = kind === "PIVOT" ? "PIVOT" : (out ? "SIDESTEP" : (ad <= T1.xoverMax ? "XOVER" : ad >= 110 ? "PIVOT" : null));   // a sharp cut may pivot on the inside foot if that is sooner
     if (!tech) continue;
     cands.push({ u, tech, i, pref: out, inside: !out });
   }
   let pick = cands.find(c => c.pref) || null; const alt = cands[0] || null;
   if (alt && (!pick || alt.u.t < pick.u.t - T1.prefGainS)) pick = alt;
-  if (!pick) { const u = up.find((q, i) => i >= 2 && q.foot === outside) || up[up.length - 1]; pick = { u, tech: kind === "PIVOT" ? "PIVOT" : (u.foot === outside ? "SIDESTEP" : "XOVER"), i: up.indexOf(u), inside: u.foot !== outside }; }
+  if (!pick) { const u = up.slice().reverse().find(q => q.foot === outside) || up[up.length - 1]; pick = { u, tech: kind === "PIVOT" ? "PIVOT" : (u.foot === outside ? "SIDESTEP" : "XOVER"), i: up.indexOf(u), inside: u.foot !== outside }; }
   const man = { kind, tech: pick.tech, inside: !!pick.inside, delta: d, delta0: d, thIn: th, sg, plantFoot: pick.u.foot, plantIdx: pick.u.idx, tDecide: A.t, phase: "PRE", sEntry: sE, roles: {}, exitBoost: true };
   A.man = man; t1Retarget(A, man);
   A.events.push([+A.t.toFixed(4), "maneuver", man.kind, man.tech, +(d / DEG).toFixed(1), man.plantFoot, +(pick.u.t - A.t).toFixed(3)]);

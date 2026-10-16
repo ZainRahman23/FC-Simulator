@@ -1,0 +1,2954 @@
+{
+ "note": "TURN-1 regression (t1_check.cjs)",
+ "scenarios": {
+  "LOW_15R": {
+   "label": "LOW 3.0 m/s · 15° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "bbeb468feb1e14c2",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     112.7
+    ],
+    "hipFlex": [
+     -24.6,
+     59.1
+    ],
+    "hipAbd": [
+     -17.7,
+     22.1
+    ],
+    "psi": [
+     -0.9,
+     26.1
+    ]
+   },
+   "speedMin": 2.97,
+   "accMax": 4.9,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.246,
+   "headingEnd": 15,
+   "msStep": 0.1136,
+   "msPose": 0.091
+  },
+  "LOW_15L": {
+   "label": "LOW 3.0 m/s · 15° LEFT (away)",
+   "deterministic": true,
+   "hash": "4837ba26c84d2015",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9913,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     15.2,
+     112.7
+    ],
+    "hipFlex": [
+     -15.6,
+     59.1
+    ],
+    "hipAbd": [
+     -20.1,
+     13.7
+    ],
+    "psi": [
+     -7,
+     13.1
+    ]
+   },
+   "speedMin": 2.97,
+   "accMax": 4.9,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.246,
+   "headingEnd": -15,
+   "msStep": 0.0261,
+   "msPose": 0.06
+  },
+  "LOW_30R": {
+   "label": "LOW 3.0 m/s · 30° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "d24c39c6bee7258c",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     112.7
+    ],
+    "hipFlex": [
+     -28.5,
+     61.9
+    ],
+    "hipAbd": [
+     -22.9,
+     35.9
+    ],
+    "psi": [
+     -2.3,
+     35
+    ]
+   },
+   "speedMin": 2.9,
+   "accMax": 9.5,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.279,
+   "headingEnd": 30,
+   "msStep": 0.0271,
+   "msPose": 0.06
+  },
+  "LOW_30L": {
+   "label": "LOW 3.0 m/s · 30° LEFT (away)",
+   "deterministic": true,
+   "hash": "269e97721b63465b",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     112.7
+    ],
+    "hipFlex": [
+     -20.2,
+     59.1
+    ],
+    "hipAbd": [
+     -11.2,
+     30.4
+    ],
+    "psi": [
+     -6.1,
+     21
+    ]
+   },
+   "speedMin": 2.97,
+   "accMax": 5.2,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.613,
+   "headingEnd": -30,
+   "msStep": 0.027,
+   "msPose": 0.056
+  },
+  "LOW_45R": {
+   "label": "LOW 3.0 m/s · 45° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "990057af2a22bcc5",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     112.7
+    ],
+    "hipFlex": [
+     -23.4,
+     63.6
+    ],
+    "hipAbd": [
+     -24.7,
+     30.2
+    ],
+    "psi": [
+     -2.8,
+     35
+    ]
+   },
+   "speedMin": 2.9,
+   "accMax": 9.5,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.613,
+   "headingEnd": 45,
+   "msStep": 0.0262,
+   "msPose": 0.057
+  },
+  "LOW_45L": {
+   "label": "LOW 3.0 m/s · 45° LEFT (away)",
+   "deterministic": true,
+   "hash": "ab4b11e6c4c3ee0f",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     112.7
+    ],
+    "hipFlex": [
+     -16.3,
+     64.1
+    ],
+    "hipAbd": [
+     -11.2,
+     40
+    ],
+    "psi": [
+     -11.4,
+     29.3
+    ]
+   },
+   "speedMin": 2.89,
+   "accMax": 10.1,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.637,
+   "headingEnd": -45,
+   "msStep": 0.0267,
+   "msPose": 0.056
+  },
+  "LOW_60R": {
+   "label": "LOW 3.0 m/s · 60° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "eb96f75232e70346",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     124.3
+    ],
+    "hipFlex": [
+     -15.6,
+     59.1
+    ],
+    "hipAbd": [
+     -31.2,
+     35
+    ],
+    "psi": [
+     -3,
+     35
+    ]
+   },
+   "speedMin": 2.48,
+   "accMax": 18.7,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    60,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.433,
+   "headingEnd": 60,
+   "msStep": 0.0611,
+   "msPose": 0.06
+  },
+  "LOW_60L": {
+   "label": "LOW 3.0 m/s · 60° LEFT (away)",
+   "deterministic": true,
+   "hash": "a90094cc36a8a3ae",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9828,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     21.3,
+     126.1
+    ],
+    "hipFlex": [
+     -15.6,
+     72.9
+    ],
+    "hipAbd": [
+     -25,
+     30.5
+    ],
+    "psi": [
+     -26.3,
+     18.7
+    ]
+   },
+   "speedMin": 2.45,
+   "accMax": 20,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    -60,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.408,
+   "headingEnd": -60,
+   "msStep": 0.0281,
+   "msPose": 0.056
+  },
+  "LOW_90R": {
+   "label": "LOW 3.0 m/s · 90° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "f89ec2f51eb19d7c",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     127.3
+    ],
+    "hipFlex": [
+     -15.1,
+     62.7
+    ],
+    "hipAbd": [
+     -30,
+     40.1
+    ],
+    "psi": [
+     -9.7,
+     35
+    ]
+   },
+   "speedMin": 2.07,
+   "accMax": 18.3,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.504,
+   "headingEnd": 90,
+   "msStep": 0.0267,
+   "msPose": 0.054
+  },
+  "LOW_90L": {
+   "label": "LOW 3.0 m/s · 90° LEFT (away)",
+   "deterministic": true,
+   "hash": "0be227748eb59a46",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     125
+    ],
+    "hipFlex": [
+     -15.8,
+     73.6
+    ],
+    "hipAbd": [
+     -28.6,
+     44.1
+    ],
+    "psi": [
+     -6.5,
+     35
+    ]
+   },
+   "speedMin": 2.11,
+   "accMax": 17,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -90,
+    "R",
+    0.454
+   ],
+   "plantAfterS": 0.425,
+   "headingWithin5degAfterS": 0.837,
+   "headingEnd": -90,
+   "msStep": 0.0307,
+   "msPose": 0.058
+  },
+  "LOW_120R": {
+   "label": "LOW 3.0 m/s · 120° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "470ce08d3eebb3c2",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     127.4
+    ],
+    "hipFlex": [
+     -15.4,
+     70.4
+    ],
+    "hipAbd": [
+     -33.5,
+     40.1
+    ],
+    "psi": [
+     -15.6,
+     35
+    ]
+   },
+   "speedMin": 1.69,
+   "accMax": 18.6,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    120,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.542,
+   "headingEnd": 120,
+   "msStep": 0.0272,
+   "msPose": 0.059
+  },
+  "LOW_120L": {
+   "label": "LOW 3.0 m/s · 120° LEFT (away)",
+   "deterministic": true,
+   "hash": "d150608848920cc3",
+   "slipMaxCm": 0.07,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     129.7
+    ],
+    "hipFlex": [
+     -18.4,
+     81.7
+    ],
+    "hipAbd": [
+     -25,
+     24.7
+    ],
+    "psi": [
+     -34.5,
+     19
+    ]
+   },
+   "speedMin": 0.75,
+   "accMax": 21.4,
+   "maneuver": [
+    "CUT",
+    "PIVOT",
+    -120,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.329,
+   "headingEnd": -120,
+   "msStep": 0.0322,
+   "msPose": 0.06
+  },
+  "LOW_150R": {
+   "label": "LOW 3.0 m/s · 150° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "93102782c2a26d21",
+   "slipMaxCm": 0.11,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     133.2
+    ],
+    "hipFlex": [
+     -17.3,
+     70.5
+    ],
+    "hipAbd": [
+     -32,
+     39.3
+    ],
+    "psi": [
+     -2,
+     35
+    ]
+   },
+   "speedMin": 0.38,
+   "accMax": 20.3,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    150,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.35,
+   "headingEnd": 150,
+   "msStep": 0.0312,
+   "msPose": 0.059
+  },
+  "LOW_150L": {
+   "label": "LOW 3.0 m/s · 150° LEFT (away)",
+   "deterministic": true,
+   "hash": "aad529f65bf76b05",
+   "slipMaxCm": 0.11,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     128.8
+    ],
+    "hipFlex": [
+     -20.9,
+     82.1
+    ],
+    "hipAbd": [
+     -25,
+     22.2
+    ],
+    "psi": [
+     -40,
+     21.3
+    ]
+   },
+   "speedMin": 0.38,
+   "accMax": 20.3,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -150,
+    "L",
+    0.091
+   ],
+   "plantAfterS": 0.091,
+   "headingWithin5degAfterS": 0.35,
+   "headingEnd": -150,
+   "msStep": 0.0277,
+   "msPose": 0.056
+  },
+  "LOW_180R": {
+   "label": "LOW 3.0 m/s · 180° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "6d41fe215d0e32e1",
+   "slipMaxCm": 0.46,
+   "reachMax": 1.1038,
+   "reachClampSamples": 16,
+   "joints": {
+    "knee": [
+     0.2,
+     113
+    ],
+    "hipFlex": [
+     -27.7,
+     77.1
+    ],
+    "hipAbd": [
+     -41.7,
+     19.8
+    ],
+    "psi": [
+     -40,
+     22
+    ]
+   },
+   "speedMin": 0.07,
+   "accMax": 15,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    179.5,
+    "R",
+    0.454
+   ],
+   "plantAfterS": 0.452,
+   "headingWithin5degAfterS": 0.721,
+   "headingEnd": 179.5,
+   "msStep": 0.0316,
+   "msPose": 0.062
+  },
+  "LOW_180L": {
+   "label": "LOW 3.0 m/s · 180° LEFT (away)",
+   "deterministic": true,
+   "hash": "6628e72a6c82e8f9",
+   "slipMaxCm": 0.11,
+   "reachMax": 1.0902,
+   "reachClampSamples": 11,
+   "joints": {
+    "knee": [
+     0.2,
+     121.2
+    ],
+    "hipFlex": [
+     -20,
+     74.4
+    ],
+    "hipAbd": [
+     -14.9,
+     41.5
+    ],
+    "psi": [
+     -12.9,
+     35
+    ]
+   },
+   "speedMin": 0.07,
+   "accMax": 15,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -179.5,
+    "R",
+    0.454
+   ],
+   "plantAfterS": 0.452,
+   "headingWithin5degAfterS": 0.721,
+   "headingEnd": -179.5,
+   "msStep": 0.0289,
+   "msPose": 0.059
+  },
+  "JOG_15R": {
+   "label": "JOG 5.5 m/s · 15° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "c2ebe9d12dbbc92e",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9981,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     7.1,
+     135.8
+    ],
+    "hipFlex": [
+     -18.6,
+     81.3
+    ],
+    "hipAbd": [
+     -25.7,
+     29.4
+    ],
+    "psi": [
+     -5.4,
+     17.2
+    ]
+   },
+   "speedMin": 5.48,
+   "accMax": 7.9,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.646,
+   "headingEnd": 15,
+   "msStep": 0.1162,
+   "msPose": 0.064
+  },
+  "JOG_15L": {
+   "label": "JOG 5.5 m/s · 15° LEFT (away)",
+   "deterministic": true,
+   "hash": "c9abe84330592737",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     135.8
+    ],
+    "hipFlex": [
+     -18.3,
+     81.3
+    ],
+    "hipAbd": [
+     -20.5,
+     38.7
+    ],
+    "psi": [
+     -4.5,
+     17.5
+    ]
+   },
+   "speedMin": 5.47,
+   "accMax": 10.4,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.379,
+   "headingEnd": -15,
+   "msStep": 0.0275,
+   "msPose": 0.058
+  },
+  "JOG_30R": {
+   "label": "JOG 5.5 m/s · 30° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "351de29eccbdf18d",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0013,
+   "reachClampSamples": 3,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -22.8,
+     81.3
+    ],
+    "hipAbd": [
+     -25.7,
+     40.1
+    ],
+    "psi": [
+     -8.3,
+     17.8
+    ]
+   },
+   "speedMin": 5.41,
+   "accMax": 17.3,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.712,
+   "headingEnd": 30,
+   "msStep": 0.0281,
+   "msPose": 0.057
+  },
+  "JOG_30L": {
+   "label": "JOG 5.5 m/s · 30° LEFT (away)",
+   "deterministic": true,
+   "hash": "7ce1214d92100945",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19.6,
+     81.3
+    ],
+    "hipAbd": [
+     -25.3,
+     31.3
+    ],
+    "psi": [
+     -7.1,
+     17.9
+    ]
+   },
+   "speedMin": 5.47,
+   "accMax": 10.4,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.95,
+   "headingEnd": -30,
+   "msStep": 0.0287,
+   "msPose": 0.055
+  },
+  "JOG_45R": {
+   "label": "JOG 5.5 m/s · 45° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "3ab8ac806403f7ef",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0559,
+   "reachClampSamples": 7,
+   "joints": {
+    "knee": [
+     0.2,
+     140.5
+    ],
+    "hipFlex": [
+     -13.1,
+     90.2
+    ],
+    "hipAbd": [
+     -37.7,
+     36.6
+    ],
+    "psi": [
+     -9.5,
+     17.6
+    ]
+   },
+   "speedMin": 4.9,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    45,
+    "R",
+    0.25
+   ],
+   "plantAfterS": 0.25,
+   "headingWithin5degAfterS": 0.546,
+   "headingEnd": 45,
+   "msStep": 0.1149,
+   "msPose": 0.056
+  },
+  "JOG_45L": {
+   "label": "JOG 5.5 m/s · 45° LEFT (away)",
+   "deterministic": true,
+   "hash": "7a2612db36b2f5ac",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9861,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     19.1,
+     135.8
+    ],
+    "hipFlex": [
+     -15.1,
+     81.3
+    ],
+    "hipAbd": [
+     -37.2,
+     40
+    ],
+    "psi": [
+     -8.1,
+     28.5
+    ]
+   },
+   "speedMin": 4.94,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -45,
+    "R",
+    0.25
+   ],
+   "plantAfterS": 0.25,
+   "headingWithin5degAfterS": 0.546,
+   "headingEnd": -45,
+   "msStep": 0.0288,
+   "msPose": 0.057
+  },
+  "JOG_60R": {
+   "label": "JOG 5.5 m/s · 60° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "80d74f5f75d27813",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0825,
+   "reachClampSamples": 9,
+   "joints": {
+    "knee": [
+     0.2,
+     137.5
+    ],
+    "hipFlex": [
+     -19,
+     94.3
+    ],
+    "hipAbd": [
+     -40.2,
+     33.2
+    ],
+    "psi": [
+     -12.1,
+     19.1
+    ]
+   },
+   "speedMin": 4.52,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    60,
+    "R",
+    0.25
+   ],
+   "plantAfterS": 0.25,
+   "headingWithin5degAfterS": 0.575,
+   "headingEnd": 60,
+   "msStep": 0.0727,
+   "msPose": 0.057
+  },
+  "JOG_60L": {
+   "label": "JOG 5.5 m/s · 60° LEFT (away)",
+   "deterministic": true,
+   "hash": "021ba9a97ffd217a",
+   "slipMaxCm": 0.03,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19,
+     81.3
+    ],
+    "hipAbd": [
+     -40.1,
+     40.3
+    ],
+    "psi": [
+     -13,
+     32.7
+    ]
+   },
+   "speedMin": 4.57,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -60,
+    "R",
+    0.25
+   ],
+   "plantAfterS": 0.25,
+   "headingWithin5degAfterS": 0.575,
+   "headingEnd": -60,
+   "msStep": 0.0305,
+   "msPose": 0.057
+  },
+  "JOG_90R": {
+   "label": "JOG 5.5 m/s · 90° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "ac2ba80df9772e39",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0459,
+   "reachClampSamples": 18,
+   "joints": {
+    "knee": [
+     0.2,
+     137.3
+    ],
+    "hipFlex": [
+     -19.6,
+     81.3
+    ],
+    "hipAbd": [
+     -38.5,
+     56.5
+    ],
+    "psi": [
+     -8.6,
+     35
+    ]
+   },
+   "speedMin": 3.02,
+   "accMax": 27,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.498,
+   "headingWithin5degAfterS": 0.892,
+   "headingEnd": 90,
+   "msStep": 0.1535,
+   "msPose": 0.062
+  },
+  "JOG_90L": {
+   "label": "JOG 5.5 m/s · 90° LEFT (away)",
+   "deterministic": true,
+   "hash": "1b86f6b20bc221ab",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.038,
+   "reachClampSamples": 8,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19.3,
+     81.6
+    ],
+    "hipAbd": [
+     -38.7,
+     59.2
+    ],
+    "psi": [
+     -8.2,
+     35
+    ]
+   },
+   "speedMin": 3.04,
+   "accMax": 26.4,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -90,
+    "R",
+    0.875
+   ],
+   "plantAfterS": 0.76,
+   "headingWithin5degAfterS": 1.154,
+   "headingEnd": -90,
+   "msStep": 0.0328,
+   "msPose": 0.058
+  },
+  "JOG_120R": {
+   "label": "JOG 5.5 m/s · 120° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "bae5410e4f7fdeab",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0573,
+   "reachClampSamples": 19,
+   "joints": {
+    "knee": [
+     0.2,
+     136.2
+    ],
+    "hipFlex": [
+     -13.9,
+     81.3
+    ],
+    "hipAbd": [
+     -36.8,
+     55.9
+    ],
+    "psi": [
+     -11.3,
+     35
+    ]
+   },
+   "speedMin": 1.97,
+   "accMax": 19.9,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    120,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.514,
+   "headingWithin5degAfterS": 0.962,
+   "headingEnd": 120,
+   "msStep": 0.0324,
+   "msPose": 0.057
+  },
+  "JOG_120L": {
+   "label": "JOG 5.5 m/s · 120° LEFT (away)",
+   "deterministic": true,
+   "hash": "ce9683a77297809e",
+   "slipMaxCm": 0.07,
+   "reachMax": 1.0562,
+   "reachClampSamples": 8,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -17.3,
+     81.3
+    ],
+    "hipAbd": [
+     -36.8,
+     29.6
+    ],
+    "psi": [
+     -40,
+     24.2
+    ]
+   },
+   "speedMin": 0.92,
+   "accMax": 23.8,
+   "maneuver": [
+    "CUT",
+    "PIVOT",
+    -120,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.514,
+   "headingWithin5degAfterS": 0.754,
+   "headingEnd": -120,
+   "msStep": 0.0324,
+   "msPose": 0.057
+  },
+  "JOG_150R": {
+   "label": "JOG 5.5 m/s · 150° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "9531ca2f23855e1d",
+   "slipMaxCm": 1.48,
+   "reachMax": 1.1322,
+   "reachClampSamples": 29,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -23.8,
+     81.3
+    ],
+    "hipAbd": [
+     -42.1,
+     13.8
+    ],
+    "psi": [
+     -40,
+     26
+    ]
+   },
+   "speedMin": 0.46,
+   "accMax": 22.1,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    150,
+    "R",
+    0.875
+   ],
+   "plantAfterS": 0.873,
+   "headingWithin5degAfterS": 1.138,
+   "headingEnd": 150,
+   "msStep": 0.0333,
+   "msPose": 0.059
+  },
+  "JOG_150L": {
+   "label": "JOG 5.5 m/s · 150° LEFT (away)",
+   "deterministic": true,
+   "hash": "3f278c1c308ccbff",
+   "slipMaxCm": 0.12,
+   "reachMax": 1.1013,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -21.6,
+     81.3
+    ],
+    "hipAbd": [
+     -22.9,
+     38.6
+    ],
+    "psi": [
+     -16.5,
+     35
+    ]
+   },
+   "speedMin": 0.46,
+   "accMax": 22.1,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -150,
+    "R",
+    0.875
+   ],
+   "plantAfterS": 0.873,
+   "headingWithin5degAfterS": 1.138,
+   "headingEnd": -150,
+   "msStep": 0.0332,
+   "msPose": 0.061
+  },
+  "JOG_180R": {
+   "label": "JOG 5.5 m/s · 180° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "ecfc0c745a94be28",
+   "slipMaxCm": 2,
+   "reachMax": 1.1187,
+   "reachClampSamples": 29,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19.1,
+     81.3
+    ],
+    "hipAbd": [
+     -43.5,
+     17.2
+    ],
+    "psi": [
+     -40,
+     23
+    ]
+   },
+   "speedMin": 0.09,
+   "accMax": 22.1,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    179.5,
+    "R",
+    0.875
+   ],
+   "plantAfterS": 0.886,
+   "headingWithin5degAfterS": 1.154,
+   "headingEnd": 179.5,
+   "msStep": 0.0332,
+   "msPose": 0.064
+  },
+  "JOG_180L": {
+   "label": "JOG 5.5 m/s · 180° LEFT (away)",
+   "deterministic": true,
+   "hash": "d397159870cd629e",
+   "slipMaxCm": 0.12,
+   "reachMax": 1.1154,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19.1,
+     81.3
+    ],
+    "hipAbd": [
+     -22.3,
+     33.7
+    ],
+    "psi": [
+     -14.4,
+     35
+    ]
+   },
+   "speedMin": 0.09,
+   "accMax": 22.1,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -179.5,
+    "R",
+    0.875
+   ],
+   "plantAfterS": 0.886,
+   "headingWithin5degAfterS": 1.154,
+   "headingEnd": -179.5,
+   "msStep": 0.0328,
+   "msPose": 0.057
+  },
+  "RUN_15R": {
+   "label": "RUN 7.8 m/s · 15° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "07038f8d74649c11",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     147.9
+    ],
+    "hipFlex": [
+     -20.3,
+     89.6
+    ],
+    "hipAbd": [
+     -25.2,
+     33.7
+    ],
+    "psi": [
+     -2,
+     14.6
+    ]
+   },
+   "speedMin": 7.74,
+   "accMax": 9.9,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.596,
+   "headingEnd": 15,
+   "msStep": 0.1257,
+   "msPose": 0.069
+  },
+  "RUN_15L": {
+   "label": "RUN 7.8 m/s · 15° LEFT (away)",
+   "deterministic": true,
+   "hash": "22c781e62fe9c41c",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9996,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     3.1,
+     147.9
+    ],
+    "hipFlex": [
+     -20,
+     89.6
+    ],
+    "hipAbd": [
+     -25.7,
+     26
+    ],
+    "psi": [
+     -1.7,
+     14.7
+    ]
+   },
+   "speedMin": 7.7,
+   "accMax": 16.5,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.571,
+   "headingEnd": -15,
+   "msStep": 0.0329,
+   "msPose": 0.058
+  },
+  "RUN_30R": {
+   "label": "RUN 7.8 m/s · 30° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "738e04add81e93c6",
+   "slipMaxCm": 0.03,
+   "reachMax": 0.9952,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     11.2,
+     147.9
+    ],
+    "hipFlex": [
+     -20.8,
+     89.6
+    ],
+    "hipAbd": [
+     -25.2,
+     36.3
+    ],
+    "psi": [
+     -2,
+     14.8
+    ]
+   },
+   "speedMin": 7.7,
+   "accMax": 16.5,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 1.263,
+   "headingEnd": 30,
+   "msStep": 0.0345,
+   "msPose": 0.058
+  },
+  "RUN_30L": {
+   "label": "RUN 7.8 m/s · 30° LEFT (away)",
+   "deterministic": true,
+   "hash": "d83052e140ce5406",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9996,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     3.1,
+     147.9
+    ],
+    "hipFlex": [
+     -19.1,
+     89.6
+    ],
+    "hipAbd": [
+     -25.7,
+     35.3
+    ],
+    "psi": [
+     -2,
+     14.8
+    ]
+   },
+   "speedMin": 7.7,
+   "accMax": 16.5,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 1.079,
+   "headingEnd": -30,
+   "msStep": 0.0345,
+   "msPose": 0.056
+  },
+  "RUN_45R": {
+   "label": "RUN 7.8 m/s · 45° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "7582b95e4b80ca7f",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0325,
+   "reachClampSamples": 6,
+   "joints": {
+    "knee": [
+     0.2,
+     149.2
+    ],
+    "hipFlex": [
+     -21.5,
+     89.6
+    ],
+    "hipAbd": [
+     -25.1,
+     29.9
+    ],
+    "psi": [
+     -20.5,
+     21
+    ]
+   },
+   "speedMin": 6.87,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    45,
+    "L",
+    0.239
+   ],
+   "plantAfterS": 0.239,
+   "headingWithin5degAfterS": 0.654,
+   "headingEnd": 45,
+   "msStep": 0.1727,
+   "msPose": 0.063
+  },
+  "RUN_45L": {
+   "label": "RUN 7.8 m/s · 45° LEFT (away)",
+   "deterministic": true,
+   "hash": "6d8228ddf3fdad44",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0911,
+   "reachClampSamples": 11,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -17.2,
+     89.6
+    ],
+    "hipAbd": [
+     -42.5,
+     24.1
+    ],
+    "psi": [
+     -8.8,
+     22
+    ]
+   },
+   "speedMin": 6.85,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    -45,
+    "L",
+    0.239
+   ],
+   "plantAfterS": 0.239,
+   "headingWithin5degAfterS": 0.654,
+   "headingEnd": -45,
+   "msStep": 0.034,
+   "msPose": 0.058
+  },
+  "RUN_60R": {
+   "label": "RUN 7.8 m/s · 60° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "f9d34c03655788ab",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.1113,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -18.2,
+     89.6
+    ],
+    "hipAbd": [
+     -39.8,
+     17.6
+    ],
+    "psi": [
+     -11,
+     23
+    ]
+   },
+   "speedMin": 5.1,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    60,
+    "R",
+    0.487
+   ],
+   "plantAfterS": 0.434,
+   "headingWithin5degAfterS": 0.771,
+   "headingEnd": 60,
+   "msStep": 0.1254,
+   "msPose": 0.067
+  },
+  "RUN_60L": {
+   "label": "RUN 7.8 m/s · 60° LEFT (away)",
+   "deterministic": true,
+   "hash": "b076eb7aafcf0b55",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0781,
+   "reachClampSamples": 9,
+   "joints": {
+    "knee": [
+     0.2,
+     158.2
+    ],
+    "hipFlex": [
+     -15.6,
+     89.6
+    ],
+    "hipAbd": [
+     -26.3,
+     32.7
+    ],
+    "psi": [
+     -18.5,
+     26.5
+    ]
+   },
+   "speedMin": 5.14,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -60,
+    "R",
+    0.487
+   ],
+   "plantAfterS": 0.434,
+   "headingWithin5degAfterS": 0.842,
+   "headingEnd": -60,
+   "msStep": 0.0353,
+   "msPose": 0.058
+  },
+  "RUN_90R": {
+   "label": "RUN 7.8 m/s · 90° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "7d5ab52669679a04",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0337,
+   "reachClampSamples": 11,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -19.4,
+     89.6
+    ],
+    "hipAbd": [
+     -38.6,
+     60.3
+    ],
+    "psi": [
+     -9.3,
+     35
+    ]
+   },
+   "speedMin": 3.06,
+   "accMax": 25.2,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.196,
+   "headingWithin5degAfterS": 1.587,
+   "headingEnd": 90,
+   "msStep": 0.0394,
+   "msPose": 0.06
+  },
+  "RUN_90L": {
+   "label": "RUN 7.8 m/s · 90° LEFT (away)",
+   "deterministic": true,
+   "hash": "683cdc101db5346d",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0697,
+   "reachClampSamples": 18,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -18.4,
+     89.6
+    ],
+    "hipAbd": [
+     -38.5,
+     59.9
+    ],
+    "psi": [
+     -10.4,
+     35
+    ]
+   },
+   "speedMin": 3.05,
+   "accMax": 25.9,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -90,
+    "R",
+    0.982
+   ],
+   "plantAfterS": 0.933,
+   "headingWithin5degAfterS": 1.325,
+   "headingEnd": -90,
+   "msStep": 0.0385,
+   "msPose": 0.059
+  },
+  "RUN_120R": {
+   "label": "RUN 7.8 m/s · 120° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "6635ff91418b96d4",
+   "slipMaxCm": 0.12,
+   "reachMax": 1.0776,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -20.1,
+     89.6
+    ],
+    "hipAbd": [
+     -36.4,
+     31.8
+    ],
+    "psi": [
+     -40,
+     24.3
+    ]
+   },
+   "speedMin": 0.95,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "PIVOT",
+    120,
+    "R",
+    0.982
+   ],
+   "plantAfterS": 0.977,
+   "headingWithin5degAfterS": 1.217,
+   "headingEnd": 120,
+   "msStep": 0.0387,
+   "msPose": 0.059
+  },
+  "RUN_120L": {
+   "label": "RUN 7.8 m/s · 120° LEFT (away)",
+   "deterministic": true,
+   "hash": "42c28de0d397079b",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0774,
+   "reachClampSamples": 19,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -17.2,
+     89.6
+    ],
+    "hipAbd": [
+     -36.9,
+     54.6
+    ],
+    "psi": [
+     -13.4,
+     35
+    ]
+   },
+   "speedMin": 2,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -120,
+    "R",
+    0.982
+   ],
+   "plantAfterS": 0.977,
+   "headingWithin5degAfterS": 1.429,
+   "headingEnd": -120,
+   "msStep": 0.0384,
+   "msPose": 0.06
+  },
+  "RUN_150R": {
+   "label": "RUN 7.8 m/s · 150° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "2bb5544447584aeb",
+   "slipMaxCm": 0.05,
+   "reachMax": 1.1073,
+   "reachClampSamples": 14,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -26.7,
+     89.6
+    ],
+    "hipAbd": [
+     -25,
+     38.2
+    ],
+    "psi": [
+     -16.5,
+     35
+    ]
+   },
+   "speedMin": 0.5,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    150,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.349,
+   "headingWithin5degAfterS": 1.612,
+   "headingEnd": 150,
+   "msStep": 0.0384,
+   "msPose": 0.06
+  },
+  "RUN_150L": {
+   "label": "RUN 7.8 m/s · 150° LEFT (away)",
+   "deterministic": true,
+   "hash": "d8a6feaa5de592df",
+   "slipMaxCm": 1.48,
+   "reachMax": 1.1225,
+   "reachClampSamples": 29,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -26.8,
+     89.6
+    ],
+    "hipAbd": [
+     -42.1,
+     22.8
+    ],
+    "psi": [
+     -40,
+     26
+    ]
+   },
+   "speedMin": 0.5,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -150,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.349,
+   "headingWithin5degAfterS": 1.612,
+   "headingEnd": -150,
+   "msStep": 0.0379,
+   "msPose": 0.059
+  },
+  "RUN_180R": {
+   "label": "RUN 7.8 m/s · 180° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "905c94dd8fcdec93",
+   "slipMaxCm": 0.08,
+   "reachMax": 1.1252,
+   "reachClampSamples": 15,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -21.1,
+     89.6
+    ],
+    "hipAbd": [
+     -25,
+     36.1
+    ],
+    "psi": [
+     -14.3,
+     35
+    ]
+   },
+   "speedMin": 0.13,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    179.5,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.374,
+   "headingWithin5degAfterS": 1.646,
+   "headingEnd": 179.5,
+   "msStep": 0.0367,
+   "msPose": 0.058
+  },
+  "RUN_180L": {
+   "label": "RUN 7.8 m/s · 180° LEFT (away)",
+   "deterministic": true,
+   "hash": "0c99a18c35ba0519",
+   "slipMaxCm": 1.63,
+   "reachMax": 1.1138,
+   "reachClampSamples": 31,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -21.7,
+     89.6
+    ],
+    "hipAbd": [
+     -42.9,
+     22.7
+    ],
+    "psi": [
+     -40,
+     23
+    ]
+   },
+   "speedMin": 0.13,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -179.5,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.374,
+   "headingWithin5degAfterS": 1.646,
+   "headingEnd": -179.5,
+   "msStep": 0.0365,
+   "msPose": 0.059
+  },
+  "SPRINT_15R": {
+   "label": "SPRINT 9.5 m/s · 15° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "46fafb9e75b03713",
+   "slipMaxCm": 0.03,
+   "reachMax": 0.9998,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     2.1,
+     151.1
+    ],
+    "hipFlex": [
+     -18.8,
+     100.2
+    ],
+    "hipAbd": [
+     -25.5,
+     33.9
+    ],
+    "psi": [
+     -3.7,
+     16.7
+    ]
+   },
+   "speedMin": 9.38,
+   "accMax": 14.6,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.604,
+   "headingEnd": 15,
+   "msStep": 0.0837,
+   "msPose": 0.063
+  },
+  "SPRINT_15L": {
+   "label": "SPRINT 9.5 m/s · 15° LEFT (away)",
+   "deterministic": true,
+   "hash": "6609d327cc5d20bd",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9998,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     2.1,
+     151.1
+    ],
+    "hipFlex": [
+     -20,
+     100.2
+    ],
+    "hipAbd": [
+     -25.1,
+     40
+    ],
+    "psi": [
+     -3.5,
+     16.7
+    ]
+   },
+   "speedMin": 9.38,
+   "accMax": 14.6,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.621,
+   "headingEnd": -15,
+   "msStep": 0.036,
+   "msPose": 0.056
+  },
+  "SPRINT_30R": {
+   "label": "SPRINT 9.5 m/s · 30° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "34e79d3f7d80f812",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.1029,
+   "reachClampSamples": 7,
+   "joints": {
+    "knee": [
+     0.2,
+     152.7
+    ],
+    "hipFlex": [
+     -20.1,
+     100.2
+    ],
+    "hipAbd": [
+     -41.3,
+     30.2
+    ],
+    "psi": [
+     -4.4,
+     16.9
+    ]
+   },
+   "speedMin": 7.18,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    30,
+    "R",
+    0.318
+   ],
+   "plantAfterS": 0.266,
+   "headingWithin5degAfterS": 0.496,
+   "headingEnd": 30,
+   "msStep": 0.1855,
+   "msPose": 0.062
+  },
+  "SPRINT_30L": {
+   "label": "SPRINT 9.5 m/s · 30° LEFT (away)",
+   "deterministic": true,
+   "hash": "8883ac52291b4606",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.019,
+   "reachClampSamples": 3,
+   "joints": {
+    "knee": [
+     0.2,
+     165.2
+    ],
+    "hipFlex": [
+     -20,
+     100.2
+    ],
+    "hipAbd": [
+     -31.9,
+     32
+    ],
+    "psi": [
+     -6.6,
+     21.4
+    ]
+   },
+   "speedMin": 7.16,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -30,
+    "R",
+    0.318
+   ],
+   "plantAfterS": 0.266,
+   "headingWithin5degAfterS": 0.496,
+   "headingEnd": -30,
+   "msStep": 0.04,
+   "msPose": 0.06
+  },
+  "SPRINT_45R": {
+   "label": "SPRINT 9.5 m/s · 45° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "d812bd00b4c48b6c",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.1009,
+   "reachClampSamples": 8,
+   "joints": {
+    "knee": [
+     0.2,
+     153.5
+    ],
+    "hipFlex": [
+     -20,
+     100.2
+    ],
+    "hipAbd": [
+     -40.8,
+     29.1
+    ],
+    "psi": [
+     -8.9,
+     22.1
+    ]
+   },
+   "speedMin": 7.14,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    45,
+    "R",
+    0.318
+   ],
+   "plantAfterS": 0.266,
+   "headingWithin5degAfterS": 0.683,
+   "headingEnd": 45,
+   "msStep": 0.0404,
+   "msPose": 0.059
+  },
+  "SPRINT_45L": {
+   "label": "SPRINT 9.5 m/s · 45° LEFT (away)",
+   "deterministic": true,
+   "hash": "0dd1a6766c17d762",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0713,
+   "reachClampSamples": 6,
+   "joints": {
+    "knee": [
+     0.2,
+     165.9
+    ],
+    "hipFlex": [
+     -20,
+     100.2
+    ],
+    "hipAbd": [
+     -25.3,
+     29.6
+    ],
+    "psi": [
+     -20.1,
+     18.9
+    ]
+   },
+   "speedMin": 7.14,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -45,
+    "R",
+    0.318
+   ],
+   "plantAfterS": 0.266,
+   "headingWithin5degAfterS": 0.683,
+   "headingEnd": -45,
+   "msStep": 0.0406,
+   "msPose": 0.059
+  },
+  "SPRINT_60R": {
+   "label": "SPRINT 9.5 m/s · 60° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "7174c98fc2f8e972",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0091,
+   "reachClampSamples": 2,
+   "joints": {
+    "knee": [
+     0.2,
+     159.4
+    ],
+    "hipFlex": [
+     -19.7,
+     100.2
+    ],
+    "hipAbd": [
+     -25.1,
+     39.8
+    ],
+    "psi": [
+     -22.1,
+     25.6
+    ]
+   },
+   "speedMin": 5.35,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    60,
+    "L",
+    0.538
+   ],
+   "plantAfterS": 0.456,
+   "headingWithin5degAfterS": 0.908,
+   "headingEnd": 60,
+   "msStep": 0.0428,
+   "msPose": 0.059
+  },
+  "SPRINT_60L": {
+   "label": "SPRINT 9.5 m/s · 60° LEFT (away)",
+   "deterministic": true,
+   "hash": "11da56f37d6ade16",
+   "slipMaxCm": 0.3,
+   "reachMax": 1.1045,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     153.1
+    ],
+    "hipFlex": [
+     -20.1,
+     100.2
+    ],
+    "hipAbd": [
+     -40.1,
+     16.5
+    ],
+    "psi": [
+     -12.2,
+     21.7
+    ]
+   },
+   "speedMin": 5.33,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    -60,
+    "L",
+    0.538
+   ],
+   "plantAfterS": 0.456,
+   "headingWithin5degAfterS": 0.908,
+   "headingEnd": -60,
+   "msStep": 0.0425,
+   "msPose": 0.059
+  },
+  "SPRINT_90R": {
+   "label": "SPRINT 9.5 m/s · 90° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "6be9bf72120e30ef",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0376,
+   "reachClampSamples": 10,
+   "joints": {
+    "knee": [
+     0.2,
+     152
+    ],
+    "hipFlex": [
+     -18.8,
+     100.2
+    ],
+    "hipAbd": [
+     -38.6,
+     61.1
+    ],
+    "psi": [
+     -8.7,
+     35
+    ]
+   },
+   "speedMin": 3.06,
+   "accMax": 25.5,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.978
+   ],
+   "plantAfterS": 0.943,
+   "headingWithin5degAfterS": 1.333,
+   "headingEnd": 90,
+   "msStep": 0.0427,
+   "msPose": 0.058
+  },
+  "SPRINT_90L": {
+   "label": "SPRINT 9.5 m/s · 90° LEFT (away)",
+   "deterministic": true,
+   "hash": "1ad888338a467184",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0342,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     153.7
+    ],
+    "hipFlex": [
+     -19.2,
+     100.2
+    ],
+    "hipAbd": [
+     -38.5,
+     60.6
+    ],
+    "psi": [
+     -8.7,
+     35
+    ]
+   },
+   "speedMin": 3.07,
+   "accMax": 24.8,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    -90,
+    "R",
+    1.197
+   ],
+   "plantAfterS": 1.205,
+   "headingWithin5degAfterS": 1.596,
+   "headingEnd": -90,
+   "msStep": 0.0416,
+   "msPose": 0.06
+  },
+  "SPRINT_120R": {
+   "label": "SPRINT 9.5 m/s · 120° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "fe85e3a5ab69de58",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0558,
+   "reachClampSamples": 11,
+   "joints": {
+    "knee": [
+     0.2,
+     152.6
+    ],
+    "hipFlex": [
+     -18.2,
+     100.2
+    ],
+    "hipAbd": [
+     -36.8,
+     44.6
+    ],
+    "psi": [
+     -11.5,
+     35
+    ]
+   },
+   "speedMin": 2.01,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    120,
+    "L",
+    0.978
+   ],
+   "plantAfterS": 0.964,
+   "headingWithin5degAfterS": 1.413,
+   "headingEnd": 120,
+   "msStep": 0.041,
+   "msPose": 0.059
+  },
+  "SPRINT_120L": {
+   "label": "SPRINT 9.5 m/s · 120° LEFT (away)",
+   "deterministic": true,
+   "hash": "a4ca79136b99c767",
+   "slipMaxCm": 0.07,
+   "reachMax": 1.0638,
+   "reachClampSamples": 14,
+   "joints": {
+    "knee": [
+     0.2,
+     154.8
+    ],
+    "hipFlex": [
+     -17.6,
+     100.2
+    ],
+    "hipAbd": [
+     -36.3,
+     30.6
+    ],
+    "psi": [
+     -40,
+     24.3
+    ]
+   },
+   "speedMin": 0.96,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "PIVOT",
+    -120,
+    "L",
+    0.978
+   ],
+   "plantAfterS": 0.964,
+   "headingWithin5degAfterS": 1.204,
+   "headingEnd": -120,
+   "msStep": 0.0408,
+   "msPose": 0.06
+  },
+  "SPRINT_150R": {
+   "label": "SPRINT 9.5 m/s · 150° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "1f365a06ed7b475b",
+   "slipMaxCm": 1.46,
+   "reachMax": 1.1212,
+   "reachClampSamples": 21,
+   "joints": {
+    "knee": [
+     0.2,
+     152.6
+    ],
+    "hipFlex": [
+     -26,
+     100.2
+    ],
+    "hipAbd": [
+     -42.1,
+     23.9
+    ],
+    "psi": [
+     -40,
+     26
+    ]
+   },
+   "speedMin": 0.51,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    150,
+    "R",
+    1.197
+   ],
+   "plantAfterS": 1.333,
+   "headingWithin5degAfterS": 1.596,
+   "headingEnd": 150,
+   "msStep": 0.039,
+   "msPose": 0.059
+  },
+  "SPRINT_150L": {
+   "label": "SPRINT 9.5 m/s · 150° LEFT (away)",
+   "deterministic": true,
+   "hash": "4460bc79a9e893b7",
+   "slipMaxCm": 0.05,
+   "reachMax": 1.1112,
+   "reachClampSamples": 17,
+   "joints": {
+    "knee": [
+     0.2,
+     154.9
+    ],
+    "hipFlex": [
+     -27,
+     100.2
+    ],
+    "hipAbd": [
+     -25.1,
+     37.3
+    ],
+    "psi": [
+     -16.5,
+     35
+    ]
+   },
+   "speedMin": 0.51,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -150,
+    "R",
+    1.197
+   ],
+   "plantAfterS": 1.333,
+   "headingWithin5degAfterS": 1.596,
+   "headingEnd": -150,
+   "msStep": 0.0391,
+   "msPose": 0.058
+  },
+  "SPRINT_180R": {
+   "label": "SPRINT 9.5 m/s · 180° RIGHT (toward camera)",
+   "deterministic": true,
+   "hash": "b4b17c1b410bb1e9",
+   "slipMaxCm": 1.89,
+   "reachMax": 1.1128,
+   "reachClampSamples": 21,
+   "joints": {
+    "knee": [
+     0.2,
+     152.6
+    ],
+    "hipFlex": [
+     -21.6,
+     100.2
+    ],
+    "hipAbd": [
+     -42.9,
+     23.9
+    ],
+    "psi": [
+     -40,
+     23
+    ]
+   },
+   "speedMin": 0.14,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    179.5,
+    "R",
+    1.197
+   ],
+   "plantAfterS": 1.354,
+   "headingWithin5degAfterS": 1.629,
+   "headingEnd": 179.5,
+   "msStep": 0.0398,
+   "msPose": 0.061
+  },
+  "SPRINT_180L": {
+   "label": "SPRINT 9.5 m/s · 180° LEFT (away)",
+   "deterministic": true,
+   "hash": "6b6a6db4fed5ddee",
+   "slipMaxCm": 0.06,
+   "reachMax": 1.1301,
+   "reachClampSamples": 19,
+   "joints": {
+    "knee": [
+     0.2,
+     154.9
+    ],
+    "hipFlex": [
+     -22.2,
+     100.2
+    ],
+    "hipAbd": [
+     -25.1,
+     35.7
+    ],
+    "psi": [
+     -14.4,
+     35
+    ]
+   },
+   "speedMin": 0.14,
+   "accMax": 23.4,
+   "maneuver": [
+    "PIVOT",
+    "PIVOT",
+    -179.5,
+    "R",
+    1.197
+   ],
+   "plantAfterS": 1.354,
+   "headingWithin5degAfterS": 1.629,
+   "headingEnd": -179.5,
+   "msStep": 0.0377,
+   "msPose": 0.059
+  },
+  "LOW_STRAIGHT": {
+   "label": "LOW 3 m/s · straight (RUN-1.3 control)",
+   "deterministic": true,
+   "hash": "448a8486aedbf1b6",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9772,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     24.6,
+     112.7
+    ],
+    "hipFlex": [
+     -15.6,
+     59.1
+    ],
+    "hipAbd": [
+     -11.2,
+     9.5
+    ],
+    "psi": [
+     1,
+     13
+    ]
+   },
+   "speedMin": 3,
+   "accMax": 0,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": null,
+   "headingEnd": 0,
+   "msStep": 0.0243,
+   "msPose": 0.054
+  },
+  "JOG_STRAIGHT": {
+   "label": "JOG 5.5 m/s · straight (RUN-1.3 control)",
+   "deterministic": true,
+   "hash": "31e39cd92c5061ab",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9841,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     20.5,
+     135.8
+    ],
+    "hipFlex": [
+     -12.6,
+     81.3
+    ],
+    "hipAbd": [
+     -19.1,
+     12.1
+    ],
+    "psi": [
+     -3,
+     17
+    ]
+   },
+   "speedMin": 5.5,
+   "accMax": 0,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": null,
+   "headingEnd": 0,
+   "msStep": 0.0256,
+   "msPose": 0.056
+  },
+  "RUN_STRAIGHT": {
+   "label": "RUN 7.8 m/s · straight (RUN-1.3 control)",
+   "deterministic": true,
+   "hash": "4bc3a1c63a31f5a0",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9891,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     17,
+     147.9
+    ],
+    "hipFlex": [
+     -14,
+     89.6
+    ],
+    "hipAbd": [
+     -23.8,
+     14.5
+    ],
+    "psi": [
+     -0.1,
+     14.1
+    ]
+   },
+   "speedMin": 7.8,
+   "accMax": 0,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": null,
+   "headingEnd": 0,
+   "msStep": 0.0298,
+   "msPose": 0.056
+  },
+  "SPRINT_STRAIGHT": {
+   "label": "SPRINT 9.5 m/s · straight (RUN-1.3 control)",
+   "deterministic": true,
+   "hash": "b64a35db0bc50803",
+   "slipMaxCm": 0.02,
+   "reachMax": 0.9998,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     2.1,
+     151.1
+    ],
+    "hipFlex": [
+     -13.2,
+     100.2
+    ],
+    "hipAbd": [
+     -25,
+     16.5
+    ],
+    "psi": [
+     -2.5,
+     16.5
+    ]
+   },
+   "speedMin": 9.5,
+   "accMax": 0,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": null,
+   "headingEnd": 0,
+   "msStep": 0.0315,
+   "msPose": 0.057
+  },
+  "ZIGZAG_RUN": {
+   "label": "RUN 7.8 · cut 60° right, then back 60° left (RUN → CUT → RUN → CUT → RUN)",
+   "deterministic": true,
+   "hash": "c6c303dede09e12c",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.1113,
+   "reachClampSamples": 21,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -18.2,
+     89.6
+    ],
+    "hipAbd": [
+     -39.8,
+     17.6
+    ],
+    "psi": [
+     -11,
+     23
+    ]
+   },
+   "speedMin": 5.1,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    60,
+    "R",
+    0.487
+   ],
+   "plantAfterS": 0.434,
+   "headingWithin5degAfterS": 0.775,
+   "headingEnd": 0,
+   "msStep": 0.0415,
+   "msPose": 0.061
+  },
+  "ZIGZAG_JOG": {
+   "label": "JOG 5.5 · cut 90° right, then 90° left back to the original line",
+   "deterministic": true,
+   "hash": "92467a788a9e3828",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0459,
+   "reachClampSamples": 30,
+   "joints": {
+    "knee": [
+     0.2,
+     137.3
+    ],
+    "hipFlex": [
+     -19.9,
+     82.3
+    ],
+    "hipAbd": [
+     -38.5,
+     56.5
+    ],
+    "psi": [
+     -10.2,
+     35
+    ]
+   },
+   "speedMin": 3.02,
+   "accMax": 27,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.498,
+   "headingWithin5degAfterS": 1.288,
+   "headingEnd": 0,
+   "msStep": 0.0375,
+   "msPose": 0.064
+  },
+  "SLALOM_JOG": {
+   "label": "JOG 5.5 · gentle steering: ±15° every 0.8 s",
+   "deterministic": true,
+   "hash": "608b4146c4f2445c",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0384,
+   "reachClampSamples": 12,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -20.9,
+     81.3
+    ],
+    "hipAbd": [
+     -31.7,
+     40
+    ],
+    "psi": [
+     -9,
+     18.3
+    ]
+   },
+   "speedMin": 5.41,
+   "accMax": 17.3,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.475,
+   "headingEnd": 0,
+   "msStep": 0.0306,
+   "msPose": 0.056
+  },
+  "SLALOM_SPRINT": {
+   "label": "SPRINT 9.5 · gentle steering: ±12° every 0.9 s",
+   "deterministic": true,
+   "hash": "527a6dd8a29df466",
+   "slipMaxCm": 0.03,
+   "reachMax": 0.9998,
+   "reachClampSamples": 0,
+   "joints": {
+    "knee": [
+     2.1,
+     151.1
+    ],
+    "hipFlex": [
+     -20,
+     100.2
+    ],
+    "hipAbd": [
+     -25.6,
+     40
+    ],
+    "psi": [
+     -3.5,
+     16.7
+    ]
+   },
+   "speedMin": 9.38,
+   "accMax": 14.6,
+   "maneuver": null,
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0,
+   "headingEnd": 0,
+   "msStep": 0.0384,
+   "msPose": 0.056
+  },
+  "CONT_CURVE": {
+   "label": "JOG 5.5 · arc 30° right, then (during the curve) 60° left",
+   "deterministic": true,
+   "hash": "5ef7cc2a2168575b",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0729,
+   "reachClampSamples": 8,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -17.9,
+     97.7
+    ],
+    "hipAbd": [
+     -25.7,
+     41.7
+    ],
+    "psi": [
+     -28.8,
+     24.8
+    ]
+   },
+   "speedMin": 4.37,
+   "accMax": 27.5,
+   "maneuver": [
+    "CUT",
+    "XOVER",
+    -65.8,
+    "L",
+    0.112
+   ],
+   "plantAfterS": 0.562,
+   "headingWithin5degAfterS": 0.446,
+   "headingEnd": -60,
+   "msStep": 0.0302,
+   "msPose": 0.058
+  },
+  "CONT_PRE_RETARGET": {
+   "label": "RUN 7.8 · 90° right, retargeted to 50° right before the plant",
+   "deterministic": true,
+   "hash": "ea762b860dd4f9bd",
+   "slipMaxCm": 2.11,
+   "reachMax": 1.1204,
+   "reachClampSamples": 18,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -16.9,
+     89.6
+    ],
+    "hipAbd": [
+     -76.1,
+     43.5
+    ],
+    "psi": [
+     -21.5,
+     35
+    ]
+   },
+   "speedMin": 3.82,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    1.23
+   ],
+   "plantAfterS": 1.196,
+   "headingWithin5degAfterS": 1.208,
+   "headingEnd": 50,
+   "msStep": 0.0407,
+   "msPose": 0.059
+  },
+  "CONT_PRE_ABANDON": {
+   "label": "RUN 7.8 · 90° right, abandoned (back to 10° right) before the plant",
+   "deterministic": true,
+   "hash": "fcd54fc5a0bf3cd6",
+   "slipMaxCm": 0.02,
+   "reachMax": 1.0117,
+   "reachClampSamples": 4,
+   "joints": {
+    "knee": [
+     0.2,
+     147.9
+    ],
+    "hipFlex": [
+     -18.7,
+     89.6
+    ],
+    "hipAbd": [
+     -23.8,
+     28.4
+    ],
+    "psi": [
+     -6.3,
+     16.5
+    ]
+   },
+   "speedMin": 6.1,
+   "accMax": 23.4,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    1.23
+   ],
+   "plantAfterS": null,
+   "headingWithin5degAfterS": 0.288,
+   "headingEnd": 10,
+   "msStep": 0.0342,
+   "msPose": 0.058
+  },
+  "CONT_PRE_FLIP": {
+   "label": "JOG 5.5 · 90° right, flipped to 90° left before the plant",
+   "deterministic": true,
+   "hash": "7694d75661157e78",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0459,
+   "reachClampSamples": 18,
+   "joints": {
+    "knee": [
+     0.2,
+     135.8
+    ],
+    "hipFlex": [
+     -19.1,
+     81.3
+    ],
+    "hipAbd": [
+     -38,
+     40
+    ],
+    "psi": [
+     -6.4,
+     35
+    ]
+   },
+   "speedMin": 3.1,
+   "accMax": 19.2,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.813,
+   "headingWithin5degAfterS": 0.984,
+   "headingEnd": -90,
+   "msStep": 0.0333,
+   "msPose": 0.057
+  },
+  "CONT_POST": {
+   "label": "JOG 5.5 · 90° right, changed to 130° right after the plant began (committed: ±20°)",
+   "deterministic": true,
+   "hash": "728ff762064bcfbf",
+   "slipMaxCm": 0.03,
+   "reachMax": 1.0459,
+   "reachClampSamples": 19,
+   "joints": {
+    "knee": [
+     0.2,
+     137.3
+    ],
+    "hipFlex": [
+     -23.6,
+     93.7
+    ],
+    "hipAbd": [
+     -26.2,
+     56.5
+    ],
+    "psi": [
+     -17.1,
+     35
+    ]
+   },
+   "speedMin": 3.02,
+   "accMax": 27,
+   "maneuver": [
+    "CUT",
+    "SIDESTEP",
+    90,
+    "L",
+    0.562
+   ],
+   "plantAfterS": 0.498,
+   "headingWithin5degAfterS": 0.525,
+   "headingEnd": 130,
+   "msStep": 0.0321,
+   "msPose": 0.057
+  }
+ },
+ "fails": 0
+}
