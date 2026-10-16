@@ -1,0 +1,117 @@
+{
+ "note": "TURN-1 statuses and review text (the final report's lines); judged from the regression (TURN1_check.json), continuity (TURN1_continuity.json), mirror (TURN1_mirror.json), sweep (TURN1_sweep.json) and frame strips / contact sheets of the renders (no real-time video playback).",
+ "statuses": [
+  [
+   "LATEST LOCOMOTION STATE RECONSTRUCTED",
+   "YES"
+  ],
+  [
+   "GENTLE ARC TURNING",
+   "PASS"
+  ],
+  [
+   "MODERATE TURNING",
+   "PASS"
+  ],
+  [
+   "HARD CUT",
+   "PASS"
+  ],
+  [
+   "90° CHANGE OF DIRECTION",
+   "PASS"
+  ],
+  [
+   "120–150° CHANGE OF DIRECTION",
+   "PARTIAL"
+  ],
+  [
+   "180° REVERSAL",
+   "PARTIAL"
+  ],
+  [
+   "JOG COVERAGE",
+   "PASS"
+  ],
+  [
+   "RUN COVERAGE",
+   "PASS"
+  ],
+  [
+   "SPRINT COVERAGE",
+   "PARTIAL"
+  ],
+  [
+   "LEFT/RIGHT MIRRORING",
+   "PASS"
+  ],
+  [
+   "PLANT FOOT SLIP",
+   "PASS"
+  ],
+  [
+   "RUN→CUT TRANSITION",
+   "PASS"
+  ],
+  [
+   "CUT→RUN TRANSITION",
+   "PASS"
+  ],
+  [
+   "CONTINUOUS INPUT HANDLING",
+   "PASS"
+  ],
+  [
+   "V1 TURN RESOLVER",
+   "PASS"
+  ],
+  [
+   "MINIMUM AUTHORED LIBRARY IDENTIFIED",
+   "YES"
+  ],
+  [
+   "PHYSICAL CHARACTER/COLLISION COMPATIBILITY PRESERVED",
+   "YES"
+  ],
+  [
+   "DETERMINISM",
+   "PASS"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY TO BEGIN PHYSICS-BASED DRIBBLING AFTER OWNER APPROVAL",
+   "YES"
+  ]
+ ],
+ "watchFirst": [
+  {
+   "id": "JOG_90R",
+   "why": "Hard cut: brake → wide side-step plant → pelvis rotation → push → first step and acceleration toward the camera"
+  },
+  {
+   "id": "ZIGZAG_RUN",
+   "why": "RUN → CUT → RUN → CUT → RUN at 7.8 m/s: two committed 60° cuts in a row, no pops at entry or exit"
+  },
+  {
+   "id": "SLALOM_JOG",
+   "why": "Gentle steering for contrast: ±15° bends are arcs (lean, outside-foot placement), never cuts"
+  }
+ ],
+ "picks": {
+  "bestGentle": "SLALOM_JOG (and JOG_30R)",
+  "bestHardCut": "JOG_90R (and RUN_60R)",
+  "worst": "SPRINT_180R"
+ },
+ "system": "<b>Base.</b> The frozen RUN-1.3 straight-line run (unmodified) supplies the cyclic athletic motion at the current speed; straight running through TURN-1 stays RUN-1 (plant slip 0.02 cm, the same placement).<br><b>Dynamics.</b> The COM's horizontal velocity changes only while a foot is on the turf — every stance carries a planned ΔV with a half-sine force profile, each bounded by what that stance can deliver (contact time, travel, ≤ 17.5 m/s² mean). The turn is therefore made by the plants, not by rotating a root.<br><b>Feet.</b> Each plant is a fixed world point chosen at touchdown: RUN-1's own placement plus the inverted-pendulum offset of the stance's mean acceleration (outside the curve, ahead of a brake, wide of a cut), inside the leg's reachable window. The stance foot rolls heel → flat → toe pad (RUN-1's profile, heel-first for braking / plants, pivoting about the toe pad in reversals); the leg reaches it by analytic IK, with a predicted pelvis drop when a plant needs it. The swing foot follows RUN-1's own swing path warped onto the aimed plant.<br><b>Body.</b> Pelvis heading is a state of its own (facing ≠ velocity); gaze and chest lead it; whole-body lean follows each step's planned acceleration; crouch, arm balance and a smoothed base phase complete the organisation.<br><b>Resolver.</b> A request (incoming velocity + requested change + stride phase / foot availability) becomes an ARC, a CUT (side-step on the outside foot, crossover on the inside foot ≤ 70° when ≥ 0.2 s sooner) or a PIVOT (≥ 135°, or an inside-foot pivot ≥ 110° when sooner), with braking steps planned from what a braking stance can actually remove. Before the plant the request can be retargeted, abandoned or flipped; from the plant's touchdown it is committed (exit direction ±20°).<br><b>Cost.</b> ≈ 0.012 ms per 240 Hz step and ≈ 0.065 ms per pose per character (warm), Node.",
+ "library": "<b>Recommended minimum set: 1 cyclic base + 3 plant bases + 2 step modifiers + 1 procedural layer.</b><ol><li><b>RUN-1.3</b> (existing): the cyclic run, 2.5–9.5 m/s, speed-blended. No new speed variants.</li><li><b>ARC</b> — procedural, no authored data: per-stance lateral impulses, bank, outside-foot placement, pelvis / gaze lead.</li><li><b>SIDE-STEP PLANT</b> (45–135°, the core cut): one base; entry speed, contact, crouch and redirect fraction interpolate continuously with angle and speed (TURN1_sweep.json).</li><li><b>CROSSOVER PLANT</b> (inside foot, ≤ 70°): a variant of the side-step base (narrow placement, foot turned); worth keeping because it saves up to a stride (≈ 0.25 s) when the outside foot is not next.</li><li><b>PIVOT PLANT</b> (≥ 135°; inside-foot fallback ≥ 110°): genuinely distinct biomechanics — stop on a plant ahead and rotate on the ball, reversal of the velocity along the incoming line.</li><li><b>BRAKE step</b> (modifier): shorter-travel heel-first contact, back-lean, moderate crouch.</li><li><b>EXIT / ACCEL step</b> (modifier): short flight, forward lean, the remaining turn.</li></ol><b>Mirror</b>: exact by construction (verified in 32 cases) — never author left and right. <b>Interpolate</b>: inside each plant base across angle, and every base across speed. <b>Distinct</b>: side-step vs pivot (different contact mechanics) and crossover vs side-step (different foot). <b>Next authored content with the most visual value</b>: upper-body key poses per plant base (arms / shoulders / head), a braking posture, and a below-2.5 m/s stop / walk base for standing turns (RUN-1 has none).",
+ "dribble": "<code>TURN1.t1State(A)</code> — at the current step, in the anim3d world frame: per foot the ankle, toe tip, heel and ball-of-foot positions and the full 4×4 transform; linear velocities of ankle / toe tip / ball and the foot's angular velocity (one-step forward difference of a cloned, identically advanced state); support (R / L / flight), stance or swing progress and step role; the plant (world point, yaw, time since touchdown) or, for a swinging foot, the aimed next touchdown (time, point, yaw, role); pelvis position / velocity / heading / yaw rate; COM position, velocity, speed, acceleration; desired vs actual direction, facing, gaze; stride segment / phase; the turn state (mode, technique, phase, requested change, plant foot).<br><code>TURN1.t1Predict(A, horizon, every)</code> — a deterministic lookahead on a clone: where each foot's ankle, toe tip and ball will be, and which foot supports, over the next horizon seconds if the input does not change. This is the question DRIBBLE-1 asks: <i>where will each foot actually be, and can it reach the ball?</i><br><code>TURN1.t1Clone(A)</code> — an independent copy (advancing it with the same input reproduces the original exactly).",
+ "boundary": "TURN-1 is presentation and runs on its own inputs (desired direction and speed); nothing in the match changes. Its stance-impulse COM model and its footstep plan, however, are exactly what decides <i>where the feet are and when the velocity changes</i>, which physics-based dribbling will make outcome-relevant. Recommendation: make the TURN-1 locomotion law (stance plans, ΔV per stance, footstep positions, pivot / plant timing, swing aims) the authoritative locomotion law of the simulation — it is cheap (≈ 0.012 ms per step) and deterministic — and let presentation add only the cosmetic layers (pose, lean, arms, gaze). Facts the simulation must then own and expose: input (desired direction, desired speed); COM position and velocity; support state; current stance plan (ΔV, contact, flight); plants (positions, yaw, timing); swing aims and progress; pelvis facing; turn / maneuver state; and, for DRIBBLE-1, the contact-capable foot trajectories. Today's authoritative law (match.js) is a direction-split velocity limiter (8.5 m/s² forward, 12 braking, 10 lateral) with facing at 4–7 rad/s — a presentation driven by it could not show plants that cause the turn. Animation ON / OFF neutrality holds as long as the pose only reads that state, as here.",
+ "defects": [
+  "<b>Reversals / pivots (≥ 135°) are the weakest family:</b> from a sprint they take five braking steps (new heading at +1.6 s), the pivot sits in a deep crouch, and a pivot on the inside foot slides 1.5–2 cm at the toe pad.",
+  "<b>The plant's body language is procedural, not authored:</b> lean (≤ 28°), pelvis rotation, crouch and arm abduction; there are no plant key poses for the arms, shoulders and head, and braking steps have no strong dig-in back-lean — at the gameplay camera's scale the cut reads mainly through the trajectory, the speed change and the pelvis rotation.",
+  "<b>Momentum and timing are compromises:</b> the plant's horizontal force is dramatised (≈ 2.8 g peak); latency depends on the stride phase (a 90° cut at a sprint plants 0.66–0.94 s after the request depending on which foot is next); below 2.5 m/s RUN-1 has no gait (walk / stop), so pivots near standstill reuse its slowest run timing; one retargeting case keeps a single-step foot slap (≈ 12 cm)."
+ ]
+}

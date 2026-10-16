@@ -229,7 +229,7 @@ function t1PlanManeuver(A, d, s, th) {
   for (let i = 0; i < up.length; i++) {
     const u = up[i]; if (u.t - A.t < T1.reactS) continue;
     const nB = i - (up[0].t - A.t < T1.reactS ? 1 : 0);
-    if (nB < Math.min(nBrake, nCap) && !(ad < 70 && nB >= nBrake - 1)) continue;
+    if (nB < Math.min(nBrake, nCap) && !(ad < 100 && nB >= nBrake - 1)) continue;   // cuts under 100° may plant one braking step early (responsiveness)
     const out = u.foot === outside;
     const tech = kind === "PIVOT" ? "PIVOT" : (out ? "SIDESTEP" : (ad <= T1.xoverMax ? "XOVER" : ad >= 110 ? "PIVOT" : null));   // a sharp cut may pivot on the inside foot if that is sooner
     if (!tech) continue;
