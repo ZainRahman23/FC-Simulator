@@ -1,0 +1,89 @@
+{
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Viktor Gyökeres",
+  "arch": "B",
+  "playerSpeed": 5.5,
+  "touchesPerSec": 0.56,
+  "sepMean": 1.89,
+  "sepMax": 6.07,
+  "freeIntervalMean": 1.82,
+  "freeIntervalMax": 3.15,
+  "freeSharePct": 99.75,
+  "feet": {
+   "R": 19,
+   "L": 18,
+   "preferredShare": 51
+  },
+  "regions": {
+   "FRONT": 37
+  },
+  "touchErrSpeedPct": 1.87,
+  "touchErrDirDeg": 1.68,
+  "launchMean": 8.74,
+  "launchMax": 11.63,
+  "ballSpeedMean": 5.79,
+  "controlLosses": 1,
+  "controlledPct": 79.25,
+  "recoveryTouches": 8,
+  "touches": 37
+ },
+ "CUT60_RUN": {
+  "seeds": 8,
+  "profile": "Viktor Gyökeres",
+  "arch": "B",
+  "playerSpeed": 5.45,
+  "touchesPerSec": 0.63,
+  "sepMean": 3.18,
+  "sepMax": 15.66,
+  "freeIntervalMean": 1.62,
+  "freeIntervalMax": 2.2,
+  "freeSharePct": 99.76,
+  "feet": {
+   "R": 11,
+   "L": 11,
+   "preferredShare": 50
+  },
+  "regions": {
+   "FRONT": 22
+  },
+  "touchErrSpeedPct": 1.74,
+  "touchErrDirDeg": 2.06,
+  "launchMean": 8.49,
+  "launchMax": 10.93,
+  "ballSpeedMean": 5.33,
+  "controlLosses": 0.88,
+  "controlledPct": 63.15,
+  "recoveryTouches": 6,
+  "touches": 22
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Viktor Gyökeres",
+  "arch": "B",
+  "playerSpeed": 9.52,
+  "touchesPerSec": 0.33,
+  "sepMean": 3.2,
+  "sepMax": 28.22,
+  "freeIntervalMean": 2.66,
+  "freeIntervalMax": 3.04,
+  "freeSharePct": 99.8,
+  "feet": {
+   "R": 14,
+   "L": 7,
+   "preferredShare": 67
+  },
+  "regions": {
+   "FRONT": 21
+  },
+  "touchErrSpeedPct": 2.55,
+  "touchErrDirDeg": 1.34,
+  "launchMean": 13.82,
+  "launchMax": 15.16,
+  "ballSpeedMean": 8.94,
+  "controlLosses": 0.25,
+  "controlledPct": 89.84,
+  "recoveryTouches": 0,
+  "touches": 21
+ }
+}

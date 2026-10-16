@@ -1,0 +1,119 @@
+{
+ "STRAIGHT_JOG": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 3,
+  "touchesPerSec": 1.18,
+  "sepMean": 0.78,
+  "sepMax": 1.32,
+  "freeIntervalMean": 0.86,
+  "freeIntervalMax": 1.45,
+  "freeSharePct": 99.48,
+  "feet": {
+   "R": 34,
+   "L": 41,
+   "preferredShare": 45
+  },
+  "regions": {
+   "FRONT": 75
+  },
+  "touchErrSpeedPct": 1.7,
+  "touchErrDirDeg": 1.2,
+  "launchMean": 4.49,
+  "launchMax": 5.66,
+  "ballSpeedMean": 3.06,
+  "controlLosses": 0,
+  "controlledPct": 100,
+  "recoveryTouches": 0,
+  "touches": 75
+ },
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 5.47,
+  "touchesPerSec": 0.68,
+  "sepMean": 1.31,
+  "sepMax": 3.48,
+  "freeIntervalMean": 1.51,
+  "freeIntervalMax": 2.16,
+  "freeSharePct": 99.7,
+  "feet": {
+   "R": 19,
+   "L": 26,
+   "preferredShare": 42
+  },
+  "regions": {
+   "FRONT": 45
+  },
+  "touchErrSpeedPct": 1.75,
+  "touchErrDirDeg": 1.07,
+  "launchMean": 7.97,
+  "launchMax": 10.18,
+  "ballSpeedMean": 5.65,
+  "controlLosses": 0.25,
+  "controlledPct": 97.2,
+  "recoveryTouches": 2,
+  "touches": 45
+ },
+ "STRAIGHT_FAST": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 7.77,
+  "touchesPerSec": 0.54,
+  "sepMean": 1.61,
+  "sepMax": 3.08,
+  "freeIntervalMean": 1.85,
+  "freeIntervalMax": 2.49,
+  "freeSharePct": 99.75,
+  "feet": {
+   "R": 11,
+   "L": 24,
+   "preferredShare": 31
+  },
+  "regions": {
+   "FRONT": 34,
+   "LACES": 1
+  },
+  "touchErrSpeedPct": 1.98,
+  "touchErrDirDeg": 1.44,
+  "launchMean": 10.86,
+  "launchMax": 12.06,
+  "ballSpeedMean": 7.89,
+  "controlLosses": 0,
+  "controlledPct": 100,
+  "recoveryTouches": 0,
+  "touches": 35
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 9.49,
+  "touchesPerSec": 0.35,
+  "sepMean": 2.9,
+  "sepMax": 28.28,
+  "freeIntervalMean": 2.5,
+  "freeIntervalMax": 2.77,
+  "freeSharePct": 99.82,
+  "feet": {
+   "R": 17,
+   "L": 5,
+   "preferredShare": 77
+  },
+  "regions": {
+   "FRONT": 22
+  },
+  "touchErrSpeedPct": 1.52,
+  "touchErrDirDeg": 1.32,
+  "launchMean": 13.7,
+  "launchMax": 14.48,
+  "ballSpeedMean": 9.02,
+  "controlLosses": 0.25,
+  "controlledPct": 88.38,
+  "recoveryTouches": 0,
+  "touches": 22
+ }
+}

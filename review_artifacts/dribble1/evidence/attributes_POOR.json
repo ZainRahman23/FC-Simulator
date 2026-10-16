@@ -1,0 +1,92 @@
+{
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Jonathan Tah",
+  "arch": "B",
+  "playerSpeed": 5.48,
+  "touchesPerSec": 0.71,
+  "sepMean": 4.41,
+  "sepMax": 31.11,
+  "freeIntervalMean": 1.36,
+  "freeIntervalMax": 2.58,
+  "freeSharePct": 99.8,
+  "feet": {
+   "R": 12,
+   "L": 16,
+   "preferredShare": 43
+  },
+  "regions": {
+   "FRONT": 26,
+   "INSIDE": 2
+  },
+  "touchErrSpeedPct": 4.13,
+  "touchErrDirDeg": 2.35,
+  "launchMean": 8.25,
+  "launchMax": 11.53,
+  "ballSpeedMean": 4.25,
+  "controlLosses": 1.75,
+  "controlledPct": 42.62,
+  "recoveryTouches": 11,
+  "touches": 28
+ },
+ "CUT60_RUN": {
+  "seeds": 8,
+  "profile": "Jonathan Tah",
+  "arch": "B",
+  "playerSpeed": 5.43,
+  "touchesPerSec": 0.84,
+  "sepMean": 4.32,
+  "sepMax": 17.82,
+  "freeIntervalMean": 1.15,
+  "freeIntervalMax": 2.28,
+  "freeSharePct": 99.8,
+  "feet": {
+   "R": 7,
+   "L": 13,
+   "preferredShare": 35
+  },
+  "regions": {
+   "FRONT": 19,
+   "INSIDE": 1
+  },
+  "touchErrSpeedPct": 4.16,
+  "touchErrDirDeg": 2.59,
+  "launchMean": 7.61,
+  "launchMax": 11.53,
+  "ballSpeedMean": 3.72,
+  "controlLosses": 1.13,
+  "controlledPct": 40.3,
+  "recoveryTouches": 5,
+  "touches": 20
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Jonathan Tah",
+  "arch": "B",
+  "playerSpeed": 9.41,
+  "touchesPerSec": 0.12,
+  "sepMean": 12.59,
+  "sepMax": 131.63,
+  "freeIntervalMean": 3.2,
+  "freeIntervalMax": 3.99,
+  "freeSharePct": 99.9,
+  "feet": {
+   "R": 11,
+   "L": 2,
+   "preferredShare": 85
+  },
+  "regions": {
+   "LACES": 9,
+   "FRONT": 4
+  },
+  "touchErrSpeedPct": 2.85,
+  "touchErrDirDeg": 2.31,
+  "launchMean": 14.85,
+  "launchMax": 17.15,
+  "ballSpeedMean": 8.45,
+  "controlLosses": 1.25,
+  "controlledPct": 17.18,
+  "recoveryTouches": 9,
+  "touches": 13
+ }
+}

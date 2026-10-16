@@ -1,0 +1,352 @@
+{
+ "date": "16–17 Oct 2026",
+ "statusLines": [
+  [
+   "TURN-1.2 FROZEN BASELINE PRESERVED",
+   "YES"
+  ],
+  [
+   "BALL-PHYS FOUNDATION RECONSTRUCTED",
+   "YES"
+  ],
+  [
+   "BALL-FEEL VERSION USED",
+   "BALL-FEEL-1.3 — Codex lab prototype/ball-feel-1-3 @ 75866e99 (ballfeel13 BallWorld), byte-identical (23 files)"
+  ],
+  [
+   "TOUCH ARCHITECTURE SELECTED",
+   "RESOLVED"
+  ],
+  [
+   "NO BALL TETHER",
+   "PASS"
+  ],
+  [
+   "JOG STRAIGHT DRIBBLE",
+   "PASS"
+  ],
+  [
+   "RUN STRAIGHT DRIBBLE",
+   "PASS"
+  ],
+  [
+   "SPRINT STRAIGHT DRIBBLE",
+   "PARTIAL"
+  ],
+  [
+   "GENTLE CURVE DRIBBLE",
+   "PASS"
+  ],
+  [
+   "45–60° CUT DRIBBLE",
+   "PARTIAL"
+  ],
+  [
+   "90° CUT DRIBBLE",
+   "PARTIAL"
+  ],
+  [
+   "135° DRIBBLE",
+   "FAIL"
+  ],
+  [
+   "180° DRIBBLE",
+   "FAIL"
+  ],
+  [
+   "BALL PHYSICALLY FREE BETWEEN TOUCHES",
+   "YES"
+  ],
+  [
+   "TOUCH CONTACT ALIGNMENT",
+   "PASS"
+  ],
+  [
+   "FOOT SELECTION",
+   "PARTIAL"
+  ],
+  [
+   "CONTROL LOSS POSSIBLE",
+   "YES"
+  ],
+  [
+   "PHYSICAL INTERCEPTION",
+   "PASS"
+  ],
+  [
+   "ATTRIBUTE DIFFERENTIATION",
+   "PASS"
+  ],
+  [
+   "CONTINUOUS INPUT",
+   "PARTIAL"
+  ],
+  [
+   "NO DOUBLE IMPULSE",
+   "PASS"
+  ],
+  [
+   "DETERMINISM",
+   "PASS"
+  ],
+  [
+   "CPU VIABLE FOR MATCH-SCALE DEVELOPMENT",
+   "PARTIAL"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY FOR DRIBBLE-V1 INTEGRATION IF OWNER APPROVES",
+   "NO"
+  ]
+ ],
+ "watchFirst": [
+  [
+   "s02_straight_run_1x",
+   "1 — Straight RUN at the gameplay camera: free ball, real touches, believable rhythm"
+  ],
+  [
+   "k02_cut60_run_1x",
+   "2 — A 60° cut taken with the ball (response 0.9 s)"
+  ],
+  [
+   "d04_cut90_run_diag",
+   "3 — The 90° cut with diagnostics: plan, contact tick, boot region, then the free ball"
+  ]
+ ],
+ "videos": {
+  "STRAIGHT": [
+   [
+    "s01_straight_jog_1x",
+    "JOG 3.0 m/s — HIGH profile, seed 1 (straight JOG: 100 % controlled, held to the end 8/8 seeds)"
+   ],
+   [
+    "s02_straight_run_1x",
+    "RUN 5.5 m/s — seed 1 (97 %, 6/8)"
+   ],
+   [
+    "s03_straight_fast_1x",
+    "FAST 7.8 m/s — seed 1 (100 %, 8/8)"
+   ],
+   [
+    "s04_straight_sprint_1x",
+    "SPRINT 9.5 m/s knock-ons — seed 5 (88 %, 6/8)"
+   ]
+  ],
+  "CURVE": [
+   [
+    "c01_curve_run_1x",
+    "RUN, steering 20° right / 5° left / 15° right — seed 1 (96 %, 7/8)"
+   ],
+   [
+    "c02_curve_jog_1x",
+    "JOG, steering ±25° — seed 2 (95 %, 7/8)"
+   ]
+  ],
+  "CUT": [
+   [
+    "k01_cut45_run_1x",
+    "45° right at RUN — seed 5, taken with the ball (45°: 5/8)"
+   ],
+   [
+    "k02_cut60_run_1x",
+    "60° right at RUN — seed 5, taken with the ball (60°: 5/8)"
+   ],
+   [
+    "k03_cut60L_run_1x",
+    "60° left at RUN — seed 8 (60° left: 3/8)"
+   ],
+   [
+    "k04_cut90_run_1x",
+    "90° right at RUN (hero) — seed 6, taken with the ball (90°: 1/8)"
+   ],
+   [
+    "k05_cut90L_run_1x",
+    "90° left at RUN — seed 3 (90° left: 2/8)"
+   ],
+   [
+    "k06_cut90_jog_1x",
+    "90° at JOG — seed 2 (90° jog: 2/8)"
+   ],
+   [
+    "k07_cut90_run_LOSS_1x",
+    "FAILURE, the typical one: 90° at RUN, seed 7 — no touch can take the ball into the cut; the swing that meets it makes a firm recovery push (9.3 m/s) and the ball is lost"
+   ]
+  ],
+  "REVERSAL": [
+   [
+    "r01_rev135_run_1x",
+    "135° at RUN — seed 5: the body turns, the ball is not taken with it (0/8)"
+   ],
+   [
+    "r02_rev180_sprint_1x",
+    "180° from SPRINT — seed 3: the hold runs out, the player turns and recovers the ball late (0/8 taken by a touch)"
+   ]
+  ],
+  "INTERRUPTION": [
+   [
+    "i01_intercept_run_1x",
+    "A defender's leg (prescribed sweep) meets the ball between touches at 2.88 s — knocked loose, no snap-back"
+   ],
+   [
+    "i02_tackle_run_1x",
+    "A sliding tackle leg meets the ball at 3.72 s — knocked loose"
+   ]
+  ],
+  "SKILL": [
+   [
+    "s02_straight_run_1x",
+    "HIGH (Vinícius Júnior) — straight RUN, seed 1"
+   ],
+   [
+    "a01_skill_average_run_1x",
+    "AVERAGE (Viktor Gyökeres) — same scenario and seed"
+   ],
+   [
+    "a02_skill_poor_run_1x",
+    "POOR (Jonathan Tah) — same scenario and seed"
+   ],
+   [
+    "a03_skill_weakfoot_run_1x",
+    "WEAK FOOT (Dani Carvajal, weak foot 2) — same scenario and seed"
+   ],
+   [
+    "k02_cut60_run_1x",
+    "HIGH — 60° cut, seed 5"
+   ],
+   [
+    "a04_skill_poor_cut60_1x",
+    "POOR — 60° cut, seed 5"
+   ]
+  ],
+  "INPUT": [
+   [
+    "n01_cancel_run_1x",
+    "A 90° cut requested at 2.2 s and cancelled 0.1 s later — the dribble continues (94 %, 7/8)"
+   ],
+   [
+    "n02_retarget_run_1x",
+    "60° right requested, changed to 60° left 0.12 s later — seed 1, taken with the ball (retarget: 1/8)"
+   ]
+  ],
+  "ARCH": [
+   [
+    "x01_arch_A_straight_1x",
+    "A — PURE PHYSICAL, straight"
+   ],
+   [
+    "x02_arch_B_straight_1x",
+    "B — RESOLVED, straight"
+   ],
+   [
+    "x03_arch_C_straight_1x",
+    "C — BOUNDED HYBRID, straight"
+   ],
+   [
+    "x04_arch_A_cut60_1x",
+    "A — 60° cut (seed 6)"
+   ],
+   [
+    "x05_arch_B_cut60_1x",
+    "B — 60° cut (seed 6)"
+   ],
+   [
+    "x06_arch_C_cut60_1x",
+    "C — 60° cut (seed 6)"
+   ]
+  ],
+  "DIAG": [
+   [
+    "d01_straight_run_diag",
+    "Straight RUN with diagnostics"
+   ],
+   [
+    "d02_straight_sprint_diag",
+    "SPRINT knock-ons with diagnostics"
+   ],
+   [
+    "d03_cut60_run_diag",
+    "60° cut with diagnostics — the plan ring shows foot, region and contact tick before the touch"
+   ],
+   [
+    "d04_cut90_run_diag",
+    "90° cut with diagnostics"
+   ],
+   [
+    "d08_cut90_loss_diag",
+    "The failing 90° cut with diagnostics"
+   ],
+   [
+    "d07_curve_run_diag",
+    "Curve with diagnostics"
+   ],
+   [
+    "d05_intercept_run_diag",
+    "Interception with diagnostics"
+   ],
+   [
+    "d06_tackle_run_diag",
+    "Tackle with diagnostics"
+   ]
+  ],
+  "SLOW": [
+   [
+    "z01_contact_run_slow",
+    "A RUN touch (right toe, FRONT region) at 0.25×"
+   ],
+   [
+    "z02_contact_sprint_slow",
+    "A SPRINT knock-on at 0.25×"
+   ],
+   [
+    "z03_cut90_touch_slow",
+    "The 90° cut touch (left LACES, pushed 62°) at 0.25×"
+   ],
+   [
+    "z04_intercept_slow",
+    "The defender's leg meeting the ball at 0.25×"
+   ],
+   [
+    "z05_tackle_slow",
+    "The sliding tackle meeting the ball at 0.25×"
+   ]
+  ]
+ },
+ "howItWorks": [
+  "<b>Authority:</b> the simulation owns intent (direction / speed, the cut gate, pursuit); TURN-1.2 resolves locomotion, unchanged; the resolver decides when, which foot, which boot region, which contact tick and the launch; BallWorld owns the ball from that tick on. No tether: the dribble code never writes the ball's state — it sets collider frames and schedules one launch per touch through the kernel's validated schedule().",
+  "<b>The touch</b> is a bounded adjustment of the free leg's swing on top of TURN-1.2's pose: a swing <b>time-warp</b> (the boot meets the ball at an earlier point of its own path, at a controlled speed), a bounded offset, a boot-region rotation (yaw carried by the hip), a follow-through hold, pinned to zero at touchdown — the plant never moves (0 mm over 26,076 adjusted ticks).",
+  "<b>Candidates</b> come from real foot opportunities in TURN-1.2's own prediction (contact tick × path phase × region × contact elevation); each must pass reach, closing speed, the approach and follow-through checks, the launch solve against the next feasible window (exact BallWorld refinement), and must not send the ball into the other leg.",
+  "<b>Touch distance scales with speed</b> (aimed separation 0.7 m at JOG → 2.8 m at SPRINT, longest interval 1.4 → 2.9 s); minimum intervals stop rapid fire; one deliberate touch per swing.",
+  "<b>Foot selection:</b> both feet's opportunities compete; cost includes the preferred / weak foot (weak-foot rating), region, reach and continuity with the window the last launch aimed at; the weak foot also raises the execution error.",
+  "<b>Execution error</b> (seeded, keyed per touch): σ from Dribbling 0.5 / Ball Control 0.3 / Agility 0.2, weak foot, boot region, speed and turn (Balance); Reactions set the reaction time; Agility the reach.",
+  "<b>Cuts:</b> a requested change of more than 8° is held until a touch can take the ball into it (at most the speed's longest touch interval + 0.3 s, then the body turns without it); staged cuts and set-up touches; the carrier's pursuit bends the run toward where the free ball will be — the ball is never corrected.",
+  "<b>Control state</b> is a classification only (CONTROLLED / LOOSE / CONTESTED)."
+ ],
+ "visualDefects": [
+  "<b>Touch-family monotony:</b> almost every touch is a FRONT (toe) push — 75 of 75 at JOG, 45 of 45 at RUN; inside / outside / laces appear only in cuts. At gameplay scale the rhythm reads well, close up the touches look alike.",
+  "<b>Failed cuts end in a firm recovery push:</b> when no touch can take the ball into the cut, the swing that meets it pushes it 9–10 m/s straight on while the body turns (k07); the cut also starts late (about 1.2 s after the request) because the player must first reach a ball he pushed 1–1.5 m ahead.",
+  "<b>SPRINT knock-ons look like chasing a loose ball:</b> 2.5 s between touches, the ball 2–3 m ahead; at the 1× camera player and ball are small, so contacts read only through the ball's change of speed."
+ ],
+ "systemDefects": [
+  "<b>Cut reliability (the stop-condition gap):</b> turns taken with the ball, 8 seeds — 45° 5/8, 60° 5/8, 60° left 3/8, 90° 1/8, 90° left 2/8, 90° jog 2/8, 135° 0/8, 180° 0/8. Cause: a contact early in the swing has a fast follow-through (the time-warp must catch up to TURN-1.2's unchanged plant), so only a firm launch clears it without a second contact — the soft redirecting touch a cut needs is often infeasible. Tried tonight, measured, kept or rejected: interval consistency, gate on user changes only, speed-dependent hold, blockers, partial / staged cuts, set-up touches, pursuit on/off.",
+  "<b>CPU:</b> 496.6 ms per simulated second for one dribbler (Apple M4, one thread) — locomotion 28.1, ball 2.8, resolver 465.7 (predictions 270.1, launch solve 117.9); 2.01× real time on average, slower than real time in the worst cases (135°: 0.53×).",
+  "<b>Foot preference is weak and the kernel can fail closed:</b> the right-footed elite player makes only 31–59 % of RUN / FAST touches with his right foot (continuity with the aimed window outweighs preference); the ball kernel throws on a leg–ball–turf pinch (0 in the final 160 runs, seen during development — the run ends as a recorded fault); Node vs Chrome replay differs in 2 / 20 scenarios (ball kernel, 1e-17 level)."
+ ],
+ "nextStep": "DRIBBLE-1.1 — a <b>soft-touch follow-through</b>: after the contact tick, let the touching swing decelerate / lift around the ball and re-converge to TURN-1.2's unchanged plant (instead of the time-warp's catch-up), add it to the follow-through model, and re-run the cut matrix with the taken-with-the-ball metric (target 45–60° ≥ 7/8, 90° ≥ 5/8); in the same pass, share one locomotion prediction per input change between planning, clearance and the post-cut branches to cut the resolver's CPU.",
+ "provenance": [
+  "TURN-1.2: tag locomotion-turn12-baseline-1 = 2129ca04; the branch descends from it and only adds files; the six frozen sources match TURN12_FREEZE_MANIFEST.tsv (sha256); git diff tag..HEAD over turn1/, run1/, anim3d/ is empty.",
+  "Ball: 23 files byte-identical to Codex lab prototype/ball-feel-1-3 @ 75866e99 (BALL_SOURCE_MANIFEST.tsv: git blob, sha256, source commit; verified against the manifest and against git show).",
+  "Player attributes: players.json (players-v3-4attrs) via d1_attrs.js — Dribbling, Ball Control, Agility, Balance, Reactions, preferred_foot, weak_foot.",
+  "Evidence: tools/d1_evidence.mjs, d1_matrix.mjs, d1_abc.mjs, d1_plantcheck.mjs, d1_determinism.mjs, d1_chrome_fp.cjs on the committed core; videos: tools/d1_render_all.sh + d1_videos.txt from the lab page (fingerprints in each run's HUD)."
+ ],
+ "determinismNote": "The cross-engine differences start at the last bits: REV180_SPRINT in the ball's state inside the ball kernel (~6e-15 at 3.26 s), CURVE_JOG in the player's heading ψ (4.4e-16 at 2.25 s — locomotion / intent math), while the other state is still identical; a sample of common Math functions gives identical results in both engines, so the difference is in a transcendental for specific inputs between V8 versions. Same-engine replay is exact.",
+ "cpuNote": "The ball kernel and TURN-1.2 are cheap (≈ 31 ms per simulated second together); the resolver's lookahead (TURN-1.2 clones for the locomotion prediction and post-cut branches) dominates. Only the ball carrier runs the resolver, so match scale means one resolver plus 22 locomotion bodies — viable for development now, with ~5× to gain before match budgets.",
+ "numbers": {
+  "doubleImpulses": 0,
+  "kernelFaults": 0,
+  "runs": 160,
+  "sep": "JOG 3 m/s: mean 0.78 m, max 1.32 m · RUN 5.47 m/s: mean 1.31 m, max 3.48 m · FAST 7.77 m/s: mean 1.61 m, max 3.08 m · SPRINT 9.49 m/s: mean 2.9 m, max 28.28 m"
+ }
+}

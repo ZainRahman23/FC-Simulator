@@ -1,0 +1,90 @@
+{
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 5.47,
+  "touchesPerSec": 0.68,
+  "sepMean": 1.31,
+  "sepMax": 3.48,
+  "freeIntervalMean": 1.51,
+  "freeIntervalMax": 2.16,
+  "freeSharePct": 99.7,
+  "feet": {
+   "R": 19,
+   "L": 26,
+   "preferredShare": 42
+  },
+  "regions": {
+   "FRONT": 45
+  },
+  "touchErrSpeedPct": 1.75,
+  "touchErrDirDeg": 1.07,
+  "launchMean": 7.97,
+  "launchMax": 10.18,
+  "ballSpeedMean": 5.65,
+  "controlLosses": 0.25,
+  "controlledPct": 97.2,
+  "recoveryTouches": 2,
+  "touches": 45
+ },
+ "CUT60_RUN": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 5.45,
+  "touchesPerSec": 0.77,
+  "sepMean": 1.56,
+  "sepMax": 8.59,
+  "freeIntervalMean": 1.32,
+  "freeIntervalMax": 1.99,
+  "freeSharePct": 99.67,
+  "feet": {
+   "R": 17,
+   "L": 18,
+   "preferredShare": 49
+  },
+  "regions": {
+   "FRONT": 32,
+   "INSIDE": 3
+  },
+  "touchErrSpeedPct": 2.23,
+  "touchErrDirDeg": 1.28,
+  "launchMean": 7.57,
+  "launchMax": 9.17,
+  "ballSpeedMean": 5.37,
+  "controlLosses": 0.38,
+  "controlledPct": 85.78,
+  "recoveryTouches": 2,
+  "touches": 35
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Vinícius Júnior",
+  "arch": "B",
+  "playerSpeed": 9.49,
+  "touchesPerSec": 0.35,
+  "sepMean": 2.9,
+  "sepMax": 28.28,
+  "freeIntervalMean": 2.5,
+  "freeIntervalMax": 2.77,
+  "freeSharePct": 99.82,
+  "feet": {
+   "R": 17,
+   "L": 5,
+   "preferredShare": 77
+  },
+  "regions": {
+   "FRONT": 22
+  },
+  "touchErrSpeedPct": 1.52,
+  "touchErrDirDeg": 1.32,
+  "launchMean": 13.7,
+  "launchMax": 14.48,
+  "ballSpeedMean": 9.02,
+  "controlLosses": 0.25,
+  "controlledPct": 88.38,
+  "recoveryTouches": 0,
+  "touches": 22
+ }
+}

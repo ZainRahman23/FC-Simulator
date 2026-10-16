@@ -42,23 +42,25 @@ if (mode === "reliability") {
       unplannedOwnContacts: rows.reduce((s, r) => s + r.unplannedOwnContacts, 0), kernelFaults: rows.filter((r) => r.kernelFault).length, heldToEnd: rows.filter((r) => r.end === "CONTROLLED").length + "/" + N, rows };
     console.log(id.padEnd(17), arch, prof, `controlled ${out[id].controlledPct}% · touches ${out[id].touches} · double impulses ${out[id].doubleImpulses} · unplanned own ${out[id].unplannedOwnContacts} · kernel faults ${out[id].kernelFaults}${out[id].takenWithBall ? ` · TURN taken with ball ${out[id].takenWithBall} (released by touch ${out[id].releasedByTouch}, response ${out[id].responseS} s)` : ""} · end ${rows.map((r) => r.kernelFault ? "F" : r.end[0]).join("")}`); }
 } else if (mode === "free") {
-  const N = +a2; let gTicks = 0, gBad = 0, gMax = 0;
+  const N = +a2; let gTicks = 0, gBad = 0, gPersist = 0, gMax = 0;
   for (const id of ids(idsArg)) for (let seed = 1; seed <= N; seed++) {
     const S = makeSim(get(id), { seed }), n = Math.round(S.cfg.scenario.dur / DT), B = S.ballCfg;
     const Ref = new B.World(Object.assign({}, B.options, { p: [0, 0.11, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }));
     const sync = () => { const W = S.W; Ref.ball = structuredClone(W.ball); Ref.tick = W.tick; Ref.time = W.time; Ref.restTime = W.restTime; Ref.events = []; Ref.actions = []; Ref.guards = []; Ref.actionIds = new Set(); };
-    let ticks = 0, bad = 0, maxDev = 0, events = 0, synced = false;
+    // a deviation on the tick right after a body contact is CONTACT PERSISTENCE (the ball still resting on that boot / leg surface for one more
+    // tick, resolved by the kernel without an impulse event) — physics, reported separately; anything else would be an unexplained influence
+    let ticks = 0, bad = 0, persist = 0, maxDev = 0, maxUnexpl = 0, events = 0, synced = false, lastContact = -9;
     while (S.k < n && !S.fault) {
       const e0 = S.W.events.length; if (synced) Ref.step(); S.step();
       const ev = S.W.events.slice(e0).filter((e) => e.kind === "AUTHORITATIVE_LAUNCH" || (e.kind === "PHYSICAL_CONTACT" && e.collider !== "turf"));
-      if (ev.length || !synced) { events += ev.length; sync(); synced = true; continue; }
+      if (ev.length || !synced) { events += ev.length; if (ev.length) lastContact = S.k - 1; sync(); synced = true; continue; }
       const a = S.W.ball, b = Ref.ball, d = Math.max(Math.abs(a.p[0] - b.p[0]), Math.abs(a.p[1] - b.p[1]), Math.abs(a.p[2] - b.p[2]), Math.abs(a.v[0] - b.v[0]), Math.abs(a.v[1] - b.v[1]), Math.abs(a.v[2] - b.v[2]));
-      ticks++; maxDev = Math.max(maxDev, d); if (d > 1e-12) { bad++; sync(); }
+      ticks++; maxDev = Math.max(maxDev, d); if (d > 1e-12) { if (S.k - 1 - lastContact <= 1) persist++; else { bad++; maxUnexpl = Math.max(maxUnexpl, d); } sync(); }
     }
-    gTicks += ticks; gBad += bad; gMax = Math.max(gMax, maxDev);
-    out[id + ":" + seed] = { freeTicks: ticks, deviatingTicks: bad, maxDeviation: maxDev, resyncEvents: events, kernelFault: S.fault || null };
-    console.log((id + ":" + seed).padEnd(20), `free ticks ${ticks} · deviating ${bad} · max |Δ| ${maxDev.toExponential(2)} · events ${events}`); }
-  out.TOTAL = { freeTicks: gTicks, deviatingTicks: gBad, maxDeviation: gMax }; console.log(`TOTAL free ticks ${gTicks} · deviating ${gBad} · max ${gMax.toExponential(2)}`);
+    gTicks += ticks; gBad += bad; gPersist += persist; gMax = Math.max(gMax, maxUnexpl);
+    out[id + ":" + seed] = { freeTicks: ticks, unexplainedDeviatingTicks: bad, contactPersistenceTicks: persist, maxDeviation: maxDev, maxUnexplainedDeviation: maxUnexpl, resyncEvents: events, kernelFault: S.fault || null };
+    console.log((id + ":" + seed).padEnd(20), `free ticks ${ticks} · unexplained ${bad} · contact persistence ${persist} · max |Δ| ${maxDev.toExponential(2)} · events ${events}`); }
+  out.TOTAL = { freeTicks: gTicks, unexplainedDeviatingTicks: gBad, contactPersistenceTicks: gPersist, maxUnexplainedDeviation: gMax }; console.log(`TOTAL free ticks ${gTicks} · unexplained ${gBad} · contact persistence ${gPersist} · max unexplained ${gMax.toExponential(2)}`);
 } else if (mode === "touches") {
   const csv = ["scenario,seed,profile,arch,touch,tick,t_s,foot,weak,region,hull,swing_w,gap_mm,ball_x,ball_y,ball_z,pre_vx,pre_vy,pre_vz,desired_speed,desired_dir_deg,executed_speed,executed_dir_deg,post_vx,post_vy,post_vz,post_wx,post_wy,post_wz,err_speed_pct,err_dir_deg,recovery,releases_cut,player_speed,launched,cancelled"];
   for (const spec of idsArg.split(",")) { const [id, sd, pf, ar] = spec.split(":"), seed = +(sd || 1), prof = pf || "HIGH", arch = ar || "B";
@@ -77,10 +79,11 @@ if (mode === "reliability") {
     for (let seed = 1; seed <= N; seed++) { const S = makeSim(get(id), { seed, opts: { record: false } }), w0 = performance.now(); S.run(); acc.wall += performance.now() - w0; acc.sim += S.k * DT;
       for (const k of ["loco", "ball", "plan", "predict", "solve", "commit"]) acc[k] += S.cpu[k]; }
     for (const k in tot) tot[k] += acc[k];
-    // plan time includes predict + solve (nested): report the resolver's own share separately
-    const per = (x) => +(x / acc.sim).toFixed(1); out[id] = { simSeconds: +acc.sim.toFixed(1), msPerSimSecond: { total: per(acc.wall), locomotion: per(acc.loco), ball: per(acc.ball), resolverTotal: per(acc.plan), resolverPredict: per(acc.predict), resolverSolve: per(acc.solve), commit: per(acc.commit) }, realtimeFactor: +(acc.sim * 1000 / acc.wall).toFixed(2) };
+    // the resolver = everything that is neither locomotion (intent, TURN-1.2 step, pose, swing adjustment, colliders) nor the ball kernel; its
+    // predictions (TURN-1.2 clones for the locomotion lookahead and the post-cut motions, collider-free ball paths) and launch solve are measured inside it
+    const per = (x) => +(x / acc.sim).toFixed(1); out[id] = { simSeconds: +acc.sim.toFixed(1), msPerSimSecond: { total: per(acc.wall), locomotion: per(acc.loco), ball: per(acc.ball), resolverTotal: per(acc.wall - acc.loco - acc.ball), resolverPredict: per(acc.predict), resolverSolve: per(acc.solve), commit: per(acc.commit) }, realtimeFactor: +(acc.sim * 1000 / acc.wall).toFixed(2) };
     console.log(id.padEnd(17), JSON.stringify(out[id])); }
-  const per = (x) => +(x / tot.sim).toFixed(1); out.ALL = { simSeconds: +tot.sim.toFixed(1), msPerSimSecond: { total: per(tot.wall), locomotion: per(tot.loco), ball: per(tot.ball), resolverTotal: per(tot.plan), resolverPredict: per(tot.predict), resolverSolve: per(tot.solve), commit: per(tot.commit) }, realtimeFactor: +(tot.sim * 1000 / tot.wall).toFixed(2), node: process.version };
+  const per = (x) => +(x / tot.sim).toFixed(1); out.ALL = { simSeconds: +tot.sim.toFixed(1), msPerSimSecond: { total: per(tot.wall), locomotion: per(tot.loco), ball: per(tot.ball), resolverTotal: per(tot.wall - tot.loco - tot.ball), resolverPredict: per(tot.predict), resolverSolve: per(tot.solve), commit: per(tot.commit) }, realtimeFactor: +(tot.sim * 1000 / tot.wall).toFixed(2), node: process.version };
   console.log("ALL", JSON.stringify(out.ALL));
 } else { console.error("mode: reliability | free | touches | cpu"); process.exit(1); }
 const file = { reliability: a5, free: a3, touches: a2, cpu: a3 }[mode]; if (file) fs.writeFileSync(file, JSON.stringify(out, null, 1));

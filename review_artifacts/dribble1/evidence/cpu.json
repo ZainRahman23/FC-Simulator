@@ -1,0 +1,276 @@
+{
+ "STRAIGHT_JOG": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 204.6,
+   "locomotion": 28.5,
+   "ball": 2.6,
+   "resolverTotal": 173.5,
+   "resolverPredict": 74.5,
+   "resolverSolve": 39.2,
+   "commit": 0.9
+  },
+  "realtimeFactor": 4.89
+ },
+ "STRAIGHT_RUN": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 273.1,
+   "locomotion": 26.9,
+   "ball": 2.5,
+   "resolverTotal": 243.7,
+   "resolverPredict": 88.2,
+   "resolverSolve": 69.4,
+   "commit": 0.7
+  },
+  "realtimeFactor": 3.66
+ },
+ "STRAIGHT_FAST": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 179.8,
+   "locomotion": 27.7,
+   "ball": 2.4,
+   "resolverTotal": 149.6,
+   "resolverPredict": 88.4,
+   "resolverSolve": 44.7,
+   "commit": 0.4
+  },
+  "realtimeFactor": 5.56
+ },
+ "STRAIGHT_SPRINT": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 302.3,
+   "locomotion": 31.3,
+   "ball": 2.5,
+   "resolverTotal": 268.5,
+   "resolverPredict": 184.7,
+   "resolverSolve": 27.9,
+   "commit": 0.2
+  },
+  "realtimeFactor": 3.31
+ },
+ "STRAIGHT_RUN_FAR": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 194.4,
+   "locomotion": 26.3,
+   "ball": 2.5,
+   "resolverTotal": 165.6,
+   "resolverPredict": 98,
+   "resolverSolve": 40.5,
+   "commit": 0.6
+  },
+  "realtimeFactor": 5.14
+ },
+ "CUT60_RUN_FAR": {
+  "simSeconds": 13,
+  "msPerSimSecond": {
+   "total": 1282.1,
+   "locomotion": 28.8,
+   "ball": 2.7,
+   "resolverTotal": 1250.7,
+   "resolverPredict": 734,
+   "resolverSolve": 402.1,
+   "commit": 0.6
+  },
+  "realtimeFactor": 0.78
+ },
+ "CURVE_RUN": {
+  "simSeconds": 16,
+  "msPerSimSecond": {
+   "total": 391.6,
+   "locomotion": 26.9,
+   "ball": 2.7,
+   "resolverTotal": 362,
+   "resolverPredict": 230.5,
+   "resolverSolve": 78.3,
+   "commit": 0.7
+  },
+  "realtimeFactor": 2.55
+ },
+ "CURVE_JOG": {
+  "simSeconds": 14,
+  "msPerSimSecond": {
+   "total": 440.8,
+   "locomotion": 26.6,
+   "ball": 4.1,
+   "resolverTotal": 410.1,
+   "resolverPredict": 192.2,
+   "resolverSolve": 38.7,
+   "commit": 0.6
+  },
+  "realtimeFactor": 2.27
+ },
+ "CUT45_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 444.6,
+   "locomotion": 27.3,
+   "ball": 2.7,
+   "resolverTotal": 414.5,
+   "resolverPredict": 273.8,
+   "resolverSolve": 81.2,
+   "commit": 0.7
+  },
+  "realtimeFactor": 2.25
+ },
+ "CUT60_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 515.5,
+   "locomotion": 27.6,
+   "ball": 2.7,
+   "resolverTotal": 485.1,
+   "resolverPredict": 295.2,
+   "resolverSolve": 93.5,
+   "commit": 0.8
+  },
+  "realtimeFactor": 1.94
+ },
+ "CUT60L_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 454.9,
+   "locomotion": 27,
+   "ball": 2.8,
+   "resolverTotal": 425.2,
+   "resolverPredict": 291,
+   "resolverSolve": 88.5,
+   "commit": 0.9
+  },
+  "realtimeFactor": 2.2
+ },
+ "CUT90_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 576.5,
+   "locomotion": 27.1,
+   "ball": 2.8,
+   "resolverTotal": 546.6,
+   "resolverPredict": 389,
+   "resolverSolve": 100.7,
+   "commit": 0.9
+  },
+  "realtimeFactor": 1.73
+ },
+ "CUT90_JOG": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 600,
+   "locomotion": 26.5,
+   "ball": 2.9,
+   "resolverTotal": 570.7,
+   "resolverPredict": 359,
+   "resolverSolve": 104.4,
+   "commit": 0.7
+  },
+  "realtimeFactor": 1.67
+ },
+ "CUT90L_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 516.5,
+   "locomotion": 27.3,
+   "ball": 2.8,
+   "resolverTotal": 486.5,
+   "resolverPredict": 289,
+   "resolverSolve": 132.1,
+   "commit": 1
+  },
+  "realtimeFactor": 1.94
+ },
+ "REV135_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 1889.8,
+   "locomotion": 28.3,
+   "ball": 4.1,
+   "resolverTotal": 1857.4,
+   "resolverPredict": 795.9,
+   "resolverSolve": 802.3,
+   "commit": 1
+  },
+  "realtimeFactor": 0.53
+ },
+ "REV180_SPRINT": {
+  "simSeconds": 14,
+  "msPerSimSecond": {
+   "total": 559.4,
+   "locomotion": 39.7,
+   "ball": 2.6,
+   "resolverTotal": 517.2,
+   "resolverPredict": 386.3,
+   "resolverSolve": 59.2,
+   "commit": 0.1
+  },
+  "realtimeFactor": 1.79
+ },
+ "CANCEL_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 468,
+   "locomotion": 26.6,
+   "ball": 2.6,
+   "resolverTotal": 438.9,
+   "resolverPredict": 263.4,
+   "resolverSolve": 97.6,
+   "commit": 0.7
+  },
+  "realtimeFactor": 2.14
+ },
+ "RETARGET_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 642.9,
+   "locomotion": 27,
+   "ball": 2.9,
+   "resolverTotal": 613,
+   "resolverPredict": 410.2,
+   "resolverSolve": 111.9,
+   "commit": 0.6
+  },
+  "realtimeFactor": 1.56
+ },
+ "INTERCEPT_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 178.1,
+   "locomotion": 26.5,
+   "ball": 2.7,
+   "resolverTotal": 148.8,
+   "resolverPredict": 79.1,
+   "resolverSolve": 44.2,
+   "commit": 0.6
+  },
+  "realtimeFactor": 5.62
+ },
+ "TACKLE_RUN": {
+  "simSeconds": 12,
+  "msPerSimSecond": {
+   "total": 228.5,
+   "locomotion": 27.1,
+   "ball": 2.7,
+   "resolverTotal": 198.7,
+   "resolverPredict": 120.3,
+   "resolverSolve": 37.3,
+   "commit": 0.6
+  },
+  "realtimeFactor": 4.38
+ },
+ "ALL": {
+  "simSeconds": 269,
+  "msPerSimSecond": {
+   "total": 496.6,
+   "locomotion": 28.1,
+   "ball": 2.8,
+   "resolverTotal": 465.7,
+   "resolverPredict": 270.1,
+   "resolverSolve": 117.9,
+   "commit": 0.6
+  },
+  "realtimeFactor": 2.01,
+  "node": "v22.19.0"
+ }
+}

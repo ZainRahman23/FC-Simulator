@@ -1,0 +1,91 @@
+{
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Dani Carvajal",
+  "arch": "B",
+  "playerSpeed": 5.5,
+  "touchesPerSec": 0.57,
+  "sepMean": 2.22,
+  "sepMax": 12.93,
+  "freeIntervalMean": 1.81,
+  "freeIntervalMax": 3.82,
+  "freeSharePct": 99.77,
+  "feet": {
+   "R": 14,
+   "L": 20,
+   "preferredShare": 41
+  },
+  "regions": {
+   "FRONT": 33,
+   "INSIDE": 1
+  },
+  "touchErrSpeedPct": 4.01,
+  "touchErrDirDeg": 2.29,
+  "launchMean": 8.53,
+  "launchMax": 11.91,
+  "ballSpeedMean": 5.32,
+  "controlLosses": 0.88,
+  "controlledPct": 72.24,
+  "recoveryTouches": 7,
+  "touches": 34
+ },
+ "CUT60_RUN": {
+  "seeds": 8,
+  "profile": "Dani Carvajal",
+  "arch": "B",
+  "playerSpeed": 5.47,
+  "touchesPerSec": 0.66,
+  "sepMean": 3.58,
+  "sepMax": 18.91,
+  "freeIntervalMean": 1.56,
+  "freeIntervalMax": 1.92,
+  "freeSharePct": 99.78,
+  "feet": {
+   "R": 10,
+   "L": 14,
+   "preferredShare": 42
+  },
+  "regions": {
+   "FRONT": 24
+  },
+  "touchErrSpeedPct": 4.05,
+  "touchErrDirDeg": 2.41,
+  "launchMean": 8.17,
+  "launchMax": 11.91,
+  "ballSpeedMean": 4.92,
+  "controlLosses": 0.88,
+  "controlledPct": 64.57,
+  "recoveryTouches": 4,
+  "touches": 24
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Dani Carvajal",
+  "arch": "B",
+  "playerSpeed": 9.45,
+  "touchesPerSec": 0.4,
+  "sepMean": 2.63,
+  "sepMax": 17.04,
+  "freeIntervalMean": 2.51,
+  "freeIntervalMax": 3.32,
+  "freeSharePct": 99.81,
+  "feet": {
+   "R": 17,
+   "L": 8,
+   "preferredShare": 68
+  },
+  "regions": {
+   "FRONT": 24,
+   "LACES": 1
+  },
+  "touchErrSpeedPct": 3.13,
+  "touchErrDirDeg": 2.28,
+  "launchMean": 13.48,
+  "launchMax": 15.44,
+  "ballSpeedMean": 9.46,
+  "controlLosses": 0.25,
+  "controlledPct": 93.02,
+  "recoveryTouches": 1,
+  "touches": 25
+ }
+}

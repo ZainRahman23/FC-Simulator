@@ -1,0 +1,91 @@
+{
+ "STRAIGHT_RUN": {
+  "seeds": 8,
+  "profile": "Ousmane Dembélé",
+  "arch": "B",
+  "playerSpeed": 5.5,
+  "touchesPerSec": 0.67,
+  "sepMean": 1.27,
+  "sepMax": 2.53,
+  "freeIntervalMean": 1.49,
+  "freeIntervalMax": 2.17,
+  "freeSharePct": 99.68,
+  "feet": {
+   "R": 16,
+   "L": 31,
+   "preferredShare": 66
+  },
+  "regions": {
+   "FRONT": 47
+  },
+  "touchErrSpeedPct": 1.03,
+  "touchErrDirDeg": 0.75,
+  "launchMean": 7.87,
+  "launchMax": 9.19,
+  "ballSpeedMean": 5.57,
+  "controlLosses": 0,
+  "controlledPct": 100,
+  "recoveryTouches": 0,
+  "touches": 47
+ },
+ "CUT60_RUN": {
+  "seeds": 8,
+  "profile": "Ousmane Dembélé",
+  "arch": "B",
+  "playerSpeed": 5.43,
+  "touchesPerSec": 0.82,
+  "sepMean": 2.22,
+  "sepMax": 10.95,
+  "freeIntervalMean": 1.24,
+  "freeIntervalMax": 1.91,
+  "freeSharePct": 99.73,
+  "feet": {
+   "R": 8,
+   "L": 22,
+   "preferredShare": 73
+  },
+  "regions": {
+   "FRONT": 23,
+   "LACES": 5,
+   "INSIDE": 2
+  },
+  "touchErrSpeedPct": 1.07,
+  "touchErrDirDeg": 0.78,
+  "launchMean": 7.77,
+  "launchMax": 10.13,
+  "ballSpeedMean": 5.09,
+  "controlLosses": 0.88,
+  "controlledPct": 68.69,
+  "recoveryTouches": 7,
+  "touches": 30
+ },
+ "STRAIGHT_SPRINT": {
+  "seeds": 8,
+  "profile": "Ousmane Dembélé",
+  "arch": "B",
+  "playerSpeed": 9.45,
+  "touchesPerSec": 0.41,
+  "sepMean": 2.2,
+  "sepMax": 7.06,
+  "freeIntervalMean": 2.47,
+  "freeIntervalMax": 2.64,
+  "freeSharePct": 99.77,
+  "feet": {
+   "R": 19,
+   "L": 5,
+   "preferredShare": 21
+  },
+  "regions": {
+   "FRONT": 24
+  },
+  "touchErrSpeedPct": 1.4,
+  "touchErrDirDeg": 0.89,
+  "launchMean": 13.61,
+  "launchMax": 14.34,
+  "ballSpeedMean": 9.28,
+  "controlLosses": 0.38,
+  "controlledPct": 92.02,
+  "recoveryTouches": 0,
+  "touches": 24
+ }
+}
