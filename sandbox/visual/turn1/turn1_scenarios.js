@@ -20,8 +20,8 @@ var T1SCN = (function () {
   const seq = (id, label, v, cmds, dur) => { SC[id] = Object.assign(make(v, 0, 9), { id, label, cmds, dur, tCmd: cmds[0].t }); };
   seq("ZIGZAG_RUN", "RUN 7.8 · cut 60° right, then back 60° left (RUN → CUT → RUN → CUT → RUN)", 7.8, [{ t: 1.0, turn: 60 }, { t: 2.6, turn: 0 }], 5.2);
   seq("ZIGZAG_JOG", "JOG 5.5 · cut 90° right, then 90° left back to the original line", 5.5, [{ t: 1.0, turn: 90 }, { t: 2.5, turn: 0 }], 5.0);
-  seq("SLALOM_JOG", "JOG 5.5 · gentle steering: ±20° every 0.8 s", 5.5, [{ t: 0.9, turn: 20 }, { t: 1.7, turn: -20 }, { t: 2.5, turn: 20 }, { t: 3.3, turn: 0 }], 4.8);
-  seq("SLALOM_SPRINT", "SPRINT 9.5 · gentle steering: ±15° every 0.9 s", 9.5, [{ t: 0.9, turn: 15 }, { t: 1.8, turn: -15 }, { t: 2.7, turn: 0 }], 4.6);
+  seq("SLALOM_JOG", "JOG 5.5 · gentle steering: ±15° every 0.8 s", 5.5, [{ t: 0.9, turn: 15 }, { t: 1.7, turn: -15 }, { t: 2.5, turn: 15 }, { t: 3.3, turn: 0 }], 4.8);
+  seq("SLALOM_SPRINT", "SPRINT 9.5 · gentle steering: ±12° every 0.9 s", 9.5, [{ t: 0.9, turn: 12 }, { t: 1.8, turn: -12 }, { t: 2.7, turn: 0 }], 4.6);
   seq("CONT_CURVE", "JOG 5.5 · arc 30° right, then (during the curve) 60° left", 5.5, [{ t: 1.0, turn: 30 }, { t: 1.45, turn: -60 }], 4.6);
   seq("CONT_PRE_RETARGET", "RUN 7.8 · 90° right, retargeted to 50° right before the plant", 7.8, [{ t: 1.0, turn: 90 }, { t: 1.25, turn: 50 }], 4.4);
   seq("CONT_PRE_ABANDON", "RUN 7.8 · 90° right, abandoned (back to 10° right) before the plant", 7.8, [{ t: 1.0, turn: 90 }, { t: 1.25, turn: 10 }], 4.4);
