@@ -1,0 +1,93 @@
+{
+ "note": "TURN-1.1 final statuses and picks (review page source)",
+ "statuses": [
+  [
+   "TURN-1 MOVEMENT FOUNDATION PRESERVED",
+   "YES"
+  ],
+  [
+   "RUN 90° AUTHORED CUT",
+   "PASS"
+  ],
+  [
+   "SIDE-STEP PLANT",
+   "PASS"
+  ],
+  [
+   "CROSSOVER PLANT",
+   "PARTIAL"
+  ],
+  [
+   "PIVOT PLANT",
+   "PASS"
+  ],
+  [
+   "BRAKING BODY LANGUAGE",
+   "PASS"
+  ],
+  [
+   "EXIT/ACCELERATION BODY LANGUAGE",
+   "PASS"
+  ],
+  [
+   "SPRINT 90°",
+   "PASS"
+  ],
+  [
+   "SPRINT 180°",
+   "PARTIAL"
+  ],
+  [
+   "GENTLE CURVES PRESERVED",
+   "YES"
+  ],
+  [
+   "PLANT FOOT SLIP",
+   "PASS"
+  ],
+  [
+   "CONTINUOUS INPUT",
+   "PASS"
+  ],
+  [
+   "LEFT/RIGHT MIRRORING",
+   "PASS"
+  ],
+  [
+   "MINIMUM LIBRARY REMAINS 3 BASES + MODIFIERS",
+   "YES"
+  ],
+  [
+   "DETERMINISM",
+   "PASS"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY TO CONVERGE WITH BALL-PHYS FOR DRIBBLE-1",
+   "YES"
+  ]
+ ],
+ "watchFirst": [
+  {
+   "id": "BAZ_RUN_90L_TOWARD",
+   "why": "The hero 90° side-step at the gameplay camera (6×), running toward the camera and cutting across the screen — TURN-1 (left) vs TURN-1.1 (right), identical path and plants (the 3× and real-1080p versions are BA_ / REAL_RUN_90L_TOWARD below)"
+  },
+  {
+   "id": "BAC_RUN_90R",
+   "why": "The same cut close up, before / after: brace, lean over the wide plant with the balancing arm, the free knee coming through, push and drive"
+  },
+  {
+   "id": "BA_SPRINT_180R",
+   "why": "The worst case, improved: braced deceleration, side-on pivot, shoulder-led rotation, low drive-out (TURN-1's 5 braking steps and timing unchanged)"
+  }
+ ],
+ "picks": {
+  "bestSidestep": "RUN_90R (also SPRINT_90R, JOG_90R)",
+  "bestCrossover": "RUN_60R (and ZIGZAG_RUN)",
+  "bestPivot": "RUN_180R",
+  "worst": "SPRINT_180R"
+ }
+}

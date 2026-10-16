@@ -1,0 +1,429 @@
+{
+ "note": "TURN-1.1: pose identity with TURN-1 where the layer is not engaged (ARC steering, straight running); joint positions every 240 Hz step, 7 decimals",
+ "scenarios": {
+  "LOW_15R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_15L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_30R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_30L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_45R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_45L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "LOW_60R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 632
+  },
+  "LOW_60L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 632
+  },
+  "LOW_90R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 660
+  },
+  "LOW_90L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 740
+  },
+  "LOW_120R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 676
+  },
+  "LOW_120L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 733
+  },
+  "LOW_150R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 743
+  },
+  "LOW_150L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 743
+  },
+  "LOW_180R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "LOW_180L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_15R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "JOG_15L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "JOG_30R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "JOG_30L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "JOG_45R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 664
+  },
+  "JOG_45L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 662
+  },
+  "JOG_60R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 692
+  },
+  "JOG_60L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 688
+  },
+  "JOG_90R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_90L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_120R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_120L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_150R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_150L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_180R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "JOG_180L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_15R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "RUN_15L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "RUN_30R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "RUN_30L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "RUN_45R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 733
+  },
+  "RUN_45L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 733
+  },
+  "RUN_60R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_60L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_90R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_90L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_120R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_120L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_150R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_150L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_180R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_180L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_15R": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "SPRINT_15L": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "SPRINT_30R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 709
+  },
+  "SPRINT_30L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 709
+  },
+  "SPRINT_45R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 712
+  },
+  "SPRINT_45L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 712
+  },
+  "SPRINT_60R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_60L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_90R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_90L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_120R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_120L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_150R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_150L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_180R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_180L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "LOW_STRAIGHT": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "JOG_STRAIGHT": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "RUN_STRAIGHT": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "SPRINT_STRAIGHT": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "ZIGZAG_RUN": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 1008
+  },
+  "ZIGZAG_JOG": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 960
+  },
+  "SLALOM_JOG": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "SLALOM_SPRINT": {
+   "maneuver": false,
+   "poseIdenticalToTurn1": true,
+   "layerActiveSteps": 0
+  },
+  "CONT_CURVE": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 667
+  },
+  "CONT_PRE_RETARGET": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 816
+  },
+  "CONT_PRE_ABANDON": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 744
+  },
+  "CONT_PRE_FLIP": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 864
+  },
+  "CONT_POST": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 835
+  },
+  "RUN_135R": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_135L": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_90L_TOWARD": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_90R_AWAY": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_90L_TOWARD": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "RUN_90L_MIRROR": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  },
+  "SPRINT_180L_MIRROR": {
+   "maneuver": true,
+   "poseIdenticalToTurn1": false,
+   "layerActiveSteps": 768
+  }
+ },
+ "arcAndStraight": {
+  "count": 22,
+  "allIdentical": true
+ }
+}
