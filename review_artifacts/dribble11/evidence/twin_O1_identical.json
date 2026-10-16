@@ -1,0 +1,378 @@
+{
+ "summary": {
+  "identical": 40,
+  "total": 40,
+  "simSeconds": 269,
+  "msPerSimSecond": {
+   "d1Total": 667.7,
+   "d11Total": 362.4,
+   "d1Resolver": 627.1,
+   "d11Resolver": 322.6
+  },
+  "resolverSpeedup": 1.94,
+  "d11PredictedTicksPerSimSecond": 1309.3,
+  "node": "v22.19.0"
+ },
+ "runs": {
+  "STRAIGHT_JOG:1": {
+   "identical": true,
+   "touches": 10,
+   "events": 22,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1974,
+   "msD11": 1379
+  },
+  "STRAIGHT_JOG:2": {
+   "identical": true,
+   "touches": 8,
+   "events": 16,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1449,
+   "msD11": 1083
+  },
+  "STRAIGHT_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 13,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 2027,
+   "msD11": 1621
+  },
+  "STRAIGHT_RUN:2": {
+   "identical": true,
+   "touches": 6,
+   "events": 19,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 2404,
+   "msD11": 1485
+  },
+  "STRAIGHT_FAST:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 7,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1473,
+   "msD11": 1156
+  },
+  "STRAIGHT_FAST:2": {
+   "identical": true,
+   "touches": 5,
+   "events": 11,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1416,
+   "msD11": 1112
+  },
+  "STRAIGHT_SPRINT:1": {
+   "identical": true,
+   "touches": 1,
+   "events": 2,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 2878,
+   "msD11": 1767
+  },
+  "STRAIGHT_SPRINT:2": {
+   "identical": true,
+   "touches": 3,
+   "events": 8,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 2002,
+   "msD11": 1452
+  },
+  "STRAIGHT_RUN_FAR:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 17,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1603,
+   "msD11": 1175
+  },
+  "STRAIGHT_RUN_FAR:2": {
+   "identical": true,
+   "touches": 6,
+   "events": 15,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 1551,
+   "msD11": 1240
+  },
+  "CUT60_RUN_FAR:1": {
+   "identical": true,
+   "touches": 4,
+   "events": 16,
+   "ticks": 1561,
+   "firstDiff": null,
+   "msD1": 13969,
+   "msD11": 4190
+  },
+  "CUT60_RUN_FAR:2": {
+   "identical": true,
+   "touches": 3,
+   "events": 5,
+   "ticks": 1561,
+   "firstDiff": null,
+   "msD1": 3057,
+   "msD11": 1700
+  },
+  "CURVE_RUN:1": {
+   "identical": true,
+   "touches": 6,
+   "events": 15,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 3494,
+   "msD11": 2334
+  },
+  "CURVE_RUN:2": {
+   "identical": true,
+   "touches": 6,
+   "events": 23,
+   "ticks": 1921,
+   "firstDiff": null,
+   "msD1": 2900,
+   "msD11": 1905
+  },
+  "CURVE_JOG:1": {
+   "identical": true,
+   "touches": 4,
+   "events": 14,
+   "ticks": 1681,
+   "firstDiff": null,
+   "msD1": 3759,
+   "msD11": 2082
+  },
+  "CURVE_JOG:2": {
+   "identical": true,
+   "touches": 8,
+   "events": 18,
+   "ticks": 1681,
+   "firstDiff": null,
+   "msD1": 2523,
+   "msD11": 1557
+  },
+  "CUT45_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 19,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2803,
+   "msD11": 1830
+  },
+  "CUT45_RUN:2": {
+   "identical": true,
+   "touches": 3,
+   "events": 8,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2620,
+   "msD11": 1658
+  },
+  "CUT60_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 13,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2821,
+   "msD11": 2018
+  },
+  "CUT60_RUN:2": {
+   "identical": true,
+   "touches": 5,
+   "events": 16,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 3523,
+   "msD11": 2182
+  },
+  "CUT60L_RUN:1": {
+   "identical": true,
+   "touches": 6,
+   "events": 18,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 3764,
+   "msD11": 2108
+  },
+  "CUT60L_RUN:2": {
+   "identical": true,
+   "touches": 4,
+   "events": 12,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 1828,
+   "msD11": 1272
+  },
+  "CUT90_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 15,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 3847,
+   "msD11": 2767
+  },
+  "CUT90_RUN:2": {
+   "identical": true,
+   "touches": 5,
+   "events": 17,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 6369,
+   "msD11": 4036
+  },
+  "CUT90_JOG:1": {
+   "identical": true,
+   "touches": 4,
+   "events": 6,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 6206,
+   "msD11": 2786
+  },
+  "CUT90_JOG:2": {
+   "identical": true,
+   "touches": 8,
+   "events": 16,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 5632,
+   "msD11": 3264
+  },
+  "CUT90L_RUN:1": {
+   "identical": true,
+   "touches": 4,
+   "events": 14,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 7478,
+   "msD11": 3541
+  },
+  "CUT90L_RUN:2": {
+   "identical": true,
+   "touches": 5,
+   "events": 9,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2735,
+   "msD11": 2065
+  },
+  "REV135_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 10,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 30037,
+   "msD11": 10935
+  },
+  "REV135_RUN:2": {
+   "identical": true,
+   "touches": 5,
+   "events": 14,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 8269,
+   "msD11": 4415
+  },
+  "REV180_SPRINT:1": {
+   "identical": true,
+   "touches": 1,
+   "events": 3,
+   "ticks": 1681,
+   "firstDiff": null,
+   "msD1": 4907,
+   "msD11": 2605
+  },
+  "REV180_SPRINT:2": {
+   "identical": true,
+   "touches": 2,
+   "events": 8,
+   "ticks": 1681,
+   "firstDiff": null,
+   "msD1": 7996,
+   "msD11": 3447
+  },
+  "CANCEL_RUN:1": {
+   "identical": true,
+   "touches": 4,
+   "events": 10,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 4802,
+   "msD11": 2992
+  },
+  "CANCEL_RUN:2": {
+   "identical": true,
+   "touches": 4,
+   "events": 13,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 4460,
+   "msD11": 2652
+  },
+  "RETARGET_RUN:1": {
+   "identical": true,
+   "touches": 5,
+   "events": 16,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 7276,
+   "msD11": 4201
+  },
+  "RETARGET_RUN:2": {
+   "identical": true,
+   "touches": 3,
+   "events": 11,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 5550,
+   "msD11": 3385
+  },
+  "INTERCEPT_RUN:1": {
+   "identical": true,
+   "touches": 2,
+   "events": 10,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 1801,
+   "msD11": 1278
+  },
+  "INTERCEPT_RUN:2": {
+   "identical": true,
+   "touches": 4,
+   "events": 14,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 1787,
+   "msD11": 1389
+  },
+  "TACKLE_RUN:1": {
+   "identical": true,
+   "touches": 3,
+   "events": 17,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2502,
+   "msD11": 1856
+  },
+  "TACKLE_RUN:2": {
+   "identical": true,
+   "touches": 3,
+   "events": 14,
+   "ticks": 1441,
+   "firstDiff": null,
+   "msD1": 2107,
+   "msD11": 1557
+  }
+ }
+}
