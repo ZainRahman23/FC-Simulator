@@ -85,7 +85,7 @@ export const D1 = {
   maxInterval: [[2.5, 1.4], [5.5, 2.1], [9.5, 2.9]],
   launchExtra: [[2.5, 2.6], [5.5, 3.6], [9.5, 5.0]],   // m/s: the largest dribble launch above the player's speed (beyond it a touch is a kick / pass)
   horizon: 3.2,
-  switchCache: 16, cloneStride: 12,                      // held cut: distinct post-cut predictions (switch ticks) kept per input
+  switchCache: 24, cloneStride: 12,                      // held cut: distinct post-cut predictions (switch ticks) kept per input
   planTries: 24, planStep: 2, refineTries: 4, liftCarry: 0.22, validKeep: 3, sepCostK: 0.6, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
   warp: { rhoMaxPhys: 1.8, maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.0, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
@@ -95,6 +95,7 @@ export const D1 = {
   floorMax: 1.25,                                                                     // the executed launch may be firmed up by at most 25 % to clear the follow-through
   otherGap: 0.005,                                                                    // m: a launched ball must clear a planted foot / the leg capsules by this
   blockDepth: -0.02,                                                                  // a swing whose unadjusted path runs ≥ 2 cm into the free ball blocks later plans
+  stageLead: 20,                                                                      // deg: a staged cut turns the body this far beyond the ball's new direction
   cutAimFrac: [1, 0.75, 0.55, 0.4],                                                   // a cut touch's aim: the post-cut direction, or this fraction of the way to it
   cutGate: 8, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
   gateExtra: 0.3,                      // s: … at most the speed's longest touch interval + this (the player must reach the ball first; then the turn goes without it)
@@ -184,7 +185,7 @@ export class DribbleSim {
     this.W = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: bvk, w: [bvk[2] / R, 0, -bvk[0] / R], dt: DT, substeps: 1, parameters: B.parameters, colliders: cols }));
     this.Wp = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: [0, 0, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }));   // free-ball predictor (no colliders)
     this.k = 0; this.evIdx = 0; this.adjs = { R: {}, L: {} }; this.plan = null; this.lastTouch = null; this.touches = []; this.contacts = []; this.cancels = []; this.notes = [];
-    this.locoCache = null; this.ballCache = null; this.held = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0 };
+    this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0 };
     this.rollTab = this.buildRollTable();
     this.input = this.intent(0); this.A.input = this.input;
     this.evalPose(this.A); this.framesPrev = boneFrames(this.A, this.A.fk); this.rec = cfg.opts && cfg.opts.record ? [] : null; this.record();
@@ -198,11 +199,14 @@ export class DribbleSim {
     if (opt.gate === false || !this.input) { this.userDir = raw0.dir; return raw; }
     // the gate holds the USER's direction changes only: the carrier's own pursuit bends (toward where the ball will be) are never held
     if (this.userDir != null && Math.abs(wrapA(raw0.dir - this.userDir)) < 1e-9 && !(this.held && !this.held.released)) { this.held = null; return raw; }
-    const cur = this.input, dA = Math.abs(wrapA(raw.dir - cur.dir));
-    if (this.held && Math.abs(wrapA(this.held.raw.dir - raw.dir)) > 1e-9) this.held = null;   // the request changed again: re-evaluate
-    if (dA * 180 / Math.PI <= D1.cutGate) { this.held = null; this.userDir = raw0.dir; return raw; }
+    let cur = this.input; if (this.stageDir != null) { cur = { dir: this.stageDir, v: this.input.v }; this.stageDir = null; }   // a staged cut: run on to the stage heading
+    const dA = Math.abs(wrapA(raw.dir - cur.dir));
+    if (this.held && Math.abs(wrapA(this.held.raw.dir - raw.dir)) > 1e-9) {               // the request changed again: re-evaluate — unless only the pursuit bend moved
+      if (!this.held.released && Math.abs(wrapA(this.held.user - raw0.dir)) < 1e-9) this.held.raw = raw; else this.held = null; }
+    if (dA * 180 / Math.PI <= D1.cutGate) { if (this.held && this.held.stages && !this.held.released) this.turnLog.push({ k, t, kind: "release", by: "touch-staged" }); this.held = null; this.userDir = raw0.dir; return raw; }
     if (!this.held) this.held = { raw, user: raw0.dir, since: t, released: false };
-    if (this.held.released || t - this.held.since >= tab(D1.maxInterval, Math.hypot(A.V[0], A.V[1])) + D1.gateExtra || this.ctrl.state !== "CONTROLLED") { this.held.released = true; this.userDir = raw0.dir; return raw; }
+    if (!this.held.released && (t - this.held.since >= tab(D1.maxInterval, Math.hypot(A.V[0], A.V[1])) + D1.gateExtra || this.ctrl.state !== "CONTROLLED")) { this.held.released = true; this.turnLog.push({ k, t, kind: "release", by: this.ctrl.state !== "CONTROLLED" ? "not-controlled" : "timeout" }); }
+    if (this.held.released) { this.userDir = raw0.dir; return raw; }
     return { dir: cur.dir, v: raw.v, holding: raw };                                     // keep running on the line with the ball until the cut touch
   }
   // ── the pose: TURN-1.2's own pose, then (only while a touch adjustment acts on a swing foot) that leg re-solved with RUN-1.3's leg IK ──────────
@@ -625,7 +629,7 @@ export class DribbleSim {
     if (this.plan && (this.plan.F !== best.F || this.plan.swing !== best.smp.legs[best.F].swing)) this.dropAdj(this.plan.F, this.plan.swing);
     this.setAdj(best.F, { swing: best.smp.legs[best.F].swing, ws: wNow, wc: best.smp.legs[best.F].w, o: g2.o, r: g2.rv, yaw: g2.yaw, oBase: cur.o, rBase: cur.r, yawBase: cur.yaw, kc, hold: this.holdOf(best.gs, best.F, g2.o), warp: best.warp || null });
     const ballAtK = new Map(); for (const [kk, v] of this.ballCache.map) if (kk <= kc) ballAtK.set(kk, v.p);
-    this.plan = { id: `${this.pid}:T${kc}`, kc, F: best.F, reg: g2.reg, hull: g2.hull, swing: best.smp.legs[best.F].swing, wc: best.smp.legs[best.F].w, wp: best.wp, rho: best.rho, n: L.n, launch: L, geom: g2, vBoot: vb2, close: closeN, release: best.release, ballAtK, made: k, input: this.input, cost: g2.cost != null ? g2.cost : best.cost, sF: best.sF || 0, pred: best.pred, j: best.j, warp: best.warp || null, gs: best.gs, ballP: K(best.ballK.p) };
+    this.plan = { id: `${this.pid}:T${kc}`, kc, F: best.F, reg: g2.reg, hull: g2.hull, swing: best.smp.legs[best.F].swing, wc: best.smp.legs[best.F].w, wp: best.wp, rho: best.rho, n: L.n, launch: L, geom: g2, vBoot: vb2, close: closeN, release: best.release, stage: best.stage != null ? best.stage : null, ballAtK, made: k, input: this.input, cost: g2.cost != null ? g2.cost : best.cost, sF: best.sF || 0, pred: best.pred, j: best.j, warp: best.warp || null, gs: best.gs, ballP: K(best.ballK.p) };
     if (best.release === true && this.held) { this.held.released = true; this.held.releasedAt = k; this.userDir = this.held.user; }   // the cut is taken WITH the ball: release the turn now
     if (this.cfg.opts && this.cfg.opts.recViewer) {                                       // diagnostic: the planned (warped) toe path to the contact and the contact point
       const toe = []; for (let i = Math.max(best.off, 0); i <= Math.min(best.pred.length - 1, best.j + 30); i += 3) { const smp = best.pred[i], Lp = smp.legs[best.F]; if (Lp.stance || Lp.swing !== this.plan.swing) continue;
@@ -662,28 +666,37 @@ export class DribbleSim {
   launchMax(s) { return s + tab(D1.launchExtra, s); }
   // the motion if a held cut is released at this candidate's contact (input held until the touch, the cut from the next tick); cached per contact tick
   switchCand(c, k, held) {
-    // TURN-1.2 is deterministic: a switched prediction made at an earlier tick (same input, same switch tick) stays valid — cached across ticks
-    const kc = c.smp.k, ik = this.inputKey(), key = ik + "@" + kc; if (!this._swc || this._swc.ik !== ik) this._swc = { ik, m: new Map() };
+    const kc = c.smp.k, spd = Math.hypot(this.A.V[0], this.A.V[1]); let e = this.swPred(k, kc, held, "full"); if (!e) return null;
+    const ix = (kk) => kk - e.k0 - 1, j = ix(kc); if (j < 0 || j >= e.ps.length) return c;
+    // re-aim into the post-cut motion and redo the contact geometry for that direction (any region / elevation)
+    const ball = K(c.ballK.p), vBall = K(c.ballK.v), nFull = this.aimDir(e.ps, j, ball, spd, true);
+    // the full post-cut aim first; if no boot region can push that far across, a partial one (the next touch completes the turn)
+    let g = null, n = nFull, fUsed = 1;
+    for (const f of D1.cutAimFrac) { n = f === 1 ? nFull : V.norm(V.add(V.sc(c.n, 1 - f), V.sc(nFull, f)));
+      for (const reg of [c.reg, ...Object.keys(D1.regions).filter((r) => r !== c.reg)]) { for (const el of this.elevs()) { g = this.contactGeom(c.gs, c.F, reg, n, ball, vBall, el * DEG); if (g) break; } if (g) break; }
+      if (g) { fUsed = f; break; } }
+    if (!g) return null;
+    // STAGED CUT: a touch that takes the ball only part of the way turns the body only as far as the ball goes (+ a lead); the rest of the requested
+    // change stays held for the next touch — the player never turns away from his own ball
+    let stage = null;
+    if (fUsed < 1) { const hN = headingOf(n), d = wrapA(held.dir - hN), lead = D1.stageLead * DEG;
+      if (Math.abs(d) > lead) { stage = hN + Math.sign(d) * lead; const st = this.swPred(k, kc, { dir: stage, v: held.v }, "stage" + stage.toFixed(4)); if (!st) return null; e = st; } }
+    const vPath = this.bootVel(c.pred, c.jp, c.F, g.cW), vb = V.sc(vPath, c.rho);
+    return Object.assign({}, c, g, { pred: e.ps, j, smp: e.ps[j], jp: ix(c.pred[c.jp].k), off: Math.max(0, ix(k + 1)), release: "contact", stage, n, vb, gs: c.gs });
+  }
+  // the motion if the held change (or a stage of it) is released at contact tick kc: TURN-1.2 is deterministic, so a switched prediction made at an
+  // earlier tick (same input, same switch tick, same released heading) stays valid — cached across ticks; it branches from the main prediction's
+  // nearest stored state at or before the contact (identical motion until the switch)
+  swPred(k, kc, inp2, tag) {
+    const ik = this.inputKey(), key = ik + "@" + kc + ":" + tag; if (!this._swc || this._swc.ik !== ik) this._swc = { ik, m: new Map() };
     let e = this._swc.m.get(key);
     if (!e) { if (this._swc.m.size >= D1.switchCache) { rjX(this, "switchCap"); return null; }
-      // branch from the main prediction's nearest stored state at or before the contact (identical motion until the switch), not from now
       const LC = this.locoCache, cl = LC && LC.key === ik && LC.pred.clones ? LC.pred.clones : null; let kb = k, from = null;
       if (cl) for (const kk of Object.keys(cl)) { const v = +kk; if (v <= kc && v > kb) { kb = v; from = cl[kk]; } }
-      const nH = Math.round((1.6 + tab(D1.maxInterval, Math.hypot(this.A.V[0], this.A.V[1])) + 0.5) / DT) - (kb - k), head = from ? [] : null;
-      const tail = this.predictLoco(kb, this.input, Math.max(60, nH), held, kc + 1, from || null);
-      // samples before kb come from the main prediction (same motion)
+      const nH = Math.round((1.6 + tab(D1.maxInterval, Math.hypot(this.A.V[0], this.A.V[1])) + 0.5) / DT) - (kb - k);
+      const tail = this.predictLoco(kb, this.input, Math.max(60, nH), inp2, kc + 1, from || null);
       const ps = from ? LC.pred.slice(k - LC.k0, kb - LC.k0).concat(tail) : tail; e = { k0: k, ps }; this._swc.m.set(key, e); }
-    const ps = e.ps, ix = (kk) => kk - e.k0 - 1, j = ix(kc); if (j < 0 || j >= ps.length) return c;
-    // re-aim into the post-cut motion and redo the contact geometry for that direction (any region / elevation)
-    const ball = K(c.ballK.p), vBall = K(c.ballK.v), nFull = this.aimDir(ps, j, ball, Math.hypot(this.A.V[0], this.A.V[1]), true);
-    // the full post-cut aim first; if no boot region can push that far across, a partial one (the next touch completes the turn)
-    let g = null, n = nFull;
-    for (const f of D1.cutAimFrac) { n = f === 1 ? nFull : V.norm(V.add(V.sc(c.n, 1 - f), V.sc(nFull, f)));
-      for (const reg of [c.reg, ...Object.keys(D1.regions).filter((r) => r !== c.reg)]) { for (const e of this.elevs()) { g = this.contactGeom(c.gs, c.F, reg, n, ball, vBall, e * DEG); if (g) break; } if (g) break; }
-      if (g) break; }
-    if (!g) return null;
-    const vPath = this.bootVel(c.pred, c.jp, c.F, g.cW), vb = V.sc(vPath, c.rho);
-    return Object.assign({}, c, g, { pred: ps, j, smp: ps[j], jp: ix(c.pred[c.jp].k), off: Math.max(0, ix(k + 1)), release: "contact", n, vb, gs: c.gs });
+    return e;
   }
   // a recovery touch only when the ball is actually coming into this foot's swing soon (otherwise keep looking for a proper touch)
   blockers(pred, off) {
@@ -770,12 +783,15 @@ export class DribbleSim {
     const elev = best.elev || 0;
     const c0 = now(), held = this.held && !this.held.released ? this.held.raw : null;
     // the motion that follows the contact: if this contact releases a held cut, the cut prediction; otherwise the current one
-    const cut = best.release && this.held ? this.held.raw.dir : null;                     // this touch takes the ball through a requested cut
-    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = cut != null ? D1.cutMinInterval : this.minInterval(s), maxI = tab(D1.maxInterval, s);
+    const cut = best.release && this.held ? (best.stage != null ? best.stage : this.held.raw.dir) : null;   // this touch takes the ball through a requested cut (or a stage of it)
+    // a SET-UP touch: a cut is held but this touch cannot take the ball into it — it places the ball close for a quick next touch, inside what
+    // remains of the hold (otherwise the player would have to turn away from his own ball)
+    const setup = cut == null && !!(this.held && !this.held.released), holdLeft = setup ? this.held.since + tab(D1.maxInterval, s) + D1.gateExtra - best.smp.k * DT - 0.1 : Infinity;
+    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = cut != null || setup ? D1.cutMinInterval : this.minInterval(s), maxI = Math.max(minI + 0.2, Math.min(tab(D1.maxInterval, s), holdLeft));
     // through a cut: the ball is placed for the first outgoing steps (the body already on the new heading), close
     const wins = this.windowTargets(pred, j0 + Math.round(minI / DT), j0 + Math.round(maxI / DT), s).filter((w) => !(w.F === best.F && w.swing === best.smp.legs[best.F].swing)
       && (cut == null || (Math.abs(wrapA(headingOf([pred[w.j].V[0], 0, -pred[w.j].V[1]]) - cut)) < D1.cutWinTol * DEG && Math.hypot(pred[w.j].V[0], pred[w.j].V[1]) > 1.0)));
-    const want = this.wantSep(s) * (cut != null ? D1.cutSepK : 1); const picks = []; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
+    const want = this.wantSep(s) * (cut != null || setup ? D1.cutSepK : 1); const picks = []; if (this.rej) this.rej.nwin = (this.rej.nwin || 0) + wins.length;
     for (const w of wins) {
       const d = V.sub(w.q, ball); d[1] = 0; const L = V.len(d), n = V.norm(d), nT = w.k - best.smp.k, sMin = Math.max(V.dot(vb, n) + D1.sepMin, sFollow);
       // speed for distance L in nT ticks (monotone): bisection on the roll table
@@ -814,7 +830,9 @@ export class DribbleSim {
   // ── commit at the contact tick: final checks on the ACTUAL state, the touch error (keyed RNG), one authoritative launch (B / C) or none (A) ─────
   commit(k, P) {
     const c0 = now(); this.plan = null;
-    if (P.release === "contact" && this.held && !this.held.released) { this.held.released = true; this.held.releasedAt = k; this.held.byTouch = P.id; this.userDir = this.held.user; }   // the cut goes WITH this touch
+    if (P.release === "contact" && this.held && !this.held.released) {
+      if (P.stage != null) { this.stageDir = P.stage; this.held.since = k * DT; this.held.stages = (this.held.stages || 0) + 1; this.turnLog.push({ k, t: k * DT, kind: "stage", dir: P.stage, target: this.held.raw.dir, by: P.id }); }   // a stage: the rest stays held
+      else { this.held.released = true; this.held.releasedAt = k; this.held.byTouch = P.id; this.userDir = this.held.user; this.turnLog.push({ k, t: k * DT, kind: "release", by: "touch", id: P.id }); } }   // the cut goes WITH this touch
     const A = this.A, F = P.F, fr = this.framesPrev, ball = this.ballA(), foot = fr["foot_" + F], toe = fr["toe_" + F];
     const H = P.hull === "toe" ? this.hulls["toe_" + F] : this.hulls["boot_" + F], Rh = P.hull === "toe" ? toe.R : foot.R, ph = P.hull === "toe" ? toe.p : foot.p;
     const dq = hullDistance(hullAt(H, ph, Rh), ball.p, 0), gap = dq.d - R;

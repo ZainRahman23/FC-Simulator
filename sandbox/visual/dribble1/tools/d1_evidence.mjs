@@ -20,17 +20,27 @@ if (mode === "reliability") {
   const N = +a2, arch = a3 || "B", prof = a4 || "HIGH";
   for (const id of ids(idsArg)) { const rows = [];
     for (let seed = 1; seed <= N; seed++) {
-      const S = makeSim(get(id), { seed, arch, player: PROFILES[prof] }); S.run();
+      const scn = get(id), S = makeSim(scn, { seed, arch, player: PROFILES[prof] }); let cut = null;
+      // a direction change: when (and how) it was released — by a touch taking the ball into it, or by the hold running out — and the final heading
+      while (S.k < Math.round(scn.dur / DT) && !S.fault) S.step();
+      const rel = (S.turnLog || []).filter((e) => e.kind === "release"), fin = rel[rel.length - 1], first = (S.turnLog || [])[0];
+      if (fin) cut = { at: fin.t, by: /^touch/.test(fin.by) ? "touch" : fin.by, firstTouchAt: first && (first.kind === "stage" || /^touch/.test(first.by || "")) ? first.t : null, stages: S.turnLog.filter((e) => e.kind === "stage").length };
       const T = S.touches.filter((t) => t.launched), k0 = T.length ? T[0].k : 0, rec = S.rec.slice(k0), ctl = rec.filter((r) => r.ctrl === "CONTROLLED").length / Math.max(1, rec.length);
+      const want = scn.cmds && scn.cmds.length ? scn.cmds[scn.cmds.length - 1].turn : 0, headErr = Math.abs(((S.A.psi * 180 / Math.PI - want) + 540) % 360 - 180);
+      const kRel = cut ? Math.round(cut.at / DT) : null, after = kRel != null ? S.rec.slice(kRel) : [], ctlAfter = after.length ? 100 * after.filter((r) => r.ctrl === "CONTROLLED").length / after.length : null;
+      const cmd0 = scn.cmds && scn.cmds.length ? scn.cmds[0].t : null, isCut = Math.abs(want) >= 30;
+      const taken = !isCut ? null : !!(cut && cut.by === "touch" && headErr < 20 && S.rec[S.rec.length - 1].ctrl === "CONTROLLED");
       let loose = 0, run = 0; for (const r of rec) { if (r.ctrl === "LOOSE") { run++; loose = Math.max(loose, run); } else run = 0; }
       const dbl = doubles(S), struck = new Set(T.map((t) => t.k));
       rows.push({ seed, touches: T.length, cancelled: S.touches.filter((t) => t.cancelled).length, recovery: T.filter((t) => t.recovery).length, controlledPct: +(ctl * 100).toFixed(1), longestLooseS: +(loose * DT).toFixed(2), end: S.rec[S.rec.length - 1].ctrl,
         doubleImpulses: dbl.reduce((s, x) => s + x, 0), unplannedOwnContacts: S.contacts.filter((c) => c.own && !c.striking).length, opponentContacts: S.contacts.filter((c) => !c.own).map((c) => ({ t: r3(c.t), part: c.collider, impulse: r3(c.impulse) })),
-        lostAtS: (S.ctrl.changes.find((c) => c.to === "LOOSE" && c.k > k0) || {}).t ?? null, kernelFault: S.fault || null });
+        lostAtS: (S.ctrl.changes.find((c) => c.to === "LOOSE" && c.k > k0) || {}).t ?? null, kernelFault: S.fault || null,
+        turn: isCut ? { requested: want, releasedBy: cut ? cut.by : "never", stages: cut ? cut.stages : 0, responseS: cut && cut.firstTouchAt != null && cmd0 != null ? +(cut.firstTouchAt - cmd0).toFixed(2) : null, completedS: cut && cmd0 != null ? +(cut.at - cmd0).toFixed(2) : null, finalHeadingErrDeg: +headErr.toFixed(0), controlledAfterPct: ctlAfter != null ? +ctlAfter.toFixed(0) : null, takenWithBall: taken } : null });
       void struck; }
     out[id] = { arch, profile: PROFILES[prof].name, seeds: N, controlledPct: m(rows.map((r) => r.controlledPct)), touches: m(rows.map((r) => r.touches)), doubleImpulses: rows.reduce((s, r) => s + r.doubleImpulses, 0),
+      takenWithBall: rows[0].turn ? rows.filter((r) => r.turn.takenWithBall).length + "/" + N : null, releasedByTouch: rows[0].turn ? rows.filter((r) => r.turn.releasedBy === "touch").length + "/" + N : null, responseS: rows[0].turn ? m(rows.map((r) => r.turn.releasedBy === "touch" ? r.turn.responseS : null)) : null,
       unplannedOwnContacts: rows.reduce((s, r) => s + r.unplannedOwnContacts, 0), kernelFaults: rows.filter((r) => r.kernelFault).length, heldToEnd: rows.filter((r) => r.end === "CONTROLLED").length + "/" + N, rows };
-    console.log(id.padEnd(17), arch, prof, `controlled ${out[id].controlledPct}% · touches ${out[id].touches} · double impulses ${out[id].doubleImpulses} · unplanned own ${out[id].unplannedOwnContacts} · kernel faults ${out[id].kernelFaults} · end ${rows.map((r) => r.kernelFault ? "F" : r.end[0]).join("")}`); }
+    console.log(id.padEnd(17), arch, prof, `controlled ${out[id].controlledPct}% · touches ${out[id].touches} · double impulses ${out[id].doubleImpulses} · unplanned own ${out[id].unplannedOwnContacts} · kernel faults ${out[id].kernelFaults}${out[id].takenWithBall ? ` · TURN taken with ball ${out[id].takenWithBall} (released by touch ${out[id].releasedByTouch}, response ${out[id].responseS} s)` : ""} · end ${rows.map((r) => r.kernelFault ? "F" : r.end[0]).join("")}`); }
 } else if (mode === "free") {
   const N = +a2; let gTicks = 0, gBad = 0, gMax = 0;
   for (const id of ids(idsArg)) for (let seed = 1; seed <= N; seed++) {
