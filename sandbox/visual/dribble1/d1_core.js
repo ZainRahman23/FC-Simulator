@@ -84,12 +84,12 @@ export const D1 = {
   maxInterval: [[2.5, 1.4], [5.5, 2.1], [9.5, 2.9]],
   launchExtra: [[2.5, 2.6], [5.5, 3.6], [9.5, 5.0]],   // m/s: the largest dribble launch above the player's speed (beyond it a touch is a kick / pass)
   horizon: 3.2,
-  planTries: 24, planStep: 2, refineTries: 4, liftCarry: 0.22, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
+  planTries: 24, planStep: 2, refineTries: 4, liftCarry: 0.22, validKeep: 3, sepCostK: 0.6, followExtra: 2.0,   // a recovery touch may be up to followExtra m/s firmer than launchMax to clear the follow-through             // contact ticks searched every planStep (240 Hz grid); the commit is still at the exact tick
   warp: { maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.4, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
   recover: { dth: 12, slow: 1.0, fast: 0.6, gain: 1.0, lag: 0.25, latDead: 0.05, fwdDead: 0.06, paceDead: 0.45 },   // carrier recovery: bend (deg) / pace (m/s) bounds, response model
   pursuitEvery: 60,                     // ticks: while no touch is planned the carrier re-aims his run at the free ball this often
-  cutGate: 32, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
+  cutGate: 8, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
   gateMax: 1.2,                        // s: … at most this long (then the turn is released without the ball)
   // touch error σ for a neutral (g = 0) player on the preferred foot, LACES, at 5.5 m/s
   errSpeed: 0.022, errDir: 1.5, errLift: 0.20, errSkill: 0.9,   // σ = base × (1 − errSkill · q), q = 0.5 g(Dribbling) + 0.3 g(Ball Control) + 0.2 g(Agility)
@@ -266,6 +266,7 @@ export class DribbleSim {
       (T.follow = T.follow || []).push([k - T.k, +(gb * 1000).toFixed(1), +(gt * 1000).toFixed(1)]); }
     this.classify(k);
   }
+  enRoute(k) { const T = this.lastTouch; if (!T || !T.launched || !T.expect || !T.expect.k || k > T.expect.k + 60) return false; return !this.contacts.some((c) => c.k > T.k + 2 && !c.striking); }
   reactTime() { return clamp(0.12 - 0.05 * this.g.reactions, 0.05, 0.2); }
   // ── control state: a gameplay CLASSIFICATION of the free ball (never a constraint) ───────────────────────────────────────────────────────────
   classify(k) {
@@ -273,7 +274,8 @@ export class DribbleSim {
     const env = tab(D1.sepWant, s) + 1.6, opp = this.fixtures.some((fx) => fx.near && fx.near(k * DT, [b.p[0], -b.p[2]]) < 1.3);
     let st;
     if ((this.ctrl.contestedUntil && k < this.ctrl.contestedUntil) || opp) st = "CONTESTED";
-    else if (this.plan || (d < env && this.reachable)) st = "CONTROLLED";
+    // CONTROLLED: a touch is planned, or the ball is on its way to the window its last touch aimed at (no contact since), or it is close and reachable
+    else if (this.plan || this.enRoute(k) || (d < env && this.reachable)) st = "CONTROLLED";
     else st = "LOOSE";
     if (st !== this.ctrl.state) { this.ctrl.changes.push({ k, t: k * DT, from: this.ctrl.state, to: st, dist: d }); this.ctrl.state = st; this.ctrl.since = k; }
     this.ctrl.dist = d;
@@ -516,7 +518,7 @@ export class DribbleSim {
     if (!cands.length) { fail(); return; }
     // the ranked candidates: the first whose launch solves and whose refined contact passes every check becomes the plan
     cands.sort((a, b) => a.cost - b.cost);
-    let best = null, L = null, g2 = null, vb2 = null, closeN = 0, recov = null; const tried = new Set(), deadF = new Set();
+    let best = null, L = null, g2 = null, vb2 = null, closeN = 0, recov = null, nValid = 0; const tried = new Set(), deadF = new Set();
     for (const c0c of cands) {
       const tk = c0c.F + c0c.smp.k + ":" + c0c.jp; if (tried.has(tk)) continue; const fk = c0c.F + c0c.smp.legs[c0c.F].swing + c0c.reg + Math.round(c0c.wp * 20);
       if (deadF.has(fk)) continue; tried.add(tk); if (tried.size > D1.planTries) break;
@@ -533,7 +535,10 @@ export class DribbleSim {
       if (cl < D1.closeMin || V.dot(V.sub(vL, vb), g.nc) < D1.sepMin) { rj("sep"); continue; }
       if (!this.followClear(c.pred, c.j, c.F, g, Lc, K(c.ballK.p), c.warp, c.gs)) { rj("follow"); continue; }
       if (!this.approachClear(c.pred, c.j, c.F, g, c.off, c.warp)) { rj("early2"); continue; }
-      best = c; L = Lc; g2 = g; vb2 = vb; closeN = cl; break;
+      // a valid plan: keep the best few by contact cost + how far its launch strays from the speed's dribble character (no needlessly firm touch)
+      const tot = c.cost + D1.sepCostK * Math.pow((Lc.maxSep - Lc.want) / Math.max(0.3, Lc.want), 2);
+      if (!best || tot < best.tot) { best = c; best.tot = tot; L = Lc; g2 = g; vb2 = vb; closeN = cl; }
+      if (++nValid >= D1.validKeep) break;
     }
     // RECOVERY TOUCH: the ball is coming into a foot and no touch with a guaranteed next window exists — rather than let the swing kick it, the player
     // makes a deliberate settling push along his line, just firm enough to clear his own follow-through (no next window is promised)
