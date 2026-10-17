@@ -93,7 +93,7 @@ export const D1 = {
   closeWant: 1.1,                       // m/s: the planned closing speed of the next boot on the ball at that contact (robust, still a touch)                 // swing-fraction window searched for contacts (late swing)
   gap0: 0.003,                          // m (a 1.5 mm gap inside the kernel's 2 mm guard band was tried: near-contact with a spinning boot stalls the kernel's
                                         // conservative-advancement CCD, which fails closed — not acceptable; the follow-through planning prevents re-contact instead)
-  clear: { lateW: 0.90, margin: 0.025, lat: 0.13, back: 0.22, up: 0.08, wcMax: 0.86, minSpan: 0.08 },   // non-touching swings: keep ≥ margin from the free ball (avoidance bounds, m)
+  clear: { lateW: 0.90, margin: 0.025, margin12: 0.008, lat: 0.13, back: 0.22, up: 0.08, wcMax: 0.86, minSpan: 0.08 },   // non-touching swings: keep ≥ margin from the free ball (avoidance bounds, m)
   elevs: [0, 10, 20, 30, 38], elevsPhys: [0, 10, 20, 30],           // deg: contact-normal elevations searched (the boot meets the ball below its equator → a small, consistent pop)
   liftK: 0.30, liftMax: 1.1,            // resolved vertical launch = speed · sin(elevation) · liftK (≤ liftMax m/s)
   floor: 0.004,                         // m: lowest boot-hull point (sole; studs excluded) above the turf plane for an adjusted swing foot                          // m: boot ↔ ball surface gap at the contact tick (the kernel's eligibility window is ≤ 0.025)
@@ -143,6 +143,7 @@ export const D1 = {
   // the horizontal unit u for a ball arriving with velocity vIn is the horizontal direction of s·u − vIn. A redirect of a moving ball is a sideways
   // push by the side of the boot, not a face turned to the new direction; a push along the ball's own travel is unchanged. DRIBBLE-1 / 1.1 used u.
   impulseNormal: true,
+  safePursuit: 0.45,                    // s: DRIBBLE-1.2 — a pursuit correction must not put a leg into the free ball's path over this horizon
   winLatK: 0.3,
   // DRIBBLE-1.2 SIDE-FOOT SWEEP: an inside / outside push is made by the free leg sweeping ACROSS into the ball (hip ad- / abduction), not by a foot
   // that only travels forward: the swing adjustment gets a wind-up away from the ball and a sweep through the contact along the impulse normal
@@ -340,6 +341,10 @@ export class DribbleSim {
     const cols = playerColliders(this.J, this.pid); for (const fx of this.fixtures) for (const c of fx.colliders) cols.push(c);
     this.W = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: bvk, w: [bvk[2] / R, 0, -bvk[0] / R], dt: DT, substeps: 1, parameters: B.parameters, colliders: cols }));
     this.Wp = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: [0, 0, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }));   // free-ball predictor (no colliders)
+    // DRIBBLE-1.2 CPU: the planner's private predictor worlds do not build the per-step snapshot (a deep copy of the ball that step() returns and the
+    // planner never reads — 20 % of all CPU in a cut): an instance override of snapshot(), the kernel's code and physics untouched (step() only
+    // returns it; no substep callback is set on these worlds)
+    if (!this.twin) this.Wp.snapshot = noSnap;
     this.k = 0; this.evIdx = 0; this.adjs = { R: {}, L: {} }; this.plan = null; this.lastTouch = null; this.touches = []; this.contacts = []; this.cancels = []; this.notes = [];
     this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0, predTicks: 0, tracks: 0, plans: 0, viewNew: 0, viewReuse: 0, winHit: 0, winMiss: 0, ftHit: 0, ftMiss: 0, launchHit: 0, launchMiss: 0 }; this.trackSeq = 0; this.track = null;
     this.twin = !!(cfg.opts && cfg.opts.twin); this.regs = this.twin ? D1.regions : D1.regions12; this.imp = !this.twin && D1.impulseNormal; this.sweepOn = !this.twin && D1.sweep.on; this.o2 = !this.twin && D1.o2 && !(cfg.opts && cfg.opts.o2 === false);                                          // the optimisation twin: DRIBBLE-1's football exactly (no DRIBBLE-1.1 behaviour)
@@ -570,6 +575,7 @@ export class DribbleSim {
     // DRIBBLE-1.2: after a set-up with the switch the motion IS the planned turn: a miss is answered by the decisive touch (re-planned on the actual
     // ball), never by bending the turning run (a bend leaves the motion every decisive corridor was planned in)
     if (!this.twin && T.setupSw) return;
+
     // DRIBBLE-1.1: a periodic re-aim (no plan yet) keeps the correction in force unless the new one differs by more than pursuitHyst (hysteresis —
     // a fresh input means a fresh locomotion prediction)
     const keep = (nc) => { if (!this.twin && periodic && prev && nc && prev.raw === nc.raw && Math.abs(wrapA(prev.dir - nc.dir)) < D1.pursuitHyst.dir * DEG && Math.abs(prev.v - nc.v) < D1.pursuitHyst.v) { this.carry = prev; return true; } return false; };
@@ -593,8 +599,8 @@ export class DribbleSim {
       const bend = V.len(dA) > 0.5 ? q(adapt * clamp(wrapA(headingOf(dG) - headingOf(dA)), -D1.recover.dth * DEG, D1.recover.dth * DEG), 0.5 * DEG) : 0;
       const dv = q(adapt * clamp((V.len(dG) - V.len(dA)) / Math.max(0.3, Tt), -D1.recover.slow, D1.recover.fast), 0.1);
       const nc = { raw: raw0.dir, dir: Math.abs(bend) < pd.dir * DEG ? E.inp.dir : E.inp.dir + bend, v: Math.abs(dv) < pd.v ? E.inp.v : E.inp.v + dv, until: kT + 120, k, goal: V.add(E.com, miss), dist: V.len(dG), Tt, rel: true };
-      if (prev && prev.rel && keep(nc)) return; this.carry = nc;
-      (this.carryLog = this.carryLog || []).push({ k, dth: this.carry.dir - E.inp.dir, dv: this.carry.v - E.inp.v, ef: V.len(miss), el: 0, rel: true }); return;
+      if (prev && prev.rel && keep(nc)) return; this.carry = this.safeCarry(nc, k, T);
+      if (this.carry) (this.carryLog = this.carryLog || []).push({ k, dth: this.carry.dir - E.inp.dir, dv: this.carry.v - E.inp.v, ef: V.len(miss), el: 0, rel: true }); return;
     }
     const B = K(bk.p), vb = K(bk.v), hb = Math.hypot(vb[0], vb[2]) > 0.3 ? headingOf(vb) : this.A.psi, dc = clamp(T.contactAhead || 0.6, 0.35, 0.9);
     const goal = V.sub(B, V.sc(fwdW(hb), dc)), P = pitch2w(this.A.P[0], this.A.P[1], 0), d = V.sub(goal, P); d[1] = 0;
@@ -609,9 +615,28 @@ export class DribbleSim {
       // next touch (the swing adjustment absorbs it) leaves the input bit-identical, so the shared locomotion track stays valid (no new prediction)
       const pd = D1.pursuitDead, bend = q(dir - raw.dir, 0.5 * DEG), dv = q(v - raw.v, 0.1);
       const nc = { raw: raw.dir, dir: Math.abs(bend) < pd.dir * DEG ? raw.dir : raw.dir + bend, v: Math.abs(dv) < pd.v ? raw.v : raw.v + dv, until: kT + 120, k, goal, dist, Tt };
-      if (prev && !prev.rel && keep(nc)) return; this.carry = nc;
+      if (prev && !prev.rel && keep(nc)) return; this.carry = this.safeCarry(nc, k, T);
     }
-    (this.carryLog = this.carryLog || []).push({ k, dth: this.carry.dir - raw.dir, dv: this.carry.v - raw.v, ef: dist - raw.v * Tt, el: 0 });
+    if (this.carry) (this.carryLog = this.carryLog || []).push({ k, dth: this.carry.dir - raw.dir, dv: this.carry.v - raw.v, ef: dist - raw.v * Tt, el: 0 });
+  }
+  // DRIBBLE-1.2 SAFE PURSUIT: a pursuit bend / pace change re-plans the whole run — before it is applied, the bent motion (from the next tick) is
+  // predicted for safeK seconds and both legs (boot, toe, shin, thigh; the touching foot once it has landed) are checked against the free ball:
+  // a correction that would put a leg into the ball's path is halved, then dropped (DRIBBLE-1.1 applied it blind: after a cut touch a 10° bend
+  // toward the ball put the other thigh into its path)
+  safeCarry(nc, k, T) {
+    if (this.twin || !nc || !D1.safePursuit) return nc;
+    const raw = this.rawInput(k * DT), inpOf = (c) => c.rel ? { dir: c.dir, v: c.v } : { dir: raw.dir + clamp(wrapA(c.dir - raw.dir), -D1.recover.dth * DEG, D1.recover.dth * DEG), v: clamp(c.v, raw.v - D1.recover.slow, raw.v + D1.recover.fast) };
+    const base = this.input, n = Math.round(D1.safePursuit / DT), bm = this.predictBall(k, n), c0 = now();
+    const hits = (inp) => { if (inp.dir === base.dir && inp.v === base.v) return false; const tr = new LocoTrack(this, k, this.A, base, inp, k + 1, null);
+      for (let i = 2; i <= n; i += 2) { const smp = tr.at(k + i), bk = bm.get(k + i); if (!bk || !smp.bones) continue; const b = K(bk.p);
+        for (const F of SIDES) { if (T && T.F === F && !smp.legs[F].stance && smp.legs[F].swing === T.swing) continue;   // the touching swing: its follow-through is solved
+          const foot = smp.bones["foot_" + F], toe = smp.bones["toe_" + F]; if (Math.hypot(b[0] - foot.p[0], b[2] - foot.p[2]) > 0.9) continue;
+          if (gapAtLeast(this.hulls["boot_" + F], foot.p, foot.R, b, 0) < 0 || gapAtLeast(this.hulls["toe_" + F], toe.p, toe.R, b, 0) < 0) return true;
+          const C = this.cfg.colliders.sides[F]; for (const part of ["shin", "thigh"]) if (capGap(C[part], smp.bones[part + "_" + F], b) < 0) return true; } }
+      return false; };
+    let out = nc;
+    if (hits(inpOf(nc))) { const half = Object.assign({}, nc, { dir: base.dir + 0.5 * wrapA(nc.dir - base.dir), v: base.v + 0.5 * (nc.v - base.v) }); out = hits(inpOf(half)) ? null : half; (this.pursuitLog = this.pursuitLog || []).push({ k, cut: out ? "half" : "dropped" }); }
+    this.cpu.safe = (this.cpu.safe || 0) + (now() - c0); return out;
   }
   // ── clearance: a swing that is NOT making a deliberate touch must not sweep through the free ball. Its predicted path (TURN-1.2 + its current
   // adjustment) is checked against the predicted free ball; if it would hit it, a bounded avoidance offset (zero at both swing ends: sideways away
@@ -633,7 +658,9 @@ export class DribbleSim {
       if (this.plan && this.plan.F === F && this.plan.swing === swing) continue;          // this swing is the touch
       const a = this.getAdj(F, swing);
       if (a && a.kc >= k && !a.dropped && !a.avoid) continue;                             // a touch still to come is never overridden (after the touch: the boot withdraws if needed)
-      const solved = !this.twin && a && a.ftSolved && a.kc < k && !a.avoid, thrC = solved ? D1.followGap * 0.5 : D1.clear.margin;
+      // (DRIBBLE-1.2: with the exact foot model the avoidance margin is clear.margin12 — an avoidance for a near-miss moves the whole leg, and its
+      // shin / thigh are not part of this check: a 24 mm "near-miss" avoided put the other thigh into the ball)
+      const cm = this.twin ? D1.clear.margin : D1.clear.margin12, solved = !this.twin && a && a.ftSolved && a.kc < k && !a.avoid, thrC = solved ? D1.followGap * 0.5 : cm;
       if (!this.twin && w0 > D1.clear.lateW) continue;                                   // DRIBBLE-1.1: no new avoidance in the swing's last part (it could only snap the landing)   // (DRIBBLE-1.1: the solved follow-through is trusted unless it would still hit)
       // closest approach over the rest of this swing, with the adjustment currently in force
       let worst = null;
@@ -652,7 +679,7 @@ export class DribbleSim {
       if (!worst || worst.g > thrC) continue;
       if (a && a.avoid && worst.g > 0.004) continue;                                      // already avoiding and clear enough
       // away from the ball, in the player's heading frame: sideways to the foot's own side, back (a shorter step), a little up
-      const th = worst.smp.psi, f = fwdW(th), r = rgtW(th), sg = F === "R" ? 1 : -1, d = V.sub(worst.ank, worst.b), dl = V.dot(d, r), need = D1.clear.margin + 0.012 - worst.g;
+      const th = worst.smp.psi, f = fwdW(th), r = rgtW(th), sg = F === "R" ? 1 : -1, d = V.sub(worst.ank, worst.b), dl = V.dot(d, r), need = cm + 0.012 - worst.g;
       const side = clamp(sg * Math.max(0.0, need * 1.2) * (Math.sign(dl) === sg || Math.abs(dl) < 0.02 ? 1 : 0.4), -D1.clear.lat, D1.clear.lat), back = -clamp(need * 0.9, 0, D1.clear.back), up = clamp(need * 0.5, 0, D1.clear.up);
       const prevO = a ? a.o : [0, 0, 0], o = V.add(prevO, V.add(V.add(V.sc(r, side), V.sc(f, back)), [0, up, 0]));
       const lim = (v, m) => clamp(v, -m, m), of = clamp(V.dot(o, f), -D1.clear.back, 0.02), ol = lim(V.dot(o, r), D1.clear.lat), ov = clamp(o[1], 0, D1.clear.up);
@@ -687,7 +714,7 @@ export class DribbleSim {
     const tr = this.simLaunch0(p0, v0, n); if (mc.size > 256) mc.clear(); mc.set(key, tr); return tr;
   }
   simLaunch0(p0, v0, n) {
-    const B = this.ballCfg, vk = K(v0), Wq = this.Wq || (this.Wq = new B.World(Object.assign({}, B.options, { p: [0, R, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] })));
+    const B = this.ballCfg, vk = K(v0), Wq = this.Wq || (this.Wq = new B.World(Object.assign({}, B.options, { p: [0, R, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }))); if (!this.twin && Wq.snapshot !== noSnap) Wq.snapshot = noSnap;
     Wq.ball = { p: K(p0), v: vk, w: [vk[2] / R, 0, -vk[0] / R], q: [0, 0, 0, 1], mode: "AIRBORNE", slip: 0, sleeping: false }; Wq.tick = 0; Wq.time = 0; Wq.restTime = 0; Wq.events = []; Wq.actions = []; Wq.guards = []; Wq.actionIds = new Set();
     const out = []; for (let i = 0; i < n; i++) { Wq.step(); out.push({ p: K(Wq.ball.p), v: K(Wq.ball.v) }); } return out;
   }
@@ -1240,6 +1267,8 @@ export class DribbleSim {
     const swing = pred.at(j).legs[F].swing, wc = pred.at(j).legs[F].w, L0 = this.A.legs[F], cur = !L0.stance && Math.round(L0.tTO * 240) === swing ? clamp(L0.w || 0, 0, 1) : 0;
     const a0 = this.getAdj(F, swing) && cur > 0 ? this.adjAt(this.getAdj(F, swing), cur) : { o: [0, 0, 0], r: [0, 0, 0] }, ad = { ws: cur, wc, o: g.o, r: g.rv, oBase: a0.o, rBase: a0.r, yaw: 0, yawBase: 0, sweepW: g.sweepW || null };
     for (let i = Math.max(off, 0); i < j; i++) { const smp = pred.at(i); const L = smp.legs[F]; if (L.stance || L.swing !== swing) continue; const bk = this.ballCache.map.get(smp.k); if (!bk) continue;
+      // (DRIBBLE-1.2 CPU: the unwarped foot first — a warped foot is within a swing's lag of it; far from the ball no exact pose is needed)
+      if (!this.twin && wk && smp.bones) { const bb = K(bk.p), fu = smp.bones["foot_" + F].p; if (Math.hypot(bb[0] - fu[0], bb[2] - fu[2]) > 1.1) continue; }
       const bones = wk ? this.pathFrames(pred, F, swing, warpAt(wk, L.w), j, smp) : smp.bones; if (!bones) continue;
       const q = this.adjAt(ad, L.w), foot = bones["foot_" + F], toe = bones["toe_" + F], Rw = M.exp(q.r), ank = V.add(foot.p, q.o), b = K(bk.p);
       if (Math.hypot(b[0] - ank[0], b[2] - ank[2]) > 0.6) continue;
@@ -1382,6 +1411,12 @@ export class DribbleSim {
     const base = clamp(0.5 * this.g.dribbling + 0.3 * this.g.ball_control + 0.2 * this.g.agility, -1, 1), sig = D1.errSpeed * (1 - D1.errSkill * base) * (c.F !== this.pref ? 1 + 0.30 * (5 - this.wf) : 1);
     const Lsoft = Object.assign({}, Lp, { speed: Lp.speed * (1 - 3 * sig) }), cf = this.caftFor(c.pred, c.j, c.F, g, Lsoft, ball, c.warp, c.gs); if (!cf) return why("follow");
     if (!this.otherClear(c.pred, c.j, c.F, g, Lp, ball)) return why("other");
+    // (DRIBBLE-1.2: and for a high execution — the lift error +2σ: a ball hopping higher meets the other leg's shin / thigh that a rolling one passes)
+    { const sgm = this.touchSigma(c, s), v0 = this.launchVec(Lp, g), vH = [v0[0], clamp(v0[1] + 2 * sgm.sigL, 0, D1.liftMax + 0.4), v0[2]];
+      if (vH[1] > v0[1] + 1e-9 && !this.otherClear(c.pred, c.j, c.F, g, Object.assign({}, Lp, { v: vH }), ball)) return why("otherHigh");
+      // (and for the direction error ±2σ: a ball launched a few degrees closer to the other leg)
+      for (const sgn of [1, -1]) { const a = sgn * 2 * sgm.sigD * DEG, ca = Math.cos(a), sa = Math.sin(a), vD = [v0[0] * ca + v0[2] * sa, v0[1], -v0[0] * sa + v0[2] * ca];
+        if (!this.otherClear(c.pred, c.j, c.F, g, Object.assign({}, Lp, { v: vD }), ball)) return why("otherDir"); } }
     if (!this.approachClear(c.pred, c.j, c.F, g, c.off, c.warp)) return why("approach");
     return { g, cf, vbR, cl };
   }
@@ -1441,6 +1476,9 @@ export class DribbleSim {
       picksT = picks.filter((p) => { const ang = Math.acos(clamp(p.n[0] * u0[0] + p.n[2] * u0[2], -1, 1)); return ang > D1.cut12.floorAng * DEG || (fU != null && p.speed >= 0.95 * fU); }); }
     for (const pick of picksT.slice(0, pick12 ? (setup ? D1.cut12.refineSetup : D1.cut12.refineTries12) : D1.refineTries)) {
       const d0 = V.sub(pick.w.q, ball); d0[1] = 0; const Ld = V.len(d0), nn = pick.n;
+      // DRIBBLE-1.2 CPU: the pick's own checks on its rolling-estimate launch first — only a pick that passes them is refined through the exact ball
+      // integrator (most picks fail the follow-through; DRIBBLE-1.1 refined every one) and then checked again exactly
+      if (pick12 && !this.solvedPick(best, { n: nn, speed: pick.speed, elev, minI }, s)) { if (this.rej) this.rej.preFail = (this.rej.preFail || 0) + 1; continue; }
       const along = (sp) => { const tr = this.simLaunch(ball, [nn[0] * sp, vzOf(sp), nn[2] * sp], pick.nT); const e = tr[tr.length - 1]; return { d: V.dot(V.sub(e.p, ball), nn), tr }; };
       let s0 = pick.speed, f0 = along(s0).d - Ld, s1 = s0 * (1 - 0.04), f1 = along(s1).d - Ld, it = 0;
       while (Math.abs(f1) > 0.004 && it++ < 6 && Math.abs(f1 - f0) > 1e-9) { const s2 = clamp(s1 - f1 * (s1 - s0) / (f1 - f0), 0.3, 30); s0 = s1; f0 = f1; s1 = s2; f1 = along(s1).d - Ld; }
@@ -1540,4 +1578,5 @@ export class DribbleSim {
         ft: Object.fromEntries(SIDES.map((F) => { const a = this.curAdj(A, F); return [F, a && a.caft ? { iy: a.caft.iy, ia: a.caft.ia } : a && a.ftSolved ? { iy: 0, ia: 0 } : null]; })) } : null });
   }
 }
+const noSnap = () => null;
 const now = (typeof performance !== "undefined" && performance.now) ? () => performance.now() : () => Date.now();
