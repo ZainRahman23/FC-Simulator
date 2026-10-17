@@ -1,0 +1,36 @@
+CUT60L_RUN:35    taken → clean setup accepted                 @556 d13 line LF@655 | d14 setup LO@652 | draws 2/2
+CUT60L_RUN:18    lost  → clean planner-budget ordering        @548 d13 line RF@718 | d14 line RO@724 | draws 2/2
+CUT60L_RUN:21    lost  → taken planner-budget ordering        @583 d13 line LF@799 | d14 line LO@807 | draws 2/2
+CUT60L_RUN:24    lost  → clean setup accepted                 @562 d13 - | d14 setup LF@655 | draws 3/3
+CUT60L_RUN:38    lost  → taken different contact opportunity  @864 d13 cut-now LO@926 | d14 cut-now LO@925 | draws 3/3
+CUT60L_RUN:40    taken → clean planner-budget ordering        @624 d13 line RO@724 | d14 dribble LL@796 | draws 3/3
+CUT60L_RUN:27    lost  → taken different contact opportunity  @780 d13 - | d14 cut-now LO@807 | draws 3/3
+CUT60L_RUN:11    clean → lost  different contact opportunity  @533 d13 cut-now RI@561 | d14 cut-now RI@562 | draws 2/2
+CUT60L_RUN:29    lost  → taken setup accepted                 @572 d13 - | d14 setup LO@785 | draws 2/2
+CUT60L_RUN:30    lost  → taken planner-budget ordering        @558 d13 line LO@649 | d14 line RF@868 | draws 2/2
+CUT60L_RUN:45    taken → lost  different contact opportunity  @735 d13 cut-now LO@797 | d14 cut-now LO@795 | draws 3/3
+CUT60L_RUN:81    lost  → clean different contact opportunity  @628 d13 dribble RO@718 | d14 cut-now RI@704 | draws 2/2
+CUT60L_RUN:82    taken → clean planner-budget ordering        @543 d13 line LO@646 | d14 dribble RL@709 | draws 3/3
+CUT60L_RUN:84    taken → clean different contact opportunity  @649 d13 cut-now RI@709 | d14 cut-now RL@716 | draws 2/2
+CUT60L_RUN:66    lost  → clean setup accepted                 @552 d13 line LF@652 | d14 setup LO@652 | draws 3/3
+CUT60L_RUN:67    taken → clean setup accepted                 @560 d13 line RF@571 | d14 setup RF@571 | draws 3/3
+CUT60L_RUN:70    taken → lost  setup accepted                 @568 d13 line RF@727 | d14 setup LO@634 | draws 2/2
+CUT60L_RUN:85    taken → lost  different contact surface      @767 d13 setup RI@877 | d14 dribble RO@877 | draws 4/4
+CUT60L_RUN:49    taken → lost  setup accepted                 @717 d13 line RF@736 | d14 setup RF@737 | draws 2/2
+CUT60L_RUN:50    clean → lost  planner-budget ordering        @580 d13 line LF@802 | d14 line LF@800 | draws 2/2
+CUT60L_RUN:55    taken → lost  planner-budget ordering        @708 d13 line LF@793 | d14 - | draws 3/3
+CUT60L_RUN:56    lost  → clean different contact opportunity  @584 d13 cut-now LO@645 | d14 cut-now LO@635 | draws 2/2
+CUT60L_RUN:90    taken → lost  planner-budget ordering        @581 d13 line LO@806 | d14 line LF@813 | draws 2/2
+CUT60L_RUN:74    clean → taken different contact opportunity  @676 d13 cut-now RI@714 | d14 cut-now RI@712 | draws 2/2
+CUT60L_RUN:75    lost  → taken planner-budget ordering        @556 d13 line RF@574 | d14 line RF@586 | draws 2/2
+CUT60L_RUN:76    lost  → taken different contact opportunity  @555 d13 cut-now RL@576 | d14 cut-now RI@849 | draws 2/2
+CUT60L_RUN:59    lost  → taken planner-budget ordering        @554 d13 line RF@580 | d14 dribble RF@586 | draws 2/2
+CUT60L_RUN:62    lost  → taken different contact opportunity  @653 d13 cut-now RL@721 | d14 dribble LO@907 | draws 2/2
+CUT60L_RUN:63    lost  → taken different contact surface      @551 d13 line RF@736 | d14 line RO@736 | draws 2/2
+CUT60L_RUN:77    clean → lost  setup accepted                 @554 d13 line LF@652 | d14 setup LO@652 | draws 3/3
+CUT60L_RUN:78    lost  → clean setup accepted                 @674 d13 cut-now LO@797 | d14 setup LF@791 | draws 3/3
+CUT60L_RUN:79    lost  → taken planner-budget ordering        @704 d13 setup LO@811 | d14 line LI@799 | draws 3/3
+CUT60L_RUN:80    taken → clean different contact opportunity  @646 d13 dribble LO@910 | d14 cut-now RL@721 | draws 2/2
+CUT60L_RUN:94    lost  → taken different contact opportunity  @886 d13 cut-now LO@950 | d14 cut-now LO@951 | draws 3/3
+CUT60L_RUN:95    lost  → clean planner-budget ordering        @553 d13 line RF@724 | d14 line RF@730 | draws 2/2
+TALLY {"setup accepted":{"better":6,"worse":3},"planner-budget ordering":{"better":9,"worse":3},"different contact opportunity":{"better":9,"worse":3},"different contact surface":{"better":1,"worse":1}}

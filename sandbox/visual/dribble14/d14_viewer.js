@@ -70,6 +70,8 @@ function ballProg(gl) {
 async function simulate(ent) {
   const q = new URLSearchParams(location.search), scn = get(q.get("scn") || "STRAIGHT_RUN"), arch = q.get("arch") || "B", prof = q.get("prof") || "HIGH", seed = +(q.get("seed") || 1);
   const colliders = await (await fetch("dribble1/d1_colliders.json")).json(), t0 = performance.now();
+  // (DIAGNOSTIC ONLY — the review's counterfactuals: ?ovr={"setup14":{"graded":false}} overrides resolver parameters for this page, one level deep)
+  const ovr = q.get("ovr"); Vv.ovr = ovr || null; if (ovr) for (const [k, v] of Object.entries(JSON.parse(ovr))) D1[k] = v && typeof v === "object" && !Array.isArray(v) && D1[k] ? { ...D1[k], ...v } : v;
   const S = new DribbleSim({ T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch, seed, player: PROFILES[prof], scenario: scn, opts: { record: true, recViewer: true, errScale: q.get("err") != null ? +q.get("err") : undefined } });
   S.run(); Vv.simMs = performance.now() - t0; Vv.S = S; Vv.scn = scn; Vv.arch = arch; Vv.prof = prof; Vv.seed = seed; Vv.rec = S.rec; Vv.dur = S.fault ? (S.rec.length - 1) * DT : scn.dur;
   // a determinism fingerprint of the run (ball + COM at every tick, touches): identical in Node for the same scenario / arch / profile / seed
@@ -161,9 +163,9 @@ function overlay(ctx, vw, cam, dpr, i, r) {
   }
   if (Vv.labels && (vw.id === "game" || Vv.single)) {
     const D = 180 / Math.PI, sp = Math.hypot(r.V[0], r.V[1]), bs = Math.hypot(r.ball.v[0], r.ball.v[2]), dx = r.ball.p[0] - r.P[0], dy = r.ball.p[2] - r.P[1];
-    const last = [...S.touches].reverse().find(T => T.k <= i), lt = last ? `last touch ${last.F} ${last.reg} ${(i - last.k) * DT < 1 ? (i - last.k) * DT < 0.02 ? "NOW" : ((i - last.k) * DT).toFixed(2) + " s ago" : ""}` : "";
+    const tl = (S.turnLog || []).filter((e) => e.k <= i && (e.kind === "stage" || e.kind === "release")).pop(), last = [...S.touches].reverse().find(T => T.k <= i), lt = (tl ? `${tl.kind === "stage" ? "staged turn" : "turn released"} @${(tl.k * DT).toFixed(2)} s (tick ${tl.k}) · ` : "") + (last ? `last touch ${last.F} ${last.reg} ${(i - last.k) * DT < 1 ? (i - last.k) * DT < 0.02 ? "NOW" : ((i - last.k) * DT).toFixed(2) + " s ago" : ""}` : "");
     ctx.font = `600 ${12 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(vw.x * dpr, (vw.y + vw.h - 40) * dpr, vw.w * dpr, 40 * dpr); ctx.fillStyle = "rgba(235,242,238,0.95)";
-    ctx.fillText(`DRIBBLE-1.4 · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
+    ctx.fillText(`DRIBBLE-1.4${Vv.ovr ? " · DIAGNOSTIC OVERRIDE " + Vv.ovr : ""} · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
     ctx.fillStyle = COL[r.ctrl] || "#fff"; ctx.fillText(`t ${r.t.toFixed(2)} s · player ${sp.toFixed(1)} m/s · ball ${bs.toFixed(1)} m/s · separation ${Math.hypot(dx, dy).toFixed(2)} m · ${r.ctrl}${r.held ? " · cut held for the touch" : ""} · ${lt}${r.p13 ? ` · planner ${r.p13.job ? "searching (tick " + r.p13.job.ticks + ")" : "idle"} ${(r.p13.wu / 1000).toFixed(1)} / ${(r.p13.budget / 1000).toFixed(0)} ms` : ""}`, (vw.x + 10) * dpr, (vw.y + vw.h - 8) * dpr);
     ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillText(vw.id === "game" ? "TOUCHLINE GAMEPLAY CAMERA · 1×" : "", (vw.x + 8) * dpr, (vw.y + 16) * dpr);
   } else if (Vv.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(vw.id === "A" ? Vv.A : vw.id === "B" ? Vv.B : vw.id, (vw.x + 8) * dpr, (vw.y + 16) * dpr); }

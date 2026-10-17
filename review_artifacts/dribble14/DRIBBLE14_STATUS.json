@@ -1,0 +1,282 @@
+{
+ "date": "17–18 October 2026 (Europe/Athens), night session (17 Oct chronicle day)",
+ "statusLines": [
+  [
+   "DRIBBLE-1.3 PERFORMANCE ARCHITECTURE PRESERVED",
+   "YES — incremental planner, 2 / 8 ms deterministic budget, prediction / pose / ball caches, broad / narrow phases and the exact leg-only pose unchanged; 143 ms / s (D1.3 146 in the same benchmark)"
+  ],
+  [
+   "TURN-1.2 UNCHANGED",
+   "YES — no TURN-1.2 file touched; planner leg pose bit-identical 118,236 / 118,236; plants 0.0000 mm over 29,975 adjusted ticks"
+  ],
+  [
+   "EARLY-RELEASE ROOT CAUSE ADDRESSED",
+   "YES — the release search sampled contact ticks every 3 ticks counted from the release tick, so the fixed 24-tick lead chose the stage contact (639 instead of 640) and, the execution error being keyed by tick, its draw (−1.9σ instead of +1.1σ); every tick of the release window is now evaluated: tick 640 for all 24 leads; 90° right seed 16 lost → taken"
+  ],
+  [
+   "CONTACT-TIMED RELEASE",
+   "PARTIAL — a found release is re-evaluated exactly at the earliest tick its evaluation can complete and the planner's contact cost chooses the release (seed 16: 552 → 541); bounded by causality (a release decision takes ≈ 5 ticks to evaluate under the budget), and a choice among exactly evaluated release ticks rather than a backward solve"
+  ],
+  [
+   "SETUP VALIDATOR PRECISION/RECALL IMPROVED",
+   "YES for recall and the catastrophic tail — recall 41 → 94 % of the set-ups that worked; accepted set-ups that lose the ball within 1 s 18 → 17 %; the rejected ones are 67 % such losses (base rate 23 %); precision on 'planned decisive executed + cut taken' 77 → 68 % (168 audited set-ups, fit + independent validation)"
+  ],
+  [
+   "SETUP VALIDATED AGAINST BALL-PHYS FUTURE",
+   "YES — graded robustness over the six BALL-PHYS execution variants (window coverage of the decisive foot), R ≥ 0.25"
+  ],
+  [
+   "CUTS TAKEN",
+   "D1.2 258 / D1.3 256 / D1.4 273 (of 384)"
+  ],
+  [
+   "CLEAN CUTS",
+   "D1.2 129 / D1.3 114 / D1.4 121 — half the gap recovered; 60° cuts recovered fully (94 vs 81), 90° cuts not (27 vs 48)"
+  ],
+  [
+   "60R / 60L / 90R / 90L OVER 96 SEEDS",
+   "6.50 · 6.25 · 5.67 · 4.33 per 8 (D1.2 6.67 · 5.42 · 5.33 · 4.08; D1.3 6.25 · 5.42 · 5.08 · 4.58)"
+  ],
+  [
+   "DECISIVE TOE RATE",
+   "5.9 % (D1.2 8.5 %, D1.3 5.1 %)"
+  ],
+  [
+   "≥9 M/S DECISIVE CUT TOUCHES",
+   "0 of 400 cut / stage / decisive-cut touches (D1.3 0 / 422)"
+  ],
+  [
+   "STRAIGHT CONTROL",
+   "100 % — STRAIGHT_RUN held 16 / 16 (bit-identical to D1.3)"
+  ],
+  [
+   "IMMEDIATE SAME-FOOT RECONTACT",
+   "0.10 % — 2 of 1,966 launches (D1.2 / D1.3 0.10 %)"
+  ],
+  [
+   "PHYSICAL INTERRUPTION",
+   "PASS — INTERCEPT_RUN held 12 / 16, the defender's leg takes the ball in 4 (= D1.2 / D1.3); free-ball audit 1 unexplained tick in 128,605"
+  ],
+  [
+   "CONTROL LOSS POSSIBLE",
+   "YES — TACKLE_RUN held 3 / 16 (= D1.3); rejected set-ups still lose the ball (D)"
+  ],
+  [
+   "AVERAGE CPU",
+   "143 ms / s (D1.2 205, D1.3 146; each core in its own process)"
+  ],
+  [
+   "WORST SPIKE",
+   "23 ms (D1.2 540, D1.3 28 in the same benchmark); steps over 20 ms 0.004 %"
+  ],
+  [
+   "CHROME/NODE DETERMINISM",
+   "PASS — decisions 20 / 20 identical"
+  ],
+  [
+   "READY TO FREEZE DRIBBLE-V1 FOUNDATION",
+   "NO — ONE MORE FOUNDATION FIX REQUIRED: clean 90° cuts (90° right 16 vs D1.2's 32 of 96); 90° cuts are taken more often than in D1.2 but turn the ball slowly (median 2.14 vs 1.71 s to the new line for 90° right) — not planner latency (unbudgeted planning: 18 clean), not the release lead (instant release: 13), not release-first ordering (compare-all: 16); inherited from DRIBBLE-1.3's search semantics"
+  ]
+ ],
+ "watchFirst": [
+  [
+   "A3_known_diag",
+   "The known case (90° right, seed 16), top camera at ½ speed with diagnostics: D1.3 plans the staged inside-left contact for 2.66 s (tick 639), launches 6.3 m/s and needs a left-toe recovery; D1.4 plans it for 2.67 s (tick 640), launches 6.9 m/s and plans the outside-right cut"
+  ],
+  [
+   "B1_60L_1x",
+   "Best recovered 60° cut (60° left, seed 24) at the 1× gameplay camera: D1.3 loses it; D1.4 accepts a set-up D1.3's rule refused, then cuts cleanly with the outside of the left foot"
+  ],
+  [
+   "D1_rejected_1x",
+   "A correctly rejected set-up (60° left, seed 4): with the check off the fragile set-up (robustness 0.17) is played and the ball is lost; D1.4 refuses it, plays another touch and still does not take the cut — no rescue"
+  ]
+ ],
+ "videos": {
+  "A": [
+   [
+    "A1_known_1x",
+    "90° right, seed 16 — 1× gameplay camera: D1.3 loses the cut, D1.4 takes it"
+   ],
+   [
+    "A2_known_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "A3_known_diag",
+    "top camera, ½ speed, diagnostics: the staged release (HUD: staged turn @ tick), the planned contact and its predicted ball path (dotted), the swing's corridor, the actual impulse"
+   ]
+  ],
+  "B": [
+   [
+    "B1_60L_1x",
+    "60° left, seed 24 — 1× gameplay camera"
+   ],
+   [
+    "B2_60L_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "C": [
+   [
+    "C1_90R_1x",
+    "90° right, seed 66 — 1× gameplay camera: D1.3 loses it; D1.4 accepts a set-up, then the outside of the right foot, cleanly"
+   ],
+   [
+    "C2_90R_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "D": [
+   [
+    "D1_rejected_1x",
+    "60° left, seed 4 — left: the set-up check switched off (diagnostic override): the left-outside set-up at 2.77 s is played, ball lost at 3.53 s; right: D1.4 rejects it"
+   ],
+   [
+    "D2_rejected_diag",
+    "the same, top camera, ½ speed, diagnostics"
+   ]
+  ],
+  "E": [
+   [
+    "E1_straight_1x",
+    "STRAIGHT_RUN seed 1 — D1.3 | D1.4 at the 1× gameplay camera (bit-identical runs)"
+   ]
+  ]
+ },
+ "caseA": "<b>Reproduced first.</b> DRIBBLE-1.3 (and DRIBBLE-1.4 before the fix) lose 90° right seed 16; DRIBBLE-1.2 takes it cleanly. The release-lead sweep below runs the release search to completion at every lead from 1 to 24 ticks. With contact ticks sampled every 3 ticks counted from the release tick, the outcome repeats with the lead modulo 3: a stage contact at tick 640 (speed-error draw +1.1σ → 6.87 m/s) gives the clean cut; at tick 639 (draw −1.9σ → 6.33 m/s) the slower ball meets the left foot's next swing 0.46 s later — a left-toe recovery, a loose ball, a late laces touch off the line; at tick 638 the cut is lost too. DRIBBLE-1.2's 1-tick release happened to land on 640; DRIBBLE-1.3's 24-tick lead on 639. <b>The fix:</b> the release search evaluates every tick of its contact window — the stage contact is tick 640 for all 24 leads — and the found release is re-evaluated at the earliest tick it can be decided (552 → 541). D1.4 takes this cut (the final release on the same tick as D1.2, 789); not cleanly — its cut touch comes at 815 rather than D1.2's 820 and turns the ball less, so the ball is inside 20° at 1.99 s.",
+ "caseB": "60° left, seed 24. The planner proposes a set-up at 2.73 s (a left-foot nudge, then the outside of the left foot). Only 2 of its 6 execution variants keep a decisive contact, so DRIBBLE-1.3's rule (≥ 5) refuses it, plays a line touch and loses the cut. Those two variants leave the decisive foot its whole contact window: robustness 0.33 ≥ 0.25, and DRIBBLE-1.4 accepts it — set-up 5.7 m/s, then the outside of the left foot at 3.25 s, cut taken cleanly (ball inside 20° 1.06 s after the request). Classifier: set-up accepted.",
+ "caseC": "90° right, seed 66. The same shape at 90°: a set-up with 2 of 6 variants reachable (robustness 0.33). DRIBBLE-1.3 refuses it, plays a line touch, needs a recovery and loses the cut; DRIBBLE-1.4 accepts it — set-up 5.3 m/s at 2.73 s, then the outside of the right foot at 3.58 s, taken cleanly (ball inside 20° at 1.38 s). Classifier: set-up accepted.",
+ "caseD": "60° left, seed 4. D1.4's validator rejects a left-outside set-up at 2.77 s: only 1 of its 6 execution variants leaves the decisive foot a contact, robustness 0.17. With the check switched off (diagnostic override on the same page) that set-up is played at 6.1 m/s and the ball is lost at 3.53 s with no further touch. D1.4 instead plays a left-outside line touch, then a right-outside recovery (8.8 m/s) and loses the ball at 3.76 s — it does not take the cut either. Nothing guarantees the dribble: the validator removes a set-up that would fail, it does not rescue the situation.",
+ "perf": {
+  "rows": [
+   [
+    "average resolver CPU (ms / simulated second; each core in its own process, 20 scenarios × 4 seeds)",
+    "205",
+    "146",
+    "143"
+   ],
+   [
+    "worst 240 Hz step (ms)",
+    "540",
+    "28",
+    "23"
+   ],
+   [
+    "cuts taken / 384",
+    "258",
+    "256",
+    "273"
+   ],
+   [
+    "clean cuts / 384",
+    "129",
+    "114",
+    "121"
+   ],
+   [
+    "60° right per 8 (over 96 seeds)",
+    "6.67",
+    "6.25",
+    "6.50"
+   ],
+   [
+    "60° left per 8",
+    "5.42",
+    "5.42",
+    "6.25"
+   ],
+   [
+    "90° right per 8",
+    "5.33",
+    "5.08",
+    "5.67"
+   ],
+   [
+    "90° left per 8",
+    "4.08",
+    "4.58",
+    "4.33"
+   ],
+   [
+    "decisive cut touch with the toe",
+    "8.5 %",
+    "5.1 %",
+    "5.9 %"
+   ],
+   [
+    "≥ 9 m/s cut / stage / decisive-cut touches",
+    "0 / 337",
+    "0 / 422",
+    "0 / 400"
+   ],
+   [
+    "set-up attempts (runs with a set-up)",
+    "117",
+    "24",
+    "79"
+   ],
+   [
+    "set-up success (cut taken after it)",
+    "56 % (65)",
+    "75 % (18)",
+    "56 % (44)"
+   ],
+   [
+    "straight control (STRAIGHT_RUN, 16 seeds)",
+    "100 %",
+    "100 %",
+    "100 %"
+   ],
+   [
+    "immediate same-foot recontact (≤ 250 ms)",
+    "0.10 %",
+    "0.10 %",
+    "0.10 %"
+   ],
+   [
+    "seeds 1–8: 60R · 60L · 90R · 90L",
+    "7 · 6 · 5 · 5",
+    "6 · 5 · 5 · 4",
+    "8 · 5 · 6 · 5"
+   ],
+   [
+    "clean cuts 60R · 60L · 90R · 90L (of 96)",
+    "45 · 36 · 32 · 16",
+    "47 · 37 · 19 · 11",
+    "48 · 46 · 16 · 11"
+   ],
+   [
+    "request → ball within 20° (median, taken cuts) 60R · 60L · 90R · 90L",
+    "1.23 · 1.15 · 1.71 · 2.14 s",
+    "1.14 · 1.17 · 2.08 · 2.17 s",
+    "1.12 · 1.10 · 2.14 · 2.16 s"
+   ]
+  ]
+ },
+ "perfNote": "Football: 4 cuts × seeds 1–96 = 384 runs per core, HIGH profile (D1.2 = the synchronous planner, bit-identical to DRIBBLE-1.2). One run's outcome is chaotic in the planner (one tick, one draw); σ ≈ 9 runs on taken / clean totals, ≈ 4–5 per cut. CPU: tools/d14_cpu.sh.",
+ "auditNote": "<b>How the validator was audited.</b> Every set-up the DRIBBLE-1.3 core makes with the set-up check off (so each one is executed and its outcome is known) was replayed to its commit and graded against the six BALL-PHYS execution variants the validator uses: for each, the number of slots (tick × held-back path phase) of the decisive window in which the decisive foot still meets that ball. Outcome: the planned decisive executed and the cut taken; catastrophic: the ball lost within 1 s. 89 set-ups from seeds 1–96 chose the rule, 79 from seeds 97–192 checked it. The 1.3 rule (≥ 5 of 6 variants reachable, one slot each suffices) keeps precision but rejects 59 % of the set-ups that work. The count of reachable variants hardly predicts the outcome; how much of the window survives does. <b>DRIBBLE-1.4's rule:</b> per variant, its coverage = slots / 4 (a comfortable window), at most 1; robustness R = the mean over the six variants; accepted if R ≥ 0.25 — four comfortable variants and two misses score 0.67, five barely-reachable variants and a miss 0.21. In the 384-run matrix it is the threshold that played best (0.5: 259 taken / 118 clean; 0.25: 265 / 123 before the release fix). About a quarter of accepted set-ups end as clean cuts whatever the threshold: the validator cannot pick clean ones, it removes the ones whose execution leaves no contact window.",
+ "diffNote": "Every run of the 384 whose outcome (lost / taken / clean) changed between D1.3 and D1.4 was re-run on both cores and its first changed decision classified from the plans and both decision logs (tools/d14_diff.mjs). 'Different contact opportunity' = a release-now / staged plan with another contact (the every-tick release window); 'planner-budget ordering' = another plan with no set-up or release change at its root (the validator's work shifts how far each tick's budget reaches); outcomes downstream of a changed decision are chaotic, which is why changes go both ways in every class.",
+ "howItWorks": [
+  "<b>Release contact window.</b> The release search (release-now / staged options) evaluates every tick of its contact window instead of every third tick counted from the release tick. Which contacts exist no longer depends on when the search began. Work units rose 4 %.",
+  "<b>Contact-timed release.</b> When the release search has found a plan for its release tick, the same release is evaluated exactly at the earliest tick its evaluation can complete — now + the ticks the search just took (+ the search's own evalTicks margin) — branched from the main prediction there. Both plans stay in the found set and DRIBBLE-1.2's total cost chooses; if the earlier one is not complete in time or not as good, the found plan stands.",
+  "<b>Graded set-up robustness.</b> The set-up check still simulates the planned launch and its six execution variants with BALL-PHYS. For each variant it now counts how much of the decisive foot's contact window (tick × path phase) still meets that ball, instead of whether one slot does. The set-up is accepted on the mean coverage R ≥ 0.25 rather than ≥ 5 of 6 reachable.",
+  "<b>Speed-error clearance.</b> Every launch was already required to stay clear of the other leg for its +2σ lift and ±2σ direction errors. It is now also checked for its ±2σ speed error, the dimension DRIBBLE-1.2 left out.",
+  "<b>Unchanged.</b> TURN-1.2, the resolved touch, one authoritative impulse, the free physical ball, interruption, control loss, the contact geometry and its costs, the incremental planner and its budget. Randomness is keyed by (seed, player, tick, foot), so a changed decision changes only what it causes: 392 / 392 touches common to D1.3 and D1.4 draw identical errors."
+ ],
+ "limitations": [
+  "<b>90° cuts redirect slower than DRIBBLE-1.2.</b> Median ball-within-20° 2.14 s vs D1.2's 1.71 s for 90° right; taken more often (5.67 vs 5.33 / 8) but clean 16 vs 32 of 96. Ruled out tonight: planner latency (unbudgeted: 18 clean), the release lead (instant release: 13), release-first ordering (compare-all: 16). Present in every 1.3 / 1.4 configuration: it comes from DRIBBLE-1.3's search semantics (most likely the cap of 3 set-up validations per search or the release search stopping at its first valid plan). This one is a foundation defect, not an attribute matter.",
+  "<b>Weak foot and the preferred foot (out of scope here).</b> Decisive cuts pick the foot the geometry favours; preferred-foot bias belongs to the attribute / utility layer.",
+  "<b>How tight and quick a 90° turn is, against pressure.</b> Agility, ball control and a defender's pressure should decide how sharp a generic player's 90° turn can be. Do not tune the generic player toward 8 / 8."
+ ],
+ "nextStep": "ONE MORE FOUNDATION FIX (DRIBBLE-1.5, narrow): find which of DRIBBLE-1.3's search caps slows the 90° redirect — set-up validations per search (maxSetups 3), the release search's first-valid stop (rStop1), the cut-at-contact version (off) — by restoring each to DRIBBLE-1.2's semantics under the budget on the 384-run matrix; adopt the one that brings clean 90° cuts back toward D1.2 (≈ 32 + 16 of 192) without losing the 60° and taken gains or the CPU guardrail. Then freeze DRIBBLE-V1 and move to Dribbling / Ball Control / Agility.",
+ "provenance": [
+  "instruction: review_artifacts/dribble14/sources/2026-10-17_user_instruction_dribble1_4_foundation_cleanup.md (verbatim)",
+  "core: sandbox/visual/dribble14/d14_core.js (from dribble13/d13_core.js at 54ff810d, which stays frozen); lab: sandbox/visual/dribble14.html; tools: sandbox/visual/dribble14/tools/",
+  "football: evidence/score96_d14.json (D1.4, 384 runs); D1.2 / D1.3 from review_artifacts/dribble13/evidence/score96_d12.json / score96_d13.json",
+  "known case: evidence/leadsweep_cut90_s16.json; validator audit: evidence/setup_audit.json + setup_audit_summary.json; outcome changes: evidence/diff_d13_d14.json",
+  "checks: cpu.json, chrome_d14.json, legpose_check.json, plant_check_d14.json, free_ball_audit.json, rel_d14_straight.json, rel_d14_interrupt.json",
+  "I cannot play video in real time: every judgement here comes from frame strips and stills of these clips",
+  "LOCAL REVIEW PAGE ONLY — the lab shows real player names; not published"
+ ]
+}
