@@ -7,7 +7,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url)), require = createRequi
 const { loadTurn1 } = require(path.resolve(HERE, "../../turn1/tools/t1_load.cjs"));
 export const X = loadTurn1();
 // experiments: D1OVR='{"key": value, ...}' overrides the DRIBBLE-1.2 resolver parameters for this process (never used by the evidence of record)
-if (process.env.D1OVR) Object.assign(C12.D1, JSON.parse(process.env.D1OVR));
+if (process.env.D1OVR) for (const [k, v] of Object.entries(JSON.parse(process.env.D1OVR))) C12.D1[k] = v && typeof v === "object" && !Array.isArray(v) && C12.D1[k] ? { ...C12.D1[k], ...v } : v;   // (one level deep: {"cut12": {"robustK": 1}})
 export const COLLIDERS = JSON.parse(fs.readFileSync(path.resolve(HERE, "../../dribble1/d1_colliders.json"), "utf8"));
 export const CORES = { d1: C1, d11: C11, d12: C12 };
 export function makeSim(scenario, o = {}) {
