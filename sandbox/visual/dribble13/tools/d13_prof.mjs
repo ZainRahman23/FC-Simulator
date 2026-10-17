@@ -27,6 +27,7 @@ const CAT = {
   viewFor: "invalidation", inputKey: "invalidation", ballChanged: "invalidation", ballChangedCache: "invalidation",
 };
 const ROOTS = new Set(["resolve", "post", "record"]);
+const PASSES = []; let passCtx = null;
 const now = () => performance.now();
 const P = { self: {}, selfBy: {}, calls: {}, primBy: {}, prim: { t1Step: 0, t1Clone: 0, t1Pose: 0, r1FK: 0, ballStep: 0, contactGeom: 0, corridor: 0 } };
 let depth = 0; const stack = [];
@@ -38,7 +39,9 @@ function wrapFn(obj, name, cat, isRoot = false, prim = null) {
   let w;
   if (isGen) w = function (...a) { if (!depth && !isRoot) return f.apply(this, a); const g = f.apply(this, a);
     const it = { next(v) { enter(cat, name); try { return g.next(v); } finally { leave(); } }, return(v) { return g.return(v); }, throw(e) { return g.throw(e); }, [Symbol.iterator]() { return this; } }; return it; };
-  else w = function (...a) { if (prim && depth) { P.prim[prim]++; const par = stack.length ? stack[stack.length - 1].nm : '-'; const pk = prim + '<' + par; P.primBy[pk] = (P.primBy[pk] || 0) + 1; } if (!depth && !isRoot) return f.apply(this, a); P.calls[name] = (P.calls[name] || 0) + 1; enter(cat, name); try { return f.apply(this, a); } finally { leave(); } };
+  else { const w0 = function (...a) { P.calls[name] = (P.calls[name] || 0) + 1; enter(cat, name); try { return f.apply(this, a); } finally { leave(); } };
+    w = function (...a) { if (name === 'makePlan' && depth) { const before = { self: { ...P.self }, prim: { ...P.prim }, t0: now() }; try { return w0.apply(this, a); } finally { const d = {}, dp = {}; for (const [k, v] of Object.entries(P.self)) if (v - (before.self[k] || 0) > 1e-6) d[k] = +(v - (before.self[k] || 0)).toFixed(2); for (const [k, v] of Object.entries(P.prim)) if (v - (before.prim[k] || 0)) dp[k] = v - (before.prim[k] || 0); PASSES.push({ id: curRun, k: this.k, ms: +(now() - before.t0).toFixed(2), held: !!(this.held && !this.held.released), self: d, prim: dp }); } }
+    if (prim && depth) { P.prim[prim]++; const par = stack.length ? stack[stack.length - 1].nm : '-'; const pk = prim + '<' + par; P.primBy[pk] = (P.primBy[pk] || 0) + 1; } if (!depth && !isRoot) return f.apply(this, a); P.calls[name] = (P.calls[name] || 0) + 1; enter(cat, name); try { return f.apply(this, a); } finally { leave(); } }; }
   w.__prof = true; obj[name] = w;
 }
 // the primitives (TURN-1.2, RUN-1 FK, BALL-PHYS predictor steps): counted and timed only under a resolver entry point
@@ -48,11 +51,14 @@ const C = CORES[ver];
 // a warm-up run exposes the internal prototypes (LocoTrack; the BALL-PHYS world)
 const S0 = makeSim(get("CUT60_RUN"), { ver, seed: 1, opts: { record: false } }); S0.run(0.5);
 const protoSim = C.DribbleSim.prototype, protoTrack = S0.track ? Object.getPrototypeOf(S0.track) : null, protoW = Object.getPrototypeOf(S0.Wp);
+for (const n of Object.getOwnPropertyNames(protoSim)) if (!CAT[n] && /G$/.test(n) && CAT[n.slice(0, -1)]) CAT[n] = CAT[n.slice(0, -1)];
+Object.assign(CAT, { plan13G: "planOther", search13G: "scoring", install13G: "scoring", genOptG: "enumerate", setupCheckG: "setup", resolveTouch13: "invalidation", ensureG: "turnPredict", wuTotal: "invalidation", installPlan: "scoring" });
 for (const n of Object.getOwnPropertyNames(protoSim)) if (CAT[n] && n !== "constructor") wrapFn(protoSim, n, CAT[n], ROOTS.has(n), n === "contactGeom" ? "contactGeom" : n === "corridor" ? "corridor" : null);
 if (protoTrack) for (const n of Object.getOwnPropertyNames(protoTrack)) if (CAT[n]) wrapFn(protoTrack, n, CAT[n]);
 wrapFn(protoW, "step", "ballPredict", false, "ballStep");
 const tot = { sim: 0, wall: 0, loco: 0, ball: 0, plans: 0, steps: 0, cpu: {} }, per = {};
-for (const id of ids) for (let seed = 1; seed <= N; seed++) {
+let curRun = null;
+for (const id of ids) for (let seed = 1; seed <= N; seed++) { curRun = id + ':' + seed;
   const before = JSON.stringify(P.self), S = makeSim(get(id), { ver, seed, opts: { record: false } }); const t0 = now(); S.run(); const w = now() - t0;
   tot.sim += S.k / 240; tot.wall += w; tot.loco += S.cpu.loco || 0; tot.ball += S.cpu.ball || 0; tot.plans += (S.cpu.plans || P.calls.makePlan || 0); tot.steps += S.k;
   for (const [k, v] of Object.entries(S.cpu)) if (typeof v === "number") tot.cpu[k] = (tot.cpu[k] || 0) + v;
@@ -70,4 +76,5 @@ const out = { ver, ids, seeds: N, simS: +tot.sim.toFixed(2), resolverMsPerSimS_w
   coreCountersPerSimS: Object.fromEntries(Object.entries(tot.cpu).filter(([k]) => !["loco", "ball", "plan", "predict", "solve", "commit", "nested", "safe", "planMax", "tickMax"].includes(k)).map(([k, v]) => [k, +(v / tot.sim).toFixed(1)])),
   perScenarioMsPerSimS: Object.fromEntries(Object.entries(per).map(([id, r]) => [id, Object.fromEntries(Object.entries(r.self).sort((a, b) => b[1] - a[1]).map(([k, v]) => [k, +(v / r.sim).toFixed(1)]))])) };
 console.log(JSON.stringify({ ...out, perScenarioMsPerSimS: undefined }, null, 1));
+out.allPasses = PASSES.map((p) => ({ id: p.id, k: p.k, ms: p.ms, held: p.held, prim: p.prim })); PASSES.sort((a, b) => b.ms - a.ms); out.worstPasses = PASSES.slice(0, 15); const pm = PASSES.map((p) => p.ms).sort((a, b) => a - b); out.passStats = { n: pm.length, p50: pm[pm.length >> 1], p90: pm[Math.floor(0.9 * pm.length)], p99: pm[Math.floor(0.99 * pm.length)], max: pm[pm.length - 1], over20: pm.filter((x) => x > 20).length, sumOver20: +pm.filter((x) => x > 20).reduce((a, b) => a + b, 0).toFixed(0), sum: +pm.reduce((a, b) => a + b, 0).toFixed(0) };
 if (outFile) fs.writeFileSync(outFile, JSON.stringify(out, null, 1));
