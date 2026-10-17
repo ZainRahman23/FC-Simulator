@@ -139,11 +139,13 @@ const warpOk = (K) => { for (let i = 0; i < K.length - 1; i++) { const a = K[i],
 // continue a warp from its current state (w, w', slope) back to the identity at the swing's end — always monotone (slopes limited, Fritsch–Carlson)
 export function warpHome(K, w) { if (!K) return null; const y = warpAt(K, w); if (w >= 0.999 || Math.abs(y - w) < 1e-7) return null; const d = (1 - y) / (1 - w), s0 = Math.min(warpSlope(K, w), 2 * d), s1 = Math.min(1, 2 * d); return [[w, y, Math.max(0, s0)], [1, 1, s1]]; }
 // the follow-through profiles over the rest of the swing u ∈ [0, 1] (each 0 with zero slope at the contact and at touchdown): the YIELD (back along
-// the launch) acts at once — sin²(πu), peak half-way; the lateral ARC and the LIFT come later — sin²(πu²), peak at u ≈ 0.71 — so the boot never
+// the launch) acts at once — sin²(πu'), peak half-way; the lateral ARC and the LIFT come later — sin²(πu'²), peak at u ≈ 0.67 — so the boot never
 // lifts or swings sideways into the ball it has just struck from below and behind
 const caftU = (wc, w) => clamp((w - wc) / Math.max(1e-6, 1 - wc), 0, 1);
-const caftBump = (wc, w) => { const x = Math.sin(Math.PI * caftU(wc, w)); return x * x; };
-const caftLate = (wc, w) => { const u = caftU(wc, w), x = Math.sin(Math.PI * u * u); return x * x; };
+// both complete by 95 % of the remaining swing (exactly zero, with zero velocity, over the last ticks before touchdown: the foot lands on TURN-1.2's
+// own path, no residual to snap off at the plant)
+const caftBump = (wc, w) => { const x = Math.sin(Math.PI * Math.min(1, caftU(wc, w) / 0.95)); return x * x; };
+const caftLate = (wc, w) => { const u = Math.min(1, caftU(wc, w) / 0.95), x = Math.sin(Math.PI * u * u); return x * x; };
 const caftOff = (cf, wc, w) => { const b = caftBump(wc, w), l = caftLate(wc, w); return [cf.Db[0] * b + cf.Dl[0] * l, cf.Db[1] * b + cf.Dl[1] * l, cf.Db[2] * b + cf.Dl[2] * l]; };
 const rjX = (S, key) => { if (S.rej) S.rej[key] = (S.rej[key] || 0) + 1; };
 const tab = (T, x) => { if (x <= T[0][0]) return T[0][1]; for (let i = 1; i < T.length; i++) if (x <= T[i][0]) { const a = T[i - 1], b = T[i]; return a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); } return T[T.length - 1][1]; };
@@ -213,6 +215,7 @@ class LocoTrack {
   fill(ki) {
     const sim = this.sim, T1 = sim.T1, c0 = now(); let kc = null; for (const k of this.cps.keys()) if (k <= ki && (kc == null || k > kc)) kc = k;
     const C = T1.t1Clone(this.cps.get(kc)), end = Math.min(this.kb + this.s.length, kc + D1.cloneStride);
+    if (kc > this.kb) { const s0 = this.s[kc - this.kb - 1], d0 = Object.getOwnPropertyDescriptor(s0, "bones"); if (d0 && d0.get) this.evalInto(s0, C); }   // the stored state's own tick
     for (let kk = kc + 1; kk <= end; kk++) { T1.t1Step(C, this.inp2 && kk - 1 >= this.kSwitch ? this.inp2 : this.inp); if (C.log.length > 64) C.log.splice(0, C.log.length - 1);
       const smp = this.s[kk - this.kb - 1], d = Object.getOwnPropertyDescriptor(smp, "bones"); if (d && d.get) this.evalInto(smp, C); }
     sim.cpu.predict += now() - c0; sim.cpu.lazyFills = (sim.cpu.lazyFills || 0) + 1;
