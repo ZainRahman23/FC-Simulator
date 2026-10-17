@@ -123,14 +123,14 @@ Also `c_followthrough_cut60_low` (low camera) and `c_followthrough_cut90_slow`.
 
 ## Average cut touch speed before vs after
 
-**Cut and stage touches** in every cut scenario, all seeds:
+**Cut and stage touches** in the seven cut scenarios (CUT45 / 60 / 60L / 90 / 90L RUN, CUT90 JOG, CUT60 RUN far), seeds 1–16:
 
 | | Count | Mean | Median | ≥ 9 m/s |
 |---|---|---|---|---|
 | DRIBBLE-1 | 104 | 6.33 m/s | 6.09 m/s | 8 |
 | DRIBBLE-1.1 | 213 | 6.63 m/s | 6.77 m/s | 8 |
 
-Individual cut touches are **not** softer.
+Individual cut touches are **not** softer. In the five RUN cuts alone the mean is 6.39 → 7.27 m/s (75 → 139 touches).
 
 **What did fall is the firm recovery touch**, the 9–10 m/s push made when no planned touch is feasible. Over all 320 runs:
 - DRIBBLE-1: 78 recovery touches, mean 9.35 m/s;
