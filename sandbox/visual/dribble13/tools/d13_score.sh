@@ -4,7 +4,7 @@
 # contacts within 250 ms per launch, request → redirect / ball-within-20° medians, set-ups.
 # usage: zsh d13_score.sh "SCN1 SCN2 …" N [ver d13] [P 10] [out.json]           (D1OVR / D13CORE pass through)
 HERE="${0:A:h}"; SC="$1"; N="${2:-16}"; VER="${3:-d13}"; P="${4:-10}"; OUT="${5:-}"; R="${TMPDIR:-/tmp}/d13score.$$"; mkdir -p "$R"
-jobs=(); for s in ${=SC}; do for ((a=1; a<=N; a+=4)); do b=$((a+3)); ((b>N)) && b=$N; jobs+=("$s $a $b"); done; done
+O="${SEED0:-0}"; jobs=(); for s in ${=SC}; do for ((a=1; a<=N; a+=4)); do b=$((a+3)); ((b>N)) && b=$N; jobs+=("$s $((a+O)) $((b+O))"); done; done   # (SEED0: seeds SEED0+1 … SEED0+N)
 i=0; for j in "${jobs[@]}"; do set -- ${=j}; node "$HERE/d13_score.mjs" "$1" "$2" "$3" "$VER" "$R/$i.json" 2>"$R/$i.err" & i=$((i+1)); if (( i % P == 0 )); then wait; fi; done; wait
 python3 - "$R" "$OUT" <<'PY'
 import sys, json, glob, statistics as st
@@ -20,7 +20,7 @@ for k in sorted(by):
     if v[0]["taken"] is None:
         c = sum(1 for r in v if r["end"] == "CONTROLLED"); print(f"{k:16s} controlled at end {c}/{len(v)}"); continue
     t = sum(1 for r in v if r["taken"]); c = sum(1 for r in v if r["clean"]); tot[0] += t; tot[1] += c; tot[2] += len(v)
-    t8 = sum(1 for r in v if r["taken"] and r["sd"] <= 8)
+    t8 = sum(1 for r in v if r["taken"] and r["sd"] <= 8) if min(r["sd"] for r in v) == 1 else -1
     print(f"{k:16s} taken {t}/{len(v)} (seeds 1-8: {t8}/8) clean {c}/{len(v)} | " + "".join("T" if r["taken"] else "-" for r in v))
 cut = [r for r in rows if r["taken"] is not None]
 dec = [r["decisive"] for r in cut if r["decisive"]]

@@ -42,6 +42,25 @@ export function compareRef(A, B) {
   if (bits(A.fault) !== bits(B.fault)) out.identical = false;
   return out;
 }
+// WHY a 1.3 run decided differently from the reference at its first divergence (rule-based, from the plans and the 1.3 planner's decision log):
+//   "pursuit timing" — the first difference is an input / a pursuit correction (1.3 applies a checked correction from its switch tick);
+//   "same plan, later" — the same contact (tick, foot, surface) installed later (the search ran over several ticks);
+//   "release lead" — a release-now / staged plan released lead ticks after its search began (1.2 released on the next tick);
+//   "set-up rejected" — a set-up DRIBBLE-1.2 made was refused by the physical-ball envelope check;
+//   "search order / budget" — a different plan, found under the per-tick budget (phased search, deadline, anytime install);
+//   "after an earlier change" — the first difference is not a decision (a consequence of an earlier physical difference)
+function classify(A, B, c, S) {
+  const f = c.first; if (!f) return "trajectory only"; const t = f.tick, log = (S.decLog || []).filter((d) => d.k >= t - 60 && d.k <= t + 2);
+  if (f.list === "plans" && f.ref && f.now) { if (f.ref.kc === f.now.kc && f.ref.F === f.now.F && f.ref.reg === f.now.reg) return f.now.k > f.ref.k ? "same plan, later" : "same plan, different launch";
+    if (/now/.test(f.now.role) || /now/.test(f.ref.role)) return "release lead";
+    if (f.ref.role === "setup" && log.some((d) => d.ev === "setupCheck" && !d.ok)) return "set-up rejected";
+    return "search order / budget"; }
+  if (f.list === "plans" && f.ref && !f.now) return log.some((d) => d.ev === "setupCheck" && !d.ok) ? "set-up rejected" : "search order / budget";
+  if (f.list === "plans" && !f.ref && f.now) return "search order / budget";
+  if (f.list === "turnLog") return "release lead";
+  if (f.list === "touches") return "same plan, different launch";
+  return "after an earlier change";
+}
 const [mode, a1, a2, a3, a4, a5] = process.argv.slice(2);
 if (mode === "record") {
   const ver = a1, ids = a2 === "all" ? list().map((s) => s.id) : a2.split(","), seeds = a3.includes("-") ? a3.split("-").map(Number) : [1, +a3], out = [];
@@ -50,9 +69,10 @@ if (mode === "record") {
 } else if (mode === "compare") {
   const R = JSON.parse(fs.readFileSync(a1, "utf8")), ver = a2, opts = a4 ? JSON.parse(a4) : {}, rows = []; let same = 0;
   for (const A of R.runs) { const { S, ref: B0 } = runRef(ver, A.id, A.seed, opts), B = JSON.parse(JSON.stringify(B0)), c = compareRef(A, B); if (c.identical) same++;   // (the reference went through JSON: compare like with like)
-    const why = c.first && S.decLog ? S.decLog.filter((d) => Math.abs(d.k - c.first.tick) <= 30).slice(0, 12) : null;
-    rows.push({ id: A.id, seed: A.seed, identical: c.identical, digest: c.digest, first: c.first, why, outcomeRef: A.outcome, outcomeNow: B.outcome });
+    const why = c.first && S.decLog ? S.decLog.filter((d) => Math.abs(d.k - c.first.tick) <= 30).slice(0, 12) : null, cause = c.identical ? null : classify(A, B, c, S);
+    rows.push({ id: A.id, seed: A.seed, identical: c.identical, digest: c.digest, first: c.first, cause, why, outcomeRef: A.outcome, outcomeNow: B.outcome });
     console.log(`${A.id}:${A.seed}`.padEnd(20), c.identical ? "IDENTICAL" : `DIVERGES at tick ${c.first ? c.first.tick : "?"} (${c.first ? c.first.list + "#" + c.first.i : "digest"})`, "taken", A.outcome.taken, "→", B.outcome.taken); }
-  const sum = { ver, ref: R.ver, identical: same, total: R.runs.length };
+  const causes = {}; for (const r of rows) if (r.cause) causes[r.cause] = (causes[r.cause] || 0) + 1;
+  const sum = { ver, ref: R.ver, identical: same, total: R.runs.length, divergenceCauses: causes, takenRef: rows.filter((r) => r.outcomeRef.taken).length, takenNow: rows.filter((r) => r.outcomeNow.taken).length };
   console.log("REF", JSON.stringify(sum)); if (a3) fs.writeFileSync(a3, JSON.stringify({ summary: sum, rows }, null, 1));
 }

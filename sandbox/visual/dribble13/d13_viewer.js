@@ -1,4 +1,4 @@
-// ═══ dribble12/d12_viewer.js — DRIBBLE-1.2 lab (cut contact geometry / set-up touch; from the DRIBBLE-1.1 lab): the Touchline gameplay camera (CAMERA_V1) + close views, the real character, the physical ball ═══
+// ═══ dribble13/d13_viewer.js — DRIBBLE-1.3 lab (the incremental planner; from the DRIBBLE-1.2 lab — cut contact geometry / set-up touch): the Touchline gameplay camera (CAMERA_V1) + close views, the real character, the physical ball ═══
 // The page runs the SAME simulation as the Node tools (d1_core.js on the frozen TURN-1.2 and the BALL-FEEL-1.3 world) once at load, recording every
 // 240 Hz tick (skin matrices, ball state, diagnostics); playback only reads the record (deterministic, scrubbable). Diagnostics (optional): ball
 // trajectory, COM, feet, the planned (warped) toe path, the intended contact point, authoritative contact ticks, the control envelope, ball / player
@@ -151,7 +151,11 @@ function overlay(ctx, vw, cam, dpr, i, r) {
         if (z.target) { const tq = z.target, m = z.corr ? Math.max(0.02, z.corr.margin) : 0.05, ring = []; for (let a = 0; a <= 32; a++) ring.push([tq[0] + m * Math.cos(a / 32 * 6.283), 0.015, tq[2] + m * Math.sin(a / 32 * 6.283)]);
           line(ring, rcol, 2.0); dot([tq[0], 0.015, tq[2]], 3, rcol);
           text([tq[0], 0.30, tq[2]], `${z.role === "setup" ? "SET-UP TARGET REGION" : "next window"}${z.corr ? ` · ${z.corr.F} ${z.corr.reg} corridor ±${(z.corr.margin * 100).toFixed(0)} cm @${(z.corr.k * DT).toFixed(2)}s` : ""}`, rcol, 10); }
-        text([z.ball[0], 0.62, z.ball[2]], `${z.role.toUpperCase()} · ${(Math.atan2(-z.n[2], z.n[0]) * 180 / Math.PI).toFixed(0)}° ${z.speed != null ? z.speed.toFixed(1) + " m/s" : ""}${z.dec ? ` · decisive ${z.dec.F} ${z.dec.reg} ${(z.dec.dir * 180 / Math.PI).toFixed(0)}° @${(z.dec.kc * DT).toFixed(2)}s` : ""}`, "#ffd45e", 10); }
+        text([z.ball[0], 0.62, z.ball[2]], `${z.role.toUpperCase()} · ${(Math.atan2(-z.n[2], z.n[0]) * 180 / Math.PI).toFixed(0)}° ${z.speed != null ? z.speed.toFixed(1) + " m/s" : ""}${z.dec ? ` · decisive ${z.dec.F} ${z.dec.reg} ${(z.dec.dir * 180 / Math.PI).toFixed(0)}° @${(z.dec.kc * DT).toFixed(2)}s` : ""}`, "#ffd45e", 10);
+        // DRIBBLE-1.3: the set-up's validation against the physical ball future — where BALL-PHYS predicts the ball around the decisive tick for the
+        // planned launch (large violet) and for the execution envelope (green: the decisive foot can still meet it, red: it cannot)
+        if (z.setupEnv) { let nom = null; for (const e of z.setupEnv) { if (!e.p) continue; if (e.tag === "nominal") { nom = e; dot([e.p[0], 0.02, e.p[2]], 6, "#c58bff", true); } else dot([e.p[0], 0.02, e.p[2]], 3.2, e.exists ? "#7dff9b" : "#ff6a6a", true); }
+          if (nom) text([nom.p[0], 0.42, nom.p[2]], `BALL-PHYS prediction at the decisive (planned launch; ±1.5σ execution: ${z.setupEnv.filter((e) => e.tag !== "nominal" && e.exists).length}/${z.setupEnv.length - 1} reachable)`, "#c58bff", 10); } }
     }
     for (const c of S.contacts) { if (c.k > i || i - c.k > 240 || c.striking) continue; const q = rec[c.k]; if (q) { const p = K2A(q.ball.p); dot(p, 6, c.own ? "rgba(255,160,40,0.9)" : "rgba(255,40,40,0.95)", true); if (i - c.k < 140) text([p[0], 0.5, p[2]], (c.own ? "own " : "OPPONENT ") + c.part, "#ff9a7a"); } }
   }
@@ -159,8 +163,8 @@ function overlay(ctx, vw, cam, dpr, i, r) {
     const D = 180 / Math.PI, sp = Math.hypot(r.V[0], r.V[1]), bs = Math.hypot(r.ball.v[0], r.ball.v[2]), dx = r.ball.p[0] - r.P[0], dy = r.ball.p[2] - r.P[1];
     const last = [...S.touches].reverse().find(T => T.k <= i), lt = last ? `last touch ${last.F} ${last.reg} ${(i - last.k) * DT < 1 ? (i - last.k) * DT < 0.02 ? "NOW" : ((i - last.k) * DT).toFixed(2) + " s ago" : ""}` : "";
     ctx.font = `600 ${12 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(vw.x * dpr, (vw.y + vw.h - 40) * dpr, vw.w * dpr, 40 * dpr); ctx.fillStyle = "rgba(235,242,238,0.95)";
-    ctx.fillText(`DRIBBLE-1.2 · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
-    ctx.fillStyle = COL[r.ctrl] || "#fff"; ctx.fillText(`t ${r.t.toFixed(2)} s · player ${sp.toFixed(1)} m/s · ball ${bs.toFixed(1)} m/s · separation ${Math.hypot(dx, dy).toFixed(2)} m · ${r.ctrl}${r.held ? " · cut held for the touch" : ""} · ${lt}`, (vw.x + 10) * dpr, (vw.y + vw.h - 8) * dpr);
+    ctx.fillText(`DRIBBLE-1.3 · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
+    ctx.fillStyle = COL[r.ctrl] || "#fff"; ctx.fillText(`t ${r.t.toFixed(2)} s · player ${sp.toFixed(1)} m/s · ball ${bs.toFixed(1)} m/s · separation ${Math.hypot(dx, dy).toFixed(2)} m · ${r.ctrl}${r.held ? " · cut held for the touch" : ""} · ${lt}${r.p13 ? ` · planner ${r.p13.job ? "searching (tick " + r.p13.job.ticks + ")" : "idle"} ${(r.p13.wu / 1000).toFixed(1)} / ${(r.p13.budget / 1000).toFixed(0)} ms` : ""}`, (vw.x + 10) * dpr, (vw.y + vw.h - 8) * dpr);
     ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillText(vw.id === "game" ? "TOUCHLINE GAMEPLAY CAMERA · 1×" : "", (vw.x + 8) * dpr, (vw.y + 16) * dpr);
   } else if (Vv.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(vw.id === "A" ? Vv.A : vw.id === "B" ? Vv.B : vw.id, (vw.x + 8) * dpr, (vw.y + 16) * dpr); }
   ctx.restore();
@@ -191,4 +195,4 @@ async function boot() {
   if (q.get("external") === "1") { Vv.external = true; render(); hud(); } else requestAnimationFrame(frame);
 }
 W.D1V = { state: Vv, set(t, o) { if (o) Object.assign(Vv, o); Vv.t = t; render(); hud(); return true; } };
-boot().catch((err) => { const h = document.getElementById("hud"); if (h) h.textContent = "DRIBBLE-1.2 lab failed: " + (err && err.stack || err); console.error(err); });
+boot().catch((err) => { const h = document.getElementById("hud"); if (h) h.textContent = "DRIBBLE-1.3 lab failed: " + (err && err.stack || err); console.error(err); });
