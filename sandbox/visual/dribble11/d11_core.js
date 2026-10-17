@@ -100,7 +100,7 @@ export const D1 = {
   warp: { rhoMaxPhys: 1.8, maxBack: 36, step: 4, rhoMin: 0.30, lead: 0.30, catchUp: 2.0, costLag: 0.8, costSlow: 0.25 },   // swing time-warp: path phase up to 36 ticks behind,
                                         // foot speed at contact ≥ 30 % of its path speed, ≤ 3.2× catch-up after, warp starts ≤ 0.30 before the meeting phase                         // ranked contact candidates tried (launch solve + refined checks) per planning pass                         // s: locomotion / free-ball lookahead
   recover: { dth: 12, slow: 1.0, fast: 0.6, gain: 1.0, lag: 0.25, latDead: 0.05, fwdDead: 0.06, paceDead: 0.45 },   // carrier recovery: bend (deg) / pace (m/s) bounds, response model
-  pursuitEvery: 60, pursuitDead: { dir: 1.0, v: 0.15 }, pursuitHyst: { dir: 2.5, v: 0.3 },   // DRIBBLE-1.1: pursuit corrections below 1° / 0.15 m/s are not made (the input — and the shared prediction — stay unchanged)
+  pursuitEvery: 60, pursuitDead: { dir: 1.0, v: 0.15 }, pursuitHyst: { dir: 0, v: 0 },   // (re-aim hysteresis: tried at 2.5° / 0.3 m/s — it cost FAST straight dribbling 16 % control; off)   // DRIBBLE-1.1: pursuit corrections below 1° / 0.15 m/s are not made (the input — and the shared prediction — stay unchanged)
                       // ticks: while no touch is planned the carrier re-aims his run at the free ball this often
   // CONTACT-AWARE FOLLOW-THROUGH (DRIBBLE-1.1): after the authoritative contact the touching leg YIELDS on its own path (the post-contact time-warp
   // keeps the foot slower than its swing for a while — a knot at lam of the remaining swing, the path phase there pulled back toward yieldK × the
@@ -122,7 +122,8 @@ export const D1 = {
   holdGrace: 0.35, holdNear: 2.5,      // DRIBBLE-1.1: a held cut is released for a not-controlled ball only after 0.35 s, or once the ball is not within 2.5 m and ahead
                                                                        // deg: a staged cut turns the body this far beyond the ball's new direction
   cutAimFrac: [1, 0.75, 0.55, 0.4],                                                   // a cut touch's aim: the post-cut direction, or this fraction of the way to it
-cutGenFrac: 0.55,                    // DRIBBLE-1.1: held cut — contacts are also generated for a push this fraction of the way into the cut
+  cutAlignK: 0.6, cutWinAfterSwitch: 0.25,   // DRIBBLE-1.1: cut-window alignment cost per (angle / 25°)²; a cut / stage touch's next window ≥ 0.25 s after the switch (touchdown)
+  cutGenFrac: 0.55,                    // DRIBBLE-1.1: held cut — contacts are also generated for a push this fraction of the way into the cut
   cutGate: 8, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
   gateExtra: 0.3,                      // s: … at most the speed's longest touch interval + this (the player must reach the ball first; then the turn goes without it)
   // touch error σ for a neutral (g = 0) player on the preferred foot, LACES, at 5.5 m/s
@@ -269,7 +270,7 @@ export class DribbleSim {
     this.W = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: bvk, w: [bvk[2] / R, 0, -bvk[0] / R], dt: DT, substeps: 1, parameters: B.parameters, colliders: cols }));
     this.Wp = new B.World(Object.assign({}, B.options, { p: [bx, R, by], v: [0, 0, 0], dt: DT, substeps: 1, parameters: B.parameters, colliders: [] }));   // free-ball predictor (no colliders)
     this.k = 0; this.evIdx = 0; this.adjs = { R: {}, L: {} }; this.plan = null; this.lastTouch = null; this.touches = []; this.contacts = []; this.cancels = []; this.notes = [];
-    this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0, predTicks: 0, tracks: 0, plans: 0 }; this.trackSeq = 0; this.track = null;
+    this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0, predTicks: 0, tracks: 0, plans: 0, viewNew: 0, viewReuse: 0, winHit: 0, winMiss: 0, ftHit: 0, ftMiss: 0, launchHit: 0, launchMiss: 0 }; this.trackSeq = 0; this.track = null;
     this.twin = !!(cfg.opts && cfg.opts.twin); this.regs = this.twin ? D1.regions : D1.regions11; this.o2 = !this.twin && D1.o2 && !(cfg.opts && cfg.opts.o2 === false);                                          // the optimisation twin: DRIBBLE-1's football exactly (no DRIBBLE-1.1 behaviour)
     this.rollTab = this.buildRollTable();
     this.input = this.intent(0); this.A.input = this.input;
@@ -578,7 +579,7 @@ export class DribbleSim {
   // the planning window (n ticks from tick k) over the player's own input: the shared track, re-used while the input has stayed bit-identical
   viewFor(k, n) {
     const tr = this.track, inp = this.input;
-    if (!(tr && tr.ok && tr.inp.dir === inp.dir && tr.inp.v === inp.v && tr.kb <= k)) this.track = new LocoTrack(this, k, this.A, inp);
+    if (!(tr && tr.ok && tr.inp.dir === inp.dir && tr.inp.v === inp.v && tr.kb <= k)) { this.track = new LocoTrack(this, k, this.A, inp); this.cpu.viewNew++; } else this.cpu.viewReuse++;
     return new PredView(this.track, k, n);
   }
   // TURN-1.2's pose and forward kinematics of a prediction copy (t1Evaluate without the skinning matrices: the resolver reads bone frames only)
@@ -592,7 +593,7 @@ export class DribbleSim {
   // the exact free ball after a launch (BallWorld, no colliders): anim3d position / velocity at each of the next n ticks
   simLaunch(p0, v0, n) {
     const key = p0[0] + "," + p0[1] + "," + p0[2] + "|" + v0[0] + "," + v0[1] + "," + v0[2], mc = this.launchMemo || (this.launchMemo = new Map()), hit = mc.get(key);
-    if (hit && hit.length >= n) return hit.length === n ? hit : hit.slice(0, n);
+    if (hit && hit.length >= n) { this.cpu.launchHit++; return hit.length === n ? hit : hit.slice(0, n); } this.cpu.launchMiss++;
     const tr = this.simLaunch0(p0, v0, n); if (mc.size > 256) mc.clear(); mc.set(key, tr); return tr;
   }
   simLaunch0(p0, v0, n) {
@@ -684,7 +685,7 @@ export class DribbleSim {
       for (let d = 0; d <= D1.warp.maxBack; d += 12) {
         const jp = j - d; if (jp < 0) break;
         const key = cm ? "c" + cutDir.toFixed(6) + ":" + ((k1 + j) * 8 + (F === "R" ? 0 : 4) + d / 12) : (k1 + j) * 8 + (F === "R" ? 0 : 4) + d / 12; let e = memo.get(key);
-        if (e === undefined) { e = this.windowAt(pred, j, jp, F, L, d, cutDir); memo.set(key, e); }
+        if (e === undefined) { e = this.windowAt(pred, j, jp, F, L, d, cutDir); memo.set(key, e); this.cpu.winMiss++; } else this.cpu.winHit++;
         if (e === "break") break; if (e === null) continue;
         out.push({ j, k: e.k, F, swing: e.swing, w: e.w, wp: e.wp, q: e.q, span: e.span, vBoot: e.vBoot, com: e.com, dir: e.dir, warped: e.warped });
       }
@@ -796,6 +797,7 @@ export class DribbleSim {
         if (sMaxP < sF) { rj("physMax"); continue; }
         const Lc = this.solveLaunch(c, s, sF, sMaxP); if (this.dbgCut && c.release) console.log(`  cand ${c.F} k${c.smp.k} ${c.reg} e${(c.elev / DEG).toFixed(0)} n ${(headingOf(c.n) / DEG).toFixed(0)}° sF ${sF.toFixed(2)} -> ${Lc ? "speed " + Lc.speed.toFixed(2) + " next " + Lc.F2 + "@" + (Lc.kNext * DT).toFixed(2) : "null " + JSON.stringify(this._lastSolve || null)}`);
         if (!Lc) { rj("solve"); if (!recov) recov = { c, sF }; continue; }
+        if (!this.twin && c.release === "contact" && c.stage == null && held && Math.abs(wrapA(held.dir - headingOf(Lc.n))) > (D1.stageFinal + 10) * DEG) { rj("cutDir"); continue; }   // DRIBBLE-1.1: a full release whose ball would not go toward the cut
         let g = this.contactGeom(c.gs, c.F, c.reg, Lc.n, K(c.ballK.p), K(c.ballK.v), c.elev);
         if (!g) { for (const reg of Object.keys(D1.regions)) { if (this.yawOut(c.gs, c.F, reg, Lc.n)) continue; for (const e of this.elevs()) { const q = this.contactGeom(c.gs, c.F, reg, Lc.n, K(c.ballK.p), K(c.ballK.v), e * DEG); if (q) { q.cost = this.cost(q, c.F, reg, c.smp, c.close, s, Lc.n, c.release); if (!g || q.cost < g.cost) g = q; } } } }
         if (!g) { rj("refine"); continue; }
@@ -994,7 +996,7 @@ export class DribbleSim {
   // or leave the leg's reach.
   ftPath(pred, j, F, g, gs, cf) {
     const smj = pred.at(j), hold = this.holdOf(gs || smj, F, g.o), memo = pred.ftMemo || (pred.ftMemo = new Map()), key = j + "|" + F + "|" + g.o.join(",") + "|" + g.rv.join(",") + "|" + hold + "|" + cf.key;
-    let P = memo.get(key); if (P) return P;
+    let P = memo.get(key); if (P) { this.cpu.ftHit++; return P; } this.cpu.ftMiss++;
     const wc = smj.legs[F].w, swing = smj.legs[F].swing, wk = cf.wk, tl = this.A.body.thigh + this.A.body.shank;
     const rows = [], nPost = Math.round(D1.caft.plantCheck / DT); let prevAnk = null, vMax = 0, reach = 0, planted = false;
     for (let i = j + 1; i <= Math.min(pred.length - 1, j + nPost); i++) {
@@ -1091,7 +1093,10 @@ export class DribbleSim {
     // a SET-UP touch: a cut is held but this touch cannot take the ball into it — it places the ball close for a quick next touch, inside what
     // remains of the hold (otherwise the player would have to turn away from his own ball)
     const setup = cut == null && !!(this.held && !this.held.released), holdLeft = setup ? this.held.since + tab(D1.maxInterval, s) + D1.gateExtra - best.smp.k * DT - 0.1 : Infinity;
-    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = cut != null || setup ? D1.cutMinInterval : this.minInterval(s), maxI = Math.max(minI + 0.2, Math.min(tab(D1.maxInterval, s), holdLeft));
+    // DRIBBLE-1.1: through a cut the next window comes after the switch (the touching foot's touchdown) + cutWinAfterSwitch — on the turning path, not
+    // on the old line the body is still running when the ball leaves
+    const kSw = !this.twin && cut != null && best.pred.track && best.pred.track.kSwitch != null ? best.pred.track.kSwitch : null;
+    const pred = best.pred, j0 = best.j, ball = K(best.ballK.p), vb = best.vb, minI = Math.max(cut != null || setup ? D1.cutMinInterval : this.minInterval(s), kSw != null ? (kSw - best.smp.k) * DT + D1.cutWinAfterSwitch : 0), maxI = Math.max(minI + 0.2, Math.min(tab(D1.maxInterval, s), holdLeft));
     // through a cut: the ball is placed for the first outgoing steps (the body already on the new heading), close
     const wins = this.windowTargets(pred, j0 + Math.round(minI / DT), j0 + Math.round(maxI / DT), s, setup && !this.twin ? held.dir : null).filter((w) => !(w.F === best.F && w.swing === best.smp.legs[best.F].swing)
       && (cut == null || (Math.abs(wrapA(headingOf([pred.at(w.j).V[0], 0, -pred.at(w.j).V[1]]) - cut)) < D1.cutWinTol * DEG && Math.hypot(pred.at(w.j).V[0], pred.at(w.j).V[1]) > 1.0)));
