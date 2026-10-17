@@ -161,7 +161,7 @@ export const D1 = {
   // DRIBBLE-1.3 INCREMENTAL PLANNER (plan13): the planning pass runs as a search that pauses whenever this tick's deterministic work (wuTotal, weights
   // wuW ≈ µs) reaches budget, and resumes on the next tick; see resolveTouch13
   setup13: { horizon: 1.3, before: 24, after: 12, tries: 8, slack: 6, envK: 1.5, minInside: 5, tol: 0.03, airTol: 0.02, followDir: 0 },
-  plan13: { on: true, budget: 2000, budgetHi: 8000, lead: 24, minLead: 3, c12CutAtContact: false, maxSetups: 3, evalTicks: 4, setupCheck: true, keepCtx: true, rFirst: true, rStop1: true, prefetch: true, reachR: 1.0, legPose: true, carryLead: 4, pfHorizon: 1.5, pfPoses: 1.0, anytime: true, wuW: { step: 44, pose: 57, clone: 73, ball: 1.6, geom: 1.2, cor: 26, gap: 23, leg: 25, gapb: 1.1, gen: 1.7 } },
+  plan13: { on: true, budget: 2000, budgetHi: 8000, lead: 24, minLead: 3, c12CutAtContact: false, maxSetups: 3, evalTicks: 4, setupCheck: true, keepCtx: true, rFirst: true, rStop1: true, prefetch: true, reachR: 1.0, legPose: true, legOnlyPose: true, carryLead: 4, pfHorizon: 1.5, pfPoses: 1.0, anytime: true, wuW: { step: 29, pose: 26, clone: 267, ball: 1.57, geom: 1.14, cor: 22, gap: 24, leg: 21, gapb: 0.32, gen: 2.8, row: 1.9 } },
   cutGate: 8, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
   gateExtra: 0.3,                      // s: … at most the speed's longest touch interval + this (the player must reach the ball first; then the turn goes without it)
   // touch error σ for a neutral (g = 0) player on the preferred foot, LACES, at 5.5 m/s
@@ -322,6 +322,105 @@ function warpedSwingRot(TT, E, A, F, pose) {
   rot["thigh_" + F] = ik.Rthigh; rot["shin_" + F] = ik.Rshin; rot["foot_" + F] = R3.yxz(fl[0], fl[1], fl[2]);
   return rot;
 }
+// DRIBBLE-1.3 LEG POSE: the resolver reads only the pelvis and the leg chains of a predicted tick. TURN-1.2's t1Pose builds the whole body: RUN-1's
+// full r1Pose (whose legs t1Pose then replaces with its own — only RUN-1's pelvis is used), then the trunk, head and arms. This is t1Pose's pelvis and
+// leg code transcribed operation for operation onto TURN-1.2's / RUN-1's exported functions, with RUN-1's pelvis taken from r1Pelvis (exactly what
+// r1Pose uses) — the pelvis, both legs' rotations and hip rotations bit-identical to a full t1Pose (tools/d13_legcheck.mjs pose), the trunk / head /
+// arms not built (the TURN-1.1 trunk / head / arm hooks read the state and write only those rotations). Before the first step (no phase yet) a full t1Pose.
+function legPose(TT, E, A) {
+  const IN = TT._in; if (A.phi == null) return null;
+  const T1 = TT.T1, R3 = E.R3, RV = E.RV, DEGT = TT.DEG, clampT = IN.clamp, wrapT = TT.wrapA, s5T = IN.s5, lerpT = IN.lerpN, sstepT = IN.sstep;
+  const s = IN.v2.len(A.V), p = TT.t1G(A, s), Gg = { body: A.body, p, late: null, accLean: 0 }, u = A.phi, b = A.body;
+  const pel = E.r1Pelvis(Gg, u), rot = {};
+  const [latL, fwdL] = A.lean;
+  const H = A.L11 && A.L11.active(A) ? A.L11 : null, HP = H ? H.pelvis(A, pel, latL, fwdL) : null;
+  const Rlean = H ? null : R3.mul(R3.z(-latL * T1.pelvisLat), R3.x(fwdL * T1.pelvisFwd));
+  const Rp = H ? HP.R : R3.mul(Rlean, pel.R);
+  const yP = H ? HP.y : pel.pos[1] - A.crouch;
+  const pelvisPos = H ? HP.pos : [pel.pos[0], yP, 0];
+  rot.pelvis = Rp;
+  const legs = {};
+  let drop = 0;
+  for (const F of ["R", "L"]) {
+    const L = A.legs[F]; if (!L.stance) continue;
+    const sg = F === "R" ? 1 : -1, sx = A.clk.seg === (F === "R" ? 0 : 2) ? A.clk.x : 1, hip = RV.add(pelvisPos, R3.v(Rp, [sg * b.hipX, 0, 0]));
+    let bt = IN.t1Tab(A, F, s, "beta", sx); const hs = L.role && T1.heelStrike[L.role.kind]; if (hs && sx < 0.28) { const k = 1 - sstepT(0, 0.28, sx); bt = Math.max(bt, hs * DEGT * k * k); }
+    const an = IN.t1Loc(A, TT.t1AnkleW(A, L.plant, bt, sx)), dx = an[0] - hip[0], dz = an[2] - hip[2], R = (b.thigh + b.shank) * 0.985, dy = hip[1] - an[1];
+    const dyMax = Math.sqrt(Math.max(0, R * R - dx * dx - dz * dz)), need = Math.max(0, dy - dyMax) * (1 - sstepT(0.5, 0.8, sx));
+    drop = Math.max(drop, Math.min(T1.dropMaxRole[L.role && L.role.kind] || T1.dropMax, need));
+  }
+  const dropA = H ? H.dropA(A) : (A.drop || 0); pelvisPos[1] -= Math.max(dropA, drop);
+  for (const F of ["R", "L"]) {
+    const sg = F === "R" ? 1 : -1, L = A.legs[F], hip = RV.add(pelvisPos, R3.v(Rp, [sg * b.hipX, 0, 0]));
+    let ankleL, Rf, beta = 0, wStance = null, mtp = 0;
+    if (L.stance) {
+      const sx = A.clk.seg === (F === "R" ? 0 : 2) ? A.clk.x : 1;
+      beta = IN.t1Tab(A, F, s, "beta", sx);
+      const hs = L.role && T1.heelStrike[L.role.kind];
+      if (hs && sx < 0.28) { const k = 1 - sstepT(0, 0.28, sx); beta = Math.max(beta, hs * DEGT * k * k); }
+      if (L.bLand != null) { let b0 = IN.t1Tab(A, F, s, "beta", 0); if (hs) b0 = Math.max(b0, hs * DEGT); beta += (L.bLand - b0) * (1 - s5T(sx * A.st.tc / 0.04)); }
+      let aw = TT.t1AnkleW(A, L.plant, beta, sx); ankleL = IN.t1Loc(A, aw);
+      const yawL = wrapT(aw[3] - A.psi);
+      const reach = b.thigh + b.shank - 0.004, distAt = (bb) => RV.len(RV.sub(IN.t1Loc(A, TT.t1AnkleW(A, L.plant, bb, sx)), hip)), bProf = beta;
+      const wEarly = 1 - sstepT(0.30, 0.50, sx);
+      let bUp = bProf, bDn = bProf;
+      if (wEarly > 0) { const d0 = distAt(bProf); if (d0 > reach) { let lo = bProf, hi = Math.max(bProf, 30 * DEGT); const dH = distAt(hi);
+        if (dH <= reach) { for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (distAt(m) > reach) lo = m; else hi = m; } bUp = hi; }
+        else if (dH < d0) bUp = bProf + (hi - bProf) * clampT((d0 - reach) / (d0 - dH), 0, 1);
+      } }
+      if (wEarly < 1 && distAt(Math.min(bProf, 0)) > reach) { let lo = -88 * DEGT, hi = Math.min(bProf, 0); for (let i = 0; i < 24; i++) { const m = (lo + hi) / 2; if (distAt(m) > reach) hi = m; else lo = m; } bDn = lo; }
+      beta = bProf + wEarly * (bUp - bProf) * s5T(sx * A.st.tc / 0.035) + (1 - wEarly) * (bDn - bProf);
+      aw = TT.t1AnkleW(A, L.plant, beta, sx); ankleL = IN.t1Loc(A, aw);
+      Rf = R3.mul(R3.y(yawL), R3.x(-beta)); wStance = sx;
+      const up = -beta; mtp = up > 0 ? E.r1MtpDF(up) : 0;
+    } else {
+      const w = H ? H.swingW(A, F, clampT(L.w || 0, 0, 1)) : clampT(L.w || 0, 0, 1);
+      const ortho = (m) => { const x = RV.sc([m[0], m[3], m[6]], 1 / Math.hypot(m[0], m[3], m[6])); let y = [m[1], m[4], m[7]]; y = RV.sub(y, RV.sc(x, RV.dot(x, y))); y = RV.sc(y, 1 / RV.len(y)); const z = [x[1] * y[2] - x[2] * y[1], x[2] * y[0] - x[0] * y[2], x[0] * y[1] - x[1] * y[0]]; return [x[0], y[0], z[0], x[1], y[1], z[1], x[2], y[2], z[2]]; };
+      const refAt = (ww) => { const q = IN.t1Tab(A, F, s, "sw", ww); return { a: [q[0], q[1], q[2]], R: ortho(q.slice(3, 12)), toe: q[12] }; };
+      const r0 = refAt(0), r1 = refAt(1), rw = refAt(w);
+      const A0 = L.A0, tg = L.tgt || [L.fcPlant ? L.fcPlant.pos[0] : A0[0], L.fcPlant ? L.fcPlant.pos[1] : A0[2], L.yaw0];
+      const bTD = L.bStrike != null ? L.bStrike : E.r1FootPitch(p, 0) * DEGT;
+      const pl1 = { pos: [tg[0], tg[1]], yaw: tg[2] }, A1 = TT.t1AnkleW(A, pl1, bTD, 0);
+      const dR = [r1.a[0] - r0.a[0], r1.a[2] - r0.a[2]], lR = Math.hypot(dR[0], dR[1]) || 1e-6, eR = [dR[0] / lR, dR[1] / lR];
+      const dA = [A1[0] - A0[0], A1[2] - A0[2]], lA = Math.hypot(dA[0], dA[1]);
+      const rel = [rw.a[0] - r0.a[0], rw.a[2] - r0.a[2]], along = (rel[0] * eR[0] + rel[1] * eR[1]) / lR;
+      const eA = lA > 1e-4 ? [dA[0] / lA, dA[1] / lA] : TT.fwd(A.psi);
+      const latRight = rel[0] * eR[1] - rel[1] * eR[0];
+      const rA = [-eA[1], eA[0]], wpos = [A0[0] + eA[0] * along * lA + rA[0] * latRight, A0[2] + eA[1] * along * lA + rA[1] * latRight];
+      const lower = Math.max(0, pel.pos[1] - pelvisPos[1]);
+      const vy = rw.a[1] - lerpT(r0.a[1], r1.a[1], along) + lerpT(A0[1], A1[1], along) - lower * Math.min(1, 4 * along * (1 - along)) * 0.6;
+      let aw = [wpos[0], vy, wpos[1]]; if (H) aw = H.swing(A, F, w, aw, eA, rA); ankleL = IN.t1Loc(A, aw);
+      const sgF = F === "R" ? 1 : -1, yMid = A.psi + sgF * T1.toeOut, yA = L.yaw0 + wrapT(yMid - L.yaw0) * s5T(w / 0.35), yawW = yA + wrapT(tg[2] - yA) * s5T((w - 0.45) / 0.55);
+      Rf = R3.mul(R3.y(wrapT(yawW - A.psi) - sgF * T1.toeOut), rw.R); L._yawW = yawW;
+      if (L.R0w && w < 0.3) Rf = IN.rSlerp(R3.mul(R3.tr(R3.y(A.psi + Math.PI / 2)), L.R0w), Rf, s5T(w / 0.3));
+      if (w > 0.7) { const btd = bTD, Rtd = R3.mul(R3.y(wrapT(tg[2] - A.psi)), R3.x(-btd)); Rf = IN.rSlerp(Rf, Rtd, s5T((w - 0.7) / 0.3)); }
+      wStance = null;
+      rot["toe_" + F] = R3.x(w < 0.3 && L.toe0 != null ? lerpT(L.toe0, rw.toe, s5T(w / 0.3)) : rw.toe);
+    }
+    const footYawW = L.stance ? TT.t1AnkleW(A, L.plant, 0, wStance)[3] : L._yawW;
+    let psi = wrapT(footYawW - A.psi) - pel.yaw - (H ? HP.yaw : 0);
+    psi = sg > 0 ? clampT(psi, -40 * DEGT, 35 * DEGT) : clampT(psi, -35 * DEGT, 40 * DEGT);
+    if (!L.stance) {
+      const Fm = R3.mul(Rp, R3.y(psi)), Dl = R3.v(R3.tr(Fm), RV.sub(ankleL, hip)), lim = T1.swingAbd, amx = (sg > 0 ? lim[1] : -lim[0]) * DEGT, amn = (sg > 0 ? lim[0] : -lim[1]) * DEGT;
+      const wg = sstepT(0.0, 0.18, L.w || 0) * (1 - sstepT(0.80, 0.97, L.w || 0));
+      const a0 = Math.atan2(Dl[0], -Dl[1]); if (wg > 0 && (a0 > amx || a0 < amn)) { const ac = a0 + (clampT(a0, amn, amx) - a0) * wg, r = Math.hypot(Dl[0], Dl[1]); ankleL = RV.add(hip, R3.v(Fm, [r * Math.sin(ac), -r * Math.cos(ac), Dl[2]])); }
+    }
+    let ik = E.r1LegIK(b, Rp, psi, hip, ankleL);
+    if (!L.stance) {
+      const kneeP = RV.add(hip, R3.v(R3.mul(Rp, ik.Rthigh), [0, -b.thigh, 0])), kDef = (H ? H.kneeClear(A) : T1.kneeClear) - kneeP[1], w = L.w || 0;
+      const fl = b.ankleH + 0.05 * Math.sin(Math.PI * clampT(w, 0, 1)), aDef = fl - ankleL[1];
+      const sp = (x, k) => k * Math.log1p(Math.exp(x / k));
+      const lift = Math.max(sp(kDef, 0.02) * 1.3, sp(aDef, 0.01)) * sstepT(0.02, 0.15, w) * (1 - sstepT(0.85, 0.98, w));
+      if (lift > 1e-4) { ankleL = [ankleL[0], ankleL[1] + lift, ankleL[2]]; ik = E.r1LegIK(b, Rp, psi, hip, ankleL); }
+    }
+    const Rshin = R3.mul(Rp, R3.mul(ik.Rthigh, ik.Rshin));
+    const fl = R3.toYXZ(R3.mul(R3.tr(Rshin), Rf));
+    rot["thigh_" + F] = ik.Rthigh; rot["shin_" + F] = ik.Rshin; rot["foot_" + F] = R3.yxz(fl[0], fl[1], fl[2]);
+    if (L.stance) rot["toe_" + F] = R3.x(mtp > 0 ? -mtp : 0);
+    legs[F] = { psi: psi / DEGT, stance: L.stance };
+  }
+  return { rot, pelvisPos, legs };
+}
 // a predicted tick: COM, velocity, heading and the legs' support summary at once; the bone frames (and the pose summary) on first read, from the
 // tick's state snapshot — only for ticks with a foot in the contact window (bones undefined otherwise, as DRIBBLE-1.2)
 class Sample {
@@ -366,7 +465,7 @@ class LocoTrack {
     if (C.log.length > 64) C.log.splice(0, C.log.length - 1);                         // TURN-1.2 reads only its last log row
     sim.cpu.predict += now() - c0; sim.cpu.predTicks++;
   }
-  poseOf(C) { const sim = this.sim, pose = sim.T1.t1Pose(C); sim.wu.pose++; return { pose, fk: legFK(sim.E, C.body, pose) }; }
+  poseOf(C) { const sim = this.sim, pose = (D1.plan13.legOnlyPose && legPose(sim.T1, sim.E, C)) || sim.T1.t1Pose(C); sim.wu.pose++; return { pose, fk: legFK(sim.E, C.body, pose) }; }
   evalSample(smp) { const c0 = now(), ev = this.poseOf(smp.snap); smp._pose = { rot: ev.pose.rot, pelvisPos: ev.pose.pelvisPos }; smp._b = boneFrames(smp.snap, ev.fk); smp._p = { pelvisPos: ev.pose.pelvisPos.slice(), Rp: ev.pose.rot.pelvis.slice(), psiR: ev.pose.legs.R.psi, psiL: ev.pose.legs.L.psi };
     this.sim.cpu.predict += now() - c0; this.sim.cpu.poseLazy = (this.sim.cpu.poseLazy || 0) + 1; }
   evalInto(smp, C) { const ev = this.sim.evalLite(C), bones = boneFrames(C, ev.fk), pose = { pelvisPos: ev.pose.pelvisPos.slice(), Rp: ev.pose.rot.pelvis.slice(), psiR: ev.pose.legs.R.psi, psiL: ev.pose.legs.L.psi };
@@ -448,7 +547,7 @@ export class DribbleSim {
     // returns it; no substep callback is set on these worlds)
     if (!this.twin) this.Wp.snapshot = noSnap;
     this.k = 0; this.evIdx = 0; this.adjs = { R: {}, L: {} }; this.plan = null; this.lastTouch = null; this.touches = []; this.contacts = []; this.cancels = []; this.notes = [];
-    this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0, predTicks: 0, tracks: 0, plans: 0, viewNew: 0, viewReuse: 0, winHit: 0, winMiss: 0, ftHit: 0, ftMiss: 0, launchHit: 0, launchMiss: 0 }; this.trackSeq = 0; this.track = null; this.wu = { step: 0, clone: 0, pose: 0, ball: 0, geom: 0, cor: 0, gap: 0, leg: 0, gapb: 0, gen: 0 }; this.wuLimit = Infinity;
+    this.locoCache = null; this.ballCache = null; this.held = null; this.turnLog = []; this.stageDir = null; this.ctrl = { state: "CONTROLLED", since: 0, changes: [] }; this.replanAt = 0; this.perceiveAt = 0; this.cpu = { loco: 0, ball: 0, plan: 0, predict: 0, solve: 0, commit: 0, n: 0, predTicks: 0, tracks: 0, plans: 0, viewNew: 0, viewReuse: 0, winHit: 0, winMiss: 0, ftHit: 0, ftMiss: 0, launchHit: 0, launchMiss: 0 }; this.trackSeq = 0; this.track = null; this.wu = { step: 0, clone: 0, pose: 0, ball: 0, geom: 0, cor: 0, gap: 0, leg: 0, gapb: 0, gen: 0, row: 0 }; this.wuLimit = Infinity;
     this.twin = !!(cfg.opts && cfg.opts.twin); this.regs = this.twin ? D1.regions : D1.regions12; this.imp = !this.twin && D1.impulseNormal; this.sweepOn = !this.twin && D1.sweep.on; this.sliceOn = !this.twin && D1.slice.on && !(cfg.opts && cfg.opts.slice === false); this.job = null; this.o2 = !this.twin && D1.o2 && !(cfg.opts && cfg.opts.o2 === false);
     this.p13 = !this.twin && (cfg.opts && cfg.opts.plan13 != null ? !!cfg.opts.plan13 : D1.plan13.on); this.decLog = [];
     // DRIBBLE-1.3 EXECUTION MODEL — the interface the planner reads for a touch's execution error (commit draws the actual error from the same σ): its
@@ -935,7 +1034,7 @@ export class DribbleSim {
   // contact-geometry or corridor evaluation, an exact hull-distance query), weighted by their typical cost (≈ µs on the reference machine); the
   // incremental planner's per-tick budget is a limit on this count — never on the clock, so a replay (any machine, Chrome or Node) pauses its search
   // at the same points and decides the same
-  wuTotal() { const w = this.wu, Wt = D1.plan13.wuW; return Wt.step * w.step + Wt.pose * w.pose + Wt.clone * w.clone + Wt.ball * w.ball + Wt.geom * w.geom + Wt.cor * w.cor + Wt.gap * w.gap + Wt.leg * w.leg + Wt.gapb * w.gapb + Wt.gen * w.gen; }
+  wuTotal() { const w = this.wu, Wt = D1.plan13.wuW; return Wt.step * w.step + Wt.pose * w.pose + Wt.clone * w.clone + Wt.ball * w.ball + Wt.geom * w.geom + Wt.cor * w.cor + Wt.gap * w.gap + Wt.leg * w.leg + Wt.gapb * w.gapb + Wt.gen * w.gen + (Wt.row || 0) * w.row; }
   wuOver() { return this.wuLimit !== Infinity && this.wuTotal() >= this.wuLimit; }
   // a track extended to tick kk in budgeted steps (the work a lazily read sample would otherwise do inside one check)
   *ensureG(track, kk) { if (kk <= track.kb) { if (track.parent) yield* this.ensureG(track.parent, kk); return; } while (track.kb + track.s.length < kk) { track.extend(); if (this.wuOver()) yield 0; } }
@@ -1853,7 +1952,7 @@ export class DribbleSim {
     for (let i = Math.max(off, 0); i < j; i++) { if ((i & 1) === 0 && this.wuOver()) yield 0; const smp = pred.at(i); const L = smp.legs[F]; if (L.stance || L.swing !== swing) continue; const bk = this.ballCache.map.get(smp.k); if (!bk) continue;
       // (DRIBBLE-1.2 CPU: the unwarped foot first — a warped foot is within a swing's lag of it; far from the ball no exact pose is needed)
       if (!this.twin && wk && smp.bones) { const bb = K(bk.p), fu = smp.bones["foot_" + F].p; if (Math.hypot(bb[0] - fu[0], bb[2] - fu[2]) > 1.1) continue; }
-      const bones = wk ? this.pathFrames(pred, F, swing, warpAt(wk, L.w), j, smp) : smp.bones; if (!bones) continue;
+      this.wu.row++; const bones = wk ? this.pathFrames(pred, F, swing, warpAt(wk, L.w), j, smp) : smp.bones; if (!bones) continue;
       const q = this.adjAt(ad, L.w), foot = bones["foot_" + F], toe = bones["toe_" + F], Rw = M.exp(q.r), ank = V.add(foot.p, q.o), b = K(bk.p);
       if (Math.hypot(b[0] - ank[0], b[2] - ank[2]) > 0.6) continue;
       if (gapAtLeast(this.hulls["boot_" + F], ank, M.mul(Rw, foot.R), b, 0.0015) < 0.0015) return false;
@@ -1898,7 +1997,7 @@ export class DribbleSim {
       if ((i & 1) === 0 && this.wuOver()) yield 0;
       const smp = pred.at(i), Lg = smp.legs[F];
       if (Lg.stance || planted) { if (!Lg.stance) break; planted = true; if (smp.bones) rows.push({ i, plant: true, foot: smp.bones["foot_" + F], toe: smp.bones["toe_" + F] }); continue; }   // until the foot lifts again
-      const w = Lg.w, u = s5((1 - w) / Math.max(1e-6, 1 - wc));
+      const w = Lg.w, u = s5((1 - w) / Math.max(1e-6, 1 - wc)); this.wu.row++;
       const bones = wk ? this.pathFrames(pred, F, swing, warpAt(wk, w), j, smp) : smp.bones; if (!bones) continue;
       const foot = bones["foot_" + F], toe = bones["toe_" + F], f = fwdW(smp.psi), com = pitch2w(smp.P[0], smp.P[1], 0); let o = V.sc(g.o, u);
       if (cf.Db) o = V.add(o, caftOff(cf, wc, w));
