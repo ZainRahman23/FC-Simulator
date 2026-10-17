@@ -1,0 +1,9401 @@
+{
+ "CUT90_JOG": {
+  "ver": "d11",
+  "arch": "B",
+  "profile": "Vinícius Júnior",
+  "seeds": 16,
+  "controlledPct": 94.063,
+  "touches": 6.25,
+  "doubleImpulses": 0,
+  "takenWithBall": "12/16",
+  "releasedByTouch": "13/16",
+  "responseS": 0.524,
+  "touchSpeedMean": 4.533,
+  "cutTouchSpeedMean": 4.345,
+  "cutTouchSpeedMedian": 4.194,
+  "cutTouches": 49,
+  "cutTouchesOver9": 0,
+  "secondSame250": 0,
+  "secondOther250": 0,
+  "launched": 100,
+  "minClearanceMedianMm": 10.484,
+  "regions": {
+   "FRONT": 93,
+   "INSIDE": 5,
+   "LACES": 2
+  },
+  "preferredFootPct": 43,
+  "unplannedOwnContacts": 0,
+  "kernelFaults": 0,
+  "legYields": 0,
+  "nonFinite": 0,
+  "heldToEnd": "13/16",
+  "rows": [
+   {
+    "seed": 1,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6438,
+     "tracks": 19
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 0.49,
+     "completedS": 2.99,
+     "finalHeadingErrDeg": 4,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.571,
+      "along": 5.571,
+      "lateral": -0.051,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 75.846,
+       "50": 101.101,
+       "100": 87.637,
+       "150": 60.36,
+       "200": 260.729
+      },
+      "minClearanceMm250": 18.706,
+      "ballToFootM": {
+       "50": 0.499,
+       "100": 0.449,
+       "200": 0.626
+      },
+      "ballToComM": {
+       "50": 0.39,
+       "100": 0.505,
+       "200": 0.706
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.97,
+      "along": 3.969,
+      "lateral": 0.055,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 61.563,
+       "50": 131.288,
+       "100": 321.055,
+       "150": 508.992,
+       "200": 688.276
+      },
+      "minClearanceMm250": 10.484,
+      "ballToFootM": {
+       "50": 0.498,
+       "100": 0.693,
+       "200": 1.053
+      },
+      "ballToComM": {
+       "50": 0.662,
+       "100": 0.709,
+       "200": 0.78
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.889,
+      "along": 3.884,
+      "lateral": 0.2,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 22.757,
+       "50": 48.492,
+       "100": 218.852,
+       "150": 388.927,
+       "200": 552.141
+      },
+      "minClearanceMm250": 8.315,
+      "ballToFootM": {
+       "50": 0.404,
+       "100": 0.583,
+       "200": 0.913
+      },
+      "ballToComM": {
+       "50": 0.568,
+       "100": 0.603,
+       "200": 0.644
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.154,
+      "F": "L",
+      "reg": "INSIDE",
+      "speed": 5.13,
+      "along": 2.922,
+      "lateral": 4.217,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 70.562,
+       "50": 110.105,
+       "100": 139.749,
+       "150": 311.376,
+       "200": 511.321
+      },
+      "minClearanceMm250": 15.581,
+      "ballToFootM": {
+       "50": 0.375,
+       "100": 0.401,
+       "200": 0.824
+      },
+      "ballToComM": {
+       "50": 0.411,
+       "100": 0.495,
+       "200": 0.673
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.254,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.237,
+      "along": -1.522,
+      "lateral": 3.954,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.776,
+       "50": 20.997,
+       "100": 74.203,
+       "150": 246.572,
+       "200": 422.633
+      },
+      "minClearanceMm250": 5.582,
+      "ballToFootM": {
+       "50": 0.422,
+       "100": 0.435,
+       "200": 0.793
+      },
+      "ballToComM": {
+       "50": 0.56,
+       "100": 0.616,
+       "200": 0.702
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.992,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.825,
+      "along": -3.143,
+      "lateral": 2.179,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 27.054,
+       "50": 36.452,
+       "100": 121.191,
+       "150": 288.709,
+       "200": 457.679
+      },
+      "minClearanceMm250": 7.352,
+      "ballToFootM": {
+       "50": 0.426,
+       "100": 0.452,
+       "200": 0.809
+      },
+      "ballToComM": {
+       "50": 0.55,
+       "100": 0.585,
+       "200": 0.645
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.392,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.236,
+      "along": -4.146,
+      "lateral": 0.865,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 70.323,
+       "50": 175.024,
+       "100": 365.84,
+       "150": 553.407,
+       "200": 732.271
+      },
+      "minClearanceMm250": 9.768,
+      "ballToFootM": {
+       "50": 0.528,
+       "100": 0.722,
+       "200": 1.085
+      },
+      "ballToComM": {
+       "50": 0.691,
+       "100": 0.72,
+       "200": 0.768
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5829,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.49,
+     "completedS": 1.64,
+     "finalHeadingErrDeg": 5,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.425,
+      "along": 5.421,
+      "lateral": -0.192,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 71.134,
+       "50": 84.167,
+       "100": 51.387,
+       "150": 44.369,
+       "200": 239.88
+      },
+      "minClearanceMm250": 18.237,
+      "ballToFootM": {
+       "50": 0.485,
+       "100": 0.411,
+       "200": 0.602
+      },
+      "ballToComM": {
+       "50": 0.383,
+       "100": 0.491,
+       "200": 0.679
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.721,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.319,
+      "along": 4.319,
+      "lateral": 0.061,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 31.433,
+       "50": 46.526,
+       "100": 132.673,
+       "150": 319.87,
+       "200": 500.806
+      },
+      "minClearanceMm250": 9.497,
+      "ballToFootM": {
+       "50": 0.431,
+       "100": 0.499,
+       "200": 0.872
+      },
+      "ballToComM": {
+       "50": 0.606,
+       "100": 0.656,
+       "200": 0.729
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "INSIDE",
+      "speed": 4.712,
+      "along": 4.465,
+      "lateral": 1.506,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 23.541,
+       "50": 57.211,
+       "100": 249.496,
+       "150": 449.413,
+       "200": 645.23
+      },
+      "minClearanceMm250": 11.41,
+      "ballToFootM": {
+       "50": 0.362,
+       "100": 0.578,
+       "200": 0.982
+      },
+      "ballToComM": {
+       "50": 0.508,
+       "100": 0.584,
+       "200": 0.72
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.579,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.598,
+      "along": -0.175,
+      "lateral": 3.593,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 25.808,
+       "50": 43.284,
+       "100": 185.594,
+       "150": 336.699,
+       "200": 482.91
+      },
+      "minClearanceMm250": 11.394,
+      "ballToFootM": {
+       "50": 0.383,
+       "100": 0.545,
+       "200": 0.846
+      },
+      "ballToComM": {
+       "50": 0.505,
+       "100": 0.549,
+       "200": 0.61
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.242,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.181,
+      "along": -4.636,
+      "lateral": 2.312,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 51.83,
+       "50": 83.57,
+       "100": 133.461,
+       "150": 297.914,
+       "200": 496.463
+      },
+      "minClearanceMm250": 16.821,
+      "ballToFootM": {
+       "50": 0.488,
+       "100": 0.471,
+       "200": 0.864
+      },
+      "ballToComM": {
+       "50": 0.488,
+       "100": 0.587,
+       "200": 0.757
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.346,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.27,
+      "along": -4.17,
+      "lateral": 0.918,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 34.059,
+       "50": 35.919,
+       "100": 98.124,
+       "150": 278.62,
+       "200": 465.986
+      },
+      "minClearanceMm250": 9.213,
+      "ballToFootM": {
+       "50": 0.428,
+       "100": 0.447,
+       "200": 0.83
+      },
+      "ballToComM": {
+       "50": 0.551,
+       "100": 0.613,
+       "200": 0.713
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 3,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 2,
+    "controlledPct": 64.9,
+    "longestLooseS": 1.91,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.0875,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6693,
+     "tracks": 27
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "not-controlled",
+     "stages": 2,
+     "responseS": 0.44,
+     "completedS": 2.44,
+     "finalHeadingErrDeg": 7,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.53,
+      "along": 5.529,
+      "lateral": 0.124,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 75.804,
+       "50": 102.463,
+       "100": 90.009,
+       "150": 51.901,
+       "200": 252.021
+      },
+      "minClearanceMm250": 18.587,
+      "ballToFootM": {
+       "50": 0.501,
+       "100": 0.454,
+       "200": 0.621
+      },
+      "ballToComM": {
+       "50": 0.389,
+       "100": 0.503,
+       "200": 0.703
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.923,
+      "along": 3.915,
+      "lateral": 0.255,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 58.434,
+       "50": 134.698,
+       "100": 308.18,
+       "150": 479.548,
+       "200": 643.996
+      },
+      "minClearanceMm250": 10.151,
+      "ballToFootM": {
+       "50": 0.486,
+       "100": 0.67,
+       "200": 1.003
+      },
+      "ballToComM": {
+       "50": 0.643,
+       "100": 0.68,
+       "200": 0.727
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.442,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.967,
+      "along": 4.895,
+      "lateral": 0.84,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 35.051,
+       "50": 65.281,
+       "100": 129.471,
+       "150": 327.801,
+       "200": 536.999
+      },
+      "minClearanceMm250": 8.899,
+      "ballToFootM": {
+       "50": 0.458,
+       "100": 0.464,
+       "200": 0.896
+      },
+      "ballToComM": {
+       "50": 0.527,
+       "100": 0.616,
+       "200": 0.765
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.517,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.322,
+      "along": 3.739,
+      "lateral": 2.168,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 26.439,
+       "50": 55.452,
+       "100": 47.749,
+       "150": 161.89,
+       "200": 317.987
+      },
+      "minClearanceMm250": 9.125,
+      "ballToFootM": {
+       "50": 0.432,
+       "100": 0.368,
+       "200": 0.675
+      },
+      "ballToComM": {
+       "50": 0.495,
+       "100": 0.535,
+       "200": 0.589
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.967,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.578,
+      "along": 5.695,
+      "lateral": 3.291,
+      "cut": true,
+      "stage": true,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 45.939,
+       "50": 195.273,
+       "100": 515.641,
+       "150": 837.527,
+       "200": 1152.399
+      },
+      "minClearanceMm250": 13.054,
+      "ballToFootM": {
+       "50": 0.563,
+       "100": 0.89,
+       "200": 1.506
+      },
+      "ballToComM": {
+       "50": 0.73,
+       "100": 0.896,
+       "200": 1.225
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 4,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5982,
+     "tracks": 18
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 0.49,
+     "completedS": 3.34,
+     "finalHeadingErrDeg": 6,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.505,
+      "along": 5.505,
+      "lateral": -0.013,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.891,
+       "50": 101.153,
+       "100": 89.724,
+       "150": 53.043,
+       "200": 249.07
+      },
+      "minClearanceMm250": 18.487,
+      "ballToFootM": {
+       "50": 0.499,
+       "100": 0.451,
+       "200": 0.615
+      },
+      "ballToComM": {
+       "50": 0.388,
+       "100": 0.499,
+       "200": 0.695
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.112,
+      "along": 4.112,
+      "lateral": 0.033,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 22.019,
+       "50": 52.599,
+       "100": 222.02,
+       "150": 412.038,
+       "200": 596.073
+      },
+      "minClearanceMm250": 9.169,
+      "ballToFootM": {
+       "50": 0.441,
+       "100": 0.59,
+       "200": 0.967
+      },
+      "ballToComM": {
+       "50": 0.699,
+       "100": 0.753,
+       "200": 0.835
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.864,
+      "along": 3.848,
+      "lateral": 0.353,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 38.89,
+       "50": 90.207,
+       "100": 261.163,
+       "150": 429.859,
+       "200": 590.975
+      },
+      "minClearanceMm250": 8.533,
+      "ballToFootM": {
+       "50": 0.445,
+       "100": 0.623,
+       "200": 0.949
+      },
+      "ballToComM": {
+       "50": 0.608,
+       "100": 0.641,
+       "200": 0.679
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.154,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.163,
+      "along": 2.705,
+      "lateral": 3.165,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 33.823,
+       "50": 89.055,
+       "100": 150.896,
+       "150": 266.212,
+       "200": 409.099
+      },
+      "minClearanceMm250": 7.136,
+      "ballToFootM": {
+       "50": 0.445,
+       "100": 0.413,
+       "200": 0.717
+      },
+      "ballToComM": {
+       "50": 0.415,
+       "100": 0.467,
+       "200": 0.559
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.892,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.102,
+      "along": -1.153,
+      "lateral": 3.937,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 32.451,
+       "50": 61.693,
+       "100": 139.147,
+       "150": 290.428,
+       "200": 449.271
+      },
+      "minClearanceMm250": 7.527,
+      "ballToFootM": {
+       "50": 0.44,
+       "100": 0.457,
+       "200": 0.801
+      },
+      "ballToComM": {
+       "50": 0.493,
+       "100": 0.555,
+       "200": 0.65
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.617,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.242,
+      "along": -3.205,
+      "lateral": 2.779,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.408,
+       "50": 68.431,
+       "100": 64.122,
+       "150": 237.347,
+       "200": 415.108
+      },
+      "minClearanceMm250": 8.322,
+      "ballToFootM": {
+       "50": 0.446,
+       "100": 0.424,
+       "200": 0.784
+      },
+      "ballToComM": {
+       "50": 0.546,
+       "100": 0.598,
+       "200": 0.675
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.342,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.194,
+      "along": -3.361,
+      "lateral": 2.508,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 37.683,
+       "50": 56.67,
+       "100": 65.382,
+       "150": 236.433,
+       "200": 429.434
+      },
+      "minClearanceMm250": 7.677,
+      "ballToFootM": {
+       "50": 0.443,
+       "100": 0.405,
+       "200": 0.788
+      },
+      "ballToComM": {
+       "50": 0.509,
+       "100": 0.568,
+       "200": 0.681
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 5,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7153,
+     "tracks": 26
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.49,
+     "completedS": 2.78,
+     "finalHeadingErrDeg": 7,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.552,
+      "along": 5.551,
+      "lateral": -0.108,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 75.322,
+       "50": 100.066,
+       "100": 86.484,
+       "150": 60.8,
+       "200": 259.173
+      },
+      "minClearanceMm250": 18.626,
+      "ballToFootM": {
+       "50": 0.498,
+       "100": 0.447,
+       "200": 0.623
+      },
+      "ballToComM": {
+       "50": 0.389,
+       "100": 0.503,
+       "200": 0.702
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.126,
+      "along": 4.114,
+      "lateral": -0.314,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 55.959,
+       "50": 118.363,
+       "100": 313.418,
+       "150": 514.707,
+       "200": 712.151
+      },
+      "minClearanceMm250": 11.176,
+      "ballToFootM": {
+       "50": 0.483,
+       "100": 0.686,
+       "200": 1.079
+      },
+      "ballToComM": {
+       "50": 0.648,
+       "100": 0.704,
+       "200": 0.808
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.927,
+      "along": 3.926,
+      "lateral": 0.051,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 110.731,
+       "50": 248.626,
+       "100": 429.157,
+       "150": 603.836,
+       "200": 769.405
+      },
+      "minClearanceMm250": 9.374,
+      "ballToFootM": {
+       "50": 0.62,
+       "100": 0.803,
+       "200": 1.135
+      },
+      "ballToComM": {
+       "50": 0.793,
+       "100": 0.827,
+       "200": 0.866
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.192,
+      "F": "L",
+      "reg": "INSIDE",
+      "speed": 4.358,
+      "along": 2.461,
+      "lateral": 3.596,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 67.454,
+       "50": 115.075,
+       "100": 272.027,
+       "150": 456.88,
+       "200": 639.694
+      },
+      "minClearanceMm250": 13.893,
+      "ballToFootM": {
+       "50": 0.385,
+       "100": 0.573,
+       "200": 0.958
+      },
+      "ballToComM": {
+       "50": 0.54,
+       "100": 0.581,
+       "200": 0.678
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.042,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.36,
+      "along": -2.924,
+      "lateral": 3.234,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1.007,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 24.649,
+       "50": 53.511,
+       "100": 204.893,
+       "150": 389.588,
+       "200": 574.111
+      },
+      "minClearanceMm250": 8.24,
+      "ballToFootM": {
+       "50": 0.403,
+       "100": 0.561,
+       "200": 0.939
+      },
+      "ballToComM": {
+       "50": 0.55,
+       "100": 0.606,
+       "200": 0.698
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.779,
+      "F": "R",
+      "reg": "INSIDE",
+      "speed": 3.954,
+      "along": -0.885,
+      "lateral": 3.854,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 17.479,
+       "50": 70.933,
+       "100": 219.814,
+       "150": 382.314,
+       "200": 540.727
+      },
+      "minClearanceMm250": 9.664,
+      "ballToFootM": {
+       "50": 0.441,
+       "100": 0.592,
+       "200": 0.899
+      },
+      "ballToComM": {
+       "50": 0.607,
+       "100": 0.615,
+       "200": 0.627
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.154,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.19,
+      "along": -4.985,
+      "lateral": 1.442,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 35.988,
+       "50": 133.218,
+       "100": 381.424,
+       "150": 627.59,
+       "200": 866.374
+      },
+      "minClearanceMm250": 13.761,
+      "ballToFootM": {
+       "50": 0.465,
+       "100": 0.723,
+       "200": 1.2
+      },
+      "ballToComM": {
+       "50": 0.62,
+       "100": 0.672,
+       "200": 0.832
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 6,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 60.2,
+    "longestLooseS": 2.17,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.8291666666666666,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5196,
+     "tracks": 20
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.42,
+     "completedS": 2.03,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.513,
+      "along": 5.513,
+      "lateral": -0.06,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.934,
+       "50": 100.574,
+       "100": 88.42,
+       "150": 55.921,
+       "200": 252.381
+      },
+      "minClearanceMm250": 18.519,
+      "ballToFootM": {
+       "50": 0.498,
+       "100": 0.449,
+       "200": 0.617
+      },
+      "ballToComM": {
+       "50": 0.388,
+       "100": 0.5,
+       "200": 0.697
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.839,
+      "along": 3.839,
+      "lateral": 0.048,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 14.748,
+       "50": 35.641,
+       "100": 192.855,
+       "150": 361.754,
+       "200": 523.865
+      },
+      "minClearanceMm250": 7.818,
+      "ballToFootM": {
+       "50": 0.426,
+       "100": 0.563,
+       "200": 0.896
+      },
+      "ballToComM": {
+       "50": 0.695,
+       "100": 0.728,
+       "200": 0.765
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.417,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.543,
+      "along": 5.48,
+      "lateral": 0.834,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 40.465,
+       "50": 55.216,
+       "100": 101.343,
+       "150": 310.439,
+       "200": 569.691
+      },
+      "minClearanceMm250": 13.948,
+      "ballToFootM": {
+       "50": 0.45,
+       "100": 0.469,
+       "200": 0.931
+      },
+      "ballToComM": {
+       "50": 0.505,
+       "100": 0.63,
+       "200": 0.872
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 7,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5292,
+     "tracks": 13
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.49,
+     "completedS": 1.44,
+     "finalHeadingErrDeg": 10,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.502,
+      "along": 5.501,
+      "lateral": 0.053,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 73.122,
+       "50": 88.955,
+       "100": 58.127,
+       "150": 40.645,
+       "200": 243.544
+      },
+      "minClearanceMm250": 18.511,
+      "ballToFootM": {
+       "50": 0.49,
+       "100": 0.423,
+       "200": 0.611
+      },
+      "ballToComM": {
+       "50": 0.387,
+       "100": 0.498,
+       "200": 0.692
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.168,
+      "along": 4.165,
+      "lateral": -0.149,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 23.115,
+       "50": 57.535,
+       "100": 212.801,
+       "150": 398.638,
+       "200": 580.68
+      },
+      "minClearanceMm250": 9.61,
+      "ballToFootM": {
+       "50": 0.443,
+       "100": 0.576,
+       "200": 0.951
+      },
+      "ballToComM": {
+       "50": 0.682,
+       "100": 0.737,
+       "200": 0.818
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.571,
+      "along": 3.552,
+      "lateral": 0.361,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 19.106,
+       "50": 43.941,
+       "100": 195.518,
+       "150": 346.028,
+       "200": 488.793
+      },
+      "minClearanceMm250": 7.092,
+      "ballToFootM": {
+       "50": 0.403,
+       "100": 0.562,
+       "200": 0.85
+      },
+      "ballToComM": {
+       "50": 0.57,
+       "100": 0.583,
+       "200": 0.58
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.854,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.565,
+      "along": 3.405,
+      "lateral": 1.058,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.004,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 12.264,
+       "50": 41.166,
+       "100": 159.91,
+       "150": 297.745,
+       "200": 435.831
+      },
+      "minClearanceMm250": 7.067,
+      "ballToFootM": {
+       "50": 0.355,
+       "100": 0.505,
+       "200": 0.792
+      },
+      "ballToComM": {
+       "50": 0.524,
+       "100": 0.546,
+       "200": 0.572
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.442,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.174,
+      "along": -0.64,
+      "lateral": 4.124,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 22.643,
+       "50": 56.366,
+       "100": 271.053,
+       "150": 473.963,
+       "200": 670.63
+      },
+      "minClearanceMm250": 10.388,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.644,
+       "200": 1.038
+      },
+      "ballToComM": {
+       "50": 0.438,
+       "100": 0.499,
+       "200": 0.623
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.729,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.973,
+      "along": -4.349,
+      "lateral": 2.412,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 130.923,
+       "50": 258.774,
+       "100": 492.358,
+       "150": 719.736,
+       "200": 938.642
+      },
+      "minClearanceMm250": 12.908,
+      "ballToFootM": {
+       "50": 0.621,
+       "100": 0.861,
+       "200": 1.296
+      },
+      "ballToComM": {
+       "50": 0.762,
+       "100": 0.837,
+       "200": 0.973
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.042,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.165,
+      "along": -4.867,
+      "lateral": 1.728,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.406,
+       "50": 108.854,
+       "100": 100.884,
+       "150": 50.052,
+       "200": 232.764
+      },
+      "minClearanceMm250": 17.417,
+      "ballToFootM": {
+       "50": 0.501,
+       "100": 0.461,
+       "200": 0.601
+      },
+      "ballToComM": {
+       "50": 0.383,
+       "100": 0.489,
+       "200": 0.674
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 8,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7283,
+     "tracks": 24
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 1.08,
+     "completedS": 3.37,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.342,
+      "along": 5.341,
+      "lateral": -0.143,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 69.65,
+       "50": 84.17,
+       "100": 54.445,
+       "150": 33.656,
+       "200": 222.332
+      },
+      "minClearanceMm250": 17.872,
+      "ballToFootM": {
+       "50": 0.484,
+       "100": 0.413,
+       "200": 0.584
+      },
+      "ballToComM": {
+       "50": 0.379,
+       "100": 0.483,
+       "200": 0.662
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.708,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.013,
+      "along": 5.013,
+      "lateral": 0.016,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.97,
+       "50": 48.603,
+       "100": 117.505,
+       "150": 350.711,
+       "200": 588.795
+      },
+      "minClearanceMm250": 12.4,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.489,
+       "200": 0.962
+      },
+      "ballToComM": {
+       "50": 0.57,
+       "100": 0.668,
+       "200": 0.855
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.083,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.651,
+      "along": 5.549,
+      "lateral": 1.071,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 81.334,
+       "50": 120.201,
+       "100": 134.789,
+       "150": 178.304,
+       "200": 324.636
+      },
+      "minClearanceMm250": 19.007,
+      "ballToFootM": {
+       "50": 0.507,
+       "100": 0.535,
+       "200": 0.648
+      },
+      "ballToComM": {
+       "50": 0.411,
+       "100": 0.534,
+       "200": 0.754
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.296,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.571,
+      "along": 2.314,
+      "lateral": 2.72,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 46.811,
+       "50": 122.255,
+       "100": 283.259,
+       "150": 447.692,
+       "200": 603.66
+      },
+      "minClearanceMm250": 6.391,
+      "ballToFootM": {
+       "50": 0.492,
+       "100": 0.657,
+       "200": 0.973
+      },
+      "ballToComM": {
+       "50": 0.702,
+       "100": 0.718,
+       "200": 0.728
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.908,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.17,
+      "along": 0.007,
+      "lateral": 4.17,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.002,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 31.168,
+       "50": 35.996,
+       "100": 38.021,
+       "150": 40.075,
+       "200": 189.43
+      },
+      "minClearanceMm250": 7.093,
+      "ballToFootM": {
+       "50": 0.436,
+       "100": 0.412,
+       "200": 0.56
+      },
+      "ballToComM": {
+       "50": 0.475,
+       "100": 0.53,
+       "200": 0.611
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.371,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.985,
+      "along": -3.422,
+      "lateral": 2.043,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 46.435,
+       "50": 114.244,
+       "100": 291.051,
+       "150": 481.199,
+       "200": 667.554
+      },
+      "minClearanceMm250": 10.821,
+      "ballToFootM": {
+       "50": 0.456,
+       "100": 0.628,
+       "200": 1.01
+      },
+      "ballToComM": {
+       "50": 0.653,
+       "100": 0.668,
+       "200": 0.729
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 9,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7184,
+     "tracks": 30
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 0.49,
+     "completedS": 3.64,
+     "finalHeadingErrDeg": 20,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.661,
+      "along": 5.657,
+      "lateral": -0.214,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 77.152,
+       "50": 99.314,
+       "100": 81.002,
+       "150": 76.924,
+       "200": 283.791
+      },
+      "minClearanceMm250": 19.067,
+      "ballToFootM": {
+       "50": 0.499,
+       "100": 0.443,
+       "200": 0.647
+      },
+      "ballToComM": {
+       "50": 0.395,
+       "100": 0.514,
+       "200": 0.724
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.835,
+      "along": 3.834,
+      "lateral": 0.057,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 107.981,
+       "50": 229.877,
+       "100": 413.189,
+       "150": 589.765,
+       "200": 757.183
+      },
+      "minClearanceMm250": 10.02,
+      "ballToFootM": {
+       "50": 0.603,
+       "100": 0.788,
+       "200": 1.123
+      },
+      "ballToComM": {
+       "50": 0.77,
+       "100": 0.806,
+       "200": 0.851
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.648,
+      "along": 4.585,
+      "lateral": 0.765,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 32.093,
+       "50": 69.621,
+       "100": 263.141,
+       "150": 463.411,
+       "200": 657.92
+      },
+      "minClearanceMm250": 11.467,
+      "ballToFootM": {
+       "50": 0.398,
+       "100": 0.609,
+       "200": 1.006
+      },
+      "ballToComM": {
+       "50": 0.55,
+       "100": 0.62,
+       "200": 0.737
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.454,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.056,
+      "along": 3.122,
+      "lateral": 3.976,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 59.227,
+       "50": 87.004,
+       "100": 84.911,
+       "150": 26.16,
+       "200": 227.453
+      },
+      "minClearanceMm250": 15.011,
+      "ballToFootM": {
+       "50": 0.481,
+       "100": 0.454,
+       "200": 0.593
+      },
+      "ballToComM": {
+       "50": 0.454,
+       "100": 0.547,
+       "200": 0.707
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.567,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.945,
+      "along": -1.007,
+      "lateral": 4.841,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 52.192,
+       "50": 65.02,
+       "100": 29.762,
+       "150": 116.871,
+       "200": 312.917
+      },
+      "minClearanceMm250": 14.609,
+      "ballToFootM": {
+       "50": 0.463,
+       "100": 0.385,
+       "200": 0.663
+      },
+      "ballToComM": {
+       "50": 0.483,
+       "100": 0.558,
+       "200": 0.694
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.642,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.995,
+      "along": -4.008,
+      "lateral": 2.981,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 58.851,
+       "50": 97.025,
+       "100": 86.362,
+       "150": 120.276,
+       "200": 284.854
+      },
+      "minClearanceMm250": 15.067,
+      "ballToFootM": {
+       "50": 0.481,
+       "100": 0.491,
+       "200": 0.649
+      },
+      "ballToComM": {
+       "50": 0.511,
+       "100": 0.598,
+       "200": 0.746
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 10,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 79.9,
+    "longestLooseS": 1.1,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.904166666666667,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6708,
+     "tracks": 24
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.48,
+     "completedS": 2.25,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 37,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.489,
+      "along": 5.489,
+      "lateral": -0.037,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 72.613,
+       "50": 87.28,
+       "100": 55.278,
+       "150": 42.451,
+       "200": 244.336
+      },
+      "minClearanceMm250": 18.46,
+      "ballToFootM": {
+       "50": 0.488,
+       "100": 0.418,
+       "200": 0.61
+      },
+      "ballToComM": {
+       "50": 0.386,
+       "100": 0.496,
+       "200": 0.689
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.083,
+      "along": 4.081,
+      "lateral": 0.149,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 21.054,
+       "50": 49.614,
+       "100": 178.502,
+       "150": 358.894,
+       "200": 533.479
+      },
+      "minClearanceMm250": 8.941,
+      "ballToFootM": {
+       "50": 0.439,
+       "100": 0.545,
+       "200": 0.903
+      },
+      "ballToComM": {
+       "50": 0.663,
+       "100": 0.708,
+       "200": 0.771
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.479,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.549,
+      "along": 4.477,
+      "lateral": 0.809,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.176,
+       "50": 27.123,
+       "100": 196.065,
+       "150": 403.908,
+       "200": 614.667
+      },
+      "minClearanceMm250": 10.272,
+      "ballToFootM": {
+       "50": 0.356,
+       "100": 0.531,
+       "200": 0.965
+      },
+      "ballToComM": {
+       "50": 0.498,
+       "100": 0.578,
+       "200": 0.729
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.517,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.302,
+      "along": 2.527,
+      "lateral": 3.481,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 9.91,
+       "50": 63.78,
+       "100": 35.454,
+       "150": 185.377,
+       "200": 360.332
+      },
+      "minClearanceMm250": 8.887,
+      "ballToFootM": {
+       "50": 0.446,
+       "100": 0.412,
+       "200": 0.736
+      },
+      "ballToComM": {
+       "50": 0.543,
+       "100": 0.588,
+       "200": 0.66
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.254,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.783,
+      "along": -0.6,
+      "lateral": 3.735,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 20.718,
+       "50": 47.334,
+       "100": 71.814,
+       "150": 237.546,
+       "200": 403.933
+      },
+      "minClearanceMm250": 8.728,
+      "ballToFootM": {
+       "50": 0.448,
+       "100": 0.443,
+       "200": 0.778
+      },
+      "ballToComM": {
+       "50": 0.536,
+       "100": 0.584,
+       "200": 0.656
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 11,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6108,
+     "tracks": 18
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.42,
+     "completedS": 2.18,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.481,
+      "along": 5.48,
+      "lateral": -0.12,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 73.85,
+       "50": 99.105,
+       "100": 87.515,
+       "150": 53.875,
+       "200": 245.778
+      },
+      "minClearanceMm250": 18.328,
+      "ballToFootM": {
+       "50": 0.496,
+       "100": 0.446,
+       "200": 0.609
+      },
+      "ballToComM": {
+       "50": 0.386,
+       "100": 0.496,
+       "200": 0.688
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.721,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.064,
+      "along": 4.06,
+      "lateral": -0.181,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 19.746,
+       "50": 41.53,
+       "100": 156.423,
+       "150": 330.7,
+       "200": 498.071
+      },
+      "minClearanceMm250": 8.5,
+      "ballToFootM": {
+       "50": 0.432,
+       "100": 0.524,
+       "200": 0.87
+      },
+      "ballToComM": {
+       "50": 0.642,
+       "100": 0.68,
+       "200": 0.729
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.417,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.246,
+      "along": 5.198,
+      "lateral": 0.706,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 40.353,
+       "50": 61.747,
+       "100": 90.806,
+       "150": 280.693,
+       "200": 514.884
+      },
+      "minClearanceMm250": 12.34,
+      "ballToFootM": {
+       "50": 0.449,
+       "100": 0.448,
+       "200": 0.871
+      },
+      "ballToComM": {
+       "50": 0.509,
+       "100": 0.615,
+       "200": 0.81
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.579,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.535,
+      "along": 1.995,
+      "lateral": 2.918,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 53.721,
+       "50": 121.326,
+       "100": 284.753,
+       "150": 445.519,
+       "200": 597.579
+      },
+      "minClearanceMm250": 8.467,
+      "ballToFootM": {
+       "50": 0.491,
+       "100": 0.659,
+       "200": 0.964
+      },
+      "ballToComM": {
+       "50": 0.675,
+       "100": 0.689,
+       "200": 0.694
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.179,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.835,
+      "along": -3.103,
+      "lateral": 2.253,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 60.581,
+       "50": 138.555,
+       "100": 314.333,
+       "150": 483.648,
+       "200": 644.072
+      },
+      "minClearanceMm250": 12.845,
+      "ballToFootM": {
+       "50": 0.507,
+       "100": 0.689,
+       "200": 0.977
+      },
+      "ballToComM": {
+       "50": 0.451,
+       "100": 0.474,
+       "200": 0.503
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.704,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.224,
+      "along": -5.13,
+      "lateral": 0.985,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 21.578,
+       "50": 52.905,
+       "100": 36.545,
+       "150": 171.585,
+       "200": 393.776
+      },
+      "minClearanceMm250": 12.099,
+      "ballToFootM": {
+       "50": 0.423,
+       "100": 0.391,
+       "200": 0.764
+      },
+      "ballToComM": {
+       "50": 0.452,
+       "100": 0.551,
+       "200": 0.721
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.817,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.204,
+      "along": -4.188,
+      "lateral": 0.361,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.892,
+       "50": 25.304,
+       "100": 89.366,
+       "150": 274.314,
+       "200": null
+      },
+      "minClearanceMm250": 9.024,
+      "ballToFootM": {
+       "50": 0.422,
+       "100": 0.457,
+       "200": null
+      },
+      "ballToComM": {
+       "50": 0.579,
+       "100": 0.638,
+       "200": null
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 12,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6570,
+     "tracks": 23
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.49,
+     "completedS": 1.8,
+     "finalHeadingErrDeg": 6,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.511,
+      "along": 5.511,
+      "lateral": -0.091,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 75.327,
+       "50": 100.127,
+       "100": 86.047,
+       "150": 64.833,
+       "200": 267.396
+      },
+      "minClearanceMm250": 18.51,
+      "ballToFootM": {
+       "50": 0.499,
+       "100": 0.448,
+       "200": 0.632
+      },
+      "ballToComM": {
+       "50": 0.391,
+       "100": 0.507,
+       "200": 0.711
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.131,
+      "along": 4.131,
+      "lateral": -0.051,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 82.148,
+       "50": 173.198,
+       "100": 373.359,
+       "150": 574.015,
+       "200": 766.262
+      },
+      "minClearanceMm250": 11.171,
+      "ballToFootM": {
+       "50": 0.545,
+       "100": 0.748,
+       "200": 1.134
+      },
+      "ballToComM": {
+       "50": 0.711,
+       "100": 0.766,
+       "200": 0.863
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.886,
+      "along": 3.886,
+      "lateral": 0.065,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 110.348,
+       "50": 246.919,
+       "100": 434.974,
+       "150": 624.272,
+       "200": 804.98
+      },
+      "minClearanceMm250": 9.363,
+      "ballToFootM": {
+       "50": 0.616,
+       "100": 0.808,
+       "200": 1.169
+      },
+      "ballToComM": {
+       "50": 0.787,
+       "100": 0.829,
+       "200": 0.9
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.217,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.121,
+      "along": 1.795,
+      "lateral": 2.553,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 46.26,
+       "50": 108.703,
+       "100": 255.408,
+       "150": 407.615,
+       "200": 557.457
+      },
+      "minClearanceMm250": 9.169,
+      "ballToFootM": {
+       "50": 0.457,
+       "100": 0.606,
+       "200": 0.901
+      },
+      "ballToComM": {
+       "50": 0.639,
+       "100": 0.619,
+       "200": 0.601
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.804,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.291,
+      "along": -1.621,
+      "lateral": 3.973,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 64.547,
+       "50": 166.373,
+       "100": 361.08,
+       "150": 550.831,
+       "200": 732.591
+      },
+      "minClearanceMm250": 11.08,
+      "ballToFootM": {
+       "50": 0.51,
+       "100": 0.713,
+       "200": 1.059
+      },
+      "ballToComM": {
+       "50": 0.416,
+       "100": 0.48,
+       "200": 0.578
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.404,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.911,
+      "along": -3.348,
+      "lateral": 2.021,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 25.541,
+       "50": 52.606,
+       "100": 182.279,
+       "150": 354.603,
+       "200": 519.24
+      },
+      "minClearanceMm250": 7.079,
+      "ballToFootM": {
+       "50": 0.438,
+       "100": 0.554,
+       "200": 0.888
+      },
+      "ballToComM": {
+       "50": 0.577,
+       "100": 0.613,
+       "200": 0.656
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.054,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.282,
+      "along": -5.123,
+      "lateral": 1.286,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 34.586,
+       "50": 44.463,
+       "100": 18.83,
+       "150": 172.28,
+       "200": 399.874
+      },
+      "minClearanceMm250": 12.584,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.421,
+       "200": 0.775
+      },
+      "ballToComM": {
+       "50": 0.492,
+       "100": 0.592,
+       "200": 0.765
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 13,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 8176,
+     "tracks": 36
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 40,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.477,
+      "along": 5.477,
+      "lateral": -0.057,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 72.323,
+       "50": 86.822,
+       "100": 54.793,
+       "150": 41.964,
+       "200": 242.782
+      },
+      "minClearanceMm250": 18.411,
+      "ballToFootM": {
+       "50": 0.488,
+       "100": 0.417,
+       "200": 0.607
+      },
+      "ballToComM": {
+       "50": 0.386,
+       "100": 0.495,
+       "200": 0.687
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.967,
+      "along": 3.966,
+      "lateral": 0.063,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 31.729,
+       "50": 35.995,
+       "100": 148.853,
+       "150": 322.02,
+       "200": 489.39
+      },
+      "minClearanceMm250": 8.375,
+      "ballToFootM": {
+       "50": 0.43,
+       "100": 0.517,
+       "200": 0.861
+      },
+      "ballToComM": {
+       "50": 0.643,
+       "100": 0.681,
+       "200": 0.73
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.417,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.087,
+      "along": 5.051,
+      "lateral": 0.609,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 34.594,
+       "50": 64.874,
+       "100": 65.932,
+       "150": 225.694,
+       "200": 439.581
+      },
+      "minClearanceMm250": 11.725,
+      "ballToFootM": {
+       "50": 0.449,
+       "100": 0.431,
+       "200": 0.801
+      },
+      "ballToComM": {
+       "50": 0.498,
+       "100": 0.588,
+       "200": 0.742
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.517,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.222,
+      "along": 3.579,
+      "lateral": 2.239,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 24.254,
+       "50": 54.556,
+       "100": 52.076,
+       "150": 172.708,
+       "200": 329.276
+      },
+      "minClearanceMm250": 8.419,
+      "ballToFootM": {
+       "50": 0.418,
+       "100": 0.38,
+       "200": 0.689
+      },
+      "ballToComM": {
+       "50": 0.495,
+       "100": 0.539,
+       "200": 0.603
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.229,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.775,
+      "along": 3.546,
+      "lateral": 4.559,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 46,
+       "50": 42.661,
+       "100": 72.03,
+       "150": 268.263,
+       "200": 516.929
+      },
+      "minClearanceMm250": 15.477,
+      "ballToFootM": {
+       "50": 0.454,
+       "100": 0.463,
+       "200": 0.876
+      },
+      "ballToComM": {
+       "50": 0.476,
+       "100": 0.608,
+       "200": 0.862
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.729,
+      "F": "R",
+      "reg": "INSIDE",
+      "speed": 3.921,
+      "along": 0.424,
+      "lateral": 3.899,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.008,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 36.901,
+       "50": 13.325,
+       "100": 115.502,
+       "150": 281.866,
+       "200": 441.774
+      },
+      "minClearanceMm250": 12.573,
+      "ballToFootM": {
+       "50": 0.382,
+       "100": 0.472,
+       "200": 0.8
+      },
+      "ballToComM": {
+       "50": 0.573,
+       "100": 0.597,
+       "200": 0.626
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 14,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 9916,
+     "tracks": 44
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 0.49,
+     "completedS": 3.68,
+     "finalHeadingErrDeg": 12,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.467,
+      "along": 5.465,
+      "lateral": 0.157,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 73.187,
+       "50": 90.592,
+       "100": 61.662,
+       "150": 36.754,
+       "200": 238.726
+      },
+      "minClearanceMm250": 18.309,
+      "ballToFootM": {
+       "50": 0.491,
+       "100": 0.427,
+       "200": 0.608
+      },
+      "ballToComM": {
+       "50": 0.386,
+       "100": 0.497,
+       "200": 0.69
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.721,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.163,
+      "along": 4.162,
+      "lateral": -0.09,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 23.889,
+       "50": 58.927,
+       "100": 208.241,
+       "150": 395.491,
+       "200": 579.345
+      },
+      "minClearanceMm250": 9.591,
+      "ballToFootM": {
+       "50": 0.442,
+       "100": 0.569,
+       "200": 0.95
+      },
+      "ballToComM": {
+       "50": 0.665,
+       "100": 0.72,
+       "200": 0.806
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.733,
+      "along": 3.717,
+      "lateral": 0.342,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.888,
+       "50": 70.977,
+       "100": 237.652,
+       "150": 402.266,
+       "200": 558.69
+      },
+      "minClearanceMm250": 7.878,
+      "ballToFootM": {
+       "50": 0.438,
+       "100": 0.609,
+       "200": 0.923
+      },
+      "ballToComM": {
+       "50": 0.609,
+       "100": 0.633,
+       "200": 0.655
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.129,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.226,
+      "along": 3.476,
+      "lateral": 2.403,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 33.378,
+       "50": 72.467,
+       "100": 49.974,
+       "150": 75.509,
+       "200": 189.624
+      },
+      "minClearanceMm250": 9.041,
+      "ballToFootM": {
+       "50": 0.435,
+       "100": 0.337,
+       "200": 0.519
+      },
+      "ballToComM": {
+       "50": 0.372,
+       "100": 0.414,
+       "200": 0.475
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.517,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.575,
+      "along": 0.457,
+      "lateral": 4.552,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 56.109,
+       "50": 77.655,
+       "100": 189.582,
+       "150": 366.97,
+       "200": 550.876
+      },
+      "minClearanceMm250": 12.217,
+      "ballToFootM": {
+       "50": 0.484,
+       "100": 0.52,
+       "200": 0.904
+      },
+      "ballToComM": {
+       "50": 0.535,
+       "100": 0.591,
+       "200": 0.72
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.542,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.216,
+      "along": -2.864,
+      "lateral": 4.36,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 63.988,
+       "50": 95.427,
+       "100": 87.031,
+       "150": 131.903,
+       "200": 273.009
+      },
+      "minClearanceMm250": 15.808,
+      "ballToFootM": {
+       "50": 0.477,
+       "100": 0.478,
+       "200": 0.594
+      },
+      "ballToComM": {
+       "50": 0.409,
+       "100": 0.51,
+       "200": 0.687
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.679,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.549,
+      "along": -4.238,
+      "lateral": 1.653,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 23.171,
+       "50": 49.49,
+       "100": 36.117,
+       "150": 221.136,
+       "200": 404.262
+      },
+      "minClearanceMm250": 10.967,
+      "ballToFootM": {
+       "50": 0.442,
+       "100": 0.439,
+       "200": 0.777
+      },
+      "ballToComM": {
+       "50": 0.592,
+       "100": 0.658,
+       "200": 0.765
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 15,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5535,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 3,
+     "responseS": 0.49,
+     "completedS": 2.36,
+     "finalHeadingErrDeg": 11,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.554,
+      "along": 5.553,
+      "lateral": 0.062,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 76.452,
+       "50": 102.312,
+       "100": 88.556,
+       "150": 59.545,
+       "200": 263.318
+      },
+      "minClearanceMm250": 18.688,
+      "ballToFootM": {
+       "50": 0.501,
+       "100": 0.453,
+       "200": 0.632
+      },
+      "ballToComM": {
+       "50": 0.392,
+       "100": 0.508,
+       "200": 0.713
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.767,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.017,
+      "along": 4.012,
+      "lateral": -0.197,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 85.95,
+       "50": 187.741,
+       "100": 374.21,
+       "150": 559.729,
+       "200": 738.142
+      },
+      "minClearanceMm250": 10.758,
+      "ballToFootM": {
+       "50": 0.548,
+       "100": 0.742,
+       "200": 1.102
+      },
+      "ballToComM": {
+       "50": 0.707,
+       "100": 0.756,
+       "200": 0.828
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.492,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.612,
+      "along": 3.57,
+      "lateral": 0.548,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 34.071,
+       "50": 78.044,
+       "100": 246.047,
+       "150": 412.207,
+       "200": 570.076
+      },
+      "minClearanceMm250": 7.519,
+      "ballToFootM": {
+       "50": 0.441,
+       "100": 0.613,
+       "200": 0.93
+      },
+      "ballToComM": {
+       "50": 0.609,
+       "100": 0.634,
+       "200": 0.66
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.142,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 4.589,
+      "along": 2.511,
+      "lateral": 3.841,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.885,
+       "50": 103.401,
+       "100": 307.568,
+       "150": 457.739,
+       "200": 627.69
+      },
+      "minClearanceMm250": 9.164,
+      "ballToFootM": {
+       "50": 0.422,
+       "100": 0.539,
+       "200": 0.906
+      },
+      "ballToComM": {
+       "50": 0.412,
+       "100": 0.506,
+       "200": 0.712
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.292,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.378,
+      "along": -0.267,
+      "lateral": 3.368,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 54.538,
+       "50": 160.724,
+       "100": 320.487,
+       "150": 485.292,
+       "200": 645.344
+      },
+      "minClearanceMm250": 7.312,
+      "ballToFootM": {
+       "50": 0.52,
+       "100": 0.682,
+       "200": 1.003
+      },
+      "ballToComM": {
+       "50": 0.742,
+       "100": 0.748,
+       "200": 0.759
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.642,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.551,
+      "along": -3.343,
+      "lateral": 3.088,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 44.329,
+       "50": 82.67,
+       "100": 262.744,
+       "150": 466.784,
+       "200": 663.375
+      },
+      "minClearanceMm250": 11.683,
+      "ballToFootM": {
+       "50": 0.443,
+       "100": 0.608,
+       "200": 1.012
+      },
+      "ballToComM": {
+       "50": 0.731,
+       "100": 0.75,
+       "200": 0.811
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.667,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 4.268,
+      "along": -3.981,
+      "lateral": 1.539,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 10.998,
+       "50": 46.318,
+       "100": 38.969,
+       "150": 120.086,
+       "200": 314.16
+      },
+      "minClearanceMm250": 7.154,
+      "ballToFootM": {
+       "50": 0.376,
+       "100": 0.372,
+       "200": 0.677
+      },
+      "ballToComM": {
+       "50": 0.406,
+       "100": 0.478,
+       "200": 0.619
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 16,
+    "touches": 7,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6324,
+     "tracks": 18
+    },
+    "turn": {
+     "requested": 90,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.42,
+     "completedS": 2.3,
+     "finalHeadingErrDeg": 3,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.554,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 5.513,
+      "along": 5.511,
+      "lateral": -0.138,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.432,
+       "50": 99.118,
+       "100": 86.266,
+       "150": 57.994,
+       "200": 252.523
+      },
+      "minClearanceMm250": 18.458,
+      "ballToFootM": {
+       "50": 0.497,
+       "100": 0.445,
+       "200": 0.616
+      },
+      "ballToComM": {
+       "50": 0.387,
+       "100": 0.499,
+       "200": 0.694
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.721,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 3.916,
+      "along": 3.915,
+      "lateral": -0.105,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 17.551,
+       "50": 40.06,
+       "100": 187.916,
+       "150": 361.595,
+       "200": 527.672
+      },
+      "minClearanceMm250": 7.963,
+      "ballToFootM": {
+       "50": 0.43,
+       "100": 0.557,
+       "200": 0.9
+      },
+      "ballToComM": {
+       "50": 0.677,
+       "100": 0.714,
+       "200": 0.758
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.417,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.059,
+      "along": 4.983,
+      "lateral": 0.877,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 37.388,
+       "50": 59.092,
+       "100": 82.083,
+       "150": 251.971,
+       "200": 462.412
+      },
+      "minClearanceMm250": 11.658,
+      "ballToFootM": {
+       "50": 0.441,
+       "100": 0.429,
+       "200": 0.813
+      },
+      "ballToComM": {
+       "50": 0.509,
+       "100": 0.596,
+       "200": 0.751
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.542,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 4.323,
+      "along": 2.334,
+      "lateral": 3.639,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 27.401,
+       "50": 36.754,
+       "100": 94.164,
+       "150": 277.419,
+       "200": 464.026
+      },
+      "minClearanceMm250": 9.859,
+      "ballToFootM": {
+       "50": 0.434,
+       "100": 0.439,
+       "200": 0.831
+      },
+      "ballToComM": {
+       "50": 0.518,
+       "100": 0.588,
+       "200": 0.704
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.304,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 3.526,
+      "along": -0.948,
+      "lateral": 3.396,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.213,
+       "50": 99.57,
+       "100": 251.089,
+       "150": 403.331,
+       "200": 547.794
+      },
+      "minClearanceMm250": 7.612,
+      "ballToFootM": {
+       "50": 0.469,
+       "100": 0.625,
+       "200": 0.915
+      },
+      "ballToComM": {
+       "50": 0.647,
+       "100": 0.663,
+       "200": 0.668
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.629,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.214,
+      "along": -3.88,
+      "lateral": 1.642,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 44.607,
+       "50": 84.382,
+       "100": 208.66,
+       "150": 402.668,
+       "200": 595.621
+      },
+      "minClearanceMm250": 10.283,
+      "ballToFootM": {
+       "50": 0.454,
+       "100": 0.532,
+       "200": 0.939
+      },
+      "ballToComM": {
+       "50": 0.637,
+       "100": 0.659,
+       "200": 0.739
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.404,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 4.29,
+      "along": -4.256,
+      "lateral": 0.539,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 78.391,
+       "50": 170.706,
+       "100": 374.025,
+       "150": 581.249,
+       "200": 781.415
+      },
+      "minClearanceMm250": 10.442,
+      "ballToFootM": {
+       "50": 0.532,
+       "100": 0.744,
+       "200": 1.145
+      },
+      "ballToComM": {
+       "50": 0.689,
+       "100": 0.753,
+       "200": 0.866
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   }
+  ]
+ },
+ "REV135_RUN": {
+  "ver": "d11",
+  "arch": "B",
+  "profile": "Vinícius Júnior",
+  "seeds": 16,
+  "controlledPct": 86.013,
+  "touches": 4.188,
+  "doubleImpulses": 1,
+  "takenWithBall": "2/16",
+  "releasedByTouch": "2/16",
+  "responseS": 0.805,
+  "touchSpeedMean": 7.532,
+  "cutTouchSpeedMean": 7.673,
+  "cutTouchSpeedMedian": 7.668,
+  "cutTouches": 29,
+  "cutTouchesOver9": 3,
+  "secondSame250": 1,
+  "secondOther250": 0,
+  "launched": 67,
+  "minClearanceMedianMm": 15.306,
+  "regions": {
+   "FRONT": 62,
+   "LACES": 4,
+   "INSIDE": 1
+  },
+  "preferredFootPct": 37,
+  "unplannedOwnContacts": 0,
+  "kernelFaults": 0,
+  "legYields": 0,
+  "nonFinite": 0,
+  "heldToEnd": "10/16",
+  "rows": [
+   {
+    "seed": 1,
+    "touches": 3,
+    "cancelled": 1,
+    "recovery": 0,
+    "controlledPct": 64.4,
+    "longestLooseS": 2.04,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.9583333333333335,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7180,
+     "tracks": 17
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 2,
+     "responseS": 0.18,
+     "completedS": 1.76,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.983,
+      "along": 6.983,
+      "lateral": 0.004,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 24.874,
+       "50": 93.345,
+       "100": 417.559,
+       "150": 743.233,
+       "200": 1059.468
+      },
+      "minClearanceMm250": 20.668,
+      "ballToFootM": {
+       "50": 0.44,
+       "100": 0.79,
+       "200": 1.322
+      },
+      "ballToComM": {
+       "50": 0.667,
+       "100": 0.73,
+       "200": 0.829
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.142,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.312,
+      "along": 7.312,
+      "lateral": 0.006,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 39.441,
+       "50": 87.743,
+       "100": 172.753,
+       "150": 514.532,
+       "200": 858.89
+      },
+      "minClearanceMm250": 10.397,
+      "ballToFootM": {
+       "50": 0.423,
+       "100": 0.54,
+       "200": 1.23
+      },
+      "ballToComM": {
+       "50": 0.737,
+       "100": 0.835,
+       "200": 1.009
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.379,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.986,
+      "along": 6.781,
+      "lateral": 1.681,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.017,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 91.127,
+       "50": 135.877,
+       "100": 46.119,
+       "150": 258.498,
+       "200": 575.424
+      },
+      "minClearanceMm250": 15.521,
+      "ballToFootM": {
+       "50": 0.516,
+       "100": 0.443,
+       "200": 0.945
+      },
+      "ballToComM": {
+       "50": 0.609,
+       "100": 0.685,
+       "200": 0.827
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 9964,
+     "tracks": 32
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 98,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.017,
+      "along": 7.012,
+      "lateral": -0.263,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 24.675,
+       "50": 93.079,
+       "100": 420.918,
+       "150": 749.975,
+       "200": 1070.141
+      },
+      "minClearanceMm250": 19.065,
+      "ballToFootM": {
+       "50": 0.441,
+       "100": 0.795,
+       "200": 1.334
+      },
+      "ballToComM": {
+       "50": 0.669,
+       "100": 0.736,
+       "200": 0.843
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.204,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.084,
+      "along": 7.071,
+      "lateral": -0.425,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 40.686,
+       "50": 140.976,
+       "100": 456.938,
+       "150": 793.737,
+       "200": 1127.271
+      },
+      "minClearanceMm250": 14.689,
+      "ballToFootM": {
+       "50": 0.469,
+       "100": 0.82,
+       "200": 1.417
+      },
+      "ballToComM": {
+       "50": 0.702,
+       "100": 0.788,
+       "200": 0.943
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.367,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.913,
+      "along": 7.851,
+      "lateral": 0.99,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.005,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 115.345,
+       "50": 184.144,
+       "100": 138.382,
+       "150": 203.712,
+       "200": 570.919
+      },
+      "minClearanceMm250": 20.249,
+      "ballToFootM": {
+       "50": 0.542,
+       "100": 0.511,
+       "200": 0.947
+      },
+      "ballToComM": {
+       "50": 0.555,
+       "100": 0.668,
+       "200": 0.886
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.654,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.159,
+      "along": 4.951,
+      "lateral": 3.664,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 25.47,
+       "50": 41.26,
+       "100": 166.07,
+       "150": 459.174,
+       "200": 757.166
+      },
+      "minClearanceMm250": 7.952,
+      "ballToFootM": {
+       "50": 0.405,
+       "100": 0.521,
+       "200": 1.106
+      },
+      "ballToComM": {
+       "50": 0.71,
+       "100": 0.716,
+       "200": 0.723
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.942,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.404,
+      "along": 5.18,
+      "lateral": 5.29,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 47.104,
+       "50": 115.24,
+       "100": 296.433,
+       "150": 624.869,
+       "200": 970.333
+      },
+      "minClearanceMm250": 8.394,
+      "ballToFootM": {
+       "50": 0.446,
+       "100": 0.593,
+       "200": 1.307
+      },
+      "ballToComM": {
+       "50": 0.792,
+       "100": 0.868,
+       "200": 1.032
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.454,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.711,
+      "along": 1.373,
+      "lateral": 6.569,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.999,
+       "50": 118.019,
+       "100": 408.427,
+       "150": 731.434,
+       "200": 1050.787
+      },
+      "minClearanceMm250": 14.887,
+      "ballToFootM": {
+       "50": 0.474,
+       "100": 0.778,
+       "200": 1.359
+      },
+      "ballToComM": {
+       "50": 0.813,
+       "100": 0.844,
+       "200": 0.897
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 3,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 64.9,
+    "longestLooseS": 2.01,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.9875,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 4220,
+     "tracks": 17
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 0,
+     "responseS": null,
+     "completedS": 2.08,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.455,
+      "along": 7.45,
+      "lateral": 0.27,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 22.967,
+       "50": 120.837,
+       "100": 476.81,
+       "150": 840.081,
+       "200": 1194.762
+      },
+      "minClearanceMm250": 19.128,
+      "ballToFootM": {
+       "50": 0.466,
+       "100": 0.848,
+       "200": 1.457
+      },
+      "ballToComM": {
+       "50": 0.692,
+       "100": 0.787,
+       "200": 0.963
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.667,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 8.883,
+      "along": 8.877,
+      "lateral": 0.319,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 109.68,
+       "50": 162.598,
+       "100": 110.545,
+       "150": 90.937,
+       "200": 261.838
+      },
+      "minClearanceMm250": 24.857,
+      "ballToFootM": {
+       "50": 0.46,
+       "100": 0.53,
+       "200": 0.629
+      },
+      "ballToComM": {
+       "50": 0.442,
+       "100": 0.602,
+       "200": 0.92
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.867,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 11.745,
+      "along": 11.715,
+      "lateral": 0.833,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 141.267,
+       "50": 148.668,
+       "100": 111.093,
+       "150": 375.312,
+       "200": 926.93
+      },
+      "minClearanceMm250": 35.835,
+      "ballToFootM": {
+       "50": 0.472,
+       "100": 0.464,
+       "200": 1.304
+      },
+      "ballToComM": {
+       "50": 0.485,
+       "100": 0.78,
+       "200": 1.358
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 4,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7605,
+     "tracks": 25
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 92,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.236,
+      "along": 7.231,
+      "lateral": 0.252,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 32.926,
+       "50": 109.703,
+       "100": 455.195,
+       "150": 806.481,
+       "200": 1148.543
+      },
+      "minClearanceMm250": 21.937,
+      "ballToFootM": {
+       "50": 0.455,
+       "100": 0.826,
+       "200": 1.411
+      },
+      "ballToComM": {
+       "50": 0.681,
+       "100": 0.765,
+       "200": 0.917
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.515,
+      "along": 7.506,
+      "lateral": 0.376,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 38.017,
+       "50": 54.164,
+       "100": 84.6,
+       "150": 328.908,
+       "200": 682.632
+      },
+      "minClearanceMm250": 13.991,
+      "ballToFootM": {
+       "50": 0.399,
+       "100": 0.428,
+       "200": 1.051
+      },
+      "ballToComM": {
+       "50": 0.634,
+       "100": 0.731,
+       "200": 0.919
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.942,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.987,
+      "along": 8.569,
+      "lateral": 2.709,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 112.301,
+       "50": 151.605,
+       "100": 112.816,
+       "150": 188.305,
+       "200": 481.166
+      },
+      "minClearanceMm250": 26.379,
+      "ballToFootM": {
+       "50": 0.527,
+       "100": 0.491,
+       "200": 0.833
+      },
+      "ballToComM": {
+       "50": 0.469,
+       "100": 0.644,
+       "200": 0.977
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.879,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.745,
+      "along": 4.178,
+      "lateral": 5.295,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.025,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 83.758,
+       "50": 116.068,
+       "100": 27.061,
+       "150": 313.845,
+       "200": 622.707
+      },
+      "minClearanceMm250": 14.959,
+      "ballToFootM": {
+       "50": 0.496,
+       "100": 0.428,
+       "200": 0.996
+      },
+      "ballToComM": {
+       "50": 0.647,
+       "100": 0.709,
+       "200": 0.812
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.817,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.09,
+      "along": -0.812,
+      "lateral": 7.044,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 27.656,
+       "50": 64.381,
+       "100": 100.875,
+       "150": 337.62,
+       "200": null
+      },
+      "minClearanceMm250": 10.342,
+      "ballToFootM": {
+       "50": 0.405,
+       "100": 0.429,
+       "200": null
+      },
+      "ballToComM": {
+       "50": 0.6,
+       "100": 0.689,
+       "200": null
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 5,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 1,
+    "secondSame250": 1,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7197,
+     "tracks": 29
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "touch",
+     "stages": 2,
+     "responseS": 0.48,
+     "completedS": 2.95,
+     "finalHeadingErrDeg": 2,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.067,
+      "along": 7.06,
+      "lateral": 0.324,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 30.259,
+       "50": 105.568,
+       "100": 440.281,
+       "150": 785.187,
+       "200": 1127.258
+      },
+      "minClearanceMm250": 21.39,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.81,
+       "200": 1.389
+      },
+      "ballToComM": {
+       "50": 0.673,
+       "100": 0.749,
+       "200": 0.895
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.403,
+      "along": 7.371,
+      "lateral": 0.686,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 43.11,
+       "50": 55.944,
+       "100": 110.608,
+       "150": 350.766,
+       "200": 684.429
+      },
+      "minClearanceMm250": 13.209,
+      "ballToFootM": {
+       "50": 0.395,
+       "100": 0.438,
+       "200": 1.047
+      },
+      "ballToComM": {
+       "50": 0.655,
+       "100": 0.747,
+       "200": 0.915
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.679,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.427,
+      "along": 5.548,
+      "lateral": 3.244,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 68.662,
+       "50": 123.248,
+       "100": 225.085,
+       "150": 449.905,
+       "200": 669.225
+      },
+      "minClearanceMm250": 9.223,
+      "ballToFootM": {
+       "50": 0.472,
+       "100": 0.485,
+       "200": 0.943
+      },
+      "ballToComM": {
+       "50": 0.589,
+       "100": 0.668,
+       "200": 0.834
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.742,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.376,
+      "along": -4.87,
+      "lateral": 5.54,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 61.57,
+       "50": 33.595,
+       "100": 267.925,
+       "150": 456.395,
+       "200": 704.901
+      },
+      "minClearanceMm250": 14.345,
+      "ballToFootM": {
+       "50": 0.376,
+       "100": 0.455,
+       "200": 0.975
+      },
+      "ballToComM": {
+       "50": 0.424,
+       "100": 0.574,
+       "200": 0.861
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.154,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.04,
+      "along": -3.575,
+      "lateral": -4.868,
+      "cut": true,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 0.185,
+       "50": 105.603,
+       "100": 165.877,
+       "150": 537.34,
+       "200": 914.435
+      },
+      "minClearanceMm250": 0.185,
+      "ballToFootM": {
+       "50": 0.427,
+       "100": 0.53,
+       "200": 1.286
+      },
+      "ballToComM": {
+       "50": 0.688,
+       "100": 0.812,
+       "200": 1.037
+      },
+      "secondSame": {
+       "n": 1,
+       "firstMs": 20.833,
+       "part": "toe_R",
+       "impulse": 1.035
+      },
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 6,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7837,
+     "tracks": 29
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 100,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.45,
+      "along": 7.45,
+      "lateral": -0.017,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 21.7,
+       "50": 118.566,
+       "100": 473.737,
+       "150": 837.26,
+       "200": 1195.38
+      },
+      "minClearanceMm250": 17.691,
+      "ballToFootM": {
+       "50": 0.465,
+       "100": 0.846,
+       "200": 1.459
+      },
+      "ballToComM": {
+       "50": 0.692,
+       "100": 0.787,
+       "200": 0.966
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.303,
+      "along": 8.293,
+      "lateral": -0.407,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 76.552,
+       "50": 63.517,
+       "100": 17.592,
+       "150": 102.387,
+       "200": 466.786
+      },
+      "minClearanceMm250": 14.403,
+      "ballToFootM": {
+       "50": 0.468,
+       "100": 0.387,
+       "200": 0.838
+      },
+      "ballToComM": {
+       "50": 0.426,
+       "100": 0.594,
+       "200": 0.904
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.617,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.245,
+      "along": 7.19,
+      "lateral": 0.892,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.03,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 42.989,
+       "50": 42.402,
+       "100": 40.892,
+       "150": 245.876,
+       "200": 572.045
+      },
+      "minClearanceMm250": 16.755,
+      "ballToFootM": {
+       "50": 0.429,
+       "100": 0.441,
+       "200": 0.948
+      },
+      "ballToComM": {
+       "50": 0.565,
+       "100": 0.681,
+       "200": 0.893
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.792,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.125,
+      "along": 6.137,
+      "lateral": 5.325,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.021,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 54.519,
+       "50": 32.62,
+       "100": 46.679,
+       "150": 85.904,
+       "200": 448.128
+      },
+      "minClearanceMm250": 19.045,
+      "ballToFootM": {
+       "50": 0.431,
+       "100": 0.372,
+       "200": 0.824
+      },
+      "ballToComM": {
+       "50": 0.58,
+       "100": 0.678,
+       "200": 0.869
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 7,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 69.6,
+    "longestLooseS": 1.75,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.254166666666666,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6158,
+     "tracks": 25
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 0,
+     "responseS": null,
+     "completedS": 2.06,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.104,
+      "along": 7.104,
+      "lateral": -0.016,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 28.184,
+       "50": 100.666,
+       "100": 437.558,
+       "150": 776.256,
+       "200": 1105.742
+      },
+      "minClearanceMm250": 21.305,
+      "ballToFootM": {
+       "50": 0.448,
+       "100": 0.81,
+       "200": 1.369
+      },
+      "ballToComM": {
+       "50": 0.675,
+       "100": 0.75,
+       "200": 0.876
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.142,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.483,
+      "along": 6.48,
+      "lateral": -0.207,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 60.644,
+       "50": 105.316,
+       "100": 112.627,
+       "150": 417.137,
+       "200": 730.123
+      },
+      "minClearanceMm250": 9.122,
+      "ballToFootM": {
+       "50": 0.483,
+       "100": 0.468,
+       "200": 1.095
+      },
+      "ballToComM": {
+       "50": 0.831,
+       "100": 0.879,
+       "200": 0.979
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.379,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.929,
+      "along": 7.929,
+      "lateral": -0.035,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 37.054,
+       "50": 40.885,
+       "100": 20.059,
+       "150": 226.18,
+       "200": 594.285
+      },
+      "minClearanceMm250": 15.611,
+      "ballToFootM": {
+       "50": 0.405,
+       "100": 0.383,
+       "200": 0.967
+      },
+      "ballToComM": {
+       "50": 0.527,
+       "100": 0.641,
+       "200": 0.86
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 8,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 58.2,
+    "longestLooseS": 2.4,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.6041666666666665,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5812,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.53,
+     "completedS": 1.7,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.209,
+      "along": 7.197,
+      "lateral": 0.412,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 33.098,
+       "50": 110.217,
+       "100": 454.479,
+       "150": 804.353,
+       "200": 1144.929
+      },
+      "minClearanceMm250": 21.82,
+      "ballToFootM": {
+       "50": 0.454,
+       "100": 0.824,
+       "200": 1.407
+      },
+      "ballToComM": {
+       "50": 0.68,
+       "100": 0.762,
+       "200": 0.912
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.671,
+      "along": 7.553,
+      "lateral": 1.345,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 39.984,
+       "50": 32.061,
+       "100": 66.298,
+       "150": 322.74,
+       "200": 675.146
+      },
+      "minClearanceMm250": 14.403,
+      "ballToFootM": {
+       "50": 0.397,
+       "100": 0.417,
+       "200": 1.044
+      },
+      "ballToComM": {
+       "50": 0.619,
+       "100": 0.722,
+       "200": 0.913
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.729,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.191,
+      "along": 6.131,
+      "lateral": 0.862,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 58.145,
+       "50": 54.424,
+       "100": 259.072,
+       "150": 545.713,
+       "200": 844.337
+      },
+      "minClearanceMm250": 12.022,
+      "ballToFootM": {
+       "50": 0.395,
+       "100": 0.607,
+       "200": 1.189
+      },
+      "ballToComM": {
+       "50": 0.717,
+       "100": 0.749,
+       "200": 0.81
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 9,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 71.2,
+    "longestLooseS": 1.65,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.35,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7256,
+     "tracks": 18
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 2,
+     "responseS": 0.83,
+     "completedS": 2.5,
+     "finalHeadingErrDeg": 10,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.166,
+      "along": 7.166,
+      "lateral": 0.021,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 31.967,
+       "50": 109.794,
+       "100": 446.619,
+       "150": 796.889,
+       "200": 1144.402
+      },
+      "minClearanceMm250": 21.932,
+      "ballToFootM": {
+       "50": 0.451,
+       "100": 0.819,
+       "200": 1.408
+      },
+      "ballToComM": {
+       "50": 0.678,
+       "100": 0.759,
+       "200": 0.914
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.454,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.288,
+      "along": 6.283,
+      "lateral": -0.247,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 73.039,
+       "50": 123.059,
+       "100": 124.173,
+       "150": 424.082,
+       "200": 729.06
+      },
+      "minClearanceMm250": 12.325,
+      "ballToFootM": {
+       "50": 0.502,
+       "100": 0.489,
+       "200": 1.098
+      },
+      "ballToComM": {
+       "50": 0.732,
+       "100": 0.77,
+       "200": 0.839
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.092,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.65,
+      "along": 6.643,
+      "lateral": -0.308,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 29.683,
+       "50": 88.354,
+       "100": 294.953,
+       "150": 618.587,
+       "200": 936.829
+      },
+      "minClearanceMm250": 7.141,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.657,
+       "200": 1.3
+      },
+      "ballToComM": {
+       "50": 0.83,
+       "100": 0.884,
+       "200": 0.981
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.029,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 6.822,
+      "along": 6.754,
+      "lateral": 0.956,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.065,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 62.367,
+       "50": 151.597,
+       "100": 126.122,
+       "150": 455.089,
+       "200": 786.107
+      },
+      "minClearanceMm250": 10.79,
+      "ballToFootM": {
+       "50": 0.47,
+       "100": 0.483,
+       "200": 1.15
+      },
+      "ballToComM": {
+       "50": 0.647,
+       "100": 0.71,
+       "200": 0.842
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.229,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 10.383,
+      "along": 6.285,
+      "lateral": 8.265,
+      "cut": true,
+      "stage": true,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 49.288,
+       "50": 25.32,
+       "100": 38.845,
+       "150": 219.528,
+       "200": 684.906
+      },
+      "minClearanceMm250": 7.983,
+      "ballToFootM": {
+       "50": 0.33,
+       "100": 0.361,
+       "200": 1.056
+      },
+      "ballToComM": {
+       "50": 0.389,
+       "100": 0.584,
+       "200": 0.973
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 10,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7752,
+     "tracks": 22
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 94,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.03,
+      "along": 7.029,
+      "lateral": 0.14,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 30.534,
+       "50": 108.355,
+       "100": 437.646,
+       "150": 779.21,
+       "200": 1119.919
+      },
+      "minClearanceMm250": 21.546,
+      "ballToFootM": {
+       "50": 0.445,
+       "100": 0.806,
+       "200": 1.382
+      },
+      "ballToComM": {
+       "50": 0.671,
+       "100": 0.746,
+       "200": 0.889
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.467,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.328,
+      "along": 7.326,
+      "lateral": 0.179,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 48.779,
+       "50": 97.884,
+       "100": 296.916,
+       "150": 647.453,
+       "200": 1002.383
+      },
+      "minClearanceMm250": 13.664,
+      "ballToFootM": {
+       "50": 0.452,
+       "100": 0.647,
+       "200": 1.363
+      },
+      "ballToComM": {
+       "50": 0.782,
+       "100": 0.87,
+       "200": 1.041
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.954,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.371,
+      "along": 8.268,
+      "lateral": 1.313,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 78.636,
+       "50": 71.37,
+       "100": 50.583,
+       "150": 133.497,
+       "200": 483.092
+      },
+      "minClearanceMm250": 21.91,
+      "ballToFootM": {
+       "50": 0.469,
+       "100": 0.389,
+       "200": 0.852
+      },
+      "ballToComM": {
+       "50": 0.542,
+       "100": 0.68,
+       "200": 0.933
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.554,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 7.507,
+      "along": 4.808,
+      "lateral": 5.765,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.021,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 99.855,
+       "50": 127.127,
+       "100": 30.336,
+       "150": 281.768,
+       "200": 633.606
+      },
+      "minClearanceMm250": 17.799,
+      "ballToFootM": {
+       "50": 0.42,
+       "100": 0.431,
+       "200": 0.991
+      },
+      "ballToComM": {
+       "50": 0.601,
+       "100": 0.673,
+       "200": 0.855
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 11,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 9443,
+     "tracks": 25
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 102,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.134,
+      "along": 7.133,
+      "lateral": 0.073,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 30.947,
+       "50": 107.195,
+       "100": 443.9,
+       "150": 792.261,
+       "200": 1138.232
+      },
+      "minClearanceMm250": 21.724,
+      "ballToFootM": {
+       "50": 0.449,
+       "100": 0.816,
+       "200": 1.401
+      },
+      "ballToComM": {
+       "50": 0.676,
+       "100": 0.755,
+       "200": 0.908
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.259,
+      "along": 6.259,
+      "lateral": -0.023,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 77.727,
+       "50": 134.644,
+       "100": 74.539,
+       "150": 267.762,
+       "200": 562.15
+      },
+      "minClearanceMm250": 12.622,
+      "ballToFootM": {
+       "50": 0.518,
+       "100": 0.462,
+       "200": 0.931
+      },
+      "ballToComM": {
+       "50": 0.699,
+       "100": 0.735,
+       "200": 0.8
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.079,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.259,
+      "along": 7.258,
+      "lateral": -0.076,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 28.514,
+       "50": 68.774,
+       "100": 209.623,
+       "150": 553.413,
+       "200": 904.377
+      },
+      "minClearanceMm250": 9.284,
+      "ballToFootM": {
+       "50": 0.434,
+       "100": 0.562,
+       "200": 1.272
+      },
+      "ballToComM": {
+       "50": 0.762,
+       "100": 0.847,
+       "200": 1.01
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.304,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.758,
+      "along": 7.614,
+      "lateral": 1.484,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 55.045,
+       "50": 96.885,
+       "100": 149.182,
+       "150": 474.364,
+       "200": 846.289
+      },
+      "minClearanceMm250": 14.287,
+      "ballToFootM": {
+       "50": 0.421,
+       "100": 0.485,
+       "200": 1.201
+      },
+      "ballToComM": {
+       "50": 0.673,
+       "100": 0.775,
+       "200": 0.983
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.804,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.668,
+      "along": 5.996,
+      "lateral": 4.78,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.526,
+       "50": 38.182,
+       "100": 117.09,
+       "150": 447.803,
+       "200": 811.727
+      },
+      "minClearanceMm250": 13.75,
+      "ballToFootM": {
+       "50": 0.405,
+       "100": 0.472,
+       "200": 1.177
+      },
+      "ballToComM": {
+       "50": 0.675,
+       "100": 0.767,
+       "200": 0.952
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 12,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5912,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 115,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.238,
+      "along": 7.237,
+      "lateral": -0.134,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 20,
+       "50": 114.102,
+       "100": 454.074,
+       "150": 806.831,
+       "200": 1157.701
+      },
+      "minClearanceMm250": 15.791,
+      "ballToFootM": {
+       "50": 0.454,
+       "100": 0.825,
+       "200": 1.421
+      },
+      "ballToComM": {
+       "50": 0.682,
+       "100": 0.766,
+       "200": 0.929
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.717,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.676,
+      "along": 8.669,
+      "lateral": -0.37,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 61.51,
+       "50": 42.095,
+       "100": 5.722,
+       "150": 139.159,
+       "200": 526.493
+      },
+      "minClearanceMm250": 4.395,
+      "ballToFootM": {
+       "50": 0.423,
+       "100": 0.338,
+       "200": 0.896
+      },
+      "ballToComM": {
+       "50": 0.487,
+       "100": 0.634,
+       "200": 0.901
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.592,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 9.243,
+      "along": 9.034,
+      "lateral": 1.955,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 107.98,
+       "50": 171.12,
+       "100": 113.621,
+       "150": 251.467,
+       "200": 642.485
+      },
+      "minClearanceMm250": 26.788,
+      "ballToFootM": {
+       "50": 0.553,
+       "100": 0.492,
+       "200": 1.001
+      },
+      "ballToComM": {
+       "50": 0.463,
+       "100": 0.67,
+       "200": 1.082
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.742,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 8.311,
+      "along": 4.844,
+      "lateral": 6.753,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 49.034,
+       "50": 69.797,
+       "100": 140.429,
+       "150": 361.213,
+       "200": 718.632
+      },
+      "minClearanceMm250": 15.916,
+      "ballToFootM": {
+       "50": 0.398,
+       "100": 0.436,
+       "200": 1.061
+      },
+      "ballToComM": {
+       "50": 0.615,
+       "100": 0.732,
+       "200": 0.956
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 13,
+    "touches": 6,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 8531,
+     "tracks": 20
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "touch",
+     "stages": 4,
+     "responseS": 1.13,
+     "completedS": 2.92,
+     "finalHeadingErrDeg": 2,
+     "controlledAfterPct": 100,
+     "takenWithBall": true
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.247,
+      "along": 7.244,
+      "lateral": 0.178,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 21.622,
+       "50": 117,
+       "100": 457.921,
+       "150": 811.11,
+       "200": 1162.251
+      },
+      "minClearanceMm250": 17.597,
+      "ballToFootM": {
+       "50": 0.456,
+       "100": 0.827,
+       "200": 1.425
+      },
+      "ballToComM": {
+       "50": 0.682,
+       "100": 0.767,
+       "200": 0.931
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.704,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.588,
+      "along": 8.587,
+      "lateral": 0.12,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 72.271,
+       "50": 49.094,
+       "100": 40.991,
+       "150": 78.067,
+       "200": 446.571
+      },
+      "minClearanceMm250": 22.433,
+      "ballToFootM": {
+       "50": 0.447,
+       "100": 0.353,
+       "200": 0.822
+      },
+      "ballToComM": {
+       "50": 0.505,
+       "100": 0.644,
+       "200": 0.899
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.329,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 6.151,
+      "along": 6.145,
+      "lateral": 0.272,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 79.229,
+       "50": 120.29,
+       "100": 122.782,
+       "150": 416.593,
+       "200": 716.366
+      },
+      "minClearanceMm250": 14.097,
+      "ballToFootM": {
+       "50": 0.503,
+       "100": 0.486,
+       "200": 1.085
+      },
+      "ballToComM": {
+       "50": 0.739,
+       "100": 0.77,
+       "200": 0.826
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.967,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 5.701,
+      "along": 4.246,
+      "lateral": 3.804,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 58.572,
+       "50": 136.842,
+       "100": 332.175,
+       "150": 591.187,
+       "200": 852.515
+      },
+      "minClearanceMm250": 8.882,
+      "ballToFootM": {
+       "50": 0.453,
+       "100": 0.635,
+       "200": 1.179
+      },
+      "ballToComM": {
+       "50": 0.783,
+       "100": 0.759,
+       "200": 0.758
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.517,
+      "F": "L",
+      "reg": "INSIDE",
+      "speed": 5.977,
+      "along": -1.691,
+      "lateral": 5.732,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 48.645,
+       "50": 82.079,
+       "100": 320.166,
+       "150": 578.985,
+       "200": 839.17
+      },
+      "minClearanceMm250": 13.511,
+      "ballToFootM": {
+       "50": 0.378,
+       "100": 0.652,
+       "200": 1.118
+      },
+      "ballToComM": {
+       "50": 0.598,
+       "100": 0.623,
+       "200": 0.646
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.992,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.996,
+      "along": -7.923,
+      "lateral": -1.077,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 53.993,
+       "50": 155.846,
+       "100": 477.602,
+       "150": 761.78,
+       "200": 1073.477
+      },
+      "minClearanceMm250": 15.62,
+      "ballToFootM": {
+       "50": 0.445,
+       "100": 0.683,
+       "200": 1.342
+      },
+      "ballToComM": {
+       "50": 0.514,
+       "100": 0.641,
+       "200": 1.013
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 14,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7771,
+     "tracks": 26
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 97,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.184,
+      "along": 7.183,
+      "lateral": -0.075,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 30.833,
+       "50": 105.998,
+       "100": 447.112,
+       "150": 797.62,
+       "200": 1142.663
+      },
+      "minClearanceMm250": 21.815,
+      "ballToFootM": {
+       "50": 0.451,
+       "100": 0.82,
+       "200": 1.406
+      },
+      "ballToComM": {
+       "50": 0.679,
+       "100": 0.76,
+       "200": 0.914
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.171,
+      "along": 7.171,
+      "lateral": 0.025,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 92.654,
+       "50": 151.647,
+       "100": 108.269,
+       "150": 299.169,
+       "200": 647.018
+      },
+      "minClearanceMm250": 15.069,
+      "ballToFootM": {
+       "50": 0.529,
+       "100": 0.505,
+       "200": 1.023
+      },
+      "ballToComM": {
+       "50": 0.661,
+       "100": 0.741,
+       "200": 0.896
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.667,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.786,
+      "along": 7.637,
+      "lateral": 1.516,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 35.299,
+       "50": 48.584,
+       "100": 95.562,
+       "150": 294.048,
+       "200": 656.621
+      },
+      "minClearanceMm250": 15.306,
+      "ballToFootM": {
+       "50": 0.38,
+       "100": 0.405,
+       "200": 1.011
+      },
+      "ballToComM": {
+       "50": 0.602,
+       "100": 0.714,
+       "200": 0.943
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.179,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 8.807,
+      "along": 5.963,
+      "lateral": 6.481,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 51.875,
+       "50": 24.703,
+       "100": 35.479,
+       "150": 239.172,
+       "200": 610.899
+      },
+      "minClearanceMm250": 21.439,
+      "ballToFootM": {
+       "50": 0.42,
+       "100": 0.392,
+       "200": 0.972
+      },
+      "ballToComM": {
+       "50": 0.523,
+       "100": 0.665,
+       "200": 0.939
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 15,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5376,
+     "tracks": 15
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 72,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.308,
+      "along": 7.307,
+      "lateral": -0.148,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 30.993,
+       "50": 104.943,
+       "100": 443.978,
+       "150": 783.817,
+       "200": 1114.705
+      },
+      "minClearanceMm250": 21.874,
+      "ballToFootM": {
+       "50": 0.453,
+       "100": 0.817,
+       "200": 1.378
+      },
+      "ballToComM": {
+       "50": 0.681,
+       "100": 0.758,
+       "200": 0.886
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.379,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 8.405,
+      "along": 8.404,
+      "lateral": -0.136,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 79.461,
+       "50": 61.783,
+       "100": 46.72,
+       "150": 54.291,
+       "200": 370.281
+      },
+      "minClearanceMm250": 20.573,
+      "ballToFootM": {
+       "50": 0.463,
+       "100": 0.355,
+       "200": 0.74
+      },
+      "ballToComM": {
+       "50": 0.519,
+       "100": 0.65,
+       "200": 0.889
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.979,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 7.993,
+      "along": 7.735,
+      "lateral": 2.016,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 35.864,
+       "50": 6.87,
+       "100": 47.394,
+       "150": 275.614,
+       "200": 629.422
+      },
+      "minClearanceMm250": 5.177,
+      "ballToFootM": {
+       "50": 0.381,
+       "100": 0.42,
+       "200": 0.997
+      },
+      "ballToComM": {
+       "50": 0.604,
+       "100": 0.723,
+       "200": 0.952
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.517,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 8.474,
+      "along": 2.408,
+      "lateral": 8.125,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 72.977,
+       "50": 112.773,
+       "100": 304.32,
+       "150": 538.898,
+       "200": 789.389
+      },
+      "minClearanceMm250": 21.703,
+      "ballToFootM": {
+       "50": 0.471,
+       "100": 0.501,
+       "200": 1.026
+      },
+      "ballToComM": {
+       "50": 0.456,
+       "100": 0.654,
+       "200": 1.038
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 16,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 47.9,
+    "longestLooseS": 2.99,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.0125,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 4985,
+     "tracks": 27
+    },
+    "turn": {
+     "requested": 135,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.69,
+     "completedS": 1.16,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.267,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.275,
+      "along": 7.269,
+      "lateral": 0.285,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 19.097,
+       "50": 112.875,
+       "100": 459.393,
+       "150": 814.104,
+       "200": 1160.348
+      },
+      "minClearanceMm250": 14.605,
+      "ballToFootM": {
+       "50": 0.457,
+       "100": 0.83,
+       "200": 1.423
+      },
+      "ballToComM": {
+       "50": 0.683,
+       "100": 0.769,
+       "200": 0.928
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 1.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 7.193,
+      "along": 7.138,
+      "lateral": 0.89,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 43.409,
+       "50": 52.85,
+       "100": 156.939,
+       "150": 414.202,
+       "200": 745.409
+      },
+      "minClearanceMm250": 12.463,
+      "ballToFootM": {
+       "50": 0.394,
+       "100": 0.477,
+       "200": 1.105
+      },
+      "ballToComM": {
+       "50": 0.723,
+       "100": 0.808,
+       "200": 0.972
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.892,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 11.052,
+      "along": 10.026,
+      "lateral": 4.652,
+      "cut": true,
+      "stage": true,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 151.481,
+       "50": 224.788,
+       "100": 184.622,
+       "150": 71.227,
+       "200": 253.159
+      },
+      "minClearanceMm250": 33.643,
+      "ballToFootM": {
+       "50": 0.483,
+       "100": 0.597,
+       "200": 0.635
+      },
+      "ballToComM": {
+       "50": 0.274,
+       "100": 0.501,
+       "200": 0.95
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   }
+  ]
+ },
+ "REV180_SPRINT": {
+  "ver": "d11",
+  "arch": "B",
+  "profile": "Vinícius Júnior",
+  "seeds": 16,
+  "controlledPct": 76.125,
+  "touches": 2.688,
+  "doubleImpulses": 0,
+  "takenWithBall": "0/16",
+  "releasedByTouch": "0/16",
+  "responseS": null,
+  "touchSpeedMean": 12.469,
+  "cutTouchSpeedMean": 11.681,
+  "cutTouchSpeedMedian": 11.898,
+  "cutTouches": 20,
+  "cutTouchesOver9": 19,
+  "secondSame250": 0,
+  "secondOther250": 1,
+  "launched": 43,
+  "minClearanceMedianMm": 21.154,
+  "regions": {
+   "FRONT": 34,
+   "LACES": 9
+  },
+  "preferredFootPct": 67,
+  "unplannedOwnContacts": 11,
+  "kernelFaults": 0,
+  "legYields": 0,
+  "nonFinite": 0,
+  "heldToEnd": "5/16",
+  "rows": [
+   {
+    "seed": 1,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5525,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 155,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.829,
+      "along": 13.828,
+      "lateral": 0.081,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.699,
+       "50": 121.707,
+       "100": 200.068,
+       "150": 598.273,
+       "200": 1255.834
+      },
+      "minClearanceMm250": 24.285,
+      "ballToFootM": {
+       "50": 0.493,
+       "100": 0.613,
+       "200": 1.615
+      },
+      "ballToComM": {
+       "50": 0.679,
+       "100": 0.883,
+       "200": 1.265
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.354,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 13.837,
+      "along": 13.553,
+      "lateral": -2.789,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 185.278,
+       "50": 312.627,
+       "100": 272.38,
+       "150": 214.147,
+       "200": 783.524
+      },
+      "minClearanceMm250": 34.663,
+      "ballToFootM": {
+       "50": 0.636,
+       "100": 0.618,
+       "200": 1.129
+      },
+      "ballToComM": {
+       "50": 0.367,
+       "100": 0.572,
+       "200": 0.994
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 6.079,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 11.172,
+      "along": 8.543,
+      "lateral": -7.199,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 67.483,
+       "50": 97.657,
+       "100": 88.913,
+       "150": 300.773,
+       "200": 788.969
+      },
+      "minClearanceMm250": 19.135,
+      "ballToFootM": {
+       "50": 0.406,
+       "100": 0.358,
+       "200": 1.131
+      },
+      "ballToComM": {
+       "50": 0.547,
+       "100": 0.663,
+       "200": 0.901
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 2,
+    "touches": 1,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 41.9,
+    "longestLooseS": 3.64,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 4,
+    "opponentContacts": [],
+    "lostAtS": 3.3625,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.08116,
+    "cpu": {
+     "predTicks": 6080,
+     "tracks": 15
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 0,
+     "responseS": null,
+     "completedS": 0.97,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.768,
+      "along": 13.762,
+      "lateral": -0.415,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 72.416,
+       "50": 117.871,
+       "100": 198.298,
+       "150": 592.068,
+       "200": 1243.213
+      },
+      "minClearanceMm250": 23.984,
+      "ballToFootM": {
+       "50": 0.487,
+       "100": 0.606,
+       "200": 1.6
+      },
+      "ballToComM": {
+       "50": 0.675,
+       "100": 0.875,
+       "200": 1.249
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 3,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 64.9,
+    "longestLooseS": 2.2,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.804166666666666,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6507,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.77,
+     "completedS": 2.65,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.704,
+      "along": 13.704,
+      "lateral": -0.093,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 71.273,
+       "50": 116.436,
+       "100": 187.54,
+       "150": 578.677,
+       "200": 1228.35
+      },
+      "minClearanceMm250": 23.776,
+      "ballToFootM": {
+       "50": 0.485,
+       "100": 0.599,
+       "200": 1.587
+      },
+      "ballToComM": {
+       "50": 0.672,
+       "100": 0.869,
+       "200": 1.236
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.167,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 12.053,
+      "along": 11.979,
+      "lateral": 1.328,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 131.738,
+       "50": 222.942,
+       "100": 217.405,
+       "150": 583.269,
+       "200": 1162.835
+      },
+      "minClearanceMm250": 18.262,
+      "ballToFootM": {
+       "50": 0.61,
+       "100": 0.643,
+       "200": 1.502
+      },
+      "ballToComM": {
+       "50": 0.76,
+       "100": 0.872,
+       "200": 1.092
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 4,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 51.5,
+    "longestLooseS": 3.04,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.9625,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 11359,
+     "tracks": 34
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.79,
+     "completedS": 1.57,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.865,
+      "along": 13.864,
+      "lateral": -0.189,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 74.89,
+       "50": 121.738,
+       "100": 203.996,
+       "150": 602.697,
+       "200": 1259.743
+      },
+      "minClearanceMm250": 24.414,
+      "ballToFootM": {
+       "50": 0.492,
+       "100": 0.614,
+       "200": 1.618
+      },
+      "ballToComM": {
+       "50": 0.68,
+       "100": 0.884,
+       "200": 1.267
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.192,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 8.893,
+      "along": 8.573,
+      "lateral": -2.364,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 91.401,
+       "50": 184.602,
+       "100": 169.509,
+       "150": 579.677,
+       "200": 992.842
+      },
+      "minClearanceMm250": 12.489,
+      "ballToFootM": {
+       "50": 0.577,
+       "100": 0.534,
+       "200": 1.235
+      },
+      "ballToComM": {
+       "50": 0.797,
+       "100": 0.756,
+       "200": 0.659
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 5,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 64.9,
+    "longestLooseS": 2.2,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.804166666666666,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6044,
+     "tracks": 14
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.99,
+     "completedS": 2.5,
+     "finalHeadingErrDeg": 0,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 14.063,
+      "along": 14.059,
+      "lateral": -0.343,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 79.844,
+       "50": 129.341,
+       "100": 227.224,
+       "150": 636.437,
+       "200": 1303.593
+      },
+      "minClearanceMm250": 25.233,
+      "ballToFootM": {
+       "50": 0.502,
+       "100": 0.636,
+       "200": 1.661
+      },
+      "ballToComM": {
+       "50": 0.69,
+       "100": 0.906,
+       "200": 1.31
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.392,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 11.589,
+      "along": 11.498,
+      "lateral": -1.445,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.211,
+       "50": 81.479,
+       "100": 116.858,
+       "150": 512.972,
+       "200": 1049.669
+      },
+      "minClearanceMm250": 18.68,
+      "ballToFootM": {
+       "50": 0.446,
+       "100": 0.502,
+       "200": 1.372
+      },
+      "ballToComM": {
+       "50": 0.675,
+       "100": 0.769,
+       "200": 0.934
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 6,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 86.5,
+    "longestLooseS": 0.85,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 6.154166666666667,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5263,
+     "tracks": 17
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.73,
+     "completedS": 3.86,
+     "finalHeadingErrDeg": 139,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.448,
+      "along": 13.448,
+      "lateral": -0.124,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 64.997,
+       "50": 107.342,
+       "100": 162.259,
+       "150": 540.588,
+       "200": 1177.071
+      },
+      "minClearanceMm250": 22.683,
+      "ballToFootM": {
+       "50": 0.472,
+       "100": 0.573,
+       "200": 1.535
+      },
+      "ballToComM": {
+       "50": 0.659,
+       "100": 0.843,
+       "200": 1.184
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.129,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 14.018,
+      "along": 13.326,
+      "lateral": 4.352,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 218.894,
+       "50": 383.957,
+       "100": 321.723,
+       "150": 349.633,
+       "200": 856.206
+      },
+      "minClearanceMm250": 35.139,
+      "ballToFootM": {
+       "50": 0.684,
+       "100": 0.644,
+       "200": 1.17
+      },
+      "ballToComM": {
+       "50": 0.368,
+       "100": 0.59,
+       "200": 1.086
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 7,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 64.9,
+    "longestLooseS": 2.2,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.804166666666666,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 5621,
+     "tracks": 12
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.78,
+     "completedS": 2.61,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.711,
+      "along": 13.711,
+      "lateral": -0.031,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 71.76,
+       "50": 117.405,
+       "100": 189.517,
+       "150": 582.113,
+       "200": 1233.51
+      },
+      "minClearanceMm250": 23.789,
+      "ballToFootM": {
+       "50": 0.487,
+       "100": 0.601,
+       "200": 1.592
+      },
+      "ballToComM": {
+       "50": 0.673,
+       "100": 0.871,
+       "200": 1.242
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.179,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 11.24,
+      "along": 11.057,
+      "lateral": 2.02,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 31.357,
+       "50": 98.32,
+       "100": 150.278,
+       "150": 621.432,
+       "200": 1146.911
+      },
+      "minClearanceMm250": 16.408,
+      "ballToFootM": {
+       "50": 0.472,
+       "100": 0.517,
+       "200": 1.436
+      },
+      "ballToComM": {
+       "50": 0.728,
+       "100": 0.807,
+       "200": 0.964
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 8,
+    "touches": 5,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 97.8,
+    "longestLooseS": 0.14,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 6.8625,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 9278,
+     "tracks": 19
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 145,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.348,
+      "along": 13.346,
+      "lateral": -0.253,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 62.509,
+       "50": 103.529,
+       "100": 154.649,
+       "150": 527.89,
+       "200": 1158.811
+      },
+      "minClearanceMm250": 22.256,
+      "ballToFootM": {
+       "50": 0.466,
+       "100": 0.563,
+       "200": 1.516
+      },
+      "ballToComM": {
+       "50": 0.654,
+       "100": 0.833,
+       "200": 1.165
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.954,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 11.628,
+      "along": 11.623,
+      "lateral": -0.332,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 30.894,
+       "50": 100.683,
+       "100": 166.555,
+       "150": 630.562,
+       "200": 1185.16
+      },
+      "minClearanceMm250": 18.567,
+      "ballToFootM": {
+       "50": 0.49,
+       "100": 0.574,
+       "200": 1.505
+      },
+      "ballToComM": {
+       "50": 0.769,
+       "100": 0.868,
+       "200": 1.049
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.504,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 11.957,
+      "along": 11.742,
+      "lateral": 2.256,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1.011,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 114.197,
+       "50": 146.031,
+       "100": 56.329,
+       "150": 446.293,
+       "200": 1009.067
+      },
+      "minClearanceMm250": 19.293,
+      "ballToFootM": {
+       "50": 0.484,
+       "100": 0.475,
+       "200": 1.339
+      },
+      "ballToComM": {
+       "50": 0.603,
+       "100": 0.707,
+       "200": 0.932
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 6.079,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 10.272,
+      "along": 6.729,
+      "lateral": 7.762,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 112.966,
+       "50": 211.397,
+       "100": 134.702,
+       "150": 533.77,
+       "200": 1014.688
+      },
+      "minClearanceMm250": 13.396,
+      "ballToFootM": {
+       "50": 0.596,
+       "100": 0.56,
+       "200": 1.337
+      },
+      "ballToComM": {
+       "50": 0.758,
+       "100": 0.798,
+       "200": 0.852
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 6.742,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 13.302,
+      "along": 1.991,
+      "lateral": 13.152,
+      "cut": true,
+      "stage": true,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 110.748,
+       "50": 286.887,
+       "100": 680.97,
+       "150": 1131.248,
+       "200": 1701.928
+      },
+      "minClearanceMm250": 14.654,
+      "ballToFootM": {
+       "50": 0.585,
+       "100": 0.967,
+       "200": 1.988
+      },
+      "ballToComM": {
+       "50": 0.779,
+       "100": 0.988,
+       "200": 1.429
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 9,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 7012,
+     "tracks": 13
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 135,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 14.008,
+      "along": 14.008,
+      "lateral": -0.015,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 78.854,
+       "50": 127.767,
+       "100": 218.114,
+       "150": 624.764,
+       "200": 1290.669
+      },
+      "minClearanceMm250": 25.032,
+      "ballToFootM": {
+       "50": 0.501,
+       "100": 0.63,
+       "200": 1.65
+      },
+      "ballToComM": {
+       "50": 0.688,
+       "100": 0.9,
+       "200": 1.299
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.379,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 12.366,
+      "along": 12.137,
+      "lateral": 2.37,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 55.86,
+       "50": 99.203,
+       "100": 102.811,
+       "150": 441.634,
+       "200": 1013.187
+      },
+      "minClearanceMm250": 19.47,
+      "ballToFootM": {
+       "50": 0.45,
+       "100": 0.508,
+       "200": 1.368
+      },
+      "ballToComM": {
+       "50": 0.623,
+       "100": 0.763,
+       "200": 1.042
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.129,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.74,
+      "along": 6.981,
+      "lateral": 11.835,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 82.202,
+       "50": 112.733,
+       "100": 166.496,
+       "150": 498.445,
+       "200": 1125.141
+      },
+      "minClearanceMm250": 24.227,
+      "ballToFootM": {
+       "50": 0.493,
+       "100": 0.553,
+       "200": 1.485
+      },
+      "ballToComM": {
+       "50": 0.58,
+       "100": 0.787,
+       "200": 1.192
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 10,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 68.7,
+    "longestLooseS": 1.96,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 5.0375,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6962,
+     "tracks": 22
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.77,
+     "completedS": 2.64,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.66,
+      "along": 13.649,
+      "lateral": 0.55,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 71.056,
+       "50": 116.547,
+       "100": 176.556,
+       "150": 567.393,
+       "200": 1215.638
+      },
+      "minClearanceMm250": 23.572,
+      "ballToFootM": {
+       "50": 0.486,
+       "100": 0.594,
+       "200": 1.577
+      },
+      "ballToComM": {
+       "50": 0.669,
+       "100": 0.864,
+       "200": 1.228
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.167,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 11.898,
+      "along": 10.72,
+      "lateral": 5.161,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 54.539,
+       "50": 91.86,
+       "100": 147.135,
+       "150": 518.368,
+       "200": 1059.163
+      },
+      "minClearanceMm250": 15.211,
+      "ballToFootM": {
+       "50": 0.399,
+       "100": 0.48,
+       "200": 1.385
+      },
+      "ballToComM": {
+       "50": 0.657,
+       "100": 0.773,
+       "200": 1.013
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 11,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 57.9,
+    "longestLooseS": 2.64,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 4.3625,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 9643,
+     "tracks": 23
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 1,
+     "responseS": 0.55,
+     "completedS": 2.31,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.348,
+      "along": 13.346,
+      "lateral": 0.27,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 63.144,
+       "50": 105.467,
+       "100": 148.272,
+       "150": 522.149,
+       "200": 1154.696
+      },
+      "minClearanceMm250": 22.282,
+      "ballToFootM": {
+       "50": 0.469,
+       "100": 0.563,
+       "200": 1.515
+      },
+      "ballToComM": {
+       "50": 0.654,
+       "100": 0.833,
+       "200": 1.165
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.954,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 11.101,
+      "along": 10.992,
+      "lateral": 1.554,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 16.981,
+       "50": 99.634,
+       "100": 122.121,
+       "150": 571.807,
+       "200": 1092.22
+      },
+      "minClearanceMm250": 15.673,
+      "ballToFootM": {
+       "50": 0.47,
+       "100": 0.533,
+       "200": 1.415
+      },
+      "ballToComM": {
+       "50": 0.755,
+       "100": 0.838,
+       "200": 0.986
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.242,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 14.986,
+      "along": 11.396,
+      "lateral": 9.732,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 196.734,
+       "50": 305.002,
+       "100": 260.054,
+       "150": 284.569,
+       "200": 964.666
+      },
+      "minClearanceMm250": 32.901,
+      "ballToFootM": {
+       "50": 0.645,
+       "100": 0.625,
+       "200": 1.341
+      },
+      "ballToComM": {
+       "50": 0.37,
+       "100": 0.623,
+       "200": 1.104
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 12,
+    "touches": 2,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 47.7,
+    "longestLooseS": 3.27,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": 3.725,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 4331,
+     "tracks": 16
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 0,
+     "responseS": null,
+     "completedS": 1.55,
+     "finalHeadingErrDeg": 1,
+     "controlledAfterPct": 0,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 14.365,
+      "along": 14.364,
+      "lateral": 0.158,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 87.243,
+       "50": 140.098,
+       "100": 249.721,
+       "150": 672.586,
+       "200": 1355.551
+      },
+      "minClearanceMm250": 26.514,
+      "ballToFootM": {
+       "50": 0.519,
+       "100": 0.663,
+       "200": 1.715
+      },
+      "ballToComM": {
+       "50": 0.704,
+       "100": 0.934,
+       "200": 1.365
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.604,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 16.118,
+      "along": 15.808,
+      "lateral": 3.149,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 117.192,
+       "50": 78.376,
+       "100": 194.271,
+       "150": 694.354,
+       "200": 1467.674
+      },
+      "minClearanceMm250": 38.458,
+      "ballToFootM": {
+       "50": 0.457,
+       "100": 0.579,
+       "200": 1.84
+      },
+      "ballToComM": {
+       "50": 0.554,
+       "100": 0.908,
+       "200": 1.597
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 13,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 1,
+    "unplannedOwnContacts": 6,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.06263,
+    "cpu": {
+     "predTicks": 9177,
+     "tracks": 21
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 131,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.565,
+      "along": 13.56,
+      "lateral": 0.389,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 68.504,
+       "50": 112.865,
+       "100": 168.468,
+       "150": 553.694,
+       "200": 1197.192
+      },
+      "minClearanceMm250": 23.185,
+      "ballToFootM": {
+       "50": 0.48,
+       "100": 0.584,
+       "200": 1.558
+      },
+      "ballToComM": {
+       "50": 0.665,
+       "100": 0.855,
+       "200": 1.209
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.167,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 12.116,
+      "along": 11.505,
+      "lateral": 3.797,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 132.559,
+       "50": 206.308,
+       "100": 191.739,
+       "150": 361.158,
+       "200": 939.208
+      },
+      "minClearanceMm250": 21.352,
+      "ballToFootM": {
+       "50": 0.598,
+       "100": 0.548,
+       "200": 1.289
+      },
+      "ballToComM": {
+       "50": 0.584,
+       "100": 0.709,
+       "200": 0.98
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.954,
+      "F": "L",
+      "reg": "LACES",
+      "speed": 10.94,
+      "along": 4.715,
+      "lateral": 9.871,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 105.486,
+       "50": 148.584,
+       "100": 93.772,
+       "150": 489.671,
+       "200": 1012.936
+      },
+      "minClearanceMm250": 17.679,
+      "ballToFootM": {
+       "50": 0.5,
+       "100": 0.497,
+       "200": 1.321
+      },
+      "ballToComM": {
+       "50": 0.685,
+       "100": 0.727,
+       "200": 0.889
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 6.654,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 8.17,
+      "along": -1.456,
+      "lateral": 8.039,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 12.097,
+       "50": 48.843,
+       "100": 178.404,
+       "150": 563.306,
+       "200": 940.845
+      },
+      "minClearanceMm250": 5.092,
+      "ballToFootM": {
+       "50": 0.418,
+       "100": 0.526,
+       "200": 1.135
+      },
+      "ballToComM": {
+       "50": 0.68,
+       "100": 0.636,
+       "200": 0.533
+      },
+      "secondSame": null,
+      "secondOther": {
+       "n": 1,
+       "firstMs": 250,
+       "part": "boot_R",
+       "impulse": 1.366
+      }
+     }
+    ]
+   },
+   {
+    "seed": 14,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 1,
+    "controlledPct": 71.3,
+    "longestLooseS": 1.45,
+    "end": "LOOSE",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 1,
+    "opponentContacts": [],
+    "lostAtS": 4.625,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6924,
+     "tracks": 21
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "not-controlled",
+     "stages": 0,
+     "responseS": null,
+     "completedS": 2.57,
+     "finalHeadingErrDeg": 21,
+     "controlledAfterPct": 29,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.347,
+      "along": 13.338,
+      "lateral": -0.499,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 62.357,
+       "50": 102.692,
+       "100": 159.936,
+       "150": 532.395,
+       "200": 1161.975
+      },
+      "minClearanceMm250": 22.222,
+      "ballToFootM": {
+       "50": 0.465,
+       "100": 0.564,
+       "200": 1.517
+      },
+      "ballToComM": {
+       "50": 0.654,
+       "100": 0.833,
+       "200": 1.166
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 2.954,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 12.118,
+      "along": 12.116,
+      "lateral": -0.241,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 41.52,
+       "50": 122.073,
+       "100": 220.739,
+       "150": 700.608,
+       "200": 1277.987
+      },
+      "minClearanceMm250": 20.565,
+      "ballToFootM": {
+       "50": 0.514,
+       "100": 0.626,
+       "200": 1.601
+      },
+      "ballToComM": {
+       "50": 0.804,
+       "100": 0.921,
+       "200": 1.146
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.504,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 9.425,
+      "along": 9.31,
+      "lateral": 1.472,
+      "cut": false,
+      "stage": false,
+      "recovery": true,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 101.139,
+       "50": 189.524,
+       "100": 111.009,
+       "150": 529.33,
+       "200": 983.633
+      },
+      "minClearanceMm250": 12.814,
+      "ballToFootM": {
+       "50": 0.583,
+       "100": 0.496,
+       "200": 1.253
+      },
+      "ballToComM": {
+       "50": 0.806,
+       "100": 0.782,
+       "200": 0.73
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 15,
+    "touches": 3,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 6063,
+     "tracks": 17
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 85,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.905,
+      "along": 13.898,
+      "lateral": -0.438,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 75.692,
+       "50": 122.854,
+       "100": 211.994,
+       "150": 612.529,
+       "200": 1270.448
+      },
+      "minClearanceMm250": 24.553,
+      "ballToFootM": {
+       "50": 0.493,
+       "100": 0.619,
+       "200": 1.627
+      },
+      "ballToComM": {
+       "50": 0.682,
+       "100": 0.888,
+       "200": 1.276
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.367,
+      "F": "R",
+      "reg": "LACES",
+      "speed": 9.3,
+      "along": 5.626,
+      "lateral": -7.406,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 45.067,
+       "50": 280.438,
+       "100": 837.873,
+       "150": 1215.664,
+       "200": 1487.895
+      },
+      "minClearanceMm250": 11.317,
+      "ballToFootM": {
+       "50": 0.433,
+       "100": 0.997,
+       "200": 1.66
+      },
+      "ballToComM": {
+       "50": 0.578,
+       "100": 0.935,
+       "200": 1.693
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 6.167,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 10.781,
+      "along": -10.767,
+      "lateral": -0.534,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0.5
+      },
+      "clearanceMm": {
+       "25": 25.862,
+       "50": 36.344,
+       "100": 59.954,
+       "150": 207.095,
+       "200": 709.841
+      },
+      "minClearanceMm250": 11.201,
+      "ballToFootM": {
+       "50": 0.395,
+       "100": 0.314,
+       "200": 1.081
+      },
+      "ballToComM": {
+       "50": 0.623,
+       "100": 0.705,
+       "200": 0.862
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   },
+   {
+    "seed": 16,
+    "touches": 4,
+    "cancelled": 0,
+    "recovery": 0,
+    "controlledPct": 100,
+    "longestLooseS": 0,
+    "end": "CONTROLLED",
+    "doubleImpulses": 0,
+    "secondSame250": 0,
+    "secondOther250": 0,
+    "unplannedOwnContacts": 0,
+    "opponentContacts": [],
+    "lostAtS": null,
+    "kernelFault": null,
+    "legYields": 0,
+    "yieldDetail": [],
+    "ballFinite": true,
+    "minBallHeight": 0.11,
+    "cpu": {
+     "predTicks": 11931,
+     "tracks": 25
+    },
+    "turn": {
+     "requested": 180,
+     "releasedBy": "never",
+     "stages": 0,
+     "responseS": null,
+     "completedS": null,
+     "finalHeadingErrDeg": 138,
+     "controlledAfterPct": null,
+     "takenWithBall": false
+    },
+    "touchRows": [
+     {
+      "t": 0.742,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 13.083,
+      "along": 13.081,
+      "lateral": -0.237,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 56.23,
+       "50": 94.758,
+       "100": 128.698,
+       "150": 488.808,
+       "200": 1106.488
+      },
+      "minClearanceMm250": 21.154,
+      "ballToFootM": {
+       "50": 0.453,
+       "100": 0.537,
+       "200": 1.463
+      },
+      "ballToComM": {
+       "50": 0.641,
+       "100": 0.806,
+       "200": 1.112
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 3.017,
+      "F": "R",
+      "reg": "FRONT",
+      "speed": 12.814,
+      "along": 12.44,
+      "lateral": -3.074,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 49.538,
+       "50": 97.743,
+       "100": 288.521,
+       "150": 833.929,
+       "200": 1423.987
+      },
+      "minClearanceMm250": 18.742,
+      "ballToFootM": {
+       "50": 0.403,
+       "100": 0.58,
+       "200": 1.645
+      },
+      "ballToComM": {
+       "50": 0.592,
+       "100": 0.776,
+       "200": 1.139
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 4.979,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 10.225,
+      "along": 7.542,
+      "lateral": -6.904,
+      "cut": true,
+      "stage": true,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0.5,
+       "ia": 1
+      },
+      "clearanceMm": {
+       "25": 107.442,
+       "50": 214.669,
+       "100": 132.721,
+       "150": 566.01,
+       "200": 1059.389
+      },
+      "minClearanceMm250": 13.645,
+      "ballToFootM": {
+       "50": 0.608,
+       "100": 0.558,
+       "200": 1.361
+      },
+      "ballToComM": {
+       "50": 0.835,
+       "100": 0.85,
+       "200": 0.869
+      },
+      "secondSame": null,
+      "secondOther": null
+     },
+     {
+      "t": 5.429,
+      "F": "L",
+      "reg": "FRONT",
+      "speed": 11.071,
+      "along": 5.08,
+      "lateral": -9.837,
+      "cut": false,
+      "stage": false,
+      "recovery": false,
+      "floorK": 1,
+      "ft": {
+       "iy": 0,
+       "ia": 0
+      },
+      "clearanceMm": {
+       "25": 28.845,
+       "50": 107.793,
+       "100": 357.369,
+       "150": 847.207,
+       "200": 1368.398
+      },
+      "minClearanceMm250": 7.265,
+      "ballToFootM": {
+       "50": 0.493,
+       "100": 0.697,
+       "200": 1.615
+      },
+      "ballToComM": {
+       "50": 0.827,
+       "100": 0.893,
+       "200": 1.039
+      },
+      "secondSame": null,
+      "secondOther": null
+     }
+    ]
+   }
+  ]
+ }
+}

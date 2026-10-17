@@ -1,0 +1,259 @@
+{
+ "date": "17 October 2026, 04:55 EEST (instruction 01:26 EEST)",
+ "statusLines": [
+  [
+   "DRIBBLE-1 FOUNDATION PRESERVED",
+   "YES"
+  ],
+  [
+   "TURN-1.2 UNCHANGED",
+   "YES"
+  ],
+  [
+   "RESOLVED TOUCH ARCHITECTURE PRESERVED",
+   "YES"
+  ],
+  [
+   "CONTACT-AWARE FOLLOW-THROUGH",
+   "PARTIAL"
+  ],
+  [
+   "SOFT REDIRECT TOUCH",
+   "PARTIAL"
+  ],
+  [
+   "SAME-FOOT SECOND CONTACT REDUCED",
+   "NO"
+  ],
+  [
+   "45–60° TAKEN-WITH-BALL",
+   "45° 7/8 · 60° 4/8 · 60° left 5/8 (DRIBBLE-1 5/8 · 5/8 · 3/8; seeds 1–16: 13/16 · 9/16 · 10/16 vs 7/16 · 8/16 · 8/16)"
+  ],
+  [
+   "90° TAKEN-WITH-BALL",
+   "2/8 · 90° left 4/8 (DRIBBLE-1 1/8 · 2/8; seeds 1–16: 5/16 · 5/16 vs 3/16 · 6/16)"
+  ],
+  [
+   "STRAIGHT JOG REGRESSION",
+   "PASS"
+  ],
+  [
+   "STRAIGHT RUN REGRESSION",
+   "FAIL"
+  ],
+  [
+   "STRAIGHT FAST REGRESSION",
+   "PASS"
+  ],
+  [
+   "INSIDE TOUCH",
+   "PARTIAL"
+  ],
+  [
+   "OUTSIDE TOUCH",
+   "FAIL"
+  ],
+  [
+   "LACES/FRONT TOUCH",
+   "PASS"
+  ],
+  [
+   "PREFERRED-FOOT BIAS",
+   "FAIL"
+  ],
+  [
+   "BALL PHYSICALLY FREE",
+   "YES"
+  ],
+  [
+   "PHYSICAL INTERRUPTION",
+   "PASS"
+  ],
+  [
+   "CONTROL LOSS STILL POSSIBLE",
+   "YES"
+  ],
+  [
+   "CONTINUOUS INPUT",
+   "PARTIAL"
+  ],
+  [
+   "OLD RESOLVER CPU",
+   "465 ms per simulated second per dribbler (DRIBBLE-1; M4, one thread, Node 22)"
+  ],
+  [
+   "NEW RESOLVER CPU",
+   "144 ms per simulated second (0.60 ms per 240 Hz step; worst scenario 235; longest single planning pass 363 ms)"
+  ],
+  [
+   "RESOLVER SPEEDUP",
+   "3.2× (straight 1.6–2.7×, cuts 2.4–3.0×, 135° 7.9×)"
+  ],
+  [
+   "22-PLAYER CPU PROJECTION",
+   "0.77 s of one core per simulated second with one dribbler (22 × 28 ms locomotion + 144 ms resolver + 4 ms ball); 3.8 s if all 22 dribbled (DRIBBLE-1: 1.09 s / 10.8 s)"
+  ],
+  [
+   "CHROME/NODE DECISION DETERMINISM",
+   "PASS"
+  ],
+  [
+   "PINNED-BALL STABILITY",
+   "PASS"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY FOR DRIBBLE-V1 INTEGRATION IF OWNER APPROVES",
+   "NO"
+  ]
+ ],
+ "watchFirst": [
+  [
+   "A2_cut60_d1_vs_d11_zoom",
+   "60° cut, seed 16, zoomed gameplay camera: DRIBBLE-1 kicks the ball 8 m clear and loses it; DRIBBLE-1.1 takes it — a 29° touch (7.2 m/s, the foot yields and arcs past the ball, 24 mm minimum clearance), the body leads into the turn, an 84° touch finishes it"
+  ],
+  [
+   "c_followthrough_cut60_slow",
+   "That touch's follow-through, 0.25×, close camera with diagnostics: TURN-1.2's own toe path (white dashed) against the adjusted one (green), the touchdown ring, launch and clearance"
+  ],
+  [
+   "B2_cut90_d1_vs_d11_zoom",
+   "90° cut, seed 3, zoomed gameplay camera: DRIBBLE-1 does not take the turn; DRIBBLE-1.1 takes the ball 17° → 51° → into the new lane in three touches"
+  ]
+ ],
+ "videos": {
+  "A": [
+   [
+    "A1_cut60_d1_vs_d11_1x",
+    "60° hero at the real 1× Touchline camera — DRIBBLE-1 | DRIBBLE-1.1, CUT60_RUN seed 16"
+   ],
+   [
+    "A2_cut60_d1_vs_d11_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "a_cut60_s16_d11_layout",
+    "DRIBBLE-1.1, gameplay camera + close views with diagnostics"
+   ]
+  ],
+  "B": [
+   [
+    "B1_cut90_d1_vs_d11_1x",
+    "90° hero at the real 1× Touchline camera — DRIBBLE-1 | DRIBBLE-1.1, CUT90_RUN seed 3"
+   ],
+   [
+    "B2_cut90_d1_vs_d11_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "b_cut90_s3_d11_layout",
+    "DRIBBLE-1.1, gameplay camera + close views with diagnostics"
+   ]
+  ],
+  "C": [
+   [
+    "c_followthrough_cut60_slow",
+    "60° hero's cut touch (3.617 s, right FRONT, 7.2 m/s, yield 0.5 / arc 1.0), 0.25×, close camera"
+   ],
+   [
+    "c_followthrough_cut60_low",
+    "the same touch, low camera"
+   ],
+   [
+    "c_followthrough_cut90_slow",
+    "90° hero's second cut touch (4.204 s, right FRONT, 7.0 m/s, yield 0.5 / arc 1.0), 0.25×"
+   ]
+  ],
+  "D": [
+   [
+    "d_straight_jog_1x",
+    "JOG 3.0 m/s, seed 1"
+   ],
+   [
+    "d_straight_run_1x",
+    "RUN 5.5 m/s, seed 1"
+   ],
+   [
+    "d_straight_fast_1x",
+    "FAST 7.8 m/s, seed 1"
+   ]
+  ],
+  "E": [
+   [
+    "e_inside_cut45_slow",
+    "INSIDE — 45° cut in one touch with the left inside (CUT45_RUN seed 4, 2.767 s, 7.2 m/s, 39°), 0.25×"
+   ],
+   [
+    "e_inside_cut45_1x",
+    "the same run at 1×"
+   ],
+   [
+    "e_inside_cut60L_slow",
+    "INSIDE — the right inside takes a left cut across (CUT60L_RUN seed 3, 4.192 s, 7.6 m/s), 0.25×"
+   ],
+   [
+    "e_laces_fast_slow",
+    "LACES — a forward push at FAST (seed 5, 4.342 s, 10.5 m/s), 0.25×"
+   ],
+   [
+    "e_front_run_slow",
+    "FRONT — the ordinary RUN touch (seed 1), 0.25×"
+   ]
+  ],
+  "F": [
+   [
+    "f_tackle_run_1x",
+    "a sliding tackle leg knocks the ball loose (seed 1, contact 3.754 s) — no snap-back"
+   ],
+   [
+    "f_intercept_run_1x",
+    "a defender's sweep meets the ball (seed 2, contact 2.971 s)"
+   ],
+   [
+    "f_straight_sprint_1x",
+    "SPRINT 9.5 m/s (seed 5) — control is not guaranteed"
+   ],
+   [
+    "f_rev135_run_1x",
+    "135° (experimental, still FAIL)"
+   ]
+  ]
+ },
+ "stills": [
+  {
+   "file": "strip_cut60_s16_followthrough.jpg",
+   "caption": "The 60° hero's cut touch, frame by frame (close camera, diagnostics on): 50 ms before, the contact, +50 ms, +100 ms, TURN-1.2's touchdown (3.742 s, on its marked landing — the plant is unchanged), +200 ms. The boot keeps moving through its stride, slows on its own path and passes beside the ball (minimum clearance 24 mm) instead of chasing through it."
+  }
+ ],
+ "followNote": "<b>What the close-up shows.</b> TURN-1.2's own toe path for that swing (white, dashed) and the toe path the player actually swings (green / pink): after the contact the adjusted path falls behind and to the side of TURN-1.2's (the yield and the arc) and rejoins it before the touchdown ring (the authoritative landing — unchanged, same tick, ≤ 4.1 mm residual on the last airborne tick). The label at the contact gives the region, the launch speed, the follow-through used (yield / arc intensity) and the minimum boot–ball clearance measured in the ball kernel over 250 ms. I cannot play video in real time; these judgements come from frame strips and stills.",
+ "howItWorks": [
+  "<b>DRIBBLE-1 is preserved.</b> <code>dribble1/d1_core.js</code> and its lab are untouched (7fe57fd3). DRIBBLE-1.1 is a separate core, <code>dribble11/d11_core.js</code>, on the same frozen TURN-1.2 and byte-identical BALL-FEEL-1.3. The resolved touch architecture (one authoritative launch through <code>BallWorld.schedule()</code> at a verified boot contact) is unchanged.",
+  "<b>The optimisation twin.</b> With <code>opts.twin</code> the new core runs DRIBBLE-1's football through the new planning machinery, and is bit-identical to the frozen DRIBBLE-1 core in every scenario: touches, kernel events, cut timeline, control changes, full 240 Hz record. The machinery: one shared, lazily extended TURN-1.2 prediction per input; pose evaluation without skinning; memoised window envelopes and free-ball launches; the approach check evaluated lazily in rank order.",
+  "<b>Contact-aware follow-through.</b> After the authoritative contact the touching leg's path is generated from the actual launch, not replayed:<br>&nbsp;• the post-contact time-warp gets a <i>yield</i> knot, so the foot keeps moving along its own path slower than its swing for a while;<br>&nbsp;• an <i>arc</i> moves it sideways away from the ball's new line, lifts it, and shortens it a little;<br>&nbsp;• both profiles are zero with zero velocity at the contact and finished by 95 % of the remaining swing, so the foot lands on TURN-1.2's unchanged plant at the unchanged time.<br>A five-rung ladder (none → arc → arc + yield) is solved per touch for the <i>executed</i> launch (error included); the gentlest rung that clears the ball is used. The foot is never faster than the swing's own natural peak (×1.1, or DRIBBLE-1's own catch-up if that was faster) and never leaves the leg's reach. The planted foot after touchdown must not meet the ball either.",
+  "<b>The touching swing is committed.</b> TURN-1.2 retargets a swing's landing whenever the input changes. DRIBBLE-1 released cuts (and pursuit bends) at the contact tick, so the touching foot was retargeted mid follow-through and could run ~80 mm ahead of the model and hit the ball again. Now the input is frozen from the contact to that foot's touchdown (≤ one step). Cut predictions switch at that touchdown, and every contact of a swing shares one branch prediction.",
+  "<b>Cuts.</b><br>&nbsp;• A held cut keeps the user's direction; the pursuit can no longer bend the requested cut.<br>&nbsp;• While a cut is held, contacts are also generated for a push toward the cut, so an inside or outside contact where the foot passes beside the ball can be found. Set-up touches aim at windows where such a contact will be feasible.<br>&nbsp;• A touch releases the whole cut only if the ball itself goes within 25° of the request. Otherwise it is a stage: the body leads the ball's new direction by 20° + 0.6 × the touch's redirect (≤ 45°).<br>&nbsp;• The hold compares the request with the cut's own line, not with the pursuit-bent line.<br>&nbsp;• Next-touch windows that make the ball cross the new line are costed.",
+  "<b>Pursuit.</b> After a touch that released or staged a cut, the carrier corrects the planned motion by the ball's actual miss (relative to the plan), instead of running straight at the ball. Ordinary dribbling keeps DRIBBLE-1's request-relative pursuit, with dead bands (1°, 0.15 m/s), so the input — and the shared prediction — stays unchanged when the correction would not matter. (Re-aim hysteresis at 2.5° / 0.3 m/s was tried and is off: it cost FAST straight dribbling 16 % control.)",
+  "<b>Planning cost (o2).</b> Each of these changes which candidates are examined, never how a touch is resolved:<br>&nbsp;• the provisional aim comes from the contact sample's own motion;<br>&nbsp;• next-touch windows are probed on absolute 6-tick ticks, with a coarse-to-fine envelope;<br>&nbsp;• the contact search covers 1.0 s ahead, every 3 ticks and every 6 ticks of path phase;<br>&nbsp;• the follow-through ladder has 5 rungs, the best of 2 valid plans is kept, and unreachable polls run every 12 ticks;<br>&nbsp;• far prediction ticks evaluate the pose only on demand (bit-identical, re-stepped from stored states).",
+  "<b>Pinched ball.</b> The kernel still fails closed. DRIBBLE-1.1's step restores the world's exact prior state and re-runs the tick with this player's colliders that touch the ball held still (the leg yields). If that also fails, they are set just clear along the separating normal. The ball's state is never written, and each recovery is recorded.",
+  "<b>Determinism.</b> Decisions read the player's speed to 0.01 m/s and compare costs to 1e-9, so a last-bit difference between engines' maths libraries cannot flip a choice."
+ ],
+ "cpuNote": "Resolver = wall − locomotion (TURN-1.2 step + pose + swing adjustment) − ball kernel, both cores back to back in one process, every scenario × 2 seeds, quiet machine. Cache hit rates (DRIBBLE-1.1): locomotion track reuse 22.9 %, window envelopes 54.2 %, follow-through paths 51.7 %, free-ball launches 71.5 %. The 10× target is <b>not</b> met: one new TURN-1.2 track per input change still costs ~400–600 predicted ticks (t1Step ≈ 35 µs each, frozen code), and a heavy planning pass can take up to 363 ms in one tick. In Chrome 155 the page simulates DRIBBLE-1.1 2–4× faster than DRIBBLE-1 (0.8–0.9 s for 6–8 s scenarios vs 1.9–3.5 s).",
+ "determinismNote": "The state differences start in the last bit of the ball's vertical velocity (≈ 3e-18) or of TURN-1.2's heading ψ (4.4e-16) — the two engines' Math libraries (V8 12.4 vs 15.5) — and grow to at most 3e-12 m in 6–8 s. They are floating-point differences, not branching: no decision differs. DRIBBLE-1's reported 2/20 'differences' were the same last-bit effect showing in a 9-decimal hash (its decisions are 20/20 identical as well). DRIBBLE-1.1's decisions read speed to 0.01 m/s and costs to 1e-9 so that such differences cannot flip a choice.",
+ "pinchNote": "The pinch was never triggered in the 320 reliability runs of either core (0 kernel faults, 0 leg yields needed); the stress test exercises the recovery directly. The harness drives the boot below the turf plane, which can push the ball's centre down (min −0.107 m) in both the bare and the recovered kernel — in the simulation the swing foot never goes below its floor.",
+ "visualDefects": [
+  "Still the toe push: 97 % of DRIBBLE-1.1 touches are FRONT (1,519 of 1,574); inside 12 (DRIBBLE-1: 53), laces 43 (FAST / SPRINT forward pushes), outside none at all. The softer follow-through did not make the other regions feasible — they fail on the ball's position relative to the foot (reach, ground, the toe touching first), not on the follow-through.",
+  "Cuts are staged and the body visibly leads the ball: the first cut touch typically takes the ball only 5–20°, the body turns 20–45° beyond it, and the next touch re-collects it ~0.6–1.2 s later; when that touch is missed the player has run away from his ball. First response ~0.8–0.9 s after the request (DRIBBLE-1 ~1.2–1.4 s).",
+  "Straight RUN is less tidy than DRIBBLE-1 in some seeds (80 % controlled on seeds 1–8 vs 97 %): a swing predicted to run into the ball blocks every plan, has no feasible touch of its own in the coarser o2 search, and then kicks the ball; and a small toe re-contact 8–46 ms after 1 % of touches (mostly with the follow-through arc in use) nudges the ball off line."
+ ],
+ "nextStep": "<b>DRIBBLE-1.2 — cut geometry, not follow-through.</b> The follow-through now lets soft touches clear the leg, but cuts are still limited by WHERE the ball is when the foot can reach it: on the approach only the toe can meet a ball rolling ahead, so the first redirect is 5–20° and the rest is staged. The evidence points at the fix: a left-footed elite player takes the right 60° cut 8/8 and the right-footed one the left cut 5/8 — the preferred foot's INSIDE works; the right-footer's OUTSIDE never becomes feasible. So: (1) make the outside-of-the-foot cut contact feasible (contact low on the boot's outer edge with the foot turned out — today it fails ground / reach / the toe touching first) and plan the set-up touch to place the ball on the cutting foot's line; (2) remove the two regressions (the blocker swing that kicks the ball in straight RUN; the 1 % toe re-contacts with the arc) and restore DRIBBLE-1's straight RUN; (3) CPU: spread a heavy planning pass over several ticks (no 363 ms spikes) and keep the opportunity results across passes while the track and ball are unchanged. Target: 60° ≥ 7/8, 90° ≥ 5/8, straight RUN back to ≥ 95 %, second contacts 0.",
+ "provenance": [
+  "Owner instruction (verbatim): <code>review_artifacts/dribble11/sources/2026-10-17_user_instruction_dribble1_1_soft_touch_followthrough.md</code> (commit e134462c).",
+  "Branch <code>prototype/dribble-1</code>; DRIBBLE-1 frozen at 7fe57fd3 (<code>dribble1/</code>, <code>dribble1.html</code> untouched). DRIBBLE-1.1 commits: e134462c (instruction), 511923ec (optimisation twin O1), d867aa23, ecb4f1e2, bb3efc73, 45c0d724 (configuration for review), and the review package.",
+  "Frozen and untouched: TURN-1.2 (tag locomotion-turn12-baseline-1, 2129ca04), RUN-1, BALL-FEEL-1.3 (byte-identical, 75866e99), tackle / ball labs (Codex).",
+  "Evidence produced by <code>sandbox/visual/dribble11/tools/</code>: d11_evidence.mjs (reliability, free-ball audit), d11_twin.mjs, d11_cpu.mjs, d11_chrome.cjs, d11_plantcheck.mjs, d11_pinch.mjs; videos by d11_render.sh + d11_capture.cjs; stills by d11_strip.mjs; this page by d11_review_build.mjs.",
+  "<code>evidence/old_bb3efc73/</code> keeps the first DRIBBLE-1.1 batch (commit bb3efc73), which is superseded: a cut-window cost parameter was undefined there (NaN costs in cuts)."
+ ]
+}

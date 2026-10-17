@@ -14,7 +14,7 @@ for (const name of Object.keys(meta)) { const v = path.join(VID, name + ".mp4"),
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const lab = (page, q) => `http://127.0.0.1:8361/sandbox/visual/${page || "dribble11.html"}?${q}`;
 const fig = (name, cap, big) => { const m = meta[name]; if (!m || !fs.existsSync(path.join(VID, name + ".mp4"))) return `<p class="miss">missing ${name}</p>`;
-  const view = m.view === "sbs" ? "DRIBBLE-1 (left) | DRIBBLE-1.1 (right), same scenario / seed / player, frame-synchronised, 1× Touchline gameplay camera" : m.view === "game" || m.view === "half" ? "1× Touchline gameplay camera" : m.view === "layout" ? "gameplay camera + close views, diagnostics on" : `close camera, ${m.rate}× speed`;
+  const view = m.view === "sbs" ? `DRIBBLE-1 (left) | DRIBBLE-1.1 (right), same scenario / seed / player, frame-synchronised, 1× speed, ${/zoom=/.test(m.q || "") ? "Touchline gameplay camera zoomed 2.6×" : "the real Touchline gameplay camera"}` : m.view === "game" || m.view === "half" ? "1× Touchline gameplay camera" : m.view === "layout" ? "gameplay camera + close views, diagnostics on" : `close camera, ${m.rate}× speed`;
   const links = m.sbs ? `<a href="${lab("dribble1.html", m.q)}">DRIBBLE-1 lab</a> · <a href="${lab("dribble11.html", m.q)}">DRIBBLE-1.1 lab</a>` : `<a href="${lab(m.page, m.q)}">open in the lab</a>`;
   return `<figure class="${big ? "big" : ""}"><video controls muted loop playsinline preload="none" poster="../posters/${name}.jpg" src="../videos/${name}.mp4"></video><figcaption><b>${esc(cap)}</b><br><span class="mut">${view} · sim ${m.t0}–${m.t1} s · <code>${name}.mp4</code> · ${links}</span></figcaption></figure>`; };
 const grid = (n, items) => `<div class="g${n}">${(items || []).map(([a, b]) => fig(a, b)).join("")}</div>`;
@@ -56,7 +56,7 @@ video{width:100%;background:#000;border-radius:4px;display:block}figure{margin:6
 @media(max-width:1100px){.g2,.g3{grid-template-columns:1fr}}.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12.5px}td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}li{margin:3px 0}</style></head><body><main>
 <h1>DRIBBLE-1.1 — contact-aware follow-through, cut reliability, resolver performance</h1>
 <p class="mut">${esc(S.date)} · branch <code>prototype/dribble-1</code> (DRIBBLE-1 frozen at <code>7fe57fd3</code>, files untouched) · instruction <code>review_artifacts/dribble11/sources/2026-10-17_user_instruction_dribble1_1_soft_touch_followthrough.md</code> · <b>local review page</b> (real player names) · live labs: <a href="${lab("dribble11.html", "scn=CUT60_RUN&seed=1&diag=1")}">dribble11.html</a> · <a href="${lab("dribble1.html", "scn=CUT60_RUN&seed=1")}">dribble1.html</a> (server on :8361 from the dribble-1 worktree)</p>
-<div class="card vl">${S.statusLines.map(([k, v]) => `${esc(k)}: <b class="${/PARTIAL/.test(v) ? "p" : /^(FAIL|NO)/.test(v) ? "f" : ""}">${esc(v)}</b>`).join("<br>")}</div>
+<div class="card vl">${S.statusLines.map(([k, v]) => `${esc(k)}: <b class="${/PARTIAL|\/8/.test(v) ? "p" : /^(FAIL|NO)/.test(v) ? "f" : ""}">${esc(v)}</b>`).join("<br>")}</div>
 <p class="mut">I cannot play video in real time; every judgement on this page was made from frame strips and stills of these clips.</p>
 <h2>Three videos to watch first</h2>${S.watchFirst.map(([n, c]) => fig(n, c, true)).join("")}
 <h2>A — 60° hero: DRIBBLE-1 | DRIBBLE-1.1</h2>${grid(1, S.videos.A)}

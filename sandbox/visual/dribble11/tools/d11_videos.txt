@@ -1,0 +1,36 @@
+# name | page | query | t0 | t1 | view (game = 1× Touchline camera 1280×720; half = 960×540 for side-by-side; layout = game + close views with diagnostics; nearC/low/… = close) | rate
+# ── D — straight regression (DRIBBLE-1.1, 1×)
+d_straight_jog_1x          | dribble11.html | scn=STRAIGHT_JOG&prof=HIGH&seed=1     | 0 | 8 | game | 1
+d_straight_run_1x          | dribble11.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1     | 0 | 8 | game | 1
+d_straight_fast_1x         | dribble11.html | scn=STRAIGHT_FAST&prof=HIGH&seed=1    | 0 | 8 | game | 1
+# ── F — interruption, sprint, reversals
+f_tackle_run_1x            | dribble11.html | scn=TACKLE_RUN&prof=HIGH&seed=1       | 0 | 6 | game | 1
+f_intercept_run_1x         | dribble11.html | scn=INTERCEPT_RUN&prof=HIGH&seed=2    | 0 | 6 | game | 1
+f_straight_sprint_1x       | dribble11.html | scn=STRAIGHT_SPRINT&prof=HIGH&seed=5  | 0 | 8 | game | 1
+f_rev135_run_1x            | dribble11.html | scn=REV135_RUN&prof=HIGH&seed=1       | 0 | 6 | game | 1
+# ── A — 60° hero: CUT60_RUN seed 16 (DRIBBLE-1.1 takes the ball: 29° then 84°, both with the follow-through; DRIBBLE-1 loses it)
+a_cut60_s16_d1_half        | dribble1.html  | scn=CUT60_RUN&prof=HIGH&seed=16       | 0 | 6 | half | 1
+a_cut60_s16_d11_half       | dribble11.html | scn=CUT60_RUN&prof=HIGH&seed=16       | 0 | 6 | half | 1
+a_cut60_s16_d1_zoom        | dribble1.html  | scn=CUT60_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | half | 1
+a_cut60_s16_d11_zoom       | dribble11.html | scn=CUT60_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | half | 1
+SBS | A1_cut60_d1_vs_d11_1x       | a_cut60_s16_d1_half | a_cut60_s16_d11_half | DRIBBLE-1 | DRIBBLE-1.1
+SBS | A2_cut60_d1_vs_d11_zoom     | a_cut60_s16_d1_zoom | a_cut60_s16_d11_zoom | DRIBBLE-1 (zoomed camera) | DRIBBLE-1.1 (zoomed camera)
+a_cut60_s16_d11_layout     | dribble11.html | scn=CUT60_RUN&prof=HIGH&seed=16&diag=1 | 1.5 | 6 | layout | 1
+# ── B — 90° hero: CUT90_RUN seed 3 (DRIBBLE-1.1: 17° → 51° → into the new lane; DRIBBLE-1 does not take the turn)
+b_cut90_s3_d1_half         | dribble1.html  | scn=CUT90_RUN&prof=HIGH&seed=3        | 0 | 6 | half | 1
+b_cut90_s3_d11_half        | dribble11.html | scn=CUT90_RUN&prof=HIGH&seed=3        | 0 | 6 | half | 1
+b_cut90_s3_d1_zoom         | dribble1.html  | scn=CUT90_RUN&prof=HIGH&seed=3&zoom=2.6 | 0 | 6 | half | 1
+b_cut90_s3_d11_zoom        | dribble11.html | scn=CUT90_RUN&prof=HIGH&seed=3&zoom=2.6 | 0 | 6 | half | 1
+SBS | B1_cut90_d1_vs_d11_1x       | b_cut90_s3_d1_half | b_cut90_s3_d11_half | DRIBBLE-1 | DRIBBLE-1.1
+SBS | B2_cut90_d1_vs_d11_zoom     | b_cut90_s3_d1_zoom | b_cut90_s3_d11_zoom | DRIBBLE-1 (zoomed camera) | DRIBBLE-1.1 (zoomed camera)
+b_cut90_s3_d11_layout      | dribble11.html | scn=CUT90_RUN&prof=HIGH&seed=3&diag=1 | 1.5 | 6 | layout | 1
+# ── C — the follow-through close-up (the 60° hero's cut touch, 3.617 s, R FRONT 7.2 m/s, yield 0.5 / arc 1.0)
+c_followthrough_cut60_slow | dribble11.html | scn=CUT60_RUN&prof=HIGH&seed=16&diag=1 | 3.45 | 3.95 | nearC | 0.25
+c_followthrough_cut60_low  | dribble11.html | scn=CUT60_RUN&prof=HIGH&seed=16&diag=1 | 3.45 | 3.95 | low | 0.25
+c_followthrough_cut90_slow | dribble11.html | scn=CUT90_RUN&prof=HIGH&seed=3&diag=1  | 4.05 | 4.55 | nearC | 0.25
+# ── E — contact family
+e_inside_cut45_slow        | dribble11.html | scn=CUT45_RUN&prof=HIGH&seed=4&diag=1  | 2.6 | 3.1 | nearC | 0.25
+e_inside_cut45_1x          | dribble11.html | scn=CUT45_RUN&prof=HIGH&seed=4        | 0 | 6 | game | 1
+e_inside_cut60L_slow       | dribble11.html | scn=CUT60L_RUN&prof=HIGH&seed=3&diag=1 | 4.0 | 4.5 | nearC | 0.25
+e_laces_fast_slow          | dribble11.html | scn=STRAIGHT_FAST&prof=HIGH&seed=5&diag=1 | 4.2 | 4.7 | nearC | 0.25
+e_front_run_slow           | dribble11.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1&diag=1 | 2.25 | 2.75 | nearC | 0.25
