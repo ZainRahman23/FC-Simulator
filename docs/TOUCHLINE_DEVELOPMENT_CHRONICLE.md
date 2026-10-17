@@ -3319,6 +3319,184 @@ What was done there is not reconstructed here.
 
 **End-of-day state.** No V2 commits from the Claude session after the 06:04 push. The Codex tackle chain (9 commits) and the ball clone (2 commits) are local. Nothing changed in `touchline-current` except this chronicle.
 
+## Friday 16 October 2026 — The 15 Oct publication; TURN-1 → TURN-1.2, a frozen turning baseline; DRIBBLE-1 and DRIBBLE-1.1, physical dribbling on it; the Codex ball and tackle labs
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `5b0d9b0` (06:05 EEST, the 15 Oct entry), pushed at 06:06.
+  - `prototype/physical-character-v2`: `1588a9d` (06:06) and `ec79770` (06:07). Both save owner instructions verbatim: TACKLE-REACTION-1 of 15 Oct, and the TURN-1 pivot mission. They are pushed in the 17 Oct housekeeping.
+  - **`prototype/turn-1`** (new; cut from `prototype/locomotion-v2-run1`, the frozen RUN-1.3 straight baseline): 17 commits, `6185b97` (06:43) → `2129ca0` (17:37). The annotated tag **`locomotion-turn12-baseline-1`** → `2129ca0`. Pushed with the tag at 17:58 and verified by fetch.
+  - **`prototype/dribble-1`** (new, on `2129ca0`):
+    - DRIBBLE-1: 15 commits, `7c749a9` (18:25) → `7fe57fd` (23:55);
+    - DRIBBLE-1.1: 8 commits, `e134462` (17 Oct 01:28) → `7d8c852` (05:00).
+    - Pushed in the 17 Oct housekeeping.
+  - **[Local]** The Codex tackle worktree (the same repository; `~/Documents/Codex/2026-10-15/…/touchline-tackle-reaction1`): `prototype/tackle-recovery-v1-2` `0500c76` (06:12) and `prototype/tackle-recovery-v1-3` `e4d6716` (16:02). Not pushed.
+  - **[Local]** The Codex ball clone (`~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/work/touchline-ball-phys1`), one branch per step. None was pushed to FC-Simulator.
+
+    | Branch | Commit | Time |
+    |---|---|---|
+    | `prototype/ball-feel-1-1` | `e8da0c3` | 06:20 |
+    | `-1-2` | `db526cc` | 16:21 |
+    | `-1-3` | `75866e9` | 17:02 |
+    | `-1-4` | `c947998` | 18:35 |
+    | `prototype/ball-shot-1` | `d5790bf` | 20:39 |
+    | `prototype/ball-shot-1-1` | `0b60ba9` | 17 Oct 00:40 |
+    | `prototype/gk-shot-map-1` | `dba4976` | 02:25 |
+
+    BALL-FEEL-1.3 was fetched read-only into this repository (`balllab/ball-feel-1-3`) as DRIBBLE-1's ball.
+- **[Doc]:**
+  - `review_artifacts/turn1/`: `TURN1_REPORT.md`, `turn11/TURN11_REPORT.md`, `turn12/TURN12_REPORT.md`, `turn12/TURN12_HANDOFF.md`, review pages;
+  - `review_artifacts/dribble1/`: `DRIBBLE1_REPORT.md`, `DRIBBLE1_HANDOFF.md`, review page;
+  - `review_artifacts/dribble11/`: `DRIBBLE11_REPORT.md`, `DRIBBLE11_HANDOFF.md`, review page.
+  - The Codex `outputs/` folders hold the ball and shot READMEs and their review zips.
+  - The DRIBBLE review pages name real players; they are local review pages only.
+- **[Session]** The Claude session resumed at 06:01. Owner instructions:
+
+  | Time (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | start of the day | Stop the tackle task ("another agent has taken over"); TURN-1 | V2 `ec79770` |
+  | 15:14 | TURN-1 approved; TURN-1.1 | `382e915` |
+  | 16:46 | TURN-1.2 | `a83e199` |
+  | 17:34 | Freeze / publish / handoff | `8a5a8f1` |
+  | ≈ 18:22 | DRIBBLE-1 | `7c749a9` |
+  | 17 Oct 01:26 | DRIBBLE-1.1 | `e134462` |
+
+- **Owner screenshots:** none.
+  - Six owner screen recordings of football broadcast footage (16 Oct, 5.36 PM – 9.15 PM, Desktop and Downloads) were supplied to the Codex ball lab as pace and shot references.
+  - They are third-party footage and stay outside Git.
+
+**The 15 Oct housekeeping (06:06).** The chronicle `5b0d9b0` was pushed and verified. Two owner instructions were then saved to the V2 branch (`1588a9d`, `ec79770`) and left for this publication.
+
+**The pivot.** The owner stopped Claude's tackle work: the Codex agent owns the tackle line. Claude moved to turning and cutting locomotion, with no ball.
+
+**TURN-1** (06:43 – 07:40, `6185b97` → `7b58d1a`). A turning and cutting engine on the unmodified RUN-1.3 straight baseline (`sandbox/visual/turn1/turn1_loco.js`).
+- **How it works:**
+  - The centre of mass changes horizontal velocity only through the stance foot: a half-sine ΔV per stance, bounded by what that stance can deliver. Flights are ballistic, with no root rotation.
+  - Plants are world-locked points chosen at touchdown (RUN-1's placement plus the inverted-pendulum offset).
+  - The swing is RUN-1's own path, warped onto the aimed plant.
+  - The pelvis heading is its own state.
+  - A resolver turns each request into ARC / CUT (side-step or crossover) / PIVOT.
+  - Braking is planned from what a braking stance can really remove: up to 4 braking steps before a cut, 5 before a reversal.
+- **Results** (77 scenarios):
+  - deterministic;
+  - plant slip median 0.02 cm, p90 0.46 cm;
+  - mirroring exact in 32 / 32;
+  - pelvis continuity ≤ 11.6 mm.
+- **Statuses:** PASS except 120 – 150°, 180° and sprint coverage (PARTIAL).
+- **At 15:14 the owner approved TURN-1 as the mechanical foundation.** Its movement maths is frozen.
+
+**TURN-1.1** (15:14 – 16:28, `382e915` → `bb97f42`). Authored football cut body language as a presentation-only layer (`turn11_body.js`):
+- three plant bases (SIDESTEP, XOVER, PIVOT) as key poses on a plant timeline;
+- BRAKE / EXIT modifiers and a reaction term;
+- authored for the right and mirrored.
+
+Results:
+- Movement identity 84 / 84 with and without the layer.
+- Slip p90 0.46 → 0.11 cm.
+- Visible reaction 0.20 → 0.07 s.
+- Crossover and sprint 180° PARTIAL.
+
+Found on the way:
+- Arms must be authored as directions in the pelvis-heading frame.
+- Replacing TURN-1's crouch exposes the leg's reach budget.
+
+**The owner preferred original TURN-1 for ordinary turns**, so TURN-1.1 is kept as research.
+
+**TURN-1.2** (16:46 – 17:19, `a83e199` → `634bf20`). TURN-1 is restored as the default and stays bit-identical (77 / 77). It gains one opt-in family for large turns under real momentum:
+- **The family:** BRAKE → REORGANISE → TURN → ACCELERATE (BRAKE_TURN, BRAKE_SHUFFLE_TURN). It has new step roles BRAKEQ and REORG, and the turn plant goes on the outside foot.
+- **When it applies:** the angle must be large for the speed (118° at 5 m/s falling to 102° at 9.5 m/s), and at least 3.6 m/s of excess speed must remain. In the ±10° transition band the stride state decides.
+- **Compact pivot:** TURN-1's pivot no longer waits through a braking stride once its speed is already down.
+- **Statuses:** all PASS / YES. TURN-1.1's 84 hashes are untouched.
+
+**The freeze** (17:34 – 17:37, `8a5a8f1`, `2129ca0`). The owner approved TURN-1.2 as the locomotion baseline.
+- The handoff (`TURN12_HANDOFF.md`), freeze manifest and parameters were committed.
+- **Tag `locomotion-turn12-baseline-1`.**
+- The branch and tag were pushed at 17:58 and verified. The final regression was byte-identical to the reviewed evidence.
+
+**DRIBBLE-1** (18:25 – 23:55, `7c749a9` → `7fe57fd`). Physics-based dribbling with no tether, on the frozen TURN-1.2 and the Codex BALL-FEEL-1.3 world (`75866e9`, 23 files imported byte-identical).
+
+How it works:
+- The touch is a time-warp of TURN-1.2's own free-leg swing, pinned at both ends, so the plants stay bit-identical.
+- **Three touch architectures** on identical fixtures (straight / 60° cut, controlled share):
+  - A, pure physical boot impulse: 26 % / 33 %; the boot misses or glances.
+  - **B, resolved: 99 % / 70 %.** One authoritative launch through the kernel's `schedule()` at a verified boot contact.
+  - C, bounded hybrid: 88 % / 60 %.
+- **B was selected.** Between touches the ball is fully physical; a defender's leg sweep or a slide knocks it loose with no snap-back.
+
+Results (8 seeds):
+
+| Case | Result |
+|---|---|
+| Straight JOG / RUN / FAST | 100 / 97 / 100 % |
+| Straight SPRINT | 88 % (PARTIAL) |
+| Curves | 95 – 96 % |
+| Turns taken with the ball | 45° 5/8, 60° 5/8, 90° 1 – 2/8, 135° / 180° 0/8 |
+| Double impulses | 0 |
+| Tether audit | 0 unexplained deviations |
+| Node replay | 20 / 20 |
+| Chrome vs Node | 18 / 20; DRIBBLE-1.1 later showed these differences are last-bit floating point, not branching |
+| CPU | 497 ms per simulated second, of which ≈ 470 is the resolver's look-ahead |
+
+Discoveries:
+- **The controlled share hides failed cuts.** A player who never takes the cut keeps the ball, so the honest metric became "taken with the ball": released by a touch, heading within 20°, controlled at the end.
+- **The cut limit is the follow-through.** After an early-swing contact the foot races to its unchanged plant, so only firm launches escape a second contact.
+
+Stopped for owner visual review.
+
+**DRIBBLE-1.1** (17 Oct 01:26 – 05:00, `e134462` → `7d8c852`). Soft-touch follow-through, cut reliability and resolver CPU. DRIBBLE-1 is kept frozen.
+- **An optimisation twin first** (`511923e`): the new planning machinery running DRIBBLE-1's football. It is bit-identical to DRIBBLE-1 in 40 / 40 runs (touches, kernel events, the 240 Hz record). The machinery:
+  - one shared, lazily extended TURN-1.2 prediction per input;
+  - pose evaluation without skinning;
+  - memoised windows and launches.
+- **Then the behaviour:**
+  - **A contact-aware follow-through:** a yield in the swing's time-warp, plus an arc away from the ball's new line with a lift. It is solved per touch from the executed launch. It is zero at the contact, done by 95 % of the swing, and the foot lands on TURN-1.2's unchanged plant.
+  - **The touching swing is committed until it lands.** TURN-1.2 retargets a swing on every input change, which had made the foot run ≈ 80 mm ahead of the model.
+  - Held and staged cuts, and plan-relative pursuit.
+  - Decision-level planning savings.
+  - A kernel step that recovers a pinched ball: the leg yields, and the ball's state is never written.
+- **Results** (HIGH profile, 8 seeds; DRIBBLE-1 in brackets):
+
+  | Case | Result |
+  |---|---|
+  | 45° | 7/8 |
+  | 60° | 4/8 (5/8) |
+  | 60° left | 5/8 (3/8) |
+  | 90° | 2/8 (1/8) |
+  | 90° left | 4/8 (2/8) |
+  | Straight RUN | 80.5 % (97 %), a regression |
+  | Firm recovery touches | 78 → 31 |
+  | Same-foot second contacts | 1.1 % (0 %) |
+  | Outside-of-the-foot touches | none |
+  | Resolver CPU | 465 → 144 ms per simulated second (3.2×, not the 10× aimed for) |
+  | Chrome / Node decisions | 20 / 20 |
+  | Pinched-ball stress | 0 unrecovered in 3,000 wedges |
+
+- **Diagnosis:** cuts are now limited by where the ball is when the foot can reach it, not by the follow-through. A left-footed profile takes the right 60° cut 8 / 8 on its inside, while the right-footer's outside contact is never feasible.
+- **A self-inflicted error, caught and recorded:** a silently failed edit left one cut-cost parameter undefined (NaN costs). That first evidence batch was superseded and kept as `evidence/old_bb3efc73/`.
+- **Proposed next:** DRIBBLE-1.2 = cut geometry (an outside contact and a set-up touch), plus fixes for the two regressions. Stopped for owner review.
+
+**The Codex labs** (read-only from the outputs and commit messages; not integrated):
+- **The ball line:**
+  - **BALL-FEEL-1.1:** faster launches and a progressive rolling law.
+  - **1.2:** driven-pass grip and curve shapes.
+  - **1.3:** opt-in launch-only turf skips; this is the world DRIBBLE-1 imports.
+  - **1.4:** ground-ball pace calibrated against two owner-supplied reference clips; Candidate A is provisional.
+  - **BALL-SHOT-1:** a Shot Power 80 family lab (Inside 30, Outside 32, Laces 34, Power 39, Chip 16 m/s).
+  - **BALL-SHOT-1.1:** reference-guided candidates; working technique labels await owner confirmation.
+  - **GK-SHOT-MAP-1:** a frozen goalkeeper shot-envelope lab.
+- **The tackle line:** TACKLE-RECOVERY-V1.2 (keep tackle contacts while braking broad prone F3 exits) and V1.3 (the separated F3 posting arm with finite sliding support).
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| TURN-1.2 | Frozen, tagged and published |
+| DRIBBLE-1 | Committed, awaiting owner review; published in the 17 Oct housekeeping |
+| DRIBBLE-1.1 | Committed, awaiting owner review; published in the 17 Oct housekeeping |
+| V2 | Gained only two instruction files |
+| Codex ball and tackle labs | Local branches |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3332,7 +3510,7 @@ What was done there is not reconstructed here.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`, head `dbc8aa2`, 15 Oct 05:57, pushed at 06:04 on 15 Oct; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `ec79770`, 16 Oct 06:07: two owner-instruction files after `dbc8aa2`; pushed on 17 Oct; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz. An articulated toe body (D-1F1) exists only as a default-off extension and is not adopted.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -3394,7 +3572,7 @@ What was done there is not reconstructed here.
   - **Not achieved:** a fully physical RUN-1 runner (> 20 candidates, none longer than ≈ 2 s).
   - **Found:** RUN-1 cannot turn.
   - **Candidate V1.1** (earlier fall commitment) awaits the owner; the review page compares it with V1.
-- **The tackle line** (15 – 16 Oct, built in the Codex workspace; local branches on top of `dbc8aa2`, not pushed, not integrated): TACKLE-REACTION-1 (F3 + R6: RUN → TACKLED_FALL from the exact collision state) → TACKLE-IMPACT-1 → TACKLE-CONTACT-V1 (ten-case TRIP / SLICE / IMPACT spectrum) → polish C10 → TACKLE-RECOVERY-V1 / V1.1 (the get-up lifecycle to IDLE). HAC-1 is frozen as research.
+- **The tackle line** (15 – 16 Oct, built in the Codex workspace; local branches on top of `dbc8aa2`, not pushed, not integrated): TACKLE-REACTION-1 (F3 + R6: RUN → TACKLED_FALL from the exact collision state) → TACKLE-IMPACT-1 → TACKLE-CONTACT-V1 (ten-case TRIP / SLICE / IMPACT spectrum) → polish C10 → TACKLE-RECOVERY-V1 / V1.1 (the get-up lifecycle to IDLE) → V1.2 / V1.3 (16 Oct: contacts kept while braking prone F3 exits; the separated F3 posting arm with finite sliding support). HAC-1 is frozen as research.
 - **The IB-1 interaction benchmark** (`interaction_benchmark/`: 5 frozen scenarios, metrics H1 – H8 / Q1 – Q8) and `consolidation/CANONICAL_EVIDENCE.md` (`15b0d5c`) are the architecture-neutral reference for any future interaction system.
 - **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
 
@@ -3403,6 +3581,10 @@ What was done there is not reconstructed here.
   - `prototype/slide-contact-v1.3-charcollide` (`5042230`);
   - `prototype/locomotion-continuity-v1` (`9d57d46`, LC-1);
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
+- **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
+  - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
+  - `prototype/dribble-1`: DRIBBLE-1 (`7fe57fd`) and DRIBBLE-1.1 (`7d8c852`), physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3. Both await owner review.
+- **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1, GK-SHOT-MAP-1. Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -3458,9 +3640,16 @@ What was done there is not reconstructed here.
   - **The interaction-time architecture is decided, but its later stages are untested:** hand-back / reconciliation, recovery and broader tackle coverage. The articulated toe (F1) is closed at the solver, and toe-pivot geometry remains a rigid-boot limitation.
   - **A candidate V2 model limit:** from 4.2 m/s the swing hip torque exceeds the modelled capacity (Hill w0 15 rad/s). This is not an observed failure.
   - **Production locomotion (Locomotion V2, frozen 10 Oct)** covers straight-line running only, in four regimes from 3.0 to 9.5 m/s. Acceleration and deceleration, curves, turning and cutting, walking, per-player speed, ball carry and integration into the match runtime are not started. The simulation's VMAX (8.2 m/s) is below ALL-OUT.
+  - **Turning and cutting** exist since 16 Oct as the frozen TURN-1.2 baseline (animation-driven, stance-impulse dynamics; no ball), not integrated. The locomotion authority contract with the simulation is undecided.
   - **E2 touchdown** is blocked at TD2C (U-1, the +20 mm obstacle at 180 / 240 Hz). The recovery-step touchdown (R-4 / R-5) is unsolved. TD-15 and TD-17 are open.
   - **CPU.** Continuous V2 locomotion for 22 players measured 4.3 – 5.1 s CPU per simulated second (SLP-2, unoptimised, one core). Promotion is estimated at roughly 18 – 38× less on average, but the interaction rates behind that estimate are assumed, not measured.
 - **Sprint dribbling** still loses the ball (not hidden). The Dribbling V1 boot-plan lateral mirror is recorded and unfixed.
+- **Physical dribbling** (DRIBBLE-1 / 1.1, prototype):
+  - Straight and curved dribbling work.
+  - Cuts taken with the ball: 45° 7/8, 60° 4–5/8, 90° 2–4/8. 135° and 180° are not attempted.
+  - The outside of the foot is never used.
+  - Straight RUN regressed in DRIBBLE-1.1 (80.5 % vs 97 %).
+  - The resolver costs 144 ms per simulated second per dribbler.
 - **Goalkeeper presentation.**
   - Two backends coexist, with families still review-only.
   - Audits flagged set-depth geometry at close range and the X3 curl's size (about 4–5× a measured free kick).
@@ -3607,6 +3796,10 @@ An index to the narrative above, not a substitute for it.
 | 12 Oct | C2 16 / 17 on B2M (P8); post hoc: forward saves by rocking on the rigid boot tip | FC-Sim Git | `4b6ebd9`, `b995c13`, `85792a6` |
 | 12 Oct | **Owner: boot-tip support not legitimate** (22:12); C3, a support-envelope governor, uses legitimate support only, 15 / 17 on B2M | FC-Sim Git | `fe301b3`, `d590fd4`, `2bc0275` |
 | 12 Oct | **Owner: rigid flat foot retained** (23:16); B2F flat-sole forward criterion 10.15 – 14.21 N·s; unchanged C3 16 / 17 (P8 only); P8 diagnosed controller-side; minimal successor rejected (13 Oct 00:55) | FC-Sim Git | `44e782d`, `ae8177f`, `65373ab`, `010d03c`, `ae78010` |
+| 16 Oct | TURN-1 turning / cutting engine on frozen RUN-1.3, approved as the mechanical foundation; TURN-1.1 authored cut body (research only) | FC-Sim Git | `7b58d1a`, `bb97f42` |
+| 16 Oct | **TURN-1.2 frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` | FC-Sim Git | `634bf20`, `2129ca0` |
+| 16 Oct | DRIBBLE-1: physical dribbling, resolved touch selected over pure physical / hybrid; cuts PARTIAL | FC-Sim Git | `7fe57fd` |
+| 16 Oct | DRIBBLE-1.1 (17 Oct 01:26 – 05:00): contact-aware follow-through, twin bit-identical to DRIBBLE-1, resolver 3.2× faster; 60° / 90° targets missed | FC-Sim Git | `511923e`, `8f36164`, `7d8c852` |
 
 ## Appendix B — Repository provenance
 
