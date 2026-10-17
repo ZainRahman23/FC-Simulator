@@ -1,0 +1,6 @@
+CUT90_RUN:10 d12 worst step 420.7 ms
+CUT90_RUN:10 d13 worst step 37.5 ms
+CUT90L_RUN:1 d12 worst step 552.2 ms
+CUT90L_RUN:1 d13 worst step 18.2 ms
+d12 {"steps":64560,"p50":0.136,"p99":21.124,"p999":157.013,"worst":562.391,"worstAt":"REV135_RUN s1 t 2.20","over4Pct":1.636,"over8Pct":1.561,"over20Pct":1.033,"over50":354,"workUnitsPerTick":null,"decisionBudgetTickPct":null}
+d13 {"steps":64560,"p50":0.176,"p99":10.342,"p999":14.717,"worst":73.28,"worstAt":"CUT60_RUN_FAR s2 t 3.10","over4Pct":6.379,"over8Pct":3.638,"over20Pct":0.023,"over50":2,"workUnitsPerTick":{"p50":29,"p99":8318,"p999":10229,"max":14504},"decisionBudgetTickPct":47.9}

@@ -1,0 +1,1074 @@
+{
+ "node": "v22.19.0",
+ "seeds": 4,
+ "repeats": 1,
+ "versions": [
+  "d1",
+  "d11",
+  "d12",
+  "d13"
+ ],
+ "processes": "one per core",
+ "all": {
+  "d1": {
+   "resolverMsPerSimS": 472.1,
+   "totalMsPerSimS": 502.8,
+   "locoMsPerSimS": 27.9,
+   "ballMsPerSimS": 2.7,
+   "resolverUsPerStep": 1967.2,
+   "worstStepMs": 2112.3,
+   "worstStepAt": "CUT60_RUN_FAR s1 t 2.42",
+   "p999StepMs": 294.25,
+   "p99StepMs": 28.82,
+   "stepsOver4msPct": 2.009,
+   "stepsOver8msPct": 1.423,
+   "stepsOver20msPct": 1.087,
+   "worstPlanMs": 0,
+   "plansPerSimS": 0
+  },
+  "d11": {
+   "resolverMsPerSimS": 165.5,
+   "totalMsPerSimS": 200.8,
+   "locoMsPerSimS": 31.2,
+   "ballMsPerSimS": 4.1,
+   "resolverUsPerStep": 689.5,
+   "worstStepMs": 379.7,
+   "worstStepAt": "CUT60_RUN_FAR s4 t 2.40",
+   "p999StepMs": 115.72,
+   "p99StepMs": 13.49,
+   "stepsOver4msPct": 1.788,
+   "stepsOver8msPct": 1.199,
+   "stepsOver20msPct": 0.865,
+   "worstPlanMs": 379,
+   "plansPerSimS": 7.6
+  },
+  "d12": {
+   "resolverMsPerSimS": 208,
+   "totalMsPerSimS": 240,
+   "locoMsPerSimS": 28.3,
+   "ballMsPerSimS": 3.8,
+   "resolverUsPerStep": 866.6,
+   "worstStepMs": 538.2,
+   "worstStepAt": "CUT90L_RUN s1 t 2.20",
+   "p999StepMs": 150.77,
+   "p99StepMs": 19.81,
+   "stepsOver4msPct": 1.589,
+   "stepsOver8msPct": 1.505,
+   "stepsOver20msPct": 0.998,
+   "worstPlanMs": 537.9,
+   "plansPerSimS": 7.7
+  },
+  "d13": {
+   "resolverMsPerSimS": 147.6,
+   "totalMsPerSimS": 181.1,
+   "locoMsPerSimS": 29.6,
+   "ballMsPerSimS": 3.9,
+   "resolverUsPerStep": 615.1,
+   "worstStepMs": 40.7,
+   "worstStepAt": "REV180_SPRINT s1 t 2.46",
+   "p999StepMs": 14.22,
+   "p99StepMs": 9.36,
+   "stepsOver4msPct": 6.548,
+   "stepsOver8msPct": 2.974,
+   "stepsOver20msPct": 0.018,
+   "worstPlanMs": 0,
+   "plansPerSimS": 7.9
+  }
+ },
+ "projection22": {
+  "d1": {
+   "activeDribblerResolver": 472.1,
+   "oneDribbler": 1089,
+   "twoContesting": 1561,
+   "allTwentyTwoDribbling": 11003
+  },
+  "d11": {
+   "activeDribblerResolver": 165.5,
+   "oneDribbler": 856,
+   "twoContesting": 1022,
+   "allTwentyTwoDribbling": 4332
+  },
+  "d12": {
+   "activeDribblerResolver": 208,
+   "oneDribbler": 834,
+   "twoContesting": 1042,
+   "allTwentyTwoDribbling": 5202
+  },
+  "d13": {
+   "activeDribblerResolver": 147.6,
+   "oneDribbler": 803,
+   "twoContesting": 950,
+   "allTwentyTwoDribbling": 3902
+  }
+ },
+ "perScenario": {
+  "STRAIGHT_JOG": {
+   "d1": {
+    "resolverMsPerSimS": 174,
+    "totalMsPerSimS": 204.4,
+    "locoMsPerSimS": 27.7,
+    "ballMsPerSimS": 2.6,
+    "worstStepMs": 195,
+    "p999StepMs": 155.1,
+    "p99StepMs": 4.7,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 99.7,
+    "totalMsPerSimS": 131.2,
+    "locoMsPerSimS": 27.9,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 136.6,
+    "p999StepMs": 73.57,
+    "p99StepMs": 3.75,
+    "worstPlanMs": 135,
+    "plansPerSimS": 1.6
+   },
+   "d12": {
+    "resolverMsPerSimS": 98.5,
+    "totalMsPerSimS": 129.9,
+    "locoMsPerSimS": 27.8,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 146.9,
+    "p999StepMs": 72.92,
+    "p99StepMs": 2.76,
+    "worstPlanMs": 145.4,
+    "plansPerSimS": 1.8
+   },
+   "d13": {
+    "resolverMsPerSimS": 73.7,
+    "totalMsPerSimS": 106.8,
+    "locoMsPerSimS": 29.2,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 21.2,
+    "p999StepMs": 13.15,
+    "p99StepMs": 8.11,
+    "worstPlanMs": 0,
+    "plansPerSimS": 1.8
+   }
+  },
+  "STRAIGHT_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 214.1,
+    "totalMsPerSimS": 243.9,
+    "locoMsPerSimS": 27.3,
+    "ballMsPerSimS": 2.5,
+    "worstStepMs": 230.1,
+    "p999StepMs": 203.53,
+    "p99StepMs": 7.65,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 115.9,
+    "totalMsPerSimS": 147.4,
+    "locoMsPerSimS": 27.9,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 130.3,
+    "p999StepMs": 80.48,
+    "p99StepMs": 12.43,
+    "worstPlanMs": 130,
+    "plansPerSimS": 7
+   },
+   "d12": {
+    "resolverMsPerSimS": 97.6,
+    "totalMsPerSimS": 128.6,
+    "locoMsPerSimS": 27.4,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 108.8,
+    "p999StepMs": 73.29,
+    "p99StepMs": 11.3,
+    "worstPlanMs": 108.5,
+    "plansPerSimS": 4.3
+   },
+   "d13": {
+    "resolverMsPerSimS": 79.2,
+    "totalMsPerSimS": 110.6,
+    "locoMsPerSimS": 27.9,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 12.3,
+    "p999StepMs": 9.82,
+    "p99StepMs": 7.95,
+    "worstPlanMs": 0,
+    "plansPerSimS": 4.3
+   }
+  },
+  "STRAIGHT_FAST": {
+   "d1": {
+    "resolverMsPerSimS": 224.7,
+    "totalMsPerSimS": 255.4,
+    "locoMsPerSimS": 28.3,
+    "ballMsPerSimS": 2.4,
+    "worstStepMs": 235.8,
+    "p999StepMs": 220.58,
+    "p99StepMs": 12.41,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 123.4,
+    "totalMsPerSimS": 160.2,
+    "locoMsPerSimS": 32.6,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 198,
+    "p999StepMs": 113.39,
+    "p99StepMs": 7.05,
+    "worstPlanMs": 197.7,
+    "plansPerSimS": 8.8
+   },
+   "d12": {
+    "resolverMsPerSimS": 110.5,
+    "totalMsPerSimS": 142.2,
+    "locoMsPerSimS": 28.3,
+    "ballMsPerSimS": 3.5,
+    "worstStepMs": 116.7,
+    "p999StepMs": 89.82,
+    "p99StepMs": 12.39,
+    "worstPlanMs": 116.5,
+    "plansPerSimS": 9.2
+   },
+   "d13": {
+    "resolverMsPerSimS": 112.7,
+    "totalMsPerSimS": 145.5,
+    "locoMsPerSimS": 29.5,
+    "ballMsPerSimS": 3.4,
+    "worstStepMs": 13.3,
+    "p999StepMs": 10.74,
+    "p99StepMs": 8.59,
+    "worstPlanMs": 0,
+    "plansPerSimS": 10.1
+   }
+  },
+  "STRAIGHT_SPRINT": {
+   "d1": {
+    "resolverMsPerSimS": 270.9,
+    "totalMsPerSimS": 302.2,
+    "locoMsPerSimS": 28.7,
+    "ballMsPerSimS": 2.6,
+    "worstStepMs": 257.3,
+    "p999StepMs": 169.63,
+    "p99StepMs": 9.06,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 102.1,
+    "totalMsPerSimS": 137.2,
+    "locoMsPerSimS": 31.3,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 125,
+    "p999StepMs": 83.63,
+    "p99StepMs": 6.38,
+    "worstPlanMs": 124.7,
+    "plansPerSimS": 15.3
+   },
+   "d12": {
+    "resolverMsPerSimS": 95.2,
+    "totalMsPerSimS": 128.1,
+    "locoMsPerSimS": 29.2,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 112.4,
+    "p999StepMs": 82.97,
+    "p99StepMs": 5.92,
+    "worstPlanMs": 112.1,
+    "plansPerSimS": 14.9
+   },
+   "d13": {
+    "resolverMsPerSimS": 83.6,
+    "totalMsPerSimS": 116.5,
+    "locoMsPerSimS": 29.2,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 11.7,
+    "p999StepMs": 10.83,
+    "p99StepMs": 8.33,
+    "worstPlanMs": 0,
+    "plansPerSimS": 16.5
+   }
+  },
+  "STRAIGHT_RUN_FAR": {
+   "d1": {
+    "resolverMsPerSimS": 191.8,
+    "totalMsPerSimS": 221,
+    "locoMsPerSimS": 26.6,
+    "ballMsPerSimS": 2.5,
+    "worstStepMs": 214.6,
+    "p999StepMs": 192.57,
+    "p99StepMs": 7.26,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 123.7,
+    "totalMsPerSimS": 160.3,
+    "locoMsPerSimS": 32.1,
+    "ballMsPerSimS": 4.5,
+    "worstStepMs": 107.2,
+    "p999StepMs": 92.06,
+    "p99StepMs": 11.94,
+    "worstPlanMs": 106.9,
+    "plansPerSimS": 5.3
+   },
+   "d12": {
+    "resolverMsPerSimS": 91.7,
+    "totalMsPerSimS": 122.1,
+    "locoMsPerSimS": 26.7,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 88.6,
+    "p999StepMs": 75.95,
+    "p99StepMs": 11.1,
+    "worstPlanMs": 88.3,
+    "plansPerSimS": 4
+   },
+   "d13": {
+    "resolverMsPerSimS": 66.1,
+    "totalMsPerSimS": 96.5,
+    "locoMsPerSimS": 26.8,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 11.7,
+    "p999StepMs": 8.91,
+    "p99StepMs": 7.36,
+    "worstPlanMs": 0,
+    "plansPerSimS": 4.7
+   }
+  },
+  "CUT60_RUN_FAR": {
+   "d1": {
+    "resolverMsPerSimS": 794.3,
+    "totalMsPerSimS": 825.7,
+    "locoMsPerSimS": 28.7,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 2112.3,
+    "p999StepMs": 838.98,
+    "p99StepMs": 100.56,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 212.5,
+    "totalMsPerSimS": 254.3,
+    "locoMsPerSimS": 36.5,
+    "ballMsPerSimS": 5.2,
+    "worstStepMs": 379.7,
+    "p999StepMs": 140.38,
+    "p99StepMs": 17.07,
+    "worstPlanMs": 379,
+    "plansPerSimS": 6.2
+   },
+   "d12": {
+    "resolverMsPerSimS": 258.8,
+    "totalMsPerSimS": 290.8,
+    "locoMsPerSimS": 28.4,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 395.5,
+    "p999StepMs": 175.55,
+    "p99StepMs": 23.42,
+    "worstPlanMs": 395.2,
+    "plansPerSimS": 10.9
+   },
+   "d13": {
+    "resolverMsPerSimS": 205.3,
+    "totalMsPerSimS": 239.7,
+    "locoMsPerSimS": 30.4,
+    "ballMsPerSimS": 4,
+    "worstStepMs": 27.7,
+    "p999StepMs": 13.34,
+    "p99StepMs": 9.82,
+    "worstPlanMs": 0,
+    "plansPerSimS": 8.4
+   }
+  },
+  "CURVE_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 400.8,
+    "totalMsPerSimS": 430.9,
+    "locoMsPerSimS": 27.4,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 975.5,
+    "p999StepMs": 268.02,
+    "p99StepMs": 23.23,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 235.2,
+    "totalMsPerSimS": 277.3,
+    "locoMsPerSimS": 37,
+    "ballMsPerSimS": 5,
+    "worstStepMs": 253.7,
+    "p999StepMs": 135.66,
+    "p99StepMs": 31.3,
+    "worstPlanMs": 253,
+    "plansPerSimS": 8.3
+   },
+   "d12": {
+    "resolverMsPerSimS": 166.7,
+    "totalMsPerSimS": 198.4,
+    "locoMsPerSimS": 28,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 465.1,
+    "p999StepMs": 108.81,
+    "p99StepMs": 13.12,
+    "worstPlanMs": 464.8,
+    "plansPerSimS": 5.9
+   },
+   "d13": {
+    "resolverMsPerSimS": 126.2,
+    "totalMsPerSimS": 159.6,
+    "locoMsPerSimS": 29.3,
+    "ballMsPerSimS": 4,
+    "worstStepMs": 24.1,
+    "p999StepMs": 11.55,
+    "p99StepMs": 8.52,
+    "worstPlanMs": 0,
+    "plansPerSimS": 8.2
+   }
+  },
+  "CURVE_JOG": {
+   "d1": {
+    "resolverMsPerSimS": 401.2,
+    "totalMsPerSimS": 432.5,
+    "locoMsPerSimS": 27.6,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 395.6,
+    "p999StepMs": 326.01,
+    "p99StepMs": 36.41,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 155.2,
+    "totalMsPerSimS": 194.6,
+    "locoMsPerSimS": 34.5,
+    "ballMsPerSimS": 5,
+    "worstStepMs": 250.3,
+    "p999StepMs": 134.21,
+    "p99StepMs": 4.94,
+    "worstPlanMs": 249.6,
+    "plansPerSimS": 4.2
+   },
+   "d12": {
+    "resolverMsPerSimS": 151,
+    "totalMsPerSimS": 182,
+    "locoMsPerSimS": 26.9,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 226.3,
+    "p999StepMs": 92.81,
+    "p99StepMs": 11.72,
+    "worstPlanMs": 226,
+    "plansPerSimS": 6.1
+   },
+   "d13": {
+    "resolverMsPerSimS": 112.2,
+    "totalMsPerSimS": 145,
+    "locoMsPerSimS": 28.5,
+    "ballMsPerSimS": 4.3,
+    "worstStepMs": 10.7,
+    "p999StepMs": 9.07,
+    "p99StepMs": 8,
+    "worstPlanMs": 0,
+    "plansPerSimS": 7.8
+   }
+  },
+  "CUT45_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 630.6,
+    "totalMsPerSimS": 661.8,
+    "locoMsPerSimS": 28.5,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 1386,
+    "p999StepMs": 532.58,
+    "p99StepMs": 115.85,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 209.5,
+    "totalMsPerSimS": 243.9,
+    "locoMsPerSimS": 30.5,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 372.5,
+    "p999StepMs": 112.89,
+    "p99StepMs": 23.07,
+    "worstPlanMs": 372.2,
+    "plansPerSimS": 6.5
+   },
+   "d12": {
+    "resolverMsPerSimS": 184.4,
+    "totalMsPerSimS": 216.1,
+    "locoMsPerSimS": 27.8,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 386.7,
+    "p999StepMs": 108.45,
+    "p99StepMs": 12.35,
+    "worstPlanMs": 386.5,
+    "plansPerSimS": 8.1
+   },
+   "d13": {
+    "resolverMsPerSimS": 128.9,
+    "totalMsPerSimS": 162.3,
+    "locoMsPerSimS": 29.4,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 15.7,
+    "p999StepMs": 11.03,
+    "p99StepMs": 8.7,
+    "worstPlanMs": 0,
+    "plansPerSimS": 4.1
+   }
+  },
+  "CUT60_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 642.7,
+    "totalMsPerSimS": 673.3,
+    "locoMsPerSimS": 28,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 1532.2,
+    "p999StepMs": 737.54,
+    "p99StepMs": 90.79,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 221.5,
+    "totalMsPerSimS": 262.9,
+    "locoMsPerSimS": 36.3,
+    "ballMsPerSimS": 5.1,
+    "worstStepMs": 297.1,
+    "p999StepMs": 159.78,
+    "p99StepMs": 25.77,
+    "worstPlanMs": 296.8,
+    "plansPerSimS": 9.3
+   },
+   "d12": {
+    "resolverMsPerSimS": 232.1,
+    "totalMsPerSimS": 264.4,
+    "locoMsPerSimS": 28.4,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 431.5,
+    "p999StepMs": 151.4,
+    "p99StepMs": 22.05,
+    "worstPlanMs": 431.3,
+    "plansPerSimS": 7.1
+   },
+   "d13": {
+    "resolverMsPerSimS": 135.5,
+    "totalMsPerSimS": 168.2,
+    "locoMsPerSimS": 29,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 12.7,
+    "p999StepMs": 11.22,
+    "p99StepMs": 8.87,
+    "worstPlanMs": 0,
+    "plansPerSimS": 8.3
+   }
+  },
+  "CUT60L_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 399.3,
+    "totalMsPerSimS": 430,
+    "locoMsPerSimS": 27.9,
+    "ballMsPerSimS": 2.8,
+    "worstStepMs": 1560,
+    "p999StepMs": 232.88,
+    "p99StepMs": 9.21,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 179.2,
+    "totalMsPerSimS": 210.9,
+    "locoMsPerSimS": 28,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 249.8,
+    "p999StepMs": 141.02,
+    "p99StepMs": 19.24,
+    "worstPlanMs": 249.6,
+    "plansPerSimS": 5.8
+   },
+   "d12": {
+    "resolverMsPerSimS": 190.4,
+    "totalMsPerSimS": 221.9,
+    "locoMsPerSimS": 27.7,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 479,
+    "p999StepMs": 147.64,
+    "p99StepMs": 11.78,
+    "worstPlanMs": 478.7,
+    "plansPerSimS": 7.3
+   },
+   "d13": {
+    "resolverMsPerSimS": 159.8,
+    "totalMsPerSimS": 193.9,
+    "locoMsPerSimS": 29.9,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 38.1,
+    "p999StepMs": 19.49,
+    "p99StepMs": 9.22,
+    "worstPlanMs": 0,
+    "plansPerSimS": 7.1
+   }
+  },
+  "CUT90_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 720.3,
+    "totalMsPerSimS": 751.5,
+    "locoMsPerSimS": 28.5,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 1477,
+    "p999StepMs": 837.15,
+    "p99StepMs": 112.51,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 214.4,
+    "totalMsPerSimS": 248.1,
+    "locoMsPerSimS": 29.6,
+    "ballMsPerSimS": 4.1,
+    "worstStepMs": 367.9,
+    "p999StepMs": 145.57,
+    "p99StepMs": 23.68,
+    "worstPlanMs": 367.7,
+    "plansPerSimS": 11
+   },
+   "d12": {
+    "resolverMsPerSimS": 315.5,
+    "totalMsPerSimS": 347.5,
+    "locoMsPerSimS": 28.1,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 524,
+    "p999StepMs": 317.97,
+    "p99StepMs": 22.07,
+    "worstPlanMs": 523.7,
+    "plansPerSimS": 8.3
+   },
+   "d13": {
+    "resolverMsPerSimS": 271.6,
+    "totalMsPerSimS": 306.7,
+    "locoMsPerSimS": 30.9,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 32.7,
+    "p999StepMs": 12.29,
+    "p99StepMs": 9.86,
+    "worstPlanMs": 0,
+    "plansPerSimS": 7.6
+   }
+  },
+  "CUT90_JOG": {
+   "d1": {
+    "resolverMsPerSimS": 678.7,
+    "totalMsPerSimS": 708.5,
+    "locoMsPerSimS": 27,
+    "ballMsPerSimS": 2.8,
+    "worstStepMs": 1598.4,
+    "p999StepMs": 828.6,
+    "p99StepMs": 76.42,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 299.7,
+    "totalMsPerSimS": 339.8,
+    "locoMsPerSimS": 35.2,
+    "ballMsPerSimS": 4.8,
+    "worstStepMs": 305.2,
+    "p999StepMs": 186.84,
+    "p99StepMs": 39.99,
+    "worstPlanMs": 304.9,
+    "plansPerSimS": 6.4
+   },
+   "d12": {
+    "resolverMsPerSimS": 263.2,
+    "totalMsPerSimS": 293.8,
+    "locoMsPerSimS": 26.8,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 405.1,
+    "p999StepMs": 270.07,
+    "p99StepMs": 11.29,
+    "worstPlanMs": 404.8,
+    "plansPerSimS": 4.8
+   },
+   "d13": {
+    "resolverMsPerSimS": 174.2,
+    "totalMsPerSimS": 208,
+    "locoMsPerSimS": 29.3,
+    "ballMsPerSimS": 4.5,
+    "worstStepMs": 23.5,
+    "p999StepMs": 12.37,
+    "p99StepMs": 8.98,
+    "worstPlanMs": 0,
+    "plansPerSimS": 5.3
+   }
+  },
+  "CUT90L_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 450.4,
+    "totalMsPerSimS": 481,
+    "locoMsPerSimS": 27.8,
+    "ballMsPerSimS": 2.8,
+    "worstStepMs": 1489,
+    "p999StepMs": 427.24,
+    "p99StepMs": 8.05,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 178.6,
+    "totalMsPerSimS": 214,
+    "locoMsPerSimS": 31.2,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 232.2,
+    "p999StepMs": 158.17,
+    "p99StepMs": 8.39,
+    "worstPlanMs": 231.8,
+    "plansPerSimS": 5
+   },
+   "d12": {
+    "resolverMsPerSimS": 422.6,
+    "totalMsPerSimS": 455.5,
+    "locoMsPerSimS": 29.1,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 538.2,
+    "p999StepMs": 256.74,
+    "p99StepMs": 40.8,
+    "worstPlanMs": 537.9,
+    "plansPerSimS": 8
+   },
+   "d13": {
+    "resolverMsPerSimS": 212.1,
+    "totalMsPerSimS": 247.2,
+    "locoMsPerSimS": 31,
+    "ballMsPerSimS": 4.1,
+    "worstStepMs": 25.4,
+    "p999StepMs": 20.03,
+    "p99StepMs": 9.89,
+    "worstPlanMs": 0,
+    "plansPerSimS": 8.5
+   }
+  },
+  "REV135_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 1540,
+    "totalMsPerSimS": 1571.6,
+    "locoMsPerSimS": 28.3,
+    "ballMsPerSimS": 3.3,
+    "worstStepMs": 1968,
+    "p999StepMs": 1267.35,
+    "p99StepMs": 133.33,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 221.5,
+    "totalMsPerSimS": 255.1,
+    "locoMsPerSimS": 29.8,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 309.7,
+    "p999StepMs": 190.78,
+    "p99StepMs": 19.96,
+    "worstPlanMs": 309.5,
+    "plansPerSimS": 8
+   },
+   "d12": {
+    "resolverMsPerSimS": 474.9,
+    "totalMsPerSimS": 508.2,
+    "locoMsPerSimS": 29.2,
+    "ballMsPerSimS": 4.1,
+    "worstStepMs": 526.8,
+    "p999StepMs": 285.98,
+    "p99StepMs": 69.13,
+    "worstPlanMs": 526.6,
+    "plansPerSimS": 7.6
+   },
+   "d13": {
+    "resolverMsPerSimS": 257.2,
+    "totalMsPerSimS": 292.1,
+    "locoMsPerSimS": 30.8,
+    "ballMsPerSimS": 4.1,
+    "worstStepMs": 25.5,
+    "p999StepMs": 14.05,
+    "p99StepMs": 9.61,
+    "worstPlanMs": 0,
+    "plansPerSimS": 10.6
+   }
+  },
+  "REV180_SPRINT": {
+   "d1": {
+    "resolverMsPerSimS": 472.3,
+    "totalMsPerSimS": 506.5,
+    "locoMsPerSimS": 31.6,
+    "ballMsPerSimS": 2.6,
+    "worstStepMs": 974.7,
+    "p999StepMs": 248.27,
+    "p99StepMs": 12.07,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 141.6,
+    "totalMsPerSimS": 177,
+    "locoMsPerSimS": 31.8,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 254.6,
+    "p999StepMs": 122.99,
+    "p99StepMs": 10.08,
+    "worstPlanMs": 254.4,
+    "plansPerSimS": 14.3
+   },
+   "d12": {
+    "resolverMsPerSimS": 412,
+    "totalMsPerSimS": 449,
+    "locoMsPerSimS": 33.4,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 251.2,
+    "p999StepMs": 201.86,
+    "p99StepMs": 49.06,
+    "worstPlanMs": 250.9,
+    "plansPerSimS": 18.5
+   },
+   "d13": {
+    "resolverMsPerSimS": 280.2,
+    "totalMsPerSimS": 319,
+    "locoMsPerSimS": 34.7,
+    "ballMsPerSimS": 4,
+    "worstStepMs": 40.7,
+    "p999StepMs": 18.08,
+    "p99StepMs": 14.31,
+    "worstPlanMs": 0,
+    "plansPerSimS": 17
+   }
+  },
+  "CANCEL_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 447.4,
+    "totalMsPerSimS": 476.4,
+    "locoMsPerSimS": 26.5,
+    "ballMsPerSimS": 2.5,
+    "worstStepMs": 1472.4,
+    "p999StepMs": 221.93,
+    "p99StepMs": 7.84,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 134.5,
+    "totalMsPerSimS": 165.2,
+    "locoMsPerSimS": 27.1,
+    "ballMsPerSimS": 3.5,
+    "worstStepMs": 214,
+    "p999StepMs": 88.97,
+    "p99StepMs": 7,
+    "worstPlanMs": 213.8,
+    "plansPerSimS": 6.5
+   },
+   "d12": {
+    "resolverMsPerSimS": 210,
+    "totalMsPerSimS": 242.2,
+    "locoMsPerSimS": 28.3,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 513.9,
+    "p999StepMs": 268.89,
+    "p99StepMs": 12.34,
+    "worstPlanMs": 513.7,
+    "plansPerSimS": 3.9
+   },
+   "d13": {
+    "resolverMsPerSimS": 157.8,
+    "totalMsPerSimS": 190.7,
+    "locoMsPerSimS": 29.1,
+    "ballMsPerSimS": 3.8,
+    "worstStepMs": 11.7,
+    "p999StepMs": 10.2,
+    "p99StepMs": 8.84,
+    "worstPlanMs": 0,
+    "plansPerSimS": 4.7
+   }
+  },
+  "RETARGET_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 839.5,
+    "totalMsPerSimS": 869.5,
+    "locoMsPerSimS": 27.3,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 1644.7,
+    "p999StepMs": 1017.09,
+    "p99StepMs": 81.46,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 217.7,
+    "totalMsPerSimS": 250,
+    "locoMsPerSimS": 28.6,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 236.8,
+    "p999StepMs": 191.83,
+    "p99StepMs": 23.83,
+    "worstPlanMs": 236.7,
+    "plansPerSimS": 7.5
+   },
+   "d12": {
+    "resolverMsPerSimS": 348.3,
+    "totalMsPerSimS": 381.4,
+    "locoMsPerSimS": 29.1,
+    "ballMsPerSimS": 4,
+    "worstStepMs": 418.7,
+    "p999StepMs": 315.02,
+    "p99StepMs": 37.16,
+    "worstPlanMs": 418.5,
+    "plansPerSimS": 9.5
+   },
+   "d13": {
+    "resolverMsPerSimS": 246,
+    "totalMsPerSimS": 280.2,
+    "locoMsPerSimS": 30,
+    "ballMsPerSimS": 4.2,
+    "worstStepMs": 23,
+    "p999StepMs": 12.26,
+    "p99StepMs": 9.52,
+    "worstPlanMs": 0,
+    "plansPerSimS": 6.8
+   }
+  },
+  "INTERCEPT_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 181.1,
+    "totalMsPerSimS": 210.8,
+    "locoMsPerSimS": 27.1,
+    "ballMsPerSimS": 2.6,
+    "worstStepMs": 222.1,
+    "p999StepMs": 197.92,
+    "p99StepMs": 3.88,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 90.3,
+    "totalMsPerSimS": 121.1,
+    "locoMsPerSimS": 27.1,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 84.6,
+    "p999StepMs": 74.26,
+    "p99StepMs": 4.61,
+    "worstPlanMs": 84.3,
+    "plansPerSimS": 7.9
+   },
+   "d12": {
+    "resolverMsPerSimS": 97.1,
+    "totalMsPerSimS": 128.4,
+    "locoMsPerSimS": 27.6,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 99.5,
+    "p999StepMs": 73.25,
+    "p99StepMs": 11.15,
+    "worstPlanMs": 99.2,
+    "plansPerSimS": 5.1
+   },
+   "d13": {
+    "resolverMsPerSimS": 72.2,
+    "totalMsPerSimS": 104.1,
+    "locoMsPerSimS": 28.1,
+    "ballMsPerSimS": 3.9,
+    "worstStepMs": 9.6,
+    "p999StepMs": 9.18,
+    "p99StepMs": 7.72,
+    "worstPlanMs": 0,
+    "plansPerSimS": 5.1
+   }
+  },
+  "TACKLE_RUN": {
+   "d1": {
+    "resolverMsPerSimS": 205.7,
+    "totalMsPerSimS": 235.6,
+    "locoMsPerSimS": 27.2,
+    "ballMsPerSimS": 2.7,
+    "worstStepMs": 225.6,
+    "p999StepMs": 196.3,
+    "p99StepMs": 6.21,
+    "worstPlanMs": 0,
+    "plansPerSimS": 0
+   },
+   "d11": {
+    "resolverMsPerSimS": 99.2,
+    "totalMsPerSimS": 130.3,
+    "locoMsPerSimS": 27.5,
+    "ballMsPerSimS": 3.6,
+    "worstStepMs": 88.7,
+    "p999StepMs": 72.02,
+    "p99StepMs": 5.74,
+    "worstPlanMs": 88.4,
+    "plansPerSimS": 7.4
+   },
+   "d12": {
+    "resolverMsPerSimS": 106.3,
+    "totalMsPerSimS": 137.8,
+    "locoMsPerSimS": 27.8,
+    "ballMsPerSimS": 3.7,
+    "worstStepMs": 80.6,
+    "p999StepMs": 69.45,
+    "p99StepMs": 12.29,
+    "worstPlanMs": 80.4,
+    "plansPerSimS": 9.4
+   },
+   "d13": {
+    "resolverMsPerSimS": 91.9,
+    "totalMsPerSimS": 125.1,
+    "locoMsPerSimS": 29,
+    "ballMsPerSimS": 4.1,
+    "worstStepMs": 18.5,
+    "p999StepMs": 9.9,
+    "p99StepMs": 7.94,
+    "worstPlanMs": 0,
+    "plansPerSimS": 9.5
+   }
+  }
+ },
+ "worst": {
+  "id": "REV180_SPRINT",
+  "d1": {
+   "resolverMsPerSimS": 476.7,
+   "totalMsPerSimS": 511,
+   "locoMsPerSimS": 31.7,
+   "ballMsPerSimS": 2.6,
+   "worstStepMs": 986.2,
+   "p999StepMs": 248.44,
+   "p99StepMs": 12.55,
+   "worstPlanMs": 0,
+   "plansPerSimS": 0
+  },
+  "d11": {
+   "resolverMsPerSimS": 141.6,
+   "totalMsPerSimS": 177,
+   "locoMsPerSimS": 31.8,
+   "ballMsPerSimS": 3.6,
+   "worstStepMs": 254.6,
+   "p999StepMs": 122.99,
+   "p99StepMs": 10.08,
+   "worstPlanMs": 254.4,
+   "plansPerSimS": 14.3
+  },
+  "d12": {
+   "resolverMsPerSimS": 412,
+   "totalMsPerSimS": 449,
+   "locoMsPerSimS": 33.4,
+   "ballMsPerSimS": 3.6,
+   "worstStepMs": 251.2,
+   "p999StepMs": 201.86,
+   "p99StepMs": 49.06,
+   "worstPlanMs": 250.9,
+   "plansPerSimS": 18.5
+  },
+  "d13": {
+   "resolverMsPerSimS": 280.2,
+   "totalMsPerSimS": 319,
+   "locoMsPerSimS": 34.7,
+   "ballMsPerSimS": 4,
+   "worstStepMs": 40.7,
+   "p999StepMs": 18.08,
+   "p99StepMs": 14.31,
+   "worstPlanMs": 0,
+   "plansPerSimS": 17
+  }
+ },
+ "note": "each core in its own process, one after another, 20 scenarios × seeds 1–4, warm rig caches; DRIBBLE-1 re-run alone (its first run overlapped another process)"
+}

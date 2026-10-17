@@ -1,0 +1,45 @@
+{
+ "ver": "d13",
+ "planner": "synchronous (DRIBBLE-1.2 pass)",
+ "simS": 269,
+ "footPrediction": {
+  "tickRequestsPerS": 33925.8,
+  "ticksSteppedPerS": 1236.7,
+  "hitRatePct": 96.4,
+  "mainTrack": {
+   "kept": 142,
+   "adopted": 119,
+   "newPrediction": 216,
+   "reuseRatePct": 54.7
+  }
+ },
+ "footPoses": {
+  "requestsPerS": 79134.7,
+  "computedPerS": 921,
+  "hitRatePct": 98.8,
+  "warped": {
+   "requestsPerS": 757.3,
+   "memoHitsPerS": 413.3,
+   "legOnlyPerS": 260.2
+  }
+ },
+ "ballPrediction": {
+  "launchRequestsPerS": 170.3,
+  "launchReuseRatePct": 56.5,
+  "ballStepsPerS": 10896.3
+ },
+ "plans": {
+  "versionResultsReusedPerS": 4.9,
+  "versionsEvaluatedPerS": null,
+  "versionReuseRatePct": null,
+  "candidateGenerationsReusedPct": 61.3,
+  "heldPlansKept": 1,
+  "replansPerS": 6.9
+ },
+ "candidates": {
+  "broadPhaseRejectedPerS": 975.1,
+  "releaseProbesSkippedByBroadPhasePerS": 0,
+  "exactContactGeometryPerS": 5371.3,
+  "exactCorridorsPerS": 47.6
+ }
+}

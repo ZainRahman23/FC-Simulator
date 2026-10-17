@@ -52,7 +52,9 @@ const C = CORES[ver];
 const S0 = makeSim(get("CUT60_RUN"), { ver, seed: 1, opts: { record: false } }); S0.run(0.5);
 const protoSim = C.DribbleSim.prototype, protoTrack = S0.track ? Object.getPrototypeOf(S0.track) : null, protoW = Object.getPrototypeOf(S0.Wp);
 for (const n of Object.getOwnPropertyNames(protoSim)) if (!CAT[n] && /G$/.test(n) && CAT[n.slice(0, -1)]) CAT[n] = CAT[n.slice(0, -1)];
-Object.assign(CAT, { plan13G: "planOther", search13G: "scoring", install13G: "scoring", genOptG: "enumerate", setupCheckG: "setup", resolveTouch13: "invalidation", ensureG: "turnPredict", wuTotal: "invalidation", installPlan: "scoring" });
+// (DRIBBLE-1.3: the incremental search's generator bodies resume inside resolveTouch13 / resolveTouch13a — their self time is search work, not
+// invalidation; a tick's pose evaluation is poseOf / evalSample — the leg-only pose is a module function evaluated there)
+Object.assign(CAT, { plan13G: "planOther", search13G: "scoring", install13G: "scoring", genOptG: "enumerate", setupCheckG: "setup", resolveTouch13: "search (resumed generators)", resolveTouch13a: "search (resumed generators)", ensureG: "turnPredict", wuTotal: "invalidation", jobInvalid: "invalidation", installPlan: "scoring", poseOf: "pose", evalSample: "pose", prefetch13: "turnPredict", prefetch13a: "turnPredict" });
 for (const n of Object.getOwnPropertyNames(protoSim)) if (CAT[n] && n !== "constructor") wrapFn(protoSim, n, CAT[n], ROOTS.has(n), n === "contactGeom" ? "contactGeom" : n === "corridor" ? "corridor" : null);
 if (protoTrack) for (const n of Object.getOwnPropertyNames(protoTrack)) if (CAT[n]) wrapFn(protoTrack, n, CAT[n]);
 wrapFn(protoW, "step", "ballPredict", false, "ballStep");

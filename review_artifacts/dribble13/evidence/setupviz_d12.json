@@ -1,0 +1,1731 @@
+{
+ "summary": {
+  "setups": 20,
+  "decisiveExecuted": 13,
+  "takenAfter": 12,
+  "medianGapPlanExecM": 0.148,
+  "medianGapExecActualM": 0,
+  "firmed": 4,
+  "noNextTouch": 7
+ },
+ "rows": [
+  {
+   "id": "CUT60_RUN",
+   "sd": 3,
+   "k": 646,
+   "F": "L",
+   "reg": "INSIDE",
+   "speedPlan": 5.89,
+   "speedExec": 5.92,
+   "errSigma": [
+    -0.65,
+    -1.52,
+    -2.59
+   ],
+   "floorK": 1.017578125,
+   "target": [
+    30.827305395557325,
+    0.11,
+    -35.41072418539291
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 827,
+    "F": "R",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 827,
+    "plannedLaunch": [
+     30.828208817961354,
+     0.11,
+     -35.41102784516196
+    ],
+    "executedLaunch": [
+     30.62530777302987,
+     0.11,
+     -35.221331654809184
+    ],
+    "actual": [
+     30.6473629257491,
+     0.11,
+     -35.332404860089696
+    ],
+    "actualV": [
+     4.300924640870071,
+     0,
+     -7.5393197764282975
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.278,
+    "gapExecActual": 0.113,
+    "gapPlanActual": 0.197
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 823,
+    "F": "R",
+    "reg": "OUTSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 4,
+   "k": 859,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.72,
+   "speedExec": 6.61,
+   "errSigma": [
+    -0.91,
+    -0.55,
+    0.86
+   ],
+   "floorK": 1,
+   "target": [
+    36.23566967716486,
+    0.11,
+    -35.659682476383786
+   ],
+   "targetK": 1056,
+   "dec": {
+    "kc": 1052,
+    "F": "L",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 1052,
+    "plannedLaunch": [
+     36.17539031706616,
+     0.11,
+     -35.64458804187865
+    ],
+    "executedLaunch": [
+     36.1449098326252,
+     0.11,
+     -35.5856662326858
+    ],
+    "actual": [
+     36.1449098326252,
+     0.11,
+     -35.5856662326858
+    ],
+    "actualV": [
+     3.6117554845349704,
+     0,
+     -0.8589341566659935
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.066,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.066
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 1054,
+    "F": "L",
+    "reg": "INSIDE",
+    "role": "recovery",
+    "decisiveHit": true
+   },
+   "taken": false
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 5,
+   "k": 652,
+   "F": "L",
+   "reg": "INSIDE",
+   "speedPlan": 6.34,
+   "speedExec": 6.16,
+   "errSigma": [
+    -1.53,
+    -0.36,
+    0.83
+   ],
+   "floorK": 1,
+   "target": [
+    30.83627037298,
+    0.11,
+    -35.98199819417236
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 833,
+    "F": "R",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 833,
+    "plannedLaunch": [
+     30.822434272709998,
+     0.11,
+     -35.97703783502682
+    ],
+    "executedLaunch": [
+     30.74329057760068,
+     0.11,
+     -35.91772836371927
+    ],
+    "actual": [
+     30.763796821541547,
+     0.11,
+     -36.022602961545545
+    ],
+    "actualV": [
+     4.465780400639712,
+     0,
+     -7.4091028985394525
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.099,
+    "gapExecActual": 0.107,
+    "gapPlanActual": 0.074
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 829,
+    "F": "R",
+    "reg": "OUTSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 10,
+   "k": 712,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.45,
+   "speedExec": 6.71,
+   "errSigma": [
+    -1.64,
+    -0.8,
+    -0.75
+   ],
+   "floorK": 1.0712890625,
+   "target": [
+    32.617651265530625,
+    0.11,
+    -35.2977449340375
+   ],
+   "targetK": 912,
+   "dec": {
+    "kc": 908,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 908,
+    "plannedLaunch": [
+     32.602767593326654,
+     0.11,
+     -35.29352026661155
+    ],
+    "executedLaunch": [
+     32.79546192683357,
+     0.11,
+     -35.27304308820482
+    ],
+    "actual": [
+     32.79546192683357,
+     0.11,
+     -35.27304308820482
+    ],
+    "actualV": [
+     3.5844761314247333,
+     0,
+     -0.9521152338652944
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.194,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.194
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 913,
+    "F": "L",
+    "reg": "INSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 15,
+   "k": 709,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.57,
+   "speedExec": 7.8,
+   "errSigma": [
+    -1.43,
+    -1.19,
+    0.57
+   ],
+   "floorK": 1.216796875,
+   "target": [
+    32.6176510896287,
+    0.11,
+    -35.057829551716424
+   ],
+   "targetK": 912,
+   "dec": {
+    "kc": 908,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 908,
+    "plannedLaunch": [
+     32.56211328129976,
+     0.11,
+     -35.04169942780234
+    ],
+    "executedLaunch": [
+     33.64255144659374,
+     0.11,
+     -35.216918989499376
+    ],
+    "actual": [
+     33.64255144659374,
+     0.11,
+     -35.216918989499376
+    ],
+    "actualV": [
+     4.722640528304551,
+     0,
+     -1.2434939440268828
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 1.095,
+    "gapExecActual": 0,
+    "gapPlanActual": 1.095
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 1,
+   "k": 571,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.87,
+   "speedExec": 5.82,
+   "errSigma": [
+    -1.93,
+    2.12,
+    -0.57
+   ],
+   "floorK": 1.015625,
+   "target": [
+    29.63393580180957,
+    0.11,
+    -32.574867763782855
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 758,
+    "F": "L",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 758,
+    "plannedLaunch": [
+     28.7044934567129,
+     0.11,
+     -32.89397003816802
+    ],
+    "executedLaunch": [
+     28.68369099644774,
+     0.11,
+     -33.006885801403975
+    ],
+    "actual": [
+     28.728516059446086,
+     0.11,
+     -32.83126675497786
+    ],
+    "actualV": [
+     4.321531229728418,
+     0,
+     6.857838124712432
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.115,
+    "gapExecActual": 0.181,
+    "gapPlanActual": 0.067
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 751,
+    "F": "L",
+    "reg": "OUTSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 4,
+   "k": 664,
+   "F": "L",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.11,
+   "speedExec": 6.13,
+   "errSigma": [
+    0.11,
+    1.17,
+    -2.15
+   ],
+   "floorK": 1,
+   "target": [
+    30.444060863970744,
+    0.11,
+    -34.028724529197255
+   ],
+   "targetK": 786,
+   "dec": {
+    "kc": 785,
+    "F": "L",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 785,
+    "plannedLaunch": [
+     30.628606971431633,
+     0.11,
+     -34.002652920391995
+    ],
+    "executedLaunch": [
+     30.44900506944893,
+     0.11,
+     -34.13312496254039
+    ],
+    "actual": [
+     30.44900506944893,
+     0.11,
+     -34.13312496254039
+    ],
+    "actualV": [
+     4.2531536632823865,
+     0,
+     0.42964501696704144
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.222,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.222
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": false
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 7,
+   "k": 568,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.91,
+   "speedExec": 5.8,
+   "errSigma": [
+    -1.61,
+    -0.72,
+    -1.46
+   ],
+   "floorK": 1,
+   "target": [
+    29.73907092936943,
+    0.11,
+    -32.45521706293846
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 758,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 758,
+    "plannedLaunch": [
+     28.84033294987051,
+     0.11,
+     -32.7847957365185
+    ],
+    "executedLaunch": [
+     28.6938401460117,
+     0.11,
+     -32.80227960939492
+    ],
+    "actual": [
+     28.6938401460117,
+     0.11,
+     -32.80227960939492
+    ],
+    "actualV": [
+     2.6326978697658037,
+     0,
+     0.9953058768293872
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.148,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.148
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 8,
+   "k": 664,
+   "F": "L",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.09,
+   "speedExec": 6.03,
+   "errSigma": [
+    -0.36,
+    -0.93,
+    0.94
+   ],
+   "floorK": 1,
+   "target": [
+    31.151643536152378,
+    0.11,
+    -33.391105351785015
+   ],
+   "targetK": 840,
+   "dec": {
+    "kc": 839,
+    "F": "R",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 839,
+    "plannedLaunch": [
+     31.13838268581229,
+     0.11,
+     -33.39548816293156
+    ],
+    "executedLaunch": [
+     31.18631358189163,
+     0.11,
+     -33.261472146633515
+    ],
+    "actual": [
+     31.18631358189163,
+     0.11,
+     -33.261472146633515
+    ],
+    "actualV": [
+     3.2887225885207982,
+     0,
+     1.2037275124240894
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.142,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.142
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 841,
+    "F": "R",
+    "reg": "INSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 2,
+   "k": 565,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.85,
+   "speedExec": 5.98,
+   "errSigma": [
+    1.24,
+    0.43,
+    0.19
+   ],
+   "floorK": 1,
+   "target": [
+    28.68566162365307,
+    0.11,
+    -35.01352594080685
+   ],
+   "targetK": 780,
+   "dec": {
+    "kc": 782,
+    "F": "L",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 782,
+    "plannedLaunch": [
+     28.704926049301598,
+     0.11,
+     -35.02037085415871
+    ],
+    "executedLaunch": [
+     28.819071308031784,
+     0.11,
+     -35.09856819093383
+    ],
+    "actual": [
+     28.80733158364508,
+     0.11082287540651137,
+     -35.120401250928076
+    ],
+    "actualV": [
+     -0.3799730573695671,
+     0.19749009756272934,
+     -6.1311121458101985
+    ],
+    "actualH": 0.11082287540651137,
+    "gapPlanExec": 0.138,
+    "gapExecActual": 0.025,
+    "gapPlanActual": 0.143
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 781,
+    "F": "L",
+    "reg": "INSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 3,
+   "k": 862,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.02,
+   "speedExec": 5.98,
+   "errSigma": [
+    -0.35,
+    0.78,
+    1.8
+   ],
+   "floorK": 1,
+   "target": [
+    35.875743808407,
+    0.11,
+    -35.3589119061212
+   ],
+   "targetK": 1074,
+   "dec": {
+    "kc": 1073,
+    "F": "L",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 1073,
+    "plannedLaunch": [
+     35.86482818584521,
+     0.11,
+     -35.35611557258865
+    ],
+    "executedLaunch": [
+     35.97694417908131,
+     0.11,
+     -35.45304580973445
+    ],
+    "actual": [
+     35.97694417908131,
+     0.11,
+     -35.45304580973445
+    ],
+    "actualV": [
+     2.7792828781436922,
+     0,
+     -0.761277419545787
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.148,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.148
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 4,
+   "k": 655,
+   "F": "L",
+   "reg": "FRONT",
+   "speedPlan": 5.21,
+   "speedExec": 5.32,
+   "errSigma": [
+    0.8,
+    -0.96,
+    0.39
+   ],
+   "floorK": 1,
+   "target": [
+    31.053753510629623,
+    0.11,
+    -35.09870468043985
+   ],
+   "targetK": 852,
+   "dec": {
+    "kc": 845,
+    "F": "R",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 845,
+    "plannedLaunch": [
+     30.9785599447957,
+     0.11,
+     -35.08280873876322
+    ],
+    "executedLaunch": [
+     31.222716725472747,
+     0.11,
+     -35.02917108191122
+    ],
+    "actual": [
+     31.222716725472747,
+     0.11,
+     -35.02917108191122
+    ],
+    "actualV": [
+     3.068003652418639,
+     0,
+     -0.5563948443826213
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.25,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.25
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 11,
+   "k": 565,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.65,
+   "speedExec": 5.84,
+   "errSigma": [
+    1.95,
+    -0.02,
+    0.03
+   ],
+   "floorK": 1,
+   "target": [
+    28.708411393965115,
+    0.11,
+    -35.079770875991215
+   ],
+   "targetK": 780,
+   "dec": {
+    "kc": 770,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 770,
+    "plannedLaunch": [
+     28.61531593744553,
+     0.11,
+     -35.05193298468043
+    ],
+    "executedLaunch": [
+     28.783330640550908,
+     0.11,
+     -35.10026225691535
+    ],
+    "actual": [
+     28.77182867412798,
+     0.11136783400745735,
+     -35.126762325281305
+    ],
+    "actualV": [
+     -0.24449409689921156,
+     0.3282801617897652,
+     -7.110973186897529
+    ],
+    "actualH": 0.11136783400745735,
+    "gapPlanExec": 0.175,
+    "gapExecActual": 0.029,
+    "gapPlanActual": 0.173
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 769,
+    "F": "L",
+    "reg": "FRONT",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 13,
+   "k": 736,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 4.98,
+   "speedExec": 5.15,
+   "errSigma": [
+    1.88,
+    1.98,
+    -1.73
+   ],
+   "floorK": 1,
+   "target": [
+    32.27309679151904,
+    0.11,
+    -34.759042235245516
+   ],
+   "targetK": 918,
+   "dec": {
+    "kc": 905,
+    "F": "L",
+    "reg": "LACES"
+   },
+   "atDecisive": {
+    "k": 905,
+    "plannedLaunch": [
+     32.31347828606685,
+     0.11,
+     -34.76884061955942
+    ],
+    "executedLaunch": [
+     32.24762236545888,
+     0.11,
+     -34.86995760714082
+    ],
+    "actual": [
+     32.24762236545888,
+     0.11,
+     -34.86995760714082
+    ],
+    "actualV": [
+     2.372166947965963,
+     0,
+     -0.6834066623115708
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.121,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.121
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 907,
+    "F": "L",
+    "reg": "LACES",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 7,
+   "k": 565,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.94,
+   "speedExec": 5.95,
+   "errSigma": [
+    0.2,
+    -0.39,
+    0.3
+   ],
+   "floorK": 1,
+   "target": [
+    29.523244997243644,
+    0.11,
+    -32.476863501694886
+   ],
+   "targetK": 840,
+   "dec": {
+    "kc": 836,
+    "F": "R",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 836,
+    "plannedLaunch": [
+     29.497383436174555,
+     0.11,
+     -32.48662293896709
+    ],
+    "executedLaunch": [
+     29.518141401781683,
+     0.11,
+     -32.45363156334017
+    ],
+    "actual": [
+     29.518141401781683,
+     0.11,
+     -32.45363156334017
+    ],
+    "actualV": [
+     1.608102888603289,
+     0,
+     0.6168249272795416
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.039,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.039
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 838,
+    "F": "R",
+    "reg": "INSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 9,
+   "k": 790,
+   "F": "L",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.5,
+   "speedExec": 5.55,
+   "errSigma": [
+    0.32,
+    -0.19,
+    -2.17
+   ],
+   "floorK": 1,
+   "target": [
+    33.69897999336249,
+    0.11,
+    -32.49192942178125
+   ],
+   "targetK": 996,
+   "dec": {
+    "kc": 995,
+    "F": "R",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 995,
+    "plannedLaunch": [
+     34.081023557825084,
+     0.11,
+     -32.33696494948617
+    ],
+    "executedLaunch": [
+     33.72363057521025,
+     0.11,
+     -32.45873721920804
+    ],
+    "actual": [
+     33.71490358120054,
+     0.11140504178259653,
+     -32.43247109594729
+    ],
+    "actualV": [
+     0.04973421053221177,
+     0.33721002782316567,
+     7.189587042786772
+    ],
+    "actualH": 0.11140504178259653,
+    "gapPlanExec": 0.378,
+    "gapExecActual": 0.028,
+    "gapPlanActual": 0.378
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 994,
+    "F": "R",
+    "reg": "FRONT",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 10,
+   "k": 964,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 6.72,
+   "speedExec": 6.52,
+   "errSigma": [
+    -1.71,
+    0.49,
+    0.9
+   ],
+   "floorK": 1,
+   "target": [
+    34.99228747046991,
+    0.11,
+    -27.120488910874464
+   ],
+   "targetK": 1104,
+   "dec": {
+    "kc": 1109,
+    "F": "R",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 1109,
+    "plannedLaunch": [
+     35.055684900157736,
+     0.11,
+     -27.049832277875765
+    ],
+    "executedLaunch": [
+     35.020396247937136,
+     0.11,
+     -27.140696003193533
+    ],
+    "actual": [
+     34.892605258749356,
+     0.11,
+     -26.99214332668147
+    ],
+    "actualV": [
+     -0.4099998799149689,
+     0,
+     7.175991091262073
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.097,
+    "gapExecActual": 0.196,
+    "gapPlanActual": 0.173
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": false
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 1100,
+    "F": "R",
+    "reg": "INSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 11,
+   "k": 562,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 6.09,
+   "speedExec": 6.03,
+   "errSigma": [
+    -0.81,
+    -0.4,
+    -1.14
+   ],
+   "floorK": 1,
+   "target": [
+    29.523244997243644,
+    0.11,
+    -32.476863501694886
+   ],
+   "targetK": 840,
+   "dec": {
+    "kc": 836,
+    "F": "R",
+    "reg": "INSIDE"
+   },
+   "atDecisive": {
+    "k": 836,
+    "plannedLaunch": [
+     29.551344336466745,
+     0.11,
+     -32.466394502593296
+    ],
+    "executedLaunch": [
+     29.422852132049655,
+     0.11,
+     -32.4877729953366
+    ],
+    "actual": [
+     29.416069486662728,
+     0.1118535877826623,
+     -32.46085226029292
+    ],
+    "actualV": [
+     0.0029209380805016154,
+     0.44486106783895124,
+     7.078941329487819
+    ],
+    "actualH": 0.1118535877826623,
+    "gapPlanExec": 0.13,
+    "gapExecActual": 0.028,
+    "gapPlanActual": 0.135
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": {
+    "k": 835,
+    "F": "R",
+    "reg": "FRONT",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 13,
+   "k": 784,
+   "F": "L",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.92,
+   "speedExec": 5.52,
+   "errSigma": [
+    -2.41,
+    -1.87,
+    0.4
+   ],
+   "floorK": 1,
+   "target": [
+    33.88356019082603,
+    0.11,
+    -33.142437521457374
+   ],
+   "targetK": 996,
+   "dec": {
+    "kc": 995,
+    "F": "R",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 995,
+    "plannedLaunch": [
+     33.87310065494192,
+     0.11,
+     -33.14525526242101
+    ],
+    "executedLaunch": [
+     33.484594997683146,
+     0.11,
+     -33.025129183366104
+    ],
+    "actual": [
+     33.484594997683146,
+     0.11,
+     -33.025129183366104
+    ],
+    "actualV": [
+     2.11239738134383,
+     0,
+     0.715343204074997
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.407,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.407
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 15,
+   "k": 664,
+   "F": "L",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.11,
+   "speedExec": 5.08,
+   "errSigma": [
+    -0.21,
+    0.83,
+    -1.48
+   ],
+   "floorK": 1,
+   "target": [
+    30.146784492831358,
+    0.11,
+    -33.4809893916617
+   ],
+   "targetK": 792,
+   "dec": {
+    "kc": 791,
+    "F": "L",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 791,
+    "plannedLaunch": [
+     30.320679352006437,
+     0.11,
+     -33.44935541027717
+    ],
+    "executedLaunch": [
+     30.127715418717276,
+     0.11,
+     -33.54599349710248
+    ],
+    "actual": [
+     30.34061047216031,
+     0.11,
+     -33.589216103931825
+    ],
+    "actualV": [
+     5.358144389588443,
+     0,
+     0.025937098656034732
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.216,
+    "gapExecActual": 0.217,
+    "gapPlanActual": 0.141
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": false
+    },
+    {
+     "tag": "fast-right",
+     "exists": false
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": false
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": null,
+   "next": null,
+   "taken": false
+  }
+ ]
+}

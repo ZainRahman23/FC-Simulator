@@ -61,6 +61,17 @@ function classify(A, B, c, S) {
   if (f.list === "touches") return "same plan, different launch";
   return "after an earlier change";
 }
+// the FIRST CHANGED DECISION: plans compared in order by content only (contact tick, foot, surface, role) — a plan installed later but otherwise the
+// same is not a changed decision; and the FIRST CHANGED TOUCH: executed touches by tick, foot, surface and launch
+const sameContent = (x, y) => x && y && x.kc === y.kc && x.F === y.F && x.reg === y.reg && x.role === y.role;
+function firstChanged(A, B, S) {
+  let dec = null; const n = Math.max(A.plans.length, B.plans.length);
+  for (let i = 0; i < n; i++) { const x = A.plans[i], y = B.plans[i]; if (sameContent(x, y)) continue; const t = Math.min(x ? x.k : Infinity, y ? y.k : Infinity);
+    dec = { i, tick: t, ref: x || null, now: y || null, cause: classify(A, B, { first: { list: "plans", i, tick: t, ref: x || null, now: y || null } }, S) }; break; }
+  let touch = null; const m = Math.max(A.touches.length, B.touches.length), key = (t) => t ? [t.k, t.F, t.reg, t.launched ? 1 : 0].join("|") : "∅";
+  for (let i = 0; i < m; i++) if (key(A.touches[i]) !== key(B.touches[i])) { touch = { i, ref: A.touches[i] ? [A.touches[i].k, A.touches[i].F, A.touches[i].reg] : null, now: B.touches[i] ? [B.touches[i].k, B.touches[i].F, B.touches[i].reg] : null }; break; }
+  return { dec, touch };
+}
 const [mode, a1, a2, a3, a4, a5] = process.argv.slice(2);
 if (mode === "record") {
   const ver = a1, ids = a2 === "all" ? list().map((s) => s.id) : a2.split(","), seeds = a3.includes("-") ? a3.split("-").map(Number) : [1, +a3], out = [];
@@ -70,7 +81,8 @@ if (mode === "record") {
   const R = JSON.parse(fs.readFileSync(a1, "utf8")), ver = a2, opts = a4 ? JSON.parse(a4) : {}, rows = []; let same = 0;
   for (const A of R.runs) { const { S, ref: B0 } = runRef(ver, A.id, A.seed, opts), B = JSON.parse(JSON.stringify(B0)), c = compareRef(A, B); if (c.identical) same++;   // (the reference went through JSON: compare like with like)
     const why = c.first && S.decLog ? S.decLog.filter((d) => Math.abs(d.k - c.first.tick) <= 30).slice(0, 12) : null, cause = c.identical ? null : classify(A, B, c, S);
-    rows.push({ id: A.id, seed: A.seed, identical: c.identical, digest: c.digest, first: c.first, cause, why, outcomeRef: A.outcome, outcomeNow: B.outcome });
+    const fc = c.identical ? null : firstChanged(A, B, S);
+    rows.push({ id: A.id, seed: A.seed, identical: c.identical, digest: c.digest, first: c.first, cause, firstChangedDecision: fc && fc.dec, firstChangedTouch: fc && fc.touch, why, outcomeRef: A.outcome, outcomeNow: B.outcome });
     console.log(`${A.id}:${A.seed}`.padEnd(20), c.identical ? "IDENTICAL" : `DIVERGES at tick ${c.first ? c.first.tick : "?"} (${c.first ? c.first.list + "#" + c.first.i : "digest"})`, "taken", A.outcome.taken, "→", B.outcome.taken); }
   const causes = {}; for (const r of rows) if (r.cause) causes[r.cause] = (causes[r.cause] || 0) + 1;
   const sum = { ver, ref: R.ver, identical: same, total: R.runs.length, divergenceCauses: causes, takenRef: rows.filter((r) => r.outcomeRef.taken).length, takenNow: rows.filter((r) => r.outcomeNow.taken).length };

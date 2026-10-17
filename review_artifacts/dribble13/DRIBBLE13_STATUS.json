@@ -1,0 +1,223 @@
+{
+ "date": "17 October 2026 (Europe/Athens), evening session",
+ "statusLines": [
+  [
+   "DRIBBLE-1.2 FOOTBALL FOUNDATION PRESERVED",
+   "YES, statistically — the four cuts taken in 256 / 384 runs (seeds 1–96) vs DRIBBLE-1.2's 258 / 384; contact geometry code untouched (synchronous twin 200 / 200 identical); per-cut rates within noise; cleanly-taken cuts lower (114 vs 129)"
+  ],
+  [
+   "TURN-1.2 UNCHANGED",
+   "YES — no TURN-1.2 file touched; stance foot / toe vs TURN-1.2's own pose 0.0000 mm over 60,486 adjusted ticks; the planner's leg pose bit-identical to t1Pose (217,961 / 217,961)"
+  ],
+  [
+   "INCREMENTAL PLANNER",
+   "YES — DRIBBLE-1.2's planning pass as a search spread over ticks: predict once, evaluate under a per-tick budget, abandon only when the input / ball / last touch changes, keep the plan in force meanwhile, install at deadlines (anytime), re-validate at installation"
+  ],
+  [
+   "DETERMINISTIC WORK BUDGET",
+   "YES — work units (counted primitives, weights fitted ≈ µs over 44k ticks): 2 ms a tick, 8 ms in decision ticks (no plan in force, or a meaningful cut held); planner work per tick p99.9 10.2k units, max 14.5k (the clearance check after a full planner tick)"
+  ],
+  [
+   "FOOT PREDICTION CACHE",
+   "YES — one exact TURN-1.2 prediction per motion, shared by every candidate: 75.5k tick reads / s served by 1.49k predicted ticks / s (98 %); main prediction kept or adopted 65.5 % of the time (DRIBBLE-1.2 pass: 54.7 %)"
+  ],
+  [
+   "FOOT POSE CACHE",
+   "YES — 48.2k pose reads / s served by 883 evaluated poses / s (98.2 %); each pose is now TURN-1.2's pelvis + legs only (exact), pose cost 91.6 → 24.7 ms / s"
+  ],
+  [
+   "BALL PREDICTION REUSE",
+   "YES — launch trajectories memoised (52 % of requests reused), one free-ball prediction per ball state shared by every candidate; ball-integrator steps 10.9k → 10.0k / s"
+  ],
+  [
+   "SETUP VALIDATED AGAINST PHYSICAL BALL FUTURE",
+   "YES — a set-up is accepted only if, for the planned launch AND its execution envelope (speed ±1.5σ × direction ±1.5σ, lift ±1.5σ), BALL-PHYS's ball at the decisive tick can still be met by the decisive foot (exact nested search, ≥ 5 of 6); set-ups used 117 → 24 of 384 runs, cut taken after one 56 % → 75 %"
+  ],
+  [
+   "60° RIGHT / 60° LEFT / 90° RIGHT / 90° LEFT",
+   "6/8 · 5/8 · 5/8 · 4/8 on seeds 1–8 (DRIBBLE-1.2: 7/8 · 6/8 · 5/8 · 5/8) — over seeds 1–96: 6.3 · 5.4 · 5.1 · 4.6 per 8 (DRIBBLE-1.2: 6.7 · 5.4 · 5.3 · 4.1). Targets 7 · 7 · 5 · 5: 90° right MET; 60° right, 60° left, 90° left NOT MET (DRIBBLE-1.2 does not meet them over 96 seeds either)"
+  ],
+  [
+   "STRAIGHT RUN CONTROL",
+   "PASS — STRAIGHT_RUN 100 % controlled, held 16 / 16 (= DRIBBLE-1.2)"
+  ],
+  [
+   "DECISIVE CUT TOE RATE",
+   "5.1 % of decisive cut touches over the 384 four-cut runs (DRIBBLE-1.2 8.5 %); 11 % over every cut scenario × 16 seeds (DRIBBLE-1.2 8 %) — target ≤ 15 % MET"
+  ],
+  [
+   "≥9 M/S CUT TOUCHES",
+   "0 of 422 cut / stage / decisive touches (DRIBBLE-1.2: 0 / 337); recovery touches ≥ 9 m/s after the request: 14 in 384 runs (DRIBBLE-1.2: 6 in its 192 runs with roles recorded)"
+  ],
+  [
+   "SAME-FOOT IMMEDIATE RECONTACT",
+   "2 of 1,978 launches (0.10 %) within 250 ms — DRIBBLE-1.2: 2 of 1,951 (0.10 %)"
+  ],
+  [
+   "D1.2 CPU / D1.3 CPU / CPU IMPROVEMENT",
+   "208 ms / s → 148 ms / s → −29 % (one core per simulated second, resolver only, 20 scenarios × 4 seeds, each core in its own process; the DRIBBLE-1.2 report's 253 came from a shared-process instrument) — target ≤ 170 MET, stretch ≤ 100 NOT MET"
+  ],
+  [
+   "D1.2 WORST SPIKE / D1.3 WORST SPIKE",
+   "538 ms → 41 ms (p99.9 step 151 → 14 ms; steps over 20 ms 1.0 % → 0.018 %, none over 50 ms in the benchmark) — not ≤ 20 ms everywhere: a full 8 ms decision tick plus the clearance check runs 10–25 ms; rarer 40–100 ms steps did not recur on the same ticks in repeated runs (GC pauses ≤ 3.5 ms; machine scheduling)"
+  ],
+  [
+   "1 ACTIVE DRIBBLER CPU / REALISTIC ACTIVE-SET CPU / ALL-22 PATHOLOGICAL CPU",
+   "842 / 1,096 / 5,129 ms per simulated second for 22 players on one core (DRIBBLE-1.2: 1,053 / 1,402 / 9,390); of the 842, 530 is the other 21 players' plain TURN-1.2 locomotion"
+  ],
+  [
+   "CHROME/NODE DETERMINISM",
+   "PASS — decisions 20 / 20 identical with the incremental planner on (Chrome 155 vs Node 22.19); state bit-identical 3 / 20, otherwise last-bit (≤ 1.6e-12)"
+  ],
+  [
+   "PHYSICAL INTERRUPTION",
+   "YES — INTERCEPT_RUN: the defender's leg takes the ball in 4 / 16 (= DRIBBLE-1.2); free-ball audit: 1 unexplained tick in 257,207 (DRIBBLE-1.2: 1)"
+  ],
+  [
+   "CONTROL LOSS POSSIBLE",
+   "YES — TACKLE_RUN 65 % controlled, held to the end 3 / 16 (= DRIBBLE-1.2)"
+  ],
+  [
+   "READY FOR OWNER VISUAL REVIEW",
+   "YES"
+  ],
+  [
+   "READY FOR DRIBBLE-V1 INTEGRATION",
+   "NOT YET — CPU and spikes are ready; the football equals DRIBBLE-1.2 statistically but three of the four X/8 targets are not met (an owner decision: is DRIBBLE-1.2's football the bar?)"
+  ]
+ ],
+ "watchFirst": [
+  [
+   "C1_cut90R_zoom",
+   "90° right, seed 10 — both take it cleanly; DRIBBLE-1.2's set-up was refused by the BALL-PHYS check, so DRIBBLE-1.3 cuts with the inside of the left foot instead (zoomed camera)"
+  ],
+  [
+   "e_setup_slow",
+   "A validated set-up (60° right, seed 13, top camera, ¼ speed): set-up target region, the BALL-PHYS ball at the decisive tick (violet) and all six execution-envelope balls reachable (green); decisive outside of the right foot 58° at 3.55 s"
+  ],
+  [
+   "C2_cut90R_worst_zoom",
+   "The worst remaining cut — 90° right, seed 16: the same staged release one tick earlier (the 100 ms release lead) and DRIBBLE-1.3 loses the cut that DRIBBLE-1.2 takes cleanly"
+  ]
+ ],
+ "videos": {
+  "A": [
+   [
+    "A1_cut60R_1x",
+    "60° right, seed 16: both cleanly, the inside of the left foot (1.3 contact one tick earlier)"
+   ],
+   [
+    "A1_cut60R_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "B": [
+   [
+    "B1_cut60L_1x",
+    "60° left, seed 3: both cleanly, the outside of the left foot"
+   ],
+   [
+    "B1_cut60L_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "C": [
+   [
+    "C1_cut90R_1x",
+    "90° right, seed 10: both cleanly (1.2 a set-up then the outside of the right foot; 1.3 the inside of the left foot)"
+   ],
+   [
+    "C1_cut90R_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "C2_cut90R_worst_1x",
+    "90° right, seed 16 — the worst remaining cut: 1.2 cleanly, 1.3 loses it"
+   ],
+   [
+    "C2_cut90R_worst_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "D": [
+   [
+    "D1_cut90L_1x",
+    "90° left, seed 14: both cleanly, the inside of the right foot"
+   ],
+   [
+    "D1_cut90L_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "D2_cut90L_s13_1x",
+    "90° left, seed 13: 1.2 loses it, 1.3 takes it (outside of the left foot)"
+   ],
+   [
+    "D2_cut90L_s13_zoom",
+    "the same, zoomed camera"
+   ]
+  ],
+  "E": [
+   [
+    "e_setup_slow",
+    "the set-up and its validation, top camera, ¼ speed (diagnostics on)"
+   ],
+   [
+    "e_setup_game",
+    "the same run at 1×, gameplay camera, diagnostics on"
+   ]
+  ],
+  "G": [
+   [
+    "G1_straight_1x",
+    "STRAIGHT_RUN seed 1: both 100 % controlled"
+   ],
+   [
+    "G1_straight_zoom",
+    "the same, zoomed camera"
+   ]
+  ]
+ },
+ "heroE": "CUT60_RUN seed 13 (DRIBBLE-1.3). At the request the planner finds no direct 60° contact and plans a SET-UP: the outside of the right foot at 3.06 s, 9° at 5.9 m/s, to put the ball where the same foot can cut it at 3.55 s. Before accepting it, BALL-PHYS simulates the planned launch and six executed launches (speed ±1.5σ × direction ±1.5σ, lift ±1.5σ) to the decisive tick; the decisive foot's exact search must still find a contact for at least five. Here all six are reachable (worst corridor margin +0.7 cm). Executed: 5.88 m/s; the executed-launch prediction and the actual ball coincide at the decisive tick (0 mm); the decisive touch lands 2 ticks after the planned one; outside of the right foot 58°, cut taken.",
+ "stillsE": [
+  {
+   "file": "e_setup_cut60_s13_strip.jpg",
+   "caption": "top camera, 3.00 · 3.10 · 3.30 · 3.55 · 3.75 s: the plan with the BALL-PHYS prediction and envelope (green = reachable) · the set-up touch · the ball rolling into the target region · the decisive outside-of-the-right-foot touch · the ball away at ≈ 60°"
+  }
+ ],
+ "timelines": [
+  "CUT90_RUN:10",
+  "CUT90L_RUN:1"
+ ],
+ "perfNote": "CPU and spike rows: each core in its own process, 20 lab scenarios × seeds 1–4 (tools/d13_cpu.sh). Plans / s: DRIBBLE-1.1 / 1.2 planning passes; DRIBBLE-1.3 planning jobs started. Exact contact-geometry evaluations / s: tools/d13_prof.mjs over every scenario × 2 seeds. Football rows: seeds 1–8 (the owner's X/8) from the 16-seed reliability run; the rates over seeds 1–96 come from the 384-run scorecards (DRIBBLE-1.2 = the synchronous planner, bit-identical to DRIBBLE-1.2 by the twin suite). With σ ≈ 3–5 runs per 8-seed block, seeds 1–8 alone cannot separate the two cores.",
+ "cpuNote": "Where the time went: DRIBBLE-1.2 spent most of a cut's planning pass building poses (full RUN-1 + TURN-1.2 bodies, then full skeleton FK) and predicting branch motions, all inside one 240 Hz step (the 538 ms step). DRIBBLE-1.3: the same predictions are made once per motion and shared; a planner pose is TURN-1.2's pelvis and legs only (exact); the search is spread over ticks under the budget. TURN-1.2 prediction (t1Step, frozen) is now the largest cost (≈ 1,490 predicted ticks / s), mostly re-predicting the main motion after each pursuit re-aim — a DRIBBLE-1.2 behaviour. Profiles carry the profiler's own wrapper overhead (≈ 20–25 %); the clean benchmark numbers are in the performance table.",
+ "cacheNote": "Hit rates count every read of a predicted tick / pose against the ticks / poses actually computed; the DRIBBLE-1.2 column is DRIBBLE-1.2's synchronous pass running on the DRIBBLE-1.3 infrastructure (the frozen DRIBBLE-1.2 core has no counters). Plan-version reuse is the incremental planner's own memo (a version re-asked in a later tick of the same search).",
+ "activeNote": "Measured, not projected (tools/d13_activeset.mjs): 22 players step in lockstep on one core for 6 s; the active players run the full dribble resolver on their own scenarios, every other player runs plain TURN-1.2 locomotion + pose. 1000 ms / s = real time on one core. The 21 non-active players' locomotion alone costs ≈ 500–530 ms / s.",
+ "scoreNote": "384 cut runs per core (4 cuts × seeds 1–96, HIGH profile). Over 96 seeds DRIBBLE-1.2 itself takes 60° left 5.4 / 8 and 90° left 4.1 / 8: the owner's 7 / 8 and 5 / 8 targets were met by DRIBBLE-1.2's seeds 1–8 sample, not by its rate. DRIBBLE-1.3 differs from it by −5 / +0 / −3 / +6 runs per 96 — inside the noise (σ ≈ 4–5 runs per 96 per cut). Request → first ≥ 20° redirect is faster (median 0.85 vs 0.98 s); request → ball within 20° is slower (1.62 vs 1.40 s), and fewer cuts are taken cleanly (114 vs 129).",
+ "plantNote": "No TURN-1.2, RUN-1, BALL-PHYS, BALL-FEEL or tackle file changed; DRIBBLE-1 / 1.1 / 1.2 files untouched (their labs still load their own cores).",
+ "interruptNote": "INTERCEPT_RUN (a defender's leg sweeps across the ball): 81.7 % controlled, held 12 / 16 — DRIBBLE-1.2 81.8 %, 12 / 16. TACKLE_RUN (a sliding tackle leg): 65.4 % controlled, held 3 / 16 — DRIBBLE-1.2 65.4 %, 3 / 16. The ball stays a free physical ball between authoritative touches (free-ball audit above); the planner never moves it.",
+ "howItWorks": [
+  "<b>Exact infrastructure</b> (bit-identical to DRIBBLE-1.2 — the synchronous twin suite is 200 / 200 identical): each predicted tick keeps a state snapshot and evaluates its pose only when read; the planner's pose is TURN-1.2's pelvis and leg code transcribed onto its exports (217,961 / 217,961 poses bit-identical) with leg-chain-only FK; a time-warped swing is TURN-1.2's swing-leg branch alone (18,112 / 18,112 bit-identical); a checked pursuit correction's prediction becomes the main prediction at its switch tick (adoption) instead of being re-predicted; the rig's RUN-1 / TURN-1 speed tables are solved at load (they caused 50–100 ms first-use spikes).",
+  "<b>Incremental planner</b>: DRIBBLE-1.2's planning pass (candidates, ranking, versions, checks, choice) runs as a resumable search. Each tick it works until the tick's deterministic work units reach the budget (2 ms; 8 ms while no plan is in force or a meaningful cut is held), then pauses. It is abandoned only when what it reads changed — the input, the ball (a launch or contact), the last touch. The plan in force stays in force meanwhile. Release-now / staged options are evaluated for a release 24 ticks (100 ms) ahead, branched from the main prediction, so a search that spans ticks still releases exactly as evaluated. A found plan is installed when its deadline requires (anytime), else when the search ends; at installation its warp is re-derived from the swing's current state and its approach re-checked.",
+  "<b>Broad / narrow</b>: a release broad phase (if the free ball is beyond the body's reach from the release tick for the whole window, the turning motion is not predicted), distance and yaw gates, and cheap rejections before the exact approach check; only survivors get exact contact geometry, launch solving and path checks (exact contact-geometry evaluations 5.4k → 5.0k / s).",
+  "<b>Set-up validation against BALL-PHYS</b>: for a set-up, BALL-PHYS simulates the planned launch and its execution envelope — speed ±1.5σ × direction ±1.5σ (4 corners) and lift ±1.5σ — to the decisive tick; the decisive foot's exact nested search (DRIBBLE-1.2's, 8 tries over the full horizon) must find a contact for ≥ 5 of the 6 envelope balls. Calibrated on DRIBBLE-1.2's own set-ups (≥ 5 / 6: 12 taken, 1 lost; ≤ 4 / 6: 7 taken, 12 lost). Planning and execution stay separate: <code>exec13.sigma</code> / <code>exec13.envelope</code> is where player attributes will set the envelope (not implemented).",
+  "<b>Prefetch</b>: in a tick with budget left and no search running, the prediction the next search will read is extended ahead of time (the main prediction, or a pending pursuit correction's).",
+  "<b>Determinism</b>: the budget counts work, not time — the same inputs make the same decisions on any machine, in Chrome and in Node (20 / 20)."
+ ],
+ "visualDefects": [
+  "<b>90° cuts and 60° left are still near DRIBBLE-1.2's rates, not the targets</b>: 90° right 5.1 / 8, 90° left 4.6 / 8, 60° left 5.4 / 8 over 96 seeds. DRIBBLE-1.3 made DRIBBLE-1.2 fast; it did not make it better. The lost cuts are the kinds DRIBBLE-1.2 also loses — e.g. 90° right seed 16: the same staged inside-of-left release one tick earlier, then a toe touch, a loose ball and a late laces contact off the line.",
+  "<b>Fewer clean cuts and a slower ball redirect</b>: cleanly taken 114 vs 129 of 384, ball within 20° 1.62 vs 1.40 s (median). Two causes the twin suite logs: the 100 ms release lead (48 of 200 runs' first changed decision) and the stricter set-up check (set-ups 117 → 24 of 384 runs; the refused ones were often what made a cut clean).",
+  "<b>CPU stretch and worst-case scenarios</b>: 148 ms / s on average but 270–280 ms / s in CUT90_RUN / REV180_SPRINT, and a 22-player match with one dribbler is 842 ms / s on one core — 530 of it the other 21 players' plain TURN-1.2 locomotion. The next cost is TURN-1.2 prediction itself (frozen) re-made after every pursuit re-aim."
+ ],
+ "nextStep": "Owner decision on the football bar: if DRIBBLE-1.2's football is the bar, integrate DRIBBLE-1.3 into DRIBBLE-V1 behind the active-set gate (only the ball carrier and a contest participant run the resolver; budget 2 / 8 ms; the 22-player locomotion cost is then the match's main CPU item). If the X/8 targets stand, the next step is football, not CPU: DRIBBLE-1.4 on the 90° / 60°-left failure classes (late laces contacts after staged releases), measured on 96 seeds against this core.",
+ "provenance": [
+  "instruction: review_artifacts/dribble13/sources/2026-10-17_user_instruction_dribble1_3_fast_planner.md (verbatim)",
+  "core: sandbox/visual/dribble13/d13_core.js (commit 54ff810d); lab: sandbox/visual/dribble13.html; tools: sandbox/visual/dribble13/tools/",
+  "reference: evidence/ref_d12.json (DRIBBLE-1.2, 200 runs) — twin_sync.json (synchronous, 200 / 200 identical), twin_p13.json (incremental, first changed decision per run)",
+  "football: score96_d12.json / score96_d13.json (384 runs each); rel_d13_g1–6.json (every scenario × 16 seeds; DRIBBLE-1 / 1.1 / 1.2 from review_artifacts/dribble12/evidence)",
+  "CPU: cpu.json (each core in its own process), ticks.json (spike timeline + distribution), prof_d1 / d11 / d12 / d13.json, cache_d12 / d13.json, activeset_d12 / d13.json",
+  "checks: chrome_d13.json, free_ball_audit.json, plant_check_d13.json, pinch_stress.json, legpose_check.json, warpleg_check.json, setupviz_d12 / d13.json",
+  "I cannot play video in real time: every judgement here comes from frame strips and stills of these clips",
+  "LOCAL REVIEW PAGE ONLY — the lab shows real player names; not published"
+ ]
+}

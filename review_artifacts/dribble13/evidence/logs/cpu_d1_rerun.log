@@ -1,0 +1,23 @@
+STRAIGHT_JOG      d1 res 174 worst step 195 p99.9 155.1
+STRAIGHT_RUN      d1 res 214.1 worst step 230.1 p99.9 203.53
+STRAIGHT_FAST     d1 res 224.7 worst step 235.8 p99.9 220.58
+STRAIGHT_SPRINT   d1 res 270.9 worst step 257.3 p99.9 169.63
+STRAIGHT_RUN_FAR  d1 res 191.8 worst step 214.6 p99.9 192.57
+CUT60_RUN_FAR     d1 res 794.3 worst step 2112.3 p99.9 838.98
+CURVE_RUN         d1 res 400.8 worst step 975.5 p99.9 268.02
+CURVE_JOG         d1 res 401.2 worst step 395.6 p99.9 326.01
+CUT45_RUN         d1 res 630.6 worst step 1386 p99.9 532.58
+CUT60_RUN         d1 res 642.7 worst step 1532.2 p99.9 737.54
+CUT60L_RUN        d1 res 399.3 worst step 1560 p99.9 232.88
+CUT90_RUN         d1 res 720.3 worst step 1477 p99.9 837.15
+CUT90_JOG         d1 res 678.7 worst step 1598.4 p99.9 828.6
+CUT90L_RUN        d1 res 450.4 worst step 1489 p99.9 427.24
+REV135_RUN        d1 res 1540 worst step 1968 p99.9 1267.35
+REV180_SPRINT     d1 res 472.3 worst step 974.7 p99.9 248.27
+CANCEL_RUN        d1 res 447.4 worst step 1472.4 p99.9 221.93
+RETARGET_RUN      d1 res 839.5 worst step 1644.7 p99.9 1017.09
+INTERCEPT_RUN     d1 res 181.1 worst step 222.1 p99.9 197.92
+TACKLE_RUN        d1 res 205.7 worst step 225.6 p99.9 196.3
+ALL d1 {"resolverMsPerSimS":472.1,"totalMsPerSimS":502.8,"locoMsPerSimS":27.9,"ballMsPerSimS":2.7,"resolverUsPerStep":1967.2,"worstStepMs":2112.3,"worstStepAt":"CUT60_RUN_FAR s1 t 2.42","p999StepMs":294.25,"p99StepMs":28.82,"stepsOver4msPct":2.009,"stepsOver8msPct":1.423,"stepsOver20msPct":1.087,"worstPlanMs":0,"plansPerSimS":0}
+worst d1 scenario REV135_RUN 1540 ms/sim-s
+22-player projection {"d1":{"activeDribblerResolver":472.1,"oneDribbler":1089,"twoContesting":1561,"allTwentyTwoDribbling":11003},"unit":"ms of one CPU core per simulated second (1000 = real time); the resolver's share is the active set only"}

@@ -1,0 +1,499 @@
+{
+ "summary": {
+  "setups": 4,
+  "decisiveExecuted": 3,
+  "takenAfter": 3,
+  "medianGapPlanExecM": 0.133,
+  "medianGapExecActualM": 0,
+  "firmed": 0,
+  "noNextTouch": 1
+ },
+ "rows": [
+  {
+   "id": "CUT60_RUN",
+   "sd": 13,
+   "k": 734,
+   "F": "R",
+   "reg": "OUTSIDE",
+   "speedPlan": 5.86,
+   "speedExec": 5.88,
+   "errSigma": [
+    0.21,
+    -0.18,
+    -0.47
+   ],
+   "floorK": 1,
+   "target": [
+    32.03626442477972,
+    0.11,
+    -34.66692841888971
+   ],
+   "targetK": 846,
+   "dec": {
+    "kc": 852,
+    "F": "R",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 852,
+    "plannedLaunch": [
+     32.15568496250541,
+     0.11,
+     -34.68625689263612
+    ],
+    "executedLaunch": [
+     32.14944797280946,
+     0.11,
+     -34.67567846515419
+    ],
+    "actual": [
+     32.14944797280946,
+     0.11,
+     -34.67567846515419
+    ],
+    "actualV": [
+     4.008026612160827,
+     0,
+     -0.6328198851074263
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.012,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.012
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": {
+    "ok": true,
+    "inside": 6,
+    "worst": 0.007367789076934833,
+    "nominal": 0.14613448343804822,
+    "env": [
+     {
+      "tag": "nominal",
+      "margin": 0.1461
+     },
+     {
+      "tag": "fast-left",
+      "margin": 0.063
+     },
+     {
+      "tag": "fast-right",
+      "margin": 0.0074
+     },
+     {
+      "tag": "slow-left",
+      "margin": 0.0723
+     },
+     {
+      "tag": "slow-right",
+      "margin": 0.0428
+     },
+     {
+      "tag": "high",
+      "margin": 0.0642
+     },
+     {
+      "tag": "low",
+      "margin": 0.1461
+     }
+    ]
+   },
+   "next": {
+    "k": 854,
+    "F": "R",
+    "reg": "OUTSIDE",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 1,
+   "k": 574,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.86,
+   "speedExec": 5.96,
+   "errSigma": [
+    1.48,
+    -2.21,
+    0.19
+   ],
+   "floorK": 1,
+   "target": [
+    29.63393580180957,
+    0.11,
+    -32.574867763782855
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 758,
+    "F": "L",
+    "reg": "OUTSIDE"
+   },
+   "atDecisive": {
+    "k": 758,
+    "plannedLaunch": [
+     28.677530984739207,
+     0.11,
+     -32.90622246003204
+    ],
+    "executedLaunch": [
+     28.717524693162037,
+     0.11,
+     -32.7797326307661
+    ],
+    "actual": [
+     28.717524693162037,
+     0.11,
+     -32.7797326307661
+    ],
+    "actualV": [
+     2.880566114548631,
+     0,
+     1.097977401368989
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.133,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.133
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": {
+    "ok": true,
+    "inside": 6,
+    "worst": -0.08070371458640133,
+    "nominal": 0.07442141471396607,
+    "env": [
+     {
+      "tag": "nominal",
+      "margin": 0.0744
+     },
+     {
+      "tag": "fast-left",
+      "margin": 0.1392
+     },
+     {
+      "tag": "fast-right",
+      "margin": 0.0132
+     },
+     {
+      "tag": "slow-left",
+      "margin": 0.0998
+     },
+     {
+      "tag": "slow-right",
+      "margin": -0.0807
+     },
+     {
+      "tag": "high",
+      "margin": 0.0995
+     },
+     {
+      "tag": "low",
+      "margin": 0.0744
+     }
+    ]
+   },
+   "next": {
+    "k": 760,
+    "F": "L",
+    "reg": "FRONT",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 7,
+   "k": 568,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.91,
+   "speedExec": 5.8,
+   "errSigma": [
+    -1.61,
+    -0.72,
+    -1.46
+   ],
+   "floorK": 1,
+   "target": [
+    29.73907092936943,
+    0.11,
+    -32.45521706293846
+   ],
+   "targetK": 834,
+   "dec": {
+    "kc": 758,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 758,
+    "plannedLaunch": [
+     28.84033294987051,
+     0.11,
+     -32.7847957365185
+    ],
+    "executedLaunch": [
+     28.6938401460117,
+     0.11,
+     -32.80227960939492
+    ],
+    "actual": [
+     28.6938401460117,
+     0.11,
+     -32.80227960939492
+    ],
+    "actualV": [
+     2.6326978697658037,
+     0,
+     0.9953058768293872
+    ],
+    "actualH": 0.11,
+    "gapPlanExec": 0.148,
+    "gapExecActual": 0,
+    "gapPlanActual": 0.148
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": false
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": {
+    "ok": true,
+    "inside": 5,
+    "worst": -0.15847704299218404,
+    "nominal": 0.05712559168770462,
+    "env": [
+     {
+      "tag": "nominal",
+      "margin": 0.0571
+     },
+     {
+      "tag": "fast-left",
+      "margin": 0.0993
+     },
+     {
+      "tag": "fast-right",
+      "margin": 0.0058
+     },
+     {
+      "tag": "slow-left",
+      "margin": 0.0453
+     },
+     {
+      "tag": "slow-right",
+      "margin": -0.1585
+     },
+     {
+      "tag": "high",
+      "margin": 0.0724
+     },
+     {
+      "tag": "low",
+      "margin": 0.0571
+     }
+    ]
+   },
+   "next": null,
+   "taken": false
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 13,
+   "k": 735,
+   "F": "R",
+   "reg": "INSIDE",
+   "speedPlan": 5.83,
+   "speedExec": 5.76,
+   "errSigma": [
+    -1,
+    0.03,
+    -0.44
+   ],
+   "floorK": 1,
+   "target": [
+    33.41365633462306,
+    0.11,
+    -32.890721319313656
+   ],
+   "targetK": 972,
+   "dec": {
+    "kc": 898,
+    "F": "L",
+    "reg": "FRONT"
+   },
+   "atDecisive": {
+    "k": 898,
+    "plannedLaunch": [
+     32.650051953378444,
+     0.11,
+     -33.18330666711269
+    ],
+    "executedLaunch": [
+     32.59606568729575,
+     0.11,
+     -33.20537025949802
+    ],
+    "actual": [
+     32.60016071069272,
+     0.11221244295697864,
+     -33.183922979976565
+    ],
+    "actualV": [
+     3.9772476692443495,
+     0.5309863096748748,
+     6.293258530598763
+    ],
+    "actualH": 0.11221244295697864,
+    "gapPlanExec": 0.058,
+    "gapExecActual": 0.022,
+    "gapPlanActual": 0.05
+   },
+   "envelopeAtCommit": [
+    {
+     "tag": "fast-left",
+     "exists": true
+    },
+    {
+     "tag": "fast-right",
+     "exists": true
+    },
+    {
+     "tag": "slow-left",
+     "exists": true
+    },
+    {
+     "tag": "slow-right",
+     "exists": true
+    },
+    {
+     "tag": "high",
+     "exists": true
+    },
+    {
+     "tag": "low",
+     "exists": true
+    }
+   ],
+   "check": {
+    "ok": true,
+    "inside": 6,
+    "worst": 0.012843775632893878,
+    "nominal": 0.12206646445217659,
+    "env": [
+     {
+      "tag": "nominal",
+      "margin": 0.1221
+     },
+     {
+      "tag": "fast-left",
+      "margin": 0.0959
+     },
+     {
+      "tag": "fast-right",
+      "margin": 0.0233
+     },
+     {
+      "tag": "slow-left",
+      "margin": 0.1323
+     },
+     {
+      "tag": "slow-right",
+      "margin": 0.0128
+     },
+     {
+      "tag": "high",
+      "margin": 0.0625
+     },
+     {
+      "tag": "low",
+      "margin": 0.1221
+     }
+    ]
+   },
+   "next": {
+    "k": 897,
+    "F": "L",
+    "reg": "FRONT",
+    "role": "dribble",
+    "decisiveHit": true
+   },
+   "taken": true
+  }
+ ]
+}
