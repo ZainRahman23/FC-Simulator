@@ -24,6 +24,6 @@ export function cutQuality(S, scn) {
   const r2 = (x) => (x == null ? null : +x.toFixed(2));
   return { requested: want, taken, takenCleanly: clean, toSetupS: setup ? r2(setup.t - tR) : null, toRedirectS: redirect ? r2(redirect.t - tR) : null, toPlantS: plant ? r2(plant[0] - tR) : null,
     toBall20S: tb != null ? r2(tb - tR) : null, toBody20S: tc != null ? r2(tc - tR) : null, bodyWaitsS: r2(wait), touchesToBall20: touchesTo, recoveryBefore: recov,
-    setupUsed: !!setup, setupFromExistingTouch: !setup && !!dec && T.indexOf(dec) === 0, decisive: dec ? { t: r2(dec.t - tR), F: dec.F, preferred: dec.F === S.pref, reg: dec.reg, speed: r2(dec.executed.speed), dirDeg: r2(dirOf(dec)), role: dec.role } : null,
+    setupUsed: !!setup, setupSpeed: setup ? r2(setup.executed.speed) : null, setupDirDeg: setup ? r2(dirOf(setup)) : null, setupFromExistingTouch: !setup && !!dec && T.indexOf(dec) === 0, decisive: dec ? { t: r2(dec.t - tR), F: dec.F, preferred: dec.F === S.pref, reg: dec.reg, speed: r2(dec.executed.speed), dirDeg: r2(dirOf(dec)), role: dec.role } : null,
     setupErrAtDecisiveM: setupErr, finalBallHeadingErrDeg: dec ? r2(Math.abs(wr(dirOf(dec) - want))) : null };
 }

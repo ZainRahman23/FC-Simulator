@@ -1,7 +1,7 @@
 // dribble12/tools/d12_pinch.mjs — PINCHED-BALL STRESS: random wedges of the real boot / toe hulls and the shin capsule against a ball on the turf
 // (positions, orientations, closing velocities, spins far beyond dribbling), stepped (a) by the bare BALL-FEEL-1.3 kernel (it fails closed: throws)
 // and (b) through DRIBBLE-1.1's kernelStep (restore the exact prior state, the wedging leg yields). Reports throws, recoveries (hold / clear),
-// unrecovered steps, non-finite states, and the ball's lowest centre height.  usage: node d11_pinch.mjs [samples 3000] [out.json]
+// unrecovered steps, non-finite states, and the ball's lowest centre height.  usage: node d12_pinch.mjs [samples 3000] [out.json]
 import fs from "fs"; import { makeSim } from "./d12_env.mjs"; import { get } from "../../dribble1/d1_scenarios.js"; import { fromTurn1Frame } from "../../ballphys1/adapter.js";
 const [nArg = "3000", outFile] = process.argv.slice(2), R = 0.11; let seed = 12345; const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648, rr = (a, b) => a + (b - a) * rnd();
 const qn = (q) => { const l = Math.hypot(...q); return q.map((x) => x / l); };

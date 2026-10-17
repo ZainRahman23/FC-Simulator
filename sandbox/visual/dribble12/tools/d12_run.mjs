@@ -1,5 +1,5 @@
 // dribble12/tools/d12_run.mjs — run one lab scenario and print the touch log, contacts, control changes and the turn timeline.
-// usage: node d12_run.mjs <SCENARIO> [arch B|A|C] [profile HIGH|AVERAGE|POOR|WEAKFOOT] [seed] [ver d11|d1]
+// usage: node d12_run.mjs <SCENARIO> [arch B|A|C] [profile HIGH|AVERAGE|POOR|WEAKFOOT] [seed] [ver d12|d11|d1]
 import { makeSim, DT, PROFILES } from "./d12_env.mjs"; import { get } from "../../dribble1/d1_scenarios.js";
 const [id, arch = "B", prof = "HIGH", seed = "1", ver = "d12"] = process.argv.slice(2), scn = get(id);
 const t0 = Date.now(), S = makeSim(scn, { ver, arch, player: PROFILES[prof], seed: +seed, opts: { errScale: process.env.ERRK ? +process.env.ERRK : undefined, noError: !!process.env.NOERR } }); S.run(); const wall = Date.now() - t0;

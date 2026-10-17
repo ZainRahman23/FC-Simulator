@@ -32,7 +32,7 @@ export function touchRows(S) {
     const psi = (S.rec && S.rec[t.k] ? S.rec[t.k].psi : 0), fwd = [Math.cos(psi), -Math.sin(psi)], vp = [v[0], -v[2]], along = vp[0] * fwd[0] + vp[1] * fwd[1], lat = -vp[0] * fwd[1] + vp[1] * fwd[0];
     const own = S.contacts.filter((c) => c.own && c.k > t.k && c.k - t.k <= 60);
     const same = own.filter((c) => c.part === "boot_" + t.F || c.part === "toe_" + t.F), other = own.filter((c) => !(c.part === "boot_" + t.F || c.part === "toe_" + t.F));
-    return { t: r3(t.t), F: t.F, reg: t.reg, speed: r3(t.executed.speed), along: r3(along), lateral: r3(lat), cut: !!t.release, stage: t.release === "contact" && S.turnLog.some((e) => e.kind === "stage" && e.by === t.id), recovery: !!t.recovery, floorK: r3(t.floorK),
+    return { t: r3(t.t), F: t.F, reg: t.reg, role: t.role || null, speed: r3(t.executed.speed), along: r3(along), lateral: r3(lat), cut: !!t.release, stage: t.release === "contact" && S.turnLog.some((e) => e.kind === "stage" && e.by === t.id), recovery: !!t.recovery, floorK: r3(t.floorK),
       ft: t.caft ? { iy: t.caft.iy, ia: t.caft.ia } : null, clearanceMm: clr, minClearanceMm250: minClr, ballToFootM: sepF, ballToComM: sepC,
       secondSame: same.length ? { n: same.length, firstMs: r3((same[0].k - t.k) * DT * 1000), part: same[0].part, impulse: r3(same[0].impulse) } : null, secondOther: other.length ? { n: other.length, firstMs: r3((other[0].k - t.k) * DT * 1000), part: other[0].part, impulse: r3(other[0].impulse) } : null };
   });

@@ -2,8 +2,10 @@
 // loads them) + one core: ver "d12" (dribble12/d12_core.js, default), "d11" (dribble11/d11_core.js, frozen at 7d8c8524) or "d1" (dribble1/d1_core.js,
 // frozen at 7fe57fd3)
 import { createRequire } from "module"; import path from "path"; import fs from "fs"; import { fileURLToPath } from "url";
-import * as C12 from "../d12_core.js"; import * as C11 from "../../dribble11/d11_core.js"; import * as C1 from "../../dribble1/d1_core.js"; import { PROFILES } from "../../dribble1/d1_attrs.js";
+import * as C11 from "../../dribble11/d11_core.js"; import * as C1 from "../../dribble1/d1_core.js"; import { PROFILES } from "../../dribble1/d1_attrs.js";
 const HERE = path.dirname(fileURLToPath(import.meta.url)), require = createRequire(import.meta.url);
+// (bisection only: D12CORE=<file in dribble12/> loads another DRIBBLE-1.2 core file as "d12"; never used by the evidence of record)
+const C12 = await import(process.env.D12CORE ? new URL("../" + process.env.D12CORE, import.meta.url).href : "../d12_core.js");
 const { loadTurn1 } = require(path.resolve(HERE, "../../turn1/tools/t1_load.cjs"));
 export const X = loadTurn1();
 // experiments: D1OVR='{"key": value, ...}' overrides the DRIBBLE-1.2 resolver parameters for this process (never used by the evidence of record)

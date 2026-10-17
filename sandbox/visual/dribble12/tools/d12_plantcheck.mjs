@@ -2,9 +2,9 @@
 // avoidance), the adjusted pose is compared with TURN-1.2's own t1Evaluate of the same state (a clone): the STANCE foot / toe (plants never move) and the
 // other, unadjusted swing foot; for every adjusted swing, the residual adjustment of the swing foot on its LAST airborne tick (how far from TURN-1.2's
 // own foot it still is as it lands — the rejoin) and the TOUCHDOWN tick against TURN-1.2's prediction (the landing time never moves).
-// usage: node d11_plantcheck.mjs "IDs|all" seeds [out.json] [ver d11]
+// usage: node d12_plantcheck.mjs "IDs|all" seeds [out.json] [ver d12]
 import fs from "fs"; import { makeSim, X } from "./d12_env.mjs"; import { get, list } from "../../dribble1/d1_scenarios.js";
-const ids = process.argv[2] === "all" ? list().map((s) => s.id) : (process.argv[2] || "CUT90_RUN").split(","), N = +(process.argv[3] || 2), ver = process.argv[5] || "d11", out = {};
+const ids = process.argv[2] === "all" ? list().map((s) => s.id) : (process.argv[2] || "CUT90_RUN").split(","), N = +(process.argv[3] || 2), ver = process.argv[5] || "d12", out = {};
 const T1 = X.TURN1, sk = X.skel, bi = (n) => sk.bones.findIndex((b) => b.name === n);
 const idx = { R: [bi("foot_R"), bi("toe_R")], L: [bi("foot_L"), bi("toe_L")] };
 const pos = (M) => [M[12], M[13], M[14]], dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);

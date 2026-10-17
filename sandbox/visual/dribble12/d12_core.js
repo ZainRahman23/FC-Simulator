@@ -157,7 +157,7 @@ export const D1 = {
   // (zero at the adjustment's start and at touchdown, the plant unchanged), at the speed that gives the planned closing speed (≤ vMax), its
   // wind-up ≤ windMax
   sweep: { on: true, vMax: 2.2, windMax: 0.045 },
-  cut12: { stagedMin: 75, stageFrac: 0.5, nowFullMaxRem: 60, decWin: 9, decPull: 2, nowHorizon: 0.7, cutMaxI: 1.3, minCut: 35, holdReplan: 24, robustK: 0, floorAng: 15, shifts: [-0.12, -0.06, 0.06, 0.12], shiftMinMargin: 0.03, refineSetup: 16, releaseNow: true, setupSwitch: true, stageMinRedirect: 20, refineTries12: 8, nestTries: 8, decFrac: 0.85, regs: ["OUTSIDE", "INSIDE", "LACES", "FRONT"], elevs: [0, 10, 20], remK: 1.2, timeK: 0.8, setupK: 0.15, validKeep: 5, marginWant: 0.06 },
+  cut12: { stagedMin: 75, stageFrac: 0.5, nowFullMaxRem: 60, decWin: 9, decPull: 2, nowHorizon: 0.7, keepHeld: true, cutMaxI: 1.3, minCut: 35, holdReplan: 24, robustK: 0, floorAng: 15, shifts: [-0.12, -0.06, 0.06, 0.12], shiftMinMargin: 0.03, refineSetup: 16, releaseNow: true, setupSwitch: true, stageMinRedirect: 20, refineTries12: 8, nestTries: 8, decFrac: 0.85, regs: ["OUTSIDE", "INSIDE", "LACES", "FRONT"], elevs: [0, 10, 20], remK: 1.2, timeK: 0.8, setupK: 0.15, validKeep: 5, marginWant: 0.06 },
   cutGate: 8, cutMinInterval: 0.28, cutWinTol: 30, cutSepK: 0.7,   // a cut touch: next window on the new heading (±30°), ≥ 0.28 s later, 70 % separation                          // deg: a requested direction change above this is held until a touch can take the ball through it
   gateExtra: 0.3,                      // s: … at most the speed's longest touch interval + this (the player must reach the ball first; then the turn goes without it)
   // touch error σ for a neutral (g = 0) player on the preferred foot, LACES, at 5.5 m/s
@@ -583,7 +583,7 @@ export class DribbleSim {
     const relOk = P && P.relInp && this.input.dir === P.relInp.dir && this.input.v === P.relInp.v && !this.ftHold;
     if (P && (!stale || relOk) && !this.ballChanged(P) && !heldRe) return;
     // a held re-plan that finds no touch keeps the plan it reconsidered (still valid: same input, same free ball) — only a better plan replaces it
-    const keepP = heldRe && (!stale || relOk) && !this.ballChanged(P) ? P : null, keepA = keepP ? this.adjs[P.F][P.swing] : null;
+    const keepP = D1.cut12.keepHeld && heldRe && (!stale || relOk) && !this.ballChanged(P) ? P : null, keepA = keepP ? this.adjs[P.F][P.swing] : null;
     if (!P && k < this.replanAt) return;
     if (!P && this.lastTouch && this.lastTouch.launched && (k - this.lastTouch.k) * DT < 0.12) return;
     if (this.sliceOn) { if (!this.job) this.job = { g: this.makePlanG(k, true), k0: k, key: this.inputKey(), bc: null, urgent: false }; return; }

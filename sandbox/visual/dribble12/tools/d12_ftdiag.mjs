@@ -2,7 +2,7 @@
 // the candidate), the slowest launch the DRIBBLE-1 follow-through can clear, and — at a soft probe launch — where and when the touching boot would
 // meet the ball again: ticks after the contact, which hull, the boot relative to the ball (along the launch, lateral, vertical), the boot's and the
 // ball's speed along the launch, and the swing fraction / path fraction (warp catch-up) at that moment.
-// usage: node d11_ftdiag.mjs SCENARIO seeds [softSpeedFactor 1.0] → summary to stdout (+ JSON with --out=file)
+// usage: node d12_ftdiag.mjs SCENARIO seeds [softSpeedFactor 1.0] → summary to stdout (+ JSON with --out=file)
 import fs from "fs"; import { makeSim, DT } from "./d12_env.mjs"; import { get } from "../../dribble1/d1_scenarios.js"; import { DribbleSim, warpAt } from "../d12_core.js";
 const [id = "CUT60_RUN", seedsArg = "4", softK = "1.0"] = process.argv.slice(2), outArg = process.argv.find((a) => a.startsWith("--out="));
 const P = DribbleSim.prototype, fms = P.followMinSpeed, rows = [];

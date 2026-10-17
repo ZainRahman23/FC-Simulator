@@ -1,6 +1,6 @@
-// dribble12/tools/d11_capture.cjs — deterministic, frame-exact capture of the DRIBBLE-1.2 lab (or, with --page dribble1.html, the frozen DRIBBLE-1 lab): for frame k the page time is SET to t0 + k·dt·rate (D1V.set);
+// dribble12/tools/d12_capture.cjs — deterministic, frame-exact capture of the DRIBBLE-1.2 lab (or, with --page dribble1.html, the frozen DRIBBLE-1 lab): for frame k the page time is SET to t0 + k·dt·rate (D1V.set);
 // the WebGL canvas and the diagnostic overlay are composited in the page, written as JPEG, and ffmpeg encodes at a constant 60 fps (no retiming).
-// usage: PUPPETEER_NODE_MODULES=<dir> FFMPEG=<bin> node d1_capture.cjs --q "scn=CUT90_RUN&diag=1" --out <file.mp4 | dir with --stills> [--t0 0] [--t1 6]
+// usage: PUPPETEER_NODE_MODULES=<dir> FFMPEG=<bin> node d12_capture.cjs --q "scn=CUT90_RUN&diag=1" --out <file.mp4 | dir with --stills> [--t0 0] [--t1 6]
 //        [--rate 1|0.25] [--w 1600 --h 900] [--single game|nearC|…] [--stills "1.0,1.2"] [--port 8361] [--profile <chrome profile dir>]
 const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path"), cp = require("child_process");

@@ -1,6 +1,6 @@
-// dribble12/tools/d11_pick.mjs — picks the review examples from the reliability evidence: for each cut, seeds where DRIBBLE-1.2 takes the turn with the
+// dribble12/tools/d12_pick.mjs — picks the review examples from the reliability evidence: for each cut, seeds where DRIBBLE-1.2 takes the turn with the
 // ball (and how DRIBBLE-1 did on the same seed), the first cut touch's redirect and speed; examples of INSIDE / OUTSIDE / LACES touches; a cut touch
-// with a non-zero follow-through (for the close-up). usage: node d11_pick.mjs
+// with a non-zero follow-through (for the close-up). usage: node d12_pick.mjs
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 const EV = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../review_artifacts/dribble11/evidence");
 const rel = { d1: {}, d11: {} }; for (const v of ["d1", "d11"]) for (let g = 1; g <= 6; g++) { try { Object.assign(rel[v], JSON.parse(fs.readFileSync(path.join(EV, `rel_${v}_g${g}.json`), "utf8"))); } catch {} }
