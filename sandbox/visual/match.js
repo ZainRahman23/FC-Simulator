@@ -23,6 +23,9 @@ const GRASS_ZONE = { x0: -3, x1: 108, y0: -3, y1: 71 };
 const APRON = { x0: -8, x1: 113, y0: -8, y1: 76 };
 const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west", "north", "north-east"];
 const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-space units
+// EMBED (?embed=1): the page is a same-origin iframe driven by the Touchline
+// app through window.TouchlineBroadcast (embed.js). Standalone is unchanged.
+const EMBED = (() => { try { return new URLSearchParams(location.search).get("embed") === "1"; } catch (e) { return false; } })();
 
 // ═══ 2X DPR-AWARE BACKING STORE ══════════════════════════════════════════════
 // ONE authoritative backing-resolution factor. The canvas backing raster is
@@ -34,9 +37,9 @@ const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-spa
 // Pixel-art discipline: strokes quantize to PXQ backing px (= 1 CSS px), so
 // chunky edges survive; sprites keep nearest-neighbour sampling and now draw
 // from their sources at up to native resolution (players 128px -> ~123px).
-const RES = Math.min(window.devicePixelRatio || 1, 2);
+let RES = Math.min(window.devicePixelRatio || 1, 2);   // let: embed quality "low" may set 1 (embed.js); standalone never reassigns
 const FPS_CAP_PARAM = (() => { try { const v = new URLSearchParams(location.search).get("fps"); return v ? +v : null; } catch (e) { return null; } })();   // ?fps=60 → presentation frame cap (see tick)
-const PXQ = Math.max(1, Math.round(RES));   // stroke quantum (1 CSS px)
+let PXQ = Math.max(1, Math.round(RES));   // stroke quantum (1 CSS px)
 const qw = (cssw) => Math.max(PXQ, Math.round(cssw * RES / PXQ) * PXQ);
 const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
 
@@ -300,8 +303,9 @@ async function boot() {
   buildGroundTexture();
   recomputeAuthoring();               // authored CAMERA_V1 basis + constants
   bindUI();
-  await startMatch();
+  if (!EMBED) await startMatch();   // embed: frames arrive from the app (embed.js), no fetching here
   document.getElementById("loading").style.display = "none";
+  if (EMBED) window.dispatchEvent(new Event("touchline:booted"));
   requestAnimationFrame(tick);
 }
 
@@ -557,10 +561,11 @@ const RIG = { x: 52.5, mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0,
               manualX: 52.5, zoom: RUNTIME_DEFAULTS.zoom,
               zoomTarget: RUNTIME_DEFAULTS.zoom, targetX: 52.5 };
 let TRAVEL = 0;
+let VIEW_PANY = 0;                      // vertical screen framing (backing px); embed.js only — standalone never assigns (stays 0)
 function sproj3(wx, wy, wz) {           // world → screen (rig-translated + zoom)
   const p = fproj3(wx - TRAVEL, wy, wz);
   return { x: (p.x - VIEW.w / 2) * (RIG.zoom * RES) + cv.width / 2,
-           y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2, d: p.d };
+           y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2 + VIEW_PANY, d: p.d };
 }
 function sproj(wx, wz) { return sproj3(wx, 0, wz); }
 // BILLBOARD PERSPECTIVE COMPRESSION (sprites only — world projection is
@@ -798,7 +803,7 @@ function drawGroundPerspective() {
   const tx = (x) => (x + TRAVEL - APRON.x0) * REF_ZOOM;   // shifted → actual world
   const tz = (z) => (z - APRON.y0) * REF_ZOOM;
   const rowWorld = (sy) => {
-    const vy = (sy - cv.height / 2) / (RIG.zoom * RES) + VIEW.h / 2;
+    const vy = (sy - cv.height / 2 - VIEW_PANY) / (RIG.zoom * RES) + VIEW.h / 2;
     const qy = (VIEW.h / 2 - vy) / PROJ.fpx;
     const dy = PROJ.f.y + qy * PROJ.u.y;
     if (dy >= -1e-6) return null;

@@ -23,6 +23,8 @@ _SLOT_GROUP = {
     "CDM": "MID", "LDM": "MID", "RDM": "MID", "LCM": "MID", "RCM": "MID",
     "LM": "MID", "RM": "MID",
     "CAM": "ATT", "LAM": "ATT", "RAM": "ATT", "LW": "ATT", "RW": "ATT", "ST": "ATT",
+    # Core Loop v2 E3 slots (back three / wing-backs / strike pair)
+    "CB": "DEF", "LWB": "DEF", "RWB": "DEF", "LST": "ATT", "RST": "ATT",
 }
 
 

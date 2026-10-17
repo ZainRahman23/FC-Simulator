@@ -238,21 +238,24 @@ def test_api_advance_parity_with_full_run():
 
 # ── §64 API vs direct Python parity ──────────────────────────────────────────
 def test_api_vs_direct_python_parity():
-    # The API's instant path runs the CONTINUOUS transport (run_continuous), not
-    # the legacy per-second MatchEngine.run() loop. The direct Python reference
-    # must therefore be the SAME continuous execution, and must expose the same
-    # authoritative event stream the server builds (via _full_event_stream).
-    # Comparing against the legacy engine would compare two different engines.
+    # The API's instant path runs the ACTIVE transport (server.ENGINE_MODE):
+    # native MatchEngine.run() by default, or the continuous lab
+    # (run_continuous + _full_event_stream) when TOUCHLINE_ENGINE=continuous.
+    # The direct Python reference must be the SAME execution.
+    import server
     from fc_simulator.engine import MatchEngine
-    from fc_simulator.continuous import run_continuous
-    from server import _full_event_stream
     home = bridge.build_team(liverpool_side(), "HOME")
     away = bridge.build_team(everton_side(), "AWAY")
     cfg = bridge.build_config({"duration_seconds": 90 * 60}, {"home": False, "away": True})
     engine = MatchEngine(home, away, bridge.ATTRIBUTE_STATS, 2024, cfg)
-    _result, lab = run_continuous(engine)
-    engine.result()                      # record FULL_TIME (same as the server path)
-    direct_events = _full_event_stream(engine, lab)
+    if server.CONTINUOUS:
+        from fc_simulator.continuous import run_continuous
+        _result, lab = run_continuous(engine)
+        engine.result()                  # record FULL_TIME (same as the server path)
+        direct_events = server._full_event_stream(engine, lab)
+    else:
+        engine.run()
+        direct_events = [e.to_dict() for e in engine.events]
     api = client.post("/api/matches/start", json=start_req(seed=2024)).json()
     assert direct_events == api["full_time"]["events"]
 
