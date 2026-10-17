@@ -1,0 +1,54 @@
+# name | page | query | t0 | t1 | view (game = 1× Touchline camera 1280×720; half = 960×540; nearC/low/… = close) | rate
+# SBS | name | left clip | right clip | left label | right label        (two-way: DRIBBLE-1.2 | DRIBBLE-1.3, frame-synchronised by simulation time)
+# ── A — 60° right: CUT60_RUN seed 16 (both cleanly, the inside of the left foot)
+a_cut60_s16_d12   | dribble12.html | scn=CUT60_RUN&prof=HIGH&seed=16   | 0 | 6 | game | 1
+a_cut60_s16_d13   | dribble14.html | scn=CUT60_RUN&prof=HIGH&seed=16   | 0 | 6 | game | 1
+SBS | A1_cut60R_1x  | a_cut60_s16_d12 | a_cut60_s16_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+a_cut60_s16_d12_zoom  | dribble12.html | scn=CUT60_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | game | 1
+a_cut60_s16_d14_zoom  | dribble14.html | scn=CUT60_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | game | 1
+SBS | A1_cut60R_zoom | a_cut60_s16_d12_zoom | a_cut60_s16_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+# ── B — 60° left: CUT60L_RUN seed 3 (both cleanly, the outside of the left foot)
+b_cut60L_s3_d12   | dribble12.html | scn=CUT60L_RUN&prof=HIGH&seed=3   | 0 | 6 | game | 1
+b_cut60L_s3_d13   | dribble14.html | scn=CUT60L_RUN&prof=HIGH&seed=3   | 0 | 6 | game | 1
+SBS | B1_cut60L_1x  | b_cut60L_s3_d12 | b_cut60L_s3_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+b_cut60L_s3_d12_zoom  | dribble12.html | scn=CUT60L_RUN&prof=HIGH&seed=3&zoom=2.6 | 0 | 6 | game | 1
+b_cut60L_s3_d14_zoom  | dribble14.html | scn=CUT60L_RUN&prof=HIGH&seed=3&zoom=2.6 | 0 | 6 | game | 1
+SBS | B1_cut60L_zoom | b_cut60L_s3_d12_zoom | b_cut60L_s3_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+# ── C — 90° right: CUT90_RUN seed 10 (both cleanly: 1.2 the outside of the right foot, 1.3 the inside of the left)
+c_cut90_s10_d12   | dribble12.html | scn=CUT90_RUN&prof=HIGH&seed=10   | 0 | 6 | game | 1
+c_cut90_s10_d13   | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=10   | 0 | 6 | game | 1
+SBS | C1_cut90R_1x  | c_cut90_s10_d12 | c_cut90_s10_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+c_cut90_s10_d12_zoom  | dribble12.html | scn=CUT90_RUN&prof=HIGH&seed=10&zoom=2.6 | 0 | 6 | game | 1
+c_cut90_s10_d14_zoom  | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=10&zoom=2.6 | 0 | 6 | game | 1
+SBS | C1_cut90R_zoom | c_cut90_s10_d12_zoom | c_cut90_s10_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+# ── C2 — the worst remaining cut: CUT90_RUN seed 16 (1.2 takes it cleanly; 1.3 loses it)
+c_cut90_s16_d12   | dribble12.html | scn=CUT90_RUN&prof=HIGH&seed=16   | 0 | 6 | game | 1
+c_cut90_s16_d13   | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=16   | 0 | 6 | game | 1
+SBS | C2_cut90R_worst_1x | c_cut90_s16_d12 | c_cut90_s16_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+c_cut90_s16_d12_zoom  | dribble12.html | scn=CUT90_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | game | 1
+c_cut90_s16_d14_zoom  | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=16&zoom=2.6 | 0 | 6 | game | 1
+SBS | C2_cut90R_worst_zoom | c_cut90_s16_d12_zoom | c_cut90_s16_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+# ── D — 90° left: CUT90L_RUN seed 14 (both cleanly, the inside of the right foot) and seed 13 (1.2 loses it after a set-up; 1.3 takes it)
+d_cut90L_s14_d12  | dribble12.html | scn=CUT90L_RUN&prof=HIGH&seed=14  | 0 | 6 | game | 1
+d_cut90L_s14_d13  | dribble14.html | scn=CUT90L_RUN&prof=HIGH&seed=14  | 0 | 6 | game | 1
+SBS | D1_cut90L_1x  | d_cut90L_s14_d12 | d_cut90L_s14_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+d_cut90L_s14_d12_zoom | dribble12.html | scn=CUT90L_RUN&prof=HIGH&seed=14&zoom=2.6 | 0 | 6 | game | 1
+d_cut90L_s14_d14_zoom | dribble14.html | scn=CUT90L_RUN&prof=HIGH&seed=14&zoom=2.6 | 0 | 6 | game | 1
+SBS | D1_cut90L_zoom | d_cut90L_s14_d12_zoom | d_cut90L_s14_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+d_cut90L_s13_d12  | dribble12.html | scn=CUT90L_RUN&prof=HIGH&seed=13  | 0 | 6 | game | 1
+d_cut90L_s13_d13  | dribble14.html | scn=CUT90L_RUN&prof=HIGH&seed=13  | 0 | 6 | game | 1
+SBS | D2_cut90L_s13_1x | d_cut90L_s13_d12 | d_cut90L_s13_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+d_cut90L_s13_d12_zoom | dribble12.html | scn=CUT90L_RUN&prof=HIGH&seed=13&zoom=2.6 | 0 | 6 | game | 1
+d_cut90L_s13_d14_zoom | dribble14.html | scn=CUT90L_RUN&prof=HIGH&seed=13&zoom=2.6 | 0 | 6 | game | 1
+SBS | D2_cut90L_s13_zoom | d_cut90L_s13_d12_zoom | d_cut90L_s13_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)
+# ── E — a validated set-up touch (DRIBBLE-1.3, diagnostics on: the set-up target region, the BALL-PHYS prediction at the decisive tick for the
+#        planned launch (violet) and the ±1.5σ execution envelope (green reachable / red not))
+e_setup_game      | dribble14.html | scn=CUT60_RUN&prof=HIGH&seed=13&diag=1 | 0 | 6 | game | 1
+e_setup_slow      | dribble14.html | scn=CUT60_RUN&prof=HIGH&seed=13&diag=1 | 2.85 | 3.75 | top | 0.25
+# ── G — straight RUN: STRAIGHT_RUN seed 1
+g_straight_s1_d12 | dribble12.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1 | 0 | 8 | game | 1
+g_straight_s1_d13 | dribble14.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1 | 0 | 8 | game | 1
+SBS | G1_straight_1x | g_straight_s1_d12 | g_straight_s1_d13 | DRIBBLE-1.2 | DRIBBLE-1.3
+g_straight_s1_d12_zoom| dribble12.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1&zoom=2.6 | 0 | 8 | game | 1
+g_straight_s1_d14_zoom| dribble14.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1&zoom=2.6 | 0 | 8 | game | 1
+SBS | G1_straight_zoom | g_straight_s1_d12_zoom | g_straight_s1_d14_zoom | DRIBBLE-1.2 (zoomed camera) | DRIBBLE-1.3 (zoomed camera)

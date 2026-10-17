@@ -1,0 +1,90 @@
+// dribble14/tools/d14_ref.mjs — the DRIBBLE-1.2 BEHAVIOURAL TWIN SUITE (the owner's DRIBBLE-1.3 §3): a deterministic reference of what DRIBBLE-1.2
+// decides and what physically happens, per scenario × seed, and the comparison of any core against it.
+//   record:  every plan the resolver installs (tick, contact tick, foot, surface, hull, swing, role — set-up / stage / cut / release-now / line —, the
+//            set-up's planned decisive contact, the planned launch and next window); every deliberate touch (tick, foot, surface, hull, role, launched
+//            or cancelled, the ball's state at the touch — position, velocity, spin —, the planned and the executed launch, the execution-error draws,
+//            the post-launch velocity and spin, the next window it aimed at); TURN-1.2's state at each touch (COM position / velocity, heading, both
+//            legs' stance / swing phase); the cut timeline (holds, stages, releases); the kernel's contacts; the control classification; the outcome
+//            (taken with the ball / cleanly, final control); and a bit-exact digest of the whole 240 Hz trajectory (ball, COM, heading).
+//   compare: per run IDENTICAL (every list and the trajectory digest bit for bit) or the FIRST DIVERGENCE: which list, which entry, the reference and
+//            the new value, the tick — and, for a 1.3 core, the planner's own decision log entries around that tick (why it decided differently).
+// usage: node d14_ref.mjs record ver "IDs|all" seeds out.json            node d14_ref.mjs compare ref.json ver [out.json] [opts-json]
+import fs from "fs"; import crypto from "crypto"; import { makeSim, DT, PROFILES } from "./d14_env.mjs"; import { get, list } from "../../dribble1/d1_scenarios.js"; import { cutQuality } from "./d14_quality.mjs";
+const bits = (x) => (typeof x === "number" ? (Object.is(x, -0) ? "-0" : String(x)) : Array.isArray(x) ? "[" + x.map(bits).join(",") + "]" : x == null ? String(x) : typeof x === "object" ? "{" + Object.keys(x).sort().map((k) => k + ":" + bits(x[k])).join(",") + "}" : String(x));
+const D = 180 / Math.PI, hd = (v) => Math.atan2(-v[2], v[0]) * D;
+export function runRef(ver, id, seed, opts = {}) {
+  const scn = get(id), S = makeSim(scn, { ver, seed, player: PROFILES.HIGH, opts: Object.assign({ record: true, recBones: true }, opts) });
+  const plans = [], st = S.step.bind(S); let last = null;
+  S.step = function () { const r = st(); const P = S.plan;
+    if (P && P !== last) { const L = P.launch || {}; plans.push({ k: S.k - 1, kc: P.kc, F: P.F, reg: P.reg, hull: P.hull, swing: P.swing, role: P.setupSw ? "setup" : P.relNow ? (P.stage != null ? "staged-now" : "cut-now") : P.release ? (P.stage != null ? "stage" : "cut") : P.cutQ ? P.cutQ.kind : "dribble",
+      dec: P.dec ? { kc: P.dec.kc, F: P.dec.F, reg: P.dec.reg, dir: P.dec.dir, speed: P.dec.speed } : null, launch: { speed: L.speed, dir: L.n ? hd(L.n) : null, kNext: L.kNext ?? null, F2: L.F2 ?? null, target: L.target || null } }); }
+    last = P; return r; };
+  S.run();
+  const touches = S.touches.map((T) => { const r = S.rec[T.k] || S.rec[S.rec.length - 1];
+    return { k: T.k, F: T.F, reg: T.reg, hull: T.hull, swing: T.swing, role: T.role, setupSw: !!T.setupSw, launched: !!T.launched, cancelled: T.cancelled || null, ball: T.ball, ballV: T.pre.v, ballW: T.pre.w,
+      desired: { speed: T.desired.speed, v: T.desired.v, kNext: T.desired.kNext, F2: T.desired.F2, target: T.desired.target || null }, executed: T.executed, err: [T.error.eS, T.error.eD, T.error.eL], post: T.post || null,
+      dec: T.dec || null, turn12: { P: r.P, V: r.V, psi: r.psi, wR: r.bones ? r.bones.wR : null, wL: r.bones ? r.bones.wL : null } }; });
+  const h = crypto.createHash("sha256"); for (const r of S.rec) h.update(bits([r.k, r.ball.p, r.ball.v, r.ball.q, r.P, r.V, r.psi, r.dir, r.ctrl, r.held]));
+  const q = cutQuality(S, scn), endCtrl = S.rec[S.rec.length - 1].ctrl;
+  const events = S.W.events.filter((e) => e.kind !== "PHYSICAL_CONTACT" || e.collider !== "turf").map((e) => ({ kind: e.kind, tick: e.tick, id: e.id || null, collider: e.collider || null }));
+  return { S, ref: { id, seed, ver, plans, touches, turnLog: S.turnLog.map((e) => ({ k: e.k, kind: e.kind, by: e.by || null, dir: e.dir ?? null })), events, ctrl: S.ctrl.changes.map((c) => [c.k, c.to]), fault: S.fault || null,
+    outcome: { endCtrl, taken: q ? q.taken : null, clean: q ? q.takenCleanly : null, toBall20S: q ? q.toBall20S : null }, digest: h.digest("hex"), ticks: S.rec.length } };
+}
+const LISTS = ["plans", "touches", "turnLog", "events", "ctrl"];
+const tickOf = (name, e) => e == null ? Infinity : name === "ctrl" ? e[0] : name === "events" ? e.tick : e.k;
+export function compareRef(A, B) {
+  const out = { identical: true, first: null, perList: {} };
+  for (const name of LISTS) { const a = A[name], b = B[name], n = Math.max(a.length, b.length);
+    for (let i = 0; i < n; i++) { const x = a[i] ? bits(a[i]) : "∅", y = b[i] ? bits(b[i]) : "∅";
+      if (x !== y) { const t = Math.min(tickOf(name, a[i]), tickOf(name, b[i])); out.perList[name] = { i, tick: t };
+        if (!out.first || t < out.first.tick) out.first = { list: name, i, tick: t, ref: a[i] || null, now: b[i] || null }; out.identical = false; break; } } }
+  if (A.digest !== B.digest) { out.identical = false; out.digest = false; } else out.digest = true;
+  if (bits(A.fault) !== bits(B.fault)) out.identical = false;
+  return out;
+}
+// WHY a 1.3 run decided differently from the reference at its first divergence (rule-based, from the plans and the 1.3 planner's decision log):
+//   "pursuit timing" — the first difference is an input / a pursuit correction (1.3 applies a checked correction from its switch tick);
+//   "same plan, later" — the same contact (tick, foot, surface) installed later (the search ran over several ticks);
+//   "release lead" — a release-now / staged plan released lead ticks after its search began (1.2 released on the next tick);
+//   "set-up rejected" — a set-up DRIBBLE-1.2 made was refused by the physical-ball envelope check;
+//   "search order / budget" — a different plan, found under the per-tick budget (phased search, deadline, anytime install);
+//   "after an earlier change" — the first difference is not a decision (a consequence of an earlier physical difference)
+function classify(A, B, c, S) {
+  const f = c.first; if (!f) return "trajectory only"; const t = f.tick, log = (S.decLog || []).filter((d) => d.k >= t - 60 && d.k <= t + 2);
+  if (f.list === "plans" && f.ref && f.now) { if (f.ref.kc === f.now.kc && f.ref.F === f.now.F && f.ref.reg === f.now.reg) return f.now.k > f.ref.k ? "same plan, later" : "same plan, different launch";
+    if (/now/.test(f.now.role) || /now/.test(f.ref.role)) return "release lead";
+    if (f.ref.role === "setup" && log.some((d) => d.ev === "setupCheck" && !d.ok)) return "set-up rejected";
+    return "search order / budget"; }
+  if (f.list === "plans" && f.ref && !f.now) return log.some((d) => d.ev === "setupCheck" && !d.ok) ? "set-up rejected" : "search order / budget";
+  if (f.list === "plans" && !f.ref && f.now) return "search order / budget";
+  if (f.list === "turnLog") return "release lead";
+  if (f.list === "touches") return "same plan, different launch";
+  return "after an earlier change";
+}
+// the FIRST CHANGED DECISION: plans compared in order by content only (contact tick, foot, surface, role) — a plan installed later but otherwise the
+// same is not a changed decision; and the FIRST CHANGED TOUCH: executed touches by tick, foot, surface and launch
+const sameContent = (x, y) => x && y && x.kc === y.kc && x.F === y.F && x.reg === y.reg && x.role === y.role;
+function firstChanged(A, B, S) {
+  let dec = null; const n = Math.max(A.plans.length, B.plans.length);
+  for (let i = 0; i < n; i++) { const x = A.plans[i], y = B.plans[i]; if (sameContent(x, y)) continue; const t = Math.min(x ? x.k : Infinity, y ? y.k : Infinity);
+    dec = { i, tick: t, ref: x || null, now: y || null, cause: classify(A, B, { first: { list: "plans", i, tick: t, ref: x || null, now: y || null } }, S) }; break; }
+  let touch = null; const m = Math.max(A.touches.length, B.touches.length), key = (t) => t ? [t.k, t.F, t.reg, t.launched ? 1 : 0].join("|") : "∅";
+  for (let i = 0; i < m; i++) if (key(A.touches[i]) !== key(B.touches[i])) { touch = { i, ref: A.touches[i] ? [A.touches[i].k, A.touches[i].F, A.touches[i].reg] : null, now: B.touches[i] ? [B.touches[i].k, B.touches[i].F, B.touches[i].reg] : null }; break; }
+  return { dec, touch };
+}
+const [mode, a1, a2, a3, a4, a5] = process.argv.slice(2);
+if (mode === "record") {
+  const ver = a1, ids = a2 === "all" ? list().map((s) => s.id) : a2.split(","), seeds = a3.includes("-") ? a3.split("-").map(Number) : [1, +a3], out = [];
+  for (const id of ids) for (let sd = seeds[0]; sd <= seeds[1]; sd++) { const { ref } = runRef(ver, id, sd); out.push(ref); console.log(id.padEnd(16), sd, "plans", ref.plans.length, "touches", ref.touches.length, "taken", ref.outcome.taken, ref.digest.slice(0, 12)); }
+  fs.writeFileSync(a4, JSON.stringify({ ver, made: new Date().toISOString(), runs: out }));
+} else if (mode === "compare") {
+  const R = JSON.parse(fs.readFileSync(a1, "utf8")), ver = a2, opts = a4 ? JSON.parse(a4) : {}, rows = []; let same = 0;
+  for (const A of R.runs) { const { S, ref: B0 } = runRef(ver, A.id, A.seed, opts), B = JSON.parse(JSON.stringify(B0)), c = compareRef(A, B); if (c.identical) same++;   // (the reference went through JSON: compare like with like)
+    const why = c.first && S.decLog ? S.decLog.filter((d) => Math.abs(d.k - c.first.tick) <= 30).slice(0, 12) : null, cause = c.identical ? null : classify(A, B, c, S);
+    const fc = c.identical ? null : firstChanged(A, B, S);
+    rows.push({ id: A.id, seed: A.seed, identical: c.identical, digest: c.digest, first: c.first, cause, firstChangedDecision: fc && fc.dec, firstChangedTouch: fc && fc.touch, why, outcomeRef: A.outcome, outcomeNow: B.outcome });
+    console.log(`${A.id}:${A.seed}`.padEnd(20), c.identical ? "IDENTICAL" : `DIVERGES at tick ${c.first ? c.first.tick : "?"} (${c.first ? c.first.list + "#" + c.first.i : "digest"})`, "taken", A.outcome.taken, "→", B.outcome.taken); }
+  const causes = {}; for (const r of rows) if (r.cause) causes[r.cause] = (causes[r.cause] || 0) + 1;
+  const sum = { ver, ref: R.ver, identical: same, total: R.runs.length, divergenceCauses: causes, takenRef: rows.filter((r) => r.outcomeRef.taken).length, takenNow: rows.filter((r) => r.outcomeNow.taken).length };
+  console.log("REF", JSON.stringify(sum)); if (a3) fs.writeFileSync(a3, JSON.stringify({ summary: sum, rows }, null, 1));
+}
