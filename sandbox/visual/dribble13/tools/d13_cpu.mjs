@@ -10,6 +10,9 @@ const ids = idsArg === "all" ? list().map((s) => s.id) : idsArg.split(","), N = 
 const zero = () => ({ wall: 0, loco: 0, ball: 0, sim: 0, steps: 0, plans: 0, planMax: 0, stepMax: 0, stepMaxAt: null, over4: 0, over8: 0, over20: 0, st: [] });
 const acc = Object.fromEntries(VERS.map((v) => [v, zero()])), per = {};
 const pct = (a, p) => { if (!a.length) return null; const s = Float64Array.from(a).sort(); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
+// (warm-up, all versions alike: the rig's RUN-1 speed grid and TURN-1.2 reference tables are solved once per process — a DRIBBLE-1.3 sim solves
+// them at construction; every core shares the rig, so no version pays a first-use solve inside a measured step)
+makeSim(get("STRAIGHT_RUN"), { ver: "d13", seed: 1, opts: { record: false } });
 for (const id of ids) { const row = Object.fromEntries(VERS.map((v) => [v, zero()]));
   for (let r = 0; r < REP; r++) for (let seed = 1; seed <= N; seed++) for (const ver of VERS) {
     const S = makeSim(get(id), { ver, seed, opts: { record: false } }), st = S.step.bind(S), steps = [];
