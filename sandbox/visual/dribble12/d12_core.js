@@ -1102,7 +1102,10 @@ export class DribbleSim {
     if (this.cfg.opts && this.cfg.opts.recViewer) {                                       // diagnostic: the planned (warped) toe path to the contact and the contact point
       const toe = []; for (let i = Math.max(best.off, 0); i <= Math.min(best.pred.length - 1, best.j + 30); i += 3) { const smp = best.pred.at(i), Lp = smp.legs[best.F]; if (Lp.stance || Lp.swing !== this.plan.swing) continue;
         const bn = best.warp ? this.pathFrames(best.pred, best.F, this.plan.swing, warpAt(best.warp, Lp.w), best.j) : smp.bones; if (bn) toe.push(V.add(bn["toe_" + best.F].p, M.v(bn["toe_" + best.F].R, [0, -0.02, 0.085]))); }
-      this.plan.viz = { toe, contact: g2.cW, ball: K(best.ballK.p), target: L.target || null }; }
+      // DRIBBLE-1.2 geometry diagnostics: the launch direction / impulse normal and speed, the next touch's target and the corridor it was aimed at
+      // (its surface and inscribed margin; for a set-up, the set-up target region), the plan's role, and a set-up's planned decisive contact
+      const role = best.setupSw ? "setup" : best.staged != null ? "staged" : best.release === true ? "cut-now" : best.release ? (best.stage != null ? "stage" : "cut") : "line";
+      this.plan.viz = { toe, contact: g2.cW, ball: K(best.ballK.p), target: L.target || null, n: L.n, nImp: g2.nc || null, speed: L.speed, role, corr: L.corr ? { F: L.corr.F, reg: L.corr.reg, margin: L.corr.margin, k: L.corr.k } : null, dec: best.dec || null }; }
     if (!sliced) { this.cpu.plan += now() - c0; this.cpu.planMax = Math.max(this.cpu.planMax || 0, now() - c0); }
     this.jobDone(true);
   }
@@ -1681,6 +1684,9 @@ export class DribbleSim {
       plan: this.plan ? { id: this.plan.id, F: this.plan.F, reg: this.plan.reg, kc: this.plan.kc, viz: vw ? this.plan.viz : null } : null, bones, feet: fb, skin: vw ? Float32Array.from(A.skinMats) : null, fx: vw ? this.fixtures.map((f) => f.viz ? f.viz(this.k * DT) : null) : null,
       env: tab(D1.sepWant, Math.hypot(A.V[0], A.V[1])) * 0.0 + this.wantSep(Math.hypot(A.V[0], A.V[1])),
       // DRIBBLE-1.1 diagnostics (viewer only): TURN-1.2's own foot under an adjusted swing, the swings' authoritative landings, the follow-through in force
+      // DRIBBLE-1.2 diagnostics (viewer only): each boot's INSIDE / OUTSIDE striking surface now (support point of the hull that reaches furthest, its
+      // outward direction)
+      d12: vw && fr ? { surf: Object.fromEntries(SIDES.map((F) => [F, Object.fromEntries(["INSIDE", "OUTSIDE"].map((reg) => { const rg = this.regs[reg], sgx = F === "R" ? 1 : -1, dL = [rg.d[0] * sgx, rg.d[1], rg.d[2]], n = V.norm(M.v(fr["foot_" + F].R, dL)), st = this.strikeHull(F, rg, M.exp([0, 0, 0]), fr["foot_" + F], fr["toe_" + F], n); return [reg, [st.cW, n]]; }))])) } : null,
       d11: vw ? { orig: A.d11orig ? JSON.parse(JSON.stringify(A.d11orig)) : null, tgt: Object.fromEntries(SIDES.map((F) => [F, A.legs[F].stance ? null : (A.legs[F].tgt ? A.legs[F].tgt.slice() : null)])),
         ft: Object.fromEntries(SIDES.map((F) => { const a = this.curAdj(A, F); return [F, a && a.caft ? { iy: a.caft.iy, ia: a.caft.ia } : a && a.ftSolved ? { iy: 0, ia: 0 } : null]; })) } : null });
   }

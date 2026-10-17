@@ -1,8 +1,10 @@
-// ═══ dribble11/d11_viewer.js — DRIBBLE-1.1 lab (contact-aware follow-through): the Touchline gameplay camera (CAMERA_V1) + close views, the real character, the physical ball ═══
+// ═══ dribble12/d12_viewer.js — DRIBBLE-1.2 lab (cut contact geometry / set-up touch; from the DRIBBLE-1.1 lab): the Touchline gameplay camera (CAMERA_V1) + close views, the real character, the physical ball ═══
 // The page runs the SAME simulation as the Node tools (d1_core.js on the frozen TURN-1.2 and the BALL-FEEL-1.3 world) once at load, recording every
 // 240 Hz tick (skin matrices, ball state, diagnostics); playback only reads the record (deterministic, scrubbable). Diagnostics (optional): ball
 // trajectory, COM, feet, the planned (warped) toe path, the intended contact point, authoritative contact ticks, the control envelope, ball / player
-// velocity, touch family and foot. URL: ?scn=<id>&arch=B|C|A&prof=HIGH|AVERAGE|POOR|WEAKFOOT&seed=1&diag=1&views=game|single&single=game&rate=0.25&t=…
+// velocity, touch family and foot; DRIBBLE-1.2 (geo=1, default with diag): each boot's inside / outside striking surface, the selected contact and
+// its impulse normal, the next touch's target with its reachable corridor (inscribed margin) — for a set-up, the set-up target region — and the
+// set-up's planned decisive contact. URL: ?scn=<id>&arch=B|C|A&prof=HIGH|AVERAGE|POOR|WEAKFOOT&seed=1&diag=1&views=game|single&single=game&rate=0.25&t=…
 import { DribbleSim, BALL_DEFAULT, D1, DT } from "./d12_core.js";
 import { PROFILES } from "../dribble1/d1_attrs.js";
 import { list, get } from "../dribble1/d1_scenarios.js";
@@ -138,17 +140,29 @@ function overlay(ctx, vw, cam, dpr, i, r) {
       for (const ms of [50, 100, 200]) { const q = rec[LT.k + Math.round(ms / 1000 / DT)]; if (q && q.feet && LT.k + Math.round(ms / 1000 / DT) <= i) { dot(q.feet["t" + F], 3.5, COL[F]); text([q.feet["t" + F][0], q.feet["t" + F][1] + 0.12, q.feet["t" + F][2]], `+${ms}`, "#e8f5ee", 9); } }
       const q0 = rec[LT.k], tg = q0 && q0.d11 && q0.d11.tgt && q0.d11.tgt[F]; if (tg) { const c = [tg[0], 0.012, -tg[1]], ring = []; for (let t = 0; t <= 24; t++) ring.push([c[0] + 0.09 * Math.cos(t / 24 * 6.283), 0.012, c[2] + 0.09 * Math.sin(t / 24 * 6.283)]); line(ring, "#7df9ff", 1.8); text([c[0], 0.05, c[2]], "TURN-1.2 landing", "#7df9ff", 9); }
       const v = LT.executed.v, p0 = LT.ball; line([[p0[0], p0[1], p0[2]], [p0[0] + v[0] * 0.12, p0[1] + v[1] * 0.12, p0[2] + v[2] * 0.12]], "#ffd45e", 2.4);
-      if (i - LT.k >= 0) text([p0[0], 0.62, p0[2]], `${F} ${LT.reg} · launch ${LT.executed.speed.toFixed(1)} m/s · follow-through ${LT.caft ? `yield ${LT.caft.iy.toFixed(2)} / arc ${LT.caft.ia.toFixed(2)}` : "–"} · min clearance ${LT.minClear != null && isFinite(LT.minClear) ? (LT.minClear * 1000).toFixed(0) + " mm" : "–"}`, "#ffe9a8", 10); }
+      if (i - LT.k >= 0) text([p0[0], 0.78, p0[2]], `authoritative impulse · ${LT.role || "touch"} · ${F} ${LT.reg} · launch ${LT.executed.speed.toFixed(1)} m/s · follow-through ${LT.caft ? `yield ${LT.caft.iy.toFixed(2)} / arc ${LT.caft.ia.toFixed(2)}` : "–"} · min clearance ${LT.minClear != null && isFinite(LT.minClear) ? (LT.minClear * 1000).toFixed(0) + " mm" : "–"}`, "#ffe9a8", 10); }
+    // DRIBBLE-1.2 — CUT CONTACT GEOMETRY: inside (cyan) / outside (orange) striking surfaces of both boots with their outward direction; the selected
+    // contact (yellow ring) with its impulse normal; the next touch's target with the corridor it was aimed at (ring = inscribed margin; green: a
+    // decisive / next window, violet: a SET-UP TARGET REGION) and the plan's role; a set-up's planned decisive contact
+    if (Vv.geo !== false) {
+      const sf = r.d12 && r.d12.surf; if (sf) for (const F of ["R", "L"]) for (const [reg, col] of [["INSIDE", "#5ff2ff"], ["OUTSIDE", "#ffa64d"]]) { const q = sf[F] && sf[F][reg]; if (!q) continue; const [p, n] = q; dot(p, 2.6, col); line([p, [p[0] + n[0] * 0.09, p[1] + n[1] * 0.09, p[2] + n[2] * 0.09]], col, 1.6); }
+      if (r.plan && r.plan.viz && r.plan.viz.n) { const z = r.plan.viz, c = z.contact, rcol = z.role === "setup" ? "#c58bff" : "#7dff9b";
+        if (c) { dot(c, 5, "#ffd45e", true); const nn = z.nImp || z.n; line([c, [c[0] + nn[0] * 0.35, c[1] + nn[1] * 0.35, c[2] + nn[2] * 0.35]], "#ffd45e", 2.0, [5, 3]); }
+        if (z.target) { const tq = z.target, m = z.corr ? Math.max(0.02, z.corr.margin) : 0.05, ring = []; for (let a = 0; a <= 32; a++) ring.push([tq[0] + m * Math.cos(a / 32 * 6.283), 0.015, tq[2] + m * Math.sin(a / 32 * 6.283)]);
+          line(ring, rcol, 2.0); dot([tq[0], 0.015, tq[2]], 3, rcol);
+          text([tq[0], 0.30, tq[2]], `${z.role === "setup" ? "SET-UP TARGET REGION" : "next window"}${z.corr ? ` · ${z.corr.F} ${z.corr.reg} corridor ±${(z.corr.margin * 100).toFixed(0)} cm @${(z.corr.k * DT).toFixed(2)}s` : ""}`, rcol, 10); }
+        text([z.ball[0], 0.62, z.ball[2]], `${z.role.toUpperCase()} · ${(Math.atan2(-z.n[2], z.n[0]) * 180 / Math.PI).toFixed(0)}° ${z.speed != null ? z.speed.toFixed(1) + " m/s" : ""}${z.dec ? ` · decisive ${z.dec.F} ${z.dec.reg} ${(z.dec.dir * 180 / Math.PI).toFixed(0)}° @${(z.dec.kc * DT).toFixed(2)}s` : ""}`, "#ffd45e", 10); }
+    }
     for (const c of S.contacts) { if (c.k > i || i - c.k > 240 || c.striking) continue; const q = rec[c.k]; if (q) { const p = K2A(q.ball.p); dot(p, 6, c.own ? "rgba(255,160,40,0.9)" : "rgba(255,40,40,0.95)", true); if (i - c.k < 140) text([p[0], 0.5, p[2]], (c.own ? "own " : "OPPONENT ") + c.part, "#ff9a7a"); } }
   }
   if (Vv.labels && (vw.id === "game" || Vv.single)) {
     const D = 180 / Math.PI, sp = Math.hypot(r.V[0], r.V[1]), bs = Math.hypot(r.ball.v[0], r.ball.v[2]), dx = r.ball.p[0] - r.P[0], dy = r.ball.p[2] - r.P[1];
     const last = [...S.touches].reverse().find(T => T.k <= i), lt = last ? `last touch ${last.F} ${last.reg} ${(i - last.k) * DT < 1 ? (i - last.k) * DT < 0.02 ? "NOW" : ((i - last.k) * DT).toFixed(2) + " s ago" : ""}` : "";
     ctx.font = `600 ${12 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(0,0,0,0.5)"; ctx.fillRect(vw.x * dpr, (vw.y + vw.h - 40) * dpr, vw.w * dpr, 40 * dpr); ctx.fillStyle = "rgba(235,242,238,0.95)";
-    ctx.fillText(`DRIBBLE-1.1 · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
+    ctx.fillText(`DRIBBLE-1.2 · ${Vv.scn.label} · ${Vv.arch === "B" ? "B resolved" : Vv.arch === "C" ? "C hybrid" : "A pure physical"} · ${PROFILES[Vv.prof].name} · seed ${Vv.seed}`, (vw.x + 10) * dpr, (vw.y + vw.h - 24) * dpr);
     ctx.fillStyle = COL[r.ctrl] || "#fff"; ctx.fillText(`t ${r.t.toFixed(2)} s · player ${sp.toFixed(1)} m/s · ball ${bs.toFixed(1)} m/s · separation ${Math.hypot(dx, dy).toFixed(2)} m · ${r.ctrl}${r.held ? " · cut held for the touch" : ""} · ${lt}`, (vw.x + 10) * dpr, (vw.y + vw.h - 8) * dpr);
     ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillText(vw.id === "game" ? "TOUCHLINE GAMEPLAY CAMERA · 1×" : "", (vw.x + 8) * dpr, (vw.y + 16) * dpr);
-  } else if (Vv.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(vw.id === "A" ? Vv.A : Vv.B, (vw.x + 8) * dpr, (vw.y + 16) * dpr); }
+  } else if (Vv.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(vw.id === "A" ? Vv.A : vw.id === "B" ? Vv.B : vw.id, (vw.x + 8) * dpr, (vw.y + 16) * dpr); }
   ctx.restore();
 }
 function hud() { const el = document.getElementById("hud"); if (!el || !Vv.rec) return; const { r } = frameAt(Vv.t), S = Vv.S;
@@ -161,7 +175,7 @@ async function boot() {
   Vv.cv = document.getElementById("gl"); Vv.ovc = document.getElementById("ov"); Vv.ov2d = Vv.ovc.getContext("2d");
   const gl = Vv.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.body.textContent = "WebGL2 unavailable"; return; }
   Vv.gl = gl; Vv.R = { gl }; Vv.ground = groundProg(gl); Vv.ball = ballProg(gl);
-  if (q.get("diag") === "1") Vv.diag = true; if (q.get("ft") === "0") Vv.ft = false; if (q.get("labels") === "0") Vv.labels = false; if (q.get("single")) Vv.single = q.get("single"); if (q.get("rate")) Vv.rate = +q.get("rate"); if (q.get("zoom")) Vv.zoom = +q.get("zoom"); if (q.get("A")) Vv.A = q.get("A"); if (q.get("B")) Vv.B = q.get("B");
+  if (q.get("diag") === "1") Vv.diag = true; if (q.get("ft") === "0") Vv.ft = false; if (q.get("geo") === "0") Vv.geo = false; if (q.get("labels") === "0") Vv.labels = false; if (q.get("single")) Vv.single = q.get("single"); if (q.get("rate")) Vv.rate = +q.get("rate"); if (q.get("zoom")) Vv.zoom = +q.get("zoom"); if (q.get("A")) Vv.A = q.get("A"); if (q.get("B")) Vv.B = q.get("B");
   Vv.camX = (r) => r.P[0];
   const sel = document.getElementById("selScn"); sel.innerHTML = list().map(s => `<option value="${s.id}">${s.group} · ${s.label}</option>`).join(""); sel.value = q.get("scn") || "STRAIGHT_RUN";
   const sp = document.getElementById("selProf"); sp.innerHTML = Object.entries(PROFILES).map(([k, p]) => `<option value="${k}">${k} · ${p.name} (${p.preferred_foot}, wf ${p.weak_foot})</option>`).join(""); sp.value = q.get("prof") || "HIGH";
@@ -177,4 +191,4 @@ async function boot() {
   if (q.get("external") === "1") { Vv.external = true; render(); hud(); } else requestAnimationFrame(frame);
 }
 W.D1V = { state: Vv, set(t, o) { if (o) Object.assign(Vv, o); Vv.t = t; render(); hud(); return true; } };
-boot().catch((err) => { const h = document.getElementById("hud"); if (h) h.textContent = "DRIBBLE-1.1 lab failed: " + (err && err.stack || err); console.error(err); });
+boot().catch((err) => { const h = document.getElementById("hud"); if (h) h.textContent = "DRIBBLE-1.2 lab failed: " + (err && err.stack || err); console.error(err); });
