@@ -42,7 +42,7 @@ export function score(S, cs, cpuMs) {
   const res = {
     id: cs.id, dir: cs.dir, angle: cs.angle, side: cs.side, rs: cs.rs, ps: cs.ps, seed: S.cfg.seed, cls: rc.cls ? rc.cls.kind : null, rta: rc.cls ? rc.cls.deg360 : null, rtaSigned: rc.cls ? rc.cls.signed : null,
     pass: { T: rc.pass.T, vArr: rc.pass.vArr },
-    first: f ? { t: f.t, F: f.F, reg: f.reg, role: f.role, family: family(S, Tf), speedIn: f.speedIn, speedOut: f.speedOut, dirOutRel: f.dirOutRel, exitErr: f.exitErr, redirect: f.redirectDeg, sigmaK: f.sigmaK,
+    first: f ? { t: f.t, F: f.F, reg: f.reg, role: f.role, family: family(S, Tf), speedIn: f.speedIn, speedOut: f.speedOut, dirOutRel: f.dirOutRel, exitErr: f.exitErrDeg, redirect: f.redirectDeg, sigmaK: f.sigmaK,
       facingAtContact: f.facingAtContact, playerSpeed: f.playerSpeed, err: f.err } : null,
     preDeflections: physDefl, turnReleasedAt: relK != null ? +(relK * DT).toFixed(3) : null, turnBy: rel ? rel.by : null, turnWithFirst: turnFirst,
     onLineT: kLine != null ? +(kLine * DT).toFixed(3) : null, firstToLine: kLine != null && k1 != null ? +((kLine - k1) * DT).toFixed(3) : null,

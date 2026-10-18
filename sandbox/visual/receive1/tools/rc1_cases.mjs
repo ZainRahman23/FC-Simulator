@@ -26,6 +26,6 @@ export function matrix(block) {
   const out = [];
   if (block === "A" || block === "all") for (const a of ANGLES) for (const d of Object.keys(DIRS)) out.push(makeCase({ dir: d, angle: a, rs: "RUN", ps: "MED" }));
   if (block === "B" || block === "all") for (const a of [0, 90, 180, 270]) for (const d of ["F", "L", "R"]) for (const rs of Object.keys(RSPEED)) for (const ps of Object.keys(PSPEED)) { if (rs === "RUN" && ps === "MED") continue; out.push(makeCase({ dir: d, angle: a, rs, ps })); }
-  if (block === "C" || block === "all") for (const a of [89, 90, 270, 271]) for (const d of Object.keys(DIRS)) out.push(makeCase({ dir: d, angle: a, rs: "JOG", ps: "MED" }));
+  if (block === "C" || block === "all") for (const a of [89, 90, 270, 271]) for (const d of Object.keys(DIRS)) { if (block === "all" && (a === 90 || a === 270) && ["F", "L", "R"].includes(d)) continue; out.push(makeCase({ dir: d, angle: a, rs: "JOG", ps: "MED" })); }   // (in "all", without B's duplicates)
   return out;
 }

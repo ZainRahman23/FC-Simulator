@@ -53,6 +53,9 @@ export const RC1 = {
   // TURN LINES: for a big turn (≥ turnLineMin°), the turn released early from the approach lines on the TURN SIDE (the ball passing beside the
   // standing leg on the side the body turns to): exact two-switch TURN-1.2 branches — the line from its switch tick, the exit from the release tick
   turnLineMin: 110, turnLines: [0.3, 0.5], turnLineBefore: [0.95, 0.75, 0.55, 0.35],
+  touchPace: true,             // the receive touch sized for the exit pace (full throttle: see makePlanG)
+  regCost: null,               // receive surface preference added to the frozen contact cost, e.g. { FRONT: 0.3, LACES: 0.1, INSIDE: -0.1 }
+  warp2: null,                 // (experiments) receive swing time-warp bounds overriding D1.warp during receive planning
   blockGap: 0.015,             // m: a stance boot / shin of the receiver within this of the predicted free ball blocks the later contacts
   sigma: { vRef: 6, vK: 0.06, turnK: 0.35 }   // receive difficulty: σ × (1 + vK·max(0, |v_in| − vRef) + turnK·redirect/180°) (generic; attributes later)
 };
@@ -148,7 +151,9 @@ export class ReceiveSim extends DribbleSim {
   // the RECEIVE OPTIONS; after the first touch, the frozen dribble planner
   *makePlanG(k, sliced) {
     if (this.rc.phase !== "approach") return yield* super.makePlanG(k, sliced);
-    this.cpu.plans++; this.rc.plans++; this.jwu0 = this.wuTotal(); const c0 = typeof performance !== "undefined" ? performance.now() : Date.now(), A = this.A, s = r2(Math.hypot(A.V[0], A.V[1]));
+    // (FULL THROTTLE: the receive touch is sized for the pace the receiver leaves at — up to vUp above his speed, toward the exit pace — when
+    // RC1.touchPace is on: the frozen rules then read that speed for the launch limits, next-touch interval and separation)
+    this.cpu.plans++; this.rc.plans++; this.jwu0 = this.wuTotal(); const c0 = typeof performance !== "undefined" ? performance.now() : Date.now(), A = this.A, s0 = r2(Math.hypot(A.V[0], A.V[1])), s = RC1.touchPace ? r2(Math.max(s0, Math.min(this.rc.exitV, s0 + RC1.vUp))) : s0;
     const held = this.held && !this.held.released ? this.held.raw : null, H = Math.round(RC1.horizon / DT), need = Math.round(1.0 / DT), key = this.inputKey();
     if (!this.locoCache || this.locoCache.key !== key || this.locoCache.k0 + this.locoCache.n - need < k) this.locoCache = { key, k0: k, n: H, need, pred: this.viewFor(k, H), alt: null };
     const LC = this.locoCache, off = k - LC.k0;
@@ -198,12 +203,15 @@ export class ReceiveSim extends DribbleSim {
     // assume a ball already at the feet)
     // (RECEIVE REACH: the receiving foot may reach reachLat sideways of its running path at the contact — the frozen dribble's 0.15 m keeps the ball
     // under the body; a pass is met where it runs, beside the standing foot)
-    const g = this.plan13G(k, s, held, LC, off, opts, rj, c0), st0 = D1.o2planStep, h0 = D1.o2horizon, n0 = D1.cut12.nowHorizon, rch = D1.reach; let r;
-    for (;;) { D1.o2planStep = RC1.planStep; D1.o2horizon = RC1.searchH; D1.cut12.nowHorizon = RC1.searchH; D1.reach = RC1.reach2 ? Object.assign({}, rch, RC1.reach2) : rch;
-      try { r = g.next(); } finally { D1.o2planStep = st0; D1.o2horizon = h0; D1.cut12.nowHorizon = n0; D1.reach = rch; } if (r.done) break; yield r.value; }
+    const g = this.plan13G(k, s, held, LC, off, opts, rj, c0), st0 = D1.o2planStep, h0 = D1.o2horizon, n0 = D1.cut12.nowHorizon, rch = D1.reach, wp = D1.warp; let r;
+    for (;;) { D1.o2planStep = RC1.planStep; D1.o2horizon = RC1.searchH; D1.cut12.nowHorizon = RC1.searchH; D1.reach = RC1.reach2 ? Object.assign({}, rch, RC1.reach2) : rch; D1.warp = RC1.warp2 ? Object.assign({}, wp, RC1.warp2) : wp;
+      try { r = g.next(); } finally { D1.o2planStep = st0; D1.o2horizon = h0; D1.cut12.nowHorizon = n0; D1.reach = rch; D1.warp = wp; } if (r.done) break; yield r.value; }
     this.rc.nextSearch = this.plan ? null : this.k + RC1.searchGap;
     if (this.plan && this.plan.made === k) this.rc.log.push({ k, ev: "plan", kc: this.plan.kc, F: this.plan.F, reg: this.plan.reg, relAt: this.plan.relAt ?? null, role: this.plan.setupSw ? "setup" : this.plan.relNow ? "turn-release" : this.plan.release ? "cut-at-contact" : "touch" });
   }
+  // RECEIVING SURFACES: the frozen contact cost ranks the surfaces for dribbling (laces 0, inside ±, front 0.10, outside 0.22); a pass is received
+  // preferably with the inside, never by choice with the toe — added during the receive only
+  cost(g, F, reg, smp, close, s, n, release) { const c = super.cost(g, F, reg, smp, close, s, n, release); return this.rc && this.rc.phase === "approach" && RC1.regCost ? c + (RC1.regCost[reg] || 0) : c; }
   // approach-line candidates: the line version only (the frozen set-up / cut-at-contact versions branch from the main motion, not the line)
   // (receive options generate contacts only in their arrival window, O.rcEnd: the launch solve still reads their motion beyond it)
   // (the frozen contact-timed re-release builds its own branch: in the receive it gets the turn options' window)
@@ -211,9 +219,9 @@ export class ReceiveSim extends DribbleSim {
     if (this.rc && this.rc.phase === "approach" && O.retimed && O.rcEnd == null && this.rc.estPlan) O.rcEnd = this.rc.estPlan.k + Math.round(RC1.turnAfter / DT) - O.pred.k0 - 1;
     if (O.rcEnd != null) { a[1] = Math.min(a[1] != null ? a[1] : Infinity, O.rcEnd); O.pred.rcEndJ = O.rcEnd; } const n0 = cands.length, r = yield* super.genCandsG(O, held, s, cands, ...a); if (O.rcLine) for (let i = n0; i < cands.length; i++) { cands[i]._ssc = null; cands[i]._swc = null; } return r; }
   // ── RECEIVE BLOCKERS: the frozen planner rejects a contact whose free ball would first run into another SWINGING boot (blockersG); an incoming
-  // pass also runs through the stance area — a stance boot or either shin in its path deflects it before the planned contact (the kernel collides
-  // the ball with every player collider). During the receive the predicted free ball is also checked against the stance boots (their hull
-  // vertices) and both shins (their capsules); the first such hit per leg phase is a blocker like any other (it rejects later contacts)
+  // pass also runs through the stance area — a stance boot, a shin or a thigh in its path deflects it before the planned contact (the kernel
+  // collides the ball with every player collider). During the receive the predicted free ball is also checked against the stance boots (their
+  // hull vertices) and both shins and thighs (their capsules); the first such hit per leg phase is a blocker like any other (it rejects later contacts)
   *blockersG(pred0, off) {
     if (!this.rc || this.rc.phase !== "approach") return yield* super.blockersG(pred0, off);
     // (a receive option's blockers matter only before its last contact: the scan ends with its contact window)
@@ -226,9 +234,9 @@ export class ReceiveSim extends DribbleSim {
       for (const F of SIDES) { const Lg = smp.legs[F], id = Lg.stance ? "st" + Lg.tTD : Lg.swing; if (seen.has(F + id)) continue; let g = Infinity, part = null;
         if (Lg.stance) for (const pt of ["boot", "toe"]) { const fr = bn[(pt === "boot" ? "foot_" : "toe_") + F], Rm = fr.R, o = fr.p; for (const q of J[F][pt].points) {
           const x = o[0] + Rm[0] * q[0] + Rm[1] * q[1] + Rm[2] * q[2] - b[0], y = o[1] + Rm[3] * q[0] + Rm[4] * q[1] + Rm[5] * q[2] - b[1], z = o[2] + Rm[6] * q[0] + Rm[7] * q[1] + Rm[8] * q[2] - b[2], d = Math.sqrt(x * x + y * y + z * z) - R; if (d < g) { g = d; part = pt; } } }
-        const sh = J[F].shin, fr = bn["shin_" + F], Rm = fr.R, c = [fr.p[0] + Rm[0] * sh.pos[0] + Rm[1] * sh.pos[1] + Rm[2] * sh.pos[2], fr.p[1] + Rm[3] * sh.pos[0] + Rm[4] * sh.pos[1] + Rm[5] * sh.pos[2], fr.p[2] + Rm[6] * sh.pos[0] + Rm[7] * sh.pos[1] + Rm[8] * sh.pos[2]], ax = [Rm[1], Rm[4], Rm[7]];
-        const t = clamp((b[0] - c[0]) * ax[0] + (b[1] - c[1]) * ax[1] + (b[2] - c[2]) * ax[2], -sh.half, sh.half), ds = Math.hypot(b[0] - c[0] - ax[0] * t, b[1] - c[1] - ax[1] * t, b[2] - c[2] - ax[2] * t) - sh.r - R;
-        if (ds < g) { g = ds; part = "shin"; }
+        for (const seg of ["shin", "thigh"]) { const sh = J[F][seg], fr = bn[seg + "_" + F], Rm = fr.R, c = [fr.p[0] + Rm[0] * sh.pos[0] + Rm[1] * sh.pos[1] + Rm[2] * sh.pos[2], fr.p[1] + Rm[3] * sh.pos[0] + Rm[4] * sh.pos[1] + Rm[5] * sh.pos[2], fr.p[2] + Rm[6] * sh.pos[0] + Rm[7] * sh.pos[1] + Rm[8] * sh.pos[2]], ax = [Rm[1], Rm[4], Rm[7]];
+          const t = clamp((b[0] - c[0]) * ax[0] + (b[1] - c[1]) * ax[1] + (b[2] - c[2]) * ax[2], -sh.half, sh.half), ds = Math.hypot(b[0] - c[0] - ax[0] * t, b[1] - c[1] - ax[1] * t, b[2] - c[2] - ax[2] * t) - sh.r - R;
+          if (ds < g) { g = ds; part = seg; } }
         if (g < RC1.blockGap) { seen.add(F + id); out.push({ k: smp.k, F, swing: id, g, part, rc: true }); } } }
     return out;
   }
