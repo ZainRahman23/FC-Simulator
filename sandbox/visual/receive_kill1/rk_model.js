@@ -42,7 +42,7 @@ export const BODY_GEOM = { H: 1.76, hip: 0.92, knee: 0.487, ankle: 0.088, thigh:
 // prep   the authored preparation time before the contact (s) — a fixed property of the action, NOT of Ball Control (Dribbling / Agility later)
 // pref   a small selection preference (AUTO tie-breaks toward the natural surface; never a quality term)
 export const SURFACES = {
-  FOOT_INSIDE:  { group: "FOOT", label: "inside of the foot", side: true, env: { z: [0.10, 0.50], vMax: 34, bear: [-100, 40], slope: [-0.6, 1.2] }, c: [0.46, 0.08], zNom: R, zHalf: 0.38,
+  FOOT_INSIDE:  { group: "FOOT", label: "inside of the foot", side: true, env: { z: [0.10, 0.62], vMax: 34, bear: [-100, 40], slope: [-0.6, 1.2] }, c: [0.46, 0.08], zNom: R, zHalf: 0.38,
                   ideal: { kind: "rest", set: [0.40, 0.09], vz: -0.3 }, cap: { vAbs: 20, kappa: 0.04, e: 0.48 }, w: [1.0, 1.6], m: 1.0, k: [1.0, 0.6, 0.25], run: 0.5, pop: true, prep: 0.32, pref: 0 },
   FOOT_SOLE:    { group: "FOOT", label: "sole", side: true, env: { z: [0.10, 0.24], vMax: 14, bear: [-90, 90], slope: [-0.3, 9] }, c: [0.40, 0.12], zNom: R, zHalf: 0.12,
                   ideal: { kind: "rest", set: [0.40, 0.12], vz: 0 }, cap: { vAbs: 9, kappa: 0.06, e: 0.48 }, w: [1.0, 1.0], m: 1.1, k: [0.7, 0.5, 0.35], run: 1.3, pop: true, prep: 0.30, pref: 0.06 },

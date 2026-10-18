@@ -1,0 +1,32 @@
+q 10:1 20:0.8785 30:0.7585 40:0.6402 50:0.5238 60:0.4098 70:0.2987 80:0.1912 90:0.0892 99:0.0071
+c 0.1:0.0909 0.2:0.1667 0.3:0.2308 0.5:0.3333 0.8:0.4444 1:0.5 1.5:0.6 2:0.6667 2.5:0.7143 3:0.75 4:0.8
+compression [{"D":0.2,"spread":0.1324,"ratio":10.131},{"D":0.5,"spread":0.662,"ratio":18.1059},{"D":1,"spread":1.9858,"ratio":25.1582},{"D":1.5,"spread":3.5745,"ratio":29.0353},{"D":2,"spread":5.2955,"ratio":31.4689},{"D":2.5,"spread":7.0923,"ratio":33.15},{"D":3,"spread":8.9362,"ratio":34.3689}]
+FOOT_INSIDE   0°:1 15°:1.051 30°:1.179 45°:1.3342 60°:1.4731
+FOOT_SOLE     0°:1.1 15°:1.1 30°:1.1 45°:1.1 60°:1.1
+FOOT_INSTEP   0°:1.25 15°:1.242 30°:1.22 45°:1.1891 60°:1.1575
+FOOT_OUTSIDE  0°:1.3 15°:1.3662 30°:1.5327 45°:1.7344 60°:1.915
+THIGH         0°:1.3225 15°:1.2994 30°:1.2342 45°:1.1392 60°:1.0354
+CHEST         0°:1.25 15°:1.2634 30°:1.2994 45°:1.347 60°:1.393
+HEAD          0°:1.76 15°:1.7832 30°:1.8452 45°:1.9267 60°:2.0048
+10 0.11  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R 
+10 0.21  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_SOLE_R   FOOT_SOLE_R   
+10 0.31  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSTEP_R FOOT_INSTEP_R 
+10 0.41  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSTEP_R FOOT_INSIDE_R FOOT_INSTEP_R THIGH_R       
+10 0.51  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSTEP_R FOOT_INSIDE_R FOOT_INSTEP_R THIGH_R       
+10 0.61  FOOT_INSIDE_R FOOT_INSIDE_R FOOT_INSTEP_R FOOT_INSIDE_R THIGH_R       THIGH_R       
+10 0.71  THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       
+10 0.81  THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       
+10 0.91  THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       
+10 1.01  THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       
+10 1.11  THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       THIGH_R       
+10 1.21  CHEST         CHEST         CHEST         CHEST         THIGH_R       THIGH_R       
+10 1.31  CHEST         CHEST         CHEST         CHEST         THIGH_R       THIGH_R       
+10 1.41  CHEST         CHEST         CHEST         CHEST         CHEST         THIGH_R       
+10 1.51  CHEST         CHEST         CHEST         CHEST         CHEST         THIGH_R       
+10 1.61  HEAD          CHEST         CHEST         CHEST         CHEST         THIGH_R       
+10 1.71  HEAD          HEAD          HEAD          CHEST         CHEST         THIGH_R       
+10 1.81  HEAD          HEAD          HEAD          HEAD          CHEST         THIGH_R       
+10 1.91  HEAD          HEAD          HEAD          HEAD          CHEST         THIGH_R       
+10 2.01  HEAD          HEAD          HEAD          HEAD          CHEST         THIGH_R       
+10 2.11  HEAD          HEAD          HEAD          HEAD          CHEST         THIGH_R       
+10 2.21  HEAD          HEAD          HEAD          HEAD          CHEST         THIGH_R       

@@ -30,7 +30,7 @@ async function build() {
   if (ST.busy) return; ST.busy = true; setURL(); const M = SETS.find((m) => m.id === ST.matrix), t0 = performance.now(), skel = await loadSkel(), dist = ST.dist ? await loadDist() : null;
   $("#mtitle").textContent = M.title; $("#mnote").textContent = M.note + " " + (EXAMPLES[ST.draw] ? "Draw: " + EXAMPLES[ST.draw].label + "." : "Draw: keyed seed " + ST.draw.slice(4) + " (seed | RECEIVE | CAL-R | kill1 | receive-kill-v1 | dimension | 0).") + " The same draw in every column.";
   const tb = $("#grid"); tb.innerHTML = `<tr><th class="rh">incoming ball</th>${BC_STEPS.map((b) => `<th>BC ${b}</th>`).join("")}</tr>`;
-  const N = drawsFor(drawSpec()), cw = Math.max(96, Math.min(150, Math.floor((W.innerWidth - 200) / 10) - 8)), sh = ST.views === "top" ? 0 : Math.round(cw * 0.6), th = ST.views === "side" ? 0 : Math.round(cw * 0.46), ch = sh + th; document.documentElement.style.setProperty("--cw", cw + "px");
+  const N = drawsFor(drawSpec()), cw = Math.max(96, Math.min(150, Math.floor((W.innerWidth - 236) / 10) - 10)), sh = ST.views === "top" ? 0 : Math.round(cw * 0.6), th = ST.views === "side" ? 0 : Math.round(cw * 0.46), ch = sh + th; document.documentElement.style.setProperty("--cw", cw + "px");
   for (let ri = 0; ri < M.rows.length; ri++) {
     const r = M.rows[ri], cond = condOf(M, r), P = prepare(cond), tr = document.createElement("tr"); tb.appendChild(tr);
     const rh = document.createElement("td"); rh.className = "rh"; tr.appendChild(rh);
@@ -53,10 +53,10 @@ async function build() {
       const d = { incoming: inc, ideal: idl, actual: acts[j], contact: P.contact, target: P.ideal.target, group: grp, J, hiBones: hi, idealEnd: idlEnd, actualEnd: acts[j][acts[j].length - 1] };
       if (sh) view(ctx, "side", { x: 0, y: 0, w: cw, h: sh }, ext, d, { scale: j === 0, font: 8 });
       if (th) view(ctx, "top", { x: 0, y: sh, w: cw, h: th }, ext, d, { scale: false, bg: "#0f1613" });
-      const dd = dist && dist[M.id] && dist[M.id][ri] && dist[M.id][ri].dist ? dist[M.id][ri].dist[j] : null;
+      const dm = dist && dist.matrices ? dist.matrices[M.id] : null, dd = dm && dm[ri] && dm[ri].dist ? dm[ri].dist[j] : null;
       const txt = document.createElement("div"); txt.className = "ct";
       txt.innerHTML = `<div class="big" style="color:${COL.state[m.state]}">${fmt(m.dStar)} m <span class="st">${m.state}</span></div>
-        <div>res ${fmt(m.resid, 1)} m/s · lat ${fmt(m["lat1"])}</div><div class="dim">0.25/0.5/1 s ${fmt(m["d0.25"])}/${fmt(m["d0.5"])}/${fmt(m["d1"])}</div>
+        <div>res ${fmt(m.resid, 1)} · lat ${fmt(m["lat1"])}</div><div class="dim">0.25/0.5/1 s ${fmt(m["d0.25"])}/${fmt(m["d0.5"])}/${fmt(m["d1"])}</div>
         ${dd ? `<div class="dist">med ${fmt(dd.med)} · p90 ${fmt(dd.p90)}<br>heavy ${(100 * dd.heavy).toFixed(0)}% · lost ${(100 * dd.lost).toFixed(0)}%</div>` : ""}`;
       td.appendChild(txt); td.onclick = () => detail(M, cond, P, rn, N);
     });

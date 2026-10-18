@@ -1,0 +1,67 @@
+{
+ "groups": {
+  "FOOT": {
+   "cases": 8,
+   "runtimeMsPerKill": 0.18013440956250054,
+   "worstRuntimeMs": 0.365561306000001,
+   "planMs": 0.16191979375000026,
+   "idealMs": 0.0010702343750000054,
+   "execMs": 0.00029647143749999573,
+   "launchMs": 0.016847910000000254,
+   "candidatesEvaluated": 1924.5,
+   "sharedPredictorMs": 1.2656052500000001,
+   "harnessIncomingSolveMs": 15.473067625000027,
+   "postContactFreeBallMsPerSecond": 0.8510656375000022
+  },
+  "THIGH": {
+   "cases": 4,
+   "runtimeMsPerKill": 0.12407066087499717,
+   "worstRuntimeMs": 0.3241002144999952,
+   "planMs": 0.11141667499999812,
+   "idealMs": 0.0012055724999999028,
+   "execMs": 0.00008570837500005268,
+   "launchMs": 0.011362704999999095,
+   "candidatesEvaluated": 1319,
+   "sharedPredictorMs": 1.1032561999999984,
+   "harnessIncomingSolveMs": 1.3246875000000387,
+   "postContactFreeBallMsPerSecond": 0.5988333249999983
+  },
+  "CHEST": {
+   "cases": 4,
+   "runtimeMsPerKill": 0.038878587750001886,
+   "worstRuntimeMs": 0.0620567985000016,
+   "planMs": 0.026973437500001297,
+   "idealMs": 0.0009101050000001011,
+   "execMs": 0.00008588025000000243,
+   "launchMs": 0.010909165000000484,
+   "candidatesEvaluated": 200.25,
+   "sharedPredictorMs": 0.7592957500000124,
+   "harnessIncomingSolveMs": 1.04403149999996,
+   "postContactFreeBallMsPerSecond": 0.600019775000004
+  },
+  "HEAD": {
+   "cases": 4,
+   "runtimeMsPerKill": 0.04740753500000025,
+   "worstRuntimeMs": 0.09715103099999942,
+   "planMs": 0.03549739999999986,
+   "idealMs": 0.0008505725000003394,
+   "execMs": 0.0002558125000000189,
+   "launchMs": 0.010803750000000036,
+   "candidatesEvaluated": 644.25,
+   "sharedPredictorMs": 0.7160978999999997,
+   "harnessIncomingSolveMs": 0.8503019999999992,
+   "postContactFreeBallMsPerSecond": 0.5227010249999978
+  }
+ },
+ "tableColdMs": null,
+ "exitTable": {
+  "columns": 15,
+  "buildMsTotal": 1033.7920820000004,
+  "msPerColumn": 68.91947213333336
+ },
+ "matrixGround": {
+  "rows": 8,
+  "cells": 80,
+  "ms": 232.69045800000004
+ }
+}
