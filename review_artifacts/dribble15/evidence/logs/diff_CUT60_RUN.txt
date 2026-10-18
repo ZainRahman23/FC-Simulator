@@ -1,0 +1,12 @@
+CUT60_RUN:31     clean → taken contact selection                                d14 dribble RF@406 | d15 dribble RO@405 | draws 1/1
+CUT60_RUN:42     lost  → taken release choice: other                            d14 cut-now LL@646 | d15 cut-now RO@884 | draws 2/2
+CUT60_RUN:13     taken → clean set-up selection                                 d14 setup RO@734 | d15 line LI@795 | draws 2/2
+CUT60_RUN:89     clean → lost  set-up selection                                 d14 cut-now LL@646 | d15 - | draws 2/2
+CUT60_RUN:91     taken → lost  set-up selection                                 d14 line LF@950 | d15 setup LF@942 | draws 3/3
+CUT60_RUN:50     clean → lost  contact selection                                d14 line LF@797 | d15 line LF@799 | draws 2/2
+CUT60_RUN:93     clean → lost  contact selection                                d14 dribble LO@343 | d15 dribble LO@345 | draws 1/1
+CUT60_RUN:57     clean → taken set-up selection                                 d14 line LF@794 | d15 setup LF@783 | draws 2/2
+CUT60_RUN:82     lost  → clean set-up selection                                 d14 - | d15 cut-now LL@654 | draws 3/3
+CUT60_RUN:84     taken → clean contact selection                                d14 dribble LO@892 | d15 dribble RO@826 | draws 3/3
+CUT60_RUN:70     clean → lost  set-up selection                                 d14 cut-now RO@732 | d15 - | draws 3/3
+TALLY {"better":4,"worse":7,"neutral":19,"identical":66} CAUSES {"contact selection":{"better":1,"worse":3},"release choice: other":{"better":1,"worse":0},"set-up selection":{"better":2,"worse":4}}

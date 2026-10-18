@@ -1,0 +1,40 @@
+# name | page | query | t0 | t1 | view (game = 1× Touchline camera 1280×720; top = close top view) | rate
+# SBS | name | left clip | right clip | left label | right label        (frame-synchronised by simulation time)
+# ── A — the root cause: CUT90_RUN seed 83 (1.4: a second stage from the lagging velocity, ball on the line at 2.15 s; 1.5: the full cut, clean at 0.91 s)
+a_s83_d14        | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=83          | 0 | 6 | game | 1
+a_s83_d15        | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=83          | 0 | 6 | game | 1
+SBS | A1_s83_1x | a_s83_d14 | a_s83_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+a_s83_d14_diag   | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=83&diag=1   | 2.3 | 4.2 | top | 0.5
+a_s83_d15_diag   | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=83&diag=1   | 2.3 | 4.2 | top | 0.5
+SBS | A2_s83_diag | a_s83_d14_diag | a_s83_d15_diag | DRIBBLE-1.4 (diagnostics) | DRIBBLE-1.5 (diagnostics)
+# ── B — recovered clean 90° cuts: CUT90_RUN seed 37 (lost → clean) and CUT90L_RUN seed 48 (lost → clean)
+b_s37_d14        | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=37          | 0 | 6 | game | 1
+b_s37_d15        | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=37          | 0 | 6 | game | 1
+SBS | B1_s37_1x | b_s37_d14 | b_s37_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+b_s37_d14_zoom   | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=37&zoom=2.6 | 0 | 6 | game | 1
+b_s37_d15_zoom   | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=37&zoom=2.6 | 0 | 6 | game | 1
+SBS | B2_s37_zoom | b_s37_d14_zoom | b_s37_d15_zoom | DRIBBLE-1.4 (zoomed camera) | DRIBBLE-1.5 (zoomed camera)
+b_l48_d14        | dribble14.html | scn=CUT90L_RUN&prof=HIGH&seed=48         | 0 | 6 | game | 1
+b_l48_d15        | dribble15.html | scn=CUT90L_RUN&prof=HIGH&seed=48         | 0 | 6 | game | 1
+SBS | B3_l48_1x | b_l48_d14 | b_l48_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+# ── C — the known case: CUT90_RUN seed 16 (taken in both)
+c_s16_d14        | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=16          | 0 | 6 | game | 1
+c_s16_d15        | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=16          | 0 | 6 | game | 1
+SBS | C1_s16_1x | c_s16_d14 | c_s16_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+# ── D — regressions: CUT90_RUN seed 58 (taken → lost) and CUT60L_RUN seed 13 (taken → lost)
+d_s58_d14        | dribble14.html | scn=CUT90_RUN&prof=HIGH&seed=58          | 0 | 6 | game | 1
+d_s58_d15        | dribble15.html | scn=CUT90_RUN&prof=HIGH&seed=58          | 0 | 6 | game | 1
+SBS | D1_s58_1x | d_s58_d14 | d_s58_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+d_l13_d14        | dribble14.html | scn=CUT60L_RUN&prof=HIGH&seed=13         | 0 | 6 | game | 1
+d_l13_d15        | dribble15.html | scn=CUT60L_RUN&prof=HIGH&seed=13         | 0 | 6 | game | 1
+SBS | D2_60L_s13_1x | d_l13_d14 | d_l13_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+# ── S — suspicious: CUT90L_RUN seed 11 counted clean with a FRONT (toe) decisive touch
+s_l11_d15_zoom   | dribble15.html | scn=CUT90L_RUN&prof=HIGH&seed=11&zoom=2.6 | 0 | 6 | game | 1
+s_l11_d15_diag   | dribble15.html | scn=CUT90L_RUN&prof=HIGH&seed=11&diag=1  | 2.3 | 4.0 | top | 0.5
+# ── E — the best recovered 60° cut of DRIBBLE-1.4 (CUT60L_RUN seed 24, clean in both) and straight RUN
+e_l24_d14        | dribble14.html | scn=CUT60L_RUN&prof=HIGH&seed=24         | 0 | 6 | game | 1
+e_l24_d15        | dribble15.html | scn=CUT60L_RUN&prof=HIGH&seed=24         | 0 | 6 | game | 1
+SBS | E1_60L_s24_1x | e_l24_d14 | e_l24_d15 | DRIBBLE-1.4 | DRIBBLE-1.5
+e_straight_d14   | dribble14.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1        | 0 | 8 | game | 1
+e_straight_d15   | dribble15.html | scn=STRAIGHT_RUN&prof=HIGH&seed=1        | 0 | 8 | game | 1
+SBS | E2_straight_1x | e_straight_d14 | e_straight_d15 | DRIBBLE-1.4 | DRIBBLE-1.5

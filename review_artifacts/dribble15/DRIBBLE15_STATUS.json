@@ -1,0 +1,349 @@
+{
+ "date": "18 October 2026, 02:40–04:00 (Europe/Athens; 17 Oct chronicle day)",
+ "statusLines": [
+  [
+   "ROOT CAUSE OF SLOW 90° CUTS",
+   "FOUND — after a 90° cut's first stage, the planner decided whether the rest of the cut was still 'big' (≥ 75°) from the VELOCITY heading, which lags the stage heading already commanded while TURN-1.2 turns onto it; the cut looked ≈ 75° away instead of ≈ 45°, so the planner staged again a few degrees further — one extra touch and ≈ 0.5 s before the ball was on the new line (1.4: 12 of 68 taken 90° right and 4 of 52 taken 90° left runs staged twice). The intent layer already measured the held cut from the line of the cut so far; the planner did not."
+  ],
+  [
+   "THE THREE SUSPECTED CAPS (maxSetups / rStop1 / c12CutAtContact)",
+   "RULED OUT — each restored alone over 384 runs: clean 90° 29 / 26 / 28 vs D1.4's 27; not changed"
+  ],
+  [
+   "FIX",
+   "plan15.stageLine — once a stage is in force the remaining cut is measured from the stage line (the same line the intent's hold uses); plus the decision-tick budget 8 → 12 ms (plan13.budgetHi 12000): with double staging gone the remaining 90° gap was decision latency (unbudgeted planning: clean 90° 50)"
+  ],
+  [
+   "CUTS TAKEN",
+   "D1.2 258 / D1.3 256 / D1.4 273 / D1.5 273 (of 384); seeds 97–192: 282"
+  ],
+  [
+   "CLEAN CUTS",
+   "D1.2 129 / D1.3 114 / D1.4 121 / D1.5 140; clean 90° 48 / 30 / 27 / 47; clean 60° 81 / 84 / 94 / 93"
+  ],
+  [
+   "60R / 60L / 90R / 90L OVER 96 SEEDS",
+   "6.25 · 5.92 · 5.58 · 5.00 per 8 (D1.4 6.50 · 6.25 · 5.67 · 4.33; D1.2 6.67 · 5.42 · 5.33 · 4.08); over 192 seeds 6.38 · 5.96 · 5.67 · 5.12"
+  ],
+  [
+   "DECISIVE TOE RATE",
+   "6.2 % (D1.4 5.9 %)"
+  ],
+  [
+   "≥9 M/S DECISIVE CUT TOUCHES",
+   "0 of 394 (seeds 97–192: 1 of 400)"
+  ],
+  [
+   "SET-UP ATTEMPTS / SUCCESS",
+   "79 / 59 % (D1.4 79 / 56 %)"
+  ],
+  [
+   "STRAIGHT CONTROL",
+   "100 % — STRAIGHT_RUN held 16 / 16, bit-identical to D1.4"
+  ],
+  [
+   "IMMEDIATE SAME-FOOT RECONTACT",
+   "0.05 % (D1.4 0.10 %)"
+  ],
+  [
+   "CONTROL LOSS POSSIBLE",
+   "YES — TACKLE_RUN held 3 / 16, INTERCEPT_RUN 12 / 16 (= D1.4); faster cuts still lose the ball sometimes (D)"
+  ],
+  [
+   "AVERAGE CPU",
+   "143.8 ms / s (D1.4 141.8 in the same benchmark; each core in its own process)"
+  ],
+  [
+   "WORST SPIKE",
+   "34.1 ms (D1.4 27.1); steps over 20 ms 0.057 % (D1.4 0.003 %) — the measured cost of the 12 ms decision budget"
+  ],
+  [
+   "TURN-1.2 UNCHANGED",
+   "YES — planner leg pose bit-identical 112,319 / 112,319; plants 0.0000 mm"
+  ],
+  [
+   "CHROME/NODE DETERMINISM",
+   "PASS — decisions 20 / 20 identical"
+  ],
+  [
+   "MATCHED-SEED CLASSIFICATION VS D1.4",
+   "46 better · 32 worse · 84 neutral (different play, same outcome) · 222 identical; 180 / 180 shared touches draw identical errors"
+  ],
+  [
+   "READY TO FREEZE DRIBBLE-V1 FOUNDATION",
+   "YES"
+  ]
+ ],
+ "watchFirst": [
+  [
+   "A2_s83_diag",
+   "The root cause, 90° right seed 83, top camera at ½ speed with diagnostics: at 3.0 s DRIBBLE-1.4 plans a second STAGED inside-left touch to 49°, DRIBBLE-1.5 the full CUT-NOW inside-left to 74° for the same moment; at 4.0 s 1.4 still plans a 'line 66°' toe touch, 1.5 is running the 89° line"
+  ],
+  [
+   "B2_s37_zoom",
+   "A recovered clean 90° cut (90° right seed 37), zoomed gameplay camera: in 1.4 the ball drifts to the player's side and is lost; in 1.5 it stays in front of him down the new line"
+  ],
+  [
+   "D1_s58_1x",
+   "A regression (90° right seed 58): 1.5's full cut at 79° sends a faster ball that later runs away — the risk side of the quicker cut"
+  ]
+ ],
+ "videos": {
+  "A": [
+   [
+    "A1_s83_1x",
+    "90° right, seed 83 — 1× gameplay camera: 1.4 taken in 2.15 s, 1.5 clean in 0.91 s"
+   ],
+   [
+    "A2_s83_diag",
+    "the same, top camera, ½ speed, diagnostics: the second stage (1.4) vs the full cut (1.5)"
+   ]
+  ],
+  "B": [
+   [
+    "B1_s37_1x",
+    "90° right, seed 37 — 1.4 lost, 1.5 clean (0.92 s)"
+   ],
+   [
+    "B2_s37_zoom",
+    "the same, zoomed camera"
+   ],
+   [
+    "B3_l48_1x",
+    "90° left, seed 48 — 1.4 lost, 1.5 clean (1.23 s)"
+   ]
+  ],
+  "C": [
+   [
+    "C1_s16_1x",
+    "90° right, seed 16 — the known case: taken in both (1.4's fix preserved)"
+   ]
+  ],
+  "D": [
+   [
+    "D1_s58_1x",
+    "90° right, seed 58 — taken → lost"
+   ],
+   [
+    "D2_60L_s13_1x",
+    "60° left, seed 13 — taken → lost"
+   ]
+  ],
+  "E": [
+   [
+    "E1_60L_s24_1x",
+    "60° left, seed 24 — the best recovered 60° cut of DRIBBLE-1.4, clean in both"
+   ],
+   [
+    "E2_straight_1x",
+    "STRAIGHT_RUN seed 1 — bit-identical runs"
+   ]
+  ]
+ },
+ "caseA": "<b>Traced first:</b> over the 90° right runs, DRIBBLE-1.4 made its first stage earlier than DRIBBLE-1.2 (median 0.50 vs 0.61 s after the request) but released the rest of the cut later (1.70 vs 1.33 s) and needed one more touch to get the ball onto the new line (3 vs 2). The extra touch was a second STAGE: 12 of 68 taken runs staged twice (1.2: 6 of 64). In seed 83 the release search 55 ticks after the first stage (35°) saw the cut as 75° away — the velocity was still turning — and staged to 49°; the ball reached the new line at 2.15 s. Measured from the commanded stage line (45° remaining, not 'big') the only release option is the full cut: inside of the left foot to 74° at 3.14 s, clean in 0.91 s. With the fix no 90° run stages twice.",
+ "caseB": "90° right seed 37 (lost → clean in 0.92 s) and 90° left seed 48 (lost → clean in 1.23 s). In the zoomed view the 1.4 ball drifts out to the side after the second stage; the 1.5 ball stays in front of the player down the new line — no sliding, no emergency toe contact. Suspicious-case check: 90° left seed 11 counts as clean with a FRONT decisive touch — the frames show an inside-right set-up taking the ball across while the body turns, then an ordinary toe push along the new line (as in straight dribbling), not a rescue.",
+ "caseC": "The known 90° right seed 16 case keeps DRIBBLE-1.4's fix: the stage contact at tick 640 (6.87 m/s), the cut taken (not clean).",
+ "caseD": "<b>Regressions are physical, not systematic.</b> 90° right seed 58: 1.4 staged twice and took the cut late; 1.5 makes the full 79° cut at once, the faster ball later runs away from the player (loose at 4.33 s). 60° left seed 13: the 12 ms budget lets the search finish sooner and pick a direct outside-left cut to −30° instead of 1.4's set-up; ball and body diverge and the ball is lost. On matched seeds 60° cuts change in 53 of 192 runs: 7 better, 13 worse, 33 neutral.",
+ "caseE": "60° cuts never stage (stagedMin 75°): the stage-line fix leaves them bit-identical; only the 12 ms budget changes their timing. Straight RUN is bit-identical to D1.4.",
+ "perf": {
+  "rows": [
+   [
+    "average resolver CPU (ms / sim s, own process, 20 scenarios × 4 seeds)",
+    "205",
+    "146",
+    "142",
+    "144"
+   ],
+   [
+    "worst 240 Hz step (ms)",
+    "540",
+    "28",
+    "27",
+    "34"
+   ],
+   [
+    "cuts taken / 384",
+    "258",
+    "256",
+    "273",
+    "273"
+   ],
+   [
+    "clean cuts / 384",
+    "129",
+    "114",
+    "121",
+    "140"
+   ],
+   [
+    "clean 60° / 192",
+    "81",
+    "84",
+    "94",
+    "93"
+   ],
+   [
+    "clean 90° / 192",
+    "48",
+    "30",
+    "27",
+    "47"
+   ],
+   [
+    "60R · 60L · 90R · 90L per 8 (over 96 seeds)",
+    "6.67 · 5.42 · 5.33 · 4.08",
+    "6.25 · 5.42 · 5.08 · 4.58",
+    "6.50 · 6.25 · 5.67 · 4.33",
+    "6.25 · 5.92 · 5.58 · 5.00"
+   ],
+   [
+    "decisive toe",
+    "8.5 %",
+    "5.1 %",
+    "5.9 %",
+    "6.2 %"
+   ],
+   [
+    "≥ 9 m/s decisive cut touches",
+    "0",
+    "0",
+    "0",
+    "0"
+   ],
+   [
+    "set-up attempts · success",
+    "117 · 56 %",
+    "24 · 75 %",
+    "79 · 56 %",
+    "79 · 59 %"
+   ],
+   [
+    "straight control",
+    "100 %",
+    "100 %",
+    "100 %",
+    "100 %"
+   ],
+   [
+    "immediate same-foot recontact",
+    "0.10 %",
+    "0.10 %",
+    "0.10 %",
+    "0.05 %"
+   ],
+   [
+    "Chrome / Node decisions",
+    "20 / 20",
+    "20 / 20",
+    "20 / 20",
+    "20 / 20"
+   ]
+  ]
+ },
+ "perfNote": "384 cut runs per core (4 cuts × seeds 1–96, HIGH profile; D1.2 = the synchronous planner). D1.5 on the independent seeds 97–192: 282 taken / 146 clean, clean 90° 49. σ ≈ 9 on taken / clean totals, ≈ 5 on clean 90°. CPU: D1.2 / D1.3 from the D1.4 benchmark, D1.4 / D1.5 measured together (tools/d15_cpu.sh).",
+ "experiments": [
+  [
+   "D1.4",
+   "—",
+   273,
+   121,
+   94,
+   27,
+   "6.50 · 6.25 · 5.67 · 4.33",
+   "baseline"
+  ],
+  [
+   "S1",
+   "rStop1 off (release search continues past its first valid plan)",
+   269,
+   120,
+   94,
+   26,
+   "6.42 · 6.17 · 5.75 · 4.08",
+   "no effect"
+  ],
+  [
+   "S2",
+   "maxSetups 3 → unlimited",
+   272,
+   121,
+   92,
+   29,
+   "6.92 · 5.83 · 5.58 · 4.33",
+   "no effect"
+  ],
+  [
+   "S3",
+   "c12CutAtContact on",
+   272,
+   123,
+   95,
+   28,
+   "6.50 · 6.17 · 5.67 · 4.33",
+   "no effect"
+  ],
+  [
+   "S4",
+   "stageLine (the root-cause fix) alone",
+   278,
+   133,
+   94,
+   39,
+   "6.50 · 6.25 · 6.00 · 4.42",
+   "60° bit-identical; double stages 16 → 0"
+  ],
+  [
+   "S5",
+   "stageLine + unbudgeted planning (diagnostic)",
+   281,
+   149,
+   99,
+   50,
+   "6.50 · 6.00 · 5.83 · 5.08",
+   "the remaining gap is decision latency"
+  ],
+  [
+   "S6 = D1.5",
+   "stageLine + 12 ms decision budget",
+   273,
+   140,
+   93,
+   47,
+   "6.25 · 5.92 · 5.58 · 5.00",
+   "adopted; seeds 97–192: 282 / 146 / clean 90° 49 (S4: 273 / 136 / 42)",
+   true
+  ],
+  [
+   "S7",
+   "stageLine + 16 ms decision budget",
+   267,
+   138,
+   93,
+   45,
+   "6.42 · 5.83 · 5.58 · 4.42",
+   "no better than 12 ms; larger spikes"
+  ]
+ ],
+ "expNote": "Every configuration ran the same 384 matched runs. The three DRIBBLE-1.3 search caps the 1.4 review suspected change nothing on clean 90° cuts. The stage-line fix alone takes clean 90° from 27 to 39 and leaves every 60° run bit-identical. With planning unbudgeted it reaches 50 — so, once double staging is gone, the rest of the gap is how long the release decision after a stage takes under the 8 ms decision budget. 12 ms was chosen over 8 ms on a second, independent 384-run block (seeds 97–192: clean 146 vs 136, clean 90° 49 vs 42, taken 282 vs 273); 16 ms was no better.",
+ "diffNote": "tools/d15_diff.mjs re-runs every better / worse run on both cores and classifies its first changed decision; 'neutral' = the same outcome with different play. Randomness is keyed by (seed, player, tick, foot): all 180 touches common to both cores in the changed runs draw identical errors. The 12 ms budget changes when searches finish for every cut, which is why 60° runs change too (7 better, 13 worse) and why most causes are contact / release / set-up selection rather than the second stage itself.",
+ "howItWorks": [
+  "<b>stageLine (plan15.stageLine).</b> When a 90° cut is staged, the planner releases part of the turn (stageFrac of it) and holds the rest. At the next release search it must decide whether the rest is still 'big' (≥ stagedMin 75°: stage again) or not (release the full cut). DRIBBLE-1.2 – 1.4 measured it from the player's velocity heading, which lags the commanded stage heading for several hundred milliseconds while TURN-1.2 turns. It is now measured from the line of the cut so far — the stage heading — exactly as the intent layer's hold already measured it. One line of the planner; the staged direction and everything downstream are unchanged.",
+  "<b>Decision-tick budget 8 → 12 ms (plan13.budgetHi).</b> The incremental planner's architecture is unchanged — work units, the 2 ms ordinary budget, invalidation, caches. Ticks in which a decision is due (a meaningful cut held, or no plan in force) may now do 12 000 units of work instead of 8 000, so the release decision after a stage completes sooner. Average CPU unchanged (143.8 vs 141.8 ms / s); worst step 34 ms.",
+  "<b>Flag fix (no behaviour change).</b> rStop1 now alone controls whether the release search stops at its first valid plan (DRIBBLE-1.3 / 1.4 tied it to rFirst, so it could not be tested); defaults unchanged.",
+  "<b>Unchanged.</b> TURN-1.2, the every-tick release window and contact-timed release of DRIBBLE-1.4, the graded set-up validator, contact geometry and costs, the resolved touch, one authoritative impulse, the free physical ball, interruption, control loss, keyed randomness."
+ ],
+ "limitations": [
+  "<b>How sharp a 90° turn can be.</b> Clean 90° cuts are back at DRIBBLE-1.2's level (47 vs 48 of 192), and 90° right still needs ≈ 2 s to the line in its slower half. How tight and how quick a 90° turn is now belongs to Agility, Ball Control and pressure, not to the generic search.",
+  "<b>Preferred / weak foot.</b> The geometry picks the foot.",
+  "<b>Bad-touch severity.</b> Faster cuts lose the ball sometimes (seeds 58, 13); Ball Control should scale the execution error through exec13, not the planner avoid quick cuts."
+ ],
+ "nextStep": "FREEZE DRIBBLE-V1 (tag the DRIBBLE-1.5 core) and move to the attribute layer: Dribbling / Ball Control / Agility through the exec13 execution-error interface and the turn-sharpness limits, then preferred / weak foot and pressure / context.",
+ "provenance": [
+  "instruction: review_artifacts/dribble15/sources/2026-10-18_user_instruction_dribble1_5_last_foundation_pass.md (verbatim)",
+  "core: sandbox/visual/dribble15/d15_core.js (from dribble14/d14_core.js at 33ce1ca1, frozen); lab sandbox/visual/dribble15.html; tools sandbox/visual/dribble15/tools/",
+  "football: evidence/score96_d15.json (seeds 1–96), score96_d15_seeds97-192.json, score96_stageline8_seeds97-192.json, experiments_384.json (S1–S7); D1.2 / D1.3 / D1.4 from the 1.3 / 1.4 evidence",
+  "matched seeds: evidence/diff_d14_d15.json; checks: cpu.json, chrome_d15.json, legpose_check.json, plant_check_d15.json, rel_d15_straight.json, rel_d15_interrupt.json",
+  "I cannot play video in real time: every judgement here comes from frame strips and stills of these clips",
+  "LOCAL REVIEW PAGE ONLY — the lab shows real player names; not published"
+ ]
+}

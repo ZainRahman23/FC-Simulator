@@ -1,0 +1,46 @@
+[d14] STRAIGHT_JOG      d14 res 74.6 worst step 21.7 p99.9 13.06
+[d14] STRAIGHT_RUN      d14 res 79.7 worst step 14.2 p99.9 10.01
+[d14] STRAIGHT_FAST     d14 res 113.8 worst step 13.2 p99.9 10.79
+[d14] STRAIGHT_SPRINT   d14 res 82.6 worst step 14.7 p99.9 10.53
+[d14] STRAIGHT_RUN_FAR  d14 res 66.9 worst step 12.7 p99.9 8.82
+[d14] CUT60_RUN_FAR     d14 res 162.8 worst step 18.2 p99.9 13.08
+[d14] CURVE_RUN         d14 res 123.2 worst step 10.9 p99.9 9.71
+[d14] CURVE_JOG         d14 res 112.5 worst step 14.9 p99.9 8.88
+[d14] CUT45_RUN         d14 res 133 worst step 13.2 p99.9 10.76
+[d14] CUT60_RUN         d14 res 163.1 worst step 16.7 p99.9 11.83
+[d14] CUT60L_RUN        d14 res 146.8 worst step 18.9 p99.9 11.24
+[d14] CUT90_RUN         d14 res 220.3 worst step 27.1 p99.9 12.79
+[d14] CUT90_JOG         d14 res 163.7 worst step 15.6 p99.9 10.72
+[d14] CUT90L_RUN        d14 res 207.8 worst step 16.4 p99.9 11.76
+[d14] REV135_RUN        d14 res 250.3 worst step 15.8 p99.9 12.66
+[d14] REV180_SPRINT     d14 res 284.2 worst step 23.5 p99.9 16.44
+[d14] CANCEL_RUN        d14 res 131.4 worst step 16 p99.9 10.34
+[d14] RETARGET_RUN      d14 res 240 worst step 17.6 p99.9 11.85
+[d14] INTERCEPT_RUN     d14 res 73.4 worst step 12.5 p99.9 9.49
+[d14] TACKLE_RUN        d14 res 89.8 worst step 12.3 p99.9 9.62
+[d14] ALL d14 {"resolverMsPerSimS":141.8,"totalMsPerSimS":174.3,"locoMsPerSimS":28.6,"ballMsPerSimS":3.8,"resolverUsPerStep":591,"worstStepMs":27.1,"worstStepAt":"CUT90_RUN s3 t 3.87","p999StepMs":13.24,"p99StepMs":8.92,"stepsOver4msPct":6.468,"stepsOver8msPct":2.481,"stepsOver20msPct":0.003,"worstPlanMs":0,"plansPerSimS":7.8}
+[d14] worst d14 scenario REV180_SPRINT 284.2 ms/sim-s
+[d15] STRAIGHT_JOG      d15 res 75.5 worst step 31.1 p99.9 18.56
+[d15] STRAIGHT_RUN      d15 res 77.5 worst step 18 p99.9 13.4
+[d15] STRAIGHT_FAST     d15 res 115 worst step 22.2 p99.9 14.86
+[d15] STRAIGHT_SPRINT   d15 res 86.3 worst step 15.1 p99.9 14.49
+[d15] STRAIGHT_RUN_FAR  d15 res 68.6 worst step 15.2 p99.9 12.61
+[d15] CUT60_RUN_FAR     d15 res 168.8 worst step 19.7 p99.9 17.3
+[d15] CURVE_RUN         d15 res 119 worst step 14.7 p99.9 13.5
+[d15] CURVE_JOG         d15 res 113.3 worst step 15.9 p99.9 13.2
+[d15] CUT45_RUN         d15 res 124.8 worst step 17.2 p99.9 15.12
+[d15] CUT60_RUN         d15 res 163.9 worst step 22.4 p99.9 16.16
+[d15] CUT60L_RUN        d15 res 163.6 worst step 17.9 p99.9 16.2
+[d15] CUT90_RUN         d15 res 190 worst step 23.9 p99.9 16.16
+[d15] CUT90_JOG         d15 res 145.9 worst step 17.3 p99.9 14.9
+[d15] CUT90L_RUN        d15 res 196.9 worst step 22.7 p99.9 15.44
+[d15] REV135_RUN        d15 res 277.6 worst step 34.1 p99.9 20.65
+[d15] REV180_SPRINT     d15 res 318.3 worst step 32 p99.9 23.22
+[d15] CANCEL_RUN        d15 res 184.1 worst step 22.6 p99.9 14.7
+[d15] RETARGET_RUN      d15 res 203.6 worst step 23.7 p99.9 16.26
+[d15] INTERCEPT_RUN     d15 res 73.6 worst step 19.1 p99.9 12.94
+[d15] TACKLE_RUN        d15 res 90.6 worst step 14.2 p99.9 13.23
+[d15] ALL d15 {"resolverMsPerSimS":143.8,"totalMsPerSimS":176.6,"locoMsPerSimS":28.9,"ballMsPerSimS":3.8,"resolverUsPerStep":599.2,"worstStepMs":34.1,"worstStepAt":"REV135_RUN s4 t 0.27","p999StepMs":18.54,"p99StepMs":12.62,"stepsOver4msPct":4.469,"stepsOver8msPct":4.236,"stepsOver20msPct":0.057,"worstPlanMs":0,"plansPerSimS":7.9}
+[d15] worst d15 scenario REV180_SPRINT 318.3 ms/sim-s
+ALL d14 {"resolverMsPerSimS":141.8,"totalMsPerSimS":174.3,"locoMsPerSimS":28.6,"ballMsPerSimS":3.8,"resolverUsPerStep":591,"worstStepMs":27.1,"worstStepAt":"CUT90_RUN s3 t 3.87","p999StepMs":13.24,"p99StepMs":8.92,"stepsOver4msPct":6.468,"stepsOver8msPct":2.481,"stepsOver20msPct":0.003,"worstPlanMs":0,"plansPerSimS":7.8}
+ALL d15 {"resolverMsPerSimS":143.8,"totalMsPerSimS":176.6,"locoMsPerSimS":28.9,"ballMsPerSimS":3.8,"resolverUsPerStep":599.2,"worstStepMs":34.1,"worstStepAt":"REV135_RUN s4 t 0.27","p999StepMs":18.54,"p99StepMs":12.62,"stepsOver4msPct":4.469,"stepsOver8msPct":4.236,"stepsOver20msPct":0.057,"worstPlanMs":0,"plansPerSimS":7.9}

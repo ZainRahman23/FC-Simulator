@@ -1,0 +1,4232 @@
+{
+ "tally": {
+  "better": 46,
+  "worse": 32,
+  "neutral": 84,
+  "identical": 222
+ },
+ "perCut": {
+  "CUT60L_RUN": {
+   "better": 3,
+   "worse": 6,
+   "neutral": 14,
+   "identical": 73
+  },
+  "CUT60_RUN": {
+   "better": 4,
+   "worse": 7,
+   "neutral": 19,
+   "identical": 66
+  },
+  "CUT90L_RUN": {
+   "better": 18,
+   "worse": 6,
+   "neutral": 27,
+   "identical": 45
+  },
+  "CUT90_RUN": {
+   "better": 21,
+   "worse": 13,
+   "neutral": 24,
+   "identical": 38
+  }
+ },
+ "causes": {
+  "contact selection": {
+   "better": 9,
+   "worse": 13
+  },
+  "set-up selection": {
+   "better": 13,
+   "worse": 7
+  },
+  "release choice: other": {
+   "better": 14,
+   "worse": 11
+  },
+  "no second stage \u2192 setup": {
+   "better": 6,
+   "worse": 1
+  },
+  "no second stage \u2192 full cut": {
+   "better": 1,
+   "worse": 0
+  },
+  "no second stage \u2192 line": {
+   "better": 2,
+   "worse": 0
+  },
+  "no second stage \u2192 dribble": {
+   "better": 1,
+   "worse": 0
+  }
+ },
+ "rows": [
+  {
+   "id": "CUT60L_RUN",
+   "sd": 21,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 579,
+    "d14": {
+     "k": 599,
+     "kc": 807,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.846810143070934,
+      "dir": -6.13214327504385,
+      "kNext": 1020,
+      "F2": "R",
+      "target": [
+       35.6980295372706,
+       0.11,
+       -33.167017169781055
+      ]
+     }
+    },
+    "d15": {
+     "k": 579,
+     "kc": 799,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.087353039576673,
+      "dir": -6.003314404020849,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.7261067988544,
+       0.11,
+       -33.16628194081093
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 37,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 560,
+    "d14": {
+     "k": 854,
+     "kc": 955,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 867,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.936514739954704,
+      "dir": -2.048362736462422,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 560,
+     "kc": 565,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "setup",
+     "dec": {
+      "kc": 755,
+      "F": "L",
+      "reg": "FRONT",
+      "dir": -0.9810880289862851,
+      "speed": 6.912348022737723
+     },
+     "launch": {
+      "speed": 5.953219670800652,
+      "dir": -21.926972457459595,
+      "kNext": 846,
+      "F2": "R",
+      "target": [
+       29.77889739838918,
+       0.11,
+       -32.01970620628857
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 27,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 780,
+    "d14": {
+     "k": 780,
+     "kc": 807,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 718,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.327132601129843,
+      "dir": -33.49601050643469,
+      "kNext": 918,
+      "F2": "L",
+      "target": [
+       32.61155268384739,
+       0.11,
+       -33.07708755710524
+      ]
+     }
+    },
+    "d15": {
+     "k": 780,
+     "kc": 810,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 718,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.235543874291566,
+      "dir": -43.62065937368068,
+      "kNext": 996,
+      "F2": "R",
+      "target": [
+       33.3719570308632,
+       0.11,
+       -31.812435164402924
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 13,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 604,
+    "d14": {
+     "k": 604,
+     "kc": 735,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "setup",
+     "dec": {
+      "kc": 898,
+      "F": "L",
+      "reg": "FRONT",
+      "dir": -1.0241567396764863,
+      "speed": 7.95110851532633
+     },
+     "launch": {
+      "speed": 5.8269409531428575,
+      "dir": -20.965010229518516,
+      "kNext": 972,
+      "F2": "R",
+      "target": [
+       33.41365633462306,
+       0.11,
+       -32.890721319313656
+      ]
+     }
+    },
+    "d15": {
+     "k": 730,
+     "kc": 781,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 715,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.1256478001824,
+      "dir": -29.946262154197893,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       32.736090813283546,
+       0.11,
+       -32.90780211244509
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 88,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 164,
+    "d14": {
+     "k": 166,
+     "kc": 403,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.495426178127833,
+      "dir": 1.6206611456668705,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.90314355299781,
+       0.11,
+       -34.5296662451481
+      ]
+     }
+    },
+    "d15": {
+     "k": 164,
+     "kc": 401,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.837169313047174,
+      "dir": 1.520035179405591,
+      "kNext": 732,
+      "F2": "R",
+      "target": [
+       29.416692243189832,
+       0.11,
+       -34.47367127811334
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 90,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 165,
+    "d14": {
+     "k": 168,
+     "kc": 404,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.757631862942521,
+      "dir": 1.097087931122406,
+      "kNext": 816,
+      "F2": "L",
+      "target": [
+       31.394908840726323,
+       0.11,
+       -34.397096026439314
+      ]
+     }
+    },
+    "d15": {
+     "k": 165,
+     "kc": 402,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.52769734088854,
+      "dir": 1.1662445408956292,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.90719511035994,
+       0.11,
+       -34.39887633525758
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 76,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 557,
+    "d14": {
+     "k": 736,
+     "kc": 849,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 792,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.797216095574158,
+      "dir": -58.06727434630796,
+      "kNext": 990,
+      "F2": "R",
+      "target": [
+       33.451458845848926,
+       0.11,
+       -31.238435458580387
+      ]
+     }
+    },
+    "d15": {
+     "k": 557,
+     "kc": 576,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 492,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.767101708561556,
+      "dir": -33.86893225394141,
+      "kNext": 690,
+      "F2": "R",
+      "target": [
+       27.569941016835525,
+       0.11,
+       -32.757925036410406
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 62,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 653,
+    "d14": {
+     "k": 758,
+     "kc": 907,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 862,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.649435961957575,
+      "dir": -59.031339536388415,
+      "kNext": 1350,
+      "F2": "L",
+      "target": [
+       37.44346254335379,
+       0.11,
+       -24.188538544275474
+      ]
+     }
+    },
+    "d15": {
+     "k": 653,
+     "kc": 721,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 642,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.442598308956342,
+      "dir": -50.16506437972743,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       30.77960291081539,
+       0.11,
+       -31.732269985177307
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60L_RUN",
+   "sd": 63,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 101,
+    "d14": {
+     "k": 103,
+     "kc": 339,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.79333738480049,
+      "dir": 0.3161945050027198,
+      "kNext": 798,
+      "F2": "L",
+      "target": [
+       30.48750000000002,
+       0.11,
+       -33.98730570590585
+      ]
+     }
+    },
+    "d15": {
+     "k": 101,
+     "kc": 338,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.615651032872767,
+      "dir": 0.46081924660324447,
+      "kNext": 738,
+      "F2": "R",
+      "target": [
+       29.587500000000016,
+       0.11,
+       -34.00642356180496
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 31,
+   "d14": "clean",
+   "d15": "taken",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 168,
+    "d14": {
+     "k": 169,
+     "kc": 406,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.485643707506803,
+      "dir": 0.6866452647094959,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.910105170257545,
+       0.11,
+       -34.26805606699364
+      ]
+     }
+    },
+    "d15": {
+     "k": 168,
+     "kc": 405,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.486443807383491,
+      "dir": 0.6872518332014581,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.910105170257545,
+       0.11,
+       -34.26805606699364
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 42,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 566,
+    "d14": {
+     "k": 566,
+     "kc": 646,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 567,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.270237338310481,
+      "dir": 56.158723328632696,
+      "kNext": 768,
+      "F2": "L",
+      "target": [
+       29.06774722393435,
+       0.11,
+       -36.68359535491828
+      ]
+     }
+    },
+    "d15": {
+     "k": 789,
+     "kc": 884,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 792,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.940240713279116,
+      "dir": 57.92040825180306,
+      "kNext": 1068,
+      "F2": "L",
+      "target": [
+       34.747758859285135,
+       0.11,
+       -38.22829001592701
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 13,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 570,
+    "d14": {
+     "k": 602,
+     "kc": 734,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "setup",
+     "dec": {
+      "kc": 852,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.0066389306456152,
+      "speed": 6.948711582138942
+     },
+     "launch": {
+      "speed": 5.859248560915225,
+      "dir": 9.193719811277553,
+      "kNext": 846,
+      "F2": "R",
+      "target": [
+       32.03626442477972,
+       0.11,
+       -34.66692841888971
+      ]
+     }
+    },
+    "d15": {
+     "k": 570,
+     "kc": 795,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 3.2804812084496184,
+      "dir": 39.62739951676362,
+      "kNext": 870,
+      "F2": "R",
+      "target": [
+       31.10130829466638,
+       0.11,
+       -34.83811483404695
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 89,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 569,
+    "d14": {
+     "k": 569,
+     "kc": 646,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 567,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.912982950697596,
+      "dir": 57.41887204548502,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       30.564330551740614,
+       0.11,
+       -38.847493744189244
+      ]
+     }
+    },
+    "d15": null
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 91,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 749,
+    "d14": {
+     "k": 872,
+     "kc": 950,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 865,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.394438632845827,
+      "dir": 9.461415098484748,
+      "kNext": 1098,
+      "F2": "L",
+      "target": [
+       37.8451214710485,
+       0.11,
+       -35.08114087952905
+      ]
+     }
+    },
+    "d15": {
+     "k": 749,
+     "kc": 942,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 865,
+     "role": "setup",
+     "dec": {
+      "kc": 1063,
+      "F": "L",
+      "reg": "INSIDE",
+      "dir": 0.9842373807385743,
+      "speed": 7.11121090218746
+     },
+     "launch": {
+      "speed": 5.507506462426274,
+      "dir": 9.614049298744554,
+      "kNext": 1014,
+      "F2": "R",
+      "target": [
+       35.98839553242395,
+       0.11,
+       -34.786647620962384
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 50,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 579,
+    "d14": {
+     "k": 579,
+     "kc": 797,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.232969446202768,
+      "dir": 5.461953871639571,
+      "kNext": 1020,
+      "F2": "R",
+      "target": [
+       35.617008224056065,
+       0.11,
+       -35.08986807161442
+      ]
+     }
+    },
+    "d15": {
+     "k": 588,
+     "kc": 799,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.239359597897935,
+      "dir": 5.4796803623576,
+      "kNext": 1020,
+      "F2": "R",
+      "target": [
+       35.617008224056065,
+       0.11,
+       -35.08986807161442
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 93,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 136,
+    "d14": {
+     "k": 137,
+     "kc": 343,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 268,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.488169189648042,
+      "dir": 1.9044877305610324,
+      "kNext": 744,
+      "F2": "R",
+      "target": [
+       29.23451095585,
+       0.11,
+       -34.58759848877286
+      ]
+     }
+    },
+    "d15": {
+     "k": 136,
+     "kc": 345,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 268,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.658159210939123,
+      "dir": 1.826572858084389,
+      "kNext": 804,
+      "F2": "L",
+      "target": [
+       30.084669206168357,
+       0.11,
+       -34.602521026562044
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 57,
+   "d14": "clean",
+   "d15": "taken",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 570,
+    "d14": {
+     "k": 570,
+     "kc": 794,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 715,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.823598409774575,
+      "dir": 2.9509538414502625,
+      "kNext": 1026,
+      "F2": "R",
+      "target": [
+       35.95269446563685,
+       0.11,
+       -33.92468030827052
+      ]
+     }
+    },
+    "d15": {
+     "k": 601,
+     "kc": 783,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 712,
+     "role": "setup",
+     "dec": {
+      "kc": 964,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.0224553023126237,
+      "speed": 7.903608656915933
+     },
+     "launch": {
+      "speed": 6.528557492061576,
+      "dir": 13.465513530680914,
+      "kNext": 978,
+      "F2": "R",
+      "target": [
+       34.72017041853548,
+       0.11,
+       -34.61695434873951
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 82,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 580,
+    "d14": null,
+    "d15": {
+     "k": 580,
+     "kc": 654,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 568,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.89321353083003,
+      "dir": 58.48057223885248,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       30.322890444402095,
+       0.11,
+       -39.687239661177784
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 84,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 740,
+    "d14": {
+     "k": 743,
+     "kc": 892,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 829,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.716886963206364,
+      "dir": 59.027631583940156,
+      "kNext": 1200,
+      "F2": "L",
+      "target": [
+       35.40000462787669,
+       0.11,
+       -41.96112618300994
+      ]
+     }
+    },
+    "d15": {
+     "k": 740,
+     "kc": 826,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 779,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.595592581292448,
+      "dir": 59.298673703677245,
+      "kNext": 1128,
+      "F2": "R",
+      "target": [
+       34.597804941052885,
+       0.11,
+       -40.54788801327521
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT60_RUN",
+   "sd": 70,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 634,
+    "d14": {
+     "k": 634,
+     "kc": 732,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.592029987396961,
+      "dir": 56.75316125699402,
+      "kNext": 918,
+      "F2": "L",
+      "target": [
+       31.351433507262797,
+       0.11,
+       -37.11744958404737
+      ]
+     }
+    },
+    "d15": null
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 7,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 558,
+    "d14": {
+     "k": 602,
+     "kc": 805,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 7.04049235988328,
+      "dir": 0.044914761256306765,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.98939571242675,
+       0.11,
+       -33.77403859673104
+      ]
+     }
+    },
+    "d15": {
+     "k": 558,
+     "kc": 576,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.174990918354079,
+      "dir": -34.748436980523394,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.81729246947175,
+       0.11,
+       -31.777429711251017
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 45,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 758,
+    "d14": {
+     "k": 768,
+     "kc": 798,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.483229651007123,
+      "dir": -33.4047949004059,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       34.23963936285316,
+       0.11,
+       -31.730309211607818
+      ]
+     }
+    },
+    "d15": {
+     "k": 758,
+     "kc": 796,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.480271758249063,
+      "dir": -33.15214313701713,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       34.23963936285316,
+       0.11,
+       -31.730309211607818
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 48,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 685,
+    "d14": {
+     "k": 685,
+     "kc": 825,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 761,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.025524148311588,
+      "dir": -47.6029768523392,
+      "kNext": 1056,
+      "F2": "L",
+      "target": [
+       34.0410659175638,
+       0.11,
+       -28.197518506802375
+      ]
+     }
+    },
+    "d15": {
+     "k": 730,
+     "kc": 822,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 761,
+     "role": "setup",
+     "dec": {
+      "kc": 1036,
+      "F": "L",
+      "reg": "OUTSIDE",
+      "dir": -1.5877890043060259,
+      "speed": 7.263997571779332
+     },
+     "launch": {
+      "speed": 6.820915118589881,
+      "dir": -49.21880886428442,
+      "kNext": 1032,
+      "F2": "L",
+      "target": [
+       33.696271585740384,
+       0.11,
+       -28.35638226177255
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 40,
+   "d14": "clean",
+   "d15": "taken",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 564,
+    "d14": {
+     "k": 564,
+     "kc": 570,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 494,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.039359351932603,
+      "dir": -27.223914286897898,
+      "kNext": 690,
+      "F2": "R",
+      "target": [
+       27.671522993106663,
+       0.11,
+       -32.47223982029435
+      ]
+     }
+    },
+    "d15": {
+     "k": 663,
+     "kc": 781,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 719,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.267352002655175,
+      "dir": -46.949849281844656,
+      "kNext": 1056,
+      "F2": "L",
+      "target": [
+       34.34472554824216,
+       0.11,
+       -28.95388651519345
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 11,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 550,
+    "d14": {
+     "k": 947,
+     "kc": 965,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 868,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.830165222289407,
+      "dir": -34.4293449707499,
+      "kNext": 1212,
+      "F2": "L",
+      "target": [
+       38.830331193975866,
+       0.11,
+       -31.041184304351226
+      ]
+     }
+    },
+    "d15": {
+     "k": 550,
+     "kc": 562,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "setup",
+     "dec": {
+      "kc": 836,
+      "F": "R",
+      "reg": "INSIDE",
+      "dir": -1.5773496665088018,
+      "speed": 7.3132348768047395
+     },
+     "launch": {
+      "speed": 6.0873949935323255,
+      "dir": -20.43393490150809,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       29.523244997243644,
+       0.11,
+       -32.476863501694886
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 30,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 774,
+    "d14": {
+     "k": 774,
+     "kc": 874,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 792,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.253551914041685,
+      "dir": 6.8933300053311735,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 776,
+     "kc": 848,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 792,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.850770367879085,
+      "dir": -44.33986114854479,
+      "kNext": 1140,
+      "F2": "R",
+      "target": [
+       36.61808172761278,
+       0.11,
+       -29.812821262519286
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 32,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 612,
+    "d14": {
+     "k": 619,
+     "kc": 642,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.771055426180573,
+      "dir": -34.66149149026388,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       30.559572425813556,
+       0.11,
+       -31.20812787181345
+      ]
+     }
+    },
+    "d15": {
+     "k": 612,
+     "kc": 639,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.283852792818121,
+      "dir": -34.359367477574004,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       30.55957251599642,
+       0.11,
+       -31.208127959665706
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 27,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 766,
+    "d14": null,
+    "d15": {
+     "k": 766,
+     "kc": 800,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 718,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 9.799296197857826,
+      "dir": 4.218441524895624,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 15,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 633,
+    "d14": {
+     "k": 638,
+     "kc": 693,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.2501746020856634,
+      "dir": -45.549124550152044,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.90385342123772,
+       0.11,
+       -29.239437461573214
+      ]
+     }
+    },
+    "d15": {
+     "k": 633,
+     "kc": 701,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.278438081351949,
+      "dir": -46.12087008174338,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.90385342123772,
+       0.11,
+       -29.239437461573214
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 49,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 593,
+    "d14": {
+     "k": 719,
+     "kc": 737,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 642,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.316738941630658,
+      "dir": -1.0807955803550422,
+      "kNext": 1014,
+      "F2": "R",
+      "target": [
+       35.1518133610416,
+       0.11,
+       -33.959098425161955
+      ]
+     }
+    },
+    "d15": {
+     "k": 593,
+     "kc": 738,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 642,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.27373158400356,
+      "dir": -1.4274996655204741,
+      "kNext": 1008,
+      "F2": "R",
+      "target": [
+       35.04379082576631,
+       0.11,
+       -33.93071484386409
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 70,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 570,
+    "d14": {
+     "k": 570,
+     "kc": 637,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.065994017225085,
+      "dir": -41.16925095766592,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       30.185915600155838,
+       0.11,
+       -30.429557685829774
+      ]
+     }
+    },
+    "d15": {
+     "k": 676,
+     "kc": 841,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 794,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.237384488027805,
+      "dir": -88.04911441364953,
+      "kNext": 1134,
+      "F2": "R",
+      "target": [
+       30.39212133032849,
+       0.11,
+       -26.024620760676566
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 68,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 425,
+    "d14": {
+     "k": 429,
+     "kc": 570,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 492,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.277979794333584,
+      "dir": -4.668590383019534,
+      "kNext": 888,
+      "F2": "R",
+      "target": [
+       32.271598815677386,
+       0.11,
+       -32.65463274704563
+      ]
+     }
+    },
+    "d15": {
+     "k": 425,
+     "kc": 569,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 492,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.2780783257439,
+      "dir": -4.667593488261799,
+      "kNext": 888,
+      "F2": "R",
+      "target": [
+       32.271598815677386,
+       0.11,
+       -32.65463274704563
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 56,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 395,
+    "d14": {
+     "k": 395,
+     "kc": 630,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.123073244833334,
+      "dir": 1.4046847373284714,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.96827139186066,
+       0.11,
+       -34.51951770645965
+      ]
+     }
+    },
+    "d15": {
+     "k": 398,
+     "kc": 635,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.641058726054595,
+      "dir": 1.4854532615143512,
+      "kNext": 1038,
+      "F2": "R",
+      "target": [
+       36.455290692300025,
+       0.11,
+       -34.54425660664365
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 91,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 655,
+    "d14": {
+     "k": 694,
+     "kc": 787,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 5.84975848948053,
+      "dir": -31.65917732881953,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 655,
+     "kc": 705,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.0240026489003595,
+      "dir": -38.91674003119339,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       32.1187062087683,
+       0.11,
+       -31.10637596889155
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 92,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 786,
+    "d14": null,
+    "d15": {
+     "k": 786,
+     "kc": 801,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 717,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.358513934728575,
+      "dir": -27.724394107563832,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       32.881029872397875,
+       0.11,
+       -31.565232969861455
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 88,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 164,
+    "d14": {
+     "k": 166,
+     "kc": 403,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.495426178127833,
+      "dir": 1.6206611456668705,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.90314355299781,
+       0.11,
+       -34.5296662451481
+      ]
+     }
+    },
+    "d15": {
+     "k": 164,
+     "kc": 401,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.837169313047174,
+      "dir": 1.520035179405591,
+      "kNext": 732,
+      "F2": "R",
+      "target": [
+       29.416692243189832,
+       0.11,
+       -34.47367127811334
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 81,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 780,
+    "d14": {
+     "k": 788,
+     "kc": 966,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 891,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.504295355883469,
+      "dir": -50.76838638307343,
+      "kNext": 1122,
+      "F2": "R",
+      "target": [
+       34.95999564674386,
+       0.11,
+       -26.7171575953515
+      ]
+     }
+    },
+    "d15": {
+     "k": 780,
+     "kc": 967,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 891,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.633151389353152,
+      "dir": -49.64058154737149,
+      "kNext": 1128,
+      "F2": "R",
+      "target": [
+       35.13584886001338,
+       0.11,
+       -26.616560780025782
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 83,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 558,
+    "d14": null,
+    "d15": {
+     "k": 558,
+     "kc": 576,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.291379942604272,
+      "dir": -32.46903716797708,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.85234555987312,
+       0.11,
+       -32.199817429813805
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 57,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 831,
+    "d14": {
+     "k": 831,
+     "kc": 908,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 859,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.126096571442552,
+      "dir": -46.14789363295954,
+      "kNext": 1128,
+      "F2": "R",
+      "target": [
+       36.436728585951016,
+       0.11,
+       -28.837605846884973
+      ]
+     }
+    },
+    "d15": {
+     "k": 834,
+     "kc": 907,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 859,
+     "role": "setup",
+     "dec": {
+      "kc": 1109,
+      "F": "R",
+      "reg": "INSIDE",
+      "dir": -1.5778137165294777,
+      "speed": 7.928917314179719
+     },
+     "launch": {
+      "speed": 6.540327428046705,
+      "dir": -57.03974788012063,
+      "kNext": 1128,
+      "F2": "R",
+      "target": [
+       35.37370109505779,
+       0.11,
+       -28.718669170893033
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 58,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 552,
+    "d14": {
+     "k": 780,
+     "kc": 877,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 793,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 6.002621608056789,
+      "dir": -2.99072295124906,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 552,
+     "kc": 565,
+     "F": "R",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "setup",
+     "dec": {
+      "kc": 830,
+      "F": "R",
+      "reg": "FRONT",
+      "dir": -1.5607276187632153,
+      "speed": 7.463163453142924
+     },
+     "launch": {
+      "speed": 5.8163285062482055,
+      "dir": -18.985293679257047,
+      "kNext": 846,
+      "F2": "R",
+      "target": [
+       29.462403566627643,
+       0.11,
+       -32.763669081602295
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 73,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 573,
+    "d14": {
+     "k": 582,
+     "kc": 799,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.344155654289003,
+      "dir": -1.194872295558571,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.98535221939783,
+       0.11,
+       -33.91364335159254
+      ]
+     }
+    },
+    "d15": {
+     "k": 573,
+     "kc": 797,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 717,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.335138981089551,
+      "dir": -1.8655811443587986,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.986399363784074,
+       0.11,
+       -33.85365248988316
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 74,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 109,
+    "d14": {
+     "k": 110,
+     "kc": 343,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.452562137090544,
+      "dir": -0.17958795865764834,
+      "kNext": 798,
+      "F2": "L",
+      "target": [
+       30.48750000000002,
+       0.11,
+       -33.98730570590585
+      ]
+     }
+    },
+    "d15": {
+     "k": 109,
+     "kc": 340,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.035392173041704,
+      "dir": -0.15954981815121871,
+      "kNext": 732,
+      "F2": "R",
+      "target": [
+       29.100000000000016,
+       0.11,
+       -33.994502265226046
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 75,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 557,
+    "d14": {
+     "k": 776,
+     "kc": 877,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 793,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 9.687318296757772,
+      "dir": -1.762959277682066,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 557,
+     "kc": 574,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 492,
+     "role": "setup",
+     "dec": {
+      "kc": 788,
+      "F": "L",
+      "reg": "OUTSIDE",
+      "dir": -1.6080976686440083,
+      "speed": 6.460226341618827
+     },
+     "launch": {
+      "speed": 5.42730477117102,
+      "dir": -11.895737527272852,
+      "kNext": 786,
+      "F2": "L",
+      "target": [
+       29.54071890410328,
+       0.11,
+       -33.211312797230754
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90L_RUN",
+   "sd": 76,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 561,
+    "d14": null,
+    "d15": {
+     "k": 561,
+     "kc": 576,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.230636095905641,
+      "dir": -34.51575460735419,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.816507351619894,
+       0.11,
+       -31.867397945841024
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 11,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 full cut",
+   "firstChange": {
+    "tick": 609,
+    "d14": {
+     "k": 609,
+     "kc": 753,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 686,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.952588926774198,
+      "dir": 47.57578694192445,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.40095757283561,
+       0.11,
+       -39.85631176860849
+      ]
+     }
+    },
+    "d15": {
+     "k": 680,
+     "kc": 746,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 686,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.905823181627639,
+      "dir": 70.65965976097067,
+      "kNext": 978,
+      "F2": "R",
+      "target": [
+       30.56123909235664,
+       0.11,
+       -40.79140409835582
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 28,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 757,
+    "d14": {
+     "k": 764,
+     "kc": 975,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 895,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.305651012811947,
+      "dir": 51.77485353349743,
+      "kNext": 1134,
+      "F2": "R",
+      "target": [
+       34.619426301802704,
+       0.11,
+       -41.98068444432595
+      ]
+     }
+    },
+    "d15": {
+     "k": 757,
+     "kc": 974,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 895,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 6.302919168942851,
+      "dir": 51.75115702245434,
+      "kNext": 1134,
+      "F2": "R",
+      "target": [
+       34.61942630180268,
+       0.11,
+       -41.98068444432598
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 31,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 168,
+    "d14": {
+     "k": 169,
+     "kc": 406,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.485643707506803,
+      "dir": 0.6866452647094959,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.910105170257545,
+       0.11,
+       -34.26805606699364
+      ]
+     }
+    },
+    "d15": {
+     "k": 168,
+     "kc": 405,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 342,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.486443807383491,
+      "dir": 0.6872518332014581,
+      "kNext": 810,
+      "F2": "L",
+      "target": [
+       30.910105170257545,
+       0.11,
+       -34.26805606699364
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 18,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 705,
+    "d14": null,
+    "d15": {
+     "k": 705,
+     "kc": 735,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.117573529124425,
+      "dir": 38.04703478316647,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       33.473015046211444,
+       0.11,
+       -36.928633811053
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 1,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 617,
+    "d14": {
+     "k": 617,
+     "kc": 755,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 689,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.95116047323789,
+      "dir": 45.99288090072829,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.33155334994433,
+       0.11,
+       -40.16841164322712
+      ]
+     }
+    },
+    "d15": {
+     "k": 618,
+     "kc": 755,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 689,
+     "role": "setup",
+     "dec": {
+      "kc": 951,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.5455126958080916,
+      "speed": 6.82339911718195
+     },
+     "launch": {
+      "speed": 6.638718113501181,
+      "dir": 53.80790405093874,
+      "kNext": 954,
+      "F2": "R",
+      "target": [
+       31.15913141950555,
+       0.11,
+       -39.78647510353481
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 2,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 540,
+    "d14": {
+     "k": 546,
+     "kc": 569,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 494,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.150649779897829,
+      "dir": 24.017357380528484,
+      "kNext": 696,
+      "F2": "R",
+      "target": [
+       27.54995811476442,
+       0.11,
+       -34.80376438837154
+      ]
+     }
+    },
+    "d15": {
+     "k": 540,
+     "kc": 566,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 494,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.594326012289025,
+      "dir": 31.809788984765706,
+      "kNext": 768,
+      "F2": "L",
+      "target": [
+       28.78901897811246,
+       0.11,
+       -36.00392166159132
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 3,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 985,
+    "d14": {
+     "k": 1000,
+     "kc": 1099,
+     "F": "R",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 1041,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 11.039393132957082,
+      "dir": 42.51002586168693,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 985,
+     "kc": 1103,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 1041,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.278281046814406,
+      "dir": 87.646617804622,
+      "kNext": 1380,
+      "F2": "R",
+      "target": [
+       34.50064985930902,
+       0.11,
+       -48.00992095080457
+      ]
+     }
+    }
+   },
+   "commonTouches": 4,
+   "sameDraws": 4
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 5,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 760,
+    "d14": {
+     "k": 760,
+     "kc": 814,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 741,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.779566814672903,
+      "dir": 72.98905357254958,
+      "kNext": 1074,
+      "F2": "R",
+      "target": [
+       31.303781904556168,
+       0.11,
+       -43.34643091270449
+      ]
+     }
+    },
+    "d15": {
+     "k": 778,
+     "kc": 816,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 741,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.110810778982961,
+      "dir": 73.12482611048486,
+      "kNext": 1074,
+      "F2": "R",
+      "target": [
+       31.303781904556168,
+       0.11,
+       -43.34643091270449
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 7,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 539,
+    "d14": {
+     "k": 544,
+     "kc": 578,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.459730087357407,
+      "dir": 34.78011122015124,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.805584253747497,
+       0.11,
+       -36.221519437038246
+      ]
+     }
+    },
+    "d15": {
+     "k": 539,
+     "kc": 566,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.811785500032074,
+      "dir": 33.57469751522491,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.805584253747497,
+       0.11,
+       -36.221519437038246
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 37,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 609,
+    "d14": {
+     "k": 609,
+     "kc": 750,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 686,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.546278343864422,
+      "dir": 44.6105417508458,
+      "kNext": 1056,
+      "F2": "L",
+      "target": [
+       33.81726685031344,
+       0.11,
+       -40.847534468429004
+      ]
+     }
+    },
+    "d15": {
+     "k": 610,
+     "kc": 750,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 686,
+     "role": "setup",
+     "dec": {
+      "kc": 1006,
+      "F": "L",
+      "reg": "INSIDE",
+      "dir": 1.5856689576663052,
+      "speed": 8.59662210680312
+     },
+     "launch": {
+      "speed": 6.906188491551898,
+      "dir": 57.27035474306336,
+      "kNext": 1008,
+      "F2": "L",
+      "target": [
+       31.788391816239077,
+       0.11,
+       -40.56136967510634
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 22,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 786,
+    "d14": {
+     "k": 798,
+     "kc": 820,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 763,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.64150214898005,
+      "dir": 63.91859469231365,
+      "kNext": 990,
+      "F2": "R",
+      "target": [
+       31.714133146426438,
+       0.11,
+       -39.16889795780772
+      ]
+     }
+    },
+    "d15": {
+     "k": 786,
+     "kc": 828,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 763,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.498424102423301,
+      "dir": 72.35190874613197,
+      "kNext": 1062,
+      "F2": "L",
+      "target": [
+       31.717618145647698,
+       0.11,
+       -40.74540357053335
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 41,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 732,
+    "d14": {
+     "k": 737,
+     "kc": 866,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 792,
+     "role": "setup",
+     "dec": {
+      "kc": 1065,
+      "F": "L",
+      "reg": "INSIDE",
+      "dir": 1.615005433832541,
+      "speed": 6.765786916472449
+     },
+     "launch": {
+      "speed": 6.1366006909897415,
+      "dir": 17.413178470944928,
+      "kNext": 1068,
+      "F2": "L",
+      "target": [
+       35.996221298898625,
+       0.11,
+       -35.98855032863014
+      ]
+     }
+    },
+    "d15": {
+     "k": 732,
+     "kc": 865,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 792,
+     "role": "setup",
+     "dec": {
+      "kc": 1067,
+      "F": "L",
+      "reg": "INSIDE",
+      "dir": 1.5943755221008904,
+      "speed": 8.105155754918709
+     },
+     "launch": {
+      "speed": 6.131974995598115,
+      "dir": 17.379118079835607,
+      "kNext": 1068,
+      "F2": "L",
+      "target": [
+       35.996221298898625,
+       0.11,
+       -35.98855032863014
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 58,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 614,
+    "d14": {
+     "k": 614,
+     "kc": 752,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 686,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.978094004364432,
+      "dir": 48.24048241558556,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.30031054813539,
+       0.11,
+       -40.07386739155146
+      ]
+     }
+    },
+    "d15": {
+     "k": 631,
+     "kc": 746,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 686,
+     "role": "setup",
+     "dec": {
+      "kc": 1002,
+      "F": "L",
+      "reg": "INSIDE",
+      "dir": 1.592112051754638,
+      "speed": 8.21112851587348
+     },
+     "launch": {
+      "speed": 7.0104783044815395,
+      "dir": 57.7724830621149,
+      "kNext": 1002,
+      "F2": "L",
+      "target": [
+       31.92506880447673,
+       0.11,
+       -41.127752538776356
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 74,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 109,
+    "d14": {
+     "k": 110,
+     "kc": 343,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.452562137090544,
+      "dir": -0.17958795865764834,
+      "kNext": 798,
+      "F2": "L",
+      "target": [
+       30.48750000000002,
+       0.11,
+       -33.98730570590585
+      ]
+     }
+    },
+    "d15": {
+     "k": 109,
+     "kc": 340,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.035392173041704,
+      "dir": -0.15954981815121871,
+      "kNext": 732,
+      "F2": "R",
+      "target": [
+       29.100000000000016,
+       0.11,
+       -33.994502265226046
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 77,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 650,
+    "d14": {
+     "k": 650,
+     "kc": 655,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 567,
+     "role": "setup",
+     "dec": {
+      "kc": 860,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.5867557505696672,
+      "speed": 6.627969730872149
+     },
+     "launch": {
+      "speed": 5.2968328116285335,
+      "dir": 11.2247591351878,
+      "kNext": 858,
+      "F2": "R",
+      "target": [
+       31.228826380679713,
+       0.11,
+       -34.71310596053051
+      ]
+     }
+    },
+    "d15": {
+     "k": 681,
+     "kc": 856,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 788,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 5.794135602657027,
+      "dir": 87.9253415009469,
+      "kNext": 1056,
+      "F2": "L",
+      "target": [
+       31.150372356007203,
+       0.11,
+       -38.44357396195948
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 78,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 535,
+    "d14": {
+     "k": 542,
+     "kc": 622,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.861725611377416,
+      "dir": 44.515957283763576,
+      "kNext": 906,
+      "F2": "L",
+      "target": [
+       31.26268123301963,
+       0.11,
+       -39.022133839403686
+      ]
+     }
+    },
+    "d15": {
+     "k": 535,
+     "kc": 576,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.210203503097307,
+      "dir": 36.13257378011108,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.75806183117659,
+       0.11,
+       -36.40147366349206
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 80,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 769,
+    "d14": {
+     "k": 769,
+     "kc": 906,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 836,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.362373641355982,
+      "dir": 47.381963346753935,
+      "kNext": 1140,
+      "F2": "R",
+      "target": [
+       35.84959614287366,
+       0.11,
+       -39.960094201160146
+      ]
+     }
+    },
+    "d15": {
+     "k": 807,
+     "kc": 915,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 836,
+     "role": "setup",
+     "dec": {
+      "kc": 1156,
+      "F": "L",
+      "reg": "FRONT",
+      "dir": 1.5678110869767028,
+      "speed": 8.298142332233118
+     },
+     "launch": {
+      "speed": 6.871891392570278,
+      "dir": 61.82553425788141,
+      "kNext": 1158,
+      "F2": "L",
+      "target": [
+       34.933433935040384,
+       0.11,
+       -40.79957359880203
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 63,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 101,
+    "d14": {
+     "k": 103,
+     "kc": 339,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.79333738480049,
+      "dir": 0.3161945050027198,
+      "kNext": 798,
+      "F2": "L",
+      "target": [
+       30.48750000000002,
+       0.11,
+       -33.98730570590585
+      ]
+     }
+    },
+    "d15": {
+     "k": 101,
+     "kc": 338,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 267,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.615651032872767,
+      "dir": 0.46081924660324447,
+      "kNext": 738,
+      "F2": "R",
+      "target": [
+       29.587500000000016,
+       0.11,
+       -34.00642356180496
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 65,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 line",
+   "firstChange": {
+    "tick": 611,
+    "d14": {
+     "k": 615,
+     "kc": 687,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 636,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.7670084012390985,
+      "dir": 45.13246865412712,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       32.29865513021019,
+       0.11,
+       -40.02376294319651
+      ]
+     }
+    },
+    "d15": {
+     "k": 611,
+     "kc": 747,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 686,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 4.40234806413291,
+      "dir": 69.01665057903979,
+      "kNext": 822,
+      "F2": "R",
+      "target": [
+       29.111979475047878,
+       0.11,
+       -37.18275794710278
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 66,
+   "d14": "clean",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 650,
+    "d14": {
+     "k": 650,
+     "kc": 655,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 567,
+     "role": "setup",
+     "dec": {
+      "kc": 860,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.5867576494693643,
+      "speed": 6.628047908663973
+     },
+     "launch": {
+      "speed": 5.296102963169571,
+      "dir": 10.964074387497934,
+      "kNext": 858,
+      "F2": "R",
+      "target": [
+       31.226470990126934,
+       0.11,
+       -34.89303123890105
+      ]
+     }
+    },
+    "d15": null
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 67,
+   "d14": "lost",
+   "d15": "clean",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 733,
+    "d14": null,
+    "d15": {
+     "k": 733,
+     "kc": 766,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 689,
+     "role": "cut-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.789866685522378,
+      "dir": 77.48293225733406,
+      "kNext": 984,
+      "F2": "R",
+      "target": [
+       30.02589161431417,
+       0.11,
+       -41.15848580688845
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 81,
+   "d14": "clean",
+   "d15": "taken",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 679,
+    "d14": {
+     "k": 686,
+     "kc": 710,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.840762517246827,
+      "dir": 22.375043724286186,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       31.02317145719404,
+       0.11,
+       -34.87226648108643
+      ]
+     }
+    },
+    "d15": {
+     "k": 679,
+     "kc": 712,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 642,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 5.862813019239873,
+      "dir": 22.597519253492525,
+      "kNext": 840,
+      "F2": "R",
+      "target": [
+       31.022134030986173,
+       0.11,
+       -34.873340767372994
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 83,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 538,
+    "d14": {
+     "k": 545,
+     "kc": 578,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.590730109173465,
+      "dir": 35.09239619474684,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.753874719333396,
+       0.11,
+       -36.6413523678251
+      ]
+     }
+    },
+    "d15": {
+     "k": 538,
+     "kc": 563,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.5312797501217235,
+      "dir": 33.44050621771361,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.753874719333396,
+       0.11,
+       -36.6413523678251
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 84,
+   "d14": "clean",
+   "d15": "taken",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 615,
+    "d14": {
+     "k": 615,
+     "kc": 712,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 641,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.875097294366581,
+      "dir": -1.272966748584908,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 660,
+     "kc": 724,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 641,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.406908474996201,
+      "dir": 37.446542301444424,
+      "kNext": 972,
+      "F2": "R",
+      "target": [
+       33.70111570914009,
+       0.11,
+       -37.13023184830289
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 49,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "no second stage \u2192 setup",
+   "firstChange": {
+    "tick": 676,
+    "d14": {
+     "k": 676,
+     "kc": 764,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 714,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.276744595417375,
+      "dir": 44.89158244591622,
+      "kNext": 1050,
+      "F2": "L",
+      "target": [
+       34.83927594227872,
+       0.11,
+       -38.61436658646789
+      ]
+     }
+    },
+    "d15": {
+     "k": 909,
+     "kc": 1033,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 957,
+     "role": "setup",
+     "dec": {
+      "kc": 1208,
+      "F": "R",
+      "reg": "OUTSIDE",
+      "dir": 1.536427807128796,
+      "speed": 8.554539469192862
+     },
+     "launch": {
+      "speed": 6.12269286122648,
+      "dir": 59.34378374429722,
+      "kNext": 1230,
+      "F2": "R",
+      "target": [
+       36.96666852071604,
+       0.11,
+       -41.80593002565049
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 51,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 571,
+    "d14": {
+     "k": 571,
+     "kc": 652,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.12204023725356,
+      "dir": 43.95323011652353,
+      "kNext": 912,
+      "F2": "L",
+      "target": [
+       31.668409122656087,
+       0.11,
+       -37.81227199181706
+      ]
+     }
+    },
+    "d15": {
+     "k": 684,
+     "kc": 910,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 862,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 6.233783640419415,
+      "dir": 87.38354175182708,
+      "kNext": 1116,
+      "F2": "R",
+      "target": [
+       31.139379321721798,
+       0.11,
+       -39.29293877346228
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 52,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 572,
+    "d14": {
+     "k": 572,
+     "kc": 646,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.276916179012351,
+      "dir": 44.67885000844461,
+      "kNext": 906,
+      "F2": "L",
+      "target": [
+       31.75287908764668,
+       0.11,
+       -38.351123487537194
+      ]
+     }
+    },
+    "d15": {
+     "k": 811,
+     "kc": 932,
+     "F": "L",
+     "reg": "INSIDE",
+     "hull": "toe",
+     "swing": 867,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.861332171306636,
+      "dir": 47.26057832178145,
+      "kNext": 1134,
+      "F2": "R",
+      "target": [
+       36.880007784118995,
+       0.11,
+       -37.4355400638869
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 56,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 395,
+    "d14": {
+     "k": 395,
+     "kc": 630,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.123073244833334,
+      "dir": 1.4046847373284714,
+      "kNext": 1032,
+      "F2": "R",
+      "target": [
+       35.96827139186066,
+       0.11,
+       -34.51951770645965
+      ]
+     }
+    },
+    "d15": {
+     "k": 398,
+     "kc": 635,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 567,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.641058726054595,
+      "dir": 1.4854532615143512,
+      "kNext": 1038,
+      "F2": "R",
+      "target": [
+       36.455290692300025,
+       0.11,
+       -34.54425660664365
+      ]
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 85,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 line",
+   "firstChange": {
+    "tick": 762,
+    "d14": {
+     "k": 762,
+     "kc": 900,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 836,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.574003319362878,
+      "dir": 46.7717985114949,
+      "kNext": 1206,
+      "F2": "L",
+      "target": [
+       36.96929143571205,
+       0.11,
+       -41.78733502488353
+      ]
+     }
+    },
+    "d15": {
+     "k": 767,
+     "kc": 897,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 836,
+     "role": "line",
+     "dec": null,
+     "launch": {
+      "speed": 7.189245192905479,
+      "dir": 48.99366040146438,
+      "kNext": 1128,
+      "F2": "R",
+      "target": [
+       35.50266080758234,
+       0.11,
+       -40.53410651569809
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 70,
+   "d14": "lost",
+   "d15": "taken",
+   "kind": "better",
+   "why": "set-up selection",
+   "firstChange": {
+    "tick": 724,
+    "d14": {
+     "k": 775,
+     "kc": 866,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 790,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 7.004542408483169,
+      "dir": -1.636571078631386,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    },
+    "d15": {
+     "k": 724,
+     "kc": 862,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 790,
+     "role": "setup",
+     "dec": {
+      "kc": 1061,
+      "F": "L",
+      "reg": "FRONT",
+      "dir": 1.518939145890686,
+      "speed": 6.139775897833568
+     },
+     "launch": {
+      "speed": 5.621261454884768,
+      "dir": 17.70857858790214,
+      "kNext": 1062,
+      "F2": "L",
+      "target": [
+       35.79896482274209,
+       0.11,
+       -34.577953772022866
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 71,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 378,
+    "d14": {
+     "k": 548,
+     "kc": 572,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 492,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.56990022987967,
+      "dir": 33.667227984247404,
+      "kNext": 762,
+      "F2": "L",
+      "target": [
+       28.741083811261394,
+       0.11,
+       -36.686161386377336
+      ]
+     }
+    },
+    "d15": {
+     "k": 378,
+     "kc": 562,
+     "F": "R",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 492,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.853859757142812,
+      "dir": 2.0534867630651465,
+      "kNext": 1026,
+      "F2": "R",
+      "target": [
+       35.720778789422944,
+       0.11,
+       -34.80944502430855
+      ]
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 89,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "release choice: other",
+   "firstChange": {
+    "tick": 579,
+    "d14": {
+     "k": 579,
+     "kc": 646,
+     "F": "L",
+     "reg": "LACES",
+     "hull": "toe",
+     "swing": 567,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 6.918942177425159,
+      "dir": 44.994418044651354,
+      "kNext": 906,
+      "F2": "L",
+      "target": [
+       31.499245674366215,
+       0.11,
+       -38.03039553085551
+      ]
+     }
+    },
+    "d15": {
+     "k": 750,
+     "kc": 853,
+     "F": "R",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 788,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 5.105897404431728,
+      "dir": 61.64464759740138,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    }
+   },
+   "commonTouches": 2,
+   "sameDraws": 2
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 93,
+   "d14": "taken",
+   "d15": "lost",
+   "kind": "worse",
+   "why": "contact selection",
+   "firstChange": {
+    "tick": 136,
+    "d14": {
+     "k": 137,
+     "kc": 343,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 268,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.488169189648042,
+      "dir": 1.9044877305610324,
+      "kNext": 744,
+      "F2": "R",
+      "target": [
+       29.23451095585,
+       0.11,
+       -34.58759848877286
+      ]
+     }
+    },
+    "d15": {
+     "k": 136,
+     "kc": 345,
+     "F": "L",
+     "reg": "OUTSIDE",
+     "hull": "toe",
+     "swing": 268,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.658159210939123,
+      "dir": 1.826572858084389,
+      "kNext": 804,
+      "F2": "L",
+      "target": [
+       30.084669206168357,
+       0.11,
+       -34.602521026562044
+      ]
+     }
+    }
+   },
+   "commonTouches": 1,
+   "sameDraws": 1
+  },
+  {
+   "id": "CUT90_RUN",
+   "sd": 94,
+   "d14": "taken",
+   "d15": "clean",
+   "kind": "better",
+   "why": "no second stage \u2192 dribble",
+   "firstChange": {
+    "tick": 760,
+    "d14": {
+     "k": 760,
+     "kc": 901,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 836,
+     "role": "staged-now",
+     "dec": null,
+     "launch": {
+      "speed": 7.282500931612905,
+      "dir": 46.975145228358336,
+      "kNext": 1206,
+      "F2": "L",
+      "target": [
+       36.84172581478219,
+       0.11,
+       -41.57682335659883
+      ]
+     }
+    },
+    "d15": {
+     "k": 807,
+     "kc": 897,
+     "F": "L",
+     "reg": "FRONT",
+     "hull": "toe",
+     "swing": 835,
+     "role": "dribble",
+     "dec": null,
+     "launch": {
+      "speed": 8.311732111946355,
+      "dir": 45.31751423139259,
+      "kNext": null,
+      "F2": null,
+      "target": null
+     }
+    }
+   },
+   "commonTouches": 3,
+   "sameDraws": 3
+  }
+ ]
+}

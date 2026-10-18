@@ -1,0 +1,11 @@
+#!/bin/zsh
+# dribble15/tools/d15_refcmp.sh — the behavioural twin suite in parallel: splits a reference (d15_ref.mjs record) into P chunks, compares each with
+# a core (d15_ref.mjs compare), and prints the identical count and every divergence.
+# usage: zsh d15_refcmp.sh ref.json [ver d15] [P 8] [opts-json] [out.json]
+HERE="${0:A:h}"; REF="$1"; VER="${2:-d13}"; P="${3:-8}"; OPTS="${4:-}"; OUT="${5:-}"; T="${TMPDIR:-/tmp}/d13cmp.$$"; mkdir -p "$T"
+node -e 'const fs=require("fs"); const R=JSON.parse(fs.readFileSync(process.argv[1])); const P=+process.argv[2]; for (let i=0;i<P;i++) fs.writeFileSync(process.argv[3]+"/c"+i+".json", JSON.stringify({ver:R.ver, runs:R.runs.filter((r,j)=>j%P===i)}));' "$REF" "$P" "$T"
+for ((i=0; i<P; i++)); do node "$HERE/d15_ref.mjs" compare "$T/c$i.json" "$VER" "$T/o$i.json" ${OPTS:+"$OPTS"} > "$T/l$i.txt" 2>&1 & done; wait
+node -e 'const fs=require("fs"); const T=process.argv[1], P=+process.argv[2]; let rows=[]; for (let i=0;i<P;i++) { try { rows.push(...JSON.parse(fs.readFileSync(T+"/o"+i+".json")).rows); } catch (e) { console.log("chunk", i, "failed:", fs.readFileSync(T+"/l"+i+".txt","utf8").slice(-400)); } }
+  const same=rows.filter(r=>r.identical).length; console.log("IDENTICAL", same, "/", rows.length); const cz={}; for (const r of rows) if (r.cause) cz[r.cause]=(cz[r.cause]||0)+1; const cd={}; let nodec=0; for (const r of rows) { if (r.identical) continue; if (r.firstChangedDecision) cd[r.firstChangedDecision.cause]=(cd[r.firstChangedDecision.cause]||0)+1; else nodec++; } console.log("FIRST CHANGED DECISION", JSON.stringify(cd), "no changed decision", nodec, "| touch sequences identical", rows.filter(r=>!r.identical && !r.firstChangedTouch).length); console.log("CAUSES", JSON.stringify(cz), "taken ref", rows.filter(r=>r.outcomeRef.taken).length, "now", rows.filter(r=>r.outcomeNow.taken).length); if (rows.filter(r=>!r.identical).length <= 30) for (const r of rows.filter(r=>!r.identical)) console.log("  DIVERGES", r.id+":"+r.seed, "tick", r.first?r.first.tick:"?", r.first?r.first.list+"#"+r.first.i:"digest", "taken", r.outcomeRef.taken, "->", r.outcomeNow.taken);
+  if (process.argv[3]) fs.writeFileSync(process.argv[3], JSON.stringify({ identical: same, total: rows.length, causes: cz, changedDecisionCauses: cd, noChangedDecision: nodec, rows }, null, 1));' "$T" "$P" "$OUT"
+rm -rf "${T:?}"

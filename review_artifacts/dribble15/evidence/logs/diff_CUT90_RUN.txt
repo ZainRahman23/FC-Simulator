@@ -1,0 +1,35 @@
+CUT90_RUN:11     taken → clean no second stage → full cut                       d14 staged-now LI@753 | d15 cut-now LI@746 | draws 3/3
+CUT90_RUN:28     lost  → taken contact selection                                d14 line RO@975 | d15 line RO@974 | draws 3/3
+CUT90_RUN:31     taken → lost  contact selection                                d14 dribble RF@406 | d15 dribble RO@405 | draws 1/1
+CUT90_RUN:18     lost  → taken set-up selection                                 d14 - | d15 staged-now RO@735 | draws 2/2
+CUT90_RUN:1      taken → clean no second stage → setup                          d14 staged-now LF@755 | d15 setup LI@755 | draws 3/3
+CUT90_RUN:2      lost  → clean release choice: other                            d14 staged-now RO@569 | d15 staged-now RO@566 | draws 2/2
+CUT90_RUN:3      taken → lost  release choice: other                            d14 dribble RL@1099 | d15 cut-now RO@1103 | draws 4/4
+CUT90_RUN:5      clean → lost  release choice: other                            d14 cut-now RO@814 | d15 cut-now RO@816 | draws 3/3
+CUT90_RUN:7      taken → clean release choice: other                            d14 staged-now RO@578 | d15 staged-now RO@566 | draws 2/2
+CUT90_RUN:37     lost  → clean no second stage → setup                          d14 staged-now LF@750 | d15 setup LF@750 | draws 3/3
+CUT90_RUN:22     taken → clean release choice: other                            d14 cut-now RO@820 | d15 cut-now RO@828 | draws 3/3
+CUT90_RUN:41     lost  → taken contact selection                                d14 setup RF@866 | d15 setup RF@865 | draws 2/2
+CUT90_RUN:58     taken → lost  no second stage → setup                          d14 staged-now LI@752 | d15 setup LF@746 | draws 3/3
+CUT90_RUN:74     clean → lost  contact selection                                d14 dribble LF@343 | d15 dribble LF@340 | draws 2/2
+CUT90_RUN:77     lost  → clean set-up selection                                 d14 setup LF@655 | d15 dribble RO@856 | draws 2/2
+CUT90_RUN:78     taken → clean release choice: other                            d14 staged-now LF@622 | d15 staged-now RO@576 | draws 2/2
+CUT90_RUN:80     lost  → clean no second stage → setup                          d14 staged-now LF@906 | d15 setup LI@915 | draws 3/3
+CUT90_RUN:63     taken → lost  contact selection                                d14 dribble LF@339 | d15 dribble LF@338 | draws 1/1
+CUT90_RUN:65     taken → clean no second stage → line                           d14 staged-now RF@687 | d15 line LI@747 | draws 3/3
+CUT90_RUN:66     clean → lost  set-up selection                                 d14 setup LF@655 | d15 - | draws 2/2
+CUT90_RUN:67     lost  → clean set-up selection                                 d14 - | d15 cut-now LI@766 | draws 3/3
+CUT90_RUN:81     clean → taken release choice: other                            d14 staged-now RO@710 | d15 staged-now RO@712 | draws 2/2
+CUT90_RUN:83     taken → clean release choice: other                            d14 staged-now RO@578 | d15 staged-now RO@563 | draws 2/2
+CUT90_RUN:84     clean → taken release choice: other                            d14 dribble RF@712 | d15 staged-now RO@724 | draws 2/2
+CUT90_RUN:49     lost  → taken no second stage → setup                          d14 staged-now LI@764 | d15 setup LI@1033 | draws 3/3
+CUT90_RUN:51     taken → clean release choice: other                            d14 staged-now LL@652 | d15 dribble LO@910 | draws 2/2
+CUT90_RUN:52     taken → lost  release choice: other                            d14 staged-now LL@646 | d15 staged-now LI@932 | draws 3/3
+CUT90_RUN:56     taken → lost  contact selection                                d14 dribble LO@630 | d15 dribble LO@635 | draws 2/2
+CUT90_RUN:85     taken → clean no second stage → line                           d14 staged-now LF@900 | d15 line LO@897 | draws 3/3
+CUT90_RUN:70     lost  → taken set-up selection                                 d14 dribble RF@866 | d15 setup RO@862 | draws 3/3
+CUT90_RUN:71     taken → clean release choice: other                            d14 staged-now RO@572 | d15 dribble RF@562 | draws 3/3
+CUT90_RUN:89     taken → lost  release choice: other                            d14 staged-now LL@646 | d15 dribble RO@853 | draws 2/2
+CUT90_RUN:93     taken → lost  contact selection                                d14 dribble LO@343 | d15 dribble LO@345 | draws 1/1
+CUT90_RUN:94     taken → clean no second stage → dribble                        d14 staged-now LF@901 | d15 dribble LF@897 | draws 3/3
+TALLY {"better":21,"worse":13,"neutral":24,"identical":38} CAUSES {"no second stage → full cut":{"better":1,"worse":0},"contact selection":{"better":2,"worse":5},"set-up selection":{"better":4,"worse":1},"no second stage → setup":{"better":4,"worse":1},"release choice: other":{"better":7,"worse":6},"no second stage → line":{"better":2,"worse":0},"no second stage → dribble":{"better":1,"worse":0}}
