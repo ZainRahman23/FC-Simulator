@@ -12,7 +12,7 @@ export const COLLIDERS = JSON.parse(fs.readFileSync(path.resolve(HERE, "../../dr
 export function makeReceive(cs, o = {}) {
   const anim = o.anim != null ? o.anim : false;
   return new RXC.ReceiveSim11({ T1: X.TURN1, E: X.RUN1_V13, M4: X.M4, TURN11: X.TURN11, skel: X.skel, colliders: COLLIDERS, ball: o.ball || RXC.BALL_DEFAULT, arch: o.arch || "B", seed: o.seed == null ? 1 : o.seed,
-    player: o.player || PROFILES.HIGH, bc: o.bc != null ? o.bc : cs.bc, scenario: cs.scenario, Body: anim ? RxBody : null, opts: Object.assign({ record: true, anim, recViewer: !!o.recViewer }, o.opts || {}) });
+    player: o.player || PROFILES.HIGH, bc: o.bc != null ? o.bc : cs.bc, wf: o.wf != null ? o.wf : cs.wf, scenario: cs.scenario, Body: anim ? RxBody : null, opts: Object.assign({ record: true, anim, recViewer: !!o.recViewer }, o.opts || {}) });
 }
 export const { DT, D1, RX, RXE, receiveTurnAngle, exitTurn } = RXC;
 export { PROFILES, RXC };

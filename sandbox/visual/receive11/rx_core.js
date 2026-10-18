@@ -47,7 +47,7 @@ export const RX = {
   passMiss: 0.6, runOnDeg: 50,   // (classification only) the pass has gone by: moving away, passMiss m beyond its closest approach, unless it runs ahead along the run
 };
 // a profile with Ball Control set (the calibration harness / review cases): the attribute is the only change
-export function withBC(player, bc) { return bc == null ? player : Object.assign({}, player, { attributes: Object.assign({}, player.attributes, { ball_control: bc }) }); }
+export function withBC(player, bc, wf) { let p = bc == null ? player : Object.assign({}, player, { attributes: Object.assign({}, player.attributes, { ball_control: bc }) }); if (wf != null) p = Object.assign({}, p, { weak_foot: wf }); return p; }
 const rootR = (psi) => { const a = psi + Math.PI / 2, c = dcos(a), s = dsin(a); return [c, 0, s, 0, 1, 0, -s, 0, c]; };
 const mv = (A, p) => [A[0] * p[0] + A[1] * p[1] + A[2] * p[2], A[3] * p[0] + A[4] * p[1] + A[5] * p[2], A[6] * p[0] + A[7] * p[1] + A[8] * p[2]];
 const mm = (A, B) => [A[0] * B[0] + A[1] * B[3] + A[2] * B[6], A[0] * B[1] + A[1] * B[4] + A[2] * B[7], A[0] * B[2] + A[1] * B[5] + A[2] * B[8], A[3] * B[0] + A[4] * B[3] + A[5] * B[6], A[3] * B[1] + A[4] * B[4] + A[5] * B[7], A[3] * B[2] + A[4] * B[5] + A[5] * B[8], A[6] * B[0] + A[7] * B[3] + A[8] * B[6], A[6] * B[1] + A[7] * B[4] + A[8] * B[7], A[6] * B[2] + A[7] * B[5] + A[8] * B[8]];
@@ -59,9 +59,9 @@ function rebase(A, T) { A.t += T; A.clk.t0 += T; for (const F of SIDES) { const 
 
 export class ReceiveSim11 extends DribbleSim {
   // cfg.scenario: { init {v, heading, pos}, pass {from, dist, speed, lead, off, lift}, exit {turn (deg, + right, relative to the initial facing),
-  //   v (m/s; 0 = kill and hold), intent ("go" | "kill")}, dur }; cfg.bc: Ball Control override (calibration); cfg.opts.anim (default: record)
+  //   v (m/s; 0 = kill and hold), intent ("go" | "kill")}, dur }; cfg.bc / cfg.wf: Ball Control / weak-foot overrides (calibration, review); cfg.opts.anim (default: record)
   constructor(cfg) {
-    const scn = cfg.scenario, ex = scn.exit || { turn: 0 }, player = withBC(cfg.player, cfg.bc);
+    const scn = cfg.scenario, ex = scn.exit || { turn: 0 }, player = withBC(cfg.player, cfg.bc, cfg.wf);
     const vReq = ex.v != null ? ex.v : Math.max(scn.init.v, RX.vFloor), cmds = [{ t: 0, turn: ex.turn, v: Math.max(vReq, RX.vFloor) }];
     super(Object.assign({}, cfg, { player, scenario: Object.assign({}, scn, { cmds, ball: { ahead: 0, lateral: 0, speed: 0 } }) }));
     const stand = (scn.init.v || 0) < 0.3, intent = ex.intent || (vReq === 0 ? "kill" : "go");
@@ -142,7 +142,11 @@ export class ReceiveSim11 extends DribbleSim {
   resolve(k) { if (this.rx && this.rx.phase !== "dribble") return; return super.resolve(k); }
   // control classification: RECEIVING until the receive contact; then DRIBBLE-V1's own (the ball en route to the point the touch aimed at)
   classify(k) {
-    const rx = this.rx; if (!rx || rx.phase === "dribble" || rx.contact) return super.classify(k);
+    const rx = this.rx;
+    // a kill and HOLD never hands off (no dribble resolver runs): the ball is CONTROLLED while it is (nearly) dead within 1 m of the body
+    if (rx && rx.hold && rx.contact && rx.contact.T.launched) { const b = this.ballA(), d = Math.hypot(b.p[0] - this.A.P[0], b.p[2] + this.A.P[1]), st = d < 1.0 && Math.hypot(b.v[0], b.v[2]) < 1.5 ? "CONTROLLED" : "LOOSE";
+      if (st !== this.ctrl.state) { this.ctrl.changes.push({ k, t: k * DT, from: this.ctrl.state, to: st, dist: d }); this.ctrl.state = st; this.ctrl.since = k; } this.ctrl.dist = d; return; }
+    if (!rx || rx.phase === "dribble" || rx.contact) return super.classify(k);
     if (this.ctrl.state !== "RECEIVING") { this.ctrl.changes.push({ k, t: k * DT, from: this.ctrl.state, to: "RECEIVING", dist: null }); this.ctrl.state = "RECEIVING"; this.ctrl.since = k; }
     const b = this.ballA(); this.ctrl.dist = Math.hypot(b.p[0] - this.A.P[0], b.p[2] + this.A.P[1]);
   }

@@ -1,0 +1,541 @@
+{
+ "n": 714,
+ "outcomes": {
+  "CLEAN": 583,
+  "TAKEN": 83,
+  "RECEIVED": 9,
+  "MISSED-NO-ACTION": 20,
+  "MISSED-LATE": 19
+ },
+ "cls5": {
+  "CLEAN": 583,
+  "TAKEN": 83,
+  "RECEIVED": 9,
+  "MISSED": 39
+ },
+ "contactMade": 675,
+ "byClass": {
+  "ordinary": {
+   "n": 246,
+   "contact": 234,
+   "CLEAN": 210,
+   "TAKEN": 24,
+   "MISSED": 12
+  },
+  "turning": {
+   "n": 468,
+   "contact": 441,
+   "CLEAN": 373,
+   "TAKEN": 59,
+   "RECEIVED": 9,
+   "MISSED": 27
+  }
+ },
+ "byAngle": {
+  "0": {
+   "n": 120,
+   "contact": 120,
+   "CLEAN": 111,
+   "TAKEN": 9
+  },
+  "45": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 19,
+   "TAKEN": 2
+  },
+  "89": {
+   "n": 42,
+   "contact": 36,
+   "CLEAN": 29,
+   "TAKEN": 7,
+   "MISSED": 6
+  },
+  "90": {
+   "n": 132,
+   "contact": 123,
+   "CLEAN": 106,
+   "TAKEN": 15,
+   "RECEIVED": 2,
+   "MISSED": 9
+  },
+  "120": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 19,
+   "TAKEN": 2
+  },
+  "135": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 20,
+   "TAKEN": 1
+  },
+  "180": {
+   "n": 120,
+   "contact": 110,
+   "CLEAN": 94,
+   "RECEIVED": 7,
+   "TAKEN": 9,
+   "MISSED": 10
+  },
+  "225": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 17,
+   "TAKEN": 4
+  },
+  "240": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 17,
+   "TAKEN": 4
+  },
+  "270": {
+   "n": 132,
+   "contact": 124,
+   "CLEAN": 100,
+   "TAKEN": 24,
+   "MISSED": 8
+  },
+  "271": {
+   "n": 42,
+   "contact": 36,
+   "CLEAN": 32,
+   "TAKEN": 4,
+   "MISSED": 6
+  },
+  "315": {
+   "n": 21,
+   "contact": 21,
+   "CLEAN": 19,
+   "TAKEN": 2
+  }
+ },
+ "byDir": {
+  "F": {
+   "n": 174,
+   "contact": 174,
+   "CLEAN": 149,
+   "TAKEN": 24,
+   "RECEIVED": 1
+  },
+  "FL": {
+   "n": 48,
+   "contact": 48,
+   "CLEAN": 43,
+   "TAKEN": 5
+  },
+  "FR": {
+   "n": 48,
+   "contact": 48,
+   "CLEAN": 43,
+   "TAKEN": 4,
+   "RECEIVED": 1
+  },
+  "L": {
+   "n": 174,
+   "contact": 168,
+   "CLEAN": 149,
+   "TAKEN": 15,
+   "RECEIVED": 4,
+   "MISSED": 6
+  },
+  "R": {
+   "n": 174,
+   "contact": 166,
+   "CLEAN": 141,
+   "TAKEN": 22,
+   "RECEIVED": 3,
+   "MISSED": 8
+  },
+  "RL": {
+   "n": 48,
+   "contact": 37,
+   "CLEAN": 30,
+   "TAKEN": 7,
+   "MISSED": 11
+  },
+  "RR": {
+   "n": 48,
+   "contact": 34,
+   "CLEAN": 28,
+   "MISSED": 14,
+   "TAKEN": 6
+  }
+ },
+ "byReceiver": {
+  "STAND": {
+   "n": 108,
+   "contact": 108,
+   "CLEAN": 92,
+   "TAKEN": 16
+  },
+  "JOG": {
+   "n": 174,
+   "contact": 153,
+   "CLEAN": 137,
+   "TAKEN": 16,
+   "MISSED": 21
+  },
+  "RUN": {
+   "n": 324,
+   "contact": 312,
+   "CLEAN": 273,
+   "TAKEN": 38,
+   "RECEIVED": 1,
+   "MISSED": 12
+  },
+  "FAST": {
+   "n": 108,
+   "contact": 102,
+   "CLEAN": 81,
+   "RECEIVED": 8,
+   "TAKEN": 13,
+   "MISSED": 6
+  }
+ },
+ "byPass": {
+  "SOFT": {
+   "n": 144,
+   "contact": 144,
+   "CLEAN": 127,
+   "RECEIVED": 1,
+   "TAKEN": 16
+  },
+  "MED": {
+   "n": 426,
+   "contact": 399,
+   "CLEAN": 343,
+   "TAKEN": 55,
+   "RECEIVED": 1,
+   "MISSED": 27
+  },
+  "FIRM": {
+   "n": 144,
+   "contact": 132,
+   "CLEAN": 113,
+   "TAKEN": 12,
+   "RECEIVED": 7,
+   "MISSED": 12
+  }
+ },
+ "families": {
+  "STRIDE": 240,
+  "OPEN_TURN": 174,
+  "THROUGH_TURN": 280
+ },
+ "footSurface": {
+  "R-INSIDE": 394,
+  "R-LACES": 34,
+  "R-OUTSIDE": 144,
+  "L-INSIDE": 86,
+  "R-SOLE": 26,
+  "L-SOLE": 2,
+  "L-OUTSIDE": 8
+ },
+ "familyByAngle": {
+  "0": {
+   "STRIDE": 120
+  },
+  "45": {
+   "STRIDE": 21
+  },
+  "89": {
+   "STRIDE": 39
+  },
+  "90": {
+   "OPEN_TURN": 82,
+   "THROUGH_TURN": 46
+  },
+  "120": {
+   "OPEN_TURN": 12,
+   "THROUGH_TURN": 9
+  },
+  "135": {
+   "OPEN_TURN": 11,
+   "THROUGH_TURN": 10
+  },
+  "180": {
+   "THROUGH_TURN": 52,
+   "OPEN_TURN": 62
+  },
+  "225": {
+   "THROUGH_TURN": 21
+  },
+  "240": {
+   "THROUGH_TURN": 18,
+   "OPEN_TURN": 3
+  },
+  "270": {
+   "THROUGH_TURN": 124,
+   "OPEN_TURN": 4
+  },
+  "271": {
+   "STRIDE": 39
+  },
+  "315": {
+   "STRIDE": 21
+  }
+ },
+ "missed": {
+  "n": 39,
+  "why": {
+   "MISSED-NO-ACTION": 20,
+   "MISSED-LATE": 19
+  },
+  "situations": {
+   "L_180R_RUN_FIRM": 3,
+   "L_270_FAST_FIRM": 3,
+   "RL_180R_RUN_MED": 2,
+   "RL_270_JOG_MED": 2,
+   "RL_271_JOG_MED": 1,
+   "RL_89_JOG_MED": 3,
+   "RL_90_JOG_MED": 3,
+   "RR_180R_RUN_MED": 2,
+   "RR_270_JOG_MED": 3,
+   "RR_271_JOG_MED": 3,
+   "RR_89_JOG_MED": 3,
+   "RR_90_JOG_MED": 3,
+   "R_180R_RUN_FIRM": 3,
+   "R_271_RUN_MED": 2,
+   "R_90_FAST_FIRM": 3
+  }
+ },
+ "missedOrdinaryNonRear": 2,
+ "intermediate": {
+  "90-90": {
+   "n": 123,
+   "idealVsExitMedianAbs": 8.2,
+   "rotPreMedian": 40.5,
+   "rotExitMedian": 49.5,
+   "families": {
+    "OPEN_TURN": 80,
+    "THROUGH_TURN": 43
+   }
+  },
+  "120-135": {
+   "n": 42,
+   "idealVsExitMedianAbs": 11.35,
+   "rotPreMedian": 48.2,
+   "rotExitMedian": 78.1,
+   "families": {
+    "OPEN_TURN": 23,
+    "THROUGH_TURN": 19
+   }
+  },
+  "180-180": {
+   "n": 110,
+   "idealVsExitMedianAbs": 5.6,
+   "rotPreMedian": 60.0,
+   "rotExitMedian": 119.5,
+   "families": {
+    "THROUGH_TURN": 50,
+    "OPEN_TURN": 60
+   }
+  },
+  "225-240": {
+   "n": 42,
+   "idealVsExitMedianAbs": 9.6,
+   "rotPreMedian": 29.1,
+   "rotExitMedian": 101.6,
+   "families": {
+    "THROUGH_TURN": 39,
+    "OPEN_TURN": 3
+   }
+  },
+  "270-271": {
+   "n": 124,
+   "idealVsExitMedianAbs": 9.05,
+   "rotPreMedian": 19.8,
+   "rotExitMedian": 70.2,
+   "families": {
+    "THROUGH_TURN": 120,
+    "OPEN_TURN": 4
+   }
+  }
+ },
+ "deg180": {
+  "n": 120,
+  "CLEAN": 94,
+  "RECEIVED": 7,
+  "TAKEN": 9,
+  "MISSED": 10,
+  "families": {
+   "THROUGH_TURN": 52,
+   "OPEN_TURN": 62
+  },
+  "contactSpeedMedian": 2.4
+ },
+ "braking": {
+  "ordinaryRunners": 116,
+  "contactOverStartMedian": 0.935,
+  "atLeast90pct": 67,
+  "frontAndFrontSide": {
+   "n": 60,
+   "contactOverStartMedian": 0.985
+  },
+  "sidePassesBehindRunner": {
+   "n": 24,
+   "contactOverStartMedian": 0.649
+  }
+ },
+ "fullThrottle": {
+  "n": 102,
+  "ordinary": {
+   "n": 27,
+   "contactSpeedMedian": 7.05,
+   "handoffSpeedMedian": 7.8
+  },
+  "turning": {
+   "n": 75,
+   "contactSpeedMedian": 2.55,
+   "handoffSpeedMedian": 4.0
+  }
+ },
+ "handoff": {
+  "n": 666,
+  "accMedian": 3.6,
+  "accMax": 5.82,
+  "yawStepMax": 0,
+  "requestVsExitMax": 0,
+  "ballAheadMedian": 1.615,
+  "ballLateralAbsMedian": 0.059,
+  "doubleTouches": 0,
+  "recontacts": 0,
+  "nextTouchAfterHandoff": 573,
+  "takenNoDribbleTouch": 79
+ },
+ "execution": {
+  "dirErrAbsMedian": 1.7,
+  "heavy": 0,
+  "short": 4,
+  "reconMissMedian": 0.28,
+  "DMedian": 1.356,
+  "Dp90": 1.534
+ },
+ "cpuParallel": {
+  "receiveMsPerSMedian": 25.0,
+  "candidatesMean": 55.8
+ },
+ "kill": {
+  "hold": {
+   "n": 63,
+   "KILLED": 63,
+   "restDistMedian": 0.43,
+   "restAheadMedian": 0.43,
+   "restTimeMedian": 0.604,
+   "speedOutMedian": 1.18
+  },
+  "go": {
+   "n": 45,
+   "KILLED": 18,
+   "SETTLED": 27
+  }
+ },
+ "ballControl": {
+  "99": {
+   "n": 24,
+   "CLEAN": 23,
+   "TAKEN": 1,
+   "dirErrMedian": 0.275,
+   "dirErrP90": 1.55,
+   "speedErrMedian": 0.075,
+   "speedErrP90": 0.26,
+   "reconMissMedian": 0.08,
+   "reconMissP90": 0.24,
+   "heavy": 0,
+   "short": 0
+  },
+  "89": {
+   "n": 24,
+   "CLEAN": 22,
+   "TAKEN": 2,
+   "dirErrMedian": 0.75,
+   "dirErrP90": 4.18,
+   "speedErrMedian": 0.2,
+   "speedErrP90": 0.7,
+   "reconMissMedian": 0.22,
+   "reconMissP90": 0.63,
+   "heavy": 0,
+   "short": 0
+  },
+  "80": {
+   "n": 24,
+   "CLEAN": 21,
+   "TAKEN": 3,
+   "dirErrMedian": 1.22,
+   "dirErrP90": 6.8,
+   "speedErrMedian": 0.3,
+   "speedErrP90": 1.05,
+   "reconMissMedian": 0.35,
+   "reconMissP90": 0.94,
+   "heavy": 0,
+   "short": 0
+  },
+  "70": {
+   "n": 24,
+   "CLEAN": 21,
+   "TAKEN": 3,
+   "dirErrMedian": 1.915,
+   "dirErrP90": 10.69,
+   "speedErrMedian": 0.455,
+   "speedErrP90": 1.58,
+   "reconMissMedian": 0.54,
+   "reconMissP90": 1.12,
+   "heavy": 3,
+   "short": 2
+  },
+  "60": {
+   "n": 24,
+   "CLEAN": 18,
+   "TAKEN": 6,
+   "dirErrMedian": 2.785,
+   "dirErrP90": 15.55,
+   "speedErrMedian": 0.65,
+   "speedErrP90": 2.24,
+   "reconMissMedian": 0.77,
+   "reconMissP90": 1.52,
+   "heavy": 5,
+   "short": 3
+  },
+  "50": {
+   "n": 24,
+   "CLEAN": 14,
+   "TAKEN": 9,
+   "RECEIVED": 1,
+   "dirErrMedian": 3.83,
+   "dirErrP90": 21.38,
+   "speedErrMedian": 0.835,
+   "speedErrP90": 2.89,
+   "reconMissMedian": 1.025,
+   "reconMissP90": 2.55,
+   "heavy": 5,
+   "short": 6
+  },
+  "40": {
+   "n": 24,
+   "CLEAN": 13,
+   "RECEIVED": 4,
+   "TAKEN": 7,
+   "dirErrMedian": 4.87,
+   "dirErrP90": 27.21,
+   "speedErrMedian": 1.025,
+   "speedErrP90": 3.55,
+   "reconMissMedian": 1.12,
+   "reconMissP90": 2.6,
+   "heavy": 6,
+   "short": 8
+  }
+ },
+ "rc1": {
+  "n": 714,
+  "outcomes": {
+   "TAKEN": 27,
+   "MISSED": 213,
+   "RECEIVED": 157,
+   "CLEAN": 279,
+   "RECOVERED": 38
+  }
+ }
+}

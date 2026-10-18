@@ -1,0 +1,313 @@
+{
+ "milestone": "RECEIVE-CONTROL-1.1",
+ "date": "2026-10-18",
+ "branch": "prototype/dribble-1",
+ "frozen": false,
+ "readyToFreeze": "NO \u2014 presented for the owner's visual review, as instructed ('DO NOT FREEZE RECEIVE-CONTROL YET')",
+ "architecture": "authored receive-action system beside the frozen DRIBBLE-V1: receive11/rx_core.js ReceiveSim11 extends DribbleSim (dribble15/d15_core.js, tag dribble-v1-foundation-1, unchanged); one authoritative kernel launch at the action's CONTACT marker; Ball Control execution (rx_exec.js); explicit TURN-1.2 handoff",
+ "families": [
+  "STRIDE",
+  "OPEN_TURN",
+  "THROUGH_TURN",
+  "CUSHION"
+ ],
+ "matrix": {
+  "runs": 714,
+  "contactMade": 675,
+  "outcomes": {
+   "CLEAN": 583,
+   "TAKEN": 83,
+   "RECEIVED": 9,
+   "MISSED": 39
+  },
+  "detail": {
+   "CLEAN": 583,
+   "TAKEN": 83,
+   "RECEIVED": 9,
+   "MISSED-NO-ACTION": 20,
+   "MISSED-LATE": 19
+  },
+  "rc1": {
+   "n": 714,
+   "outcomes": {
+    "TAKEN": 27,
+    "MISSED": 213,
+    "RECEIVED": 157,
+    "CLEAN": 279,
+    "RECOVERED": 38
+   }
+  }
+ },
+ "noContact": {
+  "n": 39,
+  "why": {
+   "MISSED-NO-ACTION": 20,
+   "MISSED-LATE": 19
+  },
+  "situations": {
+   "L_180R_RUN_FIRM": 3,
+   "L_270_FAST_FIRM": 3,
+   "RL_180R_RUN_MED": 2,
+   "RL_270_JOG_MED": 2,
+   "RL_271_JOG_MED": 1,
+   "RL_89_JOG_MED": 3,
+   "RL_90_JOG_MED": 3,
+   "RR_180R_RUN_MED": 2,
+   "RR_270_JOG_MED": 3,
+   "RR_271_JOG_MED": 3,
+   "RR_89_JOG_MED": 3,
+   "RR_90_JOG_MED": 3,
+   "R_180R_RUN_FIRM": 3,
+   "R_271_RUN_MED": 2,
+   "R_90_FAST_FIRM": 3
+  }
+ },
+ "deg180": {
+  "n": 120,
+  "CLEAN": 94,
+  "RECEIVED": 7,
+  "TAKEN": 9,
+  "MISSED": 10,
+  "families": {
+   "THROUGH_TURN": 52,
+   "OPEN_TURN": 62
+  },
+  "contactSpeedMedian": 2.4
+ },
+ "braking": {
+  "ordinaryRunners": 116,
+  "contactOverStartMedian": 0.935,
+  "atLeast90pct": 67,
+  "frontAndFrontSide": {
+   "n": 60,
+   "contactOverStartMedian": 0.985
+  },
+  "sidePassesBehindRunner": {
+   "n": 24,
+   "contactOverStartMedian": 0.649
+  }
+ },
+ "fullThrottle": {
+  "n": 102,
+  "ordinary": {
+   "n": 27,
+   "contactSpeedMedian": 7.05,
+   "handoffSpeedMedian": 7.8
+  },
+  "turning": {
+   "n": 75,
+   "contactSpeedMedian": 2.55,
+   "handoffSpeedMedian": 4.0
+  }
+ },
+ "handoff": {
+  "n": 666,
+  "accMedian": 3.6,
+  "accMax": 5.82,
+  "yawStepMax": 0,
+  "requestVsExitMax": 0,
+  "ballAheadMedian": 1.615,
+  "ballLateralAbsMedian": 0.059,
+  "doubleTouches": 0,
+  "recontacts": 0,
+  "nextTouchAfterHandoff": 573,
+  "takenNoDribbleTouch": 79
+ },
+ "execution": {
+  "dirErrAbsMedian": 1.7,
+  "heavy": 0,
+  "short": 4,
+  "reconMissMedian": 0.28,
+  "DMedian": 1.356,
+  "Dp90": 1.534
+ },
+ "ballControl": {
+  "99": {
+   "n": 24,
+   "CLEAN": 23,
+   "TAKEN": 1,
+   "dirErrMedian": 0.275,
+   "dirErrP90": 1.55,
+   "speedErrMedian": 0.075,
+   "speedErrP90": 0.26,
+   "reconMissMedian": 0.08,
+   "reconMissP90": 0.24,
+   "heavy": 0,
+   "short": 0
+  },
+  "89": {
+   "n": 24,
+   "CLEAN": 22,
+   "TAKEN": 2,
+   "dirErrMedian": 0.75,
+   "dirErrP90": 4.18,
+   "speedErrMedian": 0.2,
+   "speedErrP90": 0.7,
+   "reconMissMedian": 0.22,
+   "reconMissP90": 0.63,
+   "heavy": 0,
+   "short": 0
+  },
+  "80": {
+   "n": 24,
+   "CLEAN": 21,
+   "TAKEN": 3,
+   "dirErrMedian": 1.22,
+   "dirErrP90": 6.8,
+   "speedErrMedian": 0.3,
+   "speedErrP90": 1.05,
+   "reconMissMedian": 0.35,
+   "reconMissP90": 0.94,
+   "heavy": 0,
+   "short": 0
+  },
+  "70": {
+   "n": 24,
+   "CLEAN": 21,
+   "TAKEN": 3,
+   "dirErrMedian": 1.915,
+   "dirErrP90": 10.69,
+   "speedErrMedian": 0.455,
+   "speedErrP90": 1.58,
+   "reconMissMedian": 0.54,
+   "reconMissP90": 1.12,
+   "heavy": 3,
+   "short": 2
+  },
+  "60": {
+   "n": 24,
+   "CLEAN": 18,
+   "TAKEN": 6,
+   "dirErrMedian": 2.785,
+   "dirErrP90": 15.55,
+   "speedErrMedian": 0.65,
+   "speedErrP90": 2.24,
+   "reconMissMedian": 0.77,
+   "reconMissP90": 1.52,
+   "heavy": 5,
+   "short": 3
+  },
+  "50": {
+   "n": 24,
+   "CLEAN": 14,
+   "TAKEN": 9,
+   "RECEIVED": 1,
+   "dirErrMedian": 3.83,
+   "dirErrP90": 21.38,
+   "speedErrMedian": 0.835,
+   "speedErrP90": 2.89,
+   "reconMissMedian": 1.025,
+   "reconMissP90": 2.55,
+   "heavy": 5,
+   "short": 6
+  },
+  "40": {
+   "n": 24,
+   "CLEAN": 13,
+   "RECEIVED": 4,
+   "TAKEN": 7,
+   "dirErrMedian": 4.87,
+   "dirErrP90": 27.21,
+   "speedErrMedian": 1.025,
+   "speedErrP90": 3.55,
+   "reconMissMedian": 1.12,
+   "reconMissP90": 2.6,
+   "heavy": 6,
+   "short": 8
+  }
+ },
+ "kill": {
+  "hold": {
+   "n": 63,
+   "KILLED": 63,
+   "restDistMedian": 0.43,
+   "restAheadMedian": 0.43,
+   "restTimeMedian": 0.604,
+   "speedOutMedian": 1.18
+  },
+  "go": {
+   "n": 45,
+   "KILLED": 18,
+   "SETTLED": 27
+  }
+ },
+ "cpu": {
+  "receiveMsPerSMean": 8.8,
+  "receiveMsPerSMedian": 6.3,
+  "receiveMsPerReceive": 16.4,
+  "animatedReceiveMsPerS": 21,
+  "afterHandoffMsPerS": 161.4,
+  "worstReceiveStepMs": 16.88,
+  "worstAfterStepMs": 38.12,
+  "candidatesPerReceive": 47.5,
+  "rc1ReceiveMsPerS": 816.4
+ },
+ "determinism": {
+  "chromeNodeDecisions": "20/20",
+  "chromeNodeStateBitIdentical": "5/20",
+  "receivePhaseBitIdentical": "all; remaining last-bit differences start after the handoff (frozen TURN-1.2 / DRIBBLE-V1)",
+  "animationOnOff": "44/44",
+  "nodeReplay": "44/44",
+  "drawsDifferAcrossSeeds": "66/66"
+ },
+ "boundary": {
+  "function": [
+   {
+    "angle": 89,
+    "kind": "ordinary",
+    "expect": "ordinary",
+    "deg360": 89
+   },
+   {
+    "angle": 90,
+    "kind": "turning",
+    "expect": "turning",
+    "deg360": 90
+   },
+   {
+    "angle": 270,
+    "kind": "turning",
+    "expect": "turning",
+    "deg360": 270
+   },
+   {
+    "angle": 271,
+    "kind": "ordinary",
+    "expect": "ordinary",
+    "deg360": 271
+   },
+   {
+    "angle": 0,
+    "kind": "ordinary",
+    "expect": "ordinary",
+    "deg360": 0
+   },
+   {
+    "angle": 180,
+    "kind": "turning",
+    "expect": "turning",
+    "deg360": 180
+   }
+  ],
+  "pass": true,
+  "matrix": "28/28"
+ },
+ "mirror": {
+  "pairs": "10/10",
+  "worstPathErrM": 1.0658141036401503e-13
+ },
+ "dribbleV1": {
+  "beforeEqualsAfterReceives": "60/60",
+  "matchesEvidenceOfRecord": "48/48",
+  "D1unchanged": true,
+  "frozenFilesIdentical": true
+ },
+ "limitations": [
+  "The body is a procedural placeholder for authored animation (rx_body.js); RECEIVE11_ANIMATION_CONTRACT.md defines what production assets must meet.",
+  "DRIBBLE-V1 takeover gap: in 79 runs DRIBBLE-V1 never touches a ball on the line ~1.4 m ahead (its stride-phase sensitivity, reproduced in pure DRIBBLE-V1 starts) \u2014 owner decision.",
+  "TURN-1.2 cannot walk or stand: the ready stance and kill-and-hold are authored; the handoff speed is >= 2.5 m/s.",
+  "RECEIVE-CONTROL-1's side passes at RUN/FAST are aimed behind the runner (forced braking); rear passes into space for joggers are often reached after the 4 s runs end.",
+  "Ball Control constants are calibration values, not locked; agility, reactions, pressure, fatigue are extension points; no opponents in the matrix."
+ ],
+ "review": "review/RECEIVE11_REVIEW.html (local only: real player names)"
+}

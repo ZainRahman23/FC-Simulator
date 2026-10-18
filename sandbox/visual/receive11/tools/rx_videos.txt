@@ -1,0 +1,46 @@
+# receive11/tools/rx_videos.txt — RECEIVE-CONTROL-1.1 review videos (dribble15/tools/d15_render.sh: LIST=… OUT=…; page receive11.html)
+# name | page | query | t0 | t1 | view | rate   (game = Touchline gameplay camera 2.6× with the receive debugger panel; top = close top view with the diagnostics, 0.5×; near = close side view, clean, 0.25×)
+# ── A kill receive (BC 99) — F_0_STAND_MED_KILL_BC99 seed 1 (CUSHION R INSIDE; contact 1.43 s, handoff — (hold))
+a_game | receive11.html | case=F_0_STAND_MED_KILL_BC99&seed=1&zoom=2.6 | 0.03 | 3.83 | game | 1
+a_top  | receive11.html | case=F_0_STAND_MED_KILL_BC99&seed=1&diag=1 | 0.53 | 3.13 | top | 0.5
+a_near | receive11.html | case=F_0_STAND_MED_KILL_BC99&seed=1&labels=0 | 0.83 | 2.68 | nearC | 0.25
+# ── B touch into stride at 5.5 m/s (BC 99) — FL_0_RUN_MED_BC99 seed 1 (STRIDE R INSIDE; contact 1.02 s, handoff 1.45 s)
+b_game | receive11.html | case=FL_0_RUN_MED_BC99&seed=1&zoom=2.6 | 0.00 | 3.05 | game | 1
+b_top  | receive11.html | case=FL_0_RUN_MED_BC99&seed=1&diag=1 | 0.12 | 2.35 | top | 0.5
+b_near | receive11.html | case=FL_0_RUN_MED_BC99&seed=1&labels=0 | 0.42 | 1.90 | nearC | 0.25
+# ── C 90° turning receive (BC 99) — F_90_RUN_MED_BC99 seed 1 (OPEN_TURN R LACES; contact 0.99 s, handoff 1.66 s)
+c_game | receive11.html | case=F_90_RUN_MED_BC99&seed=1&zoom=2.6 | 0.00 | 3.26 | game | 1
+c_top  | receive11.html | case=F_90_RUN_MED_BC99&seed=1&diag=1 | 0.09 | 2.56 | top | 0.5
+c_near | receive11.html | case=F_90_RUN_MED_BC99&seed=1&labels=0 | 0.39 | 2.11 | nearC | 0.25
+# ── D 135° large turn — intermediate ball vector (BC 99) — FR_135_RUN_MED_BC99 seed 1 (THROUGH_TURN L INSIDE; contact 1.14 s, handoff 1.83 s)
+d_game | receive11.html | case=FR_135_RUN_MED_BC99&seed=1&zoom=2.6 | 0.00 | 3.43 | game | 1
+d_top  | receive11.html | case=FR_135_RUN_MED_BC99&seed=1&diag=1 | 0.24 | 2.73 | top | 0.5
+d_near | receive11.html | case=FR_135_RUN_MED_BC99&seed=1&labels=0 | 0.54 | 2.28 | nearC | 0.25
+# ── E through-stance turn, 120° left, right-foot inside (BC 99, two-footed) — F_240_JOG_MED_BC99_WF5 seed 1 (THROUGH_TURN R INSIDE; contact 1.07 s, handoff 1.76 s)
+e_game | receive11.html | case=F_240_JOG_MED_BC99_WF5&seed=1&zoom=2.6 | 0.00 | 3.36 | game | 1
+e_top  | receive11.html | case=F_240_JOG_MED_BC99_WF5&seed=1&diag=1 | 0.17 | 2.66 | top | 0.5
+e_near | receive11.html | case=F_240_JOG_MED_BC99_WF5&seed=1&labels=0 | 0.47 | 2.21 | nearC | 0.25
+# ── F mirrored: 120° right, left-foot inside (BC 99, two-footed) — F_120_JOG_MED_BC99_WF5 seed 1 (THROUGH_TURN L INSIDE; contact 1.07 s, handoff 1.76 s)
+f_game | receive11.html | case=F_120_JOG_MED_BC99_WF5&seed=1&zoom=2.6 | 0.00 | 3.36 | game | 1
+f_top  | receive11.html | case=F_120_JOG_MED_BC99_WF5&seed=1&diag=1 | 0.17 | 2.66 | top | 0.5
+f_near | receive11.html | case=F_120_JOG_MED_BC99_WF5&seed=1&labels=0 | 0.47 | 2.21 | nearC | 0.25
+# ── G 180° turn (BC 99) — F_180R_JOG_MED_BC99 seed 1 (OPEN_TURN R INSIDE; contact 1.07 s, handoff 1.74 s)
+g_game | receive11.html | case=F_180R_JOG_MED_BC99&seed=1&zoom=2.6 | 0.00 | 3.34 | game | 1
+g_top  | receive11.html | case=F_180R_JOG_MED_BC99&seed=1&diag=1 | 0.17 | 2.64 | top | 0.5
+g_near | receive11.html | case=F_180R_JOG_MED_BC99&seed=1&labels=0 | 0.47 | 2.19 | nearC | 0.25
+# ── H full throttle: 7.8 m/s in stride (BC 99) — F_0_FAST_MED_BC99 seed 1 (STRIDE R INSIDE; contact 0.73 s, handoff 1.11 s)
+h_game | receive11.html | case=F_0_FAST_MED_BC99&seed=1&zoom=2.6 | 0.00 | 2.71 | game | 1
+h_top  | receive11.html | case=F_0_FAST_MED_BC99&seed=1&diag=1 | 0.00 | 2.01 | top | 0.5
+h_near | receive11.html | case=F_0_FAST_MED_BC99&seed=1&labels=0 | 0.13 | 1.56 | nearC | 0.25
+# ── H′ full throttle: 90° turn from 7.8 m/s (BC 99) — F_90_FAST_MED_BC99 seed 1 (OPEN_TURN R LACES; contact 0.83 s, handoff 1.50 s)
+i_game | receive11.html | case=F_90_FAST_MED_BC99&seed=1&zoom=2.6 | 0.00 | 3.10 | game | 1
+i_top  | receive11.html | case=F_90_FAST_MED_BC99&seed=1&diag=1 | 0.00 | 2.40 | top | 0.5
+i_near | receive11.html | case=F_90_FAST_MED_BC99&seed=1&labels=0 | 0.23 | 1.95 | nearC | 0.25
+# ── I poor Ball Control (B's receive at BC 50) — FL_0_RUN_MED_BC50 seed 1 (STRIDE R INSIDE; contact 1.02 s, handoff 1.45 s)
+j_game | receive11.html | case=FL_0_RUN_MED_BC50&seed=1&zoom=2.6 | 0.00 | 3.05 | game | 1
+j_top  | receive11.html | case=FL_0_RUN_MED_BC50&seed=1&diag=1 | 0.12 | 2.35 | top | 0.5
+j_near | receive11.html | case=FL_0_RUN_MED_BC50&seed=1&labels=0 | 0.42 | 1.90 | nearC | 0.25
+# ── J failed / heavy receive (E's action at running pace, BC 45, seed 4) — F_240_RUN_MED_BC45 seed 4 (THROUGH_TURN R INSIDE; contact 0.98 s, handoff 1.68 s)
+k_game | receive11.html | case=F_240_RUN_MED_BC45&seed=4&zoom=2.6 | 0.00 | 3.28 | game | 1
+k_top  | receive11.html | case=F_240_RUN_MED_BC45&seed=4&diag=1 | 0.08 | 2.58 | top | 0.5
+k_near | receive11.html | case=F_240_RUN_MED_BC45&seed=4&labels=0 | 0.38 | 2.13 | nearC | 0.25

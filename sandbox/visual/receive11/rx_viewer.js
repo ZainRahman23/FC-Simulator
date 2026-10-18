@@ -72,7 +72,7 @@ async function simulate(ent) {
   const bc = q.get("bc") != null ? +q.get("bc") : cs.bc, scn = Object.assign({}, cs.scenario, { label: (vis ? vis.tag + " · " : "") + cs.id }); Vv.cs = cs;
   const colliders = await (await fetch("dribble1/d1_colliders.json")).json(), t0 = performance.now();
   const anim = q.get("anim") !== "0";
-  const S = new ReceiveSim11({ T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch: "B", seed, player: PROFILES[prof], bc, scenario: scn, Body: anim ? RxBody : null, opts: { record: true, recViewer: true, anim } });
+  const S = new ReceiveSim11({ T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch: "B", seed, player: PROFILES[prof], bc, wf: cs.wf, scenario: scn, Body: anim ? RxBody : null, opts: { record: true, recViewer: true, anim } });
   if (q.get("dur")) scn.dur = +q.get("dur"); S.cfg.scenario.dur = scn.dur; S.run(); Vv.simMs = performance.now() - t0; Vv.S = S; Vv.scn = scn; Vv.arch = "B"; Vv.prof = prof; Vv.seed = seed; Vv.rec = S.rec; Vv.dur = S.fault ? (S.rec.length - 1) * DT : scn.dur; Vv.anim = anim;
   // a determinism fingerprint of the run (ball + COM at every tick, touches): identical in Node for the same case / seed / profile
   let h = 2166136261 >>> 0; const mix = (x) => { const s = x.toFixed(9); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } };
