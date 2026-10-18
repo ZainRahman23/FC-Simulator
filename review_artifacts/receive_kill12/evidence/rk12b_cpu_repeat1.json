@@ -1,0 +1,78 @@
+{
+ "groups": {
+  "FOOT": {
+   "cases": 6,
+   "firstContactMs": 0.1815316779999994,
+   "plan": 0.16260174166666583,
+   "ideal": 0.0011456933333334025,
+   "exec": 0.0007434096666666695,
+   "launch": 0.017040833333333488,
+   "followUpsPerEpisode": 0.2638888888888889,
+   "followPredictMsEach": 11.874570263157864,
+   "followPlanMsEach": 0.49002647368420366,
+   "followContactMsEach": 0.22222363157890426,
+   "wholeEpisodeMs": 3.503053719666641,
+   "worstEpisodeMs": 7.8819450149999986,
+   "freeBallSimMsPerEpisode": 3.289317777777408,
+   "sharedPredictorMs": 1.2274278000000038,
+   "harnessPassSolveMs": 18.739659666666654
+  },
+  "THIGH": {
+   "cases": 3,
+   "firstContactMs": 0.1497035749999981,
+   "plan": 0.13656665000000126,
+   "ideal": 0.0012740266666658804,
+   "exec": 0.00023012499999996785,
+   "launch": 0.011632773333330989,
+   "followUpsPerEpisode": 0.8888888888888888,
+   "followPredictMsEach": 4.9365571875,
+   "followPlanMsEach": 0.3383515937500192,
+   "followContactMsEach": 0.19754553124998608,
+   "wholeEpisodeMs": 5.014107408333333,
+   "worstEpisodeMs": 5.671406385000159,
+   "freeBallSimMsPerEpisode": 3.0832470000012413,
+   "sharedPredictorMs": 1.044849933333353,
+   "harnessPassSolveMs": 1.4819163333334775
+  },
+  "CHEST": {
+   "cases": 3,
+   "firstContactMs": 0.04308630400000099,
+   "plan": 0.029882633333333315,
+   "ideal": 0.0010989599999993516,
+   "exec": 0.000243603999999929,
+   "launch": 0.011861106666668397,
+   "followUpsPerEpisode": 0.9166666666666666,
+   "followPredictMsEach": 4.897707181818202,
+   "followPlanMsEach": 0.31650381818178974,
+   "followContactMsEach": 0.20112121212110706,
+   "wholeEpisodeMs": 5.007140831777671,
+   "worstEpisodeMs": 5.557490850499382,
+   "freeBallSimMsPerEpisode": 3.1050285277765273,
+   "sharedPredictorMs": 0.7190500666666595,
+   "harnessPassSolveMs": 0.8582919999998921
+  },
+  "HEAD": {
+   "cases": 3,
+   "firstContactMs": 0.052415309166662004,
+   "plan": 0.038704166666669454,
+   "ideal": 0.0011131266666658728,
+   "exec": 0.00038356250000000114,
+   "launch": 0.012214453333326672,
+   "followUpsPerEpisode": 0.7222222222222222,
+   "followPredictMsEach": 5.188814115384643,
+   "followPlanMsEach": 0.3805048846154652,
+   "followContactMsEach": 0.19000323076918973,
+   "wholeEpisodeMs": 4.21192580916671,
+   "worstEpisodeMs": 5.633136058500783,
+   "freeBallSimMsPerEpisode": 2.999157527778531,
+   "sharedPredictorMs": 0.6267888666667204,
+   "harnessPassSolveMs": 0.9687083333334764
+  }
+ },
+ "exitTable": {
+  "columns": 26,
+  "msPerColumn": 73.66931407692297
+ },
+ "matrixGroundEpisodesMs": 730.0709159999997,
+ "matrixBenchEpisodesMs": 863.0551670000004
+}

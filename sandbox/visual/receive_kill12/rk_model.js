@@ -1,10 +1,13 @@
 // ═══ receive_kill12/rk_model.js — RECEIVE-KILL-1.2: the RECEIVE-KILL-1.1 model with a RECALIBRATED Ball Control rating curve (a candidate) ═══════════
 // Owner: 1.1 overcorrected — "CURRENT BC50 QUALITY ≈ NEW BC75 QUALITY", "CURRENT BC40 QUALITY ≈ NEW BC50 QUALITY", BC 99 ≈ current BC 99, smooth.
-// The candidate keeps 1.1's curve s(x) = x·(0.68 + 0.32·x²) and remaps the rating axis: a new rating BC executes exactly like the current rating
-// g(BC), g a monotone cubic (PCHIP) through (1, −8.5), (10, 0.7), (50, 40), (75, 50), (99, 98.5):
+// Every 1.2 scale keeps 1.1's curve s(x) = x·(0.68 + 0.32·x²) and remaps the rating axis: a new rating BC executes exactly like the current rating
+// g(BC), g a monotone cubic (PCHIP) through five knots:
 //     E_new(BC, D) = E_current(g(BC), D),   s_new(BC) = s(u′),   u′ = (100 − g(BC)) / 90
-// All three scales live here for the comparison (setScale): "original" (RECEIVE-KILL-1's curve and chest / head shapes), "current" (RECEIVE-KILL-1.1),
-// "candidate" (the default). Nothing else differs between them. (RECEIVE-KILL-1.1 header follows.)
+//   A  (1, −8.5) (10, 0.7) (50, 40)   (75, 50)   (99, 98.5) — the two anchors met exactly; it flattened BC 50–75 (presented 19 Oct, not chosen)
+//   B  (1, −8.5) (10, 0.7) (50, 35.4) (75, 54.5) (99, 98.5) — the anchors met within 10 % of execution error, BC 50–75 spread over 19 current
+//      points instead of 10. Owner, 19 Oct: "Use Alternative B. Do not preserve the two anchors exactly." — B is the CANDIDATE (the default).
+// All scales live here for the comparison (setScale): "original" (RECEIVE-KILL-1's curve and chest / head shapes), "current" (RECEIVE-KILL-1.1),
+// "A", "B"; "candidate" names B. Nothing else differs between them. (RECEIVE-KILL-1.1 header follows.)
 // ═══ receive_kill11/rk_model.js — RECEIVE-KILL-1.1: the KILL / DEADEN first-touch model, COMPRESSED Ball Control, + FOLLOW-UP CONTROL constants ═══
 // RECEIVE-KILL-1.1 changes vs RECEIVE-KILL-1 (receive_kill1/, kept for comparison): the Ball Control curve (owner: "a major compression") —
 //   old  E = 0.0068 + 0.40 · u^1.1 · c(D)                      u = (100 − BC) / 90
@@ -74,13 +77,16 @@ export const SURFACES = {
 export const SURFACE_ORDER = ["FOOT_INSIDE", "FOOT_SOLE", "FOOT_INSTEP", "FOOT_OUTSIDE", "THIGH", "CHEST", "HEAD"];
 export const GROUPS = { FOOT: ["FOOT_INSIDE", "FOOT_SOLE", "FOOT_INSTEP", "FOOT_OUTSIDE"], THIGH: ["THIGH"], CHEST: ["CHEST"], HEAD: ["HEAD"] };
 
+// the 1.2 remap knots (new rating → current-equivalent rating) and the candidate scale of record
+export const KNOTS = { A: [[1, -8.5], [10, 0.7], [50, 40], [75, 50], [99, 98.5]], B: [[1, -8.5], [10, 0.7], [50, 35.4], [75, 54.5], [99, 98.5]] };
+export const CANDIDATE = "B";
 // ── the model's constants (calibration values for review) ─────────────────────────────────────────────────────────────────────────────────────────
 export const RK = {
   id: "receive-kill-v1",
-  version: "RECEIVE-KILL-1.2 candidate",
+  version: "RECEIVE-KILL-1.2 candidate B",
   diff: { vRef: 10, aH: 0.6, aJump: 0.8, aBear: 0.5, aShift: 0.10 },
   // RECEIVE-KILL-1 was { eFloor: 0.0068, eSkill: 0.40, gamma: 1.1 (s = u^γ), Dc: 1.0 } — see receive_kill1/rk_model.js
-  exec: { eFloor: 0.0068, eSkill: 0.25, lambda: 0.68, p: 2, Dc: 1.0, runCap: 0.9, curve: "remap", knots: [[1, -8.5], [10, 0.7], [50, 40], [75, 50], [99, 98.5]], gamma: 1.1 },
+  exec: { eFloor: 0.0068, eSkill: 0.25, lambda: 0.68, p: 2, Dc: 1.0, runCap: 0.9, curve: "remap", knots: KNOTS[CANDIDATE], gamma: 1.1 },
   // FOLLOW-UP CONTROL (the control episode): after a first contact the receiver re-predicts the real ball and may schedule a follow-up FOOT control
   //   free      s after a contact before the follow-up foot action's preparation may start — it OVERLAPS the first action's unwinding (the leg
   //             prepares while the chest / head cushions; the thigh's own leg needs longer; a header with a jump adds `jump` for the landing)
@@ -169,18 +175,22 @@ export function pchip(K, x) {
   let i = 0; while (i < n - 2 && x > xs[i + 1]) i++; const t = (x - xs[i]) / h[i], t2 = t * t, t3 = t2 * t;
   return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h[i] * m[i] + (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h[i] * m[i + 1];
 }
-// the current-equivalent rating of a rating (the candidate's remap; identity for the other scales)
+// the current-equivalent rating of a rating (the 1.2 remap; identity for the other scales)
 export const gBC = (bc) => (RK.exec.curve === "remap" ? pchip(RK.exec.knots, clamp(bc, 1, 99)) : clamp(bc, 1, 99));
-// the rating curve s (1 at BC 10 on the current scale): original u^1.1 · (0.40 / 0.25 to keep eSkill); current u·(0.68 + 0.32 u²); candidate = current(g)
+// the rating curve s (1 at BC 10 on the current scale): original u^1.1 · (0.40 / 0.25 to keep eSkill); current u·(0.68 + 0.32 u²); A / B = current(g)
 export const qBC = (bc) => { const X = RK.exec, b = gBC(bc), u = (100 - b) / 90; if (X.curve === "power") return u <= 0 ? 0 : powD(u, X.gamma); return u * (X.lambda + (1 - X.lambda) * powD(Math.abs(u), X.p)); };
-// ── THE THREE SCALES (for the comparison; the machinery is identical) ─────────────────────────────────────────────────────────────────────────
+// ── THE SCALES (for the comparison; the machinery is identical) ──────────────────────────────────────────────────────────────────────────────
+// tag: the short name on comparison tiles
 export const SCALES = {
-  original: { label: "ORIGINAL — RECEIVE-KILL-1", exec: { eSkill: 0.40, curve: "power", gamma: 1.1 }, k: { CHEST: [1.0, 0.6, 0.6], HEAD: [1.0, 0.9, 0.6] } },
-  current: { label: "CURRENT — RECEIVE-KILL-1.1", exec: { eSkill: 0.25, curve: "cubic" }, k: { CHEST: [0.85, 0.5, 0.5], HEAD: [0.85, 0.7, 0.5] } },
-  candidate: { label: "CANDIDATE — RECEIVE-KILL-1.2", exec: { eSkill: 0.25, curve: "remap" }, k: { CHEST: [0.85, 0.5, 0.5], HEAD: [0.85, 0.7, 0.5] } },
+  original: { label: "ORIGINAL — RECEIVE-KILL-1", tag: "original", exec: { eSkill: 0.40, curve: "power", gamma: 1.1 }, k: { CHEST: [1.0, 0.6, 0.6], HEAD: [1.0, 0.9, 0.6] } },
+  current: { label: "CURRENT — RECEIVE-KILL-1.1", tag: "current", exec: { eSkill: 0.25, curve: "cubic" }, k: { CHEST: [0.85, 0.5, 0.5], HEAD: [0.85, 0.7, 0.5] } },
+  A: { label: "1.2 A — exact anchors (not chosen)", tag: "A", exec: { eSkill: 0.25, curve: "remap", knots: KNOTS.A }, k: { CHEST: [0.85, 0.5, 0.5], HEAD: [0.85, 0.7, 0.5] } },
+  B: { label: "CANDIDATE — RECEIVE-KILL-1.2 B", tag: "B", exec: { eSkill: 0.25, curve: "remap", knots: KNOTS.B }, k: { CHEST: [0.85, 0.5, 0.5], HEAD: [0.85, 0.7, 0.5] } },
 };
-export let SCALE = "candidate";
-export function setScale(name) { const S = SCALES[name]; if (!S) throw new Error("unknown scale " + name); Object.assign(RK.exec, S.exec); for (const [id, k] of Object.entries(S.k)) SURFACES[id].k = k.slice(); SCALE = name; return name; }
+// "candidate" → the candidate scale of record (B)
+export const scaleKey = (name) => (name === "candidate" ? CANDIDATE : name);
+export let SCALE = CANDIDATE;
+export function setScale(name) { const key = scaleKey(name), S = SCALES[key]; if (!S) throw new Error("unknown scale " + name); Object.assign(RK.exec, S.exec); for (const [id, k] of Object.entries(S.k)) SURFACES[id].k = k.slice(); SCALE = key; return key; }
 export const cD = (D) => D / (D + RK.exec.Dc);                                   // Ball Control's share of the error: → 0 for easy balls, → 1 for hard ones
 export const relErr = (bc, D) => RK.exec.eFloor + RK.exec.eSkill * qBC(bc) * cD(D);
 export function sigmas(sf, bc, D) { const E = relErr(bc, D), s = RK.diff.vRef * D * E, k = sf.S.k; return { E, scale: s, reb: k[0] * s, lat: k[1] * s, third: k[2] * s }; }

@@ -1,4 +1,4 @@
-// ═══ receive_kill12/rk_matrix_page.js — RECEIVE-KILL-1.2: the episode matrix with a SCALE selector (original · current · candidate, computed live)
+// ═══ receive_kill12/rk_matrix_page.js — RECEIVE-KILL-1.2: the episode matrix with a SCALE selector (original · current · A · B = candidate, computed live)
 // ═══ (RECEIVE-KILL-1.1's page:) THE CALIBRATION MATRIX of CONTROL EPISODES (rows = one incoming ball, columns = Ball
 // Control 10 … 99 with the SAME standardised execution draws, for every contact of the episode). Each cell runs the real chain in the page and shows
 //   FIRST CONTACT     the first touch's exit-velocity error, its drop point (aerial) and its error 0.25 s after the touch
@@ -6,18 +6,18 @@
 //                     episode and the continuation class (IMMEDIATE / ADJUSTED / RECOVERY / UNSTABLE)
 // Side view above (height), top view below (lateral + the receiver's adjustment path); ideal episode green dashed, actual episode orange.
 import { prepare, runBC, runEpisode, firstContact, drawsFor, EXAMPLES, DT, at } from "./rk_sim.js";
-import { RK, BC_STEPS, SCALES, setScale, gBC } from "./rk_model.js";
+import { RK, BC_STEPS, SCALES, setScale, scaleKey, gBC } from "./rk_model.js";
 import { MATRICES, BENCHMARKS, condOf, condLabel } from "./rk_conditions.js";
 import { KillBody } from "./rk_body.js";
 import { view, extents, COL } from "./rk_draw.js";
 const W = window, M4G = typeof M4 !== "undefined" ? M4 : W.M4, Q = new URLSearchParams(location.search), $ = (s) => document.querySelector(s);
-const ST = { scale: Q.get("scale") || "candidate", matrix: Q.get("m") || "BENCH", draw: Q.get("draw") || "TYPICAL", zoom: Q.get("zoom") || "fit", views: Q.get("views") || "both", dist: Q.get("dist") !== "0", skel: null, distData: null, busy: false };
+const ST = { scale: scaleKey(Q.get("scale") || "candidate"), matrix: Q.get("m") || "BENCH", draw: Q.get("draw") || "TYPICAL", zoom: Q.get("zoom") || "fit", views: Q.get("views") || "both", dist: Q.get("dist") !== "0", skel: null, distData: null, busy: false };
 const SETS = MATRICES.concat([{ id: "BENCH", title: "Benchmarks — the owner's easy, hard and aerial tests", surface: "AUTO", note: "Each row is one benchmark.", rows: BENCHMARKS.map((b) => Object.assign({ _title: b.id + " · " + b.title }, b.cond)) }]);
 const fmt = (x, n = 2) => (x == null || !isFinite(x) ? "–" : x.toFixed(n)), fc2 = (x) => (x == null || !isFinite(x) ? "–" : Math.abs(x) < 1 ? x.toFixed(2).replace(/^(-?)0\./, "$1.") : x.toFixed(1)), pct = (x) => (x == null ? "–" : (100 * x).toFixed(0) + "%");
 const drawSpec = () => (ST.draw.startsWith("seed") ? { seed: +ST.draw.slice(4) } : { example: ST.draw });
 const BONES_FOR = (g, s) => ({ FOOT: ["foot_" + s, "toe_" + s, "shin_" + s], THIGH: ["thigh_" + s], CHEST: ["chest", "spine"], HEAD: ["head", "neck"] }[g] || []);
 async function loadSkel() { if (ST.skel) return ST.skel; const ent = await W.ofCharLoad("vinicius"); ST.skel = ent.skel; return ST.skel; }
-const DIST = { candidate: "../../review_artifacts/receive_kill12/evidence/rk12_distribution.json", current: "../../review_artifacts/receive_kill11/evidence/rk11_distribution.json" };
+const DIST = { B: "../../review_artifacts/receive_kill12/evidence/rk12b_distribution.json", A: "../../review_artifacts/receive_kill12/evidence/rk12_distribution.json", current: "../../review_artifacts/receive_kill11/evidence/rk11_distribution.json" };
 async function loadDist() { const url = DIST[ST.scale]; if (!url) return false; ST.distCache = ST.distCache || {}; if (ST.distCache[url] !== undefined) return ST.distCache[url]; let d = false; try { const r = await fetch(url); d = r.ok ? await r.json() : false; } catch (e) { d = false; } ST.distCache[url] = d; return d; }
 function header() {
   $("#tabs").innerHTML = SETS.map((m) => `<button data-m="${m.id}" class="${m.id === ST.matrix ? "on" : ""}">${m.id}</button>`).join("");
@@ -32,7 +32,7 @@ function epDraw(P, ep) { const K = Math.round(2.6 / DT), path = ep.rec.filter((r
 async function build() {
   if (ST.busy) return; ST.busy = true; setScale(ST.scale); setURL(); const M = SETS.find((m) => m.id === ST.matrix), t0 = performance.now(), skel = await loadSkel(), dist = ST.dist ? await loadDist() : null;
   $("#mtitle").textContent = M.title + " — " + SCALES[ST.scale].label; $("#mnote").textContent = M.note + " " + (EXAMPLES[ST.draw] ? "Draw: " + EXAMPLES[ST.draw].label + " (every contact)." : "Draw: keyed seed " + ST.draw.slice(4) + " — contact n keyed by its own event (kill1, kill1.f1, kill1.f2).") + " The same draws in every column.";
-  const tb = $("#grid"); tb.innerHTML = `<tr><th class="rh">incoming ball</th>${BC_STEPS.map((b) => `<th>BC ${b}${ST.scale === "candidate" ? `<br><span class="dim small">≈ current ${gBC(b).toFixed(0)}</span>` : ""}</th>`).join("")}</tr>`;
+  const tb = $("#grid"); tb.innerHTML = `<tr><th class="rh">incoming ball</th>${BC_STEPS.map((b) => `<th>BC ${b}${SCALES[ST.scale].exec.curve === "remap" ? `<br><span class="dim small">≈ current ${gBC(b).toFixed(0)}</span>` : ""}</th>`).join("")}</tr>`;
   const spec = drawSpec(), cw = Math.max(92, Math.min(150, Math.floor((W.innerWidth - 236) / BC_STEPS.length) - 10)), sh = ST.views === "top" ? 0 : Math.round(cw * 0.62), th = ST.views === "side" ? 0 : Math.round(cw * 0.5), ch = sh + th;
   document.documentElement.style.setProperty("--cw", cw + "px");
   for (let ri = 0; ri < M.rows.length; ri++) {

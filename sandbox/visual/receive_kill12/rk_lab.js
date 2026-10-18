@@ -1,4 +1,4 @@
-// ═══ receive_kill12/rk_lab.js — RECEIVE-KILL-1.2: the episode lab with a SCALE selector (original · current · candidate)
+// ═══ receive_kill12/rk_lab.js — RECEIVE-KILL-1.2: the episode lab with a SCALE selector (original · current · A · B = candidate)
 // ═══ (RECEIVE-KILL-1.1's lab:) THE CONTROL LAB — the whole CONTROL EPISODE (first contact + follow-up foot controls) ═══
 // (RECEIVE-KILL-1's lab, playing rk_sim.runEpisode: the ideal episode is the green ghost; the BC ladder shows each rating's stable-control point.)
 // ═══ (RECEIVE-KILL-1 header) ═══════════════════════════════════════════════════════════════════════════════════
@@ -9,13 +9,13 @@
 // Ball Control 10 … 99, each rating's ball 2.0 s after the touch. The page runs the same chain as the Node evidence (rk_sim.js).
 // URL: ?v=12&h=0.11&drop=0&bear=0&lat=0&surface=AUTO&bc=60&draw=TYPICAL|seed3&t=…&rate=0.5&cam=near&paused=1&external=1
 import { prepare, runBC, runEpisode, firstContact, drawsFor, EXAMPLES, DT, toW, at } from "./rk_sim.js";
-import { RK, BC_STEPS, SURFACE_ORDER, qBC, SCALES, setScale, gBC } from "./rk_model.js";
+import { RK, BC_STEPS, SURFACE_ORDER, qBC, SCALES, setScale, scaleKey, gBC } from "./rk_model.js";
 import { BENCHMARKS, MATRICES, condLabel } from "./rk_conditions.js";
 import { KillBody } from "./rk_body.js";
 import { view, extents, COL } from "./rk_draw.js";
 const W = window, M4G = typeof M4 !== "undefined" ? M4 : W.M4, Q = new URLSearchParams(location.search), $ = (s) => document.querySelector(s), fmt = (x, n = 2) => (x == null || !isFinite(x) ? "–" : x.toFixed(n));
 const L = { cond: { v: +(Q.get("v") || 12), h: +(Q.get("h") || 0.11), drop: +(Q.get("drop") || 0), bear: +(Q.get("bear") || 0), lat: +(Q.get("lat") || 0), surface: Q.get("surface") || "AUTO" },
-  scale: Q.get("scale") || "candidate", bc: +(Q.get("bc") || 60), draw: Q.get("draw") || "TYPICAL", t: 0, rate: +(Q.get("rate") || 0.5), playing: Q.get("paused") !== "1", cam: Q.get("cam") || "near", ladder: Q.get("ladder") !== "0", ready: false };
+  scale: scaleKey(Q.get("scale") || "candidate"), bc: +(Q.get("bc") || 60), draw: Q.get("draw") || "TYPICAL", t: 0, rate: +(Q.get("rate") || 0.5), playing: Q.get("paused") !== "1", cam: Q.get("cam") || "near", ladder: Q.get("ladder") !== "0", ready: false };
 // ── WebGL: the pitch and the ball (the RUN-1 / TURN-1 / DRIBBLE-V1 viewers' programs) ────────────────────────────────────────────────────────────
 function persp(fy, aspect, n, f) { const m = new Float32Array(16); m[0] = fy / aspect; m[5] = fy; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
 function lookAt(eye, at, up) { const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], nrm = (a) => { const l = Math.hypot(...a); return a.map((x) => x / l); }, cr = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], dt = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -101,7 +101,7 @@ function render() {
     const tg = P.ideal.target, ring = []; for (let a = 0; a <= 32; a++) ring.push([tg[0] + 0.5 * Math.cos(a / 32 * 2 * Math.PI), tg[1] + 0.5 * Math.sin(a / 32 * 2 * Math.PI), 0.005]); line(ring, "rgba(79,209,139,0.6)", 1.2);
     const cq = pr(P.contact); if (cq) { ctx.beginPath(); ctx.arc(cq[0], cq[1], 7, 0, 2 * Math.PI); ctx.strokeStyle = COL.surf[P.plan.sf.S.group]; ctx.lineWidth = 2; ctx.stroke(); ctx.fillStyle = COL.surf[P.plan.sf.S.group]; ctx.font = "11px Menlo, monospace"; ctx.fillText("CONTACT · " + P.plan.sf.key, cq[0] + 10, cq[1] - 8); }
     if (L.ladder) for (const rn of L.ladder) { const p = rn.ep.m.stablePoint || rn.ep.m.finalBall, q = pr(p); if (q) { ctx.fillStyle = ladderCol(rn.bc); ctx.beginPath(); ctx.arc(q[0], q[1], 3.2, 0, 2 * Math.PI); ctx.fill(); ctx.font = "10px Menlo, monospace"; ctx.fillText(rn.bc, q[0] + 4, q[1] - 3); } }
-    if (document.body.classList.contains("compare")) { const m = L.ep.m, lbl = `BC ${L.bc}${L.scale === "candidate" ? "" : " · " + L.scale}`, sub = `${m.continuation} · ${m.contacts} contact${m.contacts > 1 ? "s" : ""} · extra step ${m.extraAdj == null ? "—" : fmt(m.extraAdj) + " m"} · stable ${m.tStable == null ? "—" : fmt(m.tStable) + " s"}`;
+    if (document.body.classList.contains("compare")) { const m = L.ep.m, lbl = `BC ${L.bc} · ${SCALES[L.scale].tag}`, sub = `${m.continuation} · ${m.contacts} contact${m.contacts > 1 ? "s" : ""} · extra step ${m.extraAdj == null ? "—" : fmt(m.extraAdj) + " m"} · stable ${m.tStable == null ? "—" : fmt(m.tStable) + " s"}`;
       ctx.fillStyle = "rgba(10,14,12,0.72)"; ctx.fillRect(0, 0, w, 58); ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px -apple-system, Helvetica, sans-serif"; ctx.fillText(lbl, 12, 32); ctx.fillStyle = COL.cls[m.continuation]; ctx.font = "bold 15px -apple-system, Helvetica, sans-serif"; ctx.fillText(sub, 12, 52);
       ctx.fillStyle = "#e6efe9"; ctx.font = "13px Menlo, monospace"; ctx.fillText(`t ${L.t - L.tc >= 0 ? "+" : ""}${fmt(L.t - L.tc, 2)} s`, w - 110, 32); }
     else { ctx.fillStyle = "#e6efe9"; ctx.font = "12px Menlo, monospace"; ctx.fillText(`t ${fmt(L.t - L.tc, 2)} s from the first contact · BC ${L.bc} · ${L.ep.contacts.map((c) => c.sf.key).join(" → ")} · ${L.ep.m.continuation} · camera ${L.cam}`, 10, 18); }
@@ -126,7 +126,7 @@ function hud() {
    ${fmt(sp, 2)} m/s · vertical ${fmt(arr.v[2], 2)} m/s · height ${fmt(arr.p[2])} m · ${P.sol.kind} · at the contact descent ${fmt(pl.inc.descentDeg, 1)}°, bearing ${fmt(pl.inc.bear, 0)}°
    <h3>First action (BC-independent)</h3><b style="color:${COL.surf[pl.sf.S.group]}">${pl.sf.key}</b> · CONTACT ${fmt(P.kc * DT, 3)} s · D ${fmt(d.D, 3)} (m ${fmt(d.m)} × vEff/vRef ${fmt(d.parts.speed, 3)} × (1 + ${fmt(d.parts.height, 3)} + ${fmt(d.parts.jump, 3)} + ${fmt(d.parts.bearing, 3)} + ${fmt(d.parts.shift, 3)}))<br>
    ideal ${P.ideal.kind} → intended point ${v(P.ideal.target.slice(0, 2))} · exit ${v(P.ideal.v)} m/s${P.ideal.capExtra > 0 ? ` · surface limit +${fmt(P.ideal.capExtra)}` : ""}
-   <h3>Ball Control ${L.bc} — ${SCALES[L.scale].label}</h3>E = ${X.eFloor} + ${X.eSkill} · s ${fmt(qBC(L.bc), 4)} · c(D) ${fmt(d.D / (d.D + X.Dc), 3)} = <b>${fmt(ex.sig.E, 4)}</b>${L.scale === "candidate" ? ` · BC ${L.bc} executes like current BC ${fmt(gBC(L.bc), 1)}` : ""}</div>
+   <h3>Ball Control ${L.bc} — ${SCALES[L.scale].label}</h3>E = ${X.eFloor} + ${X.eSkill} · s ${fmt(qBC(L.bc), 4)} · c(D) ${fmt(d.D / (d.D + X.Dc), 3)} = <b>${fmt(ex.sig.E, 4)}</b>${X.curve === "remap" ? ` · BC ${L.bc} executes like current BC ${fmt(gBC(L.bc), 1)}` : ""}</div>
    <div><h3>FIRST CONTACT</h3>exit ${v(fc.v)} m/s (${fmt(fc.speed)}; ideal ${fmt(fc.idealSpeed)}) · <b>velocity error ${fmt(fc.velErr)} m/s</b>${ex.capped ? " · capped" : ""}<br>
    position error vs the ideal: 0.10 s <b>${fmt(fc["e0.1"])}</b> · 0.25 s <b>${fmt(fc["e0.25"])}</b> · 0.50 s ${fmt(fc["e0.5"])} · 1.0 s ${fmt(fc["e1"])} · 2.0 s ${fmt(fc["e2"])} m${fc.dropErr != null ? ` · <b>drop point ${fmt(fc.dropErr)} m</b>` : ""}
    <h3>The episode's contacts</h3><table class="lad">${contacts}</table>
@@ -167,7 +167,7 @@ async function boot() {
   if (Q.get("compare") === "1") document.body.classList.add("compare");
   W.RKL = { state: L, set(t, o) { if (o) Object.assign(L, o); L.t = t; render(); return true; }, setRel(dt) { L.t = L.tc + dt; render(); return true; },
     // Chrome = Node: one condition through the page's own chain (no reload)
-    evalCase(cond, bc, draw, scale) { if (scale) L.scale = scale; L.cond = Object.assign({ h: 0.11, drop: 0, bear: 0, lat: 0, surface: "AUTO" }, cond); L.bc = bc; L.draw = draw; L.extCache = null; L.ladder = false; compute(); const P = L.P; if (P.plan.none) return { none: true }; const ep = L.ep; return { hash: L.hash, surface: P.plan.sf.key, kc: P.kc, D: P.plan.dif.D, contacts: ep.contacts.map((c) => [c.sf.key, c.i, c.ex.v]), final: ep.m.finalBall, tStable: ep.m.tStable, cls: ep.m.continuation, launched: ep.launched, fc: [L.fc.velErr, L.fc["e0.25"], L.fc.dropErr] }; } }; W.RKL_READY = true;
+    evalCase(cond, bc, draw, scale) { if (scale) L.scale = scaleKey(scale); L.cond = Object.assign({ h: 0.11, drop: 0, bear: 0, lat: 0, surface: "AUTO" }, cond); L.bc = bc; L.draw = draw; L.extCache = null; L.ladder = false; compute(); const P = L.P; if (P.plan.none) return { none: true }; const ep = L.ep; return { hash: L.hash, surface: P.plan.sf.key, kc: P.kc, D: P.plan.dif.D, contacts: ep.contacts.map((c) => [c.sf.key, c.i, c.ex.v]), final: ep.m.finalBall, tStable: ep.m.tStable, cls: ep.m.continuation, launched: ep.launched, fc: [L.fc.velErr, L.fc["e0.25"], L.fc.dropErr] }; } }; W.RKL_READY = true;
   if (Q.get("external") === "1") { L.playing = false; render(); } else requestAnimationFrame(frame);
 }
 boot().catch((e) => { $("#hud").textContent = "lab failed: " + (e && e.stack || e); console.error(e); });

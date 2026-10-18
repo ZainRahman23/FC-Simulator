@@ -1,7 +1,9 @@
-// receive_kill12/tools/rk_review_build.mjs — the RECEIVE-KILL-1.2 review page (LOCAL ONLY: the character is a real player's model): the three scales, the
-// anchors, the benchmark tables, the matched-rating comparisons, verification.   node rk_review_build.mjs
+// receive_kill12/tools/rk_review_build.mjs — the RECEIVE-KILL-1.2 FIRST-ROUND review page (candidate = A, presented 19 Oct ~00:00; the owner then chose
+// B — rk_review_build_b.mjs builds that round). LOCAL ONLY (the character is a real player's model): the three scales, the anchors, the benchmark tables,
+// the matched-rating comparisons, verification. The page stays as presented: "candidate" below is scale A.   node rk_review_build.mjs
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
-import { RK, BC_STEPS, relErr, setScale, gBC, SCALES } from "../rk_model.js";
+import { RK, BC_STEPS, relErr, setScale as setScale0, gBC, SCALES } from "../rk_model.js";
+const setScale = (sc) => setScale0(sc === "candidate" ? "A" : sc); setScale("candidate");
 const HERE = path.dirname(fileURLToPath(import.meta.url)), R = path.resolve(HERE, "../../../../review_artifacts/receive_kill12"), EV = path.join(R, "evidence"), J = (f) => JSON.parse(fs.readFileSync(path.join(EV, f), "utf8"));
 const T3 = J("rk12_three_scales.json"), DET = J("rk12_determinism.json"), CH = J("rk12_chrome_node.json"), CPU = J("rk12_cpu.json"), REG = J("rk12_regression.json"), RC = J("receive11_matrix_714_rerun_compare.json"), SCK = J("rk12_scalecheck.json"), sha = fs.readFileSync(path.join(EV, "frozen_sha256_end_check.txt"), "utf8"), WB = J("rk12_whatif_B.json");
 const withKnots = (K, fn) => { setScale("candidate"); const keep = RK.exec.knots; RK.exec.knots = K; try { return fn(); } finally { RK.exec.knots = keep; } };
@@ -53,8 +55,9 @@ table.heat td{text-align:center;min-width:64px}table.heat td.l{text-align:left;m
 .cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 18px;align-items:start}video{width:100%;border-radius:6px;background:#000}img.g{width:100%;border-radius:6px;border:1px solid var(--line)}
 .shot{width:100%;border:1px solid var(--line);border-radius:6px}.chart{width:100%;max-width:820px}.ax{font:11px Menlo,monospace;fill:#8fa49a}.kv td:first-child{color:var(--dim);white-space:nowrap}@media(max-width:900px){.cmp{grid-template-columns:1fr}}</style></head><body><main>
 <h1>RECEIVE-KILL-1.2 — Ball Control scale candidate</h1>
+<div class="warn"><b>First round — superseded.</b> The owner chose alternative B on 19 Oct ("Use Alternative B. Do not preserve the two anchors exactly."): <a href="RECEIVE_KILL12B_REVIEW.html">RECEIVE-KILL-1.2 B review</a>. This page is the first round as presented (its candidate = scale A; the live links below open scale A).</div>
 <div class="note"><b>Presented for review — not frozen; the curve is a candidate.</b> All three scales stay available (the matrix and lab have a scale selector). Local only (the character is a real player's model). <b>I cannot play video in real time:</b> my visual judgements come from the still grids, not from watching the clips.</div>
-<p><a href="../../../sandbox/visual/receive_kill12.html?m=BENCH">Live matrix (scale selector) ↗</a> · <a href="../../../sandbox/visual/receive_kill12_lab.html?v=22&bc=75">Live lab (scale selector) ↗</a> (local server :8361) · <a href="../RECEIVE_KILL12_REPORT.md">Report</a> · <a href="../../receive_kill11/review/RECEIVE_KILL11_REVIEW.html">RECEIVE-KILL-1.1 review</a> · <a href="../../receive_kill1/review/RECEIVE_KILL1_REVIEW.html">RECEIVE-KILL-1 review</a></p>
+<p><a href="../../../sandbox/visual/receive_kill12.html?m=BENCH&scale=A">Live matrix (scale selector) ↗</a> · <a href="../../../sandbox/visual/receive_kill12_lab.html?v=22&bc=75&scale=A">Live lab (scale selector) ↗</a> (local server :8361) · <a href="../RECEIVE_KILL12_REPORT.md">Report</a> · <a href="../../receive_kill11/review/RECEIVE_KILL11_REVIEW.html">RECEIVE-KILL-1.1 review</a> · <a href="../../receive_kill1/review/RECEIVE_KILL1_REVIEW.html">RECEIVE-KILL-1 review</a></p>
 <h2>1 · The candidate curve</h2>
 <pre>CURRENT (1.1)   E = 0.0068 + 0.25 · s(u) · D/(D + 1),   s(u) = u·(0.68 + 0.32·u²),   u = (100 − BC)/90
 CANDIDATE (1.2) E_new(BC, D) = E_current(g(BC), D)      — a new rating BC executes exactly like the current rating g(BC)
