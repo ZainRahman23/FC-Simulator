@@ -1,4 +1,4 @@
-// receive_kill1/tools/rk_calib.mjs — calibration printout: the matched TYPICAL grid and the multi-seed distribution per matrix row
+// receive_kill11/tools/rk_calib.mjs — calibration printout: the matched TYPICAL grid and the multi-seed distribution per matrix row
 //   node rk_calib.mjs [matrixIds comma] [nSeeds] [out.json]      RKOVR='{"exec":{"eSkill":0.4}}' overrides RK for this process (experiments)
 import fs from "fs";
 import { RK } from "../rk_model.js";

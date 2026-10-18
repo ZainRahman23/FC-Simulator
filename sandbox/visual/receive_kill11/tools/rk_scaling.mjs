@@ -1,4 +1,4 @@
-// receive_kill1/tools/rk_scaling.mjs — the model's own curves for the report: q(BC), c(D), E(BC, D), the difficulty of horizontal vs vertical speed
+// receive_kill11/tools/rk_scaling.mjs — the model's own curves for the report: q(BC), c(D), E(BC, D), the difficulty of horizontal vs vertical speed
 // per surface, and AUTO's surface map over arrival height × descent angle (at 5, 10 and 16 m/s).   node rk_scaling.mjs <out.json>
 import fs from "fs";
 import { RK, qBC, cD, relErr, difficulty, surf, SURFACES, BC_STEPS, incoming } from "../rk_model.js";

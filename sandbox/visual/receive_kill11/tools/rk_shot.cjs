@@ -1,4 +1,4 @@
-// receive_kill1/tools/rk_shot.cjs — screenshot a page once its ready flag is set:
+// receive_kill11/tools/rk_shot.cjs — screenshot a page once its ready flag is set:
 //   PUPPETEER_NODE_MODULES=<dir> node rk_shot.cjs <url> <out.png> [readyFlag=RKM_READY] [width=1500] [height=1000] [fullPage=1] [profile dir]
 const path = require("path"), puppeteer = require(path.join(process.env.PUPPETEER_NODE_MODULES, "puppeteer-core"));
 (async () => {

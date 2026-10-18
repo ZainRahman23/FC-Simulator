@@ -1,4 +1,4 @@
-// receive_kill1/tools/rk_capture.cjs — frame-exact capture of the control lab: for frame k the page time is SET (RKL.setRel: seconds from the
+// receive_kill11/tools/rk_capture.cjs — frame-exact capture of the control lab: for frame k the page time is SET (RKL.setRel: seconds from the
 // CONTACT marker), the viewport is written as JPEG and ffmpeg encodes at a constant fps (no retiming). Stills mode writes the listed times.
 //   PUPPETEER_NODE_MODULES=<dir> FFMPEG=<bin> node rk_capture.cjs --q "v=22&bc=50&draw=TYPICAL&cam=near" --out <file.mp4 | dir> [--from -0.8 --to 2.2]
 //     [--rate 0.5] [--fps 30] [--stills "-0.3,0,0.25,1"] [--w 1440 --h 980] [--profile <dir>]
@@ -10,7 +10,7 @@ const W = +arg("w", 1440), H = +arg("h", 980), FF = process.env.FFMPEG || "ffmpe
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: arg("profile", undefined), args: ["--enable-webgl", "--ignore-gpu-blocklist", "--use-angle=metal", `--window-size=${W},${H}`] });
   try {
     const p = await b.newPage(); await p.setViewport({ width: W, height: H, deviceScaleFactor: 1 }); const logs = []; p.on("pageerror", (e) => logs.push("PAGEERROR " + e.message));
-    await p.goto(`http://127.0.0.1:8361/sandbox/visual/receive_kill1_lab.html?external=1&paused=1&${arg("q", "")}`, { waitUntil: "load" });
+    await p.goto(`http://127.0.0.1:8361/sandbox/visual/receive_kill11_lab.html?external=1&paused=1&${arg("q", "")}`, { waitUntil: "load" });
     await p.waitForFunction("window.RKL_READY === true", { timeout: 120000 });
     const shot = async (dt) => { await p.evaluate((x) => RKL.setRel(x), dt); return p.screenshot({ type: "jpeg", quality: 88 }); };
     const out = arg("out"), st = arg("stills");
