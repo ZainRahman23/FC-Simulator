@@ -1,0 +1,233 @@
+{
+ "milestone": "RECEIVE-CONTROL-1",
+ "date": "2026-10-18",
+ "branch": "prototype/dribble-1",
+ "frozen": false,
+ "readyToFreeze": "NO (recommendation; presented for review)",
+ "architecture": "adapter: receive1/rc1_core.js ReceiveSim extends the frozen DRIBBLE-V1 DribbleSim (dribble15/d15_core.js, tag dribble-v1-foundation-1, unchanged)",
+ "receiveTurnAngle": "wrap(exitDirection - facing at the pass) in [0,360), + right; turning if 90 <= angle <= 270",
+ "boundary": {
+  "pass": true,
+  "sim": [
+   {
+    "angle": 89,
+    "exitTurn": 89,
+    "deg360": 89,
+    "signed": 89,
+    "kind": "ordinary"
+   },
+   {
+    "angle": 90,
+    "exitTurn": 90,
+    "deg360": 90,
+    "signed": 90,
+    "kind": "turning"
+   },
+   {
+    "angle": 270,
+    "exitTurn": -90,
+    "deg360": 270,
+    "signed": -90,
+    "kind": "turning"
+   },
+   {
+    "angle": 271,
+    "exitTurn": -89,
+    "deg360": 271,
+    "signed": -89,
+    "kind": "ordinary"
+   },
+   {
+    "angle": 180,
+    "exitTurn": 180,
+    "deg360": 179.5,
+    "signed": 179.5,
+    "kind": "turning"
+   }
+  ]
+ },
+ "matrix": {
+  "runs": 714,
+  "outcomes": {
+   "TAKEN": 27,
+   "MISSED": 213,
+   "RECEIVED": 157,
+   "CLEAN": 279,
+   "RECOVERED": 38
+  },
+  "realReceives": 463,
+  "byClass": {
+   "ordinary": {
+    "TAKEN": 8,
+    "MISSED": 69,
+    "CLEAN": 130,
+    "RECEIVED": 28,
+    "RECOVERED": 11,
+    "n": 246
+   },
+   "turning": {
+    "MISSED": 144,
+    "RECEIVED": 129,
+    "CLEAN": 149,
+    "RECOVERED": 27,
+    "TAKEN": 19,
+    "n": 468
+   }
+  },
+  "r180": {
+   "n": 120,
+   "outcomes": {
+    "RECEIVED": 44,
+    "MISSED": 37,
+    "RECOVERED": 8,
+    "TAKEN": 6,
+    "CLEAN": 25
+   },
+   "cleanFirstTouchIsTurn": 24,
+   "cleanFirstToLine_median": 0.504
+  },
+  "turning": {
+   "realReceives": 297,
+   "turnReleasedBeforeContact": 168,
+   "leadS_median": 0.31,
+   "leadS_p10_p90": [
+    0.129,
+    0.612
+   ],
+   "bodyTurnedAtContactDeg_median": 16.05,
+   "byRole": {
+    "recovery": 92,
+    "cut": 167,
+    "setup": 15,
+    "line": 14,
+    "dribble": 9
+   },
+   "firstTouchExitErrDeg_median_clean": 15.9,
+   "firstToLineS_median_clean": 0.512,
+   "touchOnExitIsFirst_clean": 90,
+   "clean": 149
+  },
+  "cleanTurnsBySide": {
+   "right": 95,
+   "left": 54
+  }
+ },
+ "families": {
+  "laces": 49,
+  "let-run": 15,
+  "across-body": 37,
+  "through-stance": 35,
+  "front": 171,
+  "outside-foot": 134,
+  "inside-wrap": 22
+ },
+ "incoming": {
+  "speedIn_median": 6.89,
+  "speedOut_median": 5.61,
+  "redirect_median": 106.9,
+  "sigmaK_median": 1.306,
+  "sigmaK_max": 1.726,
+  "cleanRateBySpeedIn": {
+   "<5": [
+    160,
+    92
+   ],
+   "5-7": [
+    78,
+    50
+   ],
+   "7-9": [
+    134,
+    82
+   ],
+   ">=9": [
+    91,
+    55
+   ]
+  }
+ },
+ "player": {
+  "STAND": {
+   "atFirst_median": 2.5,
+   "at1s_median": 4.7,
+   "max_median": 5.5,
+   "init": 0
+  },
+  "JOG": {
+   "atFirst_median": 3.14,
+   "at1s_median": 5.01,
+   "max_median": 5.5,
+   "init": 3.0
+  },
+  "RUN": {
+   "atFirst_median": 4.835,
+   "at1s_median": 5.09,
+   "max_median": 5.52,
+   "init": 5.5
+  },
+  "FAST": {
+   "atFirst_median": 5.045,
+   "at1s_median": 5.99,
+   "max_median": 7.8,
+   "init": 7.8
+  }
+ },
+ "handoff": {
+  "doubleTouches": 0,
+  "sameFootRecontacts": 6,
+  "runsWithRecontact": 6,
+  "handoffAcc_median": 0,
+  "handoffAcc_p95": 17.61,
+  "handoffAcc_max": 27.44
+ },
+ "failures": {
+  "heavyFirstTouch": 44,
+  "deflectedBeforeFirst": 162,
+  "lostAfterFirst": 182,
+  "recoveryRoleFirst": 107,
+  "faults": 0
+ },
+ "determinism": {
+  "nodeReplay": "20/20",
+  "chromeNodeDecisions": "20/20",
+  "chromeNodeStateBitIdentical": "7/20",
+  "matchedSeed": {
+   "note": "execution error keyed by (seed, player, tick, foot): build v6 (before the budgeted option set-up) vs the final build, same situations (seed 1\u20133 without variants)",
+   "sameContactTwoBuilds": 429,
+   "identicalDraws": 429,
+   "mismatches": [],
+   "sameContactDifferentSeeds": 162,
+   "drawsDiffer": 162
+  }
+ },
+ "cpu": {
+  "receivePhaseMsPerSimS": 816.4,
+  "afterHandoffMsPerSimS": 128.2,
+  "wholeCaseMsPerSimS": 415.6,
+  "worstStepMs": 65.2,
+  "note": "one process, idle machine, 20 cases; worst steps above ~20 ms are GC pauses"
+ },
+ "dribbleV1": {
+  "frozenFilesByteIdentical": true,
+  "beforeEqualsAfterReceives": "60/60",
+  "matchesEvidenceOfRecord": "48/48",
+  "D1unchanged": true
+ },
+ "visualCases": {
+  "A": "R_0_RUN_MED",
+  "A'": "F_315_RUN_MED",
+  "B": "FR_120_RUN_MED",
+  "C": "R_180R_JOG_SOFT",
+  "D": "FL_240_RUN_MED",
+  "E": "FL_270_RUN_MED",
+  "F": "F_180R_RUN_MED",
+  "+": "L_270_FAST_MED"
+ },
+ "limitations": [
+  "frozen dribble contact/launch model rejects most launches for hard incoming balls (geometry of the impulse normal; follow-through floor after the warp-slowed receiving foot)",
+  "TURN-1.2 has no walk/stand/open stance (2.5 m/s floor)",
+  "approach slows fast runners ~2 m/s before ordinary receives",
+  "receive-phase CPU ~0.8 s per simulated second, GC pauses",
+  "left turns weaker than right (54 vs 95 clean)"
+ ]
+}

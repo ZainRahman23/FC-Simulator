@@ -4,7 +4,7 @@
 // the Node tools once at load (deterministic, scrubbable). URL: ?case=F_180R_JOG_MED&seed=1&diag=1&single=game&rate=0.5&t=…
 import { ReceiveSim, BALL_DEFAULT, D1, DT } from "./rc1_core.js";
 import { PROFILES } from "../dribble1/d1_attrs.js";
-import { parseCase, VISUAL } from "./rc1_cases.js";
+import { parseCase, seedCase, VISUAL } from "./rc1_cases.js";
 const W = window, Vv = { t: 0, rate: 1, playing: true, diag: false, ready: false, single: null, labels: true, A: "near", B: "rear34" };
 // ── cameras (as the TURN-1 viewer: CAMERA_V1 rail-following; close views at a fixed world azimuth following the runner) ──────────────────────────
 function persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
@@ -65,7 +65,7 @@ function ballProg(gl) {
 }
 // ── run the simulation once and keep the record ───────────────────────────────────────────────────────────────────────────────────────────────────
 async function simulate(ent) {
-  const q = new URLSearchParams(location.search), cs = parseCase(q.get("case") || VISUAL[0].id), vis = VISUAL.find((v) => v.id === cs.id), scn = Object.assign({}, cs.scenario, { label: (vis ? vis.tag + " · " : "") + cs.id }), arch = q.get("arch") || "B", prof = q.get("prof") || "HIGH", seed = +(q.get("seed") || 1); Vv.cs = cs;
+  const q = new URLSearchParams(location.search), cs = seedCase(parseCase(q.get("case") || VISUAL[0].id), +(q.get("seed") || 1)), vis = VISUAL.find((v) => v.id === cs.id), scn = Object.assign({}, cs.scenario, { label: (vis ? vis.tag + " · " : "") + cs.id }), arch = q.get("arch") || "B", prof = q.get("prof") || "HIGH", seed = +(q.get("seed") || 1); Vv.cs = cs;
   const colliders = await (await fetch("dribble1/d1_colliders.json")).json(), t0 = performance.now();
   // (DIAGNOSTIC ONLY — the review's counterfactuals: ?ovr={"setup14":{"graded":false}} overrides resolver parameters for this page, one level deep)
   const ovr = q.get("ovr"); Vv.ovr = ovr || null; if (ovr) for (const [k, v] of Object.entries(JSON.parse(ovr))) D1[k] = v && typeof v === "object" && !Array.isArray(v) && D1[k] ? { ...D1[k], ...v } : v;

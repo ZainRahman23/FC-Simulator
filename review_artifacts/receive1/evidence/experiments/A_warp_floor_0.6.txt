@@ -1,0 +1,34 @@
+runs 84  CLEAN 28  TAKEN 5  RECEIVED 17  MISSED 34  errors 0
+-- by receiveTurnAngle
+  0            n   7  clean   6  taken   0  received   0  missed   1  | first→line med 0.00s  turnWithFirst 3
+  45           n   7  clean   4  taken   1  received   0  missed   2  | first→line med 0.02s  turnWithFirst 4
+  89           n   7  clean   3  taken   1  received   1  missed   2  | first→line med 0.48s  turnWithFirst 4
+  90           n   7  clean   3  taken   1  received   1  missed   2  | first→line med 0.48s  turnWithFirst 4
+  120          n   7  clean   2  taken   1  received   3  missed   1  | first→line med 0.91s  turnWithFirst 5
+  135          n   7  clean   3  taken   0  received   2  missed   2  | first→line med 0.86s  turnWithFirst 4
+  180          n   7  clean   1  taken   0  received   3  missed   3  | first→line med 1.22s  turnWithFirst 2
+  225          n   7  clean   0  taken   0  received   2  missed   5  | first→line med nans  turnWithFirst 0
+  240          n   7  clean   1  taken   0  received   2  missed   4  | first→line med 0.94s  turnWithFirst 1
+  270          n   7  clean   1  taken   0  received   2  missed   4  | first→line med 0.50s  turnWithFirst 2
+  271          n   7  clean   1  taken   0  received   1  missed   5  | first→line med 0.50s  turnWithFirst 2
+  315          n   7  clean   3  taken   1  received   0  missed   3  | first→line med 0.19s  turnWithFirst 4
+-- by pass direction
+  F            n  12  clean   2  taken   2  received   3  missed   5  | first→line med 1.24s  turnWithFirst 1
+  FL           n  12  clean   5  taken   0  received   2  missed   5  | first→line med 0.50s  turnWithFirst 5
+  FR           n  12  clean   3  taken   0  received   0  missed   9  | first→line med 0.79s  turnWithFirst 3
+  L            n  12  clean   2  taken   1  received   6  missed   3  | first→line med 0.00s  turnWithFirst 9
+  R            n  12  clean   5  taken   2  received   1  missed   4  | first→line med 0.45s  turnWithFirst 6
+  RL           n  12  clean   5  taken   0  received   5  missed   2  | first→line med 0.27s  turnWithFirst 6
+  RR           n  12  clean   6  taken   0  received   0  missed   6  | first→line med 0.51s  turnWithFirst 5
+-- by receiver speed
+  RUN          n  84  clean  28  taken   5  received  17  missed  34  | first→line med 0.45s  turnWithFirst 35
+-- by pass strength
+  MED          n  84  clean  28  taken   5  received  17  missed  34  | first→line med 0.45s  turnWithFirst 35
+-- by class
+  ordinary     n  35  clean  17  taken   3  received   2  missed  13  | first→line med 0.04s  turnWithFirst 17
+  turning      n  49  clean  11  taken   2  received  15  missed  21  | first→line med 0.86s  turnWithFirst 18
+-- first-touch family {'laces': 3, 'none': 34, 'across-body': 9, 'through-stance': 3, 'outside-foot': 18, 'front': 9, 'let-run': 5, 'inside-wrap': 3}
+-- first-touch role {'dribble': 10, 'none': 34, 'recovery': 8, 'cut': 26, 'line': 3, 'setup': 3}
+-- foot/surface {'RLACES': 3, '--': 34, 'RINSIDE': 5, 'ROUTSIDE': 7, 'LFRONT': 2, 'LOUTSIDE': 11, 'RFRONT': 7, 'LINSIDE': 15}
+-- heavy first touches 4  double touches 0  same-foot recontacts 0  deflected before the first touch 13  lost after first 16  faults 0
+-- CPU ms per sim-s: mean 1834  median 1572  max 4744 | receive phase ms/s: mean 2759  max 6334

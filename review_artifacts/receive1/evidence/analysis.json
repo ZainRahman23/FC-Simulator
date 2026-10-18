@@ -1,0 +1,376 @@
+{
+ "n": 714,
+ "outcomes": {
+  "TAKEN": 27,
+  "MISSED": 213,
+  "RECEIVED": 157,
+  "CLEAN": 279,
+  "RECOVERED": 38
+ },
+ "realReceives": 463,
+ "byClass": {
+  "ordinary": {
+   "TAKEN": 8,
+   "MISSED": 69,
+   "CLEAN": 130,
+   "RECEIVED": 28,
+   "RECOVERED": 11,
+   "n": 246
+  },
+  "turning": {
+   "MISSED": 144,
+   "RECEIVED": 129,
+   "CLEAN": 149,
+   "RECOVERED": 27,
+   "TAKEN": 19,
+   "n": 468
+  }
+ },
+ "byAngle": {
+  "0": {
+   "TAKEN": 4,
+   "MISSED": 23,
+   "RECEIVED": 10,
+   "CLEAN": 77,
+   "RECOVERED": 6,
+   "n": 120
+  },
+  "120": {
+   "MISSED": 6,
+   "CLEAN": 7,
+   "RECEIVED": 7,
+   "RECOVERED": 1,
+   "n": 21
+  },
+  "135": {
+   "MISSED": 4,
+   "CLEAN": 7,
+   "RECEIVED": 9,
+   "RECOVERED": 1,
+   "n": 21
+  },
+  "180": {
+   "RECEIVED": 44,
+   "MISSED": 37,
+   "RECOVERED": 8,
+   "TAKEN": 6,
+   "CLEAN": 25,
+   "n": 120
+  },
+  "225": {
+   "RECEIVED": 9,
+   "MISSED": 9,
+   "CLEAN": 2,
+   "RECOVERED": 1,
+   "n": 21
+  },
+  "240": {
+   "CLEAN": 4,
+   "MISSED": 10,
+   "TAKEN": 1,
+   "RECEIVED": 5,
+   "RECOVERED": 1,
+   "n": 21
+  },
+  "270": {
+   "MISSED": 40,
+   "CLEAN": 48,
+   "RECEIVED": 31,
+   "TAKEN": 5,
+   "RECOVERED": 8,
+   "n": 132
+  },
+  "271": {
+   "MISSED": 21,
+   "CLEAN": 12,
+   "RECEIVED": 8,
+   "RECOVERED": 1,
+   "n": 42
+  },
+  "315": {
+   "CLEAN": 10,
+   "MISSED": 7,
+   "TAKEN": 2,
+   "RECEIVED": 2,
+   "n": 21
+  },
+  "45": {
+   "CLEAN": 15,
+   "MISSED": 2,
+   "RECOVERED": 2,
+   "RECEIVED": 2,
+   "n": 21
+  },
+  "89": {
+   "MISSED": 16,
+   "CLEAN": 16,
+   "RECEIVED": 6,
+   "RECOVERED": 2,
+   "TAKEN": 2,
+   "n": 42
+  },
+  "90": {
+   "MISSED": 38,
+   "CLEAN": 56,
+   "RECEIVED": 24,
+   "TAKEN": 7,
+   "RECOVERED": 7,
+   "n": 132
+  }
+ },
+ "byDir": {
+  "F": {
+   "CLEAN": 93,
+   "MISSED": 17,
+   "TAKEN": 10,
+   "RECEIVED": 48,
+   "RECOVERED": 6,
+   "n": 174
+  },
+  "FL": {
+   "TAKEN": 2,
+   "MISSED": 21,
+   "RECEIVED": 8,
+   "CLEAN": 17,
+   "n": 48
+  },
+  "FR": {
+   "MISSED": 27,
+   "RECEIVED": 7,
+   "CLEAN": 14,
+   "n": 48
+  },
+  "L": {
+   "CLEAN": 62,
+   "RECEIVED": 30,
+   "MISSED": 61,
+   "RECOVERED": 14,
+   "TAKEN": 7,
+   "n": 174
+  },
+  "R": {
+   "CLEAN": 73,
+   "RECEIVED": 30,
+   "RECOVERED": 9,
+   "TAKEN": 5,
+   "MISSED": 57,
+   "n": 174
+  },
+  "RL": {
+   "CLEAN": 8,
+   "RECOVERED": 9,
+   "RECEIVED": 19,
+   "MISSED": 10,
+   "TAKEN": 2,
+   "n": 48
+  },
+  "RR": {
+   "CLEAN": 12,
+   "RECEIVED": 15,
+   "MISSED": 20,
+   "TAKEN": 1,
+   "n": 48
+  }
+ },
+ "byReceiver": {
+  "FAST": {
+   "CLEAN": 50,
+   "MISSED": 14,
+   "TAKEN": 6,
+   "RECEIVED": 28,
+   "RECOVERED": 10,
+   "n": 108
+  },
+  "JOG": {
+   "MISSED": 77,
+   "CLEAN": 58,
+   "RECEIVED": 25,
+   "TAKEN": 6,
+   "RECOVERED": 8,
+   "n": 174
+  },
+  "RUN": {
+   "TAKEN": 9,
+   "MISSED": 89,
+   "RECEIVED": 83,
+   "CLEAN": 124,
+   "RECOVERED": 19,
+   "n": 324
+  },
+  "STAND": {
+   "CLEAN": 47,
+   "RECEIVED": 21,
+   "MISSED": 33,
+   "TAKEN": 6,
+   "RECOVERED": 1,
+   "n": 108
+  }
+ },
+ "byPass": {
+  "FIRM": {
+   "CLEAN": 34,
+   "MISSED": 63,
+   "RECEIVED": 33,
+   "RECOVERED": 9,
+   "TAKEN": 5,
+   "n": 144
+  },
+  "MED": {
+   "TAKEN": 11,
+   "MISSED": 139,
+   "RECEIVED": 97,
+   "CLEAN": 158,
+   "RECOVERED": 21,
+   "n": 426
+  },
+  "SOFT": {
+   "CLEAN": 87,
+   "TAKEN": 11,
+   "RECOVERED": 8,
+   "MISSED": 11,
+   "RECEIVED": 27,
+   "n": 144
+  }
+ },
+ "turning": {
+  "realReceives": 297,
+  "turnReleasedBeforeContact": 168,
+  "leadS_median": 0.31,
+  "leadS_p10_p90": [
+   0.129,
+   0.612
+  ],
+  "bodyTurnedAtContactDeg_median": 16.05,
+  "byRole": {
+   "recovery": 92,
+   "cut": 167,
+   "setup": 15,
+   "line": 14,
+   "dribble": 9
+  },
+  "firstTouchExitErrDeg_median_clean": 15.9,
+  "firstToLineS_median_clean": 0.512,
+  "touchOnExitIsFirst_clean": 90,
+  "clean": 149
+ },
+ "r180": {
+  "n": 120,
+  "outcomes": {
+   "RECEIVED": 44,
+   "MISSED": 37,
+   "RECOVERED": 8,
+   "TAKEN": 6,
+   "CLEAN": 25
+  },
+  "cleanFirstTouchIsTurn": 24,
+  "cleanFirstToLine_median": 0.504
+ },
+ "families": {
+  "laces": 49,
+  "let-run": 15,
+  "across-body": 37,
+  "through-stance": 35,
+  "front": 171,
+  "outside-foot": 134,
+  "inside-wrap": 22
+ },
+ "roles": {
+  "recovery": 107,
+  "cut": 240,
+  "setup": 25,
+  "dribble": 75,
+  "line": 16
+ },
+ "feetInTurns": {
+  "right": {
+   "R LACES": 14,
+   "R OUTSIDE": 34,
+   "L INSIDE": 29,
+   "L OUTSIDE": 32,
+   "L FRONT": 39,
+   "R FRONT": 24,
+   "L LACES": 9,
+   "R INSIDE": 11
+  },
+  "left": {
+   "R LACES": 12,
+   "R INSIDE": 9,
+   "R FRONT": 24,
+   "L FRONT": 18,
+   "R OUTSIDE": 10,
+   "L LACES": 5,
+   "L OUTSIDE": 18,
+   "L INSIDE": 9
+  }
+ },
+ "cleanTurnsBySide": {
+  "right": 95,
+  "left": 54
+ },
+ "incoming": {
+  "speedIn_median": 6.89,
+  "speedOut_median": 5.61,
+  "redirect_median": 106.9,
+  "sigmaK_median": 1.306,
+  "sigmaK_max": 1.726,
+  "cleanRateBySpeedIn": {
+   "<5": [
+    160,
+    92
+   ],
+   "5-7": [
+    78,
+    50
+   ],
+   "7-9": [
+    134,
+    82
+   ],
+   ">=9": [
+    91,
+    55
+   ]
+  }
+ },
+ "player": {
+  "STAND": {
+   "atFirst_median": 2.5,
+   "at1s_median": 4.7,
+   "max_median": 5.5,
+   "init": 0
+  },
+  "JOG": {
+   "atFirst_median": 3.14,
+   "at1s_median": 5.01,
+   "max_median": 5.5,
+   "init": 3.0
+  },
+  "RUN": {
+   "atFirst_median": 4.835,
+   "at1s_median": 5.09,
+   "max_median": 5.52,
+   "init": 5.5
+  },
+  "FAST": {
+   "atFirst_median": 5.045,
+   "at1s_median": 5.99,
+   "max_median": 7.8,
+   "init": 7.8
+  }
+ },
+ "handoff": {
+  "doubleTouches": 0,
+  "sameFootRecontacts": 6,
+  "runsWithRecontact": 6,
+  "handoffAcc_median": 0,
+  "handoffAcc_p95": 17.61,
+  "handoffAcc_max": 27.44
+ },
+ "failures": {
+  "heavyFirstTouch": 44,
+  "deflectedBeforeFirst": 162,
+  "lostAfterFirst": 182,
+  "recoveryRoleFirst": 107,
+  "faults": 0
+ }
+}

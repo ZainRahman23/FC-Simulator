@@ -47,9 +47,10 @@ export const RC1 = {
   searchH: 1.2,                // s: contact search horizon of the receive search in every motion
   planTries: null,             // candidates tried per search phase in the receive (null: the frozen 24)
   reach2: { lat: 0.35 },       // receive swing-adjustment bounds overriding D1.reach during receive planning: the receiving foot reaches 0.35 m sideways
+  passMiss: 0.6, runOnDeg: 50, // m: the ball moving away and this much beyond its closest approach — the receive was missed (chase mode), unless the
+                               // ball is ahead and travelling within runOnDeg° of his run (a ball into space)
   // (CPU) the receive search starts once the ball's meeting is within searchH + farMargin s (before that the approach alone runs); approach-line
   // switch ticks lie on a lineGrid-tick grid, so the line branches of successive searches are the same TURN-1.2 predictions (re-used, not re-made)
-  passMiss: 0.6, runOnDeg: 50,               // m: the ball moving away and this much beyond its closest approach — the receive was missed (chase mode)
   farMargin: 0.25, lineGrid: 48, relGrid: 12, searchGap: 24,   // (ticks: switch-tick grids; a search that found nothing waits searchGap before the next)
   lineAfter: 0.45, turnAfter: 0.9,   // s after the meeting estimate: the end of an approach line's / a turn option's contact window
   // TURN LINES: for a big turn (≥ turnLineMin°), the turn released early from the approach lines on the TURN SIDE (the ball passing beside the

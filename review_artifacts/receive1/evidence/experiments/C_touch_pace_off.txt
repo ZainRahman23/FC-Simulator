@@ -1,0 +1,26 @@
+runs 28  CLEAN 7  TAKEN 1  RECEIVED 2  MISSED 18  errors 0
+-- by receiveTurnAngle
+  89           n   7  clean   2  taken   1  received   0  missed   4  | first→line med 0.55s  turnWithFirst 3
+  90           n   7  clean   2  taken   0  received   1  missed   4  | first→line med 0.49s  turnWithFirst 3
+  270          n   7  clean   2  taken   0  received   0  missed   5  | first→line med 0.84s  turnWithFirst 2
+  271          n   7  clean   1  taken   0  received   1  missed   5  | first→line med 1.13s  turnWithFirst 2
+-- by pass direction
+  F            n   4  clean   4  taken   0  received   0  missed   0  | first→line med 0.77s  turnWithFirst 4
+  FL           n   4  clean   0  taken   0  received   0  missed   4  | first→line med nans  turnWithFirst 0
+  FR           n   4  clean   1  taken   1  received   2  missed   0  | first→line med 0.55s  turnWithFirst 4
+  L            n   4  clean   0  taken   0  received   0  missed   4  | first→line med nans  turnWithFirst 0
+  R            n   4  clean   2  taken   0  received   0  missed   2  | first→line med 0.57s  turnWithFirst 2
+  RL           n   4  clean   0  taken   0  received   0  missed   4  | first→line med nans  turnWithFirst 0
+  RR           n   4  clean   0  taken   0  received   0  missed   4  | first→line med nans  turnWithFirst 0
+-- by receiver speed
+  JOG          n  28  clean   7  taken   1  received   2  missed  18  | first→line med 0.56s  turnWithFirst 10
+-- by pass strength
+  MED          n  28  clean   7  taken   1  received   2  missed  18  | first→line med 0.56s  turnWithFirst 10
+-- by class
+  ordinary     n  14  clean   3  taken   1  received   1  missed   9  | first→line med 0.56s  turnWithFirst 5
+  turning      n  14  clean   4  taken   0  received   1  missed   9  | first→line med 0.56s  turnWithFirst 5
+-- first-touch family {'none': 18, 'front': 6, 'inside-wrap': 4}
+-- first-touch role {'none': 18, 'setup': 2, 'cut': 8}
+-- foot/surface {'--': 18, 'RFRONT': 2, 'LINSIDE': 4, 'LFRONT': 4}
+-- heavy first touches 0  double touches 0  same-foot recontacts 0  deflected before the first touch 4  lost after first 3  faults 0
+-- CPU ms per sim-s: mean 1648  median 1561  max 3414 | receive phase ms/s: mean 1998  max 4640

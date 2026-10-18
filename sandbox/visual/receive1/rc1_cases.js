@@ -15,7 +15,7 @@ export const ANGLES = [0, 45, 89, 90, 120, 135, 180, 225, 240, 270, 271, 315];
 export function makeCase(o) {
   // o: { dir, angle (receiveTurnAngle 0–360), side ("R" | "L" for 180), rs (receiver speed key), ps (pass strength key), exitV?, dur? }
   const ps = PSPEED[o.ps || "MED"], rk = rearK(o.dir), v = RSPEED[o.rs || "RUN"];
-  const pass = { from: DIRS[o.dir], dist: rk ? rk.dist : ps.dist, speed: ps.speed + (rk ? rk.add : 0), lead: o.lead != null ? o.lead : 1, off: rk ? [rk.ahead, 0] : [0, 0] };
+  const pass = { from: DIRS[o.dir], dist: (rk ? rk.dist : ps.dist) + (o.distAdd || 0), speed: ps.speed + (rk ? rk.add : 0), lead: o.lead != null ? o.lead : 1, off: rk ? [rk.ahead, 0] : [0, 0] };
   const exit = { turn: exitTurn(o.angle, o.side || "R"), v: o.exitV != null ? o.exitV : Math.max(v, 5.5) };   // (full throttle: at least RUN pace out)
   const id = `${o.dir}_${o.angle}${o.angle === 180 ? o.side || "R" : ""}_${o.rs || "RUN"}_${o.ps || "MED"}`;
   return { id, dir: o.dir, angle: o.angle, side: o.side || null, rs: o.rs || "RUN", ps: o.ps || "MED", scenario: { id, init: { v, heading: 0, pos: [30, 34] }, pass, exit, dur: o.dur || 4.0 } };
@@ -29,11 +29,17 @@ export function matrix(block) {
   if (block === "C" || block === "all") for (const a of [89, 90, 270, 271]) for (const d of Object.keys(DIRS)) { if (block === "all" && (a === 90 || a === 270) && ["F", "L", "R"].includes(d)) continue; out.push(makeCase({ dir: d, angle: a, rs: "JOG", ps: "MED" })); }   // (in "all", without B's duplicates)
   return out;
 }
+// SITUATION VARIANTS: a seed changes the keyed execution draws AND the situation — the pass is struck from slightly further / closer (seed 1 is the
+// nominal case), so its arrival meets a different phase of the receiver's stride (otherwise a situation the planner cannot take would be missed
+// identically on every seed)
+export const DIST_ADD = [0, 0.37, -0.29, 0.61, -0.53, 0.19, -0.11, 0.83];
+export const seedCase = (cs, seed) => (seed > 1 ? makeCase({ dir: cs.dir, angle: cs.angle, side: cs.side, rs: cs.rs, ps: cs.ps, distAdd: DIST_ADD[(seed - 1) % DIST_ADD.length] }) : cs);
 // a case from its id (DIR_ANGLE[R|L]_RS_PS, e.g. "F_180R_JOG_MED") — the lab page's ?case=
 export function parseCase(id, o = {}) { const [dir, ang, rs, ps] = id.split("_"), angle = parseInt(ang), side = /L$/.test(ang) ? "L" : "R"; return makeCase(Object.assign({ dir, angle, side, rs, ps }, o)); }
 // the review's visual cases (A–F as the instruction names them, chosen from the evidence matrix, seed 1)
 export const VISUAL = [
   { id: "R_0_RUN_MED", tag: "A ordinary forward receive" },
+  { id: "F_315_RUN_MED", tag: "A′ ordinary receive at running pace (45° left)" },
   { id: "FR_120_RUN_MED", tag: "B 120° turning receive (right)" },
   { id: "R_180R_JOG_SOFT", tag: "C 180° turn first touch" },
   { id: "FL_240_RUN_MED", tag: "D the opposite side (120° left)" },

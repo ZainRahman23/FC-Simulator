@@ -1,0 +1,34 @@
+# receive1/tools/rc1_videos.txt — RECEIVE-CONTROL-1 review videos (rendered with dribble15/tools/d15_render.sh: LIST=… OUT=…; page receive1.html)
+# name | page | query | t0 | t1 | view | rate      (game = Touchline gameplay camera, zoomed 2.6×; top = close top view with diagnostics; nearC = close side view)
+# ── A — R_0_RUN_MED (CLEAN; first touch 1.52 s L INSIDE dribble)
+a_game | receive1.html | case=R_0_RUN_MED&zoom=2.6 | 0 | 3.72 | game | 1
+a_top  | receive1.html | case=R_0_RUN_MED&diag=1 | 0.52 | 2.82 | top | 0.5
+a_near | receive1.html | case=R_0_RUN_MED | 1.02 | 2.22 | nearC | 0.25
+# ── B — FR_120_RUN_MED (CLEAN; first touch 1.04 s R OUTSIDE cut)
+b_game | receive1.html | case=FR_120_RUN_MED&zoom=2.6 | 0 | 3.24 | game | 1
+b_top  | receive1.html | case=FR_120_RUN_MED&diag=1 | 0.04 | 2.34 | top | 0.5
+b_near | receive1.html | case=FR_120_RUN_MED | 0.54 | 1.74 | nearC | 0.25
+# ── C — R_180R_JOG_SOFT (CLEAN; first touch 1.63 s L LACES cut)
+c_game | receive1.html | case=R_180R_JOG_SOFT&zoom=2.6 | 0 | 3.83 | game | 1
+c_top  | receive1.html | case=R_180R_JOG_SOFT&diag=1 | 0.63 | 2.93 | top | 0.5
+c_near | receive1.html | case=R_180R_JOG_SOFT | 1.13 | 2.33 | nearC | 0.25
+# ── D — FL_240_RUN_MED (CLEAN; first touch 1.04 s R INSIDE cut)
+d_game | receive1.html | case=FL_240_RUN_MED&zoom=2.6 | 0 | 3.24 | game | 1
+d_top  | receive1.html | case=FL_240_RUN_MED&diag=1 | 0.04 | 2.34 | top | 0.5
+d_near | receive1.html | case=FL_240_RUN_MED | 0.54 | 1.74 | nearC | 0.25
+# ── E — FL_270_RUN_MED (CLEAN; first touch 1.02 s R INSIDE cut)
+e_game | receive1.html | case=FL_270_RUN_MED&zoom=2.6 | 0 | 3.23 | game | 1
+e_top  | receive1.html | case=FL_270_RUN_MED&diag=1 | 0.02 | 2.33 | top | 0.5
+e_near | receive1.html | case=FL_270_RUN_MED | 0.52 | 1.72 | nearC | 0.25
+# ── F — F_180R_RUN_MED (RECEIVED; first touch 0.85 s L FRONT recovery)
+f_game | receive1.html | case=F_180R_RUN_MED&zoom=2.6 | 0 | 3.05 | game | 1
+f_top  | receive1.html | case=F_180R_RUN_MED&diag=1 | 0.00 | 2.15 | top | 0.5
+f_near | receive1.html | case=F_180R_RUN_MED | 0.35 | 1.55 | nearC | 0.25
+# ── G — L_270_FAST_MED (CLEAN; first touch 1.42 s R INSIDE cut)
+g_game | receive1.html | case=L_270_FAST_MED&zoom=2.6 | 0 | 3.62 | game | 1
+g_top  | receive1.html | case=L_270_FAST_MED&diag=1 | 0.42 | 2.72 | top | 0.5
+g_near | receive1.html | case=L_270_FAST_MED | 0.92 | 2.12 | nearC | 0.25
+# ── A′ — F_315_RUN_MED (CLEAN; first touch 0.83 s L OUTSIDE cut; received at 5.5 m/s)
+h_game | receive1.html | case=F_315_RUN_MED&zoom=2.6 | 0 | 3.03 | game | 1
+h_top  | receive1.html | case=F_315_RUN_MED&diag=1 | 0.00 | 2.13 | top | 0.5
+h_near | receive1.html | case=F_315_RUN_MED | 0.33 | 1.53 | nearC | 0.25
