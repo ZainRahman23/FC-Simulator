@@ -1,0 +1,39 @@
+714 runs · CLEAN 583 · TAKEN 83 · MISSED-NO-ACTION 20 · MISSED-LATE 19 · RECEIVED 9
+GO receives:
+  all                        n  714 · CLEAN  583 (  82%) TAKEN  83 RECEIVED   9 RECOVERED   0 MISSED  39 (   5%)
+  ordinary                   n  246 · CLEAN  210 (  85%) TAKEN  24 RECEIVED   0 RECOVERED   0 MISSED  12 (   5%)
+  turning                    n  468 · CLEAN  373 (  80%) TAKEN  59 RECEIVED   9 RECOVERED   0 MISSED  27 (   6%)
+  angle 0                    n  120 · CLEAN  111 (  92%) TAKEN   9 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 45                   n   21 · CLEAN   19 (  90%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 89                   n   42 · CLEAN   29 (  69%) TAKEN   7 RECEIVED   0 RECOVERED   0 MISSED   6 (  14%)
+  angle 90                   n  132 · CLEAN  106 (  80%) TAKEN  15 RECEIVED   2 RECOVERED   0 MISSED   9 (   7%)
+  angle 120                  n   21 · CLEAN   19 (  90%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 135                  n   21 · CLEAN   20 (  95%) TAKEN   1 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 180                  n  120 · CLEAN   94 (  78%) TAKEN   9 RECEIVED   7 RECOVERED   0 MISSED  10 (   8%)
+  angle 225                  n   21 · CLEAN   17 (  81%) TAKEN   4 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 240                  n   21 · CLEAN   17 (  81%) TAKEN   4 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 270                  n  132 · CLEAN  100 (  76%) TAKEN  24 RECEIVED   0 RECOVERED   0 MISSED   8 (   6%)
+  angle 271                  n   42 · CLEAN   32 (  76%) TAKEN   4 RECEIVED   0 RECOVERED   0 MISSED   6 (  14%)
+  angle 315                  n   21 · CLEAN   19 (  90%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from F                     n  174 · CLEAN  149 (  86%) TAKEN  24 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  from FL                    n   48 · CLEAN   43 (  90%) TAKEN   5 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from FR                    n   48 · CLEAN   43 (  90%) TAKEN   4 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  from L                     n  174 · CLEAN  149 (  86%) TAKEN  15 RECEIVED   4 RECOVERED   0 MISSED   6 (   3%)
+  from R                     n  174 · CLEAN  141 (  81%) TAKEN  22 RECEIVED   3 RECOVERED   0 MISSED   8 (   5%)
+  from RL                    n   48 · CLEAN   30 (  62%) TAKEN   7 RECEIVED   0 RECOVERED   0 MISSED  11 (  23%)
+  from RR                    n   48 · CLEAN   28 (  58%) TAKEN   6 RECEIVED   0 RECOVERED   0 MISSED  14 (  29%)
+  receiver STAND             n  108 · CLEAN   92 (  85%) TAKEN  16 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  receiver JOG               n  174 · CLEAN  137 (  79%) TAKEN  16 RECEIVED   0 RECOVERED   0 MISSED  21 (  12%)
+  receiver RUN               n  324 · CLEAN  273 (  84%) TAKEN  38 RECEIVED   1 RECOVERED   0 MISSED  12 (   4%)
+  receiver FAST              n  108 · CLEAN   81 (  75%) TAKEN  13 RECEIVED   8 RECOVERED   0 MISSED   6 (   6%)
+  pass SOFT                  n  144 · CLEAN  127 (  88%) TAKEN  16 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  pass MED                   n  426 · CLEAN  343 (  81%) TAKEN  55 RECEIVED   1 RECOVERED   0 MISSED  27 (   6%)
+  pass FIRM                  n  144 · CLEAN  113 (  78%) TAKEN  12 RECEIVED   7 RECOVERED   0 MISSED  12 (   8%)
+  families: {'STRIDE': 240, 'OPEN_TURN': 174, 'THROUGH_TURN': 280}
+  foot/surface: {'R-INSIDE': 394, 'R-LACES': 34, 'R-OUTSIDE': 144, 'L-INSIDE': 86, 'R-SOLE': 26, 'L-SOLE': 2, 'L-OUTSIDE': 8}
+  candidate rejections: {'prep-accel': 18103, 'stance-clear': 1365, 'foot-yaw': 818, 'no-meeting': 241, 'surface': 182, 'too-late': 26, 'footwork': 3}
+  missed: {'MISSED-NO-ACTION': 20, 'MISSED-LATE': 19} examples: ['L_180R_RUN_FIRM#1', 'L_180R_RUN_FIRM#2', 'L_180R_RUN_FIRM#3', 'L_270_FAST_FIRM#1', 'L_270_FAST_FIRM#2', 'L_270_FAST_FIRM#3', 'RL_180R_RUN_MED#1', 'RL_180R_RUN_MED#3', 'RL_270_JOG_MED#1', 'RL_270_JOG_MED#3', 'RL_271_JOG_MED#3', 'RL_89_JOG_MED#1', 'RL_89_JOG_MED#2', 'RL_89_JOG_MED#3']
+  contact made 675/714 · |dir err| median 1.7° · heavy 0 short 4 · reconnection miss median 0.28 m · double touches 0 · recontacts 0
+  braking (start > 4 m/s): min prep speed / start median 0.65 · ordinary: contact / start median 0.94, ≥ 0.9 in 67/116
+  handoff: n 666 · acc median 3.6 m/s² max 5.8 · yaw step max 0.00° · request vs exit max 0.0°
+  CPU (this run's processes): receive phase 26 ms/s median (mean 28) · after handoff 429 ms/s · worst step 116.9 ms · candidates per run 56

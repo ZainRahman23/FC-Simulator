@@ -1,0 +1,297 @@
+{
+ "function": [
+  {
+   "angle": 89,
+   "kind": "ordinary",
+   "expect": "ordinary",
+   "deg360": 89
+  },
+  {
+   "angle": 90,
+   "kind": "turning",
+   "expect": "turning",
+   "deg360": 90
+  },
+  {
+   "angle": 270,
+   "kind": "turning",
+   "expect": "turning",
+   "deg360": 270
+  },
+  {
+   "angle": 271,
+   "kind": "ordinary",
+   "expect": "ordinary",
+   "deg360": 271
+  },
+  {
+   "angle": 0,
+   "kind": "ordinary",
+   "expect": "ordinary",
+   "deg360": 0
+  },
+  {
+   "angle": 180,
+   "kind": "turning",
+   "expect": "turning",
+   "deg360": 180
+  }
+ ],
+ "functionPass": true,
+ "cases": [
+  {
+   "id": "F_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "F_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "OPEN_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "F_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "F_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "FR_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "FR_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "FR_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "FR_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "R_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "R_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "R_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "R_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "RR_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": null,
+   "familyKind": null,
+   "pass": true
+  },
+  {
+   "id": "RR_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "RR_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "RR_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "RL_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "RL_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "OPEN_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "RL_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "RL_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "L_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "L_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "L_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "L_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "FL_89_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 89,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  },
+  {
+   "id": "FL_90_JOG_MED",
+   "cls": "turning",
+   "deg360": 90,
+   "want": "turning",
+   "family": "OPEN_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "FL_270_JOG_MED",
+   "cls": "turning",
+   "deg360": 270,
+   "want": "turning",
+   "family": "THROUGH_TURN",
+   "familyKind": "turning",
+   "pass": true
+  },
+  {
+   "id": "FL_271_JOG_MED",
+   "cls": "ordinary",
+   "deg360": 271,
+   "want": "ordinary",
+   "family": "STRIDE",
+   "familyKind": "ordinary",
+   "pass": true
+  }
+ ],
+ "pass": 28,
+ "n": 28
+}

@@ -16,8 +16,9 @@
 // never modified: before the action the receiver runs on TURN-1.2 exactly as any DRIBBLE-V1 actor; after the handoff the frozen resolver runs.
 import { DribbleSim, D1, DT, BALL_DEFAULT } from "../dribble15/d15_core.js";
 import { receiveTurnAngle, exitTurn } from "../receive1/rc1_core.js";
-import { FAMILIES, FAMILY_ORDER, HANDOFF_AHEAD, S_ENTRY, SURF, surfacesFor, footYawFor, planSteps, herm, minSpeed, DEG, wrapA, clamp, s5, tab, fwd, rgt, hdg, toPitch, toLocal, sideOf, other } from "./rx_actions.js";
+import { FAMILIES, FAMILY_ORDER, HANDOFF_AHEAD, RECONNECT_TAU, S_ENTRY, SURF, surfacesFor, footYawFor, planSteps, herm, minSpeed, DEG, wrapA, clamp, s5, tab, fwd, rgt, hdg, toPitch, toLocal, sideOf, other } from "./rx_actions.js";
 import { RXE, execute, difficulty, bcOf } from "./rx_exec.js";
+import { dsin, dcos } from "../physchar2/core/v2_math.js";
 export { BALL_DEFAULT, D1, DT, receiveTurnAngle, exitTurn, FAMILIES, RXE };
 const R = 0.11, SIDES = ["R", "L"], now = (typeof performance !== "undefined" && performance.now) ? () => performance.now() : () => Date.now();
 const r2 = (x) => Math.round(x * 100) / 100, r3 = (x) => Math.round(x * 1000) / 1000;
@@ -39,13 +40,15 @@ export const RX = {
   contactTol: 0.06,              // m: the CONTACT WINDOW — the ball must be within this of the action's planned contact point at the marker
   ballHMax: 0.33,                // m: highest ball centre a ground receive takes (higher: no family applies)
   clear: { stand: 0.035, handoff: 0.30 },   // m: the ball's path past the standing foot (beyond the ball radius); ball ahead of the body at the handoff
-  score: { a: 0.5, tx: 0.8, D: 1.2, surf: 1.0, weak: 0.35, vLoss: 0.6, dt: 0.9, rot: 0.15, brake: 1.0 },
-  adapt: { lat: 0.5, back: 0.5, minAhead: 0.9, aK: 1.3 },   // the exit's adaptation to the actual touch (m, m, m, × aExit)
+  score: { a: 0.5, tx: 0.8, D: 1.2, surf: 1.0, weak: 0.35, vLoss: 0.6, dt: 0.9, rot: 0.15, brake: 1.0, cross: 0.3 },
+  adapt: { lat: 0.5, back: 0.5, minAhead: 0.9, aK: 1.3 },
+  exitRamp: { dv: 1.5, after: 0.8 },
+  handoffLT: true,               // the receive touch is DRIBBLE-V1's last touch at the handoff (false: experiment only)   // the exit pace after the handoff: handoff speed + dv, the full exit pace `after` s later   // the exit's adaptation to the actual touch (m, m, m, × aExit)
   passMiss: 0.6, runOnDeg: 50,   // (classification only) the pass has gone by: moving away, passMiss m beyond its closest approach, unless it runs ahead along the run
 };
 // a profile with Ball Control set (the calibration harness / review cases): the attribute is the only change
 export function withBC(player, bc) { return bc == null ? player : Object.assign({}, player, { attributes: Object.assign({}, player.attributes, { ball_control: bc }) }); }
-const rootR = (psi) => { const a = psi + Math.PI / 2, c = Math.cos(a), s = Math.sin(a); return [c, 0, s, 0, 1, 0, -s, 0, c]; };
+const rootR = (psi) => { const a = psi + Math.PI / 2, c = dcos(a), s = dsin(a); return [c, 0, s, 0, 1, 0, -s, 0, c]; };
 const mv = (A, p) => [A[0] * p[0] + A[1] * p[1] + A[2] * p[2], A[3] * p[0] + A[4] * p[1] + A[5] * p[2], A[6] * p[0] + A[7] * p[1] + A[8] * p[2]];
 const mm = (A, B) => [A[0] * B[0] + A[1] * B[3] + A[2] * B[6], A[0] * B[1] + A[1] * B[4] + A[2] * B[7], A[0] * B[2] + A[1] * B[5] + A[2] * B[8], A[3] * B[0] + A[4] * B[3] + A[5] * B[6], A[3] * B[1] + A[4] * B[4] + A[5] * B[7], A[3] * B[2] + A[4] * B[5] + A[5] * B[8], A[6] * B[0] + A[7] * B[3] + A[8] * B[6], A[6] * B[1] + A[7] * B[4] + A[8] * B[7], A[6] * B[2] + A[7] * B[5] + A[8] * B[8]];
 // the collider frames of a body (DRIBBLE-V1's boneFrames: root-frame FK → world), for the handoff's collider history
@@ -78,8 +81,8 @@ export class ReceiveSim11 extends DribbleSim {
   // ── the pass (RECEIVE-CONTROL-1's setPass, unchanged): struck from `from` / `dist` toward where the receiver's run takes him, aimed with BALL-PHYS's
   // own free ball (rolling resistance included); `off` misplaces it, `lift` lofts it
   setPass(pa, init) {
-    const h0 = init.heading || 0, f = [Math.cos(h0), Math.sin(h0)], r = [-Math.sin(h0), Math.cos(h0)], P0 = init.pos, b = (pa.from || 0) * DEG, L = pa.lead != null ? pa.lead : 1;
-    const O = [P0[0] + pa.dist * (Math.cos(b) * f[0] + Math.sin(b) * r[0]), P0[1] + pa.dist * (Math.cos(b) * f[1] + Math.sin(b) * r[1])], off = pa.off || [0, 0], v0 = init.v || 0;
+    const h0 = init.heading || 0, f = [dcos(h0), dsin(h0)], r = [-dsin(h0), dcos(h0)], P0 = init.pos, b = (pa.from || 0) * DEG, L = pa.lead != null ? pa.lead : 1;
+    const O = [P0[0] + pa.dist * (dcos(b) * f[0] + dsin(b) * r[0]), P0[1] + pa.dist * (dcos(b) * f[1] + dsin(b) * r[1])], off = pa.off || [0, 0], v0 = init.v || 0;
     const aimAt = (T) => [P0[0] + L * v0 * T * f[0] + off[0] * f[0] + off[1] * r[0], P0[1] + L * v0 * T * f[1] + off[0] * f[1] + off[1] * r[1]];
     const strike = (aim) => { const d = [aim[0] - O[0], aim[1] - O[1]], dl = Math.hypot(d[0], d[1]), u = [d[0] / dl, d[1] / dl];
       this.W.ball.p = [O[0], R, O[1]]; this.W.ball.v = [u[0] * pa.speed, pa.lift || 0, u[1] * pa.speed]; this.W.ball.w = [u[1] * pa.speed / R, 0, -u[0] * pa.speed / R]; this.W.ball.mode = "AIRBORNE"; this.W.ball.sleeping = false; this.W.restTime = 0;
@@ -111,7 +114,7 @@ export class ReceiveSim11 extends DribbleSim {
   // meeting needs a clearly different one (≥ keepBand) — never below TURN-1.2's floor
   rxApproach(k, est) {
     const A = this.A, P = A.P, s0 = Math.hypot(A.V[0], A.V[1]), ap = RX.approach; let dir = Math.atan2(est.p[1] - P[1], est.p[0] - P[0]), tx = est.p[0], ty = est.p[1];
-    for (let it = 0; it < 3; it++) { tx = est.p[0] - Math.cos(dir) * ap.meet; ty = est.p[1] - Math.sin(dir) * ap.meet; const dx = tx - P[0], dy = ty - P[1]; if (Math.hypot(dx, dy) < 0.3) break; dir = Math.atan2(dy, dx); }
+    for (let it = 0; it < 3; it++) { tx = est.p[0] - dcos(dir) * ap.meet; ty = est.p[1] - dsin(dir) * ap.meet; const dx = tx - P[0], dy = ty - P[1]; if (Math.hypot(dx, dy) < 0.3) break; dir = Math.atan2(dy, dx); }
     const dist = Math.hypot(tx - P[0], ty - P[1]); if (dist < 0.3) dir = s0 > 0.3 ? Math.atan2(A.V[1], A.V[0]) : A.psi;
     const need = dist / Math.max(0.15, est.t), vTop = Math.min(9.5, Math.max(s0, this.rx.exitV) + ap.vUp);
     let v = Math.abs(need - s0) <= ap.keepBand * Math.max(s0, 1) ? s0 : clamp(need, RX.vFloor, vTop);
@@ -130,6 +133,11 @@ export class ReceiveSim11 extends DribbleSim {
     }
     return { dir: rx.approach.dir, v: rx.approach.v };
   }
+  // THE EXIT INTENT AFTER THE HANDOFF: the requested exit direction, and the exit pace reached in two steps — the handoff speed + exitRamp.dv first,
+  // the full pace exitRamp.after s later (a player accelerating out of a turn; a single jump to full pace with the ball rolling at his speed is a
+  // pocket DRIBBLE-V1 does not take: receive11/tools/rx_d1accept.mjs). Two discrete steps keep DRIBBLE-V1's shared prediction valid between them.
+  rawInput(t) { const r = super.rawInput(t), ho = this.rx && this.rx.handoff; if (!ho || t < ho.k * DT - 1e-9) return r; const e = RX.exitRamp;
+    return { dir: r.dir, v: t - ho.k * DT < e.after ? Math.min(r.v, Math.max(RX.vFloor, ho.v + e.dv)) : r.v }; }
   // no dribble resolver before the handoff (there is no ball to dribble — a pass is coming)
   resolve(k) { if (this.rx && this.rx.phase !== "dribble") return; return super.resolve(k); }
   // control classification: RECEIVING until the receive contact; then DRIBBLE-V1's own (the ball en route to the point the touch aimed at)
@@ -164,10 +172,10 @@ export class ReceiveSim11 extends DribbleSim {
     if (!est) { this.rxRej("no-meeting"); return null; }
     if (!stand && est.t > RX.start.tMax) return null;                                 // (still far: keep approaching — not a planning event)
     const cls = rx.cls, kind = cls.turning ? "turning" : "ordinary", dEx0 = wrapA(rx.exitDir - psi0), ctx = { k, P0, V0, psi0, s0, stand, map, est, dEx0, thRun: s0 > 1 ? hdg(V0) : psi0 };
-    const fams = FAMILY_ORDER.map((id) => FAMILIES[id]).filter((f) => f.kind === kind && f.intents.includes(rx.intent));
+    const fams = FAMILY_ORDER.map((id) => FAMILIES[id]).filter((f) => (f.kind === kind || f.kind === "any") && f.intents.includes(rx.intent));
     let best = null, n = 0; const kMin = k + Math.round(RX.start.tMin / DT), kMax = k + Math.round((stand ? RX.start.standMax : RX.start.tMax + 0.12) / DT);
     for (const fam of fams) {
-      const sig0 = Math.sign(dEx0) || 1, sides = kind === "turning" && Math.abs(dEx0) >= 170 * DEG ? [sig0, -sig0] : [sig0];
+      const sig0 = Math.sign(dEx0) || 1, sides = kind === "turning" && fam.kind !== "any" && Math.abs(dEx0) >= 170 * DEG ? [sig0, -sig0] : [sig0];
       for (const sg of sides) { const feet = fam.feet === "either" ? ["R", "L"] : fam.feet === "near" ? [sg > 0 ? "R" : "L"] : [sg > 0 ? "L" : "R"];
         for (const F of feet) for (let vi = 0; vi < fam.contact.length; vi++) for (let j = -RX.kcSpan; j <= RX.kcSpan; j++) {
           const kc = est.k + j * RX.kcGrid; if (kc < kMin || kc > kMax) continue; n++;
@@ -184,7 +192,7 @@ export class ReceiveSim11 extends DribbleSim {
     if (b.p[1] > RX.ballHMax) return this.rxRej("airborne");
     const c = [b.p[0], b.p[2]], vin = [b.v[0], b.v[2]], sIn = Math.hypot(vin[0], vin[1]), Tp = (kc - k) * DT, thRun = ctx.thRun;
     // the exit rotation relative to the current facing, the long way round for the other side of a 180° turn
-    let dEx = ctx.dEx0; if (fam.kind === "turning" && Math.sign(dEx) !== sg && dEx !== 0) dEx += sg * 2 * Math.PI;
+    let dEx = ctx.dEx0; if (fam.kind !== "ordinary" && Math.sign(dEx) !== sg && dEx !== 0) dEx += sg * 2 * Math.PI;
     // PREPARATION — the facing at the contact and the body's velocity there. The speed at the contact is the one that meets the ball on time along
     // the run (the minimum-acceleration straight-line solution) inside the family's range: never above the turn's entry speed (TURN-1's angle–velocity
     // trade-off) — and slowing only when the pass's timing needs it (a touch into stride keeps the pace when the meeting allows; braking is scored)
@@ -193,7 +201,7 @@ export class ReceiveSim11 extends DribbleSim {
     else if (fam.face.mode === "lead") { const dT = wrapA(rx.exitDir - thRun); psiC = thRun + clamp(fam.face.k * dT, -fam.face.max * DEG, fam.face.max * DEG);
       sMax = Math.min(stand ? Math.min(2.2, rx.exitV) : Math.max(s0, Math.min(rx.exitV, s0 + 1.0)), tab(S_ENTRY, Math.max(45, Math.abs(dT) / DEG)) * fam.vContact.k); sMin = stand ? 0 : Math.max(1.2, 0.45 * s0); thV = stand ? psiC : thRun + 0.3 * dT; }
     else { psiC = psi0 + sg * Math.min(fam.face.k * Math.abs(dEx), fam.face.max * DEG); sMax = Math.min(Math.max(s0, 0.5), tab(S_ENTRY, Math.abs(dEx) / DEG) * fam.vContact.k); sMin = 0; thV = thRun; }
-    const lc = fam.contact[vi], Pc = toPitch(c, psiC, -lc[0], -sF * lc[1]), fV = [Math.cos(thV), Math.sin(thV)];
+    const lc = fam.contact[vi], Pc = toPitch(c, psiC, -lc[0], -sF * lc[1]), fV = [dcos(thV), dsin(thV)];
     const dAl = (Pc[0] - P0[0]) * fV[0] + (Pc[1] - P0[1]) * fV[1], v0Al = V0[0] * fV[0] + V0[1] * fV[1], Tm0 = stand ? null : Tp;
     // (a standing receiver holds, then moves into the contact over Tm — arriving at 1.5 d / Tm at most: the Hermite from rest then has its peak
     // acceleration 3 d / Tm² at the start and none at the contact)
@@ -208,7 +216,7 @@ export class ReceiveSim11 extends DribbleSim {
     // EXIT — the handoff state: on the exit line, at a TURN-1.2 speed, after a contact → handoff with bounded acceleration and rotation
     const thX = rx.exitDir, dRot = rx.hold ? 0 : dEx - rotPre;
     const vH = rx.hold ? 0 : fam.id === "CUSHION" ? RX.vFloor : fam.exitV ? Math.max(RX.vFloor, Math.min(rx.exitV, tab(fam.exitV, Math.abs(dEx) / DEG))) : Math.max(RX.vFloor, Math.min(rx.exitV, sC + 1.0));
-    const Vh = [vH * Math.cos(thX), vH * Math.sin(thX)], dV = Math.hypot(Vh[0] - Vc[0], Vh[1] - Vc[1]);
+    const Vh = [vH * dcos(thX), vH * dsin(thX)], dV = Math.hypot(Vh[0] - Vc[0], Vh[1] - Vc[1]);
     const txMin = Math.max(fam.txMin, dV / RX.aExit, 1.875 * Math.abs(dRot) / (RX.omegaMax * DEG));
     // FOOTWORK fitted to the contact marker (and to TURN-1.2's touchdown at the handoff)
     const gp = this.E.r1GaitAt(this.A.body, this.E.RUN1.ref, clamp(Math.max(s0, sC), 2.5, 9.5)), gH = this.E.r1GaitAt(this.A.body, this.E.RUN1.ref, clamp(vH, 2.5, 9.5)), slow = Math.max(s0, sC) < 2.0;
@@ -222,12 +230,12 @@ export class ReceiveSim11 extends DribbleSim {
     // THE IDEAL FIRST TOUCH — the ball sent to where the player will next play it (reconnection point X at time tX)
     const rc = fam.reconnect; let X, nX, rest = false;
     if (rc.rest != null) { const psiE = rx.hold ? psiC : thX, Pe = rx.hold ? Ph : Ph; X = toPitch(Pe, psiE, rc.rest, 0); rest = true; nX = 2400; }
-    else { X = toPitch(Ph, thX, tab(HANDOFF_AHEAD, vH), 0); nX = kh - kc; }
+    else { const tau = RECONNECT_TAU[fam.id] || 0, Pb = [Ph[0] + Vh[0] * tau, Ph[1] + Vh[1] * tau]; X = toPitch(Pb, thX, tab(HANDOFF_AHEAD, vH), 0); nX = kh - kc + Math.round(tau / DT); }
     const dX = [X[0] - c[0], X[1] - c[1]], DX = Math.hypot(dX[0], dX[1]); if (DX < 0.02) return this.rxRej("no-touch");
     const u0 = this.speedFor(DX, nX, rest); if (u0 == null) return this.rxRej("too-far");
     const uX = rest ? 0 : this.rollDist(u0, nX).v;
     if (!rest && uX > Math.max(1.6 * vH, vH + 2.5)) return this.rxRej("runs-away");
-    const vOut = [dX[0] / DX * u0, dX[1] / DX * u0], dv = [vOut[0] - vin[0], vOut[1] - vin[1]], dvM = Math.hypot(dv[0], dv[1]);
+    const DXs = Math.sqrt(dX[0] * dX[0] + dX[1] * dX[1]), uOut = [dX[0] / DXs, dX[1] / DXs], vOut = [uOut[0] * u0, uOut[1] * u0], dv = [vOut[0] - vin[0], vOut[1] - vin[1]], dvM = Math.hypot(dv[0], dv[1]);
     const alpha = wrapA(hdg(dv) - psiC) / DEG, surfs = surfacesFor(fam, F, alpha, dvM); if (!surfs.length) return this.rxRej("surface", { fam: fam.id, F, kc, alpha, dvM });
     // the foot's yaw that presents the surface to the impulse, brought into the surface's authored yaw range by at most the glancing tolerance
     const tolG = tab(SURF.tol, dvM); let surface = null, yRel = 0, glance = 0, yRelI = 0;
@@ -249,8 +257,8 @@ export class ReceiveSim11 extends DribbleSim {
     const redirect = sIn > 1 && u0 > 1 ? Math.abs(wrapA(hdg(vOut) - hdg(vin))) / DEG : 0, psiAt = (t) => this.psiPlan({ tS, Tp, psi0, psiC, dRot, Tx: rx.hold ? 0.45 : (kh - kc) * DT, hold: rx.hold }, t);
     const rot = Math.abs(wrapA(psiAt(Tp + RXE.diff.rotWin) - psiAt(Math.max(0, Tp - RXE.diff.rotWin)))) / DEG, weak = F !== this.pref;
     const dif = difficulty({ vIn: sIn, redirect, s: sC, rot, surface, weak, wf: this.wf, glance });
-    const w = RX.score, aN = prep.aPeak / aLim, score = w.a * aN + w.tx * (rx.hold ? 0 : (kh - kc) * DT) + w.D * (dif.D - 1) + w.surf * SURF[surface].pref + (weak ? w.weak * (5 - (this.wf || 3)) / 2 : 0) + w.vLoss * (rx.exitV > 0 ? Math.max(0, rx.exitV - vH) / rx.exitV : 0) + w.dt * Math.abs(kc - est.k) * DT + fam.pref + w.rot * Math.abs(dRot) / Math.PI + (fam.id === "STRIDE" && s0 > 1 ? w.brake * Math.max(0, s0 - minSpeed(prep)) / s0 : 0);
-    return { fam, F, S, sg, vi, kc, kh, k0: k, psi0, psiC, P0, V0, Pc, Vc, Ph, Vh, thX, vH, tS, Tp, Tx: rx.hold ? 0.45 : (kh - kc) * DT, dEx, dRot, rotPre, prep, exitP, steps: st, X, nX, rest, ideal: { dir: hdg(vOut), speed: u0, uX, vOut }, vin, sIn, c, cK: b.p.slice(), cH: b.p[1],
+    const w = RX.score, aN = prep.aPeak / aLim, score = w.a * aN + w.tx * (rx.hold ? 0 : (kh - kc) * DT) + w.D * (dif.D - 1) + w.surf * SURF[surface].pref + (weak ? w.weak * (5 - (this.wf || 3)) / 2 : 0) + w.vLoss * (rx.exitV > 0 ? Math.max(0, rx.exitV - vH) / rx.exitV : 0) + w.dt * Math.abs(kc - est.k) * DT + fam.pref + w.rot * Math.abs(dRot) / Math.PI + (fam.id === "STRIDE" && s0 > 1 ? w.brake * Math.max(0, s0 - minSpeed(prep)) / s0 : 0) + (rest ? 0 : w.cross * Math.abs(wrapA(hdg(vOut) - thX)) / (30 * DEG));
+    return { fam, F, S, sg, vi, kc, kh, k0: k, psi0, psiC, P0, V0, Pc, Vc, Ph, Vh, thX, vH, tS, Tp, Tx: rx.hold ? 0.45 : (kh - kc) * DT, dEx, dRot, rotPre, prep, exitP, steps: st, X, nX, rest, ideal: { dir: hdg(vOut), u: uOut, speed: u0, uX, vOut }, vin, sIn, c, cK: b.p.slice(), cH: b.p[1],
       surface, alpha, yawF, glance, dv, dvM, redirect, rot, dif, weak, score, aPeak: prep.aPeak, gS, stand, hold: rx.hold, sC, Spl, ySpl: yS, gp, gH };
   }
   // the launch speed whose free roll covers distance D in n ticks (rest: comes to rest after D) — BALL-PHYS's own roll table (DRIBBLE-V1's)
@@ -298,7 +306,7 @@ export class ReceiveSim11 extends DribbleSim {
   // ── THE AUTHORITATIVE RECEIVE CONTACT (the action's CONTACT marker): ideal touch → Ball Control execution → one resolved launch ────────────────
   contactNow(k, act) {
     const b = this.W.ball, vin = [b.v[0], b.v[2]], sIn = Math.hypot(vin[0], vin[1]), key = ["RECEIVE", this.pid, act.eventId];
-    const ex = execute(this.rng, key, act.ideal, sIn, this.bc, act.dif.D), vk = [Math.cos(ex.dir) * ex.speed, 0, Math.sin(ex.dir) * ex.speed], wk = [vk[2] / R, 0, -vk[0] / R], id = `${this.pid}:${act.eventId}`;
+    const ex = execute(this.rng, key, act.ideal, sIn, this.bc, act.dif.D), vk = [ex.v[0], 0, ex.v[1]], wk = [vk[2] / R, 0, -vk[0] / R], id = `${this.pid}:${act.eventId}`;
     // the kernel asserts the contact window (the ball within contactTol of the planned contact point — never a teleport) and that no other
     // collider contests the ball; colliderId null: the authored action's contact is not a boot-mesh collision
     this.W.schedule({ id, tick: k, position: act.cK.slice(), maxContactError: RX.contactTol, velocity: vk, spin: wk, colliderId: null, preparedAt: this.W.time,
@@ -317,8 +325,8 @@ export class ReceiveSim11 extends DribbleSim {
   // the handoff, and back (≤ adapt.back) if the ball would be closer than adapt.minAhead — within the exit's acceleration limit; the exit
   // direction, the handoff speed and tick are unchanged. A touch that went too far wrong for that is not chased by the action: DRIBBLE-V1 gets it.
   adaptExit(k, act) {
-    act.adapted = true; const n = act.kh - k, map = this.predictBall(k, n + 2), b = map.get(act.kh); if (!b) return;
-    const Bh = [b.p[0], b.p[2]], rel = toLocal(act.Ph, act.thX, Bh), A = RX.adapt, lat = clamp(rel[1], -A.lat, A.lat), back = rel[0] < A.minAhead ? clamp(rel[0] - A.minAhead, -A.back, 0) : 0;
+    act.adapted = true; const kX = act.kc + act.nX, n = kX - k, map = this.predictBall(k, n + 2), b = map.get(kX); if (!b) return;
+    const tau = (kX - act.kh) * DT, Bh = [b.p[0] - act.Vh[0] * tau, b.p[2] - act.Vh[1] * tau], rel = toLocal(act.Ph, act.thX, Bh), A = RX.adapt, lat = clamp(rel[1], -A.lat, A.lat), back = rel[0] < A.minAhead ? clamp(rel[0] - A.minAhead, -A.back, 0) : 0;
     if (Math.abs(lat) < 0.01 && back === 0) { act.adapt = { lat: 0, back: 0, rel: rel.map(r3) }; return; }
     const t0 = (k - act.k0) * DT - act.Tp, st = act.exitP.at(t0), Tr = (act.kh - k) * DT;
     for (const f of [1, 0.75, 0.5, 0.25]) { const Ph2 = toPitch(act.Ph, act.thX, back * f, lat * f), h2 = herm(st.P, st.V, Ph2, act.Vh, Tr);
@@ -333,10 +341,11 @@ export class ReceiveSim11 extends DribbleSim {
     const k = this.k, rx = this.rx, A1 = act.A1;
     rebase(A1, act.tA + (k - act.kA) * DT);
     if (this.cfg.TURN11) this.cfg.TURN11.attach(A1, { mode: "t12" });
-    A1.input = { dir: rx.exitDir, v: Math.max(rx.exitV, RX.vFloor) };
+    A1.input = { dir: rx.exitDir, v: Math.min(Math.max(rx.exitV, RX.vFloor), Math.max(RX.vFloor, act.vH + RX.exitRamp.dv)) };
     this.A = A1; this.adjs = { R: {}, L: {} }; this.evalPose(A1); this.framesPrev = boneFramesOf(A1, A1.fk); this.prevColV = null;
     this.plan = null; this.job = null; this.locoCache = null; this.ballCache = null; this.track = null; this.adoptable = []; this.genMemo = null; this.ftHold = null; this.carry = null; this.carryTask = null;
     this.held = null; this.userDir = rx.exitDir; this.stageDir = null; this.replanAt = k; this.recoverAt = k; this.lastPursuit = k;
+    if (RX.handoffLT === false) { this.lastTouch = null; this.recoverAt = null; }   // (experiment: DRIBBLE-V1 starts as from a scenario — no last touch)
     const b = this.ballA(), rel = toLocal(act.Ph, act.thX, [b.p[0], -b.p[2]]);
     rx.handoff = { k, t: r3(k * DT), P: act.Ph.slice(), v: act.vH, dir: +(act.thX / DEG).toFixed(2), ballRel: rel.map(r3), ballSpeed: r2(Math.hypot(b.v[0], b.v[2])), foot: act.Fh };
     rx.phase = "dribble"; rx.log.push({ k, ev: "handoff", v: act.vH, ballRel: rx.handoff.ballRel });

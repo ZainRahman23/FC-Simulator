@@ -28,7 +28,7 @@ if go:
     mi = [r for r in go if r["cls5"] == "MISSED"]; print("  missed:", dict(Counter(r["outcome"] for r in mi)), "examples:", [f'{r["id"]}#{r["seed"]}' for r in mi[:14]])
     ct = [r for r in go if r["contact"] and r["contact"]["launched"]]
     if ct:
-        de = [abs(r["contact"]["dirErr"]) for r in ct]; print(f"  contact made {len(ct)}/{len(go)} · |dir err| median {st.median(de):.1f}° · heavy {sum(1 for r in ct if r['heavy'])} · double touches {sum(r['doubleTouches'] for r in go)} · recontacts {sum(r['recontacts'] for r in go)}")
+        de = [abs(r["contact"]["dirErr"]) for r in ct]; print(f"  contact made {len(ct)}/{len(go)} · |dir err| median {st.median(de):.1f}° · heavy {sum(1 for r in ct if r['heavy'])} short {sum(1 for r in ct if r['short'])} · reconnection miss median {st.median([r['recon']['miss'] for r in ct if r['recon']]):.2f} m · double touches {sum(r['doubleTouches'] for r in go)} · recontacts {sum(r['recontacts'] for r in go)}")
         br = [r for r in ct if r["speed"]["start"] and r["speed"]["start"] > 4]
         if br:
             o = [r for r in br if r["cls"] == "ordinary"]

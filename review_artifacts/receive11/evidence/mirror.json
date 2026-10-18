@@ -1,0 +1,237 @@
+{
+ "pass": 10,
+ "n": 10,
+ "worstPathErrM": 1.0658141036401503e-13,
+ "rows": [
+  {
+   "pair": "F_0_RUN / F_0_RUN",
+   "A": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    202,
+    307
+   ],
+   "B": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    202,
+    307
+   ],
+   "idealMirrorErrDeg": 0.7757843159521371,
+   "pathMirrorErrM": 0.060000000000002274,
+   "selfSymmetric": true,
+   "pass": true
+  },
+  {
+   "pair": "FL_45_RUN / FR_315_RUN",
+   "A": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    250,
+    355
+   ],
+   "B": [
+    "STRIDE",
+    "L",
+    -1,
+    "INSIDE",
+    250,
+    355
+   ],
+   "idealMirrorErrDeg": 1.1368683772161603e-13,
+   "pathMirrorErrM": 6.434238129413513e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "L_90_RUN / R_270_RUN",
+   "A": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    402,
+    568
+   ],
+   "B": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    402,
+    568
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 4.3220627292571254e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "F_120_JOG / F_240_JOG",
+   "A": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    256,
+    422
+   ],
+   "B": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    256,
+    422
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 1.4210854715202004e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "FR_135_RUN / FL_225_RUN",
+   "A": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    274,
+    440
+   ],
+   "B": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    274,
+    440
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 6.394884621840902e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "F_180_JOG / F_180_JOG",
+   "A": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "INSIDE",
+    256,
+    417
+   ],
+   "B": [
+    "OPEN_TURN",
+    "L",
+    -1,
+    "INSIDE",
+    256,
+    417
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 7.105427357601002e-15,
+   "selfSymmetric": true,
+   "pass": true
+  },
+  {
+   "pair": "R_240_RUN / L_120_RUN",
+   "A": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "SOLE",
+    374,
+    540
+   ],
+   "B": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "SOLE",
+    374,
+    540
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 5.0242958677880804e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "RL_315_RUN / RR_45_RUN",
+   "A": [
+    "STRIDE",
+    "R",
+    -1,
+    "INSIDE",
+    362,
+    468
+   ],
+   "B": [
+    "STRIDE",
+    "L",
+    1,
+    "INSIDE",
+    362,
+    468
+   ],
+   "idealMirrorErrDeg": 1.1368683772161603e-13,
+   "pathMirrorErrM": 1.4210854715202004e-14,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "L_0_STAND / R_0_STAND",
+   "A": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    348,
+    464
+   ],
+   "B": [
+    "STRIDE",
+    "L",
+    1,
+    "INSIDE",
+    348,
+    464
+   ],
+   "idealMirrorErrDeg": 1.2505552149377763e-12,
+   "pathMirrorErrM": 1.0658141036401503e-13,
+   "selfSymmetric": false,
+   "pass": true
+  },
+  {
+   "pair": "F_90_FAST / F_270_FAST",
+   "A": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    200,
+    366
+   ],
+   "B": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    200,
+    366
+   ],
+   "idealMirrorErrDeg": 0,
+   "pathMirrorErrM": 1.4210854715202004e-14,
+   "selfSymmetric": false,
+   "pass": true
+  }
+ ]
+}

@@ -40,6 +40,11 @@ export function score(S, cs, cpu) {
     const r = rec[kr != null ? kr : rec.length - 1], bx = r.ball.p[0] - r.P[0], by = r.ball.p[2] - r.P[1], ah = bx * Math.cos(r.psi) + by * Math.sin(r.psi), lat = -bx * Math.sin(r.psi) + by * Math.cos(r.psi);
     kill = { restT: kr != null ? r3((kr - k1) * DT) : null, ahead: r2(ah), lat: r2(lat), dist: r2(Math.hypot(bx, by)), speedOut: r2(c.ex.speed) }; }
   const exOut = Tr ? hdgA(Tr.executed.v) : null;
+  // EXECUTION QUALITY of the receive touch against its ideal: heavy / short (speed off by more than max(0.8 m/s, 20 %)), and the RECONNECTION MISS —
+  // how far the actual ball is from the point the ideal touch sent it to, at the tick it was meant to be there (lateral: across the exit line)
+  let reconX = null; if (Tr && act && !act.rest) { const kX = act.kc + act.nX, q = rec[Math.min(rec.length - 1, kX)], bx = q.ball.p[0] - act.X[0], by = q.ball.p[2] - act.X[1];
+    reconX = { miss: r2(Math.hypot(bx, by)), lateral: r2(-bx * Math.sin(act.thX) + by * Math.cos(act.thX)), along: r2(bx * Math.cos(act.thX) + by * Math.sin(act.thX)) }; }
+  const eLim = Tr ? Math.max(0.8, 0.2 * act.ideal.speed) : null, heavy2 = Tr ? c.ex.speedErr > eLim : null, short2 = Tr ? c.ex.speedErr < -eLim : null;
   const res = {
     id: cs.id, dir: cs.dir, angle: cs.angle, side: cs.side, rs: cs.rs, ps: cs.ps, intent: rx.intent, bc: S.bc, seed: S.cfg.seed, cls: rx.cls.kind, rta: rx.cls.deg360, rtaSigned: rx.cls.signed,
     pass: { T: rx.pass.T, vArr: rx.pass.vArr },
@@ -50,12 +55,13 @@ export function score(S, cs, cpu) {
     nextTouch: nextT ? { dt: r3((nextT.k - Tr.k) * DT), F: nextT.F, reg: nextT.reg, afterHandoff: ho ? nextT.k >= ho.k : null } : null,
     speed: { start: act ? r2(spAt(act.k0)) : null, minPrep: r2(vMinPrep), atContact: k1 != null ? r2(spAt(k1)) : null, atHandoff: ho ? r2(spAt(ho.k)) : null, at1s: k1 != null ? r2(spAt(k1 + 240)) : null, end: r2(spAt(rec.length - 1)) },
     handoff: ho ? { t: ho.t, acc: r2(hoAcc), yawStep: r2(hoYaw), reqVsExit: r2(hoReq), ballRel: hoBall, ballSpeed: ho.ballSpeed } : null,
-    ctrlEnd, lostAfter: lostAt.length ? r3(lostAt[0] * DT) : null, heavy: Tr ? c.ex.speed - (spAt(k1) || 0) > 4.0 : null, doubleTouches: dbl, recontacts: recon, physBefore: physPre,
+    ctrlEnd, lostAfter: lostAt.length ? r3(lostAt[0] * DT) : null, heavyRC1: Tr ? c.ex.speed - (spAt(k1) || 0) > 4.0 : null, heavy: heavy2, short: short2, recon: reconX, doubleTouches: dbl, recontacts: recon, physBefore: physPre,
     touches: T.length, fault: S.fault ? S.fault.message : null, kill, plans: rx.plans, cands: rx.cands, rej: rx.rej, cpu,
   };
   const real = !!(Tr && (chase == null || Tr.k < chase)), anyTouch = T.length > 0;
-  if (rx.intent === "kill") res.outcome = !Tr ? (sm.action ? "MISSED-CANCELLED" : "MISSED-NO-ACTION") : kill && kill.restT != null && kill.restT <= 1.2 && kill.dist <= 1.0 && kill.ahead > -0.1 ? "KILLED" : kill && kill.dist <= 1.6 ? "SETTLED" : "HEAVY";
-  else res.outcome = !anyTouch ? (sm.action ? "MISSED-CANCELLED" : "MISSED-NO-ACTION") : !real ? "RECOVERED" : kLine == null ? "RECEIVED" : ctrlEnd === "CONTROLLED" && res.firstToLine <= 2.5 ? "CLEAN" : "TAKEN";
+  const late = sm.action && !Tr && sm.action.kc >= rec.length - 1, missWhy = !sm.action ? "MISSED-NO-ACTION" : late ? "MISSED-LATE" : "MISSED-CANCELLED";   // (LATE: the action's contact falls after the run's end)
+  if (rx.intent === "kill") res.outcome = !Tr ? missWhy : kill && kill.restT != null && kill.restT <= 1.2 && kill.dist <= 1.0 && kill.ahead > -0.1 ? "KILLED" : kill && kill.dist <= 1.6 ? "SETTLED" : "HEAVY";
+  else res.outcome = !anyTouch ? missWhy : !real ? "RECOVERED" : kLine == null ? "RECEIVED" : ctrlEnd === "CONTROLLED" && res.firstToLine <= 2.5 ? "CLEAN" : "TAKEN";
   res.cls5 = res.outcome.startsWith("MISSED") ? "MISSED" : res.outcome;
   return res;
 }

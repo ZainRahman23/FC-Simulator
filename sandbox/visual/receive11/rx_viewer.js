@@ -236,11 +236,11 @@ async function boot() {
   Vv.gl = gl; Vv.R = { gl }; Vv.ground = groundProg(gl); Vv.ball = ballProg(gl);
   if (q.get("diag") === "1") Vv.diag = true; if (q.get("ft") === "0") Vv.ft = false; if (q.get("geo") === "0") Vv.geo = false; if (q.get("labels") === "0") Vv.labels = false; if (q.get("single")) Vv.single = q.get("single"); if (q.get("rate")) Vv.rate = +q.get("rate"); if (q.get("zoom")) Vv.zoom = +q.get("zoom"); if (q.get("A")) Vv.A = q.get("A"); if (q.get("B")) Vv.B = q.get("B");
   Vv.camX = (r) => r.P[0];
-  const sel = document.getElementById("selScn"); sel.innerHTML = VISUAL.map(s => `<option value="${s.id}">${s.tag} · ${s.id}</option>`).join(""); sel.value = q.get("case") || VISUAL[0].id;
+  const sel = document.getElementById("selScn"); sel.innerHTML = VISUAL.map(s => `<option value="${s.id}|${s.seed || 1}">${s.tag} · ${s.id}${s.seed ? " · seed " + s.seed : ""}</option>`).join(""); sel.value = (q.get("case") || VISUAL[0].id) + "|" + (q.get("seed") || 1);
   const sp = document.getElementById("selProf"); sp.innerHTML = Object.entries(PROFILES).map(([k, p]) => `<option value="${k}">${k} · ${p.name} (${p.preferred_foot}, wf ${p.weak_foot})</option>`).join(""); sp.value = q.get("prof") || "HIGH";
   const sb = document.getElementById("selBC"); sb.innerHTML = [["", "case / profile"], ...[99, 89, 80, 70, 60, 50, 40].map((b) => [String(b), "BC " + b])].map(([v, l]) => `<option value="${v}">${l}</option>`).join(""); sb.value = q.get("bc") || "";
   const go = (k, v) => { const u = new URL(location.href); u.searchParams.set(k, v); location.href = u.toString(); };
-  sel.onchange = (e) => go("case", e.target.value); sp.onchange = (e) => go("prof", e.target.value); sb.onchange = (e) => { const u = new URL(location.href); if (e.target.value) u.searchParams.set("bc", e.target.value); else u.searchParams.delete("bc"); location.href = u.toString(); };
+  sel.onchange = (e) => { const [c, sd] = e.target.value.split("|"), u = new URL(location.href); u.searchParams.set("case", c); u.searchParams.set("seed", sd); location.href = u.toString(); }; sp.onchange = (e) => go("prof", e.target.value); sb.onchange = (e) => { const u = new URL(location.href); if (e.target.value) u.searchParams.set("bc", e.target.value); else u.searchParams.delete("bc"); location.href = u.toString(); };
   document.querySelectorAll("[data-rate]").forEach(b => b.onclick = () => { Vv.rate = +b.dataset.rate; document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", x === b)); });
   const bp = document.getElementById("bPlay"); bp.onclick = () => { Vv.playing = !Vv.playing; bp.textContent = Vv.playing ? "❚❚ Pause" : "▶ Play"; };
   const cd = document.getElementById("cDiag"); cd.checked = Vv.diag; cd.onchange = () => { Vv.diag = cd.checked; };

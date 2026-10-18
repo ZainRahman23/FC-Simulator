@@ -14,10 +14,13 @@ export const wrapA = (a) => { a = (a + Math.PI) % (2 * Math.PI); if (a < 0) a +=
 export const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 export const s5 = (t) => { t = clamp(t, 0, 1); return t * t * t * (t * (6 * t - 15) + 10); };
 export const tab = (T, x) => { if (x <= T[0][0]) return T[0][1]; for (let i = 1; i < T.length; i++) if (x <= T[i][0]) { const a = T[i - 1], b = T[i]; return a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); } return T[T.length - 1][1]; };
-export const fwd = (th) => [Math.cos(th), Math.sin(th)], rgt = (th) => [-Math.sin(th), Math.cos(th)];
+// (the authoritative chain — the action plan, the ideal touch, the executed launch — uses the ball kernel's deterministic dsin / dcos: bit-identical
+// in every JavaScript engine; Math.atan2 is V8's fdlibm port)
+import { dsin, dcos } from "../physchar2/core/v2_math.js";
+export const fwd = (th) => [dcos(th), dsin(th)], rgt = (th) => [-dsin(th), dcos(th)];
 export const hdg = (v) => Math.atan2(v[1], v[0]);
-export const toPitch = (P, th, a, l) => [P[0] + a * Math.cos(th) - l * Math.sin(th), P[1] + a * Math.sin(th) + l * Math.cos(th)];   // body-local [ahead, lateral] → pitch
-export const toLocal = (P, th, q) => { const dx = q[0] - P[0], dy = q[1] - P[1]; return [dx * Math.cos(th) + dy * Math.sin(th), -dx * Math.sin(th) + dy * Math.cos(th)]; };
+export const toPitch = (P, th, a, l) => { const c = dcos(th), s = dsin(th); return [P[0] + a * c - l * s, P[1] + a * s + l * c]; };   // body-local [ahead, lateral] → pitch
+export const toLocal = (P, th, q) => { const dx = q[0] - P[0], dy = q[1] - P[1], c = dcos(th), s = dsin(th); return [dx * c + dy * s, -dx * s + dy * c]; };
 export const sideOf = (F) => (F === "R" ? 1 : -1), other = (F) => (F === "R" ? "L" : "R");
 
 // ── TURN-1's approved angle–velocity trade-off (turn1_loco.js T1.sEntry: the largest COM speed a plant at that heading change is entered at) ─────
@@ -58,12 +61,16 @@ export function footYawFor(s, F, hn) { const sg = sideOf(F); return s === "INSID
 // of a runner — on the line and ≥ 1 m ahead it takes over almost always, 0.2 m off the line or 0.6 m ahead often not); for a kill the rest
 // point in front of the feet.
 export const HANDOFF_AHEAD = [[2.5, 1.2], [4.0, 1.4], [5.5, 1.6], [7.8, 2.0], [9.5, 2.4]];
+// …and the ball CROSSES the new line (an intermediate touch vector converges onto it) RECONNECT_TAU s after the handoff — when DRIBBLE-V1's first
+// touch is due — not at the handoff: a ball that crossed the line before DRIBBLE-V1 plays it drifts off it (the takeovers that failed in the
+// matrix had crossing angles of 13–24°, the clean ones 7°)
+export const RECONNECT_TAU = { STRIDE: 0.15, OPEN_TURN: 0.28, THROUGH_TURN: 0.28 };
 export const FAMILIES = {
   CUSHION: {
-    id: "CUSHION", label: "kill / cushion", kind: "ordinary", rta: [0, 90], intents: ["kill"], feet: "either", surfaces: ["INSIDE", "SOLE"],
-    contact: [[0.36, 0.17]], stand: [-0.02, -0.15], face: { mode: "ball", max: 70 }, vContact: { max: 1.0 }, follow: 0.18, txMin: 0.55,
+    id: "CUSHION", label: "kill / cushion", kind: "any", rta: [0, 181], intents: ["kill"], feet: "either", surfaces: ["INSIDE", "SOLE"],
+    contact: [[0.36, 0.17]], stand: [-0.02, -0.15], face: { mode: "ball", max: 150 }, vContact: { max: 1.0 }, follow: 0.18, txMin: 0.55,
     reconnect: { rest: 0.42 }, crouch: 0.07, pref: 0,
-    doc: "The ball deadened in front of the feet: the contact foot meets it with the inside and gives with it; the body squares up to the pass and settles. Ideal outgoing speed: what rolls the ball to rest `rest` m in front of the body.",
+    doc: "(Any receiveTurnAngle: a kill is about the touch — the set-off afterwards turns to the exit.) The ball deadened in front of the feet: the contact foot meets it with the inside and gives with it; the body squares up to the pass (turning to face it, up to 150°) and settles. Ideal outgoing speed: what rolls the ball to rest `rest` m in front of the body.",
   },
   STRIDE: {
     id: "STRIDE", label: "touch into stride", kind: "ordinary", rta: [0, 90], intents: ["go"], feet: "either", surfaces: ["INSIDE", "OUTSIDE", "LACES"],

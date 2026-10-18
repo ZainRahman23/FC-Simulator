@@ -1,0 +1,29 @@
+276 runs · CLEAN 132 · KILLED 81 · TAKEN 31 · SETTLED 27 · RECEIVED 5
+GO receives:
+  all                        n  168 · CLEAN  132 (  79%) TAKEN  31 RECEIVED   5 RECOVERED   0 MISSED   0 (   0%)
+  ordinary                   n   63 · CLEAN   50 (  79%) TAKEN  12 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  turning                    n  105 · CLEAN   82 (  78%) TAKEN  19 RECEIVED   4 RECOVERED   0 MISSED   0 (   0%)
+  angle 0                    n   42 · CLEAN   35 (  83%) TAKEN   7 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 45                   n   21 · CLEAN   15 (  71%) TAKEN   5 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  angle 90                   n   21 · CLEAN   17 (  81%) TAKEN   4 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 120                  n   21 · CLEAN   18 (  86%) TAKEN   2 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  angle 180                  n   21 · CLEAN   13 (  62%) TAKEN   7 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  angle 240                  n   21 · CLEAN   16 (  76%) TAKEN   3 RECEIVED   2 RECOVERED   0 MISSED   0 (   0%)
+  angle 270                  n   21 · CLEAN   18 (  86%) TAKEN   3 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from F                     n   84 · CLEAN   63 (  75%) TAKEN  18 RECEIVED   3 RECOVERED   0 MISSED   0 (   0%)
+  from FR                    n   21 · CLEAN   18 (  86%) TAKEN   2 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  from L                     n   42 · CLEAN   33 (  79%) TAKEN   8 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  from R                     n   21 · CLEAN   18 (  86%) TAKEN   3 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  receiver JOG               n   21 · CLEAN   13 (  62%) TAKEN   7 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  receiver RUN               n  105 · CLEAN   86 (  82%) TAKEN  16 RECEIVED   3 RECOVERED   0 MISSED   0 (   0%)
+  receiver FAST              n   42 · CLEAN   33 (  79%) TAKEN   8 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  pass MED                   n  168 · CLEAN  132 (  79%) TAKEN  31 RECEIVED   5 RECOVERED   0 MISSED   0 (   0%)
+  families: {'THROUGH_TURN': 63, 'STRIDE': 63, 'OPEN_TURN': 42}
+  foot/surface: {'L-INSIDE': 21, 'R-INSIDE': 126, 'R-LACES': 21}
+  candidate rejections: {'prep-accel': 3213, 'stance-clear': 364}
+  missed: {} examples: []
+  contact made 168/168 · |dir err| median 1.6° · heavy 19 short 19 · reconnection miss median 0.52 m · double touches 0 · recontacts 0
+  braking (start > 4 m/s): min prep speed / start median 0.48 · ordinary: contact / start median 0.73, ≥ 0.9 in 21/42
+  handoff: n 168 · acc median 4.2 m/s² max 5.8 · yaw step max 0.00° · request vs exit max 0.0°
+  CPU (this run's processes): receive phase 22 ms/s median (mean 30) · after handoff 600 ms/s · worst step 128.2 ms · candidates per run 48
+KILL receives: {'KILLED': 81, 'SETTLED': 27}

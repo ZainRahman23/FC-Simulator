@@ -1,0 +1,372 @@
+{
+ "node": "v22.19.0",
+ "chrome": "Chrome/155.0.8059.80",
+ "seed": "1",
+ "results": {
+  "F_0_STAND_MED_KILL_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": true,
+   "firstStateDiff": null,
+   "maxStateDiff": 0,
+   "touches": 1,
+   "action": [
+    "CUSHION",
+    "R",
+    1,
+    "INSIDE",
+    342,
+    null
+   ]
+  },
+  "FL_0_RUN_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 609,
+    "q": 4,
+    "diff": 2.7755575615628914e-17
+   },
+   "maxStateDiff": 2.7755575615628914e-17,
+   "touches": 2,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    244,
+    349
+   ]
+  },
+  "F_90_RUN_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 519,
+    "q": 8,
+    "diff": 8.881784197001252e-16
+   },
+   "maxStateDiff": 1.7763568394002505e-15,
+   "touches": 3,
+   "action": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "LACES",
+    238,
+    399
+   ]
+  },
+  "FR_135_RUN_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 557,
+    "q": 4,
+    "diff": 5.551115123125783e-17
+   },
+   "maxStateDiff": 7.105427357601002e-15,
+   "touches": 3,
+   "action": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    274,
+    440
+   ]
+  },
+  "F_240_JOG_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 515,
+    "q": 8,
+    "diff": 4.440892098500626e-16
+   },
+   "maxStateDiff": 3.552713678800501e-15,
+   "touches": 3,
+   "action": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    256,
+    422
+   ]
+  },
+  "F_120_JOG_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 567,
+    "q": 4,
+    "diff": 5.551115123125783e-17
+   },
+   "maxStateDiff": 2.6645352591003757e-15,
+   "touches": 3,
+   "action": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "LACES",
+    280,
+    441
+   ]
+  },
+  "F_180R_JOG_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": true,
+   "firstStateDiff": null,
+   "maxStateDiff": 0,
+   "touches": 3,
+   "action": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "INSIDE",
+    256,
+    417
+   ]
+  },
+  "F_0_FAST_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 768,
+    "q": 4,
+    "diff": 1.3877787807814457e-17
+   },
+   "maxStateDiff": 1.3877787807814457e-17,
+   "touches": 2,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    176,
+    266
+   ]
+  },
+  "F_90_FAST_MED_BC99": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 462,
+    "q": 8,
+    "diff": 8.881784197001252e-16
+   },
+   "maxStateDiff": 1.7763568394002505e-15,
+   "touches": 4,
+   "action": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "LACES",
+    200,
+    361
+   ]
+  },
+  "FL_0_RUN_MED_BC50": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 511,
+    "q": 8,
+    "diff": 4.440892098500626e-16
+   },
+   "maxStateDiff": 4.440892098500626e-16,
+   "touches": 1,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    244,
+    349
+   ]
+  },
+  "F_0_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": true,
+   "firstStateDiff": null,
+   "maxStateDiff": 0,
+   "touches": 3,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    202,
+    307
+   ]
+  },
+  "FL_45_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 463,
+    "q": 8,
+    "diff": 4.440892098500626e-16
+   },
+   "maxStateDiff": 7.105427357601002e-15,
+   "touches": 3,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "INSIDE",
+    250,
+    355
+   ]
+  },
+  "R_270_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 711,
+    "q": 3,
+    "diff": 1.887379141862766e-15
+   },
+   "maxStateDiff": 1.887379141862766e-15,
+   "touches": 2,
+   "action": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "SOLE",
+    368,
+    534
+   ]
+  },
+  "RR_315_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 565,
+    "q": 8,
+    "diff": 4.440892098500626e-16
+   },
+   "maxStateDiff": 8.881784197001252e-16,
+   "touches": 2,
+   "action": [
+    "STRIDE",
+    "R",
+    -1,
+    "INSIDE",
+    380,
+    485
+   ]
+  },
+  "F_180R_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": true,
+   "firstStateDiff": null,
+   "maxStateDiff": 0,
+   "touches": 3,
+   "action": [
+    "OPEN_TURN",
+    "R",
+    1,
+    "INSIDE",
+    232,
+    393
+   ]
+  },
+  "L_90_JOG_SOFT": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 719,
+    "q": 3,
+    "diff": 1.4363510381087963e-15
+   },
+   "maxStateDiff": 1.4363510381087963e-15,
+   "touches": 2,
+   "action": [
+    "THROUGH_TURN",
+    "L",
+    1,
+    "INSIDE",
+    427,
+    593
+   ]
+  },
+  "R_0_STAND_FIRM": {
+   "decisionsIdentical": true,
+   "stateIdentical": true,
+   "firstStateDiff": null,
+   "maxStateDiff": 0,
+   "touches": 3,
+   "action": [
+    "STRIDE",
+    "R",
+    1,
+    "OUTSIDE",
+    258,
+    374
+   ]
+  },
+  "F_270_FAST_FIRM": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 427,
+    "q": 8,
+    "diff": 2.220446049250313e-16
+   },
+   "maxStateDiff": 1.7763568394002505e-15,
+   "touches": 3,
+   "action": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "INSIDE",
+    172,
+    338
+   ]
+  },
+  "FR_225_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 515,
+    "q": 3,
+    "diff": 4.440892098500626e-16
+   },
+   "maxStateDiff": 7.105427357601002e-15,
+   "touches": 4,
+   "action": [
+    "THROUGH_TURN",
+    "R",
+    -1,
+    "SOLE",
+    274,
+    440
+   ]
+  },
+  "RL_0_RUN_MED": {
+   "decisionsIdentical": true,
+   "stateIdentical": false,
+   "firstStateDiff": {
+    "tick": 679,
+    "q": 5,
+    "diff": 1.3877787807814457e-17
+   },
+   "maxStateDiff": 1.3877787807814457e-17,
+   "touches": 3,
+   "action": [
+    "STRIDE",
+    "R",
+    -1,
+    "INSIDE",
+    362,
+    467
+   ]
+  }
+ },
+ "summary": {
+  "decisionsIdentical": 20,
+  "stateIdentical": 5,
+  "total": 20
+ }
+}

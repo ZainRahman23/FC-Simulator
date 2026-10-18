@@ -5,6 +5,9 @@ import { DIRS, DIRNAME, RSPEED, PSPEED, ANGLES, DIST_ADD, makeCase as makeCase1,
 export { DIRS, DIRNAME, RSPEED, PSPEED, ANGLES, DIST_ADD };
 export function makeCase(o) {
   const c = makeCase1(o), sc = c.scenario;
+  // (a kill is received at the feet: RECEIVE-CONTROL-1's rear passes are played 3 m into space ahead of the run — for a standing receiver who
+  // wants to kill the ball that pass is unreachable by design; the kill blocks aim rear passes at his feet instead)
+  if ((o.intent === "kill" || o.intent === "killgo") && Math.abs(DIRS[o.dir]) > 100) sc.pass = Object.assign({}, sc.pass, { off: [0.35, 0] });
   if (o.intent === "kill") { sc.exit = Object.assign({}, sc.exit, { v: 0, intent: "kill" }); }
   else if (o.intent === "killgo") { sc.exit = Object.assign({}, sc.exit, { v: 2.5, intent: "kill" }); }
   const id = c.id + (o.intent === "kill" ? "_KILL" : o.intent === "killgo" ? "_KILLGO" : "") + (o.bc != null ? "_BC" + o.bc : "");
@@ -32,13 +35,14 @@ export function matrix(block) {
 // the review's visual cases (the instruction's A–J), seed 1 unless given
 export const VISUAL = [
   { id: "F_0_STAND_MED_KILL_BC99", tag: "A kill receive (BC 99)" },
-  { id: "L_0_RUN_MED_BC99", tag: "B touch into stride (BC 99)" },
+  { id: "FL_0_RUN_MED_BC99", tag: "B touch into stride at 5.5 m/s (BC 99)" },
   { id: "F_90_RUN_MED_BC99", tag: "C 90° turning receive (BC 99)" },
   { id: "FR_135_RUN_MED_BC99", tag: "D 135° large turn — intermediate ball vector (BC 99)" },
   { id: "F_240_JOG_MED_BC99", tag: "E through-stance turn, 120° left, right-foot inside (BC 99)" },
   { id: "F_120_JOG_MED_BC99", tag: "F mirrored: 120° right, left-foot inside (BC 99)" },
   { id: "F_180R_JOG_MED_BC99", tag: "G 180° turn (BC 99)" },
-  { id: "L_0_FAST_MED_BC99", tag: "H full throttle 7.8 m/s (BC 99)" },
-  { id: "L_0_RUN_MED_BC50", tag: "I poor Ball Control (B's receive at BC 50)" },
-  { id: "F_240_RUN_FIRM_BC45", tag: "J failed / heavy receive (BC 45)" },
+  { id: "F_0_FAST_MED_BC99", tag: "H full throttle: 7.8 m/s in stride (BC 99)" },
+  { id: "F_90_FAST_MED_BC99", tag: "H′ full throttle: 90° turn from 7.8 m/s (BC 99)" },
+  { id: "FL_0_RUN_MED_BC50", tag: "I poor Ball Control (B's receive at BC 50)" },
+  { id: "F_240_RUN_MED_BC45", seed: 4, tag: "J failed / heavy receive (E's action at running pace, BC 45, seed 4)" },
 ];

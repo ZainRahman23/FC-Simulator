@@ -10,6 +10,7 @@
 // Control widens the distribution until heavy, short, wrong-side touches — and lost balls — are common. The rigid-body ball does the rest.
 // The constants are CALIBRATION VALUES for review (receive11/tools/rx_calib.mjs prints the resulting distributions) — not locked.
 import { clamp, tab } from "./rx_actions.js";
+import { dsin, dcos } from "../physchar2/core/v2_math.js";
 export const RXE = {
   id: "receive-execution-v1",
   sigDir: [[1, 30], [30, 18], [40, 14], [50, 11], [60, 8], [70, 5.5], [80, 3.5], [90, 2.0], [99, 0.8]],          // deg at D = 1
@@ -31,9 +32,11 @@ export function difficulty(c) {
   return { D, parts };
 }
 // the executed touch: ideal { dir (rad, pitch heading), speed (m/s) }, the incoming speed, Ball Control, the difficulty, the RNG and the event key
+// (the executed velocity is formed engine-independently: the ideal direction as a unit vector, turned by the error with the kernel's own
+// deterministic dsin / dcos — the authoritative launch is bit-identical in every JavaScript engine)
 export function execute(rng, key, ideal, vIn, bc, D) {
   const sg = bcSigma(bc), N1 = rng.normal(...key, RXE.id, "dir", 0), N2 = rng.normal(...key, RXE.id, "speed", 0);
   const sDir = sg.dir * D, sSp = sg.speed * D * (RXE.speedScale.out * ideal.speed + RXE.speedScale.in * vIn);
-  const dir = ideal.dir + sDir * N1 * Math.PI / 180, speed = Math.max(0, ideal.speed + sSp * N2);
-  return { dir, speed, dirErrDeg: sDir * N1, speedErr: speed - ideal.speed, sigDirDeg: sDir, sigSpeed: sSp, N: [N1, N2], bc, D, keyId: rng.keyId(...key, RXE.id, "dir", 0) };
+  const e = sDir * N1 * Math.PI / 180, ce = dcos(e), se = dsin(e), u = ideal.u, ux = u[0] * ce - u[1] * se, uy = u[0] * se + u[1] * ce, speed = Math.max(0, ideal.speed + sSp * N2);
+  return { dir: Math.atan2(uy, ux), u: [ux, uy], v: [ux * speed, uy * speed], speed, dirErrDeg: sDir * N1, speedErr: speed - ideal.speed, sigDirDeg: sDir, sigSpeed: sSp, N: [N1, N2], bc, D, keyId: rng.keyId(...key, RXE.id, "dir", 0) };
 }
