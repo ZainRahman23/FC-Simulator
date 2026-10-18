@@ -3497,6 +3497,118 @@ Stopped for owner visual review.
 | Codex ball and tackle labs | Local branches |
 | `touchline-current` | No changes except this chronicle |
 
+## Saturday 17 October 2026 — The 16 Oct publication; DRIBBLE-1.2 → DRIBBLE-1.5, the DRIBBLE-V1 foundation frozen; RECEIVE-CONTROL-1 begun; the Codex shot, curve and charge labs
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `adabb41` (06:00 EEST, the 16 Oct entry), pushed in the 17 Oct housekeeping.
+  - **`prototype/dribble-1`**, 28 commits this day, all pushed in the 18 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | DRIBBLE-1.2 | `a883739` → `a2f0505` (12) | 07:04 – 16:43 |
+    | DRIBBLE-1.3 | `d7e0b41` → `2e44e1f` (7) | 17:40 – 23:39 |
+    | DRIBBLE-1.4 | `e05a42d`, `7e15213`, `33ce1ca` | 18 Oct 00:01 – 02:02 |
+    | DRIBBLE-1.5 | `daa5352`, `4f20d28` | 02:38 – 03:48 |
+    | RECEIVE-CONTROL-1 | `c420657`, `d13963a`, `ab65d46`, `b6434a2` | 04:36 – 05:43 |
+
+  - The annotated tag **`dribble-v1-foundation-1`** → `4f20d28`, pushed explicitly in the 18 Oct housekeeping.
+  - **[Local]** The Codex ball clone (`~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/work/touchline-ball-phys1`), one branch per step. None was pushed to FC-Simulator.
+
+    | Branch | Commit | Time |
+    |---|---|---|
+    | `prototype/ball-shot-1.2` | `c62f854` | 17:27 |
+    | `prototype/curve-1` | `83564d5` | 17:55 |
+    | `prototype/curve-1-simple-review` (= `curve-magnitude-brackets`) | `4f72fbf` | 20:45 |
+    | `prototype/curve-1-1-strength` | `aae44ae` | 21:04 |
+    | `prototype/shot-charge-1` | `05d1e68` | 21:45 |
+    | `prototype/shot-charge-1-1-shape` | `b71910b` | 22:35 |
+    | `prototype/shot-charge-1-2-overcharge` | `c7d04b9` | 23:05 |
+    | `prototype/shot-charge-1-3-faster-input` | `7653bcb` | 18 Oct 00:16 |
+
+    An output folder `SHOT-ACCURACY-1.0-VISUAL` was written at 18 Oct 04:48 with no commit; it is listed here only.
+- **[Doc]:**
+  - `review_artifacts/dribble12/` … `dribble15/`: each `DRIBBLE1x_REPORT.md`, `DRIBBLE1x_HANDOFF.md`, `DRIBBLE1x_STATUS.json` (1.2 – 1.5), review page and videos;
+  - `review_artifacts/receive1/`: the owner instruction and the frozen-file hashes at its start.
+  - The DRIBBLE review pages name real players; they are local review pages only.
+  - The Codex `outputs/` folders hold the shot, curve and charge READMEs, review pages and videos.
+- **[Session]** Owner instructions:
+
+  | Time (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 07:03 | DRIBBLE-1.2 — cut contact geometry and the set-up touch | `a883739` |
+  | 17:39 | DRIBBLE-1.3 — make DRIBBLE-1.2 fast without losing the football | `d7e0b41` |
+  | ≈ 23:59 | DRIBBLE-1.4 — final foundation cleanup before attributes | `e05a42d` |
+  | 18 Oct ≈ 02:35 | DRIBBLE-1.5 — the last narrow foundation pass; freeze if it passes | `daa5352` |
+  | 18 Oct ≈ 04:30 | RECEIVE-CONTROL-1 — full-throttle receiving and turning first touches | `c420657` |
+
+- **Owner screenshots:** none.
+
+**The 16 Oct housekeeping (06:00 – 06:37).** The chronicle `adabb41` was committed and pushed. The V2 instruction commits (`ec79770`) and `prototype/dribble-1` up to DRIBBLE-1.1 (`7d8c852`) were pushed and verified.
+
+**DRIBBLE-1.2** (07:04 – 16:43, `a883739` → `a2f0505`). Cut contact geometry on DRIBBLE-1.1, which stays frozen (`sandbox/visual/dribble12/`).
+- **What was added:**
+  - a **future contact corridor**: for a later swing, foot and surface, the exact set of ball positions that surface can meet with a given launch;
+  - a **set-up touch**: a touch on the line that places the ball inside a later swing's decisive corridor, validated before it is made;
+  - genuine **outside-of-the-foot** cut contacts; the side surfaces strike with whichever forefoot hull meets the ball first;
+  - staged release-now for big cuts; exact time-warped poses in non-steady motion (the root cause of 1.1's same-foot toe re-contacts).
+- **Results** (HIGH profile, seeds 1–8; 16 seeds in brackets):
+
+  | Case | Result |
+  |---|---|
+  | 60° right / left | 7/8 (14/16) / 6/8 (14/16) |
+  | 90° right / left | 5/8 (12/16) / 5/8 (9/16) |
+  | Straight RUN | 100 % |
+  | Decisive cut surfaces | OUTSIDE 45 % / INSIDE 36 % / FRONT 8 % (1.1: FRONT 88 %) |
+  | Request → redirect | 1.98 → 0.83 s |
+  | Same-foot re-contacts | 1 in 1,647 |
+  | CPU | 253 ms per simulated second, worst planning pass 604 ms — FAIL |
+  | Chrome / Node decisions | 20 / 20 |
+
+- Stopped for owner review at ≈ 17:00.
+
+**DRIBBLE-1.3** (17:40 – 23:39, `d7e0b41` → `2e44e1f`). Make 1.2 fast without losing its football.
+- **An incremental planner** (`plan13`): 1.2's search runs as generators over deterministic work units, a fixed budget per 240 Hz tick (2 ms; 8 ms while a decision is due), so a replay pauses at the same points on any machine. Plus an exact leg-only pose and speed caches solved at load.
+- **A behavioural twin suite** against 1.2 (200 runs) guarded every step.
+- **Results:**
+  - CPU 208 → 148 ms per simulated second, measured with each core in its own process (1.2's published 253 came from a shared-process instrument);
+  - worst step 538 → 41 ms;
+  - football 256 / 384 cuts taken (1.2: 258); clean cuts 114 (1.2: 129).
+- Readiness for integration: NOT YET; stopped for owner review at ≈ 23:40.
+
+**DRIBBLE-1.4** (18 Oct 00:01 – 02:02, `e05a42d` → `33ce1ca`). Final foundation cleanup.
+- **The known early-release case** (90° right, seed 16): the release search sampled contacts every 3 ticks from the release tick, so the release lead modulo 3 moved the contact by one tick, and with it the keyed execution draw. Fixed with an every-tick release contact window and a contact-timed re-release.
+- **The set-up validator** rejected 59 % of working set-ups; it now grades physical quality (mean window coverage over the execution envelope).
+- **Results** (384 cut runs, seeds 1–96): 273 taken, 121 clean; toe 5.9 %; 143 ms per simulated second, worst step 23 ms; Chrome / Node 20 / 20; TURN-1.2 bit-identical.
+- READY TO FREEZE: NO — clean 90° cuts had fallen to 27 (1.2: 48).
+
+**DRIBBLE-1.5** (02:38 – 03:48, `daa5352`, `4f20d28`). The last narrow foundation pass.
+- **Root cause of the slow 90° cuts:** after a staged first touch, the planner measured the rest of the cut from the lagging velocity heading, so a 90° cut staged to 45° still looked big and was staged a second time — one more touch and ≈ 0.5 s. It now measures from the stage line, as the intent layer already did (`plan15.stageLine`).
+- The rest of the gap was decision latency: the decision-tick budget went from 8 to 12 ms.
+- `maxSetups`, `rStop1` and `c12CutAtContact` were each tested alone on the 384-run matrix: no effect.
+- **Results** (384 cut runs; D1.4 in brackets): 273 taken (273), **140 clean (121)**, clean 90° 47 (27); toe 6.2 %; 144 ms per simulated second, worst step 34 ms; Chrome / Node 20 / 20; leg pose bit-identical in 112,319 checks. Seeds 97–192: 282 taken / 146 clean.
+- **READY TO FREEZE: YES.** The foundation is frozen as **DRIBBLE-V1** (`sandbox/visual/dribble15/d15_core.js`), tag **`dribble-v1-foundation-1`**. Next on the dribble line: the attribute layer.
+
+**RECEIVE-CONTROL-1** (from 04:36, `c420657` → `b6434a2`). Full-throttle receiving and turning first touches, on the frozen DRIBBLE-V1.
+- Built as an adapter (`sandbox/visual/receive1/rc1_core.js`): a receive subclass of the frozen dribble simulation. The frozen core is unchanged (sha256 recorded at the start).
+- What it does so far: the incoming pass, a meeting-point interception, the receive-turn-angle classification (90° – 270° is a turning receive), and receive options handed to the frozen planner — approach lines, the turn released at ticks timed to the ball's arrival, and early turns from lines on the turn side.
+- In progress at the end of the day: work-in-progress commits `d13963a`, `ab65d46` and `b6434a2`; not yet presented. A first representative matrix at 05:51 (714 runs, 3 seeds): 36 % clean receives and 31 % with no touch at all; firm passes, jogging receivers and passes from front-right or behind are the weak cases.
+
+**The Codex labs** (read-only from the outputs and commit messages; not integrated):
+- **BALL-SHOT-1.2:** the final V1 Shot Power calibration (shot speed anchored at 90; chip response compressed).
+- **CURVE-1 → CURVE-1.1:** a continuous-Magnus Finesse Curve candidate (sidespin 40 × (Curve / 75)^2.7 rad/s), a simple behind-the-shooter review, then the same system 40 % stronger.
+- **SHOT-CHARGE-1 → 1.3:** an isolated Laces hold-to-charge lab: the charge sets the trajectory shape before contact (a physical apex solver), then a capped-speed overcharge and a live hold-to-shoot lab, then faster input timing. Owner review candidates; no winner selected.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| DRIBBLE-V1 (DRIBBLE-1.5) | Frozen and tagged; published in the 18 Oct housekeeping |
+| DRIBBLE-1.2 – 1.4 | Committed; frozen as references; published in the 18 Oct housekeeping |
+| RECEIVE-CONTROL-1 | In progress (work-in-progress commit) |
+| Codex ball / curve / charge labs | Local branches |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3583,8 +3695,8 @@ Stopped for owner visual review.
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
-  - `prototype/dribble-1`: DRIBBLE-1 (`7fe57fd`) and DRIBBLE-1.1 (`7d8c852`), physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3. Both await owner review.
-- **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1, GK-SHOT-MAP-1. Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
+  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). RECEIVE-CONTROL-1 (receiving and turning first touches, an adapter on DRIBBLE-V1) is in progress on the same branch.
+- **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3. Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -3644,12 +3756,12 @@ Stopped for owner visual review.
   - **E2 touchdown** is blocked at TD2C (U-1, the +20 mm obstacle at 180 / 240 Hz). The recovery-step touchdown (R-4 / R-5) is unsolved. TD-15 and TD-17 are open.
   - **CPU.** Continuous V2 locomotion for 22 players measured 4.3 – 5.1 s CPU per simulated second (SLP-2, unoptimised, one core). Promotion is estimated at roughly 18 – 38× less on average, but the interaction rates behind that estimate are assumed, not measured.
 - **Sprint dribbling** still loses the ball (not hidden). The Dribbling V1 boot-plan lateral mirror is recorded and unfixed.
-- **Physical dribbling** (DRIBBLE-1 / 1.1, prototype):
-  - Straight and curved dribbling work.
-  - Cuts taken with the ball: 45° 7/8, 60° 4–5/8, 90° 2–4/8. 135° and 180° are not attempted.
-  - The outside of the foot is never used.
-  - Straight RUN regressed in DRIBBLE-1.1 (80.5 % vs 97 %).
-  - The resolver costs 144 ms per simulated second per dribbler.
+- **Physical dribbling** (DRIBBLE-V1, frozen 18 Oct; prototype, not integrated):
+  - Straight and curved dribbling work (straight 100 %).
+  - 60° and 90° cuts on 384 runs: 273 taken with the ball, 140 clean. 135° and 180° dribbling cuts are not attempted.
+  - Inside, outside and set-up touches are used; toe 6.2 % of decisive touches.
+  - The resolver costs 144 ms per simulated second per dribbler (worst step 34 ms).
+  - Not started: the attribute layer (Dribbling / Ball Control / Agility, preferred and weak foot, pressure). Receiving and turning first touches are in progress (RECEIVE-CONTROL-1).
 - **Goalkeeper presentation.**
   - Two backends coexist, with families still review-only.
   - Audits flagged set-depth geometry at close range and the X3 curl's size (about 4–5× a measured free kick).
@@ -3800,6 +3912,10 @@ An index to the narrative above, not a substitute for it.
 | 16 Oct | **TURN-1.2 frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` | FC-Sim Git | `634bf20`, `2129ca0` |
 | 16 Oct | DRIBBLE-1: physical dribbling, resolved touch selected over pure physical / hybrid; cuts PARTIAL | FC-Sim Git | `7fe57fd` |
 | 16 Oct | DRIBBLE-1.1 (17 Oct 01:26 – 05:00): contact-aware follow-through, twin bit-identical to DRIBBLE-1, resolver 3.2× faster; 60° / 90° targets missed | FC-Sim Git | `511923e`, `8f36164`, `7d8c852` |
+| 17 Oct | DRIBBLE-1.2: contact corridor, set-up touch, outside-of-the-foot cuts (FRONT 88 → 8 %); CPU target missed | FC-Sim Git | `a2f0505` |
+| 17 Oct | DRIBBLE-1.3: incremental planner on deterministic work units (148 ms per simulated second, worst step 41 ms) | FC-Sim Git | `54ff810`, `2e44e1f` |
+| 17 Oct | DRIBBLE-1.4 (18 Oct 00:01 – 02:02): every-tick release window, graded set-up validator; not ready to freeze | FC-Sim Git | `7e15213`, `33ce1ca` |
+| 17 Oct | **DRIBBLE-1.5 (18 Oct 02:38 – 03:48): stage-line fix + 12 ms decision budget; frozen as DRIBBLE-V1**, tag `dribble-v1-foundation-1` | FC-Sim Git | `4f20d28` |
 
 ## Appendix B — Repository provenance
 
