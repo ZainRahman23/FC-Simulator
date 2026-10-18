@@ -49,10 +49,12 @@ export function score(S, cs, cpuMs) {
     touchOnExit: tOn ? { t: +(tOn.k * DT).toFixed(3), n: T.filter((t) => t.k >= k1 && t.k <= tOn.k).length, isFirst: tOn.k === k1 } : null,
     speed: { atFirst: f ? f.playerSpeed : null, at1s: k1 != null ? +sp(k1 * DT + 1.0).toFixed(2) : null, at2s: k1 != null ? +sp(k1 * DT + 2.0).toFixed(2) : null, max: fastest != null ? +fastest.toFixed(2) : null },
     ctrlEnd, lostAfterFirst: lostAt.length ? +(lostAt[0] * DT).toFixed(3) : null, heavy, doubleTouches: dbl, recontacts: recon, handoffAcc: dv != null ? +dv.toFixed(2) : null,
-    touches: T.length, fault: S.fault ? S.fault.message : null, cpu: cpuMs,
+    touches: T.length, fault: S.fault ? S.fault.message : null, cpu: cpuMs, chaseAt: rc.chase != null ? +(rc.chase * DT).toFixed(3) : null,
   };
-  // outcome classes: CLEAN — first touch, the new line reached within 2.5 s of it, and the ball controlled at the end; TAKEN — first touch, the
-  // new line reached; RECEIVED — a first touch but no new line; MISSED — no first touch
-  res.outcome = !f ? "MISSED" : kLine == null ? "RECEIVED" : ctrlEnd === "CONTROLLED" && res.firstToLine <= 2.5 ? "CLEAN" : "TAKEN";
+  // outcome classes — a RECEIVE is a first touch made before the pass has gone by (before the receiver had to chase it): CLEAN — a receive, the
+  // new line reached within 2.5 s of it, the ball controlled at the end; TAKEN — a receive and the new line, but late or not controlled at the end;
+  // RECEIVED — a receive, no new line; RECOVERED — the pass went by, the loose ball was played later; MISSED — no touch at all
+  const real = f && (rc.chase == null || f.k < rc.chase);
+  res.outcome = !f ? "MISSED" : !real ? "RECOVERED" : kLine == null ? "RECEIVED" : ctrlEnd === "CONTROLLED" && res.firstToLine <= 2.5 ? "CLEAN" : "TAKEN";
   return res;
 }

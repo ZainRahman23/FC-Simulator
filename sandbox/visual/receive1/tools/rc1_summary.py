@@ -11,14 +11,14 @@ for f in glob.glob(R + "/*.err") if not R.endswith(".json") else []:
 rows.sort(key=lambda r: (r["id"], r["seed"]))
 if OUT: json.dump(rows, open(OUT, "w"), indent=0)
 oc = C.Counter(r["outcome"] for r in rows)
-print(f"runs {len(rows)}  " + "  ".join(f"{k} {oc[k]}" for k in ["CLEAN", "TAKEN", "RECEIVED", "MISSED"]) + f"  errors {sum(1 for r in rows if r.get('error'))}")
+print(f"runs {len(rows)}  " + "  ".join(f"{k} {oc[k]}" for k in ["CLEAN", "TAKEN", "RECEIVED", "RECOVERED", "MISSED"]) + f"  errors {sum(1 for r in rows if r.get('error'))}")
 def grp(key, name):
     g = C.defaultdict(list)
     for r in rows: g[key(r)].append(r)
     print(f"-- by {name}")
     for k in sorted(g, key=lambda x: (str(type(x)), x)):
         v = g[k]; c = C.Counter(r["outcome"] for r in v); tl = [r["firstToLine"] for r in v if r["firstToLine"] is not None]
-        print(f"  {str(k):12s} n {len(v):3d}  clean {c['CLEAN']:3d}  taken {c['TAKEN']:3d}  received {c['RECEIVED']:3d}  missed {c['MISSED']:3d}  | first→line med {st.median(tl) if tl else float('nan'):.2f}s  turnWithFirst {sum(1 for r in v if r['turnWithFirst'])}")
+        print(f"  {str(k):12s} n {len(v):3d}  clean {c['CLEAN']:3d}  taken {c['TAKEN']:3d}  received {c['RECEIVED']:3d}  recovered {c['RECOVERED']:3d}  missed {c['MISSED']:3d}  | first→line med {st.median(tl) if tl else float('nan'):.2f}s  turnWithFirst {sum(1 for r in v if r['turnWithFirst'])}")
 grp(lambda r: r["angle"], "receiveTurnAngle")
 grp(lambda r: r["dir"], "pass direction")
 grp(lambda r: r["rs"], "receiver speed")

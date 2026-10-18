@@ -48,6 +48,7 @@ export const RC1 = {
   reach2: { lat: 0.35 },       // receive swing-adjustment bounds overriding D1.reach during receive planning: the receiving foot reaches 0.35 m sideways
   // (CPU) the receive search starts once the ball's meeting is within searchH + farMargin s (before that the approach alone runs); approach-line
   // switch ticks lie on a lineGrid-tick grid, so the line branches of successive searches are the same TURN-1.2 predictions (re-used, not re-made)
+  passMiss: 0.6,               // m: the ball moving away and this much beyond its closest approach — the receive was missed (chase mode)
   farMargin: 0.25, lineGrid: 48, relGrid: 12, searchGap: 24,   // (ticks: switch-tick grids; a search that found nothing waits searchGap before the next)
   lineAfter: 0.45, turnAfter: 0.9,   // s after the meeting estimate: the end of an approach line's / a turn option's contact window
   // TURN LINES: for a big turn (≥ turnLineMin°), the turn released early from the approach lines on the TURN SIDE (the ball passing beside the
@@ -167,13 +168,18 @@ export class ReceiveSim extends DribbleSim {
       return new PredView(tr, k, H); };
     // approach lines: the ball arriving elsewhere in the body frame (RC1.lines), each an exact TURN-1.2 branch switching plan13.lead ticks ahead
     const est = this.rcIntercept(k), cur = this.input; this.rc.estPlan = est;
-    if (est && est.t > RC1.searchH + RC1.farMargin) { this.reachable = false; this.rc.far = (this.rc.far || 0) + 1; return; }   // (the ball still far: approach only)
-    if (!this.plan && this.rc.nextSearch != null && k < this.rc.nextSearch) { this.reachable = false; return; }   // (nothing found a moment ago: the same futures)
+    // CHASE: once the pass has gone by (closest approach passed by passMiss m, the ball moving away) the receive is missed — the receiver chases the
+    // loose ball like any loose ball: the current motion only (no approach lines, no timed turns)
+    { const b = this.ballA(), dx = b.p[0] - A.P[0], dy = -b.p[2] - A.P[1], d = Math.hypot(dx, dy), away = dx * (b.v[0] - A.V[0]) + dy * (-b.v[2] - A.V[1]) > 0;
+      this.rc.dMin = Math.min(this.rc.dMin ?? Infinity, d); if (this.rc.chase == null && away && d > this.rc.dMin + RC1.passMiss) { this.rc.chase = k; this.rc.log.push({ k, ev: "chase", dMin: +this.rc.dMin.toFixed(2) }); } }
+    const chase = this.rc.chase != null;
+    if (!chase && est && est.t > RC1.searchH + RC1.farMargin) { this.reachable = false; this.rc.far = (this.rc.far || 0) + 1; return; }   // (the ball still far: approach only)
+    if (!chase && !this.plan && this.rc.nextSearch != null && k < this.rc.nextSearch) { this.reachable = false; return; }   // (nothing found a moment ago: the same futures)
     // the option set of a main motion and switch tick is fixed when first made (its branches and their candidates are then re-used by later searches)
     const kS = Math.ceil((k + D1.plan13.lead) / RC1.lineGrid) * RC1.lineGrid, oKey = LC.pred.track.id + "|" + kS;
     if (!this.rc.optSet || this.rc.optSet.key !== oKey) this.rc.optSet = { key: oKey, est, lines: RC1.lines.map((ln) => ({ ln, a: est ? this.rcApproach(k, ln.at, est, ln.dv || 0) : null })), tl: new Map() };
     const OS = this.rc.optSet;
-    if (est && LC.pred.track && RC1.lines.length) {
+    if (!chase && est && LC.pred.track && RC1.lines.length) {
       for (const { ln, a } of OS.lines) { if (!a) continue;
         if (Math.abs(wrapA(a.dir - cur.dir)) < RC1.approachDead.dir * DEG && Math.abs(a.v - cur.v) < RC1.approachDead.v) continue;
         if (held && a.dir === held.dir && a.v === held.v) continue;
@@ -181,7 +187,7 @@ export class ReceiveSim extends DribbleSim {
         // line's input as `now` so the planner checks them in their own motion — blockers, approach — and they get the line version only)
         const pv = branch(a, kS); pv.rcTag = "line" + JSON.stringify(ln); pv.rcLine = { inp: a, kS }; opts.push({ pred: pv, off: 0, jMin: Math.max(0, kS - k - 1), release: false, now: a, kS, rcLine: true, rcEnd: est.k + Math.round(RC1.lineAfter / DT) - k - 1 }); } }
     // turn lines: the approach re-aimed to the turn side, then the exit released early (two switches), for a big turn
-    if (held && est && LC.pred.track && Math.abs(wrapA(held.dir - cur.dir)) >= RC1.turnLineMin * DEG) {
+    if (!chase && held && est && LC.pred.track && Math.abs(wrapA(held.dir - cur.dir)) >= RC1.turnLineMin * DEG) {
       const side = wrapA(held.dir - cur.dir) > 0 ? 1 : -1, inp = { dir: held.dir, v: held.v };
       for (const lat of RC1.turnLines) { if (!OS.tl.has(lat)) OS.tl.set(lat, this.rcApproach(k, [RC1.meet[0], side * lat], OS.est || est, 0)); const a = OS.tl.get(lat); if (!a) continue; const pl = branch(a, kS), tl = pl.track;
         for (const b of RC1.turnLineBefore) { const kS2 = Math.round((est.k - Math.round(b / DT)) / RC1.relGrid) * RC1.relGrid; if (kS2 < kS + D1.cloneStride) continue;
@@ -190,7 +196,7 @@ export class ReceiveSim extends DribbleSim {
           const pv = new PredView(tr, k, H); pv.rcTag = "turnline" + lat + "@" + b; pv.rcLine = { inp: a, kS };
           opts.push({ pred: pv, off: 0, jMin: Math.max(0, kS2 - k - 1), release: true, now: inp, kS: kS2, rcEnd: est.k + Math.round(RC1.turnAfter / DT) - k - 1 }); } } }
     // a meaningful turn: the exit released at ticks timed against the ball's predicted arrival (each an exact TURN-1.2 branch of the approach motion)
-    if (held && est && LC.pred.track && Math.abs(wrapA(held.dir - this.input.dir)) >= RC1.release.minCut * DEG) {
+    if (!chase && held && est && LC.pred.track && Math.abs(wrapA(held.dir - this.input.dir)) >= RC1.release.minCut * DEG) {
       const kArr = est.k, inp = { dir: held.dir, v: held.v };
       const ticks = [...new Set(RC1.release.before.map((b) => Math.max(Math.ceil((k + D1.plan13.lead) / RC1.relGrid) * RC1.relGrid, Math.round((kArr - Math.round(b / DT)) / RC1.relGrid) * RC1.relGrid)))].sort((a, b) => a - b);
       for (const kS of ticks) { const pv = branch(inp, kS); pv.rcTag = "turn@" + (kArr - kS); opts.push({ pred: pv, off: 0, jMin: Math.max(0, kS - k - 1), release: true, now: inp, kS, rcEnd: kArr + Math.round(RC1.turnAfter / DT) - k - 1 }); } }
@@ -206,7 +212,7 @@ export class ReceiveSim extends DribbleSim {
     const g = this.plan13G(k, s, held, LC, off, opts, rj, c0), st0 = D1.o2planStep, h0 = D1.o2horizon, n0 = D1.cut12.nowHorizon, rch = D1.reach, wp = D1.warp; let r;
     for (;;) { D1.o2planStep = RC1.planStep; D1.o2horizon = RC1.searchH; D1.cut12.nowHorizon = RC1.searchH; D1.reach = RC1.reach2 ? Object.assign({}, rch, RC1.reach2) : rch; D1.warp = RC1.warp2 ? Object.assign({}, wp, RC1.warp2) : wp;
       try { r = g.next(); } finally { D1.o2planStep = st0; D1.o2horizon = h0; D1.cut12.nowHorizon = n0; D1.reach = rch; D1.warp = wp; } if (r.done) break; yield r.value; }
-    this.rc.nextSearch = this.plan ? null : this.k + RC1.searchGap;
+    this.rc.nextSearch = this.plan || chase ? null : this.k + RC1.searchGap;
     if (this.plan && this.plan.made === k) this.rc.log.push({ k, ev: "plan", kc: this.plan.kc, F: this.plan.F, reg: this.plan.reg, relAt: this.plan.relAt ?? null, role: this.plan.setupSw ? "setup" : this.plan.relNow ? "turn-release" : this.plan.release ? "cut-at-contact" : "touch" });
   }
   // RECEIVING SURFACES: the frozen contact cost ranks the surfaces for dribbling (laces 0, inside ±, front 0.10, outside 0.22); a pass is received
