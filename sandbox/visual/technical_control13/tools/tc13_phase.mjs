@@ -39,7 +39,7 @@ export function jointsOf(S) { const sk = S.cfg.skel, M4 = S.cfg.M4, sm = S.A.ski
 // the posed support point of a planted foot: the sole's edge it rolls on (when the body says it rolls), else the ball of the foot (the MTP joint)
 function supPosed(J, X, edge) { if (!edge) return J["toe_" + X].j.slice(); const m = J._foot[X], sx = X === "R" ? 1 : -1, p = [-edge * 0.072, -0.057, 0.1805]; return [m[0] * p[0] + m[4] * p[1] + m[8] * p[2] + m[12], m[1] * p[0] + m[5] * p[1] + m[9] * p[2] + m[13], m[2] * p[0] + m[6] * p[1] + m[10] * p[2] + m[14]]; }
 export function runPhase(id, Body, o = {}) {
-  const cs = anyCase(id, o.seed || 1), S = (o.flow ? makeFlow : makeCarry)(cs, { seed: o.seed || 1, foot: o.foot || "R", style: o.style, anim: true, Body }), _c = (S._tc11cache = S._tc11cache || new Map()), n = Math.round(cs.scenario.dur * 240), fr = [];
+  const cs = anyCase(id, o.seed || 1), S = (o.make || (o.flow ? makeFlow : makeCarry))(cs, { seed: o.seed || 1, foot: o.foot || "R", style: o.style, anim: true, Body }), _c = (S._tc11cache = S._tc11cache || new Map()), n = Math.round(cs.scenario.dur * 240), fr = [];
   let run_lastB = null; for (let i = 0; i < n && !S.fault; i++) { S.step(); const c2 = S.rc2, act = c2 && c2.kind === "ELITE" && c2.phase === "action" ? c2.pose : null, J = jointsOf(S); if (!J) { fr.push(null); continue; }
     const rb = S.body2 !== run_lastB; run_lastB = S.body2;
     const t = c2 && c2.kc != null ? (S.k - c2.kc) * DT : S.k * DT, f = { rb, seg: act && S.body2 && S.body2.segAt ? { R: S.body2.segAt("R", act.t), L: S.body2.segAt("L", act.t) } : null, k: S.k, t, phase: act ? "action" : "approach", J, Lb: limbs(J), planted: {}, sup: {}, ballPt: {}, legs: act ? act.legs || null : null, pel: J.pelvis.j.slice(), ang: null };

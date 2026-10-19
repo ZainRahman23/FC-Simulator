@@ -1,0 +1,142 @@
+TECHNICAL-CONTROL-1.4 — Dribbling 99 = the fastest technique, not the most touches: BEFORE (TECHNICAL-CONTROL-1.2) → AFTER
+
+== the efficiency test (owner §13): 5.5 m/s, Ball Control / Agility 99, turns to the right, seeds 1 – 3 (the request at three phases of the touch rhythm)
+   angle  D  | contacts before → after (per seed) | technique after (per seed) | preparation s | contact → new line s | request → new line s | exit m/s | separation m (medians, before → after)
+     30  50 | [1, 1, 1] → [1, 0, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.3 → 0.07 | 0.14 → 0.14 | 0.44 → 0.14 | 5.5 → 5.5 | 0.76 → 0.76
+     30  70 | [1, 1, 1] → [1, 0, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.3 → 0.07 | 0.14 → 0.14 | 0.44 → 0.14 | 5.5 → 5.5 | 0.69 → 0.69
+     30  80 | [1, 1, 1] → [1, 0, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.3 → 0.07 | 0.14 → 0.14 | 0.44 → 0.14 | 5.5 → 5.5 | 0.67 → 0.67
+     30  90 | [1, 1, 1] → [1, 0, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.3 → 0.07 | 0.14 → 0.14 | 0.44 → 0.14 | 5.5 → 5.5 | 0.64 → 0.65
+     30  99 | [1, 1, 1] → [1, 0, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.3 → 0.07 | 0.14 → 0.07 | 0.44 → 0.14 | 5.5 → 5.5 | 0.63 → 0.63
+
+     60  50 | [2, 2, 2] → [2, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.93 → 0.5 | 0.35 → 0.35 | 1.27 → 0.85 | 5.5 → 5.5 | 0.78 → 0.79
+     60  70 | [3, 3, 3] → [2, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.93 → 0.5 | 0.35 → 0.35 | 1.27 → 0.85 | 5.5 → 5.5 | 0.77 → 0.75
+     60  80 | [3, 3, 3] → [2, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.93 → 0.5 | 0.35 → 0.35 | 1.27 → 0.85 | 5.5 → 5.5 | 0.75 → 0.73
+     60  90 | [2, 2, 2] → [2, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.61 → 0.39 | 0.35 → 0.35 | 0.96 → 0.74 | 5.5 → 5.5 | 0.72 → 0.72
+     60  99 | [2, 2, 2] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.61 → 0.3 | 0.35 → 0.35 | 0.96 → 0.65 | 5.5 → 5.5 | 0.71 → 0.7
+
+     90  50 | [3, 3, 3] → [2, 2, 2] | OUT_TOUCH, IN_CUT, IN_CUT                            | 1.26 → 0.7 | 0.47 → 0.49 | 1.73 → 1.23 | 5.31 → 5.31 | 0.97 → 1.01
+     90  70 | [2, 2, 2] → [2, 1, 1] | IN_CUT, OUT_TOUCH, OUT_TOUCH                         | 0.61 → 0.39 | 0.49 → 0.53 | 1.1 → 0.88 | 5.31 → 5.47 | 0.97 → 1
+     90  80 | [3, 3, 3] → [2, 1, 1] | IN_CUT, OUT_TOUCH, OUT_TOUCH                         | 0.61 → 0.39 | 0.52 → 0.53 | 1.13 → 0.88 | 5.26 → 5.47 | 0.73 → 0.99
+     90  90 | [3, 3, 3] → [2, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.61 → 0.39 | 0.52 → 0.53 | 1.13 → 0.92 | 5.26 → 5.47 | 0.7 → 0.98
+     90  99 | [3, 3, 3] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH                      | 0.61 → 0.3 | 0.52 → 0.53 | 1.13 → 0.83 | 5.26 → 5.47 | 0.68 → 0.97
+
+    120  50 | [3, 3, 3] → [2, 2, 2] | DRAG_BACK, CRUYFF, CRUYFF                            | 1.26 → 0.37 | 0.45 → 0.52 | 1.71 → 1.02 | 4.94 → 4.45 | 0.97 → 0.99
+    120  70 | [2, 2, 2] → [2, 2, 2] | IN_CUT, DRAG_BACK, CHOP                              | 0.61 → 0.47 | 0.47 → 0.46 | 1.09 → 0.86 | 4.94 → 4.61 | 0.96 → 0.97
+    120  80 | [3, 3, 3] → [2, 2, 2] | IN_CUT, DRAG_BACK, CHOP                              | 0.61 → 0.5 | 0.53 → 0.41 | 1.14 → 0.86 | 4.78 → 4.76 | 0.8 → 0.95
+    120  90 | [3, 3, 3] → [2, 2, 2] | IN_CUT, DRAG_BACK, CHOP                              | 0.61 → 0.47 | 0.53 → 0.46 | 1.14 → 0.86 | 4.78 → 4.61 | 0.78 → 0.94
+    120  99 | [4, 4, 4] → [2, 2, 2] | CHOP, DRAG_BACK, CHOP                                | 0.61 → 0.45 | 0.69 → 0.49 | 1.3 → 0.83 | 5.36 → 4.55 | 0.68 → 0.96
+
+    150  50 | [3, 3, 3] → [2, 2, 2] | DRAG_BACK, CRUYFF, CRUYFF                            | 1 → 0.37 | 0.28 → 0.55 | 1.27 → 1.05 | 4.43 → 4.45 | 0.91 → 0.99
+    150  70 | [4, 4, 4] → [3, 1, 2] | DRAG_BACK, DRAG_BACK, CRUYFF                         | 1 → 0.5 | 0.28 → 0.35 | 1.27 → 0.85 | 4.43 → 4.45 | 0.84 → 0.92
+    150  80 | [4, 4, 4] → [3, 2, 2] | DRAG_BACK, DRAG_BACK, CRUYFF                         | 1 → 0.5 | 0.28 → 0.35 | 1.27 → 0.85 | 4.43 → 4.45 | 0.87 → 0.9
+    150  90 | [4, 4, 4] → [3, 2, 2] | DRAG_BACK, DRAG_BACK, CHOP                           | 1.07 → 0.5 | 0.2 → 0.35 | 1.27 → 0.95 | 4.43 → 4.45 | 0.85 → 1.08
+    150  99 | [4, 4, 4] → [2, 2, 2] | CHOP, DRAG_BACK, CHOP                                | 1.02 → 0.3 | 0.25 → 0.51 | 1.27 → 0.85 | 4.43 → 4.59 | 0.86 → 1.03
+
+    180  50 | [3, 3, 3] → [2, 3, 2] | DRAG_BACK, DRAG_BACK, DRAG_BACK                      | 1 → 0.78 | 0.28 → 0.28 | 1.28 → 1.05 | 4.43 → 4.43 | 0.92 → 0.95
+    180  70 | [4, 4, 4] → [2, 2, 2] | CRUYFF, DRAG_BACK, CRUYFF                            | 1 → 0.53 | 0.28 → 0.41 | 1.28 → 0.94 | 4.43 → 4.45 | 0.87 → 0.9
+    180  80 | [3, 3, 3] → [2, 1, 2] | CRUYFF, DRAG_BACK, CRUYFF                            | 1 → 0.53 | 0.33 → 0.41 | 1.33 → 0.94 | 4.45 → 4.45 | 0.9 → 0.89
+    180  90 | [3, 3, 3] → [2, 2, 2] | CRUYFF, DRAG_BACK, CRUYFF                            | 0.61 → 0.53 | 0.41 → 0.41 | 1.02 → 0.94 | 4.45 → 4.45 | 0.9 → 0.88
+    180  99 | [3, 3, 3] → [2, 2, 2] | CRUYFF, DRAG_BACK, CRUYFF                            | 0.61 → 0.53 | 0.41 → 0.41 | 1.02 → 0.94 | 4.45 → 4.45 | 0.88 → 0.87
+
+== turns to the LEFT at 99 (a right-footer: his right foot is the one the chop / inside cut across uses)
+     30 seed 1 | contacts 1 | IN_CUT     | request → line 0.196 s | sep 0.64 m | RI@0.07*!
+     90 seed 1 | contacts 1 | IN_CUT     | request → line 0.567 s | sep 0.83 m | RI@0.07*!
+    150 seed 1 | contacts 2 | CHOP       | request → line 1.042 s | sep 1.06 m | RO@0.07 RI@0.53*!
+     30 seed 2 | contacts 0 | DOUBLE     | request → line 0.142 s | sep 1.2 m | 
+     90 seed 2 | contacts 1 | IN_CUT     | request → line 0.992 s | sep 0.93 m | RI@0.50*!
+    150 seed 2 | contacts 2 | DRAG_BACK  | request → line 0.846 s | sep 1.68 m | RS@0.50*! RO@0.81
+     30 seed 3 | contacts 1 | IN_CUT     | request → line 0.421 s | sep 0.64 m | RI@0.30*!
+     90 seed 3 | contacts 1 | IN_CUT     | request → line 0.792 s | sep 0.95 m | RI@0.30*!
+    150 seed 3 | contacts 2 | CHOP       | request → line 1.267 s | sep 1.03 m | RO@0.30 RI@0.76*!
+     60 seed 1 | contacts 1 | IN_CUT     | request → line 0.425 s | sep 0.76 m | RI@0.07*!
+    120 seed 1 | contacts 2 | CHOP       | request → line 1.021 s | sep 0.79 m | RO@0.07 RI@0.53*!
+    180 seed 1 | contacts 2 | CRUYFF     | request → line 0.942 s | sep 0.81 m | RI@0.07 RI@0.53*!
+     60 seed 2 | contacts 1 | IN_CUT     | request → line 0.85 s | sep 0.65 m | RI@0.50*!
+    120 seed 2 | contacts 1 | IN_CUT     | request → line 0.975 s | sep 0.83 m | RI@0.50*!
+    180 seed 2 | contacts 2 | DRAG_BACK  | request → line 0.85 s | sep 1.68 m | RS@0.50*! RI@0.81
+     60 seed 3 | contacts 1 | IN_CUT     | request → line 0.65 s | sep 0.64 m | RI@0.30*!
+    120 seed 3 | contacts 1 | IN_CUT     | request → line 0.775 s | sep 0.87 m | RI@0.30*!
+    180 seed 3 | contacts 2 | CRUYFF     | request → line 1.167 s | sep 0.87 m | RI@0.30 RI@0.71!
+
+== the attributes (owner §11, §12): Dribbling 99 with Ball Control 50 / Agility 50 — the decisive contact's execution (difficulty, direction error, speed error) and the body's time to the new line
+     30 D50 B99 A50 | contacts [1, 1, 1] → [0, 1, 0] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH          | decisive error ° [0] speed [0] | contact → line 0.22 → 0.22 s
+     30 D99 B50 A99 | contacts [1, 1, 1] → [1, 1, 0] | OUT_TOUCH, IN_CUT, OUT_TOUCH             | decisive error ° [2.2, 2.3] speed [0.013, 0.024] | contact → line 0.14 → 0.09 s
+     30 D99 B99 A50 | contacts [1, 1, 1] → [0, 0, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH          | decisive error ° [0.2] speed [0.001] | contact → line 0.22 → 0.15 s
+     60 D50 B99 A50 | contacts [3, 3, 3] → [1, 1, 2] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH          | decisive error ° [0.4, 0.4, 0.3] speed [-0.005, -0.004, -0.009] | contact → line 0.07 → 0.61 s
+     60 D99 B50 A99 | contacts [2, 2, 2] → [1, 1, 1] | OUT_TOUCH, IN_CUT, OUT_TOUCH             | decisive error ° [1.1, 2.3, 3.9] speed [0.019, 0.033, -0.022] | contact → line 0.35 → 0.35 s
+     60 D99 B99 A50 | contacts [3, 3, 3] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH          | decisive error ° [0.1, 0.4, 0.4] speed [0.001, -0.005, -0.004] | contact → line 0.61 → 0.61 s
+     90 D50 B99 A50 | contacts [4, 4, 4] → [2, 2, 2] | OUT_TOUCH, IN_CUT, IN_CUT                | decisive error ° [0.4, 0.2, 0.3] speed [-0.008, -0.004, -0.006] | contact → line 0.59 → 0.62 s
+     90 D99 B50 A99 | contacts [3, 3, 3] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, IN_CUT             | decisive error ° [3.8, 1.5, 1.2] speed [-0.042, 0.052, 0.041] | contact → line 0.52 → 0.53 s
+     90 D99 B99 A50 | contacts [4, 4, 4] → [2, 1, 1] | CHOP, OUT_TOUCH, OUT_TOUCH               | decisive error ° [0.4, 0.2, 0] speed [-0.012, -0.006, -0.002] | contact → line 0.69 → 0.7 s
+    120 D50 B99 A50 | contacts [4, 4, 4] → [3, 2, 3] | DRAG_BACK, CRUYFF, DRAG_BACK             | decisive error ° [0.1, 0.9, 0.3] speed [-0.009, -0.002, -0.011] | contact → line 0.74 → 0.55 s
+    120 D99 B50 A99 | contacts [4, 4, 4] → [1, 2, 2] | IN_CUT, CHOP, CHOP                       | decisive error ° [1, 6.8, 7.5] speed [0.037, -0.143, -0.129] | contact → line 0.69 → 0.49 s
+    120 D99 B99 A50 | contacts [4, 4, 4] → [2, 2, 2] | CHOP, IN_CUT, CHOP                       | decisive error ° [1.6, 0.2, 1.7] speed [-0.006, -0.01, -0.005] | contact → line 0.55 → 0.9 s
+    150 D50 B99 A50 | contacts [3, 3, 3] → [3, 3, 2] | DRAG_BACK, DRAG_BACK, CRUYFF             | decisive error ° [0.3, 0, 0.9] speed [-0.013, -0.01, -0.002] | contact → line 0.57 → 0.58 s
+    150 D99 B50 A99 | contacts [4, 5, 4] → [2, 2, 2] | CHOP, CHOP, CHOP                         | decisive error ° [8.8, 14.2, 60.3] speed [-0.083, -0.06, 0.72] | contact → line 0.25 → 0.56 s
+    150 D99 B99 A50 | contacts [4, 4, 4] → [3, 3, 3] | CHOP, CHOP, DRAG_BACK                    | decisive error ° [0, 0.8, 0] speed [-0.008, 0, -0.009] | contact → line 0.57 → 0.0 s
+    180 D50 B99 A50 | contacts [3, 3, 3] → [3, 3, 3] | DRAG_BACK, DRAG_BACK, DRAG_BACK          | decisive error ° [1.7, 0.1, 0.2] speed [-0.011, -0.014, -0.01] | contact → line 0.58 → 0.59 s
+    180 D99 B50 A99 | contacts [3, 5, 3] → [2, 2, 2] | CRUYFF, CRUYFF, CRUYFF                   | decisive error ° [2.5, 2.6, 1.5] speed [-0.036, -0.023, -0.114] | contact → line 0.41 → 0.46 s
+    180 D99 B99 A50 | contacts [5, 5, 5] → [2, 2, 2] | CRUYFF, CRUYFF, CRUYFF                   | decisive error ° [0.3, 0.3, 0.1] speed [-0.005, -0.005, -0.015] | contact → line 0.78 → 0.66 s
+
+== the styles (owner §16), Dribbling 99
+     60 CLOSE_CONTROL   | contacts [3, 3, 3] → [2, 2, 2] | DRAG_ACROSS, DRAG_ACROSS, DRAG_ACROSS | request → line 0.98 → 0.65 s | sep 0.65 m
+     60 DIRECT_RUNNER   | contacts [2, 2, 2] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH | request → line 1.16 → 0.85 s | sep 1.15 m
+     60 DOMINANT_CLOSE  | contacts [2, 2, 2] → [1, 1, 1] | IN_CUT, IN_CUT, IN_CUT | request → line 0.96 → 0.65 s | sep 0.65 m
+     60 TWO_FOOT        | contacts [3, 3, 3] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH | request → line 0.98 → 0.65 s | sep 0.7 m
+     90 CLOSE_CONTROL   | contacts [4, 4, 4] → [2, 2, 2] | DRAG_ACROSS, DRAG_ACROSS, DRAG_ACROSS | request → line 1.23 → 0.83 s | sep 1 m
+     90 DIRECT_RUNNER   | contacts [3, 3, 3] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH | request → line 1.33 → 1.03 s | sep 1.16 m
+     90 DOMINANT_CLOSE  | contacts [3, 3, 3] → [1, 1, 1] | IN_CUT, IN_CUT, IN_CUT | request → line 1.13 → 0.79 s | sep 1.4 m
+     90 TWO_FOOT        | contacts [4, 4, 4] → [1, 1, 1] | OUT_TOUCH, OUT_TOUCH, OUT_TOUCH | request → line 1.23 → 0.83 s | sep 0.97 m
+    120 CLOSE_CONTROL   | contacts [4, 4, 4] → [2, 2, 2] | CHOP, CHOP, DRAG_BACK | request → line 1.3 → 0.83 s | sep 0.96 m
+    120 DIRECT_RUNNER   | contacts [3, 3, 3] → [1, 2, 2] | DRAG_BACK, DRAG_BACK, CHOP | request → line 1.34 → 0.93 s | sep 1.67 m
+    120 DOMINANT_CLOSE  | contacts [3, 3, 3] → [2, 1, 1] | CHOP, IN_CUT, IN_CUT | request → line 1.14 → 0.97 s | sep 1.2 m
+    120 TWO_FOOT        | contacts [4, 4, 4] → [2, 2, 2] | DRAG_BACK, CHOP, CHOP | request → line 1.3 → 0.83 s | sep 0.96 m
+    150 CLOSE_CONTROL   | contacts [4, 4, 4] → [2, 2, 2] | CRUYFF, CHOP, DRAG_BACK | request → line 1.27 → 0.85 s | sep 1.02 m
+    150 DIRECT_RUNNER   | contacts [4, 4, 4] → [1, 2, 2] | DRAG_BACK, DRAG_BACK, CHOP | request → line 1.48 → 0.95 s | sep 1.67 m
+    150 DOMINANT_CLOSE  | contacts [2, 2, 2] → [2, 2, 2] | CHOP, DRAG_BACK, CHOP | request → line 1.01 → 1.05 s | sep 1.06 m
+    150 TWO_FOOT        | contacts [5, 5, 5] → [2, 2, 2] | DRAG_BACK, CHOP, CHOP | request → line 1.27 → 0.85 s | sep 1.03 m
+
+== open / tight carrying (owner §7, §8): touches per second · footfalls between touches (median)
+   STRAIGHT    D99 tc12 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   STRAIGHT    D99 tc14 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   STRAIGHT    D80 tc12 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   STRAIGHT    D80 tc14 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   STRAIGHT    D50 tc12 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   STRAIGHT    D50 tc14 | 1.73 /s · gap 0.63 s · 2 footfalls · RRRRRR
+   TURN0_V7.5  D99 tc12 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   TURN0_V7.5  D99 tc14 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   TURN0_V7.5  D80 tc12 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   TURN0_V7.5  D80 tc14 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   TURN0_V7.5  D50 tc12 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   TURN0_V7.5  D50 tc14 | 1.15 /s · gap 1.02 s · 4 footfalls · RRRR
+   ACCEL       D99 tc12 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   ACCEL       D99 tc14 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   ACCEL       D80 tc12 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   ACCEL       D80 tc14 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   ACCEL       D50 tc12 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   ACCEL       D50 tc14 | 1.01 /s · gap 0.97 s · 6 footfalls · RRRR
+   LR          D99 tc12 | 2.21 /s · gap 0.35 s · 2 footfalls · RRRLLLRRR
+   LR          D99 tc14 | 2.21 /s · gap 0.54 s · 2 footfalls · RRLRRRRRR
+   LR          D80 tc12 | 2.21 /s · gap 0.35 s · 2 footfalls · RRRLLLRRR
+   LR          D80 tc14 | 2.21 /s · gap 0.54 s · 2 footfalls · RRLRRRRRR
+   LR          D50 tc12 | 1.96 /s · gap 0.68 s · 2 footfalls · RRRLLLRL
+   LR          D50 tc14 | 1.96 /s · gap 0.54 s · 2 footfalls · RRLRRRRL
+
+== the phasing on the same body (TECHNICAL-CONTROL-1.3's diagnostics; the efficiency cases × D 99 / 80 / 50 × seeds × sides): TECHNICAL-CONTROL-1.2's cuts with FlowBody → TECHNICAL-CONTROL-1.4 with ChopBody
+   runs                         108 → 108
+   intersectFrames              286 → 389
+   casesWithIntersections       56 → 52
+   worstSepCm                   -2.6 → -2.6
+   pelvisAccMax_median          959 → 959
+   pelvisAccMax_worst           1082 → 1060
+   ankleAccMax_median           2586 → 2509
+   ankleAccMax_worst            11947 → 13091
+   pops_median                  16.0 → 11.0
+   slipMm_median                0.8 → 0.6
+   slipMm_worst                 17.1 → 47.8
+   instantSwaps                 15 → 5
+   TECHNICAL-CONTROL-1.3's torture set at 99 on TECHNICAL-CONTROL-1.4: {"runs": 26, "intersectFrames": 14, "casesWithIntersections": 3, "worstSepCm": -6.3, "pelvisAccMax_median": 673, "pelvisAccMax_worst": 712, "ankleAccMax_median": 2375, "ankleAccMax_worst": 13044, "pops_median": 7.5, "slipMm_median": 2.0, "slipMm_worst": 26.3, "instantSwaps": 0}
+
+== checks (163 runs: the efficiency matrix × D 99/80/50 × seeds × sides, TECHNICAL-CONTROL-1.2's carry course × 4 players, the receive chain × 99/80/50): {"det": "163/163", "bodyNeutral": "163/163", "poseDet": "163/163", "failed": 0, "errors": 0}
+== the carry model preserved (owner §6), TECHNICAL-CONTROL-1.2's carry course, TECHNICAL-CONTROL-1.2 → 1.4: {"DOMINANT_CLOSE/L": {"outside": [0.769, 0.757], "inside": [0.076, 0.088], "instep": [0.155, 0.155], "sameFoot": [1, 1], "preferredFoot": [1, 1], "preferredLane": [0.974, 0.97], "crossingsPerS": [0.152, 0.144], "touchesPerS": [1.569, 1.518]}, "TWO_FOOT/B": {"outside": [0.636, 0.608], "inside": [0.164, 0.192], "instep": [0.2, 0.2], "sameFoot": [0.849, 0.862], "preferredFoot": [null, null], "preferredLane": [null, null], "crossingsPerS": [0.367, 0.298], "touchesPerS": [1.734, 1.647]}, "DOMINANT_CLOSE/R": {"outside": [0.769, 0.757], "inside": [0.076, 0.088], "instep": [0.155, 0.155], "sameFoot": [1, 1], "preferredFoot": [1, 1], "preferredLane": [0.978, 0.979], "crossingsPerS": [0.152, 0.099], "touchesPerS": [1.569, 1.518]}, "NEUTRAL/R": {"outside": [0.682, 0.572], "inside": [0.118, 0.128], "instep": [0.2, 0.3], "sameFoot": [0.975, 0.935], "preferredFoot": [0.967, 0.856], "preferredLane": [0.943, 0.824], "crossingsPerS": [0.243, 0.196], "touchesPerS": [1.608, 1.555]}}
+== CPU: {"sim12": {"msPerSimS": {"median": 13, "max": 14.2}, "worstStepMs": {"median": 3.1, "max": 3.2}}, "sim14": {"msPerSimS": {"median": 12.1, "max": 12.7}, "worstStepMs": {"median": 3.1, "max": 3.3}}, "anim12": {"msPerSimS": {"median": 103.3, "max": 121.6}, "worstStepMs": {"median": 45.1, "max": 48.4}}, "anim14": {"msPerSimS": {"median": 100.9, "max": 104.7}, "worstStepMs": {"median": 43.2, "max": 45.9}}}

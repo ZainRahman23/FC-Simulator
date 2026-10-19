@@ -1,0 +1,383 @@
+{
+ "note": "sim12/sim14: TC1.2 / TC1.4 simulation, animation off; anim12: TC1.2 + TC1.3 FlowBody; anim14: TC1.4 + ChopBody; second pass; one Node process",
+ "summary": {
+  "sim12": {
+   "msPerSimS": {
+    "median": 13,
+    "max": 14.2
+   },
+   "worstStepMs": {
+    "median": 3.1,
+    "max": 3.2
+   }
+  },
+  "sim14": {
+   "msPerSimS": {
+    "median": 12.1,
+    "max": 12.7
+   },
+   "worstStepMs": {
+    "median": 3.1,
+    "max": 3.3
+   }
+  },
+  "anim12": {
+   "msPerSimS": {
+    "median": 103.3,
+    "max": 121.6
+   },
+   "worstStepMs": {
+    "median": 45.1,
+    "max": 48.4
+   }
+  },
+  "anim14": {
+   "msPerSimS": {
+    "median": 100.9,
+    "max": 104.7
+   },
+   "worstStepMs": {
+    "median": 43.2,
+    "max": 45.9
+   }
+  }
+ },
+ "rows": [
+  {
+   "ang": 30,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 12.2,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 30,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 12.3,
+   "worstStepMs": 3.2
+  },
+  {
+   "ang": 30,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 94.3,
+   "worstStepMs": 43.3
+  },
+  {
+   "ang": 30,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 97.1,
+   "worstStepMs": 37.9
+  },
+  {
+   "ang": 30,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 12.6,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 30,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 12.7,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 30,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 100.3,
+   "worstStepMs": 44.7
+  },
+  {
+   "ang": 30,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 104.7,
+   "worstStepMs": 41.9
+  },
+  {
+   "ang": 60,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 13,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 60,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 12.4,
+   "worstStepMs": 3.2
+  },
+  {
+   "ang": 60,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 103.2,
+   "worstStepMs": 46.6
+  },
+  {
+   "ang": 60,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 102.2,
+   "worstStepMs": 45
+  },
+  {
+   "ang": 60,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 12.9,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 60,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 11.7,
+   "worstStepMs": 3
+  },
+  {
+   "ang": 60,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 99.3,
+   "worstStepMs": 42
+  },
+  {
+   "ang": 60,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 96.9,
+   "worstStepMs": 42.7
+  },
+  {
+   "ang": 90,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 13.5,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 90,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 11.8,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 90,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 114.4,
+   "worstStepMs": 45.1
+  },
+  {
+   "ang": 90,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 94.9,
+   "worstStepMs": 41.7
+  },
+  {
+   "ang": 90,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 13.5,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 90,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 11.4,
+   "worstStepMs": 3
+  },
+  {
+   "ang": 90,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 110.5,
+   "worstStepMs": 48.2
+  },
+  {
+   "ang": 90,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 91.5,
+   "worstStepMs": 39.2
+  },
+  {
+   "ang": 120,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 14.2,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 120,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 12.2,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 120,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 121.6,
+   "worstStepMs": 45.9
+  },
+  {
+   "ang": 120,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 102.7,
+   "worstStepMs": 43
+  },
+  {
+   "ang": 120,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 14.1,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 120,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 12,
+   "worstStepMs": 3
+  },
+  {
+   "ang": 120,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 116.5,
+   "worstStepMs": 48.4
+  },
+  {
+   "ang": 120,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 96.8,
+   "worstStepMs": 44.3
+  },
+  {
+   "ang": 150,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 12.7,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 150,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 11.9,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 150,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 103.3,
+   "worstStepMs": 42.4
+  },
+  {
+   "ang": 150,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 101.9,
+   "worstStepMs": 43.2
+  },
+  {
+   "ang": 150,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 13.1,
+   "worstStepMs": 3
+  },
+  {
+   "ang": 150,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 12.6,
+   "worstStepMs": 3.3
+  },
+  {
+   "ang": 150,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 107.4,
+   "worstStepMs": 44.9
+  },
+  {
+   "ang": 150,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 102.5,
+   "worstStepMs": 44.5
+  },
+  {
+   "ang": 180,
+   "seed": 1,
+   "m": "sim12",
+   "msPerSimS": 12.6,
+   "worstStepMs": 3.1
+  },
+  {
+   "ang": 180,
+   "seed": 1,
+   "m": "sim14",
+   "msPerSimS": 11.6,
+   "worstStepMs": 3
+  },
+  {
+   "ang": 180,
+   "seed": 1,
+   "m": "anim12",
+   "msPerSimS": 98,
+   "worstStepMs": 44.3
+  },
+  {
+   "ang": 180,
+   "seed": 1,
+   "m": "anim14",
+   "msPerSimS": 99,
+   "worstStepMs": 44.4
+  },
+  {
+   "ang": 180,
+   "seed": 2,
+   "m": "sim12",
+   "msPerSimS": 12.7,
+   "worstStepMs": 3.2
+  },
+  {
+   "ang": 180,
+   "seed": 2,
+   "m": "sim14",
+   "msPerSimS": 12.1,
+   "worstStepMs": 3.2
+  },
+  {
+   "ang": 180,
+   "seed": 2,
+   "m": "anim12",
+   "msPerSimS": 98.8,
+   "worstStepMs": 46.3
+  },
+  {
+   "ang": 180,
+   "seed": 2,
+   "m": "anim14",
+   "msPerSimS": 100.9,
+   "worstStepMs": 45.9
+  }
+ ]
+}
