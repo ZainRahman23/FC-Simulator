@@ -39,7 +39,7 @@ export function techParams(r) {
 //   feint     how readily a disguise (body feint, step-over exit) is used when the space geometry calls for one — × Dribbling's sophistication
 //   direct    directness: the straightest, quickest progression; larger touches into space; fewer adjustment touches
 export const STYLES = {
-  NEUTRAL:       { label: "neutral", foot: 0.5, surface: { inside: 1.0, outside: 1.0, sole: 1.0 }, rhythm: 0.5, technical: 0.5, feint: 0.3, direct: 0.5 },
+  NEUTRAL:       { label: "neutral", foot: 0.5, surface: { inside: 1.0, outside: 1.0, sole: 1.0 }, rhythm: 0.5, technical: 0.5, feint: 0.4, direct: 0.5 },
   DOMINANT_FOOT: { label: "dominant-foot carrier", foot: 0.92, surface: { inside: 1.0, outside: 1.25, sole: 0.8 }, rhythm: 0.55, technical: 0.4, feint: 0.25, direct: 0.6 },
   TWO_FOOT:      { label: "two-foot technician", foot: 0.08, surface: { inside: 1.15, outside: 0.95, sole: 1.0 }, rhythm: 0.7, technical: 0.55, feint: 0.25, direct: 0.5 },
   DIRECT_RUNNER: { label: "direct runner", foot: 0.55, surface: { inside: 0.9, outside: 1.15, sole: 0.6 }, rhythm: 0.15, technical: 0.15, feint: 0.1, direct: 0.95 },

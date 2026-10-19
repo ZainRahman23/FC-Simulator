@@ -31,8 +31,10 @@ export { DT, RX, ATTR, STYLES };
 const R = 0.11, hyp = Math.hypot, abs = Math.abs, max = Math.max, min = Math.min, r2 = (x) => Math.round(x * 100) / 100, r3 = (x) => Math.round(x * 1000) / 1000, lerp = (a, b, t) => a + (b - a) * t;
 export const TC = {
   version: "TECHNICAL-CONTROL-1",
-  touchU: 0.82, landAfter: 0.035, soleDv: 3.2,                     // a technical contact at this share of its swing; the foot lands this long after it
-  gait: { Ts: [[0, 0.40], [3, 0.33], [5.5, 0.29], [7.8, 0.255], [9.5, 0.24]], flight: [[0, 0], [2.5, 0], [4, 0.03], [7.8, 0.06]], lead: [0.10, 0.045], width: 0.09, minStance: 0.07 },
+  touchU: 0.82, landAfter: 0.075, soleDv: 3.2,                     // a technical contact at this share of its swing; the foot lands this long after it
+  // the GAIT: the step period Ts (one foot's landing to the other's) and the duty factor (the share of a stride a foot is on the ground — walking
+  // > 0.5 with double support, running < 0.5 with a flight between steps; human running data: ~0.38 at 3 m/s, ~0.30 at 5.5, ~0.23 at 8)
+  gait: { Ts: [[0, 0.40], [3, 0.33], [5.5, 0.29], [7.8, 0.255], [9.5, 0.24]], duty: [[0, 0.62], [1.5, 0.56], [3, 0.40], [5.5, 0.31], [7.8, 0.24], [9.5, 0.22]], dutyTurn: 0.46, minStance: 0.07, stanceLen: 0.78 }, // stanceLen: the ground a stance covers at most — the leg's reach, landing ≤ 0.27 m ahead → toe-off ≈ 0.5 m behind
   ahead: [0.30, 0.03, 0.46], lat: 0.10,                // the next contact point (as RECEIVE-ELITE-1): ahead of the body, on the touching foot's side
   // the CARRY rhythm: steps between two touches — close control touches every step (alternating feet) or every other step (one foot); a stride
   // carry every 3 – 4 steps in open space at speed; the style's rhythm and directness choose inside what Dribbling's cadence allows
@@ -40,15 +42,19 @@ export const TC = {
   replanDeg: 10, replanV: 0.6, turnMin: 28,            // the intent moved: re-plan the run (a bend) — beyond turnMin a technical action
   horizon: 3.0,
   recover: { window: 1.6 },                            // a ball beyond reach: the run is re-planned toward it (never released into space)
-  bridge: { vMin: 6.4, straight: 8, after: 1.0 },      // BRIDGE to DRIBBLE-V1: a straight stride carry at ≥ vMin, ≥ after s into the carry
+  bridge: { vMin: 6.4, straight: 8, after: 1.0 },
+  ddiff: { v: 0.05, dv: 0.04 },                       // the dribble touch's difficulty: + 0.05 per m/s of running speed, + 0.04 per m/s of impulse
+  idealCap: [4.5, 3.5],                                // m/s: a technical / carry touch sends the ball at most max(4.5, the body's speed + 3.5)      // BRIDGE to DRIBBLE-V1: a straight stride carry at ≥ vMin, ≥ after s into the carry
 };
 const gaitTs = (v, ag, turning) => (turning ? ag.stepT : tab(TC.gait.Ts, v));
+// RUN-1's own gait at running speed (≥ 3 m/s, not turning): its step period and duty factor
+const gaitOf = (ep, v, turning) => { if (!turning && v >= 3.0 && ep.gaitAt) { const G = ep.gaitAt(v); return { Ts: G.Ts, duty: G.D }; } return { Ts: gaitTs(v, ep.el.agi, turning), duty: turning ? max(TC.gait.dutyTurn, tab(TC.gait.duty, v)) : tab(TC.gait.duty, v) }; };
 // ═══ THE EPISODE ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 // o: EliteEpisode's options (receive) or { mode: "dribble", start: { P, V, psi } } + { intent(t) → { theta, v, contest }, style, bridge }
 export class TechEpisode extends EliteEpisode {
   constructor(o) {
     super(o); this.style = styleOf(o.style); this.intent = o.intent; this.plans = []; this.gen = 0; this.actions = []; this.carryFrom = null; this.lastDecision = null; this.bridgeMode = o.bridge || "off";
-    this.pref = o.pref || "R"; this.techLog = [];
+    this.pref = o.pref === undefined ? "R" : o.pref; this.techLog = [];        // null: two-footed (no foot bias)
     if (o.mode === "dribble") { this.carryFrom = 0; this.splice(0, Object.assign({ kind: "RUN" }, this.wantNow(0))); }
   }
   // ── the authored body: RECEIVE-ELITE-1's receive path until the first splice, then the motion plans (each from its splice tick) ──────────────
@@ -70,20 +76,24 @@ export class TechEpisode extends EliteEpisode {
     for (const q of keep) { if (q.F === "L") lastL = q; else lastR = q; }
     let side = (lastL && lastR) ? (lastL.t1 > lastR.t1 ? "R" : "L") : other((lastL || lastR || { F: this.tech.F0 }).F), tPrev = max(t, (lastL || lastR) ? max(lastL ? lastL.t1 : -9, lastR ? lastR.t1 : -9) : t), n = 0;
     while (tPrev < t + TC.horizon && n < 30) {
-      const v = this.speedBase(tPrev + 0.05), turning = abs(wrapA(this.psiAt(tPrev + 0.1) - hdg(this.velAt(tPrev + 0.1)))) > 20 * DEG && v > 0.8 || this.braking(tPrev), Ts = gaitTs(v, this.el.agi, turning), fl = turning ? 0.02 : tab(TC.gait.flight, v);
-      const own = side === "L" ? lastL : lastR, tMin0 = own ? own.t1 + TC.gait.minStance : -9; let t0 = max(tPrev - fl, tMin0), t1 = max(t0 + 0.12, tPrev + Ts), tc = null;
+      const v = this.speedBase(tPrev + 0.05), turning = abs(wrapA(this.psiAt(tPrev + 0.1) - hdg(this.velAt(tPrev + 0.1)))) > 20 * DEG && v > 0.8 || this.braking(tPrev), gg = gaitOf(this, v, turning), Ts = gg.Ts, duty = gg.duty;
+      const own = side === "L" ? lastL : lastR, tMin0 = own ? own.t1 + TC.gait.minStance : -9; let t1 = tPrev + Ts, t0 = max(tMin0, t1 - (1 - duty) * 2 * Ts), tc = null;
       // PROCEDURAL STRIDE ADJUSTMENT: a technical contact the action needs at a given time with a given foot — this swing ends at it (shortened or
       // lengthened), or, when the other foot is due, this one is cut short (a stutter step) so that the foot that must play the ball is free
       const f = forced[fi];
       if (f) { const land = f.tc + TC.landAfter;
-        if (side === f.F && land <= t1 + 0.5 * Ts) { t1 = max(land, t0 + 0.1); t0 = max(tMin0, min(t0, t1 - 0.15)); tc = f.tc; fi++; }
-        else if (side !== f.F && t1 > f.tc - 0.10) { t1 = max(t0 + 0.1, f.tc - 0.13); } }
+        // (a swing moved earlier keeps its natural duration — it lifts earlier, the stance before it is shorter — never a crammed swing)
+        if (side === f.F && land <= t1 + 0.5 * Ts) { const dur = t1 - t0; t1 = max(land, tMin0 + 0.16); t0 = max(tMin0, t1 - max(dur, 0.16)); tc = f.tc; fi++; }
+        else if (side !== f.F && t1 > f.tc - 0.10) { const dur = t1 - t0; t1 = max(tMin0 + 0.16, f.tc - 0.13); t0 = max(tMin0, t1 - max(0.16, dur * 0.8)); } }
+      // a stance never outlasts the ground the body covers over the foot: the foot lifts when the body has passed it (the swing is longer, never a
+      // foot left behind)
+      if (own) { const vSt = max(0.5, this.speedBase(own.t1 + 0.08)); t0 = max(t, min(t0, own.t1 + max(TC.gait.minStance, TC.gait.stanceLen / vSt))); }
       const sw = { F: side, t0, t1 }; if (tc != null) sw.tc = tc; out.push(sw); if (side === "L") lastL = sw; else lastR = sw; tPrev = t1; side = other(side); n++; }
     this.swings = out.sort((x, y) => x.t1 - y.t1);
   }
   braking(t) { const v0 = this.speedBase(t), v1 = this.speedBase(t + 0.1); return v1 < v0 - 0.25; }
   // the contact time inside a swing (the end of it: the foot plays the ball and lands)
-  contactTimeOf(s) { return s.tc != null ? s.tc : s.t0 + TC.touchU * (s.t1 - s.t0); }
+  contactTimeOf(s) { return s.tc != null ? s.tc : max(s.t0 + 0.55 * (s.t1 - s.t0), s.t1 - TC.landAfter); }
   // ── THE NEXT CONTACT of the carry: the rhythm (steps between touches) the style wants, inside Dribbling's cadence; the preferred foot when the
   // style leans on it and the timing allows ───────────────────────────────────────────────────────────────────────────────────────────────────
   carryNext(c, ac) {
@@ -91,7 +101,7 @@ export class TechEpisode extends EliteEpisode {
     const nClose = tab(TC.rhythm.close, v), nStride = tab(TC.rhythm.stride, v), r = clamp(st.rhythm - (open ? 0.35 * st.direct : -0.25), 0, 1), want = Math.round(lerp(nStride, nClose, r));
     const sw = this.swings.filter((s) => !s.first && this.contactTimeOf(s) > t + 0.02 && (!ac || this.contactTimeOf(s) < ac.contacts[0].tc - 0.1)); let best = null;
     for (let j = 0; j < min(sw.length, 6); j++) { const s = sw[j], tt = this.contactTimeOf(s), gap = s.F === c.F ? this.el.dri.sameFoot : this.el.dri.cadence; if (tt - t < gap - 1e-9) continue;
-      const nSteps = j + 1, foot = s.F !== this.pref ? st.foot * 1.2 : 0, cost = (ac ? nSteps : abs(nSteps - want)) * 0.8 + foot + (s.F === c.F && want === 1 ? 0.3 : 0);
+      const nSteps = j + 1, foot = this.pref && s.F !== this.pref ? st.foot * 1.2 : 0, cost = (ac ? nSteps : abs(nSteps - want)) * 0.8 + foot + (s.F === c.F && want === 1 ? 0.3 : 0);
       if (!best || cost < best.cost) best = { s, j, t: tt, cost, nSteps }; }
     return best;
   }
@@ -117,7 +127,9 @@ export class TechEpisode extends EliteEpisode {
       if (!before) { const k = this.kc0 + Math.round(q.tc / DT); nx = { i: c.i + 1, t: (k - this.kc0) * DT, k, F: q.F, role: q.role, allowed: q.surfaces, act: ac.fam, actIdx: ac.contacts.indexOf(q) }; } } }
     if (!nx) { const f = this.carryNext(c, ac && ac.contacts[0].tc > c.t + 0.02 ? ac : null); if (!f) return null; nx = { i: c.i + 1, t: f.t, k: this.kc0 + Math.round(f.t / DT), F: f.s.F, swing: f.s, role: "carry", nSteps: f.nSteps, allowed: ["INSIDE", "OUTSIDE", "LACES"] }; nx.t = (nx.k - this.kc0) * DT; }
     nx.Q = this.rolePoint(nx.t, nx.F, nx.role);
-    const ideal = this.towardIdeal(c, B, nx, commit); return this.finishPlan(c, B, vB, { exit: false, ideal, nx, allowed: c.allowed });
+    const ideal = this.towardIdeal(c, B, nx, commit), vb = hyp(...this.velAt(nx.t)), cap = max(TC.idealCap[0], vb + TC.idealCap[1]);
+    if (ideal.speed > cap) { const k = cap / ideal.speed; ideal.v = [ideal.v[0] * k, ideal.v[1] * k]; ideal.speed = cap; ideal.capped = true; }   // a technical touch is never a kick: beyond it, the next contact adapts (findNext)
+    return this.finishPlan(c, B, vB, { exit: false, ideal, nx, allowed: c.allowed });
   }
   nextSwingTime(c) { const s = this.swings.find((q) => !q.first && this.contactTimeOf(q) > c.t + 0.02); return s ? this.contactTimeOf(s) : Infinity; }
   // the ball's place at a contact of this role, foot F, time t (carry: RECEIVE-ELITE-1's next contact point; actions: tc_actions.js ROLE_AT)
@@ -127,18 +139,24 @@ export class TechEpisode extends EliteEpisode {
   // the rotation inside the touch window, the glance, the surface, the touch's own speed); the style weights the surfaces that fit
   finishPlan(c, B, vB, o) {
     const t = c.t, Vb = this.velAt(t), psi = this.psiAt(t), vI = o.ideal.v, vrel = [vB[0] - Vb[0], vB[1] - Vb[1], vB[2] || 0], dv = [vI[0] - vB[0], vI[1] - vB[1]], dvM = hyp(dv[0], dv[1]), alpha = wrapA(hdg(dv) - psi) / DEG;
-    const fs = this.fitStyled(c.F, alpha, dvM, o.allowed || ["INSIDE", "OUTSIDE", "LACES", "SOLE"], !!(c.role && c.role !== "carry")), st = { p: [B[0], B[1], B[2] != null ? B[2] : R], v: vrel }, inc = incoming(st), Dk = difficulty(surf("FOOT_INSIDE", c.F), st, inc, 0).D;
-    const rotIn = abs(wrapA(this.psiAt(t + 0.15) - this.psiAt(t - 0.15))) / Math.PI, sOut = hyp(vI[0], vI[1]), D = Dk * (1 + TDIFF.rot * rotIn + TDIFF.glance * fs.glance + (TDIFF.surface[fs.surface] || 0) + TDIFF.out * sOut / RK.diff.vRef);
+    const fs = this.fitStyled(c.F, alpha, dvM, o.allowed || ["INSIDE", "OUTSIDE", "LACES", "SOLE"], !!(c.role && c.role !== "carry"), hyp(Vb[0], Vb[1])), st = { p: [B[0], B[1], B[2] != null ? B[2] : R], v: vrel }, inc = incoming(st), Dk = difficulty(surf("FOOT_INSIDE", c.F), st, inc, 0).D;
+    // THE DRIBBLE TOUCH'S DIFFICULTY: the receive model's (the incoming ball relative to the foot — small for a ball rolling with the runner) plus
+    // what makes a dribble touch hard: the running speed it is played at and the impulse the foot imparts (Ball Control's curve itself unchanged)
+    const rotIn = abs(wrapA(this.psiAt(t + 0.15) - this.psiAt(t - 0.15))) / Math.PI, sOut = hyp(vI[0], vI[1]), Ddr = TC.ddiff.v * hyp(Vb[0], Vb[1]) + TC.ddiff.dv * dvM;
+    const D = (Dk + Ddr) * (1 + TDIFF.rot * rotIn + TDIFF.glance * fs.glance + (TDIFF.surface[fs.surface] || 0) + TDIFF.out * sOut / RK.diff.vRef);
     return { exit: o.exit, ideal: o.ideal, nx: o.nx, fs, alpha, D, vrel };
   }
   // the boot surface for this impulse among those that fit (RECEIVE-CONTROL-1.1's ranges and glancing tolerance), the style's surface preference
   // breaking ties between surfaces that fit (never choosing one that does not)
   // (dribbling: the SOLE rolls the ball in any direction at a low impulse — a drag across, a drag back, a stop — where RECEIVE-CONTROL-1.1's
   // receiving table only lets it pull back)
-  fitStyled(F, alphaDeg, dvM, allowed, ordered) {
-    const a = sideOf(F) * alphaDeg, tol = tab(SURF11.tol, dvM), st = this.style; let best = null;
+  // A CARRY touch in stride: the faster the run, the more the push comes from the running foot as it is — the laces (straight) or the outside
+  // (angled away) — rather than the inside with the foot turned out (the walking / close-control touch); r: 0 at ≤ 3 m/s … 1 at ≥ 7 m/s
+  fitStyled(F, alphaDeg, dvM, allowed, ordered, vBody) {
+    const a = sideOf(F) * alphaDeg, tol = tab(SURF11.tol, dvM), st = this.style, r = ordered || vBody == null ? 0 : clamp((vBody - 3) / 4, 0, 1); let best = null;
+    const stride = (s) => (s === "INSIDE" ? 22 * r + (a > 8 ? 10 * r : 0) : s === "LACES" ? -13 * r + 0.8 * r * abs(a) : s === "OUTSIDE" ? -8 * r - (a > 8 ? 10 * r : 0) : 0);
     for (const [ix, s] of allowed.entries()) { const [lo, hi] = SURF11[s].R, x = ((a - lo) % 360 + 360) % 360, w = hi - lo, off = dvM < SURF11.gentle || x <= w || (s === "SOLE" && dvM <= TC.soleDv) ? 0 : min(x - w, 360 - x), ok = off <= tol, sp = st.surface[s.toLowerCase()] || (s === "LACES" ? (st.surface.inside + st.surface.outside) / 2 : 1);
-      const cost = off + (ordered ? ix * 30 : SURF11[s].pref * 100) - 25 * Math.log(max(0.2, sp)); if (!best || (ok && !best.ok) || (ok === best.ok && cost < best.cost)) best = { surface: s, off, ok, cost }; }
+      const cost = off + (ordered ? ix * 30 : SURF11[s].pref * 100 + stride(s)) - 25 * Math.log(max(0.2, sp)); if (!best || (ok && !best.ok) || (ok === best.ok && cost < best.cost)) best = { surface: s, off, ok, cost }; }
     return { surface: best.surface, glance: best.off, ok: best.ok };
   }
   // ── A DECISION at a carry contact: the intent at this contact → a bend of the run, or a TECHNICAL ACTION (tc_actions.js) for a turn beyond turnMin
@@ -165,14 +183,14 @@ export class TechEpisode extends EliteEpisode {
         if (body.kind !== "RUN" && body.vEntry < v && (v - body.vEntry) / max(0.05, dtc) > el.agi.aBrake * 1.05) continue;       // the body cannot brake in time: a later swing
         let cost = SEL.wFit * outR / 10 + SEL.wTime * dtc + SEL.wSpeedLoss * (body.vEntry != null ? max(0, v - body.vEntry) / max(v, 1) : 0) + (s.F !== F1 ? 0.35 : 0);
         cost += f.soph * (SEL.wSoph * (1 - soph) + SEL.wSimple) - SEL.wTech * st.technical * soph * f.soph;
-        cost += (F1 !== this.pref ? st.foot * SEL.wFoot : 0) - SEL.wSurface * Math.log(max(0.2, st.surface[(f.first.surfaces || ["INSIDE"])[0].toLowerCase()] || 1));
+        cost += (this.pref && F1 !== this.pref ? st.foot * SEL.wFoot : 0) - SEL.wSurface * Math.log(max(0.2, st.surface[(f.first.surfaces || ["INSIDE"])[0].toLowerCase()] || 1));
         // FUNCTION: what each technical family is for (owner §14) — the drag across when the ball is on the wrong side of the stance at low speed,
         // the double touch in a tight left-right sequence, the inside cut / the outside touch as the plain answers to their angles
         if (fam === "DRAG_ACROSS") cost -= sw[0] && sw[0].F === footFor("turn", sg) && deg >= 35 && v < 4.5 ? SEL.wrongSide : 0;
         if (fam === "DOUBLE") cost -= recent.some((e) => e.sg === -sg) ? 0.7 : 0;
         if (fam === "IN_CUT" && deg >= 40 && deg <= 105) cost -= SEL.natural; if (fam === "OUT_TOUCH" && deg <= 50) cost -= SEL.natural;
         if (f.contest) cost -= SEL.wFeint * st.feint * soph; else cost += SEL.wContest * contest;
-        if (f.second) { const F2 = other(F1); cost += (F2 !== this.pref ? st.foot * SEL.wFoot * 0.6 : 0); }
+        if (f.second) { const F2 = other(F1); cost += (this.pref && F2 !== this.pref ? st.foot * SEL.wFoot * 0.6 : 0); }
         out.push({ fam, j, s, F1, tc, body, cost }); } }
     out.sort((x, y) => x.cost - y.cost); const a = out[0] || null; if (a) a.cands = out.slice(0, 6).map((x) => [x.fam, x.j, x.F1, r2(x.cost)]); return a;
   }
@@ -208,6 +226,10 @@ export class TechEpisode extends EliteEpisode {
     if (!best) best = this.chase(last, nx, P, W.tick, tReact);
     if (!best) { this.failed = true; this.notes.push(`ball beyond reach after c${last.i}`); this.ver++; return; }
     if (best.corr) this.corr.push({ t0: tReact, t1: best.t, d: best.corr, after: last.i, gen: (this.planAt(best.t) || { gen: 0 }).gen });
+    // an action's contact played later / earlier than planned (the ball's real place): its following contacts keep their spacing (the push after the
+    // drag), the gait re-forced from now
+    const ac = this.act; if (ac && nx.act && best.role !== "carry" && nx.actIdx != null && abs(best.t - nx.t) > 1e-6) { const dt = best.t - nx.t;
+      for (let j = nx.actIdx; j < ac.contacts.length; j++) ac.contacts[j].tc += dt; ac.endT += dt; this.forced = ac.contacts.filter((q) => q.tc > tNow + 0.02).map((q) => ({ F: q.F, tc: q.tc })); this.rebuildSwings(tNow); }
     const Q = best.corr ? [best.Q[0] + best.corr[0], best.Q[1] + best.corr[1]] : best.Q;
     this.next = { i: nx.i, k: best.k, t: best.t, F: best.F, Q, role: best.role || nx.role, allowed: best.role === "carry" ? ["INSIDE", "OUTSIDE", "LACES"] : nx.allowed, act: best.role === "carry" ? null : nx.act, recovery: best.recovery || (best.corr && hyp(best.corr[0], best.corr[1]) > 0.25) || abs(best.t - nx.t) > 0.12, corr: best.corr ? best.corr.map(r3) : null, planned: { t: r3(nx.t), F: nx.F, Q: nx.Q }, chase: best.chase || false }; this.ver++;
   }
@@ -228,15 +250,24 @@ export class TechEpisode extends EliteEpisode {
   // THE CHASE (the replacement of "released into space"): the run is re-planned from the reaction time toward where the ball will be, and the next
   // contact is the first swing end at which it can be played — however long the body (Agility) needs
   chase(last, nx, P, tick, tReact) {
-    const ballAt = (k) => P[k - tick], kR = this.kc0 + Math.round(tReact / DT), bA = ballAt(kR + Math.round(0.5 / DT)) || ballAt(Math.min(P.length - 1 + tick, kR));
-    if (!bA) return null; const P0 = this.rootAt(tReact), d = [bA.p[0] - P0[0], bA.p[1] - P0[1]], dl = hyp(d[0], d[1]), I = this.wantNow(tReact);
-    this.splice(tReact, { kind: "RUN", theta: Math.atan2(d[1], d[0]), v: clamp(max(I.v, dl / 0.5), 1.5, 9.0) });
-    for (const s of this.swings) { const tc = this.contactTimeOf(s); if (s.first || tc <= tReact + 0.05) continue; if (tc > tReact + TC.recover.window) break; const kc = this.kc0 + Math.round(tc / DT), bc = ballAt(kc); if (!bc || bc.p[2] > RX.ballHMax) continue;
-      const Q = this.contactPoint(tc, s.F), e = hyp(bc.p[0] - Q[0], bc.p[1] - Q[1]); if (e > this.el.dri.reach + 0.3) continue;
-      this.techLog.push({ t: r3(tReact), ev: "chase", contact: last.i + 1 }); this.carryFrom = this.carryFrom ?? tReact;
-      return { k: kc, t: (kc - this.kc0) * DT, F: s.F, Q, corr: null, cost: 0, recovery: true, chase: true, ball: bc.p.slice() }; }
+    const ballAt = (k) => P[k - tick], kR = this.kc0 + Math.round(tReact / DT), P0 = this.rootAt(tReact), I = this.wantNow(tReact), save = { n: this.plans.length, gen: this.gen, sw: this.swings, forced: this.forced, act: this.act };
+    // arrival times: aim the run at where the ball will be then, at the speed that gets there then (no faster than the intent / a sprint) — the
+    // first arrival with a swing that plays it within reach
+    const restore = () => { this.plans.length = save.n; this.gen = save.gen; this.swings = save.sw; this.forced = save.forced; this.act = save.act; };
+    for (const T of [0.35, 0.5, 0.65, 0.8, 1.0, 1.2, 1.4, 1.6]) { const bA = ballAt(kR + Math.round(T / DT)); if (!bA) break;
+      // aim the body (its contact point ahead of it) at the ball; the run's momentum bends it wide — re-aim by the miss (≤ 3 shots)
+      const u0 = [bA.p[0] - P0[0], bA.p[1] - P0[1]], l0 = hyp(u0[0], u0[1]) || 1, goal = [bA.p[0] - u0[0] / l0 * TC.ahead[0], bA.p[1] - u0[1] / l0 * TC.ahead[0]]; let aim = goal.slice();
+      for (let shot = 0; shot < 3; shot++) { const d = [aim[0] - P0[0], aim[1] - P0[1]], dl = hyp(d[0], d[1]); restore(); this.act = null; this.forced = [];
+        this.splice(tReact, { kind: "RUN", theta: Math.atan2(d[1], d[0]), v: clamp(dl / T * 1.05, 1.2, max(I.v, 6.5)) }); const R1 = this.rootAt(tReact + T), miss = [goal[0] - R1[0], goal[1] - R1[1]];
+        if (hyp(miss[0], miss[1]) < 0.15) break; aim = [aim[0] + miss[0], aim[1] + miss[1]]; }
+      for (const s of this.swings) { const tc = this.contactTimeOf(s); if (s.first || tc <= tReact + 0.05) continue; if (tc > tReact + T + 0.35) break; const kc = this.kc0 + Math.round(tc / DT), bc = ballAt(kc); if (!bc || bc.p[2] > RX.ballHMax) continue;
+        const Q = this.contactPoint(tc, s.F), e = hyp(bc.p[0] - Q[0], bc.p[1] - Q[1]); if (e > this.el.dri.reach + 0.3) continue;
+        this.techLog.push({ t: r3(tReact), ev: "chase", contact: last.i + 1, T }); this.carryFrom = this.carryFrom ?? tReact;
+        return { k: kc, t: (kc - this.kc0) * DT, F: s.F, Q, corr: null, cost: 0, recovery: true, chase: true, ball: bc.p.slice() }; }
+      restore(); }
     return null;
   }
+
 }
 // ═══ THE SIMULATION ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 // cfg as ReceiveSimE's + cfg.style, cfg.intent (fn t (s from the strike) → { theta (pitch heading), v, contest }), cfg.bridge ("off" | "sprint"),
@@ -244,6 +275,7 @@ export class TechEpisode extends EliteEpisode {
 export class TechSim extends ReceiveSimE {
   constructor(cfg) {
     super(cfg); this.tc = { style: styleOf(cfg.style), bridge: cfg.bridge || "off" }; this.el = techParams(this.ratings);
+    this.pref = cfg.player && cfg.player.preferred_foot === "L" ? "L" : "R"; // the preferred foot (a two-footed player — weak foot 5 — has none: prefFoot() → null)
     if (cfg.dribble) this.startDribble(cfg.dribble);
   }
   // the movement intent in the episode's frame and time (t from its first contact): the scenario's intent (pitch heading), else the receive's exit
@@ -261,16 +293,19 @@ export class TechSim extends ReceiveSimE {
     if (c2 && c2.kind === "ELITE" && dry) { c2.dry = dry; if (!dry.ok || dry.recovery) { const T = c2.ep.tech; T.firstExit = true; T.cushion = true; T.dir0 = null; c2.ep.techLog.push({ t: 0, ev: "cushion-first-touch", fam: T.fid, why: "the turning first touch could not be followed (dry run): cushion along the run, turn with the ball after" }); } } }
   // RECEIVE-ELITE-1's receive episode becomes a TECHNICAL-CONTROL episode carrying the same state (no event / draw / contact changes)
   promote(c2) { const ep = c2.ep, te = Object.create(TechEpisode.prototype); Object.assign(te, ep);
-    Object.assign(te, { style: this.tc.style, intent: this.intentFn(ep.kc0, c2.frame), plans: [], gen: 0, actions: [], carryFrom: null, lastDecision: null, bridgeMode: this.tc.bridge, pref: this.prefFoot() || this.pref || "R", techLog: [], el: Object.assign({}, ep.el, { dri: Object.assign({}, ep.el.dri, this.el.dri), agi: Object.assign({}, ep.el.agi, this.el.agi) }) });
+    Object.assign(te, { gaitAt: this.gaitFn(), style: this.tc.style, intent: this.intentFn(ep.kc0, c2.frame), plans: [], gen: 0, actions: [], carryFrom: null, lastDecision: null, bridgeMode: this.tc.bridge, pref: this.prefFoot(), techLog: [], el: Object.assign({}, ep.el, { dri: Object.assign({}, ep.el.dri, this.el.dri), agi: Object.assign({}, ep.el.agi, this.el.agi) }) });
     c2.ep = te; this.buildBody2(); }
   // A DRIBBLE START (the technical course): the player running at the course's start speed with the ball just ahead of his foot, moving with him —
   // the technical controller owns ball and body from the first tick (the first contact 0.025 s in)
+  // the presentation body, rebuilt when the episode re-plans — handed the previous body for its continuity (presentation only)
+  buildBody2() { const c2 = this.rc2, prev = this.body2; super.buildBody2(); if (this.body2 && prev && c2.kind === "ELITE" && this.body2.inherit) this.body2.inherit(prev, (this.k - c2.kc) * DT); }
+  gaitFn() { const E = this.E || this.cfg.E, body = this.A.body; return (v) => E.r1GaitAt(body, E.RUN1.ref, v); }
   startDribble(d) {
     const c2 = this.rc2, rx = this.rx, A = this.A, P0 = A.P.slice(), F = new Frame(P0, 0), h = d.heading || 0, v = d.v || 0, V = [Math.cos(h) * v, Math.sin(h) * v], F0 = d.foot || (this.prefFoot() || "R");
     const plan = new MotionPlan({ t: 0, P: [0, 0], V, psi: h, w: 0 }, this.el.agi, 8.0).build({ kind: "RUN", theta: h, v }), kc0 = 6;
     const path = { kind: "dribble", base: (t) => plan.at(t).P, psi: (t) => plan.at(t).psi, th: h, Trot: 0 }, ev = this.newEvent(), spec = this.spec(ev);
     const tech = { fid: "DRIBBLE", label: "dribble", F0, surfaces: ["INSIDE", "OUTSIDE", "LACES"], famM: 1, sig: 1, theta: h, stand: null, shift: 0, lift0: -0.16, land0: TC.landAfter, firstExit: true, dir0: null, vIn0: V, ballC0: null };
-    const ep = new TechEpisode({ F, kc0, k0: 0, path, mode: "dribble", tech, el: this.el, bc: this.bc, spec, idp: `${this.pid}:${ev}`, vFloor: RX.vFloor, vX: v, rollSpeed: this.rollSpeedFn(), style: this.tc.style, intent: this.intentFn(kc0, F), bridge: this.tc.bridge, pref: this.prefFoot() || "R" });
+    const ep = new TechEpisode({ F, kc0, k0: 0, path, mode: "dribble", gaitAt: this.gaitFn(), tech, el: this.el, bc: this.bc, spec, idp: `${this.pid}:${ev}`, vFloor: RX.vFloor, vX: v, rollSpeed: this.rollSpeedFn(), style: this.tc.style, pref: this.prefFoot(), intent: this.intentFn(kc0, F), bridge: this.tc.bridge, pref: this.prefFoot() || "R" });
     // the ball: at the first contact's place (ahead of the foot that plays it), rolling with the player
     const t0 = 0, a = ep.contactPoint(t0, F0), bP = F.ker([a[0] - V[0] * kc0 * DT, a[1] - V[1] * kc0 * DT, R]), bV = F.kerV([V[0], V[1], 0]), b = this.W.ball; b.p = bP; b.v = bV; b.w = rollK(bV); b.mode = "ROLLING"; b.sleeping = false; this.W.restTime = 0;
     Object.assign(c2, { kind: "ELITE", eliteFrom: "DRIBBLE", phase: "action", frame: F, kc: kc0, k0: 0, psiInit: null, spec, ep, cls: { k: 0, ev, ground: true, intent: "go", hold: false, action: "DRIBBLE", moving: true } });

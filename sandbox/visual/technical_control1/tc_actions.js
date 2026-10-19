@@ -10,7 +10,7 @@
 //   DRAG_ACROSS  the SOLE rolls the ball across the front of the body to the other foot, which plays it on — the ball on the wrong side of the
 //                stance for the turn, a tight lateral shift (35° – 95°)
 //   DOUBLE       inside → inside / outside: one foot plays the ball laterally to the other, which plays it on at once — a quick lateral shift,
-//                a tight left-right sequence (25° – 70°)
+//                a tight left-right sequence (25° – 90°)
 //   FEINT_EXIT   a body feint (the centre of mass dips the other way) then the outside of the foot on the turn side takes the ball away — only when
 //                the space geometry calls for disguise (the contest proxy), never on its own (25° – 100°)
 // SELECTION: for the intent's turn Δ (signed, + right), a small feasible set — family × the next swings (which foot plays it, and when) — scored:
@@ -27,7 +27,7 @@ export const VOCAB = {
   DRAG_BACK:   { label: "sole drag-back", soph: 0.45, range: [115, 180], body: "STOP", first: { foot: "any", role: "drag", surfaces: ["SOLE"] }, second: { foot: "other", role: "push", gap: "sameFoot" } },
   CRUYFF:      { label: "Cruyff-like turn", soph: 0.55, range: [105, 180], body: "PIVOT", first: { foot: "away", role: "behind", surfaces: ["INSIDE"] } },
   DRAG_ACROSS: { label: "drag across the body", soph: 0.5, range: [35, 95], body: "PLANT_SOFT", first: { foot: "turn", role: "across", surfaces: ["SOLE", "INSIDE"] }, second: { foot: "other", role: "push", gap: "cluster" } },
-  DOUBLE:      { label: "double touch (inside → inside / outside)", soph: 0.55, range: [25, 70], body: "PLANT_SOFT", first: { foot: "away", role: "lateral", surfaces: ["INSIDE"] }, second: { foot: "other", role: "push", gap: "cluster" } },
+  DOUBLE:      { label: "double touch (inside → inside / outside)", soph: 0.55, range: [25, 90], body: "PLANT_SOFT", first: { foot: "away", role: "lateral", surfaces: ["INSIDE"] }, second: { foot: "other", role: "push", gap: "cluster" } },
   FEINT_EXIT:  { label: "body feint + outside exit", soph: 0.65, range: [25, 100], body: "FEINT", contest: true, first: { foot: "turn", role: "out", surfaces: ["OUTSIDE", "INSIDE"] } },
 };
 export const FAMILY_ORDER = ["CARRY", "OUT_TOUCH", "IN_CUT", "STOP", "DRAG_BACK", "CRUYFF", "DRAG_ACROSS", "DOUBLE", "FEINT_EXIT"];
