@@ -1,0 +1,38 @@
+{
+ "milestone": "TECHNICAL-CONTROL-1.1",
+ "title": "feet, ankles and lower-leg IK",
+ "state": "presented for review \u2014 NOT frozen, NOT integrated",
+ "date": "2026-10-19",
+ "gameplay_identical": "48/48 (animation off \u00b7 TC1 body \u00b7 TC1.1 body)",
+ "protected": "959/959",
+ "at99": {
+  "ankW_p99_median": 853.0,
+  "ankW_max": 1606.2,
+  "ankA_p99_median": 81684.5,
+  "footYawShin_max": 25,
+  "df_max": 28,
+  "knee_min": 7.5,
+  "overHard_pct_median": 0.0,
+  "ballPen_swing_frames": 26,
+  "ballPen_planted_frames": 7,
+  "gap_cm_absmax": 0.2,
+  "face_ok": 136,
+  "prepared": 136,
+  "slip_mm_max": 8.6,
+  "late_decisions": 10
+ },
+ "tc1_at99": {
+  "ankW_p99_median": 4276.6,
+  "ankW_max": 20970.4,
+  "ankA_p99_median": 596136.5,
+  "footYawShin_max": 179.6,
+  "df_max": 89.6,
+  "knee_min": 0.2,
+  "overHard_pct_median": 95.0,
+  "ballPen_swing_frames": 3914,
+  "ballPen_planted_frames": 703,
+  "gap_cm_absmax": 9
+ },
+ "flagged_contacts": 36,
+ "review": "review/TECHNICAL_CONTROL11_REVIEW.html (local only)"
+}

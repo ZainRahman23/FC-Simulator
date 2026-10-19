@@ -1,0 +1,325 @@
+{
+ "note": "second pass (warm caches: the RUN-1 grid, the channel tables); one Node process, nothing else running",
+ "summary": {
+  "off": {
+   "msPerSimS": {
+    "median": 12.3,
+    "max": 19.4
+   },
+   "worstStepMs": {
+    "median": 3.1,
+    "max": 3.4
+   }
+  },
+  "tc1": {
+   "msPerSimS": {
+    "median": 20.4,
+    "max": 27.6
+   },
+   "worstStepMs": {
+    "median": 4.1,
+    "max": 4.6
+   }
+  },
+  "tc11": {
+   "msPerSimS": {
+    "median": 29.2,
+    "max": 48.4
+   },
+   "worstStepMs": {
+    "median": 9.1,
+    "max": 11.3
+   }
+  }
+ },
+ "rows": [
+  {
+   "key": "straight8",
+   "body": "off",
+   "msPerSimS": 10.8,
+   "worstStepMs": 3.2
+  },
+  {
+   "key": "straight8",
+   "body": "tc1",
+   "msPerSimS": 19.1,
+   "worstStepMs": 4.4
+  },
+  {
+   "key": "straight8",
+   "body": "tc11",
+   "msPerSimS": 24.1,
+   "worstStepMs": 7.5
+  },
+  {
+   "key": "straight",
+   "body": "off",
+   "msPerSimS": 10.3,
+   "worstStepMs": 3.3
+  },
+  {
+   "key": "straight",
+   "body": "tc1",
+   "msPerSimS": 18.1,
+   "worstStepMs": 4.6
+  },
+  {
+   "key": "straight",
+   "body": "tc11",
+   "msPerSimS": 22,
+   "worstStepMs": 7.5
+  },
+  {
+   "key": "accel",
+   "body": "off",
+   "msPerSimS": 11.1,
+   "worstStepMs": 3.1
+  },
+  {
+   "key": "accel",
+   "body": "tc1",
+   "msPerSimS": 19,
+   "worstStepMs": 4
+  },
+  {
+   "key": "accel",
+   "body": "tc11",
+   "msPerSimS": 25.4,
+   "worstStepMs": 8.3
+  },
+  {
+   "key": "inside",
+   "body": "off",
+   "msPerSimS": 15.8,
+   "worstStepMs": 2.8
+  },
+  {
+   "key": "inside",
+   "body": "tc1",
+   "msPerSimS": 23.9,
+   "worstStepMs": 3.7
+  },
+  {
+   "key": "inside",
+   "body": "tc11",
+   "msPerSimS": 36,
+   "worstStepMs": 9.7
+  },
+  {
+   "key": "outside",
+   "body": "off",
+   "msPerSimS": 19.3,
+   "worstStepMs": 2.8
+  },
+  {
+   "key": "outside",
+   "body": "tc1",
+   "msPerSimS": 27.6,
+   "worstStepMs": 3.2
+  },
+  {
+   "key": "outside",
+   "body": "tc11",
+   "msPerSimS": 44.5,
+   "worstStepMs": 9.7
+  },
+  {
+   "key": "in_out",
+   "body": "off",
+   "msPerSimS": 11.6,
+   "worstStepMs": 3
+  },
+  {
+   "key": "in_out",
+   "body": "tc1",
+   "msPerSimS": 19.8,
+   "worstStepMs": 4.1
+  },
+  {
+   "key": "in_out",
+   "body": "tc11",
+   "msPerSimS": 29.2,
+   "worstStepMs": 9.5
+  },
+  {
+   "key": "out_in",
+   "body": "off",
+   "msPerSimS": 19.4,
+   "worstStepMs": 2.8
+  },
+  {
+   "key": "out_in",
+   "body": "tc1",
+   "msPerSimS": 27.6,
+   "worstStepMs": 3.2
+  },
+  {
+   "key": "out_in",
+   "body": "tc11",
+   "msPerSimS": 42.7,
+   "worstStepMs": 9
+  },
+  {
+   "key": "double",
+   "body": "off",
+   "msPerSimS": 16.5,
+   "worstStepMs": 2.9
+  },
+  {
+   "key": "double",
+   "body": "tc1",
+   "msPerSimS": 24.5,
+   "worstStepMs": 3.5
+  },
+  {
+   "key": "double",
+   "body": "tc11",
+   "msPerSimS": 38.7,
+   "worstStepMs": 10
+  },
+  {
+   "key": "drag",
+   "body": "off",
+   "msPerSimS": 18,
+   "worstStepMs": 2.6
+  },
+  {
+   "key": "drag",
+   "body": "tc1",
+   "msPerSimS": 26.2,
+   "worstStepMs": 3
+  },
+  {
+   "key": "drag",
+   "body": "tc11",
+   "msPerSimS": 48.4,
+   "worstStepMs": 11.1
+  },
+  {
+   "key": "stop",
+   "body": "off",
+   "msPerSimS": 12.2,
+   "worstStepMs": 2.9
+  },
+  {
+   "key": "stop",
+   "body": "tc1",
+   "msPerSimS": 20.2,
+   "worstStepMs": 3.8
+  },
+  {
+   "key": "stop",
+   "body": "tc11",
+   "msPerSimS": 30.9,
+   "worstStepMs": 11.3
+  },
+  {
+   "key": "cut60",
+   "body": "off",
+   "msPerSimS": 10.8,
+   "worstStepMs": 3.3
+  },
+  {
+   "key": "cut60",
+   "body": "tc1",
+   "msPerSimS": 18.8,
+   "worstStepMs": 4.4
+  },
+  {
+   "key": "cut60",
+   "body": "tc11",
+   "msPerSimS": 23.1,
+   "worstStepMs": 7.4
+  },
+  {
+   "key": "cut90",
+   "body": "off",
+   "msPerSimS": 12.3,
+   "worstStepMs": 3.4
+  },
+  {
+   "key": "cut90",
+   "body": "tc1",
+   "msPerSimS": 21.2,
+   "worstStepMs": 4.5
+  },
+  {
+   "key": "cut90",
+   "body": "tc11",
+   "msPerSimS": 28.2,
+   "worstStepMs": 9
+  },
+  {
+   "key": "turn120",
+   "body": "off",
+   "msPerSimS": 13.1,
+   "worstStepMs": 3.3
+  },
+  {
+   "key": "turn120",
+   "body": "tc1",
+   "msPerSimS": 21.2,
+   "worstStepMs": 4.2
+  },
+  {
+   "key": "turn120",
+   "body": "tc11",
+   "msPerSimS": 29.7,
+   "worstStepMs": 8.8
+  },
+  {
+   "key": "turn150",
+   "body": "off",
+   "msPerSimS": 10.8,
+   "worstStepMs": 3.2
+  },
+  {
+   "key": "turn150",
+   "body": "tc1",
+   "msPerSimS": 18.8,
+   "worstStepMs": 4.2
+  },
+  {
+   "key": "turn150",
+   "body": "tc11",
+   "msPerSimS": 23.8,
+   "worstStepMs": 9.1
+  },
+  {
+   "key": "turn180",
+   "body": "off",
+   "msPerSimS": 10.4,
+   "worstStepMs": 3.4
+  },
+  {
+   "key": "turn180",
+   "body": "tc1",
+   "msPerSimS": 18.4,
+   "worstStepMs": 4.4
+  },
+  {
+   "key": "turn180",
+   "body": "tc11",
+   "msPerSimS": 24,
+   "worstStepMs": 9.1
+  },
+  {
+   "key": "dominant",
+   "body": "off",
+   "msPerSimS": 12.3,
+   "worstStepMs": 3
+  },
+  {
+   "key": "dominant",
+   "body": "tc1",
+   "msPerSimS": 20.4,
+   "worstStepMs": 3.8
+  },
+  {
+   "key": "dominant",
+   "body": "tc11",
+   "msPerSimS": 27.2,
+   "worstStepMs": 9.5
+  }
+ ]
+}

@@ -1,0 +1,186 @@
+{
+ "body": "tc11",
+ "run1": [
+  {
+   "v": 5.5,
+   "ankW": {
+    "p50": 227.2,
+    "p95": 1002.3,
+    "p99": 1139.4,
+    "max": 1237
+   },
+   "ankA": {
+    "p95": 27060,
+    "p99": 74677,
+    "max": 110379
+   },
+   "df": {
+    "min": -40.4,
+    "max": 31.3
+   },
+   "inv": {
+    "min": -17.8,
+    "max": -2.7
+   },
+   "knee": {
+    "min": 15.6,
+    "max": 125
+   },
+   "hip": {
+    "min": -7.5,
+    "max": 10.2
+   },
+   "yawShin": {
+    "max": 10.2
+   }
+  },
+  {
+   "v": 8,
+   "ankW": {
+    "p50": 206.8,
+    "p95": 1242.9,
+    "p99": 1339.7,
+    "max": 1463.1
+   },
+   "ankA": {
+    "p95": 36505,
+    "p99": 110425,
+    "max": 126416
+   },
+   "df": {
+    "min": -38.2,
+    "max": 31
+   },
+   "inv": {
+    "min": -16.1,
+    "max": -3.2
+   },
+   "knee": {
+    "min": 20.3,
+    "max": 135
+   },
+   "hip": {
+    "min": -7.2,
+    "max": 11.6
+   },
+   "yawShin": {
+    "max": 6.4
+   }
+  }
+ ],
+ "runs": [
+  {
+   "id": "STRAIGHT_B99_D99_A99",
+   "seed": 1,
+   "foot": "R",
+   "body": "tc11",
+   "fault": null,
+   "ms": 4289,
+   "sum": {
+    "frames": 1916,
+    "ankW": {
+     "p50": 173.9,
+     "p95": 563.6,
+     "p99": 830.3,
+     "max": 1184.8
+    },
+    "ankA": {
+     "p95": 41201,
+     "p99": 65735,
+     "max": 123819
+    },
+    "footW": {
+     "p95": 854.3,
+     "p99": 1053.6,
+     "max": 1386.3
+    },
+    "yawShin": {
+     "p95": 9,
+     "max": 11.2
+    },
+    "df": {
+     "min": -32.3,
+     "p01": -28.5,
+     "p99": 19.3,
+     "max": 19.7
+    },
+    "inv": {
+     "min": -16.4,
+     "p01": -16.4,
+     "p99": 1.2,
+     "max": 1.2
+    },
+    "knee": {
+     "min": 9.8,
+     "p01": 10.1
+    },
+    "hip": {
+     "min": -17.6,
+     "max": 10.3
+    },
+    "tib": {
+     "min": -3.5,
+     "max": 7.8
+    },
+    "abd": {
+     "min": -1.5,
+     "max": 9
+    },
+    "overHard": {
+     "hip": 0,
+     "knee": 0,
+     "tib": 0,
+     "df": 0,
+     "inv": 0,
+     "abd": 0
+    },
+    "overComfort": {
+     "hip": 0,
+     "knee": 0,
+     "tib": 0,
+     "df": 0,
+     "inv": 29.33,
+     "abd": 39.56
+    },
+    "kneeLock": 0,
+    "slipMm": 0,
+    "ballPen": {
+     "swingFrames": 0,
+     "swingMaxCm": 0,
+     "plantedFrames": 0,
+     "plantedMaxCm": 0,
+     "deepFrames": 0
+    },
+    "contacts": {
+     "n": 5,
+     "faceOk": 5,
+     "gapAbsMax": 0,
+     "gapMin": 0,
+     "gapMax": 0,
+     "oriErrMax": 9.8,
+     "oriErrP50": 9.5,
+     "pre50Max": 5.8,
+     "post50Max": 20.9,
+     "pre50AnkMax": 14,
+     "post50AnkMax": 18.3,
+     "pre50YawMax": 2.8,
+     "post50YawMax": 2.5,
+     "ankWpkMax": 1185,
+     "reachMax": 0.925,
+     "supKneeMin": 77.3,
+     "late": 0,
+     "prepared": {
+      "n": 5,
+      "faceOk": 5,
+      "oriErrMax": 9.8,
+      "pre50AnkMax": 14,
+      "post50AnkMax": 18.3,
+      "pre50YawMax": 2.8,
+      "post50YawMax": 2.5,
+      "ankWpkMax": 1185
+     }
+    }
+   }
+  }
+ ]
+}

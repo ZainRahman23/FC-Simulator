@@ -1,0 +1,80 @@
+gameplay identical (ball every tick + every contact, TC1 body vs TC1.1 body): 48/48
+RUN-1 reference: [{"v": 5.5, "ankW": {"p50": 227.2, "p95": 1002.3, "p99": 1139.4, "max": 1237}, "ankA": {"p95": 27060, "p99": 74677, "max": 110379}, "df": {"min": -40.4, "max": 31.3}, "inv": {"min": -17.8, "max": -2.7}, "knee": {"min": 15.6, "max": 125}, "hip": {"min": -7.5, "max": 10.2}, "yawShin": {"max": 10.2}}, {"v": 8, "ankW": {"p50": 206.8, "p95": 1242.9, "p99": 1339.7, "max": 1463.1}, "ankA": {"p95": 36505, "p99": 110425, "max": 126416}, "df": {"min": -38.2, "max": 31}, "inv": {"min": -16.1, "max": -3.2}, "knee": {"min": 20.3, "max": 135}, "hip": {"min": -7.2, "max": 11.6}, "yawShin": {"max": 6.4}}]
+runs                     99 tc1: 16  99 tc11: 16  80 tc1: 16  80 tc11: 16  50 tc1: 16  50 tc11: 16
+ankW_p99_median          99 tc1: 4276.6  99 tc11: 853.0  80 tc1: 2989.5  80 tc11: 833.8  50 tc1: 2491.2  50 tc11: 922.3
+ankW_p99_max             99 tc1: 5406.3  99 tc11: 1143.6  80 tc1: 5403.1  80 tc11: 1144.4  50 tc1: 5405.5  50 tc11: 1165.5
+ankW_max                 99 tc1: 20970.4  99 tc11: 1606.2  80 tc1: 17912.6  80 tc11: 1697.9  50 tc1: 18252.4  50 tc11: 1907.6
+ankA_p99_median          99 tc1: 596136.5  99 tc11: 81684.5  80 tc1: 569675.0  80 tc11: 67577.0  50 tc1: 566168.0  50 tc11: 65869.5
+ankA_p99_max             99 tc1: 651163  99 tc11: 108803  80 tc1: 651163  80 tc11: 100551  50 tc1: 651163  50 tc11: 85262
+footYawShin_max          99 tc1: 179.6  99 tc11: 25  80 tc1: 179.8  80 tc11: 29.1  50 tc1: 180  50 tc11: 25.3
+df_min                   99 tc1: -46.2  99 tc11: -41.1  80 tc1: -60.7  80 tc11: -43.8  50 tc1: -65.9  50 tc11: -43.5
+df_max                   99 tc1: 89.6  99 tc11: 28  80 tc1: 89.5  80 tc11: 27.5  50 tc1: 89.7  50 tc11: 26.5
+inv_min                  99 tc1: -180  99 tc11: -17.6  80 tc1: -180  80 tc11: -18  50 tc1: -180  50 tc11: -18
+inv_max                  99 tc1: 180  99 tc11: 21.9  80 tc1: 180  80 tc11: 21.6  50 tc1: 179.9  50 tc11: 21.7
+knee_min                 99 tc1: 0.2  99 tc11: 7.5  80 tc1: 0.2  80 tc11: 7.1  50 tc1: 0.2  50 tc11: 7.1
+kneeLock_pct_max         99 tc1: 9.71  99 tc11: 0  80 tc1: 9.92  80 tc11: 0  50 tc1: 10.54  50 tc11: 0
+hip_min                  99 tc1: -65.5  99 tc11: -40.4  80 tc1: -64.9  80 tc11: -39.8  50 tc1: -65.8  50 tc11: -40.5
+hip_max                  99 tc1: 93.6  99 tc11: 45.8  80 tc1: 93.7  80 tc11: 47.4  50 tc1: 92.2  50 tc11: 50.8
+overHard_pct_median      99 tc1: 95.0  99 tc11: 0.0  80 tc1: 96.7  80 tc11: 0.0  50 tc1: 99.8  50 tc11: 0.0
+overHard_pct_max         99 tc1: 112.43  99 tc11: 0.39  80 tc1: 107.36  80 tc11: 0.64  50 tc1: 106.13  50 tc11: 2.88
+overComfort_pct_median   99 tc1: 118.3  99 tc11: 54.4  80 tc1: 124.0  80 tc11: 46.8  50 tc1: 129.6  50 tc11: 42.0
+ballPen_swing_frames     99 tc1: 3914  99 tc11: 26  80 tc1: 3549  80 tc11: 29  50 tc1: 2464  50 tc11: 21
+ballPen_planted_frames   99 tc1: 703  99 tc11: 7  80 tc1: 467  80 tc11: 0  50 tc1: 187  50 tc11: 0
+ballPen_maxCm            99 tc1: 15.5  99 tc11: 3.7  80 tc1: 14.8  80 tc11: 4.8  50 tc1: 14.4  50 tc11: 4
+slip_mm_max              99 tc1: 2.2  99 tc11: 8.6  80 tc1: 0.7  80 tc11: 16  50 tc1: 0  50 tc11: 16.1
+slip_mm_median           99 tc1: 0.0  99 tc11: 0.2  80 tc1: 0.0  80 tc11: 0.0  50 tc1: 0.0  50 tc11: 0.1
+contacts                 99 tc1: 146  99 tc11: 146  80 tc1: 143  80 tc11: 143  50 tc1: 121  50 tc11: 121
+late_decisions           99 tc1: 0  99 tc11: 10  80 tc1: 0  80 tc11: 10  50 tc1: 0  50 tc11: 9
+gap_cm_absmax            99 tc1: 9  99 tc11: 0.2  80 tc1: 9  80 tc11: 0.1  50 tc1: 9  50 tc11: 0.1
+gap_cm_within1           99 tc1: 0  99 tc11: 146  80 tc1: 0  80 tc11: 143  50 tc1: 0  50 tc11: 121
+face_ok                  99 tc1: 141  99 tc11: 136  80 tc1: 135  80 tc11: 133  50 tc1: 116  50 tc11: 112
+prepared                 99 tc1: 146  99 tc11: 136  80 tc1: 143  80 tc11: 133  50 tc1: 121  50 tc11: 112
+oriErr_median            99 tc1: 0.5  99 tc11: 8.5  80 tc1: 1.8  80 tc11: 9  50 tc1: 2.8  50 tc11: 7.0
+oriErr_max               99 tc1: 62.6  99 tc11: 36  80 tc1: 86.7  80 tc11: 37.6  50 tc1: 74.6  50 tc11: 34.6
+within_tol               99 tc1: 142  99 tc11: 136  80 tc1: 135  80 tc11: 132  50 tc1: 113  50 tc11: 112
+pre50Ank_median          99 tc1: 9.7  99 tc11: 5.5  80 tc1: 10.9  80 tc11: 4.9  50 tc1: 11.9  50 tc11: 5.5
+pre50Ank_max             99 tc1: 110.9  99 tc11: 21.4  80 tc1: 26.1  80 tc11: 21.1  50 tc1: 23  50 tc11: 19.9
+post50Ank_median         99 tc1: 15.1  99 tc11: 16.1  80 tc1: 16.3  80 tc11: 14.7  50 tc1: 24.6  50 tc11: 18.2
+post50Ank_max            99 tc1: 119.5  99 tc11: 28.7  80 tc1: 107.3  80 tc11: 35.2  50 tc1: 91  50 tc11: 39.3
+pre50Yaw_max             99 tc1: 111.8  99 tc11: 22.3  80 tc1: 38.3  80 tc11: 27.7  50 tc1: 3.2  50 tc11: 20.7
+post50Yaw_max            99 tc1: 126.6  99 tc11: 80.4  80 tc1: 118.6  80 tc11: 74  50 tc1: 98.8  50 tc11: 63.9
+ankWpk_contact_max       99 tc1: 20970  99 tc11: 1606  80 tc1: 17913  80 tc11: 1698  50 tc1: 5002  50 tc11: 1908
+reach_max                99 tc1: 0.997  99 tc11: 0.986  80 tc1: 0.994  80 tc11: 0.987  50 tc1: 0.992  50 tc11: 0.985
+supKnee_min              99 tc1: 0.2  99 tc11: 7.7  80 tc1: 0.2  80 tc11: 8.1  50 tc1: 0.2  50 tc11: 9.2
+flagged contacts: 36
+  accel 99/99/99 t 0.35 L INSIDE: reach 0.986
+  inside 99/99/99 t 2.883 R INSIDE: reach 0.986
+  inside 80/80/80 t 0.683 R INSIDE: reach 0.986
+  outside 99/99/99 t 1.25 R OUTSIDE: late decision (INSIDE→OUTSIDE Δ127°)
+  outside 80/80/80 t 1.25 R OUTSIDE: late decision (INSIDE→OUTSIDE Δ73°)
+  in_out 99/99/99 t 2.046 R INSIDE: late decision (INSIDE→INSIDE Δ25°)
+  in_out 99/99/99 t 2.567 R OUTSIDE: late decision (OUTSIDE→OUTSIDE Δ27°)
+  in_out 80/80/80 t 0.683 R INSIDE: reach 0.986
+  in_out 80/80/80 t 2.046 R INSIDE: late decision (INSIDE→INSIDE Δ32°); reach 0.986
+  out_in 80/80/80 t 2.421 R LACES: late decision (OUTSIDE→LACES Δ3°)
+  double 99/99/99 t 4.238 R INSIDE: late decision (INSIDE→INSIDE Δ34°)
+  double 80/80/80 t 0.683 R INSIDE: reach 0.986
+  drag 99/99/99 t 1.767 L INSIDE: late decision (INSIDE→INSIDE Δ33°)
+  drag 80/80/80 t 1.767 L INSIDE: late decision (INSIDE→INSIDE Δ43°)
+  stop 99/99/99 t 1.288 R INSIDE: late decision (LACES→INSIDE Δ55°)
+  stop 80/80/80 t 1.288 R INSIDE: late decision (LACES→INSIDE Δ63°)
+  cut60 99/99/99 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ27°)
+  cut60 80/80/80 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ29°)
+  cut90 80/80/80 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ18°)
+  turn120 99/99/99 t 2.079 R INSIDE: late decision (INSIDE→INSIDE Δ40°)
+  turn120 80/80/80 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ22°)
+  turn150 99/99/99 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ149°)
+  turn150 80/80/80 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ42°)
+  turn150 80/80/80 t 2.421 R INSIDE: surface 37.6° off the impulse
+  turn150 80/80/80 t 3.117 R INSIDE: reach 0.987
+  turn180 99/99/99 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ141°)
+  turn180 80/80/80 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ42°)
+  inside 50/50/50 t 1.367 R INSIDE: late decision (INSIDE→INSIDE Δ43°)
+  outside 50/50/50 t 1.25 R OUTSIDE: late decision (LACES→OUTSIDE Δ66°)
+  in_out 50/50/50 t 2.046 R INSIDE: late decision (INSIDE→INSIDE Δ51°)
+  double 50/50/50 t 1.367 R INSIDE: late decision (INSIDE→INSIDE Δ43°)
+  drag 50/50/50 t 1.767 L INSIDE: late decision (INSIDE→INSIDE Δ56°)
+  stop 50/50/50 t 1.288 R INSIDE: late decision (LACES→INSIDE Δ144°)
+  turn150 50/50/50 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ165°)
+  turn180 50/50/50 t 1.563 L INSIDE: late decision (LACES→INSIDE Δ165°)
+  dominant 50/50/50 t 1.875 L OUTSIDE: late decision (LACES→OUTSIDE Δ34°)
