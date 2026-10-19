@@ -45,7 +45,7 @@ export const LB = {
 };
 // per surface: the candidate foot pitch (toe up +, deg) and inversion (sole facing in +, deg) at the contact; the yaw comes from the impulse
 const CAND = { INSIDE: { pitch: [-2, 6, 14], inv: [-6, 0, 7] }, OUTSIDE: { pitch: [-34, -22, -10], inv: [4, 11, 18] }, LACES: { pitch: [-62, -50, -38], inv: [-5, 2, 9] }, SOLE: { pitch: [6, 16, 26], inv: [-6, 0, 6] } };
-const CACHE = new Map();
+const CACHE = new Map();   // (a simulation may carry its own: sim._tc11cache — then two runs in one process pose identically; TECHNICAL-CONTROL-1.3's FlowSim does)
 const lerp3 = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const blendPose = (A, B, t) => { if (!A || t <= 0) return A || B; if (t >= 1) return B; const rot = {}; for (const k of Object.keys(B.rot)) rot[k] = A.rot[k] ? Q.slerp(A.rot[k], B.rot[k], t) : B.rot[k]; return { rot, pelvisPos: lerp3(A.pelvisPos, B.pelvisPos, t) }; };
 const yawOf = (Rw) => { const f = Q.v(Rw, [0, 0, 1]); return Math.atan2(f[0], f[2]); };
@@ -84,8 +84,8 @@ export class LegBody extends TechBody {
     const mem = this.sim.rc2 && (this.sim.rc2._tc11cp || (this.sim.rc2._tc11cp = new Map())), mk = c ? `${c.i}|${X}|${s}` : null, m0 = mk && mem.get(mk);
     if (m0 && hyp(ball[0] - m0.ball[0], ball[1] - m0.ball[1]) < 0.06 && abs(tc - m0.tc) < 0.03 && (this._hipTrue || !m0.final)) { const d = [ball[0] - m0.ball[0], ball[1] - m0.ball[1], max(R, ball[2]) - max(R, m0.ball[2])];
       if (!this._hipTrue || m0.final) { const r0 = Object.assign({}, m0.cp, { ank: [m0.cp.ank[0] + d[0], m0.cp.ank[1] + d[1], m0.cp.ank[2] + d[2]] }); (this._cpBy || (this._cpBy = new Map())).set(ball, r0); return r0; } }
-    const Ht = this._hipTrue && this._hipTrue.get(ball), key = [X, s, ball.map((x) => x.toFixed(3)).join(), n.map((x) => x.toFixed(3)).join(), tc.toFixed(3), ep.psiAt(tc).toFixed(3), hyp(...ep.velAt(tc)).toFixed(2), Ht ? Ht.pel.concat(Ht.P).map((x) => x.toFixed(3)).join() + Ht.Rp.map((x) => x.toFixed(3)).join() : "est"].join("|"); if (CACHE.has(key)) { const r0 = CACHE.get(key); (this._cpBy || (this._cpBy = new Map())).set(ball, r0); return r0; }
-    const r = this.searchContact(X, s, ball, n, tc, H); if (CACHE.size > 4000) CACHE.clear(); CACHE.set(key, r); (this._cpBy || (this._cpBy = new Map())).set(ball, r);
+    const Ht = this._hipTrue && this._hipTrue.get(ball), key = [X, s, ball.map((x) => x.toFixed(3)).join(), n.map((x) => x.toFixed(3)).join(), tc.toFixed(3), ep.psiAt(tc).toFixed(3), hyp(...ep.velAt(tc)).toFixed(2), Ht ? Ht.pel.concat(Ht.P).map((x) => x.toFixed(3)).join() + Ht.Rp.map((x) => x.toFixed(3)).join() : "est"].join("|"); const CC = this.sim._tc11cache || CACHE; if (CC.has(key)) { const r0 = CC.get(key); (this._cpBy || (this._cpBy = new Map())).set(ball, r0); return r0; }
+    const r = this.searchContact(X, s, ball, n, tc, H); if (CC.size > 4000) CC.clear(); CC.set(key, r); (this._cpBy || (this._cpBy = new Map())).set(ball, r);
     if (mk && this._hipTrue) mem.set(mk, { ball: ball.slice(), tc, cp: r, final: true }); return r;
   }
   // the boot placed against the ball for a root-frame orientation Rf: approached against the surface's working direction (the sole from above),
@@ -202,7 +202,7 @@ export class LegBody extends TechBody {
     // reach: a planted or touching leg out of reach moves the pelvis (never the foot, never the ball), lowering it a little (TECHNICAL-CONTROL-1)
     const touchOf = (X) => { let wt = 0; for (const s2 of this.seg[X]) if (s2.con) { const d = abs(t - s2.con.t); if (d < 0.07) wt = max(wt, 1 - s5(d / 0.07)); } return wt; };
     for (let it = 0; it < 3; it++) { let moved = false, dP = [0, 0], drop = 0;
-      for (const X of SIDES) { const fX = feet[X], wC = max(fX.planted ? 1 : fX.since != null ? max(1 - s5(fX.since / 0.05), s5(1 - fX.until / 0.05)) : 0, touchOf(X)); if (wC <= 0) continue;
+      for (const X of SIDES) { const fX = feet[X], wC = this.reachWeight ? this.reachWeight(X, fX, t, touchOf(X)) : max(fX.planted ? 1 : fX.since != null ? max(1 - s5(fX.since / 0.05), s5(1 - fX.until / 0.05)) : 0, touchOf(X)); if (wC <= 0) continue;   // (reachWeight: a subclass's hook)
         const sx = X === "R" ? 1 : -1, hipM = [pelvis[0] + sx * b.hipX, pelvis[1], pelvis[2]], an = toM(fX.ank, P), d = hyp(an[0] - hipM[0], an[1] - hipM[1], an[2] - hipM[2]), lim = HB.reach * b.legLen;
         if (d > lim) { const ex = (d - lim) * wC, hx = an[0] - hipM[0], hz = an[2] - hipM[2], hl = hyp(hx, hz) || 1, dr = min(0.05, ex * 0.5), ex2 = max(0, ex - dr), mx = hx / hl * ex2, mz = hz / hl * ex2;
           dP = [dP[0] + mz * c - mx * s, dP[1] + mz * s + mx * c]; drop = max(drop, dr); moved = true; } }
@@ -224,6 +224,9 @@ export class LegBody extends TechBody {
       // edge stays put whether the heel is down or rising; the support point is that edge, else the ball of the foot)
       let sup = Q.v(Rf, [0, -my, mz]).map((x, i) => x + an[i]);
       if (abs(rho) > 1e-6) { const xE = -Math.sign(rho) * 0.072, E = Q.v(Rf, [xE, -my, mz]).map((x, i) => x + an[i]), Rr = Q.mul3(Rf, Q.z(rho), Q.tr(Rf)), d = an.map((x, i) => x - E[i]), dr = Q.v(Rr, d); an = E.map((x, i) => x + dr[i]); Rf = Q.mul(Rf, Q.z(rho)); if (abs(rho) > 0.3 * DEG) sup = E; }
+      // (pivotOnEdge — a subclass's option: a foot turning while it stands on its edge turns about that edge, which stays put; none here)
+      if (this.pivotOnEdge && abs(rho) > 0.3 * DEG && abs(dy) > 1e-6) { const xE = -Math.sign(rho) * 0.072, b0 = mz * Math.cos(pp) - my * Math.sin(pp), a0 = [ball[0] - dir(ft.yaw)[0] * b0, ball[1] - dir(ft.yaw)[1] * b0, ank[2]], R0 = Q.mul(Q.y(wrapA(ft.yaw - psi)), Q.x(pp)),
+          E0 = Q.v(R0, [xE, -my, mz]).map((x, i) => x + this.toM(a0, P, psi)[i]), sh = E0.map((x, i) => x - sup[i]); an = an.map((x, i) => x + sh[i]); sup = E0; }
       const psiK = swivelFor(footOut(pf.Rp, Rf, X), X), ik = legIK(b, pf.Rp, psiK, hip, an, LB.kMin), Rsh0 = Q.mul3(pf.Rp, ik.Rthigh, Q.x(ik.k)), A = ankleFor(Rsh0, Rf, X, ik.k);
       return { pp, dy, rho, an, ank: this.fromM(an, P, psi), sup: this.fromM(sup, P, psi), edge: abs(rho) > 0.3 * DEG ? Math.sign(rho) : 0, Rf, psiK, ik, A, df: -Q.toYXZ(Q.mul(Q.y(-A.tau), Q.mul(Q.tr(Rsh0), Rf)))[1] / DEG }; };
     // the heel's schedule: TECHNICAL-CONTROL-1 lifted it to the toe-off angle in the stance's last 60 ms (≈1 000 °/s at speed); here it rises over
@@ -231,7 +234,7 @@ export class LegBody extends TechBody {
     const t = pf.t, nx = this.seg[X].find((q) => q.t0 > t - 1e-9), pv = this.seg[X].filter((q) => q.t1 <= t + 1e-9).pop(), tL = pv ? pv.t1 : t - 0.2, tO = nx ? nx.t0 : t + 0.2, Ts = max(0.05, tO - tL);
     const pTO = Math.asin(clamp(this.toeOffLift(nx ? hyp(...this.ep.velAt(nx.t0)) : 0) / hyp(my, mz), 0, 0.9)), wR = max(0.06, 0.55 * Ts), sched = pTO * s5((t - (tO - wR)) / wR);
     const smax = (a, c) => 0.5 * (a + c + Math.sqrt((a - c) * (a - c) + (1.5 * DEG) ** 2));
-    let pp = sched, dy = 0, rho = 0, out = solve(pp, dy, rho);
+    let pp = this.heelStart ? this.heelStart(X, t, sched) : sched, dy = 0, rho = 0, out = solve(pp, dy, rho);   // (heelStart: a subclass's hand-off hook; none here)
     for (let it = 0; it < 4; it++) {
       // the heel: up as soon as the ankle would dorsiflex past its range (LB.dfRise), and in the push-off once the leg nears its length
       const ex = out.df - LB.dfRise, addDF = ex > -6 ? 3 * Math.log(1 + Math.exp(ex / 3)) * DEG * 0.9 : 0;
@@ -242,6 +245,7 @@ export class LegBody extends TechBody {
       if (abs(npp2 - pp) < 0.02 * DEG && abs(ndy - dy) < 0.02 * DEG && abs(nrho - rho) < 0.02 * DEG) break;
       pp = npp2; dy = ndy; rho = nrho; out = solve(pp, dy, rho); }
     const dLim = LB.reachStance * b.legLen; if (out.ik.dW > dLim && out.pp < LB.pushMax) { let lo = out.pp, hi = min(LB.pushMax, out.pp + 45 * DEG); if (solve(hi, dy, rho).ik.dW > dLim) out = solve(hi, dy, rho); else { for (let i = 0; i < 14; i++) { const m = (lo + hi) / 2; if (solve(m, dy, rho).ik.dW > dLim) lo = m; else hi = m; } out = solve(hi, dy, rho); } }
+    if (this.heelFinal) { const q = this.heelFinal(X, t, out); if (q) out = solve(q.pp, q.dy, q.rho); }                // (a subclass's hand-off hook; none here)
     return { v: [out.psiK, out.A.tau, out.A.fy, out.A.fp, out.A.fr, -out.pp], ik: out.ik, an: out.an, ank: out.ank, Rf: out.Rf, A: out.A, Rw: Q.mul(Q.y(psi), out.Rf), planted: true, roll: out.rho, turn: out.dy, sup: out.sup, edge: out.edge };
   }
   // ── THE SWING LEG: the joint plan (C¹ monotone cubic through the keys) and the world-locked windows (toe-off · contact · landing) ───────────────

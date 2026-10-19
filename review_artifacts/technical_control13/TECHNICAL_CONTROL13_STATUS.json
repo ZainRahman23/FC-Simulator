@@ -1,0 +1,171 @@
+{
+ "milestone": "TECHNICAL-CONTROL-1.3",
+ "title": "body / leg phasing removed, especially receive → play / dribble transitions",
+ "state": "presented for the owner's visual review — NOT frozen, NOT integrated; no new skills until approved",
+ "date": "2026-10-19",
+ "instruction": "sources/2026-10-19_user_instruction_transition_phasing.md",
+ "review": "review/TECHNICAL_CONTROL13_REVIEW.html (local only)",
+ "lab": "http://127.0.0.1:8361/sandbox/visual/technical_control13.html",
+ "ratings": {
+  "99": {
+   "gameplayIdentical": "26/26",
+   "before": {
+    "intersectFrames": 496,
+    "casesWithIntersections": 14,
+    "worstSeparationCm": -14.9,
+    "pelvisAccMax_worst": 4294,
+    "ankleAccMax_median": 6586.1,
+    "ankleAccMax_worst": 21948,
+    "pops_median": 48.5,
+    "slipMm_median": 9.6,
+    "slipMm_worst": 67.5,
+    "handoffKneeJumpCm_worst": 35.1
+   },
+   "after": {
+    "intersectFrames": 14,
+    "casesWithIntersections": 3,
+    "worstSeparationCm": -6.3,
+    "pelvisAccMax_worst": 712,
+    "ankleAccMax_median": 2375.4,
+    "ankleAccMax_worst": 13044,
+    "pops_median": 7.5,
+    "slipMm_median": 2.0,
+    "slipMm_worst": 26.3,
+    "handoffKneeJumpCm_worst": 3.1
+   }
+  },
+  "80": {
+   "gameplayIdentical": "26/26",
+   "before": {
+    "intersectFrames": 962,
+    "casesWithIntersections": 21,
+    "worstSeparationCm": -15,
+    "pelvisAccMax_worst": 5485,
+    "ankleAccMax_median": 6880.4,
+    "ankleAccMax_worst": 19622,
+    "pops_median": 48.0,
+    "slipMm_median": 12.8,
+    "slipMm_worst": 82,
+    "handoffKneeJumpCm_worst": 35.1
+   },
+   "after": {
+    "intersectFrames": 45,
+    "casesWithIntersections": 6,
+    "worstSeparationCm": -10.1,
+    "pelvisAccMax_worst": 808,
+    "ankleAccMax_median": 1973.2,
+    "ankleAccMax_worst": 6356,
+    "pops_median": 7.5,
+    "slipMm_median": 4.0,
+    "slipMm_worst": 37,
+    "handoffKneeJumpCm_worst": 3.3
+   }
+  },
+  "50": {
+   "gameplayIdentical": "26/26",
+   "before": {
+    "intersectFrames": 987,
+    "casesWithIntersections": 19,
+    "worstSeparationCm": -15,
+    "pelvisAccMax_worst": 6510,
+    "ankleAccMax_median": 6718.9,
+    "ankleAccMax_worst": 16253,
+    "pops_median": 46.5,
+    "slipMm_median": 12.2,
+    "slipMm_worst": 77.1,
+    "handoffKneeJumpCm_worst": 40.5
+   },
+   "after": {
+    "intersectFrames": 61,
+    "casesWithIntersections": 4,
+    "worstSeparationCm": -9.8,
+    "pelvisAccMax_worst": 1063,
+    "ankleAccMax_median": 2100.0,
+    "ankleAccMax_worst": 6009,
+    "pops_median": 8.5,
+    "slipMm_median": 4.9,
+    "slipMm_worst": 46,
+    "handoffKneeJumpCm_worst": 3.6
+   }
+  }
+ },
+ "checks": {
+  "flowSimNeutral": "123/123",
+  "bodyNeutral": "123/123",
+  "det": "123/123",
+  "poseDet": "123/123",
+  "failed": 0,
+  "errors": 0,
+  "transitionStates": 888,
+  "contacts": 888
+ },
+ "protected": "1249/1250 identical; 1 hooked as expected; 0 unexpected",
+ "cpu": {
+  "sim": {
+   "msPerSimS": {
+    "median": 13.2,
+    "max": 15.7
+   },
+   "worstStepMs": {
+    "median": 3.6,
+    "max": 8
+   }
+  },
+  "tc11": {
+   "msPerSimS": {
+    "median": 39.2,
+    "max": 43.4
+   },
+   "worstStepMs": {
+    "median": 16.5,
+    "max": 22.6
+   }
+  },
+  "tc13": {
+   "msPerSimS": {
+    "median": 89,
+    "max": 102.8
+   },
+   "worstStepMs": {
+    "median": 54.7,
+    "max": 64.4
+   }
+  }
+ },
+ "flags99": {
+  "early": 10,
+  "late": 1
+ },
+ "remainingIntersections99": [
+  {
+   "spec": "ST_180_V12",
+   "frames": 6,
+   "flaggedEarly": true
+  },
+  {
+   "spec": "L_60_RUN_NORMAL@L@DOMINANT_CLOSE",
+   "frames": 6,
+   "flaggedEarly": true
+  },
+  {
+   "spec": "ST_150_V12",
+   "frames": 2,
+   "flaggedEarly": false
+  }
+ ],
+ "clips": 91,
+ "strips": 39,
+ "notTested": "chest → foot → carry, thigh → foot → carry (not in the receive → dribble pipeline: ground passes only)",
+ "limitations": [
+  "F_180R sprint pivot flip at 99 (ankle 13,044 m/s²; TC1.2 13,818)",
+  "slip at push-off at the reach limit ≤ 26 mm (99) / 46 mm (50)",
+  "CPU 89 ms per simulated second (before 39), worst step 64 ms",
+  "IK correction worst 24.1 cm at 99 (before 17.8)"
+ ],
+ "ownerDecisions": [
+  "visual review: one continuous human action?",
+  "early lift for a planted foot turned > 110° round; late-lift hold ≤ 50 ms",
+  "the F_180R sprint pivot: accept flagged, or landings that anticipate the turn",
+  "optimise CPU before any integration"
+ ]
+}

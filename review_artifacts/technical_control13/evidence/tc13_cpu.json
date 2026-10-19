@@ -1,0 +1,505 @@
+{
+ "note": "sim = TC1.2 simulation, animation off; tc11 = + TC1.1's legs (before); tc13 = FlowSim + FlowBody (after); second pass; one Node process",
+ "summary": {
+  "sim": {
+   "msPerSimS": {
+    "median": 13.2,
+    "max": 15.7
+   },
+   "worstStepMs": {
+    "median": 3.6,
+    "max": 8
+   }
+  },
+  "tc11": {
+   "msPerSimS": {
+    "median": 39.2,
+    "max": 43.4
+   },
+   "worstStepMs": {
+    "median": 16.5,
+    "max": 22.6
+   }
+  },
+  "tc13": {
+   "msPerSimS": {
+    "median": 89,
+    "max": 102.8
+   },
+   "worstStepMs": {
+    "median": 54.7,
+    "max": 64.4
+   }
+  }
+ },
+ "rows": [
+  {
+   "spec": "RL_0_SPRINT_NORMAL",
+   "body": "sim",
+   "msPerSimS": 11.5,
+   "worstStepMs": 3.4
+  },
+  {
+   "spec": "RL_0_SPRINT_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 27.7,
+   "worstStepMs": 14.9
+  },
+  {
+   "spec": "RL_0_SPRINT_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 63,
+   "worstStepMs": 54.7
+  },
+  {
+   "spec": "L_30_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 13.9,
+   "worstStepMs": 3.5
+  },
+  {
+   "spec": "L_30_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 39.9,
+   "worstStepMs": 16.7
+  },
+  {
+   "spec": "L_30_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 89.5,
+   "worstStepMs": 64.4
+  },
+  {
+   "spec": "L_30L_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 13.8,
+   "worstStepMs": 3.4
+  },
+  {
+   "spec": "L_30L_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 38.9,
+   "worstStepMs": 16.7
+  },
+  {
+   "spec": "L_30L_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 84.9,
+   "worstStepMs": 56.8
+  },
+  {
+   "spec": "ST_30_V12",
+   "body": "sim",
+   "msPerSimS": 12.8,
+   "worstStepMs": 8
+  },
+  {
+   "spec": "ST_30_V12",
+   "body": "tc11",
+   "msPerSimS": 41,
+   "worstStepMs": 20.7
+  },
+  {
+   "spec": "ST_30_V12",
+   "body": "tc13",
+   "msPerSimS": 88.9,
+   "worstStepMs": 47.8
+  },
+  {
+   "spec": "ST_30L_V12",
+   "body": "sim",
+   "msPerSimS": 13.3,
+   "worstStepMs": 7.6
+  },
+  {
+   "spec": "ST_30L_V12",
+   "body": "tc11",
+   "msPerSimS": 32.6,
+   "worstStepMs": 21.8
+  },
+  {
+   "spec": "ST_30L_V12",
+   "body": "tc13",
+   "msPerSimS": 82.3,
+   "worstStepMs": 47.9
+  },
+  {
+   "spec": "L_60_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 15.1,
+   "worstStepMs": 3.2
+  },
+  {
+   "spec": "L_60_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 43.1,
+   "worstStepMs": 17.9
+  },
+  {
+   "spec": "L_60_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 96.6,
+   "worstStepMs": 58.2
+  },
+  {
+   "spec": "L_60L_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 14.9,
+   "worstStepMs": 3.1
+  },
+  {
+   "spec": "L_60L_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 34.4,
+   "worstStepMs": 15.3
+  },
+  {
+   "spec": "L_60L_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 89.8,
+   "worstStepMs": 56.5
+  },
+  {
+   "spec": "ST_60_V12",
+   "body": "sim",
+   "msPerSimS": 12.8,
+   "worstStepMs": 7.8
+  },
+  {
+   "spec": "ST_60_V12",
+   "body": "tc11",
+   "msPerSimS": 41.9,
+   "worstStepMs": 22.6
+  },
+  {
+   "spec": "ST_60_V12",
+   "body": "tc13",
+   "msPerSimS": 89,
+   "worstStepMs": 49.4
+  },
+  {
+   "spec": "ST_60L_V12",
+   "body": "sim",
+   "msPerSimS": 12.6,
+   "worstStepMs": 7.7
+  },
+  {
+   "spec": "ST_60L_V12",
+   "body": "tc11",
+   "msPerSimS": 31.8,
+   "worstStepMs": 20.1
+  },
+  {
+   "spec": "ST_60L_V12",
+   "body": "tc13",
+   "msPerSimS": 82.5,
+   "worstStepMs": 49.1
+  },
+  {
+   "spec": "L_90_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 15.7,
+   "worstStepMs": 3
+  },
+  {
+   "spec": "L_90_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 39.2,
+   "worstStepMs": 15.7
+  },
+  {
+   "spec": "L_90_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 101.8,
+   "worstStepMs": 59.9
+  },
+  {
+   "spec": "L_90L_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 15.6,
+   "worstStepMs": 3
+  },
+  {
+   "spec": "L_90L_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 37.7,
+   "worstStepMs": 14.9
+  },
+  {
+   "spec": "L_90L_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 100.4,
+   "worstStepMs": 55.3
+  },
+  {
+   "spec": "ST_90_V12",
+   "body": "sim",
+   "msPerSimS": 12.9,
+   "worstStepMs": 7.8
+  },
+  {
+   "spec": "ST_90_V12",
+   "body": "tc11",
+   "msPerSimS": 30.9,
+   "worstStepMs": 15.5
+  },
+  {
+   "spec": "ST_90_V12",
+   "body": "tc13",
+   "msPerSimS": 81.8,
+   "worstStepMs": 45.4
+  },
+  {
+   "spec": "ST_90L_V12",
+   "body": "sim",
+   "msPerSimS": 12.7,
+   "worstStepMs": 7.6
+  },
+  {
+   "spec": "ST_90L_V12",
+   "body": "tc11",
+   "msPerSimS": 39.8,
+   "worstStepMs": 16.5
+  },
+  {
+   "spec": "ST_90L_V12",
+   "body": "tc13",
+   "msPerSimS": 87.8,
+   "worstStepMs": 47.4
+  },
+  {
+   "spec": "ST_90_V12@L@DOMINANT_CLOSE",
+   "body": "sim",
+   "msPerSimS": 13.5,
+   "worstStepMs": 7.6
+  },
+  {
+   "spec": "ST_90_V12@L@DOMINANT_CLOSE",
+   "body": "tc11",
+   "msPerSimS": 40.5,
+   "worstStepMs": 17
+  },
+  {
+   "spec": "ST_90_V12@L@DOMINANT_CLOSE",
+   "body": "tc13",
+   "msPerSimS": 89.5,
+   "worstStepMs": 51
+  },
+  {
+   "spec": "ST_90L_V12@L@DOMINANT_CLOSE",
+   "body": "sim",
+   "msPerSimS": 12.6,
+   "worstStepMs": 7.9
+  },
+  {
+   "spec": "ST_90L_V12@L@DOMINANT_CLOSE",
+   "body": "tc11",
+   "msPerSimS": 39.8,
+   "worstStepMs": 16.2
+  },
+  {
+   "spec": "ST_90L_V12@L@DOMINANT_CLOSE",
+   "body": "tc13",
+   "msPerSimS": 89.2,
+   "worstStepMs": 46.8
+  },
+  {
+   "spec": "ST_120_V12@L@DOMINANT_CLOSE",
+   "body": "sim",
+   "msPerSimS": 12.7,
+   "worstStepMs": 7.8
+  },
+  {
+   "spec": "ST_120_V12@L@DOMINANT_CLOSE",
+   "body": "tc11",
+   "msPerSimS": 40,
+   "worstStepMs": 16.7
+  },
+  {
+   "spec": "ST_120_V12@L@DOMINANT_CLOSE",
+   "body": "tc13",
+   "msPerSimS": 89.1,
+   "worstStepMs": 47.9
+  },
+  {
+   "spec": "L_60_RUN_NORMAL@L@DOMINANT_CLOSE",
+   "body": "sim",
+   "msPerSimS": 14,
+   "worstStepMs": 3.1
+  },
+  {
+   "spec": "L_60_RUN_NORMAL@L@DOMINANT_CLOSE",
+   "body": "tc11",
+   "msPerSimS": 39.9,
+   "worstStepMs": 16.2
+  },
+  {
+   "spec": "L_60_RUN_NORMAL@L@DOMINANT_CLOSE",
+   "body": "tc13",
+   "msPerSimS": 88.2,
+   "worstStepMs": 58.5
+  },
+  {
+   "spec": "ST_150_V12",
+   "body": "sim",
+   "msPerSimS": 12.8,
+   "worstStepMs": 7.9
+  },
+  {
+   "spec": "ST_150_V12",
+   "body": "tc11",
+   "msPerSimS": 40.1,
+   "worstStepMs": 20.2
+  },
+  {
+   "spec": "ST_150_V12",
+   "body": "tc13",
+   "msPerSimS": 89.9,
+   "worstStepMs": 50.4
+  },
+  {
+   "spec": "ST_180_V12",
+   "body": "sim",
+   "msPerSimS": 13,
+   "worstStepMs": 8
+  },
+  {
+   "spec": "ST_180_V12",
+   "body": "tc11",
+   "msPerSimS": 41.3,
+   "worstStepMs": 19.1
+  },
+  {
+   "spec": "ST_180_V12",
+   "body": "tc13",
+   "msPerSimS": 89.8,
+   "worstStepMs": 48.6
+  },
+  {
+   "spec": "ST_180L_V12",
+   "body": "sim",
+   "msPerSimS": 12.8,
+   "worstStepMs": 7.8
+  },
+  {
+   "spec": "ST_180L_V12",
+   "body": "tc11",
+   "msPerSimS": 32.4,
+   "worstStepMs": 19.4
+  },
+  {
+   "spec": "ST_180L_V12",
+   "body": "tc13",
+   "msPerSimS": 83.6,
+   "worstStepMs": 48.3
+  },
+  {
+   "spec": "L_150_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 15.3,
+   "worstStepMs": 3.2
+  },
+  {
+   "spec": "L_150_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 43.4,
+   "worstStepMs": 16.1
+  },
+  {
+   "spec": "L_150_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 102.8,
+   "worstStepMs": 60.5
+  },
+  {
+   "spec": "L_150L_RUN_NORMAL",
+   "body": "sim",
+   "msPerSimS": 15.3,
+   "worstStepMs": 3.1
+  },
+  {
+   "spec": "L_150L_RUN_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 35.9,
+   "worstStepMs": 12.9
+  },
+  {
+   "spec": "L_150L_RUN_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 99.7,
+   "worstStepMs": 58.9
+  },
+  {
+   "spec": "L_90_SPRINT_NORMAL",
+   "body": "sim",
+   "msPerSimS": 13.2,
+   "worstStepMs": 3.6
+  },
+  {
+   "spec": "L_90_SPRINT_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 34.1,
+   "worstStepMs": 15.5
+  },
+  {
+   "spec": "L_90_SPRINT_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 83.7,
+   "worstStepMs": 59
+  },
+  {
+   "spec": "L_90L_SPRINT_NORMAL",
+   "body": "sim",
+   "msPerSimS": 13.2,
+   "worstStepMs": 3.5
+  },
+  {
+   "spec": "L_90L_SPRINT_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 32.2,
+   "worstStepMs": 13.2
+  },
+  {
+   "spec": "L_90L_SPRINT_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 80.2,
+   "worstStepMs": 52.2
+  },
+  {
+   "spec": "L_30_SPRINT_NORMAL",
+   "body": "sim",
+   "msPerSimS": 12.4,
+   "worstStepMs": 3.5
+  },
+  {
+   "spec": "L_30_SPRINT_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 30.1,
+   "worstStepMs": 15.1
+  },
+  {
+   "spec": "L_30_SPRINT_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 72.9,
+   "worstStepMs": 57.6
+  },
+  {
+   "spec": "F_180R_SPRINT_NORMAL",
+   "body": "sim",
+   "msPerSimS": 13.2,
+   "worstStepMs": 3.6
+  },
+  {
+   "spec": "F_180R_SPRINT_NORMAL",
+   "body": "tc11",
+   "msPerSimS": 33.4,
+   "worstStepMs": 15.6
+  },
+  {
+   "spec": "F_180R_SPRINT_NORMAL",
+   "body": "tc13",
+   "msPerSimS": 81,
+   "worstStepMs": 60.5
+  }
+ ]
+}

@@ -1,0 +1,156 @@
+TECHNICAL-CONTROL-1.3 — transitions / phasing: BEFORE (TECHNICAL-CONTROL-1.2: TECHNICAL-CONTROL-1.1's legs on the carry model) → AFTER (TECHNICAL-CONTROL-1.3), the same simulation
+
+== 99/99/99 · 26 torture cases · gameplay fingerprint identical 26/26
+   cases                                  26 →       26
+   intersectFrames                       496 →       14
+   intersectFramesInWindow               468 →       14
+   casesWithIntersections                 14 →        3
+   worstSeparationCm                   -14.9 →     -6.3
+   pelvisAccP99_median                 764.4 →    220.9
+   pelvisAccMax_median                2399.2 →    673.0
+   pelvisAccMax_worst                   4294 →      712
+   ankleAccP99_median                  646.8 →    563.3
+   ankleAccMax_median                 6586.1 →   2375.4
+   ankleAccMax_worst                   21948 →    13044
+   kneeJerkP99_median                  286.8 →    157.1
+   pops_median                          48.5 →      7.5
+   pops_total                           1273 →      191
+   slipMm_median                         9.6 →      2.0
+   slipMm_worst                         67.5 →     26.3
+   instantSupportSwaps                     0 →        0
+   shortStances                            0 →        0
+   shortSwings                             0 →        0
+   weightTransferMinS                  0.158 →    0.158
+   ikCorrectionP99Cm_median              4.3 →      4.3
+   ikCorrectionMaxCm_worst              17.8 →     24.1
+   handoffKneeJumpCm_worst              35.1 →      3.1
+   handoffPelvisAcc_worst                700 →      700
+
+== 80/80/80 · 26 torture cases · gameplay fingerprint identical 26/26
+   cases                                  26 →       26
+   intersectFrames                       962 →       45
+   intersectFramesInWindow               932 →       43
+   casesWithIntersections                 21 →        6
+   worstSeparationCm                     -15 →    -10.1
+   pelvisAccP99_median                 753.6 →    240.6
+   pelvisAccMax_median                2374.0 →    670.9
+   pelvisAccMax_worst                   5485 →      808
+   ankleAccP99_median                  706.0 →    482.9
+   ankleAccMax_median                 6880.4 →   1973.2
+   ankleAccMax_worst                   19622 →     6356
+   kneeJerkP99_median                  306.3 →    162.2
+   pops_median                          48.0 →      7.5
+   pops_total                           1311 →      210
+   slipMm_median                        12.8 →      4.0
+   slipMm_worst                           82 →       37
+   instantSupportSwaps                     0 →        0
+   shortStances                            0 →        0
+   shortSwings                             0 →        0
+   weightTransferMinS                  0.179 →    0.179
+   ikCorrectionP99Cm_median              4.3 →      2.7
+   ikCorrectionMaxCm_worst              19.1 →     23.8
+   handoffKneeJumpCm_worst              35.1 →      3.3
+   handoffPelvisAcc_worst                700 →      700
+
+== 50/50/50 · 26 torture cases · gameplay fingerprint identical 26/26
+   cases                                  26 →       26
+   intersectFrames                       987 →       61
+   intersectFramesInWindow               912 →       58
+   casesWithIntersections                 19 →        4
+   worstSeparationCm                     -15 →     -9.8
+   pelvisAccP99_median                 757.2 →    254.9
+   pelvisAccMax_median                2331.4 →    680.2
+   pelvisAccMax_worst                   6510 →     1063
+   ankleAccP99_median                  470.2 →    456.8
+   ankleAccMax_median                 6718.9 →   2100.0
+   ankleAccMax_worst                   16253 →     6009
+   kneeJerkP99_median                  295.3 →    161.4
+   pops_median                          46.5 →      8.5
+   pops_total                           1239 →      277
+   slipMm_median                        12.2 →      4.9
+   slipMm_worst                         77.1 →       46
+   instantSupportSwaps                     0 →        0
+   shortStances                            0 →        0
+   shortSwings                             0 →        0
+   weightTransferMinS                  0.179 →    0.179
+   ikCorrectionP99Cm_median              4.2 →      1.6
+   ikCorrectionMaxCm_worst              24.5 →     18.3
+   handoffKneeJumpCm_worst              40.5 →      3.6
+   handoffPelvisAcc_worst                700 →      700
+
+== per case at 99: intersect frames · worst separation cm · slip mm · pelvis acc max · ankle acc max · pops (before → after)
+   RL_0_SPRINT_NORMAL                   0 → 0     10.5 → 15       0.2 → 6.9    2921 → 712    17983 → 1499    58 → 9
+   ST_30_V12                           15 → 0     -5.3 → 2.8      8.2 → 0       858 → 407     2507 → 2843    36 → 2
+   L_60L_RUN_NORMAL                     0 → 0      3.4 → 4.4      2.3 → 1.9    2790 → 699    12194 → 1307    53 → 8
+   L_90_RUN_NORMAL                      0 → 0      2.3 → 10.3    28.9 → 17.4   2719 → 700    21948 → 5042    67 → 16
+   ST_90L_V12                          22 → 0     -9.5 → 1.4     16.3 → 0.6    1550 → 474     1915 → 2394    36 → 2
+   ST_120_V12@L@DOMINANT_CLOSE         27 → 0     -9.6 → 1       14.6 → 0.8    1323 → 439     2568 → 4216    34 → 4
+   ST_180_V12                          79 → 6    -14.7 → -4.4    67.3 → 17.4   2441 → 454     5566 → 2362    46 → 2
+   L_150L_RUN_NORMAL                    3 → 0     12.4 → 9.6      5.1 → 16.5   2210 → 700     9422 → 1682    47 → 13
+   L_30_SPRINT_NORMAL                   0 → 0     10.9 → 15       0.1 → 11.4   2668 → 683    13547 → 1539    60 → 8
+   L_30_RUN_NORMAL                      9 → 0     -4.5 → 2.9      3.6 → 0      2479 → 700    14840 → 2053    53 → 7
+   ST_30L_V12                           0 → 0      3.5 → 4.2     10.3 → 0.9     908 → 484     1140 → 717     30 → 3
+   ST_60_V12                            7 → 0       -3 → 1.5     12.5 → 0       850 → 472     2717 → 2389    34 → 2
+   L_90L_RUN_NORMAL                     0 → 0     12.3 → 9.5      3.7 → 1.7    4148 → 699    12776 → 1337    58 → 8
+   ST_90_V12@L@DOMINANT_CLOSE          22 → 0     -9.5 → 1.7     14.9 → 0.6    1550 → 473     2020 → 2010    34 → 2
+   L_60_RUN_NORMAL@L@DOMINANT_CLOSE    78 → 6    -10.3 → -6.3     7.4 → 11.6   2254 → 700     6986 → 5096    67 → 11
+   ST_180L_V12                         83 → 0    -14.7 → 1.5     67.5 → 17.4   2442 → 518     6186 → 1224    43 → 5
+   L_90_SPRINT_NORMAL                   0 → 0      0.3 → 2.6     42.4 → 23.7   2640 → 680    16627 → 5494    85 → 16
+   F_180R_SPRINT_NORMAL                18 → 0     -9.3 → 1.9     46.7 → 9.9    3110 → 666    13818 → 13044   66 → 18
+   L_30L_RUN_NORMAL                     0 → 0      7.9 → 11.9     0.1 → 2.1    2624 → 700    16777 → 2874    48 → 8
+   L_60_RUN_NORMAL                      0 → 0      1.4 → 9.5     19.8 → 0.1    2357 → 700     9843 → 2576    51 → 8
+   ST_60L_V12                           0 → 0      6.6 → 4.6     18.2 → 0       950 → 553     1790 → 860     30 → 4
+   ST_90_V12                            0 → 0      4.1 → 4.7      4.3 → 0.5    1550 → 555     1831 → 784     30 → 4
+   ST_90L_V12@L@DOMINANT_CLOSE         14 → 0     -8.7 → 7.1      8.9 → 0.5    1479 → 316     2794 → 2606    37 → 1
+   ST_150_V12                          99 → 2    -14.9 → -2.2    51.4 → 13.8   4294 → 516     2958 → 5138    49 → 7
+   L_150_RUN_NORMAL                    20 → 0       -9 → 1.6      0.1 → 26.3   2158 → 699     6149 → 2833    57 → 13
+   L_90L_SPRINT_NORMAL                  0 → 0      0.1 → 6.7      6.9 → 15.4   2505 → 680    12629 → 1533    64 → 10
+
+== the receive → the next carry touch (at 99)
+   L_30_SPRINT_NORMAL                 R inside     → L inside       opposite foot +0.196 s · after: intersect 0, pops 8
+   L_60L_RUN_NORMAL                   R inside     → L outside      opposite foot +0.204 s · after: intersect 0, pops 8
+   L_30_RUN_NORMAL                    R inside     → L outside      opposite foot +0.204 s · after: intersect 0, pops 7
+   L_60_RUN_NORMAL                    R inside     → L outside      opposite foot +0.208 s · after: intersect 0, pops 8
+   L_90_SPRINT_NORMAL                 R inside     → L inside       opposite foot +0.217 s · after: intersect 0, pops 16
+   L_90_RUN_NORMAL                    R inside     → L inside       opposite foot +0.221 s · after: intersect 0, pops 16
+   L_150L_RUN_NORMAL                  R inside     → L inside       opposite foot +0.221 s · after: intersect 0, pops 13
+   F_180R_SPRINT_NORMAL               R inside     → L inside       opposite foot +0.221 s · after: intersect 0, pops 18
+   L_150_RUN_NORMAL                   L sole       → R inside       opposite foot +0.221 s · after: intersect 0, pops 13
+   L_90L_RUN_NORMAL                   R inside     → L inside       opposite foot +0.233 s · after: intersect 0, pops 8
+   L_90L_SPRINT_NORMAL                R inside     → L inside       opposite foot +0.233 s · after: intersect 0, pops 10
+   ST_30_V12                          L inside     → R outside      opposite foot +0.338 s · after: intersect 0, pops 2
+   ST_30L_V12                         R inside     → L laces        opposite foot +0.338 s · after: intersect 0, pops 3
+   ST_60_V12                          L inside     → R outside      opposite foot +0.342 s · after: intersect 0, pops 2
+   ST_60L_V12                         R inside     → L laces        opposite foot +0.342 s · after: intersect 0, pops 4
+   ST_90L_V12                         L inside     → R outside      opposite foot +0.350 s · after: intersect 0, pops 2
+   ST_90_V12@L@DOMINANT_CLOSE         R inside     → L outside      opposite foot +0.350 s · after: intersect 0, pops 2
+   ST_90_V12                          R inside     → L laces        opposite foot +0.350 s · after: intersect 0, pops 4
+   ST_120_V12@L@DOMINANT_CLOSE        R inside     → L outside      opposite foot +0.358 s · after: intersect 0, pops 4
+   ST_150_V12                         L inside     → R outside      opposite foot +0.392 s · after: intersect 2, pops 7
+   ST_180_V12                         L inside     → R outside      opposite foot +0.413 s · after: intersect 6, pops 2
+   ST_180L_V12                        R inside     → L laces        opposite foot +0.413 s · after: intersect 0, pops 5
+   RL_0_SPRINT_NORMAL                 R inside     → L laces        opposite foot +0.779 s · after: intersect 0, pops 9
+   L_60_RUN_NORMAL@L@DOMINANT_CLOSE   L outside    → L outside      same foot     +0.308 s · after: intersect 6, pops 11
+   ST_90L_V12@L@DOMINANT_CLOSE        L inside     → L outside      same foot     +0.450 s · after: intersect 0, pops 1
+   L_30L_RUN_NORMAL                   R inside     → R outside      same foot     +0.658 s · after: intersect 0, pops 8
+
+== flagged at 99: early (clearance unresolved at planning) 10 · late decisions 1
+   early  ST_180_V12                         R swing [0.279, 0.499] contact 1 @ 0.412 · planned at 0.004 s · 6.3 cm vs leg
+   early  L_60_RUN_NORMAL@L@DOMINANT_CLOSE   L swing [0.255, 0.493] contact 1 @ 0.308 · planned at 0.004 s · 2.6 cm vs leg
+   early  L_60_RUN_NORMAL@L@DOMINANT_CLOSE   L swing [-0.252, 0.105] contact 0 @ 0 · planned at 0.004 s · 5.9 cm vs leg
+   early  L_60_RUN_NORMAL@L@DOMINANT_CLOSE   R swing [0.376, 0.807] contact None @ None · planned at 0.313 s · 3 cm vs leg
+   early  L_60_RUN_NORMAL@L@DOMINANT_CLOSE   L swing [0.623, 1.12] contact 2 @ 0.733 · planned at 0.313 s · 2.2 cm vs leg
+   early  L_90_SPRINT_NORMAL                 R swing [-0.254, 0.112] contact 0 @ 0 · planned at 0.004 s · 2.6 cm vs ball
+   early  F_180R_SPRINT_NORMAL               R swing [0.188, 0.488] contact None @ None · planned at -1.092 s · 4.9 cm vs leg
+   early  F_180R_SPRINT_NORMAL               L swing [0.087, 0.307] contact None @ None · planned at -1.092 s · 2.8 cm vs ball
+   early  L_60_RUN_NORMAL                    R swing [0.995, 1.239] contact None @ None · planned at 0.004 s · 2.8 cm vs ball
+   early  L_150_RUN_NORMAL                   L swing [-0.268, 0.128] contact 0 @ 0 · planned at 0.004 s · 7.7 cm vs leg
+   late   L_60_RUN_NORMAL                    contact 1 @ 0.208 L planned INSIDE executed OUTSIDE Δimpulse 15° · late decision
+
+== remaining intersections at 99 (after)
+   ST_180_V12                         6 frames: 0.317 foot -2.1cm; 0.321 foot -4.4cm; 0.325 shin -1.8cm; 0.329 shin -1.8cm; 0.333 shin -2.1cm; 0.338 shin -1.6cm · flagged early: R swing [0.279, 0.499]
+   L_60_RUN_NORMAL@L@DOMINANT_CLOSE   6 frames: 0.287 foot -3.3cm; 0.292 foot -5.7cm; 0.296 foot -6.3cm; 0.3 foot -1.8cm; 0.729 shin -1.6cm; 0.733 shin -1.5cm · flagged early: L swing [0.255, 0.493], L swing [-0.252, 0.105], R swing [0.376, 0.807], L swing [0.623, 1.12]
+   ST_150_V12                         2 frames: 0.338 foot -1.5cm; 0.342 foot -2.2cm · not flagged
+
+== checks (123 runs: the torture set × 99/80/50, TECHNICAL-CONTROL-1.2's carry course × 4 players, the receive chain): {"flowSimNeutral": "123/123", "bodyNeutral": "123/123", "det": "123/123", "poseDet": "123/123", "failed": 0, "errors": 0, "transitionStates": 888, "contacts": 888}
+== CPU (ms per simulated second · worst 240 Hz step, median / max): {"sim": {"msPerSimS": {"median": 13.2, "max": 15.7}, "worstStepMs": {"median": 3.6, "max": 8}}, "tc11": {"msPerSimS": {"median": 39.2, "max": 43.4}, "worstStepMs": {"median": 16.5, "max": 22.6}}, "tc13": {"msPerSimS": {"median": 89, "max": 102.8}, "worstStepMs": {"median": 54.7, "max": 64.4}}}
