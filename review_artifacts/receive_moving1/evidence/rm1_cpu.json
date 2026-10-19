@@ -1,0 +1,167 @@
+{
+ "rows": [
+  {
+   "id": "RL_0_SPRINT_NORMAL",
+   "plan": 0,
+   "rxPlan": 2.04,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 204,
+   "worstStep": 15.3
+  },
+  {
+   "id": "L_30_RUN_NORMAL",
+   "plan": 0,
+   "rxPlan": 1.91,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 182,
+   "worstStep": 14.9
+  },
+  {
+   "id": "L_60_RUN_NORMAL",
+   "plan": 0,
+   "rxPlan": 1.62,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 164,
+   "worstStep": 15.2
+  },
+  {
+   "id": "L_90_RUN_NORMAL",
+   "plan": 0,
+   "rxPlan": 1.66,
+   "plans": 4,
+   "cands": 39,
+   "ep": 0,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 169,
+   "worstStep": 19.7
+  },
+  {
+   "id": "L_120_RUN_NORMAL",
+   "plan": 0,
+   "rxPlan": 1.55,
+   "plans": 4,
+   "cands": 39,
+   "ep": 0,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 219,
+   "worstStep": 18.1
+  },
+  {
+   "id": "F_180R_SPRINT_NORMAL",
+   "plan": 0,
+   "rxPlan": 2.32,
+   "plans": 4,
+   "cands": 78,
+   "ep": 0,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 236,
+   "worstStep": 15
+  },
+  {
+   "id": "RL_0_SPRINT_FIRM_BC50",
+   "plan": 0,
+   "rxPlan": 2.05,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 24,
+   "afterPerSimSec": 204,
+   "worstStep": 15
+  },
+  {
+   "id": "RL_0_SPRINT_FIRM_BC99",
+   "plan": 0,
+   "rxPlan": 2.14,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 219,
+   "worstStep": 14.7
+  },
+  {
+   "id": "RL_0_SPRINT_NORMAL_IS",
+   "plan": 0,
+   "rxPlan": 2.03,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 114,
+   "worstStep": 16.8
+  },
+  {
+   "id": "L_30_RUN_NORMAL_IS",
+   "plan": 0,
+   "rxPlan": 1.74,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 175,
+   "worstStep": 13.4
+  },
+  {
+   "id": "L_60_RUN_NORMAL_IS",
+   "plan": 0,
+   "rxPlan": 1.61,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 135,
+   "worstStep": 13.8
+  },
+  {
+   "id": "RL_0_JOG_NORMAL",
+   "plan": 0,
+   "rxPlan": 2.16,
+   "plans": 4,
+   "cands": 52,
+   "ep": 0,
+   "recvPerSimSec": 19,
+   "afterPerSimSec": 126,
+   "worstStep": 13.1
+  },
+  {
+   "id": "RL_90_SPRINT_NORMAL",
+   "plan": 0,
+   "rxPlan": 1.83,
+   "plans": 4,
+   "cands": 39,
+   "ep": 0,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 192,
+   "worstStep": 18
+  },
+  {
+   "id": "RL_0_STAND_NORMAL",
+   "plan": 7.06,
+   "rxPlan": 0,
+   "plans": 0,
+   "cands": 0,
+   "ep": 15.3,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 129,
+   "worstStep": 12.9
+  }
+ ],
+ "planMedian": 0,
+ "planMax": 7.06,
+ "epMedian": 0,
+ "rxPlanMedian": 1.91,
+ "rxPlanMax": 2.32,
+ "msPerSimSec": 17,
+ "afterPerSimSec": 182,
+ "worstStep": 19.7,
+ "note": "the second of two passes (the first warms the lazily built tables); msPerSimSec = the receive phase (until DRIBBLE-V1 takes the ball, the TURN-1.2 run-out included); afterPerSimSec = DRIBBLE-V1 after it"
+}

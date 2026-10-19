@@ -1,0 +1,555 @@
+{
+ "note": "step 1 = RM.prepBand null (RECEIVE-CONTROL-1.1's keep band 0.06); final = RM.prepBand 0",
+ "rows": [
+  {
+   "case": "RL_0_SPRINT_NORMAL",
+   "tag": "A sprint receive into stride — pass from behind-left, exit straight on",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 6.99,
+     "vContact": 6.99,
+     "keep": 0.9
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 7.08,
+     "vContact": 7.08,
+     "keep": 0.91
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 6.9,
+     "vContact": 6.9,
+     "keep": 0.88
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 7.38,
+     "vContact": 7.38,
+     "keep": 0.95
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 7.42,
+     "vContact": 7.42,
+     "keep": 0.95
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 7.33,
+     "vContact": 7.33,
+     "keep": 0.94
+    }
+   ]
+  },
+  {
+   "case": "L_30_RUN_NORMAL",
+   "tag": "B running 30° receive",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 4.27,
+     "vContact": 4.27,
+     "keep": 0.78
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.4,
+     "vContact": 4.4,
+     "keep": 0.8
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.45,
+     "vContact": 4.45,
+     "keep": 0.81
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 4.55,
+     "vContact": 4.55,
+     "keep": 0.83
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.59,
+     "vContact": 4.59,
+     "keep": 0.84
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.45,
+     "vContact": 4.45,
+     "keep": 0.81
+    }
+   ]
+  },
+  {
+   "case": "L_60_RUN_NORMAL",
+   "tag": "C running 60° receive",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 3.91,
+     "vContact": 3.92,
+     "keep": 0.71
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.05,
+     "vContact": 4.06,
+     "keep": 0.74
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.13,
+     "vContact": 4.14,
+     "keep": 0.75
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 4.32,
+     "vContact": 4.34,
+     "keep": 0.79
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.39,
+     "vContact": 4.4,
+     "keep": 0.8
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.13,
+     "vContact": 4.14,
+     "keep": 0.75
+    }
+   ]
+  },
+  {
+   "case": "L_90_RUN_NORMAL",
+   "tag": "D running 90° receive",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 2.83,
+     "vContact": 4.02,
+     "keep": 0.51
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 3.11,
+     "vContact": 4.17,
+     "keep": 0.57
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 3.12,
+     "vContact": 4.27,
+     "keep": 0.57
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 2.92,
+     "vContact": 4.27,
+     "keep": 0.53
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 3.41,
+     "vContact": 5.14,
+     "keep": 0.62
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 3.12,
+     "vContact": 4.27,
+     "keep": 0.57
+    }
+   ]
+  },
+  {
+   "case": "L_120_RUN_NORMAL",
+   "tag": "E running 120° receive",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 2,
+     "vContact": 5.24,
+     "keep": 0.36
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 2.47,
+     "vContact": 5.27,
+     "keep": 0.45
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 2.33,
+     "vContact": 4.94,
+     "keep": 0.42
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 1.98,
+     "vContact": 5.15,
+     "keep": 0.36
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 2.41,
+     "vContact": 5.1,
+     "keep": 0.44
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 2.33,
+     "vContact": 4.94,
+     "keep": 0.42
+    }
+   ]
+  },
+  {
+   "case": "F_180R_SPRINT_NORMAL",
+   "tag": "F sprinting 180° receive — a full reversal",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 0.09,
+     "vContact": 3.14,
+     "keep": 0.01
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 0.2,
+     "vContact": 2.98,
+     "keep": 0.03
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 1.12,
+     "vContact": 5.48,
+     "keep": 0.14
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 0.09,
+     "vContact": 3.14,
+     "keep": 0.01
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 0.2,
+     "vContact": 2.98,
+     "keep": 0.03
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 1.12,
+     "vContact": 5.48,
+     "keep": 0.14
+    }
+   ]
+  },
+  {
+   "case": "RL_0_SPRINT_NORMAL_IS",
+   "tag": "A′ — case A with the pass into his stride (aimed 0.42 m ahead of his body)",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 7.8,
+     "vContact": 7.8,
+     "keep": 1
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 7.8,
+     "vContact": 7.8,
+     "keep": 1
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 7.8,
+     "vContact": 7.8,
+     "keep": 1
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 7.8,
+     "vContact": 7.8,
+     "keep": 1
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 7.8,
+     "vContact": 7.8,
+     "keep": 1
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 7.79,
+     "vContact": 7.8,
+     "keep": 1
+    }
+   ]
+  },
+  {
+   "case": "L_30_RUN_NORMAL_IS",
+   "tag": "B′ — case B, the pass into his stride",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 5.32,
+     "vContact": 5.32,
+     "keep": 0.97
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 5.12,
+     "vContact": 5.12,
+     "keep": 0.93
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 5.12,
+     "vContact": 5.12,
+     "keep": 0.93
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 5.02,
+     "vContact": 5.02,
+     "keep": 0.91
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 5.06,
+     "vContact": 5.06,
+     "keep": 0.92
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 5.12,
+     "vContact": 5.12,
+     "keep": 0.93
+    }
+   ]
+  },
+  {
+   "case": "L_60_RUN_NORMAL_IS",
+   "tag": "C′ — case C, the pass into his stride",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 4.79,
+     "vContact": 4.87,
+     "keep": 0.87
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.77,
+     "vContact": 4.79,
+     "keep": 0.87
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.77,
+     "vContact": 4.8,
+     "keep": 0.87
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 5.5,
+     "vMin": 4.75,
+     "vContact": 4.82,
+     "keep": 0.86
+    },
+    {
+     "seed": 2,
+     "vBefore": 5.5,
+     "vMin": 4.71,
+     "vContact": 4.73,
+     "keep": 0.86
+    },
+    {
+     "seed": 3,
+     "vBefore": 5.5,
+     "vMin": 4.77,
+     "vContact": 4.8,
+     "keep": 0.87
+    }
+   ]
+  },
+  {
+   "case": "RL_0_JOG_NORMAL",
+   "tag": "jog into stride",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 3,
+     "vMin": 2.76,
+     "vContact": 2.77,
+     "keep": 0.92
+    },
+    {
+     "seed": 2,
+     "vBefore": 3,
+     "vMin": 2.78,
+     "vContact": 2.94,
+     "keep": 0.93
+    },
+    {
+     "seed": 3,
+     "vBefore": 3,
+     "vMin": 2.93,
+     "vContact": 2.93,
+     "keep": 0.98
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 3,
+     "vMin": 2.76,
+     "vContact": 2.77,
+     "keep": 0.92
+    },
+    {
+     "seed": 2,
+     "vBefore": 3,
+     "vMin": 2.78,
+     "vContact": 2.94,
+     "keep": 0.93
+    },
+    {
+     "seed": 3,
+     "vBefore": 3,
+     "vMin": 2.93,
+     "vContact": 2.93,
+     "keep": 0.98
+    }
+   ]
+  },
+  {
+   "case": "RL_90_SPRINT_NORMAL",
+   "tag": "sprint 90° (moving through-stance / open turn)",
+   "step1": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 3.86,
+     "vContact": 7.17,
+     "keep": 0.49
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 4.13,
+     "vContact": 7.25,
+     "keep": 0.53
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 4.14,
+     "vContact": 7.18,
+     "keep": 0.53
+    }
+   ],
+   "final": [
+    {
+     "seed": 1,
+     "vBefore": 7.8,
+     "vMin": 4.02,
+     "vContact": 7.5,
+     "keep": 0.52
+    },
+    {
+     "seed": 2,
+     "vBefore": 7.8,
+     "vMin": 4.24,
+     "vContact": 7.52,
+     "keep": 0.54
+    },
+    {
+     "seed": 3,
+     "vBefore": 7.8,
+     "vMin": 4.2,
+     "vContact": 7.48,
+     "keep": 0.54
+    }
+   ]
+  }
+ ]
+}
