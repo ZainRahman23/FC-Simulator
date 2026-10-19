@@ -1,0 +1,48 @@
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/6.json
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/7.json
+82 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/1.json
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/8.json
+82 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/2.json
+82 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/0.json
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/4.json
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/3.json
+81 runs → /private/tmp/claude-501/-Users-zainrahman/06d7a98e-781e-4eaa-9a32-e638c168c8f4/scratchpad/tmp/rc2m.9381/5.json
+732 runs · CLEAN 625 · TAKEN 60 · MISSED-NO-ACTION 20 · MISSED-LATE 19 · RECEIVED 8
+GO receives:
+  all                        n  732 · CLEAN  625 (  85%) TAKEN  60 RECEIVED   8 RECOVERED   0 MISSED  39 (   5%)
+  ordinary                   n  246 · CLEAN  202 (  82%) TAKEN  32 RECEIVED   0 RECOVERED   0 MISSED  12 (   5%)
+  turning                    n  486 · CLEAN  423 (  87%) TAKEN  28 RECEIVED   8 RECOVERED   0 MISSED  27 (   6%)
+  angle 0                    n  120 · CLEAN  112 (  93%) TAKEN   8 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 45                   n   21 · CLEAN   20 (  95%) TAKEN   1 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 89                   n   42 · CLEAN   23 (  55%) TAKEN  13 RECEIVED   0 RECOVERED   0 MISSED   6 (  14%)
+  angle 90                   n  141 · CLEAN  118 (  84%) TAKEN  13 RECEIVED   1 RECOVERED   0 MISSED   9 (   6%)
+  angle 120                  n   21 · CLEAN   21 ( 100%) TAKEN   0 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 135                  n   21 · CLEAN   21 ( 100%) TAKEN   0 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 180                  n  120 · CLEAN  102 (  85%) TAKEN   1 RECEIVED   7 RECOVERED   0 MISSED  10 (   8%)
+  angle 225                  n   21 · CLEAN   21 ( 100%) TAKEN   0 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 240                  n   21 · CLEAN   21 ( 100%) TAKEN   0 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  angle 270                  n  141 · CLEAN  119 (  84%) TAKEN  14 RECEIVED   0 RECOVERED   0 MISSED   8 (   6%)
+  angle 271                  n   42 · CLEAN   27 (  64%) TAKEN   9 RECEIVED   0 RECOVERED   0 MISSED   6 (  14%)
+  angle 315                  n   21 · CLEAN   20 (  95%) TAKEN   1 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from F                     n  180 · CLEAN  160 (  89%) TAKEN  19 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  from FL                    n   48 · CLEAN   46 (  96%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from FR                    n   48 · CLEAN   44 (  92%) TAKEN   4 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  from L                     n  180 · CLEAN  162 (  90%) TAKEN   8 RECEIVED   4 RECOVERED   0 MISSED   6 (   3%)
+  from R                     n  180 · CLEAN  146 (  81%) TAKEN  23 RECEIVED   3 RECOVERED   0 MISSED   8 (   4%)
+  from RL                    n   48 · CLEAN   35 (  73%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED  11 (  23%)
+  from RR                    n   48 · CLEAN   32 (  67%) TAKEN   2 RECEIVED   0 RECOVERED   0 MISSED  14 (  29%)
+  receiver STAND             n  108 · CLEAN  108 ( 100%) TAKEN   0 RECEIVED   0 RECOVERED   0 MISSED   0 (   0%)
+  receiver JOG               n  192 · CLEAN  143 (  74%) TAKEN  28 RECEIVED   0 RECOVERED   0 MISSED  21 (  11%)
+  receiver RUN               n  324 · CLEAN  290 (  90%) TAKEN  22 RECEIVED   0 RECOVERED   0 MISSED  12 (   4%)
+  receiver FAST              n  108 · CLEAN   84 (  78%) TAKEN  10 RECEIVED   8 RECOVERED   0 MISSED   6 (   6%)
+  pass SOFT                  n  144 · CLEAN  136 (  94%) TAKEN   7 RECEIVED   1 RECOVERED   0 MISSED   0 (   0%)
+  pass MED                   n  444 · CLEAN  379 (  85%) TAKEN  38 RECEIVED   0 RECOVERED   0 MISSED  27 (   6%)
+  pass FIRM                  n  144 · CLEAN  110 (  76%) TAKEN  15 RECEIVED   7 RECOVERED   0 MISSED  12 (   8%)
+  families: {'STRIDE': 213, 'OPEN_TURN': 148, 'THROUGH_TURN': 270, 'DIRECTIONAL': 27, 'HALF_TURN': 54}
+  foot/surface: {'R-INSIDE': 398, 'R-LACES': 37, 'R-OUTSIDE': 121, 'L-INSIDE': 121, 'R-SOLE': 24, 'L-SOLE': 3, 'L-OUTSIDE': 8}
+  candidate rejections: {'prep-accel': 17345, 'stance-clear': 795, 'foot-yaw': 703, 'no-meeting': 241, 'surface': 126, 'too-late': 26, 'footwork': 3}
+  missed: {'MISSED-NO-ACTION': 20, 'MISSED-LATE': 19} examples: ['L_180R_RUN_FIRM#1', 'L_180R_RUN_FIRM#2', 'L_180R_RUN_FIRM#3', 'L_270_FAST_FIRM#1', 'L_270_FAST_FIRM#2', 'L_270_FAST_FIRM#3', 'RL_180R_RUN_MED#1', 'RL_180R_RUN_MED#3', 'RL_270_JOG_MED#1', 'RL_270_JOG_MED#3', 'RL_271_JOG_MED#3', 'RL_89_JOG_MED#1', 'RL_89_JOG_MED#2', 'RL_89_JOG_MED#3']
+  contact made 693/732 · |dir err| median 2.0° · heavy 0 short 0 · reconnection miss median 0.16 m · double touches 0 · recontacts 0
+  braking (start > 4 m/s): min prep speed / start median 0.65 · ordinary: contact / start median 0.94, ≥ 0.9 in 67/116
+  handoff: n 684 · acc median 3.9 m/s² max 5.8 · yaw step max 0.50° · request vs exit max 0.0°
+  CPU (this run's processes): receive phase 30 ms/s median (mean 34) · after handoff 408 ms/s · worst step 653.4 ms · candidates per run 48

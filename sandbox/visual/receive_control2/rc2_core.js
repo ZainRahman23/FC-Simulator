@@ -71,21 +71,28 @@ export class ReceiveSim2 extends ReceiveSim11 {
   // ── THE RESOLVER (a standing receiver, at the pass's strike: the clean read) ─────────────────────────────────────────────────────────────────
   resolve2(k) {
     const c2 = this.rc2, rx = this.rx, P0 = this.A.P.slice();
-    // the receive frame: the receiver squares up to the pass (faces where it comes from at its closest approach)
-    const F0 = new Frame(P0, 0), raw = predictK(this.W, RC2.horizon, F0); let iC = 0, dC = Infinity; for (let i = 0; i < raw.length; i++) { const d = hyp(raw[i].p[0], raw[i].p[1]); if (d < dC) { dC = d; iC = i; } }
-    const vA = raw[iC].v, hFace = abs(vA[1]) < 1e-12 && vA[0] < 0 ? 0 : Math.atan2(-vA[1], -vA[0]), F = new Frame(P0, hFace);
-    // the strike-time prediction in the receive frame, truncated as RECEIVE-KILL's predict(): 1.6 s after the arrival at the reach plane
-    const full = predictK(this.W, RC2.horizon, F); let K = full.findIndex((q) => q.p[0] <= RKS.SIM.xRef); if (K < 0) K = full.length - 1; const Kend = min(full.length - 1, K + Math.round(1.6 / DT)); const P = [];
-    for (let i = 0; i <= Kend; i++) { P.push(full[i]); if (i > K && full[i].p[0] < -2.5) break; }
-    const inReach = P.filter((q) => q.p[0] >= RC2.reachF[0] && q.p[0] <= RC2.reachF[1] && abs(q.p[1]) <= 1.2), ground = inReach.length > 0 && inReach.every((q) => q.p[2] <= RC2.groundZ);
-    const thDeg = +(wrapA(rx.exitDir - hFace) / DEG).toFixed(9), go = rx.intent !== "kill", pref = this.prefFoot(), ev = this.newEvent();
-    const cls = { k, ev, frame: { P0, h: hFace }, ground, intent: rx.intent, hold: rx.hold, exitRel: thDeg, faceTurn: wrapA(hFace - this.A.psi) / DEG };
-    let plan = null;
-    if (ground && go) { const A = RT.selectTurn({ pred: { P } }, { theta: thDeg, pref }); if (!A.none) plan = { kind: "TURN", A }; else cls.turnRej = A.rej; }
-    if (!plan) { const keep = RK.plan.prefFoot; RK.plan.prefFoot = pref || "R"; const kp = RKS.planKill({ P }, { surface: "AUTO" }); RK.plan.prefFoot = keep;
-      if (!kp.none) { const ideal = surfaceIdeal(kp.sf, kp.st, kp.inc, kp.shift); ideal.base = RKS.solveExit({ ideal, contact: kp.st.p }); ideal.v = idealVel(ideal, ideal.base.s); plan = { kind: "KILL", plan: kp, ideal }; } else cls.killRej = kp.rej; }
+    // the strike-time prediction in a receive frame, truncated as RECEIVE-KILL's predict(): 1.6 s after the arrival at the reach plane
+    const predIn = (F) => { const full = predictK(this.W, RC2.horizon, F); let K = full.findIndex((q) => q.p[0] <= RKS.SIM.xRef); if (K < 0) K = full.length - 1; const Kend = min(full.length - 1, K + Math.round(1.6 / DT)), P = [];
+      for (let i = 0; i <= Kend; i++) { P.push(full[i]); if (i > K && full[i].p[0] < -2.5) break; } return P; };
+    // two frames: the receiver's own facing (RECEIVE-KILL receives from any bearing — the bearing is a difficulty term) and squared up to the pass
+    // (RECEIVE-TURN-1's actions are authored for a ball from the front: the receiver faces where it comes from at its closest approach)
+    const Fown = new Frame(P0, this.A.psi), Pown = predIn(Fown), raw = predictK(this.W, RC2.horizon, new Frame(P0, 0)); let iC = 0, dC = Infinity; for (let i = 0; i < raw.length; i++) { const d = hyp(raw[i].p[0], raw[i].p[1]); if (d < dC) { dC = d; iC = i; } }
+    const vA = raw[iC].v, hFace = abs(vA[1]) < 1e-12 && vA[0] < 0 ? 0 : Math.atan2(-vA[1], -vA[0]), Fsq = abs(wrapA(hFace - this.A.psi)) < 1e-9 ? Fown : new Frame(P0, hFace), Psq = Fsq === Fown ? Pown : predIn(Fsq);
+    const inReach = (P) => P.filter((q) => q.p[0] >= RC2.reachF[0] && q.p[0] <= RC2.reachF[1] && abs(q.p[1]) <= 1.2), groundIn = (P) => { const q = inReach(P); return q.length > 0 && q.every((x) => x.p[2] <= RC2.groundZ); };
+    const ground = groundIn(Psq), go = rx.intent !== "kill", pref = this.prefFoot(), ev = this.newEvent();
+    // the exit relative to the squared-up facing; a 180° turn keeps the side the intent asked for (the scenario's sign)
+    // (the intent's own turn, relative to the initial facing: DRIBBLE-V1's command layer stores a 180° turn as 179.5° to keep its side — the
+    // receive asks for the turn the intent names; the post-handoff exit direction stays DRIBBLE-V1's)
+    const want = this.cfg.scenario.exit && this.cfg.scenario.exit.turn, fTurn = wrapA(hFace - this.A.psi) / DEG;
+    let thDeg = want != null ? want - fTurn : +(wrapA(rx.exitDir - hFace) / DEG).toFixed(9); if (thDeg > 180) thDeg -= 360; else if (thDeg < -180) thDeg += 360; if (abs(abs(thDeg) - 180) < 1e-9 && want) thDeg = want < 0 ? -180 : 180;
+    const cls = { k, ev, ground, intent: rx.intent, hold: rx.hold, exitRel: thDeg, faceTurn: wrapA(hFace - this.A.psi) / DEG };
+    let plan = null, F = null, P = null;
+    if (ground && go) { const A = RT.selectTurn({ pred: { P: Psq } }, { theta: thDeg, pref }); if (!A.none) { plan = { kind: "TURN", A }; F = Fsq; P = Psq; } else cls.turnRej = A.rej; }
+    if (!plan) for (const [Fk, Pk] of Fsq === Fown ? [[Fown, Pown]] : [[Fown, Pown], [Fsq, Psq]]) { const keep = RK.plan.prefFoot; RK.plan.prefFoot = pref || "R"; const kp = RKS.planKill({ P: Pk }, { surface: "AUTO" }); RK.plan.prefFoot = keep;
+      if (!kp.none) { const ideal = surfaceIdeal(kp.sf, kp.st, kp.inc, kp.shift); ideal.base = RKS.solveExit({ ideal, contact: kp.st.p }); ideal.v = idealVel(ideal, ideal.base.s); plan = { kind: "KILL", plan: kp, ideal }; F = Fk; P = Pk; break; } else cls.killRej = kp.rej; }
+    cls.frame = F ? { P0, h: F.h } : null;
     cls.action = plan ? (plan.kind === "TURN" ? plan.A.fid : plan.plan.sf.S.group === "FOOT" ? "KILL_" + plan.plan.sf.key : plan.plan.sf.S.group) : "NONE";
-    c2.cls = cls; c2.frame = F; c2.P = P; c2.log.push({ k, ev: "resolve", action: cls.action, ground, exitRel: thDeg });
+    c2.cls = cls; c2.frame = F; c2.P = P; c2.log.push({ k, ev: "resolve", action: cls.action, ground, exitRel: thDeg, face: F ? +(wrapA(F.h - this.A.psi) / DEG).toFixed(1) : null });
     if (!plan) { c2.phase = "none"; return; }
     const spec = this.spec(ev);
     if (plan.kind === "TURN") { const A = plan.A; A.pref = pref; c2.ep = new TurnEpisode({ A, F, kc: k + A.k, bc: this.bc, spec, idPrefix: `${this.pid}:${ev}.c0`, carry: "none" }); c2.kind = "TURN"; c2.kc = k + A.k; c2.thExit = rx.exitDir; }
@@ -96,10 +103,10 @@ export class ReceiveSim2 extends ReceiveSim11 {
   // ── AN AUTHORED TICK: the action owns the body; the episode's contacts; the ball kernel ────────────────────────────────────────────────────────
   actionStep() {
     const k = this.k, c2 = this.rc2, ep = c2.ep, A = this.A, c0 = now();
-    if (ep) { const st = this.root2(k + 1); A.P = st.P; A.V = st.V; A.psi = st.psi; const sp = hyp(st.V[0], st.V[1]); this.input = { dir: sp > 0.3 ? Math.atan2(st.V[1], st.V[0]) : st.psi, v: sp }; ep.pre(this.W); this.extraPre(k); }
+    if (ep) { const st = this.root2(k + 1); A.P = st.P; A.V = st.V; A.psi = st.psi; const sp = hyp(st.V[0], st.V[1]); this.input = { dir: sp > 0.3 ? Math.atan2(st.V[1], st.V[0]) : st.psi, v: sp }; this.capture(() => ep.pre(this.W)); this.extraPre(k); }
     if (!this.kernelStep(k)) { this.rx.cpuRx += now() - c0; return; }
     this.post(k); this.k++;
-    if (ep) { ep.post(this.W); this.afterPost(); }
+    if (ep) { this.capture(() => ep.post(this.W)); this.afterPost(); }
     if (this.body2) { const pz = this.body2.pose(this.k); if (pz) A.skinMats = pz.skin; }
     this.record(); this.rx.cpuRx += now() - c0; c2.cpu.ep += now() - c0;
     if (c2.kT12 != null && this.k === c2.kT12) this.switchToT12();
@@ -190,6 +197,31 @@ export class ReceiveSim2 extends ReceiveSim11 {
     const Ax = { D, vIdeal: rj.vIdeal, nIn: n, dHat: rj.dHat, sig, vInS: max(0.05, vh) }, N = RT.turnDraws(c2.spec, nC), ex = RT.executeTurn(Ax, this.bc, N);
     rj.ex = ex; rj.D = D; rj.N = N; return { vL: ex.v, surface: "FOOT_INSIDE", F: rj.foot, D, ex };
   }
+  // the episode's launches (RECEIVE-KILL / RECEIVE-TURN's own schedule() calls) become touch records: DRIBBLE-V1's last touch, the scorecard's
+  // receive contact (c0 also fills RECEIVE-CONTROL-1.1's rx.contact so its scorecard reads the integrated receive unchanged)
+  capture(fn) {
+    const W = this.W, orig = W.schedule, got = []; W.schedule = function (L) { const r = orig.call(W, L); got.push(L); return r; };
+    try { fn(); } finally { W.schedule = orig; } for (const L of got) this.touchFromEpisode(L);
+  }
+  touchFromEpisode(L) {
+    const c2 = this.rc2, ep = c2.ep, b = this.W.ball, vk = L.velocity, isC0 = /\.c0$/.test(L.id), F = c2.kind === "TURN" ? (isC0 ? ep.A.F : (ep.follow && ep.follow.F) || ep.A.F) : (() => { const c = ep.contacts[ep.contacts.length - 1]; return c && c.sf.side === "L" ? "L" : "R"; })();
+    const T = { id: L.id, k: L.tick, t: L.tick * DT, F, reg: L.metadata && L.metadata.surface || "INSIDE", hull: "boot", collider: `${this.pid}:boot_${F}`, swing: -1, receive: true, family: (L.metadata && (L.metadata.family || L.metadata.action)) || "RECEIVE", side: c2.kind === "TURN" ? ep.A.sig : 1, weak: F !== this.pref, arch: this.arch,
+      ball: [b.p[0], b.p[1], -b.p[2]], pre: { v: [b.v[0], b.v[1], -b.v[2]], w: [-b.w[0], -b.w[1], b.w[2]] }, gap: 0, otherGap: 1, desired: { v: [vk[0], 0, -vk[2]], speed: hyp(vk[0], vk[2]), target: null, kNext: null }, executed: { v: [vk[0], 0, -vk[2]], speed: hyp(vk[0], vk[2]) },
+      expect: { F: null, swing: null, k: null, com: null, target: null, inp: null }, minNext: 0.5, release: false, recovery: false, role: "receive", heldDir: null, setupSw: false, dec: null, contactAhead: 0, com: this.A.P.slice(), speedPlayer: hyp(this.A.V[0], this.A.V[1]), ctrl: this.ctrl.state, launched: false };
+    this.touches.push(T); c2.lastRxTouch = T;
+    if (isC0) { const ex = c2.kind === "TURN" ? ep.ex : ep.contacts[0].ex, vI = c2.kind === "TURN" ? ep.A.vIdeal : ep.contacts[0].ideal.v, vL = ex.v, dI = Math.atan2(vI[1], vI[0]), dA = Math.atan2(vL[1], vL[0]), sI = hyp(vI[0], vI[1]), sA = hyp(vL[0], vL[1]);
+      this.rx.contact = { k: L.tick, T, ex: { dir: this.rc2.frame.head(dA), speed: sA, dirErrDeg: wrapA(dA - dI) / DEG, speedErr: sA - sI, sigDirDeg: 0, sigSpeed: 0 }, act: null };
+      this.rx.act = { k0: c2.k0, kc: c2.kc, rest: true, ideal: { speed: sI, dir: this.rc2.frame.head(dI) }, hold: this.rx.hold }; }
+  }
+  // RECEIVE-CONTROL-1.1's summary for a standing receiver's integrated receive (the fields its scorecard reads)
+  summary() {
+    if (this.rx.stand !== true || !this.rc2) return super.summary();
+    const rx = this.rx, c2 = this.rc2, ep = c2.ep, c = rx.contact, T = c ? c.T : null, fam = ep ? (c2.kind === "TURN" ? ep.A.fid : "KILL_" + ep.plan.sf.key) : null;
+    return { cls: rx.cls, intent: rx.intent, hold: rx.hold, bc: this.bc, action: ep ? { id: c2.cls.ev, fam, F: c2.kind === "TURN" ? ep.A.F : ep.plan.sf.side, side: c2.kind === "TURN" ? ep.A.sig : 0, surface: c2.kind === "TURN" ? ep.A.surface : ep.plan.sf.key, k0: c2.k0, kc: c2.kc, tc: r3(c2.kc * DT), th: rx.handoff ? r3(rx.handoff.k * DT) : null,
+        D: r3(c2.kind === "TURN" ? ep.A.D : ep.plan.dif.D), rotPre: c2.kind === "TURN" ? +(ep.A.psiC / DEG).toFixed(1) : 0, rotExit: c2.kind === "TURN" ? +(ep.A.dPsi / DEG).toFixed(1) : 0, ideal: { dirRel: null, vsExit: null, speed: c ? r2(rx.act.ideal.speed) : null }, sIn: c2.kind === "TURN" ? r2(ep.A.vInS || 0) : r2(ep.plan.inc.speed), s0: 0, sC: 0, vH: rx.handoff ? r2(rx.handoff.v) : null } : null,
+      contact: T ? { k: T.k, launched: !!T.launched, cancelled: T.cancelled || null, exec: { dirAbs: +(c.ex.dir / DEG).toFixed(1), speed: r2(c.ex.speed), dirErr: +c.ex.dirErrDeg.toFixed(2), speedErr: r2(c.ex.speedErr), sigDir: 0, sigSpeed: 0 } } : null,
+      handoff: rx.handoff, plans: rx.plans, cands: rx.cands, rej: rx.rej, cpu: { rx: Math.round(rx.cpuRx), plan: Math.round(c2.cpu.plan) } };
+  }
   // one scheduled receive touch of the episode's own (the rejoin / set-off push): executed now, one kernel launch, a touch record DRIBBLE-V1 reads
   scheduleTouch(L) {
     const F = this.rc2.frame, b = this.W.ball, o = L.build(), vk = F.kerV(o.vL), wk = rollK(vk);
@@ -248,7 +280,7 @@ export class ReceiveSim2 extends ReceiveSim11 {
     this.W.schedule({ id, tick: k, position: act.cK.slice(), maxContactError: RX.contactTol, velocity: vk, spin: wk, colliderId: null, preparedAt: this.W.time,
       metadata: { family: "RECEIVE_" + act.fam.id, technique: act.surface, selectedFoot: act.F, preferredFoot: this.pref, seed: this.seed, model: "receive-control-v2" } });
     const sp = hyp(this.A.V[0], this.A.V[1]), dirE = Math.atan2(vk[2], vk[0]), speedE = hyp(vk[0], vk[2]);
-    const exO = { dir: dirE, speed: speedE, dirErrDeg: wrapA(dirE - act.ideal.dir) / DEG, speedErr: speedE - act.ideal.speed, sigDirDeg: null, sigSpeed: null, N: [N.direction, N.weight], bc: this.bc, D, keyId: N.keyIds ? N.keyIds.direction : null, model: "receive-control-v2" };
+    const exO = { dir: dirE, speed: speedE, dirErrDeg: wrapA(dirE - act.ideal.dir) / DEG, speedErr: speedE - act.ideal.speed, sigDirDeg: Math.atan2(ex.sigma.direction, max(0.3, act.ideal.speed)) / DEG, sigSpeed: ex.sigma.weight, N: [N.direction, N.weight], bc: this.bc, D, keyId: N.keyIds ? N.keyIds.direction : null, model: "receive-control-v2" };
     const T = { id, k, t: k * DT, F: act.F, reg: act.surface, hull: "boot", collider: `${this.pid}:boot_${act.F}`, swing: -1, receive: true, family: act.fam.id, side: act.sg, weak: act.F !== this.pref, arch: this.arch,
       ball: [b.p[0], b.p[1], -b.p[2]], pre: { v: [b.v[0], b.v[1], -b.v[2]], w: [-b.w[0], -b.w[1], b.w[2]] }, gap: 0, otherGap: 1,
       desired: { v: [act.ideal.vOut[0], 0, -act.ideal.vOut[1]], speed: act.ideal.speed, target: [act.X[0], 0, -act.X[1]], kNext: act.kNext },
