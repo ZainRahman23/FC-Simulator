@@ -1,0 +1,5928 @@
+{
+ "what": "human-motion metrics at BC 99 (typical draw) per review case; slip in m from the posed skeleton",
+ "cases": {
+  "d30": {
+   "cond": {
+    "theta": 30
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "DIRECTIONAL",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "front",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.46,
+    "supportPlant": -0.26,
+    "contactLand": 0.228,
+    "pivotEnd": 0.298,
+    "exitPlant": 0.698,
+    "prepStart": -0.55,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.065,
+    "maxHipRate": 231.376,
+    "weightTransfer": 0.265,
+    "aligned": 0.065,
+    "rejoin": 0.554
+   },
+   "rotation": {
+    "total": 30,
+    "beforeContact": 12,
+    "afterContact": 18,
+    "shoulderBeforeContact": 21.5,
+    "maxHipShoulderSeparation": 12.049,
+    "maxHipRate": 231.376
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.018,
+   "continuity": {
+    "turnPhaseEnd": 0.654,
+    "human": {
+     "maxFootSpeed": 18.487,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.371
+     ],
+     "snap": 0.02882,
+     "snapAt": [
+      "R",
+      "ankle",
+      1.404
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 5.427,
+     "speedAt": [
+      "R",
+      "ankle",
+      0.517
+     ],
+     "snap": 0.00654,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.65
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 20.003,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.08604,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 20.003,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.08604,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.415,
+    "legExtension": 0.931
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0.006,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.969,
+   "com": {
+    "prep": 0.096,
+    "toRejoin": 0.423,
+    "minHeightDrop": 0.065
+   },
+   "timing": {
+    "prepToContact": 0.55,
+    "contactToAligned": 0.065,
+    "contactToRejoin": 0.554,
+    "supportPlantBeforeContact": 0.26,
+    "contactLand": 0.228
+   },
+   "touch": {
+    "extraAdj": 0.02,
+    "tCont": 0.554,
+    "contacts": 1,
+    "dirErrDeg": -0.015,
+    "touchSpeedErr": 0.079
+   }
+  },
+  "d60": {
+   "cond": {
+    "theta": 60
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "DIRECTIONAL",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "front",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.46,
+    "supportPlant": -0.26,
+    "contactLand": 0.235,
+    "pivotEnd": 0.305,
+    "exitPlant": 0.705,
+    "prepStart": -0.55,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.085,
+    "maxHipRate": 369.896,
+    "weightTransfer": 0.27,
+    "aligned": 0.115,
+    "rejoin": 0.579
+   },
+   "rotation": {
+    "total": 60,
+    "beforeContact": 23,
+    "afterContact": 37,
+    "shoulderBeforeContact": 37,
+    "maxHipShoulderSeparation": 18.646,
+    "maxHipRate": 369.896
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.679,
+    "human": {
+     "maxFootSpeed": 18.461,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.379
+     ],
+     "snap": 0.02941,
+     "snapAt": [
+      "L",
+      "ankle",
+      1.954
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.297,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.671
+     ],
+     "snap": 0.00946,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.675
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 31.908,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.13533,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 31.908,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.13533,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.415,
+    "legExtension": 0.928
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0.007,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.066,
+    "toRejoin": 0.398,
+    "minHeightDrop": 0.069
+   },
+   "timing": {
+    "prepToContact": 0.55,
+    "contactToAligned": 0.115,
+    "contactToRejoin": 0.579,
+    "supportPlantBeforeContact": 0.26,
+    "contactLand": 0.235
+   },
+   "touch": {
+    "extraAdj": 0.008,
+    "tCont": 0.579,
+    "contacts": 1,
+    "dirErrDeg": -0.328,
+    "touchSpeedErr": 0.049
+   }
+  },
+  "h90": {
+   "cond": {
+    "theta": 90
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.588,
+    "supportPlant": -0.354,
+    "contactLand": 0.253,
+    "pivotEnd": 0.323,
+    "exitPlant": 0.535,
+    "prepStart": -0.728,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.085,
+    "maxHipRate": 366.805,
+    "weightTransfer": 0.29,
+    "aligned": 0.115,
+    "rejoin": 0.654
+   },
+   "rotation": {
+    "total": 90,
+    "beforeContact": 53.1,
+    "afterContact": 36.9,
+    "shoulderBeforeContact": 71.9,
+    "maxHipShoulderSeparation": 27.857,
+    "maxHipRate": 366.805
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.754,
+    "human": {
+     "maxFootSpeed": 18.501,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.426
+     ],
+     "snap": 0.02788,
+     "snapAt": [
+      "R",
+      "ankle",
+      2.18
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.164,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.63
+     ],
+     "snap": 0.01424,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.73
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.873
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.259,
+    "toRejoin": 0.651,
+    "minHeightDrop": 0.085
+   },
+   "timing": {
+    "prepToContact": 0.728,
+    "contactToAligned": 0.115,
+    "contactToRejoin": 0.654,
+    "supportPlantBeforeContact": 0.354,
+    "contactLand": 0.253
+   },
+   "touch": {
+    "extraAdj": 0.01,
+    "tCont": 0.654,
+    "contacts": 1,
+    "dirErrDeg": -0.342,
+    "touchSpeedErr": 0.05
+   }
+  },
+  "h120": {
+   "cond": {
+    "theta": 120
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.624,
+    "supportPlant": -0.372,
+    "contactLand": 0.261,
+    "pivotEnd": 0.331,
+    "exitPlant": 0.543,
+    "prepStart": -0.764,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.1,
+    "maxHipRate": 427.019,
+    "weightTransfer": 0.295,
+    "aligned": 0.14,
+    "rejoin": 0.663
+   },
+   "rotation": {
+    "total": 120,
+    "beforeContact": 70.8,
+    "afterContact": 49.2,
+    "shoulderBeforeContact": 92.215,
+    "maxHipShoulderSeparation": 30.976,
+    "maxHipRate": 427.019
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.161,
+   "slipV1ForefootTurnPhase": 0.015,
+   "continuity": {
+    "turnPhaseEnd": 0.763,
+    "human": {
+     "maxFootSpeed": 18.504,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.436
+     ],
+     "snap": 0.02905,
+     "snapAt": [
+      "L",
+      "ankle",
+      1.286
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.01,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.64
+     ],
+     "snap": 0.00902,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.74
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 38.429,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.161
+     ],
+     "snap": 0.16644,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.157
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 38.429,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.161
+     ],
+     "snap": 0.16644,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.157
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.876
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.213,
+    "toRejoin": 0.609,
+    "minHeightDrop": 0.091
+   },
+   "timing": {
+    "prepToContact": 0.764,
+    "contactToAligned": 0.14,
+    "contactToRejoin": 0.663,
+    "supportPlantBeforeContact": 0.372,
+    "contactLand": 0.261
+   },
+   "touch": {
+    "extraAdj": 0.004,
+    "tCont": 0.663,
+    "contacts": 1,
+    "dirErrDeg": -0.192,
+    "touchSpeedErr": 0.016
+   }
+  },
+  "h135": {
+   "cond": {
+    "theta": 135
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.642,
+    "supportPlant": -0.381,
+    "contactLand": 0.268,
+    "pivotEnd": 0.338,
+    "exitPlant": 0.551,
+    "prepStart": -0.782,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.11,
+    "maxHipRate": 468.709,
+    "weightTransfer": 0.305,
+    "aligned": 0.16,
+    "rejoin": 0.671
+   },
+   "rotation": {
+    "total": 135,
+    "beforeContact": 75.4,
+    "afterContact": 59.6,
+    "shoulderBeforeContact": 97.63,
+    "maxHipShoulderSeparation": 31.662,
+    "maxHipRate": 468.709
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.012,
+   "continuity": {
+    "turnPhaseEnd": 0.771,
+    "human": {
+     "maxFootSpeed": 18.496,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.447
+     ],
+     "snap": 0.02834,
+     "snapAt": [
+      "R",
+      "ankle",
+      1.839
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.944,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.647
+     ],
+     "snap": 0.01309,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.747
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.877
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.203,
+    "toRejoin": 0.582,
+    "minHeightDrop": 0.095
+   },
+   "timing": {
+    "prepToContact": 0.782,
+    "contactToAligned": 0.16,
+    "contactToRejoin": 0.671,
+    "supportPlantBeforeContact": 0.381,
+    "contactLand": 0.268
+   },
+   "touch": {
+    "extraAdj": 0.002,
+    "tCont": 0.671,
+    "contacts": 1,
+    "dirErrDeg": 0.126,
+    "touchSpeedErr": 0
+   }
+  },
+  "x135": {
+   "cond": {
+    "theta": 135,
+    "family": "THROUGH_TURN"
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.321,
+    "pivotEnd": 0.391,
+    "exitPlant": 0.576,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.16,
+    "maxHipRate": 585.822,
+    "weightTransfer": 0.355,
+    "aligned": 0.26,
+    "rejoin": 0.696
+   },
+   "rotation": {
+    "total": 135,
+    "beforeContact": 26.25,
+    "afterContact": 108.75,
+    "shoulderBeforeContact": 37.494,
+    "maxHipShoulderSeparation": 25.855,
+    "maxHipRate": 585.822
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.161,
+   "slipV1ForefootTurnPhase": 0.005,
+   "continuity": {
+    "turnPhaseEnd": 0.796,
+    "human": {
+     "maxFootSpeed": 18.487,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.479
+     ],
+     "snap": 0.02786,
+     "snapAt": [
+      "L",
+      "forefoot",
+      1.438
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.489,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.208
+     ],
+     "snap": 0.00815,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.708
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 24.158,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.10806,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 24.158,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.10806,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.928
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.099,
+    "toRejoin": 0.74,
+    "minHeightDrop": 0.115
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.26,
+    "contactToRejoin": 0.696,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.321
+   },
+   "touch": {
+    "extraAdj": 0.014,
+    "tCont": 0.696,
+    "contacts": 1,
+    "dirErrDeg": -0.265,
+    "touchSpeedErr": 0.03
+   }
+  },
+  "t150": {
+   "cond": {
+    "theta": 150
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.335,
+    "pivotEnd": 0.405,
+    "exitPlant": 0.584,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.175,
+    "maxHipRate": 607.677,
+    "weightTransfer": 0.37,
+    "aligned": 0.28,
+    "rejoin": 0.704
+   },
+   "rotation": {
+    "total": 150,
+    "beforeContact": 28.5,
+    "afterContact": 121.5,
+    "shoulderBeforeContact": 39.906,
+    "maxHipShoulderSeparation": 26.744,
+    "maxHipRate": 607.677
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.003,
+   "continuity": {
+    "turnPhaseEnd": 0.804,
+    "human": {
+     "maxFootSpeed": 18.485,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.488
+     ],
+     "snap": 0.02806,
+     "snapAt": [
+      "R",
+      "forefoot",
+      2.346
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.076,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.683
+     ],
+     "snap": 0.0084,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.717
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 21.646,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.09649,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 21.646,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.09649,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.925
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.101,
+    "toRejoin": 0.711,
+    "minHeightDrop": 0.118
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.28,
+    "contactToRejoin": 0.704,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.335
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.704,
+    "contacts": 1,
+    "dirErrDeg": -0.14,
+    "touchSpeedErr": 0.016
+   }
+  },
+  "t180": {
+   "cond": {
+    "theta": 180
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.363,
+    "pivotEnd": 0.433,
+    "exitPlant": 0.609,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.2,
+    "maxHipRate": 642.993,
+    "weightTransfer": 0.4,
+    "aligned": 0.33,
+    "rejoin": 0.729
+   },
+   "rotation": {
+    "total": -180,
+    "beforeContact": 33,
+    "afterContact": 147,
+    "shoulderBeforeContact": 44.728,
+    "maxHipShoulderSeparation": 28.524,
+    "maxHipRate": 642.993
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.001,
+   "continuity": {
+    "turnPhaseEnd": 0.829,
+    "human": {
+     "maxFootSpeed": 18.479,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.513
+     ],
+     "snap": 0.02935,
+     "snapAt": [
+      "L",
+      "ankle",
+      2.267
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.66,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.521
+     ],
+     "snap": 0.0083,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.742
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.921
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.103,
+    "toRejoin": 0.642,
+    "minHeightDrop": 0.125
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.33,
+    "contactToRejoin": 0.729,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.363
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.729,
+    "contacts": 1,
+    "dirErrDeg": 0.381,
+    "touchSpeedErr": -0.008
+   }
+  },
+  "o90": {
+   "cond": {
+    "theta": 90,
+    "family": "OUTSIDE_TURN",
+    "v": 4
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "OUTSIDE_TURN",
+   "foot": "R",
+   "surface": "OUTSIDE",
+   "variant": "side",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.48,
+    "supportPlant": -0.28,
+    "contactLand": 0.297,
+    "pivotEnd": 0.367,
+    "exitPlant": 0.767,
+    "prepStart": -0.62,
+    "swingStart": -0.21,
+    "contact": 0,
+    "maxHipRotation": 0.11,
+    "maxHipRate": 467.791,
+    "weightTransfer": 0.335,
+    "aligned": 0.16,
+    "rejoin": 0.629
+   },
+   "rotation": {
+    "total": 90,
+    "beforeContact": 31.5,
+    "afterContact": 58.5,
+    "shoulderBeforeContact": 45.417,
+    "maxHipShoulderSeparation": 22.743,
+    "maxHipRate": 467.791
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.729,
+    "human": {
+     "maxFootSpeed": 18.495,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.434
+     ],
+     "snap": 0.02922,
+     "snapAt": [
+      "R",
+      "ankle",
+      2.009
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.73,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.73
+     ],
+     "snap": 0.00774,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.622
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 39.256,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.163
+     ],
+     "snap": 0.17146,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.159
+     ],
+     "forefootSkate": 0.099,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 39.256,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.163
+     ],
+     "snap": 0.17146,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.159
+     ],
+     "forefootSkate": 0.099,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.382,
+    "legExtension": 0.862
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0.014,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.971,
+   "com": {
+    "prep": 0.365,
+    "toRejoin": 0.415,
+    "minHeightDrop": 0.088
+   },
+   "timing": {
+    "prepToContact": 0.62,
+    "contactToAligned": 0.16,
+    "contactToRejoin": 0.629,
+    "supportPlantBeforeContact": 0.28,
+    "contactLand": 0.297
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.629,
+    "contacts": 1,
+    "dirErrDeg": -0.138,
+    "touchSpeedErr": 0.011
+   }
+  },
+  "m30": {
+   "cond": {
+    "theta": -30
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "DIRECTIONAL",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "front",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.46,
+    "supportPlant": -0.26,
+    "contactLand": 0.228,
+    "pivotEnd": 0.298,
+    "exitPlant": 0.698,
+    "prepStart": -0.55,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.065,
+    "maxHipRate": 231.376,
+    "weightTransfer": 0.265,
+    "aligned": 0.065,
+    "rejoin": 0.554
+   },
+   "rotation": {
+    "total": -30,
+    "beforeContact": -12,
+    "afterContact": -18,
+    "shoulderBeforeContact": -21.5,
+    "maxHipShoulderSeparation": 12.049,
+    "maxHipRate": 231.376
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.018,
+   "continuity": {
+    "turnPhaseEnd": 0.654,
+    "human": {
+     "maxFootSpeed": 18.487,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.371
+     ],
+     "snap": 0.02882,
+     "snapAt": [
+      "L",
+      "ankle",
+      1.404
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 5.427,
+     "speedAt": [
+      "L",
+      "ankle",
+      0.517
+     ],
+     "snap": 0.00654,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.65
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 20.003,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.08604,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 20.003,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.08604,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.415,
+    "legExtension": 0.931
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0.006,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.969,
+   "com": {
+    "prep": 0.096,
+    "toRejoin": 0.423,
+    "minHeightDrop": 0.065
+   },
+   "timing": {
+    "prepToContact": 0.55,
+    "contactToAligned": 0.065,
+    "contactToRejoin": 0.554,
+    "supportPlantBeforeContact": 0.26,
+    "contactLand": 0.228
+   },
+   "touch": {
+    "extraAdj": 0.02,
+    "tCont": 0.554,
+    "contacts": 1,
+    "dirErrDeg": -0.015,
+    "touchSpeedErr": 0.079
+   }
+  },
+  "m60": {
+   "cond": {
+    "theta": -60
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "DIRECTIONAL",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "front",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.46,
+    "supportPlant": -0.26,
+    "contactLand": 0.235,
+    "pivotEnd": 0.305,
+    "exitPlant": 0.705,
+    "prepStart": -0.55,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.085,
+    "maxHipRate": 369.896,
+    "weightTransfer": 0.27,
+    "aligned": 0.115,
+    "rejoin": 0.579
+   },
+   "rotation": {
+    "total": -60,
+    "beforeContact": -23,
+    "afterContact": -37,
+    "shoulderBeforeContact": -37,
+    "maxHipShoulderSeparation": 18.646,
+    "maxHipRate": 369.896
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.679,
+    "human": {
+     "maxFootSpeed": 18.46,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.379
+     ],
+     "snap": 0.0294,
+     "snapAt": [
+      "R",
+      "ankle",
+      1.954
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.297,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.671
+     ],
+     "snap": 0.00946,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.675
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 31.908,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.13533,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 31.908,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.13533,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.415,
+    "legExtension": 0.928
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0.007,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.066,
+    "toRejoin": 0.398,
+    "minHeightDrop": 0.069
+   },
+   "timing": {
+    "prepToContact": 0.55,
+    "contactToAligned": 0.115,
+    "contactToRejoin": 0.579,
+    "supportPlantBeforeContact": 0.26,
+    "contactLand": 0.235
+   },
+   "touch": {
+    "extraAdj": 0.008,
+    "tCont": 0.579,
+    "contacts": 1,
+    "dirErrDeg": -0.328,
+    "touchSpeedErr": 0.049
+   }
+  },
+  "m90": {
+   "cond": {
+    "theta": -90
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.588,
+    "supportPlant": -0.354,
+    "contactLand": 0.253,
+    "pivotEnd": 0.323,
+    "exitPlant": 0.535,
+    "prepStart": -0.728,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.085,
+    "maxHipRate": 366.805,
+    "weightTransfer": 0.29,
+    "aligned": 0.115,
+    "rejoin": 0.654
+   },
+   "rotation": {
+    "total": -90,
+    "beforeContact": -53.1,
+    "afterContact": -36.9,
+    "shoulderBeforeContact": -71.9,
+    "maxHipShoulderSeparation": 27.857,
+    "maxHipRate": 366.805
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.754,
+    "human": {
+     "maxFootSpeed": 18.502,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.426
+     ],
+     "snap": 0.02788,
+     "snapAt": [
+      "L",
+      "ankle",
+      2.18
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.164,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.63
+     ],
+     "snap": 0.01424,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.73
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.873
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.259,
+    "toRejoin": 0.651,
+    "minHeightDrop": 0.085
+   },
+   "timing": {
+    "prepToContact": 0.728,
+    "contactToAligned": 0.115,
+    "contactToRejoin": 0.654,
+    "supportPlantBeforeContact": 0.354,
+    "contactLand": 0.253
+   },
+   "touch": {
+    "extraAdj": 0.01,
+    "tCont": 0.654,
+    "contacts": 1,
+    "dirErrDeg": -0.342,
+    "touchSpeedErr": 0.05
+   }
+  },
+  "m120": {
+   "cond": {
+    "theta": -120
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.624,
+    "supportPlant": -0.372,
+    "contactLand": 0.261,
+    "pivotEnd": 0.331,
+    "exitPlant": 0.543,
+    "prepStart": -0.764,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.1,
+    "maxHipRate": 427.019,
+    "weightTransfer": 0.295,
+    "aligned": 0.14,
+    "rejoin": 0.663
+   },
+   "rotation": {
+    "total": -120,
+    "beforeContact": -70.8,
+    "afterContact": -49.2,
+    "shoulderBeforeContact": -92.215,
+    "maxHipShoulderSeparation": 30.976,
+    "maxHipRate": 427.019
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.161,
+   "slipV1ForefootTurnPhase": 0.015,
+   "continuity": {
+    "turnPhaseEnd": 0.763,
+    "human": {
+     "maxFootSpeed": 18.504,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.436
+     ],
+     "snap": 0.02905,
+     "snapAt": [
+      "R",
+      "ankle",
+      1.286
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.01,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.64
+     ],
+     "snap": 0.00902,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.74
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 38.429,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.161
+     ],
+     "snap": 0.16644,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.157
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 38.429,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.161
+     ],
+     "snap": 0.16644,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.157
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.876
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.213,
+    "toRejoin": 0.609,
+    "minHeightDrop": 0.091
+   },
+   "timing": {
+    "prepToContact": 0.764,
+    "contactToAligned": 0.14,
+    "contactToRejoin": 0.663,
+    "supportPlantBeforeContact": 0.372,
+    "contactLand": 0.261
+   },
+   "touch": {
+    "extraAdj": 0.004,
+    "tCont": 0.663,
+    "contacts": 1,
+    "dirErrDeg": -0.192,
+    "touchSpeedErr": 0.016
+   }
+  },
+  "m135": {
+   "cond": {
+    "theta": -135
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.642,
+    "supportPlant": -0.381,
+    "contactLand": 0.268,
+    "pivotEnd": 0.338,
+    "exitPlant": 0.551,
+    "prepStart": -0.782,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.11,
+    "maxHipRate": 468.709,
+    "weightTransfer": 0.305,
+    "aligned": 0.16,
+    "rejoin": 0.671
+   },
+   "rotation": {
+    "total": -135,
+    "beforeContact": -75.4,
+    "afterContact": -59.6,
+    "shoulderBeforeContact": -97.63,
+    "maxHipShoulderSeparation": 31.662,
+    "maxHipRate": 468.709
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.012,
+   "continuity": {
+    "turnPhaseEnd": 0.771,
+    "human": {
+     "maxFootSpeed": 18.497,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.447
+     ],
+     "snap": 0.02834,
+     "snapAt": [
+      "L",
+      "ankle",
+      1.839
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.944,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.647
+     ],
+     "snap": 0.01309,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.747
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.877
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.203,
+    "toRejoin": 0.582,
+    "minHeightDrop": 0.095
+   },
+   "timing": {
+    "prepToContact": 0.782,
+    "contactToAligned": 0.16,
+    "contactToRejoin": 0.671,
+    "supportPlantBeforeContact": 0.381,
+    "contactLand": 0.268
+   },
+   "touch": {
+    "extraAdj": 0.002,
+    "tCont": 0.671,
+    "contacts": 1,
+    "dirErrDeg": 0.126,
+    "touchSpeedErr": 0
+   }
+  },
+  "m150": {
+   "cond": {
+    "theta": -150
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.335,
+    "pivotEnd": 0.405,
+    "exitPlant": 0.584,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.175,
+    "maxHipRate": 607.677,
+    "weightTransfer": 0.37,
+    "aligned": 0.28,
+    "rejoin": 0.704
+   },
+   "rotation": {
+    "total": -150,
+    "beforeContact": -28.5,
+    "afterContact": -121.5,
+    "shoulderBeforeContact": -39.906,
+    "maxHipShoulderSeparation": 26.744,
+    "maxHipRate": 607.677
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.003,
+   "continuity": {
+    "turnPhaseEnd": 0.804,
+    "human": {
+     "maxFootSpeed": 18.485,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.488
+     ],
+     "snap": 0.02806,
+     "snapAt": [
+      "L",
+      "forefoot",
+      2.346
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.076,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.683
+     ],
+     "snap": 0.0084,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.717
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 21.646,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.09649,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 21.646,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.162
+     ],
+     "snap": 0.09649,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.158
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.925
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.101,
+    "toRejoin": 0.711,
+    "minHeightDrop": 0.118
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.28,
+    "contactToRejoin": 0.704,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.335
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.704,
+    "contacts": 1,
+    "dirErrDeg": -0.14,
+    "touchSpeedErr": 0.016
+   }
+  },
+  "m180": {
+   "cond": {
+    "theta": -180
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.363,
+    "pivotEnd": 0.433,
+    "exitPlant": 0.609,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.2,
+    "maxHipRate": 642.993,
+    "weightTransfer": 0.4,
+    "aligned": 0.33,
+    "rejoin": 0.729
+   },
+   "rotation": {
+    "total": -180,
+    "beforeContact": -33,
+    "afterContact": -147,
+    "shoulderBeforeContact": -44.728,
+    "maxHipShoulderSeparation": 28.524,
+    "maxHipRate": 642.993
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.001,
+   "continuity": {
+    "turnPhaseEnd": 0.829,
+    "human": {
+     "maxFootSpeed": 18.479,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.513
+     ],
+     "snap": 0.02935,
+     "snapAt": [
+      "R",
+      "ankle",
+      2.267
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.66,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.521
+     ],
+     "snap": 0.0083,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.742
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.921
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.103,
+    "toRejoin": 0.642,
+    "minHeightDrop": 0.125
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.33,
+    "contactToRejoin": 0.729,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.363
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.729,
+    "contacts": 1,
+    "dirErrDeg": 0.381,
+    "touchSpeedErr": -0.008
+   }
+  },
+  "mo90": {
+   "cond": {
+    "theta": -90,
+    "family": "OUTSIDE_TURN",
+    "v": 4
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "OUTSIDE_TURN",
+   "foot": "L",
+   "surface": "OUTSIDE",
+   "variant": "side",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.48,
+    "supportPlant": -0.28,
+    "contactLand": 0.297,
+    "pivotEnd": 0.367,
+    "exitPlant": 0.767,
+    "prepStart": -0.62,
+    "swingStart": -0.21,
+    "contact": 0,
+    "maxHipRotation": 0.11,
+    "maxHipRate": 467.791,
+    "weightTransfer": 0.335,
+    "aligned": 0.16,
+    "rejoin": 0.629
+   },
+   "rotation": {
+    "total": -90,
+    "beforeContact": -31.5,
+    "afterContact": -58.5,
+    "shoulderBeforeContact": -45.417,
+    "maxHipShoulderSeparation": 22.743,
+    "maxHipRate": 467.791
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.729,
+    "human": {
+     "maxFootSpeed": 18.494,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.434
+     ],
+     "snap": 0.02922,
+     "snapAt": [
+      "L",
+      "ankle",
+      2.009
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.73,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.73
+     ],
+     "snap": 0.00774,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.622
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 39.256,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.163
+     ],
+     "snap": 0.17146,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.159
+     ],
+     "forefootSkate": 0.098,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 39.256,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.163
+     ],
+     "snap": 0.17146,
+     "snapAt": [
+      "R",
+      "forefoot",
+      0.159
+     ],
+     "forefootSkate": 0.098,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.382,
+    "legExtension": 0.862
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0.014,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.971,
+   "com": {
+    "prep": 0.365,
+    "toRejoin": 0.415,
+    "minHeightDrop": 0.088
+   },
+   "timing": {
+    "prepToContact": 0.62,
+    "contactToAligned": 0.16,
+    "contactToRejoin": 0.629,
+    "supportPlantBeforeContact": 0.28,
+    "contactLand": 0.297
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.629,
+    "contacts": 1,
+    "dirErrDeg": -0.138,
+    "touchSpeedErr": 0.011
+   }
+  },
+  "pl90": {
+   "cond": {
+    "theta": 90,
+    "pref": "L"
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.588,
+    "supportPlant": -0.354,
+    "contactLand": 0.253,
+    "pivotEnd": 0.323,
+    "exitPlant": 0.535,
+    "prepStart": -0.728,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.085,
+    "maxHipRate": 366.805,
+    "weightTransfer": 0.29,
+    "aligned": 0.115,
+    "rejoin": 0.654
+   },
+   "rotation": {
+    "total": 90,
+    "beforeContact": 53.1,
+    "afterContact": 36.9,
+    "shoulderBeforeContact": 71.9,
+    "maxHipShoulderSeparation": 27.857,
+    "maxHipRate": 366.805
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.013,
+   "continuity": {
+    "turnPhaseEnd": 0.754,
+    "human": {
+     "maxFootSpeed": 18.501,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.426
+     ],
+     "snap": 0.02788,
+     "snapAt": [
+      "R",
+      "ankle",
+      2.18
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "humanTurn": {
+     "maxFootSpeed": 8.164,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.63
+     ],
+     "snap": 0.01424,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.73
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0
+    },
+    "v1": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "v1Turn": {
+     "maxFootSpeed": 34.782,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.14731,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.001
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.873
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.259,
+    "toRejoin": 0.651,
+    "minHeightDrop": 0.085
+   },
+   "timing": {
+    "prepToContact": 0.728,
+    "contactToAligned": 0.115,
+    "contactToRejoin": 0.654,
+    "supportPlantBeforeContact": 0.354,
+    "contactLand": 0.253
+   },
+   "touch": {
+    "extraAdj": 0.01,
+    "tCont": 0.654,
+    "contacts": 1,
+    "dirErrDeg": -0.342,
+    "touchSpeedErr": 0.05
+   }
+  },
+  "pl135": {
+   "cond": {
+    "theta": 135,
+    "pref": "L"
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "HALF_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "back",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.642,
+    "supportPlant": -0.381,
+    "contactLand": 0.268,
+    "pivotEnd": 0.338,
+    "exitPlant": 0.551,
+    "prepStart": -0.782,
+    "swingStart": -0.22,
+    "contact": 0,
+    "maxHipRotation": 0.11,
+    "maxHipRate": 468.709,
+    "weightTransfer": 0.305,
+    "aligned": 0.16,
+    "rejoin": 0.671
+   },
+   "rotation": {
+    "total": 135,
+    "beforeContact": 75.4,
+    "afterContact": 59.6,
+    "shoulderBeforeContact": 97.63,
+    "maxHipShoulderSeparation": 31.662,
+    "maxHipRate": 468.709
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.162,
+   "slipV1ForefootTurnPhase": 0.012,
+   "continuity": {
+    "turnPhaseEnd": 0.771,
+    "human": {
+     "maxFootSpeed": 18.496,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.447
+     ],
+     "snap": 0.02834,
+     "snapAt": [
+      "R",
+      "ankle",
+      1.839
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.944,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.647
+     ],
+     "snap": 0.01309,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.747
+     ],
+     "forefootSkate": 0,
+     "heelSkate": 0.001
+    },
+    "v1": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 39.278,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.164
+     ],
+     "snap": 0.17183,
+     "snapAt": [
+      "L",
+      "forefoot",
+      0.16
+     ],
+     "forefootSkate": 0.002,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.274,
+    "legExtension": 0.877
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.203,
+    "toRejoin": 0.582,
+    "minHeightDrop": 0.095
+   },
+   "timing": {
+    "prepToContact": 0.782,
+    "contactToAligned": 0.16,
+    "contactToRejoin": 0.671,
+    "supportPlantBeforeContact": 0.381,
+    "contactLand": 0.268
+   },
+   "touch": {
+    "extraAdj": 0.002,
+    "tCont": 0.671,
+    "contacts": 1,
+    "dirErrDeg": 0.126,
+    "touchSpeedErr": 0
+   }
+  },
+  "tf180": {
+   "cond": {
+    "theta": 180,
+    "pref": null
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "L",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.363,
+    "pivotEnd": 0.433,
+    "exitPlant": 0.609,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.2,
+    "maxHipRate": 642.993,
+    "weightTransfer": 0.4,
+    "aligned": 0.33,
+    "rejoin": 0.729
+   },
+   "rotation": {
+    "total": -180,
+    "beforeContact": 33,
+    "afterContact": 147,
+    "shoulderBeforeContact": 44.728,
+    "maxHipShoulderSeparation": 28.524,
+    "maxHipRate": 642.993
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.001,
+   "continuity": {
+    "turnPhaseEnd": 0.829,
+    "human": {
+     "maxFootSpeed": 18.479,
+     "speedAt": [
+      "L",
+      "forefoot",
+      1.513
+     ],
+     "snap": 0.02935,
+     "snapAt": [
+      "L",
+      "ankle",
+      2.267
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.66,
+     "speedAt": [
+      "R",
+      "forefoot",
+      0.521
+     ],
+     "snap": 0.0083,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.742
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "L",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.921
+   },
+   "rejoin": {
+    "foot": "L",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.103,
+    "toRejoin": 0.642,
+    "minHeightDrop": 0.125
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.33,
+    "contactToRejoin": 0.729,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.363
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.729,
+    "contacts": 1,
+    "dirErrDeg": 0.381,
+    "touchSpeedErr": -0.008
+   }
+  },
+  "tf180L": {
+   "cond": {
+    "theta": -180,
+    "pref": null
+   },
+   "bc": 99,
+   "draw": {
+    "example": "TYPICAL"
+   },
+   "family": "THROUGH_TURN",
+   "foot": "R",
+   "surface": "INSIDE",
+   "variant": "behind",
+   "cls": "IMMEDIATE",
+   "events": {
+    "supportLift": -0.66,
+    "supportPlant": -0.32,
+    "contactLand": 0.363,
+    "pivotEnd": 0.433,
+    "exitPlant": 0.609,
+    "prepStart": -0.8,
+    "swingStart": -0.26,
+    "contact": 0,
+    "maxHipRotation": 0.2,
+    "maxHipRate": 642.993,
+    "weightTransfer": 0.4,
+    "aligned": 0.33,
+    "rejoin": 0.729
+   },
+   "rotation": {
+    "total": -180,
+    "beforeContact": -33,
+    "afterContact": -147,
+    "shoulderBeforeContact": -44.728,
+    "maxHipShoulderSeparation": 28.524,
+    "maxHipRate": 642.993
+   },
+   "slip": {
+    "flatR": 0,
+    "flatL": 0,
+    "pivotR": 0,
+    "pivotL": 0,
+    "max": 0
+   },
+   "slipV1ForefootMax": 0.163,
+   "slipV1ForefootTurnPhase": 0.001,
+   "continuity": {
+    "turnPhaseEnd": 0.829,
+    "human": {
+     "maxFootSpeed": 18.479,
+     "speedAt": [
+      "R",
+      "forefoot",
+      1.513
+     ],
+     "snap": 0.02935,
+     "snapAt": [
+      "R",
+      "ankle",
+      2.267
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "humanTurn": {
+     "maxFootSpeed": 7.66,
+     "speedAt": [
+      "L",
+      "forefoot",
+      0.521
+     ],
+     "snap": 0.0083,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.742
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "v1Turn": {
+     "maxFootSpeed": 22.651,
+     "speedAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "snap": 0.09438,
+     "snapAt": [
+      "R",
+      "ankle",
+      0.771
+     ],
+     "forefootSkate": 0.001,
+     "heelSkate": 0.002
+    },
+    "standDev": 0
+   },
+   "contactPoseError": 0,
+   "contactReach": {
+    "comToBall": 0.13,
+    "legExtension": 0.921
+   },
+   "rejoin": {
+    "foot": "R",
+    "poseErr": 0,
+    "ankleToBall": 0.17
+   },
+   "maxLegExtension": 0.968,
+   "com": {
+    "prep": 0.103,
+    "toRejoin": 0.642,
+    "minHeightDrop": 0.125
+   },
+   "timing": {
+    "prepToContact": 0.8,
+    "contactToAligned": 0.33,
+    "contactToRejoin": 0.729,
+    "supportPlantBeforeContact": 0.32,
+    "contactLand": 0.363
+   },
+   "touch": {
+    "extraAdj": 0.011,
+    "tCont": 0.729,
+    "contacts": 1,
+    "dirErrDeg": 0.381,
+    "touchSpeedErr": -0.008
+   }
+  }
+ },
+ "bc": {
+  "h90": {
+   "50": {
+    "cond": {
+     "theta": 90
+    },
+    "bc": 50,
+    "draw": {
+     "seed": 12
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.588,
+     "supportPlant": -0.354,
+     "contactLand": 0.253,
+     "pivotEnd": 0.323,
+     "exitPlant": 0.616,
+     "prepStart": -0.728,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.085,
+     "maxHipRate": 366.805,
+     "weightTransfer": 0.29,
+     "aligned": 0.115,
+     "rejoin": 0.729
+    },
+    "rotation": {
+     "total": 90,
+     "beforeContact": 53.1,
+     "afterContact": 36.9,
+     "shoulderBeforeContact": 71.9,
+     "maxHipShoulderSeparation": 27.857,
+     "maxHipRate": 366.805
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.027,
+    "continuity": {
+     "turnPhaseEnd": 0.829,
+     "human": {
+      "maxFootSpeed": 18.387,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.489
+      ],
+      "snap": 0.02924,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.522
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "humanTurn": {
+      "maxFootSpeed": 12.136,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.701
+      ],
+      "snap": 0.01837,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.601
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 34.78,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.14729,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1Turn": {
+      "maxFootSpeed": 34.78,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.14729,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.873
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.97,
+    "com": {
+     "prep": 0.259,
+     "toRejoin": 1.076,
+     "minHeightDrop": 0.085
+    },
+    "timing": {
+     "prepToContact": 0.728,
+     "contactToAligned": 0.115,
+     "contactToRejoin": 0.729,
+     "supportPlantBeforeContact": 0.354,
+     "contactLand": 0.253
+    },
+    "touch": {
+     "extraAdj": 0.392,
+     "tCont": 0.729,
+     "contacts": 1,
+     "dirErrDeg": 18.845,
+     "touchSpeedErr": 0.584
+    }
+   },
+   "70": {
+    "cond": {
+     "theta": 90
+    },
+    "bc": 70,
+    "draw": {
+     "seed": 12
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.588,
+     "supportPlant": -0.354,
+     "contactLand": 0.253,
+     "pivotEnd": 0.323,
+     "exitPlant": 0.616,
+     "prepStart": -0.728,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.085,
+     "maxHipRate": 366.805,
+     "weightTransfer": 0.29,
+     "aligned": 0.115,
+     "rejoin": 0.704
+    },
+    "rotation": {
+     "total": 90,
+     "beforeContact": 53.1,
+     "afterContact": 36.9,
+     "shoulderBeforeContact": 71.9,
+     "maxHipShoulderSeparation": 27.857,
+     "maxHipRate": 366.805
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.02,
+    "continuity": {
+     "turnPhaseEnd": 0.804,
+     "human": {
+      "maxFootSpeed": 18.387,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.489
+      ],
+      "snap": 0.02924,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.522
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "humanTurn": {
+      "maxFootSpeed": 12.089,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.672
+      ],
+      "snap": 0.01728,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.605
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.14729,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1Turn": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.14729,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.873
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.259,
+     "toRejoin": 0.956,
+     "minHeightDrop": 0.085
+    },
+    "timing": {
+     "prepToContact": 0.728,
+     "contactToAligned": 0.115,
+     "contactToRejoin": 0.704,
+     "supportPlantBeforeContact": 0.354,
+     "contactLand": 0.253
+    },
+    "touch": {
+     "extraAdj": 0.273,
+     "tCont": 0.704,
+     "contacts": 1,
+     "dirErrDeg": 14.728,
+     "touchSpeedErr": 0.406
+    }
+   },
+   "80": {
+    "cond": {
+     "theta": 90
+    },
+    "bc": 80,
+    "draw": {
+     "seed": 12
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.588,
+     "supportPlant": -0.354,
+     "contactLand": 0.253,
+     "pivotEnd": 0.323,
+     "exitPlant": 0.568,
+     "prepStart": -0.728,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.085,
+     "maxHipRate": 366.805,
+     "weightTransfer": 0.29,
+     "aligned": 0.115,
+     "rejoin": 0.688
+    },
+    "rotation": {
+     "total": 90,
+     "beforeContact": 53.1,
+     "afterContact": 36.9,
+     "shoulderBeforeContact": 71.9,
+     "maxHipShoulderSeparation": 27.857,
+     "maxHipRate": 366.805
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.017,
+    "continuity": {
+     "turnPhaseEnd": 0.788,
+     "human": {
+      "maxFootSpeed": 18.475,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.451
+      ],
+      "snap": 0.02957,
+      "snapAt": [
+       "R",
+       "ankle",
+       2.205
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "humanTurn": {
+      "maxFootSpeed": 9.731,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.66
+      ],
+      "snap": 0.01017,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.764
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1Turn": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.873
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.259,
+     "toRejoin": 0.835,
+     "minHeightDrop": 0.085
+    },
+    "timing": {
+     "prepToContact": 0.728,
+     "contactToAligned": 0.115,
+     "contactToRejoin": 0.688,
+     "supportPlantBeforeContact": 0.354,
+     "contactLand": 0.253
+    },
+    "touch": {
+     "extraAdj": 0.2,
+     "tCont": 0.688,
+     "contacts": 1,
+     "dirErrDeg": 11.562,
+     "touchSpeedErr": 0.292
+    }
+   },
+   "90": {
+    "cond": {
+     "theta": 90
+    },
+    "bc": 90,
+    "draw": {
+     "seed": 12
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.588,
+     "supportPlant": -0.354,
+     "contactLand": 0.253,
+     "pivotEnd": 0.323,
+     "exitPlant": 0.552,
+     "prepStart": -0.728,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.085,
+     "maxHipRate": 366.805,
+     "weightTransfer": 0.29,
+     "aligned": 0.115,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 90,
+     "beforeContact": 53.1,
+     "afterContact": 36.9,
+     "shoulderBeforeContact": 71.9,
+     "maxHipShoulderSeparation": 27.857,
+     "maxHipRate": 366.805
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.014,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.492,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.439
+      ],
+      "snap": 0.02886,
+      "snapAt": [
+       "R",
+       "ankle",
+       2.193
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.859,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.647
+      ],
+      "snap": 0.01279,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1Turn": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.873
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.259,
+     "toRejoin": 0.732,
+     "minHeightDrop": 0.085
+    },
+    "timing": {
+     "prepToContact": 0.728,
+     "contactToAligned": 0.115,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.354,
+     "contactLand": 0.253
+    },
+    "touch": {
+     "extraAdj": 0.102,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": 6.637,
+     "touchSpeedErr": 0.147
+    }
+   },
+   "99": {
+    "cond": {
+     "theta": 90
+    },
+    "bc": 99,
+    "draw": {
+     "seed": 12
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.588,
+     "supportPlant": -0.354,
+     "contactLand": 0.253,
+     "pivotEnd": 0.323,
+     "exitPlant": 0.535,
+     "prepStart": -0.728,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.085,
+     "maxHipRate": 366.805,
+     "weightTransfer": 0.29,
+     "aligned": 0.115,
+     "rejoin": 0.654
+    },
+    "rotation": {
+     "total": 90,
+     "beforeContact": 53.1,
+     "afterContact": 36.9,
+     "shoulderBeforeContact": 71.9,
+     "maxHipShoulderSeparation": 27.857,
+     "maxHipRate": 366.805
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.013,
+    "continuity": {
+     "turnPhaseEnd": 0.754,
+     "human": {
+      "maxFootSpeed": 18.501,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.426
+      ],
+      "snap": 0.02788,
+      "snapAt": [
+       "R",
+       "ankle",
+       2.18
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.134,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.63
+      ],
+      "snap": 0.01415,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.73
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1Turn": {
+      "maxFootSpeed": 34.781,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.1473,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.873
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.259,
+     "toRejoin": 0.648,
+     "minHeightDrop": 0.085
+    },
+    "timing": {
+     "prepToContact": 0.728,
+     "contactToAligned": 0.115,
+     "contactToRejoin": 0.654,
+     "supportPlantBeforeContact": 0.354,
+     "contactLand": 0.253
+    },
+    "touch": {
+     "extraAdj": 0.027,
+     "tCont": 0.654,
+     "contacts": 1,
+     "dirErrDeg": 2.063,
+     "touchSpeedErr": 0.04
+    }
+   }
+  },
+  "h135": {
+   "50": {
+    "cond": {
+     "theta": 135
+    },
+    "bc": 50,
+    "draw": {
+     "seed": 11
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.642,
+     "supportPlant": -0.381,
+     "contactLand": 0.268,
+     "pivotEnd": 0.338,
+     "exitPlant": 0.551,
+     "prepStart": -0.782,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.11,
+     "maxHipRate": 468.709,
+     "weightTransfer": 0.305,
+     "aligned": 0.16,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 135,
+     "beforeContact": 75.4,
+     "afterContact": 59.6,
+     "shoulderBeforeContact": 97.63,
+     "maxHipShoulderSeparation": 31.662,
+     "maxHipRate": 468.709
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.021,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.496,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.447
+      ],
+      "snap": 0.02833,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.839
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "humanTurn": {
+      "maxFootSpeed": 9.155,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.631
+      ],
+      "snap": 0.01445,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 39.279,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.279,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.877
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.203,
+     "toRejoin": 0.753,
+     "minHeightDrop": 0.095
+    },
+    "timing": {
+     "prepToContact": 0.782,
+     "contactToAligned": 0.16,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.381,
+     "contactLand": 0.268
+    },
+    "touch": {
+     "extraAdj": 0.45,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": -31.263,
+     "touchSpeedErr": 0.184
+    }
+   },
+   "70": {
+    "cond": {
+     "theta": 135
+    },
+    "bc": 70,
+    "draw": {
+     "seed": 11
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.642,
+     "supportPlant": -0.381,
+     "contactLand": 0.268,
+     "pivotEnd": 0.338,
+     "exitPlant": 0.551,
+     "prepStart": -0.782,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.11,
+     "maxHipRate": 468.709,
+     "weightTransfer": 0.305,
+     "aligned": 0.16,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 135,
+     "beforeContact": 75.4,
+     "afterContact": 59.6,
+     "shoulderBeforeContact": 97.63,
+     "maxHipShoulderSeparation": 31.662,
+     "maxHipRate": 468.709
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.017,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.496,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.447
+      ],
+      "snap": 0.02834,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.839
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.569,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.639
+      ],
+      "snap": 0.01385,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.877
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.203,
+     "toRejoin": 0.672,
+     "minHeightDrop": 0.095
+    },
+    "timing": {
+     "prepToContact": 0.782,
+     "contactToAligned": 0.16,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.381,
+     "contactLand": 0.268
+    },
+    "touch": {
+     "extraAdj": 0.321,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": -23.733,
+     "touchSpeedErr": 0.072
+    }
+   },
+   "80": {
+    "cond": {
+     "theta": 135
+    },
+    "bc": 80,
+    "draw": {
+     "seed": 11
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.642,
+     "supportPlant": -0.381,
+     "contactLand": 0.268,
+     "pivotEnd": 0.338,
+     "exitPlant": 0.551,
+     "prepStart": -0.782,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.11,
+     "maxHipRate": 468.709,
+     "weightTransfer": 0.305,
+     "aligned": 0.16,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 135,
+     "beforeContact": 75.4,
+     "afterContact": 59.6,
+     "shoulderBeforeContact": 97.63,
+     "maxHipShoulderSeparation": 31.662,
+     "maxHipRate": 468.709
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.015,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.496,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.447
+      ],
+      "snap": 0.02834,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.839
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.261,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.643
+      ],
+      "snap": 0.0135,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17183,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17183,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.877
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.203,
+     "toRejoin": 0.628,
+     "minHeightDrop": 0.095
+    },
+    "timing": {
+     "prepToContact": 0.782,
+     "contactToAligned": 0.16,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.381,
+     "contactLand": 0.268
+    },
+    "touch": {
+     "extraAdj": 0.237,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": -18.137,
+     "touchSpeedErr": 0.019
+    }
+   },
+   "90": {
+    "cond": {
+     "theta": 135
+    },
+    "bc": 90,
+    "draw": {
+     "seed": 11
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.642,
+     "supportPlant": -0.381,
+     "contactLand": 0.268,
+     "pivotEnd": 0.338,
+     "exitPlant": 0.551,
+     "prepStart": -0.782,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.11,
+     "maxHipRate": 468.709,
+     "weightTransfer": 0.305,
+     "aligned": 0.16,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 135,
+     "beforeContact": 75.4,
+     "afterContact": 59.6,
+     "shoulderBeforeContact": 97.63,
+     "maxHipShoulderSeparation": 31.662,
+     "maxHipRate": 468.709
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.013,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.496,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.447
+      ],
+      "snap": 0.02834,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.839
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.013,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.643
+      ],
+      "snap": 0.01319,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 39.279,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.279,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.877
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.203,
+     "toRejoin": 0.591,
+     "minHeightDrop": 0.095
+    },
+    "timing": {
+     "prepToContact": 0.782,
+     "contactToAligned": 0.16,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.381,
+     "contactLand": 0.268
+    },
+    "touch": {
+     "extraAdj": 0.127,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": -9.922,
+     "touchSpeedErr": -0.017
+    }
+   },
+   "99": {
+    "cond": {
+     "theta": 135
+    },
+    "bc": 99,
+    "draw": {
+     "seed": 11
+    },
+    "family": "HALF_TURN",
+    "foot": "R",
+    "surface": "INSIDE",
+    "variant": "back",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.642,
+     "supportPlant": -0.381,
+     "contactLand": 0.268,
+     "pivotEnd": 0.338,
+     "exitPlant": 0.551,
+     "prepStart": -0.782,
+     "swingStart": -0.22,
+     "contact": 0,
+     "maxHipRotation": 0.11,
+     "maxHipRate": 468.709,
+     "weightTransfer": 0.305,
+     "aligned": 0.16,
+     "rejoin": 0.671
+    },
+    "rotation": {
+     "total": 135,
+     "beforeContact": 75.4,
+     "afterContact": 59.6,
+     "shoulderBeforeContact": 97.63,
+     "maxHipShoulderSeparation": 31.662,
+     "maxHipRate": 468.709
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.162,
+    "slipV1ForefootTurnPhase": 0.012,
+    "continuity": {
+     "turnPhaseEnd": 0.771,
+     "human": {
+      "maxFootSpeed": 18.496,
+      "speedAt": [
+       "R",
+       "forefoot",
+       1.447
+      ],
+      "snap": 0.02834,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.839
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "humanTurn": {
+      "maxFootSpeed": 7.924,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.647
+      ],
+      "snap": 0.01306,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.747
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.278,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.164
+      ],
+      "snap": 0.17184,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.16
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.274,
+     "legExtension": 0.877
+    },
+    "rejoin": {
+     "foot": "R",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.203,
+     "toRejoin": 0.578,
+     "minHeightDrop": 0.095
+    },
+    "timing": {
+     "prepToContact": 0.782,
+     "contactToAligned": 0.16,
+     "contactToRejoin": 0.671,
+     "supportPlantBeforeContact": 0.381,
+     "contactLand": 0.268
+    },
+    "touch": {
+     "extraAdj": 0.038,
+     "tCont": 0.671,
+     "contacts": 1,
+     "dirErrDeg": -2.925,
+     "touchSpeedErr": -0.012
+    }
+   }
+  },
+  "t150": {
+   "50": {
+    "cond": {
+     "theta": 150
+    },
+    "bc": 50,
+    "draw": {
+     "seed": 30
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.335,
+     "pivotEnd": 0.405,
+     "exitPlant": 0.699,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.175,
+     "maxHipRate": 607.677,
+     "weightTransfer": 0.37,
+     "aligned": 0.28,
+     "rejoin": 0.321
+    },
+    "rotation": {
+     "total": 150,
+     "beforeContact": 28.5,
+     "afterContact": 121.5,
+     "shoulderBeforeContact": 39.906,
+     "maxHipShoulderSeparation": 26.744,
+     "maxHipRate": 607.677
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.101,
+    "continuity": {
+     "turnPhaseEnd": 0.421,
+     "human": {
+      "maxFootSpeed": 18.42,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.575
+      ],
+      "snap": 0.028,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.787
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.834,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.204
+      ],
+      "snap": 0.00419,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.404
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 20.796,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.09279,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 20.796,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.09279,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.925
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.255
+    },
+    "maxLegExtension": 0.97,
+    "com": {
+     "prep": 0.101,
+     "toRejoin": 0.504,
+     "minHeightDrop": 0.118
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.28,
+     "contactToRejoin": 0.321,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.335
+    },
+    "touch": {
+     "extraAdj": 0.561,
+     "tCont": 0.321,
+     "contacts": 1,
+     "dirErrDeg": -3.502,
+     "touchSpeedErr": 1.155
+    }
+   },
+   "70": {
+    "cond": {
+     "theta": 150
+    },
+    "bc": 70,
+    "draw": {
+     "seed": 30
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.335,
+     "pivotEnd": 0.405,
+     "exitPlant": 0.699,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.175,
+     "maxHipRate": 607.677,
+     "weightTransfer": 0.37,
+     "aligned": 0.28,
+     "rejoin": 0.271
+    },
+    "rotation": {
+     "total": 150,
+     "beforeContact": 28.5,
+     "afterContact": 121.5,
+     "shoulderBeforeContact": 39.906,
+     "maxHipShoulderSeparation": 26.744,
+     "maxHipRate": 607.677
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.016,
+    "continuity": {
+     "turnPhaseEnd": 0.371,
+     "human": {
+      "maxFootSpeed": 18.42,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.575
+      ],
+      "snap": 0.028,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.787
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 7.692,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.196
+      ],
+      "snap": 0.00375,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.333
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 19.05,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.575
+      ],
+      "snap": 0.07015,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 15.938,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.07015,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.925
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.101,
+     "toRejoin": 0.366,
+     "minHeightDrop": 0.118
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.28,
+     "contactToRejoin": 0.271,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.335
+    },
+    "touch": {
+     "extraAdj": 0.398,
+     "tCont": 0.271,
+     "contacts": 1,
+     "dirErrDeg": -2.795,
+     "touchSpeedErr": 0.852
+    }
+   },
+   "80": {
+    "cond": {
+     "theta": 150
+    },
+    "bc": 80,
+    "draw": {
+     "seed": 30
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.335,
+     "pivotEnd": 0.405,
+     "exitPlant": 0.699,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.175,
+     "maxHipRate": 607.677,
+     "weightTransfer": 0.37,
+     "aligned": 0.28,
+     "rejoin": 0.779
+    },
+    "rotation": {
+     "total": 150,
+     "beforeContact": 28.5,
+     "afterContact": 121.5,
+     "shoulderBeforeContact": 39.906,
+     "maxHipShoulderSeparation": 26.744,
+     "maxHipRate": 607.677
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.017,
+    "continuity": {
+     "turnPhaseEnd": 0.879,
+     "human": {
+      "maxFootSpeed": 18.42,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.575
+      ],
+      "snap": 0.028,
+      "snapAt": [
+       "R",
+       "ankle",
+       1.787
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 12.643,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.742
+      ],
+      "snap": 0.01703,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.687
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 21.646,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.0965,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 21.646,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.0965,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.925
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.101,
+     "toRejoin": 1.202,
+     "minHeightDrop": 0.118
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.28,
+     "contactToRejoin": 0.779,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.335
+    },
+    "touch": {
+     "extraAdj": 0.333,
+     "tCont": 0.779,
+     "contacts": 1,
+     "dirErrDeg": -2.234,
+     "touchSpeedErr": 0.642
+    }
+   },
+   "90": {
+    "cond": {
+     "theta": 150
+    },
+    "bc": 90,
+    "draw": {
+     "seed": 30
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.335,
+     "pivotEnd": 0.405,
+     "exitPlant": 0.626,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.175,
+     "maxHipRate": 607.677,
+     "weightTransfer": 0.37,
+     "aligned": 0.28,
+     "rejoin": 0.746
+    },
+    "rotation": {
+     "total": 150,
+     "beforeContact": 28.5,
+     "afterContact": 121.5,
+     "shoulderBeforeContact": 39.906,
+     "maxHipShoulderSeparation": 26.744,
+     "maxHipRate": 607.677
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.007,
+    "continuity": {
+     "turnPhaseEnd": 0.846,
+     "human": {
+      "maxFootSpeed": 18.499,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.521
+      ],
+      "snap": 0.02953,
+      "snapAt": [
+       "L",
+       "ankle",
+       1.912
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.697,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.721
+      ],
+      "snap": 0.01349,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.821
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 23.294,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "snap": 0.09706,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 23.294,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "snap": 0.09706,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.925
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.101,
+     "toRejoin": 0.941,
+     "minHeightDrop": 0.118
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.28,
+     "contactToRejoin": 0.746,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.335
+    },
+    "touch": {
+     "extraAdj": 0.171,
+     "tCont": 0.746,
+     "contacts": 1,
+     "dirErrDeg": -1.318,
+     "touchSpeedErr": 0.346
+    }
+   },
+   "99": {
+    "cond": {
+     "theta": 150
+    },
+    "bc": 99,
+    "draw": {
+     "seed": 30
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.335,
+     "pivotEnd": 0.405,
+     "exitPlant": 0.593,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.175,
+     "maxHipRate": 607.677,
+     "weightTransfer": 0.37,
+     "aligned": 0.28,
+     "rejoin": 0.713
+    },
+    "rotation": {
+     "total": 150,
+     "beforeContact": 28.5,
+     "afterContact": 121.5,
+     "shoulderBeforeContact": 39.906,
+     "maxHipShoulderSeparation": 26.744,
+     "maxHipRate": 607.677
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.004,
+    "continuity": {
+     "turnPhaseEnd": 0.813,
+     "human": {
+      "maxFootSpeed": 18.484,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.496
+      ],
+      "snap": 0.02792,
+      "snapAt": [
+       "L",
+       "ankle",
+       1.888
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 7.432,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.687
+      ],
+      "snap": 0.00799,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.788
+      ],
+      "forefootSkate": 0,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 22.422,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "snap": 0.09649,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 22.422,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.767
+      ],
+      "snap": 0.09649,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.925
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.101,
+     "toRejoin": 0.766,
+     "minHeightDrop": 0.118
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.28,
+     "contactToRejoin": 0.713,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.335
+    },
+    "touch": {
+     "extraAdj": 0.051,
+     "tCont": 0.713,
+     "contacts": 1,
+     "dirErrDeg": -0.408,
+     "touchSpeedErr": 0.099
+    }
+   }
+  },
+  "t180": {
+   "50": {
+    "cond": {
+     "theta": 180
+    },
+    "bc": 50,
+    "draw": {
+     "seed": 19
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.363,
+     "pivotEnd": 0.433,
+     "exitPlant": 0.727,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.2,
+     "maxHipRate": 642.993,
+     "weightTransfer": 0.4,
+     "aligned": 0.33,
+     "rejoin": 0.346
+    },
+    "rotation": {
+     "total": -180,
+     "beforeContact": 33,
+     "afterContact": 147,
+     "shoulderBeforeContact": 44.728,
+     "maxHipShoulderSeparation": 28.524,
+     "maxHipRate": 642.993
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.208,
+    "slipV1ForefootTurnPhase": 0.208,
+    "continuity": {
+     "turnPhaseEnd": 0.446,
+     "human": {
+      "maxFootSpeed": 18.412,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.604
+      ],
+      "snap": 0.02868,
+      "snapAt": [
+       "L",
+       "ankle",
+       1.996
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 7.857,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.229
+      ],
+      "snap": 0.00532,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.171
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 19.038,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.583
+      ],
+      "snap": 0.08002,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 18.155,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.08002,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.921
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.261
+    },
+    "maxLegExtension": 0.971,
+    "com": {
+     "prep": 0.103,
+     "toRejoin": 0.582,
+     "minHeightDrop": 0.125
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.33,
+     "contactToRejoin": 0.346,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.363
+    },
+    "touch": {
+     "extraAdj": 0.646,
+     "tCont": 0.346,
+     "contacts": 1,
+     "dirErrDeg": -12.573,
+     "touchSpeedErr": 1.244
+    }
+   },
+   "70": {
+    "cond": {
+     "theta": 180
+    },
+    "bc": 70,
+    "draw": {
+     "seed": 19
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.363,
+     "pivotEnd": 0.433,
+     "exitPlant": 0.727,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.2,
+     "maxHipRate": 642.993,
+     "weightTransfer": 0.4,
+     "aligned": 0.33,
+     "rejoin": 0.288
+    },
+    "rotation": {
+     "total": -180,
+     "beforeContact": 33,
+     "afterContact": 147,
+     "shoulderBeforeContact": 44.728,
+     "maxHipShoulderSeparation": 28.524,
+     "maxHipRate": 642.993
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.072,
+    "continuity": {
+     "turnPhaseEnd": 0.387,
+     "human": {
+      "maxFootSpeed": 18.412,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.604
+      ],
+      "snap": 0.02868,
+      "snapAt": [
+       "L",
+       "ankle",
+       1.996
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 6.608,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.221
+      ],
+      "snap": 0.00506,
+      "snapAt": [
+       "L",
+       "forefoot",
+       0.362
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.001
+     },
+     "v1": {
+      "maxFootSpeed": 19.037,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.583
+      ],
+      "snap": 0.07239,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 16.584,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "snap": 0.07239,
+      "snapAt": [
+       "R",
+       "forefoot",
+       0.162
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.921
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0.001,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.103,
+     "toRejoin": 0.421,
+     "minHeightDrop": 0.125
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.33,
+     "contactToRejoin": 0.288,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.363
+    },
+    "touch": {
+     "extraAdj": 0.452,
+     "tCont": 0.288,
+     "contacts": 1,
+     "dirErrDeg": -10.133,
+     "touchSpeedErr": 0.905
+    }
+   },
+   "80": {
+    "cond": {
+     "theta": 180
+    },
+    "bc": 80,
+    "draw": {
+     "seed": 19
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "ADJUSTED",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.363,
+     "pivotEnd": 0.433,
+     "exitPlant": 0.727,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.2,
+     "maxHipRate": 642.993,
+     "weightTransfer": 0.4,
+     "aligned": 0.33,
+     "rejoin": 0.246
+    },
+    "rotation": {
+     "total": -180,
+     "beforeContact": 33,
+     "afterContact": 147,
+     "shoulderBeforeContact": 44.728,
+     "maxHipShoulderSeparation": 28.524,
+     "maxHipRate": 642.993
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.012,
+    "continuity": {
+     "turnPhaseEnd": 0.346,
+     "human": {
+      "maxFootSpeed": 18.412,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.604
+      ],
+      "snap": 0.02868,
+      "snapAt": [
+       "L",
+       "ankle",
+       1.996
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 6.559,
+      "speedAt": [
+       "L",
+       "forefoot",
+       0.204
+      ],
+      "snap": 0.00512,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.146
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0
+     },
+     "v1": {
+      "maxFootSpeed": 39.209,
+      "speedAt": [
+       "R",
+       "ankle",
+       0.162
+      ],
+      "snap": 0.16342,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.158
+      ],
+      "forefootSkate": 0.002,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 39.209,
+      "speedAt": [
+       "R",
+       "ankle",
+       0.162
+      ],
+      "snap": 0.16342,
+      "snapAt": [
+       "R",
+       "ankle",
+       0.158
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.921
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0.008,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.103,
+     "toRejoin": 0.315,
+     "minHeightDrop": 0.125
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.33,
+     "contactToRejoin": 0.246,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.363
+    },
+    "touch": {
+     "extraAdj": 0.326,
+     "tCont": 0.246,
+     "contacts": 1,
+     "dirErrDeg": -8.153,
+     "touchSpeedErr": 0.674
+    }
+   },
+   "90": {
+    "cond": {
+     "theta": 180
+    },
+    "bc": 90,
+    "draw": {
+     "seed": 19
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.363,
+     "pivotEnd": 0.433,
+     "exitPlant": 0.618,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.2,
+     "maxHipRate": 642.993,
+     "weightTransfer": 0.4,
+     "aligned": 0.33,
+     "rejoin": 0.738
+    },
+    "rotation": {
+     "total": -180,
+     "beforeContact": 33,
+     "afterContact": 147,
+     "shoulderBeforeContact": 44.728,
+     "maxHipShoulderSeparation": 28.524,
+     "maxHipRate": 642.993
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.012,
+    "continuity": {
+     "turnPhaseEnd": 0.838,
+     "human": {
+      "maxFootSpeed": 18.488,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.521
+      ],
+      "snap": 0.02753,
+      "snapAt": [
+       "L",
+       "forefoot",
+       1.479
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 8.91,
+      "speedAt": [
+       "R",
+       "ankle",
+       0.529
+      ],
+      "snap": 0.00772,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.817
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 22.921,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "snap": 0.0955,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 22.921,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "snap": 0.0955,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.921
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.103,
+     "toRejoin": 0.887,
+     "minHeightDrop": 0.125
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.33,
+     "contactToRejoin": 0.738,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.363
+    },
+    "touch": {
+     "extraAdj": 0.247,
+     "tCont": 0.738,
+     "contacts": 1,
+     "dirErrDeg": -4.856,
+     "touchSpeedErr": 0.356
+    }
+   },
+   "99": {
+    "cond": {
+     "theta": 180
+    },
+    "bc": 99,
+    "draw": {
+     "seed": 19
+    },
+    "family": "THROUGH_TURN",
+    "foot": "L",
+    "surface": "INSIDE",
+    "variant": "behind",
+    "cls": "IMMEDIATE",
+    "events": {
+     "supportLift": -0.66,
+     "supportPlant": -0.32,
+     "contactLand": 0.363,
+     "pivotEnd": 0.433,
+     "exitPlant": 0.618,
+     "prepStart": -0.8,
+     "swingStart": -0.26,
+     "contact": 0,
+     "maxHipRotation": 0.2,
+     "maxHipRate": 642.993,
+     "weightTransfer": 0.4,
+     "aligned": 0.33,
+     "rejoin": 0.738
+    },
+    "rotation": {
+     "total": -180,
+     "beforeContact": 33,
+     "afterContact": 147,
+     "shoulderBeforeContact": 44.728,
+     "maxHipShoulderSeparation": 28.524,
+     "maxHipRate": 642.993
+    },
+    "slip": {
+     "flatR": 0,
+     "flatL": 0,
+     "pivotR": 0,
+     "pivotL": 0,
+     "max": 0
+    },
+    "slipV1ForefootMax": 0.163,
+    "slipV1ForefootTurnPhase": 0.001,
+    "continuity": {
+     "turnPhaseEnd": 0.838,
+     "human": {
+      "maxFootSpeed": 18.487,
+      "speedAt": [
+       "L",
+       "forefoot",
+       1.521
+      ],
+      "snap": 0.02752,
+      "snapAt": [
+       "L",
+       "forefoot",
+       1.479
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "humanTurn": {
+      "maxFootSpeed": 7.682,
+      "speedAt": [
+       "R",
+       "forefoot",
+       0.525
+      ],
+      "snap": 0.00774,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.812
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1": {
+      "maxFootSpeed": 22.921,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "snap": 0.0955,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "v1Turn": {
+      "maxFootSpeed": 22.921,
+      "speedAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "snap": 0.0955,
+      "snapAt": [
+       "L",
+       "ankle",
+       0.771
+      ],
+      "forefootSkate": 0.001,
+      "heelSkate": 0.002
+     },
+     "standDev": 0
+    },
+    "contactPoseError": 0,
+    "contactReach": {
+     "comToBall": 0.13,
+     "legExtension": 0.921
+    },
+    "rejoin": {
+     "foot": "L",
+     "poseErr": 0,
+     "ankleToBall": 0.17
+    },
+    "maxLegExtension": 0.968,
+    "com": {
+     "prep": 0.103,
+     "toRejoin": 0.712,
+     "minHeightDrop": 0.125
+    },
+    "timing": {
+     "prepToContact": 0.8,
+     "contactToAligned": 0.33,
+     "contactToRejoin": 0.738,
+     "supportPlantBeforeContact": 0.32,
+     "contactLand": 0.363
+    },
+    "touch": {
+     "extraAdj": 0.061,
+     "tCont": 0.738,
+     "contacts": 1,
+     "dirErrDeg": -1.506,
+     "touchSpeedErr": 0.099
+    }
+   }
+  }
+ }
+}

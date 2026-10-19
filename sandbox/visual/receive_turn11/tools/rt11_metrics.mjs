@@ -1,0 +1,34 @@
+// receive_turn11/tools/rt11_metrics.mjs — the HUMAN-MOTION METRICS of every review case (the 1.1 body; and RECEIVE-TURN-1's body for comparison):
+//   events (preparation, support plant, swing, contact, fastest hip rotation, weight transfer, exit plant, aligned, rejoin), rotation before /
+//   after the contact, hip–shoulder separation, plant-foot slip measured on the POSED skeleton (a flat plant's ankle, a pivot's forefoot / MTP;
+//   for RECEIVE-TURN-1's body the forefoot of every planted foot), the contact-pose error at the authoritative contact, the planted legs'
+//   extension, the centre-of-mass travel, timings.   node rt11_metrics.mjs <out.json>
+import fs from "fs"; import { createRequire } from "module"; import path from "path"; import { fileURLToPath } from "url";
+const HERE = path.dirname(fileURLToPath(import.meta.url)), require = createRequire(import.meta.url), { loadTurn1 } = require(path.resolve(HERE, "../../turn1/tools/t1_load.cjs")), X = loadTurn1();
+const S = await import("../../receive_turn1/rt_sim.js"), { continuity } = await import("./rt11_contin.mjs"), { HumanTurnBody } = await import("../rt11_body.js"), { TurnBody } = await import("../../receive_turn1/rt_body.js");
+export const CASES = [["d30", { theta: 30 }], ["d60", { theta: 60 }], ["h90", { theta: 90 }], ["h120", { theta: 120 }], ["h135", { theta: 135 }], ["x135", { theta: 135, family: "THROUGH_TURN" }], ["t150", { theta: 150 }], ["t180", { theta: 180 }],
+  ["o90", { theta: 90, family: "OUTSIDE_TURN", v: 4 }], ["m30", { theta: -30 }], ["m60", { theta: -60 }], ["m90", { theta: -90 }], ["m120", { theta: -120 }], ["m135", { theta: -135 }], ["m150", { theta: -150 }], ["m180", { theta: -180 }], ["mo90", { theta: -90, family: "OUTSIDE_TURN", v: 4 }], ["pl90", { theta: 90, pref: "L" }], ["pl135", { theta: 135, pref: "L" }], ["tf180", { theta: 180, pref: null }], ["tf180L", { theta: -180, pref: null }]];
+const r3 = (x) => (x == null ? null : Math.round(x * 1000) / 1000);
+// RECEIVE-TURN-1's body: a foot is planted while its ankle is on the turf (within 1 mm of the ankle height) AND its ankle does not move; the
+// forefoot's (MTP joint's) drift over such a stretch is the slip a viewer sees (the posed foot drags while its target is held: IK overreach in
+// the run-out, ~16 cm, 1.2–2.3 s after the contact); slipV1ForefootTurnPhase = the same up to +0.8 s (the turn itself)
+function oldSlip(P, e, t1 = 2.4) { const B = new TurnBody(X.RUN1_V13, X.M4, X.skel, P, e); let ref = { R: null, L: null }, prevA = { R: null, L: null }, mx = 0;
+  for (let t = -0.9; t <= t1; t += 1 / 120) { const po = B.poseAt(P.kc / 240 + t, null); for (const Xf of ["R", "L"]) { const f = po.feet[Xf], a = f.ank, still = prevA[Xf] && Math.hypot(a[0] - prevA[Xf][0], a[1] - prevA[Xf][1]) < 1e-4, planted = a[2] <= 0.0885 + 1e-3 && still, pt = po.J["toe_" + Xf].j; prevA[Xf] = a.slice();
+      if (!planted) { ref[Xf] = null; continue; } if (!ref[Xf]) { ref[Xf] = pt.slice(); continue; } mx = Math.max(mx, Math.hypot(pt[0] - ref[Xf][0], pt[1] - ref[Xf][1])); } } return mx; }
+const out = { what: "human-motion metrics at BC 99 (typical draw) per review case; slip in m from the posed skeleton", cases: {} };
+function measure(c, bc, draw) { const P = S.prepareTurn(Object.assign({ v: 12 }, c)); if (P.A.none) return { none: true };
+  const e = S.runTurn(P, bc, draw, { every: 1 }), B = new HumanTurnBody(X.RUN1_V13, X.M4, X.skel, P, e);
+  const ballAt = (t) => { const k = Math.round(t * 240); if (k <= 0) return P.inc.pred.P[Math.max(0, P.kc + k)].p; return e.rec[Math.min(e.rec.length - 1, k)].p; };
+  const d = B.diagnostics(ballAt), ev = {}; for (const [k, v] of Object.entries(d.events)) ev[k] = typeof v === "number" ? r3(v) : v;
+  return { cond: c, bc, draw, family: P.A.fid, foot: P.A.F, surface: P.A.surface, variant: P.A.vid, cls: e.m.cls, events: ev, rotation: Object.fromEntries(Object.entries(d.rotation).map(([k, v]) => [k, r3(v)])),
+    slip: { flatR: r3(d.slip.R), flatL: r3(d.slip.L), pivotR: r3(d.slip.pivotR), pivotL: r3(d.slip.pivotL), max: r3(Math.max(d.slip.R, d.slip.L, d.slip.pivotR, d.slip.pivotL)) }, slipV1ForefootMax: r3(oldSlip(P, e)), slipV1ForefootTurnPhase: r3(oldSlip(P, e, 0.8)),
+    continuity: (() => { const V1 = new TurnBody(X.RUN1_V13, X.M4, X.skel, P, e), q = (c) => ({ maxFootSpeed: r3(c.jump.speed), speedAt: c.jump.t == null ? null : [c.jump.foot, c.jump.joint, r3(c.jump.t)], snap: Math.round(c.snap.m * 1e5) / 1e5, snapAt: c.snap.t == null ? null : [c.snap.foot, c.snap.joint, r3(c.snap.t)], forefootSkate: r3(c.skate.forefoot), heelSkate: r3(c.skate.heel) }), tc = P.kc / 240;
+      const tT = Math.min(1.0, (B.ev.rejoin != null ? B.ev.rejoin : 0.8) + 0.1);
+      return { turnPhaseEnd: r3(tT), human: q(continuity(B, tc, B.T0 - 0.1, 2.4, ballAt)), humanTurn: q(continuity(B, tc, B.T0 - 0.1, tT, ballAt)), v1: q(continuity(V1, tc, B.T0 - 0.1, 2.4, ballAt)), v1Turn: q(continuity(V1, tc, B.T0 - 0.1, tT, ballAt)), standDev: r3(B.standDev) }; })(),
+    contactPoseError: r3(d.contactErr), contactReach: { comToBall: r3(d.contactReach.comToBall), legExtension: r3(d.contactReach.legExtension) }, rejoin: { foot: d.rejoinFoot || null, poseErr: r3(d.rejoinPoseErr), ankleToBall: r3(d.rejoinReach) }, maxLegExtension: r3(d.maxLegExtension), com: Object.fromEntries(Object.entries(d.com).map(([k, v]) => [k, r3(v)])), timing: Object.fromEntries(Object.entries(d.timing).map(([k, v]) => [k, r3(v)])), touch: { extraAdj: r3(e.m.extraAdj), tCont: r3(e.m.tCont), contacts: e.m.contacts, dirErrDeg: r3(e.m.dirErrDeg), touchSpeedErr: r3(e.m.touchSpeedErr) } }; }
+for (const [id, c] of CASES) { out.cases[id] = measure(c, 99, { example: "TYPICAL" }); if (out.cases[id].none) continue;
+  console.log(id, out.cases[id].family, out.cases[id].foot, "turn-phase", JSON.stringify(out.cases[id].continuity.humanTurn), "v1 turn-phase", JSON.stringify(out.cases[id].continuity.v1Turn), "slip", out.cases[id].slip.max, "v1", out.cases[id].slipV1ForefootMax, "v1 turn phase", out.cases[id].slipV1ForefootTurnPhase, "contactErr", out.cases[id].contactPoseError, "rejoin", JSON.stringify(out.cases[id].rejoin)); }
+// Ball Control adaptation: the matched p75 draws of RECEIVE-TURN-1 (turn_clip_seeds.json) at BC 50 / 70 / 80 / 90 / 99 — the body adapts to the ACTUAL touch
+out.bc = {}; for (const [id, c, seed] of [["h90", { theta: 90 }, 12], ["h135", { theta: 135 }, 11], ["t150", { theta: 150 }, 30], ["t180", { theta: 180 }, 19]]) { out.bc[id] = {};
+  for (const bc of [50, 70, 80, 90, 99]) { const m = measure(c, bc, { seed }); out.bc[id][bc] = m; console.log("bc", id, bc, m.cls, "rejoin", m.events.rejoin, "aligned", m.events.aligned, "extra", m.touch.extraAdj, "snap", m.continuity.humanTurn.snap, "skate", m.continuity.humanTurn.forefootSkate); } }
+fs.writeFileSync(process.argv[2] || "rt11_metrics.json", JSON.stringify(out, null, 1));

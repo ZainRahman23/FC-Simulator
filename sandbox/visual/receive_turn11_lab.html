@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Motion Lab</title>
+<style>
+  :root { --bg: #0f1412; --panel: #18201c; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --line: #2a3530; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 12px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #ctl { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 12px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  #ctl b.t { font-size: 14px; margin-right: 6px; }
+  .sl { display: inline-flex; align-items: center; gap: 4px; } .sl input { width: 110px; } .sl output { font: 11px Menlo, monospace; min-width: 34px; color: var(--acc); }
+  button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 3px 8px; font: inherit; cursor: pointer; } button.on { background: var(--acc); color: #1a1a10; font-weight: 600; }
+  #stage { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: 1fr; gap: 4px; height: min(66vh, 660px); padding: 4px 8px; }
+  #g3 { position: relative; } #gl, #ov { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 6px; }
+  #top { width: 100%; height: 100%; border-radius: 6px; background: #121916; }
+  #hud { padding: 6px 12px 30px; font: 11.5px/1.45 Menlo, monospace; } #hud h3 { font: 600 12px -apple-system, Helvetica, sans-serif; margin: 6px 0 2px; color: var(--acc); }
+  #hud .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 6px 18px; } .dim { color: var(--dim); }
+  table.lad { border-collapse: collapse; } table.lad td { padding: 1px 5px; text-align: right; } a { color: var(--acc); }
+  body.compare #ctl, body.compare #hud { display: none; } body.compare #stage { grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr; height: 100vh; padding: 0; gap: 2px; }
+  @media (max-width: 900px) { #stage { grid-template-columns: 1fr; grid-template-rows: 50vh 50vh; height: auto; } }
+</style>
+</head>
+<body>
+<div id="ctl"><b class="t">Human-motion lab</b></div>
+<div id="stage"><div id="g3"><canvas id="gl"></canvas><canvas id="ov"></canvas></div><canvas id="top"></canvas></div>
+<div id="hud">loading…</div>
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="run1/run1_gait_v13.js"></script>
+<script type="module" src="receive_turn11/rt11_lab.js"></script>
+</body>
+</html>

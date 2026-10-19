@@ -1,0 +1,33 @@
+{
+ "milestone": "RECEIVE-TURN-1.1",
+ "status": "presented for review",
+ "frozen": false,
+ "integrated": false,
+ "footballDecision": "RECEIVE-TURN-1, imported unchanged",
+ "neutrality": "750/750",
+ "bodyDeterministic": "750/750",
+ "chromeNode": {
+  "simulation": "54/54",
+  "bodyPoses": "54/54"
+ },
+ "mirror": "176/176",
+ "plantSlipMaxMm": 0,
+ "turnSnapMaxMm": 14.239999999999998,
+ "v1TurnSnapMm": [
+  86.04,
+  171.83
+ ],
+ "contactPoseErrorMaxMm": 0,
+ "protectedFiles": "386/386 identical",
+ "regression": {
+  "dribbleRuns": 60,
+  "dribbleBeforeEqualsAfter": 60,
+  "dribbleEvidenceMatch": 48,
+  "receive11BeforeEqualsAfter": 11,
+  "turnBeforeEqualsAfter": 18,
+  "frozenParamsUnchanged": true
+ },
+ "review": "review_artifacts/receive_turn11/review/RECEIVE_TURN11_REVIEW.html (local only)",
+ "lab": "sandbox/visual/receive_turn11_lab.html",
+ "next": "owner review; then QUEUE #1 (integrate RECEIVE-KILL + RECEIVE-TURN into RECEIVE-CONTROL)"
+}
