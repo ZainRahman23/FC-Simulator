@@ -1,0 +1,131 @@
+{
+ "rows": [
+  {
+   "id": "A_BC70",
+   "plan": 6.37,
+   "ep": 17.6,
+   "recvPerSimSec": 5,
+   "afterPerSimSec": null,
+   "worstStep": 6.4
+  },
+  {
+   "id": "B_BC70",
+   "plan": 6.26,
+   "ep": 14.3,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 138,
+   "worstStep": 12.9
+  },
+  {
+   "id": "C_BC70",
+   "plan": 6.47,
+   "ep": 13.3,
+   "recvPerSimSec": 19,
+   "afterPerSimSec": 148,
+   "worstStep": 13.6
+  },
+  {
+   "id": "D_BC70",
+   "plan": 6.37,
+   "ep": 14.7,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 133,
+   "worstStep": 13.3
+  },
+  {
+   "id": "E_BC70",
+   "plan": 6.4,
+   "ep": 14.2,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 181,
+   "worstStep": 14.3
+  },
+  {
+   "id": "F_BC70",
+   "plan": 6.16,
+   "ep": 14.5,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 163,
+   "worstStep": 15.5
+  },
+  {
+   "id": "G_BC70",
+   "plan": 6.68,
+   "ep": 15.3,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 191,
+   "worstStep": 13.5
+  },
+  {
+   "id": "H_BC70",
+   "plan": 6.39,
+   "ep": 15.1,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 181,
+   "worstStep": 18.1
+  },
+  {
+   "id": "I_BC70",
+   "plan": 5.24,
+   "ep": 22.3,
+   "recvPerSimSec": 6,
+   "afterPerSimSec": null,
+   "worstStep": 5.3
+  },
+  {
+   "id": "J_BC70",
+   "plan": 5.12,
+   "ep": 21.2,
+   "recvPerSimSec": 6,
+   "afterPerSimSec": null,
+   "worstStep": 5.1
+  },
+  {
+   "id": "K_BC70",
+   "plan": 4.87,
+   "ep": 21.2,
+   "recvPerSimSec": 6,
+   "afterPerSimSec": null,
+   "worstStep": 4.9
+  },
+  {
+   "id": "L",
+   "plan": 6.46,
+   "ep": 13.6,
+   "recvPerSimSec": 18,
+   "afterPerSimSec": 172,
+   "worstStep": 13
+  },
+  {
+   "id": "M_BC70",
+   "plan": 6.15,
+   "ep": 13.9,
+   "recvPerSimSec": 17,
+   "afterPerSimSec": 128,
+   "worstStep": 13.6
+  },
+  {
+   "id": "I2_BC70",
+   "plan": 5.04,
+   "ep": 21.9,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 176,
+   "worstStep": 15.2
+  },
+  {
+   "id": "A2_BC70",
+   "plan": 6.26,
+   "ep": 15.4,
+   "recvPerSimSec": 16,
+   "afterPerSimSec": 189,
+   "worstStep": 15.3
+  }
+ ],
+ "planMedian": 6.26,
+ "planMax": 6.68,
+ "epMedian": 15.1,
+ "msPerSimSec": 17,
+ "afterPerSimSec": 172,
+ "worstStep": 18.1,
+ "note": "the second of two passes (the first warms the lazily built tables); msPerSimSec = the receive phase (until DRIBBLE-V1 takes the ball, the TURN-1.2 run-out included); afterPerSimSec = DRIBBLE-V1 after it"
+}

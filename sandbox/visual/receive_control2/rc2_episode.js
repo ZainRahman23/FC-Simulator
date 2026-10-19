@@ -36,6 +36,8 @@ export const rollK = (vk) => [vk[2] / R, 0, -vk[0] / R];
 // the free ball (no colliders) from a kernel world's CURRENT state in the receive frame: i = ticks from now (RECEIVE-KILL's predictFrom)
 export function predictK(W, horizon, F) { const C = cloneWorld(W), n = Math.round(horizon / DT), P = [{ p: F.loc(C.ball.p), v: F.locV(C.ball.v), pk: C.ball.p.slice() }];
   for (let i = 1; i <= n; i++) { C.step(); P.push({ p: F.loc(C.ball.p), v: F.locV(C.ball.v), pk: C.ball.p.slice() }); } return P; }
+// the free ball's KERNEL states from now (one prediction, to be mapped into any frame): i = ticks from now
+export function predictKer(W, horizon) { const C = cloneWorld(W), n = Math.round(horizon / DT), P = [{ p: C.ball.p.slice(), v: C.ball.v.slice() }]; for (let i = 1; i <= n; i++) { C.step(); P.push({ p: C.ball.p.slice(), v: C.ball.v.slice() }); } return P; }
 // (verbatim from rk_sim.js: private there) the first index ≥ i0 from which the ball stays stable for `hold` s (the receiver standing at S), or −1
 function stableAlone(P, S, i0, window) { const H = Math.round(RK.stable.hold / DT), n = min(P.length - 1, i0 + Math.round(window / DT)); let run = 0; for (let i = i0; i <= n; i++) { if (stableNow(P[i], S)) { run++; if (run > H) return i - H; } else run = 0; } return -1; }
 // (verbatim from rt_sim.js: private there) the extra control touch's draws: the kill model's dimensions on this receive event's contact n

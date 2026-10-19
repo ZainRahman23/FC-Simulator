@@ -26,7 +26,7 @@ import * as RT from "../receive_turn1/rt_sim.js";
 import * as RKS from "../receive_turn1/rk_sim.js";
 import { RK, surf, incoming, difficulty, surfaceIdeal, idealVel } from "../receive_turn1/rk_model.js";
 import { MOVE, TDIFF, DEG, clamp, s5, wrapA, dir, toL2, runDist, runSpeed } from "../receive_turn1/rt_actions.js";
-import { Frame, TurnEpisode, KillEpisode, predictK, rollK } from "./rc2_episode.js";
+import { Frame, TurnEpisode, KillEpisode, predictK, predictKer, rollK } from "./rc2_episode.js";
 import { HumanTurnBody } from "../receive_turn11/rt11_body.js";
 import { FramedTurnBody, FramedKillBody } from "./rc2_bodies.js";
 import { dsin, dcos } from "../physchar2/core/v2_math.js";
@@ -78,11 +78,13 @@ export class ReceiveSim2 extends ReceiveSim11 {
   resolve2(k) {
     const c2 = this.rc2, rx = this.rx, P0 = this.A.P.slice();
     // the strike-time prediction in a receive frame, truncated as RECEIVE-KILL's predict(): 1.6 s after the arrival at the reach plane
-    const predIn = (F) => { const full = predictK(this.W, RC2.horizon, F); let K = full.findIndex((q) => q.p[0] <= RKS.SIM.xRef); if (K < 0) K = full.length - 1; const Kend = min(full.length - 1, K + Math.round(1.6 / DT)), P = [];
+    // (ONE kernel prediction from the strike, mapped into each frame — the same states, the same arithmetic as a per-frame prediction)
+    const ker = predictKer(this.W, RC2.horizon), inF = (F) => ker.map((q) => ({ p: F.loc(q.p), v: F.locV(q.v), pk: q.p }));
+    const predIn = (F) => { const full = inF(F); let K = full.findIndex((q) => q.p[0] <= RKS.SIM.xRef); if (K < 0) K = full.length - 1; const Kend = min(full.length - 1, K + Math.round(1.6 / DT)), P = [];
       for (let i = 0; i <= Kend; i++) { P.push(full[i]); if (i > K && full[i].p[0] < -2.5) break; } return P; };
     // two frames: the receiver's own facing (RECEIVE-KILL receives from any bearing — the bearing is a difficulty term) and squared up to the pass
     // (RECEIVE-TURN-1's actions are authored for a ball from the front: the receiver faces where it comes from at its closest approach)
-    const Fown = new Frame(P0, this.A.psi), Pown = predIn(Fown), raw = predictK(this.W, RC2.horizon, new Frame(P0, 0)); let iC = 0, dC = Infinity; for (let i = 0; i < raw.length; i++) { const d = hyp(raw[i].p[0], raw[i].p[1]); if (d < dC) { dC = d; iC = i; } }
+    const Fown = new Frame(P0, this.A.psi), Pown = predIn(Fown), raw = inF(new Frame(P0, 0)); let iC = 0, dC = Infinity; for (let i = 0; i < raw.length; i++) { const d = hyp(raw[i].p[0], raw[i].p[1]); if (d < dC) { dC = d; iC = i; } }
     const vA = raw[iC].v, hFace = abs(vA[1]) < 1e-12 && vA[0] < 0 ? 0 : Math.atan2(-vA[1], -vA[0]), Fsq = abs(wrapA(hFace - this.A.psi)) < 1e-9 ? Fown : new Frame(P0, hFace), Psq = Fsq === Fown ? Pown : predIn(Fsq);
     const inReach = (P) => P.filter((q) => q.p[0] >= RC2.reachF[0] && q.p[0] <= RC2.reachF[1] && abs(q.p[1]) <= 1.2), groundIn = (P) => { const q = inReach(P); return q.length > 0 && q.every((x) => x.p[2] <= RC2.groundZ); };
     const ground = groundIn(Psq), go = rx.intent !== "kill", pref = this.prefFoot(), ev = this.newEvent();
@@ -289,6 +291,8 @@ export class ReceiveSim2 extends ReceiveSim11 {
     const c2 = this.rc2;
     if (c2 && c2.phase !== "moving" && c2.phase !== "dribble" && this.rx.hold && c2.ep && k > c2.kc) { const b = this.ballA(), d = Math.hypot(b.p[0] - this.A.P[0], b.p[2] + this.A.P[1]), st = d < 1.0 && Math.hypot(b.v[0], b.v[2]) < 1.5 ? "CONTROLLED" : "LOOSE";
       if (st !== this.ctrl.state) { this.ctrl.changes.push({ k, t: k * DT, from: this.ctrl.state, to: st, dist: d }); this.ctrl.state = st; this.ctrl.since = k; } this.ctrl.dist = d; return; }
+    // (a go receive: RECEIVE-CONTROL-1.1's classification — RECEIVING until the receive contact, then DRIBBLE-V1's own, which DRIBBLE-V1 reads:
+    // its control state and how long it has held it shape the takeover; a label forced until the handoff changed 6 of 108 soft-pass takeovers)
     return super.classify(k);
   }
   // ── a moving receiver's contact: RECEIVE-CONTROL-1.1's action, executed with the SAME Ball Control model as every receive touch ──────────────────

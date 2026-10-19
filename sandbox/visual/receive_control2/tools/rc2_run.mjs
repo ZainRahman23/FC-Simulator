@@ -3,6 +3,7 @@
 import fs from "fs"; import { makeReceive2, DT } from "./rc2_env.mjs"; import { parseCase, seedCase, matrix } from "../../receive11/rx_cases.js"; import { score } from "../../receive11/tools/rx_metrics.mjs";
 const [sel, seedsS, outFile, shard] = process.argv.slice(2), seeds = (seedsS || "1").split(",").map(Number);
 let cases = sel.startsWith("@") ? sel.slice(1).split("+").flatMap((b) => matrix(b)) : sel.split(",").map((id) => parseCase(id));
+{ const seen = new Set(); cases = cases.filter((c) => (seen.has(c.id) ? false : (seen.add(c.id), true))); }   // (the blocks share situations: each once)
 const jobs = []; for (const cs of cases) for (const sd of seeds) jobs.push([cs, sd]);
 const [si, sn] = shard ? shard.split("/").map(Number) : [0, 1], mine = jobs.filter((_, i) => i % sn === si), rows = [], nowMs = () => performance.now();
 for (const [cs0, sd] of mine) {

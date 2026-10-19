@@ -1,0 +1,46 @@
+{
+ "milestone": "RECEIVE-CONTROL-2",
+ "queue": "QUEUE #1",
+ "status": "presented for review",
+ "frozen": false,
+ "equivalence": {
+  "controllerTurn": "864/864",
+  "controllerKill": "585/585",
+  "pipelineTurn": "180/180",
+  "pipelineKill": "260/260"
+ },
+ "matrix714": {
+  "stationary": {
+   "CLEAN": 108
+  },
+  "moving": {
+   "CLEAN": 500,
+   "TAKEN": 59,
+   "RECEIVED": 8,
+   "MISSED": 39
+  },
+  "rc11Stationary": {
+   "CLEAN": 92,
+   "TAKEN": 16
+  },
+  "rc11Moving": {
+   "CLEAN": 491,
+   "TAKEN": 67,
+   "RECEIVED": 9,
+   "MISSED": 39
+  }
+ },
+ "killBlocks": {
+  "KILLED": 108
+ },
+ "cases": {
+  "goClean": "136/138",
+  "kills": "59/60"
+ },
+ "neutrality": "122/122",
+ "chromeNode": "25/25",
+ "matchedDraws": "56/56",
+ "mirrorToHandoff": "28/28",
+ "protectedFiles": "578/578 identical",
+ "next": "owner review; QUEUE #2 \u2014 receiving while moving"
+}
