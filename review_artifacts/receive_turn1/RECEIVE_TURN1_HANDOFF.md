@@ -50,7 +50,7 @@ DRIBBLE-V1, TURN-1.2, RUN-1, BALL-FEEL / BALL-PHYS, tackle, RECEIVE-CONTROL-1.1,
 
 ## Review
 
-The per-tile clip captures (`clips_*/tiles/`, ~110 MB) are git-ignored inputs of the committed mosaics; `tools/rt_clips.sh` with the lists in the report regenerates them.
+The per-tile clip captures (`clips_*/tiles/`, ~110 MB) are git-ignored inputs of the committed mosaics; `S=<scratch> zsh tools/rt_clips.sh tools/clip_lists/<list>.txt <clips dir>` then `python3 tools/rt_compose.py <clips dir> <ffmpeg> tools/clip_lists/<groups>.json` regenerates them; `python3 tools/rt_report_build.py <review dir>` rebuilds the report.
 
 LOCAL ONLY (the character is a real player's model):
 
