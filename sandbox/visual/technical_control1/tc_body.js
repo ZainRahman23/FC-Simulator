@@ -125,9 +125,11 @@ export class TechBody {
   // ball's new path (on the side it played from)
   landAfterTouch(X, c, s) {
     const n = this.impulseDir(c), P = this.contactPose(X, c.surface, c.ball, n), ep = this.ep, psi = ep.psiAt(s.t1), V = ep.velAt(s.t1), v = hyp(V[0], V[1]), mv = v > 1.0 ? [V[0] / v, V[1] / v] : dir(psi);
-    const vf = this.footSpeed(c), dl = s.t1 - c.t, d = clamp(vf * dl * 0.75, 0.05, 0.32), mix = [n[0] * 0.5 + mv[0] * 0.5, n[1] * 0.5 + mv[1] * 0.5], ml = hyp(mix[0], mix[1]) || 1;
-    let pos = [P.ank[0] + mix[0] / ml * d, P.ank[1] + mix[1] / ml * d]; const R1 = ep.rootAt(s.t1), fR = (pos[0] - R1[0]) * mv[0] + (pos[1] - R1[1]) * mv[1];
+    // (the foot's own follow-through along the push, plus the body's travel it moves with — at a sprint 75 ms is 0.6 m)
+    const vf = this.footSpeed(c), dl = s.t1 - c.t, d = clamp(vf * dl * 0.75, 0.05, 0.32), mix = [n[0] * 0.5 + mv[0] * 0.5, n[1] * 0.5 + mv[1] * 0.5], ml = hyp(mix[0], mix[1]) || 1, Vc = ep.velAt(c.t);
+    let pos = [P.ank[0] + mix[0] / ml * d + Vc[0] * dl, P.ank[1] + mix[1] / ml * d + Vc[1] * dl]; const R1 = ep.rootAt(s.t1), fR = (pos[0] - R1[0]) * mv[0] + (pos[1] - R1[1]) * mv[1], lo = min(TB.leadMax, TB.lead[0] + TB.lead[1] * v) - 0.12;
     if (fR > TB.leadMax) pos = [pos[0] - mv[0] * (fR - TB.leadMax), pos[1] - mv[1] * (fR - TB.leadMax)]; // within the leg's reach ahead of the body (RUN-1 lands ≈ 0.23 – 0.25 m ahead)
+    else if (v > 1.5 && fR < lo) pos = [pos[0] + mv[0] * (lo - fR), pos[1] + mv[1] * (lo - fR)];          // … and never behind the running body's stride
     const ball = c.ball, ul = hyp(c.vOut[0], c.vOut[1]), un = ul > 0.2 ? [c.vOut[0] / ul, c.vOut[1] / ul] : mv;
     const latOf = (q) => -(q[0] - ball[0]) * un[1] + (q[1] - ball[1]) * un[0], sideP = Math.sign(latOf(P.ank)) || sgnF(X), lat = latOf(pos); if (lat * sideP < 0.09) { const k = sideP * 0.09 - lat; pos = [pos[0] - un[1] * k, pos[1] + un[0] * k]; }
     return { pos, yaw: (v > 1.0 ? hdg(mv) : psi) + sgnF(X) * 6 * DEG };
@@ -154,7 +156,8 @@ export class TechBody {
       for (let i = 1; i < all.length - 1; i++) { const a = all[i - 1], b = all[i + 1], dt = b.t - a.t, w = (all[i].t - sw.t0) / T; keys.push({ t: all[i].t, p: all[i].p, v: [(b.p[0] - a.p[0]) / dt, (b.p[1] - a.p[1]) / dt, (b.p[2] - a.p[2]) / dt], yaw: from.yaw + wrapA(to.yaw - from.yaw) * s5(w), pitch: (w < 0.3 ? -25 * (1 - w / 0.3) : 8 * Math.sin(Math.PI * w)) * DEG }); } }
     else { const m = [0.5 * (a0[0] + to.pos[0]), 0.5 * (a0[1] + to.pos[1])], d = [(to.pos[0] - a0[0]) / T, (to.pos[1] - a0[1]) / T]; keys.push({ t: sw.t0 + 0.5 * T, p: [m[0], m[1], HB.ankleH + lift], v: [d[0] * 1.5, d[1] * 1.5, 0], yaw: from.yaw + wrapA(to.yaw - from.yaw) * 0.5, pitch: 6 * DEG }); }
     keys.push({ t: sw.t1, p: [to.pos[0], to.pos[1], HB.ankleH], v: [(to.pos[0] - keys[keys.length - 1].p[0]) * 0.8, (to.pos[1] - keys[keys.length - 1].p[1]) * 0.8, -0.45], yaw: to.yaw, pitch: 0 });
-    keys.sort((x, y) => x.t - y.t); for (let i = keys.length - 1; i > 0; i--) if (keys[i].t - keys[i - 1].t < 0.012) keys.splice(keys[i].contact ? i - 1 : i, 1);
+    keys.sort((x, y) => x.t - y.t); for (let i = keys.length - 1; i > 0 && keys.length > 2; i--) if (keys[i].t - keys[i - 1].t < 0.012) keys.splice(keys[i].contact || i === keys.length - 1 ? i - 1 : i, 1);
+    if (keys.length < 2) keys.push({ t: max(sw.t1, keys[0].t + 0.012), p: [to.pos[0], to.pos[1], HB.ankleH], v: [0, 0, -0.45], yaw: to.yaw, pitch: 0 });
     return keys;
   }
   // the swing path from the toe-off to a later key kE (the preparation of a touch): RUN-1's swing at a running speed (its ends corrected onto the toe-off

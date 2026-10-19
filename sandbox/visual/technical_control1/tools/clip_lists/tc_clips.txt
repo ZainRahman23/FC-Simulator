@@ -1,0 +1,54 @@
+# TECHNICAL-CONTROL-1 review clips: <id>|<from: s from the first contact>|<to>|<rate>|<lab query>   (1280×720, 30 fps; rate 1 = normal speed, 0.5 = half, 0.25 = slow motion)
+# ── the 99 / 99 / 99 reference, normal speed (gameplay + close + top) ──
+n99_straight|0.1|3.8|1|case=STRAIGHT
+n99_cut30|0.6|3.2|1|case=CUT30
+n99_cut90|0.6|3.4|1|case=CUT90
+n99_cut120|0.6|3.6|1|case=CUT120
+n99_cut180|0.6|3.8|1|case=CUT180
+n99_lr|0.3|4.4|1|case=LR
+n99_accel|0.1|4.3|1|case=ACCEL
+n99_contest45|0.4|3.4|1|case=CONTEST45
+n99_stop|0.6|3.2|1|case=STOP
+# ── half speed + slow motion of the actions at 99 ──
+half99_lr|0.3|4.4|0.5|case=LR
+half99_cut180|0.8|3.0|0.5|case=CUT180
+slow99_incut|1.0|2.3|0.25|case=CUT90
+slow99_cruyff|1.0|2.5|0.25|case=CUT180
+slow99_feint|0.7|2.0|0.25|case=CONTEST45
+slow99_dragacross|1.7|3.1|0.25|case=LR&style=CLOSE_CONTROL
+slow99_double|1.9|3.0|0.25|case=LR&style=TWO_FOOT
+slow99_outtouch|1.0|2.3|0.25|case=CUT30
+slow99_stop|1.0|2.4|0.25|case=STOP
+slow99_sprintcarry|1.6|3.2|0.25|case=ACCEL
+# ── the ratings side by side (yellow = the page's ratings, pink = vs) ──
+v99v80_cut90|0.6|3.6|1|case=CUT90&vs=B80_D80_A80
+v99v50_cut90|0.6|3.8|1|case=CUT90&vs=B50_D50_A50
+v99v80_cut180|0.6|4.0|1|case=CUT180&vs=B80_D80_A80
+v99v50_cut180|0.6|4.2|1|case=CUT180&vs=B50_D50_A50
+v99v50_lr|0.3|4.4|1|case=LR&vs=B50_D50_A50
+slow50_cut90|1.0|2.8|0.25|case=CUT90&b=50&d=50&a=50
+# ── each attribute alone (the others 99) ──
+vA50_cut180|0.6|4.2|1|case=CUT180&vs=B99_D99_A50
+vD50_cut180|0.6|4.2|1|case=CUT180&vs=B99_D50_A99
+vB50_lr|0.3|4.4|1|case=LR&vs=B50_D99_A99
+vB1_cut90|0.6|3.8|1|case=CUT90&vs=B1_D99_A99
+# ── mixed archetypes ──
+vmix_9595_55_cut120|0.6|3.8|1|case=CUT120&b=95&d=95&a=55&vs=B95_D55_A95
+vmix_55_9595_lr|0.3|4.4|1|case=LR&b=55&d=95&a=95&vs=B95_D95_A55
+# ── styles at 90 / 90 / 90 on the same course (yellow = style, pink = vsStyle) ──
+sty_lr_dominant_two|0.3|4.4|1|case=LR&b=90&d=90&a=90&style=DOMINANT_FOOT&vsStyle=TWO_FOOT
+sty_lr_close_direct|0.3|4.4|1|case=LR&b=90&d=90&a=90&style=CLOSE_CONTROL&vsStyle=DIRECT_RUNNER
+sty_contest_feint_neutral|0.4|3.4|1|case=CONTEST45&b=90&d=90&a=90&style=FEINT_HEAVY&vsStyle=NEUTRAL
+sty_cut90_close_direct|0.6|3.6|1|case=CUT90&b=90&d=90&a=90&style=CLOSE_CONTROL&vsStyle=DIRECT_RUNNER
+sty_straight_close_direct|0.1|3.8|1|case=STRAIGHT&b=90&d=90&a=90&style=CLOSE_CONTROL&vsStyle=DIRECT_RUNNER
+# ── preferred foot: a left-footed dominant-foot carrier vs a right-footed one ──
+foot_lr_L_vs_R|0.3|4.4|1|case=LR&b=90&d=90&a=90&style=DOMINANT_FOOT&foot=L&vsFoot=R
+# ── receive → turn → dribble (RECEIVE-ELITE-1 | NEW): the exit touch gone, the carry continuous ──
+rx_st180_re1_new|-0.7|2.4|1|case=ST_180_V12&compare=re1&A=nearC
+rx_run90_re1_new|-0.9|2.4|1|case=L_90_RUN_NORMAL&compare=re1&A=near
+rx_sprint180_re1_new|-0.9|2.6|1|case=F_180R_SPRINT_NORMAL&compare=re1&A=near
+rx_run150_A50_re1_new|-0.9|3.0|1|case=L_150_RUN_NORMAL&a=50&compare=re1&A=near
+slow_rx_st180|-0.4|1.4|0.25|case=ST_180_V12
+# ── the bridge to DRIBBLE-V1 at a sprint (optional mode) ──
+bridge_sprint180|-0.9|3.6|1|case=F_180R_SPRINT_NORMAL&bridge=sprint
+bridge_accel|0.1|4.4|1|case=ACCEL&bridge=sprint

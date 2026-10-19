@@ -11,4 +11,8 @@ if (set === "indep" || set === "all") for (const X of ["B", "D", "A"]) for (cons
 if (set === "presets" || set === "all") for (const [k, [b, d, a]] of Object.entries(PRESETS)) for (const c of CASES) add("preset:" + k, rid(c, b, d, a));
 if (set === "styles" || set === "all") for (const st of Object.keys(STYLES)) for (const c of CASES) add("style:" + st, rid(c, 90, 90, 90, st));
 if (set === "foot" || set === "all") for (const foot of ["R", "L", "B"]) for (const st of ["NEUTRAL", "DOMINANT_FOOT", "TWO_FOOT"]) for (const c of CASES) add(`foot:${foot}:${st}`, rid(c, 90, 90, 90, st), { foot });
+// the full chain (owner §45 "receive → turn → dribble") with the BRIDGE to DRIBBLE-V1 at a sprint: the receive chain + the sprint receives +
+// the acceleration into space, bridge on (and off for comparison), the six uniform presets
+export const CHAIN = RECEIVE_CHAIN.concat(["RL_0_SPRINT_NORMAL", "L_30_SPRINT_NORMAL", "L_60_SPRINT_NORMAL", "L_90_SPRINT_NORMAL", "L_120_SPRINT_NORMAL", "ACCEL"]);
+if (set === "chain" || set === "all") for (const k of ["99/99/99", "90/90/90", "80/80/80", "70/70/70", "60/60/60", "50/50/50"]) { const [b, d, a] = PRESETS[k]; for (const c of CHAIN) for (const bridge of ["sprint", "off"]) add(`chain:${bridge}:${k}`, rid(c, b, d, a), { bridge }); }
 process.stdout.write(JSON.stringify(jobs));

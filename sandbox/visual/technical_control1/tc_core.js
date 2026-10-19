@@ -72,7 +72,9 @@ export class TechEpisode extends EliteEpisode {
   // ── THE GAIT after time t: steps in progress keep their timing; new steps alternate feet at the running cadence (or Agility's support-step period
   // while the body turns or brakes), the next foot lifting as the other lands (a flight at running speed) ───────────────────────────────────────
   rebuildSwings(t) {
-    const forced = (this.forced || []).filter((f) => f.tc > t + 0.02).slice().sort((x, y) => x.tc - y.tc), keep = this.swings.filter((q) => q.t0 < t - 1e-9), out = keep.slice(); let lastL = null, lastR = null, fi = 0;
+    const keep = this.swings.filter((q) => q.t0 < t - 1e-9), out = keep.slice(); let lastL = null, lastR = null, fi = 0;
+    // (a forced contact already inside a swing in progress of its foot is that swing's — never forced onto the foot's next one)
+    const forced = (this.forced || []).filter((f) => f.tc > t + 0.02 && !keep.some((q) => q.F === f.F && f.tc >= q.t0 - 1e-9 && f.tc <= q.t1 + 0.01)).slice().sort((x, y) => x.tc - y.tc);
     for (const q of keep) { if (q.F === "L") lastL = q; else lastR = q; }
     let side = (lastL && lastR) ? (lastL.t1 > lastR.t1 ? "R" : "L") : other((lastL || lastR || { F: this.tech.F0 }).F), tPrev = max(t, (lastL || lastR) ? max(lastL ? lastL.t1 : -9, lastR ? lastR.t1 : -9) : t), n = 0;
     while (tPrev < t + TC.horizon && n < 30) {
@@ -117,7 +119,8 @@ export class TechEpisode extends EliteEpisode {
     const t = c.t, psi = this.psiAt(t), V = this.velAt(t), v = hyp(V[0], V[1]), th = this.path.th; return abs(wrapA(psi - th)) <= RE.exitTol * DEG && v >= 1.2 && abs(wrapA(hdg(V) - th)) <= RE.velTol * DEG; }
   plan(c, B, vB, commit) {
     if (c.i === 0 && this.tech.dir0 != null && !this.tech.firstExit) return super.plan(c, B, vB, commit);      // the receive's first touch: RECEIVE-ELITE-1's
-    if (!this.inCarry(c) || this.isExit(c)) return super.plan(c, B, vB, commit);                                // the receive turn (and the bridge's exit)
+    if (this.inCarry(c) && this.isExit(c)) { this.vX = this.wantNow(c.t).v; return super.plan(c, B, vB, commit); }  // the bridge's exit: RECEIVE-ELITE-1's hand-over touch at the intent's pace
+    if (!this.inCarry(c)) return super.plan(c, B, vB, commit);                                                    // the receive turn
     // THE TECHNICAL CONTROL: from the first contact played out on the exit — the intent decides (a bend, or a technical action), then the next
     // contact: the action's next contact, else the carry's
     if (commit) this.decide(c);
@@ -166,7 +169,8 @@ export class TechEpisode extends EliteEpisode {
     if (this.act) { this.act = null; this.forced = []; }
     const V = this.velAt(t), v = hyp(V[0], V[1]), h = v > 0.8 ? hdg(V) : this.psiAt(t), dS = wrapA(I.theta - h), d = abs(dS), pl = this.planAt(t), cur = pl && pl.prog;
     const heading = cur && cur.theta != null && abs(wrapA(cur.theta - I.theta)) < TC.replanDeg * DEG;      // the plan already takes the body there
-    if (!heading && (d >= TC.turnMin * DEG || (I.v < 0.4 && v > 1.2))) { const a = this.selectAction(c, dS, I, v, t); if (a) { this.applyAction(c, a, I, t); return a; } }
+    const stopNow = I.v < 0.4 && v > 1.2 && !(cur && cur.v != null && cur.v < 0.4);                        // a stop: the heading need not change
+    if ((!heading && d >= TC.turnMin * DEG) || stopNow) { const a = this.selectAction(c, dS, I, v, t); if (a) { this.applyAction(c, a, I, t); return a; } }
     const moved = !cur || cur.kind !== "RUN" || abs(wrapA((cur.theta != null ? cur.theta : h) - I.theta)) > TC.replanDeg * DEG || abs((cur.v != null ? cur.v : v) - I.v) > TC.replanV, short = pl && pl.tFrom + TC.horizon - t < 1.6;
     if (moved || !pl || short) { this.splice(t, { kind: "RUN", theta: I.theta, v: I.v }); if (moved) this.techLog.push({ t: r3(t), ev: "run", theta: r2(I.theta / DEG), v: I.v, d: r2(d / DEG) }); }
   }

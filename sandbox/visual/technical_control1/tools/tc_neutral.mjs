@@ -3,9 +3,9 @@
 //   contact-pose error (the posed ankle vs the contact pose at each contact tick) · IK reach error (the posed ankle vs the foot's target, every tick) · planted-foot slip · SNAPPING — the peak acceleration of each
 //   ankle (posed, 240 Hz, smoothed over 3 ticks) during swings, and its 95th percentile · pelvis jerk · the share of frames a leg is fully extended
 //   node tc_neutral.mjs <out.json | -> <ids> [body new|old] [seeds]
-import fs from "fs"; import { makeTech } from "./tc_env.mjs"; import { TechBody } from "../tc_body.js"; import { EliteBody } from "../../receive_elite1/re1_body.js"; import { courseCase, COURSE } from "../tc_course.js"; import { parseCase } from "../../receive_elite1/re1_cases.js";
+import fs from "fs"; import { makeTech } from "./tc_env.mjs"; import { TechBody } from "../tc_body.js"; import { EliteBody } from "../../receive_elite1/re1_body.js"; import { courseCase, anyCase, COURSE } from "../tc_course.js"; import { parseCase } from "../../receive_elite1/re1_cases.js";
 const out = process.argv[2] || "-", ids = process.argv[3] ? process.argv[3].split(",") : COURSE, Body = (process.argv[4] || "new") === "old" ? EliteBody : TechBody, seeds = (process.argv[5] || "1").split(",").map(Number);
-const caseOf = (id, sd) => (/^ST_|_RUN_|_SPRINT_|_JOG_/.test(id) ? Object.assign(parseCase(id), { style: "NEUTRAL" }) : courseCase(id, sd));
+const caseOf = (id, sd) => anyCase(id, sd);
 const fp = (S) => { let h = 2166136261 >>> 0; const mix = (x) => { const s = (+x).toFixed(9); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } }; for (const r of S.rec) { for (const x of r.ball.p) mix(x); mix(r.P[0]); mix(r.P[1]); mix(r.psi); } for (const T of S.touches) { mix(T.k); for (const x of T.executed.v) mix(x); } return h.toString(16); };
 const res = { body: Body.name, runs: 0, identical: 0, rows: [] };
 for (const id of ids) for (const sd of seeds) { const cs = caseOf(id, sd), a = makeTech(cs, { seed: sd, style: cs.style, ratings: cs.ratings }); a.run(cs.scenario.dur);

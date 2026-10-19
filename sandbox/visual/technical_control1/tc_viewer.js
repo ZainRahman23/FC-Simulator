@@ -16,7 +16,7 @@ import { EliteBody } from "../receive_elite1/re1_body.js";
 import { TechSim } from "./tc_core.js";
 import { TechBody } from "./tc_body.js";
 import { STYLES } from "./tc_attrs.js";
-import { courseCase, COURSE } from "./tc_course.js";
+import { courseCase, COURSE, EXTRA } from "./tc_course.js";
 import { RxBody } from "../receive11/rx_body.js";
 import { PROFILES } from "../dribble1/d1_attrs.js";
 import { ALL, SET, parseCase as parseRecv } from "../receive_elite1/re1_cases.js";
@@ -88,18 +88,18 @@ async function simulate(ent) {
   const q = new URLSearchParams(location.search), seed = +(q.get("seed") || 1), id = q.get("case") || "CUT90", r = { bc: +(q.get("b") || 99), dri: +(q.get("d") || 99), agi: +(q.get("a") || 99) }, style = q.get("style") || "NEUTRAL", foot = q.get("foot") || null, bodyKind = q.get("body") || "new";
   Vv.style = style; Vv.foot = foot; const cs = parseCase(`${id}_B${r.bc}_D${r.dri}_A${r.agi}`, seed), colliders = await (await fetch("dribble1/d1_colliders.json")).json(), anim = q.get("anim") !== "0"; Vv.cs = cs; Vv.ratings = r; Vv.seed = seed; Vv.anim = anim;
   // vs=B50_D99_A99: NEW at the page's ratings beside NEW at these (the attribute comparisons); compare=1: CURRENT beside NEW
-  const vs = q.get("vs") ? (() => { const m = /B(\d+)_D(\d+)_A(\d+)/.exec(q.get("vs")); return { bc: +m[1], dri: +m[2], agi: +m[3] }; })() : null, vsStyle = q.get("vsStyle") || null; Vv.vs = vs; Vv.vsStyle = vsStyle;
-  const pipes = vs || vsStyle ? ["NEW", "NEW@vs"] : q.get("compare") === "1" ? [isRecv(id) ? "CURRENT" : "RE1", "NEW"] : q.get("compare") === "re1" ? ["RE1", "NEW"] : [q.get("pipe") || "NEW"];
+  const vs = q.get("vs") ? (() => { const m = /B(\d+)_D(\d+)_A(\d+)/.exec(q.get("vs")); return { bc: +m[1], dri: +m[2], agi: +m[3] }; })() : null, vsStyle = q.get("vsStyle") || null, vsFoot = q.get("vsFoot") || null; Vv.vs = vs; Vv.vsStyle = vsStyle; Vv.vsFoot = vsFoot;
+  const pipes = vs || vsStyle || vsFoot ? ["NEW", "NEW@vs"] : q.get("compare") === "1" ? [isRecv(id) ? "CURRENT" : "RE1", "NEW"] : q.get("compare") === "re1" ? ["RE1", "NEW"] : [q.get("pipe") || "NEW"];
   const curveOnly = q.get("graph") !== "0" && pipes.length === 1 && isRecv(id) ? (pipes[0] === "NEW" ? "RE1" : "NEW") : null;   // the other pipeline's separation curve for the graph
-  for (const pipe0 of pipes.concat(curveOnly ? [curveOnly] : [])) { const shown = pipe0 !== curveOnly || pipes.includes(pipe0), t0 = performance.now(), pipe = pipe0 === "NEW@vs" ? "NEW" : pipe0, rr = pipe0 === "NEW@vs" ? vs : r;
+  for (const pipe0 of pipes.concat(curveOnly ? [curveOnly] : [])) { const shown = pipe0 !== curveOnly || pipes.includes(pipe0), t0 = performance.now(), pipe = pipe0 === "NEW@vs" ? "NEW" : pipe0, rr = pipe0 === "NEW@vs" && vs ? vs : r;
     const st = pipe0 === "NEW@vs" && vsStyle ? vsStyle : style;
-    const cfg = { T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch: "B", seed, player: playerWith(rr, null, foot), bc: rr.bc, wf: null, scenario: Object.assign({}, cs.scenario), ratings: rr,
+    const cfg = { T1: W.TURN1, E: W.RUN1_V13, M4: M4, TURN11: W.TURN11, skel: ent.skel, colliders, ball: BALL_DEFAULT, arch: "B", seed, player: playerWith(rr, null, pipe0 === "NEW@vs" && vsFoot ? vsFoot : foot), bc: rr.bc, wf: null, scenario: Object.assign({}, cs.scenario), ratings: rr,
       Body: anim && shown ? RxBody : null, EliteBody: anim && shown ? (pipe === "NEW" && bodyKind !== "old" ? TechBody : EliteBody) : null, opts: { record: true, recViewer: shown, anim: anim && shown },
       style: st, bridge: q.get("bridge") || "off", moveIntent: cs.moveIntent || null, dribble: cs.dribble || null };
     const S = pipe === "NEW" ? new TechSim(cfg) : pipe === "RE1" ? new ReceiveSimE(cfg) : new ReceiveSimM(cfg); S.run(); const ms = performance.now() - t0;
     let h = 2166136261 >>> 0; const mix = (x) => { const s = x.toFixed(9); for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } };
     for (const rr of S.rec) { mix(rr.ball.p[0]); mix(rr.ball.p[1]); mix(rr.ball.p[2]); mix(rr.P[0]); mix(rr.P[1]); } for (const T of S.touches) mix(T.k);
-    const sim = { pipe, tag: pipe0, ratings: rr, style: pipe0 === "NEW@vs" && vsStyle ? vsStyle : style, S, rec: S.rec, ms, hash: h.toString(16), shown, contacts: contactsOf(S), sep: S.rec.map((rr) => Math.hypot(rr.ball.p[0] - rr.P[0], rr.ball.p[2] - rr.P[1])) };
+    const sim = { pipe, tag: pipe0, foot: pipe0 === "NEW@vs" && vsFoot ? vsFoot : foot, ratings: rr, style: pipe0 === "NEW@vs" && vsStyle ? vsStyle : style, S, rec: S.rec, ms, hash: h.toString(16), shown, contacts: contactsOf(S), sep: S.rec.map((rr) => Math.hypot(rr.ball.p[0] - rr.P[0], rr.ball.p[2] - rr.P[1])) };
     if (shown) Vv.sims.push(sim); else Vv.other = sim; }
   Vv.dur = Math.max(...Vv.sims.map((s) => (s.S.fault ? (s.rec.length - 1) * DT : cs.scenario.dur)));
 }
@@ -164,15 +164,16 @@ function overlay(ctx, vw, cam, dpr, sim, i, r) {
   if (big) { const L = (s, y, col) => { ctx.font = `600 ${11.5 * dpr}px -apple-system, Helvetica`; const w = ctx.measureText(s).width; ctx.fillStyle = "rgba(0,0,0,0.58)"; ctx.fillRect((vw.x + 6) * dpr, (vw.y + y - 13) * dpr, w + 10 * dpr, 17 * dpr); ctx.fillStyle = col; ctx.fillText(s, (vw.x + 11) * dpr, (vw.y + y) * dpr); };
     const rt = sim.ratings || Vv.ratings, sp = Math.hypot(r.V[0], r.V[1]), k1 = sim.contacts.k1, tRel = k1 != null ? (i - k1) * DT : null, ph = phaseOf(sim, i);
     const ep0 = sim.S.rc2 && sim.S.rc2.ep, act0 = ep0 && ep0.techLog ? ep0.techLog.filter((e) => e.ev === "action" && e.t <= (i - (sim.S.rc2.kc || 0)) * DT + 0.6).pop() : null;
-    L(`${sim.pipe === "NEW" ? "NEW · TECHNICAL-CONTROL-1" : sim.pipe === "RE1" ? "RECEIVE-ELITE-1" : "CURRENT · RECEIVE-MOVING-1"} · ${Vv.cs.label || Vv.cs.base}${sim.pipe === "NEW" ? " · style " + (STYLES[sim.style] || STYLES.NEUTRAL).label : ""}${act0 ? " · " + act0.fam.replace(/_/g, " ").toLowerCase() : ""}`, 20, COL[sim.tag || sim.pipe]);
+    L(`${sim.pipe === "NEW" ? "NEW · TECHNICAL-CONTROL-1" : sim.pipe === "RE1" ? "RECEIVE-ELITE-1" : "CURRENT · RECEIVE-MOVING-1"} · ${Vv.cs.label || Vv.cs.base}${sim.pipe === "NEW" ? " · style " + (STYLES[sim.style] || STYLES.NEUTRAL).label + " · " + ({ R: "right-footed", L: "left-footed", B: "two-footed" }[sim.foot] || "right-footed") : ""}${act0 ? " · " + act0.fam.replace(/_/g, " ").toLowerCase() : ""}`, 20, COL[sim.tag || sim.pipe]);
     L(`Ball Control ${rt.bc} · Dribbling ${rt.dri} · Agility ${rt.agi}${sim.pipe === "CURRENT" ? " (the current receive reads Ball Control only)" : ""} · seed ${Vv.seed}${Vv.anim ? "" : " · ANIMATION OFF"}`, 38, "#e8f5ee");
     L(`t ${r.t.toFixed(2)} s${tRel != null ? ` (${tRel >= 0 ? "+" : ""}${tRel.toFixed(2)} s from the first contact)` : ""} · ${ph} · player ${sp.toFixed(1)} m/s · ball–player ${dNow.toFixed(2)} m`, 56, "#e8f5ee");
-    const n = sim.contacts.list.filter((c) => c.recv).length; L(`receive contacts ${n} · max separation (contact → DRIBBLE-V1's first touch) ${sepMax(sim).toFixed(2)} m`, 74, "#ffe9a8"); }
+    const n = sim.contacts.list.filter((c) => c.recv).length; L(Vv.cs.kind === "course" ? `contacts ${n} · max separation (the whole run) ${sepMax(sim).toFixed(2)} m` : `contacts ${n} (receive + technical control) · max separation (first contact → DRIBBLE-V1's first touch, ≤ 2.5 s) ${sepMax(sim).toFixed(2)} m`, 74, "#ffe9a8"); }
   else if (Vv.labels) { ctx.font = `600 ${11 * dpr}px -apple-system, Helvetica`; ctx.fillStyle = "rgba(230,240,235,0.85)"; ctx.fillText(vw.id, (vw.x + 8) * dpr, (vw.y + 16) * dpr); }
   ctx.restore();
 }
-function phaseOf(sim, i) { const S = sim.S, c2 = S.rc2, ho = S.rx.handoff, k1 = sim.contacts.k1; if (k1 == null || i < k1) return "preparation"; if (ho && ho.kDribble != null && i >= ho.kDribble) return "DRIBBLE-V1"; if (c2 && c2.t12 && i >= c2.t12.k) return "TURN-1.2 run-out (the ball rolls to DRIBBLE-V1's takeover)"; return "receive action"; }
-function sepMax(sim) { const S = sim.S, k1 = sim.contacts.k1; if (k1 == null) return 0; const d = sim.contacts.list.find((c) => !c.recv && c.k > k1), kE = Math.min(sim.rec.length - 1, d ? d.k : k1 + 600, k1 + 600); let m = 0; for (let k = k1; k <= kE; k++) m = Math.max(m, sim.sep[k]); return m; }
+function phaseOf(sim, i) { const S = sim.S, c2 = S.rc2, ho = S.rx.handoff, k1 = sim.contacts.k1; if (k1 == null || i < k1) return "preparation"; if (ho && ho.kDribble != null && i >= ho.kDribble) return "DRIBBLE-V1"; if (c2 && c2.t12 && i >= c2.t12.k) return "TURN-1.2 run-out (the ball rolls to DRIBBLE-V1's takeover)"; const ep = c2 && c2.ep;
+  if (ep && ep.carryFrom != null && i >= ep.kc0 + Math.round(ep.carryFrom / DT)) return "technical control (carry · actions)"; return Vv.cs.kind === "course" ? "technical control (carry · actions)" : "receive action"; }
+function sepMax(sim) { const S = sim.S, k1 = sim.contacts.k1; if (k1 == null) return 0; const d = sim.contacts.list.find((c) => !c.recv && c.k > k1), kE = Vv.cs.kind === "course" ? sim.rec.length - 1 : Math.min(sim.rec.length - 1, d ? d.k : k1 + 600, k1 + 600); let m = 0; for (let k = k1; k <= kE; k++) m = Math.max(m, sim.sep[k]); return m; }
 // ── the separation graph: ball – player distance over time, CURRENT grey / NEW yellow, the contacts as ticks, the time cursor ─────────────────────
 function graph(ctx, g, dpr) {
   const sims = Vv.sims.concat(Vv.other ? [Vv.other] : []), nw = sims.find((s) => s.pipe === "NEW") || sims[0], k1 = nw.contacts.k1 != null ? nw.contacts.k1 : 0, t0 = k1 * DT - 0.3, t1 = t0 + 3.0;
@@ -186,7 +187,7 @@ function graph(ctx, g, dpr) {
     for (const c of s.contacts.list) { if (c.k * DT < t0 || c.k * DT > t1) continue; ctx.fillStyle = c.recv ? COL[s.tag || s.pipe] : "rgba(125,240,255,0.9)"; const x = X(c.k * DT), y = Y(s.sep[c.k]); ctx.beginPath(); ctx.arc(x, y, (c.recv ? 3.6 : 2.6) * dpr, 0, 7); ctx.fill(); } }
   const xc = X(Vv.t); ctx.strokeStyle = "rgba(255,255,255,0.6)"; ctx.beginPath(); ctx.moveTo(xc, (g.y + 8) * dpr); ctx.lineTo(xc, (g.y + g.h - 18) * dpr); ctx.stroke();
   ctx.fillStyle = "#e8f5ee"; ctx.fillText("ball – player separation (ball centre ↔ the player's centre, horizontal) · dots: contacts (receive ● · DRIBBLE-V1 ● cyan)", (g.x + 56) * dpr, (g.y + 14) * dpr);
-  let lx = g.x + g.w - 330; for (const s of sims) { const rt = s.ratings || Vv.ratings; ctx.fillStyle = COL[s.tag || s.pipe]; ctx.fillRect(lx * dpr, (g.y + 8) * dpr, 14 * dpr, 4 * dpr); ctx.fillText(s.pipe === "NEW" ? `NEW ${rt.bc}/${rt.dri}/${rt.agi}` : "CURRENT", (lx + 18) * dpr, (g.y + 14) * dpr); lx += 150; }
+  let lx = g.x + g.w - 360; for (const s of sims) { const rt = s.ratings || Vv.ratings; ctx.fillStyle = COL[s.tag || s.pipe]; ctx.fillRect(lx * dpr, (g.y + 8) * dpr, 14 * dpr, 4 * dpr); ctx.fillText(s.pipe === "NEW" ? `NEW ${rt.bc}/${rt.dri}/${rt.agi}${s.style && s.style !== "NEUTRAL" ? " " + (STYLES[s.style] || { label: s.style }).label.split(" ")[0] : ""}${s.foot && s.foot !== "R" ? " " + s.foot : ""}` : s.pipe === "RE1" ? "RECEIVE-ELITE-1" : "CURRENT", (lx + 18) * dpr, (g.y + 14) * dpr); lx += 165; }
 }
 function hud() { const el = document.getElementById("hud"); if (!el || !Vv.sims.length) return; el.textContent = Vv.sims.concat(Vv.other ? [Vv.other] : []).map((s) => { const S = s.S, c = s.contacts.list.filter((x) => x.recv);
   return `${s.pipe}${s.shown ? "" : " (graph only)"} · ${Vv.cs.id} · contacts ${c.map((x) => `${x.n}@${x.t.toFixed(2)}s ${x.F}`).join(" ")} · max sep ${sepMax(s).toFixed(2)} m · ${S.rx.handoff && S.rx.handoff.kDribble ? "DRIBBLE-V1 " + (S.rx.handoff.kDribble * DT).toFixed(2) + " s" : "no takeover"} · control ${S.ctrl.state} · simulated in ${s.ms.toFixed(0)} ms · fingerprint ${s.hash}`; }).join("\n"); }
@@ -198,14 +199,18 @@ async function boot() {
   const gl = Vv.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.body.textContent = "WebGL2 unavailable"; return; }
   Vv.gl = gl; Vv.R = { gl }; Vv.ground = groundProg(gl); Vv.ball = ballProg(gl);
   if (q.get("labels") === "0") Vv.labels = false; if (q.get("single")) Vv.single = q.get("single"); if (q.get("rate")) Vv.rate = +q.get("rate"); if (q.get("zoom")) Vv.zoom = +q.get("zoom"); if (q.get("A")) Vv.A = q.get("A"); if (q.get("B")) Vv.B = q.get("B"); if (q.get("graph") === "0") Vv.graph = false;
-  const sel = document.getElementById("selScn"), groups = [["technical course", COURSE.concat(COURSE.filter((c) => /^CUT|^CONTEST/.test(c)).map((c) => c + "_L"))], ["receive → turn → dribble · stationary", SET.stationary], ["… running", SET.running], ["… sprinting", SET.sprint]];
+  const sel = document.getElementById("selScn"), groups = [["technical course", COURSE.concat(COURSE.filter((c) => /^CUT|^CONTEST/.test(c)).map((c) => c + "_L"))], ["receive → turn → dribble · stationary", SET.stationary], ["… running", SET.running], ["… sprinting", SET.sprint], ["lab sections (stop · free turns)", EXTRA.concat(/^TURN/.test(q.get("case") || "") && !EXTRA.includes(q.get("case")) ? [q.get("case")] : [])]];
   sel.innerHTML = groups.map(([g, ids]) => `<optgroup label="${g}">` + ids.map((id) => `<option value="${id}">${id}</option>`).join("") + "</optgroup>").join(""); sel.value = q.get("case") || "CUT90";
   const ss = document.getElementById("selStyle"); ss.innerHTML = Object.entries(STYLES).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join(""); ss.value = q.get("style") || "NEUTRAL"; ss.onchange = (e) => go({ style: e.target.value });
   const sf = document.getElementById("selFoot"); sf.value = q.get("foot") || ""; sf.onchange = (e) => go({ foot: e.target.value || null });
   const sp2 = document.getElementById("selPreset"); sp2.onchange = (e) => { const v = e.target.value.split("/"); if (v.length === 3) go({ b: v[0], d: v[1], a: v[2] }); };
   const go = (o) => { const u = new URL(location.href); for (const [k, v] of Object.entries(o)) { if (v == null) u.searchParams.delete(k); else u.searchParams.set(k, v); } location.href = u.toString(); };
   sel.onchange = (e) => go({ case: e.target.value });
-  for (const [k, id] of [["b", "selB"], ["d", "selD"], ["a", "selA"]]) { const s = document.getElementById(id); s.innerHTML = [99, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 40, 30, 20, 10, 1].map((v) => `<option value="${v}">${v}</option>`).join(""); s.value = q.get(k) || "99"; s.onchange = (e) => go({ [k]: e.target.value }); }
+  // the lab's free turn: any angle (0 – 180°) at any running speed, either side — TURN<deg>[_L]_V<m/s>
+  const tm = /^TURN(\d+)(_L)?_V([\d.]+)/.exec(q.get("case") || ""), iT = document.getElementById("inTurn"), iV = document.getElementById("inV"), iS = document.getElementById("selSide");
+  iT.value = tm ? tm[1] : 90; iV.value = tm ? tm[3] : 5.5; iS.value = tm && tm[2] ? "L" : "R";
+  document.getElementById("bTurn").onclick = () => go({ case: `TURN${Math.round(Math.max(0, Math.min(180, +iT.value)))}${iS.value === "L" ? "_L" : ""}_V${Math.max(1, Math.min(9, +iV.value))}` });
+  for (const [k, id] of [["b", "selB"], ["d", "selD"], ["a", "selA"]]) { const s = document.getElementById(id); s.innerHTML = Array.from({ length: 99 }, (_, i) => 99 - i).map((v) => `<option value="${v}">${v}</option>`).join(""); s.value = q.get(k) || "99"; s.onchange = (e) => go({ [k]: e.target.value }); }
   const sp = document.getElementById("selPipe"); sp.value = q.get("compare") === "1" ? "compare" : q.get("compare") === "re1" ? "re1" : (q.get("pipe") || "NEW"); sp.onchange = (e) => go(e.target.value === "compare" ? { compare: "1", pipe: null } : e.target.value === "re1" ? { compare: "re1", pipe: null } : { compare: null, pipe: e.target.value });
   const sv = document.getElementById("selView"); sv.value = q.get("single") || ""; sv.onchange = (e) => go({ single: e.target.value || null });
   document.querySelectorAll("[data-rate]").forEach(b => { b.classList.toggle("on", +b.dataset.rate === Vv.rate); b.onclick = () => { Vv.rate = +b.dataset.rate; document.querySelectorAll("[data-rate]").forEach(x => x.classList.toggle("on", x === b)); }; });

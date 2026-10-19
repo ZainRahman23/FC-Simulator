@@ -1,0 +1,426 @@
+{
+ "milestone": "TECHNICAL-CONTROL-1",
+ "state": "presented for review — NOT frozen (no RECEIVE-V1 / DRIBBLE freeze), not integrated",
+ "date": "2026-10-19",
+ "instruction": "sources/2026-10-19_user_instruction_receive_dribble_phase.md",
+ "report": "TECHNICAL_CONTROL1_REPORT.md",
+ "review": "review/TECHNICAL_CONTROL1_REVIEW.html (local only)",
+ "lab": "sandbox/visual/technical_control1.html",
+ "phase1_exit_touch": {
+  "re1_receive_set_99": {
+   "sepMedian": 1.7,
+   "sepWorst": 2.37,
+   "exitLaunchMedian": 8.34
+  },
+  "new_99": {
+   "sepMedian": 0.85,
+   "sepWorst": 0.87,
+   "exitTouches": 0,
+   "clean": 60
+  }
+ },
+ "phase2_low_agility": {
+  "50": {
+   "re1SepWorst": 5.67,
+   "re1Clean": 56,
+   "newSepWorst": 1,
+   "newClean": 60,
+   "newFailed": 0
+  },
+  "25": {
+   "re1SepWorst": 5.67,
+   "re1Clean": 54,
+   "newSepWorst": 0.97,
+   "newClean": 60,
+   "newFailed": 0
+  }
+ },
+ "phase3_body_ab_receive_chain": {
+  "RE1": {
+   "footAccP95Median": 490,
+   "footAccMax": 1386,
+   "ikP99Median": 0.322,
+   "ikMax": 0.854,
+   "slipMax": 0.0303,
+   "fullExtMedian": 0.25
+  },
+  "NEW": {
+   "footAccP95Median": 243,
+   "footAccMax": 826,
+   "ikP99Median": 0.041,
+   "ikMax": 0.186,
+   "slipMax": 0.0013,
+   "fullExtMedian": 0.076
+  }
+ },
+ "human_motion_diagnostics": {
+  "runs": 80,
+  "identical": 80,
+  "faults": [],
+  "contactPoseErrMax": 0.0039,
+  "slipMax": 0.0053,
+  "footAccP95Median": 215,
+  "footAccMaxMax": 1388,
+  "ikErrP99Median": 0.0399,
+  "ikErrP99Max": 0.0704,
+  "ikErrMax": 0.2381,
+  "fullExtShareMedian": 0.0675
+ },
+ "presets": {
+  "99/99/99": {
+   "sepMaxMed": 0.86,
+   "sepMax": 0.9,
+   "sepMean": 0.62,
+   "perS": 1.726,
+   "tOrient": 1.016,
+   "vExit": 4.649,
+   "recovery": 0,
+   "rxClean": "15/15",
+   "rxTCont": 0.692
+  },
+  "90/90/90": {
+   "sepMaxMed": 0.88,
+   "sepMax": 1.01,
+   "sepMean": 0.624,
+   "perS": 1.844,
+   "tOrient": 1.113,
+   "vExit": 4.294,
+   "recovery": 6,
+   "rxClean": "15/15",
+   "rxTCont": 0.74
+  },
+  "80/80/80": {
+   "sepMaxMed": 0.92,
+   "sepMax": 1.07,
+   "sepMean": 0.65,
+   "perS": 1.722,
+   "tOrient": 1.052,
+   "vExit": 3.953,
+   "recovery": 0,
+   "rxClean": "15/15",
+   "rxTCont": 0.787
+  },
+  "70/70/70": {
+   "sepMaxMed": 0.95,
+   "sepMax": 1.11,
+   "sepMean": 0.666,
+   "perS": 1.733,
+   "tOrient": 1.093,
+   "vExit": 3.778,
+   "recovery": 2,
+   "rxClean": "15/15",
+   "rxTCont": 0.895
+  },
+  "60/60/60": {
+   "sepMaxMed": 1,
+   "sepMax": 1.17,
+   "sepMean": 0.697,
+   "perS": 1.763,
+   "tOrient": 1.072,
+   "vExit": 3.668,
+   "recovery": 9,
+   "rxClean": "15/15",
+   "rxTCont": 0.892
+  },
+  "50/50/50": {
+   "sepMaxMed": 1.03,
+   "sepMax": 1.59,
+   "sepMean": 0.728,
+   "perS": 1.661,
+   "tOrient": 1.143,
+   "vExit": 3.49,
+   "recovery": 13,
+   "rxClean": "15/15",
+   "rxTCont": 1.102
+  },
+  "BC99/D99/A50": {
+   "sepMaxMed": 0.86,
+   "sepMax": 0.95,
+   "sepMean": 0.606,
+   "perS": 1.812,
+   "tOrient": 1.285,
+   "vExit": 3.487,
+   "recovery": 0,
+   "rxClean": "15/15",
+   "rxTCont": 0.971
+  },
+  "BC99/D50/A99": {
+   "sepMaxMed": 1,
+   "sepMax": 1.17,
+   "sepMean": 0.757,
+   "perS": 1.613,
+   "tOrient": 1.266,
+   "vExit": 4.308,
+   "recovery": 12,
+   "rxClean": "15/15",
+   "rxTCont": 0.66
+  },
+  "BC50/D99/A99": {
+   "sepMaxMed": 0.89,
+   "sepMax": 1.01,
+   "sepMean": 0.602,
+   "perS": 1.771,
+   "tOrient": 0.925,
+   "vExit": 4.951,
+   "recovery": 3,
+   "rxClean": "15/15",
+   "rxTCont": 0.692
+  },
+  "95/95/55": {
+   "sepMaxMed": 0.87,
+   "sepMax": 1.03,
+   "sepMean": 0.613,
+   "perS": 1.813,
+   "tOrient": 1.262,
+   "vExit": 3.73,
+   "recovery": 0,
+   "rxClean": "15/15",
+   "rxTCont": 0.954
+  },
+  "95/55/95": {
+   "sepMaxMed": 0.99,
+   "sepMax": 1.05,
+   "sepMean": 0.731,
+   "perS": 1.631,
+   "tOrient": 1.148,
+   "vExit": 4.083,
+   "recovery": 6,
+   "rxClean": "15/15",
+   "rxTCont": 0.683
+  },
+  "55/95/95": {
+   "sepMaxMed": 0.9,
+   "sepMax": 0.97,
+   "sepMean": 0.604,
+   "perS": 1.867,
+   "tOrient": 1.062,
+   "vExit": 4.356,
+   "recovery": 6,
+   "rxClean": "15/15",
+   "rxTCont": 0.712
+  }
+ },
+ "styles_90": {
+  "NEUTRAL": {
+   "sepMaxMed": 0.88,
+   "perS": 1.844,
+   "gapP50": 0.625,
+   "prefShare": 0.596,
+   "actions": {
+    "IN_CUT": 15,
+    "OUT_TOUCH": 6,
+    "DRAG_BACK": 5,
+    "DRAG_ACROSS": 5,
+    "FEINT_EXIT": 3,
+    "CRUYFF": 1
+   },
+   "surfaces": {
+    "LACES": 0.501,
+    "INSIDE": 0.432,
+    "SOLE": 0.036,
+    "OUTSIDE": 0.03
+   }
+  },
+  "DOMINANT_FOOT": {
+   "sepMaxMed": 0.82,
+   "perS": 1.94,
+   "gapP50": 0.625,
+   "prefShare": 0.914,
+   "actions": {
+    "IN_CUT": 19,
+    "OUT_TOUCH": 9,
+    "CRUYFF": 3,
+    "DRAG_BACK": 3
+   },
+   "surfaces": {
+    "LACES": 0.615,
+    "INSIDE": 0.302,
+    "OUTSIDE": 0.067,
+    "SOLE": 0.015
+   }
+  },
+  "TWO_FOOT": {
+   "sepMaxMed": 0.69,
+   "perS": 2.314,
+   "gapP50": 0.338,
+   "prefShare": 0.619,
+   "actions": {
+    "IN_CUT": 18,
+    "OUT_TOUCH": 11,
+    "CRUYFF": 3,
+    "DRAG_BACK": 3
+   },
+   "surfaces": {
+    "INSIDE": 0.612,
+    "LACES": 0.348,
+    "OUTSIDE": 0.027,
+    "SOLE": 0.013
+   }
+  },
+  "DIRECT_RUNNER": {
+   "sepMaxMed": 0.9,
+   "perS": 1.529,
+   "gapP50": 0.625,
+   "prefShare": 0.556,
+   "actions": {
+    "IN_CUT": 11,
+    "OUT_TOUCH": 11,
+    "CRUYFF": 5,
+    "DRAG_BACK": 1
+   },
+   "surfaces": {
+    "LACES": 0.54,
+    "INSIDE": 0.4,
+    "OUTSIDE": 0.048,
+    "SOLE": 0.013
+   }
+  },
+  "CLOSE_CONTROL": {
+   "sepMaxMed": 0.55,
+   "perS": 3.246,
+   "gapP50": 0.313,
+   "prefShare": 0.547,
+   "actions": {
+    "IN_CUT": 16,
+    "OUT_TOUCH": 12,
+    "DRAG_BACK": 4,
+    "CRUYFF": 2,
+    "DRAG_ACROSS": 2
+   },
+   "surfaces": {
+    "INSIDE": 0.904,
+    "LACES": 0.063,
+    "OUTSIDE": 0.019,
+    "SOLE": 0.014
+   }
+  },
+  "FEINT_HEAVY": {
+   "sepMaxMed": 0.69,
+   "perS": 2.321,
+   "gapP50": 0.333,
+   "prefShare": 0.617,
+   "actions": {
+    "IN_CUT": 14,
+    "OUT_TOUCH": 7,
+    "DRAG_ACROSS": 5,
+    "CRUYFF": 3,
+    "FEINT_EXIT": 3,
+    "DRAG_BACK": 3
+   },
+   "surfaces": {
+    "INSIDE": 0.551,
+    "LACES": 0.381,
+    "OUTSIDE": 0.043,
+    "SOLE": 0.025
+   }
+  }
+ },
+ "vocabulary_spread_sophisticated_share": {
+  "50": 0.023,
+  "60": 0.023,
+  "70": 0.114,
+  "80": 0.136,
+  "90": 0.144,
+  "99": 0.295
+ },
+ "bridge_sprint": {
+  "99/99/99": {
+   "sepMaxMed": 2.21,
+   "sepMax": 2.52
+  },
+  "90/90/90": {
+   "sepMaxMed": 2.19,
+   "sepMax": 2.63
+  },
+  "80/80/80": {
+   "sepMaxMed": 2.14,
+   "sepMax": 2.63
+  },
+  "70/70/70": {
+   "sepMaxMed": 2.15,
+   "sepMax": 2.72
+  },
+  "60/60/60": {
+   "sepMaxMed": 2.11,
+   "sepMax": 4.25
+  },
+  "50/50/50": {
+   "sepMaxMed": 2.08,
+   "sepMax": 3.9
+  }
+ },
+ "failures": "0 in 2826 sweep + 396 chain + 180 RECEIVE-ELITE-1-set runs",
+ "regression": {
+  "isolation": [
+   78,
+   78
+  ],
+  "nonTurn": [
+   24,
+   24
+  ],
+  "turnsChanged": [
+   54,
+   54
+  ]
+ },
+ "determinism": {
+  "repeat": [
+   300,
+   300
+  ],
+  "actions": [
+   300,
+   300
+  ],
+  "keyedDraws": [
+   2093,
+   2093
+  ],
+  "chromeNode": [
+   13,
+   13
+  ]
+ },
+ "neutrality": [
+  80,
+  80
+ ],
+ "protected": "837/837 identical",
+ "cpu": {
+  "NEW": {
+   "msPerSimSec": {
+    "median": 11,
+    "max": 16
+   },
+   "worstStep": {
+    "median": 3.2,
+    "max": 8.2
+   },
+   "planMsPerSimSec": {
+    "median": 0.2,
+    "max": 0.4
+   }
+  },
+  "RE1": {
+   "msPerSimSec": {
+    "median": 86,
+    "max": 123
+   },
+   "worstStep": {
+    "median": 14.3,
+    "max": 14.9
+   }
+  },
+  "CURRENT": {
+   "msPerSimSec": {
+    "median": 85,
+    "max": 124
+   },
+   "worstStep": {
+    "median": 15.1,
+    "max": 19.5
+   }
+  }
+ }
+}
