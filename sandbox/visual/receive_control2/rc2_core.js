@@ -28,6 +28,7 @@ import { RK, surf, incoming, difficulty, surfaceIdeal, idealVel } from "../recei
 import { MOVE, TDIFF, DEG, clamp, s5, wrapA, dir, toL2, runDist, runSpeed } from "../receive_turn1/rt_actions.js";
 import { Frame, TurnEpisode, KillEpisode, predictK, rollK } from "./rc2_episode.js";
 import { HumanTurnBody } from "../receive_turn11/rt11_body.js";
+import { FramedTurnBody, FramedKillBody } from "./rc2_bodies.js";
 import { dsin, dcos } from "../physchar2/core/v2_math.js";
 export { RX, BALL_DEFAULT, D1, DT, withBC };
 const R = 0.11, hyp = Math.hypot, abs = Math.abs, max = Math.max, min = Math.min, r2 = (x) => Math.round(x * 100) / 100, r3 = (x) => Math.round(x * 1000) / 1000;
@@ -41,10 +42,15 @@ export const RC2 = {
   rejoin: { tau: 0.70, minSpeed: 0.8 },   // the rejoin push: the ball on the exit line HANDOFF_AHEAD(v) ahead of the runner tau s after the touch
   // (the runner after TURN-1.2 takes the body: its switch speed vSw, asked for vSw + exitRamp.dv — modelled as vSw + dv / 2 over the window)
   setOff: { turnShare: 0.6, tau: 0.55 },  // after a kill / control and a go intent: the push along the exit after turnShare of the turn; DRIBBLE-V1 tau s later
+  // TURN-1.2 settles into its gait before DRIBBLE-V1 takes the ball (≥ settle s after the switch); the runner model for the push's target: TURN-1.2
+  // asked for vSw + exitRamp.dv, reached at aRun m/s²
+  settle: 0.6, aRun: 3.5,
   surfaceMap: { INSIDE: "FOOT_INSIDE", OUTSIDE: "FOOT_OUTSIDE", LACES: "FOOT_INSTEP", SOLE: "FOOT_SOLE" },
   // RECEIVE-CONTROL-1.1's moving families on RECEIVE-TURN-1's difficulty terms: the share of the body's rotation inside the touch window
   movingRotIn: { CUSHION: 0.0, STRIDE: 0.25, OPEN_TURN: 0.35, THROUGH_TURN: 0.5 },
 };
+// the runner after TURN-1.2 takes the body at speed vSw: asked for vSw + exitRamp.dv, reached at aRun (distance along the exit after dt s, and the speed)
+function runAfter(vSw, dt) { const v1 = vSw + RX.exitRamp.dv, a = RC2.aRun, tA = (v1 - vSw) / a; return dt <= tA ? { d: vSw * dt + 0.5 * a * dt * dt, v: vSw + a * dt } : { d: vSw * tA + 0.5 * a * tA * tA + v1 * (dt - tA), v: v1 }; }
 // RECEIVE-CONTROL-1.1's private rebase (a fresh TURN-1.2 actor continues the simulation's clock)
 function rebase(A, T) { A.t += T; A.clk.t0 += T; for (const F of SIDES) { const L = A.legs[F]; if (L.tTD != null) L.tTD += T; if (L.tTO != null) L.tTO += T; } }
 
@@ -98,7 +104,7 @@ export class ReceiveSim2 extends ReceiveSim11 {
     if (plan.kind === "TURN") { const A = plan.A; A.pref = pref; c2.ep = new TurnEpisode({ A, F, kc: k + A.k, bc: this.bc, spec, idPrefix: `${this.pid}:${ev}.c0`, carry: "none" }); c2.kind = "TURN"; c2.kc = k + A.k; c2.thExit = rx.exitDir; }
     else { c2.ep = new KillEpisode({ plan: plan.plan, ideal: plan.ideal, F, kc: k + plan.plan.k, bc: this.bc, spec, idPrefix: `${this.pid}:${ev}.c0` }); c2.kind = "KILL"; c2.kc = k + plan.plan.k; }
     c2.k0 = k; c2.psiInit = this.A.psi; c2.phase = "action"; c2.spec = spec; this.parkColliders();
-    if (this.cfg.Body2 && this.anim) this.body2 = null;   // (built when the episode's footwork is known)
+    this.buildBody2();
   }
   // ── AN AUTHORED TICK: the action owns the body; the episode's contacts; the ball kernel ────────────────────────────────────────────────────────
   actionStep() {
@@ -107,7 +113,7 @@ export class ReceiveSim2 extends ReceiveSim11 {
     if (!this.kernelStep(k)) { this.rx.cpuRx += now() - c0; return; }
     this.post(k); this.k++;
     if (ep) { this.capture(() => ep.post(this.W)); this.afterPost(); }
-    if (this.body2) { const pz = this.body2.pose(this.k); if (pz) A.skinMats = pz.skin; }
+    if (this.anim && this.cfg.E && ep) { if (this.body2Stale()) this.buildBody2(); if (this.body2) { const F = c2.frame, b = this.W.ball, pz = this.body2.poseAt((this.k - c2.k0) * DT, F.loc(b.p)); if (pz) { A.skinMats = pz.skin; c2.pose = pz; } } }
     this.record(); this.rx.cpuRx += now() - c0; c2.cpu.ep += now() - c0;
     if (c2.kT12 != null && this.k === c2.kT12) this.switchToT12();
   }
@@ -159,13 +165,18 @@ export class ReceiveSim2 extends ReceiveSim11 {
     // the footwork: the swing that plays the meeting and its touchdown (the authored footstep plan — the same one the presentation shows)
     const fw = this.footwork(); let foot = null, tTD = null; if (fw) { for (const X of SIDES) for (const s of fw.seg[X]) if (s.touch && abs(s.touch.t - m.t) < 1e-9) { foot = X; tTD = s.t1; } if (!foot && m.t < (fw.ev.contactLand || 0)) { foot = A.F; tTD = fw.ev.contactLand; } }
     if (!foot) { foot = A.F; tTD = m.t + 0.12; }
+    // the TURN-1.2 switch: the touch foot's touchdown — or, while the authored run is still slower than TURN-1.2's slowest gait (vFloor), the first
+    // later footstep touchdown where it has reached it (no speed step at the switch: a through-stance turn is still accelerating at the rejoin)
+    let tSw = max(m.t + DT, tTD); const spd = (t) => hyp(...this.rootVelLocal(t));
+    if (spd(tSw) < RX.vFloor * 0.97 && fw) { const tds = []; for (const X of SIDES) for (const sg of fw.seg[X]) if (sg.kind === "swing" && sg.t1 > tSw + 1e-9) tds.push([sg.t1, X]); tds.sort((a, b) => a[0] - b[0]);
+      const ok = tds.find(([t]) => spd(t) >= RX.vFloor * 0.97); if (ok) { tSw = ok[0]; foot = ok[1]; tTD = ok[0]; } }
     // where the runner will be at the handoff: the action's path to the TURN-1.2 switch, then TURN-1.2 asked for vSw + exitRamp.dv
-    const tSw = max(m.t + DT, tTD), Psw = this.rootLocal(tSw), vSw = max(RX.vFloor, hyp(...this.rootVelLocal(tSw))), vRun = vSw + RX.exitRamp.dv / 2, vH = vSw + RX.exitRamp.dv;
-    const Rh = [Psw[0] + u[0] * vRun * max(0, tH - tSw), Psw[1] + u[1] * vRun * max(0, tH - tSw)], T = [Rh[0] + u[0] * tab(HANDOFF_AHEAD, vH), Rh[1] + u[1] * tab(HANDOFF_AHEAD, vH)], B = m.ball;
-    const d = [T[0] - B[0], T[1] - B[1]], dl = hyp(d[0], d[1]), dHat = [d[0] / dl, d[1] / dl], s0 = max(RC2.rejoin.minSpeed, RT.rollSpeedFor(dl, tau));
+    const Psw = this.rootLocal(tSw), vSw = max(RX.vFloor, spd(tSw)), tH2 = max(tH, tSw + RC2.settle), ra = runAfter(vSw, tH2 - tSw), vH = ra.v;
+    const Rh = [Psw[0] + u[0] * ra.d, Psw[1] + u[1] * ra.d], T = [Rh[0] + u[0] * tab(HANDOFF_AHEAD, vH), Rh[1] + u[1] * tab(HANDOFF_AHEAD, vH)], B = m.ball;
+    const d = [T[0] - B[0], T[1] - B[1]], dl = hyp(d[0], d[1]), dHat = [d[0] / dl, d[1] / dl], s0 = max(RC2.rejoin.minSpeed, RT.rollSpeedFor(dl, tH2 - m.t));
     c2.rejoin = { kM, tM: m.t, foot, tTD, kTD: c2.kc + Math.round(tTD / DT), vIdeal: [dHat[0] * s0, dHat[1] * s0, 0], target: T, vH, dHat, s0 };
     this.rc2.launches.push({ id: `${this.pid}:${c2.cls.ev}.c${ep.contacts}`, tick: kM, kind: "REJOIN", foot, contact: ep.contacts, build: () => this.rejoinExec() });
-    c2.kT12 = max(kM + 1, c2.rejoin.kTD); c2.kDribble = kM + Math.round(tau / DT); c2.log.push({ k: this.k, ev: "rejoin-plan", kM, foot, kT12: c2.kT12, kDribble: c2.kDribble, s0: r2(s0) });
+    c2.kT12 = max(kM + 1, c2.rejoin.kTD); c2.kDribble = c2.kc + Math.round(tH2 / DT); c2.rejoin.tH = tH2; c2.log.push({ k: this.k, ev: "rejoin-plan", kM, foot, kT12: c2.kT12, kDribble: c2.kDribble, s0: r2(s0) });
   }
   rejoinExec() {
     const c2 = this.rc2, ep = c2.ep, A = ep.A, F = c2.frame, rj = c2.rejoin, b = this.W.ball, st = { p: F.loc(b.p), v: F.locV(b.v) }, Vr = this.rootVelLocal((this.k - c2.kc) * DT);
@@ -181,18 +192,22 @@ export class ReceiveSim2 extends ReceiveSim11 {
     const c2 = this.rc2, ep = c2.ep, F = c2.frame, t0 = (this.k - c2.kc) * DT, S = this.rootLocal(t0), psi0 = this.psiLocal(t0), th = wrapA(this.rx.exitDir - F.h), dPsi = wrapA(th - psi0), Trot = MOVE.turnBase + abs(dPsi / DEG) / MOVE.omegaTurn;
     const tPush = t0 + RC2.setOff.turnShare * Trot, kP = c2.kc + Math.round(tPush / DT), u = dir(th);
     c2.setOff = { t0, S, psi0, psi1: th, Trot, tPush, kP, u, tGo: tPush };
-    const tau = RC2.setOff.tau, tH = tPush + tau, Rh = this.setOffRoot(tH), vH = max(RX.vFloor, runSpeed(tH - tPush)), T = [Rh[0] + u[0] * tab(HANDOFF_AHEAD, vH), Rh[1] + u[1] * tab(HANDOFF_AHEAD, vH)];
+    // the TURN-1.2 switch when the run out of the stance reaches TURN-1.2's slowest gait; the DRIBBLE-V1 handoff tau after the push (≥ 0.15 s after the switch)
+    const tSw = tPush + RX.vFloor / MOVE.accel, vSw = RX.vFloor, tH = max(tPush + RC2.setOff.tau, tSw + RC2.settle), Psw = this.setOffRoot(tSw), ra = runAfter(vSw, tH - tSw), vH = ra.v;
+    const Rh = [Psw[0] + u[0] * ra.d, Psw[1] + u[1] * ra.d], T = [Rh[0] + u[0] * tab(HANDOFF_AHEAD, vH), Rh[1] + u[1] * tab(HANDOFF_AHEAD, vH)], tau = tH - tPush;
     // the ball at the push (the free ball from now: it is settled)
     const Pf = predictK(this.W, tPush - t0 + 0.05, F), B = Pf[min(Pf.length - 1, kP - this.k)].p, d = [T[0] - B[0], T[1] - B[1]], dl = hyp(d[0], d[1]), dHat = [d[0] / dl, d[1] / dl], s0 = max(RC2.rejoin.minSpeed, RT.rollSpeedFor(dl, tau));
     const foot = wrapA(th - psi0) >= 0 ? "R" : "L";   // the push with the foot on the turn side (a turn with the ball: the outside foot stays planted)
-    c2.rejoin = { kM: kP, tM: tPush, foot, tTD: tPush + 0.12, kTD: kP + Math.round(0.12 / DT), vIdeal: [dHat[0] * s0, dHat[1] * s0, 0], target: T, vH, dHat, s0, setOff: true };
+    // the stance foot at the switch: the push foot lands 0.12 s after the push, then the strides alternate (TURN-1.2's stance time at vFloor ≈ 0.18 s + flight)
+    const nSteps = Math.max(0, Math.floor((tSw - (tPush + 0.12)) / 0.24)), fSw = nSteps % 2 === 0 ? foot : (foot === "R" ? "L" : "R");
+    c2.rejoin = { kM: kP, tM: tPush, foot: fSw, pushFoot: foot, tTD: tSw, kTD: c2.kc + Math.round(tSw / DT), vIdeal: [dHat[0] * s0, dHat[1] * s0, 0], target: T, vH, dHat, s0, setOff: true };
     const nC = ep.contacts.length != null ? ep.contacts.length : ep.contacts;
     c2.launches.push({ id: `${this.pid}:${c2.cls.ev}.c${nC}`, tick: kP, kind: "SET-OFF", foot, contact: nC, build: () => this.rejoinExecK(nC) });
-    c2.kT12 = c2.rejoin.kTD; c2.kDribble = kP + Math.round(tau / DT); c2.log.push({ k: this.k, ev: "set-off-plan", kP, foot, kT12: c2.kT12, kDribble: c2.kDribble, s0: r2(s0) });
+    c2.kT12 = c2.rejoin.kTD; c2.kDribble = c2.kc + Math.round(tH / DT); c2.log.push({ k: this.k, ev: "set-off-plan", kP, foot, kT12: c2.kT12, kDribble: c2.kDribble, s0: r2(s0) });
   }
   setOffRoot(t) { const so = this.rc2.setOff; if (t <= so.tGo) return so.S.slice(); const d = runDist(t - so.tGo); return [so.S[0] + so.u[0] * d, so.S[1] + so.u[1] * d]; }
   rejoinExecK(nC) {
-    const c2 = this.rc2, F = c2.frame, rj = c2.rejoin, b = this.W.ball, st = { p: F.loc(b.p), v: F.locV(b.v) }, inc = incoming(st), sf = surf("FOOT_INSIDE", rj.foot), Dk = difficulty(sf, st, inc, 0).D, D = Dk * (1 + TDIFF.out * rj.s0 / RK.diff.vRef);
+    const c2 = this.rc2, F = c2.frame, rj = c2.rejoin, b = this.W.ball, st = { p: F.loc(b.p), v: F.locV(b.v) }, inc = incoming(st), sf = surf("FOOT_INSIDE", rj.pushFoot || rj.foot), Dk = difficulty(sf, st, inc, 0).D, D = Dk * (1 + TDIFF.out * rj.s0 / RK.diff.vRef);
     const vh = hyp(st.v[0], st.v[1]), n = vh > 0.05 ? [-st.v[0] / vh, -st.v[1] / vh] : [-rj.dHat[0], -rj.dHat[1]], sig = wrapA(rj.dHat ? Math.atan2(rj.dHat[1], rj.dHat[0]) - c2.setOff.psi0 : 0) >= 0 ? 1 : -1;
     const Ax = { D, vIdeal: rj.vIdeal, nIn: n, dHat: rj.dHat, sig, vInS: max(0.05, vh) }, N = RT.turnDraws(c2.spec, nC), ex = RT.executeTurn(Ax, this.bc, N);
     rj.ex = ex; rj.D = D; rj.N = N; return { vL: ex.v, surface: "FOOT_INSIDE", F: rj.foot, D, ex };
@@ -240,6 +255,14 @@ export class ReceiveSim2 extends ReceiveSim11 {
     const ep = c2.ep, prep = { A: ep.A, kc: c2.kc - c2.k0 }, epi = { meet: ep.meet, follow: ep.follow, ex: ep.ex, m: { cls: ep.cls } };
     c2.fw = new HumanTurnBody(this.cfg.E, this.cfg.M4, this.cfg.skel, prep, epi); c2.fwT0 = c2.k0; return c2.fw;
   }
+  // ── the presentation body (animation on only; the simulation never reads it): RECEIVE-TURN-1.1's human body for a turn, RECEIVE-KILL's body for a
+  // kill / control episode — rebuilt when the episode learns more (the continuation, a follow-up), the poses before that unchanged
+  buildBody2() {
+    const c2 = this.rc2, ep = c2.ep; this.body2 = null; if (!this.anim || !this.cfg.E || !this.cfg.skel || !ep) return;
+    if (c2.kind === "TURN") { const epi = ep.cls !== undefined ? { meet: ep.meet, follow: ep.follow, ex: ep.ex, m: { cls: ep.cls } } : null; this.body2 = new FramedTurnBody(this.cfg.E, this.cfg.M4, this.cfg.skel, { A: ep.A, kc: c2.kc - c2.k0 }, epi, c2.frame); this.body2.v = epi ? 1 : 0; }
+    else { const prep = { kc: c2.kc - c2.k0, plan: ep.plan, stance: ep.plan.shift, contact: ep.plan.st.p, ideal: ep.ideal }, epk = ep.contacts.length ? { contacts: ep.contacts.slice(), moves: ep.moves.slice() } : null; this.body2 = new FramedKillBody(this.cfg.E, this.cfg.M4, this.cfg.skel, prep, epk, c2.frame); this.body2.v = ep.contacts.length; }
+  }
+  body2Stale() { const c2 = this.rc2, ep = c2.ep, b = this.body2; if (!b) return true; return c2.kind === "TURN" ? (ep.cls !== undefined && b.v === 0) : ep.contacts.length !== b.v; }
   // ── TURN-1.2 TAKES THE BODY (at the rejoin foot's touchdown): the action's state becomes a TURN-1.2 actor; no dribble resolver yet ───────────────
   switchToT12() {
     const c2 = this.rc2, rx = this.rx, k = this.k, st = this.root2(k), F = c2.frame, rj = c2.rejoin, th = rx.exitDir, v = max(RX.vFloor, hyp(st.V[0], st.V[1]));
@@ -249,7 +272,7 @@ export class ReceiveSim2 extends ReceiveSim11 {
     this.A = A1; this.adjs = { R: {}, L: {} }; this.evalPose(A1); this.framesPrev = boneFramesOf(A1, A1.fk); this.prevColV = null; this.input = A1.input;
     c2.t12 = { k, P: st.P.map(r3), v: r2(v), dir: +(th / DEG).toFixed(2), foot: rj.foot }; c2.phase = "exit"; c2.log.push({ k, ev: "turn12", v: r2(v), foot: rj.foot });
     rx.handoff = { k, t: r3(k * DT), P: st.P.slice(), v, dir: +(th / DEG).toFixed(2), foot: rj.foot, ballRel: null, ballSpeed: null };
-    if (this.body2) this.body2.end(k);
+    this.body2 = null;
     if (k >= c2.kDribble) this.dribbleOn();
   }
   // ── DRIBBLE-V1 TAKES THE BALL: the frozen resolver's state is fresh, the rejoin touch is its last touch (the ball en route to where it was sent) ─
