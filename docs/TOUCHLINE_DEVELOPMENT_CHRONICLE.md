@@ -3609,6 +3609,99 @@ Stopped for owner visual review.
 | Codex ball / curve / charge labs | Local branches |
 | `touchline-current` | No changes except this chronicle |
 
+## Sunday 18 October 2026 — The 17 Oct publication; RECEIVE-CONTROL-1 presented; RECEIVE-CONTROL-1.1, authored receive actions; RECEIVE-KILL-1 → 1.2 B, the Ball Control scale; RECEIVE-TURN-1 and 1.1, the stationary receive-and-turn and its human motion; the Codex shot-accuracy and standing-tackle labs
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `c01274e` (the 17 Oct entry), pushed in the 18 Oct housekeeping.
+  - **`prototype/dribble-1`**, 24 commits this day, all pushed in the 19 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | RECEIVE-CONTROL-1 | `d6dd233`, `dc6693c` | 06:34 – 07:04 |
+    | RECEIVE-CONTROL-1.1 | `f4a896f` → `470a4ab` (4) | 12:41 – 14:28 |
+    | RECEIVE-KILL-1 | `21d9010`, `5758445`, `d0064a8` | 19:52 – 21:22 |
+    | RECEIVE-KILL-1.1 | `869264b`, `a1f8fbd`, `f6f7a88` | 21:46 – 22:27 |
+    | RECEIVE-KILL-1.2 (and B) | `9867a1a`, `9aba8b9`, `e5aacc9`, `ec5d972` | 23:17 – 19 Oct 01:54 |
+    | RECEIVE-TURN-1 | `da7bdcf`, `6881ce0`, `33c58e5` | 19 Oct 02:39 – 04:10 |
+    | RECEIVE-TURN-1.1 | `26cb992`, `23b6dca` | 19 Oct 04:26 – 05:24 |
+    | The queued receive work (instruction only) | `d03b6fc` | 19 Oct 04:46 |
+    | RECEIVE-CONTROL-2 (QUEUE #1), work in progress | `53a6f0d`, `3dddda5` | 19 Oct 05:46 – 05:56 |
+
+  - **[Local]** The Codex workspaces, read-only, no commits this day:
+    - the ball clone's `outputs/SHOT-ACCURACY-1.0-VISUAL` folder was updated (file times to 19 Oct 04:20);
+    - a new workspace, `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/` (19 Oct 04:37 – 05:04): **Standing Tackle V1 — Phase C**, an isolated visual prototype (`outputs/standing-tackle-review.html`, `validation.md`).
+- **[Doc]:**
+  - `review_artifacts/receive1/`, `receive11/`, `receive_kill1/`, `receive_kill11/`, `receive_kill12/`, `receive_turn1/`, `receive_turn11/`: each milestone's report, handoff, status, evidence and review page;
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the review pages show a real player's model; they are local review pages only.
+- **[Session]** Owner instructions:
+
+  | Time (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 12:30 | RECEIVE-CONTROL-1.1 — authored receive actions with one authoritative contact, not a contact search | `f4a896f` |
+  | ≈ 19:50 | RECEIVE-KILL-1 — isolate the kill / deaden action and show how Ball Control meets difficulty | `21d9010` |
+  | ≈ 21:45 | RECEIVE-KILL-1.1 — compress Ball Control's error; follow-up control for thigh / chest / head | `869264b` |
+  | ≈ 23:00 | RECEIVE-KILL-1.2 — a harsher rating scale with two anchors | `9867a1a` |
+  | 19 Oct ≈ 01:10 | RECEIVE-KILL-1.2 — use alternative B | `e5aacc9` |
+  | 19 Oct ≈ 02:30 | RECEIVE-TURN-1 — execution variance around B; a stationary receive-and-turn library by angle | `da7bdcf` |
+  | 19 Oct ≈ 04:20 | RECEIVE-TURN-1.1 — human body motion around the authoritative football action | `26cb992` |
+  | 19 Oct ≈ 04:45 | Two queued assignments: integrate RECEIVE-KILL + RECEIVE-TURN into RECEIVE-CONTROL; then receiving while moving | `d03b6fc` |
+
+- **Owner screenshots:** none.
+
+**The 17 Oct housekeeping (06:00 – 06:08).** The chronicle `c01274e` was committed and pushed. `prototype/dribble-1` up to `b6434a2` and the tag `dribble-v1-foundation-1` were pushed and verified.
+
+**RECEIVE-CONTROL-1** (06:34 – 07:04, `d6dd233`, `dc6693c`). Presented for review: a receive adapter on the frozen DRIBBLE-V1 that hands receive options to the frozen planner.
+- **Results** (714 runs = 238 situations × 3 seeds): CLEAN 279, TAKEN 27, RECEIVED 157, RECOVERED 38, MISSED 213; the receive phase cost 816 ms per simulated second; Chrome / Node decisions 20 / 20; DRIBBLE-V1 unchanged.
+- **Finding:** the frozen dribble contact model only meets a ball within ≈ 15 cm of a late-swing foot path. Not ready to freeze; the owner's answer was a dedicated receive contact model.
+
+**RECEIVE-CONTROL-1.1** (12:41 – 14:28, `f4a896f` → `470a4ab`). Receiving as authored receive actions beside DRIBBLE-V1 (`sandbox/visual/receive11/`).
+- **The model:** a family (CUSHION, STRIDE, OPEN_TURN, THROUGH_TURN) × contact foot × side × contact tick, scored deterministically; one authoritative contact at the action's CONTACT marker; the ideal post-contact ball state; a Ball Control execution error; the free rigid-body ball; an explicit handoff to a TURN-1.2 actor and the frozen resolver.
+- **Results** (the same 714 runs, BC 89): CLEAN 583, TAKEN 83, RECEIVED 9, no contact 39; 180° 94 / 120 clean; receive phase 8.8 ms per simulated second (RECEIVE-CONTROL-1: 816); Chrome / Node 20 / 20; animation on / off identical; mirror 10 / 10; DRIBBLE-V1 60 / 60 + 48 / 48.
+- **Lesson:** the handoff must deliver what DRIBBLE-V1 can take over — the ball on the runner's line, ≥ 1 m ahead.
+- Not frozen (owner: do not freeze yet).
+
+**RECEIVE-KILL-1** (19:52 – 21:22, `21d9010` → `d0064a8`). One action alone — kill / deaden — and how Ball Control meets incoming difficulty (`sandbox/visual/receive_kill1/`).
+- **The model:** foot inside / sole / instep / outside, thigh, chest and head surfaces with envelopes; a continuous difficulty D; the error E = 0.0068 + 0.40 · ((100 − BC) / 90)^1.1 · D / (D + 1), easy balls compressing the ratings.
+- **Results** (200 seeds): a 22 m/s pass ends 0.03 / 0.12 / 0.33 / 0.68 / 1.80 m from the intended point at BC 99 / 90 / 80 / 70 / 50; a 2 m/s roller ≤ 3 cm at every rating; Chrome / Node 45 / 45.
+
+**RECEIVE-KILL-1.1** (21:46 – 22:27, `869264b` → `f6f7a88`). A compressed scale (BC 50 – 70 = professionals) and follow-up control.
+- **Follow-up control:** the real ball re-predicted after each contact; up to three contacts per episode; stable control; continuation classes IMMEDIATE / ADJUSTED / RECOVERY / UNSTABLE against the ideal episode.
+- **Results:** the 22 m/s pass's 2-second median 2.46 / 0.57 / 0.23 / 0.03 m at BC 10 / 50 / 70 / 99; an 8 m/s chest ball is trapped with the sole at 0.45 s and stable at 0.67 s. The owner found it overcorrected.
+
+**RECEIVE-KILL-1.2** (23:17 – 19 Oct 01:54, `9867a1a` → `ec5d972`). A harsher rating scale as a remap of 1.1: E_new(BC) = E_current(g(BC)), g a monotone cubic.
+- Candidate A met the owner's two anchors exactly but flattened BC 50 – 75; a what-if B was offered.
+- **Owner decision (01:13): alternative B**, knots (1, −8.5) (10, 0.7) (50, 35.4) (75, 54.5) (99, 98.5). B behaves as measured (99 / 99); the 22 m/s pass is IMMEDIATE 29 / 47 / 73 / 95 / 100 % at BC 50 / 70 / 80 / 90 / 99; an easy roller is IMMEDIATE at every rating. The Ball Control candidate; not frozen.
+
+**RECEIVE-TURN-1** (19 Oct 02:39 – 04:10, `da7bdcf` → `33c58e5`). Two phases (`sandbox/visual/receive_turn1/`).
+- **Execution variance around B:** bounded draws (identity to |N| 1.5, a soft cap at 2.5), keyed per receive event and contact, never by Ball Control. B stays the centre over 1,000 seeds; BC 99's largest placement error is 0.07 m.
+- **A stationary receive-and-turn library:** DIRECTIONAL, HALF-TURN, OUTSIDE-OF-FOOT and THROUGH-STANCE, selected by feasibility and cost (never by Ball Control). At 12 m/s: directional 0 – 60°, half-turn 75 – 135°, through-stance 150 – 180°; the outside of the foot only for slow passes. Mirror 50,400 / 50,400; regressions unchanged.
+- Three owner decisions pending (the half-turn's range, the outside turn, large-turn difficulty).
+
+**RECEIVE-TURN-1.1** (19 Oct 04:26 – 05:24, `26cb992`, `23b6dca`). Human body motion around the unchanged RECEIVE-TURN-1 action (`sandbox/visual/receive_turn11/`).
+- **The body:** an authored reference per family and angle; a footstep plan (the support step with the toe already in the turn, forefoot pivots exact about the rig's MTP joint, the contact swing through the authoritative contact pose, the step-through); gaze → shoulders → hips sequencing; the root pulled toward the loaded foot.
+- **Results:** animation on / off 750 / 750; Chrome / Node 54 / 54 including every posed joint; the left / right mirror 176 / 176, joint for joint; plant slip 0.0 mm; foot snaps ≤ 18 mm, at the ball touches only (RECEIVE-TURN-1's body: 86 – 172 mm). Boundary snaps of up to 27 cm and two right-foot biases were found and fixed during the milestone. Presented for review; not frozen.
+
+**The queued receive work** (04:46, `d03b6fc`). QUEUE #1: integrate RECEIVE-KILL + RECEIVE-TURN into RECEIVE-CONTROL (stop, test, report); QUEUE #2: receiving while moving (stop, test, report). The integration (RECEIVE-CONTROL-2) was begun at 05:25 (work-in-progress commits `53a6f0d`, `3dddda5`).
+- RECEIVE-TURN-1's and RECEIVE-KILL's episodes run as live controllers inside the DRIBBLE-V1 ball kernel and reproduce the stand-alone episodes bit for bit (turns 864 / 864, kills and aerial controls 585 / 585); the full pipeline, striking the stand-alone passes, chooses the same actions and reproduces their contacts and ball (180 / 180, 260 / 260).
+- On RECEIVE-CONTROL-1.1's matrix of record (714 runs): standing receivers 108 / 108 CLEAN (RECEIVE-CONTROL-1.1: 92), moving receivers 500 / 606 CLEAN (491), the same 39 misses; the kill blocks 108 / 108 KILLED. Not yet presented.
+
+**The Codex labs** (read-only from the outputs; not integrated):
+- **SHOT-ACCURACY-1.0-VISUAL:** the folder written on 18 Oct at 04:48 (17 Oct day) was extended; file times only.
+- **Standing Tackle V1 — Phase C:** an isolated visual prototype with four cameras, frame strips, mirroring and an 11-angle × 5-reach table per ball state; its automated sweep ran 220 configurations and 9,020 sampled poses. Not a production validation or a freeze.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| RECEIVE-CONTROL-1 / 1.1 | Presented; not frozen; published in the 19 Oct housekeeping |
+| RECEIVE-KILL-1 / 1.1 / 1.2 | Presented; 1.2's alternative B is the Ball Control candidate; not frozen |
+| RECEIVE-TURN-1 / 1.1 | Presented; not frozen; owner decisions pending |
+| RECEIVE-CONTROL-2 (the queued integration) | In progress (work-in-progress commit) |
+| Codex shot-accuracy / standing-tackle labs | Local |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3695,8 +3788,9 @@ Stopped for owner visual review.
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
-  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). RECEIVE-CONTROL-1 (receiving and turning first touches, an adapter on DRIBBLE-V1) is in progress on the same branch.
-- **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3. Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
+  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 — RECEIVE-KILL and RECEIVE-TURN integrated into RECEIVE-CONTROL (the owner's QUEUE #1) — is in progress, then QUEUE #2, receiving while moving.
+- **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
+- **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; no commits, not a freeze.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -3916,6 +4010,13 @@ An index to the narrative above, not a substitute for it.
 | 17 Oct | DRIBBLE-1.3: incremental planner on deterministic work units (148 ms per simulated second, worst step 41 ms) | FC-Sim Git | `54ff810`, `2e44e1f` |
 | 17 Oct | DRIBBLE-1.4 (18 Oct 00:01 – 02:02): every-tick release window, graded set-up validator; not ready to freeze | FC-Sim Git | `7e15213`, `33ce1ca` |
 | 17 Oct | **DRIBBLE-1.5 (18 Oct 02:38 – 03:48): stage-line fix + 12 ms decision budget; frozen as DRIBBLE-V1**, tag `dribble-v1-foundation-1` | FC-Sim Git | `4f20d28` |
+| 18 Oct | RECEIVE-CONTROL-1 presented: 279 / 714 clean; the frozen contact model cannot receive → a dedicated receive contact model | FC-Sim Git | `dc6693c` |
+| 18 Oct | RECEIVE-CONTROL-1.1: authored receive actions, one authoritative contact, Ball Control execution, DRIBBLE-V1 handoff (583 / 714 clean) | FC-Sim Git | `470a4ab` |
+| 18 Oct | RECEIVE-KILL-1 / 1.1: kill / deaden, surfaces to the head, easy-ball compression; follow-up foot control | FC-Sim Git | `d0064a8`, `f6f7a88` |
+| 18 Oct | RECEIVE-KILL-1.2 (19 Oct 00:00 – 01:54): the Ball Control remap; **alternative B chosen by the owner** | FC-Sim Git | `9aba8b9`, `ec5d972` |
+| 18 Oct | RECEIVE-TURN-1 (19 Oct 02:39 – 04:10): bounded keyed variance around B; the stationary receive-and-turn library | FC-Sim Git | `6881ce0` |
+| 18 Oct | RECEIVE-TURN-1.1 (19 Oct 04:26 – 05:24): human body motion — neutrality 750 / 750, mirror 176 / 176, plant slip 0 | FC-Sim Git | `23b6dca` |
+| 18 Oct | RECEIVE-CONTROL-2 begun (19 Oct 05:25 –): RECEIVE-KILL + RECEIVE-TURN integrated, bit-identical to the stand-alone episodes | FC-Sim Git | `53a6f0d`, `3dddda5` (WIP) |
 
 ## Appendix B — Repository provenance
 
