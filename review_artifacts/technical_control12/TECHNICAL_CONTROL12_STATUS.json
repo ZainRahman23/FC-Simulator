@@ -1,0 +1,193 @@
+{
+ "milestone": "TECHNICAL-CONTROL-1.2",
+ "title": "the carry model (owner's correction)",
+ "state": "presented for visual acceptance of basic carrying \u2014 NOT frozen, NOT integrated",
+ "date": "2026-10-19",
+ "checks": {
+  "runs": 75,
+  "errors": 0,
+  "deterministic": 75,
+  "bodyNeutral": 75,
+  "failedNew": 0,
+  "failedOld": 0,
+  "sets": {
+   "carry": {
+    "n": 40,
+    "sepMedianNew": 0.66,
+    "sepMaxNew": 1.277,
+    "sepMedianOld": 0.65,
+    "sepMaxOld": 0.87
+   },
+   "course": {
+    "n": 30,
+    "sepMedianNew": 0.83,
+    "sepMaxNew": 1.474,
+    "sepMedianOld": 0.92,
+    "sepMaxOld": 1.263
+   },
+   "chain": {
+    "n": 5,
+    "sepMedianNew": 0.87,
+    "sepMaxNew": 0.983,
+    "sepMedianOld": 0.87,
+    "sepMaxOld": 0.867
+   }
+  }
+ },
+ "protected": "959/959",
+ "players": {
+  "Ldom": {
+   "old": {
+    "left": 0.99,
+    "right": 0.01,
+    "preferred": 0.99,
+    "inside": 0.115,
+    "outside": 0.101,
+    "instep": 0.783,
+    "sole": 0.0,
+    "sameFoot": 0.983,
+    "runningStepsBetween": 0.978,
+    "latMeanAbs_m": 0.106,
+    "latMeanPrefSide_m": 0.102,
+    "prefLaneShare": 0.965,
+    "centreCrossingsPerS": 0.177,
+    "touchesPerS": 1.776,
+    "sepMax_m": 0.87,
+    "failed": 0
+   },
+   "new": {
+    "left": 1.0,
+    "right": 0.0,
+    "preferred": 1.0,
+    "inside": 0.096,
+    "outside": 0.791,
+    "instep": 0.112,
+    "sole": 0.0,
+    "sameFoot": 1,
+    "runningStepsBetween": 1.34,
+    "latMeanAbs_m": 0.153,
+    "latMeanPrefSide_m": 0.151,
+    "prefLaneShare": 0.975,
+    "centreCrossingsPerS": 0.138,
+    "touchesPerS": 1.585,
+    "sepMax_m": 1,
+    "failed": 0
+   }
+  },
+  "Rdom": {
+   "old": {
+    "left": 0.014,
+    "right": 0.986,
+    "preferred": 0.986,
+    "inside": 0.13,
+    "outside": 0.082,
+    "instep": 0.788,
+    "sole": 0.0,
+    "sameFoot": 0.973,
+    "runningStepsBetween": 0.972,
+    "latMeanAbs_m": 0.1,
+    "latMeanPrefSide_m": 0.096,
+    "prefLaneShare": 0.959,
+    "centreCrossingsPerS": 0.215,
+    "touchesPerS": 1.783,
+    "sepMax_m": 0.87,
+    "failed": 0
+   },
+   "new": {
+    "left": 0.0,
+    "right": 1.0,
+    "preferred": 1.0,
+    "inside": 0.096,
+    "outside": 0.791,
+    "instep": 0.112,
+    "sole": 0.0,
+    "sameFoot": 1,
+    "runningStepsBetween": 1.34,
+    "latMeanAbs_m": 0.145,
+    "latMeanPrefSide_m": 0.143,
+    "prefLaneShare": 0.972,
+    "centreCrossingsPerS": 0.177,
+    "touchesPerS": 1.585,
+    "sepMax_m": 1,
+    "failed": 0
+   }
+  },
+  "two": {
+   "old": {
+    "left": 0.488,
+    "right": 0.512,
+    "preferred": null,
+    "inside": 0.574,
+    "outside": 0.05,
+    "instep": 0.376,
+    "sole": 0.0,
+    "sameFoot": 0.481,
+    "runningStepsBetween": 0.814,
+    "latMeanAbs_m": 0.084,
+    "latMeanPrefSide_m": null,
+    "prefLaneShare": null,
+    "centreCrossingsPerS": 0.937,
+    "touchesPerS": 1.94,
+    "sepMax_m": 0.79,
+    "failed": 0
+   },
+   "new": {
+    "left": 0.268,
+    "right": 0.732,
+    "preferred": null,
+    "inside": 0.2,
+    "outside": 0.668,
+    "instep": 0.132,
+    "sole": 0.0,
+    "sameFoot": 0.849,
+    "runningStepsBetween": 1.194,
+    "latMeanAbs_m": 0.098,
+    "latMeanPrefSide_m": null,
+    "prefLaneShare": null,
+    "centreCrossingsPerS": 0.313,
+    "touchesPerS": 1.757,
+    "sepMax_m": 1,
+    "failed": 0
+   }
+  },
+  "neutral": {
+   "old": {
+    "left": 0.319,
+    "right": 0.681,
+    "preferred": 0.681,
+    "inside": 0.411,
+    "outside": 0.059,
+    "instep": 0.513,
+    "sole": 0.016,
+    "sameFoot": 0.432,
+    "runningStepsBetween": 1.272,
+    "latMeanAbs_m": 0.074,
+    "latMeanPrefSide_m": 0.034,
+    "prefLaneShare": 0.603,
+    "centreCrossingsPerS": 0.953,
+    "touchesPerS": 1.57,
+    "sepMax_m": 0.87,
+    "failed": 0
+   },
+   "new": {
+    "left": 0.068,
+    "right": 0.932,
+    "preferred": 0.932,
+    "inside": 0.162,
+    "outside": 0.712,
+    "instep": 0.126,
+    "sole": 0.0,
+    "sameFoot": 0.959,
+    "runningStepsBetween": 1.352,
+    "latMeanAbs_m": 0.098,
+    "latMeanPrefSide_m": 0.088,
+    "prefLaneShare": 0.92,
+    "centreCrossingsPerS": 0.245,
+    "touchesPerS": 1.633,
+    "sepMax_m": 1.32,
+    "failed": 0
+   }
+  }
+ },
+ "review": "review/TECHNICAL_CONTROL12_REVIEW.html (local only)"
+}
