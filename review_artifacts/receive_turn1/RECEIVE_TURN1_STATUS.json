@@ -1,0 +1,3969 @@
+{
+ "milestone": "RECEIVE-TURN-1",
+ "date": "2026-10-19",
+ "branch": "prototype/dribble-1",
+ "frozen": false,
+ "integrated": false,
+ "readyToFreeze": "NO — presented for the owner's review ('Do NOT freeze or integrate automatically.')",
+ "phase1": {
+  "model": "touch = ideal + Σ σ_a · bounded(N_a) · ê_a, σ_a = k_a · vRef · D · E_B(BC, D); bounded(N) = N for |N| ≤ 1.5, else ±(1.5 + tanh(|N| − 1.5)), cap 2.5",
+  "keys": "seed|RECEIVE|receiver|receiveEvent|c<contact>|receive-control-v2|<dimension>|<drawIndex>",
+  "dimensions": {
+   "kill": [
+    "damping",
+    "direction",
+    "vertical"
+   ],
+   "turn": [
+    "damping",
+    "weight",
+    "direction",
+    "vertical"
+   ]
+  },
+  "seeds": 1000,
+  "bAsCentre": {
+   "EASY": {
+    "30": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "50": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "70": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "80": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "90": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "NORMAL": {
+    "30": {
+     "B": 0.693,
+     "Bb": 0.697,
+     "v2": 0.68
+    },
+    "50": {
+     "B": 0.867,
+     "Bb": 0.872,
+     "v2": 0.881
+    },
+    "70": {
+     "B": 0.946,
+     "Bb": 0.952,
+     "v2": 0.968
+    },
+    "80": {
+     "B": 0.991,
+     "Bb": 0.999,
+     "v2": 1
+    },
+    "90": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "HARD": {
+    "30": {
+     "B": 0.17,
+     "Bb": 0.171,
+     "v2": 0.148
+    },
+    "50": {
+     "B": 0.324,
+     "Bb": 0.323,
+     "v2": 0.314
+    },
+    "70": {
+     "B": 0.537,
+     "Bb": 0.538,
+     "v2": 0.53
+    },
+    "80": {
+     "B": 0.743,
+     "Bb": 0.753,
+     "v2": 0.731
+    },
+    "90": {
+     "B": 0.961,
+     "Bb": 0.966,
+     "v2": 0.975
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "THIGH_M": {
+    "30": {
+     "B": 0.751,
+     "Bb": 0.756,
+     "v2": 0.752
+    },
+    "50": {
+     "B": 0.904,
+     "Bb": 0.92,
+     "v2": 0.922
+    },
+    "70": {
+     "B": 0.976,
+     "Bb": 0.989,
+     "v2": 0.996
+    },
+    "80": {
+     "B": 0.997,
+     "Bb": 1,
+     "v2": 1
+    },
+    "90": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "THIGH_H": {
+    "30": {
+     "B": 0.062,
+     "Bb": 0.062,
+     "v2": 0.049
+    },
+    "50": {
+     "B": 0.12,
+     "Bb": 0.12,
+     "v2": 0.101
+    },
+    "70": {
+     "B": 0.236,
+     "Bb": 0.236,
+     "v2": 0.222
+    },
+    "80": {
+     "B": 0.394,
+     "Bb": 0.394,
+     "v2": 0.392
+    },
+    "90": {
+     "B": 0.826,
+     "Bb": 0.838,
+     "v2": 0.837
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "CHEST_M": {
+    "30": {
+     "B": 0.453,
+     "Bb": 0.459,
+     "v2": 0.417
+    },
+    "50": {
+     "B": 0.621,
+     "Bb": 0.626,
+     "v2": 0.615
+    },
+    "70": {
+     "B": 0.77,
+     "Bb": 0.771,
+     "v2": 0.755
+    },
+    "80": {
+     "B": 0.859,
+     "Bb": 0.866,
+     "v2": 0.869
+    },
+    "90": {
+     "B": 0.983,
+     "Bb": 0.985,
+     "v2": 0.987
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 0.999
+    }
+   },
+   "CHEST_H": {
+    "30": {
+     "B": 0.05,
+     "Bb": 0.05,
+     "v2": 0.047
+    },
+    "50": {
+     "B": 0.097,
+     "Bb": 0.097,
+     "v2": 0.09
+    },
+    "70": {
+     "B": 0.171,
+     "Bb": 0.172,
+     "v2": 0.153
+    },
+    "80": {
+     "B": 0.288,
+     "Bb": 0.291,
+     "v2": 0.273
+    },
+    "90": {
+     "B": 0.609,
+     "Bb": 0.613,
+     "v2": 0.603
+    },
+    "99": {
+     "B": 0.993,
+     "Bb": 0.999,
+     "v2": 1
+    }
+   },
+   "HEAD_M": {
+    "30": {
+     "B": 0.172,
+     "Bb": 0.172,
+     "v2": 0.152
+    },
+    "50": {
+     "B": 0.245,
+     "Bb": 0.245,
+     "v2": 0.234
+    },
+    "70": {
+     "B": 0.365,
+     "Bb": 0.368,
+     "v2": 0.364
+    },
+    "80": {
+     "B": 0.543,
+     "Bb": 0.547,
+     "v2": 0.515
+    },
+    "90": {
+     "B": 0.868,
+     "Bb": 0.873,
+     "v2": 0.876
+    },
+    "99": {
+     "B": 1,
+     "Bb": 1,
+     "v2": 1
+    }
+   },
+   "HEAD_H": {
+    "30": {
+     "B": 0.006,
+     "Bb": 0.006,
+     "v2": 0.009
+    },
+    "50": {
+     "B": 0.018,
+     "Bb": 0.018,
+     "v2": 0.017
+    },
+    "70": {
+     "B": 0.036,
+     "Bb": 0.036,
+     "v2": 0.031
+    },
+    "80": {
+     "B": 0.07,
+     "Bb": 0.07,
+     "v2": 0.064
+    },
+    "90": {
+     "B": 0.205,
+     "Bb": 0.207,
+     "v2": 0.184
+    },
+    "99": {
+     "B": 0.883,
+     "Bb": 0.888,
+     "v2": 0.887
+    }
+   }
+  },
+  "matchedSameClass": {
+   "EASY": {
+    "30": 1,
+    "50": 1,
+    "70": 1,
+    "80": 1,
+    "90": 1,
+    "99": 1
+   },
+   "NORMAL": {
+    "30": 0.992,
+    "50": 0.994,
+    "70": 0.99,
+    "80": 0.992,
+    "90": 1,
+    "99": 1
+   },
+   "HARD": {
+    "30": 0.99,
+    "50": 0.992,
+    "70": 0.985,
+    "80": 0.988,
+    "90": 0.989,
+    "99": 1
+   },
+   "THIGH_M": {
+    "30": 0.994,
+    "50": 0.984,
+    "70": 0.987,
+    "80": 0.997,
+    "90": 1,
+    "99": 1
+   },
+   "THIGH_H": {
+    "30": 0.993,
+    "50": 0.989,
+    "70": 0.992,
+    "80": 0.986,
+    "90": 0.988,
+    "99": 1
+   },
+   "CHEST_M": {
+    "30": 0.984,
+    "50": 0.989,
+    "70": 0.998,
+    "80": 0.993,
+    "90": 0.996,
+    "99": 1
+   },
+   "CHEST_H": {
+    "30": 0.995,
+    "50": 0.989,
+    "70": 0.991,
+    "80": 0.991,
+    "90": 0.99,
+    "99": 0.994
+   },
+   "HEAD_M": {
+    "30": 0.993,
+    "50": 0.996,
+    "70": 0.99,
+    "80": 0.995,
+    "90": 0.995,
+    "99": 1
+   },
+   "HEAD_H": {
+    "30": 0.999,
+    "50": 0.997,
+    "70": 0.992,
+    "80": 0.99,
+    "90": 0.986,
+    "99": 0.995
+   }
+  },
+  "bc99MaxPlacement": {
+   "EASY": 0.0079,
+   "NORMAL": 0.0437,
+   "HARD": 0.0742,
+   "THIGH_M": 0.0437,
+   "THIGH_H": 0.1368,
+   "CHEST_M": 0.0865,
+   "CHEST_H": 0.2416,
+   "HEAD_M": 0.3937,
+   "HEAD_H": 1.0657
+  },
+  "legacyAudit": "504/504",
+  "determinism": {
+   "matched": {
+    "conds": 14,
+    "seedSets": 84,
+    "drawsIdenticalAcrossBC": 155,
+    "drawsChecked": 155,
+    "proportional": 883,
+    "proportionalChecked": 883,
+    "capped": 41,
+    "maxRelDev": 1.0229733967536028e-14
+   },
+   "seedsDiffer": {
+    "pairs": 70,
+    "differ": 70
+   },
+   "replay": {
+    "runs": 252,
+    "identical": 252
+   },
+   "schedulePath": {
+    "runs": 252,
+    "identical": 252,
+    "contacts": 392
+   },
+   "anim": {
+    "runs": 14,
+    "identical": 14
+   }
+  },
+  "chromeNode": "45/45"
+ },
+ "phase2": {
+  "families": [
+   "DIRECTIONAL",
+   "HALF_TURN",
+   "OUTSIDE_TURN",
+   "THROUGH_TURN"
+  ],
+  "selection": {
+   "SLOW_R": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL L INSIDE front",
+    "30": "DIRECTIONAL L INSIDE front",
+    "45": "DIRECTIONAL L INSIDE front",
+    "60": "DIRECTIONAL L INSIDE front",
+    "75": "HALF_TURN R INSIDE back",
+    "90": "HALF_TURN R INSIDE back",
+    "105": "HALF_TURN R INSIDE back",
+    "120": "HALF_TURN R INSIDE back",
+    "135": "HALF_TURN R INSIDE back",
+    "150": "THROUGH_TURN L INSIDE behind",
+    "165": "THROUGH_TURN L INSIDE behind",
+    "180": "THROUGH_TURN L INSIDE behind"
+   },
+   "SLOW_L": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL R INSIDE front",
+    "30": "DIRECTIONAL R INSIDE front",
+    "45": "DIRECTIONAL R INSIDE front",
+    "60": "DIRECTIONAL R INSIDE front",
+    "75": "HALF_TURN L INSIDE back",
+    "90": "HALF_TURN L INSIDE back",
+    "105": "HALF_TURN L INSIDE back",
+    "120": "HALF_TURN L INSIDE back",
+    "135": "THROUGH_TURN R INSIDE behind",
+    "150": "THROUGH_TURN R INSIDE behind",
+    "165": "THROUGH_TURN R INSIDE behind",
+    "180": "THROUGH_TURN R INSIDE behind"
+   },
+   "NORMAL_R": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL L INSIDE front",
+    "30": "DIRECTIONAL L INSIDE front",
+    "45": "DIRECTIONAL L INSIDE front",
+    "60": "DIRECTIONAL L INSIDE front",
+    "75": "HALF_TURN R INSIDE back",
+    "90": "HALF_TURN R INSIDE back",
+    "105": "HALF_TURN R INSIDE back",
+    "120": "HALF_TURN R INSIDE back",
+    "135": "HALF_TURN R INSIDE back",
+    "150": "THROUGH_TURN L INSIDE behind",
+    "165": "THROUGH_TURN L INSIDE behind",
+    "180": "THROUGH_TURN L INSIDE behind"
+   },
+   "NORMAL_L": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL R INSIDE front",
+    "30": "DIRECTIONAL R INSIDE front",
+    "45": "DIRECTIONAL R INSIDE front",
+    "60": "DIRECTIONAL R INSIDE front",
+    "75": "HALF_TURN L INSIDE back",
+    "90": "HALF_TURN L INSIDE back",
+    "105": "HALF_TURN L INSIDE back",
+    "120": "HALF_TURN L INSIDE back",
+    "135": "HALF_TURN L INSIDE back",
+    "150": "THROUGH_TURN R INSIDE behind",
+    "165": "THROUGH_TURN R INSIDE behind",
+    "180": "THROUGH_TURN R INSIDE behind"
+   },
+   "FIRM_R": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL L INSIDE front",
+    "30": "DIRECTIONAL L INSIDE front",
+    "45": "DIRECTIONAL L INSIDE front",
+    "60": "DIRECTIONAL L INSIDE front",
+    "75": "HALF_TURN R INSIDE back",
+    "90": "HALF_TURN R INSIDE back",
+    "105": "HALF_TURN R INSIDE back",
+    "120": "HALF_TURN R INSIDE back",
+    "135": "HALF_TURN R INSIDE back",
+    "150": "HALF_TURN R INSIDE back",
+    "165": "THROUGH_TURN L INSIDE behind",
+    "180": "THROUGH_TURN L INSIDE behind"
+   },
+   "FIRM_L": {
+    "0": "DIRECTIONAL R INSIDE front",
+    "15": "DIRECTIONAL R INSIDE front",
+    "30": "DIRECTIONAL R INSIDE front",
+    "45": "DIRECTIONAL R INSIDE front",
+    "60": "DIRECTIONAL R INSIDE front",
+    "75": "HALF_TURN L INSIDE back",
+    "90": "HALF_TURN L INSIDE back",
+    "105": "HALF_TURN L INSIDE back",
+    "120": "HALF_TURN L INSIDE back",
+    "135": "HALF_TURN L INSIDE back",
+    "150": "THROUGH_TURN R INSIDE behind",
+    "165": "THROUGH_TURN R INSIDE behind",
+    "180": "THROUGH_TURN R INSIDE behind"
+   }
+  },
+  "seedsPerCell": 200,
+  "classShares": {
+   "FIRM_-15": {
+    "30": {
+     "IMMEDIATE": 0.215,
+     "ADJUSTED": 0.415,
+     "RECOVERY": 0.345,
+     "UNSTABLE": 0.025
+    },
+    "50": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.175,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.385,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.08,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.61,
+     "ADJUSTED": 0.38,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.935,
+     "ADJUSTED": 0.065,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-30": {
+    "30": {
+     "IMMEDIATE": 0.17,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.325,
+     "UNSTABLE": 0.035
+    },
+    "50": {
+     "IMMEDIATE": 0.285,
+     "ADJUSTED": 0.545,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.375,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.105,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.45,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.92,
+     "ADJUSTED": 0.08,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-45": {
+    "30": {
+     "IMMEDIATE": 0.155,
+     "ADJUSTED": 0.435,
+     "RECOVERY": 0.36,
+     "UNSTABLE": 0.05
+    },
+    "50": {
+     "IMMEDIATE": 0.295,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.205,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.355,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.135,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.43,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.055,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.605,
+     "ADJUSTED": 0.38,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.875,
+     "ADJUSTED": 0.125,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-60": {
+    "30": {
+     "IMMEDIATE": 0.16,
+     "ADJUSTED": 0.405,
+     "RECOVERY": 0.385,
+     "UNSTABLE": 0.05
+    },
+    "50": {
+     "IMMEDIATE": 0.245,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.33,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.15,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.42,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.065,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.42,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-75": {
+    "30": {
+     "IMMEDIATE": 0.175,
+     "ADJUSTED": 0.335,
+     "RECOVERY": 0.425,
+     "UNSTABLE": 0.065
+    },
+    "50": {
+     "IMMEDIATE": 0.23,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.235,
+     "UNSTABLE": 0.025
+    },
+    "60": {
+     "IMMEDIATE": 0.285,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.195,
+     "UNSTABLE": 0.01
+    },
+    "70": {
+     "IMMEDIATE": 0.32,
+     "ADJUSTED": 0.585,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.465,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-90": {
+    "30": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.405,
+     "UNSTABLE": 0.075
+    },
+    "50": {
+     "IMMEDIATE": 0.235,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.265,
+     "UNSTABLE": 0.015
+    },
+    "60": {
+     "IMMEDIATE": 0.27,
+     "ADJUSTED": 0.56,
+     "RECOVERY": 0.165,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.595,
+     "RECOVERY": 0.07,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.035,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-105": {
+    "30": {
+     "IMMEDIATE": 0.165,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.42,
+     "UNSTABLE": 0.075
+    },
+    "50": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.25,
+     "UNSTABLE": 0.015
+    },
+    "60": {
+     "IMMEDIATE": 0.28,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.15,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.59,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.835,
+     "ADJUSTED": 0.165,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-120": {
+    "30": {
+     "IMMEDIATE": 0.16,
+     "ADJUSTED": 0.37,
+     "RECOVERY": 0.41,
+     "UNSTABLE": 0.06
+    },
+    "50": {
+     "IMMEDIATE": 0.235,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0.005
+    },
+    "60": {
+     "IMMEDIATE": 0.295,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.14,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.345,
+     "ADJUSTED": 0.575,
+     "RECOVERY": 0.08,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.495,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-135": {
+    "30": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0.405,
+     "UNSTABLE": 0.055
+    },
+    "50": {
+     "IMMEDIATE": 0.25,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.26,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.33,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.375,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.53,
+     "ADJUSTED": 0.455,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.895,
+     "ADJUSTED": 0.105,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-150": {
+    "30": {
+     "IMMEDIATE": 0.09,
+     "ADJUSTED": 0.305,
+     "RECOVERY": 0.495,
+     "UNSTABLE": 0.11
+    },
+    "50": {
+     "IMMEDIATE": 0.15,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.355,
+     "UNSTABLE": 0.025
+    },
+    "60": {
+     "IMMEDIATE": 0.235,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.255,
+     "UNSTABLE": 0.01
+    },
+    "70": {
+     "IMMEDIATE": 0.305,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.155,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.465,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.045,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.835,
+     "ADJUSTED": 0.165,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-165": {
+    "30": {
+     "IMMEDIATE": 0.1,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0.52,
+     "UNSTABLE": 0.115
+    },
+    "50": {
+     "IMMEDIATE": 0.155,
+     "ADJUSTED": 0.425,
+     "RECOVERY": 0.4,
+     "UNSTABLE": 0.02
+    },
+    "60": {
+     "IMMEDIATE": 0.205,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.27,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.275,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.175,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.45,
+     "ADJUSTED": 0.505,
+     "RECOVERY": 0.045,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.815,
+     "ADJUSTED": 0.185,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_-180": {
+    "30": {
+     "IMMEDIATE": 0.09,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0.525,
+     "UNSTABLE": 0.12
+    },
+    "50": {
+     "IMMEDIATE": 0.14,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.43,
+     "UNSTABLE": 0.02
+    },
+    "60": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.525,
+     "RECOVERY": 0.29,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.195,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.39,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.8,
+     "ADJUSTED": 0.2,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_0": {
+    "30": {
+     "IMMEDIATE": 0.21,
+     "ADJUSTED": 0.435,
+     "RECOVERY": 0.34,
+     "UNSTABLE": 0.015
+    },
+    "50": {
+     "IMMEDIATE": 0.345,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.43,
+     "ADJUSTED": 0.465,
+     "RECOVERY": 0.105,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.655,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.97,
+     "ADJUSTED": 0.03,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_15": {
+    "30": {
+     "IMMEDIATE": 0.215,
+     "ADJUSTED": 0.415,
+     "RECOVERY": 0.345,
+     "UNSTABLE": 0.025
+    },
+    "50": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.175,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.385,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.08,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.61,
+     "ADJUSTED": 0.38,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.935,
+     "ADJUSTED": 0.065,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_30": {
+    "30": {
+     "IMMEDIATE": 0.17,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.325,
+     "UNSTABLE": 0.035
+    },
+    "50": {
+     "IMMEDIATE": 0.285,
+     "ADJUSTED": 0.545,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.375,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.105,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.45,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.92,
+     "ADJUSTED": 0.08,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_45": {
+    "30": {
+     "IMMEDIATE": 0.155,
+     "ADJUSTED": 0.435,
+     "RECOVERY": 0.36,
+     "UNSTABLE": 0.05
+    },
+    "50": {
+     "IMMEDIATE": 0.295,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.205,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.355,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.135,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.43,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.055,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.605,
+     "ADJUSTED": 0.38,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.875,
+     "ADJUSTED": 0.125,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_60": {
+    "30": {
+     "IMMEDIATE": 0.16,
+     "ADJUSTED": 0.405,
+     "RECOVERY": 0.385,
+     "UNSTABLE": 0.05
+    },
+    "50": {
+     "IMMEDIATE": 0.245,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.33,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.15,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.42,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.065,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.42,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_75": {
+    "30": {
+     "IMMEDIATE": 0.175,
+     "ADJUSTED": 0.335,
+     "RECOVERY": 0.425,
+     "UNSTABLE": 0.065
+    },
+    "50": {
+     "IMMEDIATE": 0.23,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.235,
+     "UNSTABLE": 0.025
+    },
+    "60": {
+     "IMMEDIATE": 0.285,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.195,
+     "UNSTABLE": 0.01
+    },
+    "70": {
+     "IMMEDIATE": 0.32,
+     "ADJUSTED": 0.585,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.465,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_90": {
+    "30": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.405,
+     "UNSTABLE": 0.075
+    },
+    "50": {
+     "IMMEDIATE": 0.235,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.265,
+     "UNSTABLE": 0.015
+    },
+    "60": {
+     "IMMEDIATE": 0.27,
+     "ADJUSTED": 0.56,
+     "RECOVERY": 0.165,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.595,
+     "RECOVERY": 0.07,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.035,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_105": {
+    "30": {
+     "IMMEDIATE": 0.165,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.42,
+     "UNSTABLE": 0.075
+    },
+    "50": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.25,
+     "UNSTABLE": 0.015
+    },
+    "60": {
+     "IMMEDIATE": 0.28,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.15,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.59,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.835,
+     "ADJUSTED": 0.165,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_120": {
+    "30": {
+     "IMMEDIATE": 0.16,
+     "ADJUSTED": 0.37,
+     "RECOVERY": 0.41,
+     "UNSTABLE": 0.06
+    },
+    "50": {
+     "IMMEDIATE": 0.235,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0.005
+    },
+    "60": {
+     "IMMEDIATE": 0.295,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.14,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.345,
+     "ADJUSTED": 0.575,
+     "RECOVERY": 0.08,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.495,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_135": {
+    "30": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0.405,
+     "UNSTABLE": 0.055
+    },
+    "50": {
+     "IMMEDIATE": 0.25,
+     "ADJUSTED": 0.49,
+     "RECOVERY": 0.26,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.33,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.375,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.53,
+     "ADJUSTED": 0.455,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.895,
+     "ADJUSTED": 0.105,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_150": {
+    "30": {
+     "IMMEDIATE": 0.17,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0.45,
+     "UNSTABLE": 0.04
+    },
+    "50": {
+     "IMMEDIATE": 0.25,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.255,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.31,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.17,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.395,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.065,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.52,
+     "ADJUSTED": 0.46,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.9,
+     "ADJUSTED": 0.1,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_165": {
+    "30": {
+     "IMMEDIATE": 0.1,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0.52,
+     "UNSTABLE": 0.115
+    },
+    "50": {
+     "IMMEDIATE": 0.155,
+     "ADJUSTED": 0.425,
+     "RECOVERY": 0.4,
+     "UNSTABLE": 0.02
+    },
+    "60": {
+     "IMMEDIATE": 0.205,
+     "ADJUSTED": 0.52,
+     "RECOVERY": 0.27,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.275,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.175,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.45,
+     "ADJUSTED": 0.505,
+     "RECOVERY": 0.045,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.815,
+     "ADJUSTED": 0.185,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "FIRM_180": {
+    "30": {
+     "IMMEDIATE": 0.09,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0.525,
+     "UNSTABLE": 0.12
+    },
+    "50": {
+     "IMMEDIATE": 0.14,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.43,
+     "UNSTABLE": 0.02
+    },
+    "60": {
+     "IMMEDIATE": 0.18,
+     "ADJUSTED": 0.525,
+     "RECOVERY": 0.29,
+     "UNSTABLE": 0.005
+    },
+    "70": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.565,
+     "RECOVERY": 0.195,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.39,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.8,
+     "ADJUSTED": 0.2,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-15": {
+    "30": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.58,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.655,
+     "ADJUSTED": 0.345,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.775,
+     "ADJUSTED": 0.225,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.91,
+     "ADJUSTED": 0.09,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-30": {
+    "30": {
+     "IMMEDIATE": 0.425,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.43,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.66,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.735,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.88,
+     "ADJUSTED": 0.12,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-45": {
+    "30": {
+     "IMMEDIATE": 0.4,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.09,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.565,
+     "ADJUSTED": 0.42,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.63,
+     "ADJUSTED": 0.37,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.7,
+     "ADJUSTED": 0.3,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-60": {
+    "30": {
+     "IMMEDIATE": 0.37,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.55,
+     "ADJUSTED": 0.43,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.61,
+     "ADJUSTED": 0.39,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.665,
+     "ADJUSTED": 0.335,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-75": {
+    "30": {
+     "IMMEDIATE": 0.305,
+     "ADJUSTED": 0.555,
+     "RECOVERY": 0.135,
+     "UNSTABLE": 0.005
+    },
+    "50": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.52,
+     "ADJUSTED": 0.46,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.59,
+     "ADJUSTED": 0.405,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.97,
+     "ADJUSTED": 0.03,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-90": {
+    "30": {
+     "IMMEDIATE": 0.29,
+     "ADJUSTED": 0.605,
+     "RECOVERY": 0.105,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.425,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.035,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.515,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.6,
+     "ADJUSTED": 0.4,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.78,
+     "ADJUSTED": 0.22,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-105": {
+    "30": {
+     "IMMEDIATE": 0.31,
+     "ADJUSTED": 0.595,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.44,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.025,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.51,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.645,
+     "ADJUSTED": 0.355,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.8,
+     "ADJUSTED": 0.2,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.98,
+     "ADJUSTED": 0.02,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-120": {
+    "30": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.57,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.48,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.435,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.65,
+     "ADJUSTED": 0.35,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-135": {
+    "30": {
+     "IMMEDIATE": 0.35,
+     "ADJUSTED": 0.575,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.51,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.415,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.64,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-150": {
+    "30": {
+     "IMMEDIATE": 0.28,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.215,
+     "UNSTABLE": 0.005
+    },
+    "50": {
+     "IMMEDIATE": 0.435,
+     "ADJUSTED": 0.505,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.52,
+     "ADJUSTED": 0.45,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.635,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-165": {
+    "30": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.21,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.39,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.07,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.49,
+     "ADJUSTED": 0.48,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.77,
+     "ADJUSTED": 0.23,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_-180": {
+    "30": {
+     "IMMEDIATE": 0.21,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.355,
+     "ADJUSTED": 0.57,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.525,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.495,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.68,
+     "ADJUSTED": 0.32,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_0": {
+    "30": {
+     "IMMEDIATE": 0.47,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.625,
+     "ADJUSTED": 0.37,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.725,
+     "ADJUSTED": 0.275,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.785,
+     "ADJUSTED": 0.215,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.94,
+     "ADJUSTED": 0.06,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_15": {
+    "30": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.495,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.58,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.655,
+     "ADJUSTED": 0.345,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.775,
+     "ADJUSTED": 0.225,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.91,
+     "ADJUSTED": 0.09,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_30": {
+    "30": {
+     "IMMEDIATE": 0.425,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.43,
+     "RECOVERY": 0.01,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.66,
+     "ADJUSTED": 0.34,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.735,
+     "ADJUSTED": 0.265,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.88,
+     "ADJUSTED": 0.12,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_45": {
+    "30": {
+     "IMMEDIATE": 0.4,
+     "ADJUSTED": 0.51,
+     "RECOVERY": 0.09,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.565,
+     "ADJUSTED": 0.42,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.63,
+     "ADJUSTED": 0.37,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.7,
+     "ADJUSTED": 0.3,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_60": {
+    "30": {
+     "IMMEDIATE": 0.37,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.55,
+     "ADJUSTED": 0.43,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.61,
+     "ADJUSTED": 0.39,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.665,
+     "ADJUSTED": 0.335,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_75": {
+    "30": {
+     "IMMEDIATE": 0.305,
+     "ADJUSTED": 0.555,
+     "RECOVERY": 0.135,
+     "UNSTABLE": 0.005
+    },
+    "50": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.515,
+     "RECOVERY": 0.04,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.52,
+     "ADJUSTED": 0.46,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.59,
+     "ADJUSTED": 0.405,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.97,
+     "ADJUSTED": 0.03,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_90": {
+    "30": {
+     "IMMEDIATE": 0.29,
+     "ADJUSTED": 0.605,
+     "RECOVERY": 0.105,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.425,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.035,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.515,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.015,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.6,
+     "ADJUSTED": 0.4,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.78,
+     "ADJUSTED": 0.22,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_105": {
+    "30": {
+     "IMMEDIATE": 0.31,
+     "ADJUSTED": 0.595,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.44,
+     "ADJUSTED": 0.535,
+     "RECOVERY": 0.025,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.51,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.645,
+     "ADJUSTED": 0.355,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.8,
+     "ADJUSTED": 0.2,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.98,
+     "ADJUSTED": 0.02,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_120": {
+    "30": {
+     "IMMEDIATE": 0.335,
+     "ADJUSTED": 0.57,
+     "RECOVERY": 0.095,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.48,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.56,
+     "ADJUSTED": 0.435,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.65,
+     "ADJUSTED": 0.35,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_135": {
+    "30": {
+     "IMMEDIATE": 0.35,
+     "ADJUSTED": 0.575,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.51,
+     "ADJUSTED": 0.47,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.415,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.64,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_150": {
+    "30": {
+     "IMMEDIATE": 0.28,
+     "ADJUSTED": 0.5,
+     "RECOVERY": 0.215,
+     "UNSTABLE": 0.005
+    },
+    "50": {
+     "IMMEDIATE": 0.435,
+     "ADJUSTED": 0.505,
+     "RECOVERY": 0.06,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.52,
+     "ADJUSTED": 0.45,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.635,
+     "ADJUSTED": 0.36,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.795,
+     "ADJUSTED": 0.205,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_165": {
+    "30": {
+     "IMMEDIATE": 0.24,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.21,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.39,
+     "ADJUSTED": 0.54,
+     "RECOVERY": 0.07,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.49,
+     "ADJUSTED": 0.48,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.585,
+     "ADJUSTED": 0.41,
+     "RECOVERY": 0.005,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.77,
+     "ADJUSTED": 0.23,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "NORMAL_180": {
+    "30": {
+     "IMMEDIATE": 0.21,
+     "ADJUSTED": 0.55,
+     "RECOVERY": 0.24,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.355,
+     "ADJUSTED": 0.57,
+     "RECOVERY": 0.075,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.445,
+     "ADJUSTED": 0.525,
+     "RECOVERY": 0.03,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.495,
+     "ADJUSTED": 0.485,
+     "RECOVERY": 0.02,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 0.68,
+     "ADJUSTED": 0.32,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-15": {
+    "30": {
+     "IMMEDIATE": 0.95,
+     "ADJUSTED": 0.05,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-30": {
+    "30": {
+     "IMMEDIATE": 0.94,
+     "ADJUSTED": 0.06,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-45": {
+    "30": {
+     "IMMEDIATE": 0.905,
+     "ADJUSTED": 0.095,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-60": {
+    "30": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-75": {
+    "30": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.97,
+     "ADJUSTED": 0.03,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.98,
+     "ADJUSTED": 0.02,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-90": {
+    "30": {
+     "IMMEDIATE": 0.855,
+     "ADJUSTED": 0.145,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-105": {
+    "30": {
+     "IMMEDIATE": 0.875,
+     "ADJUSTED": 0.125,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-120": {
+    "30": {
+     "IMMEDIATE": 0.895,
+     "ADJUSTED": 0.105,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-135": {
+    "30": {
+     "IMMEDIATE": 0.855,
+     "ADJUSTED": 0.145,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-150": {
+    "30": {
+     "IMMEDIATE": 0.83,
+     "ADJUSTED": 0.17,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.94,
+     "ADJUSTED": 0.06,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-165": {
+    "30": {
+     "IMMEDIATE": 0.855,
+     "ADJUSTED": 0.145,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.93,
+     "ADJUSTED": 0.07,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_-180": {
+    "30": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.91,
+     "ADJUSTED": 0.09,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.95,
+     "ADJUSTED": 0.05,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_0": {
+    "30": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_15": {
+    "30": {
+     "IMMEDIATE": 0.95,
+     "ADJUSTED": 0.05,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_30": {
+    "30": {
+     "IMMEDIATE": 0.94,
+     "ADJUSTED": 0.06,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_45": {
+    "30": {
+     "IMMEDIATE": 0.905,
+     "ADJUSTED": 0.095,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_60": {
+    "30": {
+     "IMMEDIATE": 0.86,
+     "ADJUSTED": 0.14,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_75": {
+    "30": {
+     "IMMEDIATE": 0.85,
+     "ADJUSTED": 0.15,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.97,
+     "ADJUSTED": 0.03,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.98,
+     "ADJUSTED": 0.02,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_90": {
+    "30": {
+     "IMMEDIATE": 0.855,
+     "ADJUSTED": 0.145,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_105": {
+    "30": {
+     "IMMEDIATE": 0.875,
+     "ADJUSTED": 0.125,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.975,
+     "ADJUSTED": 0.025,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_120": {
+    "30": {
+     "IMMEDIATE": 0.895,
+     "ADJUSTED": 0.105,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.985,
+     "ADJUSTED": 0.015,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_135": {
+    "30": {
+     "IMMEDIATE": 0.935,
+     "ADJUSTED": 0.065,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.995,
+     "ADJUSTED": 0.005,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_150": {
+    "30": {
+     "IMMEDIATE": 0.83,
+     "ADJUSTED": 0.17,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.94,
+     "ADJUSTED": 0.06,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.96,
+     "ADJUSTED": 0.04,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_165": {
+    "30": {
+     "IMMEDIATE": 0.855,
+     "ADJUSTED": 0.145,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.93,
+     "ADJUSTED": 0.07,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.955,
+     "ADJUSTED": 0.045,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.99,
+     "ADJUSTED": 0.01,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   },
+   "SLOW_180": {
+    "30": {
+     "IMMEDIATE": 0.82,
+     "ADJUSTED": 0.18,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "50": {
+     "IMMEDIATE": 0.91,
+     "ADJUSTED": 0.09,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "60": {
+     "IMMEDIATE": 0.95,
+     "ADJUSTED": 0.05,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "70": {
+     "IMMEDIATE": 0.965,
+     "ADJUSTED": 0.035,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "80": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "90": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    },
+    "99": {
+     "IMMEDIATE": 1,
+     "ADJUSTED": 0,
+     "RECOVERY": 0,
+     "UNSTABLE": 0
+    }
+   }
+  },
+  "mirror": {
+   "runs": 50400,
+   "mirroredExactly": 50400,
+   "sameResult": 49915,
+   "maxDev": 1.5276668818842154e-13
+  },
+  "determinism": {
+   "matched": {
+    "conds": 14,
+    "seedSets": 84,
+    "drawsIdentical": 504,
+    "drawsChecked": 504,
+    "proportional": 501,
+    "proportionalChecked": 501,
+    "capped": 3,
+    "maxRelDev": 0
+   },
+   "seedsDiffer": {
+    "pairs": 84,
+    "differ": 84
+   },
+   "replay": {
+    "runs": 84,
+    "identical": 84
+   },
+   "schedulePath": {
+    "runs": 252,
+    "identical": 252,
+    "launches": 498
+   },
+   "anim": {
+    "runs": 14,
+    "identical": 14
+   },
+   "mirror": {
+    "runs": 144,
+    "exact": 144,
+    "bitIdentical": 80,
+    "maxDev": 1.4210854715202004e-13,
+    "note": "exact = the same family, class and continuation time (to 1e-12 s) and the ball path mirrored to 1e-9 m; bitIdentical = no floating-point difference at all (angle wraps of mirrored values can differ in the last bit)"
+   },
+   "keys": {
+    "example": "RECEIVE|CAL-R|T1|c0|receive-control-v2",
+    "dims": [
+     "damping",
+     "weight",
+     "direction",
+     "vertical"
+    ],
+    "id": "receive-control-v2"
+   }
+  },
+  "chromeNode": "45/45",
+  "cpu": {
+   "warmupMs": 282.82833300000004,
+   "rollTableMs": 265.415709,
+   "groups": {
+    "0–45": {
+     "receives": 24,
+     "candidatesPerReceive": 208,
+     "feasiblePerReceive": 89.83333333333333,
+     "selectionMs": 0.22217364166667483,
+     "selectionWorstMs": 1.0167079999999942,
+     "episodes": 720,
+     "contactMs": 0.3736924749999954,
+     "predictMs": 3.840393280555563,
+     "meetMs": 0.2653991319444401,
+     "freeBallSimMs": 3.442639705555185,
+     "episodeMs": 8.140313187500002,
+     "episodeWorstMs": 155.83695899999975
+    },
+    "60–105": {
+     "receives": 24,
+     "candidatesPerReceive": 208,
+     "feasiblePerReceive": 80.83333333333333,
+     "selectionMs": 0.21059334166668578,
+     "selectionWorstMs": 0.7531250000001819,
+     "episodes": 720,
+     "contactMs": 0.41698309861109617,
+     "predictMs": 4.28961676250002,
+     "meetMs": 0.059484598611097936,
+     "freeBallSimMs": 3.7785479124998473,
+     "episodeMs": 8.778718395833307,
+     "episodeWorstMs": 16.69312499999978
+    },
+    "120–150": {
+     "receives": 18,
+     "candidatesPerReceive": 208,
+     "feasiblePerReceive": 67.55555555555556,
+     "selectionMs": 0.1659703444446172,
+     "selectionWorstMs": 0.7340839999997115,
+     "episodes": 540,
+     "contactMs": 0.38765893703697724,
+     "predictMs": 4.089342611111133,
+     "meetMs": 0.04220632592594282,
+     "freeBallSimMs": 3.604376133331526,
+     "episodeMs": 8.345799470370356,
+     "episodeWorstMs": 14.77074999999968
+    },
+    "165–180": {
+     "receives": 12,
+     "candidatesPerReceive": 208,
+     "feasiblePerReceive": 55,
+     "selectionMs": 0.1511701000001267,
+     "selectionWorstMs": 0.5190829999992275,
+     "episodes": 360,
+     "contactMs": 0.38998471111115374,
+     "predictMs": 4.057220030555507,
+     "meetMs": 0.07177232222224525,
+     "freeBallSimMs": 3.5656991999991785,
+     "episodeMs": 8.298989449999974,
+     "episodeWorstMs": 22.30620899999849
+    }
+   }
+  }
+ },
+ "regression": {
+  "receiveKill11": "90/90",
+  "receiveKill1": "90/90",
+  "receiveKill12B": "22/22",
+  "dribbleV1": "60/60",
+  "dribbleV1Evidence": "48/48",
+  "receive11Cases": "11/11",
+  "receive11Matrix": "714/714",
+  "frozenParamsUnchanged": true,
+  "protectedFiles": "IDENTICAL"
+ },
+ "decisionsForOwner": [
+  "keep the half-turn's 120° comfortable bound (through-stance at 150–180) or let outcomes decide",
+  "keep or drop the outside-of-foot turn (infeasible for frontal passes > ~6 m/s)",
+  "large-turn difficulty (rotation inside the touch × 0.55)"
+ ],
+ "review": "review/RECEIVE_TURN1_REVIEW.html (local only)",
+ "report": "RECEIVE_TURN1_REPORT.md",
+ "research": "RECEIVE_TURN1_RESEARCH.md"
+}

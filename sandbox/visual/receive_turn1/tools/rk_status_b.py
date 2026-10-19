@@ -1,0 +1,27 @@
+# receive_kill12/tools/rk_status_b.py — RECEIVE_KILL12B_STATUS.json (the owner chose B, 19 Oct) from the evidence: python3 rk_status_b.py <receive_kill12 review dir>
+import json, os, sys
+R = sys.argv[1]; EV = os.path.join(R, "evidence"); J = lambda f: json.load(open(os.path.join(EV, f)))
+F4, AM, DET, CH, CPU, REG, RC, SCK = J("rk12b_four_scales.json"), J("rk12b_as_measured.json"), J("rk12b_determinism.json"), J("rk12b_chrome_node.json"), J("rk12b_cpu.json"), J("rk12b_regression.json"), J("rk12b_receive11_matrix_714_rerun_compare.json"), J("rk12b_scalecheck.json")
+SC = ["original", "current", "A", "B"]
+def row(r): return {"g": r["g"], "E": r["E"], "immediate": r["cls"]["IMMEDIATE"], "classes": r["cls"], "residMedian": r["resid"]["med"], "placeMedian": r["place"]["med"], "e025Median": r["e025"]["med"], "e05Median": r["e05"]["med"], "e1Median": r["e1"]["med"], "d2Median": r["d2"]["med"], "recDistMedian": r["recDist"]["med"], "recTimeMedian": r["recTime"]["med"], "contactsMean": r["contacts"]["mean"], "tStableMedian": r["tStable"]["med"]}
+at = lambda rows, bc: next(r for r in rows if r["bc"] == bc)
+bench = {bid: {"title": B["title"], "surface": B["scales"]["B"][0]["surface"], "D": B["scales"]["B"][0]["D"], "byScale": {sc: {str(r["bc"]): row(r) for r in B["scales"][sc]} for sc in SC}, "anchors": B["anchors"],
+               "spread50to80Immediate": {sc: round(at(B["scales"][sc], 80)["cls"]["IMMEDIATE"] - at(B["scales"][sc], 50)["cls"]["IMMEDIATE"], 4) for sc in SC}} for bid, B in F4["benchmarks"].items()}
+hard = F4["benchmarks"]["HARD"]["scales"]
+S = {"milestone": "RECEIVE-KILL-1.2 B", "date": "2026-10-19", "branch": "prototype/dribble-1", "frozen": False, "curveLocked": False, "integratedIntoReceiveControl11": False,
+  "ownerDecision": "2026-10-19: 'Use Alternative B. Do not preserve the two anchors exactly.' (sources/2026-10-19_user_instruction_receive_kill_1_2_choose_B.md)",
+  "candidate": "B", "readyToFreeze": "NO — B is the candidate; the owner: 'Do not integrate into RECEIVE-CONTROL-1.1 or freeze it yet.'",
+  "model": {"original": "E = 0.0068 + 0.40 · u^1.1 · D/(D+1), u = (100−BC)/90; chest k [1.0,0.6,0.6], head k [1.0,0.9,0.6]",
+            "current": "E = 0.0068 + 0.25 · u·(0.68 + 0.32·u²) · D/(D+1); chest k [0.85,0.5,0.5], head k [0.85,0.7,0.5]",
+            "B": "E_new(BC, D) = E_current(g_B(BC), D); g_B = monotone cubic (PCHIP, Fritsch–Carlson) through (1, -8.5), (10, 0.7), (50, 35.4), (75, 54.5), (99, 98.5); everything else = RECEIVE-KILL-1.1",
+            "A": "the same remap through (1, -8.5), (10, 0.7), (50, 40), (75, 50), (99, 98.5) — the anchors met exactly; not chosen",
+            "gTable": {sc: {str(r["bc"]): r["g"] for r in hard[sc]} for sc in ("B", "A")}, "E22": {sc: {str(r["bc"]): r["E22"] for r in hard[sc]} for sc in SC}},
+  "anchors": {"metExactly": False, "note": "B: new BC75 has 0.90 × current BC50's error and new BC50 1.10 × current BC40's (within 10 %, by the owner's choice); A met them exactly", "byBenchmark": {bid: B["anchors"] for bid, B in F4["benchmarks"].items()}},
+  "behavesAsMeasured": {sc: f'{v["identical"]}/{v["cells"]}' for sc, v in AM.items()},
+  "benchmarks": bench, "seeds": F4["nSeeds"],
+  "determinism": {"scale": "B", "currentScaleEqualsReceiveKill11": f'{SCK["current"]["identical"]}/{SCK["current"]["runs"]}', "originalScaleEqualsReceiveKill1": f'{SCK["original"]["identical"]}/{SCK["original"]["cells"]}', "drawsIdenticalAcrossBC": f'{DET["matched"]["drawsIdenticalAcrossBC"]}/{DET["matched"]["drawsChecked"]}', "firstContactProportional": f'{DET["matched"]["proportional"]}/{DET["matched"]["proportionalChecked"]}', "seedsDiffer": f'{DET["seedsDiffer"]["differ"]}/{DET["seedsDiffer"]["pairs"]}', "replay": f'{DET["replay"]["identical"]}/{DET["replay"]["runs"]}', "schedulePath": f'{DET["schedulePath"]["identical"]}/{DET["schedulePath"]["runs"]}', "animationOnOff": f'{DET["anim"]["identical"]}/{DET["anim"]["runs"]}', "chromeNode": f'{CH["identical"]}/{CH["total"]} ({", ".join(CH["scales"])})'},
+  "cpu": {g: {"firstContactMs": round(c["firstContactMs"], 4), "wholeEpisodeMs": round(c["wholeEpisodeMs"], 3), "worstEpisodeMs": round(c["worstEpisodeMs"], 3)} for g, c in CPU["groups"].items()},
+  "regression": {"receiveKill11Episodes": f'{REG["kill11MatchEvidenceAfter"]}/{REG["kill11Cells"]}', "receiveKill1Cells": f'{REG["kill1MatchEvidenceAfter"]}/{REG["kill1Cells"]}', "dribbleV1": f'{REG["dribbleBeforeEqualsAfter"]}/{REG["dribbleRuns"]}', "dribbleV1Evidence": f'{REG["dribbleEvidenceMatch"]}/{REG["dribbleEvidenceCompared"]}', "receive11Cases": f'{REG["receive11BeforeEqualsAfter"]}/{REG["receive11Cases"]}', "receive11Matrix": f'{RC["identical"]}/{RC["runs"]}', "frozenParamsUnchanged": REG["frozenParamsUnchanged"], "frozenFiles": "IDENTICAL" if "IDENTICAL" in open(os.path.join(EV, "rk12b_frozen_sha256_end_check.txt")).read() else "CHANGED"},
+  "limitations": ["placeholder body, not in the ball's world", "stationary receiver in clean conditions; adjustment speed and foot timing fixed (Agility / Dribbling later)", "a pure remap: B cannot produce any outcome the current scale does not produce at some rating", "follow-ups are foot controls only", "curve not locked"],
+  "review": "review/RECEIVE_KILL12B_REVIEW.html (local only)", "firstRound": "review/RECEIVE_KILL12_REVIEW.html, RECEIVE_KILL12_STATUS.json (candidate = A, kept as presented)"}
+json.dump(S, open(os.path.join(R, "RECEIVE_KILL12B_STATUS.json"), "w"), indent=1, ensure_ascii=False); print("wrote B status")

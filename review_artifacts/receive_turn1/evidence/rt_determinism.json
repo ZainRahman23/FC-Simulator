@@ -1,0 +1,46 @@
+{
+ "matched": {
+  "conds": 14,
+  "seedSets": 84,
+  "drawsIdentical": 504,
+  "drawsChecked": 504,
+  "proportional": 501,
+  "proportionalChecked": 501,
+  "capped": 3,
+  "maxRelDev": 0
+ },
+ "seedsDiffer": {
+  "pairs": 84,
+  "differ": 84
+ },
+ "replay": {
+  "runs": 84,
+  "identical": 84
+ },
+ "schedulePath": {
+  "runs": 252,
+  "identical": 252,
+  "launches": 498
+ },
+ "anim": {
+  "runs": 14,
+  "identical": 14
+ },
+ "mirror": {
+  "runs": 144,
+  "exact": 144,
+  "bitIdentical": 80,
+  "maxDev": 1.4210854715202004e-13,
+  "note": "exact = the same family, class and continuation time (to 1e-12 s) and the ball path mirrored to 1e-9 m; bitIdentical = no floating-point difference at all (angle wraps of mirrored values can differ in the last bit)"
+ },
+ "keys": {
+  "example": "RECEIVE|CAL-R|T1|c0|receive-control-v2",
+  "dims": [
+   "damping",
+   "weight",
+   "direction",
+   "vertical"
+  ],
+  "id": "receive-control-v2"
+ }
+}

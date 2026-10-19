@@ -1,0 +1,62 @@
+{
+ "warmupMs": 282.82833300000004,
+ "rollTableMs": 265.415709,
+ "groups": {
+  "0–45": {
+   "receives": 24,
+   "candidatesPerReceive": 208,
+   "feasiblePerReceive": 89.83333333333333,
+   "selectionMs": 0.22217364166667483,
+   "selectionWorstMs": 1.0167079999999942,
+   "episodes": 720,
+   "contactMs": 0.3736924749999954,
+   "predictMs": 3.840393280555563,
+   "meetMs": 0.2653991319444401,
+   "freeBallSimMs": 3.442639705555185,
+   "episodeMs": 8.140313187500002,
+   "episodeWorstMs": 155.83695899999975
+  },
+  "60–105": {
+   "receives": 24,
+   "candidatesPerReceive": 208,
+   "feasiblePerReceive": 80.83333333333333,
+   "selectionMs": 0.21059334166668578,
+   "selectionWorstMs": 0.7531250000001819,
+   "episodes": 720,
+   "contactMs": 0.41698309861109617,
+   "predictMs": 4.28961676250002,
+   "meetMs": 0.059484598611097936,
+   "freeBallSimMs": 3.7785479124998473,
+   "episodeMs": 8.778718395833307,
+   "episodeWorstMs": 16.69312499999978
+  },
+  "120–150": {
+   "receives": 18,
+   "candidatesPerReceive": 208,
+   "feasiblePerReceive": 67.55555555555556,
+   "selectionMs": 0.1659703444446172,
+   "selectionWorstMs": 0.7340839999997115,
+   "episodes": 540,
+   "contactMs": 0.38765893703697724,
+   "predictMs": 4.089342611111133,
+   "meetMs": 0.04220632592594282,
+   "freeBallSimMs": 3.604376133331526,
+   "episodeMs": 8.345799470370356,
+   "episodeWorstMs": 14.77074999999968
+  },
+  "165–180": {
+   "receives": 12,
+   "candidatesPerReceive": 208,
+   "feasiblePerReceive": 55,
+   "selectionMs": 0.1511701000001267,
+   "selectionWorstMs": 0.5190829999992275,
+   "episodes": 360,
+   "contactMs": 0.38998471111115374,
+   "predictMs": 4.057220030555507,
+   "meetMs": 0.07177232222224525,
+   "freeBallSimMs": 3.5656991999991785,
+   "episodeMs": 8.298989449999974,
+   "episodeWorstMs": 22.30620899999849
+  }
+ }
+}
