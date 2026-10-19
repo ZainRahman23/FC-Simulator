@@ -1,0 +1,76 @@
+{
+ "milestone": "RECEIVE-ELITE-1",
+ "state": "presented for review \u2014 NOT frozen (RECEIVE-V1 not frozen)",
+ "date": "2026-10-19",
+ "instruction": "sources/2026-10-19_user_instruction_elite_tight_control_99.md",
+ "review": "review/RECEIVE_ELITE1_REVIEW.html (local only)",
+ "lab": "sandbox/visual/receive_elite1.html",
+ "separation_turn_max": {
+  "moving_ge90_current": "3.30\u20135.22",
+  "moving_ge90_new": "0.45\u20130.65",
+  "stationary_current": "0.65\u20130.85",
+  "stationary_new": "0.42\u20130.54",
+  "matrix_moving_ge90_median": [
+   3.375,
+   0.47
+  ]
+ },
+ "matrix_672": {
+  "current": {
+   "CLEAN": 639,
+   "TAKEN": 15,
+   "MISSED": 16,
+   "RECOVERED": 2
+  },
+  "new": {
+   "CLEAN": 657,
+   "MISSED": 12,
+   "RECOVERED": 3
+  }
+ },
+ "regression": {
+  "eliteOff": [
+   422,
+   422
+  ],
+  "nonTurn": [
+   24,
+   24
+  ]
+ },
+ "determinism": {
+  "repeat": [
+   240,
+   240
+  ],
+  "draws": [
+   172,
+   172
+  ],
+  "chromeNode": [
+   26,
+   26
+  ]
+ },
+ "neutrality": [
+  100,
+  100
+ ],
+ "protected": "727/727 identical",
+ "cpu": {
+  "current": {
+   "receivePerSimSec": 17,
+   "afterPerSimSec": 163,
+   "worstStep": 46.1,
+   "rxPlanMedian": 1.89,
+   "rxPlanMax": 2.7
+  },
+  "new": {
+   "receivePerSimSec": 21,
+   "afterPerSimSec": 137,
+   "worstStep": 39.9,
+   "rxPlanMedian": 1.97,
+   "rxPlanMax": 2.76
+  }
+ }
+}

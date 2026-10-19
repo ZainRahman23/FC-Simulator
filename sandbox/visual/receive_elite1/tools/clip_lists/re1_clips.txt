@@ -1,0 +1,27 @@
+# RECEIVE-ELITE-1 review clips: <id>|<from: s from the first contact>|<to>|<rate>|<lab query>   (1280×720, 30 fps; CURRENT vs NEW side by side unless named otherwise)
+cmp_st90|-0.7|1.9|0.5|case=ST_90_V12&compare=1&A=nearC
+cmp_st135|-0.7|1.9|0.5|case=ST_135_V12&compare=1&A=nearC
+cmp_st180|-0.7|1.9|0.5|case=ST_180_V12&compare=1&A=nearC
+cmp_run60|-0.9|1.8|0.5|case=L_60_RUN_NORMAL&compare=1&A=near
+cmp_run90|-0.9|1.8|0.5|case=L_90_RUN_NORMAL&compare=1&A=near
+cmp_run120|-0.9|1.8|0.5|case=L_120_RUN_NORMAL&compare=1&A=near
+cmp_run150|-0.9|1.8|0.5|case=L_150_RUN_NORMAL&compare=1&A=near
+cmp_spr90|-0.9|1.9|0.5|case=L_90_SPRINT_NORMAL&compare=1&A=near
+cmp_spr120|-0.9|1.9|0.5|case=L_120_SPRINT_NORMAL&compare=1&A=near
+cmp_spr150|-0.9|1.9|0.5|case=L_150_SPRINT_NORMAL&compare=1&A=near
+cmp_spr180|-0.9|1.9|0.5|case=F_180R_SPRINT_NORMAL&compare=1&A=near
+new_st180_slow|-0.5|1.1|0.25|case=ST_180_V12&single=nearC
+new_st180_top|-0.5|1.4|0.5|case=ST_180_V12&single=topC
+new_run120_slow|-0.6|1.1|0.25|case=L_120_RUN_NORMAL&single=nearC
+new_spr180_slow|-0.6|1.2|0.25|case=F_180R_SPRINT_NORMAL&single=nearC
+new_spr150_top|-0.8|1.6|0.5|case=L_150_SPRINT_NORMAL&single=topC
+new_spr0_game|-0.6|2.4|1|case=RL_0_SPRINT_NORMAL&single=game
+new_run90_game|-0.8|2.4|1|case=L_90_RUN_NORMAL
+bc_st180|-0.5|1.6|0.5|case=ST_180_V12&vs=B50_D99_A99&A=nearC
+bc_run120|-0.7|1.7|0.5|case=L_120_RUN_NORMAL&vs=B50_D99_A99&A=near
+dri_st180|-0.5|1.6|0.5|case=ST_180_V12&vs=B99_D50_A99&A=nearC
+dri_run120|-0.7|1.7|0.5|case=L_120_RUN_NORMAL&vs=B99_D50_A99&A=near
+agi_spr180|-0.9|1.9|0.5|case=F_180R_SPRINT_NORMAL&vs=B99_D99_A50&A=near
+agi_run120|-0.9|1.8|0.5|case=L_120_RUN_NORMAL&vs=B99_D99_A50&A=near
+all_st135|-0.6|1.7|0.5|case=ST_135_V12&vs=B50_D50_A50&A=nearC
+all_spr150|-0.9|1.9|0.5|case=L_150_SPRINT_NORMAL&vs=B70_D70_A70&A=near

@@ -1,0 +1,10 @@
+// receive_elite1/tools/re1_run.mjs — RECEIVE-MOVING-1's movement matrix (or listed ids) × seeds on CURRENT or NEW at the given ratings: the scorecard,
+// the tight-control metrics, the momentum metrics.   node re1_run.mjs <@matrix | ids> <seeds> <out.json> [shard/n] [CURRENT|NEW] [B,D,A] [dur]
+import fs from "fs"; import { makeElite, makeCurrent } from "./re1_env.mjs"; import { matrix, parseCase as parseMoving, seedCase } from "../../receive_moving1/rm1_cases.js"; import { tight } from "./re1_metrics.mjs"; import { momentum } from "../../receive_moving1/tools/rm1_metrics.mjs";
+const [sel, seedsS, outFile, shard, pipe, rtS, durS] = process.argv.slice(2), seeds = (seedsS || "1").split(",").map(Number), rt = (rtS || "99,99,99").split(",").map(Number), ratings = { bc: rt[0], dri: rt[1], agi: rt[2] };
+const cases = sel === "@matrix" ? matrix() : sel.split(",").map((id) => parseMoving(id)), jobs = []; for (const cs of cases) for (const sd of seeds) jobs.push([cs, sd]);
+const [si, sn] = shard ? shard.split("/").map(Number) : [0, 1], rows = [];
+for (const [i, [cs0, sd]] of jobs.entries()) { if (i % sn !== si) continue; const cs = seedCase(cs0, sd); cs.scenario.dur = +(durS || 5.5); cs.ratings = ratings; cs.base = cs.id; cs.kind = cs.rs === "STAND" ? "stationary" : cs.rs === "SPRINT" ? "sprint" : "running";
+  const S = (pipe === "NEW" ? makeElite : makeCurrent)(cs, { seed: sd, ratings }), t0 = performance.now(); S.run(cs.scenario.dur); const ms = performance.now() - t0;
+  const m = tight(S, cs); m.seed = sd; m.pipeline = pipe || "CURRENT"; m.rs = cs.rs; m.ps = cs.ps; m.dir = cs.dir; m.momentum = momentum(S); m.ms = Math.round(ms); m.mode = S.rx.stand ? "stationary" : "moving"; m.elite = S.rc2 && S.rc2.kind === "ELITE" ? { from: S.rc2.eliteFrom, failed: S.rc2.ep.failed, n: S.rc2.ep.contacts.length, rec: S.rc2.ep.contacts.filter((c) => c.recovery).length } : null; delete m.sep.curve; rows.push(m); }
+fs.writeFileSync(outFile, JSON.stringify(rows)); console.log(`${rows.length} runs → ${outFile}`);
