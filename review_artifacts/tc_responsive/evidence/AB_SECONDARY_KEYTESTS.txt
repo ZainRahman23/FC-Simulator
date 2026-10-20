@@ -1,0 +1,108 @@
+
+■ sprint snap 45°
+  88573ef0   response: authoritative  0.18 (p95  0.30) · visible  0.26 (p95  0.38) | relevant contact  0.33 (p95  0.45, max  0.45) | new line  0.55 (p95  0.67, max  0.67) · exit 70 %  0.55
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.13 m (median 0.79) · 1.35 contacts/s (shortest gap 0.246 s) | body: legs 3 · foot jumps 5 · slides 0 | replan p99 3.07 ms
+  experiment response: authoritative  0.01 (p95  0.02) · visible  0.01 (p95  0.01) | relevant contact  0.16 (p95  0.18, max  0.18) | new line  0.32 (p95  0.36, max  0.36) · exit 70 %  0.33
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 0.92 m (median 0.68) · 2.19 contacts/s (shortest gap 0.163 s) | body: legs 20 · foot jumps 5 · slides 0 | replan p99 5.7 ms
+             actions: URGENT REACH R ×4, INSIDE REDIRECT R ×2, INSIDE REDIRECT L ×1, URGENT REACH L ×1
+             commitment (the contacting proxy's final approach): URGENT 29 ms (29–29, n 5) · CARRY 37 ms (37–38, n 34) · INSIDE 33 ms (33–33, n 3)
+
+■ sprint snap 90°
+  88573ef0   response: authoritative  0.34 (p95  0.49) · visible  0.41 (p95  0.55) | relevant contact  0.68 (p95  0.81, max  0.81) | new line  0.86 (p95  1.08, max  1.08) · exit 70 %  1.31
+             control: LOST 0 · missed 0 · double 0 · stale 6 · sep max 1.68 m (median 0.77) · 1.67 contacts/s (shortest gap 0.246 s) | body: legs 2 · foot jumps 69 · slides 0 | replan p99 1.61 ms
+             actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
+  experiment response: authoritative  0.01 (p95  0.01) · visible  0.01 (p95  0.01) | relevant contact  0.24 (p95  0.26, max  0.26) | new line  0.65 (p95  0.68, max  0.68) · exit 70 %  0.91
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.05 m (median 0.73) · 2.08 contacts/s (shortest gap 0.15 s) | body: legs 9 · foot jumps 9 · slides 0 | replan p99 1.73 ms
+             actions: URGENT REACH R ×5, URGENT REACH L ×3
+             commitment (the contacting proxy's final approach): URGENT 29 ms (29–29, n 8) · CARRY 38 ms (37–38, n 32)
+
+■ sprint snap 120°
+  88573ef0   response: authoritative  0.34 (p95  0.58) · visible  0.43 (p95  0.68) | relevant contact  0.69 (p95  1.05, max  1.05) | new line  0.97 (p95  1.33, max  1.33) · exit 70 %  1.43
+             control: LOST 0 · missed 0 · double 0 · stale 5 · sep max 1.91 m (median 0.82) · 1.61 contacts/s (shortest gap 0.246 s) | body: legs 1 · foot jumps 53 · slides 0 | replan p99 1.05 ms
+             actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
+  experiment response: authoritative  0.01 (p95  0.03) · visible  0.01 (p95  0.01) | relevant contact  0.44 (p95  1.22, max  1.22) | new line  0.95 (p95  1.81, max  1.81) · exit 70 %  1.68
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.08 m (median 0.83) · 1.93 contacts/s (shortest gap 0.138 s) | body: legs 21 · foot jumps 20 · slides 0 | replan p99 2.61 ms
+             actions: CHECK TOUCH R ×5, CRUYFF TURN L ×2, CHECK TOUCH L ×2, RONALDO CHOP L ×1, INSIDE HOOK L ×1, RONALDO CHOP R ×1, INSIDE HOOK R ×1, CRUYFF TURN R ×1, INSIDE REDIRECT R ×1
+             commitment (the contacting proxy's final approach): CHECK 38 ms (37–38, n 5) · CARRY 38 ms (37–38, n 31) · INSIDE 33 ms (33–33, n 1)
+
+■ sprint snap 180°
+  88573ef0   response: authoritative  0.25 (p95  0.35) · visible  0.33 (p95  0.44) | relevant contact  0.54 (p95  0.64, max  0.64) | new line  1.11 (p95  1.22, max  1.22) · exit 70 %  1.68
+             control: LOST 0 · missed 0 · double 0 · stale 6 · sep max 1.22 m (median 0.76) · 2.19 contacts/s (shortest gap 0.242 s) | body: legs 18 · foot jumps 38 · slides 0 | replan p99 2.02 ms
+             actions: DRAG-BACK L ×4, DRAG-BACK R ×4
+  experiment response: authoritative  0.01 (p95  0.02) · visible  0.01 (p95  0.01) | relevant contact  0.63 (p95  1.05, max  1.05) | new line  1.21 (p95  1.61, max  1.61) · exit 70 %  2.08
+             control: LOST 0 · missed 0 · double 0 · stale 2 · sep max 1.07 m (median 0.85) · 2.29 contacts/s (shortest gap 0.163 s) | body: legs 4 · foot jumps 42 · slides 0 | replan p99 1.87 ms
+             actions: CHECK TOUCH R ×10, DRAG-BACK R ×4, BRAKING PIVOT L ×4, ACROSS-BODY GATHER R ×2, CHECK TOUCH L ×2
+             commitment (the contacting proxy's final approach): CHECK 38 ms (37–38, n 12) · PIVOT 42 ms (42–42, n 2) · GATHER 33 ms (33–33, n 2) · CARRY 38 ms (37–38, n 28)
+
+■ run rapid left/right
+  88573ef0   response: authoritative  0.23 (p95  0.35) · visible  0.30 (p95  0.30) | relevant contact  0.35 (p95  0.78, max  0.78) | new line  0.66 (p95  0.77, max  0.77) · exit 70 %  0.68
+             control: LOST 3 · missed 0 · double 0 · stale 7 · sep max 0.9 m (median 0.53) · 1.93 contacts/s (shortest gap 0.254 s) | body: legs 19 · foot jumps 85 · slides 0 | replan p99 0.91 ms
+             actions: INSIDE HOOK R ×4, RONALDO CHOP R ×3, RONALDO CHOP L ×3
+  experiment response: authoritative  0.01 (p95  0.02) · visible  0.01 (p95  0.01) | relevant contact  0.16 (p95  0.28, max  0.28) | new line  0.34 (p95  0.44, max  0.44) · exit 70 %  0.47
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.15 m (median 0.72) · 2.31 contacts/s (shortest gap 0.1 s) | body: legs 20 · foot jumps 43 · slides 0 | replan p99 1.84 ms
+             actions: URGENT REACH R ×27, URGENT REACH L ×17, INSIDE REDIRECT R ×9, CHECK TOUCH R ×3, INSIDE REDIRECT L ×3, CHECK TOUCH L ×3, OUTSIDE REDIRECT L ×2, INSIDE HOOK R ×1
+             commitment (the contacting proxy's final approach): CARRY 38 ms (37–38, n 47) · URGENT 29 ms (29–29, n 25) · INSIDE 33 ms (33–33, n 7) · CHECK 38 ms (38–38, n 6)
+
+■ run 1 Hz circle
+  88573ef0   response: authoritative  0.03 (p95  0.60) · visible  0.13 (p95  0.70) | relevant contact   —   (p95   —  , max   —  ) | new line   —   (p95   —  , max   —  ) · exit 70 %   —   · circle heading error 100°
+             control: LOST 0 · missed 0 · double 5 · stale 31 · sep max 1.49 m (median 0.44) · 2.22 contacts/s (shortest gap 0.054 s) | body: legs 53 · foot jumps 369 · slides 0 | replan p99 1.09 ms
+             actions: DRAG-BACK R ×13, RONALDO CHOP L ×12, INSIDE HOOK R ×12, RONALDO CHOP R ×10, INSIDE HOOK L ×7, DRAG-BACK L ×5, OUTSIDE CUT R ×4, OUTSIDE CUT L ×4, CRUYFF TURN R ×3, CRUYFF TURN L ×1
+  experiment response: authoritative  0.05 (p95  0.06) · visible  0.13 (p95  0.18) | relevant contact   —   (p95   —  , max   —  ) | new line   —   (p95   —  , max   —  ) · exit 70 %   —   · circle heading error 90.6°
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.18 m (median 0.99) · 1.44 contacts/s (shortest gap 0.163 s) | body: legs 22 · foot jumps 112 · slides 0 | replan p99 4.43 ms
+             actions: URGENT REACH R ×344, URGENT REACH L ×218, INSIDE REDIRECT R ×20, INSIDE REDIRECT L ×17, INSIDE HOOK R ×10, INSIDE HOOK L ×7, OUTSIDE REDIRECT L ×5, DRAG-BACK R ×4, CHECK TOUCH R ×4, OUTSIDE CUT R ×2, CHECK TOUCH L ×2, BRAKING PIVOT L ×2, CRUYFF TURN R ×2, BRAKING PIVOT R ×2, DRAG-BACK L ×1, RONALDO CHOP R ×1, OUTSIDE CUT L ×1
+             commitment (the contacting proxy's final approach): CARRY 38 ms (37–38, n 34) · URGENT 29 ms (29–29, n 9) · CHECK 38 ms (37–38, n 3)
+
+■ run 0→90→0→−90 (0.6 s)
+  88573ef0   response: authoritative  0.23 (p95  0.36) · visible  0.31 (p95  0.44) | relevant contact  0.52 (p95  0.86, max  0.94, FAILED 12/32) | new line  0.78 (p95  1.19, max  1.19, FAILED 21/32) · exit 70 %  0.85
+             control: LOST 2 · missed 0 · double 2 · stale 9 · sep max 0.99 m (median 0.45) · 2.08 contacts/s (shortest gap 0.092 s) | body: legs 15 · foot jumps 74 · slides 0 | replan p99 0.87 ms
+             actions: RONALDO CHOP R ×6, RONALDO CHOP L ×2, DRAG-BACK L ×1, CRUYFF TURN R ×1
+  experiment response: authoritative  0.02 (p95  0.02) · visible  0.01 (p95  0.01) | relevant contact  0.20 (p95  0.36, max  0.53, FAILED 2/32) | new line  0.46 (p95  0.60, max  0.61, FAILED 9/32) · exit 70 %  0.49
+             control: LOST 0 · missed 0 · double 0 · stale 1 · sep max 1.09 m (median 0.7) · 2.57 contacts/s (shortest gap 0.1 s) | body: legs 17 · foot jumps 192 · slides 0 | replan p99 2.02 ms
+             actions: URGENT REACH R ×16, URGENT REACH L ×13, CHECK TOUCH L ×2, BRAKING PIVOT R ×1
+             commitment (the contacting proxy's final approach): CARRY 38 ms (37–38, n 46) · CHECK 37 ms (37–37, n 1) · URGENT 29 ms (29–29, n 26) · PIVOT 42 ms (42–42, n 1)
+
+■ run small 20–40° corrections
+  88573ef0   response: authoritative  0.23 (p95  0.35) · visible  0.31 (p95  0.43) | relevant contact  0.20 (p95  0.41, max  0.50, FAILED 1/64) | new line  0.18 (p95  0.48, max  0.50, FAILED 4/64) · exit 70 %  0.25
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 0.72 m (median 0.59) · 1.86 contacts/s (shortest gap 0.313 s) | body: legs 5 · foot jumps 58 · slides 0 | replan p99 0.47 ms
+  experiment response: authoritative  0.01 (p95  0.03) · visible  0.01 (p95  0.01) | relevant contact  0.12 (p95  0.22, max  0.42) | new line  0.13 (p95  0.22, max  0.28, FAILED 1/64) · exit 70 %  0.14
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 0.86 m (median 0.73) · 2.05 contacts/s (shortest gap 0.104 s) | body: legs 21 · foot jumps 58 · slides 0 | replan p99 1.72 ms
+             actions: URGENT REACH R ×3, URGENT REACH L ×3, OUTSIDE CUT L ×2, INSIDE REDIRECT R ×1
+             commitment (the contacting proxy's final approach): CARRY 37 ms (37–38, n 98) · URGENT 29 ms (29–29, n 6) · INSIDE 33 ms (33–33, n 1)
+
+■ sprint rapid left/right
+  88573ef0   response: authoritative  0.05 (p95  0.17) · visible  0.13 (p95  0.25) | relevant contact  0.14 (p95  0.64, max  0.64) | new line  0.43 (p95  0.81, max  0.81) · exit 70 %  0.92
+             control: LOST 4 · missed 0 · double 3 · stale 5 · sep max 1.8 m (median 0.73) · 1.82 contacts/s (shortest gap 0.067 s) | body: legs 25 · foot jumps 66 · slides 0 | replan p99 1.22 ms
+             actions: RONALDO CHOP L ×5, OUTSIDE CUT R ×4, INSIDE HOOK R ×2, RONALDO CHOP R ×2, CRUYFF TURN R ×1, OUTSIDE CUT L ×1, INSIDE HOOK L ×1
+  experiment response: authoritative  0.01 (p95  0.02) · visible  0.01 (p95  0.01) | relevant contact  0.11 (p95  0.67, max  0.67) | new line  0.40 (p95  0.86, max  0.86) · exit 70 %  1.14
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.08 m (median 0.79) · 2.42 contacts/s (shortest gap 0.1 s) | body: legs 22 · foot jumps 129 · slides 0 | replan p99 1.75 ms
+             actions: URGENT REACH R ×12, CHECK TOUCH R ×11, INSIDE HOOK R ×7, INSIDE REDIRECT L ×7, CHECK TOUCH L ×4, RONALDO CHOP R ×4, INSIDE REDIRECT R ×4, BRAKING PIVOT R ×2, CRUYFF TURN R ×2, BRAKING PIVOT L ×2, URGENT REACH L ×2, RONALDO CHOP L ×1
+             commitment (the contacting proxy's final approach): URGENT 29 ms (29–29, n 13) · CARRY 37 ms (37–38, n 56) · CHECK 37 ms (37–38, n 10) · INSIDE 33 ms (33–33, n 8) · PIVOT 42 ms (42–42, n 2)
+
+■ sprint 1 Hz circle
+  88573ef0   response: authoritative  0.03 (p95  0.03) · visible  0.21 (p95  0.38) | relevant contact   —   (p95   —  , max   —  ) | new line   —   (p95   —  , max   —  ) · exit 70 %   —   · circle heading error 93.1°
+             control: LOST 2 · missed 0 · double 7 · stale 32 · sep max 1.33 m (median 0.45) · 2.09 contacts/s (shortest gap 0.063 s) | body: legs 55 · foot jumps 337 · slides 0 | replan p99 1.42 ms
+             actions: DRAG-BACK R ×18, INSIDE HOOK R ×14, RONALDO CHOP R ×13, RONALDO CHOP L ×12, INSIDE HOOK L ×8, DRAG-BACK L ×7, OUTSIDE CUT R ×6, CRUYFF TURN R ×6, OUTSIDE CUT L ×5, CRUYFF TURN L ×4
+  experiment response: authoritative  0.04 (p95  0.04) · visible  0.12 (p95  0.14) | relevant contact   —   (p95   —  , max   —  ) | new line   —   (p95   —  , max   —  ) · exit 70 %   —   · circle heading error 93°
+             control: LOST 0 · missed 0 · double 0 · stale 1 · sep max 1.12 m (median 0.77) · 1.97 contacts/s (shortest gap 0.1 s) | body: legs 28 · foot jumps 99 · slides 0 | replan p99 1.77 ms
+             actions: URGENT REACH R ×166, URGENT REACH L ×120, CHECK TOUCH R ×51, CHECK TOUCH L ×37, INSIDE REDIRECT L ×35, INSIDE HOOK R ×26, INSIDE HOOK L ×25, INSIDE REDIRECT R ×23, DRAG-BACK R ×14, BRAKING PIVOT R ×12, CRUYFF TURN L ×10, CRUYFF TURN R ×10, RONALDO CHOP L ×9, OUTSIDE REDIRECT R ×8, RONALDO CHOP R ×7, DRAG-BACK L ×6, BRAKING PIVOT L ×6, OUTSIDE CUT R ×4, ACROSS-BODY GATHER L ×3, OUTSIDE REDIRECT L ×3, OUTSIDE CUT L ×2, ACROSS-BODY GATHER R ×1
+             commitment (the contacting proxy's final approach): URGENT 29 ms (29–29, n 8) · CHECK 37 ms (37–38, n 12) · CARRY 38 ms (37–38, n 34) · INSIDE 33 ms (33–33, n 5) · PIVOT 42 ms (42–42, n 4)
+
+■ sprint 0→90→0→−90 (0.6 s)
+  88573ef0   response: authoritative  0.34 (p95  0.49) · visible  0.41 (p95  0.55) | relevant contact  0.52 (p95  1.56, max  1.58, FAILED 12/32) | new line  0.79 (p95  1.65, max  1.65, FAILED 21/32) · exit 70 %  1.10
+             control: LOST 5 · missed 0 · double 1 · stale 12 · sep max 1.23 m (median 0.53) · 2.19 contacts/s (shortest gap 0.075 s) | body: legs 22 · foot jumps 119 · slides 0 | replan p99 1.1 ms
+             actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4, DRAG-BACK L ×2, CRUYFF TURN R ×2, OUTSIDE CUT R ×2, DRAG-BACK R ×2
+  experiment response: authoritative  0.01 (p95  0.01) · visible  0.01 (p95  0.01) | relevant contact  0.26 (p95  0.49, max  0.49, FAILED 2/32) | new line  0.49 (p95  0.69, max  0.74, FAILED 20/32) · exit 70 %  1.33
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 1.09 m (median 0.75) · 2.33 contacts/s (shortest gap 0.138 s) | body: legs 16 · foot jumps 56 · slides 0 | replan p99 1.66 ms
+             actions: URGENT REACH R ×17, URGENT REACH L ×7, BRAKING PIVOT R ×2, INSIDE REDIRECT R ×2, BRAKING PIVOT L ×1, INSIDE HOOK R ×1, INSIDE HOOK L ×1, CHECK TOUCH L ×1, OUTSIDE CUT R ×1, CHECK TOUCH R ×1
+             commitment (the contacting proxy's final approach): URGENT 29 ms (29–29, n 21) · CARRY 38 ms (37–38, n 40) · PIVOT 42 ms (42–42, n 3) · INSIDE 33 ms (33–33, n 1) · CHECK 38 ms (37–38, n 2)
+
+■ sprint small 20–40° corrections
+  88573ef0   response: authoritative  0.18 (p95  0.30) · visible  0.26 (p95  0.38) | relevant contact  0.19 (p95  0.59, max  0.89, FAILED 12/64) | new line  0.19 (p95  0.49, max  0.55, FAILED 21/64) · exit 70 %  0.23
+             control: LOST 1 · missed 0 · double 4 · stale 0 · sep max 1.12 m (median 0.77) · 1.7 contacts/s (shortest gap 0.062 s) | body: legs 29 · foot jumps 64 · slides 0 | replan p99 0.54 ms
+             actions: OUTSIDE CUT R ×4, OUTSIDE CUT L ×1
+  experiment response: authoritative  0.01 (p95  0.01) · visible  0.01 (p95  0.01) | relevant contact  0.13 (p95  0.32, max  0.37) | new line  0.17 (p95  0.44, max  0.46) · exit 70 %  0.17
+             control: LOST 0 · missed 0 · double 0 · stale 0 · sep max 0.91 m (median 0.7) · 2.56 contacts/s (shortest gap 0.162 s) | body: legs 22 · foot jumps 58 · slides 0 | replan p99 1.36 ms
+             actions: OUTSIDE CUT L ×3, INSIDE REDIRECT R ×3, OUTSIDE CUT R ×2
+             commitment (the contacting proxy's final approach): CARRY 37 ms (37–38, n 128) · INSIDE 33 ms (33–33, n 3)
+
+(secondary: 96 sequences per engine; times in s after the input change; 29.8 s)

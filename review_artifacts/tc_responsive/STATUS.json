@@ -1,0 +1,39 @@
+{
+ "milestone": "TC-RESPONSIVE-1 — responsiveness experiment beside BASELINE-88573ef0 (owner-approved architecture)",
+ "status": "PRESENTED for the owner's hands-on A/B — NOT frozen, NOT integrated",
+ "url": "http://127.0.0.1:8361/sandbox/visual/tc_responsive.html",
+ "baseline_url": "http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html",
+ "local_only": "the character is a real player's model — never publish",
+ "date": "2026-10-21",
+ "baseline_lock": "bl_lock_check.sh PASS (tags tc-baseline-88573ef0, tc-baseline-88573ef0-locked)",
+ "response_median_s": { "experiment": { "authoritative": 0.01, "visible": 0.01 }, "baseline_88573ef0": { "authoritative": "0.05–0.35", "visible": "0.08–0.43" } },
+ "primary_24_traces_contact_line_s": {
+  "H90_JOG": { "experiment": [0.12, 0.36], "baseline": [0.55, 0.60] },
+  "REV_JOG": { "experiment": [0.46, 0.78], "baseline": [0.88, 1.16] },
+  "RAP_JOG": { "experiment": [0.10, 0.36], "baseline": [0.52, 0.80] },
+  "H90_SPRINT": { "experiment": [0.25, 0.67], "baseline": [0.80, 1.08] },
+  "REV_SPRINT": { "experiment": [0.92, 1.26], "baseline": [0.70, 0.90], "note": "experiment WORSE" },
+  "RAP_SPRINT": { "experiment": [0.28, 0.74], "baseline": [0.57, 0.76], "note": "experiment worse p95 tail (1.16 / 1.49 vs 0.75 / 0.93)" }
+ },
+ "commitment_ms_by_family": { "URGENT": 29, "INSIDE/GATHER": 33, "CARRY": "37–38", "CHECK": "37–38", "PIVOT": 42, "named (HUD)": "~36", "note": "family-constant, context-independent (√(2·R/a_proxy))" },
+ "control": {
+  "torture_140": { "experiment": { "lost": 0, "recoveries": 100, "double": 0, "missed": 0, "abandoned": 0 }, "baseline": { "lost": 26, "recoveries": 528, "double": 11, "missed": 0, "abandoned": 0 } },
+  "extended_240": { "experiment": { "lost": 0, "recoveries": 165, "double": 0 }, "baseline": { "lost": 108, "recoveries": 1235, "double": 48 } }
+ },
+ "body_torture_140": { "experiment": { "leg_crossing_spans": 656, "foot_jumps": 1332, "crossed_supports": 10, "support_collisions": 3, "ball_in_boot_ticks": 7524 }, "baseline": { "leg_crossing_spans": 528, "foot_jumps": 1893, "crossed_supports": 43, "support_collisions": 2, "ball_in_boot_ticks": 7583 } },
+ "interceptor": "3/3 PASS",
+ "neutrality": "ALL IDENTICAL",
+ "node_eq_browser": "7/7 sessions IDENTICAL",
+ "browser": { "console_errors": 0, "http_errors": 0, "frame_p99_ms": 16.8, "experiment_work_ms": { "avg": "1.2–1.5", "p99": "4.8–7.6", "worst": 12.6 } },
+ "known_gaps": [
+  "sprint reversals (REV·SPRINT, sprint snap 180°, snap 120° tail) slower than baseline",
+  "exit to 70 % speed slower after some sprint changes",
+  "leg crossings +24 % in torture",
+  "ball separation larger (median 0.69–0.75 m vs 0.57–0.58 m at jog)",
+  "stop after release slower at jog / run",
+  "named moves rarely win under the uniform cost",
+  "neither engine follows a 1 Hz circle (heading error ~90°)"
+ ],
+ "fixed_this_pass": "continuous-stick touch starvation (sprint circle LOST 8 / ~0 contacts/s → 0 / 1.97 contacts/s); primary traces unchanged",
+ "decision_owner": "hands-on A/B"
+}

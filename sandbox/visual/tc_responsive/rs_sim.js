@@ -272,8 +272,10 @@ export class PlaySim {
         for (let tc = Math.ceil(t0c / DT) * DT; tc <= t + RX.horizon + 1e-9; tc += tc - t < 0.35 ? 3 * DT : 6 * DT) { if (firstOK != null && aT >= 12 && tc > firstOK + 0.30) break;
           const r = this.screen(fam, X, tc, st, q, ft, turn, vm, th0, V0, p0, b0, bv, aT); if (r) { quick.push(r); if (firstOK == null) firstOK = tc; } } } }
     // (the running plan's own pending contact, re-screened at exactly its time: the continuation is always a built candidate)
-    let cont = null; { const pc = this.plan.contacts.find((c) => !c.done && c.src === "rx" && c.t > t + RX.approachMin && FAM[c.fam] && !keep.contacts.includes(c)), D = this.decision;
-      if (pc && D && D.reqH != null && abs(wrap(q.h - D.reqH)) < 12 * DEG && !keep.contacts.some((c) => c.F === pc.F)) cont = this.screen(pc.fam, pc.F, pc.t, st, q, keep.feet[pc.F], turn, vm, th0, V0, p0, b0, bv, aT); }
+    // (whatever the intent has done since: a continuously turning stick must not keep postponing a touch whose proxy is already on its way — the
+    // re-screen re-aims it at the latest intent, at its own time, and it competes on cost like every other candidate)
+    let cont = null; { const pc = this.plan.contacts.find((c) => !c.done && c.src === "rx" && c.t > t + 0.03 && FAM[c.fam] && !keep.contacts.includes(c));
+      if (pc && !keep.contacts.some((c) => c.F === pc.F)) cont = this.screen(pc.fam, pc.F, pc.t, st, q, keep.feet[pc.F], turn, vm, th0, V0, p0, b0, bv, aT, true); }
     // the best few per family (cheap estimate), built in full
     quick.sort((a, b) => a.J0 - b.J0); const per = {}, sel = cont ? [cont] : [];
     for (const r of quick) { const key = r.fam + r.X; per[key] = (per[key] || 0) + 1; if (per[key] <= 1 && sel.length < 6) sel.push(r); }
@@ -281,7 +283,7 @@ export class PlaySim {
   }
   // the cheap screen of one (family, foot, contact time): the staging state (the ballistic end of a constant-acceleration approach, shifted so the
   // ball sits inside the family's box), its peak acceleration, the proxy's reach in time, the redirect the touch must make
-  screen(fam, X, tc, st, q, ft, turn, vm, th0, V0, p0, b0, bv, aNeed) {
+  screen(fam, X, tc, st, q, ft, turn, vm, th0, V0, p0, b0, bv, aNeed, cont) {
     const f = FAM[fam], t = this.t, T = tc - t; if (T < 0.03) return null; const s = sgn(X), aT = abs(turn) / DEG, urgent = aNeed >= 12, B = predict(b0, bv, T);
     const vcap = f.vMax != null ? min(vm, f.vMax) : vm, vAcc = st.s + 0.8 * min(this.P.aAcc, f.aLim) * T;
     // the contact speed: the family's (as a share of the requested), bounded by what the body can reach in the time; variants a little slower, and
@@ -305,7 +307,8 @@ export class PlaySim {
     // the ball's line after the touch: the intent (the carry: within its redirect of the ball's own line, or of the body's when the ball is slow)
     const bs = hyp(B.v[0], B.v[1]), hRef = (fam === "CARRY" || f.check) && bs > 1.0 ? hdg(B.v) : th0, hOut = fam === "CARRY" ? hRef + clamp(wrap(q.h - hRef), -f.maxRedir * DEG, f.maxRedir * DEG) : f.check ? hRef : q.h;
     if (bs > 1.0 && abs(wrap(hOut - hdg(B.v))) > redirMax(f, bs)) return null;
-    if (tc - (ft.planted ? ft.tLift : t) < RX.approachMin - 1e-9) return null;
+    // (a fresh approach needs RX.approachMin; the continuation's proxy is already on its way — its own speed limit, checked below, is the test)
+    const aMin = cont && !ft.planted ? 0.03 : RX.approachMin; if (tc - (ft.planted ? ft.tLift : t) < aMin - 1e-9) return null;
     let best = null;
     for (const psiC of psiCs) for (const { vc, hc } of vs) { const slow = vc < 1.6, box = slow && (fam === "CARRY" || fam === "STOP") ? { a: [-0.12, 0.62], l: [-0.46, 0.46] } : f.box, u = dir(hc);
       const Vc = [vc * u[0], vc * u[1]], Pb = natP ? [natP[0] + (Vc[0] - natV[0]) * T / 2, natP[1] + (Vc[1] - natV[1]) * T / 2] : [p0[0] + (V0[0] + Vc[0]) / 2 * T, p0[1] + (V0[1] + Vc[1]) / 2 * T];
@@ -322,7 +325,7 @@ export class PlaySim {
       // (the proxy's own path, as the full build will make it: from the foot's present state — or from its stance, lifted in time — to the contact
       // point, sampled against its top speed)
       const tA = ft.planted ? max(ft.tLift, tc - max(RX.approachMin, dist / (0.6 * vF))) : t, p0x = ft.planted ? [ft.p[0], ft.p[1], 0] : ft.p, v0x = ft.planted ? [0, 0, 0] : ft.v;
-      if (tc - tA < RX.approachMin - 1e-9) continue; const vHit = [Vc[0] * 0.5 + nI[0] * 3, Vc[1] * 0.5 + nI[1] * 3, 0]; let fast = false;
+      if (tc - tA < aMin - 1e-9) continue; const vHit = [Vc[0] * 0.5 + nI[0] * 3, Vc[1] * 0.5 + nI[1] * 3, 0]; let fast = false;
       for (const uu of [0.2, 0.4, 0.6, 0.8]) { const H = herm(p0x, v0x, C, vHit, tc - tA, uu); if (hyp(H.v[0], H.v[1]) > vF * 1.08) { fast = true; break; } } if (fast) continue;
       // the cheap cost: the contact's time (when the turn needs it), the time to the new line after it, the effort; straight on: the touch nearest
       // the family's natural placement

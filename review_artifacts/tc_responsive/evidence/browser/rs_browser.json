@@ -1,0 +1,175 @@
+{
+ "runs": [
+  {
+   "engine": "experiment",
+   "label": "snap 90°",
+   "hud120": {
+    "action": "URGENT REACH (L)",
+    "speed": 6.49,
+    "clocks": {
+     "since": 0.2333333333333334,
+     "root": 0.029166666666668117,
+     "contact": null,
+     "relevant": false,
+     "line": null
+    },
+    "next": {
+     "F": "L",
+     "role": "urgent reach",
+     "fam": "URGENT",
+     "in": 0.029166666666666785,
+     "status": "PROVISIONAL",
+     "tauC": 0.03162277660168379
+    }
+   },
+   "determinism": true,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.21 URGENT REACH"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.23,
+     "p99": 7.6,
+     "worst": 11
+    },
+    "frameP99": 16.8,
+    "replanWorst": 8.8
+   },
+   "session": "experiment_snap90_session.json"
+  },
+  {
+   "engine": "experiment",
+   "label": "snap 180°",
+   "hud120": {
+    "action": "DRAG-BACK (R)",
+    "speed": 4.2,
+    "clocks": {
+     "since": 0.21666666666666679,
+     "root": 0.029166666666668117,
+     "contact": 0.17499999999999982,
+     "relevant": false,
+     "line": null
+    },
+    "next": {
+     "F": "R",
+     "role": "DRAG-BACK",
+     "fam": "TECH",
+     "in": 0.5583333333333331,
+     "status": "PROVISIONAL",
+     "tauC": 0.03597384670922507
+    }
+   },
+   "determinism": true,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.21 CHECK TOUCH",
+    "3.39 DRAG-BACK"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.47,
+     "p99": 4.8,
+     "worst": 12.6
+    },
+    "frameP99": 16.8,
+    "replanWorst": 10.3
+   },
+   "session": "experiment_snap180_session.json"
+  },
+  {
+   "engine": "baseline",
+   "label": "snap 90°",
+   "hud120": {
+    "action": "RONALDO CHOP (L)",
+    "speed": 6.94,
+    "clocks": {
+     "since": 0.20000000000000018,
+     "root": 0.1458333333333406,
+     "contact": 0.04999999999999982,
+     "relevant": false,
+     "line": null
+    },
+    "next": {
+     "F": "L",
+     "role": "RONALDO CHOP",
+     "fam": "CHOP",
+     "in": 0.24583333333333313,
+     "status": "PROVISIONAL"
+    }
+   },
+   "determinism": true,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.21 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.42,
+     "p99": 3.6,
+     "worst": 8.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 6.6
+   },
+   "session": "baseline_snap90_session.json"
+  },
+  {
+   "engine": "baseline",
+   "label": "snap 180°",
+   "hud120": {
+    "action": "DRAG-BACK (L)",
+    "speed": 7.24,
+    "clocks": {
+     "since": 0.21666666666666679,
+     "root": 0.17916666666667558,
+     "contact": 0.0708333333333333,
+     "relevant": false,
+     "line": null
+    },
+    "next": {
+     "F": "L",
+     "role": "DRAG-BACK",
+     "fam": "DRAGBACK",
+     "in": 0.22916666666666652,
+     "status": "PROVISIONAL"
+    }
+   },
+   "determinism": true,
+   "contacts": 9,
+   "missed": 0,
+   "actions": [
+    "3.20 DRAG-BACK"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.39,
+     "p99": 3.8,
+     "worst": 7.7
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.6
+   },
+   "session": "baseline_snap180_session.json"
+  }
+ ],
+ "sameInput": {
+  "inputIdentical": true,
+  "engines": [
+   "experiment",
+   "baseline",
+   "experiment"
+  ],
+  "replayShown": true,
+  "backHashIdentical": true
+ },
+ "torture": {
+  "determinism": true,
+  "contacts": 8
+ },
+ "logs": [],
+ "http": []
+}

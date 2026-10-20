@@ -1,0 +1,50 @@
+{
+ "A — 150 ms before (revisable)": {
+  "name": "A — 150 ms before (revisable)",
+  "tHit": 2.988,
+  "interceptor": {
+   "t": 2.992,
+   "ballOut": 6
+  },
+  "planned": null,
+  "staleImpulses": 0,
+  "after": [],
+  "commitT": null,
+  "pass": true
+ },
+ "B — 25 ms before (inside the 38 ms commitment)": {
+  "name": "B — 25 ms before (inside the 38 ms commitment)",
+  "tHit": 3.113,
+  "interceptor": {
+   "t": 3.117,
+   "ballOut": 6
+  },
+  "planned": {
+   "t": 3.146,
+   "missed": false,
+   "why": null
+  },
+  "staleImpulses": 0,
+  "after": [
+   "3.146 R deflected touch",
+   "3.550 L carry turn",
+   "4.075 R carry"
+  ],
+  "commitT": 3.108,
+  "pass": true
+ },
+ "C — control: 150 ms after, across the touch's own spot": {
+  "name": "C — control: 150 ms after, across the touch's own spot",
+  "tHit": 3.288,
+  "interceptor": null,
+  "planned": {
+   "t": 3.146,
+   "missed": false,
+   "why": null
+  },
+  "staleImpulses": 0,
+  "after": [],
+  "commitT": 3.108,
+  "pass": true
+ }
+}

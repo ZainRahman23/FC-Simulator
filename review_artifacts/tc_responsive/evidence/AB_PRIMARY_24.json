@@ -1,0 +1,2024 @@
+{
+ "H90 · JOG": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    0.0665,
+    0.2872499999999998
+   ],
+   "vis": [
+    0.18733333333333357,
+    0.36224999999999996
+   ],
+   "contact": [
+    0.5455833333333331,
+    0.7083333333333335,
+    0.7083333333333335
+   ],
+   "contactFail": 0,
+   "line": [
+    0.5957499999999998,
+    0.7124999999999999,
+    0.7124999999999999
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.5957499999999998,
+    0.7124999999999999
+   ],
+   "exit": [
+    0.5957499999999998,
+    0.7124999999999999
+   ],
+   "lost": 2,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 0.78,
+   "sepMed": 0.58,
+   "cps": 1.73,
+   "minGap": 0.267,
+   "legs": 5,
+   "jumps": 3,
+   "slides": 0,
+   "cpuP99": 3.02,
+   "techs": {
+    "OUTSIDE CUT R": 2
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "H90 JOG #0",
+     "per": [
+      {
+       "t": 3,
+       "held": true,
+       "auth": 0.008333333333333304,
+       "vis": 0.08333333333333348,
+       "contact": 0.7083333333333335,
+       "line": 0.7124999999999999
+      }
+     ],
+     "techs": [],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #1",
+     "per": [
+      {
+       "t": 3.179,
+       "held": true,
+       "auth": 0.05408333333333326,
+       "vis": 0.15824999999999978,
+       "contact": 0.4249166666666664,
+       "line": 0.5957499999999998
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R"
+     ],
+     "lost": 1,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #2",
+     "per": [
+      {
+       "t": 3.358,
+       "held": true,
+       "auth": 0.0665,
+       "vis": 0.18733333333333357,
+       "contact": 0.4039999999999999,
+       "line": 0.5790000000000002
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R"
+     ],
+     "lost": 1,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #3",
+     "per": [
+      {
+       "t": 3.538,
+       "held": true,
+       "auth": 0.2872499999999998,
+       "vis": 0.36224999999999996,
+       "contact": 0.5455833333333331,
+       "line": 0.5622499999999997
+      }
+     ],
+     "techs": [],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.012500000000000178,
+    0.016416666666666746
+   ],
+   "vis": [
+    0.008166666666666877,
+    0.008249999999999869
+   ],
+   "contact": [
+    0.11650000000000027,
+    0.37491666666666656,
+    0.37491666666666656
+   ],
+   "contactFail": 0,
+   "line": [
+    0.35808333333333353,
+    0.3915833333333332,
+    0.3915833333333332
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.35808333333333353,
+    0.3915833333333332
+   ],
+   "exit": [
+    0.35808333333333353,
+    0.3915833333333332
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 0.93,
+   "sepMed": 0.75,
+   "cps": 2.12,
+   "minGap": 0.137,
+   "legs": 14,
+   "jumps": 8,
+   "slides": 0,
+   "cpuP99": 6.18,
+   "techs": {
+    "URGENT REACH R": 2
+   },
+   "meanErr": null,
+   "commit": {
+    "CARRY": {
+     "n": 20,
+     "med": 38,
+     "min": 37,
+     "max": 38
+    },
+    "URGENT": {
+     "n": 2,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    }
+   },
+   "traces": [
+    {
+     "name": "H90 JOG #0",
+     "per": [
+      {
+       "t": 3,
+       "held": true,
+       "auth": 0.012500000000000178,
+       "vis": 0.00416666666666643,
+       "contact": 0.0625,
+       "line": 0.3500000000000001
+      }
+     ],
+     "techs": [],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #1",
+     "per": [
+      {
+       "t": 3.179,
+       "held": true,
+       "auth": 0.012416666666666298,
+       "vis": 0.008249999999999869,
+       "contact": 0.37491666666666656,
+       "line": 0.3915833333333332
+      }
+     ],
+     "techs": [
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #2",
+     "per": [
+      {
+       "t": 3.358,
+       "held": true,
+       "auth": 0.012333333333333307,
+       "vis": 0.008166666666666877,
+       "contact": 0.11650000000000027,
+       "line": 0.34983333333333366
+      }
+     ],
+     "techs": [
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 JOG #3",
+     "per": [
+      {
+       "t": 3.538,
+       "held": true,
+       "auth": 0.016416666666666746,
+       "vis": 0.008083333333333442,
+       "contact": 0.06641666666666657,
+       "line": 0.35808333333333353
+      }
+     ],
+     "techs": [],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ },
+ "REV · JOG": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    0.0665,
+    0.2872499999999998
+   ],
+   "vis": [
+    0.15824999999999978,
+    0.18733333333333357
+   ],
+   "contact": [
+    0.881416666666667,
+    1.5791666666666662,
+    1.5791666666666662
+   ],
+   "contactFail": 0,
+   "line": [
+    1.1605833333333329,
+    1.5583333333333331,
+    1.5583333333333331
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    1.1189166666666668,
+    1.5583333333333331
+   ],
+   "exit": [
+    1.3064166666666668,
+    1.5583333333333331
+   ],
+   "lost": 1,
+   "missed": 0,
+   "double": 0,
+   "stale": 4,
+   "sepMax": 0.96,
+   "sepMed": 0.49,
+   "cps": 2.06,
+   "minGap": 0.258,
+   "legs": 3,
+   "jumps": 9,
+   "slides": 0,
+   "cpuP99": 0.92,
+   "techs": {
+    "OUTSIDE CUT R": 2,
+    "RONALDO CHOP R": 1,
+    "CRUYFF TURN R": 1,
+    "INSIDE HOOK R": 1
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "REV JOG #0 (d 0.10 s)",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.008333333333333304,
+       "vis": 0.08333333333333348,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.1,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 1.5791666666666662,
+       "line": 1.5583333333333331
+      }
+     ],
+     "techs": [],
+     "lost": 1,
+     "stale": 1
+    },
+    {
+     "name": "REV JOG #1 (d 0.17 s)",
+     "per": [
+      {
+       "t": 3.179,
+       "held": false,
+       "auth": 0.05408333333333326,
+       "vis": 0.15824999999999978,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.349,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.7549166666666669,
+       "line": 0.9049166666666664
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "REV JOG #2 (d 0.24 s)",
+     "per": [
+      {
+       "t": 3.358,
+       "held": false,
+       "auth": 0.0665,
+       "vis": 0.18733333333333357,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.598,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.6515000000000004,
+       "line": 0.9265000000000008
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R",
+      "CRUYFF TURN R"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "REV JOG #3 (d 0.31 s)",
+     "per": [
+      {
+       "t": 3.538,
+       "held": false,
+       "auth": 0.2872499999999998,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.848,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.881416666666667,
+       "line": 1.1605833333333329
+      }
+     ],
+     "techs": [
+      "INSIDE HOOK R"
+     ],
+     "lost": 0,
+     "stale": 1
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.012500000000000178,
+    0.016416666666666746
+   ],
+   "vis": [
+    0.008166666666666877,
+    0.008249999999999869
+   ],
+   "contact": [
+    0.4640000000000004,
+    0.7458333333333331,
+    0.7458333333333331
+   ],
+   "contactFail": 0,
+   "line": [
+    0.7806666666666668,
+    1.0124999999999997,
+    1.0124999999999997
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.7390000000000008,
+    0.9708333333333328
+   ],
+   "exit": [
+    0.9390000000000001,
+    1.1666666666666665
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 0.93,
+   "sepMed": 0.71,
+   "cps": 2.39,
+   "minGap": 0.137,
+   "legs": 16,
+   "jumps": 10,
+   "slides": 0,
+   "cpuP99": 3.86,
+   "techs": {
+    "BRAKING PIVOT R": 3,
+    "INSIDE HOOK R": 1,
+    "URGENT REACH R": 4,
+    "CHECK TOUCH R": 2,
+    "BRAKING PIVOT L": 1
+   },
+   "meanErr": null,
+   "commit": {
+    "CARRY": {
+     "n": 15,
+     "med": 37,
+     "min": 37,
+     "max": 38
+    },
+    "URGENT": {
+     "n": 4,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    },
+    "PIVOT": {
+     "n": 2,
+     "med": 42,
+     "min": 42,
+     "max": 42
+    },
+    "CHECK": {
+     "n": 1,
+     "med": 38,
+     "min": 38,
+     "max": 38
+    }
+   },
+   "traces": [
+    {
+     "name": "REV JOG #0 (d 0.10 s)",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.012500000000000178,
+       "vis": 0.00416666666666643,
+       "contact": 0.0625,
+       "line": null
+      },
+      {
+       "t": 3.1,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.7458333333333331,
+       "line": 1.0124999999999997
+      }
+     ],
+     "techs": [
+      "BRAKING PIVOT R",
+      "INSIDE HOOK R",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV JOG #1 (d 0.17 s)",
+     "per": [
+      {
+       "t": 3.179,
+       "held": false,
+       "auth": 0.012416666666666298,
+       "vis": 0.008249999999999869,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.349,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.14241666666666664,
+       "line": 0.40908333333333324
+      }
+     ],
+     "techs": [
+      "URGENT REACH R",
+      "BRAKING PIVOT R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV JOG #2 (d 0.24 s)",
+     "per": [
+      {
+       "t": 3.358,
+       "held": false,
+       "auth": 0.012333333333333307,
+       "vis": 0.008166666666666877,
+       "contact": 0.11650000000000027,
+       "line": null
+      },
+      {
+       "t": 3.598,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.4640000000000004,
+       "line": 0.7806666666666668
+      }
+     ],
+     "techs": [
+      "URGENT REACH R",
+      "CHECK TOUCH R",
+      "CHECK TOUCH R",
+      "BRAKING PIVOT R",
+      "BRAKING PIVOT L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV JOG #3 (d 0.31 s)",
+     "per": [
+      {
+       "t": 3.538,
+       "held": false,
+       "auth": 0.016416666666666746,
+       "vis": 0.008083333333333442,
+       "contact": 0.06641666666666657,
+       "line": null
+      },
+      {
+       "t": 3.848,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.40225,
+       "line": 0.6480833333333336
+      }
+     ],
+     "techs": [
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ },
+ "RAP · JOG": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    0.05408333333333326,
+    0.0665
+   ],
+   "vis": [
+    0.08333333333333348,
+    0.08333333333333348
+   ],
+   "contact": [
+    0.5206666666666666,
+    0.6832499999999997,
+    0.6832499999999997
+   ],
+   "contactFail": 0,
+   "line": [
+    0.8040000000000007,
+    0.9665833333333329,
+    0.9665833333333329
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.5208333333333335,
+    0.9290833333333333
+   ],
+   "exit": [
+    0.9540000000000002,
+    1.1165833333333333
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 1,
+   "stale": 0,
+   "sepMax": 0.78,
+   "sepMed": 0.57,
+   "cps": 1.88,
+   "minGap": 0.092,
+   "legs": 3,
+   "jumps": 16,
+   "slides": 0,
+   "cpuP99": 0.84,
+   "techs": {
+    "DRAG-BACK L": 1,
+    "OUTSIDE CUT R": 2,
+    "CRUYFF TURN R": 3
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "RAP JOG #0",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.008333333333333304,
+       "vis": 0.08333333333333348,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.15,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.3,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.4416666666666669,
+       "line": 0.5208333333333335
+      }
+     ],
+     "techs": [
+      "DRAG-BACK L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #1",
+     "per": [
+      {
+       "t": 3.179,
+       "held": false,
+       "auth": 0.05408333333333326,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.329,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0.004083333333333439
+      },
+      {
+       "t": 3.479,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.6832499999999997,
+       "line": 0.9665833333333329
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R",
+      "CRUYFF TURN R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #2",
+     "per": [
+      {
+       "t": 3.358,
+       "held": false,
+       "auth": 0.0665,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.508,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0.0040000000000000036
+      },
+      {
+       "t": 3.658,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.5206666666666666,
+       "line": 0.8040000000000007
+      }
+     ],
+     "techs": [
+      "OUTSIDE CUT R",
+      "CRUYFF TURN R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #3",
+     "per": [
+      {
+       "t": 3.538,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.688,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.12891666666666657,
+       "line": 0.003916666666666568
+      },
+      {
+       "t": 3.838,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.503916666666667,
+       "line": 0.7872500000000002
+      }
+     ],
+     "techs": [
+      "CRUYFF TURN R"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.012500000000000178,
+    0.016416666666666746
+   ],
+   "vis": [
+    0.008166666666666877,
+    0.008249999999999869
+   ],
+   "contact": [
+    0.10400000000000009,
+    0.13741666666666674,
+    0.13741666666666674
+   ],
+   "contactFail": 0,
+   "line": [
+    0.35824999999999996,
+    0.3665000000000007,
+    0.3665000000000007
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.3414166666666665,
+    0.3665000000000007
+   ],
+   "exit": [
+    0.378916666666667,
+    0.38733333333333375
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 0.93,
+   "sepMed": 0.69,
+   "cps": 2.5,
+   "minGap": 0.1,
+   "legs": 11,
+   "jumps": 9,
+   "slides": 0,
+   "cpuP99": 2.71,
+   "techs": {
+    "URGENT REACH R": 4,
+    "URGENT REACH L": 3
+   },
+   "meanErr": null,
+   "commit": {
+    "CARRY": {
+     "n": 17,
+     "med": 38,
+     "min": 37,
+     "max": 38
+    },
+    "URGENT": {
+     "n": 7,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    }
+   },
+   "traces": [
+    {
+     "name": "RAP JOG #0",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.012500000000000178,
+       "vis": 0.00416666666666643,
+       "contact": 0.0625,
+       "line": null
+      },
+      {
+       "t": 3.15,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.10000000000000009,
+       "line": null
+      },
+      {
+       "t": 3.3,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.07500000000000018,
+       "line": 0.3166666666666669
+      }
+     ],
+     "techs": [
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #1",
+     "per": [
+      {
+       "t": 3.179,
+       "held": false,
+       "auth": 0.012416666666666298,
+       "vis": 0.008249999999999869,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.329,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.09991666666666665,
+       "line": null
+      },
+      {
+       "t": 3.479,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.13741666666666674,
+       "line": 0.35824999999999996
+      }
+     ],
+     "techs": [
+      "URGENT REACH R",
+      "URGENT REACH L",
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #2",
+     "per": [
+      {
+       "t": 3.358,
+       "held": false,
+       "auth": 0.012333333333333307,
+       "vis": 0.008166666666666877,
+       "contact": 0.11650000000000027,
+       "line": null
+      },
+      {
+       "t": 3.508,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.09150000000000036,
+       "line": null
+      },
+      {
+       "t": 3.658,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.10400000000000009,
+       "line": 0.3665000000000007
+      }
+     ],
+     "techs": [
+      "URGENT REACH R",
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP JOG #3",
+     "per": [
+      {
+       "t": 3.538,
+       "held": false,
+       "auth": 0.016416666666666746,
+       "vis": 0.008083333333333442,
+       "contact": 0.06641666666666657,
+       "line": null
+      },
+      {
+       "t": 3.688,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.07891666666666675,
+       "line": null
+      },
+      {
+       "t": 3.838,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.09141666666666692,
+       "line": 0.3414166666666665
+      }
+     ],
+     "techs": [
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ },
+ "H90 · SPRINT": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    0.3500000000000001,
+    0.5972500000000003
+   ],
+   "vis": [
+    0.43241666666666667,
+    0.6597500000000003
+   ],
+   "contact": [
+    0.7990833333333334,
+    0.9097500000000003,
+    0.9097500000000003
+   ],
+   "contactFail": 0,
+   "line": [
+    1.0782500000000002,
+    1.093083333333333,
+    1.093083333333333
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.9532500000000002,
+    1.0639166666666662
+   ],
+   "exit": [
+    1.5389166666666667,
+    1.6449166666666666
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 3,
+   "sepMax": 1.68,
+   "sepMed": 0.79,
+   "cps": 1.44,
+   "minGap": 0.3,
+   "legs": 4,
+   "jumps": 26,
+   "slides": 0,
+   "cpuP99": 0.9,
+   "techs": {
+    "RONALDO CHOP L": 4
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "H90 SPRINT #0",
+     "per": [
+      {
+       "t": 3,
+       "held": true,
+       "auth": 0.3500000000000001,
+       "vis": 0.4125000000000001,
+       "contact": 0.6625000000000001,
+       "line": 0.8458333333333332
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "H90 SPRINT #1",
+     "per": [
+      {
+       "t": 3.247,
+       "held": true,
+       "auth": 0.33658333333333346,
+       "vis": 0.43241666666666667,
+       "contact": 0.7990833333333334,
+       "line": 1.0782500000000002
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 SPRINT #2",
+     "per": [
+      {
+       "t": 3.494,
+       "held": true,
+       "auth": 0.23983333333333334,
+       "vis": 0.30233333333333334,
+       "contact": 0.5523333333333333,
+       "line": 0.7314999999999996
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "H90 SPRINT #3",
+     "per": [
+      {
+       "t": 3.74,
+       "held": true,
+       "auth": 0.5972500000000003,
+       "vis": 0.6597500000000003,
+       "contact": 0.9097500000000003,
+       "line": 1.093083333333333
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L"
+     ],
+     "lost": 0,
+     "stale": 1
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.014833333333333254,
+    0.01574999999999971
+   ],
+   "vis": [
+    0.00649999999999995,
+    0.007416666666666405
+   ],
+   "contact": [
+    0.25,
+    0.2782499999999999,
+    0.2782499999999999
+   ],
+   "contactFail": 0,
+   "line": [
+    0.6657500000000001,
+    0.6764166666666669,
+    0.6764166666666669
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.6657500000000001,
+    0.6764166666666669
+   ],
+   "exit": [
+    0.8972500000000001,
+    1.0490833333333334
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 1.05,
+   "sepMed": 0.73,
+   "cps": 1.92,
+   "minGap": 0.15,
+   "legs": 2,
+   "jumps": 4,
+   "slides": 0,
+   "cpuP99": 1.54,
+   "techs": {
+    "URGENT REACH L": 4,
+    "INSIDE REDIRECT L": 1
+   },
+   "meanErr": null,
+   "commit": {
+    "URGENT": {
+     "n": 4,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    },
+    "CARRY": {
+     "n": 16,
+     "med": 37,
+     "min": 37,
+     "max": 38
+    }
+   },
+   "traces": [
+    {
+     "name": "H90 SPRINT #0",
+     "per": [
+      {
+       "t": 3,
+       "held": true,
+       "auth": 0.008333333333333304,
+       "vis": 0.00416666666666643,
+       "contact": 0.25,
+       "line": 0.6166666666666667
+      }
+     ],
+     "techs": [
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 SPRINT #1",
+     "per": [
+      {
+       "t": 3.247,
+       "held": true,
+       "auth": 0.01574999999999971,
+       "vis": 0.007416666666666405,
+       "contact": 0.2782499999999999,
+       "line": 0.6657500000000001
+      }
+     ],
+     "techs": [
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 SPRINT #2",
+     "per": [
+      {
+       "t": 3.494,
+       "held": true,
+       "auth": 0.014833333333333254,
+       "vis": 0.00649999999999995,
+       "contact": 0.23150000000000004,
+       "line": 0.6148333333333333
+      }
+     ],
+     "techs": [
+      "INSIDE REDIRECT L",
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "H90 SPRINT #3",
+     "per": [
+      {
+       "t": 3.74,
+       "held": true,
+       "auth": 0.009749999999999925,
+       "vis": 0.0055833333333330515,
+       "contact": 0.23891666666666644,
+       "line": 0.6764166666666669
+      }
+     ],
+     "techs": [
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ },
+ "REV · SPRINT": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    0.23983333333333334,
+    0.23983333333333334
+   ],
+   "vis": [
+    null,
+    null
+   ],
+   "contact": [
+    0.6999999999999997,
+    0.7664166666666663,
+    0.7664166666666663
+   ],
+   "contactFail": 0,
+   "line": [
+    0.9039999999999999,
+    0.9497499999999999,
+    0.9497499999999999
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.8541666666666665,
+    0.9205833333333331
+   ],
+   "exit": [
+    1.3955833333333327,
+    1.4831666666666665
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 5,
+   "sepMax": 1.67,
+   "sepMed": 0.89,
+   "cps": 1.84,
+   "minGap": 0.233,
+   "legs": 3,
+   "jumps": 49,
+   "slides": 0,
+   "cpuP99": 0.86,
+   "techs": {
+    "RONALDO CHOP L": 4,
+    "RONALDO CHOP R": 4
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "REV SPRINT #0 (d 0.10 s)",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.1,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.6999999999999997,
+       "line": 0.8791666666666664
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "REV SPRINT #1 (d 0.17 s)",
+     "per": [
+      {
+       "t": 3.247,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.417,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.49575000000000014,
+       "line": 0.6749166666666668
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "REV SPRINT #2 (d 0.24 s)",
+     "per": [
+      {
+       "t": 3.494,
+       "held": false,
+       "auth": 0.23983333333333334,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.734,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.5623333333333331,
+       "line": 0.9039999999999999
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 2
+    },
+    {
+     "name": "REV SPRINT #3 (d 0.31 s)",
+     "per": [
+      {
+       "t": 3.74,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 4.05,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.7664166666666663,
+       "line": 0.9497499999999999
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.014833333333333254,
+    0.01574999999999971
+   ],
+   "vis": [
+    0.00649999999999995,
+    0.007416666666666405
+   ],
+   "contact": [
+    0.9247499999999995,
+    0.924833333333333,
+    0.924833333333333
+   ],
+   "contactFail": 0,
+   "line": [
+    1.2580833333333334,
+    1.5456666666666665,
+    1.5456666666666665
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.9831666666666665,
+    1.0289166666666665
+   ],
+   "exit": [
+    1.8999166666666665,
+    1.8999166666666665
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 1.13,
+   "sepMed": 0.81,
+   "cps": 2.39,
+   "minGap": 0.162,
+   "legs": 6,
+   "jumps": 15,
+   "slides": 0,
+   "cpuP99": 1.97,
+   "techs": {
+    "URGENT REACH L": 4,
+    "URGENT REACH R": 2,
+    "CHECK TOUCH L": 1,
+    "INSIDE REDIRECT L": 1,
+    "BRAKING PIVOT R": 2,
+    "CHECK TOUCH R": 1
+   },
+   "meanErr": null,
+   "commit": {
+    "URGENT": {
+     "n": 4,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    },
+    "CARRY": {
+     "n": 14,
+     "med": 38,
+     "min": 37,
+     "max": 38
+    },
+    "CHECK": {
+     "n": 2,
+     "med": 38,
+     "min": 37,
+     "max": 38
+    },
+    "PIVOT": {
+     "n": 2,
+     "med": 42,
+     "min": 42,
+     "max": 42
+    }
+   },
+   "traces": [
+    {
+     "name": "REV SPRINT #0 (d 0.10 s)",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.008333333333333304,
+       "vis": 0.00416666666666643,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.1,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.22916666666666652,
+       "line": 0.6541666666666663
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV SPRINT #1 (d 0.17 s)",
+     "per": [
+      {
+       "t": 3.247,
+       "held": false,
+       "auth": 0.01574999999999971,
+       "vis": 0.007416666666666405,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.417,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.49158333333333326,
+       "line": 0.7165833333333329
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "CHECK TOUCH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV SPRINT #2 (d 0.24 s)",
+     "per": [
+      {
+       "t": 3.494,
+       "held": false,
+       "auth": 0.014833333333333254,
+       "vis": 0.00649999999999995,
+       "contact": 0.23150000000000004,
+       "line": null
+      },
+      {
+       "t": 3.734,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.924833333333333,
+       "line": 1.5456666666666665
+      }
+     ],
+     "techs": [
+      "INSIDE REDIRECT L",
+      "URGENT REACH L",
+      "BRAKING PIVOT R",
+      "BRAKING PIVOT R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "REV SPRINT #3 (d 0.31 s)",
+     "per": [
+      {
+       "t": 3.74,
+       "held": false,
+       "auth": 0.009749999999999925,
+       "vis": 0.0055833333333330515,
+       "contact": 0.23891666666666644,
+       "line": null
+      },
+      {
+       "t": 4.05,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.9247499999999995,
+       "line": 1.2580833333333334
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "CHECK TOUCH R",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ },
+ "RAP · SPRINT": {
+  "88573ef0": {
+   "n": 4,
+   "auth": [
+    null,
+    null
+   ],
+   "vis": [
+    null,
+    null
+   ],
+   "contact": [
+    0.56575,
+    0.7472499999999993,
+    0.7472499999999993
+   ],
+   "contactFail": 0,
+   "line": [
+    0.7606666666666664,
+    0.9264166666666664,
+    0.9264166666666664
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.6273333333333335,
+    0.9014166666666661
+   ],
+   "exit": [
+    1.3273333333333337,
+    1.3764166666666666
+   ],
+   "lost": 1,
+   "missed": 0,
+   "double": 0,
+   "stale": 3,
+   "sepMax": 1.66,
+   "sepMed": 0.84,
+   "cps": 1.98,
+   "minGap": 0.196,
+   "legs": 1,
+   "jumps": 38,
+   "slides": 0,
+   "cpuP99": 0.7,
+   "techs": {
+    "RONALDO CHOP L": 4,
+    "RONALDO CHOP R": 3,
+    "OUTSIDE CUT L": 1
+   },
+   "meanErr": null,
+   "commit": {},
+   "traces": [
+    {
+     "name": "RAP SPRINT #0",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.15,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0
+      },
+      {
+       "t": 3.3,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.5,
+       "line": 0.6791666666666667
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    },
+    {
+     "name": "RAP SPRINT #1",
+     "per": [
+      {
+       "t": 3.247,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.397,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.05741666666666667,
+       "line": 0.003249999999999975
+      },
+      {
+       "t": 3.547,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.56575,
+       "line": 0.7407499999999998
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "OUTSIDE CUT L"
+     ],
+     "lost": 1,
+     "stale": 1
+    },
+    {
+     "name": "RAP SPRINT #2",
+     "per": [
+      {
+       "t": 3.494,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.643,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.00649999999999995,
+       "line": 0.0023333333333335204
+      },
+      {
+       "t": 3.793,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.47316666666666674,
+       "line": 0.7606666666666664
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP SPRINT #3",
+     "per": [
+      {
+       "t": 3.74,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.89,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0.0014166666666666217
+      },
+      {
+       "t": 4.04,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.7472499999999993,
+       "line": 0.9264166666666664
+      }
+     ],
+     "techs": [
+      "RONALDO CHOP L",
+      "RONALDO CHOP R"
+     ],
+     "lost": 0,
+     "stale": 1
+    }
+   ]
+  },
+  "experiment": {
+   "n": 4,
+   "auth": [
+    0.014833333333333254,
+    0.01574999999999971
+   ],
+   "vis": [
+    0.00649999999999995,
+    0.007416666666666405
+   ],
+   "contact": [
+    0.2782499999999999,
+    1.1555833333333325,
+    1.1555833333333325
+   ],
+   "contactFail": 0,
+   "line": [
+    0.7398333333333333,
+    1.4930833333333329,
+    1.4930833333333329
+   ],
+   "lineFail": 0,
+   "held": 4,
+   "heading": [
+    0.666666666666667,
+    1.42225
+   ],
+   "exit": [
+    1.0365833333333332,
+    1.0398333333333332
+   ],
+   "lost": 0,
+   "missed": 0,
+   "double": 0,
+   "stale": 0,
+   "sepMax": 1.13,
+   "sepMed": 0.77,
+   "cps": 1.88,
+   "minGap": 0.163,
+   "legs": 2,
+   "jumps": 3,
+   "slides": 0,
+   "cpuP99": 2.27,
+   "techs": {
+    "URGENT REACH L": 5,
+    "URGENT REACH R": 5,
+    "INSIDE REDIRECT L": 1
+   },
+   "meanErr": null,
+   "commit": {
+    "URGENT": {
+     "n": 4,
+     "med": 29,
+     "min": 29,
+     "max": 29
+    },
+    "CARRY": {
+     "n": 14,
+     "med": 38,
+     "min": 37,
+     "max": 38
+    }
+   },
+   "traces": [
+    {
+     "name": "RAP SPRINT #0",
+     "per": [
+      {
+       "t": 3,
+       "held": false,
+       "auth": 0.008333333333333304,
+       "vis": 0.00416666666666643,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.15,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0.02083333333333348
+      },
+      {
+       "t": 3.3,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.2625000000000002,
+       "line": 0.666666666666667
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP SPRINT #1",
+     "per": [
+      {
+       "t": 3.247,
+       "held": false,
+       "auth": 0.01574999999999971,
+       "vis": 0.007416666666666405,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.397,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.06574999999999998,
+       "line": 0.011583333333333279
+      },
+      {
+       "t": 3.547,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.2782499999999999,
+       "line": 0.7282500000000005
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP SPRINT #2",
+     "per": [
+      {
+       "t": 3.494,
+       "held": false,
+       "auth": 0.014833333333333254,
+       "vis": 0.00649999999999995,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.643,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": null,
+       "line": 0.035666666666666735
+      },
+      {
+       "t": 3.793,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 0.277333333333333,
+       "line": 0.7398333333333333
+      }
+     ],
+     "techs": [
+      "INSIDE REDIRECT L",
+      "URGENT REACH L",
+      "URGENT REACH R"
+     ],
+     "lost": 0,
+     "stale": 0
+    },
+    {
+     "name": "RAP SPRINT #3",
+     "per": [
+      {
+       "t": 3.74,
+       "held": false,
+       "auth": 0.009749999999999925,
+       "vis": 0.0055833333333330515,
+       "contact": null,
+       "line": null
+      },
+      {
+       "t": 3.89,
+       "held": false,
+       "auth": null,
+       "vis": null,
+       "contact": 0.06391666666666662,
+       "line": 0.022250000000000103
+      },
+      {
+       "t": 4.04,
+       "held": true,
+       "auth": null,
+       "vis": null,
+       "contact": 1.1555833333333325,
+       "line": 1.4930833333333329
+      }
+     ],
+     "techs": [
+      "URGENT REACH L",
+      "URGENT REACH R",
+      "URGENT REACH R",
+      "URGENT REACH L"
+     ],
+     "lost": 0,
+     "stale": 0
+    }
+   ]
+  }
+ }
+}
