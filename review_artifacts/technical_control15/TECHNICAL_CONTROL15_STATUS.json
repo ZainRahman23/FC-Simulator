@@ -1,0 +1,18 @@
+{
+  "milestone": "TECHNICAL-CONTROL-1.5",
+  "title": "technique reset: research, the Ronaldo chop specification, five elite references",
+  "status": "presented for visual approval; not frozen; not integrated",
+  "instruction": "sources/2026-10-20_user_instruction_technical_control_reset_research.md",
+  "review_page_local_only": "review/TECHNICAL_CONTROL15_REVIEW.html",
+  "lab": "http://127.0.0.1:8361/sandbox/visual/technical_control15.html?tech=CHOP90&single=quad",
+  "research": ["research/R1_chop_cruyff_hook_dragback.md", "research/R2_cuts_rolls_croqueta_feint_carry.md", "research/R3_cod_biomechanics.md", "TECHNIQUE_RESEARCH_AND_SPEC.md"],
+  "references": { "45": "OUTCUT45 outside-foot cut (right)", "90": "CHOP90 Ronaldo chop (left)", "120": "CRUYFF120 Cruyff turn (left)", "150": "HOOK150 inside hook (left)", "180": "DRAGBACK180 drag-back (turning right)" },
+  "chop_acceptance": "8/8 (check 6 on the front line; the right side opens after the chop — a shown limitation); external-kick fail condition not triggered",
+  "evidence": "evidence/TC15_EVIDENCE.json",
+  "clips": 14, "strips": 5, "diagrams": 5,
+  "body": { "leg_clearance_min_cm": { "OUTCUT45": 5.73, "CHOP90": 2.86, "CRUYFF120": -1.56, "HOOK150": -2.0, "DRAGBACK180": -2.08 }, "ankle_orientation_error_max_deg": "11-31", "reach_adaptation_max_cm": 8.85 },
+  "not_done": ["integration into the TC1.2/1.3 simulation", "rating curves (BC99 = ideal launch)", "mirroring / styles / more moves"],
+  "owner_decisions": ["chop angle 82° ball / 90° body", "chop striking-foot landing: crossover round the plant (built) vs crossed behind", "150°: inside hook (built) vs outside hook", "drag-back turn side (built: toward the dragging foot)", "chop right-side exposure after the contact"],
+  "protected_frozen_check": "no tracked file modified (git diff empty); TC1.5 is new files only",
+  "time_cannot_play_video": true
+}

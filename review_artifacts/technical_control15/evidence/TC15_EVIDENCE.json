@@ -1,0 +1,719 @@
+[
+ {
+  "id": "OUTCUT45",
+  "label": "45° outside-foot cut (to the right)",
+  "family": "OUTSIDE CUT",
+  "turnDeg": 45,
+  "pressure": {
+   "from": "left",
+   "note": "a defender in front / on the far (left) side (A1, A2: cut away from the defender with the far foot)"
+  },
+  "approach": {
+   "speed": 5.5,
+   "atDecisiveContact": 5.05,
+   "min": 4.85,
+   "tMin": 0.1
+  },
+  "decisive": {
+   "t": 1.2,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "OUTSIDE CUT",
+   "ballIn": 4.06,
+   "ballOut": 6.4,
+   "ballOutDeg": 42,
+   "ballTurnDeg": 42,
+   "impulseDeg": 80.81,
+   "footYawDeg": 15.81,
+   "actualFace": "OUTSIDE"
+  },
+  "exit": {
+   "bodyHeading05": 45,
+   "pelvisHeading035": 45,
+   "timeToLine": 0.1,
+   "accel": 1.5,
+   "speed05": 5.43,
+   "speed10": 6.1
+  },
+  "contacts": [
+   {
+    "t": -0.508,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "outDeg": 0,
+    "speedOut": 5.95
+   },
+   {
+    "t": 0,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "outDeg": 42,
+    "speedOut": 6.4
+   }
+  ],
+  "contactsInAction": 2,
+  "ballVsSupport": {
+   "atContact": [
+    0.589,
+    0.269
+   ],
+   "crossesFootAxis": null,
+   "crossesRunLine": null
+  },
+  "ballNearestPelvis": {
+   "d": 0.233,
+   "t": 0
+  },
+  "protection": {
+   "contact": {
+    "t0": 1.17,
+    "t1": 1.23,
+    "frames": 15,
+    "exposedShare": {
+     "front": 1,
+     "left": 0,
+     "right": 1,
+     "rearLeft": 0,
+     "rearRight": 1
+    },
+    "openDegMean": 277
+   },
+   "protection": {
+    "t0": 1.2,
+    "t1": 1.45,
+    "frames": 61,
+    "exposedShare": {
+     "front": 1,
+     "left": 0,
+     "right": 1,
+     "rearLeft": 0.07,
+     "rearRight": 1
+    },
+    "openDegMean": 290
+   },
+   "exit": {
+    "t0": 1.45,
+    "t1": 1.7999999999999998,
+    "frames": 85,
+    "exposedShare": {
+     "front": 1,
+     "left": 0.32,
+     "right": 1,
+     "rearLeft": 0.01,
+     "rearRight": 1
+    },
+    "openDegMean": 293
+   }
+  },
+  "pressureBlocked": {
+   "contact": 0.5,
+   "protection": 0.5,
+   "exit": 0.34
+  },
+  "body": {
+   "minLegClearanceCm": 5.73,
+   "atT": 1.142,
+   "minBallBootGapCm": -2.01,
+   "gapT": 1.117,
+   "romOverHardDeg": 0,
+   "romT": 0,
+   "romJoint": "",
+   "ankleErrMaxDeg": 10.88,
+   "ankleErrT": 1.183,
+   "reachAdaptCm": 8.85,
+   "reachT": 0.75
+  }
+ },
+ {
+  "id": "CHOP90",
+  "label": "90° Ronaldo chop (to the left)",
+  "family": "RONALDO CHOP",
+  "turnDeg": -90,
+  "pressure": {
+   "from": "rightAhead",
+   "note": "a defender alongside on the right / level-ahead, committed forward (S8, S11: 'alongside you', 'in behind the defender')"
+  },
+  "approach": {
+   "speed": 5,
+   "atDecisiveContact": 3.5,
+   "min": 2.2,
+   "tMin": 0.171
+  },
+  "decisive": {
+   "t": 1.3,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "CHOP",
+   "ballIn": 2.18,
+   "ballOut": 4.3,
+   "ballOutDeg": -82,
+   "ballTurnDeg": 82,
+   "impulseDeg": -111.41,
+   "footYawDeg": -21.41,
+   "actualFace": "INSIDE"
+  },
+  "exit": {
+   "bodyHeading05": -91,
+   "pelvisHeading035": -90,
+   "timeToLine": 0.24,
+   "accel": 4.66,
+   "speed05": 3.9,
+   "speed10": 5.31
+  },
+  "contacts": [
+   {
+    "t": -0.379,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "outDeg": -6.8,
+    "speedOut": 3.63
+   },
+   {
+    "t": 0,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CHOP",
+    "outDeg": -82,
+    "speedOut": 4.3
+   },
+   {
+    "t": 0.3,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "outDeg": -90,
+    "speedOut": 5.8
+   }
+  ],
+  "contactsInAction": 3,
+  "ballVsSupport": {
+   "atContact": [
+    -0.33,
+    -0.029
+   ],
+   "crossesFootAxis": null,
+   "crossesRunLine": {
+    "t": 0.037,
+    "behindHeel": 0.209
+   }
+  },
+  "ballNearestPelvis": {
+   "d": 0.226,
+   "t": 0.033
+  },
+  "protection": {
+   "contact": {
+    "t0": 1.27,
+    "t1": 1.33,
+    "frames": 15,
+    "exposedShare": {
+     "front": 0.07,
+     "left": 1,
+     "right": 0.8,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 227
+   },
+   "protection": {
+    "t0": 1.3,
+    "t1": 1.55,
+    "frames": 61,
+    "exposedShare": {
+     "front": 0.05,
+     "left": 1,
+     "right": 0.82,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 273
+   },
+   "exit": {
+    "t0": 1.55,
+    "t1": 1.9,
+    "frames": 85,
+    "exposedShare": {
+     "front": 0.76,
+     "left": 1,
+     "right": 0.25,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 279
+   }
+  },
+  "pressureBlocked": {
+   "contact": 0.56,
+   "protection": 0.56,
+   "exit": 0.5
+  },
+  "body": {
+   "minLegClearanceCm": 2.86,
+   "atT": 1.633,
+   "minBallBootGapCm": -2.04,
+   "gapT": 2.158,
+   "romOverHardDeg": 6.09,
+   "romT": 0.817,
+   "romJoint": "R hip",
+   "ankleErrMaxDeg": 19.85,
+   "ankleErrT": 1.192,
+   "reachAdaptCm": 6.88,
+   "reachT": 0.35
+  },
+  "acceptance": {
+   "tests": [
+    {
+     "n": 1,
+     "test": "approaching at useful speed (≥ 4.5 m/s)",
+     "value": "5 m/s; 3.5 at the chop",
+     "pass": true
+    },
+    {
+     "n": 2,
+     "test": "the shielding (left) leg moves across / in front of the ball",
+     "value": "left foot lands 0.30 m ahead of the ball, 0.14 m to its left; -0.02 s before the chop",
+     "pass": true
+    },
+    {
+     "n": 3,
+     "test": "the striking foot comes behind / across it",
+     "value": "at the chop the right ankle is 0.17 m behind the left heel; it sweeps to 0.17 m behind it",
+     "pass": true
+    },
+    {
+     "n": 4,
+     "test": "the inside of the striking foot contacts the ball",
+     "value": "surface INSIDE; the boot face on the ball (DRIBBLE-1's hull): INSIDE",
+     "pass": true
+    },
+    {
+     "n": 5,
+     "test": "the ball travels behind / across the shielding leg through the stance",
+     "value": "crosses the left foot's line 0.21 m behind its heel at +0.037 s; nearest the pelvis 0.226 m at +0.033 s",
+     "pass": true
+    },
+    {
+     "n": 6,
+     "test": "the body blocks the obvious pressure line (a defender level-ahead, committed forward; alongside on the right shown too)",
+     "value": "a reach from the FRONT blocked 0.93 at the chop, 0.95 through the stance · from the RIGHT 0.2 / 0.18 (the right side opens as the striking leg recovers: a limitation)",
+     "pass": true
+    },
+    {
+     "n": 7,
+     "test": "the player lands / orients toward the new line",
+     "value": "pelvis -90° at +0.35 s (exit -90°); travel -91° at +0.5 s; on the line at +0.24 s",
+     "pass": true
+    },
+    {
+     "n": 8,
+     "test": "immediate acceleration out",
+     "value": "2.2 m/s at +0.171 s → 3.9 m/s at +0.5 s → 5.31 at +1.0 s (4.66 m/s² over 0.5 s)",
+     "pass": true
+    }
+   ],
+   "passed": 8,
+   "of": 8,
+   "failCondition": {
+    "test": "the ball kicked externally around the player's body",
+    "value": "ball nearest the pelvis 0.226 m",
+    "fail": false
+   }
+  }
+ },
+ {
+  "id": "CRUYFF120",
+  "label": "120° Cruyff turn (to the left)",
+  "family": "CRUYFF TURN",
+  "turnDeg": -120,
+  "pressure": {
+   "from": "front",
+   "note": "a defender in front, blocking the shot / pass (S2, S3: 'in front of you', close marking)"
+  },
+  "approach": {
+   "speed": 4,
+   "atDecisiveContact": 0.35,
+   "min": 0.15,
+   "tMin": 0.079
+  },
+  "decisive": {
+   "t": 1.4,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "CRUYFF drag",
+   "ballIn": 1.02,
+   "ballOut": 2.8,
+   "ballOutDeg": -120,
+   "ballTurnDeg": 120,
+   "impulseDeg": -135.02,
+   "footYawDeg": -45.02,
+   "actualFace": "INSIDE"
+  },
+  "exit": {
+   "bodyHeading05": -123,
+   "pelvisHeading035": -120,
+   "timeToLine": 0.44,
+   "accel": 6.11,
+   "speed05": 2.8,
+   "speed10": 4.71
+  },
+  "contacts": [
+   {
+    "t": 0,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF drag",
+    "outDeg": -120,
+    "speedOut": 2.8
+   },
+   {
+    "t": 0.379,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch (left foot)",
+    "outDeg": -122,
+    "speedOut": 5
+   }
+  ],
+  "contactsInAction": 2,
+  "ballVsSupport": {
+   "atContact": [
+    -0.29,
+    0.096
+   ],
+   "crossesFootAxis": {
+    "t": 0.037,
+    "alongFromHeel": -0.192
+   },
+   "crossesRunLine": {
+    "t": 0.121,
+    "behindHeel": 0.253
+   }
+  },
+  "ballNearestPelvis": {
+   "d": 0.214,
+   "t": 0.029
+  },
+  "protection": {
+   "contact": {
+    "t0": 1.3699999999999999,
+    "t1": 1.43,
+    "frames": 15,
+    "exposedShare": {
+     "front": 0,
+     "left": 1,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 234
+   },
+   "protection": {
+    "t0": 1.4,
+    "t1": 1.65,
+    "frames": 61,
+    "exposedShare": {
+     "front": 0.05,
+     "left": 1,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 288
+   },
+   "exit": {
+    "t0": 1.65,
+    "t1": 2,
+    "frames": 85,
+    "exposedShare": {
+     "front": 0.18,
+     "left": 1,
+     "right": 0.99,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 284
+   }
+  },
+  "pressureBlocked": {
+   "contact": 1,
+   "protection": 0.95,
+   "exit": 0.82
+  },
+  "body": {
+   "minLegClearanceCm": -1.56,
+   "atT": 1.571,
+   "minBallBootGapCm": -1.6,
+   "gapT": 1.229,
+   "romOverHardDeg": 0,
+   "romT": 0,
+   "romJoint": "",
+   "ankleErrMaxDeg": 22.8,
+   "ankleErrT": 1.475,
+   "reachAdaptCm": 6.8,
+   "reachT": 1
+  }
+ },
+ {
+  "id": "HOOK150",
+  "label": "150° inside hook (to the left)",
+  "family": "INSIDE HOOK",
+  "turnDeg": -150,
+  "pressure": {
+   "from": "rightAhead",
+   "note": "a defender ahead / alongside on the right, closing down: the hook turns the player's back to him (A9, S24: the turning shoulder between ball and defender)"
+  },
+  "approach": {
+   "speed": 3.5,
+   "atDecisiveContact": 0.4,
+   "min": 0.15,
+   "tMin": 0.079
+  },
+  "decisive": {
+   "t": 1.42,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "HOOK",
+   "ballIn": 0.97,
+   "ballOut": 3,
+   "ballOutDeg": -150,
+   "ballTurnDeg": 150,
+   "impulseDeg": -157.25,
+   "footYawDeg": -67.25,
+   "actualFace": "INSIDE"
+  },
+  "exit": {
+   "bodyHeading05": -150,
+   "pelvisHeading035": -150,
+   "timeToLine": 0.4,
+   "accel": 5.7,
+   "speed05": 2.65,
+   "speed10": 4.4
+  },
+  "contacts": [
+   {
+    "t": 0.001,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "HOOK",
+    "outDeg": -150,
+    "speedOut": 3
+   },
+   {
+    "t": 0.38,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch (left foot)",
+    "outDeg": -150,
+    "speedOut": 4.8
+   }
+  ],
+  "contactsInAction": 2,
+  "ballVsSupport": {
+   "atContact": [
+    0.096,
+    0.439
+   ],
+   "crossesFootAxis": {
+    "t": 0.225,
+    "alongFromHeel": -0.195
+   },
+   "crossesRunLine": {
+    "t": 0.321,
+    "behindHeel": 0.346
+   }
+  },
+  "ballNearestPelvis": {
+   "d": 0.06,
+   "t": 0.112
+  },
+  "protection": {
+   "contact": {
+    "t0": 1.39,
+    "t1": 1.45,
+    "frames": 15,
+    "exposedShare": {
+     "front": 0,
+     "left": 0,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 211
+   },
+   "protection": {
+    "t0": 1.42,
+    "t1": 1.67,
+    "frames": 60,
+    "exposedShare": {
+     "front": 0.6,
+     "left": 0.38,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 275
+   },
+   "exit": {
+    "t0": 1.67,
+    "t1": 2.02,
+    "frames": 84,
+    "exposedShare": {
+     "front": 0.35,
+     "left": 1,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 279
+   }
+  },
+  "pressureBlocked": {
+   "contact": 0.5,
+   "protection": 0.2,
+   "exit": 0.32
+  },
+  "body": {
+   "minLegClearanceCm": -2,
+   "atT": 1.008,
+   "minBallBootGapCm": -1.63,
+   "gapT": 2.296,
+   "romOverHardDeg": 2.68,
+   "romT": 1.496,
+   "romJoint": "R hip",
+   "ankleErrMaxDeg": 30.65,
+   "ankleErrT": 1.558,
+   "reachAdaptCm": 4.88,
+   "reachT": 0.1
+  }
+ },
+ {
+  "id": "DRAGBACK180",
+  "label": "180° drag-back (turning to the right)",
+  "family": "DRAG-BACK",
+  "turnDeg": 180,
+  "pressure": {
+   "from": "front",
+   "note": "a defender in front, tight (back to goal / closing down — S27, S28)"
+  },
+  "approach": {
+   "speed": 3,
+   "atDecisiveContact": 0.35,
+   "min": 0.15,
+   "tMin": 0.079
+  },
+  "decisive": {
+   "t": 1.4,
+   "F": "R",
+   "surface": "SOLE",
+   "role": "DRAG-BACK pull",
+   "ballIn": 0.62,
+   "ballOut": 1.7,
+   "ballOutDeg": -180,
+   "ballTurnDeg": 180,
+   "impulseDeg": 179.93,
+   "footYawDeg": -0.07,
+   "actualFace": "SOLE"
+  },
+  "exit": {
+   "bodyHeading05": -180,
+   "pelvisHeading035": -180,
+   "timeToLine": 0.36,
+   "accel": 5.91,
+   "speed05": 2.7,
+   "speed10": 4.56
+  },
+  "contacts": [
+   {
+    "t": 0,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "DRAG-BACK pull",
+    "outDeg": -180,
+    "speedOut": 1.7
+   },
+   {
+    "t": 0.242,
+    "F": "L",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "outDeg": -180,
+    "speedOut": 4.6
+   }
+  ],
+  "contactsInAction": 2,
+  "ballVsSupport": {
+   "atContact": [
+    0.078,
+    0.3
+   ],
+   "crossesFootAxis": null,
+   "crossesRunLine": null
+  },
+  "ballNearestPelvis": {
+   "d": 0.167,
+   "t": 0.125
+  },
+  "protection": {
+   "contact": {
+    "t0": 1.3699999999999999,
+    "t1": 1.43,
+    "frames": 15,
+    "exposedShare": {
+     "front": 0.07,
+     "left": 0,
+     "right": 0.67,
+     "rearLeft": 0.67,
+     "rearRight": 0.87
+    },
+    "openDegMean": 115
+   },
+   "protection": {
+    "t0": 1.4,
+    "t1": 1.65,
+    "frames": 61,
+    "exposedShare": {
+     "front": 0.31,
+     "left": 0.11,
+     "right": 0.51,
+     "rearLeft": 0.26,
+     "rearRight": 0.52
+    },
+    "openDegMean": 115
+   },
+   "exit": {
+    "t0": 1.65,
+    "t1": 2,
+    "frames": 85,
+    "exposedShare": {
+     "front": 0.38,
+     "left": 0.98,
+     "right": 1,
+     "rearLeft": 1,
+     "rearRight": 1
+    },
+    "openDegMean": 274
+   }
+  },
+  "pressureBlocked": {
+   "contact": 0.93,
+   "protection": 0.69,
+   "exit": 0.62
+  },
+  "body": {
+   "minLegClearanceCm": -2.08,
+   "atT": 1.458,
+   "minBallBootGapCm": -3.56,
+   "gapT": 1.342,
+   "romOverHardDeg": 0,
+   "romT": 0,
+   "romJoint": "",
+   "ankleErrMaxDeg": 30.35,
+   "ankleErrT": 1.325,
+   "reachAdaptCm": 5.5,
+   "reachT": 0.1
+  }
+ }
+]
