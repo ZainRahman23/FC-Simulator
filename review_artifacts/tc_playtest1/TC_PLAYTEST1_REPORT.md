@@ -29,12 +29,60 @@ Optional URL parameters: `?cam=follow|touchline|top|side`, `&foot=R|L|B`, `&bc=�
 | **H** | Hide / show the HUD. |
 | **V** | Verify determinism: the whole session is re-simulated from its recorded input. |
 
+**On-screen stick** (bottom-left; see the joystick section below): drag = direction and magnitude; SPRINT (hold) / sprint lock; WALK (hold).
+
 Bar controls:
 - **Foot:** right-dominant, left-dominant or two-footed.
 - **Style:** only "neutral elite" exists.
 - **BC / DRI / AGI sliders:** 1–99, live. Below 99 they are marked **PROVISIONAL**: a linear scaling, not a calibration.
 - **Course:** straight acceleration, slalom, sharp-cut 45 / 90 / 120 / 150 / 180° or tight box. Courses are visual only and placed ahead of the player when chosen.
 - **Overlays:** HUD, panels (separation graph, technique frequency, last 20 contacts), protection diagnostic, body debug, and the body itself (switching it off runs the simulation only).
+
+## The on-screen joystick (added 20 Oct, input only)
+
+Instruction (verbatim): `sources/2026-10-20_user_instruction_tc_playtest1_joystick.md`.
+
+- **The stick:** bottom-left, drag inside it. The pointer is captured while dragging, so leaving the circle keeps control; releasing returns the thumb to the centre and movement to zero. Mouse, trackpad, pen and touch all work (pointer events).
+- **Direction:** continuous, never quantised. Up = the camera's forward, latched when the stick leaves its deadzone. This is the same convention as WASD, which latches when the key combination changes. The HUD shows the exact angle from that forward, e.g. "input STICK +37.0°".
+- **Magnitude:** the distance from the centre. Below the deadzone (0.08 of the radius, editable in the bar as "Stick dz", or `?dz=`) there is no movement. Then WALK up to 0.40, JOG up to 0.72, RUN beyond. The outer edge is never a sprint.
+- **SPRINT:** hold the SPRINT button (= Shift), or click "sprint lock" to keep sprinting with one hand on a mouse. **WALK** is a hold button (= Alt / Option).
+- **Keyboard and stick:** the last source to become active authors the request (a WASD key going down, or the stick being grabbed or dragged). The two are never added.
+- **Replay:** the stick's raw position and analog vector are recorded per tick. REPLAY LAST ACTION draws the recorded stick beside the WASD, Shift, Alt, SPRINT and WALK it shows.
+- **Implementation:** `pt_input.js` builds the request for both sources. The simulation files are unchanged (git diff empty). The joystick changes nothing in Dribbling, Ball Control, Agility, technique scoring, touch timing, ball physics or movement capability. The stick asks only for a direction; Technical Control chooses the technique.
+
+**Verified.**
+- **Equivalence** (`tools/pt_input_test.mjs`, `evidence/PT1_STICK_INPUT_TESTS.*`): identical authoritative results — hash, contacts, actions — 6 / 6:
+  - WASD forward vs the stick exactly forward;
+  - W + D vs the stick's normalised diagonal (√½, √½);
+  - W → WD → D → SD → S vs the stick's equivalents;
+  - Shift + W → A vs the stick + the SPRINT button;
+  - Alt + W vs the stick + the WALK button;
+  - release vs the stick back to the centre.
+- **The owner's playtest on the stick:**
+
+  | Stick input | What the player does |
+  |---|---|
+  | sprint, smooth 0 → 90° over 2.5 s (through 30 / 45 / 60 / 75°) | carry corrections follow it |
+  | sprint, held at 30° | carry |
+  | sprint, held at 60° | outside cut |
+  | sprint, snap 90° | Ronaldo chop |
+  | sprint, snap 150° | drag-back |
+  | run, 41° / 68° | carry |
+  | run, 97° | Ronaldo chop |
+  | run, 137° | inside hook |
+  | stick in the jog zone, 90° | outside cut |
+
+  0 missed contacts throughout.
+- **In Chrome with real pointer input** (`tools/pt_stick_browser.cjs`, `evidence/PT1_STICK_BROWSER.json`):
+  - a mouse drag to 37° gives a request 37.0° from the latched forward, RUN zone;
+  - with the pointer dragged far outside the circle, the stick stays captured and clamps to the rim;
+  - release gives movement zero;
+  - W takes over, then a new drag takes back;
+  - a touch on the stick while the mouse holds SPRINT gives the stick direction + SPRINT;
+  - the sprint sweep 0 → 90° gives carry, the snap 90° a Ronaldo chop L, the snap 150° a drag-back R;
+  - REPLAY LAST ACTION shows the recorded stick;
+  - the page's determinism check is identical, and the session re-simulated in node is identical (`evidence/PT1_STICK_SESSION_RESIM.txt`).
+- **WASD unchanged:** the 34 s WASD tour still gives 59 contacts, 0 missed, determinism identical.
 
 ## The techniques (no skill button, no angle buckets)
 

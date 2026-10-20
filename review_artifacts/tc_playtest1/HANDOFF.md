@@ -27,6 +27,11 @@
 - Carry touches: the foot is slower than the ball and follows through behind it.
 - A swing foot inside the ball is moved clear.
 
+**`pt_input.js` — the movement request** (20 Oct): WASD and the on-screen stick build the same request.
+- The stick: continuous direction, the deadzone, zones WALK / JOG / RUN.
+- The frame is latched at the input's start (WASD: the combination changes; the stick: it leaves the deadzone).
+- The record's input bits: 64 = the stick, 128 = SPRINT button, 256 = WALK button.
+
 **`pt_viewer.js` — the page**
 - Loop, input latch, cameras, overlays, HUD and panels, replay, determinism check, the `window.PT` test surface.
 
@@ -40,6 +45,9 @@
 | `tools/pt_audit.mjs <session.json> [--json]` | Pose audit of a recorded browser session. |
 | `tools/pt_resim.mjs <session.json> [t1,t2]` | Node re-simulation of a browser session (node ≡ browser) with a decision trace. |
 | `PUPPETEER_NODE_MODULES=… node tools/pt_browser.cjs --out <dir> --seq tour [--q "cam=top"] [--set '{"show":{…}}'] [--shots "…"]` | Real key presses in Chrome, screenshots, perf, determinism, session export. |
+| `tools/pt_input_test.mjs [--json]` | The stick: continuous angles, deadzone / zones, WASD ≡ stick equivalence, the owner's stick playtest. |
+| `PUPPETEER_NODE_MODULES=… node tools/pt_stick_browser.cjs --out <dir>` | Real pointer / touch input on the stick in Chrome, replay, determinism, session export. |
+| `tools/pt_stick_actions.mjs <session.json>` | Each technique of a recorded session with the input that asked for it. |
 | `tools/pt_bake.mjs` | Re-bakes RUN-1's tables (only if RUN-1's gait changes — it is frozen). |
 
 ## Next, if the owner wants

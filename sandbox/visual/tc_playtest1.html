@@ -38,10 +38,20 @@
   #replay { left: 50%; bottom: 12px; transform: translateX(-50%); display: none; pointer-events: auto; width: min(760px, 80%); }
   #replay input { width: 100%; }
   #replay .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; font: 600 12px -apple-system, Helvetica, sans-serif; }
-  #help { left: 10px; bottom: 10px; color: var(--dim); font-size: 11.5px; }
+  #help { left: 10px; bottom: 8px; color: var(--dim); font-size: 11px; padding: 4px 8px; }
   #perf { right: 10px; bottom: 10px; font: 11px Menlo, Consolas, monospace; color: var(--dim); white-space: pre; }
   #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 600 15px -apple-system, Helvetica, sans-serif; color: var(--dim); z-index: 9; }
   .hidden { display: none !important; }
+  /* the on-screen movement stick (input only) and its SPRINT / WALK buttons */
+  #stickBox { position: absolute; left: 14px; bottom: 44px; width: 210px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickPad { width: 210px; height: 210px; cursor: grab; touch-action: none; border-radius: 50%; }
+  #stickPad:active { cursor: grabbing; }
+  #stickInfo { text-align: center; font: 600 12px Menlo, Consolas, monospace; color: #9ad7ff; text-shadow: 0 1px 2px #000; margin-top: -4px; }
+  #stickBtns { position: absolute; left: 230px; bottom: 74px; display: flex; flex-direction: column; gap: 7px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickBtns button { touch-action: none; width: 96px; font-weight: 700; letter-spacing: 0.04em; background: rgba(34,44,39,0.82); }
+  #bSprint { height: 58px; font-size: 15px; } #bSprint.on { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; }
+  #bLock { height: 26px; font-size: 11px; } #bLock.on { background: #ffb36b; border-color: #ffb36b; color: #1a1209; }
+  #bWalk { height: 40px; font-size: 13px; } #bWalk.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; }
 </style>
 </head>
 <body>
@@ -57,6 +67,7 @@
   <span class="grp"><span class="lab">BC</span><input id="aBC" type="range" min="1" max="99" value="99"><span id="vBC">99</span>
     <span class="lab">DRI</span><input id="aDRI" type="range" min="1" max="99" value="99"><span id="vDRI">99</span>
     <span class="lab">AGI</span><input id="aAGI" type="range" min="1" max="99" value="99"><span id="vAGI">99</span><span id="prov"></span></span>
+  <span class="grp"><span class="lab">Stick dz</span><input id="dz" type="number" min="0" max="0.3" step="0.01" value="0.08" style="width:58px" title="share of the stick's radius"><span class="lab" id="zones" style="font-size:11px" title="stick zones (share of the radius): walk below 0.40, jog below 0.72, run beyond; sprint only with SPRINT / Shift">zones .40 / .72</span></span>
   <span class="grp"><label><input id="cHud" type="checkbox" checked>HUD</label><label><input id="cSide" type="checkbox" checked>panels</label><label><input id="cProt" type="checkbox">protection</label><label><input id="cBody" type="checkbox">body debug</label><label><input id="cAnim" type="checkbox" checked>body</label></span>
 </div>
 <div id="stage">
@@ -69,7 +80,9 @@
   </div>
   <div id="keys" class="box"></div>
   <div id="replay" class="box"><div class="row"><span id="rLabel">REPLAY</span><span><button id="rSlow" class="on">0.25×</button><button id="rHalf">0.5×</button><button id="rOne">1×</button><button id="rPlay">❚❚</button><button id="rLive">LIVE ▸ (Esc)</button></span></div><input id="rScrub" type="range" min="0" max="1000" value="0"></div>
-  <div id="help" class="box">WASD move (camera frame) · Shift sprint · Alt/Option walk · 1–4 mode · Space pause · . step · Q replay last action · B replay buffer · R reset · C camera · H HUD</div>
+  <div id="stickBox"><div id="stickPad" title="drag in any direction — continuous direction and magnitude (the camera's forward = up)"></div><div id="stickInfo">drag to move</div></div>
+  <div id="stickBtns"><button id="bSprint" title="hold: sprint (= Shift)">SPRINT</button><button id="bLock" title="keep sprinting without holding (click again to release)">sprint lock</button><button id="bWalk" title="hold: walk (= Alt / Option)">WALK</button></div>
+  <div id="help" class="box">Stick (left): drag = direction + magnitude · SPRINT hold / lock · WASD move (camera frame) · Shift sprint · Alt/Option walk · 1–4 mode · Space pause · . step · Q replay last action · B replay buffer · R reset · C camera · H HUD</div>
   <div id="perf" class="box"></div>
   <div id="loading">loading the player…</div>
 </div>

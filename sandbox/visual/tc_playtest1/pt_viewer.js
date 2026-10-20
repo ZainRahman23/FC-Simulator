@@ -9,10 +9,13 @@
 import { PlaySim, DT, MODES, LABEL, wrap, dir, hdg } from "./pt_sim.js";
 import { PlayBody } from "./pt_body.js";
 import { DIRS } from "../technical_control15/tc15_ref.js";
+import { STICK, stickVector, stickMode, headingFrom, stickAngleDeg, BITS } from "./pt_input.js";
 const W = window, hyp = Math.hypot, DEG = Math.PI / 180, max = Math.max, min = Math.min, abs = Math.abs;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const START = { P: [52.5, 34], h: 0 };
 const V = { ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
+  // the on-screen stick (input only): the source that last became active authors the movement — "keys" (a WASD key went down) or "stick"
+  src: "keys", stick: { pid: null, raw: { x: 0, y: 0 }, v: { x: 0, y: 0, m: 0, r: 0 }, latch: 0, moving: false, cfg: Object.assign({}, STICK) }, btn: { sprint: false, walk: false, lock: false }, inStick: null, stickLog: [],
   show: { hud: true, side: true, prot: false, body: false, anim: true }, course: null, replay: null, perf: { frame: [], sim: [], pose: [], render: [], work: [] }, lastNow: null, lastShown: null, dom: {}, verify: null };
 // ── GL ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
@@ -78,22 +81,31 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, 
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function newSim() { const o = { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
-  V.sim = new PlaySim(V.env, o); V.body = new PlayBody(V.env, V.sim); V.o0 = JSON.parse(JSON.stringify(o)); V.acc = 0; V.trail = []; V.cam = null; V.lastShown = null; V.replay = null; V.verify = null; showReplayUI(false); }
-// the request from the keys held: a direction in the camera frame latched when the combination changed; the mode (Shift / Alt over the base)
+  V.sim = new PlaySim(V.env, o); V.body = new PlayBody(V.env, V.sim); V.o0 = JSON.parse(JSON.stringify(o)); V.stickLog = []; V.acc = 0; V.trail = []; V.cam = null; V.lastShown = null; V.replay = null; V.verify = null; showReplayUI(false); }
+// the request (pt_input.js): from the keys held — a direction in the camera frame latched when the combination changed, the base mode — or from
+// the stick when it is the active source — its continuous direction in the camera frame latched when it left its deadzone, its zone's mode; Shift
+// or the SPRINT button = sprint, Alt or the WALK button = walk, for both. One source at a time — never the two added
 function request() {
-  const K = V.keys, w = K.has("KeyW"), a = K.has("KeyA"), s = K.has("KeyS"), d = K.has("KeyD"), sh = K.has("ShiftLeft") || K.has("ShiftRight"), alt = K.has("AltLeft") || K.has("AltRight");
+  const K = V.keys, w = K.has("KeyW"), a = K.has("KeyA"), s = K.has("KeyS"), d = K.has("KeyD"), shK = K.has("ShiftLeft") || K.has("ShiftRight"), altK = K.has("AltLeft") || K.has("AltRight");
+  const sh = shK || V.btn.sprint || V.btn.lock, alt = altK || V.btn.walk, S = V.stick, useStick = V.src === "stick";
   const combo = (w ? "W" : "") + (a ? "A" : "") + (s ? "S" : "") + (d ? "D" : ""); if (combo !== V.latch.combo) { V.latch.combo = combo; V.latch.h = V.camH; }
-  const f = (w ? 1 : 0) - (s ? 1 : 0), r = (d ? 1 : 0) - (a ? 1 : 0), mode = sh ? "SPRINT" : alt ? "WALK" : V.baseMode, bits = (w ? 1 : 0) | (a ? 2 : 0) | (s ? 4 : 0) | (d ? 8 : 0) | (sh ? 16 : 0) | (alt ? 32 : 0);
-  return { h: f || r ? wrap(V.latch.h + Math.atan2(r, f)) : null, mode, keys: bits };
+  const bits = (w ? BITS.W : 0) | (a ? BITS.A : 0) | (s ? BITS.S : 0) | (d ? BITS.D : 0) | (shK ? BITS.SHIFT : 0) | (altK ? BITS.ALT : 0) | (useStick ? BITS.STICK : 0) | (V.btn.sprint || V.btn.lock ? BITS.SPRINT_BTN : 0) | (V.btn.walk ? BITS.WALK_BTN : 0);
+  if (useStick) { const v = S.v; if (v.m > 0 && !S.moving) S.latch = V.camH; S.moving = v.m > 0; V.inStick = v;
+    return { h: v.m > 0 ? headingFrom(S.latch, v.x, v.y) : null, mode: sh ? "SPRINT" : alt ? "WALK" : v.m > 0 ? stickMode(v.r, S.cfg) : V.baseMode, keys: bits }; }
+  V.inStick = null; S.moving = false;
+  const f = (w ? 1 : 0) - (s ? 1 : 0), r = (d ? 1 : 0) - (a ? 1 : 0);
+  return { h: headingFrom(V.latch.h, r, f), mode: sh ? "SPRINT" : alt ? "WALK" : V.baseMode, keys: bits };
 }
+// one simulation tick with the request, and the stick's record for it (raw displacement, the analog vector — the replay shows what was held)
+function stepSim(req) { V.sim.step(req); const S = V.stick, on = !!(req.keys & BITS.STICK); V.stickLog.push(on ? S.raw.x : 0, on ? S.raw.y : 0, on ? S.v.x : 0, on ? S.v.y : 0); }
 // ── what the page shows at time t (live: now; replay: a recent instant) — all from the recorded history ────────────────────────────────────────
 function hudAt(t) {
   const S = V.sim, P = S.planAt(t), st = S.stateAt(t, P), B = S.ballTrack(t), k = Math.round(t / DT), I = S.log.input, a = P.action;
   const ik = min(k, I.length / 3 - 1), reqH = ik >= 0 && I[3 * ik] !== -99 ? I[3 * ik] : null, mode = ik >= 0 ? MODES[I[3 * ik + 1]] : "RUN", keys = ik >= 0 ? I[3 * ik + 2] : 0;
   let last = null, n3 = 0; for (let i = S.contacts.length - 1; i >= 0; i--) { const c = S.contacts[i]; if (c.t > t + 1e-9) continue; if (!last && !c.missed) last = c; if (c.t > t - 3 && !c.missed) n3++; else if (c.t <= t - 3) break; }
   let phase = a.label; if (a.tech) phase = t < a.tA ? "ENTRY · approach" : t < a.tC - 0.01 ? "ENTRY" : t < a.tC + 0.03 ? "CONTACT" : t < a.tRelease ? "PROTECTION" : "EXIT";
-  const travel = st.s > 1.0 ? st.h : st.psi;
-  return { t, k, plan: P, action: a.label + (a.m ? (a.m > 0 ? " (R)" : " (L)") : ""), kind: a.kind, phase, speed: st.s, ballSpeed: hyp(B.v[0], B.v[1]), reqH, mode, reqSpeed: reqH != null ? S.P.speed[mode] : 0, keys,
+  const travel = st.s > 1.0 ? st.h : st.psi, L = V.stickLog, stick = ik >= 0 && keys & BITS.STICK && 4 * ik + 3 < L.length ? { raw: [L[4 * ik], L[4 * ik + 1]], v: [L[4 * ik + 2], L[4 * ik + 3]] } : null;
+  return { t, k, plan: P, stick, action: a.label + (a.m ? (a.m > 0 ? " (R)" : " (L)") : ""), kind: a.kind, phase, speed: st.s, ballSpeed: hyp(B.v[0], B.v[1]), reqH, mode, reqSpeed: reqH != null ? S.P.speed[mode] : 0, keys,
     facing: st.psi, travel, turn: reqH != null ? wrap(reqH - travel) : 0, sep: hyp(B.p[0] - st.P[0], B.p[1] - st.P[1]), cps: n3 / 3, last, why: P.why || [], st, ball: B };
 }
 const deg = (r) => (r == null ? "  —" : ((wrap(r) / DEG).toFixed(0) + "°").padStart(5));
@@ -182,12 +194,20 @@ function updateHud(h) {
   const lastC = h.last, prov = S.P.provisional;
   d.hud.innerHTML = `<div class="act">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}${V.paused && !V.replay ? "  ·  PAUSED" : ""}</div>` +
     `mode ${h.mode.padEnd(6)} requested ${h.reqSpeed.toFixed(1)} m/s\nplayer ${h.speed.toFixed(2)} m/s   ball ${h.ballSpeed.toFixed(2)} m/s\n` +
-    `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` +
+    `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" +
     `foot ${lastC ? lastC.F : "—"} · ${lastC ? String(lastC.surface).toLowerCase() : "—"} (${lastC ? (LABEL[lastC.tech] || lastC.tech) + " · " + lastC.role : "no contact yet"})\n` +
     `ball separation ${h.sep.toFixed(2)} m   contacts/s ${h.cps.toFixed(1)}\n` + `<span style="color:#8fa49a">why (cost, lower = chosen):\n${top}</span>` +
     (prov ? `\n<span id="provH" style="color:#ffb36b">attributes below 99: PROVISIONAL linear scaling — not a calibration</span>` : "");
   d.prov.textContent = prov ? " provisional" : "";
   if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); }
+}
+// the input line: which source authored the request; for the stick its exact direction (from the camera forward it latched, + = right), its
+// analog magnitude beyond the deadzone, its zone and the deadzone itself
+function inputLine(h) {
+  const k = h.keys, btn = (k & BITS.SPRINT_BTN ? " +SPRINT btn" : "") + (k & BITS.WALK_BTN ? " +WALK btn" : "") + (k & BITS.SHIFT ? " +Shift" : "") + (k & BITS.ALT ? " +Alt" : "");
+  if (k & BITS.STICK && h.stick) { const v = { x: h.stick.v[0], y: h.stick.v[1], m: hyp(h.stick.v[0], h.stick.v[1]) }, r = hyp(h.stick.raw[0], h.stick.raw[1]), a = stickAngleDeg(v);
+    return `<span style="color:#9ad7ff">input STICK ${a == null ? "  centre" : (a >= 0 ? "+" : "") + a.toFixed(1) + "°"} · |v| ${v.m.toFixed(2)} · ${v.m > 0 ? stickMode(r, V.stick.cfg) + " zone" : "deadzone"}${btn} · dz ${V.stick.cfg.deadzone.toFixed(2)}</span>`; }
+  const keys = ["W", "A", "S", "D"].filter((x) => k & BITS[x]).join(""); return `<span style="color:#9ad7ff">input WASD ${keys || "—"}${btn}</span>`;
 }
 function drawGraph(h) {
   const cv = V.dom.graph, dpr = min(window.devicePixelRatio || 1, 2), w = cv.clientWidth, ht = cv.clientHeight; if (cv.width !== Math.round(w * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(ht * dpr); }
@@ -213,7 +233,21 @@ function contactsTable(h) {
 }
 function showKeys(h) { const k = h.keys, el = V.dom.keys; if (!V.replay) { el.style.display = "none"; return; } el.style.display = "block";
   const K = (s, b, w) => `<span class="k${b ? " on" : ""}${w ? " w" : ""}">${s}</span>`;
-  el.innerHTML = `<div style="font:600 11px -apple-system;color:#8fa49a;margin-bottom:3px">INPUT PRESSED (replay) · mode ${h.mode}</div>${K("", 0)}${K("W", k & 1)}${K("", 0)}<br>${K("A", k & 2)}${K("S", k & 4)}${K("D", k & 8)}<br>${K("Shift", k & 16, 1)}${K("Alt", k & 32, 1)}`; }
+  const st = k & BITS.STICK && h.stick ? h.stick : null, sv = stickSVG(st ? st.raw : [0, 0], st ? st.v : [0, 0], 104, !!st);
+  el.innerHTML = `<div style="font:600 11px -apple-system;color:#8fa49a;margin-bottom:3px">INPUT PRESSED (replay) · mode ${h.mode}</div><div style="display:flex;gap:12px;align-items:center"><div>${K("", 0)}${K("W", k & 1)}${K("", 0)}<br>${K("A", k & 2)}${K("S", k & 4)}${K("D", k & 8)}<br>${K("Shift", k & 16, 1)}${K("Alt", k & 32, 1)}<br>${K("SPRINT", k & BITS.SPRINT_BTN, 1)}${K("WALK", k & BITS.WALK_BTN, 1)}</div><div>${sv}<div style="font:600 11px Menlo;color:#9ad7ff">${st ? inputLine(h).replace(/<[^>]+>/g, "").replace("input ", "") : "stick not used"}</div></div></div>`; }
+// the stick drawn (the live one and the replay's): the movement area, the deadzone and zone rings, the camera-forward tick, the direction line, the thumb
+function stickSVG(raw, v, size, on) {
+  const c = size / 2, R = size * 0.40, cfg = V.stick.cfg, tx = c + raw[0] * R, ty = c - raw[1] * R, m = hyp(v[0], v[1]);
+  const ring = (f, col, dash) => `<circle cx="${c}" cy="${c}" r="${(f * R).toFixed(1)}" fill="none" stroke="${col}" stroke-width="1" ${dash ? 'stroke-dasharray="3 3"' : ""}/>`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block"><circle cx="${c}" cy="${c}" r="${(R + size * 0.08).toFixed(1)}" fill="rgba(20,28,24,0.55)" stroke="rgba(200,230,215,0.35)" stroke-width="1.5"/>` +
+    ring(cfg.deadzone, "rgba(255,255,255,0.35)") + ring(cfg.walkTo, "rgba(160,220,255,0.25)", 1) + ring(cfg.jogTo, "rgba(160,220,255,0.25)", 1) + ring(1, "rgba(160,220,255,0.35)") +
+    `<line x1="${c}" y1="${(c - R - size * 0.06).toFixed(1)}" x2="${c}" y2="${(c - R - size * 0.015).toFixed(1)}" stroke="rgba(255,212,94,0.8)" stroke-width="2"/>` +
+    (on && m > 0 ? `<line x1="${c}" y1="${c}" x2="${tx.toFixed(1)}" y2="${ty.toFixed(1)}" stroke="#ffd45e" stroke-width="2.5"/>` : "") +
+    `<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="${(size * 0.13).toFixed(1)}" fill="${on ? "rgba(255,212,94,0.88)" : "rgba(220,235,228,0.55)"}" stroke="rgba(0,0,0,0.35)" stroke-width="1"/></svg>`;
+}
+function drawStick() { const S = V.stick; if (!V.dom.stickPad) return; const on = S.pid != null && V.src === "stick", v = S.v, a = stickAngleDeg(v);
+  V.dom.stickPad.innerHTML = stickSVG([S.raw.x, S.raw.y], [v.x, v.y], 210, on);
+  V.dom.stickInfo.textContent = on ? (v.m > 0 ? `${a >= 0 ? "+" : ""}${a.toFixed(1)}° · ${v.m.toFixed(2)} · ${stickMode(v.r, S.cfg)}` : "deadzone") : "drag to move"; }
 function perfText() { const q = (A, x) => { if (!A.length) return 0; const s = A.slice().sort((a, b) => a - b); return s[min(s.length - 1, Math.floor(x * s.length))]; }, avg = (A) => (A.length ? A.reduce((a, b) => a + b, 0) / A.length : 0), P = V.perf;
   return `frame  avg ${avg(P.frame).toFixed(1)}  p95 ${q(P.frame, 0.95).toFixed(1)}  p99 ${q(P.frame, 0.99).toFixed(1)}  worst ${max(0, ...P.frame).toFixed(1)} ms\n` +
     `work   avg ${avg(P.work).toFixed(2)}  p95 ${q(P.work, 0.95).toFixed(2)}  p99 ${q(P.work, 0.99).toFixed(2)}  worst ${max(0, ...P.work).toFixed(2)} ms  (sim ${avg(P.sim).toFixed(2)} / pose ${avg(P.pose).toFixed(2)} / render ${avg(P.render).toFixed(2)})` +
@@ -242,8 +276,8 @@ let hudClock = 0;
 function frame(now) {
   if (V.lastNow == null) V.lastNow = now; const dtReal = min(0.1, (now - V.lastNow) / 1000); V.lastNow = now; const w0 = performance.now(); let nSteps = 0;
   if (V.replay) { const R = V.replay; if (R.playing) { R.t = min(R.t1, R.t + dtReal * R.rate); if (R.t >= R.t1) R.playing = false; } }
-  else if (!V.paused) { V.acc += dtReal * V.rate; const req = request(); while (V.acc >= DT - 1e-12 && nSteps < 60) { V.sim.step(req); V.acc -= DT; nSteps++; } if (nSteps >= 60) V.acc = 0; }
-  else if (V.stepReq) { const req = request(); for (let i = 0; i < V.stepReq; i++) V.sim.step(req); V.stepReq = 0; }
+  else if (!V.paused) { V.acc += dtReal * V.rate; const req = request(); while (V.acc >= DT - 1e-12 && nSteps < 60) { stepSim(req); V.acc -= DT; nSteps++; } if (nSteps >= 60) V.acc = 0; }
+  else if (V.stepReq) { const req = request(); for (let i = 0; i < V.stepReq; i++) stepSim(req); V.stepReq = 0; }
   const w1 = performance.now(), tShow = V.replay ? Math.round(V.replay.t / DT) * DT : V.sim.t, h = hudAt(tShow);
   const pose = V.show.anim ? V.body.pose(tShow) : null; const w2 = performance.now();
   const dtc = V.lastShown == null || abs(tShow - V.lastShown) > 0.25 ? -1 : abs(tShow - V.lastShown); V.lastShown = tShow;
@@ -257,7 +291,7 @@ function frame(now) {
 function setRateButtons() { document.querySelectorAll("[data-rate]").forEach((b) => b.classList.toggle("on", +b.dataset.rate === V.rate)); V.dom.bPause.textContent = V.paused && !V.replay ? "▶" : "❚❚"; V.dom.bPause.classList.toggle("on", V.paused && !V.replay); }
 function setMode(m) { V.baseMode = m; document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", b.dataset.mode === m)); }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk"]) d[id] = $(id);
   const blur = (e) => { if (e && e.target && e.target.blur && e.target.tagName !== "INPUT") e.target.blur(); };
   $("bReset").onclick = (e) => { newSim(); blur(e); };
   document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = (e) => { setMode(b.dataset.mode); blur(e); }));
@@ -275,10 +309,25 @@ function bindUI() {
   d.selStyle.onchange = (e) => blur(e);
   for (const [k, id] of [["bc", "aBC"], ["dri", "aDRI"], ["agi", "aAGI"]]) d[id].oninput = () => { d["v" + id.slice(1)].textContent = d[id].value; V.sim.setAttrs({ [k]: +d[id].value }); };
   for (const [id, key] of [["cHud", "hud"], ["cSide", "side"], ["cProt", "prot"], ["cBody", "body"], ["cAnim", "anim"]]) $(id).onchange = (e) => { V.show[key] = e.target.checked; d.hud.classList.toggle("hidden", !V.show.hud); d.side.classList.toggle("hidden", !V.show.side); };
+  // THE STICK (pointer events: mouse, trackpad, pen, touch): the pointer is captured while it drags — leaving the circle never releases it; the
+  // release returns the thumb to the centre (movement = zero). The thumb's travel is the circle's 40 % radius in the drawing (stickSVG)
+  const S = V.stick, pad = d.stickPad;
+  const stickAt = (e) => { const b = pad.getBoundingClientRect(), R = b.width * 0.40; let x = (e.clientX - (b.left + b.width / 2)) / R, y = -(e.clientY - (b.top + b.height / 2)) / R; const r = hyp(x, y); if (r > 1) { x /= r; y /= r; }
+    S.raw = { x, y }; S.v = stickVector(x, y, S.cfg.deadzone); drawStick(); };
+  pad.addEventListener("pointerdown", (e) => { if (S.pid != null) return; e.preventDefault(); try { pad.setPointerCapture(e.pointerId); } catch (_) {} S.pid = e.pointerId; V.src = "stick"; if (V.replay) stopReplay(); stickAt(e); });
+  pad.addEventListener("pointermove", (e) => { if (e.pointerId !== S.pid) return; e.preventDefault(); V.src = "stick"; stickAt(e); });
+  const stickEnd = (e) => { if (e.pointerId !== S.pid) return; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); };
+  for (const ev of ["pointerup", "pointercancel", "lostpointercapture"]) pad.addEventListener(ev, stickEnd);
+  // SPRINT / WALK: held (each its own pointer — touch can hold SPRINT while the other finger steers); the sprint lock keeps sprint without a hand
+  const hold = (el, key) => { let pid = null; el.addEventListener("pointerdown", (e) => { e.preventDefault(); pid = e.pointerId; try { el.setPointerCapture(pid); } catch (_) {} V.btn[key] = true; el.classList.add("on"); });
+    const up = (e) => { if (e.pointerId !== pid) return; pid = null; V.btn[key] = false; el.classList.remove("on"); }; for (const ev of ["pointerup", "pointercancel", "lostpointercapture"]) el.addEventListener(ev, up); };
+  hold(d.bSprint, "sprint"); hold(d.bWalk, "walk");
+  d.bLock.addEventListener("click", (e) => { V.btn.lock = !V.btn.lock; d.bLock.classList.toggle("on", V.btn.lock); d.bLock.blur(); });
+  d.dz.onchange = d.dz.oninput = () => { const x = clamp(+d.dz.value || 0, 0, 0.3); S.cfg.deadzone = x; S.v = stickVector(S.raw.x, S.raw.y, x); drawStick(); };
   const code = (e) => e.code;
   window.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" && e.target.type === "text")) return; const c = code(e);
-    if (["KeyW", "KeyA", "KeyS", "KeyD", "ShiftLeft", "ShiftRight", "AltLeft", "AltRight"].includes(c)) { V.keys.add(c); e.preventDefault(); if (V.replay && /^Key[WASD]$/.test(c)) stopReplay(); return; }
+    if (["KeyW", "KeyA", "KeyS", "KeyD", "ShiftLeft", "ShiftRight", "AltLeft", "AltRight"].includes(c)) { V.keys.add(c); e.preventDefault(); if (/^Key[WASD]$/.test(c)) { if (!e.repeat) V.src = "keys"; if (V.replay) stopReplay(); } return; }
     if (e.repeat) return;
     if (c === "Space") { if (V.replay) V.replay.playing = !V.replay.playing; else V.paused = !V.paused; setRateButtons(); e.preventDefault(); }
     else if (c === "Period") { if (V.replay) { V.replay.playing = false; V.replay.t = min(V.replay.t1, V.replay.t + (e.shiftKey ? DT : 4 * DT)); } else { V.paused = true; V.stepReq = e.shiftKey ? 1 : 4; } setRateButtons(); }
@@ -293,7 +342,8 @@ function bindUI() {
     else if (/^Digit[1-4]$/.test(c)) setMode(MODES[+c.slice(5) - 1]);
   });
   window.addEventListener("keyup", (e) => { V.keys.delete(code(e)); if (code(e).startsWith("Alt")) e.preventDefault(); });
-  window.addEventListener("blur", () => V.keys.clear());
+  window.addEventListener("blur", () => { V.keys.clear(); V.btn.sprint = V.btn.walk = false; d.bSprint.classList.remove("on"); d.bWalk.classList.remove("on"); if (S.pid != null) { S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); } });
+  drawStick();
 }
 async function boot() {
   const q = new URLSearchParams(location.search); bindUI(); V.cv = document.getElementById("gl"); V.ovc = document.getElementById("ov"); V.ov2d = V.ovc.getContext("2d");
@@ -301,6 +351,7 @@ async function boot() {
   V.gl = gl; V.R = { gl }; V.ground = groundProg(gl); V.ballProg = ballProg(gl); V.cone = coneProg(gl);
   const [colliders, baked, ent] = await Promise.all([fetch("dribble1/d1_colliders.json").then((r) => r.json()), fetch("tc_playtest1/pt_baked.json").then((r) => r.json()), W.ofCharLoad(q.get("char") || "vinicius")]);
   V.ent = ent; const E = W.RUN1_V13; V.env = { E, M4, skel: ent.skel, colliders, baked, body: E.r1Body(ent.skel) };
+  if (q.get("dz") != null) { V.dom.dz.value = q.get("dz"); V.dom.dz.oninput(); }
   if (q.get("foot")) V.dom.selFoot.value = q.get("foot"); if (q.get("cam")) { V.camId = q.get("cam"); V.dom.selCam.value = V.camId; }
   for (const [k, id] of [["bc", "aBC"], ["dri", "aDRI"], ["agi", "aAGI"]]) if (q.get(k)) { V.dom[id].value = q.get(k); V.dom["v" + id.slice(1)].textContent = q.get(k); }
   newSim(); document.getElementById("loading").remove(); V.ready = true;
@@ -313,7 +364,10 @@ W.PT = { ready: () => V.ready, V,
   resetPerf: () => { for (const k of Object.keys(V.perf)) V.perf[k].length = 0; },
   verify: () => verifyDeterminism(), reset: () => newSim(), keys: (down, up) => { for (const k of up || []) V.keys.delete(k); for (const k of down || []) V.keys.add(k); },
   set: (o) => { if (o.cam) { V.camId = o.cam; V.dom.selCam.value = o.cam; V.cam = null; } if (o.course != null) { V.course = makeCourse(o.course); V.dom.selCourse.value = o.course; } if (o.show) { Object.assign(V.show, o.show); for (const [id, key] of [["cHud", "hud"], ["cSide", "side"], ["cProt", "prot"], ["cBody", "body"], ["cAnim", "anim"]]) document.getElementById(id).checked = !!V.show[key]; V.dom.hud.classList.toggle("hidden", !V.show.hud); V.dom.side.classList.toggle("hidden", !V.show.side); } if (o.mode) setMode(o.mode); if (o.rate) V.rate = o.rate; if (o.paused != null) V.paused = o.paused; return true; },
-  record: () => ({ o0: V.o0, input: Array.from(V.sim.log.input), events: V.sim.log.events, hash: V.sim.hash, k: V.sim.k }),
+  record: () => ({ o0: V.o0, input: Array.from(V.sim.log.input), events: V.sim.log.events, hash: V.sim.hash, k: V.sim.k, stick: Array.from(V.stickLog), deadzone: V.stick.cfg.deadzone }),
+  // the stick as a test would hold it: raw (x right, y up) in −1 … 1, null = released
+  stick: (x, y) => { const S = V.stick; if (x == null) { S.pid = null; S.raw = { x: 0, y: 0 }; } else { S.pid = -1; V.src = "stick"; S.raw = { x, y }; } S.v = stickVector(S.raw.x, S.raw.y, S.cfg.deadzone); drawStick(); return S.v; },
+  request: () => { const r = request(); return { h: r.h, mode: r.mode, keys: r.keys, frameH: V.src === "stick" ? V.stick.latch : V.latch.h, src: V.src }; },
   replay: (kind) => startReplay(kind || "last"), live: () => stopReplay(), seek: (t) => { if (V.replay) { V.replay.t = t; V.replay.playing = false; } },
   // drive one external frame (external=1): advance the simulation dt seconds with the given keys, then draw
   tick: (dt, keys) => { if (keys) { V.keys = new Set(keys); } const now = (V.lastNow || 0) + dt * 1000; frame(now); return { t: V.sim.t, hash: V.sim.hash }; },
