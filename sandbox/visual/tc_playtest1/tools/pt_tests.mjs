@@ -42,4 +42,9 @@ console.log("\n■ timing sweep · sprint W → A pressed at t:"); res.sweepSpri
 for (let t = 2.6; t <= 3.2 + 1e-9; t += 0.05) { const { sim, onLine } = run([{ t: 0.2, keys: "W", mode: "SPRINT" }, { t, keys: "A" }], t + 2.6); const a = sim.log.actions.filter((x) => x.t >= t - 1e-6 && x.label !== "CARRY")[0];
   const row = { t: +t.toFixed(2), first: a ? a.label + (a.m ? (a.m > 0 ? " R" : " L") : "") : "carry", onNewLine: onLine == null ? null : +onLine.toFixed(2), why: a ? (a.why || []).slice(0, 2).map((w) => `${w.label} ${w.J}`) : [] }; res.sweepSprint.push(row);
   console.log(`    ${t.toFixed(2)} → ${row.first.padEnd(18)} on the line +${row.onNewLine ?? "—"} s · ${row.why.join(" | ")}`); }
+// THE MIRROR (PLAYTEST-1.2): the same sweeps to the right (W → D) — the left-foot chop's phases
+for (const [label, mode, t0, t1, key] of [["run W → D", "RUN", 2.0, 2.6, "sweepD"], ["sprint W → D", "SPRINT", 2.6, 3.2, "sweepSprintD"]]) { console.log(`\n■ timing sweep · ${label} pressed at t:`); res[key] = [];
+  for (let t = t0; t <= t1 + 1e-9; t += 0.05) { const { sim, onLine } = run([{ t: 0.2, keys: "W", mode }, { t, keys: "D" }], t + 2.6); const a = sim.log.actions.filter((x) => x.t >= t - 1e-6 && x.label !== "CARRY")[0];
+    const row = { t: +t.toFixed(2), first: a ? a.label + (a.m ? (a.m > 0 ? " R" : " L") : "") : "carry", onNewLine: onLine == null ? null : +onLine.toFixed(2), why: a ? (a.why || []).slice(0, 2).map((w) => `${w.label} ${w.J}`) : [] }; res[key].push(row);
+    console.log(`    ${t.toFixed(2)} → ${row.first.padEnd(18)} on the line +${row.onNewLine ?? "—"} s · ${row.why.join(" | ")}`); } }
 if (out) fs.writeFileSync(out, JSON.stringify(res, null, 1));

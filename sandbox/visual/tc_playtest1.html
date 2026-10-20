@@ -67,6 +67,7 @@
   <span class="grp"><span class="lab">BC</span><input id="aBC" type="range" min="1" max="99" value="99"><span id="vBC">99</span>
     <span class="lab">DRI</span><input id="aDRI" type="range" min="1" max="99" value="99"><span id="vDRI">99</span>
     <span class="lab">AGI</span><input id="aAGI" type="range" min="1" max="99" value="99"><span id="vAGI">99</span><span id="prov"></span></span>
+  <span class="grp"><span class="lab">Torture</span><select id="selTort" style="max-width:190px"></select><select id="selTortMode"><option>WALK</option><option>JOG</option><option>RUN</option><option>SPRINT</option></select><button id="bTort" title="plays the sequence through the analog stick (recorded as stick input; Q replays it)">▶ play</button></span>
   <span class="grp"><span class="lab">Stick dz</span><input id="dz" type="number" min="0" max="0.3" step="0.01" value="0.08" style="width:58px" title="share of the stick's radius"><span class="lab" id="zones" style="font-size:11px" title="stick zones (share of the radius): walk below 0.40, jog below 0.72, run beyond; sprint only with SPRINT / Shift">zones .40 / .72</span></span>
   <span class="grp"><label><input id="cHud" type="checkbox" checked>HUD</label><label><input id="cSide" type="checkbox" checked>panels</label><label><input id="cProt" type="checkbox">protection</label><label><input id="cBody" type="checkbox">body debug</label><label><input id="cAnim" type="checkbox" checked>body</label></span>
 </div>
@@ -74,7 +75,7 @@
   <canvas id="gl"></canvas><canvas id="ov"></canvas>
   <div id="hud" class="box"></div>
   <div id="side" class="box">
-    <div class="sec"><h4>Ball separation (player ↔ ball, last 8 s)</h4><canvas id="graph"></canvas></div>
+    <div class="sec"><h4>Ball separation (player ↔ ball, last 8 s) · top strip: CONTROL (green secure · yellow replanning · cyan committed · orange recovering · red lost)</h4><canvas id="graph"></canvas></div>
     <div class="sec"><h4>Technique frequency (since reset)</h4><div id="stats"></div></div>
     <div class="sec"><h4>Last contacts</h4><table id="ctab"></table></div>
   </div>

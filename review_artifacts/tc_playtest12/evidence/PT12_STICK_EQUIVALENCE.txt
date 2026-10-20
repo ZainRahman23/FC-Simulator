@@ -1,0 +1,27 @@
+■ continuous direction (stick at full radius → requested heading, deg): 7→7  23→23  41→41  68→68  97→97  137→137  -45→-45  180→-180
+■ magnitude (raw r → |v|, zone; deadzone 0.08): 0.02→0 deadzone · 0.05→0 deadzone · 0.07→0 deadzone · 0.09→0.011 WALK · 0.2→0.13 WALK · 0.39→0.337 WALK · 0.41→0.359 JOG · 0.71→0.685 JOG · 0.73→0.707 RUN · 1→1 RUN
+
+■ equivalence (identical authoritative results):
+  IDENTICAL  WASD forward vs stick exactly forward · hash be0d1aca / be0d1aca · contacts 7 / 7
+  IDENTICAL  WASD W+D vs stick normalised diagonal (√½, √½) · hash 17a52d79 / 17a52d79 · contacts 7 / 7
+  IDENTICAL  W → WD → D → SD → S vs the stick's equivalents · hash 37706ae3 / 37706ae3 · contacts 11 / 11
+  IDENTICAL  Shift + W → A (sprint) vs stick + SPRINT button · hash ec8a63d1 / ec8a63d1 · contacts 8 / 8
+  IDENTICAL  Alt + W (walk) vs stick + WALK button · hash 9e55518a / 9e55518a · contacts 5 / 5
+  IDENTICAL  release: WASD up vs stick back to the centre · hash 39ba77db / 39ba77db · contacts 6 / 6
+
+■ the owner's playtest on the stick (what the resolver chooses — the stick only asks for a direction):
+  sprint forward, stick rotated smoothly 0 → 90° over 2.5 s (30 / 45 / 60 / 75 / 90 on the way): carry only · contacts 16 (missed 0)
+  sprint forward, stick held at 30°: carry only · contacts 7 (missed 0)
+  sprint forward, stick held at 60°: 3.00 OUTSIDE CUT R · contacts 8 (missed 0)
+      3.00 OUTSIDE CUT: OUTSIDE CUT (R) 3.17 | OUTSIDE CUT (R) 3.4 | RONALDO CHOP (L) 3.43
+  sprint forward → snap 90° right: 3.00 RONALDO CHOP L · contacts 8 (missed 0)
+      3.00 RONALDO CHOP: RONALDO CHOP (L) 3.18 | CARRY 3.45 | CRUYFF TURN (L) 3.81
+  sprint forward → snap 150° right: 3.00 DRAG-BACK L · contacts 10 (missed 0)
+      3.00 DRAG-BACK: DRAG-BACK (L) 3.7 | INSIDE HOOK (L) 3.71 | DRAG-BACK (R) 3.79
+  run (stick outer zone) forward → snap 41° left: carry only · contacts 9 (missed 0)
+  run forward → snap 68° right: carry only · contacts 9 (missed 0)
+  run forward → snap 97° right: 2.60 RONALDO CHOP L · contacts 9 (missed 0)
+      2.60 RONALDO CHOP: RONALDO CHOP (L) 3.13 | CARRY 3.27 | CRUYFF TURN (L) 3.58
+  run forward → snap 137° left: 2.60 INSIDE HOOK R · contacts 9 (missed 0)
+      2.60 INSIDE HOOK: INSIDE HOOK (R) 2.68 | INSIDE HOOK (R) 2.9 | CRUYFF TURN (R) 3.05
+  jog zone (stick at 0.55 of the radius) forward → 90° right: carry only · contacts 7 (missed 0)

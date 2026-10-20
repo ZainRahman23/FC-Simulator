@@ -17,22 +17,27 @@
 // Everything here is deterministic (fixed tick, no clock, no randomness at Ball Control 99; below 99 the provisional execution error is keyed on the
 // seed and the contact). Nothing here reads the posed body (pt_body.js is presentation).
 // FRAMES: pitch (x, y) metres; heading h with dir(h) = (cos h, sin h); the player's right = (−sin h, cos h); + heading change = a right turn.
+// (DETERMINISTIC math for everything that feeds the simulation: JavaScript does not make Math.sin / cos / atan2 / acos / hypot bit-identical
+// across engines — Node and Chrome were measured to differ — so a recorded session could diverge on another engine; + − × ÷ and sqrt are exact)
+import { dsin, dcos, datan2, dacos, dnorm } from "../physchar2/core/v2_math.js";
 import { DT, R, Ball, predict, speedFor, rollFrom } from "./pt_ball.js";
 import { params, gaitTable, lead, WIDTH, DEG, MODES } from "./pt_params.js";
 import { TEMPLATES, TECH_IDS, LABEL } from "./pt_tech.js";
 import { pchip, pchipAt } from "../technical_control11/tc11_leg.js";
 export { DT, R, DEG, MODES, TEMPLATES, LABEL };
-const hyp = Math.hypot, abs = Math.abs, max = Math.max, min = Math.min, PI = Math.PI;
+const hyp = dnorm, abs = Math.abs, max = Math.max, min = Math.min, PI = Math.PI;
 export const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 export const wrap = (a) => { a = (a + PI) % (2 * PI); if (a < 0) a += 2 * PI; return a - PI; };
-export const dir = (h) => [Math.cos(h), Math.sin(h)], rgt = (h) => [-Math.sin(h), Math.cos(h)], hdg = (v) => Math.atan2(v[1], v[0]);
+export const dir = (h) => [dcos(h), dsin(h)], rgt = (h) => [-dsin(h), dcos(h)], hdg = (v) => datan2(v[1], v[0]);
 const sgn = (F) => (F === "R" ? 1 : -1), other = (F) => (F === "R" ? "L" : "R");
 const lerp = (a, b, t) => a + (b - a) * t;
-export const toLocal = (q, P, h) => { const dx = q[0] - P[0], dy = q[1] - P[1], c = Math.cos(h), s = Math.sin(h); return [dx * c + dy * s, -dx * s + dy * c]; };
-export const fromLocal = (P, h, a, l) => { const c = Math.cos(h), s = Math.sin(h); return [P[0] + a * c - l * s, P[1] + a * s + l * c]; };
+export const toLocal = (q, P, h) => { const dx = q[0] - P[0], dy = q[1] - P[1], c = dcos(h), s = dsin(h); return [dx * c + dy * s, -dx * s + dy * c]; };
+export const fromLocal = (P, h, a, l) => { const c = dcos(h), s = dsin(h); return [P[0] + a * c - l * s, P[1] + a * s + l * c]; };
 export class Curve { constructor(keys) { this.K = keys.slice().sort((a, b) => a[0] - b[0]); for (let i = this.K.length - 1; i > 0; i--) if (this.K[i][0] - this.K[i - 1][0] < 1e-6) this.K.splice(i - 1, 1); this.P = this.K.length > 1 ? pchip(this.K.map(([t, v]) => ({ t, v: [v] })), 1) : null; }
   at(t) { return this.P ? pchipAt(this.P, t, 1)[0] : this.K[0][1]; } }
 // the carry's constants (TECHNICAL-CONTROL-1.2's carry, re-stated)
+// (switches for the bisection tool only — every one off by default)
+export const OFF = {};
 export const CARRY = {
   touchBefore: 0.075,                            // a touch at the end of the touching foot's swing, this long before it lands (TECHNICAL-CONTROL-1)
   ahead: (v) => min(0.50, 0.30 + 0.03 * v),      // the next touch point: ahead of the centre of mass …
@@ -75,13 +80,19 @@ export class PlaySim {
     const t = this.t; this.req = req && req.h != null ? { h: Math.round(req.h * 1e6) / 1e6, mode: req.mode || "RUN", keys: req.keys | 0 } : { h: null, mode: (req && req.mode) || "RUN", keys: req ? req.keys | 0 : 0 };
     this.log.input.push(this.req.h == null ? -99 : this.req.h, MODES.indexOf(this.req.mode), this.req.keys);
     // the request changed? (direction > 4°, the mode, start / stop)
-    const L = this.lastReq, q = this.req; if (!L || (L.h == null) !== (q.h == null) || L.mode !== q.mode || (q.h != null && abs(wrap(q.h - L.h)) > 4 * DEG)) { this.flags.replan = this.flags.replan || "request"; this.lastReq = q; }
+    // the INTENT: a change of request re-plans at once when the input is calm; a change within 0.25 s of the last one (rapid input) waits for the
+    // next decision point — a footfall, a contact, the refresh — which plans with the newest request (the body can only change its path through
+    // its feet: requests superseded before then never get a plan of their own; the raw input is recorded every tick all the same)
+    const L = this.lastReq, q = this.req; if (!L || (L.h == null) !== (q.h == null) || L.mode !== q.mode || (q.h != null && abs(wrap(q.h - L.h)) > 4 * DEG)) {
+      const calm = OFF.intent || this.lastReqT == null || t - this.lastReqT > 0.25 || (L && (L.h == null) !== (q.h == null)); if (calm) this.flags.replan = this.flags.replan || "request"; else this.intentPending = true; this.lastReq = q; this.lastReqT = t;
+      (this.reqChanges = (this.reqChanges || []).filter((x) => x > t - 0.5)).push(t); }
     // the contacts due now: one kernel launch each, from the ball's actual state
     for (const c of this.plan.contacts) if (!c.done && c.k === this.k) this.execute(c);
     // footfalls now (the gait progresses: a re-plan keeps the plan fresh)
     for (const X of ["R", "L"]) for (const s of this.plan.stances[X]) if (abs(s.t0 - t) < DT / 2 && s.t0 > 0) this.flags.replan = this.flags.replan || "footfall";
     if (t - this.plan.t0 > 0.30) this.flags.replan = this.flags.replan || "refresh";
-    if (this.flags.replan) { const c0 = performance.now(); this.replan(this.flags.replan); this.cpu.replan.push(performance.now() - c0); this.flags.replan = null; }
+    if (this.intentPending && t - this.plan.t0 > 0.15) this.flags.replan = this.flags.replan || "intent";
+    if (this.flags.replan) { this.intentPending = false; const c0 = performance.now(); this.replan(this.flags.replan); this.cpu.replan.push(performance.now() - c0); this.flags.replan = null; }
     this.ball.step(); this.k++; this.t = this.k * DT; this.record();
     // the authoritative record's fingerprint (the centre of mass, the ball, every 4th tick)
     if (this.k % 4 === 0) { const s = this.stateAt(this.t, this.plan), b = this.ball.p; this.mix(s.P[0]); this.mix(s.P[1]); this.mix(b[0]); this.mix(b[1]); }
@@ -96,9 +107,9 @@ export class PlaySim {
     // (the ball must be where the foot can play it — never a contact at a distance: a miss re-plans)
     if (hyp(rel[0], rel[1]) > 1.05 || b[2] > 0.5) { c.missed = true; this.flags.replan = "missed contact"; this.contacts.push(Object.assign(this.contactRec(c, bv, bv, null), { missed: true })); return; }
     let v; if (c.aim.kind === "target") { const d = [c.aim.P[0] - b[0], c.aim.P[1] - b[1]], D = hyp(d[0], d[1]), T = max(0.05, c.aim.T - this.t); let sp = D > 1e-3 ? speedFor(D, T) : 0; if (sp == null) sp = CARRY.vCap; sp = min(sp, CARRY.vCap); v = D > 1e-3 ? [d[0] / D * sp, d[1] / D * sp] : [0, 0]; }
-    else v = [c.aim.speed * Math.cos(c.aim.h), c.aim.speed * Math.sin(c.aim.h)];
+    else v = [c.aim.speed * dcos(c.aim.h), c.aim.speed * dsin(c.aim.h)];
     const intended = v.slice();
-    if (this.P.errDir > 0 && hyp(v[0], v[1]) > 0.2) { const r1 = this.rand(c.id, 1), r2 = this.rand(c.id, 2), e = r1 * this.P.errDir * DEG, f = 1 + r2 * this.P.errSpeed, ca = Math.cos(e), sa = Math.sin(e); v = [(v[0] * ca - v[1] * sa) * f, (v[0] * sa + v[1] * ca) * f]; }
+    if (this.P.errDir > 0 && hyp(v[0], v[1]) > 0.2) { const r1 = this.rand(c.id, 1), r2 = this.rand(c.id, 2), e = r1 * this.P.errDir * DEG, f = 1 + r2 * this.P.errSpeed, ca = dcos(e), sa = dsin(e); v = [(v[0] * ca - v[1] * sa) * f, (v[0] * sa + v[1] * ca) * f]; }
     this.ball.launch(v, { foot: c.F, surface: c.surface, role: c.role }); this.contacts.push(this.contactRec(c, bv, v, intended)); this.mix(v[0]); this.mix(v[1]); this.flags.replan = "contact";
   }
   contactRec(c, vIn, vOut, intended) { const a = this.plan.action; return { n: this.contacts.length + 1, k: this.k, t: this.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech || a.kind, action: a.label, actionId: a.id,
@@ -109,20 +120,25 @@ export class PlaySim {
   replan(reason) {
     const t = this.t, cur = this.plan, st = this.stateAt(t, cur), q = this.req, P = this.P;
     // what cannot change any more: the footfalls already made (and the swinging foot's coming one within `react`), the contacts within `react`
-    const keep = this.committed(cur, t), act = cur.action;
+    const keep = this.committed(cur, t), act = cur.action; this._support = keep;
     const setDone = act.tech && cur.contacts.some((c) => c.role === "set touch" && c.done && c.tech === act.tech) && t < act.tC;
-    const committedTech = act.tech && ((t >= act.tCommit - 1e-9 && t < act.tRelease) || (setDone && q.h != null && abs(wrap(q.h - act.exitH)) < 35 * DEG));
+    // a technique whose ball is no longer where its decisive contact will be (its contact missed, or the real ball predicted > 0.30 m from the
+    // technique's ball point at the contact) is no commitment any more: it is released before contact, and everything is a candidate again
+    let broken = false; if (act.tech) { const dc = cur.contacts.find((c) => c.decisive && c.tech === act.tech); if (dc && this.contacts.some((r) => r.cid === dc.id && r.missed)) broken = true;
+      else if (dc && !dc.done && act.Bref && dc.t > t && !cur.contacts.some((c) => !c.done && c.t > t && c.t < dc.t - 1e-6)) { const f = predict(this.ball.p, this.ball.v, dc.t - t).p, Ob = this.stateAt(dc.t, cur).P, want = fromLocal(Ob, act.h0, act.Bref[0], act.Bref[1]);
+        if (hyp(f[0] - want[0], f[1] - want[1]) > 0.30) broken = true; } }   // (the ball against where the technique needs it relative to the body then)
+    const committedTech = act.tech && !broken && ((t >= act.tCommit - 1e-9 && t < act.tRelease) || (setDone && q.h != null && abs(wrap(q.h - act.exitH)) < 35 * DEG));
     // a technique's EXIT (after its plant is released, until its exit touch is made): it runs on — re-targeted — unless the request turns away
     // from its exit by more than 25° (then everything is a candidate again, the continuation among them)
     const exitTouch = act.tech ? cur.contacts.find((c) => c.tech === act.tech && !c.done && !c.decisive && c.role !== "set touch") : null;
     const inExit = act.tech && t >= act.tRelease && exitTouch && t < exitTouch.t + 0.02;
     const cands = [];
-    if (committedTech || (inExit && q.h != null && abs(wrap(q.h - act.exitH)) < 25 * DEG)) { const re = this.instantiate(act.tech, act.m, q, st, keep, { pinned: act }); if (!re) return; cands.push(re); }   // (committed: only its exit re-targets; else it runs on as planned)
+    if (committedTech || (inExit && q.h != null && abs(wrap(q.h - act.exitH)) < 25 * DEG)) { const re = this.instantiate(act.tech, act.m, q, st, keep, { pinned: act }); if (!re || !this.ballFits(re)) return; cands.push(re); }   // (a re-aimed commitment that would leave the ball where the body cannot play it: the plan runs on unchanged to its contact)   // (committed: only its exit re-targets; else it runs on as planned)
     else {
-      if (inExit) { const re = this.instantiate(act.tech, act.m, q, st, keep, { pinned: act }); if (re) cands.push(re); }
+      if (inExit) { const re = this.instantiate(act.tech, act.m, q, st, keep, { pinned: act }); if (re && this.ballFits(re)) cands.push(re); }
       cands.push(this.carryPlan(st, keep, q, reason));
       const turn = this.turnOf(st, q);
-      if (q.h != null && abs(turn) > 16 * DEG && !inExit) for (const id of TECH_IDS) for (const m of [1, -1]) { const p = this.instantiate(id, m, q, st, keep, { pinned: act.tech === id && act.m === m && t < act.tC ? act : null }); if (p) { cands.push(p); if (p.alt) cands.push(p.alt); } }
+      if (q.h != null && abs(turn) > 16 * DEG && !inExit) for (const id of TECH_IDS) for (const m of [1, -1]) { const p = this.instantiate(id, m, q, st, keep, { pinned: act.tech === id && act.m === m && t < act.tC ? act : null }); if (p) { if (this.ballFits(p)) cands.push(p); if (p.alt && this.ballFits(p.alt)) cands.push(p.alt); } }
     }
     for (const c of cands) c.cost = this.cost(c, st, q, cur);
     cands.sort((a, b) => a.cost.J - b.cost.J); const best = cands[0];
@@ -130,7 +146,8 @@ export class PlaySim {
     best.reason = reason; this.adopt(best);
     if (!this.decision || q.h == null || this.decision.reqH == null || abs(wrap(q.h - this.decision.reqH)) >= 12 * DEG || best.action.kind !== this.decision.kind) this.decision = { reqH: q.h, kind: best.action.kind, t };
   }
-  adopt(plan) { plan.v = ++this.ver; this.plan = plan; this.plans.push(plan); this.log.plans++;
+  // (plan.ball0: the ball as this plan saw it — a launch scheduled this tick included — the presentation predicts the plan's ball from it)
+  adopt(plan) { plan.v = ++this.ver; plan.ball0 = { p: this.ball.p, v: this.ball.v }; this.plan = plan; this.plans.push(plan); this.log.plans++;
     if (plan.action.id !== (this.plans[this.plans.length - 2] || {}).action?.id) this.log.actions.push({ t: this.t, kind: plan.action.kind, label: plan.action.label, m: plan.action.m || 0, why: plan.why });
     // (the history the replay / the presentation needs: 12 s)
     while (this.plans.length > 2 && this.plans[1].t0 < this.t - 12) this.plans.shift(); while (this.contacts.length > 400) this.contacts.shift(); }
@@ -141,6 +158,10 @@ export class PlaySim {
     for (const X of ["R", "L"]) { const L = cur.stances[X], nPast = L.filter((s) => s.t0 <= t + 1e-9).length; let i = 0;
       for (const s of L) { const past = s.t0 <= t + 1e-9; if (past) i++; if ((past && (s.t1 > t - 1.0 || i > nPast - 2)) || (s.t0 - t < R && s.t0 > t)) out.stances[X].push(s); } }
     for (const c of cur.contacts) if (!c.done && c.t > t - 1e-9 && c.t - t < R) out.contacts.push(c);
+    // a foot IN THE AIR is committed to its landing (a swing in flight cannot be re-aimed at will: the next plan builds from where it comes down —
+    // the bridge footwork every reorganisation starts from)
+    for (const X of ["R", "L"]) { const L = cur.stances[X], past = L.filter((s) => s.t0 <= t + 1e-9), last = past[past.length - 1];
+      if (!OFF.air && last && last.t1 < t - 1e-9) { const nx = L.find((s) => s.t0 > t + 1e-9); if (nx && nx.t0 - t < 0.35 && !out.stances[X].includes(nx)) { if (!nx.posC) nx.posC = nx.pos.slice(); out.stances[X].push(nx); out.stances[X].sort((a, b) => a.t0 - b.t0); } } }
     // a touch committed or just made: its foot's landing after it (the swing the touch belongs to) is committed too
     for (const c of cur.contacts) if ((c.done && c.t > t - 0.2) || out.contacts.includes(c)) { const X = c.F, L = out.stances[X];
       const s = cur.stances[X].find((x) => x.t0 > c.t - 1e-6 && x.t0 <= c.t + 0.25); if (s && !L.includes(s)) { L.push(s); L.sort((a, b) => a.t0 - b.t0); } }
@@ -154,6 +175,10 @@ export class PlaySim {
     let J = 0; const tLine = c.tLine != null ? c.tLine - t : 3.0; J += 2.0 * min(3.0, tLine); notes.push(c.tLine != null ? `line +${tLine.toFixed(2)}s` : "never on the line");
     if (a.tech) { J += 0.8 * (a.tC - t); notes.push(`contact +${(a.tC - t).toFixed(2)}s`); }
     J += 0.22 * (c.nContacts || 0);
+    // CONTROL FIRST: the ball is touched regularly — a plan whose first contact would leave it untouched for more than ≈ 1.15 s since the last one
+    // (input chaos superseding technique after technique) pays steeply; a soon, reachable touch wins
+    { const lastMade = this.contacts.filter((x) => !x.missed).reduce((m, x) => max(m, x.t), 0), fc = (c.contacts || []).filter((x) => !x.done && x.t > t - 1e-9).reduce((m, x) => min(m, x.t), 9e9);
+      const gap = (fc < 9e9 ? fc : t + 1.5) - lastMade; if (q.h != null && gap > 1.15) { J += 2.5 * (gap - 1.15); notes.push("ball untouched " + gap.toFixed(1) + " s"); } }
     if (c.sepPen) { J += c.sepPen; notes.push(`ball ${c.sepMax.toFixed(1)}m away`); }
     if (a.tech) { const T = TEMPLATES[a.tech], d = abs(a.turnDeg), ex = d < T.comfort[0] ? T.comfort[0] - d : d > T.comfort[1] ? d - T.comfort[1] : 0; if (ex > 0) { J += 0.5 * (ex / 20) * (ex / 20); notes.push(`${d.toFixed(0)}° outside ${T.comfort[0]}–${T.comfort[1]}`); }
       J -= 0.35 * T.protect * clamp((d - 30) / 60, 0, 1);
@@ -171,16 +196,24 @@ export class PlaySim {
   mkPlan(o) {
     const H = 1.5, n = Math.round(H / DT), Pt = new Float64Array(2 * (n + 1)), Vt = new Float64Array(2 * (n + 1)), psiT = new Float64Array(n + 1), st = o.st, P = this.P;
     let p = st.P.slice(), s = st.s, h = st.h, psi = st.psi, w = st.w || 0; const prog = o.prog, q = o.req;
-    for (let i = 0; i <= n; i++) { const t = o.t0 + i * DT; Pt[2 * i] = p[0]; Pt[2 * i + 1] = p[1]; Vt[2 * i] = s * Math.cos(h); Vt[2 * i + 1] = s * Math.sin(h); psiT[i] = psi; if (i === n) break;
+    // THE FEET ORDER THE HIPS: while both feet's places are known (planted, or the committed landing of the foot in the air), the pelvis turns only
+    // within the band that keeps the right foot ≥ 0.06 m right of the left in its frame — a sharp turn is completed step by step, never by
+    // twisting the hips across the feet until the legs cross
+    const KS = this._support && o.t0 === this.t ? this._support.stances : null;
+    const footPos = (X, tt) => { const L = KS[X]; let cur = null; for (const sp of L) if (sp.t0 <= tt + 1e-9) cur = sp; if (cur && cur.t1 >= tt) return cur.pos; const nx = L.find((sp) => sp.t0 > tt + 1e-9);
+      if (!cur) return nx ? nx.pos : null; if (!nx) return cur.pos; const u = clamp((tt - cur.t1) / max(0.02, nx.t0 - cur.t1), 0, 1); return [lerp(cur.pos[0], nx.pos[0], u), lerp(cur.pos[1], nx.pos[1], u)]; };   // (in the air: along its swing)
+    for (let i = 0; i <= n; i++) { const t = o.t0 + i * DT; Pt[2 * i] = p[0]; Pt[2 * i + 1] = p[1]; Vt[2 * i] = s * dcos(h); Vt[2 * i + 1] = s * dsin(h); psiT[i] = psi; if (i === n) break;
       const d = this.progAt(prog, t + DT, s, h, q, p);
       if (d.keyed) { s = d.s; h = d.h; } else { // the carry tracker (Agility): bend toward the request at the lateral limit, accelerate / brake
         const ts = d.speed, th = d.h; if (th != null) { const dh = wrap(th - h); if (s < 0.6) h += clamp(dh, -P.yawRate * DT, P.yawRate * DT); else { const om = min(P.aLat / max(s, 1.2), P.yawRate * 0.8); h += clamp(dh, -om * DT, om * DT); } }
-        const want = th != null ? ts * (abs(wrap(th - h)) > 50 * DEG ? max(0.35, Math.cos(wrap(th - h))) : 1) : 0, acc = P.aAcc * clamp(1 - s / 11, 0.35, 1);
+        const want = th != null ? ts * (abs(wrap(th - h)) > 50 * DEG ? max(0.35, dcos(wrap(th - h))) : 1) : 0, acc = P.aAcc * clamp(1 - s / 11, 0.35, 1);
         s = s < want ? min(want, s + acc * DT) : max(want, s - P.aBrake * (d.stop ? 0.7 : 1) * DT); }
-      const v = [s * Math.cos(h), s * Math.sin(h)]; p = [p[0] + v[0] * DT, p[1] + v[1] * DT];
-      // the pelvis heading: keyed in a technique, else following the travel (or the request when slow)
+      const v = [s * dcos(h), s * dsin(h)]; p = [p[0] + v[0] * DT, p[1] + v[1] * DT];
+      // the pelvis heading: keyed in a technique, else following the travel (or the request when slow — collecting the ball: the ball)
       if (d.psi != null) { w = wrap(d.psi - psi) / DT; psi = d.psi; }
-      else { const tgt = s > 1.0 ? h : th0(q, psi), err = wrap(tgt - psi), al = clamp(3600 * err * 0.1 - 38 * w, -9000 * DEG, 9000 * DEG); w = clamp(w + al * DT, -P.yawRate, P.yawRate); psi += w * DT; } }
+      else { const tgt = s > 1.0 ? h : prog.kind === "chase" ? (d.h != null ? d.h : psi) : th0(q, psi), err = wrap(tgt - psi), al = clamp(3600 * err * 0.1 - 38 * w, -9000 * DEG, 9000 * DEG); w = clamp(w + al * DT, -P.yawRate, P.yawRate); psi += w * DT;
+        if (KS && !OFF.order) { const pR = footPos("R", t + DT), pL = footPos("L", t + DT); if (pR && pL) { const D = [pR[0] - pL[0], pR[1] - pL[1]], dl = hyp(D[0], D[1]);
+          if (dl > 0.07) { const c = hdg(D) - PI / 2, hw = dacos(min(1, 0.06 / dl)), e = wrap(psi - c); if (e > hw) { psi = c + hw; w = min(w, 0); } else if (e < -hw) { psi = c - hw; w = max(w, 0); } } } } } }
     function th0(q, psi) { return q && q.h != null ? q.h : psi; }
     const plan = { t0: o.t0, k0: Math.round(o.t0 / DT), n, P: Pt, V: Vt, psi: psiT, stances: o.stances, contacts: o.contacts, action: o.action, req: o.req, prog };
     plan.ch = this.channels(o, plan); return plan;
@@ -190,7 +223,10 @@ export class PlaySim {
     if (prog.kind === "carry" && prog.pace && t < prog.pace.until && q && q.h != null) { const f = predict(prog.pace.b0, prog.pace.bv, t - prog.pace.t0), u = dir(q.h), gap = (f.p[0] - p[0]) * u[0] + (f.p[1] - p[1]) * u[1], va = f.v[0] * u[0] + f.v[1] * u[1];
       return { speed: clamp(va + 2.5 * (gap - 0.42), 0.6, this.P.speed[q.mode]), h: q.h }; }
     if (prog.kind === "carry") { if (prog.hold && t < prog.hold.until && q && q.h != null) return { speed: this.P.speed[q.mode], h: prog.hold.h }; return { speed: q && q.h != null ? this.P.speed[q.mode] : 0, h: q ? q.h : null, stop: !q || q.h == null }; }
-    if (prog.kind === "chase") return t < prog.until ? { speed: prog.speed, h: prog.h } : { speed: q && q.h != null ? this.P.speed[q.mode] : 0, h: q ? q.h : null, stop: !q || q.h == null };
+    // the pursuit (control first): re-aimed at the moving ball every step — closing to ≈ 0.40 m behind it at its own pace — then the request
+    if (prog.kind === "chase") { if (t < prog.until) { const f = predict(prog.b0, prog.bv, t - prog.t0), d = [f.p[0] - p[0], f.p[1] - p[1]], D = hyp(d[0], d[1]), u = D > 1e-3 ? [d[0] / D, d[1] / D] : dir(h);
+        const va = f.v[0] * u[0] + f.v[1] * u[1]; return { speed: clamp(va + 3.0 * (D - 0.40), 0.4, prog.vMax), h: D > 0.18 ? hdg(d) : h }; }
+      return { speed: q && q.h != null ? this.P.speed[q.mode] : 0, h: q ? q.h : null, stop: !q || q.h == null }; }
     // a technique: the approach (a speed ramp along the entry heading), its keys, then the carry
     if (t < prog.tA) { const v = t < prog.tb ? prog.v0 : lerp(prog.v0, prog.vA, clamp((t - prog.tb) / max(1e-6, prog.tA - prog.tb), 0, 1)); return { keyed: true, s: v, h: prog.h0 + prog.drift * clamp((t - prog.t0) / max(1e-6, prog.tA - prog.t0), 0, 1) }; }
     if (t <= prog.tEnd) return { keyed: true, s: prog.sC.at(t), h: prog.hC.at(t), psi: prog.fC.at(t) };
@@ -212,12 +248,12 @@ export class PlaySim {
     // planted boot). Positions only: no decision reads them
     const bp0 = this.ball.p, bv0 = this.ball.v;
     const place = (X, tt, t1) => { const s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = v > 2.4 ? WIDTH.run : WIDTH.walk, ld = v < 0.3 ? 0 : lead(v);
-      let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X);
-      const o = lastOf(other(X)); if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) { p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; } }
+      let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w);
+      const o = lastOf(other(X)); p = this.ownSide(p, X, o && o.pos, s0.psi);
       return offBall(p, s0.psi, X, tt, min(t1 != null ? t1 : tt + 0.25, tt + 0.6)); };
     // a stance off the free ball's path while it stands (a stance that never lifts: off where the ball comes to rest)
     const offBall = (p, psi, X, tt, tEnd) => { const r = rgt(psi); let need = 0, side = sgn(X);
-      for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
+      for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * dcos(psi) + d[1] * dsin(psi), l = d[0] * r[0] + d[1] * r[1];
         if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
       return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; };
     const yawOf = (X, tt) => { const s0 = this.stateAt(tt, plan); return (s0.s > 0.6 ? s0.h : s0.psi) + sgn(X) * 5 * DEG; };
@@ -237,7 +273,16 @@ export class PlaySim {
       let X = rr < ll - 0.02 ? "R" : ll < rr - 0.02 ? "L" : (this.o.foot === "L" ? "R" : "L"); if (anchors.length) { const A0 = anchors[0]; X = A0.t0 - t < 0.3 ? A0.F : other(A0.F); }
       const td = t + 0.03 + 0.17; lastOf(X).t1 = t + 0.03; if (!(anchors.length && anchors[0].F === X && anchors[0].t0 < td + 0.1)) step(X, td); lastOf(other(X)).t1 = Infinity; }
     // the anchors (a technique's own stances): the steps before each spread evenly to land it on its foot at its time
-    for (const A of anchors.slice().sort((x, y) => x.t0 - y.t0)) { if (A.t0 <= t + this.P.react) continue;
+    for (const A of anchors.slice().sort((x, y) => x.t0 - y.t0)) {
+      // a technique stance at a committed landing of its foot (a foot in the air): it IS that landing — merged into it (the same stance, adjusted by
+      // ≤ 0.15 m + 3 m/s × the time it still has, at most 0.45 m); further than that, the instance cannot be made from here. Its time: a swing in
+      // flight can still reach a little longer or come down a little sooner (≤ 25 % of the flight it has left, at most 70 ms — a stride's reach)
+      const reTime = (c) => (c.posC && !OFF.retime ? min(0.07, 0.25 * max(0, c.t0 - t)) : 0);
+      const cm = S[A.F].find((c) => c.t0 > t + 1e-9 && abs(c.t0 - A.t0) < max(0.03, reTime(c)));
+      // (re-timed, the landing it is measured against travels with the body over the difference)
+      if (cm) { const pos = A.pos || cm.pos, adj = min(0.45, 0.15 + 3.0 * max(0, cm.t0 - t)), dtR = abs(cm.t0 - A.t0) < 0.03 ? 0 : A.t0 - cm.t0, sR = this.stateAt(cm.t0, plan), ref = [cm.pos[0] + sR.s * dcos(sR.h) * dtR, cm.pos[1] + sR.s * dsin(sR.h) * dtR];
+        if (hyp(pos[0] - ref[0], pos[1] - ref[1]) > adj) { S.invalid = true; continue; } Object.assign(cm, A, { id: cm.id, t0: cm.t0 + dtR, pos, yaw: A.yaw != null ? A.yaw : cm.yaw }); continue; }
+      if (A.t0 <= t + this.P.react) continue;
       const L0 = lastTD(), N = other(L0.F), gap = A.t0 - L0.t0, Ts = this.gait(max(this.stateAt(L0.t0, plan).s, 0.5)).Ts;
       let best = null; for (let j = (A.F === N ? 0 : 1); j <= 7; j += 2) { const per = gap / (j + 1); if (per < 0.13) break; const e = abs(per - Ts); if (!best || e < best.e) best = { j, per, e }; }
       if (!best) best = { j: A.F === N ? 0 : 1, per: gap / ((A.F === N ? 0 : 1) + 1) };
@@ -258,6 +303,19 @@ export class PlaySim {
     for (const X of ["R", "L"]) { const L = S[X]; for (let i = 0; i + 1 < L.length; i++) if (L[i].t1 > L[i + 1].t0 - 0.14 && L[i].t1 > t) L[i].t1 = max(L[i].t0 + 0.05, L[i + 1].t0 - 0.14, t + 0.005); }
     return S;
   }
+  // can foot X reach point Q (the ball it is to play) by time tc? From where it is now — standing (it leaves at its stance's end) or in the air
+  // (between its toe-off and the landing it is committed to) — at an elite swing's speed (≈ twice the body's, + 2 m/s): the plan never asks a foot
+  // for a contact it could not get to (the body would have to teleport it)
+  footCan(plan, X, tc, Q, vBody) { const t = this.t, L = plan.stances[X]; let from = null, cur = null, t0 = t;
+    for (const s of L) { if (s.t0 <= t + 1e-9) from = s; } if (!from) return true;
+    if (from.t1 >= t) { cur = from.pos; t0 = from.t1 === Infinity ? t + 0.02 : max(t, from.t1); }
+    else { const nx = L.find((s) => s.t0 > t + 1e-9), to = nx ? nx.posC || nx.pos : from.pos, u = nx ? clamp((t - from.t1) / max(0.02, nx.t0 - from.t1), 0, 1) : 0; cur = [lerp(from.pos[0], to[0], u), lerp(from.pos[1], to[1], u)]; }
+    const T = tc - t0; if (T < 0.02) return hyp(Q[0] - cur[0], Q[1] - cur[1]) < 0.35; return max(0, hyp(Q[0] - cur[0], Q[1] - cur[1]) - 0.15) <= T * (2.0 * max(2.5, vBody) + 2.0); }
+  // a footfall kept on its own side of the other foot (in the pelvis frame then)
+  ownSide(p, X, otherPos, psi) { if (!otherPos) return p; const sx = sgn(X), r = rgt(psi), lat = ((p[0] - otherPos[0]) * r[0] + (p[1] - otherPos[1]) * r[1]) * sx; if (lat < 0.13) p = [p[0] + r[0] * sx * (0.13 - lat), p[1] + r[1] * sx * (0.13 - lat)];
+    const d = [p[0] - otherPos[0], p[1] - otherPos[1]], dl = hyp(d[0], d[1]); if (dl < 0.15) { const u = dl > 1e-3 ? [d[0] / dl, d[1] / dl] : [r[0] * sx, r[1] * sx]; p = [otherPos[0] + u[0] * 0.15, otherPos[1] + u[1] * 0.15]; }   // (never on top of the other foot)
+    return p; }
+  gaitValid(S) { if (S.invalid) return false; for (const X of ["R", "L"]) { const L = S[X]; for (let i = 0; i + 1 < L.length; i++) { const a = L[i], b = L[i + 1]; if (b.t0 < a.t0 + 0.12 - 1e-9) return false; if (a.t1 !== Infinity && a.t1 > b.t0 - 0.07 + 1e-9 && a.t1 > this.t) return false; } } return true; }
   // ── THE CARRY CANDIDATE ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   carryPlan(st, keep, q, reason) {
     const t = this.t, b0 = this.ball.p, bv = this.ball.v;
@@ -274,7 +332,9 @@ export class PlaySim {
       p2.stances = this.gaitFrom(p2, keep, [], t + 1.5); let tc2 = this.carryTouches(p2, keep, q);
       if (tc2.ok && tc2.list.length) { const until = tc2.list[0].t + 0.02; p2 = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: plan.action, req: q, prog: { kind: "carry", hold: { h: hold0.h, until } }, chKeys: this.carryChannels(st, q, t) }); p2.stances = this.gaitFrom(p2, keep, [], t + 1.5); tc2 = this.carryTouches(p2, keep, q); if (tc2.ok) { plan = p2; touches = tc2; } } }
     // the ball beyond the feet's reach on this path: chase it (re-plan the run toward where it will be — never released into space)
-    if (!touches.ok && hyp(bv[0], bv[1]) + 0.1 > 0) { const ch = this.chasePlan(st, keep, q); if (ch) { plan = ch.plan; touches = ch.touches; } }
+    // (stopping is no exception: a ball not at rest at the feet is pursued and stopped — never left to roll away)
+    const ballAway = hyp(bv[0], bv[1]) > 0.4 || hyp(b0[0] - st.P[0], b0[1] - st.P[1]) > 0.8;
+    if (!touches.ok && (q.h != null || ballAway)) { const ch = this.chasePlan(st, keep, q); if (ch) { plan = ch.plan; touches = ch.touches; if (q.h == null) plan.action.label = "STOP"; } }
     plan.contacts = keep.contacts.concat(touches.list.filter((c) => !keep.contacts.some((k) => abs(k.t - c.t) < 0.03 && k.F === c.F)));
     plan.nContacts = touches.list.length; plan.tLine = this.lineTime(plan, q); if (plan.tLine != null && touches.tAligned != null) plan.tLine = max(plan.tLine, touches.tAligned); plan.sepMax = touches.sepMax; plan.sepPen = touches.sepPen; plan.action.carry = touches.info;
     return plan;
@@ -282,14 +342,17 @@ export class PlaySim {
   carryChannels(st, q, t) { const run = clamp(st.s / 6, 0, 1); return { lean: [[t + 0.3, 6 + 6 * run]], side: [[t + 0.25, 0]], trunk: [[t + 0.3, 0]], crouch: [[t + 0.3, 0.022]], arms: [[t + 0.3, 0.15]], gait: [[t + 0.25, 1]], look: [[t + 0.3, 0.85]] }; }
   // the run bent toward the ball (it rolls away / was left behind): the request's speed (at least the ball's + 1), toward its interception
   chasePlan(st, keep, q) {
-    // run to a point just behind the ball relative to where it must go next (the request, else its own line) — round it if need be — so the touch
-    // that follows sends it on; the earliest such point the body can reach
-    const b = this.ball.p, bv = this.ball.v; let best = null;
-    for (let T = 0.2; T <= 1.4 + 1e-9; T += 0.05) { const f = predict(b, bv, T), u = q.h != null ? dir(q.h) : (f.speed > 0.3 ? [f.v[0] / f.speed, f.v[1] / f.speed] : dir(st.psi));
-      const tgt = [f.p[0] - u[0] * 0.38, f.p[1] - u[1] * 0.38], d = [tgt[0] - st.P[0], tgt[1] - st.P[1]], D = hyp(d[0], d[1]), need = D / T;
-      if (need <= this.P.speed.SPRINT * 0.92) { best = { T, h: D > 0.05 ? hdg(d) : (q.h != null ? q.h : st.psi), sp: clamp(max(need * 1.05, 1.2), 1.2, this.P.speed.SPRINT) }; break; } }
-    if (!best) return null; const plan = this.mkPlan({ t0: this.t, st, stances: null, contacts: [], action: { kind: "CARRY", label: "CARRY", id: this.plan.action.kind === "CARRY" ? this.plan.action.id : ++this.aid, chase: true }, req: q, prog: { kind: "chase", speed: best.sp, h: best.h, until: this.t + best.T + 0.1 }, chKeys: this.carryChannels(st, q, this.t) });
-    plan.stances = this.gaitFrom(plan, keep, [], this.t + 1.5); const touches = this.carryTouches(plan, keep, q, true); touches.sepPen = (touches.sepPen || 0) + 0.3; return { plan, touches };
+    // CONTROL FIRST (the ball beyond the feet's reach on the planned path): a pursuit of the ball itself — re-aimed at it every step, never at a
+    // point set by the request (chaotic input must not move the target round the ball) — until the first touch a foot can make (that touch then
+    // sends the ball toward the newest request); a pursuit that closes on the ball without a touch inside the horizon is still a recovery in hand
+    const b = this.ball.p, bv = this.ball.v, t = this.t, vMax = min(this.P.speed.SPRINT, max(this.P.speed[q.mode] * 1.3, hyp(bv[0], bv[1]) + 1.5, 3.0));
+    const mk = (until) => { const plan = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "CARRY", label: "CARRY", id: this.plan.action.kind === "CARRY" ? this.plan.action.id : ++this.aid, chase: true }, req: q, prog: { kind: "chase", b0: b.slice(), bv: bv.slice(), t0: t, vMax, until }, chKeys: this.carryChannels(st, q, t) });
+      plan.stances = this.gaitFrom(plan, keep, [], t + 1.5); return plan; };
+    let plan = mk(t + 1.6), touches = this.carryTouches(plan, keep, q, true);
+    if (touches.ok && touches.list.length) { const p2 = mk(touches.list[0].t + 0.02), t2 = this.carryTouches(p2, keep, q, true); if (t2.ok && t2.list.length) { plan = p2; touches = t2; } }
+    const dist = (x) => { const s0 = this.stateAt(t + x, plan), f = predict(b, bv, x).p; return hyp(f[0] - s0.P[0], f[1] - s0.P[1]); };
+    plan.action.closing = touches.ok && touches.list.length ? true : dist(1.4) < max(0.9, dist(0) - 0.4);
+    touches.sepPen = (touches.sepPen || 0) + 0.3; if (!touches.list.length) touches.ok = false; return { plan, touches };
   }
   // the carry's touches: the first swing end (either foot — the lane foot first) where the ball is in that foot's reach; the touch sends the ball to
   // the touching foot's later swing end (the rhythm: every swing at a jog / run, every other at a sprint) ahead in the lane on the planned path
@@ -306,10 +369,17 @@ export class PlaySim {
     if (q.h == null && hyp(bv[0], bv[1]) < 0.05) { const me = sAt(t), d = hyp(b0[0] - me.P[0], b0[1] - me.P[1]); if (d < 0.75) { out.ok = true; out.info = "the ball at rest at the feet"; return out; } }
     let first = null, alt = null;
     const lastBy = { R: -9, L: -9 }; for (const c of this.contacts) lastBy[c.F] = max(lastBy[c.F], c.t); // (a foot never plays the ball twice in one swing)
+    // the touch the running plan already intends is HELD while it is still feasible (a re-plan never postpones a reachable touch to a later one —
+    // control first); otherwise the earliest feasible swing end below
+    const held = this.plan.contacts.find((c) => c.src === "carry" && !c.done && c.t > t + R - 1e-9);
     for (const e of ends) { if (e.tT < t + R - 1e-9 || e.tT < lastBy[e.F] + 0.2 || (skip && skip.has(e.F + e.tT.toFixed(4)))) continue; const s = sAt(e.tT), th = s.psi, bp = ballAt(e.tT).p, rel = toLocal(bp, s.P, th), slow = s.s < 1.6;
       const wide = slow || recover, okA = wide ? rel[0] >= CARRY.reach.slow.a[0] && rel[0] <= CARRY.reach.slow.a[1] + (recover ? 0.12 : 0) : rel[0] >= CARRY.reach.a[0] && rel[0] <= CARRY.reach.a[1];
-      const okL = wide ? abs(rel[1]) <= CARRY.reach.slow.l && rel[1] * sgn(e.F) >= -0.12 : rel[1] * sgn(e.F) >= CARRY.reach.l[0] && rel[1] * sgn(e.F) <= CARRY.reach.l[1];
+      // (a carry touch plays the ball on the touching foot's own side, or dead ahead — never across the body: the foot would cross over and come
+      // down crossed; the other foot plays a ball on its side)
+      const okL = wide ? abs(rel[1]) <= CARRY.reach.slow.l && rel[1] * sgn(e.F) >= (OFF.side ? -0.12 : -0.02) : rel[1] * sgn(e.F) >= (OFF.side ? CARRY.reach.l[0] : -0.02) && rel[1] * sgn(e.F) <= CARRY.reach.l[1];
       if (!okA || !okL) continue;
+      if (!OFF.fc && !this.footCan(plan, e.F, e.tT, bp, s.s)) continue;
+      if (!OFF.hold && held && held.F === e.F && abs(held.t - e.tT) < 0.03) { first = { e, s, th, bp, rel }; alt = null; break; }
       // the lane foot (the ball's side) first; the other foot plays it (across, with the inside) when the lane foot's chance is > 0.35 s later
       const laneOk = wide || abs(rel[1]) <= 0.06 || sgn(e.F) === Math.sign(rel[1]); if (!first && laneOk) { first = { e, s, th, bp, rel }; break; }
       if (!alt) alt = { e, s, th, bp, rel }; }
@@ -318,37 +388,53 @@ export class PlaySim {
     if (kept) { const s = sAt(kept.t); first = { e: { F: kept.F, tT: kept.t }, s, th: s.psi, bp: ballAt(kept.t).p, rel: toLocal(ballAt(kept.t).p, s.P, s.psi) }; }
     if (!first) { if (out.sepMax > 1.6) out.sepPen = 0.8 + 0.4 * (out.sepMax - 1.6); out.info = "the ball out of reach"; out.ok = q.h == null && out.sepMax < 0.8; return out; }
     out.ok = true; const { e, s } = first, F = e.F, pref = this.o.foot === "B" ? F : this.o.foot;
+    const rr = first.rel || [0, 0], wideM = s.s < 1.6 || recover, aR = wideM ? [CARRY.reach.slow.a[0], CARRY.reach.slow.a[1]] : CARRY.reach.a, lS = rr[1] * sgn(F), lR = wideM ? [-0.02, CARRY.reach.slow.l] : [-0.02, CARRY.reach.l[1]];
+    const margin = min(rr[0] - aR[0], aR[1] - rr[0], lS - lR[0], lR[1] - lS);
     // where the ball goes: STOP — to rest where the body stops; else ahead on the planned path, at the touching foot's next touch of the rhythm
-    let aim, role = "carry", N = CARRY.rhythm(mode, s.s);
+    // (volatile input: two or more changes of request within 0.5 s — shorter touches, no strides between them)
+    const volatile = !OFF.vol && (this.reqChanges || []).filter((x) => x > t - 0.5).length >= 2; let aim, role = "carry", N = volatile ? 1 : CARRY.rhythm(mode, s.s);
     if (q.h == null) { const se = sAt(t + 1.4), stopAt = fromLocal(se.P, se.psi, 0.36, sgn(pref) * 0.08); aim = { kind: "rest", P: stopAt }; role = "stop"; }
     else { const laneFoot = this.o.foot === "B" ? F : pref, fe = ends.filter((x) => x.F === laneFoot && x.tT > e.tT + 0.15); let nx = fe[(laneFoot === F ? N : 1) - 1] || fe[fe.length - 1];
       if (!nx) { const Ts = this.gait(max(s.s, 1)).Ts; nx = { tT: e.tT + 2 * Ts * N }; }
       const sN = sAt(nx.tT), thN = q.h != null ? q.h : (sN.s > 0.6 ? sN.h : sN.psi), laneF = laneFoot, lane = sgn(laneF) * CARRY.lane(mode);
-      aim = { kind: "target", P: fromLocal(sN.P, thN, CARRY.ahead(sN.s), lane), T: nx.tT }; }
+      aim = { kind: "target", P: fromLocal(sN.P, thN, CARRY.ahead(sN.s) * (volatile ? 0.7 : 1), lane), T: nx.tT }; }
     // the touch: the ball arrives at e.tT; what the touch must do (its surface from the impulse it gives)
     const bArr = ballAt(e.tT), vIn = bArr.v; let vOut;
     if (aim.kind === "rest") { // the stop: under the sole when the body is slow; else a cushion that keeps the ball with the braking body
       const vb = s.s, inS0 = hyp(vIn[0], vIn[1]); if (vb < 2.4 || inS0 < 0.3) { vOut = [0, 0]; aim = { kind: "vel", speed: 0, h: s.psi }; }
-      else { const sp = min(inS0, vb * 0.55), hh = inS0 > 0.3 ? hdg(vIn) : s.psi; vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; } }
+      else { const sp = min(inS0, vb * 0.55), hh = inS0 > 0.3 ? hdg(vIn) : s.psi; vOut = [dcos(hh) * sp, dsin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; } }
     else { const d = [aim.P[0] - bArr.p[0], aim.P[1] - bArr.p[1]], D = hyp(d[0], d[1]), sp = min(CARRY.vCap, speedFor(D, max(0.1, aim.T - e.tT)) || CARRY.vCap); vOut = [d[0] / max(D, 1e-6) * sp, d[1] / max(D, 1e-6) * sp]; }
     // a touch that would change nothing is not made ("quick feet, not busy feet"): the ball reaches the aim on its own — the next swing end decides
     if (!kept && aim.kind === "target" && hyp(vOut[0] - vIn[0], vOut[1] - vIn[1]) < 0.35 && (!skip || skip.size < 4)) return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), e.F + e.tT.toFixed(4)]));
     // a running touch redirects the ball within CARRY.redirect° (beyond it: the ball keeps more of its line — the next touch / a technique finishes it)
-    const inS = hyp(vIn[0], vIn[1]); if (inS > 1.0 && s.s > 1.6 && !(recover && s.s < 3.0)) { const dA = wrap(hdg(vOut) - hdg(vIn)); if (abs(dA) > CARRY.redirect * DEG) { const hh = hdg(vIn) + Math.sign(dA) * CARRY.redirect * DEG, sp = hyp(vOut[0], vOut[1]); vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; out.sepPen += 0.25; } }
+    const inS = hyp(vIn[0], vIn[1]); if (inS > 1.0 && s.s > 1.6 && !(recover && s.s < 3.0)) { const dA = wrap(hdg(vOut) - hdg(vIn)); if (abs(dA) > CARRY.redirect * DEG) { const hh = hdg(vIn) + Math.sign(dA) * CARRY.redirect * DEG, sp = hyp(vOut[0], vOut[1]); vOut = [dcos(hh) * sp, dsin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; out.sepPen += 0.25; } }
     const surface = this.surfaceFor(F, vIn, vOut, s, role);
     // the touching foot lands right after its touch: its landing is placed off the path the touch gives the ball (planned before the touch,
     // it could stand where the redirected ball is about to roll — positions only, no decision reads them)
+    const committedIds = new Set([...keep.stances.R, ...keep.stances.L].map((x) => x.id));
     if (e.st && e.st.t0 > t + R && e.st.src === "gait") { const L = e.st, psi = sAt(L.t0).psi, r = rgt(psi), sx = sgn(F); let need = 0, side = sx;
-      for (let x = max(e.tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(bArr.p, vOut, x - e.tT).p, d = [b[0] - L.pos[0], b[1] - L.pos[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
+      // where the touching foot comes down: just past where it meets the ball (behind the ball along the push), carried on by the body for the
+      // rest of its swing — not a gait position the foot could not reach in the time left; on its own side of the other foot
+      { const dv = [vOut[0] - vIn[0], vOut[1] - vIn[1]], dm = hyp(dv[0], dv[1]), nn = dm > 0.3 ? [dv[0] / dm, dv[1] / dm] : dir(sAt(e.tT).psi), vb = sAt(e.tT).V, dl = max(0, L.t0 - e.tT);
+        let land = [bArr.p[0] - nn[0] * 0.17 + vb[0] * dl * 0.85, bArr.p[1] - nn[1] * 0.17 + vb[1] * dl * 0.85]; const o = (plan.stances[other(F)] || []).filter((q) => q.t0 <= L.t0).pop();
+        // (inside the natural stride: at most 0.18 m from the gait's own footfall for this step — a touch never turns a step into a lunge)
+        { const g0 = L.posG || (L.posG = L.pos.slice()), d = [land[0] - g0[0], land[1] - g0[1]], dm = hyp(d[0], d[1]); if (dm > 0.18) land = [g0[0] + d[0] / dm * 0.18, g0[1] + d[1] / dm * 0.18]; }
+        land = this.ownSide(land, F, o && o.pos, psi);
+        // (a foot already in the air can still adjust where it comes down — by ≈ 0.15 m at most from where it was committed)
+        if (committedIds.has(L.id) && L.posC) { const d = [land[0] - L.posC[0], land[1] - L.posC[1]], dm = hyp(d[0], d[1]), adj = min(0.45, 0.15 + 3.0 * max(0, L.t0 - t)); if (dm > adj) land = [L.posC[0] + d[0] / dm * adj, L.posC[1] + d[1] / dm * adj]; }
+        if (o && o.pos) { const d = [land[0] - o.pos[0], land[1] - o.pos[1]], dl = hyp(d[0], d[1]); if (dl < 0.15 && dl > 1e-3) land = [o.pos[0] + d[0] / dl * 0.15, o.pos[1] + d[1] / dl * 0.15]; }
+        L.pos = land; }
+      for (let x = max(e.tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(bArr.p, vOut, x - e.tT).p, d = [b[0] - L.pos[0], b[1] - L.pos[1]], a = d[0] * dcos(psi) + d[1] * dsin(psi), l = d[0] * r[0] + d[1] * r[1];
         if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
       if (need > 0) { const k = min(0.20, need); L.pos = [L.pos[0] + r[0] * side * k, L.pos[1] + r[1] * side * k]; } }
-    const c = { id: ++this.cid, t: Math.round(e.tT / DT) * DT, k: Math.round(e.tT / DT), F, surface, role: role === "stop" ? (hyp(vOut[0], vOut[1]) < 0.05 ? "stop (sole)" : "stop (cushion)") : this.carryRole(F, vIn, vOut, s), aim, src: "carry", tech: "CARRY", bPred: bArr.p, vInPred: vIn, vOutPred: vOut };
+    const c = { id: ++this.cid, margin, t: Math.round(e.tT / DT) * DT, k: Math.round(e.tT / DT), F, surface, role: role === "stop" ? (hyp(vOut[0], vOut[1]) < 0.05 ? "stop (sole)" : "stop (cushion)") : this.carryRole(F, vIn, vOut, s), aim, src: "carry", tech: "CARRY", bPred: bArr.p, vInPred: vIn, vOutPred: vOut };
     if (kept && abs(kept.t - c.t) < 0.03 && kept.F === c.F) { kept.aim = c.aim; out.list.push(kept); } else out.list.push(c);
     { const lim = q.h == null ? 1.2 : mode === "SPRINT" ? 3.0 : mode === "RUN" ? 2.0 : mode === "JOG" ? 1.5 : 1.0; let sa = 0; for (let x = 0; x <= 1.2; x += 0.1) { const T2 = c.t + x, s2 = sAt(T2), b2 = predict(bArr.p, vOut, x).p; sa = max(sa, hyp(b2[0] - s2.P[0], b2[1] - s2.P[1])); }
       out.sepMax = sa; out.sepPen = (out.sepPen || 0) + (sa > lim ? 0.6 * (sa - lim) : 0); if (q.h != null && hyp(vOut[0], vOut[1]) > 0.5 && abs(wrap(hdg(vOut) - q.h)) > 30 * DEG) out.sepPen += 0.4; }
     // when the ball, too, runs along the request: this touch if it sends it within 25° of it, else the next touch of the rhythm (a capped correction
     // needs a second one)
-    if (q.h != null) { const sp = hyp(vOut[0], vOut[1]); out.tAligned = sp < 0.5 || abs(wrap(hdg(vOut) - q.h)) < 25 * DEG ? c.t : c.t + 2 * this.gait(max(s.s, 1)).Ts * N; }
+    // (a running touch redirects ≤ CARRY.redirect° — the ball is on the request's line only after as many touches as the rest of the turn needs)
+    if (q.h != null) { const sp = hyp(vOut[0], vOut[1]), res = abs(wrap(hdg(vOut) - q.h)) / DEG, more = sp < 0.5 || res < 25 ? 0 : Math.ceil((res - 25) / CARRY.redirect); out.tAligned = c.t + more * 2 * this.gait(max(s.s, 1)).Ts * N; }
     out.info = `${c.role} ${F} ${surface.toLowerCase()} in ${(c.t - t).toFixed(2)} s`;
     return out;
   }
@@ -392,7 +478,7 @@ export class PlaySim {
     const tau = (x) => tC + x;
     const hKeys = T.com.h.map(([x, d]) => [tau(x), h0 + m * ((x >= 0 || T.com.scaleAll ? d * k : d)) * DEG]);
     const keysFor = (vA) => { const vC = vCfor(vA), sp = clamp(vC / max(0.05, vRefC), 0.5, 1.45); return { vC, sp, K: T.com.v.map(([x, v]) => [tau(x), x < 0 ? vC + (v - vRefC) * (vA - vC) / (abs(vRef0 - vRefC) > 1e-3 ? vRef0 - vRefC : 1) : v * sp]) }; };
-    const dispT = (K) => { const sc = new Curve(K), hc = new Curve(hKeys); let d = [0, 0]; for (let x = tA; x < tC - 1e-9; x += DT) { const s = sc.at(x), h = hc.at(x); d = [d[0] + s * Math.cos(h) * DT, d[1] + s * Math.sin(h) * DT]; } return toLocal(d, [0, 0], h0); };
+    const dispT = (K) => { const sc = new Curve(K), hc = new Curve(hKeys); let d = [0, 0]; for (let x = tA; x < tC - 1e-9; x += DT) { const s = sc.at(x), h = hc.at(x); d = [d[0] + s * dcos(h) * DT, d[1] + s * dsin(h) * DT]; } return toLocal(d, [0, 0], h0); };
     const pos = (x, tb, vA) => { if (x <= tb) return v0 * (x - t); const u = min(x, tA) - tb, vx = v0 + (vA - v0) * u / max(1e-6, tA - tb); return v0 * (tb - t) + u * (v0 + vx) / 2 + (x > tA ? vA * (x - tA) : 0); };
     const tbLo = t, tbHi = tA, Bref = [T.B[0], m * T.B[1]];
     let tb, vA, set = null, drift = 0;
@@ -422,17 +508,17 @@ export class PlaySim {
     // ── the plan: the centre of mass (approach + keys + carry), the pelvis, the channels ───────────────────────────────────────────────────────
     let fKeys = T.face.map(([x, dd]) => [tau(x), h0 + m * (x > 0 ? dd * k : dd) * DEG]); if (t > tA) fKeys = [[t, h0 + wrap(st.psi - h0)]].concat(fKeys.filter((x) => x[0] > t + 0.04));
     const prog = { kind: "tech", t0: t, tb: max(t, tb), tA, v0, vA, h0, drift: 0, tEnd: tau(T.end), sC, hC, fC: new Curve(fKeys) };
-    if (drift) prog.drift = Math.atan2(drift, max(0.3, pos(tA, tb, vA)));
+    if (drift) prog.drift = datan2(drift, max(0.3, pos(tA, tb, vA)));
     const chKeys = {}; for (const kk of ["lean", "side", "trunk", "crouch", "arms", "gait", "look"]) chKeys[kk] = T[kk].map(([x, val]) => [tau(x), (kk === "side" || kk === "trunk") ? m * val : val]);
     const action = { kind: id, tech: id, label: T.label, id: pin ? pin.id : ++this.aid, m, F, S, h0, tC, tA, vA, vC, sig, turnDeg: dr, k, rot, tb, setTd: set ? set.td : null, tCommit: tC - P.commit, tRelease: tau(max(0.12, ...T.stances.filter((x) => x.F === "S" && x.t0 <= 0.02).map((x) => x.t1))), setTouch: !!set, speedFit, exitH: q.h };
     const plan = this.mkPlan({ t0: t, st, stances: null, contacts: [], action, req: q, prog, chKeys });
     const O = this.stateAt(tC, plan).P, Bw = set ? fromLocal(O, h0, Bref[0], Bref[1]) : predict(this.ball.p, this.ball.v, tC - t).p;
-    action.O = O; action.B = Bw;
+    action.O = O; action.B = Bw; action.Bref = Bref;
     // a set touch sends the ball along the entry line to the technique's point — one that would throw it off that line (> 60°) is no set touch
     if (set && !set.kept) { const bp = predict(this.ball.p, this.ball.v, set.t - t).p, dev = abs(wrap(hdg([Bw[0] - bp[0], Bw[1] - bp[1]]) - h0)) / DEG;
       if (dev > 60 && hyp(Bw[0] - bp[0], Bw[1] - bp[1]) > 0.25) return null; action.setPen = dev > 25 ? 0.5 * ((dev - 25) / 35) ** 2 : 0; }
     // the stances: the template's (world), the approach's steps fitted before them, the carry gait after
-    const map = (p, w) => { const a = p[0], l = p[1] * 1; if (!w) return [a, m * l]; const c = Math.cos(rot * w), s2 = Math.sin(rot * w); return [a * c - l * s2, m * (a * s2 + l * c)]; };
+    const map = (p, w) => { const a = p[0], l = p[1] * 1; if (!w) return [a, m * l]; const c = dcos(rot * w), s2 = dsin(rot * w); return [a * c - l * s2, m * (a * s2 + l * c)]; };
     const anchors = T.stances.map((ts) => { const X = ts.F === "F" ? F : S, t0 = tau(ts.t0), t1 = tau(ts.t1); let pos;
       if (ts.at.rel === "com") { const s0 = this.stateAt(tau(ts.at.t), plan); pos = fromLocal(s0.P, h0, ts.at.p[0], m * ts.at.p[1]); }
       else if (ts.at.rel === "travel") { const s0 = this.stateAt(tau(ts.at.t), plan); pos = fromLocal(s0.P, s0.h, ts.at.p[0], m * ts.at.p[1]); }
@@ -444,6 +530,7 @@ export class PlaySim {
       return { id: ++this.sid, F: X, t0, t1, pos, yaw, kind: ts.kind, src: "tech", pivot, heel: ts.heel ? [tau(ts.heel[0]), ts.heel[1]] : null, swingIn: ts.swingIn ? this.mapSpec(ts.swingIn, { tC, h0, m, rot, O, B: Bw, k }) : null }; });
     if (set && set.td != null && set.td < tA - 0.05) anchors.push({ id: ++this.sid, F, t0: set.td, t1: set.td + 0.16, pos: null, yaw: null, kind: "after the set touch", src: "tech" });
     plan.stances = this.gaitFrom(plan, keep, anchors, t + 1.5);
+    if (!OFF.gv && !this.gaitValid(plan.stances)) return null;
     // the contacts: the set touch, the decisive, the template's exit touch; then the carry picks the ball up
     const frame = { tC, h0, m, rot, O, B: Bw, k, F, S, exitH: h0 + m * refS * k * DEG };
     const cs = []; if (set) cs.push({ id: ++this.cid, t: set.t, k: Math.round(set.t / DT), F, surface: "LACES", role: "set touch", aim: { kind: "target", P: Bw, T: tC }, src: "tech", tech: id, frame });
@@ -458,7 +545,7 @@ export class PlaySim {
   // (the technique's launches scale with its body speeds: σ, the reference's ball / body ratio kept — a reversal restarts the body from almost
   // nothing whatever the approach, so its launches barely scale)
   launchScale(T, sig) { return abs(T.turn * T.ref) >= 120 ? clamp(sig, 0.8, 1.1) : clamp(sig, 0.7, 1.5); }
-  ballAfterDecisive(Bw, h0, m, T, tC, x, k, sig = 1) { const dc = T.contacts.find((c) => c.decisive), refS = T.turn * T.ref, h = h0 + m * (dc.aim.launch === "exit" ? refS * k : dc.aim.launch * k) * DEG, v = dc.aim.v * this.launchScale(T, sig); return predict(Bw, [v * Math.cos(h), v * Math.sin(h)], max(0, x - tC)).p; }
+  ballAfterDecisive(Bw, h0, m, T, tC, x, k, sig = 1) { const dc = T.contacts.find((c) => c.decisive), refS = T.turn * T.ref, h = h0 + m * (dc.aim.launch === "exit" ? refS * k : dc.aim.launch * k) * DEG, v = dc.aim.v * this.launchScale(T, sig); return predict(Bw, [v * dcos(h), v * dsin(h)], max(0, x - tC)).p; }
   // a swing spec in the technique's frame (kept relative: the presentation resolves it on the posed body and the real ball)
   mapSpec(spec, frame) { return spec ? Object.assign({}, spec, { frame }) : null; }
   // the times the given foot can land its next stances (the template's first stance): the stride as it runs, ±25 % per step
@@ -468,7 +555,31 @@ export class PlaySim {
     let tNext, Fnext; if (lastR.t0 > lastL.t0) { Fnext = "L"; tNext = max(lastR.t0 + Ts, lastL.t1 + 0.18, t + 0.03); } else { Fnext = "R"; tNext = max(lastL.t0 + Ts, lastR.t1 + 0.18, t + 0.03); }
     if (lastR.t1 === Infinity && lastL.t1 === Infinity) { tNext = t + 0.22; Fnext = X === "R" ? "L" : "R"; }
     for (let i = 0; i < 6; i++) { const f = i % 2 === 0 ? Fnext : other(Fnext), tt = tNext + i * Ts; if (f === X) { out.push(tt); out.push(tt + 0.25 * Ts); out.push(tt - 0.2 * Ts); } }
+    // (a foot in the air: its committed landing is where a technique can begin on it — exactly then)
+    // (… or a little later / sooner: the reach its swing still has — see the merge in gaitFrom)
+    const lx = S[X][S[X].length - 1]; if (lx && lx.t0 > t + 1e-9) { out.push(lx.t0); if (lx.posC && !OFF.retime) { const rt = 0.95 * min(0.07, 0.25 * (lx.t0 - t)); if (rt > 0.03) out.push(lx.t0 + rt); } }
     return out.filter((x) => x > t + 0.04).sort((a, b) => a - b);
+  }
+  // a technique plan's ball against its body at the decisive contact (the real ball predicted; ≤ 0.30 m from where the technique needs it then)
+  ballFits(plan) { const a = plan.action, t = this.t, dc = plan.contacts.find((c) => c.decisive && c.tech === a.tech && !c.done && c.t > t); if (!dc || !a.Bref) return true;
+    if (plan.contacts.some((c) => !c.done && c.t > t && c.t < dc.t - 1e-6)) return true; const f = predict(this.ball.p, this.ball.v, dc.t - t).p, want = fromLocal(this.stateAt(dc.t, plan).P, a.h0, a.Bref[0], a.Bref[1]); return hyp(f[0] - want[0], f[1] - want[1]) <= 0.30; }
+  // ── CONTROL (owner §14): SECURE · REPLANNING (the newest input is not yet planned for) · COMMITTED (a contact / a technique committed) ·
+  // RECOVERING (a pursuit: the ball beyond the planned path's reach) · LOST (the request is on and no feasible contact exists); the action's phase
+  // FREE · PREPARING · COMMITTED_TO_CONTACT · CONTACT · RECOVERY/EXIT; the next feasible contact and its margin; the raw input against the plan's intent
+  controlAt(t) {
+    const P = this.planAt(t), a = P.action, k = Math.round(t / DT), I = this.log.input, ik = min(k, I.length / 3 - 1), rawH = ik >= 0 && I[3 * ik] !== -99 ? I[3 * ik] : null, intentH = P.req ? P.req.h : null;
+    const made = new Set(this.contacts.filter((c) => c.t <= t + 1e-9).map((c) => c.cid)), next = P.contacts.find((c) => c.t > t + 1e-9 && !made.has(c.id)) || null;
+    const lastC = this.contacts.filter((c) => c.t <= t + 1e-9 && !c.missed).pop(), justMade = lastC && t - lastC.t < 0.03, R = this.P.react;
+    let phase = "FREE";
+    if (a.tech) phase = t < a.tCommit ? "PREPARING" : t < a.tC - 0.012 ? "COMMITTED_TO_CONTACT" : t < a.tC + 0.03 ? "CONTACT" : "RECOVERY / EXIT";
+    else if (justMade) phase = "CONTACT"; else if (next && next.t - t < R + 1e-9) phase = "COMMITTED_TO_CONTACT";
+    const B = this.ballTrack(t), st = this.stateAt(t, P), atFeet = hyp(B.v[0], B.v[1]) < 0.3 && hyp(B.p[0] - st.P[0], B.p[1] - st.P[1]) < 0.8;
+    // (LOST as the torture suite defines it: the request on, the ball not at the feet, and no feasible contact for 0.5 s — this plan has none and is
+    // that old — or none made for 1.8 s; a moment between plans is not a loss)
+    const lastMade = lastC ? lastC.t : 0, noPlan = !next && !(a.chase && a.closing) && t - P.t0 > 0.5, lost = rawH != null && !atFeet && (noPlan || t - lastMade > 1.8);
+    let status = "SECURE"; if (lost) status = "LOST"; else if (a.chase || (!next && rawH != null && !atFeet)) status = "RECOVERING";
+    else if (rawH != null && intentH != null && abs(wrap(rawH - intentH)) > 4 * DEG) status = "REPLANNING"; else if (phase === "COMMITTED_TO_CONTACT" || phase === "CONTACT" || (a.tech && t >= a.tCommit && t < a.tRelease)) status = "COMMITTED";
+    return { status, phase, action: a.label + (a.m ? (a.m > 0 ? " (R)" : " (L)") : ""), next: next ? { dt: next.t - t, F: next.F, role: next.role, tech: next.tech, margin: next.margin } : null, rawH, intentH, queued: a.tech ? "CARRY (after the exit)" : a.chase ? "CARRY (after the pickup)" : "—" };
   }
   // ── the HUD's summary of the present ─────────────────────────────────────────────────────────────────────────────────────────────────────
   hud() { const st = this.stateAt(this.t, this.plan), b = this.ball.p, bv = this.ball.v, a = this.plan.action; const last = this.contacts[this.contacts.length - 1];

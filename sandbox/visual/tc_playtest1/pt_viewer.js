@@ -10,6 +10,7 @@ import { PlaySim, DT, MODES, LABEL, wrap, dir, hdg } from "./pt_sim.js";
 import { PlayBody } from "./pt_body.js";
 import { DIRS } from "../technical_control15/tc15_ref.js";
 import { STICK, stickVector, stickMode, headingFrom, stickAngleDeg, BITS } from "./pt_input.js";
+import { SEQ as TORTURE, MODES as TMODES } from "./pt_torture_seq.js";
 const W = window, hyp = Math.hypot, DEG = Math.PI / 180, max = Math.max, min = Math.min, abs = Math.abs;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const START = { P: [52.5, 34], h: 0 };
@@ -80,22 +81,27 @@ function coneProg(gl) {
 const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, y, h] → anim3d world [x, h, −y]
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-function newSim() { const o = { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
+function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
   V.sim = new PlaySim(V.env, o); V.body = new PlayBody(V.env, V.sim); V.o0 = JSON.parse(JSON.stringify(o)); V.stickLog = []; V.acc = 0; V.trail = []; V.cam = null; V.lastShown = null; V.replay = null; V.verify = null; showReplayUI(false); }
 // the request (pt_input.js): from the keys held — a direction in the camera frame latched when the combination changed, the base mode — or from
 // the stick when it is the active source — its continuous direction in the camera frame latched when it left its deadzone, its zone's mode; Shift
 // or the SPRINT button = sprint, Alt or the WALK button = walk, for both. One source at a time — never the two added
 function request() {
+  // the torture preset: the stick held by the sequence (the same request the hand would author — recorded as stick input)
+  if (V.torture) { const T = V.torture, tt = V.sim.t - T.t0, M = TMODES[T.mode]; if (tt > T.seq.dur - 0.2 || V.src !== "stick") stopTorture(); else { const a = T.seq.f(tt + 0.2) * DEG; V.stick.pid = -2; V.stick.raw = { x: Math.sin(a) * M.r, y: Math.cos(a) * M.r }; V.stick.v = stickVector(V.stick.raw.x, V.stick.raw.y, V.stick.cfg.deadzone); V.btn.tSprint = !!M.sprint; drawStick(); } }
   const K = V.keys, w = K.has("KeyW"), a = K.has("KeyA"), s = K.has("KeyS"), d = K.has("KeyD"), shK = K.has("ShiftLeft") || K.has("ShiftRight"), altK = K.has("AltLeft") || K.has("AltRight");
-  const sh = shK || V.btn.sprint || V.btn.lock, alt = altK || V.btn.walk, S = V.stick, useStick = V.src === "stick";
+  const sh = shK || V.btn.sprint || V.btn.lock || V.btn.tSprint, alt = altK || V.btn.walk, S = V.stick, useStick = V.src === "stick";
   const combo = (w ? "W" : "") + (a ? "A" : "") + (s ? "S" : "") + (d ? "D" : ""); if (combo !== V.latch.combo) { V.latch.combo = combo; V.latch.h = V.camH; }
-  const bits = (w ? BITS.W : 0) | (a ? BITS.A : 0) | (s ? BITS.S : 0) | (d ? BITS.D : 0) | (shK ? BITS.SHIFT : 0) | (altK ? BITS.ALT : 0) | (useStick ? BITS.STICK : 0) | (V.btn.sprint || V.btn.lock ? BITS.SPRINT_BTN : 0) | (V.btn.walk ? BITS.WALK_BTN : 0);
+  const bits = (w ? BITS.W : 0) | (a ? BITS.A : 0) | (s ? BITS.S : 0) | (d ? BITS.D : 0) | (shK ? BITS.SHIFT : 0) | (altK ? BITS.ALT : 0) | (useStick ? BITS.STICK : 0) | (V.btn.sprint || V.btn.lock || V.btn.tSprint ? BITS.SPRINT_BTN : 0) | (V.btn.walk ? BITS.WALK_BTN : 0);
   if (useStick) { const v = S.v; if (v.m > 0 && !S.moving) S.latch = V.camH; S.moving = v.m > 0; V.inStick = v;
     return { h: v.m > 0 ? headingFrom(S.latch, v.x, v.y) : null, mode: sh ? "SPRINT" : alt ? "WALK" : v.m > 0 ? stickMode(v.r, S.cfg) : V.baseMode, keys: bits }; }
   V.inStick = null; S.moving = false;
   const f = (w ? 1 : 0) - (s ? 1 : 0), r = (d ? 1 : 0) - (a ? 1 : 0);
   return { h: headingFrom(V.latch.h, r, f), mode: sh ? "SPRINT" : alt ? "WALK" : V.baseMode, keys: bits };
 }
+function startTorture() { const name = V.dom.selTort.value; if (!TORTURE[name]) return; if (V.replay) stopReplay(); V.paused = false; setRateButtons();
+  V.torture = { name, seq: TORTURE[name], mode: V.dom.selTortMode.value, t0: V.sim.t }; V.src = "stick"; V.stick.moving = false; V.dom.bTort.textContent = "■ stop"; }
+function stopTorture() { if (!V.torture) return; V.torture = null; V.btn.tSprint = false; const S = V.stick; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); if (V.dom.bTort) V.dom.bTort.textContent = "▶ play"; }
 // one simulation tick with the request, and the stick's record for it (raw displacement, the analog vector — the replay shows what was held)
 function stepSim(req) { V.sim.step(req); const S = V.stick, on = !!(req.keys & BITS.STICK); V.stickLog.push(on ? S.raw.x : 0, on ? S.raw.y : 0, on ? S.v.x : 0, on ? S.v.y : 0); }
 // ── what the page shows at time t (live: now; replay: a recent instant) — all from the recorded history ────────────────────────────────────────
@@ -105,7 +111,7 @@ function hudAt(t) {
   let last = null, n3 = 0; for (let i = S.contacts.length - 1; i >= 0; i--) { const c = S.contacts[i]; if (c.t > t + 1e-9) continue; if (!last && !c.missed) last = c; if (c.t > t - 3 && !c.missed) n3++; else if (c.t <= t - 3) break; }
   let phase = a.label; if (a.tech) phase = t < a.tA ? "ENTRY · approach" : t < a.tC - 0.01 ? "ENTRY" : t < a.tC + 0.03 ? "CONTACT" : t < a.tRelease ? "PROTECTION" : "EXIT";
   const travel = st.s > 1.0 ? st.h : st.psi, L = V.stickLog, stick = ik >= 0 && keys & BITS.STICK && 4 * ik + 3 < L.length ? { raw: [L[4 * ik], L[4 * ik + 1]], v: [L[4 * ik + 2], L[4 * ik + 3]] } : null;
-  return { t, k, plan: P, stick, action: a.label + (a.m ? (a.m > 0 ? " (R)" : " (L)") : ""), kind: a.kind, phase, speed: st.s, ballSpeed: hyp(B.v[0], B.v[1]), reqH, mode, reqSpeed: reqH != null ? S.P.speed[mode] : 0, keys,
+  return { t, k, plan: P, stick, ctl: S.controlAt(t), action: a.label + (a.m ? (a.m > 0 ? " (R)" : " (L)") : ""), kind: a.kind, phase, speed: st.s, ballSpeed: hyp(B.v[0], B.v[1]), reqH, mode, reqSpeed: reqH != null ? S.P.speed[mode] : 0, keys,
     facing: st.psi, travel, turn: reqH != null ? wrap(reqH - travel) : 0, sep: hyp(B.p[0] - st.P[0], B.p[1] - st.P[1]), cps: n3 / 3, last, why: P.why || [], st, ball: B };
 }
 const deg = (r) => (r == null ? "  —" : ((wrap(r) / DEG).toFixed(0) + "°").padStart(5));
@@ -196,11 +202,18 @@ function updateHud(h) {
     `mode ${h.mode.padEnd(6)} requested ${h.reqSpeed.toFixed(1)} m/s\nplayer ${h.speed.toFixed(2)} m/s   ball ${h.ballSpeed.toFixed(2)} m/s\n` +
     `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" +
     `foot ${lastC ? lastC.F : "—"} · ${lastC ? String(lastC.surface).toLowerCase() : "—"} (${lastC ? (LABEL[lastC.tech] || lastC.tech) + " · " + lastC.role : "no contact yet"})\n` +
-    `ball separation ${h.sep.toFixed(2)} m   contacts/s ${h.cps.toFixed(1)}\n` + `<span style="color:#8fa49a">why (cost, lower = chosen):\n${top}</span>` +
+    `ball separation ${h.sep.toFixed(2)} m   contacts/s ${h.cps.toFixed(1)}\n` + controlLines(h) + `<span style="color:#8fa49a">why (cost, lower = chosen):\n${top}</span>` +
     (prov ? `\n<span id="provH" style="color:#ffb36b">attributes below 99: PROVISIONAL linear scaling — not a calibration</span>` : "");
   d.prov.textContent = prov ? " provisional" : "";
   if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); }
 }
+// CONTROL (owner §14 / §15): the status, the action's commitment phase, the next feasible contact and its reach margin, the raw input against
+// the intent the active plan was made with, what is queued — from the record at the instant shown (live and in a replay alike)
+const CTL_COL = { SECURE: "#8dffa6", REPLANNING: "#ffd45e", COMMITTED: "#7fe9ff", RECOVERING: "#ffab5e", LOST: "#ff6b5e" };
+function controlLines(h) { const c = h.ctl; if (!c) return ""; const n = c.next, D = (r) => (r == null ? "—" : (wrap(r) / DEG).toFixed(0) + "°"), dI = c.rawH != null && c.intentH != null ? (wrap(c.rawH - c.intentH) / DEG).toFixed(0) : null;
+  return `<span style="color:${CTL_COL[c.status]};font-weight:700">CONTROL ${c.status}</span> · ${c.phase}\n` +
+    `next contact ${n ? `${n.F} ${n.role} in ${n.dt.toFixed(2)} s · margin ${n.margin != null ? (n.margin * 100).toFixed(0) + " cm" : "authored"}` : "none planned"}\n` +
+    `intent raw ${D(c.rawH)} → active ${D(c.intentH)}${dI != null && dI !== "0" && dI !== "-0" ? ` (Δ ${dI}°)` : ""} · queued ${c.queued}\n`; }
 // the input line: which source authored the request; for the stick its exact direction (from the camera forward it latched, + = right), its
 // analog magnitude beyond the deadzone, its zone and the deadzone itself
 function inputLine(h) {
@@ -216,6 +229,7 @@ function drawGraph(h) {
   g.strokeStyle = "rgba(77,232,255,0.95)"; g.lineWidth = 1.5 * dpr; g.beginPath(); let f = true;
   for (let t = max(0, t0, S.t - 11.9); t <= t1 + 1e-9; t += 1 / 30) { const st = S.stateAt(t), b = S.ballTrack(t).p, v = hyp(b[0] - st.P[0], b[1] - st.P[1]); if (f) { g.moveTo(X(t), Y(v)); f = false; } else g.lineTo(X(t), Y(v)); } g.stroke();
   for (const c of S.contacts) { if (c.t < t0 || c.t > t1) continue; g.fillStyle = c.missed ? "#ff6b5e" : c.tech && c.tech !== "CARRY" ? "#ffd45e" : "#7df0ff"; g.fillRect(X(c.t) - dpr, cv.height - 7 * dpr, 2 * dpr, 6 * dpr); }
+  for (let t = max(0, t0, S.t - 11.9); t <= t1 + 1e-9; t += 1 / 15) { const c = S.controlAt(Math.round(t / DT) * DT); g.fillStyle = CTL_COL[c.status] + "cc"; g.fillRect(X(t), 0, max(1, cv.width / (T * 15)) + 1, 3 * dpr); }
 }
 function stats(h) {
   const S = V.sim, C = S.contacts.filter((c) => !c.missed && c.t <= h.t + 1e-9), n = C.length || 1, pc = (f) => ((C.filter(f).length / n) * 100).toFixed(0).padStart(3) + " %";
@@ -291,7 +305,7 @@ function frame(now) {
 function setRateButtons() { document.querySelectorAll("[data-rate]").forEach((b) => b.classList.toggle("on", +b.dataset.rate === V.rate)); V.dom.bPause.textContent = V.paused && !V.replay ? "▶" : "❚❚"; V.dom.bPause.classList.toggle("on", V.paused && !V.replay); }
 function setMode(m) { V.baseMode = m; document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", b.dataset.mode === m)); }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "selTort", "selTortMode", "bTort"]) d[id] = $(id);
   const blur = (e) => { if (e && e.target && e.target.blur && e.target.tagName !== "INPUT") e.target.blur(); };
   $("bReset").onclick = (e) => { newSim(); blur(e); };
   document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = (e) => { setMode(b.dataset.mode); blur(e); }));
@@ -314,7 +328,7 @@ function bindUI() {
   const S = V.stick, pad = d.stickPad;
   const stickAt = (e) => { const b = pad.getBoundingClientRect(), R = b.width * 0.40; let x = (e.clientX - (b.left + b.width / 2)) / R, y = -(e.clientY - (b.top + b.height / 2)) / R; const r = hyp(x, y); if (r > 1) { x /= r; y /= r; }
     S.raw = { x, y }; S.v = stickVector(x, y, S.cfg.deadzone); drawStick(); };
-  pad.addEventListener("pointerdown", (e) => { if (S.pid != null) return; e.preventDefault(); try { pad.setPointerCapture(e.pointerId); } catch (_) {} S.pid = e.pointerId; V.src = "stick"; if (V.replay) stopReplay(); stickAt(e); });
+  pad.addEventListener("pointerdown", (e) => { if (V.torture) stopTorture(); if (S.pid != null) return; e.preventDefault(); try { pad.setPointerCapture(e.pointerId); } catch (_) {} S.pid = e.pointerId; V.src = "stick"; if (V.replay) stopReplay(); stickAt(e); });
   pad.addEventListener("pointermove", (e) => { if (e.pointerId !== S.pid) return; e.preventDefault(); V.src = "stick"; stickAt(e); });
   const stickEnd = (e) => { if (e.pointerId !== S.pid) return; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); };
   for (const ev of ["pointerup", "pointercancel", "lostpointercapture"]) pad.addEventListener(ev, stickEnd);
@@ -322,12 +336,14 @@ function bindUI() {
   const hold = (el, key) => { let pid = null; el.addEventListener("pointerdown", (e) => { e.preventDefault(); pid = e.pointerId; try { el.setPointerCapture(pid); } catch (_) {} V.btn[key] = true; el.classList.add("on"); });
     const up = (e) => { if (e.pointerId !== pid) return; pid = null; V.btn[key] = false; el.classList.remove("on"); }; for (const ev of ["pointerup", "pointercancel", "lostpointercapture"]) el.addEventListener(ev, up); };
   hold(d.bSprint, "sprint"); hold(d.bWalk, "walk");
+  d.selTort.innerHTML = Object.keys(TORTURE).map((n) => `<option value="${n}">${n}</option>`).join(""); d.selTortMode.value = "SPRINT";
+  d.bTort.onclick = (e) => { if (V.torture) stopTorture(); else startTorture(); e.target.blur(); }; d.selTort.onchange = d.selTortMode.onchange = (e) => e.target.blur();
   d.bLock.addEventListener("click", (e) => { V.btn.lock = !V.btn.lock; d.bLock.classList.toggle("on", V.btn.lock); d.bLock.blur(); });
   d.dz.onchange = d.dz.oninput = () => { const x = clamp(+d.dz.value || 0, 0, 0.3); S.cfg.deadzone = x; S.v = stickVector(S.raw.x, S.raw.y, x); drawStick(); };
   const code = (e) => e.code;
   window.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" && e.target.type === "text")) return; const c = code(e);
-    if (["KeyW", "KeyA", "KeyS", "KeyD", "ShiftLeft", "ShiftRight", "AltLeft", "AltRight"].includes(c)) { V.keys.add(c); e.preventDefault(); if (/^Key[WASD]$/.test(c)) { if (!e.repeat) V.src = "keys"; if (V.replay) stopReplay(); } return; }
+    if (["KeyW", "KeyA", "KeyS", "KeyD", "ShiftLeft", "ShiftRight", "AltLeft", "AltRight"].includes(c)) { V.keys.add(c); e.preventDefault(); if (/^Key[WASD]$/.test(c)) { if (!e.repeat) { V.src = "keys"; stopTorture(); } if (V.replay) stopReplay(); } return; }
     if (e.repeat) return;
     if (c === "Space") { if (V.replay) V.replay.playing = !V.replay.playing; else V.paused = !V.paused; setRateButtons(); e.preventDefault(); }
     else if (c === "Period") { if (V.replay) { V.replay.playing = false; V.replay.t = min(V.replay.t1, V.replay.t + (e.shiftKey ? DT : 4 * DT)); } else { V.paused = true; V.stepReq = e.shiftKey ? 1 : 4; } setRateButtons(); }
@@ -368,9 +384,15 @@ W.PT = { ready: () => V.ready, V,
   // the stick as a test would hold it: raw (x right, y up) in −1 … 1, null = released
   stick: (x, y) => { const S = V.stick; if (x == null) { S.pid = null; S.raw = { x: 0, y: 0 }; } else { S.pid = -1; V.src = "stick"; S.raw = { x, y }; } S.v = stickVector(S.raw.x, S.raw.y, S.cfg.deadzone); drawStick(); return S.v; },
   request: () => { const r = request(); return { h: r.h, mode: r.mode, keys: r.keys, frameH: V.src === "stick" ? V.stick.latch : V.latch.h, src: V.src }; },
+  // a recorded session (PT.record() / tools/pt_record.mjs) re-simulated here — then the replay buffer shows it at any instant
+  load: (rec) => { newSim(rec.o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
+    for (let k = 0; k < rec.k; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); }
+      const h = I[3 * k]; S.step({ h: h === -99 ? null : h, mode: MODES[I[3 * k + 1]], keys: I[3 * k + 2] }); V.stickLog.push(L[4 * k] || 0, L[4 * k + 1] || 0, L[4 * k + 2] || 0, L[4 * k + 3] || 0); }
+    V.paused = true; setRateButtons(); return { hash: S.hash, t: S.t, same: rec.hash == null || rec.hash === S.hash }; },
+  torture: (name, mode) => { if (name) { V.dom.selTort.value = name; if (mode) V.dom.selTortMode.value = mode; startTorture(); } else stopTorture(); return !!V.torture; },
   replay: (kind) => startReplay(kind || "last"), live: () => stopReplay(), seek: (t) => { if (V.replay) { V.replay.t = t; V.replay.playing = false; } },
   // drive one external frame (external=1): advance the simulation dt seconds with the given keys, then draw
   tick: (dt, keys) => { if (keys) { V.keys = new Set(keys); } const now = (V.lastNow || 0) + dt * 1000; frame(now); return { t: V.sim.t, hash: V.sim.hash }; },
-  hud: () => { const h = hudAt(V.replay ? V.replay.t : V.sim.t); return { t: h.t, action: h.action, phase: h.phase, speed: h.speed, sep: h.sep, reqH: h.reqH, mode: h.mode, contacts: V.sim.contacts.length }; },
+  hud: () => { const h = hudAt(V.replay ? V.replay.t : V.sim.t); return { t: h.t, action: h.action, phase: h.phase, speed: h.speed, sep: h.sep, reqH: h.reqH, mode: h.mode, contacts: V.sim.contacts.length, control: h.ctl }; },
   state: () => ({ t: V.sim.t, hash: V.sim.hash, contacts: V.sim.contacts.map((c) => ({ t: c.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech, missed: !!c.missed })), actions: V.sim.log.actions.map((a) => ({ t: a.t, label: a.label, m: a.m })) }) };
 boot().catch((err) => { const l = document.getElementById("loading"); if (l) l.textContent = "PLAYTEST failed: " + (err && err.stack || err); console.error(err); });

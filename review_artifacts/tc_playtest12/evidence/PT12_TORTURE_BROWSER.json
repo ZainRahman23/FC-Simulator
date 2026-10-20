@@ -1,0 +1,74 @@
+[
+ {
+  "name": "0→90→180→-90→0 fast",
+  "mode": "SPRINT",
+  "statusSamples": {
+   "COMMITTED": 6,
+   "SECURE": 44,
+   "REPLANNING": 1,
+   "RECOVERING": 8
+  },
+  "determinism": true,
+  "ticks": 1555,
+  "work": {
+   "avg": 1.33,
+   "worst": 9.7
+  },
+  "frameP99": 16.800000000000182,
+  "session": "tort_0_session.json"
+ },
+ {
+  "name": "flicks ±90 / 0.12 s",
+  "mode": "SPRINT",
+  "statusSamples": {
+   "COMMITTED": 5,
+   "SECURE": 29,
+   "REPLANNING": 15,
+   "RECOVERING": 9
+  },
+  "determinism": true,
+  "ticks": 1531,
+  "work": {
+   "avg": 1.77,
+   "worst": 7.9
+  },
+  "frameP99": 16.80000000000109,
+  "session": "tort_1_session.json"
+ },
+ {
+  "name": "random #3",
+  "mode": "SPRINT",
+  "statusSamples": {
+   "COMMITTED": 7,
+   "SECURE": 51,
+   "RECOVERING": 28,
+   "REPLANNING": 1
+  },
+  "determinism": true,
+  "ticks": 2243,
+  "work": {
+   "avg": 1.64,
+   "worst": 7.6
+  },
+  "frameP99": 16.80000000000291,
+  "session": "tort_2_session.json"
+ },
+ {
+  "name": "circles 1 Hz cw",
+  "mode": "SPRINT",
+  "statusSamples": {
+   "COMMITTED": 3,
+   "SECURE": 26,
+   "REPLANNING": 21,
+   "RECOVERING": 12
+  },
+  "determinism": true,
+  "ticks": 1615,
+  "work": {
+   "avg": 1.59,
+   "worst": 6.8
+  },
+  "frameP99": 16.80000000000291,
+  "session": "tort_3_session.json"
+ }
+]

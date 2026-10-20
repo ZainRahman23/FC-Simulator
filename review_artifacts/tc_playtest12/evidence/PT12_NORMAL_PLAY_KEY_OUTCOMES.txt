@@ -1,0 +1,15 @@
+all on       run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off air      run W→S: DL sep 0.9 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.7
+off retime   run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DR sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off gv       run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off fc       run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off hold     run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off vol      run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off intent   run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off order    run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+off side     run W→S: DR sep 0.8 | sprint W→A: RCR sep 1.7 | sprint W→S: DL sep 1.3 | stop: carry sep 0.7 | W→D→W→A: RCL>RCR sep 0.8
+
+■ 90° both ways (the mirror) — sprint at 3.0 s, run at 2.4 s:
+all on       sprint W→D: 3.00 RCL | sprint W→A: 3.00 RCR | run W→D: carry | run W→A: 2.40 RCR
+off air      sprint W→D: 3.00 RCL | sprint W→A: 3.00 RCR | run W→D: 2.40 RCL | run W→A: 2.40 RCR
+off retime   sprint W→D: carry | sprint W→A: 3.00 RCR | run W→D: carry | run W→A: 2.40 RCR

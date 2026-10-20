@@ -1,0 +1,79 @@
+{
+ "checks": {
+  "drag37": {
+   "relDeg": 37,
+   "mode": "RUN",
+   "src": "stick",
+   "pass": true
+  },
+  "capturedOutside": {
+   "captured": true,
+   "rawR": 1,
+   "relDeg": 53.1,
+   "pass": true
+  },
+  "release": {
+   "h": null,
+   "raw": {
+    "x": 0,
+    "y": 0
+   },
+   "pass": true
+  },
+  "sourceSwitch": {
+   "keys": "keys",
+   "keysRelDeg": 0,
+   "thenStick": "stick",
+   "stickRelDeg": -60,
+   "pass": true
+  },
+  "touchPlusSprint": {
+   "src": "stick",
+   "relDeg": 0,
+   "mode": "SPRINT",
+   "pass": true
+  }
+ },
+ "sweep": {
+  "anglesSeen": [
+   0,
+   18,
+   36,
+   54,
+   72,
+   90
+  ],
+  "actions": [
+   "17.98 RONALDO CHOP L",
+   "23.06 DRAG-BACK L",
+   "23.31 DRAG-BACK R"
+  ]
+ },
+ "replayShowsStick": true,
+ "determinism": {
+  "ok": true,
+  "ticks": 6259,
+  "hash": 600136061,
+  "hash2": 600136061,
+  "contacts": true,
+  "actions": true,
+  "ballDelta": 0
+ },
+ "perf": {
+  "frame": {
+   "n": 1200,
+   "avg": 16.69375,
+   "p95": 16.700000000000728,
+   "p99": 16.80000000000109,
+   "worst": 50
+  },
+  "work": {
+   "n": 1200,
+   "avg": 1.2537499999503294,
+   "p95": 2.5,
+   "p99": 4.4000000059604645,
+   "worst": 10
+  }
+ },
+ "logs": []
+}

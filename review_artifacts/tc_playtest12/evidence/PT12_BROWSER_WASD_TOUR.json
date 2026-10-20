@@ -1,0 +1,571 @@
+{
+ "seq": "tour",
+ "loadMs": 133,
+ "perf": {
+  "frame": {
+   "n": 1200,
+   "avg": 16.666000000000004,
+   "p95": 16.700000000004366,
+   "p99": 16.80000000000291,
+   "worst": 16.80000000000291
+  },
+  "sim": {
+   "n": 1200,
+   "avg": 0.41075000000496703,
+   "p95": 1.4000000059604645,
+   "p99": 4.300000011920929,
+   "worst": 7
+  },
+  "pose": {
+   "n": 1200,
+   "avg": 0.41558333312471707,
+   "p95": 0.699999988079071,
+   "p99": 0.9000000059604645,
+   "worst": 1.2000000178813934
+  },
+  "render": {
+   "n": 1200,
+   "avg": 0.7485833335916201,
+   "p95": 1.4000000059604645,
+   "p99": 1.800000011920929,
+   "worst": 2.199999988079071
+  },
+  "work": {
+   "n": 1200,
+   "avg": 1.5749166667213041,
+   "p95": 2.9000000059604645,
+   "p99": 5.5999999940395355,
+   "worst": 8.300000011920929
+  },
+  "replanCpu": {
+   "n": 229,
+   "avg": 1.4689956333439422,
+   "worst": 7.199999988079071
+  }
+ },
+ "determinism": {
+  "ok": true,
+  "ticks": 8291,
+  "hash": 1396878004,
+  "hash2": 1396878004,
+  "contacts": true,
+  "actions": true,
+  "ballDelta": 0
+ },
+ "simT": 34.545833333333334,
+ "contacts": 56,
+ "missed": 0,
+ "actions": [
+  {
+   "t": 5.529166666666667,
+   "label": "RONALDO CHOP",
+   "m": -1
+  },
+  {
+   "t": 6.454166666666667,
+   "label": "CARRY",
+   "m": 0
+  },
+  {
+   "t": 10.929166666666667,
+   "label": "RONALDO CHOP",
+   "m": 1
+  },
+  {
+   "t": 11.975,
+   "label": "CARRY",
+   "m": 0
+  },
+  {
+   "t": 15.129166666666666,
+   "label": "DRAG-BACK",
+   "m": -1
+  },
+  {
+   "t": 16.3375,
+   "label": "CARRY",
+   "m": 0
+  },
+  {
+   "t": 17.129166666666666,
+   "label": "RONALDO CHOP",
+   "m": 1
+  },
+  {
+   "t": 18.091666666666665,
+   "label": "CARRY",
+   "m": 0
+  },
+  {
+   "t": 18.529166666666665,
+   "label": "RONALDO CHOP",
+   "m": -1
+  },
+  {
+   "t": 19.3125,
+   "label": "STOP",
+   "m": 0
+  },
+  {
+   "t": 19.541666666666668,
+   "label": "OUTSIDE CUT",
+   "m": -1
+  },
+  {
+   "t": 20.129166666666666,
+   "label": "CARRY",
+   "m": 0
+  }
+ ],
+ "contactList": [
+  {
+   "t": 1.2541666666666667,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 1.775,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 2.370833333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 3.0041666666666664,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 3.6374999999999997,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 4.266666666666667,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 4.866666666666666,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 5.183333333333334,
+   "F": "L",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 5.504166666666666,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 5.758333333333333,
+   "F": "L",
+   "surface": "LACES",
+   "role": "set touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 6.154166666666667,
+   "F": "L",
+   "surface": "INSIDE",
+   "role": "RONALDO CHOP",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 6.454166666666667,
+   "F": "R",
+   "surface": "LACES",
+   "role": "exit touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 7.158333333333333,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "stop (cushion)",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 7.925,
+   "F": "R",
+   "surface": "SOLE",
+   "role": "stop (sole)",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 8.333333333333334,
+   "F": "L",
+   "surface": "OUTSIDE",
+   "role": "carry turn",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 9.191666666666666,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 9.733333333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 10.308333333333334,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 11.279166666666667,
+   "F": "R",
+   "surface": "LACES",
+   "role": "set touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 11.675,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "RONALDO CHOP",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 11.975,
+   "F": "L",
+   "surface": "LACES",
+   "role": "exit touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 13.191666666666666,
+   "F": "L",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 13.441666666666666,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 13.933333333333334,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 14.920833333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 15.725,
+   "F": "L",
+   "surface": "LACES",
+   "role": "set touch",
+   "tech": "DRAGBACK",
+   "missed": false
+  },
+  {
+   "t": 16.1,
+   "F": "L",
+   "surface": "SOLE",
+   "role": "DRAG-BACK",
+   "tech": "DRAGBACK",
+   "missed": false
+  },
+  {
+   "t": 16.3375,
+   "F": "R",
+   "surface": "LACES",
+   "role": "push (2nd contact)",
+   "tech": "DRAGBACK",
+   "missed": false
+  },
+  {
+   "t": 16.8625,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 17.4,
+   "F": "R",
+   "surface": "LACES",
+   "role": "set touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 17.791666666666668,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "RONALDO CHOP",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 18.091666666666665,
+   "F": "L",
+   "surface": "LACES",
+   "role": "exit touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 18.7375,
+   "F": "L",
+   "surface": "LACES",
+   "role": "set touch",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 19.133333333333333,
+   "F": "L",
+   "surface": "INSIDE",
+   "role": "RONALDO CHOP",
+   "tech": "CHOP",
+   "missed": false
+  },
+  {
+   "t": 19.541666666666668,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 19.758333333333333,
+   "F": "L",
+   "surface": "OUTSIDE",
+   "role": "OUTSIDE CUT",
+   "tech": "OUTCUT",
+   "missed": false
+  },
+  {
+   "t": 20.3875,
+   "F": "L",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 21.491666666666667,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 22.508333333333333,
+   "F": "L",
+   "surface": "SOLE",
+   "role": "stop (sole)",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 22.754166666666666,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 23.35,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 23.991666666666667,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 24.620833333333334,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 25.245833333333334,
+   "F": "R",
+   "surface": "SOLE",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 25.97083333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 26.733333333333334,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "carry turn",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 27.508333333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 28.520833333333332,
+   "F": "L",
+   "surface": "LACES",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 29.520833333333332,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 30.166666666666668,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 30.808333333333334,
+   "F": "R",
+   "surface": "OUTSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 31.4375,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "carry correction",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 31.754166666666666,
+   "F": "L",
+   "surface": "OUTSIDE",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 32.07083333333333,
+   "F": "R",
+   "surface": "LACES",
+   "role": "carry",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 32.704166666666666,
+   "F": "R",
+   "surface": "INSIDE",
+   "role": "stop (cushion)",
+   "tech": "CARRY",
+   "missed": false
+  },
+  {
+   "t": 33.4375,
+   "F": "R",
+   "surface": "SOLE",
+   "role": "stop (sole)",
+   "tech": "CARRY",
+   "missed": false
+  }
+ ],
+ "logs": []
+}

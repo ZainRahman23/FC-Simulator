@@ -1,0 +1,26 @@
+{
+  "milestone": "TECHNICAL-CONTROL PLAYTEST-1.2 — elite rapid-direction control (99/99/99)",
+  "date": "2026-10-20",
+  "status": "PRESENTED — awaiting the owner's playtest; NOT frozen, NOT integrated; local only",
+  "page": "http://127.0.0.1:8361/sandbox/visual/tc_playtest1.html",
+  "baseline": "88573ef0 (PLAYTEST-1 + joystick)",
+  "torture_suite_140": {
+    "baseline": { "lost": 26, "missed": 0, "doubleTouch": 11, "abandoned": 0, "ballJump": 0, "crossedSupports": 43, "legSpans": 528, "supportHits": 2, "footJumps": 1893, "ballInBootTicks": 7583, "recoveries": 528 },
+    "now": { "lost": 0, "missed": 0, "doubleTouch": 0, "abandoned": 0, "ballJump": 0, "crossedSupports": 1, "legSpans": 387, "supportHits": 5, "footJumps": 461, "ballInBootTicks": 9098, "recoveries": 478 }
+  },
+  "extended_random_960": { "seconds": 8736, "lost": 0, "missed": 0, "doubleTouch": 0, "abandoned": 0, "contacts": 14244 },
+  "acceptance_12": {
+    "control_losses_zero": true,
+    "ball_teleports_zero": true,
+    "overlapping_incompatible_techniques_zero": true,
+    "leg_crossings_zero": false,
+    "impossible_support_swaps_zero": false,
+    "foot_teleports_zero": false
+  },
+  "browser": { "torture_preset_sprint_4": "never LOST in HUD samples, deterministic, node ≡ browser", "wasd_tour": "56 contacts, 0 missed, deterministic, node ≡ browser", "stick": "all real-pointer checks pass, node ≡ browser" },
+  "owner_decisions": [
+    "keep the in-flight landing commitment (organised feet, sometimes a stride later) or allow late holds (faster in those phases, more foot jumps)",
+    "next: the body zeros (posed leg clearance in carry turns, presentation swing-speed limit)",
+    "weak-foot chop preference for right turns at run"
+  ]
+}

@@ -1,0 +1,268 @@
+{
+ "pure": [
+  {
+   "deg": 7,
+   "heading": 7,
+   "angle": 7,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 23,
+   "heading": 23,
+   "angle": 23,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 41,
+   "heading": 41,
+   "angle": 41,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 68,
+   "heading": 68,
+   "angle": 68,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 97,
+   "heading": 97,
+   "angle": 97,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 137,
+   "heading": 137,
+   "angle": 137,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": -45,
+   "heading": -45,
+   "angle": -45,
+   "m": 1,
+   "zone": "RUN"
+  },
+  {
+   "deg": 180,
+   "heading": -180,
+   "angle": 180,
+   "m": 1,
+   "zone": "RUN"
+  }
+ ],
+ "equivalence": [
+  {
+   "name": "WASD forward vs stick exactly forward",
+   "keys": "be0d1aca",
+   "stick": "be0d1aca",
+   "contacts": 7,
+   "identical": true
+  },
+  {
+   "name": "WASD W+D vs stick normalised diagonal (√½, √½)",
+   "keys": "17a52d79",
+   "stick": "17a52d79",
+   "contacts": 7,
+   "identical": true
+  },
+  {
+   "name": "W → WD → D → SD → S vs the stick's equivalents",
+   "keys": "37706ae3",
+   "stick": "37706ae3",
+   "contacts": 11,
+   "identical": true
+  },
+  {
+   "name": "Shift + W → A (sprint) vs stick + SPRINT button",
+   "keys": "ec8a63d1",
+   "stick": "ec8a63d1",
+   "contacts": 8,
+   "identical": true
+  },
+  {
+   "name": "Alt + W (walk) vs stick + WALK button",
+   "keys": "9e55518a",
+   "stick": "9e55518a",
+   "contacts": 5,
+   "identical": true
+  },
+  {
+   "name": "release: WASD up vs stick back to the centre",
+   "keys": "39ba77db",
+   "stick": "39ba77db",
+   "contacts": 6,
+   "identical": true
+  }
+ ],
+ "playtest": [
+  {
+   "name": "sprint forward, stick rotated smoothly 0 → 90° over 2.5 s (30 / 45 / 60 / 75 / 90 on the way)",
+   "actions": [],
+   "contacts": 16,
+   "missed": 0
+  },
+  {
+   "name": "sprint forward, stick held at 30°",
+   "actions": [],
+   "contacts": 7,
+   "missed": 0
+  },
+  {
+   "name": "sprint forward, stick held at 60°",
+   "actions": [
+    {
+     "t": 3,
+     "label": "OUTSIDE CUT R",
+     "why": [
+      "OUTSIDE CUT (R) 3.17 [line +0.97s · contact +0.87s · 60° outside 25–60 · speed · set touch]",
+      "OUTSIDE CUT (R) 3.4 [line +0.97s · contact +0.87s · ball untouched 1.4 s · 60° outside 25–60]",
+      "RONALDO CHOP (L) 3.43 [line +0.89s · contact +0.67s · 60° outside 70–105 · weak foot · speed · set touch]"
+     ]
+    }
+   ],
+   "contacts": 8,
+   "missed": 0
+  },
+  {
+   "name": "sprint forward → snap 90° right",
+   "actions": [
+    {
+     "t": 3,
+     "label": "RONALDO CHOP L",
+     "why": [
+      "RONALDO CHOP (L) 3.18 [line +0.91s · contact +0.67s · weak foot · speed · set touch]",
+      "CARRY 3.45 [line +1.44s · ball 2.8m away]",
+      "CRUYFF TURN (L) 3.81 [line +1.13s · contact +0.71s · 90° outside 95–145 · weak foot · speed · set touch]"
+     ]
+    }
+   ],
+   "contacts": 8,
+   "missed": 0
+  },
+  {
+   "name": "sprint forward → snap 150° right",
+   "actions": [
+    {
+     "t": 3,
+     "label": "DRAG-BACK L",
+     "why": [
+      "DRAG-BACK (L) 3.7 [line +1.02s · contact +0.65s · 210° outside 158–200 · weak foot · speed · set touch]",
+      "INSIDE HOOK (L) 3.71 [line +1.05s · contact +0.65s · weak foot · speed · set touch]",
+      "DRAG-BACK (R) 3.79 [line +1.13s · contact +0.78s · 150° outside 158–200 · speed · set touch]"
+     ]
+    }
+   ],
+   "contacts": 10,
+   "missed": 0
+  },
+  {
+   "name": "run (stick outer zone) forward → snap 41° left",
+   "actions": [],
+   "contacts": 9,
+   "missed": 0
+  },
+  {
+   "name": "run forward → snap 68° right",
+   "actions": [],
+   "contacts": 9,
+   "missed": 0
+  },
+  {
+   "name": "run forward → snap 97° right",
+   "actions": [
+    {
+     "t": 2.6,
+     "label": "RONALDO CHOP L",
+     "why": [
+      "RONALDO CHOP (L) 3.13 [line +1.00s · contact +0.76s · weak foot · set touch]",
+      "CARRY 3.27 [line +0.78s · ball 3.5m away]",
+      "CRUYFF TURN (L) 3.58 [line +1.22s · contact +0.80s · weak foot · set touch]"
+     ]
+    }
+   ],
+   "contacts": 9,
+   "missed": 0
+  },
+  {
+   "name": "run forward → snap 137° left",
+   "actions": [
+    {
+     "t": 2.6,
+     "label": "INSIDE HOOK R",
+     "why": [
+      "INSIDE HOOK (R) 2.68 [line +0.88s · contact +0.48s · speed]",
+      "INSIDE HOOK (R) 2.9 [line +0.88s · contact +0.48s · speed · set touch]",
+      "CRUYFF TURN (R) 3.05 [line +0.99s · contact +0.54s · speed · set touch]"
+     ]
+    }
+   ],
+   "contacts": 9,
+   "missed": 0
+  },
+  {
+   "name": "jog zone (stick at 0.55 of the radius) forward → 90° right",
+   "actions": [],
+   "contacts": 7,
+   "missed": 0
+  }
+ ],
+ "magnitude": [
+  {
+   "r": 0.02,
+   "m": 0,
+   "zone": "deadzone"
+  },
+  {
+   "r": 0.05,
+   "m": 0,
+   "zone": "deadzone"
+  },
+  {
+   "r": 0.07,
+   "m": 0,
+   "zone": "deadzone"
+  },
+  {
+   "r": 0.09,
+   "m": 0.011,
+   "zone": "WALK"
+  },
+  {
+   "r": 0.2,
+   "m": 0.13,
+   "zone": "WALK"
+  },
+  {
+   "r": 0.39,
+   "m": 0.337,
+   "zone": "WALK"
+  },
+  {
+   "r": 0.41,
+   "m": 0.359,
+   "zone": "JOG"
+  },
+  {
+   "r": 0.71,
+   "m": 0.685,
+   "zone": "JOG"
+  },
+  {
+   "r": 0.73,
+   "m": 0.707,
+   "zone": "RUN"
+  },
+  {
+   "r": 1,
+   "m": 1,
+   "zone": "RUN"
+  }
+ ]
+}

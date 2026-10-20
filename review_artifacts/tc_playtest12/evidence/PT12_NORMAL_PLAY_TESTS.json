@@ -1,0 +1,855 @@
+{
+ "W→WD→D→SD→S": {
+  "actions": [],
+  "contacts": 12,
+  "missed": 0,
+  "sepMax": 0.83,
+  "sepMaxAfterLast": 0.83,
+  "onNewLine": 0.61,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.39 L INSIDE carry correction [CARRY]",
+   "3.02 L INSIDE carry correction [CARRY]",
+   "3.34 R INSIDE carry [CARRY]",
+   "3.97 R OUTSIDE carry correction [CARRY]",
+   "4.60 R OUTSIDE carry correction [CARRY]",
+   "5.23 R OUTSIDE carry [CARRY]",
+   "5.87 R LACES carry [CARRY]",
+   "6.50 R LACES carry [CARRY]"
+  ]
+ },
+ "sprint W→A": {
+  "actions": [
+   {
+    "t": 3,
+    "label": "RONALDO CHOP R",
+    "why": [
+     "RONALDO CHOP (R) 3.36 [line +1.04s · contact +0.80s · speed · set touch]",
+     "CARRY 3.45 [line +1.44s · ball 2.8m away]",
+     "CRUYFF TURN (R) 4 [line +1.26s · contact +0.84s · 90° outside 95–145 · speed · set touch]"
+    ]
+   },
+   {
+    "t": 4.1,
+    "label": "CARRY",
+    "why": [
+     "CARRY 3.32 [line +1.22s · ball untouched 1.2 s · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 9,
+  "missed": 0,
+  "sepMax": 1.66,
+  "sepMaxAfterLast": 1.66,
+  "onNewLine": 0.95,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.41 R LACES carry [CARRY]",
+   "2.47 R LACES carry [CARRY]",
+   "3.40 R LACES set touch [CHOP]",
+   "3.80 R INSIDE RONALDO CHOP [CHOP]",
+   "4.10 L LACES exit touch [CHOP]",
+   "5.32 L INSIDE carry [CARRY]",
+   "5.56 R INSIDE carry [CARRY]"
+  ]
+ },
+ "sprint W→S": {
+  "actions": [
+   {
+    "t": 3,
+    "label": "DRAG-BACK L",
+    "why": [
+     "DRAG-BACK (L) 3.55 [line +1.01s · contact +0.65s · weak foot · speed · set touch]",
+     "DRAG-BACK (R) 3.73 [line +1.14s · contact +0.78s · speed · set touch]",
+     "INSIDE HOOK (L) 3.83 [line +1.06s · contact +0.65s · 180° outside 130–172 · weak foot · speed · set touch]"
+    ]
+   },
+   {
+    "t": 3.887,
+    "label": "CARRY",
+    "why": [
+     "CARRY 1.77 [line +0.52s · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 9,
+  "missed": 0,
+  "sepMax": 1.28,
+  "sepMaxAfterLast": 1.23,
+  "onNewLine": 0.86,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.41 R LACES carry [CARRY]",
+   "2.47 R LACES carry [CARRY]",
+   "3.27 L LACES set touch [DRAGBACK]",
+   "3.65 L SOLE DRAG-BACK [DRAGBACK]",
+   "3.89 R LACES push (2nd contact) [DRAGBACK]",
+   "4.41 R LACES carry [CARRY]",
+   "4.98 R LACES carry [CARRY]"
+  ]
+ },
+ "W→D→W→A": {
+  "actions": [
+   {
+    "t": 2.2,
+    "label": "RONALDO CHOP L",
+    "why": [
+     "RONALDO CHOP (L) 2.65 [line +0.83s · contact +0.59s · weak foot · set touch]",
+     "CRUYFF TURN (L) 3.43 [line +1.04s · contact +0.63s · 90° outside 95–145 · weak foot · speed · set touch]",
+     "CARRY 3.45 [line +1.14s · ball 2.6m away]"
+    ]
+   },
+   {
+    "t": 3.087,
+    "label": "CARRY",
+    "why": [
+     "CARRY 2.13 [line +0.70s · (switch)]"
+    ]
+   },
+   {
+    "t": 3.2,
+    "label": "RONALDO CHOP R",
+    "why": [
+     "RONALDO CHOP (R) 3.48 [line +1.19s · contact +0.95s · set touch]",
+     "CARRY 3.49 [line +1.22s · ball 2.4m away]"
+    ]
+   },
+   {
+    "t": 4.367,
+    "label": "CARRY",
+    "why": [
+     "CARRY 3.48 [line +0.90s · ball 3.3m away]"
+    ]
+   }
+  ],
+  "contacts": 13,
+  "missed": 0,
+  "sepMax": 0.79,
+  "sepMaxAfterLast": 0.74,
+  "onNewLine": 1.16,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.39 L LACES set touch [CHOP]",
+   "2.79 L INSIDE RONALDO CHOP [CHOP]",
+   "3.09 R LACES exit touch [CHOP]",
+   "3.75 R LACES set touch [CHOP]",
+   "4.15 R INSIDE RONALDO CHOP [CHOP]",
+   "4.56 L OUTSIDE carry correction [CARRY]",
+   "5.30 L OUTSIDE carry turn [CARRY]",
+   "5.68 R LACES carry [CARRY]",
+   "6.20 R LACES carry [CARRY]"
+  ]
+ },
+ "run W→A": {
+  "actions": [
+   {
+    "t": 2.4,
+    "label": "RONALDO CHOP R",
+    "why": [
+     "RONALDO CHOP (R) 2.61 [line +0.88s · contact +0.64s · set touch]",
+     "CARRY 3.03 [line +0.94s · ball 2.5m away]",
+     "CRUYFF TURN (R) 3.4 [line +1.10s · contact +0.68s · 90° outside 95–145 · speed · set touch]"
+    ]
+   },
+   {
+    "t": 3.337,
+    "label": "CARRY",
+    "why": [
+     "CARRY 2.14 [line +0.71s · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 10,
+  "missed": 0,
+  "sepMax": 0.72,
+  "sepMaxAfterLast": 0.72,
+  "onNewLine": 0.79,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.65 R LACES set touch [CHOP]",
+   "3.04 R INSIDE RONALDO CHOP [CHOP]",
+   "3.34 L LACES exit touch [CHOP]",
+   "4.05 L INSIDE carry [CARRY]",
+   "4.36 R INSIDE carry [CARRY]",
+   "4.99 R LACES carry [CARRY]"
+  ]
+ },
+ "run W→S": {
+  "actions": [
+   {
+    "t": 2.4,
+    "label": "DRAG-BACK R",
+    "why": [
+     "DRAG-BACK (R) 3.28 [line +0.98s · contact +0.62s · speed · set touch]",
+     "INSIDE HOOK (R) 3.41 [line +1.04s · contact +0.62s · 180° outside 130–172 · speed · set touch]",
+     "DRAG-BACK (L) 4.05 [line +1.30s · contact +0.94s · weak foot · speed · set touch]"
+    ]
+   },
+   {
+    "t": 3.258,
+    "label": "CARRY",
+    "why": [
+     "CARRY 2.31 [line +0.52s · ball 2.9m away · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 10,
+  "missed": 0,
+  "sepMax": 0.78,
+  "sepMaxAfterLast": 0.78,
+  "onNewLine": 0.83,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.65 R LACES set touch [DRAGBACK]",
+   "3.02 R SOLE DRAG-BACK [DRAGBACK]",
+   "3.26 L LACES push (2nd contact) [DRAGBACK]",
+   "3.78 L INSIDE carry correction [CARRY]",
+   "4.06 R LACES carry [CARRY]",
+   "4.70 R LACES carry [CARRY]"
+  ]
+ },
+ "run W→WA (45°)": {
+  "actions": [],
+  "contacts": 8,
+  "missed": 0,
+  "sepMax": 0.69,
+  "sepMaxAfterLast": 0.66,
+  "onNewLine": 0.56,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.71 R INSIDE carry correction [CARRY]",
+   "3.34 R INSIDE carry [CARRY]",
+   "3.97 R LACES carry [CARRY]",
+   "4.60 R LACES carry [CARRY]"
+  ]
+ },
+ "run W→SA (135°)": {
+  "actions": [
+   {
+    "t": 2.4,
+    "label": "INSIDE HOOK R",
+    "why": [
+     "INSIDE HOOK (R) 3.28 [line +1.01s · contact +0.62s · speed · set touch]",
+     "CRUYFF TURN (R) 3.43 [line +1.13s · contact +0.68s · speed · set touch]",
+     "CARRY 4.58 [line +1.57s · ball 3.0m away]"
+    ]
+   },
+   {
+    "t": 3.4,
+    "label": "CARRY",
+    "why": [
+     "CARRY 1.24 [line +0.26s · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 10,
+  "missed": 0,
+  "sepMax": 0.74,
+  "sepMaxAfterLast": 0.74,
+  "onNewLine": 0.81,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.65 R LACES set touch [HOOK]",
+   "3.02 R INSIDE INSIDE HOOK [HOOK]",
+   "3.40 L LACES exit touch [HOOK]",
+   "3.66 R LACES carry [CARRY]",
+   "4.25 R LACES carry [CARRY]",
+   "4.88 R LACES carry [CARRY]"
+  ]
+ },
+ "walk W→A": {
+  "actions": [],
+  "contacts": 7,
+  "missed": 0,
+  "sepMax": 0.6,
+  "sepMaxAfterLast": 0.6,
+  "onNewLine": 0.36,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "1.09 R LACES carry [CARRY]",
+   "1.85 R LACES carry [CARRY]",
+   "2.61 R INSIDE carry turn [CARRY]",
+   "3.39 R LACES carry [CARRY]",
+   "4.15 R LACES carry [CARRY]",
+   "4.90 R LACES carry [CARRY]"
+  ]
+ },
+ "jog W→D": {
+  "actions": [
+   {
+    "t": 2.4,
+    "label": "OUTSIDE CUT R",
+    "why": [
+     "OUTSIDE CUT (R) 2.77 [line +0.60s · contact +0.48s · 90° outside 25–60]",
+     "CRUYFF TURN (L) 3.83 [line +1.12s · contact +0.70s · 90° outside 95–145 · weak foot · set touch · set off-line]",
+     "CARRY 3.92 [line +1.42s · ball 1.9m away]"
+    ]
+   },
+   {
+    "t": 3.258,
+    "label": "CARRY",
+    "why": [
+     "CARRY 1.3 [line +0.29s · (switch)]"
+    ]
+   }
+  ],
+  "contacts": 8,
+  "missed": 0,
+  "sepMax": 0.69,
+  "sepMaxAfterLast": 0.66,
+  "onNewLine": 0.66,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.95 R LACES carry [CARRY]",
+   "1.67 R LACES carry [CARRY]",
+   "2.38 R LACES carry [CARRY]",
+   "2.88 R OUTSIDE OUTSIDE CUT [OUTCUT]",
+   "3.55 R OUTSIDE carry [CARRY]",
+   "4.26 R LACES carry [CARRY]",
+   "4.98 R LACES carry [CARRY]"
+  ]
+ },
+ "stop": {
+  "actions": [],
+  "contacts": 6,
+  "missed": 0,
+  "sepMax": 0.69,
+  "sepMaxAfterLast": 0.66,
+  "onNewLine": null,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R LACES carry [CARRY]",
+   "2.70 R INSIDE stop (cushion) [CARRY]",
+   "3.60 L SOLE stop (sole) [CARRY]"
+  ]
+ },
+ "standing S": {
+  "actions": [],
+  "contacts": 4,
+  "missed": 0,
+  "sepMax": 0.73,
+  "sepMaxAfterLast": 0.73,
+  "onNewLine": 0.82,
+  "deterministic": true,
+  "contactList": [
+   "0.83 R SOLE carry turn [CARRY]",
+   "1.63 L LACES carry [CARRY]",
+   "1.91 R SOLE carry [CARRY]",
+   "2.54 R LACES carry [CARRY]"
+  ]
+ },
+ "rapid WA/WD": {
+  "actions": [],
+  "contacts": 11,
+  "missed": 0,
+  "sepMax": 0.71,
+  "sepMaxAfterLast": 0.7,
+  "onNewLine": 0.56,
+  "deterministic": true,
+  "contactList": [
+   "0.33 R LACES carry [CARRY]",
+   "0.85 R LACES carry [CARRY]",
+   "1.44 R LACES carry [CARRY]",
+   "2.08 R INSIDE carry correction [CARRY]",
+   "2.71 R OUTSIDE carry turn [CARRY]",
+   "3.30 R OUTSIDE carry correction [CARRY]",
+   "3.90 R INSIDE carry correction [CARRY]",
+   "4.22 L OUTSIDE carry [CARRY]",
+   "4.53 R INSIDE carry [CARRY]",
+   "5.17 R LACES carry [CARRY]",
+   "5.80 R LACES carry [CARRY]"
+  ]
+ },
+ "sweep": [
+  {
+   "t": 2,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.63,
+   "why": [
+    "RONALDO CHOP (R) 2.14",
+    "CRUYFF TURN (R) 2.92"
+   ]
+  },
+  {
+   "t": 2.05,
+   "first": "carry",
+   "at": null,
+   "onNewLine": 0.46,
+   "why": []
+  },
+  {
+   "t": 2.1,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 1.09,
+   "why": [
+    "RONALDO CHOP (R) 3.45",
+    "CARRY 3.63"
+   ]
+  },
+  {
+   "t": 2.15,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 1.04,
+   "why": [
+    "RONALDO CHOP (R) 3.31",
+    "CARRY 3.53"
+   ]
+  },
+  {
+   "t": 2.2,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.99,
+   "why": [
+    "RONALDO CHOP (R) 3.17",
+    "CARRY 3.43"
+   ]
+  },
+  {
+   "t": 2.25,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.94,
+   "why": [
+    "RONALDO CHOP (R) 3.03",
+    "CARRY 3.33"
+   ]
+  },
+  {
+   "t": 2.3,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.89,
+   "why": [
+    "RONALDO CHOP (R) 2.89",
+    "CARRY 3.23"
+   ]
+  },
+  {
+   "t": 2.35,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.84,
+   "why": [
+    "RONALDO CHOP (R) 2.75",
+    "CARRY 3.13"
+   ]
+  },
+  {
+   "t": 2.4,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.79,
+   "why": [
+    "RONALDO CHOP (R) 2.61",
+    "CARRY 3.03"
+   ]
+  },
+  {
+   "t": 2.45,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.8,
+   "why": [
+    "RONALDO CHOP (R) 2.65",
+    "CARRY 2.93"
+   ]
+  },
+  {
+   "t": 2.5,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.75,
+   "why": [
+    "RONALDO CHOP (R) 2.51",
+    "CARRY 2.83"
+   ]
+  },
+  {
+   "t": 2.55,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.7,
+   "why": [
+    "RONALDO CHOP (R) 2.37",
+    "CRUYFF TURN (R) 3.15"
+   ]
+  },
+  {
+   "t": 2.6,
+   "first": "RONALDO CHOP R",
+   "at": 0,
+   "onNewLine": 0.65,
+   "why": [
+    "RONALDO CHOP (R) 2.23",
+    "CRUYFF TURN (R) 3.01"
+   ]
+  }
+ ],
+ "sweepSprint": [
+  {
+   "t": 2.6,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.35,
+   "why": [
+    "RONALDO CHOP (R) 4.48",
+    "CRUYFF TURN (R) 5.12"
+   ]
+  },
+  {
+   "t": 2.65,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.3,
+   "why": [
+    "RONALDO CHOP (R) 4.34",
+    "CRUYFF TURN (R) 4.98"
+   ]
+  },
+  {
+   "t": 2.7,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.3,
+   "why": [
+    "RONALDO CHOP (R) 3.21",
+    "CRUYFF TURN (R) 3.84"
+   ]
+  },
+  {
+   "t": 2.75,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.25,
+   "why": [
+    "RONALDO CHOP (R) 3.21",
+    "CRUYFF TURN (R) 3.84"
+   ]
+  },
+  {
+   "t": 2.8,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.2,
+   "why": [
+    "RONALDO CHOP (R) 3.21",
+    "CRUYFF TURN (R) 3.84"
+   ]
+  },
+  {
+   "t": 2.85,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.15,
+   "why": [
+    "RONALDO CHOP (R) 3.21",
+    "CRUYFF TURN (R) 3.84"
+   ]
+  },
+  {
+   "t": 2.9,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1.05,
+   "why": [
+    "RONALDO CHOP (R) 3.64",
+    "CARRY 3.65"
+   ]
+  },
+  {
+   "t": 2.95,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 1,
+   "why": [
+    "RONALDO CHOP (R) 3.5",
+    "CARRY 3.55"
+   ]
+  },
+  {
+   "t": 3,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 0.95,
+   "why": [
+    "RONALDO CHOP (R) 3.36",
+    "CARRY 3.45"
+   ]
+  },
+  {
+   "t": 3.05,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 0.9,
+   "why": [
+    "RONALDO CHOP (R) 3.22",
+    "CARRY 3.35"
+   ]
+  },
+  {
+   "t": 3.1,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 0.85,
+   "why": [
+    "RONALDO CHOP (R) 3.08",
+    "CARRY 3.25"
+   ]
+  },
+  {
+   "t": 3.15,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 0.8,
+   "why": [
+    "RONALDO CHOP (R) 2.94",
+    "CARRY 3.15"
+   ]
+  },
+  {
+   "t": 3.2,
+   "first": "RONALDO CHOP R",
+   "onNewLine": 0.8,
+   "why": [
+    "RONALDO CHOP (R) 2.94",
+    "CARRY 3.3"
+   ]
+  }
+ ],
+ "sweepD": [
+  {
+   "t": 2,
+   "first": "carry",
+   "onNewLine": 0.87,
+   "why": []
+  },
+  {
+   "t": 2.05,
+   "first": "carry",
+   "onNewLine": 0.74,
+   "why": []
+  },
+  {
+   "t": 2.1,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.78,
+   "why": [
+    "RONALDO CHOP (L) 2.75",
+    "CRUYFF TURN (L) 3.53"
+   ]
+  },
+  {
+   "t": 2.15,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.79,
+   "why": [
+    "RONALDO CHOP (L) 2.79",
+    "CARRY 3.55"
+   ]
+  },
+  {
+   "t": 2.2,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.74,
+   "why": [
+    "RONALDO CHOP (L) 2.65",
+    "CRUYFF TURN (L) 3.43"
+   ]
+  },
+  {
+   "t": 2.25,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.69,
+   "why": [
+    "RONALDO CHOP (L) 2.51",
+    "CRUYFF TURN (L) 3.29"
+   ]
+  },
+  {
+   "t": 2.3,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.64,
+   "why": [
+    "RONALDO CHOP (L) 2.37",
+    "CRUYFF TURN (L) 3.15"
+   ]
+  },
+  {
+   "t": 2.35,
+   "first": "carry",
+   "onNewLine": 1.07,
+   "why": []
+  },
+  {
+   "t": 2.4,
+   "first": "carry",
+   "onNewLine": 1.02,
+   "why": []
+  },
+  {
+   "t": 2.45,
+   "first": "carry",
+   "onNewLine": 0.97,
+   "why": []
+  },
+  {
+   "t": 2.5,
+   "first": "carry",
+   "onNewLine": 0.92,
+   "why": []
+  },
+  {
+   "t": 2.55,
+   "first": "carry",
+   "onNewLine": 0.87,
+   "why": []
+  },
+  {
+   "t": 2.6,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.91,
+   "why": [
+    "RONALDO CHOP (L) 3.12",
+    "CARRY 3.13"
+   ]
+  }
+ ],
+ "sweepSprintD": [
+  {
+   "t": 2.6,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 1.22,
+   "why": [
+    "RONALDO CHOP (L) 4.28",
+    "CRUYFF TURN (L) 4.92"
+   ]
+  },
+  {
+   "t": 2.65,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 1.17,
+   "why": [
+    "RONALDO CHOP (L) 4.14",
+    "CRUYFF TURN (L) 4.78"
+   ]
+  },
+  {
+   "t": 2.7,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 1.12,
+   "why": [
+    "RONALDO CHOP (L) 4",
+    "CARRY 4.05"
+   ]
+  },
+  {
+   "t": 2.75,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 1.07,
+   "why": [
+    "RONALDO CHOP (L) 3.86",
+    "CARRY 3.95"
+   ]
+  },
+  {
+   "t": 2.8,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 1.02,
+   "why": [
+    "RONALDO CHOP (L) 3.72",
+    "CARRY 3.85"
+   ]
+  },
+  {
+   "t": 2.85,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.97,
+   "why": [
+    "RONALDO CHOP (L) 3.58",
+    "CARRY 3.75"
+   ]
+  },
+  {
+   "t": 2.9,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.92,
+   "why": [
+    "RONALDO CHOP (L) 3.44",
+    "CARRY 3.65"
+   ]
+  },
+  {
+   "t": 2.95,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.87,
+   "why": [
+    "RONALDO CHOP (L) 3.32",
+    "CARRY 3.55"
+   ]
+  },
+  {
+   "t": 3,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.82,
+   "why": [
+    "RONALDO CHOP (L) 3.18",
+    "CARRY 3.45"
+   ]
+  },
+  {
+   "t": 3.05,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.76,
+   "why": [
+    "RONALDO CHOP (L) 3.01",
+    "CARRY 3.35"
+   ]
+  },
+  {
+   "t": 3.1,
+   "first": "RONALDO CHOP L",
+   "onNewLine": 0.7,
+   "why": [
+    "RONALDO CHOP (L) 2.83",
+    "CARRY 3.25"
+   ]
+  },
+  {
+   "t": 3.15,
+   "first": "carry",
+   "onNewLine": 1.23,
+   "why": []
+  },
+  {
+   "t": 3.2,
+   "first": "carry",
+   "onNewLine": 1.18,
+   "why": []
+  }
+ ]
+}

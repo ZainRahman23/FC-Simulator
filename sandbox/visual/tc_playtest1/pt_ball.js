@@ -5,9 +5,12 @@
 // (a rolling ball's future depends only on its present speed), so any launch speed reads the same curve from the point where the long roll passes
 // that speed (fractional, interpolated). Rolling balls travel straight (no side spin is ever given). The controller only PREDICTS with the table;
 // every launch is executed on the kernel and the next decision reads the kernel's actual ball.
+// (DETERMINISTIC math for everything that feeds the simulation: JavaScript does not make Math.sin / cos / atan2 / acos / hypot bit-identical
+// across engines — Node and Chrome were measured to differ — so a recorded session could diverge on another engine; + − × ÷ and sqrt are exact)
+import { dsin, dcos, datan2, dacos, dnorm } from "../physchar2/core/v2_math.js";
 import { BALL_DEFAULT } from "../dribble15/d15_core.js";
 export const DT = 1 / 240, R = 0.11;
-const B = BALL_DEFAULT, hyp = Math.hypot;
+const B = BALL_DEFAULT, hyp = dnorm;
 export const rollK = (vk) => [vk[2] / R, 0, -vk[0] / R];
 export function mkWorld(p, v) { return new B.World(Object.assign({}, B.options, { p, v, w: rollK(v), dt: DT, substeps: 1, parameters: B.parameters, colliders: [] })); }
 // ── the rolling table: distance d[i] and speed s[i] along one roll from V0, i ticks after its launch ────────────────────────────────────────────────

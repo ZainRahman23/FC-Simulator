@@ -30,19 +30,26 @@ export class PlayBody {
     const C = env.colliders; this.hull = C && C.sides ? (C._tc15 || (C._tc15 = { R: bootHull(C.sides.R.boot.points), L: bootHull(C.sides.L.boot.points), P: { R: C.sides.R.boot.points, L: C.sides.L.boot.points } })) : null;
     // RUN-1's swing paths per 0.25 m/s, baked (pt_baked.json): RefSim's runTemplate cache seeded — no 50 – 100 ms solve in a frame
     if (env.baked && env.baked.run) { const cache = RefSim._tmpl || (RefSim._tmpl = new Map()); for (const [k, v] of Object.entries(env.baked.run)) if (!cache.has(+k)) cache.set(+k, v); }
-    this.O = [0, 0]; this.th0 = 0; this.T = { gait: null, sway: 1, armSide: null }; this.fk = null; this.cache = new Map(); this.ctx = null;
+    this.O = [0, 0]; this.th0 = 0; this.T = { gait: null, sway: 1, armSide: null }; this.fk = null; this.cache = new Map(); this.ctxs = new Map(); this.ctx = null; this.inSwing = false;
   }
   // ── the frames: the adapter's "local" frame IS the pitch (th0 = 0, O = 0); the technique frames are resolved in wayKey ──────────────────────────
   H(deg) { return deg * DEG; } L2P(q) { return [q[0], q[1]]; } P2L(p) { return [p[0], p[1]]; }
-  com(t) { return this.sim.stateAt(t).P; } vel(t) { return this.sim.stateAt(t).V; } psi(t) { return this.sim.stateAt(t).psi; } comL(t) { return this.com(t); }
-  // the ball at t: the recorded track (the past, the present), predicted from the present beyond it
-  ballAt(t) { const S = this.sim; if (t <= S.t + 1e-9) return S.ballTrack(t).p; const B = S.ballTrack(S.t), f = predict(B.p, B.v, t - S.t); return [f.p[0], f.p[1], R]; }
+  // PURITY: what a plan's swings are built from is that plan (and the history before it) — never a later plan, never the moment they are first
+  // computed — so a pose at t is the same function of the record live, in a replay, after any cache eviction
+  stAt(t) { const c = this.ctx, P = c && t >= c.plan.t0 - 1e-9 ? c.plan : this.sim.planAt(t); return this.sim.stateAt(t, P); }
+  com(t) { return this.stAt(t).P; } vel(t) { return this.stAt(t).V; } psi(t) { return this.stAt(t).psi; } comL(t) { return this.com(t); }
+  // the ball at t: inside a plan's swing computation, the plan's own ball (as it saw it, predicted on); for the pose itself, the recorded track
+  ballAt(t) { const S = this.sim, c = this.ctx;
+    if (this.inSwing && c && t > c.plan.t0 && c.plan.ball0) { const B = c.plan.ball0, f = predict(B.p, B.v, t - c.plan.t0); return [f.p[0], f.p[1], R]; }
+    if (t <= S.t + 1e-9) return S.ballTrack(t).p; const B = S.ballTrack(S.t), f = predict(B.p, B.v, t - S.t); return [f.p[0], f.p[1], R]; }
   // ── the context at t: the plan active then, its stances / contacts resolved for the presentation (cached per plan version) ─────────────────────
   ctxOf(plan) {
-    let c = this.cache.get(plan); if (c) return c;
+    let c = this.ctxs.get(plan); if (c) return c;
     const st = { R: [], L: [] }; for (const X of SIDES) for (const s of plan.stances[X]) st[X].push(this.stanceOf(s));
     for (const X of SIDES) st[X].sort((a, b) => a.t0 - b.t0);
-    c = { plan, st, sw: new Map() }; this.cache.set(plan, c); if (this.cache.size > 400) { const k = this.cache.keys().next().value; this.cache.delete(k); } return c;
+    c = { plan, st, sw: new Map() }; this.ctxs.set(plan, c);
+    if (this.ctxs.size > 900) { const live = new Set(this.sim.plans); for (const k of this.ctxs.keys()) if (!live.has(k)) this.ctxs.delete(k); }
+    if (this.cache.size > 6000) { let n = 0; for (const k of this.cache.keys()) { this.cache.delete(k); if (++n > 3000) break; } } return c;
   }
   stanceOf(s) { const k = "s" + s.id + "|" + s.t0.toFixed(5) + "|" + s.t1 + "|" + s.pos[0].toFixed(4) + "|" + s.pos[1].toFixed(4); let o = this.cache.get(k); if (o) return o;
     o = Object.assign({}, s, { pivot: s.pivot && s.pivot.length > 1 ? new RCurve(s.pivot) : null, heel: s.heel ? ((h0, d) => (t) => (t > h0 ? d * min(1, (t - h0) / 0.06) : 0))(s.heel[0], s.heel[1]) : null });
@@ -50,12 +57,12 @@ export class PlayBody {
   // the contact of the swing a → b of foot X under plan P: the plan's (or the record of one already made), resolved to { t, F, surface, ball, n, dv, swing }
   contactIn(X, a, b, P) {
     const S = this.sim, t0 = a.t1 - 1e-6, t1 = b.t0 + 1e-6; let c = P.contacts.find((q) => q.F === X && q.t > t0 && q.t < t1), rec = null;
-    if (c) rec = S.contacts.find((r) => r.cid === c.id && !r.missed) || null; else { rec = S.contacts.find((r) => r.F === X && r.t > t0 && r.t < t1 && !r.missed && r.t <= P.t0 + 1e-9) || null; if (!rec) return null; }
-    if (c && S.contacts.some((r) => r.cid === c.id && r.missed)) return null;
+    if (c) rec = S.contacts.find((r) => r.cid === c.id && !r.missed && r.t <= P.t0 + 1e-9) || null; else { rec = S.contacts.find((r) => r.F === X && r.t > t0 && r.t < t1 && !r.missed && r.t <= P.t0 + 1e-9) || null; if (!rec) return null; }
+    if (c && S.contacts.some((r) => r.cid === c.id && r.missed && r.t <= P.t0 + 1e-9)) return null;
     const key = "c" + (rec ? "r" + rec.n : "p" + c.id + "@" + P.v); let o = this.cache.get(key); if (o) return o;
     let ball, vIn, vOut, src = rec || c;
     if (rec) { ball = rec.ball; vIn = rec.vIn; vOut = rec.vOut; }
-    else { const B = S.ballTrack(P.t0), f = predict(B.p, B.v, c.t - P.t0); ball = [f.p[0], f.p[1], R]; vIn = f.v;
+    else { const B = P.ball0 || S.ballTrack(P.t0), f = predict(B.p, B.v, c.t - P.t0); ball = [f.p[0], f.p[1], R]; vIn = f.v;
       if (c.aim.kind === "target") { const d = [c.aim.P[0] - ball[0], c.aim.P[1] - ball[1]], D = hyp(d[0], d[1]), sp = min(13.5, speedFor(D, max(0.05, c.aim.T - c.t)) || 13.5); vOut = D > 1e-4 ? [d[0] / D * sp, d[1] / D * sp] : [0, 0]; }
       else vOut = [c.aim.speed * Math.cos(c.aim.h), c.aim.speed * Math.sin(c.aim.h)]; }
     const dv = [vOut[0] - vIn[0], vOut[1] - vIn[1]], m = hyp(dv[0], dv[1]);
@@ -79,12 +86,36 @@ export class PlayBody {
       else { const dv = [0.8 * con.vOut[0] - vb[0], 0.8 * con.vOut[1] - vb[1]], m = hyp(dv[0], dv[1]);
         spec = { footSpeed: clamp(m, 0.3, 6.0), sweep: m > 0.05 ? hdg(dv) / DEG : null, via: b.t0 - con.t > 0.03 ? [{ t: tF, rel: "behind", along: "out", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] };
         if (spec.sweep == null) delete spec.sweep; } }
-    w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; }
+    w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx, prevIn = this.inSwing; this.ctx = ctx; this.inSwing = true;
+    try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; this.inSwing = prevIn; }
+    // INHERITANCE: the swing began under an earlier plan — it goes on from the foot as it was displayed at this plan's start (C¹: its position and
+    // velocity, its orientation), through what is left of this plan's keys; continuous by construction however often the plan changes
+    const t0 = P.t0; if (t0 > w.t0 + 1e-6 && t0 < w.t1 - 0.012) { const i = this.sim.plans.indexOf(P);
+      if (i > 0) { const cp = this.ctxOf(this.sim.plans[i - 1]), f0 = this.displayFoot(X, t0, cp), f1 = this.displayFoot(X, t0 - DT, cp);   // (the foot as displayed)
+        if (!f0.planted && !f1.planted) { const rest = w.keys.filter((k) => k.t > t0 + 0.03), k0 = { t: t0, p: f0.ank.slice(), v: [(f0.ank[0] - f1.ank[0]) / DT, (f0.ank[1] - f1.ank[1]) / DT, (f0.ank[2] - f1.ank[2]) / DT], yaw: f0.yaw, pitch: f0.pitch, roll: f0.roll || 0 };
+          if (!rest.length) rest.push(w.keys[w.keys.length - 1]); const K = [k0].concat(rest); for (let j = 1; j < K.length; j++) K[j].yaw = K[j - 1].yaw + wrap(K[j].yaw - K[j - 1].yaw);
+          w.keys = K; w.ori = { yaw: new RCurve(K.map((k) => [k.t, k.yaw])), pitch: new RCurve(K.map((k) => [k.t, k.pitch])), roll: new RCurve(K.map((k) => [k.t, k.roll || 0])) }; w.inherited = true; } } }
+    { const pi = this.inSwing, pc = this.ctx; this.inSwing = true; this.ctx = ctx; try { this.detour(X, w); } finally { this.inSwing = pi; this.ctx = pc; } }
     ctx.sw.set(key, w); return w;
+  }
+  // a swing whose path would pass through the ball (outside its own touch): a key over / round the ball at the deepest moment — the foot goes
+  // round the ball the plan predicts (plan-pure), never through it
+  detour(X, w) {
+    for (let it = 0; it < 3; it++) { const K = w.keys; let worst = null;
+      for (let t = K[0].t + 0.01; t < w.t1 - 0.015; t += 0.01) { if (w.con && abs(t - w.con.t) < 0.035) continue;
+        let i = 0; while (i < K.length - 2 && t > K[i + 1].t) i++; const p = herm3(K[i], K[i + 1], t), B = this.ballAt(t), dx = p[0] - B[0], dy = p[1] - B[1], dh = hyp(dx, dy), pen = max(R + 0.13 - hyp(dh, max(0, p[2] - 0.06 - R)), this.bootPen(p, w.ori.yaw.at(t), w.ori.pitch.at(t), B).pen + 0.015);
+        if (pen > 0.01 && (!worst || pen > worst.pen)) worst = { t, p, B, pen, dx, dy, dh, i }; }
+      if (!worst) return; const { t, p, B, dx, dy, dh } = worst, ux = dh > 1e-3 ? dx / dh : 0, uy = dh > 1e-3 ? dy / dh : 0;
+      // round the ball on the side the foot is on, lifted to clear its top when it is close to it
+      const r = R + 0.15, q = [B[0] + ux * r, B[1] + uy * r, max(p[2], dh < R + 0.05 ? 2 * R + 0.07 : p[2] + 0.04)];
+      const a = K[worst.i], b = K[worst.i + 1], key = { t, p: q, v: [(b.p[0] - a.p[0]) / (b.t - a.t), (b.p[1] - a.p[1]) / (b.t - a.t), 0], yaw: null, pitch: null, roll: 0, detour: true };
+      if (t - a.t < 0.012 || b.t - t < 0.012) return; K.splice(worst.i + 1, 0, key);
+      const yw = w.ori.yaw.at(t), pt = w.ori.pitch.at(t); key.yaw = yw; key.pitch = pt;
+      w.ori = { yaw: new RCurve(K.map((k) => [k.t, k.yaw != null ? k.yaw : w.ori.yaw.at(k.t)])), pitch: new RCurve(K.map((k) => [k.t, k.pitch != null ? k.pitch : w.ori.pitch.at(k.t)])), roll: new RCurve(K.map((k) => [k.t, k.roll || 0])) }; }
   }
   // ── a waypoint (TECHNICAL-CONTROL-1.5's, in the technique's frame: [ahead, right] from h0, mirrored by m, rotated by its exit weight) ──────────────
   wayKey(X, w, sw) {
-    if (w.rel === "behind") { const t = w.t, B = this.ballAt(t), vo = sw.con && w.along === "out" ? sw.con.vOut : null, so = vo ? hyp(vo[0], vo[1]) : 0, n = so > 0.5 ? [vo[0] / so, vo[1] / so] : sw.con ? sw.con.n : dir(this.psi(t)); return { t, p: [B[0] - n[0] * w.d, B[1] - n[1] * w.d, w.h], v: null, yaw: null, pitch: w.pitch != null ? w.pitch * DEG : null, roll: null }; }
+    if (w.rel === "behind") { const t = w.t, B = sw.con ? predict([sw.con.ball[0], sw.con.ball[1]], sw.con.vOut, max(0, t - sw.con.t)).p : this.ballAt(t), vo = sw.con && w.along === "out" ? sw.con.vOut : null, so = vo ? hyp(vo[0], vo[1]) : 0, n = so > 0.5 ? [vo[0] / so, vo[1] / so] : sw.con ? sw.con.n : dir(this.psi(t)); return { t, p: [B[0] - n[0] * w.d, B[1] - n[1] * w.d, w.h], v: null, yaw: null, pitch: w.pitch != null ? w.pitch * DEG : null, roll: null }; }
     const t = w.t, fr = sw.spec && sw.spec.frame, m = fr ? fr.m : 1, h0 = fr ? fr.h0 : this.psi(t), rw = fr ? fr.rot * (w.w || 0) : 0, c = Math.cos(rw), s = Math.sin(rw);
     // (exitAt: [ahead, right] in the EXIT frame — the technique's exit heading — at height h; wYawExit: the yaw from the exit heading)
     const eH = fr && fr.exitH != null ? fr.exitH : h0, ex = w.exitAt, at = ex ? [0, 0, w.h] : w.at, a = at[0] * c - at[1] * s, l = m * (at[0] * s + at[1] * c);
@@ -112,33 +143,28 @@ export class PlayBody {
     const K = w.keys; let i = 0; while (i < K.length - 2 && t > K[i + 1].t) i++; const p = herm3(K[i], K[i + 1], t), toe = this.heelOf(w.from, w.from.t1) * (1 - s5((t - w.t0) / 0.12));
     return { ank: [p[0], p[1], max(HB.ankleH - 0.012, p[2])], yaw: w.ori.yaw.at(t), pitch: w.ori.pitch.at(t), roll: w.ori.roll.at(t), toe, planted: false, swing: w, contact: !!(w.con && abs(t - w.con.t) < DT * 0.6) };
   }
+  // the boot (heel – toe capsule from the ankle, its yaw and pitch) against the ball: the penetration and the direction out of it
+  bootPen(a, yaw, pitch, B) { const b = [B[0], B[1], max(R, B[2] || R)], cp = Math.cos(pitch || 0), fw = [Math.cos(yaw) * cp, Math.sin(yaw) * cp, Math.sin(pitch || 0)];
+    const heel = [a[0] - fw[0] * 0.07, a[1] - fw[1] * 0.07, a[2] - 0.045], toe = [a[0] + fw[0] * 0.21, a[1] + fw[1] * 0.21, a[2] + fw[2] * 0.21 - 0.035];
+    const d = [toe[0] - heel[0], toe[1] - heel[1], toe[2] - heel[2]], L2 = d[0] * d[0] + d[1] * d[1] + d[2] * d[2], u = clamp(((b[0] - heel[0]) * d[0] + (b[1] - heel[1]) * d[1] + (b[2] - heel[2]) * d[2]) / L2, 0, 1);
+    const c = [heel[0] + d[0] * u, heel[1] + d[1] * u, heel[2] + d[2] * u], e = [c[0] - b[0], c[1] - b[1], c[2] - b[2]]; return { pen: R + 0.062 - hyp(e[0], e[1], e[2]), e }; }
   // a swinging boot never passes through the ball (the authoritative ball moves on its own after a touch): the boot as a heel – toe capsule; a
   // boot inside the ball outside its own contact moment is moved clear, away from the ball's centre (horizontally, lifted a little) — planted feet
   // are placed off the ball's path by the simulation's gait
-  clearOfBall(f, X, t) {
-    if (f.planted) return f; const con = f.swing && f.swing.con; if (con && (abs(t - con.t) < 0.0125 || (con.surface === "SOLE" && abs(t - con.t) < 0.10))) return f;
+  clearOfBall(f, X, t, vel) {
+    if (f.planted) return f; const con = f.swing && f.swing.con, dc = con ? abs(t - con.t) : 9; if (con && con.surface === "SOLE" && dc < 0.10) return f; const wC = con ? s5((dc - 0.0125) / 0.03) : 1; if (wC <= 0) return f;
     const B = this.ballAt(t), b = [B[0], B[1], max(R, B[2] || R)], cp = Math.cos(f.pitch || 0), fw = [Math.cos(f.yaw) * cp, Math.sin(f.yaw) * cp, Math.sin(f.pitch || 0)], a = f.ank;
     const heel = [a[0] - fw[0] * 0.07, a[1] - fw[1] * 0.07, a[2] - 0.045], toe = [a[0] + fw[0] * 0.21, a[1] + fw[1] * 0.21, a[2] + fw[2] * 0.21 - 0.035];
     const d = [toe[0] - heel[0], toe[1] - heel[1], toe[2] - heel[2]], L2 = d[0] * d[0] + d[1] * d[1] + d[2] * d[2], u = clamp(((b[0] - heel[0]) * d[0] + (b[1] - heel[1]) * d[1] + (b[2] - heel[2]) * d[2]) / L2, 0, 1);
     const c = [heel[0] + d[0] * u, heel[1] + d[1] * u, heel[2] + d[2] * u], e = [c[0] - b[0], c[1] - b[1], c[2] - b[2]], dist = hyp(e[0], e[1], e[2]), pen = R + 0.062 - dist;
-    if (pen <= 0) return f; let n = [e[0], e[1], max(0, e[2]) + 0.25 * hyp(e[0], e[1])]; const m = hyp(n[0], n[1], n[2]) || 1; n = [n[0] / m, n[1] / m, n[2] / m]; const k = pen + 0.008;
+    if (pen <= 0) return f; let n = [e[0], e[1], max(0, e[2]) + 0.25 * hyp(e[0], e[1])];
+    if (f.swing && f.swing.keys) { const K = f.swing.keys; let i = 0; while (i < K.length - 2 && t > K[i + 1].t) i++; const v = [K[i + 1].p[0] - K[i].p[0], K[i + 1].p[1] - K[i].p[1]], vl = hyp(v[0], v[1]);
+      if (vl > 1e-3) { const u = [v[0] / vl, v[1] / vl], al = n[0] * u[0] + n[1] * u[1]; if (al < 0) { n = [n[0] - al * u[0], n[1] - al * u[1], n[2] + 0.5 * abs(al)]; } } } const m = hyp(n[0], n[1], n[2]) || 1; n = [n[0] / m, n[1] / m, n[2] / m]; const k = (pen + 0.008) * wC;
     return Object.assign({}, f, { ank: [a[0] + n[0] * k, a[1] + n[1] * k, a[2] + n[2] * k], cleared: k });
   }
-  footAt(X, t, depth = 0) { const f = this.footAtRaw(X, t, depth); return depth ? f : this.clearOfBall(f, X, t); }
-  footAtRaw(X, t, depth = 0) {
-    const P = this.sim.planAt(t), ctx = this.ctxOf(P), f = this.footRaw(X, t, ctx);
-    if (depth >= 3 || f.planted || t - P.t0 >= BLEND) return f;
-    const i = this.sim.plans.indexOf(P); if (i <= 0) return f; const Pp = this.sim.plans[i - 1], tr = P.t0;
-    // the previous plan's foot at the re-plan (itself blended), against this plan's there: the difference decays
-    const fp = this.footBlendAt(X, tr, Pp, depth + 1), fn = this.footRaw(X, tr, ctx); if (!fp || fp.planted !== fn.planted) return f;
-    const k = 1 - s5((t - tr) / BLEND), d = [fp.ank[0] - fn.ank[0], fp.ank[1] - fn.ank[1], fp.ank[2] - fn.ank[2]];
-    if (hyp(d[0], d[1], d[2]) > 0.6) return f;
-    return Object.assign({}, f, { ank: [f.ank[0] + d[0] * k, f.ank[1] + d[1] * k, max(HB.ankleH - 0.012, f.ank[2] + d[2] * k)], yaw: f.yaw + wrap(fp.yaw - fn.yaw) * k, pitch: f.pitch + (fp.pitch - fn.pitch) * k, roll: f.roll + ((fp.roll || 0) - (fn.roll || 0)) * k });
-  }
-  footBlendAt(X, t, P, depth) { const ctx = this.ctxOf(P), f = this.footRaw(X, t, ctx); if (depth >= 3 || f.planted || t - P.t0 >= BLEND) return f;
-    const i = this.sim.plans.indexOf(P); if (i <= 0) return f; const Pp = this.sim.plans[i - 1], tr = P.t0, fp = this.footBlendAt(X, tr, Pp, depth + 1), fn = this.footRaw(X, tr, ctx); if (!fp || fp.planted !== fn.planted) return f;
-    const k = 1 - s5((t - tr) / BLEND), d = [fp.ank[0] - fn.ank[0], fp.ank[1] - fn.ank[1], fp.ank[2] - fn.ank[2]]; if (hyp(d[0], d[1], d[2]) > 0.6) return f;
-    return Object.assign({}, f, { ank: [f.ank[0] + d[0] * k, f.ank[1] + d[1] * k, f.ank[2] + d[2] * k], yaw: f.yaw + wrap(fp.yaw - fn.yaw) * k, pitch: f.pitch + (fp.pitch - fn.pitch) * k }); }
+  footAt(X, t) { return this.displayFoot(X, t, this.ctxOf(this.sim.planAt(t))); }
+  // the foot as displayed: the plan's (raw), clear of the ball
+  displayFoot(X, t, ctx) { const prev = this.ctx; this.ctx = ctx; try { return this.clearOfBall(this.footRaw(X, t, ctx), X, t); } finally { this.ctx = prev; } }
   // the heel's rise (RefSim's; a standing stance never lifts: only its authored rise)
   heelOf(s, t) { if (s.t1 === Infinity) return s.heel ? s.heel(t) * DEG : 0; return RefSim.prototype.heelOf.call(this, s, t); }
   loadOf(X, t) { const S = this.ctxAt(t).st[X], s = S.find((q) => t >= q.t0 && t <= q.t1); if (!s) return 0; return clamp((t - s.t0) / HB.load, 0, 1) * clamp((s.t1 === Infinity ? 9 : s.t1 - t) / HB.unload, 0, 1); }
