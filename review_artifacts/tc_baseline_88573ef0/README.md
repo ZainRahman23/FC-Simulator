@@ -1,7 +1,19 @@
 # BASELINE-88573ef0 — the restored joystick playtest (before PLAYTEST-1.2)
 
+> **LOCKED — the permanent A/B reference** (owner confirmed 20 Oct 2026: "88573ef0 is the correct baseline. Lock this historical baseline as the permanent A/B reference").
+>
+> **The rules:**
+> - Never modify `sandbox/visual/tc_baseline_88573ef0/` or `tc_baseline_88573ef0.html`.
+> - Never build on top of them. Every experiment lives beside them, at its own page.
+> - The responsiveness experiment's stable address is `tc_responsive.html`; the baseline's strip links there.
+>
+> **What holds the lock:**
+> - Tags: `tc-baseline-88573ef0` → 88573ef0 (the source) and `tc-baseline-88573ef0-locked` → the locked page state.
+> - The files are read-only on disk.
+> - `bash review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh` (from the worktree root) must say PASS.
+
 **Page (local only — the character is a real player's model, never published):** http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html
-**One-click switch:** the green strip at the top-left links to PLAYTEST-1.2 (`tc_playtest1.html`), whose yellow strip links back here.
+**One-click switch:** the green strip at the top-left links to the RESPONSIVENESS EXPERIMENT (`tc_responsive.html`, a placeholder until the experiment is built) and to PLAYTEST-1.2 (`tc_playtest1.html`); both link back here.
 **Owner instruction (verbatim):** `sources/2026-10-20_user_instruction_restore_baseline_88573ef0.md`
 
 ## What it is
@@ -32,7 +44,7 @@ Only these differ from the commit:
 - the page's module path;
 - the viewer's `pt_baked.json` fetch path;
 - the title;
-- the version strip.
+- the version strip (finalised at the lock: the link to the experiment's stable address).
 
 Every shared module the baseline imports is unchanged since 88573ef0 (`git diff 88573ef0 HEAD` touches only `tc_playtest1/`, `tc_playtest1.html` and the PLAYTEST-1.2 report folder).
 
