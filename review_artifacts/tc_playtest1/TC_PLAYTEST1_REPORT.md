@@ -83,19 +83,20 @@ The HUD's "why" shows the top candidates with their costs and reasons, live and 
 - SPRINT W → A: the outside cut L right after a knock-on, otherwise the chop R. A sprint chop needs a set touch first, because the ball is 1.5–2 m ahead.
 
 **In the browser.** Chrome, real key presses on the real-time loop, a 34 s tour (`tools/pt_browser.cjs`, `evidence/PT1_BROWSER_TOUR.json`):
-- 60 contacts, 0 missed;
-- chop L, chop R, drag-back (both feet) chosen from WASD alone.
+- 58 contacts, 0 missed;
+- outside cut, drag-back and Ronaldo chop chosen from WASD alone.
+- Each run's choices vary with the millisecond timing of the keys; other runs gave chop L / chop R / drag-back L and R.
 
 **Performance** (1440 × 900, the last 1200 frames):
 
 | Measure | avg | p95 | p99 | worst |
 |---|---|---|---|---|
 | frame | 16.67 ms | 16.70 ms | 16.80 ms | 16.80 ms |
-| work per frame | 1.26 ms | 2.20 ms | 3.10 ms | 5.60 ms |
+| work per frame | 1.13 ms | 2.00 ms | 2.80 ms | 5.40 ms |
 
 - Frames are vsync 60 Hz with no dropped frame.
-- Work splits into simulation 0.26, pose 0.32 and render 0.68 ms on average.
-- Re-planning averages 0.66 ms, worst 4.3 ms. There are no hidden spikes: RUN-1's tables are baked into `pt_baked.json` instead of being solved in a frame.
+- Work splits into simulation 0.24, pose 0.31 and render 0.58 ms on average.
+- Re-planning averages 0.68 ms, worst 4.6 ms. There are no hidden spikes: RUN-1's tables are baked into `pt_baked.json` instead of being solved in a frame.
 
 **Determinism**
 - The browser session re-simulated from its recorded input and seed: hash, contacts, actions and ball all IDENTICAL (ball Δ 0).
@@ -106,8 +107,12 @@ The HUD's "why" shows the top candidates with their costs and reasons, live and 
 
 ## Limitations (honest)
 
-- **Ball / boot overlap (visual only).** In the final tour the ball is more than 20 mm inside a boot in 3.0 % of ticks: short 30–60 mm spans, around touches and technique entries (`evidence/PT1_POSE_AUDIT_tour.json`). Another session measured 5.9 %; before this session's fixes it was 12.8 %. Swing feet are pushed clear, and stances are placed off the ball's path, but not every case is caught.
-- **Legs through each other (visual only).** More than 20 mm in 0.6 % of ticks in the final tour (0.7 % in another session): short spans in sharp low-speed carry turns and the carry step after a chop. It was 3–6 % until a mirror fault was fixed: a tie-break in the gait gave the left-foot chop an extra planted step. Chop L and chop R are now exact mirrors (0.0 mm).
+- **Ball / boot overlap (visual only).** In the final tour the ball is more than 20 mm inside a boot in 2.3 % of ticks: short 30–60 mm spans, mostly around lateral carry touches (`evidence/PT1_POSE_AUDIT_tour.json`). Two other sessions measured 2.5 % and 2.7 %; before this session's fixes it was 12.8 %. What changed:
+  - swing feet are pushed clear of the ball;
+  - stances are placed off the free ball's path;
+  - the touching foot's own landing is placed off the path its touch gives the ball;
+  - a stop's final stance is placed off where the ball comes to rest.
+- **Legs through each other (visual only).** More than 20 mm in 0.6 – 1.7 % of ticks across sessions: short spans in sharp low-speed carry turns and the carry step after a chop. It was 3–6 % until a mirror fault was fixed: a tie-break in the gait gave the left-foot chop an extra planted step. Chop L and chop R are now exact mirrors (0.0 mm).
 - **Sprint chops are slow.** About 0.8 s from the request to the chop: the ball is knocked 1.5–2 m ahead at a sprint, so a set touch comes first.
 - **No techniques below jog speed.** 45° changes are carry corrections by design. Walking 90° turns and standing 180° turns are carry turns: no technique is cheaper there, and the chop's speed floor is 3.6 m/s.
 - **Two-footed / left-dominant.** These go through the same resolver (mirror) but have had less scripted coverage than right-dominant.

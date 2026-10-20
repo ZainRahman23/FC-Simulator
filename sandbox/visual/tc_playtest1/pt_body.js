@@ -73,14 +73,18 @@ export class PlayBody {
     if (!spec && b.swingIn) spec = this.resolveSpec(b.swingIn, b.swingIn.frame, 0);
     // a carry touch (no authored swing): the foot meets the ball slower than the ball leaves (a push: the ball ≈ 1.25 × the foot) and follows
     // through BEHIND it along the impulse, the toe kept down — it never runs into the ball it has just sent
-    if (con && !con.swing) { const vb = this.vel(con.t), out = hyp(con.vOut[0], con.vOut[1]), along = vb[0] * con.n[0] + vb[1] * con.n[1], sole = con.surface === "SOLE";
-      const tF = con.t + min(0.045, 0.55 * (b.t0 - con.t)); spec = { footSpeed: sole ? 0.3 : clamp(out / 1.25 - along, 0.3, 4.0), via: b.t0 - con.t > 0.03 && !sole ? [{ t: tF, rel: "behind", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] }; }
+    // (the foot's velocity at the touch: 80 % of the ball's out-velocity — whatever the touch's angle, the ball always leaves the foot)
+    if (con && !con.swing) { const vb = this.vel(con.t), out = hyp(con.vOut[0], con.vOut[1]), sole = con.surface === "SOLE", tF = con.t + min(0.045, 0.55 * (b.t0 - con.t));
+      if (sole || out < 0.5) spec = { footSpeed: 0.3, via: [] };
+      else { const dv = [0.8 * con.vOut[0] - vb[0], 0.8 * con.vOut[1] - vb[1]], m = hyp(dv[0], dv[1]);
+        spec = { footSpeed: clamp(m, 0.3, 6.0), sweep: m > 0.05 ? hdg(dv) / DEG : null, via: b.t0 - con.t > 0.03 ? [{ t: tF, rel: "behind", along: "out", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] };
+        if (spec.sweep == null) delete spec.sweep; } }
     w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; }
     ctx.sw.set(key, w); return w;
   }
   // ── a waypoint (TECHNICAL-CONTROL-1.5's, in the technique's frame: [ahead, right] from h0, mirrored by m, rotated by its exit weight) ──────────────
   wayKey(X, w, sw) {
-    if (w.rel === "behind") { const t = w.t, B = this.ballAt(t), n = sw.con ? sw.con.n : dir(this.psi(t)); return { t, p: [B[0] - n[0] * w.d, B[1] - n[1] * w.d, w.h], v: null, yaw: null, pitch: w.pitch != null ? w.pitch * DEG : null, roll: null }; }
+    if (w.rel === "behind") { const t = w.t, B = this.ballAt(t), vo = sw.con && w.along === "out" ? sw.con.vOut : null, so = vo ? hyp(vo[0], vo[1]) : 0, n = so > 0.5 ? [vo[0] / so, vo[1] / so] : sw.con ? sw.con.n : dir(this.psi(t)); return { t, p: [B[0] - n[0] * w.d, B[1] - n[1] * w.d, w.h], v: null, yaw: null, pitch: w.pitch != null ? w.pitch * DEG : null, roll: null }; }
     const t = w.t, fr = sw.spec && sw.spec.frame, m = fr ? fr.m : 1, h0 = fr ? fr.h0 : this.psi(t), rw = fr ? fr.rot * (w.w || 0) : 0, c = Math.cos(rw), s = Math.sin(rw);
     // (exitAt: [ahead, right] in the EXIT frame — the technique's exit heading — at height h; wYawExit: the yaw from the exit heading)
     const eH = fr && fr.exitH != null ? fr.exitH : h0, ex = w.exitAt, at = ex ? [0, 0, w.h] : w.at, a = at[0] * c - at[1] * s, l = m * (at[0] * s + at[1] * c);

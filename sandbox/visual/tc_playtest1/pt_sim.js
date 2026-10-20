@@ -214,11 +214,12 @@ export class PlaySim {
     const place = (X, tt, t1) => { const s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = v > 2.4 ? WIDTH.run : WIDTH.walk, ld = v < 0.3 ? 0 : lead(v);
       let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X);
       const o = lastOf(other(X)); if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) { p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; } }
-      const tEnd = min(t1 != null ? t1 : tt + 0.25, tt + 0.6); let need = 0, side = sx;
-      for (let x = max(t, tt - 0.04); x <= tEnd; x += 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(s0.psi) + d[1] * Math.sin(s0.psi), l = d[0] * r[0] + d[1] * r[1];
-        if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
-      if (need > 0) { const k = min(0.18, need); p = [p[0] + r[0] * side * k, p[1] + r[1] * side * k]; }
-      return p; };
+      return offBall(p, s0.psi, X, tt, min(t1 != null ? t1 : tt + 0.25, tt + 0.6)); };
+    // a stance off the free ball's path while it stands (a stance that never lifts: off where the ball comes to rest)
+    const offBall = (p, psi, X, tt, tEnd) => { const r = rgt(psi); let need = 0, side = sgn(X);
+      for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
+        if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
+      return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; };
     const yawOf = (X, tt) => { const s0 = this.stateAt(tt, plan); return (s0.s > 0.6 ? s0.h : s0.psi) + sgn(X) * 5 * DEG; };
     const cad = (tt) => { const v = this.stateAt(tt, plan).s, G = this.gait(max(v, 0.01)), v2 = this.stateAt(tt + 0.3, plan).s;
       return v2 > v + 0.6 && v2 > 1.8 ? { Ts: min(G.Ts, 0.245 + 0.008 * v), D: max(G.D, 0.36) } : G; }; // accelerating: quick short steps
@@ -250,7 +251,7 @@ export class PlaySim {
       if (!moving && v < 0.45 && tEnd < 0.3) { // settle
         const lx = lastOf(X); if (lx.t1 === Infinity && L0.t1 === Infinity) break;
         const td = max(L0.t0 + 0.14, lx.t1 === Infinity ? t + 0.16 : lx.t1 + 0.16, t + 0.05); if (td > tTo) break; lift(X, td); const s1 = this.stateAt(td, plan);
-        S[X].push({ id: ++this.sid, F: X, t0: td, t1: Infinity, pos: fromLocal(s1.P, s1.psi, X === (this.o.foot === "L" ? "L" : "R") ? -0.02 : 0.04, sgn(X) * WIDTH.stand), yaw: s1.psi + sgn(X) * 6 * DEG, kind: "settle", src: "gait" }); L0.t1 = Infinity; break; }
+        S[X].push({ id: ++this.sid, F: X, t0: td, t1: Infinity, pos: offBall(fromLocal(s1.P, s1.psi, X === (this.o.foot === "L" ? "L" : "R") ? -0.02 : 0.04, sgn(X) * WIDTH.stand), s1.psi, X, td, td + 3.0), yaw: s1.psi + sgn(X) * 6 * DEG, kind: "settle", src: "gait" }); L0.t1 = Infinity; break; }
       let td = L0.t0 + G.Ts; const lx = lastOf(X); if (lx.t1 !== Infinity) td = max(td, lx.t1 + 0.16); td = max(td, t + 0.02); if (td > tTo) break;
       lift(X, td); step(X, td); if (L0.t1 === Infinity) L0.t1 = td + 0.6 * stanceD(td); }
     // a stance ends before its foot's next one begins (the swing ≥ 0.14 s), never before it began
@@ -335,6 +336,12 @@ export class PlaySim {
     // a running touch redirects the ball within CARRY.redirect° (beyond it: the ball keeps more of its line — the next touch / a technique finishes it)
     const inS = hyp(vIn[0], vIn[1]); if (inS > 1.0 && s.s > 1.6 && !(recover && s.s < 3.0)) { const dA = wrap(hdg(vOut) - hdg(vIn)); if (abs(dA) > CARRY.redirect * DEG) { const hh = hdg(vIn) + Math.sign(dA) * CARRY.redirect * DEG, sp = hyp(vOut[0], vOut[1]); vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; out.sepPen += 0.25; } }
     const surface = this.surfaceFor(F, vIn, vOut, s, role);
+    // the touching foot lands right after its touch: its landing is placed off the path the touch gives the ball (planned before the touch,
+    // it could stand where the redirected ball is about to roll — positions only, no decision reads them)
+    if (e.st && e.st.t0 > t + R && e.st.src === "gait") { const L = e.st, psi = sAt(L.t0).psi, r = rgt(psi), sx = sgn(F); let need = 0, side = sx;
+      for (let x = max(e.tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(bArr.p, vOut, x - e.tT).p, d = [b[0] - L.pos[0], b[1] - L.pos[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
+        if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
+      if (need > 0) { const k = min(0.20, need); L.pos = [L.pos[0] + r[0] * side * k, L.pos[1] + r[1] * side * k]; } }
     const c = { id: ++this.cid, t: Math.round(e.tT / DT) * DT, k: Math.round(e.tT / DT), F, surface, role: role === "stop" ? (hyp(vOut[0], vOut[1]) < 0.05 ? "stop (sole)" : "stop (cushion)") : this.carryRole(F, vIn, vOut, s), aim, src: "carry", tech: "CARRY", bPred: bArr.p, vInPred: vIn, vOutPred: vOut };
     if (kept && abs(kept.t - c.t) < 0.03 && kept.F === c.F) { kept.aim = c.aim; out.list.push(kept); } else out.list.push(c);
     { const lim = q.h == null ? 1.2 : mode === "SPRINT" ? 3.0 : mode === "RUN" ? 2.0 : mode === "JOG" ? 1.5 : 1.0; let sa = 0; for (let x = 0; x <= 1.2; x += 0.1) { const T2 = c.t + x, s2 = sAt(T2), b2 = predict(bArr.p, vOut, x).p; sa = max(sa, hyp(b2[0] - s2.P[0], b2[1] - s2.P[1])); }

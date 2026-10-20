@@ -1,36 +1,36 @@
   slow poses: 
-  ball inside a boot > 20 mm: 45 ticks [2.05–2.09 2.13–2.19 2.70–2.71 3.93 4.79–4.81 5.61 5.73–5.73 6.03–6.07]
-  legs intersect > 20 mm: 24 ticks [2.54–2.58 3.75–3.79 3.89–3.92]
-mix: 1680 poses · mean 0.071 ms p95 0.158 p99 0.261 max 1.73 · NaN 0
-  worst leg clearance -87 mm (thigh @ 3.89) · ball vs boot min gap -113 mm (R OUTSIDE @ 2.15) · lowest ankle 81 mm @ 3.49
+  ball inside a boot > 20 mm: 55 ticks [2.05–2.10 2.13–2.23 2.71–2.71 3.93 4.76–4.78 5.61 5.70–5.70 6.03–6.07]
+  legs intersect > 20 mm: 156 ticks [2.54–2.57 3.75–3.79 3.89–3.92 6.45–7.00]
+mix: 1680 poses · mean 0.071 ms p95 0.162 p99 0.261 max 1.69 · NaN 0
+  worst leg clearance -87 mm (thigh @ 3.89) · ball vs boot min gap -103 mm (R TOE @ 4.77) · lowest ankle 81 mm @ 3.49
   NEUTRALITY animation ON f1f1bcf1 (14 contacts) vs OFF f1f1bcf1 (14) → IDENTICAL
   slow poses: 
-  ball inside a boot > 20 mm: 28 ticks [2.05–2.09 2.13–2.19 2.70–2.71 3.93 4.59]
-  legs intersect > 20 mm: 24 ticks [2.54–2.58 3.75–3.79 3.89–3.92]
-wdwa: 1680 poses · mean 0.072 ms p95 0.154 p99 0.279 max 1.74 · NaN 0
-  worst leg clearance -87 mm (thigh @ 3.89) · ball vs boot min gap -113 mm (R OUTSIDE @ 2.15) · lowest ankle 81 mm @ 3.49
+  ball inside a boot > 20 mm: 37 ticks [2.05–2.10 2.13–2.23 2.71–2.71 3.93]
+  legs intersect > 20 mm: 23 ticks [2.54–2.57 3.75–3.79 3.89–3.92]
+wdwa: 1680 poses · mean 0.073 ms p95 0.156 p99 0.278 max 1.70 · NaN 0
+  worst leg clearance -87 mm (thigh @ 3.89) · ball vs boot min gap -88 mm (R LACES @ 2.19) · lowest ankle 81 mm @ 3.49
   NEUTRALITY animation ON 28b8c155 (13 contacts) vs OFF 28b8c155 (13) → IDENTICAL
   slow poses: 
-  ball inside a boot > 20 mm: 6 ticks [2.70–2.71 3.63–3.63]
-  legs intersect > 20 mm: 11 ticks [3.65–3.69]
-runA: 1680 poses · mean 0.073 ms p95 0.159 p99 0.272 max 1.80 · NaN 0
-  worst leg clearance -98 mm (footCalf @ 3.67) · ball vs boot min gap -53 mm (L INSIDE @ 3.63) · lowest ankle 88 mm @ 0.00
+  ball inside a boot > 20 mm: 9 ticks [2.65–2.67 3.59–3.60]
+  legs intersect > 20 mm: 14 ticks [3.64–3.70]
+runA: 1680 poses · mean 0.072 ms p95 0.156 p99 0.262 max 1.80 · NaN 0
+  worst leg clearance -101 mm (shin @ 3.66) · ball vs boot min gap -102 mm (R TOE @ 2.67) · lowest ankle 88 mm @ 0.00
   NEUTRALITY animation ON 4c5d4cde (13 contacts) vs OFF 4c5d4cde (13) → IDENTICAL
   slow poses: 
-  ball inside a boot > 20 mm: 18 ticks [2.72 2.98–3.00 3.04–3.07 3.29 3.80–3.81 4.37]
+  ball inside a boot > 20 mm: 17 ticks [2.98–3.00 3.04–3.07 3.29 3.80–3.81 4.37]
   legs intersect > 20 mm: 14 ticks [3.08–3.12 3.28–3.29]
-sprintS: 1680 poses · mean 0.071 ms p95 0.155 p99 0.251 max 1.75 · NaN 0
+sprintS: 1680 poses · mean 0.072 ms p95 0.156 p99 0.292 max 1.77 · NaN 0
   worst leg clearance -84 mm (foot @ 3.11) · ball vs boot min gap -52 mm (R LACES @ 3.80) · lowest ankle 87 mm @ 3.14
   NEUTRALITY animation ON a109077 (11 contacts) vs OFF a109077 (11) → IDENTICAL
   slow poses: 
-  ball inside a boot > 20 mm: 2 ticks [3.26–3.26]
+  ball inside a boot > 20 mm: 4 ticks [2.36–2.36 3.26–3.26]
   legs intersect > 20 mm: 0 ticks []
-runD: 1680 poses · mean 0.072 ms p95 0.159 p99 0.243 max 1.78 · NaN 0
-  worst leg clearance 34 mm (footCalf @ 2.95) · ball vs boot min gap -26 mm (R LACES @ 3.26) · lowest ankle 88 mm @ 0.00
+runD: 1680 poses · mean 0.072 ms p95 0.155 p99 0.264 max 1.78 · NaN 0
+  worst leg clearance 34 mm (footCalf @ 2.95) · ball vs boot min gap -44 mm (L INSIDE @ 2.36) · lowest ankle 88 mm @ 0.00
   NEUTRALITY animation ON f09010ba (13 contacts) vs OFF f09010ba (13) → IDENTICAL
   slow poses: 
-  ball inside a boot > 20 mm: 8 ticks [2.70–2.71 3.62–3.63]
-  legs intersect > 20 mm: 11 ticks [3.65–3.69]
-runD_L: 1680 poses · mean 0.073 ms p95 0.160 p99 0.273 max 1.78 · NaN 0
-  worst leg clearance -98 mm (footCalf @ 3.67) · ball vs boot min gap -52 mm (R INSIDE @ 3.63) · lowest ankle 88 mm @ 0.00
+  ball inside a boot > 20 mm: 10 ticks [2.65–2.67 3.59–3.60]
+  legs intersect > 20 mm: 14 ticks [3.64–3.70]
+runD_L: 1680 poses · mean 0.073 ms p95 0.158 p99 0.269 max 1.80 · NaN 0
+  worst leg clearance -101 mm (shin @ 3.66) · ball vs boot min gap -101 mm (L TOE @ 2.67) · lowest ankle 88 mm @ 0.00
   NEUTRALITY animation ON 26ade8d2 (13 contacts) vs OFF 26ade8d2 (13) → IDENTICAL

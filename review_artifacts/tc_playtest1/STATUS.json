@@ -6,10 +6,10 @@
   "date": "2026-10-20",
   "techniques": ["CARRY (lane, laces / outside / inside / sole, same-foot rhythm, sprint touch-strides-touch, stop cushion + sole)", "RONALDO CHOP (TC1.5 mechanics)", "OUTSIDE CUT", "CRUYFF TURN", "INSIDE HOOK", "DRAG-BACK"],
   "input_tests": "13 sequences + 2 timing sweeps — 0 missed contacts, all deterministic (evidence/PT1_INPUT_TESTS.*)",
-  "browser_tour_34s": { "contacts": 60, "missed": 0, "frame_ms": { "avg": 16.67, "p95": 16.70, "p99": 16.80, "worst": 16.80 }, "work_ms": { "avg": 1.26, "p95": 2.20, "p99": 3.10, "worst": 5.60 }, "replan_ms": { "avg": 0.66, "worst": 4.3 } },
+  "browser_tour_34s": { "contacts": 58, "missed": 0, "frame_ms": { "avg": 16.67, "p95": 16.70, "p99": 16.80, "worst": 16.80 }, "work_ms": { "avg": 1.13, "p95": 2.00, "p99": 2.80, "worst": 5.40 }, "replan_ms": { "avg": 0.68, "worst": 4.6 } },
   "determinism": "browser session re-simulated from its input: IDENTICAL (hash, contacts, actions, ball Δ 0); node re-simulation of the browser session: identical hash",
   "animation_neutrality": "ON vs OFF identical hash / contacts / actions, 6 / 6 scenarios",
-  "visual_audit_final_tour": { "ball_inside_boot_gt20mm_ticks_pct": 3.0, "legs_intersect_gt20mm_ticks_pct": 0.6, "mirror_chop_L_vs_R_mm": 0.0 },
+  "visual_audit_final_tour": { "ball_inside_boot_gt20mm_ticks_pct": 2.3, "legs_intersect_gt20mm_ticks_pct": 1.7, "other_sessions": "ball 2.5 / 2.7 %, legs 0.6 / 0.9 %", "mirror_chop_L_vs_R_mm": 0.0 },
   "frozen_check": "no tracked file changed; new files only under sandbox/visual/tc_playtest1/, sandbox/visual/tc_playtest1.html, review_artifacts/tc_playtest1/",
   "owner_decisions_pending": ["playtest feel / technique choices", "whether to remove the remaining visual intersections next", "lower-rating calibration and styles (not built)"]
 }
