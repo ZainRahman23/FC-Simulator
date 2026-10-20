@@ -1,0 +1,14 @@
+// tc_responsive/tools/rs_probe.mjs — one stick sequence on an engine: the decisions (plans with their why), the contacts, the state
+//   node rs_probe.mjs <engine RX|BASE> <MODE> "<t:deg,t:deg,…>" [dur] [t1,t2]
+import { makeSim, DT } from "./rs_env.mjs";
+import { stickVector, stickMode, headingFrom } from "../pt_input.js";
+const [eng, mode, seqS, durS, winS] = process.argv.slice(2), DEG = Math.PI / 180, D = 180 / Math.PI, M = { WALK: 0.30, JOG: 0.56, RUN: 0.95, SPRINT: 0.95 }[mode];
+const seq = seqS.split(",").map((x) => x.split(":").map(Number)), f = (t) => { let a = null; for (const [t0, d] of seq) if (t >= t0) a = d; return a; }, dur = +(durS || 5), win = winS ? winS.split(",").map(Number) : [0, dur];
+const sim = makeSim(eng, {}); let lastV = -1; const t0 = performance.now();
+for (let k = 0; k < Math.round(dur / DT); k++) { const t = k * DT, a = f(t); let req; if (a == null) req = { h: null, mode: mode === "SPRINT" ? "SPRINT" : "RUN", keys: 0 }; else { const v = stickVector(Math.sin(a * DEG) * M, Math.cos(a * DEG) * M); req = { h: headingFrom(0, v.x, v.y), mode: mode === "SPRINT" ? "SPRINT" : stickMode(v.r), keys: 64 }; }
+  sim.step(req); const T = sim.t, p = sim.plan; if (T < win[0] || T > win[1]) { lastV = p.v; continue; }
+  if (p.v !== lastV) { const st = sim.stateAt(T), b = sim.ball.p, nc = p.contacts.filter((c) => !c.done && c.t > T - 1e-9)[0], rel = [(b[0] - st.P[0]) * Math.cos(st.psi) + (b[1] - st.P[1]) * Math.sin(st.psi), -(b[0] - st.P[0]) * Math.sin(st.psi) + (b[1] - st.P[1]) * Math.cos(st.psi)];
+    console.log(`${T.toFixed(3)} req ${sim.req.h == null ? "  —" : (sim.req.h * D).toFixed(0).padStart(4)} v ${st.s.toFixed(1)} trav ${(st.h * D).toFixed(0).padStart(4)} psi ${(st.psi * D).toFixed(0).padStart(4)} ball(${rel[0].toFixed(2)},${rel[1].toFixed(2)}) | ${p.reason || ""} ${p.action.label}${p.action.F ? " " + p.action.F : ""} next ${nc ? `${nc.F} ${nc.role} +${(nc.t - T).toFixed(2)}` : "—"} | ${(p.why || []).slice(0, 3).map((w) => `${w.label} ${w.J} [${w.note}]`).join(" | ")}`.slice(0, 330)); }
+  lastV = p.v; }
+console.log("\ncontacts:"); for (const c of sim.contacts) if (c.t >= win[0] - 0.5) console.log(`  ${c.t.toFixed(3)} ${c.F} ${c.surface} ${c.role}${c.missed ? " MISSED " + (c.why || "") : ""} out ${Math.hypot(...c.vOut).toFixed(2)} @ ${(Math.atan2(c.vOut[1], c.vOut[0]) * D).toFixed(0)}° req ${c.reqH == null ? "—" : (c.reqH * D).toFixed(0)}`);
+const cpu = sim.cpu.replan.slice().sort((a, b) => a - b); console.log(`\nplans ${sim.log.plans} · replan cpu avg ${(cpu.reduce((s, x) => s + x, 0) / Math.max(1, cpu.length)).toFixed(2)} ms p99 ${cpu[Math.floor(0.99 * (cpu.length - 1))]?.toFixed(2)} max ${cpu[cpu.length - 1]?.toFixed(2)} · wall ${((performance.now() - t0) / 1000).toFixed(2)} s · hash ${sim.hash.toString(16)}`);

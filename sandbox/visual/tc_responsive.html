@@ -3,24 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Responsive Dribbling Experiment</title>
+<title>Responsive Dribbling A/B</title>
 <link rel="icon" href="data:,">
-<!-- RESPONSIVENESS EXPERIMENT — the stable address of the experiment built BESIDE BASELINE-88573ef0 (the locked A/B reference links here).
-     LOCAL ONLY. Placeholder until the experiment exists: research phase. -->
+<!-- TECHNICAL-CONTROL PLAYTEST-1 — LOCAL ONLY (the character is a real player's model: never publish). Provisional, not frozen, not integrated. -->
+<!-- RESPONSIVENESS EXPERIMENT (TC-RESPONSIVE-1) — the A/B page beside the locked BASELINE-88573ef0 (whose code it imports read-only for the
+     comparison, never modifies). Experimental, not frozen, not integrated. LOCAL ONLY. -->
 <style>
-  :root { --bg: #0d1210; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --ok: #8dffa6; }
-  html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
-  main { max-width: 640px; margin: 0 auto; padding: 48px 16px; }
-  h1 { font-size: 20px; margin: 0 0 12px; color: var(--acc); }
-  p { color: var(--dim); }
-  a { color: var(--ok); font-weight: 600; }
+  :root { --bg: #0d1210; --panel: rgba(16, 22, 19, 0.86); --solid: #151d19; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --line: #2a3530; --ok: #8dffa6; --bad: #ff8a80; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font: 12.5px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #bar { position: absolute; left: 0; right: 0; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; padding: 6px 10px; background: var(--solid); border-bottom: 1px solid var(--line); }
+  #bar .grp { display: inline-flex; gap: 3px; align-items: center; }
+  #bar .lab { color: var(--dim); margin-right: 2px; }
+  button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 3px 8px; font: inherit; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  button.warn { border-color: #6b4b2a; }
+  label { display: inline-flex; gap: 3px; align-items: center; cursor: pointer; }
+  input[type=range] { width: 74px; }
+  #stage { position: absolute; left: 0; right: 0; bottom: 0; }
+  #gl, #ov { position: absolute; left: 0; top: 0; display: block; }
+  .box { position: absolute; z-index: 4; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; pointer-events: none; }
+  #hud { left: 10px; top: 10px; min-width: 250px; font: 12px/1.45 Menlo, Consolas, monospace; white-space: pre; }
+  #hud .act { font: 700 17px/1.2 -apple-system, Helvetica, sans-serif; color: var(--acc); letter-spacing: 0.02em; }
+  #hud .phase { color: #cfe; font: 600 11.5px -apple-system, Helvetica, sans-serif; }
+  #prov { color: #ffb36b; font: 600 11px -apple-system, Helvetica, sans-serif; }
+  #side { right: 10px; top: 10px; width: 540px; max-height: calc(100% - 92px); overflow: hidden; pointer-events: auto; font: 10.5px/1.35 Menlo, Consolas, monospace; }
+  #side h4 { margin: 2px 0 4px; font: 600 11.5px -apple-system, Helvetica, sans-serif; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  #side table { border-collapse: collapse; width: 100%; } #side td, #side th { padding: 1px 4px; text-align: right; white-space: nowrap; } #side th { color: var(--dim); font-weight: 500; }
+  #side td.l, #side th.l { text-align: left; }
+  #side .sec { margin-bottom: 8px; } #side .tech { color: var(--acc); }
+  #graph { display: block; width: 100%; height: 86px; }
+  #stats { white-space: pre; }
+  #keys { left: 50%; bottom: 70px; transform: translateX(-50%); display: none; text-align: center; font: 700 15px -apple-system, Helvetica, sans-serif; }
+  #keys .k { display: inline-block; width: 34px; height: 30px; line-height: 30px; margin: 2px; border-radius: 6px; border: 1px solid #50605a; color: #9ab; background: #1a221e; }
+  #keys .k.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); }
+  #keys .k.w { width: 70px; font-size: 12px; }
+  #replay { left: 50%; bottom: 12px; transform: translateX(-50%); display: none; pointer-events: auto; width: min(760px, 80%); }
+  #replay input { width: 100%; }
+  #replay .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; font: 600 12px -apple-system, Helvetica, sans-serif; }
+  #help { left: 10px; bottom: 8px; color: var(--dim); font-size: 11px; padding: 4px 8px; }
+  #perf { right: 10px; bottom: 10px; font: 11px Menlo, Consolas, monospace; color: var(--dim); white-space: pre; }
+  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 600 15px -apple-system, Helvetica, sans-serif; color: var(--dim); z-index: 9; }
+  .hidden { display: none !important; }
+  /* the on-screen movement stick (input only) and its SPRINT / WALK buttons */
+  #stickBox { position: absolute; left: 14px; bottom: 44px; width: 210px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickPad { width: 210px; height: 210px; cursor: grab; touch-action: none; border-radius: 50%; }
+  #stickPad:active { cursor: grabbing; }
+  #stickInfo { text-align: center; font: 600 12px Menlo, Consolas, monospace; color: #9ad7ff; text-shadow: 0 1px 2px #000; margin-top: -4px; }
+  #stickBtns { position: absolute; left: 230px; bottom: 74px; display: flex; flex-direction: column; gap: 7px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickBtns button { touch-action: none; width: 96px; font-weight: 700; letter-spacing: 0.04em; background: rgba(34,44,39,0.82); }
+  #bSprint { height: 58px; font-size: 15px; } #bSprint.on { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; }
+  #bLock { height: 26px; font-size: 11px; } #bLock.on { background: #ffb36b; border-color: #ffb36b; color: #1a1209; }
+  #bWalk { height: 40px; font-size: 13px; } #bWalk.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; }
 </style>
 </head>
 <body>
-<main>
-  <h1>RESPONSIVENESS EXPERIMENT — not built yet</h1>
-  <p>Research phase: the FC 26-style responsive dribbling research is being synthesised first. The experiment will be built beside the locked baseline and will appear at this address, with a one-click switch back.</p>
-  <p><a href="tc_baseline_88573ef0.html">← BASELINE-88573ef0 (the locked A/B reference)</a></p>
-</main>
+<div id="bar">
+  <span class="grp" id="engTag" style="font-weight:700;color:#1a1a10;background:#ffd45e;border-radius:5px;padding:2px 7px">RESPONSIVENESS EXPERIMENT</span><span class="grp"><a href="tc_baseline_88573ef0.html" style="color:#8dffa6;font-weight:600">open BASELINE-88573ef0 page</a></span>
+  <span class="grp"><span class="lab">Engine</span><select id="selEng" title="the simulation + body this page runs"><option value="experiment">experiment (responsive)</option><option value="baseline">baseline 88573ef0</option></select><button id="bSame" title="X: re-simulate this session's exact input on the other engine and replay it">⇄ same input on BASELINE</button>
+    <label title="the experiment only: the open sprint's long touches (two strides of the touching foot) instead of one"><input id="cLong" type="checkbox">long sprint touches</label></span>
+  <span class="grp"><span class="lab">Torture</span><select id="selTort" style="max-width:150px"></select><select id="selTortMode"><option>WALK</option><option>JOG</option><option>RUN</option><option selected>SPRINT</option></select><button id="bTort">▶ play</button></span>
+  <span class="grp"><button id="bReset" class="warn" title="R">⟲ RESET</button></span>
+  <span class="grp"><span class="lab">Mode</span><button data-mode="WALK">WALK</button><button data-mode="JOG">JOG</button><button data-mode="RUN" class="on">RUN</button><button data-mode="SPRINT">SPRINT</button></span>
+  <span class="grp"><span class="lab">Time</span><button id="bPause" title="Space">❚❚</button><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button id="bStep" title=". (shift: one 240 Hz tick)">▸| step</button></span>
+  <span class="grp"><button id="bReplay" title="Q">⟲ REPLAY LAST ACTION</button><button id="bBuffer" title="B">replay 10 s</button></span>
+  <span class="grp"><span class="lab">Camera</span><select id="selCam" title="C"><option value="follow">follow (behind / above)</option><option value="touchline">touchline (fixed side)</option><option value="top">top-down</option><option value="side">side / debug</option></select></span>
+  <span class="grp"><span class="lab">Course</span><select id="selCourse"><option value="none">none</option><option value="straight">straight acceleration</option><option value="slalom">slalom</option><option value="cuts">sharp-cut 45 / 90 / 120 / 150 / 180°</option><option value="box">tight box</option></select></span>
+  <span class="grp"><span class="lab">Foot</span><select id="selFoot"><option value="R">right-dominant</option><option value="L">left-dominant</option><option value="B">two-footed</option></select>
+    <select id="selStyle" title="dribbling style"><option value="NEUTRAL">style: neutral elite</option></select></span>
+  <span class="grp"><span class="lab">BC</span><input id="aBC" type="range" min="1" max="99" value="99"><span id="vBC">99</span>
+    <span class="lab">DRI</span><input id="aDRI" type="range" min="1" max="99" value="99"><span id="vDRI">99</span>
+    <span class="lab">AGI</span><input id="aAGI" type="range" min="1" max="99" value="99"><span id="vAGI">99</span><span id="prov"></span></span>
+  <span class="grp"><span class="lab">Stick dz</span><input id="dz" type="number" min="0" max="0.3" step="0.01" value="0.08" style="width:58px" title="share of the stick's radius"><span class="lab" id="zones" style="font-size:11px" title="stick zones (share of the radius): walk below 0.40, jog below 0.72, run beyond; sprint only with SPRINT / Shift">zones .40 / .72</span></span>
+  <span class="grp"><label><input id="cHud" type="checkbox" checked>HUD</label><label><input id="cSide" type="checkbox" checked>panels</label><label><input id="cProt" type="checkbox">protection</label><label><input id="cBody" type="checkbox">body debug</label><label><input id="cAnim" type="checkbox" checked>body</label></span>
+</div>
+<div id="stage">
+  <canvas id="gl"></canvas><canvas id="ov"></canvas>
+  <div id="hud" class="box"></div>
+  <div id="side" class="box">
+    <div class="sec"><h4>Ball separation (player ↔ ball, last 8 s)</h4><canvas id="graph"></canvas></div>
+    <div class="sec"><h4>Technique frequency (since reset)</h4><div id="stats"></div></div>
+    <div class="sec"><h4>Last contacts</h4><table id="ctab"></table></div>
+  </div>
+  <div id="keys" class="box"></div>
+  <div id="replay" class="box"><div class="row"><span id="rLabel">REPLAY</span><span><button id="rSlow" class="on">0.25×</button><button id="rHalf">0.5×</button><button id="rOne">1×</button><button id="rPlay">❚❚</button><button id="rLive">LIVE ▸ (Esc)</button></span></div><input id="rScrub" type="range" min="0" max="1000" value="0"></div>
+  <div id="stickBox"><div id="stickPad" title="drag in any direction — continuous direction and magnitude (the camera's forward = up)"></div><div id="stickInfo">drag to move</div></div>
+  <div id="stickBtns"><button id="bSprint" title="hold: sprint (= Shift)">SPRINT</button><button id="bLock" title="keep sprinting without holding (click again to release)">sprint lock</button><button id="bWalk" title="hold: walk (= Alt / Option)">WALK</button></div>
+  <div id="help" class="box">Stick (left): drag = direction + magnitude · SPRINT hold / lock · WASD move (camera frame) · Shift sprint · Alt/Option walk · 1–4 mode · Space pause · . step · Q replay last action · B replay buffer · X same input on the other engine · R reset · C camera · H HUD · V determinism</div>
+  <div id="perf" class="box"></div>
+  <div id="loading">loading the player…</div>
+</div>
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="run1/run1_gait_v13.js"></script>
+<script type="module" src="tc_responsive/rs_viewer.js"></script>
 </body>
 </html>
