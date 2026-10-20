@@ -111,46 +111,31 @@
     "t": 3.025,
     "label": "CARRY",
     "why": [
-     "CARRY 1.52 [line +0.40s · (switch)]"
+     "CARRY 1.18 [line +0.23s · (switch)]"
     ]
    },
    {
     "t": 3.2,
     "label": "RONALDO CHOP R",
     "why": [
-     "RONALDO CHOP (R) 2.56 [line +0.86s · contact +0.62s · speed · set touch]",
-     "CRUYFF TURN (R) 3.34 [line +1.08s · contact +0.66s · 90° outside 95–145 · speed · set touch]",
-     "CARRY 3.46 [line +0.96s · ball 3.2m away]"
+     "RONALDO CHOP (R) 2.15 [line +0.71s · contact +0.47s · speed · set touch]",
+     "CRUYFF TURN (R) 2.92 [line +0.93s · contact +0.51s · 90° outside 95–145 · speed · set touch]",
+     "CARRY 3.27 [line +0.77s · ball 3.5m away]"
     ]
    },
    {
-    "t": 4.117,
+    "t": 3.971,
     "label": "CARRY",
     "why": [
-     "CARRY 1.42 [line +0.27s · ball 2.3m away · (switch)]"
-    ]
-   },
-   {
-    "t": 4.2,
-    "label": "OUTSIDE CUT L",
-    "why": [
-     "OUTSIDE CUT (L) 2.89 [line +0.46s · contact +0.34s · 90° outside 25–60 · weak foot · speed]",
-     "CARRY 3.34 [line +0.88s · ball 3.3m away]"
-    ]
-   },
-   {
-    "t": 4.917,
-    "label": "CARRY",
-    "why": [
-     "CARRY 1.44 [line +0.21s · ball 1.4m away · (switch)]"
+     "CARRY 1.41 [line +0.27s · ball 2.3m away · (switch)]"
     ]
    }
   ],
-  "contacts": 14,
+  "contacts": 15,
   "missed": 0,
-  "sepMax": 0.82,
-  "sepMaxAfterLast": 0.82,
-  "onNewLine": 0.52,
+  "sepMax": 0.75,
+  "sepMaxAfterLast": 0.74,
+  "onNewLine": 0.35,
   "deterministic": true,
   "contactList": [
    "0.33 R LACES carry [CARRY]",
@@ -160,12 +145,13 @@
    "2.33 L LACES set touch [CHOP]",
    "2.73 L INSIDE RONALDO CHOP [CHOP]",
    "3.02 R LACES exit touch [CHOP]",
-   "3.42 R LACES set touch [CHOP]",
-   "3.82 R INSIDE RONALDO CHOP [CHOP]",
-   "4.12 L LACES exit touch [CHOP]",
-   "4.55 L OUTSIDE OUTSIDE CUT [OUTCUT]",
-   "5.13 R LACES carry [CARRY]",
-   "5.72 R LACES carry [CARRY]",
+   "3.27 R LACES set touch [CHOP]",
+   "3.67 R INSIDE RONALDO CHOP [CHOP]",
+   "3.97 L LACES exit touch [CHOP]",
+   "4.24 L INSIDE carry correction [CARRY]",
+   "4.50 R INSIDE carry correction [CARRY]",
+   "5.10 R LACES carry [CARRY]",
+   "5.73 R LACES carry [CARRY]",
    "6.36 R LACES carry [CARRY]"
   ]
  },

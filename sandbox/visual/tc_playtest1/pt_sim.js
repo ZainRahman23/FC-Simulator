@@ -54,7 +54,7 @@ export class PlaySim {
     const S = this.o.start, h = S.h, lane = this.o.foot === "L" ? -0.10 : this.o.foot === "R" ? 0.10 : 0, bp = fromLocal(S.P, h, 0.36, lane);
     this.ball = new Ball(bp, [0, 0]); this.contacts = []; this.log = { input: [], actions: [], replans: 0, plans: 0, events: [] }; this.hash = 2166136261 >>> 0; this.cpu = { replan: [], step: [] };
     // standing: both feet planted (an "infinite" stance), facing h
-    const st = (F) => ({ id: ++this.sid, F, t0: -1, t1: Infinity, pos: fromLocal(S.P, h, F === "R" ? -0.02 : 0.04, sgn(F) * WIDTH.stand), yaw: h + sgn(F) * 6 * DEG, kind: "standing", src: "stand" });
+    const rear = this.o.foot === "L" ? "L" : "R", st = (F) => ({ id: ++this.sid, F, t0: -1, t1: Infinity, pos: fromLocal(S.P, h, F === rear ? -0.02 : 0.04, sgn(F) * WIDTH.stand), yaw: h + sgn(F) * 6 * DEG, kind: "standing", src: "stand" });
     this.plan = this.mkPlan({ t0: 0, st: { P: S.P.slice(), s: 0, h, psi: h, w: 0 }, stances: { R: [st("R")], L: [st("L")] }, contacts: [], action: { kind: "CARRY", label: "STANDING", id: ++this.aid }, req: null, ch0: null, prog: { kind: "carry" } });
     this.plans = [this.plan]; this.req = null; this.lastReq = null; this.flags = { replan: "start" };
     this.track = { N: 240 * 12, buf: new Float64Array(240 * 12 * 9) }; this.record();
@@ -226,7 +226,8 @@ export class PlaySim {
     const step = (X, td) => { const st = { id: ++this.sid, F: X, t0: td, t1: td + stanceD(td), pos: place(X, td, td + stanceD(td)), yaw: yawOf(X, td), kind: this.stateAt(td, plan).s < 2.4 ? "walk" : "stride", src: "gait" }; S[X].push(st); return st; };
     // a planted foot that must step lifts in time (a standing foot: now)
     const lift = (X, tdNext) => { const l = lastOf(X); if (l.t1 === Infinity || l.t1 > tdNext - 0.14) l.t1 = max(l.t0 + 0.06, min(tdNext - 0.14, l.t1 === Infinity ? t + 0.02 : l.t1), t + 0.02); };
-    const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); return r.t0 >= l.t0 ? r : l; };
+    // the last touchdown (a tie — both feet down together — goes to a technique's own stance, else to the right foot: never the mirror's opposite)
+    const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); if (abs(r.t0 - l.t0) < 1e-9) return r.src === "tech" ? r : l.src === "tech" ? l : r; return r.t0 > l.t0 ? r : l; };
     const moving = plan.req && plan.req.h != null;
     // standing and asked to move: the rear foot (relative to the request) steps first, quickly
     if (lastOf("R").t1 === Infinity && lastOf("L").t1 === Infinity) {
@@ -249,7 +250,7 @@ export class PlaySim {
       if (!moving && v < 0.45 && tEnd < 0.3) { // settle
         const lx = lastOf(X); if (lx.t1 === Infinity && L0.t1 === Infinity) break;
         const td = max(L0.t0 + 0.14, lx.t1 === Infinity ? t + 0.16 : lx.t1 + 0.16, t + 0.05); if (td > tTo) break; lift(X, td); const s1 = this.stateAt(td, plan);
-        S[X].push({ id: ++this.sid, F: X, t0: td, t1: Infinity, pos: fromLocal(s1.P, s1.psi, X === "R" ? -0.02 : 0.04, sgn(X) * WIDTH.stand), yaw: s1.psi + sgn(X) * 6 * DEG, kind: "settle", src: "gait" }); L0.t1 = Infinity; break; }
+        S[X].push({ id: ++this.sid, F: X, t0: td, t1: Infinity, pos: fromLocal(s1.P, s1.psi, X === (this.o.foot === "L" ? "L" : "R") ? -0.02 : 0.04, sgn(X) * WIDTH.stand), yaw: s1.psi + sgn(X) * 6 * DEG, kind: "settle", src: "gait" }); L0.t1 = Infinity; break; }
       let td = L0.t0 + G.Ts; const lx = lastOf(X); if (lx.t1 !== Infinity) td = max(td, lx.t1 + 0.16); td = max(td, t + 0.02); if (td > tTo) break;
       lift(X, td); step(X, td); if (L0.t1 === Infinity) L0.t1 = td + 0.6 * stanceD(td); }
     // a stance ends before its foot's next one begins (the swing ≥ 0.14 s), never before it began

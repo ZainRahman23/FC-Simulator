@@ -71,7 +71,7 @@ The HUD's "why" shows the top candidates with their costs and reasons, live and 
 | W → WD → D → SD → S | carry corrections only (45° steps) | +0.56 s |
 | sprint W → A | **Ronaldo chop R** (set touch → chop → exit) | +0.95 s |
 | sprint W → S | drag-back L | +0.85 s |
-| W → D → W → A | chop L → chop R → outside cut L | +0.52 s |
+| W → D → W → A | chop L → chop R (the last A: a carry turn) | +0.35 s |
 | run W → A | Ronaldo chop R | +0.79 s |
 | run W → SA (135°) | inside hook R | +0.81 s |
 | jog W → D | outside cut R | +0.66 s |
@@ -84,30 +84,30 @@ The HUD's "why" shows the top candidates with their costs and reasons, live and 
 
 **In the browser.** Chrome, real key presses on the real-time loop, a 34 s tour (`tools/pt_browser.cjs`, `evidence/PT1_BROWSER_TOUR.json`):
 - 60 contacts, 0 missed;
-- chop L, chop R, drag-back and outside cut chosen from WASD alone.
+- chop L, chop R, drag-back (both feet) chosen from WASD alone.
 
 **Performance** (1440 × 900, the last 1200 frames):
 
 | Measure | avg | p95 | p99 | worst |
 |---|---|---|---|---|
 | frame | 16.67 ms | 16.70 ms | 16.80 ms | 16.80 ms |
-| work per frame | 1.23 ms | 2.20 ms | 3.40 ms | 4.90 ms |
+| work per frame | 1.26 ms | 2.20 ms | 3.10 ms | 5.60 ms |
 
 - Frames are vsync 60 Hz with no dropped frame.
-- Work splits into simulation 0.25, pose 0.31 and render 0.67 ms on average.
-- Re-planning averages 0.68 ms, worst 3.9 ms. There are no hidden spikes: RUN-1's tables are baked into `pt_baked.json` instead of being solved in a frame.
+- Work splits into simulation 0.26, pose 0.32 and render 0.68 ms on average.
+- Re-planning averages 0.66 ms, worst 4.3 ms. There are no hidden spikes: RUN-1's tables are baked into `pt_baked.json` instead of being solved in a frame.
 
 **Determinism**
 - The browser session re-simulated from its recorded input and seed: hash, contacts, actions and ball all IDENTICAL (ball Δ 0).
 - The same browser session re-simulated in node: identical hash, so node and the browser are bit-identical (`evidence/PT1_NODE_EQUALS_BROWSER.txt`).
 - Live attribute and foot changes are part of the record.
 
-**Animation neutrality.** Animation ON vs OFF gives identical hash, contacts and actions in 4 / 4 scenarios (`evidence/PT1_NEUTRALITY_AND_POSE.txt`). The body only reads the simulation's history.
+**Animation neutrality.** Animation ON vs OFF gives identical hash, contacts and actions in 6 / 6 scenarios (`evidence/PT1_NEUTRALITY_AND_POSE.txt`). The body only reads the simulation's history.
 
 ## Limitations (honest)
 
-- **Ball / boot overlap (visual only).** In the final tour the ball is more than 20 mm inside a boot in 3.3 % of ticks: short 30–60 mm spans, around touches and technique entries (`evidence/PT1_POSE_AUDIT_tour.json`). Another session measured 6.9 %; before this session's fixes it was 12.8 %. Swing feet are pushed clear, and stances are placed off the ball's path, but not every case is caught.
-- **Legs through each other (visual only).** More than 20 mm in 3–6 % of ticks, mostly the thighs during the step after a chop and in sharp low-speed carry turns (up to about 15 cm). TECHNICAL-CONTROL-1.5's references were clean (≥ −2 cm), but the playtest's geometry varies.
+- **Ball / boot overlap (visual only).** In the final tour the ball is more than 20 mm inside a boot in 3.0 % of ticks: short 30–60 mm spans, around touches and technique entries (`evidence/PT1_POSE_AUDIT_tour.json`). Another session measured 5.9 %; before this session's fixes it was 12.8 %. Swing feet are pushed clear, and stances are placed off the ball's path, but not every case is caught.
+- **Legs through each other (visual only).** More than 20 mm in 0.6 % of ticks in the final tour (0.7 % in another session): short spans in sharp low-speed carry turns and the carry step after a chop. It was 3–6 % until a mirror fault was fixed: a tie-break in the gait gave the left-foot chop an extra planted step. Chop L and chop R are now exact mirrors (0.0 mm).
 - **Sprint chops are slow.** About 0.8 s from the request to the chop: the ball is knocked 1.5–2 m ahead at a sprint, so a set touch comes first.
 - **No techniques below jog speed.** 45° changes are carry corrections by design. Walking 90° turns and standing 180° turns are carry turns: no technique is cheaper there, and the chop's speed floor is 3.6 m/s.
 - **Two-footed / left-dominant.** These go through the same resolver (mirror) but have had less scripted coverage than right-dominant.
