@@ -3702,6 +3702,163 @@ Stopped for owner visual review.
 | Codex shot-accuracy / standing-tackle labs | Local |
 | `touchline-current` | No changes except this chronicle |
 
+## Monday 19 October 2026 — The 18 Oct publication; the receive queue (RECEIVE-CONTROL-2, RECEIVE-MOVING-1); RECEIVE-ELITE-1; TECHNICAL-CONTROL-1 → 1.5, the technique reset; TECHNICAL-CONTROL PLAYTEST-1, the playable dribbling sandbox; the Codex standing-tackle labs
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `b245213` (the 18 Oct entry), pushed in the 19 Oct housekeeping.
+  - **`prototype/dribble-1`**, 15 commits this day, all pushed in the 20 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | RECEIVE-CONTROL-2 (QUEUE #1) | `3f55590`, `6060e13` | 06:22 – 07:11 |
+    | RECEIVE-MOVING-1 (QUEUE #2) | `036d60c` | 10:03 |
+    | RECEIVE-ELITE-1 | `140e96f` | 14:40 |
+    | TECHNICAL-CONTROL-1 | `394b865`, `4cb9714`, `5180c8d` | 15:15 – 16:34 |
+    | TECHNICAL-CONTROL-1.1 and 1.2 | `870804c`, `7d14872` | 21:25 |
+    | TECHNICAL-CONTROL-1.3 | `0e12422` | 23:30 |
+    | TECHNICAL-CONTROL-1.4 | `cd9de15` | 20 Oct 00:26 |
+    | TECHNICAL-CONTROL-1.5 | `a34070e` | 20 Oct 04:07 |
+    | TECHNICAL-CONTROL PLAYTEST-1 | `2be64dd`, `1877207`, `8899869` | 20 Oct 05:23 – 05:35 |
+
+  - **[Local]** The Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/outputs/`, read-only, no commits:
+    - Standing Tackle Phase C revision 2 (23:30 – 23:31);
+    - STANDING-TACKLE-V1, a functional real-carrier review (20 Oct 00:09 – 00:11);
+    - a standing-tackle duel v2 page and the report "Standing tackle visual design" (20 Oct 05:12).
+- **[Doc]:**
+  - `review_artifacts/receive_control2/`, `receive_moving1/`, `receive_elite1/`, `technical_control1/`, `technical_control11/` … `technical_control15/`, `tc_playtest1/`: each milestone's report, handoff, status, evidence and review page or playable page;
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the pages show a real player's model; they are local pages only.
+- **[Session]** Owner instructions. The time is when each instruction was saved; it was received a few minutes before.
+
+  | Saved (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 13:25 | RECEIVE-ELITE-1 — elite tight control at 99 / 99 / 99, then work backward per attribute | `140e96f` |
+  | ≈ 14:56 | TECHNICAL-CONTROL-1 — own the receive + dribbling phase: no exit touch, no ball into space, human fast dribbling | `394b865` |
+  | ≈ 19:57 | TECHNICAL-CONTROL-1.1 — feet, ankles and lower-leg IK | `870804c` |
+  | ≈ 21:05 | TECHNICAL-CONTROL-1.2 — the carry model: ball lanes, outside / instep, the same foot, not inside-foot ping-pong | `7d14872` |
+  | ≈ 22:17 | TECHNICAL-CONTROL-1.3 — remove body / leg phasing, especially receive → dribble transitions | `0e12422` |
+  | ≈ 23:41 | TECHNICAL-CONTROL-1.4 — Dribbling 99 = the fastest technique, not the most touches | `cd9de15` |
+  | 20 Oct ≈ 02:23 | TECHNICAL-CONTROL-1.5 — technique reset: research first, the Ronaldo chop spec, authored elite references | `a34070e` |
+  | 20 Oct ≈ 04:17 | TECHNICAL-CONTROL PLAYTEST-1 — a full playable dribbling sandbox (WASD, no skill button) | `2be64dd` |
+
+- **Owner media:**
+  - one screen recording, `Screen Recording 2026-10-20 at 3.54.57 AM.mov`:
+    - 20 Oct 03:55, 2.6 s, 460 × 534, 1.9 MB;
+    - SHA-256 `13173b3d7b70a7364cf23452a68913c088fc87d9dff67fbc547455cb3775f794`;
+    - third-party console football-game footage, a dribbling reference; kept outside Git.
+  - No screenshots.
+
+**The 18 Oct housekeeping (06:00 – 06:13).** The chronicle `b245213` was committed and pushed. `prototype/dribble-1` up to `3dddda5` was pushed and verified.
+
+**RECEIVE-CONTROL-2 (QUEUE #1)** (begun 05:25 in the 18 Oct day → 07:11, `3f55590`, `6060e13`). RECEIVE-KILL and RECEIVE-TURN integrated into one authoritative RECEIVE-CONTROL pipeline that hands off to the frozen DRIBBLE-V1 (`sandbox/visual/receive_control2/`).
+- **Integration by equivalence:** RECEIVE-TURN-1's and RECEIVE-KILL's episodes run as live controllers in DRIBBLE-V1's ball world, bit-identical to the stand-alone episodes (864 / 864 turns, 585 / 585 kills; full pipeline 180 / 180 and 260 / 260).
+- **Results:**
+  - standing receivers 108 / 108 CLEAN (RECEIVE-CONTROL-1.1: 92);
+  - moving receivers 500 / 606;
+  - cases A – M: go 136 / 138 CLEAN;
+  - neutrality 122 / 122; Chrome = Node 25 / 25; protected files 578 / 578.
+- **Lessons:**
+  - DRIBBLE-V1 reads the control state and how long it has held, so a cosmetic label forced until the handoff changed 6 of 108 takeovers;
+  - TURN-1.2 cannot start below 2.5 m/s.
+- Presented; not frozen.
+
+**RECEIVE-MOVING-1 (QUEUE #2)** (→ 10:03, `036d60c`). Receiving while moving (`sandbox/visual/receive_moving1/`).
+- **The model:** velocity-first meeting; late redirect, with the turn's cost paid after the contact; a takeover window for DRIBBLE-V1.
+- **Results:**
+  - moving receivers CLEAN 426 / 504 (RECEIVE-CONTROL-2: 365), MISSED 17 (66);
+  - paired speed kept, by turn 0 → 180°: 0.96 / 0.95 / 0.83 / 0.57 / 0.40 / 0.23 / 0.15.
+- **Lesson:** the test must be checked before the model — RECEIVE-CONTROL-1.1's pass solver could not lead sprinters, which had faked a "universal braking".
+- Presented; the owner's queue was then empty.
+
+**RECEIVE-ELITE-1** (≈ 13:20 → 14:40, `140e96f`). The ball "almost glued" at 99 / 99 / 99, then each attribute worked backward (`sandbox/visual/receive_elite1/`).
+- **Results:**
+  - moving turns ≥ 90°: maximum separation 3.30 – 5.22 → 0.45 – 0.65 m;
+  - stationary 0.65 – 0.85 → 0.42 – 0.54 m;
+  - the 672-run matrix: CLEAN 639 → 657, TAKEN 15 → 0.
+- The exit touch to DRIBBLE-V1 stayed 1.6 – 2.0 m ahead. Presented; not frozen.
+
+**TECHNICAL-CONTROL-1** (≈ 14:56 → 16:34, `394b865` → `5180c8d`). One technical-control layer from the receive into the carry and the actions: no exit touch, no ball into space, a human fast-dribbling body (`sandbox/visual/technical_control1/`).
+- **Results:**
+  - separation after the receive 1.70 / 2.37 → 0.85 / 0.87 m;
+  - Agility 50's worst 5.67 → 1.00 m;
+  - body IK error p99 32 → 4.1 cm;
+  - neutrality 80 / 80; determinism 300 / 300; Chrome = Node 13 / 13.
+- Presented; not frozen.
+
+**TECHNICAL-CONTROL-1.1 and 1.2** (≈ 19:57 → 21:25, `870804c`, `7d14872`).
+- **1.1:** the leg as a chain (pelvis → hip swivel → knee → tibia → ankle → contact surface), contact poses on DRIBBLE-1's boot hull.
+  - Ankle angular speed p99 4277 → 853 °/s (RUN-1: 1139).
+  - Boot-in-ball frames 4617 → 33.
+  - Gameplay bit-identical 48 / 48.
+- **1.2, the owner's correction mid-pass — the carry model:**
+  - ball lanes, the foot following the lane (same-foot carrying), outside / instep at speed;
+  - left-dominant: outside 10 → 79 %;
+  - the neutral default: centre crossings 0.95 → 0.25 per second.
+- Presented; not frozen.
+
+**TECHNICAL-CONTROL-1.3** (≈ 22:17 → 23:30, `0e12422`). Body / leg phasing removed, especially receive → dribble.
+- **Results (26 torture cases at 99):**
+  - leg intersections 496 → 14 frames;
+  - pelvis worst 4294 → 712 m/s²;
+  - pops 48.5 → 7.5 per case;
+  - plant slip median 9.6 → 2.0 mm.
+- Gameplay identical and pose-repeatable 123 / 123. Presented; not frozen.
+
+**TECHNICAL-CONTROL-1.4** (≈ 23:41 → 20 Oct 00:26, `cd9de15`). Dribbling 99 = the fastest technique, not the most touches.
+- **What changed:** the turn decided when asked (TECHNICAL-CONTROL-1's between-contacts decision had never been called); difficulty against capability as a cost; a chop off a planted standing leg; the exit touch.
+- **Results at 5.5 m/s:**
+  - 90° 3 → 1 contact; 120 / 150° 4 → 2;
+  - request → new line at 90°: 1.13 → 0.83 s.
+- **Owner review:** its "Ronaldo chop" was not one — the ball stayed exposed outside the body.
+
+**TECHNICAL-CONTROL-1.5** (20 Oct ≈ 02:23 → 04:07, `a34070e`). The technique reset: research first, then the actions.
+- **Research:** coaching and change-of-direction biomechanics notes; the owner's technique table for 11 techniques; the action map by angle; the Ronaldo chop specification with top-down vector diagrams.
+- **Five elite 99 references, authored as football actions** (ENTRY · CONTACT · PROTECTION · EXIT) on a new engine (`technical_control15/tc15_ref.js`): the 45° outside-foot cut, the 90° Ronaldo chop, the 120° Cruyff turn, the 150° inside hook and the 180° drag-back.
+- **The chop:** 8 / 8 on the owner's acceptance test — the ball chopped behind the left heel, under the body.
+- **The exposure diagnostic:** a defender's reaching leg from five directions, blocked by legs / hips / trunk.
+- Presented for visual approval; not frozen, not integrated.
+
+**TECHNICAL-CONTROL PLAYTEST-1** (20 Oct ≈ 04:17 → 05:35, `2be64dd`, `1877207`, `8899869`). A full playable dribbling sandbox (`sandbox/visual/tc_playtest1.html`).
+- **How it plays:** WASD is the desired direction, latched in the camera frame; Shift / Alt sprint / walk; no skill button.
+- **The resolver:** a 240 Hz simulation scores the carry and every feasible TECHNICAL-CONTROL-1.5 technique instance, parametric by angle on both feet. The terms: time to the new line, the decisive contact, contacts, separation, comfort, protection, weak foot, speed fit. The reason is shown live.
+- **The ball** is the frozen kernel's, one launch per contact. The body is TECHNICAL-CONTROL-1.5's pose code reading the simulation's history.
+- **The page:**
+  - follow / touchline / top-down / side cameras;
+  - HUD, contact history, separation graph, technique frequency;
+  - protection and body-debug overlays; courses;
+  - live provisional BC / DRI / AGI, the preferred foot;
+  - pause / 0.5× / 0.25× / frame step;
+  - a replay buffer with REPLAY LAST ACTION and the WASD pressed.
+- **Results:**
+  - 13 scripted input tests and two timing sweeps: 0 missed contacts, deterministic. Sprint W → A gives a Ronaldo chop; sprint W → S a drag-back; W → D → W → A gives chop L → chop R → outside cut.
+  - A 34 s browser tour with real key presses: 60 contacts, 0 missed; 60 fps; work per frame 1.23 ms average, 4.9 ms worst.
+  - The session re-simulated from its input is identical, and node ≡ browser. Animation on / off identical.
+- **Fixes in the two follow-up commits:**
+  - a gait tie-break gave the left-foot chop an extra planted step; chop L and chop R are now exact mirrors, and leg intersections fell from 6.3 % to 0.6 – 1.7 % of ticks;
+  - a left-dominant player now starts with his left foot;
+  - feet are placed off the ball's coming path; the ball inside a boot fell from 12.8 % to 2.3 – 2.7 % of ticks.
+- **Limitations, measured:** the remaining overlaps are visual only, in short spans around lateral carry touches.
+- Presented for the owner's playtest; provisional, not frozen, not integrated.
+
+**The Codex labs** (read-only from the outputs; not integrated):
+- **Standing Tackle Phase C revision 2:** STANDING_POKE and STANDING_LUNGE authored with continuous commitment.
+- **STANDING-TACKLE-V1:** a functional real-carrier review against TECHNICAL-CONTROL-1.3's unchanged carrier in an isolated harness; the defender reads the real ball and presents its boot to the same physical world.
+- **A duel v2 page and a visual-design report** (20 Oct 05:12).
+- None is frozen or merged.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| RECEIVE-CONTROL-2 / RECEIVE-MOVING-1 (the owner's queue) | Presented; not frozen; published in the 20 Oct housekeeping |
+| RECEIVE-ELITE-1 | Presented; not frozen |
+| TECHNICAL-CONTROL-1 / 1.1 / 1.2 / 1.3 / 1.4 | Presented; not frozen; 1.4's chop superseded by 1.5 |
+| TECHNICAL-CONTROL-1.5 | Presented; four owner decisions pending; not frozen |
+| TECHNICAL-CONTROL PLAYTEST-1 | Presented for the owner's playtest (local page); not frozen |
+| Codex standing-tackle labs | Local |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3788,9 +3945,9 @@ Stopped for owner visual review.
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
-  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 — RECEIVE-KILL and RECEIVE-TURN integrated into RECEIVE-CONTROL (the owner's QUEUE #1) — is in progress, then QUEUE #2, receiving while moving.
+  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page).
 - **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
-- **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; no commits, not a freeze.
+- **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; Phase C revision 2 and STANDING-TACKLE-V1 (a functional real-carrier review against TECHNICAL-CONTROL-1.3's carrier) followed on 19 – 20 Oct; no commits, not a freeze.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
@@ -4017,6 +4174,15 @@ An index to the narrative above, not a substitute for it.
 | 18 Oct | RECEIVE-TURN-1 (19 Oct 02:39 – 04:10): bounded keyed variance around B; the stationary receive-and-turn library | FC-Sim Git | `6881ce0` |
 | 18 Oct | RECEIVE-TURN-1.1 (19 Oct 04:26 – 05:24): human body motion — neutrality 750 / 750, mirror 176 / 176, plant slip 0 | FC-Sim Git | `23b6dca` |
 | 18 Oct | RECEIVE-CONTROL-2 begun (19 Oct 05:25 –): RECEIVE-KILL + RECEIVE-TURN integrated, bit-identical to the stand-alone episodes | FC-Sim Git | `53a6f0d`, `3dddda5` (WIP) |
+| 19 Oct | RECEIVE-CONTROL-2 (QUEUE #1): one receive pipeline, integration proved bit-identical; standing receivers 108 / 108 CLEAN | FC-Sim Git | `6060e13` |
+| 19 Oct | RECEIVE-MOVING-1 (QUEUE #2): receiving while moving; moving receivers CLEAN 426 / 504 | FC-Sim Git | `036d60c` |
+| 19 Oct | RECEIVE-ELITE-1: elite tight control at 99 / 99 / 99, each attribute worked backward | FC-Sim Git | `140e96f` |
+| 19 Oct | TECHNICAL-CONTROL-1: receive → dribble technical control — no exit touch, no ball into space | FC-Sim Git | `5180c8d` |
+| 19 Oct | TECHNICAL-CONTROL-1.1 / 1.2: feet / ankle IK; the carry model (lanes, outside / instep, the same foot) | FC-Sim Git | `870804c`, `7d14872` |
+| 19 Oct | TECHNICAL-CONTROL-1.3: body / leg phasing removed (leg intersections 496 → 14 frames) | FC-Sim Git | `0e12422` |
+| 19 Oct | TECHNICAL-CONTROL-1.4 (20 Oct 00:26): the fastest technique, not the most touches | FC-Sim Git | `cd9de15` |
+| 19 Oct | **TECHNICAL-CONTROL-1.5 (20 Oct 04:07): the technique reset — five authored elite references; the Ronaldo chop 8 / 8** | FC-Sim Git | `a34070e` |
+| 19 Oct | **TECHNICAL-CONTROL PLAYTEST-1 (20 Oct 05:23 – 05:35): the playable WASD dribbling sandbox** | FC-Sim Git | `2be64dd`, `1877207`, `8899869` |
 
 ## Appendix B — Repository provenance
 
