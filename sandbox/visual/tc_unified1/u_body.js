@@ -196,7 +196,7 @@ export class PlayBody {
       if (cw > 1e-6 && S.push > 0) { const k2 = S.push / cw; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x + (c.ank[i] - x) * k2), cleared: S.push }); }
       // (the speed limit on the foot as drawn — after the corridor and the clearance: the excess becomes offset, caught up by the spring)
       if (S.last) { const q = [g.ank[0] - S.last[0], g.ank[1] - S.last[1], g.ank[2] - S.last[2]], m = hyp(q[0], q[1], q[2]);
-        if (m > 0.09) { const e = 1 - 0.09 / m, d = q.map((x) => x * e); for (let i = 0; i < 3; i++) S.o[i] -= d[i]; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x - d[i]), limited: m }); } }
+        if (m > 0.09) { const e = 1 - 0.09 / m, d = q.map((x) => x * e); for (let i = 0; i < 3; i++) S.o[i] -= d[i]; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x - d[i]), ballPt: g.ballPt ? [g.ballPt[0] - d[0], g.ballPt[1] - d[1]] : g.ballPt, limited: m }); } }
       // (and on its turning: yaw ≤ 5°, pitch ≤ 4° per tick — a swing key's orientation step becomes a fast turn, never a flip)
       if (S.lastYaw != null) { const dy = wrap(g.yaw - S.lastYaw), dp = (g.pitch || 0) - S.lastPitch, ey = abs(dy) > 5 * DEG ? dy - Math.sign(dy) * 5 * DEG : 0, ep = abs(dp) > 4 * DEG ? dp - Math.sign(dp) * 4 * DEG : 0;
         if (ey || ep) { S.oy -= ey; S.op -= ep; g = Object.assign({}, g, { yaw: g.yaw - ey, pitch: (g.pitch || 0) - ep }); } }

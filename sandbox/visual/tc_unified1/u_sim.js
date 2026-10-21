@@ -97,7 +97,7 @@ UnifiedSim.prototype.gaitFrom = function (plan, keep, anchors, tTo) {
   // 0.15 s; 0.80 m is beyond any ordinary stride, reached only when the root really leaves the foot)
   for (const F of ["R", "L"]) for (const s of K.stances[F]) if (s.t0 <= t && s.t1 > t && s.t1 !== Infinity && s.src !== "tech") {
     for (let dt = 0.025; dt <= Math.min(0.32, s.t1 - t); dt += DT) { const x = this.stateAt(t + dt, plan), dx = s.pos[0] - x.P[0], dy = s.pos[1] - x.P[1], side = (-dx * Math.sin(x.psi) + dy * Math.cos(x.psi)) * sgn(F);
-      if (hyp(dx, dy) > 0.80 || side < -0.05) { s.t1 = Math.min(s.t1, Math.max(t + 0.025, s.t0 + 0.06, t + dt)); s.released = true; break; } } }
+      if (hyp(dx, dy) > 0.80 || side < -0.15) { s.t1 = Math.min(s.t1, Math.max(t + 0.025, s.t0 + 0.06, t + dt)); s.released = true; break; } } }
   // COMMITTED LANDINGS: revised toward the new path at Astra's rates — 0.25 m per 1/60 s while > 0.12 s remain, 0.08 m per 1/60 s later, frozen
   // in the last 0.055 s (the revision is rate-limited in time, not per re-plan: BALL ON re-plans far less often than Astra's 60 Hz probe); one
   // still out of the body's reach after it (> 0.62 m from the root at its landing) gives up its commitment — a REPLACEMENT STEP placed afresh.
