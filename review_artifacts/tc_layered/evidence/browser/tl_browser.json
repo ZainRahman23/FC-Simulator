@@ -1,0 +1,233 @@
+{
+ "runs": [
+  {
+   "cfg": "baseline",
+   "config": "locked 88573ef0",
+   "determinism": true,
+   "hash": 1517041164,
+   "contacts": 6,
+   "missed": 0,
+   "actions": [
+    "3.01 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.26,
+     "p99": 5.5,
+     "worst": 13.6
+    },
+    "frameP99": 16.8,
+    "replanWorst": 9.9
+   },
+   "session": "baseline_session.json"
+  },
+  {
+   "cfg": "A",
+   "config": "A (all off = 88573ef0)",
+   "determinism": true,
+   "hash": 3526363726,
+   "contacts": 6,
+   "missed": 0,
+   "actions": [
+    "3.01 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.23,
+     "p99": 4.6,
+     "worst": 11.6
+    },
+    "frameP99": 16.8,
+    "replanWorst": 9.5
+   },
+   "session": "A_session.json"
+  },
+  {
+   "cfg": "B1",
+   "config": "B1",
+   "determinism": true,
+   "hash": 1237766885,
+   "contacts": 6,
+   "missed": 0,
+   "actions": [
+    "3.01 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.5,
+     "p99": 4.1,
+     "worst": 6.5
+    },
+    "frameP99": 16.8,
+    "replanWorst": 3.2
+   },
+   "session": "B1_session.json"
+  },
+  {
+   "cfg": "B2",
+   "config": "B2",
+   "determinism": true,
+   "hash": 2229082445,
+   "contacts": 6,
+   "missed": 0,
+   "actions": [
+    "3.01 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.23,
+     "p99": 3.7,
+     "worst": 6.2
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.2
+   },
+   "session": "B2_session.json"
+  },
+  {
+   "cfg": "B3",
+   "config": "B3",
+   "determinism": true,
+   "hash": 3526363726,
+   "contacts": 6,
+   "missed": 0,
+   "actions": [
+    "3.00 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.44,
+     "p99": 4.4,
+     "worst": 6.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 4.7
+   },
+   "session": "B3_session.json"
+  },
+  {
+   "cfg": "B4",
+   "config": "B4",
+   "determinism": true,
+   "hash": 3574178374,
+   "contacts": 5,
+   "missed": 0,
+   "actions": [
+    "3.01 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.54,
+     "p99": 8,
+     "worst": 11.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 9.1
+   },
+   "session": "B4_session.json"
+  },
+  {
+   "cfg": "B5",
+   "config": "B5",
+   "determinism": true,
+   "hash": 2641596035,
+   "contacts": 5,
+   "missed": 0,
+   "actions": [
+    "3.01 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.52,
+     "p99": 6.7,
+     "worst": 8.4
+    },
+    "frameP99": 16.8,
+    "replanWorst": 6.9
+   },
+   "session": "B5_session.json"
+  },
+  {
+   "cfg": "ALL",
+   "config": "ALL",
+   "determinism": true,
+   "hash": 2228816512,
+   "contacts": 5,
+   "missed": 0,
+   "actions": [
+    "3.01 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.32,
+     "p99": 6.8,
+     "worst": 9.3
+    },
+    "frameP99": 16.8,
+    "replanWorst": 8.4
+   },
+   "session": "ALL_session.json"
+  }
+ ],
+ "chain": [
+  {
+   "target": "A",
+   "config": "A (all off = 88573ef0)",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  },
+  {
+   "target": "B1",
+   "config": "B1",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  },
+  {
+   "target": "B2",
+   "config": "B2",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  },
+  {
+   "target": "B3",
+   "config": "B3",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  },
+  {
+   "target": "B4",
+   "config": "B4",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  },
+  {
+   "target": "B5",
+   "config": "B5",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 100395626
+  },
+  {
+   "target": "ALL",
+   "config": "ALL",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2891095338
+  },
+  {
+   "target": "baseline",
+   "config": "locked 88573ef0",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3598514676
+  }
+ ],
+ "chainBackIdentical": true,
+ "logs": [],
+ "http": []
+}
