@@ -28,6 +28,9 @@ export class UnifiedSim extends PlaySim {
   step(req) {
     // (the request's recent headings, for B4's analog reading — a ring of 0.25 s; recorded always, read only by the unified B4 scoring)
     { const R = this.rq || (this.rq = { h: new Float64Array(60).fill(NaN), k: -1 }); R.k = this.k; R.h[this.k % 60] = req && req.h != null ? req.h : NaN; }
+    // (C + B4: a stick ROTATING steadily re-plans in 10° steps instead of 88573ef0's 4° — A99-C re-accelerates only once a motion completes, and
+    // a 270°/s circle restarted it every 15 ms: the body stalled at 0.6 m/s while the ball ran on. A snap is unaffected)
+    this.reqThresh = this.L.c && this.L.generic && this.o.ballOn !== false && this.rotation().coh ? 10 : 4;
     // (BALL OFF: Astra's movement probe samples analog changes at up to 60 Hz; BALL ON keeps 88573ef0's request thresholds)
     if (this.o.ballOn === false && this.L.c && this.k % 4 === 0 && req?.h != null && this.req?.h != null && Math.abs(wrap(req.h - this.plan.req.h)) > 0.1 * DEG) this.flags.replan = "analog movement";
     return super.step(req); }
@@ -162,6 +165,12 @@ UnifiedSim.prototype.footProxy = function (X, P, t) { const L = P.stances[X]; if
 // (the measure: how far the candidate moves that foot's path NOW — its swing under the running plan against its swing under the candidate, both
 // from its lift-off toward their touch / landing — over the time left before the new touch: what the drawn foot must make up, at most 6 m/s)
 UnifiedSim.prototype.swingCont = function (c, cur) { const t = this.t; let worst = 0;
+  // (a NEW touch played soon after its foot lifts — < 0.12 s — far beyond where that foot can get from its lift-off: relative to the body over
+  // 14 m/s is a foot that would have to jump there)
+  for (const nc of c.contacts) { if (nc.done || nc.t <= t + 1e-9 || cur.contacts.some((q) => q.F === nc.F && !q.done && abs(q.t - nc.t) < 0.02)) continue;
+    let lift = null; for (const s of c.stances[nc.F]) if (s.t1 !== Infinity && s.t1 <= nc.t + 1e-9) lift = s; if (!lift || nc.t - lift.t1 > 0.12 || !lift.pos) continue;
+    const t0 = Math.max(lift.t1, t - 0.4), R0 = this.stateAt(t0, c).P, R1 = this.stateAt(nc.t, c).P, B = nc.bPred || predict(this.ball.p, this.ball.v, nc.t - t).p, rel = hyp(B[0] - lift.pos[0] - (R1[0] - R0[0]), B[1] - lift.pos[1] - (R1[1] - R0[1])) / Math.max(DT, nc.t - t0);
+    if (rel > 14) worst = Math.max(worst, 0.5 + rel / 14 - 1); }
   for (const X of ["R", "L"]) { const f = this.footProxy(X, cur, t); if (!f) continue;
     const nc = c.contacts.find((q) => q.F === X && !q.done && q.t > t + 1e-9 && q.t < f.b.t0 + 0.2 && !c.stances[X].some((s) => s.t0 <= q.t && s.t1 >= q.t && s.t0 > t)); if (!nc) continue;
     if (cur.contacts.some((q) => q.F === X && !q.done && abs(q.t - nc.t) < 0.02)) continue;   // (the touch it was already swinging to)

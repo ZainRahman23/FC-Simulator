@@ -152,7 +152,7 @@ export class PlaySim {
     const t = this.t; this.req = req && req.h != null ? { h: Math.round(req.h * 1e6) / 1e6, mode: req.mode || "RUN", keys: req.keys | 0 } : { h: null, mode: (req && req.mode) || "RUN", keys: req ? req.keys | 0 : 0 };
     this.log.input.push(this.req.h == null ? -99 : this.req.h, MODES.indexOf(this.req.mode), this.req.keys);
     // the request changed? (direction > 4°, the mode, start / stop)
-    const L = this.lastReq, q = this.req; if (!L || (L.h == null) !== (q.h == null) || L.mode !== q.mode || (q.h != null && abs(wrap(q.h - L.h)) > 4 * DEG)) { this.flags.replan = this.flags.replan || "request"; this.lastReq = q; }
+    const L = this.lastReq, q = this.req; if (!L || (L.h == null) !== (q.h == null) || L.mode !== q.mode || (q.h != null && abs(wrap(q.h - L.h)) > (this.reqThresh || 4) * DEG)) { this.flags.replan = this.flags.replan || "request"; this.lastReq = q; }
     // the contacts due now: one kernel launch each, from the ball's actual state
     for (const c of this.plan.contacts) if (!c.done && c.k === this.k) this.execute(c);
     // footfalls now (the gait progresses: a re-plan keeps the plan fresh)
