@@ -272,6 +272,9 @@ function updateHud(h) {
   const S = V.sim, d = V.dom, top = h.why.slice(0, 4).map((w) => `${(w.label + (w.m ? (w.m > 0 ? " R" : " L") : "")).padEnd(17)} ${String((+w.J).toFixed(2)).padStart(5)}  ${(w.note || "").slice(0, 58)}`).join("\n");
   const lastC = h.last, prov = S.P.provisional;
   const cfg = configName(V.engine, V.layers), acts = V.engine === "layered" ? LAYERS.filter((x) => V.layers[x.id]).map((x) => x.id).join(" · ") || "no layer (= 88573ef0)" : "the locked engine";
+  // (the clean page: without ⚙ diagnostics the HUD is the action, its phase and the speeds — everything else behind the toggle)
+  if (!document.body.classList.contains("diagOn")) { d.hud.innerHTML = `<span style="color:#ff9b8d;font-weight:700">${cfg}</span>${V.ballOn || V.engine !== "layered" ? "" : "  <span style=\"color:#9ad7ff\">BALL OFF</span>"}\n<div class="act">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}</div>` +
+      `${h.mode.toLowerCase()} · player ${h.speed.toFixed(1)} m/s · ball ${h.ballSpeed.toFixed(1)} m/s · separation ${h.sep.toFixed(2)} m`; d.prov.textContent = ""; return; }
   d.hud.innerHTML = `<span style="color:${V.engine === "layered" ? "#ffd45e" : "#8dffa6"};font-weight:700">${cfg}</span>  <span style="color:#8fa49a">${acts}</span>\n` + solutionHtml(h) + `<div class="act" style="font-size:12px">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}${V.paused && !V.replay ? "  ·  PAUSED" : ""}</div>` +
     `mode ${h.mode.padEnd(6)} requested ${h.reqSpeed.toFixed(1)} m/s\nplayer ${h.speed.toFixed(2)} m/s   ball ${h.ballSpeed.toFixed(2)} m/s\n` +
     `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" +

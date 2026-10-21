@@ -15,7 +15,7 @@ import { WIDTH, lead } from "../tc_baseline_88573ef0/pt_params.js";
 import { predict } from "../tc_baseline_88573ef0/pt_ball.js";
 import { PROFILES, advance } from "../agility99/movement.js";
 import { bodyGaitFrom as astraGait } from "../agility99/body_gait.js";
-import { bodyGaitFrom } from "./u_gait.js";
+import { bodyGaitFrom, gaitPlace } from "./u_gait.js";
 export * from "./u_tc.js";
 const C = PROFILES["A99-C"], abs = Math.abs, min = Math.min, max = Math.max, hyp = Math.hypot, sgn = (X) => (X === "R" ? 1 : -1), other = (X) => (X === "R" ? "L" : "R");
 export class UnifiedSim extends PlaySim {
@@ -103,8 +103,9 @@ UnifiedSim.prototype.gaitFrom = function (plan, keep, anchors, tTo) {
     // (the anchor may re-time the landing — 0.03 s sooner, up to 0.13 s later while it is not frozen (Astra's two 0.065 s extensions) — and move
     // it as far as a swing can still be steered in the time left: 8 cm + 4.8 m/s × the time before the freeze)
     const A = anchors.find((a) => a.F === F && a.t0 >= c.t0 - 0.03 - 1e-9 && a.t0 <= c.t0 + (rem > 0.055 ? 0.13 : 0.03) + 1e-9);
-    if (A) { const want = A.pos || this.placeFor(F, A.t0, plan), allow = rem < 0.055 ? 0.03 : 0.08 + 4.8 * (rem - 0.055); if (hyp(want[0] - c.pos[0], want[1] - c.pos[1]) <= Math.max(cap, allow)) { L.splice(i, 1); i--; } else blocked.add(A); continue; }
-    const want = this.placeFor(F, c.t0, plan), d = hyp(want[0] - c.pos[0], want[1] - c.pos[1]), k = Math.min(1, cap / Math.max(d, 1e-9)); c.pos = [c.pos[0] + (want[0] - c.pos[0]) * k, c.pos[1] + (want[1] - c.pos[1]) * k];
+    if (A) { const want = A.pos || gaitPlace.call(this, plan, K.stances, F, A.t0, A.t1), allow = rem < 0.055 ? 0.03 : 0.08 + 4.8 * (rem - 0.055); if (hyp(want[0] - c.pos[0], want[1] - c.pos[1]) <= Math.max(cap, allow)) { L.splice(i, 1); i--; } else blocked.add(A); continue; }
+    // (revised toward the gait's OWN place for it on the new path — 88573ef0's rule: its own side of the other foot, off the free ball's path)
+    const want = gaitPlace.call(this, plan, K.stances, F, c.t0, c.t1), d = hyp(want[0] - c.pos[0], want[1] - c.pos[1]), k = Math.min(1, cap / Math.max(d, 1e-9)); c.pos = [c.pos[0] + (want[0] - c.pos[0]) * k, c.pos[1] + (want[1] - c.pos[1]) * k];
     const R0 = this.stateAt(c.t0, plan).P; if (hyp(c.pos[0] - R0[0], c.pos[1] - R0[1]) > 0.62) { L.splice(i, 1); i--; } } }
   // (an anchor the body cannot stand on — its place over 1.3 m from the root at its touchdown: a plant planned beside a ball that has gone — is
   // refused: the candidate is not feasible)
@@ -123,7 +124,15 @@ UnifiedSim.prototype.anchorTimes = function (X, keep, st) {
 // foot cannot reach a ball a metre away 0.09 s after it lifts (ordinary swings are 88573ef0's, unchanged). Such an end is skipped (88573ef0's own skip: the next swing end decides) — positions of the plan only)
 UnifiedSim.prototype.carryTouches = function (plan, keep, q, recover = false, skip = null) {
   const out = PlaySim.prototype.carryTouches.call(this, plan, keep, q, recover, skip); if (!this.L.support || !out.list.length || (skip && skip.size >= 6)) return out;
-  const c = out.list[0]; if (keep.contacts.includes(c) || !c.bPred) return out; const L = plan.stances[c.F]; let lift = null, land = null;
+  const c = out.list[0]; if (keep.contacts.includes(c) || !c.bPred) return out;
+  // (one foot, one history: a foot already swinging is not handed a NEW touch in its last 0.09 s more than 12 cm off its way — that end is
+  // skipped like the rest, the next one decides)
+  { const f = this.footProxy(c.F, this.plan, this.t); if (f && c.t - this.t < 0.09 && !this.plan.contacts.some((q) => q.F === c.F && !q.done && Math.abs(q.t - c.t) < 0.02)) {
+      const u = Math.max(0, Math.min(1, (this.t - f.a.t1) / Math.max(1e-3, c.t - f.a.t1))), g = [f.a.pos[0] + (c.bPred[0] - f.a.pos[0]) * u, f.a.pos[1] + (c.bPred[1] - f.a.pos[1]) * u];
+      const uS = Math.max(0, Math.min(1, (this.t - f.a.t1) / Math.max(1e-3, f.b.t0 - f.a.t1))), Hs = Math.min(0.5, 0.05 * this.stateAt(this.t, this.plan).s) * Math.sin(Math.PI * uS);
+      if (Math.hypot(g[0] - f.p[0], g[1] - f.p[1], Hs) > 0.12) { (this._rej = this._rej || {})["late retarget"] = (this._rej["late retarget"] || 0) + 1; const L2 = plan.stances[c.F], ld = L2.find((s) => s.t0 > c.t);
+        if (ld) return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), c.F + (ld.t0 - CARRY.touchBefore).toFixed(4)])); } } }
+  const L = plan.stances[c.F]; let lift = null, land = null;
   for (const s of L) { if (s.t1 <= c.t + 1e-9) lift = s; else if (s.t0 > c.t && !land) land = s; } if (!lift || !land || lift.t1 === Infinity) return out;
   // (relative to the body: the foot's way to the ball less the root's own travel meanwhile — a sprinting foot covers metres with the body)
   const t0 = Math.max(lift.t1, this.t - 0.4), R0 = this.stateAt(t0, plan).P, R1 = this.stateAt(c.t, plan).P, rx = c.bPred[0] - lift.pos[0] - (R1[0] - R0[0]), ry = c.bPred[1] - lift.pos[1] - (R1[1] - R0[1]);
@@ -151,7 +160,12 @@ UnifiedSim.prototype.swingCont = function (c, cur) { const t = this.t; let worst
   for (const X of ["R", "L"]) { const f = this.footProxy(X, cur, t); if (!f) continue;
     const nc = c.contacts.find((q) => q.F === X && !q.done && q.t > t + 1e-9 && q.t < f.b.t0 + 0.2 && !c.stances[X].some((s) => s.t0 <= q.t && s.t1 >= q.t && s.t0 > t)); if (!nc) continue;
     if (cur.contacts.some((q) => q.F === X && !q.done && abs(q.t - nc.t) < 0.02)) continue;   // (the touch it was already swinging to)
-    const g = this.footProxy(X, c, t); if (!g) continue; const need = hyp(g.p[0] - f.p[0], g.p[1] - f.p[1]) / Math.max(DT, nc.t - t);
+    // (a foot in the air is also UP: its swing's height at this phase — ≈ 0.09 + min(0.5, 0.05 × speed) × sin(π u) m — a touch on the ground
+    // must also come down from there)
+    const g = this.footProxy(X, c, t); if (!g) continue; const u = Math.max(0, Math.min(1, (t - f.a.t1) / Math.max(1e-3, f.b.t0 - f.a.t1))), Hs = Math.min(0.5, 0.05 * this.stateAt(t, cur).s) * Math.sin(Math.PI * u);
+    const dep = Math.hypot(g.p[0] - f.p[0], g.p[1] - f.p[1], Hs), left = nc.t - t, need = dep / Math.max(DT, left);
+    // (in its last 0.09 s a swinging foot is not handed a NEW touch more than 12 cm from its way: it is committed to where it is going)
+    if (left < 0.09 && dep > 0.12) worst = Math.max(worst, 2.0);
     if (need > 6) worst = Math.max(worst, need / 6 - 1); }
   return worst; };
 UnifiedSim.prototype.costB4 = function (c, st, q, cur) {
@@ -160,6 +174,6 @@ UnifiedSim.prototype.costB4 = function (c, st, q, cur) {
   const r = this.rotation(); if (r.coh) { const R = Math.max(0, Math.min(1, (abs(r.w) - 45 * DEG) / (90 * DEG)));
     if (a.tech) { o.J += 2.5 * R; notes.push("analog curve"); } else if (a.kind === "GENERIC" && (a.fam === "URG" || a.fam === "BRT" || a.fam === "BPV")) { o.J += 1.5 * R; notes.push("analog curve"); }
     if (a.kind !== ca.kind || (a.m || 0) !== (ca.m || 0) || (a.fam || "") !== (ca.fam || "") || (a.tech || "") !== (ca.tech || "")) { o.J += 0.5 * R; notes.push("(flow)"); } }
-  if (this.L.support) { const v = this.swingCont(c, cur); if (v > 0) { o.J += 2.0 * Math.min(3, v); notes.push(`foot ${(100 * v).toFixed(0)} % past its reach`); } }
+  if (this.L.support) { const v = this.swingCont(c, cur); if (v > 0) { o.J += 3.0 * Math.min(3, v); notes.push(`foot ${(100 * v).toFixed(0)} % past its reach`); } }
   if (notes.length) o.note = (o.note ? o.note + " · " : "") + notes.join(" · "); return o; };
 export { PlaySim as TCSim };

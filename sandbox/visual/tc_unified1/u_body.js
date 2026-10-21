@@ -276,7 +276,9 @@ export class PlayBody {
     let reachM = 0; const c = Math.cos(psi), s = Math.sin(psi);
     if (support) { // (SUPPORT: the rendered root is the authoritative root, exactly — no horizontal reach pull; a planted / contacting / swinging leg
       // that cannot reach lowers the whole body a little instead (Astra's vertical compression, ≤ 7.5 cm), continuously)
-      const nominalY = pelvis[1]; for (const X of SIDES) { const sx = sgnF(X), a = this.toM(feet[X].ank, P, psi), hip = Q.v(Rp, [sx * b.hipX, 0, 0]), dx = a[0] - hip[0], dz = a[2] - pelvis[2] - hip[2], vertical = Math.sqrt(Math.max(0.1, (b.legLen * 0.985) ** 2 - dx * dx - dz * dz));
+      // (88573ef0's rule for which legs count: a planted or contacting one — a swinging leg out of reach stays a little short, as in the
+      // original RUN, instead of lowering the body each stride)
+      const nominalY = pelvis[1]; for (const X of SIDES) { if (!feet[X].planted && !feet[X].contact) continue; const sx = sgnF(X), a = this.toM(feet[X].ank, P, psi), hip = Q.v(Rp, [sx * b.hipX, 0, 0]), dx = a[0] - hip[0], dz = a[2] - pelvis[2] - hip[2], vertical = Math.sqrt(Math.max(0.1, (b.legLen * 0.985) ** 2 - dx * dx - dz * dz));
         pelvis[1] = Math.min(pelvis[1], Math.max(nominalY - 0.075, a[1] + vertical - hip[1])); } reachM = nominalY - pelvis[1]; }
     else     for (let it = 0; it < 3; it++) { let moved = false, dP = [0, 0], drop = 0;
       for (const X of SIDES) { const fX = feet[X], wC = fX.planted ? 1 : fX.contact ? 1 : 0; if (wC <= 0) continue; const sx = sgnF(X), hipM = [pelvis[0] + sx * b.hipX, pelvis[1], pelvis[2]], an = this.toM(fX.ank, P, psi), d = hyp(an[0] - hipM[0], an[1] - hipM[1], an[2] - hipM[2]), lim = RF.reach * b.legLen;

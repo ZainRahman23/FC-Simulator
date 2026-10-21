@@ -32,7 +32,9 @@ export const SCEN = [
   ["OUTSIDE CUT", "favourable", "SPRINT", 60], ["OUTSIDE CUT", "favourable", "JOG", 90], ["OUTSIDE CUT", "nearby", "SPRINT", 45] ];
 export const scenSpecs = (mode, ang) => { const L = []; for (const s of [1, -1]) for (let i = 0; i < 4; i++) { const t0 = RUNUP + PH[i]; L.push({ mode, fam: `${mode.toLowerCase()} ${ang}°`, name: `${mode.toLowerCase()} snap ${ang * s}° #${i}`, f: steps([[t0, ang * s]]), changes: [t0], held: [t0], dur: t0 + 2.4 }); } return L; };
 export const NAMED = SCEN.flatMap(([tech, kind, mode, ang]) => scenSpecs(mode, ang).slice(0, 1).concat(scenSpecs(mode, ang).slice(4, 5)).map((x) => Object.assign({}, x, { name: `named · ${tech.toLowerCase()} ${kind} · ${x.name}` })));
-export function reqOf(f, t, M) { const a = f(t); if (a === null) return { h: null, mode: "RUN", keys: 64 }; const v = stickVector(Math.sin(a * DEG) * M.r, Math.cos(a * DEG) * M.r); return { h: t < 0.2 ? null : headingFrom(0, v.x, v.y), mode: M.sprint ? "SPRINT" : stickMode(v.r), keys: 64 }; }
+// (TC-UNIFIED-1: exactly the page's request — the stick at rest (the first 0.2 s, a null angle = released) asks for the page's base mode, RUN,
+// or SPRINT while the test holds the sprint button; before, the node traces asked JOG / RUN by the held stick's zone there)
+export function reqOf(f, t, M) { const a = t < 0.2 ? null : f(t); if (a === null) return { h: null, mode: M.sprint ? "SPRINT" : "RUN", keys: 64 }; const v = stickVector(Math.sin(a * DEG) * M.r, Math.cos(a * DEG) * M.r); return { h: t < 0.2 ? null : headingFrom(0, v.x, v.y), mode: M.sprint ? "SPRINT" : stickMode(v.r), keys: 64 }; }
 // ═══ TC-UNIFIED-1: THE OWNER'S MORNING PLAYTEST CASES (overnight brief §28) — one trace each, launched from the page (the same stick mapping) ═══
 // after the 3 s straight run-up (RUNUP); a null angle = the stick released (stop). The favourable examples: the states where the FULL stack
 // itself chooses each named move / generic family (tools/u_grid.mjs surveys JOG / RUN / SPRINT × 30 … 180°; the trace = the stride phase and
@@ -54,5 +56,5 @@ export const MORNING = [
   M("gradual 0 → 90° · sprint (90°/s)", "SPRINT", ramp(90, 90), T0 + 3, { continuous: true }),
   M("0 → 90 → 0 → −90 · sprint (0.6 s each)", "SPRINT", fx([[T0, 90], [T0 + 0.6, 0], [T0 + 1.2, -90], [T0 + 1.8, 0]]), T0 + 3.4),
   M("stop / restart · run", "RUN", fx([[T0, null], [T0 + 1.6, 0]]), T0 + 4.2),
-  fav("Ronaldo Chop", "RUN", 105, 0), fav("Cruyff Turn", "JOG", 105, 1), fav("Inside Hook", "RUN", 135, 0), fav("Drag-back", "SPRINT", 180, 0), fav("Outside Cut", "JOG", 90, 1),
-  fav("compact inside redirect", "RUN", 75, 6), fav("compact outside redirect", "RUN", 75, 2), fav("braking pivot", "JOG", 105, 6), fav("braking touch", "RUN", 165, 2), fav("urgent reach", "SPRINT", 30, 1) ];
+  fav("Ronaldo Chop", "RUN", 105, 6), fav("Cruyff Turn", "JOG", 105, 2), fav("Inside Hook", "RUN", 135, 6), fav("Drag-back", "SPRINT", 180, 3), fav("Outside Cut", "JOG", 60, 2),
+  fav("compact inside redirect", "RUN", 75, 6), fav("compact outside redirect", "RUN", 75, 2), fav("braking pivot", "JOG", 105, 4), fav("braking touch", "RUN", 165, 2), fav("urgent reach", "SPRINT", 60, 7), fav("gather", "JOG", 60, 6) ];

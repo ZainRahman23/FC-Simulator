@@ -1,7 +1,9 @@
 // ═══ tc_unified1/u_gait.js — THE SUPPORT GAIT: Astra's bodyGaitFrom (../agility99/body_gait.js, copied unchanged: the demand-driven cadence —
 // shortened re-organisation steps on hard turns / braking, compact restarts) + ONE line from the TC gait (u_tc.js gaitFrom): an anchor without
 // its own stance length (B2's shortened step; B4 / B5's "after the action" step, its generic plant) gets the gait's — Astra's BALL OFF probe never
-// schedules such anchors, so its copy never needed it (without it the stance has t1 = null: the foot drawn lifting at once, a 2 m jump)
+// schedules such anchors, so its copy never needed it (without it the stance has t1 = null: the foot drawn lifting at once, a 2 m jump) — and
+// a stance already lifted is never re-extended by lift() (88573ef0's lift moved an ENDED stance's end to t + 0.02; each re-plan repeated it, the
+// foot drawn planted ↔ swinging every other tick in the fast circle)
 // ── (Astra's header, unchanged) ──
 // BALL OFF support adapter, derived verbatim from the locked baseline gaitFrom.
 // Retain RUN1 duty at speed, shorten reorganization steps smoothly on hard
@@ -39,7 +41,8 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const stanceD = (tt) => { const G = cad(tt); return G.D * 2 * G.Ts; };
     const step = (X, td) => { const st = { id: ++this.sid, F: X, t0: td, t1: td + stanceD(td), pos: place(X, td, td + stanceD(td)), yaw: yawOf(X, td), kind: this.stateAt(td, plan).s < 2.4 ? "walk" : "stride", src: "gait" }; S[X].push(st); return st; };
     // a planted foot that must step lifts in time (a standing foot: now)
-    const lift = (X, tdNext) => { const l = lastOf(X); if (l.t1 === Infinity || l.t1 > tdNext - 0.14) l.t1 = max(l.t0 + 0.06, min(tdNext - 0.14, l.t1 === Infinity ? t + 0.02 : l.t1), t + 0.02); };
+    const lift = (X, tdNext) => { const l = lastOf(X); if (l.t1 !== Infinity && l.t1 <= t + 1e-9) return;   // (TC-UNIFIED-1: a stance already lifted stays lifted — never re-extended to t + 0.02)
+      if (l.t1 === Infinity || l.t1 > tdNext - 0.14) l.t1 = max(l.t0 + 0.06, min(tdNext - 0.14, l.t1 === Infinity ? t + 0.02 : l.t1), t + 0.02); };
     // the last touchdown (a tie — both feet down together — goes to a technique's own stance, else to the right foot: never the mirror's opposite)
     const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); if (abs(r.t0 - l.t0) < 1e-9) return r.src === "tech" ? r : l.src === "tech" ? l : r; return r.t0 > l.t0 ? r : l; };
     const moving = plan.req && plan.req.h != null;
@@ -72,3 +75,14 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     for (const X of ["R", "L"]) { const L = S[X]; for (let i = 0; i + 1 < L.length; i++) if (L[i].t1 > L[i + 1].t0 - 0.14 && L[i].t1 > t) L[i].t1 = max(L[i].t0 + 0.05, L[i + 1].t0 - 0.14, t + 0.005); }
     return S;
   }
+// ═══ TC-UNIFIED-1: THE GAIT'S OWN FOOTFALL PLACE, for revising a COMMITTED landing (u_sim.js gaitFrom) — the same rule as place() / offBall()
+// above (the lead / width on the plan's path, its own side of the other foot's stance, off the free ball's path while it stands); `this` is the
+// simulation, S the kept stances (the other foot's stance before tt is the one it keeps its side of)
+export function gaitPlace(plan, S, X, tt, t1) {
+  const t = this.t, bp0 = this.ball.p, bv0 = this.ball.v, s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h) - s0.h)) / (60 * DEG)), ld = v < 0.3 ? 0 : lead(v);
+  let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X), L = S[other(X)]; let o = null; for (const q of L) if (q.t0 <= tt + 1e-9) o = q;
+  if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; }
+  const tEnd = min(t1 != null ? t1 : tt + 0.25, tt + 0.6); let need = 0, side = sgn(X);
+  for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(s0.psi) + d[1] * Math.sin(s0.psi), l = d[0] * r[0] + d[1] * r[1];
+    if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
+  return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; }
