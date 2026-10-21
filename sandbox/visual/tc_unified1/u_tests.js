@@ -56,5 +56,5 @@ export const MORNING = [
   M("gradual 0 → 90° · sprint (90°/s)", "SPRINT", ramp(90, 90), T0 + 3, { continuous: true }),
   M("0 → 90 → 0 → −90 · sprint (0.6 s each)", "SPRINT", fx([[T0, 90], [T0 + 0.6, 0], [T0 + 1.2, -90], [T0 + 1.8, 0]]), T0 + 3.4),
   M("stop / restart · run", "RUN", fx([[T0, null], [T0 + 1.6, 0]]), T0 + 4.2),
-  fav("Ronaldo Chop", "RUN", 105, 6), fav("Cruyff Turn", "JOG", 105, 2), fav("Inside Hook", "RUN", 135, 6), fav("Drag-back", "SPRINT", 180, 3), fav("Outside Cut", "JOG", 60, 2),
-  fav("compact inside redirect", "RUN", 75, 6), fav("compact outside redirect", "RUN", 75, 2), fav("braking pivot", "JOG", 105, 4), fav("braking touch", "RUN", 165, 2), fav("urgent reach", "SPRINT", 60, 7), fav("gather", "JOG", 60, 6) ];
+  fav("Ronaldo Chop", "RUN", 105, 6), fav("Cruyff Turn", "JOG", 135, 4), fav("Inside Hook", "RUN", 135, 6), fav("Drag-back", "SPRINT", 180, 3), fav("Outside Cut", "JOG", 75, 1),
+  fav("compact inside redirect", "RUN", 75, 6), fav("compact outside redirect", "RUN", 75, 2), fav("braking pivot", "JOG", 105, 4), fav("braking touch", "RUN", 165, 2), fav("urgent reach", "JOG", 60, 6), fav("gather", "JOG", 45, 1) ];
