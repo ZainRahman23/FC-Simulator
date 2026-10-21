@@ -67,7 +67,9 @@ export class PlayBody {
     const key = "c" + (rec ? "r" + rec.n : "p" + c.id + "@" + P.v); let o = this.cache.get(key); if (o) return o;
     let ball, vIn, vOut, src = rec || c;
     if (rec) { ball = rec.ball; vIn = rec.vIn; vOut = rec.vOut; }
-    else { const B = S.ballTrack(P.t0), f = predict(B.p, B.v, c.t - P.t0); ball = [f.p[0], f.p[1], R]; vIn = f.v;
+    // (SUPPORT: the ball as the simulation saw it when it made this plan — after that tick's contact, if one was made then: the record at the
+    // plan's tick is the state BEFORE that tick's kick (88573ef0's body predicted the next touch from the pre-kick ball, up to 0.85 m off))
+    else { const t0 = S.L && S.L.support ? P.t0 + DT : P.t0, B = S.ballTrack(t0), f = predict(B.p, B.v, c.t - t0); ball = [f.p[0], f.p[1], R]; vIn = f.v;
       if (c.aim.kind === "target") { const d = [c.aim.P[0] - ball[0], c.aim.P[1] - ball[1]], D = hyp(d[0], d[1]), sp = min(13.5, speedFor(D, max(0.05, c.aim.T - c.t)) || 13.5); vOut = D > 1e-4 ? [d[0] / D * sp, d[1] / D * sp] : [0, 0]; }
       else vOut = [c.aim.speed * Math.cos(c.aim.h), c.aim.speed * Math.sin(c.aim.h)]; }
     const dv = [vOut[0] - vIn[0], vOut[1] - vIn[1]], m = hyp(dv[0], dv[1]);
@@ -163,7 +165,8 @@ export class PlayBody {
       { S.op = S.op || 0; S.opv = S.opv || 0; const a = -wy * wy * S.op - 2 * wy * S.opv; S.opv += a * DT; S.op += S.opv * DT; if (Math.abs(wy * DT) > 0.9) { S.op = 0; S.opv = 0; } }
       // (a FOOT SPEED LIMIT: the drawn ankle never moves more than 9 cm in a tick (≈ 22 m/s, a kicking foot's speed) — the excess goes into the
       // offset and is caught up by the spring; the spring itself is capped at 5 m/s relative — no plan switch, no fast authored swing teleports a foot)
-      { const m = hyp(S.ov[0], S.ov[1], S.ov[2]); if (m > 5) for (let i = 0; i < 3; i++) S.ov[i] *= 5 / m; }
+      // (the cap rises toward a coming contact just enough for the offset to be gone there: ≤ 14 m/s, the drawn foot still ≤ 9 cm / tick)
+      { const m = hyp(S.ov[0], S.ov[1], S.ov[2]), om = hyp(S.o[0], S.o[1], S.o[2]), cap = ev.tc != null && ev.tc - t < 0.2 ? clamp(1.3 * om / Math.max(0.015, ev.tc - t - 0.01), 5, 14) : 5; if (m > cap) for (let i = 0; i < 3; i++) S.ov[i] *= cap / m; }
       let f = Object.assign({}, raw, { ank: [raw.ank[0] + S.o[0], raw.ank[1] + S.o[1], Math.max(HB.ankleH - 0.012, raw.ank[2] + S.o[2])], yaw: raw.yaw + S.oy, pitch: (raw.pitch || 0) + (S.op || 0), tlOff: hyp(S.o[0], S.o[1], S.o[2]) });
       if (f.ballPt) f.ballPt = [f.ballPt[0] + S.o[0], f.ballPt[1] + S.o[1]];
       pre[X] = { f, ev }; }
@@ -256,7 +259,7 @@ export class PlayBody {
   poseAtAck(t, ak, support = false) {
     const E = this.E, R3 = E.R3, b = this.b, ch = this.ch, rot = {}, feet = { R: this.footAt("R", t), L: this.footAt("L", t) }, S = this.com(t), psi = this.psi(t) + ak.pelvis, V = this.vel(t), sp = hyp(V[0], V[1]), run = clamp(sp / 6, 0, 1), cy = this.cycle(t);
     const lR = this.loadOf("R", t), lL = this.loadOf("L", t), ld = clamp(lR + lL, 0, 1), wR = lR + lL > 1e-6 ? lR / (lR + lL) : 0.5, Fw = [wR * feet.R.ank[0] + (1 - wR) * feet.L.ank[0], wR * feet.R.ank[1] + (1 - wR) * feet.L.ank[1]];
-    const hc = Math.cos(psi), hs = Math.sin(psi), dF = [Fw[0] - S[0], Fw[1] - S[1]], lt = -dF[0] * hs + dF[1] * hc, kL = RF.comPull * (1 - 0.6 * run) * ld * (this.T.sway != null ? this.T.sway : 1); let P = [S[0] - lt * kL * hs, S[1] + lt * kL * hc];
+    const hc = Math.cos(psi), hs = Math.sin(psi), dF = [Fw[0] - S[0], Fw[1] - S[1]], lt = -dF[0] * hs + dF[1] * hc, kL = RF.comPull * (1 - 0.6 * run) * ld * (this.T.sway != null ? this.T.sway : 1), sw = support ? clamp(lt * kL, -0.04, 0.04) : lt * kL; let P = [S[0] - sw * hs, S[1] + sw * hc];   // (SUPPORT: 88573ef0's sway over the stance foot, ≤ 4 cm)
     const g = this.T.gait ? clamp(new RCurve(this.T.gait).at(t), 0, 1) : 1, bob = -clamp(RF.bob[0] + RF.bob[1] * sp, 0, RF.bob[2]) * Math.cos(2 * Math.PI * (cy.u - 0.35)) * g, gTw = sgnF(cy.sw) * clamp(RF.twist[0] + RF.twist[1] * sp, 0, RF.twist[2]) * DEG * Math.sin(Math.PI * cy.u) * g;
     const lean = ch.lean.at(t) * DEG, side = ch.side.at(t) * DEG, trunk = ch.trunk.at(t) * DEG, crouch = ch.crouch.at(t), arms = ch.arms.at(t);
     let pelvis = [0, b.pelvisY - 0.02 - crouch + bob + 0.012 * run, 0.02 * run], Rp = R3.mul3(R3.y(gTw), R3.x(lean * 0.35), R3.z(-side * 0.45));
