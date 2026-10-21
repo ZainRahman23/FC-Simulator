@@ -1,0 +1,514 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/tc_unified1.html",
+ "loadS": 0.129,
+ "defaults": {
+  "config": "FULL",
+  "ball": true,
+  "diagnostics": false,
+  "stickVisible": true,
+  "attrs": [
+   99,
+   99,
+   99
+  ],
+  "tests": 273
+ },
+ "runs": [
+  {
+   "name": "straight sprint",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 3356834531,
+   "contacts": 9,
+   "missed": 0,
+   "actions": [],
+   "perf": {
+    "work": {
+     "avg": 1.08,
+     "p99": 3.9,
+     "worst": 7.2
+    },
+    "frameP99": 16.8,
+    "replanWorst": 3.7
+   },
+   "shot": "01_straight_sprint.jpg",
+   "session": "01_straight_sprint_session.json"
+  },
+  {
+   "name": "straight run",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 3170616479,
+   "contacts": 13,
+   "missed": 0,
+   "actions": [],
+   "perf": {
+    "work": {
+     "avg": 1.37,
+     "p99": 3,
+     "worst": 5.5
+    },
+    "frameP99": 16.8,
+    "replanWorst": 1.6
+   },
+   "shot": "02_straight_run.jpg",
+   "session": "02_straight_run_session.json"
+  },
+  {
+   "name": "sprint 90°",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2157703219,
+   "contacts": 7,
+   "missed": 0,
+   "actions": [
+    "3.00 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.4,
+     "p99": 5.2,
+     "worst": 15.8
+    },
+    "frameP99": 16.8,
+    "replanWorst": 14.4
+   },
+   "shot": "03_sprint_90.jpg",
+   "session": "03_sprint_90_session.json"
+  },
+  {
+   "name": "sprint 180°",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2419940918,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.00 DRAG-BACK L"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.53,
+     "p99": 7.6,
+     "worst": 13.5
+    },
+    "frameP99": 16.8,
+    "replanWorst": 10.9
+   },
+   "shot": "04_sprint_180.jpg",
+   "session": "04_sprint_180_session.json"
+  },
+  {
+   "name": "tight analog curve · sprint (60°/s)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 1199160346,
+   "contacts": 16,
+   "missed": 0,
+   "actions": [
+    "4.05 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.55,
+     "p99": 6,
+     "worst": 8.7
+    },
+    "frameP99": 16.8,
+    "replanWorst": 7.1
+   },
+   "shot": "05_tight_analog_curve_sprint_60_s.jpg",
+   "session": "05_tight_analog_curve_sprint_60_s_session.json"
+  },
+  {
+   "name": "fast circle · sprint (270°/s)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 373435678,
+   "contacts": 10,
+   "missed": 1,
+   "actions": [
+    "3.28 COMPACT OUTSIDE REDIRECT",
+    "3.39 CRUYFF TURN L",
+    "3.80 DRAG-BACK R",
+    "4.03 CRUYFF TURN R",
+    "4.25 COMPACT OUTSIDE REDIRECT",
+    "4.83 COMPACT INSIDE REDIRECT",
+    "5.00 DRAG-BACK R",
+    "6.50 COMPACT OUTSIDE REDIRECT",
+    "6.92 INSIDE HOOK R",
+    "7.01 INSIDE HOOK R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 2.21,
+     "p99": 10.2,
+     "worst": 19.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 9.8
+   },
+   "shot": "06_fast_circle_sprint_270_s.jpg",
+   "session": "06_fast_circle_sprint_270_s_session.json"
+  },
+  {
+   "name": "0 → 90 → 0 → −90 · sprint (0.6 s each)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 3572716831,
+   "contacts": 12,
+   "missed": 0,
+   "actions": [
+    "3.00 COMPACT OUTSIDE REDIRECT",
+    "3.60 COMPACT INSIDE REDIRECT",
+    "4.20 COMPACT INSIDE REDIRECT",
+    "4.83 URGENT REACH"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.49,
+     "p99": 8.1,
+     "worst": 12.9
+    },
+    "frameP99": 16.8,
+    "replanWorst": 11.2
+   },
+   "shot": "07_0_90_0_90_sprint_0_6_s_each.jpg",
+   "session": "07_0_90_0_90_sprint_0_6_s_each_session.json"
+  },
+  {
+   "name": "rapid sprint left / right (±60° every 0.35 s)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 4229023918,
+   "contacts": 12,
+   "missed": 0,
+   "actions": [
+    "3.00 COMPACT OUTSIDE REDIRECT",
+    "3.59 COMPACT INSIDE REDIRECT",
+    "4.05 CRUYFF TURN R",
+    "5.80 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.34,
+     "p99": 4.9,
+     "worst": 7.5
+    },
+    "frameP99": 16.8,
+    "replanWorst": 6
+   },
+   "shot": "08_rapid_sprint_left_right_60_every_0_35_s.jpg",
+   "session": "08_rapid_sprint_left_right_60_every_0_35_s_session.json"
+  },
+  {
+   "name": "stop / restart · run",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2619715030,
+   "contacts": 12,
+   "missed": 0,
+   "actions": [],
+   "perf": {
+    "work": {
+     "avg": 0.98,
+     "p99": 3.1,
+     "worst": 6.7
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.2
+   },
+   "shot": "09_stop_restart_run.jpg",
+   "session": "09_stop_restart_run_session.json"
+  },
+  {
+   "name": "favourable · Ronaldo Chop (run -105° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 1510681536,
+   "contacts": 11,
+   "missed": 0,
+   "actions": [
+    "3.24 RONALDO CHOP R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.17,
+     "p99": 3.3,
+     "worst": 5.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 4.1
+   },
+   "shot": "10_favourable_ronaldo_chop_run_105_2.jpg",
+   "session": "10_favourable_ronaldo_chop_run_105_2_session.json"
+  },
+  {
+   "name": "favourable · Cruyff Turn (jog -135° #0)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 850154534,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.00 CRUYFF TURN R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.17,
+     "p99": 2.9,
+     "worst": 6.8
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.4
+   },
+   "shot": "11_favourable_cruyff_turn_jog_135_0.jpg",
+   "session": "11_favourable_cruyff_turn_jog_135_0_session.json"
+  },
+  {
+   "name": "favourable · Inside Hook (run -135° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2388791433,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.24 INSIDE HOOK R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.19,
+     "p99": 3.2,
+     "worst": 4.3
+    },
+    "frameP99": 16.8,
+    "replanWorst": 3.6
+   },
+   "shot": "12_favourable_inside_hook_run_135_2.jpg",
+   "session": "12_favourable_inside_hook_run_135_2_session.json"
+  },
+  {
+   "name": "favourable · Drag-back (sprint 180° #3)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 1295422717,
+   "contacts": 9,
+   "missed": 0,
+   "actions": [
+    "3.36 DRAG-BACK R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.3,
+     "p99": 3.6,
+     "worst": 10.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 8.5
+   },
+   "shot": "13_favourable_drag_back_sprint_180_3.jpg",
+   "session": "13_favourable_drag_back_sprint_180_3_session.json"
+  },
+  {
+   "name": "favourable · Outside Cut (jog 75° #1)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 1970614630,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.12 OUTSIDE CUT R",
+    "3.60 OUTSIDE CUT R"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.38,
+     "p99": 6,
+     "worst": 7.6
+    },
+    "frameP99": 16.8,
+    "replanWorst": 6.1
+   },
+   "shot": "14_favourable_outside_cut_jog_75_1.jpg",
+   "session": "14_favourable_outside_cut_jog_75_1_session.json"
+  },
+  {
+   "name": "favourable · compact inside redirect (run -75° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2478445299,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.24 COMPACT INSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.35,
+     "p99": 3.1,
+     "worst": 8.7
+    },
+    "frameP99": 16.8,
+    "replanWorst": 7.2
+   },
+   "shot": "15_favourable_compact_inside_redirect_run_75_2.jpg",
+   "session": "15_favourable_compact_inside_redirect_run_75_2_session.json"
+  },
+  {
+   "name": "favourable · compact outside redirect (run 75° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2207571605,
+   "contacts": 11,
+   "missed": 0,
+   "actions": [
+    "3.24 COMPACT OUTSIDE REDIRECT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.36,
+     "p99": 3,
+     "worst": 7.1
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.4
+   },
+   "shot": "16_favourable_compact_outside_redirect_run_75_2.jpg",
+   "session": "16_favourable_compact_outside_redirect_run_75_2_session.json"
+  },
+  {
+   "name": "favourable · braking pivot (jog -105° #0)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 3461097388,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.00 BRAKING PIVOT"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.29,
+     "p99": 3.4,
+     "worst": 6.2
+    },
+    "frameP99": 16.8,
+    "replanWorst": 4.8
+   },
+   "shot": "17_favourable_braking_pivot_jog_105_0.jpg",
+   "session": "17_favourable_braking_pivot_jog_105_0_session.json"
+  },
+  {
+   "name": "favourable · braking touch (run 165° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 3306452665,
+   "contacts": 10,
+   "missed": 0,
+   "actions": [
+    "3.24 BRAKING TOUCH"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.23,
+     "p99": 3.2,
+     "worst": 6.8
+    },
+    "frameP99": 16.8,
+    "replanWorst": 5.3
+   },
+   "shot": "18_favourable_braking_touch_run_165_2.jpg",
+   "session": "18_favourable_braking_touch_run_165_2_session.json"
+  },
+  {
+   "name": "favourable · urgent reach (jog -60° #2)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 2215448640,
+   "contacts": 9,
+   "missed": 0,
+   "actions": [
+    "3.68 URGENT REACH"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.03,
+     "p99": 3.2,
+     "worst": 9.2
+    },
+    "frameP99": 16.8,
+    "replanWorst": 7.6
+   },
+   "shot": "19_favourable_urgent_reach_jog_60_2.jpg",
+   "session": "19_favourable_urgent_reach_jog_60_2_session.json"
+  },
+  {
+   "name": "favourable · gather (jog 45° #1)",
+   "config": "FULL",
+   "determinism": true,
+   "hash": 1307709304,
+   "contacts": 9,
+   "missed": 0,
+   "actions": [
+    "3.12 GATHER"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.26,
+     "p99": 3.2,
+     "worst": 8.9
+    },
+    "frameP99": 16.8,
+    "replanWorst": 7
+   },
+   "shot": "20_favourable_gather_jog_45_1.jpg",
+   "session": "20_favourable_gather_jog_45_1_session.json"
+  }
+ ],
+ "chain": [
+  {
+   "target": "A",
+   "config": "A (88573ef0)",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2981567845
+  },
+  {
+   "target": "AC",
+   "config": "A + C",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 3216893886
+  },
+  {
+   "target": "ACS",
+   "config": "A + C + SUPPORT",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2886401237
+  },
+  {
+   "target": "ACS4",
+   "config": "A + C + SUPPORT + B4",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 4007506876
+  },
+  {
+   "target": "FULL",
+   "config": "FULL",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2826104439
+  }
+ ],
+ "chainBackIdentical": true,
+ "ballOff": {
+  "config": "FULL",
+  "determinism": true,
+  "rec": "ball_off_session.json"
+ },
+ "diagnosticsOn": true,
+ "logs": [],
+ "http": []
+}

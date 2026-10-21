@@ -360,7 +360,8 @@ let hudClock = 0;
 function frame(now) {
   if (V.lastNow == null) V.lastNow = now; const dtReal = min(0.1, (now - V.lastNow) / 1000); V.lastNow = now; const w0 = performance.now(); let nSteps = 0;
   if (V.replay) { const R = V.replay; if (R.playing) { R.t = min(R.t1, R.t + dtReal * R.rate); if (R.t >= R.t1) R.playing = false; } }
-  else if (!V.paused) { V.acc += dtReal * V.rate; const req = request(); while (V.acc >= DT - 1e-12 && nSteps < 60) { stepSim(req); V.acc -= DT; nSteps++; } if (nSteps >= 60) V.acc = 0; }
+  // (a playtest case is fed every 240 Hz tick from its own trace — exactly the node traces; live input is read once per frame)
+  else if (!V.paused) { V.acc += dtReal * V.rate; const req = request(); while (V.acc >= DT - 1e-12 && nSteps < 60) { stepSim(V.test ? request() : req); V.acc -= DT; nSteps++; } if (nSteps >= 60) V.acc = 0; }
   else if (V.stepReq) { const req = request(); for (let i = 0; i < V.stepReq; i++) stepSim(req); V.stepReq = 0; }
   const w1 = performance.now(), tShow = V.replay ? Math.round(V.replay.t / DT) * DT : V.sim.t, h = hudAt(tShow);
   const pose = V.show.anim ? V.body.pose(tShow) : null; const w2 = performance.now(); const dg = V.show.diag ? diagOf(pose, h) : null;
