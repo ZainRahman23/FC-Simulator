@@ -1,5 +1,0 @@
-import { makeSim, DT } from "./u_env.mjs"; import { presetLayers } from "../u_sim.js"; import { MORNING, MODES, reqOf } from "../u_tests.js";
-const PAGE = { attrs: { bc: 99, dri: 99, agi: 99 }, foot: "R", style: "NEUTRAL", seed: 1, start: { P: [52.5, 34], h: 0 } };
-for (const name of process.argv.slice(3)) { const sp = MORNING.find((x) => x.name.startsWith(name)); for (const cfg of process.argv[2].split(",")) { const sim = makeSim("TL", Object.assign(JSON.parse(JSON.stringify(PAGE)), { layers: presetLayers(cfg) })), sp2 = [];
-  for (let k = 0; k < Math.round(sp.dur / DT); k++) { sim.step(reqOf(sp.f, k * DT, MODES[sp.mode])); if (k % 60 === 0 && k * DT >= 3) { const s = sim.stateAt(sim.t), b = sim.ball.p; sp2.push(`${s.s.toFixed(1)}/${Math.hypot(b[0] - s.P[0], b[1] - s.P[1]).toFixed(1)}`); } }
-  const acts = sim.log.actions.filter((a) => a.t >= 2.9 && a.label !== "CARRY"); console.log(`${sp.name} · ${cfg}: ${acts.length} actions: ${acts.map((a) => `${a.t.toFixed(2)} ${a.label}${a.m ? (a.m > 0 ? "R" : "L") : ""}`).join(" | ")} · missed ${sim.contacts.filter((c) => c.missed).length}\n   speed/sep every 0.25 s: ${sp2.join(" ")}`); } }
