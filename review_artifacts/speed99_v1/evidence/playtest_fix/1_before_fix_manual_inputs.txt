@@ -1,0 +1,9 @@
+BEFORE the fix (candidate C) — real input events in Chrome: the stick dragged straight up to full magnitude with the mouse and held, combined with each way of asking for sprint; the request the page built, the authoritative speed after 6 s
+
+stick alone (full magnitude, straight up)        mode RUN     requested 5.3 m/s · speed after 6 s 5.3 m/s (19.1 km/h) · lock false · button held false · base mode RUN
+top-bar Mode SPRINT, then the stick              mode RUN     requested 5.3 m/s · speed after 6 s 5.3 m/s (19.1 km/h) · lock false · button held false · base mode SPRINT
+sprint lock, then the stick                      mode SPRINT  requested 10.35 m/s · speed after 6 s 10.35 m/s (37.3 km/h) · lock true · button held false · base mode RUN
+Shift held + the stick                           mode SPRINT  requested 10.35 m/s · speed after 6 s 10.35 m/s (37.3 km/h) · lock false · button held false · base mode RUN
+on-screen SPRINT held (a 2nd touch) + the stick  mode SPRINT  requested 10.35 m/s · speed after 6 s 10.35 m/s (37.3 km/h) · lock false · button held true · base mode RUN
+keyboard W + Shift                               mode SPRINT  requested 10.35 m/s · speed after 6 s 10.35 m/s (37.3 km/h) · lock false · button held false · base mode RUN
+keyboard W + top-bar Mode SPRINT                 mode SPRINT  requested 10.35 m/s · speed after 6 s 10.35 m/s (37.3 km/h) · lock false · button held false · base mode SPRINT

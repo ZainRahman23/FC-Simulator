@@ -1,0 +1,50 @@
+MANUAL = SCRIPTED (Chrome, real input events vs the TOP SPEED RUN preset vs node): per pace, from the first tick the request had a direction, 10 s (2400 ticks)
+
+■ CURRENT · candidate top speed 8 m/s (28.8 km/h)
+   scripted                               peak 8.000 m/s (28.8 km/h) · 5 m 1.367 · 10 m 2.054 · 20 m 3.304 · 30 m 4.554 · 40 m 5.804 · 60 m 8.304 · 80 m — · 90/95/99 % 1.671 / 1.833 / 1.962 s
+   manual · SPRINT LOCK + stick           peak 8.000 m/s (28.8 km/h) · 5 m 1.367 · 10 m 2.054 · 20 m 3.304 · 30 m 4.554 · 40 m 5.804 · 60 m 8.304 · 80 m — · 90/95/99 % 1.671 / 1.833 / 1.962 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 1.42e-14 m over 2400 ticks
+   manual · Shift + stick                 peak 8.000 m/s (28.8 km/h) · 5 m 1.367 · 10 m 2.054 · 20 m 3.304 · 30 m 4.554 · 40 m 5.804 · 60 m 8.304 · 80 m — · 90/95/99 % 1.671 / 1.833 / 1.962 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 1.42e-14 m over 2400 ticks
+   manual · top-bar Mode SPRINT + stick   peak 8.000 m/s (28.8 km/h) · 5 m 1.367 · 10 m 2.054 · 20 m 3.304 · 30 m 4.554 · 40 m 5.804 · 60 m 8.304 · 80 m — · 90/95/99 % 1.671 / 1.833 / 1.962 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 1.42e-14 m over 2400 ticks
+   manual · stick alone (RUN tier)        peak 5.300 m/s (19.1 km/h) · 5 m 1.404 · 10 m 2.346 · 20 m 4.233 · 30 m 6.121 · 40 m 8.008 · 60 m — · 80 m — · 90/95/99 % — / — / — s
+      vs scripted: request DIFFERENT · max |Δspeed| 2.70e+0 m/s · max |Δdistance| 2.30e+1 m over 2400 ticks
+   node                                   peak 8.000 m/s (28.8 km/h) · 5 m 1.367 · 10 m 2.054 · 20 m 3.304 · 30 m 4.554 · 40 m 5.804 · 60 m 8.304 · 80 m — · 90/95/99 % 1.671 / 1.833 / 1.962 s
+      vs scripted: request IDENTICAL · max |Δspeed| 0.00e+0 m/s · max |Δdistance| 0.00e+0 m over 2400 ticks
+■ A · candidate top speed 10 m/s (36.0 km/h)
+   scripted                               peak 10.000 m/s (36.0 km/h) · 5 m 1.246 · 10 m 1.904 · 20 m 3.029 · 30 m 4.067 · 40 m 5.067 · 60 m 7.067 · 80 m 9.067 · 90/95/99 % 2.529 / 3.288 / 4.088 s
+   manual · SPRINT LOCK + stick           peak 10.000 m/s (36.0 km/h) · 5 m 1.246 · 10 m 1.904 · 20 m 3.029 · 30 m 4.067 · 40 m 5.067 · 60 m 7.067 · 80 m 9.067 · 90/95/99 % 2.529 / 3.288 / 4.088 s
+      vs scripted: request IDENTICAL · max |Δspeed| 2.66e-15 m/s · max |Δdistance| 5.68e-14 m over 2400 ticks
+   manual · Shift + stick                 peak 10.000 m/s (36.0 km/h) · 5 m 1.246 · 10 m 1.904 · 20 m 3.029 · 30 m 4.067 · 40 m 5.067 · 60 m 7.067 · 80 m 9.067 · 90/95/99 % 2.529 / 3.288 / 4.088 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 5.68e-14 m over 2400 ticks
+   manual · top-bar Mode SPRINT + stick   peak 10.000 m/s (36.0 km/h) · 5 m 1.246 · 10 m 1.904 · 20 m 3.029 · 30 m 4.067 · 40 m 5.067 · 60 m 7.067 · 80 m 9.067 · 90/95/99 % 2.529 / 3.288 / 4.088 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 5.68e-14 m over 2400 ticks
+   manual · stick alone (RUN tier)        peak 5.300 m/s (19.1 km/h) · 5 m 1.304 · 10 m 2.25 · 20 m 4.138 · 30 m 6.025 · 40 m 7.908 · 60 m — · 80 m — · 90/95/99 % — / — / — s
+      vs scripted: request DIFFERENT · max |Δspeed| 4.70e+0 m/s · max |Δdistance| 3.83e+1 m over 2400 ticks
+   node                                   peak 10.000 m/s (36.0 km/h) · 5 m 1.246 · 10 m 1.904 · 20 m 3.029 · 30 m 4.067 · 40 m 5.067 · 60 m 7.067 · 80 m 9.067 · 90/95/99 % 2.529 / 3.288 / 4.088 s
+      vs scripted: request IDENTICAL · max |Δspeed| 0.00e+0 m/s · max |Δdistance| 0.00e+0 m over 2400 ticks
+■ B · candidate top speed 10.35 m/s (37.3 km/h)
+   scripted                               peak 10.350 m/s (37.3 km/h) · 5 m 1.196 · 10 m 1.833 · 20 m 2.917 · 30 m 3.917 · 40 m 4.888 · 60 m 6.817 · 80 m 8.75 · 90/95/99 % 2.417 / 3.142 / 3.971 s
+   manual · SPRINT LOCK + stick           peak 10.350 m/s (37.3 km/h) · 5 m 1.196 · 10 m 1.833 · 20 m 2.917 · 30 m 3.917 · 40 m 4.888 · 60 m 6.817 · 80 m 8.75 · 90/95/99 % 2.417 / 3.142 / 3.971 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 2.84e-14 m over 2400 ticks
+   manual · Shift + stick                 peak 10.350 m/s (37.3 km/h) · 5 m 1.196 · 10 m 1.833 · 20 m 2.917 · 30 m 3.917 · 40 m 4.888 · 60 m 6.817 · 80 m 8.75 · 90/95/99 % 2.417 / 3.142 / 3.971 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 4.26e-14 m over 2400 ticks
+   manual · top-bar Mode SPRINT + stick   peak 10.350 m/s (37.3 km/h) · 5 m 1.196 · 10 m 1.833 · 20 m 2.917 · 30 m 3.917 · 40 m 4.888 · 60 m 6.817 · 80 m 8.75 · 90/95/99 % 2.417 / 3.142 / 3.971 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 2.84e-14 m over 2400 ticks
+   manual · stick alone (RUN tier)        peak 5.300 m/s (19.1 km/h) · 5 m 1.275 · 10 m 2.217 · 20 m 4.104 · 30 m 5.992 · 40 m 7.879 · 60 m — · 80 m — · 90/95/99 % — / — / — s
+      vs scripted: request DIFFERENT · max |Δspeed| 5.05e+0 m/s · max |Δdistance| 4.17e+1 m over 2400 ticks
+   node                                   peak 10.350 m/s (37.3 km/h) · 5 m 1.196 · 10 m 1.833 · 20 m 2.917 · 30 m 3.917 · 40 m 4.888 · 60 m 6.817 · 80 m 8.75 · 90/95/99 % 2.417 / 3.142 / 3.971 s
+      vs scripted: request IDENTICAL · max |Δspeed| 0.00e+0 m/s · max |Δdistance| 0.00e+0 m over 2400 ticks
+■ C · candidate top speed 10.35 m/s (37.3 km/h)
+   scripted                               peak 10.350 m/s (37.3 km/h) · 5 m 1.092 · 10 m 1.679 · 20 m 2.704 · 30 m 3.675 · 40 m 4.642 · 60 m 6.571 · 80 m 8.504 · 90/95/99 % 1.771 / 2.263 / 2.854 s
+   manual · SPRINT LOCK + stick           peak 10.350 m/s (37.3 km/h) · 5 m 1.092 · 10 m 1.679 · 20 m 2.704 · 30 m 3.675 · 40 m 4.642 · 60 m 6.571 · 80 m 8.504 · 90/95/99 % 1.771 / 2.263 / 2.854 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.83e-15 m/s · max |Δdistance| 2.84e-14 m over 2400 ticks
+   manual · Shift + stick                 peak 10.350 m/s (37.3 km/h) · 5 m 1.092 · 10 m 1.679 · 20 m 2.704 · 30 m 3.675 · 40 m 4.642 · 60 m 6.571 · 80 m 8.504 · 90/95/99 % 1.771 / 2.263 / 2.854 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 5.68e-14 m over 2400 ticks
+   manual · top-bar Mode SPRINT + stick   peak 10.350 m/s (37.3 km/h) · 5 m 1.092 · 10 m 1.679 · 20 m 2.704 · 30 m 3.675 · 40 m 4.642 · 60 m 6.571 · 80 m 8.504 · 90/95/99 % 1.771 / 2.263 / 2.854 s
+      vs scripted: request IDENTICAL · max |Δspeed| 1.78e-15 m/s · max |Δdistance| 2.84e-14 m over 2400 ticks
+   manual · stick alone (RUN tier)        peak 5.300 m/s (19.1 km/h) · 5 m 1.217 · 10 m 2.163 · 20 m 4.046 · 30 m 5.933 · 40 m 7.821 · 60 m — · 80 m — · 90/95/99 % — / — / — s
+      vs scripted: request DIFFERENT · max |Δspeed| 5.05e+0 m/s · max |Δdistance| 4.39e+1 m over 2400 ticks
+   node                                   peak 10.350 m/s (37.3 km/h) · 5 m 1.092 · 10 m 1.679 · 20 m 2.704 · 30 m 3.675 · 40 m 4.642 · 60 m 6.571 · 80 m 8.504 · 90/95/99 % 1.771 / 2.263 / 2.854 s
+      vs scripted: request IDENTICAL · max |Δspeed| 8.88e-16 m/s · max |Δdistance| 0.00e+0 m over 2400 ticks

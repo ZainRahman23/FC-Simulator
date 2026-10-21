@@ -85,13 +85,17 @@
   #pace .lab { color: #ffd45e; font-weight: 700; } #pace button { font-weight: 700; padding: 3px 10px; } #pace button.on { background: #ffd45e; border-color: #ffd45e; color: #1a1408; }
   #ref .lab { color: #c8d4ce; }
   #pacebox { left: 400px; top: 10px; min-width: 360px; font: 12px/1.5 Menlo, Consolas, monospace; white-space: pre; text-align: left; }
-  #pacebox .big { font: 700 22px/1.15 -apple-system, Helvetica, sans-serif; color: #ffd45e; } #pacebox .ref { color: #b9c7c0; }
+  #pacebox .big { font: 700 22px/1.15 -apple-system, Helvetica, sans-serif; color: #ffd45e; } #pacebox .ref { color: #b9c7c0; } #pacebox .lab2 { color: #8fa49a; font: 600 10.5px -apple-system, Helvetica, sans-serif; letter-spacing: 0.06em; }
+  #bTop { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; font-weight: 800; }
+  #bLock.on { background: #ff8a3d !important; border-color: #ffd45e !important; color: #1a1209; font-weight: 800; box-shadow: 0 0 0 3px rgba(255,138,61,0.55); }
+  #bLock { height: 30px !important; font-size: 12px !important; }
+  #sprintBanner { left: 50%; bottom: 18px; transform: translateX(-50%); font: 800 18px/1.2 -apple-system, Helvetica, sans-serif; color: #1a1209; background: #ff8a3d; border-color: #ffd45e; letter-spacing: 0.08em; padding: 6px 16px; }
 </style>
 </head>
 <body>
 <div id="bar">
   <span class="grp" id="ver">SPEED-99-V1 · BALL OFF</span>
-  <span class="grp" id="pace"><span class="lab">SPRINT SPEED + ACCELERATION 99</span><span id="paceBtns"></span><button id="bNextPace" title="N: this session's input through the next pace (replay)">⇄ same input → next pace (N)</button></span>
+  <span class="grp" id="pace"><span class="lab">SPRINT SPEED + ACCELERATION 99</span><span id="paceBtns"></span><button id="bNextPace" title="N: this session's input through the next pace (replay)">⇄ same input → next pace (N)</button><button id="bTop" title="reset, then a straight full sprint from rest for 10 s (80 m): splits, peak, time to 90 / 95 / 99 % of top speed">▶ TOP SPEED RUN</button></span>
   <span class="grp" id="ref"><span class="lab">reference runner</span><select id="selRef" title="a second player on the same input, in a lane 2.5 m to the side (BALL OFF only)"></select></span>
   <span class="grp" id="model" style="display:none"><span class="lab">BALL CONTROL MODEL</span><button data-model="FREE" title="TC-UNIFIED-1's FULL exactly: the ball free between touches">CURRENT FREE</button><button data-model="CONTROLLED" class="on" title="CONTROLLED_BALL: once secured, every decision keeps a valid controlled continuation">CONTROLLED</button><button id="bOther" title="M: this session's input through the other model (replay)">⇄ same input (M)</button></span>
   <span class="grp" id="pokeGrp" style="display:none"><button id="bPoke" title="P: an opponent's foot into the real ball (from alternate sides, 6 m/s)">OPPONENT POKE (P)</button><button id="bRelease" title="K: the next touch becomes a knock-on (an intentional release)">RELEASE (K)</button></span>
@@ -99,7 +103,7 @@
   <span class="grp"><span class="lab">Mode</span><button data-mode="WALK">WALK</button><button data-mode="JOG">JOG</button><button data-mode="RUN" class="on">RUN</button><button data-mode="SPRINT">SPRINT</button></span>
   <span class="grp"><span class="lab">Time</span><button id="bPause" title="Space">❚❚</button><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button id="bStep" title=". (shift: one 240 Hz tick)">▸| step</button></span>
   <span class="grp"><button id="bReplay" title="Q">⟲ REPLAY LAST ACTION</button><button id="bBuffer" title="B">replay 10 s</button></span>
-  <span class="grp"><span class="lab">Camera</span><select id="selCam" title="C"><option value="follow">follow (behind / above)</option><option value="touchline">touchline (fixed side)</option><option value="top">top-down</option><option value="side">side / debug</option></select></span>
+  <span class="grp"><span class="lab">Camera</span><select id="selCam" title="C"><option value="follow">follow (behind / above)</option><option value="pair">both runners (side-on)</option><option value="touchline">touchline (fixed side)</option><option value="top">top-down</option><option value="side">side / debug</option></select></span>
   <span class="grp" id="stack"><span class="lab">Stack</span><button data-preset="A" title="exact 88573ef0 (checked against the locked engine)">A</button><button data-preset="AC" title="+ A99-C, Astra's movement (exact)">A + C</button><button data-preset="ACS" title="+ the persistent support: one shared foot plan, a continuous foot timeline">A + C + SUPPORT</button><button data-preset="ACS4" title="+ B4: generic vocabulary + named moves by predicted outcome">A + C + SUPPORT + B4</button><button data-preset="FULL" title="+ B5: short entries / exits — everything">FULL</button></span>
   <span class="grp"><label title="BALL ON with a 99 pace candidate is NOT yet adapted (the CONTROLLED-99-PACE integration comes after the ceiling is chosen)"><input id="cBall" type="checkbox">BALL (not yet adapted to 99 pace)</label></span>
   <span class="grp"><span class="lab">Playtest</span><select id="selTest"></select><button id="bTest" title="reset, then play the case through the stick">▶ play</button><button id="bNext" title="X: this session's input through the next stack (A → A+C → … → FULL)">⇄ same input → next (X)</button></span>
@@ -124,6 +128,7 @@
   <canvas id="gl"></canvas><canvas id="ov"></canvas>
   <div id="hud" class="box"></div>
   <div id="pacebox" class="box"></div>
+  <div id="sprintBanner" class="box hidden"></div>
   <div id="side" class="box hidden">
     <div class="sec"><h4>Ball separation (player ↔ ball, last 8 s)</h4><canvas id="graph"></canvas></div>
     <div class="sec"><h4>Technique frequency (since reset)</h4><div id="stats"></div></div>
@@ -132,7 +137,7 @@
   <div id="keys" class="box"></div>
   <div id="replay" class="box"><div class="row"><span id="rLabel">REPLAY</span><span><button id="rSlow" class="on">0.25×</button><button id="rHalf">0.5×</button><button id="rOne">1×</button><button id="rPlay">❚❚</button><button id="rLive">LIVE ▸ (Esc)</button></span></div><input id="rScrub" type="range" min="0" max="1000" value="0"></div>
   <div id="stickBox"><div id="stickPad" title="drag in any direction — continuous direction and magnitude (the camera's forward = up)"></div><div id="stickInfo">drag to move</div></div>
-  <div id="stickBtns"><button id="bSprint" title="hold: sprint (= Shift)">SPRINT</button><button id="bLock" title="keep sprinting without holding (click again to release)">sprint lock</button><button id="bWalk" title="hold: walk (= Alt / Option)">WALK</button></div>
+  <div id="stickBtns"><button id="bSprint" title="hold: sprint (= Shift)">SPRINT</button><button id="bLock" title="keep sprinting without holding anything (= top-bar Mode SPRINT, key 4); click again — or WALK / JOG / RUN — to release">sprint lock (off)</button><button id="bWalk" title="hold: walk (= Alt / Option)">WALK</button></div>
   <div id="help" class="box">Stick (left): drag = direction + magnitude · SPRINT hold / lock · WASD move (camera frame) · Shift sprint · Alt/Option walk · 1–4 mode · Space pause · . step · Q replay last action · B replay buffer · X same input → next stack · R reset · C camera · H HUD</div>
   <div id="perf" class="box"></div>
   <div id="diag" class="box"></div>

@@ -169,21 +169,28 @@ function request() {
 function stepSim(req) { V.sim.step(req); if (V.ref) V.ref.step(req); trackRun(req); if (V.test && V.test.T.courseAt && !V.test.courseDone && V.sim.t >= V.test.T.courseAt) { V.course = makeCourse(V.test.T.course); V.test.courseDone = true; } const S = V.stick, on = !!(req.keys & BITS.STICK); V.stickLog.push(on ? S.raw.x : 0, on ? S.raw.y : 0, on ? S.v.x : 0, on ? S.v.y : 0); }
 // ── THE RUN being measured (the pace panel): it starts when the stick is pushed from rest, or SPRINT is pressed with the stick pushed — the
 // path length since then, the time and speed at 5 / 10 / 20 / 30 / 40 / 60 m, the top speed; the reference runner's beside it (same input)
-const MARKS = [5, 10, 20, 30, 40, 60];
+const MARKS = [5, 10, 20, 30, 40, 60, 80], TOP_NAME = "TOP SPEED RUN · standing → straight full sprint (80 m)";
 function runOf(S, prev) { const st = S.stateAt(S.t); return { t0: S.t - DT, P: S.stateAt(Math.max(0, S.t - DT)).P.slice(), d: 0, entry: prev ? prev.s : st.s, splits: {}, vmax: 0 }; }
-function adv(R, S) { const st = S.stateAt(S.t); R.d += hyp(st.P[0] - R.P[0], st.P[1] - R.P[1]); R.P = st.P.slice(); R.vmax = max(R.vmax, st.s); R.s = st.s; R.t = S.t - R.t0; for (const m of MARKS) if (R.splits[m] == null && R.d >= m) R.splits[m] = { t: R.t, v: st.s }; }
+function adv(R, S) { const st = S.stateAt(S.t), V0 = S.P.speed.SPRINT; R.d += hyp(st.P[0] - R.P[0], st.P[1] - R.P[1]); R.P = st.P.slice(); R.vmax = max(R.vmax, st.s); R.s = st.s; R.t = S.t - R.t0; for (const m of MARKS) if (R.splits[m] == null && R.d >= m) R.splits[m] = { t: R.t, v: st.s };
+  R.pct = R.pct || {}; for (const f of [90, 95, 99]) if (R.pct[f] == null && st.s >= f / 100 * V0 - 1e-9) R.pct[f] = { t: R.t, d: R.d }; }
 function trackRun(req) { const L = V.lastReq, S = V.sim; V.lastReq = req; if (V.engine !== "layered") return; const v0 = S.stateAt(Math.max(0, S.t - DT)).s;
   if (req.mode !== "SPRINT" || req.h == null) V.noSprint = (V.noSprint || 0) + DT; const ns = V.noSprint || 0; if (req.mode === "SPRINT" && req.h != null) V.noSprint = 0;
   // (a new run: pushed from rest, or SPRINT pressed after ≥ 0.1 s without it — never a one-tick flicker)
   const start = !V.run || (req.h != null && (!L || L.h == null) && v0 < 0.3) || (req.h != null && req.mode === "SPRINT" && L && (L.mode !== "SPRINT" || L.h == null) && ns >= 0.1 - 1e-9);
   if (start) { V.run = runOf(S, { s: S.stateAt(Math.max(0, S.t - DT)).s }); V.run.ref = V.ref ? runOf(V.ref, { s: V.ref.stateAt(Math.max(0, V.ref.t - DT)).s }) : null; V.run.from = req.mode; }
   adv(V.run, S); if (V.run.ref && V.ref) adv(V.run.ref, V.ref); }
-function paceBox() { const d = V.dom.pacebox; if (!d) return; if (V.engine !== "layered") { d.classList.add("hidden"); return; } d.classList.remove("hidden");
-  const S = V.sim, st = S.stateAt(V.replay ? V.replay.t : S.t), pr = PACE[V.pace] || PACE.CURRENT, R0 = V.run, sp = (R) => MARKS.map((m) => `${m} m ${R && R.splits[m] ? R.splits[m].t.toFixed(2) : "  — "}`).join(" · ");
-  let html = `<div class="big">${st.s.toFixed(2)} m/s · ${(st.s * 3.6).toFixed(1)} km/h</div><span style="color:${pr.color};font-weight:700">${pr.label}</span>  top speed ${S.P.speed.SPRINT.toFixed(1)} m/s\n`;
-  if (R0) html += `this run (from ${R0.entry < 0.3 ? "rest" : R0.entry.toFixed(1) + " m/s"}): ${R0.d.toFixed(1)} m in ${R0.t.toFixed(2)} s · top ${R0.vmax.toFixed(2)} m/s\n${sp(R0)}`;
-  if (R0 && R0.ref && V.ref) { const rp = PACE[V.refPace] || PACE.CURRENT; html += `\n<span class="ref">reference ${rp.id}: ${sp(R0.ref)} · ${R0.d - R0.ref.d >= 0 ? "player ahead" : "player behind"} by ${abs(R0.d - R0.ref.d).toFixed(1)} m</span>`; }
-  d.innerHTML = html; }
+function paceBox(h) { const d = V.dom.pacebox; if (!d) return; if (V.engine !== "layered") { d.classList.add("hidden"); return; } d.classList.remove("hidden");
+  const S = V.sim, st = h ? h.st : S.stateAt(S.t), pr = PACE[V.pace] || PACE.CURRENT, R0 = V.run, vmax = S.P.speed.SPRINT, mode = h ? h.mode : "RUN", moving = h && h.reqH != null, req = moving ? S.P.speed[mode] : 0;
+  const src = V.replay ? (h && h.keys & BITS.SPRINT_BTN ? "SPRINT (recorded)" : null) : sprintSrc(), kmh = (v) => (v * 3.6).toFixed(1), sp = (R) => MARKS.map((m) => `${m} m ${R && R.splits[m] ? R.splits[m].t.toFixed(2) : "  — "}`).join(" · ");
+  const tiers = ["WALK", "JOG", "RUN", "SPRINT"].map((m) => (m === mode && moving ? `<b style="color:#ffd45e">[${m} ${S.P.speed[m].toFixed(2)}]</b>` : `${m} ${S.P.speed[m].toFixed(2)}`)).join(" · ");
+  let html = `<span class="lab2">CURRENT SPEED</span> <span class="big">${st.s.toFixed(2)} m/s · ${kmh(st.s)} km/h</span>\n` +
+    `<span class="lab2">REQUESTED SPEED</span> ${req.toFixed(2)} m/s   <span class="lab2">MOVEMENT MODE</span> <b style="color:${mode === "SPRINT" && moving ? "#ff8a3d" : "#e6efe9"}">${moving ? mode : "— (stick released)"}</b>   <span class="lab2">SPRINT INPUT</span> ${src ? `<b style="color:#ff8a3d">ON · ${src}</b>` : `<b style="color:#8fa49a">OFF</b>`}\n` +
+    `<span class="lab2">CANDIDATE VMAX</span> <span style="color:${pr.color};font-weight:700">${vmax.toFixed(2)} m/s · ${kmh(vmax)} km/h</span>  ${pr.label}\n<span style="color:#8fa49a">tiers (m/s): ${tiers}</span>\n<span style="color:#8fa49a">the stick: walk < 40 % · jog < 72 % · run beyond · SPRINT = hold SPRINT / Shift · or SPRINT LOCK (= Mode SPRINT, key 4)</span>\n`;
+  if (R0) html += `this run (from ${R0.entry < 0.3 ? "rest" : R0.entry.toFixed(1) + " m/s"}): ${R0.d.toFixed(1)} m in ${R0.t.toFixed(2)} s · PEAK ${R0.vmax.toFixed(2)} m/s (${kmh(R0.vmax)} km/h) · 90 % ${R0.pct && R0.pct[90] ? R0.pct[90].t.toFixed(2) + " s" : "—"} · 95 % ${R0.pct && R0.pct[95] ? R0.pct[95].t.toFixed(2) + " s" : "—"} · 99 % ${R0.pct && R0.pct[99] ? R0.pct[99].t.toFixed(2) + " s" : "—"}\n${sp(R0)}`;
+  if (R0 && R0.ref && V.ref) { const rp = PACE[V.refPace] || PACE.CURRENT; html += `\n<span class="ref">reference ${rp.id} (top ${V.ref.P.speed.SPRINT.toFixed(2)} m/s): ${sp(R0.ref)} · peak ${R0.ref.vmax.toFixed(2)} · ${R0.d - R0.ref.d >= 0 ? "player ahead" : "player behind"} by ${abs(R0.d - R0.ref.d).toFixed(1)} m</span>`; }
+  d.innerHTML = html;
+  // (the SPRINT button / banner: lit whenever sprint is actually being requested, whatever asks for it)
+  const on = !!src && !V.replay; if (V.dom.bSprint) V.dom.bSprint.classList.toggle("on", on || V.btn.sprint); drawStick(); if (V.dom.sprintBanner) { V.dom.sprintBanner.classList.toggle("hidden", !on); V.dom.sprintBanner.textContent = on ? `SPRINT ON · ${src}` : ""; } }
 // ── what the page shows at time t (live: now; replay: a recent instant) — all from the recorded history ────────────────────────────────────────
 function hudAt(t) {
   const S = V.sim, P = S.planAt(t), st = S.stateAt(t, P), B = S.ballTrack(t), k = Math.round(t / DT), I = S.log.input, a = P.action;
@@ -200,7 +207,9 @@ function cameraFor(h, vw, vh, dtc) {
   const st = h.st, Bp = h.ball.p, P = st.P, C = V.cam || (V.cam = { yaw: h.travel, tgt: [P[0], P[1]], side: st.psi + Math.PI / 2, tx: P[0], ty: P[1] }), snap = dtc < 0;
   const k = (tc) => (snap ? 1 : 1 - Math.exp(-max(0, dtc) / tc));
   // the follow target: between the player and the ball, a little ahead along the travel
-  const ahead = clamp(st.s * 0.18, 0, 1.4), want = [P[0] * 0.72 + Bp[0] * 0.28 + Math.cos(C.yaw) * ahead, P[1] * 0.72 + Bp[1] * 0.28 + Math.sin(C.yaw) * ahead];
+  // (SPEED-99-V1: BALL OFF follows the player alone — the 28 % pull toward the ball aimed the camera at the untouched start-spot ball: at 80 m it
+  // looked ≈ 22 m behind the player, the 99 player ran out of the picture and the reference runner filled it)
+  const wb = V.ballOn || V.engine !== "layered" ? 0.28 : 0, ahead = clamp(st.s * 0.18, 0, 1.4), want = [P[0] * (1 - wb) + Bp[0] * wb + Math.cos(C.yaw) * ahead, P[1] * (1 - wb) + Bp[1] * wb + Math.sin(C.yaw) * ahead];
   C.tgt = [C.tgt[0] + (want[0] - C.tgt[0]) * k(0.16), C.tgt[1] + (want[1] - C.tgt[1]) * k(0.16)];
   let eye, tgt, up = [0, 1, 0], fov = 46, camH;
   if (V.camId === "follow") {
@@ -208,6 +217,13 @@ function cameraFor(h, vw, vh, dtc) {
     if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
     const D = 10.5, el = 27 * DEG, f = dir(C.yaw); tgt = [C.tgt[0], 0.55, -C.tgt[1]]; eye = [C.tgt[0] - f[0] * D * Math.cos(el), 0.55 + D * Math.sin(el), -(C.tgt[1] - f[1] * D * Math.cos(el))]; camH = C.yaw; fov = 50; }
   else if (V.camId === "touchline") { C.tx += (P[0] - C.tx) * k(0.5); C.ty += (P[1] - C.ty) * k(2.5); eye = [C.tx, 17, -(min(C.ty, 34) - 31)]; tgt = [C.tgt[0], 0.5, -C.tgt[1]]; fov = 26; camH = hdg([tgt[0] - eye[0], -(tgt[2] - eye[2])]); }
+  else if (V.camId === "pair" && V.ref) {
+    // (SPEED-99-V1: BOTH RUNNERS, side-on — the midpoint of the player and the reference runner, seen from the side of the travel; it backs off as
+    // the gap grows, so the 99 player pulling away stays in the picture)
+    if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
+    const rs = V.ref.stateAt(Math.min(h.t, V.ref.t)), M = [(P[0] + rs.P[0]) / 2, (P[1] + rs.P[1]) / 2], gap = hyp(P[0] - rs.P[0], P[1] - rs.P[1]), D = max(10, 0.62 * gap + 7), f = dir(C.yaw), n = [-f[1], f[0]];
+    C.pm = C.pm ? [C.pm[0] + (M[0] - C.pm[0]) * k(0.12), C.pm[1] + (M[1] - C.pm[1]) * k(0.12)] : M.slice(); C.pd = C.pd ? C.pd + (D - C.pd) * k(0.4) : D;
+    tgt = [C.pm[0], 0.8, -C.pm[1]]; eye = [C.pm[0] + n[0] * C.pd, 2.2 + 0.16 * C.pd, -(C.pm[1] + n[1] * C.pd)]; fov = 42; camH = C.yaw; }
   else if (V.camId === "top") { tgt = [C.tgt[0], 0, -C.tgt[1]]; eye = [C.tgt[0], 14, -C.tgt[1]]; up = [1, 0, 0]; fov = 40; camH = 0; }
   else { const e = wrap(st.psi + Math.PI / 2 - C.side); C.side += snap ? e : e * k(0.6); const f = dir(C.side); tgt = [P[0], 0.75, -P[1]]; eye = [P[0] - f[0] * 5.2, 1.15, -(P[1] - f[1] * 5.2)]; fov = 40; camH = C.side; }
   return { view: lookAt(eye, tgt, up), proj: persp(1 / Math.tan(fov / 2 * DEG), vw / vh, 0.1, 400), h: camH, eye, tgt };
@@ -218,7 +234,7 @@ function proj3(c, vw, dpr, p) { const v = M4.transformPoint(c.view, p), pr = c.p
 function makeCourse(id) {
   if (id === "none") return null; const h = hudAt(V.sim.t), P = h.st.P, th = h.st.s > 1 ? h.travel : h.st.psi, at = (a, l) => [P[0] + a * Math.cos(th) - l * Math.sin(th), P[1] + a * Math.sin(th) + l * Math.cos(th)];
   const cones = [], lines = [], labels = [];
-  if (id === "straight") { for (const a of [5, 10, 20, 30, 40]) { cones.push(at(a, -1.6), at(a, 1.6)); labels.push([at(a, 2.4), a + " m"]); } lines.push([at(0, 0), at(40, 0), "rgba(255,255,255,0.35)", [6, 6]], [at(40, -1.6), at(40, 1.6), "rgba(255,212,94,0.9)"]); }
+  if (id === "straight") { for (const a of [5, 10, 20, 30, 40, 60, 80]) { cones.push(at(a, -1.6), at(a, 1.6)); labels.push([at(a, 2.4), a + " m"]); } lines.push([at(0, 0), at(80, 0), "rgba(255,255,255,0.35)", [6, 6]], [at(40, -1.6), at(40, 1.6), "rgba(255,212,94,0.9)"], [at(80, -1.6), at(80, 1.6), "rgba(255,212,94,0.9)"]); }
   else if (id === "slalom") { for (let i = 0; i < 9; i++) cones.push(at(5 + i * 3.5, 0)); lines.push([at(0, 0), at(5 + 8 * 3.5 + 4, 0), "rgba(255,255,255,0.25)", [4, 6]]); labels.push([at(5, 1.2), "slalom · 3.5 m"]); }
   else if (id === "cuts") { const C = at(12, 0); cones.push(C); lines.push([at(0, 0), C, "rgba(255,255,255,0.45)", [6, 5]]);
     for (const d of [45, 90, 120, 150, 180, -45, -90, -120, -150]) { const e = th + d * DEG, E = [C[0] + Math.cos(e) * 7, C[1] + Math.sin(e) * 7]; lines.push([C, E, abs(d) >= 150 ? "rgba(255,140,120,0.75)" : abs(d) >= 120 ? "rgba(255,190,110,0.75)" : "rgba(140,220,255,0.75)"]); cones.push(E); labels.push([[C[0] + Math.cos(e) * 7.8, C[1] + Math.sin(e) * 7.8], (d > 0 ? "R " : d < 0 ? "L " : "") + abs(d) + "°"]); } }
@@ -322,7 +338,7 @@ function updateHud(h) {
   const cfg = configName(V.engine, V.layers), acts = V.engine === "layered" ? LAYERS.filter((x) => V.layers[x.id]).map((x) => x.id).join(" · ") || "no layer (= 88573ef0)" : "the locked engine";
   // (the clean page: without ⚙ diagnostics the HUD is the action, its phase and the speeds — everything else behind the toggle)
   if (!document.body.classList.contains("diagOn")) { d.hud.innerHTML = `<span style="color:#ff9b8d;font-weight:700">${cfg}</span>${V.ballOn || V.engine !== "layered" ? "" : "  <span style=\"color:#9ad7ff\">BALL OFF</span>"}\n<div class="act">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}</div>` +
-      `${h.mode.toLowerCase()} · player ${h.speed.toFixed(1)} m/s · ball ${h.ballSpeed.toFixed(1)} m/s · separation ${h.sep.toFixed(2)} m` + possLine(false); d.prov.textContent = ""; return; }
+      (V.ballOn || V.engine !== "layered" ? `${h.mode.toLowerCase()} · player ${h.speed.toFixed(1)} m/s · ball ${h.ballSpeed.toFixed(1)} m/s · separation ${h.sep.toFixed(2)} m` : `${h.mode.toLowerCase()} · player ${h.speed.toFixed(2)} m/s`) + possLine(false); d.prov.textContent = ""; return; }
   d.hud.innerHTML = `<span style="color:${V.engine === "layered" ? "#ffd45e" : "#8dffa6"};font-weight:700">${cfg}</span>  <span style="color:#8fa49a">${acts}</span>\n` + solutionHtml(h) + `<div class="act" style="font-size:12px">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}${V.paused && !V.replay ? "  ·  PAUSED" : ""}</div>` +
     `mode ${h.mode.padEnd(6)} requested ${h.reqSpeed.toFixed(1)} m/s\nplayer ${h.speed.toFixed(2)} m/s   ball ${h.ballSpeed.toFixed(2)} m/s\n` +
     `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" + possLine(true) + "\n" +
@@ -385,7 +401,7 @@ function stickSVG(raw, v, size, on) {
 }
 function drawStick() { const S = V.stick; if (!V.dom.stickPad) return; const on = S.pid != null && V.src === "stick", v = S.v, a = stickAngleDeg(v);
   V.dom.stickPad.innerHTML = stickSVG([S.raw.x, S.raw.y], [v.x, v.y], 210, on);
-  V.dom.stickInfo.textContent = on ? (v.m > 0 ? `${a >= 0 ? "+" : ""}${a.toFixed(1)}° · ${v.m.toFixed(2)} · ${stickMode(v.r, S.cfg)}` : "deadzone") : "drag to move"; }
+  const spr = sprintSrc(); V.dom.stickInfo.textContent = on ? (v.m > 0 ? `${a >= 0 ? "+" : ""}${a.toFixed(1)}° · ${v.m.toFixed(2)} · ${spr ? "SPRINT" : stickMode(v.r, S.cfg)}` : "deadzone") : "drag to move"; }
 function perfText() { const q = (A, x) => { if (!A.length) return 0; const s = A.slice().sort((a, b) => a - b); return s[min(s.length - 1, Math.floor(x * s.length))]; }, avg = (A) => (A.length ? A.reduce((a, b) => a + b, 0) / A.length : 0), P = V.perf;
   return `frame  avg ${avg(P.frame).toFixed(1)}  p95 ${q(P.frame, 0.95).toFixed(1)}  p99 ${q(P.frame, 0.99).toFixed(1)}  worst ${max(0, ...P.frame).toFixed(1)} ms\n` +
     `work   avg ${avg(P.work).toFixed(2)}  p95 ${q(P.work, 0.95).toFixed(2)}  p99 ${q(P.work, 0.99).toFixed(2)}  worst ${max(0, ...P.work).toFixed(2)} ms  (sim ${avg(P.sim).toFixed(2)} / pose ${avg(P.pose).toFixed(2)} / render ${avg(P.render).toFixed(2)})` +
@@ -422,15 +438,21 @@ function frame(now) {
   const dtc = V.lastShown == null || abs(tShow - V.lastShown) > 0.25 ? -1 : abs(tShow - V.lastShown); V.lastShown = tShow;
   render(pose, h, dtc); const w3 = performance.now();
   const P = V.perf; P.frame.push(dtReal * 1000); P.sim.push(w1 - w0); P.pose.push(w2 - w1); P.render.push(w3 - w2); P.work.push(w3 - w0); for (const k of Object.keys(P)) if (P[k].length > 1200) P[k].shift();
-  if (now - hudClock > 100) { hudClock = now; paceBox(); if (V.show.hud) updateHud(h); else if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); } showKeys(h); V.dom.perf.textContent = perfText(); diagPanel(dg);
+  if (now - hudClock > 100) { hudClock = now; paceBox(h); if (V.show.hud) updateHud(h); else if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); } showKeys(h); V.dom.perf.textContent = perfText(); diagPanel(dg);
     if (V.replay) { const R = V.replay, b0 = bufStart(); V.dom.rScrub.value = String(Math.round((R.t - b0) / max(1e-6, V.sim.t - b0) * 1000)); V.dom.rLabel.textContent = `REPLAY ${R.kind === "last" ? "LAST ACTION" : "BUFFER"} · ${(R.t - V.sim.t).toFixed(2)} s · ${R.rate}×${R.playing ? "" : " (end — Esc: live)"}`; } }
   if (!V.external) requestAnimationFrame(frame);
 }
 // ── UI ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function setRateButtons() { document.querySelectorAll("[data-rate]").forEach((b) => b.classList.toggle("on", +b.dataset.rate === V.rate)); V.dom.bPause.textContent = V.paused && !V.replay ? "▶" : "❚❚"; V.dom.bPause.classList.toggle("on", V.paused && !V.replay); }
-function setMode(m) { V.baseMode = m; document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", b.dataset.mode === m)); }
+// (SPEED-99-V1 playtest blocker: the stick's zones stop at RUN and the top-bar Mode SPRINT was ignored while the stick was in use — the player
+// capped at 5.3 m/s. Mode SPRINT (and key 4) IS the sprint lock now; WALK / JOG / RUN release it. One lock state, shown everywhere)
+function setMode(m) { if (m === "SPRINT") { setLock(true); return; } V.baseMode = m; setLock(false); }
+function setLock(on) { V.btn.lock = !!on; const d = V.dom; if (d.bLock) { d.bLock.classList.toggle("on", V.btn.lock); d.bLock.textContent = V.btn.lock ? "SPRINT LOCK · ON" : "sprint lock (off)"; }
+  document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", V.btn.lock ? b.dataset.mode === "SPRINT" : b.dataset.mode === V.baseMode)); }
+// (the sprint actually requested this tick, and by what: the lock, the SPRINT button held, Shift, a preset)
+function sprintSrc() { const K = V.keys, sh = K.has("ShiftLeft") || K.has("ShiftRight"); return V.btn.tSprint ? "preset" : V.btn.lock ? "SPRINT LOCK" : V.btn.sprint ? "SPRINT held" : sh ? "Shift held" : null; }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["pacebox", "selRef", "bNextPace", "paceBtns", "bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["pacebox", "selRef", "bNextPace", "paceBtns", "bTop", "sprintBanner", "bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
   // THE PACE (SPEED-99-V1): the candidates, the reference runner, same input → the next pace; the ball model / probes behind ⚙
   d.paceBtns.innerHTML = PACE_IDS.map((id) => `<button data-pace="${id}" title="${PACE[id].label}">${id === "CURRENT" ? "CURRENT" : id}</button>`).join("");
   document.querySelectorAll("[data-pace]").forEach((b) => (b.onclick = (e) => { V.pace = b.dataset.pace; stopTest(); newSim(); e.target.blur(); }));
@@ -485,7 +507,8 @@ function bindUI() {
   const hold = (el, key) => { let pid = null; el.addEventListener("pointerdown", (e) => { e.preventDefault(); pid = e.pointerId; try { el.setPointerCapture(pid); } catch (_) {} V.btn[key] = true; el.classList.add("on"); });
     const up = (e) => { if (e.pointerId !== pid) return; pid = null; V.btn[key] = false; el.classList.remove("on"); }; for (const ev of ["pointerup", "pointercancel", "lostpointercapture"]) el.addEventListener(ev, up); };
   hold(d.bSprint, "sprint"); hold(d.bWalk, "walk");
-  d.bLock.addEventListener("click", (e) => { V.btn.lock = !V.btn.lock; d.bLock.classList.toggle("on", V.btn.lock); d.bLock.blur(); });
+  d.bLock.addEventListener("click", (e) => { setLock(!V.btn.lock); d.bLock.blur(); }); setLock(false);
+  if (d.bTop) d.bTop.onclick = (e) => { startTest(TOP_NAME); if (V.ref) { V.camId = "pair"; d.selCam.value = "pair"; V.cam = null; V.lastShown = null; } blur(e); };
   d.dz.onchange = d.dz.oninput = () => { const x = clamp(+d.dz.value || 0, 0, 0.3); S.cfg.deadzone = x; S.v = stickVector(S.raw.x, S.raw.y, x); drawStick(); };
   const code = (e) => e.code;
   window.addEventListener("keydown", (e) => {
@@ -500,7 +523,7 @@ function bindUI() {
     else if (c === "KeyB") { if (V.replay) stopReplay(); else startReplay("buffer"); }
     else if (c === "Escape") stopReplay();
     else if (c === "KeyH") { V.show.hud = !V.show.hud; $("cHud").checked = V.show.hud; d.hud.classList.toggle("hidden", !V.show.hud); }
-    else if (c === "KeyC") { const o = ["follow", "touchline", "top", "side"], i = (o.indexOf(V.camId) + 1) % o.length; V.camId = o[i]; d.selCam.value = V.camId; V.cam = null; V.lastShown = null; }
+    else if (c === "KeyC") { const o = ["follow", "pair", "touchline", "top", "side"], i = (o.indexOf(V.camId) + 1) % o.length; V.camId = o[i]; d.selCam.value = V.camId; V.cam = null; V.lastShown = null; }
     else if (c === "KeyV") verifyDeterminism();
     else if (c === "KeyX") nextInChain();
     else if (c === "KeyM") otherModel();
@@ -540,7 +563,10 @@ W.PT = { ready: () => V.ready, V,
   layers: (o) => { if (o) { V.engine = "layered"; V.layers = Object.assign({}, TL.LAYERS_OFF, o); newSim(); } return Object.assign({}, V.layers); }, same: (target) => sameInput(target), next: () => nextInChain(), load: (rec, eng, layers) => loadRec(rec, eng, layers),
   ball: (on) => { if (on != null) { V.ballOn = !!on; newSim(); } return V.ballOn; }, model: (m) => { if (m) { V.engine = "layered"; V.control = m; newSim(); } return V.control; }, other: () => otherModel(),
   pace: (id) => { if (id && PACE[id]) { V.engine = "layered"; V.pace = id; newSim(); } return V.pace; }, refPace: (id) => { if (id) { V.refPace = id; newSim(); } return V.refPace; }, nextPace: () => nextPace(),
-  run: () => (V.run ? JSON.parse(JSON.stringify(V.run)) : null), refState: () => (V.ref ? { t: V.ref.t, hash: V.ref.hash, P: V.ref.stateAt(V.ref.t).P, s: V.ref.stateAt(V.ref.t).s } : null),
+  run: () => (V.run ? JSON.parse(JSON.stringify(V.run)) : null),
+  // (the authoritative movement from the first tick the request had a direction: per tick the request (h, mode), the speed, the distance)
+  traceFromPress: (dur = 10) => { const S = V.sim, I = S.log.input; let k0 = -1; for (let k = 0; k < I.length / 3; k++) if (I[3 * k] !== -99) { k0 = k; break; } if (k0 < 0) return null;
+    const P0 = S.stateAt(k0 * DT).P, out = { k0, h: [], mode: [], s: [], d: [] }, n = Math.min(Math.round(dur / DT), I.length / 3 - k0); for (let i = 0; i < n; i++) { const k = k0 + i, st = S.stateAt((k + 1) * DT); out.h.push(I[3 * k]); out.mode.push(MODES[I[3 * k + 1]]); out.s.push(st.s); out.d.push(hyp(st.P[0] - P0[0], st.P[1] - P0[1])); } return out; }, refState: () => (V.ref ? { t: V.ref.t, hash: V.ref.hash, P: V.ref.stateAt(V.ref.t).P, s: V.ref.stateAt(V.ref.t).s } : null),
   poke: () => poke(), release: () => (V.sim.requestRelease ? V.sim.requestRelease() : false), poss: () => (V.sim.possInfo ? V.sim.possInfo() : null), possLog: () => (V.sim.poss ? V.sim.poss.log : []), diagnostics: (on) => { if (on != null) V.setDiag(!!on); return document.body.classList.contains("diagOn"); },
   test: (name) => { if (name) startTest(name); else stopTest(); return !!V.test; }, diag: () => ({ now: V.diag.prev, n: V.diag.hist.length }),
   // the stick as a test would hold it: raw (x right, y up) in −1 … 1, null = released

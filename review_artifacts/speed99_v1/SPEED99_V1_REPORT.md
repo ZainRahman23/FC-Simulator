@@ -1,5 +1,7 @@
 # SPEED-99-V1: Sprint Speed 99 + Acceleration 99, ball-off (21 Oct 2026)
 
+> **Update, the same evening:** the playtest blocker (manual play capped at RUN's 5.3 m/s) is fixed on the page. See `PLAYTEST_FIX_REPORT.md`. The candidates are unchanged.
+
 **Presented for your playtest.**
 - Nothing is frozen and nothing is integrated.
 - Ratings 1–98 are not defined.

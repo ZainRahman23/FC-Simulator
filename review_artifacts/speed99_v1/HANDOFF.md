@@ -1,6 +1,6 @@
 # SPEED-99-V1: handoff
 
-**Presented for the owner's playtest.** Ball-off only. Not frozen, not integrated, ratings 1–98 not defined. **LOCAL ONLY.** The brief is in `sources/`, verbatim. The results are in `SPEED99_V1_REPORT.md`; the research is in `RESEARCH.md`.
+**Presented for the owner's playtest.** The playtest blocker is fixed: see `PLAYTEST_FIX_REPORT.md`. Ball-off only. Not frozen, not integrated, ratings 1–98 not defined. **LOCAL ONLY.** The brief is in `sources/`, verbatim. The results are in `SPEED99_V1_REPORT.md`; the research is in `RESEARCH.md`.
 
 **Page:** `http://127.0.0.1:8361/sandbox/visual/speed99.html` (`?pace=CURRENT|A|B|C`, `&ref=off|CURRENT|A|B|C`, `&ball=1`, `&cam=…`)
 
@@ -29,6 +29,8 @@ The directory is a copy of `tc_controlled1/`: TC-CONTROLLED-1's simulation, page
 | `node s_trunk.mjs` | the drawn trunk lean |
 | `node s_cpu.mjs --pace CURRENT,A,B,C` | CPU by part |
 | `PT_TMP=… PUPPETEER_NODE_MODULES=… node s_browser.cjs --out <dir>`, then `node u_resim.mjs <session>` | the page in Chrome; node ≡ browser |
+| `PT_TMP=… PUPPETEER_NODE_MODULES=… node s_manual.cjs --pace C` | every manual sprint input path, played with real mouse and keyboard events |
+| `PT_TMP=… PUPPETEER_NODE_MODULES=… node s_manual_vs_scripted.cjs` | manual = scripted (preset) = node, tick by tick, all paces (uses `s_node_top.mjs`) |
 
 ## Next (only on the owner's word)
 

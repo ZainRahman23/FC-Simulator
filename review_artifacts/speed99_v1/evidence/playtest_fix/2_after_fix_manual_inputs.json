@@ -1,0 +1,203 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/speed99.html?pace=B",
+ "pace": "B",
+ "cases": [
+  {
+   "name": "stick alone (full magnitude, straight up)",
+   "err": null,
+   "mode": "RUN",
+   "src": "stick",
+   "requested": 5.3,
+   "speed": 5.3,
+   "runTop": 5.3,
+   "btn": {
+    "sprint": false,
+    "lock": false
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    4.512,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3,
+    5.3
+   ]
+  },
+  {
+   "name": "top-bar Mode SPRINT, then the stick",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "stick",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": false,
+    "lock": true
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    4.512,
+    6.727,
+    8.102,
+    8.955,
+    9.484,
+    9.821,
+    10.071,
+    10.321,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  },
+  {
+   "name": "sprint lock, then the stick",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "stick",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": false,
+    "lock": true
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    4.512,
+    6.727,
+    8.102,
+    8.955,
+    9.484,
+    9.821,
+    10.071,
+    10.321,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  },
+  {
+   "name": "Shift held + the stick",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "stick",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": false,
+    "lock": false
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    4.512,
+    6.727,
+    8.102,
+    8.955,
+    9.484,
+    9.821,
+    10.071,
+    10.321,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  },
+  {
+   "name": "on-screen SPRINT held (a 2nd touch) + the stick",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "stick",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": true,
+    "lock": false
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    4.512,
+    6.727,
+    8.102,
+    8.955,
+    9.484,
+    9.821,
+    10.071,
+    10.321,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  },
+  {
+   "name": "keyboard W + Shift",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "keys",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": false,
+    "lock": false
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    3.927,
+    6.427,
+    7.916,
+    8.839,
+    9.413,
+    9.768,
+    10.021,
+    10.28,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  },
+  {
+   "name": "keyboard W + top-bar Mode SPRINT",
+   "err": null,
+   "mode": "SPRINT",
+   "src": "keys",
+   "requested": 10.35,
+   "speed": 10.35,
+   "runTop": 10.35,
+   "btn": {
+    "sprint": false,
+    "lock": true
+   },
+   "baseMode": "RUN",
+   "speeds": [
+    3.927,
+    6.348,
+    7.867,
+    8.833,
+    9.409,
+    9.766,
+    10.019,
+    10.269,
+    10.35,
+    10.35,
+    10.35,
+    10.35
+   ]
+  }
+ ],
+ "logs": []
+}
