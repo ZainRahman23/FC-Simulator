@@ -158,7 +158,7 @@ export class PlayBody {
     if (k < T.k || k - T.k > 2400) { T.k = k - 1; T.st = null; }   // (a jump far back / ahead: restart there — the audit and the page pose sequentially)
     while (T.k < k) { T.k++; T.frames.set(T.k, this.tlTick(T.k * DT, T)); if (T.frames.size > 240 * 16) T.frames.delete(T.frames.keys().next().value); }
     return T.frames.get(k); }
-  tlTick(t, T) { const P = this.sim.planAt(Math.max(0, t - DT / 2)), out = {};
+  tlTick(t, T) { const P = this.sim.planAt(Math.max(0, t - DT / 2)), out = {}, FIX = !!(this.sim.P.pace && this.sim.P.pace.accGait);
     if (!T.st) T.st = { P, R: { o: [0, 0, 0], ov: [0, 0, 0], oy: 0, oyv: 0, push: 0 }, L: { o: [0, 0, 0], ov: [0, 0, 0], oy: 0, oyv: 0, push: 0 } };
     const switched = T.st.P !== P, pre = {};
     for (const X of SIDES) { const S = T.st[X], raw = this.rawAt(X, t, P);
@@ -169,9 +169,15 @@ export class PlayBody {
       // (the spring: ω so that it settles before the next contact / touchdown of this foot — 4 / ω ≈ the time left; at least 0.12 s's spring)
       const ev = this.nextEvent(X, t, P), left = Math.min(ev.tc != null ? ev.tc - t : 9, !raw.planted && ev.td != null ? ev.td - t : 9), w = Math.max(4 / 0.12, 4 / Math.max(0.012, left)), wy = Math.max(4 / 0.10, 4 / Math.max(0.012, left));
       // (a PLANTED foot never slides: its offset is held through the stance — the foot stays where it touched down — and decays in its next swing)
-      if (raw.planted) { S.ov[0] = S.ov[1] = S.ov[2] = 0; }
+      // (S99 MISSION, the 99 pace: … its HORIZONTAL offset only — the vertical one settles onto the ground at ≤ 1.5 cm a tick: a foot that touched
+      // down while its drawn ankle was still 13 cm above the stance (the foot speed limit) stood that high through the whole stance, then dropped
+      // 12 – 14 cm in one tick when its heel rose)
+      if (raw.planted) { S.ov[0] = S.ov[1] = S.ov[2] = 0; if (FIX && S.o[2] > 0) S.o[2] = Math.max(0, S.o[2] - 0.015); }
       else for (let i = 0; i < 3; i++) { const a = -w * w * S.o[i] - 2 * w * S.ov[i]; S.ov[i] += a * DT; S.o[i] += S.ov[i] * DT; if (Math.abs(w * DT) > 0.9) { S.o[i] = 0; S.ov[i] = 0; } }
-      { const a = -wy * wy * S.oy - 2 * wy * S.oyv; S.oyv += a * DT; S.oy += S.oyv * DT; if (Math.abs(wy * DT) > 0.9) { S.oy = 0; S.oyv = 0; } }
+      // (S99 MISSION: a PLANTED foot holds its yaw offset through the stance exactly as it holds its position — the spring decays it in the
+      // next swing; before, a just-planted foot was spun ≈ 3° per tick (≈ 720°/s) toward the new plan's yaw while the body turned over it)
+      if (FIX && raw.planted) S.oyv = 0;
+      else { const a = -wy * wy * S.oy - 2 * wy * S.oyv; S.oyv += a * DT; S.oy += S.oyv * DT; if (Math.abs(wy * DT) > 0.9) { S.oy = 0; S.oyv = 0; } }
       { S.op = S.op || 0; S.opv = S.opv || 0; const a = -wy * wy * S.op - 2 * wy * S.opv; S.opv += a * DT; S.op += S.opv * DT; if (Math.abs(wy * DT) > 0.9) { S.op = 0; S.opv = 0; } }
       // (a FOOT SPEED LIMIT: the drawn ankle never moves more than 9 cm in a tick (≈ 22 m/s, a kicking foot's speed) — the excess goes into the
       // offset and is caught up by the spring; the spring itself is capped at 5 m/s relative — no plan switch, no fast authored swing teleports a foot)
@@ -188,6 +194,11 @@ export class PlayBody {
     // rate-limited (≤ 2 cm / tick: a route, not a jump). Presentation only; the plan's stances and contacts are untouched
     const st = this.sim.stateAt(t, P), ps = st.psi, fw = [Math.cos(ps), Math.sin(ps)], rt = [-Math.sin(ps), Math.cos(ps)];
     for (const X of SIDES) { const S = T.st[X], { f, ev } = pre[X], o = pre[other(X)].f; let g = f;
+      // (S99 MISSION, the 99 pace: A PLANT PIVOT — a planted foot never points more than 70° from the body's facing: in a reversal the body turns
+      // ≈ 180° over the planted foot in ≈ 0.2 s, the foot kept its yaw, the leg was asked for an impossible ≈ 170° twist and its solve flipped
+      // (the knee and the drawn foot jumped ≈ 18 cm). The foot pivots about the ball of the foot (that point stays: no slide), into the yaw offset)
+      if (FIX && f.planted && f.ballPt) { const rel = wrap(f.yaw - ps), lim = 70 * DEG; if (abs(rel) > lim) { const d = clamp(-(rel - Math.sign(rel) * lim), -5 * DEG, 5 * DEG), dx = f.ank[0] - f.ballPt[0], dy = f.ank[1] - f.ballPt[1], c = Math.cos(d), sn = Math.sin(d);
+        S.oy += d; g = Object.assign({}, f, { yaw: f.yaw + d, ank: [f.ballPt[0] + dx * c - dy * sn, f.ballPt[1] + dx * sn + dy * c, f.ank[2]], pivoted: d }); } }
       let want = 0, wy = 0;
       if (!f.planted) { const dc = ev.tc != null ? ev.tc - t : 9, con = f.swing && f.swing.con, dp = con ? abs(t - con.t) : 9, ex = sstep(0.03, 0.12, min(abs(dc), dp));
         const d = [f.ank[0] - o.ank[0], f.ank[1] - o.ank[1]], a = d[0] * fw[0] + d[1] * fw[1], l = (d[0] * rt[0] + d[1] * rt[1]) * sgnF(X), near = 1 - sstep(0.22, 0.35, abs(a));
@@ -205,6 +216,11 @@ export class PlayBody {
       // (and on its turning: yaw ≤ 5°, pitch ≤ 4° per tick — a swing key's orientation step becomes a fast turn, never a flip)
       if (S.lastYaw != null) { const dy = wrap(g.yaw - S.lastYaw), dp = (g.pitch || 0) - S.lastPitch, ey = abs(dy) > 5 * DEG ? dy - Math.sign(dy) * 5 * DEG : 0, ep = abs(dp) > 4 * DEG ? dp - Math.sign(dp) * 4 * DEG : 0;
         if (ey || ep) { S.oy -= ey; S.op -= ep; g = Object.assign({}, g, { yaw: g.yaw - ey, pitch: (g.pitch || 0) - ep }); } }
+      // (S99 MISSION: the support COMPRESSION WEIGHT, per tick and rate-limited — ≤ 0.06 a tick, ≈ 0.07 s from none to full: a planted foot weighted
+      // out over the last 0.07 s of its stance, a swinging one in over the last 0.06 s before its landing. Judged from the plan of the moment, a
+      // re-plan at a contact that moved a stance's end stepped the pelvis height — the planted knee jumped 25 – 50° in one tick)
+      if (FIX) { let wT = 0; if (g.planted || g.contact) wT = g.planted && g.stance && g.stance.t1 !== Infinity ? 1 - s5((t - (g.stance.t1 - 0.07)) / 0.07) : 1; else if (g.swing && g.swing.to && g.swing.to.pos) wT = s5((t - (g.swing.t1 - 0.06)) / 0.06);
+        S.wc = S.wc == null ? wT : S.wc + Math.max(-0.06, Math.min(0.06, wT - S.wc)); g = Object.assign({}, g, { wc: S.wc }); }
       S.last = g.ank.slice(); S.lastYaw = g.yaw; S.lastPitch = g.pitch || 0; out[X] = g; }
     T.st.P = P; return out; }
   // (B2 early on: a swing re-timed toward a touch finishes its blend BEFORE that touch — the foot that plays the ball is the foot drawn there)
@@ -291,20 +307,41 @@ export class PlayBody {
       // that cannot reach lowers the whole body a little instead (Astra's vertical compression, ≤ 7.5 cm), continuously)
       // (88573ef0's rule for which legs count: a planted or contacting one — a swinging leg out of reach stays a little short, as in the
       // original RUN, instead of lowering the body each stride)
-      const nominalY = pelvis[1]; for (const X of SIDES) { if (!feet[X].planted && !feet[X].contact) continue; const sx = sgnF(X), a = this.toM(feet[X].ank, P, psi), hip = Q.v(Rp, [sx * b.hipX, 0, 0]), dx = a[0] - hip[0], dz = a[2] - pelvis[2] - hip[2], vertical = Math.sqrt(Math.max(0.1, (b.legLen * 0.985) ** 2 - dx * dx - dz * dz));
-        pelvis[1] = Math.min(pelvis[1], Math.max(nominalY - 0.075, a[1] + vertical - hip[1])); } reachM = nominalY - pelvis[1]; }
+      // (S99 MISSION: CONTINUOUS COMPRESSION — a swinging leg's reach counts too, weighted in over the last 0.06 s before its landing and out
+      // over the first 0.06 s after its lift-off: the pelvis settles into the stance instead of dropping 4 – 7 cm in the touchdown tick (the
+      // knee then snapped ≈ 15°) and popping back at toe-off. The 99 pace only; CURRENT keeps TC-CONTROLLED-1's look)
+      // (the swinging foot's weight is judged at the STANCE it will land on / has just left — the drawn swing foot reaches further forward in the
+      // air than where it lands, and judging it there dropped the pelvis before the touchdown and released it at the contact)
+      const FXC = !!(this.sim.P.pace && this.sim.P.pace.accGait), wOf = (f) => { if (FXC && f.wc != null) { if (f.planted || f.contact) return { w: f.wc, ank: f.ank }; const sw = f.swing; return sw && sw.to && sw.to.pos ? { w: f.wc, ank: [sw.to.pos[0], sw.to.pos[1], HB.ankleH] } : { w: 0 }; }
+        if (f.planted || f.contact) return { w: 1, ank: f.ank }; if (!FXC || !f.swing) return { w: 0 }; const w = f.swing, wi = s5((t - (w.t1 - 0.06)) / 0.06), wo = 1 - s5((t - w.t0) / 0.06);
+        if (wi > 0 && w.to && w.to.pos) return { w: wi, ank: [w.to.pos[0], w.to.pos[1], HB.ankleH] }; return { w: 0 }; };   // (only INTO a landing: after the lift-off the trailing stance is far behind — no pre-compression there)
+      const nominalY = pelvis[1]; for (const X of SIDES) { const W8 = wOf(feet[X]), wX = W8.w; if (wX <= 0) continue; const sx = sgnF(X), a = this.toM(W8.ank, P, psi), hip = Q.v(Rp, [sx * b.hipX, 0, 0]), dx = a[0] - hip[0], dz = a[2] - pelvis[2] - hip[2], vertical = Math.sqrt(Math.max(0.1, (b.legLen * 0.985) ** 2 - dx * dx - dz * dz));
+        const want = Math.max(nominalY - 0.075, a[1] + vertical - hip[1]); pelvis[1] = Math.min(pelvis[1], nominalY - wX * Math.max(0, nominalY - want)); } reachM = nominalY - pelvis[1]; }
     else     for (let it = 0; it < 3; it++) { let moved = false, dP = [0, 0], drop = 0;
       for (const X of SIDES) { const fX = feet[X], wC = fX.planted ? 1 : fX.contact ? 1 : 0; if (wC <= 0) continue; const sx = sgnF(X), hipM = [pelvis[0] + sx * b.hipX, pelvis[1], pelvis[2]], an = this.toM(fX.ank, P, psi), d = hyp(an[0] - hipM[0], an[1] - hipM[1], an[2] - hipM[2]), lim = RF.reach * b.legLen;
         if (d > lim) { const ex = d - lim, hx = an[0] - hipM[0], hz = an[2] - hipM[2], hl = hyp(hx, hz) || 1, dr = min(0.05, ex * 0.5), ex2 = max(0, ex - dr), mx = hx / hl * ex2, mz = hz / hl * ex2; dP = [dP[0] + mz * c - mx * s, dP[1] + mz * s + mx * c]; drop = max(drop, dr); moved = true; } }
       if (!moved) break; P = [P[0] + dP[0], P[1] + dP[1]]; pelvis[1] -= drop; reachM += hyp(dP[0], dP[1]) + drop; }
-    const legRot = {}, legs = {};
+    const legRot = {}, legs = {}, solvers = {};
     for (const X of SIDES) { const ft = feet[X], sx = sgnF(X), hip = Q.v(Rp, [sx * b.hipX, 0, 0]).map((x, i) => x + pelvis[i]);
       const solve = (f) => { const an = this.toM(f.ank, P, psi), Rf = Q.mul3(Q.y(wrapA(f.yaw - psi)), Q.x(-(f.pitch || 0)), Q.z(f.roll || 0)), psiK = swivelFor(footOut(Rp, Rf, X), X) + (f.kneeOut || 0), ik = legIK(b, Rp, psiK, hip, an, RF.kMin), Rsh0 = Q.mul3(Rp, ik.Rthigh, Q.x(ik.k)), A = ankleFor(Rsh0, Rf, X, ik.k); return { an, Rf, ik, A, Rsh0 }; };
-      let f = ft, L = solve(f);
-      if (f.planted) for (let it = 0; it < 3; it++) { const df = -L.A.fp / DEG + (L.A.err > 0.5 ? -L.A.res[1] / DEG : 0); if (df <= RF.dfRise) break; const p0 = -f.pitch, p1 = p0 + (df - RF.dfRise + 1) * DEG, my = this.mtpY, mz = this.mtpZ;
-        const back = mz * Math.cos(p1) - my * Math.sin(p1), up = my * Math.cos(p1) + mz * Math.sin(p1); f = Object.assign({}, f, { ank: [f.ballPt[0] - Math.cos(f.yaw) * back, f.ballPt[1] - Math.sin(f.yaw) * back, HB.ankleH - my + up], pitch: -p1, toe: p1 }); L = solve(f); }
+      let f = ft, L = solve(f); solvers[X] = solve;
+      // (S99 MISSION: the heel rise pivots about the ball of the foot AS DRAWN — reconstructed from the drawn ankle and yaw; the stored ballPt can
+      // disagree with them by the yaw limiter's correction, and rebuilding the ankle from it moved a planted foot up to 18 cm for a frame)
+      const FIXB = !!(this.sim.P.pace && this.sim.P.pace.accGait), bp0 = f.planted && FIXB ? (() => { const q = -(f.pitch || 0), bk = this.mtpZ * Math.cos(q) - this.mtpY * Math.sin(q); return [f.ank[0] + Math.cos(f.yaw) * bk, f.ank[1] + Math.sin(f.yaw) * bk]; })() : null;
+      if (f.planted) for (let it = 0; it < 3; it++) { const df = -L.A.fp / DEG + (L.A.err > 0.5 ? -L.A.res[1] / DEG : 0); if (df <= RF.dfRise) break; const p0 = -f.pitch, p1 = p0 + (df - RF.dfRise + 1) * DEG, my = this.mtpY, mz = this.mtpZ, BP = bp0 || f.ballPt;
+        const back = mz * Math.cos(p1) - my * Math.sin(p1), up = my * Math.cos(p1) + mz * Math.sin(p1); f = Object.assign({}, f, { ank: [BP[0] - Math.cos(f.yaw) * back, BP[1] - Math.sin(f.yaw) * back, HB.ankleH - my + up], pitch: -p1, toe: p1 }); L = solve(f); }
       feet[X] = f; legRot["thigh_" + X] = L.ik.Rthigh; legRot["shin_" + X] = Q.mul(Q.x(L.ik.k), Q.y(L.A.tau)); legRot["foot_" + X] = Q.yxz(L.A.fy, L.A.fp, L.A.fr); legRot["toe_" + X] = Q.x(-(f.toe || 0));
-      legs[X] = { short: L.ik.short, err: L.A.err, Rfoot: Q.mul(L.Rsh0, Q.mul(Q.y(L.A.tau), Q.yxz(L.A.fy, L.A.fp, L.A.fr))), an: L.an }; }
+      legs[X] = { short: L.ik.short, err: L.A.err, Rfoot: Q.mul(L.Rsh0, Q.mul(Q.y(L.A.tau), Q.yxz(L.A.fy, L.A.fp, L.A.fr))), an: L.an, ik: L.ik }; }
+    // (S99 MISSION, the 99 pace: THE SWINGING KNEE CLEARS THE STANDING ONE — in a hard turn at speed the pelvis turns ≈ 4° a tick and the swinging
+    // knee came forward through the standing knee (≈ 9 cm apart, the thighs 3 – 6 cm into each other for a few ticks); it is swivelled outward,
+    // continuously, as the knees come within 16 cm (up to 20° each), and re-solved)
+    if (this.sim.P.pace && this.sim.P.pace.accGait) { const kneeAt = (X) => { const hp = Q.v(Rp, [sgnF(X) * b.hipX, 0, 0]).map((x, i) => x + pelvis[i]), v = Q.v(Q.mul(Rp, legs[X].ik.Rthigh), [0, -b.thigh, 0]); return [hp[0] + v[0], hp[1] + v[1], hp[2] + v[2]]; };
+      const kR = kneeAt("R"), kL = kneeAt("L"), dK = hyp(kR[0] - kL[0], kR[1] - kL[1], kR[2] - kL[2]);
+      // (both knees, each by the same share — continuous in the knees' distance alone: tied to which foot is down, it switched off at a lift-off
+      // and the swinging foot's toe jumped 13 cm)
+      if (dK < 0.16) for (const X of SIDES) { const f = feet[X], L2 = solvers[X](Object.assign({}, f, { kneeOut: (f.kneeOut || 0) + (X === "L" ? -1 : 1) * 20 * DEG * Math.min(1, (0.16 - dK) / 0.10) }));
+        legRot["thigh_" + X] = L2.ik.Rthigh; legRot["shin_" + X] = Q.mul(Q.x(L2.ik.k), Q.y(L2.A.tau)); legRot["foot_" + X] = Q.yxz(L2.A.fy, L2.A.fp, L2.A.fr);
+        legs[X] = { short: L2.ik.short, err: L2.A.err, Rfoot: Q.mul(L2.Rsh0, Q.mul(Q.y(L2.A.tau), Q.yxz(L2.A.fy, L2.A.fp, L2.A.fr))), an: L2.an, ik: L2.ik }; } }
     const pose = { rot: Object.assign(rot, legRot), pelvisPos: pelvis }, rootM = E.r1RootMatrix(P[0], P[1], psi, 0), fk = E.r1FK({ body: b }, pose, rootM, this.fk); this.fk = fk;
     const sk = b.skel, skin = new Float32Array(16 * sk.bones.length); for (let i = 0; i < fk.world.length; i++) skin.set(this.M4.mul(fk.world[i], sk.invBind[i]), i * 16);
     const J = {}; for (const bn of sk.bones) { const w = fk.joint[bn.idx], tp = fk.tip[bn.idx]; J[bn.name] = { j: [w[0], -w[2], w[1]], t: [tp[0], -tp[2], tp[1]] }; }

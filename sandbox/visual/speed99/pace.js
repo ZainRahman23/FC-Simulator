@@ -30,7 +30,9 @@ export const PACE = {
   // 2.77 m/s) but transforms the middle of the curve (70 / 80 / 90 % of vmax 0.97 / 1.27 / 1.77 s → 0.74 / 0.90 / 1.16 s at p 3) — C is
   // conservative through the middle, not at the launch. Each: a0 = the launch (m/s² at rest), p = how far into the speeds it holds
   C38: { id: "C38", label: "C38 · C's acceleration at 38 km/h (launch 11.1 m/s², p 1.35)", color: "#ff9b8d", vmax: 38 / 3.6, tau: 0.95, p: 1.35, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
-  D38: { id: "D38", label: "D38 · C's launch, stronger middle (11.1 m/s², p 2.2)", color: "#ffb36b", vmax: 38 / 3.6, a0: (38 / 3.6) / 0.95, p: 2.2, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
+  D38: { id: "D38", label: "D38 · C's launch, stronger middle (11.1 m/s², p 2.2)", color: "#ffb36b", vmax: 38 / 3.6, a0: (38 / 3.6) / 0.95, p: 2.2, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true,
+    // (S99 MISSION, the owner's Acceleration 99: SPRINT_CARRY — open space at a steady sprint: the ball pushed to the touching foot's N-th swing end)
+    sprintCarry: { v: 7.5, vLong: 8.5, hold: 0.8, ang: 10, vol: 0.12, N: 2, H: 1.65 } },   // (N = 3 measured too: 0.8 touches/s, but a 20° cut then waits ≈ 1.1 s for the ball — tools/s99_cutexplode.mjs)
   E38: { id: "E38", label: "E38 · upper responsive ceiling (11.5 m/s², p 3.0)", color: "#ff6f6f", vmax: 38 / 3.6, a0: 11.5, p: 3.0, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
 };
 // (the page's main switch: CURRENT and the 38 km/h acceleration candidates; A / B / C stay selectable under "earlier")
@@ -59,7 +61,7 @@ export function accCadence(G, v, v2, base) { const w = accDemand(v, v2); if (w <
 // m/s) carries a candidate's body ≈ 1 m over the foot: the stance ended ≈ 0.7 m behind the hips, beyond the leg, and the drawn pelvis dropped up
 // to 7.5 cm for a tick before each toe-off. Above 6.5 m/s the foot lands a little further ahead (0.33 m at 9.6 m/s) and above 7 m/s the contact
 // ends ≈ 0.52 m behind (0.087 s at 9.6 m/s: fast sprinters 0.085 – 0.10 s). Below 6.5 m/s RUN-1's placement and contact exactly: the RUN)
-export const topLead = (ld, v) => ld + Math.max(0, v - 6.5) * 0.02;
+export const topLead = (ld, v) => ld;   // (S99 MISSION: RUN-1's lead kept at top speed — landing further ahead left the leg short of the foot at touchdown: the pelvis dropped 6 – 7 cm in the contact tick; the shortened contact below keeps the toe-off within reach instead)
 export const topContact = (v, ld) => (v > 7 ? (topLead(ld, v) + 0.52) / v : Infinity);
 export function accLead(ld, v, v2) { ld = topLead(ld, v); const w = accDemand(v, v2); return w <= 0 ? ld : lerp(ld, Math.min(ld, ACC_GAIT.lead(v)), w); }
 // the forward lean of acceleration (degrees of the lean channel, added to the speed lean): 3° per m/s² of forward acceleration, ≤ 30° — the drawn

@@ -78,7 +78,7 @@ export const CARRY = {
 };
 // the solution's identifier (the owner's names): CARRY · COMPACT_INSIDE_REDIRECT · … · RONALDO_CHOP · CRUYFF · HOOK · DRAG_BACK · OUTSIDE_CUT
 export const SOLUTION = { CARRY: "CARRY", CIR: "COMPACT_INSIDE_REDIRECT", COR: "COMPACT_OUTSIDE_REDIRECT", ABG: "GATHER", URG: "URGENT_REACH", BRT: "BRAKING_TOUCH", BPV: "BRAKING_PIVOT",
-  CHOP: "RONALDO_CHOP", CRUYFF: "CRUYFF", HOOK: "HOOK", DRAGBACK: "DRAG_BACK", OUTCUT: "OUTSIDE_CUT" };
+  CHOP: "RONALDO_CHOP", CRUYFF: "CRUYFF", HOOK: "HOOK", DRAGBACK: "DRAG_BACK", OUTCUT: "OUTSIDE_CUT", LAT: "LATERAL_TRANSFER", KNK: "KNOCK_ON", SOL: "SOLE_ROLL", FNO: "FEINT_OUTSIDE_CUT", FNI: "FEINT_INSIDE_CUT" };
 export const actionId = (a) => (a.kind === "GENERIC" ? SOLUTION[a.fam] : a.tech ? SOLUTION[a.tech] : a.label === "CARRY" ? (a.chase ? "CARRY (pursuit)" : "CARRY") : a.label);
 // ── ATTRIBUTE-READY (owner: "structure B4 / B5 so that later Dribbling can influence …" — the D99 ceiling only; no 1–99 curve is built) ────────────
 //   vocabulary      the generic families available            urgentEffort   the cost of a lunge (an urgent reach) — difficult contacts
@@ -104,7 +104,28 @@ export const GENERIC = {
   URG: { label: "URGENT REACH", surface: null, box: { a: [0.55, 0.98], l: [-0.16, 0.55] }, nom: [0.78, 0.18], side: 0, need: [12, 75], redirect: 75, plant: null, protect: 0.10, crouch: 0.07 },
   BRT: { label: "BRAKING TOUCH", surface: "BRAKE", box: { a: [0.10, 0.78], l: [-0.10, 0.32] }, nom: [0.42, 0.10], side: 0, need: [135, 181], body: true, brake: true, plant: [-0.10, -0.18], protect: 0.30 },
   BPV: { label: "BRAKING PIVOT", surface: "INSIDE", box: { a: [-0.10, 0.62], l: [-0.20, 0.38] }, nom: [0.26, 0.06], side: -1, need: [90, 181], body: true, redirect: 180, vMax: 3.6, plant: [0.00, -0.20], protect: 0.50 },
+  // ── S99 MISSION — THE EXPANDED VOCABULARY (the owner's 4-hour mission, Phase 3; EXPANDED only — CORE is the six above): the same machinery —
+  // one swinging-foot contact at the end of its swing, its feasibility from the state (the ball's place, the speed, the redirect needed), the
+  // choice by B4's outcome cost like every other candidate (no angle buckets), mirrored by the foot's side —
+  //   LAT  LATERAL TRANSFER (La Croqueta): the inside of one foot plays the ball ACROSS the body to the OTHER foot's next swing end (aimFoot),
+  //        which then carries it on — a lateral shift in two quick touches without braking the run (protection: the ball moved away from the
+  //        side it was on)
+  //   KNK  KNOCK-ON (push-and-go): in open space with SPRINT asked, the turning touch knocks the ball well ahead on the new line, to the lane
+  //        foot's swing end nearest 1.05 s later (knock: inside CONTROLLED_BALL's 1.2 s continuation at any cadence), and the body explodes after it at Acceleration 99 — no opponent's challenge active, a steady stick
+  //   SOL  SOLE ROLL: nearly stopped (≤ 2.6 m/s) the sole rolls the ball OUT to its own side / back (the impulse ≥ 60° off the travel; never
+  //        across the body — the rolling leg crossed the standing one) while the body pivots
+  //        over it — the contact pose the sole's (forceSurface)
+  LAT: { label: "LATERAL TRANSFER", surface: "INSIDE", box: { a: [0.00, 0.58], l: [-0.12, 0.30] }, nom: [0.30, 0.08], side: -1, need: [14, 55], redirect: 75, plant: null, vMax: 6.2, aimFoot: "other", protect: 0.45, expanded: true },
+  KNK: { label: "KNOCK-ON", surface: null, box: { a: [0.10, 0.80], l: [-0.10, 0.40] }, nom: [0.45, 0.10], side: 0, need: [16, 60], redirect: 60, plant: null, vMin: 3.0, knock: 1.05, sprintOnly: true, protect: 0.0, expanded: true },
+  SOL: { label: "SOLE ROLL", surface: null, forceSurface: "SOLE", box: { a: [-0.06, 0.42], l: [-0.20, 0.30] }, nom: [0.22, 0.05], side: 1, need: [60, 150], body: true, redirect: 150, vMax: 2.6, plant: [-0.12, -0.16], minImpulseDeg: 60, protect: 0.55, expanded: true, reviewOnly: true },   // (REVIEW ONLY for now: in 90 – 120° pivots its rolling leg still crosses the standing one — tools/s99_families.mjs)
 };
+// (BODY FEINT — REVIEW ONLY: the outside / inside cut with a feint before its plant — the weight shifted and the trunk turned toward the OTHER
+// side over the 0.30 s before the plant (the body's side-lean, trunk and crouch channels), then snapped onto the real side at the touch. The root
+// path, the plant, the touch and the ball are the cut's own: nothing is faked in the simulation. Its value is a defender's reaction — with no
+// defender model B4 has no reason to choose it, so it is generated only when forced (the review select / presets))
+GENERIC.FNO = Object.assign({}, GENERIC.COR, { label: "FEINT + OUTSIDE CUT", feint: true, reviewOnly: true, expanded: true });
+GENERIC.FNI = Object.assign({}, GENERIC.CIR, { label: "FEINT + INSIDE CUT", feint: true, reviewOnly: true, expanded: true });
+export const EXPANDED = ["LAT", "KNK"];   // (chosen automatically; SOL, FNO, FNI: review only)
 // ── B3 / B5: a technique's commitment window and its release, from its own decisive swing ───────────────────────────────────────────────────────
 //   finalApproach: the striking foot's last authored segment into the ball (from its last waypoint before the contact; ≥ react, ≤ 0.08 s)
 //   exitRelease:   the end of that foot's authored follow-through (its last waypoint after the contact; ≥ 0.06 s) — ordinary control returns there
@@ -178,7 +199,7 @@ export class PlaySim {
     if (this.P.errDir > 0 && hyp(v[0], v[1]) > 0.2) { const r1 = this.rand(c.id, 1), r2 = this.rand(c.id, 2), e = r1 * this.P.errDir * DEG, f = 1 + r2 * this.P.errSpeed, ca = Math.cos(e), sa = Math.sin(e); v = [(v[0] * ca - v[1] * sa) * f, (v[0] * sa + v[1] * ca) * f]; }
     this.ball.launch(v, { foot: c.F, surface: c.surface, role: c.role }); this.contacts.push(this.contactRec(c, bv, v, intended)); this.mix(v[0]); this.mix(v[1]); this.flags.replan = "contact";
   }
-  contactRec(c, vIn, vOut, intended) { const a = this.plan.action; return { n: this.contacts.length + 1, k: this.k, t: this.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech || a.kind, action: a.label, actionId: a.id,
+  contactRec(c, vIn, vOut, intended) { const a = this.plan.action; return { sc: c.sc || undefined, fam: c.fam, aimT: c.sc && c.aim ? c.aim.T : undefined, n: this.contacts.length + 1, k: this.k, t: this.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech || a.kind, action: a.label, actionId: a.id,
     vIn: [vIn[0], vIn[1]], vOut: [vOut[0], vOut[1]], intendedH: intended && hyp(intended[0], intended[1]) > 0.05 ? hdg(intended) : null, actualH: hyp(vOut[0], vOut[1]) > 0.05 ? hdg(vOut) : null, ball: this.ball.p.slice(), reqH: this.req.h, cid: c.id, swing: c.swing || null, frame: c.frame || null, src: c.src, decisive: !!c.decisive }; }
   // a keyed, deterministic standard-normal-ish draw (the provisional Ball Control error below 99)
   rand(id, j) { let h = (2166136261 ^ this.o.seed) >>> 0; for (const x of [id, j, 977]) { h ^= x; h = Math.imul(h, 16777619) >>> 0; h ^= h >>> 13; } let s = 0; for (let i = 0; i < 4; i++) { h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0; s += (h / 4294967296); } return (s - 2) * 1.732; }
@@ -290,13 +311,16 @@ export class PlaySim {
     const t = this.t, a = c.action, notes = [], o = (c.outcome = this.outcome(c, q)); let J = 0;
     const tLine = c.tLine != null ? c.tLine - t : 3.0; J += 2.0 * min(3.0, tLine); notes.push(c.tLine != null ? `line +${tLine.toFixed(2)}s` : "never on the line");
     const tR = o.tRel != null ? o.tRel - t : 1.6; J += 0.8 * min(2.0, tR); notes.push(o.tRel != null ? `contact +${tR.toFixed(2)}s` : "no contact onto the line");
-    const gap = o.tNext - o.tLast; if (gap > 0.30) { J += 0.8 * min(2.0, gap - 0.30); notes.push(`next touch +${gap.toFixed(2)}s`); }
+    const gap = o.tNext - o.tLast; if (gap > 0.30 && !(a.kind === "GENERIC" && GENERIC[a.fam] && GENERIC[a.fam].knock)) { J += 0.8 * min(2.0, gap - 0.30); notes.push(`next touch +${gap.toFixed(2)}s`); }
     if (o.eB > 15 * DEG) { J += 0.5 * min(4, (o.eB / (30 * DEG)) ** 2); notes.push(`ball ${(o.eB / DEG).toFixed(0)}° off`); }
     J += 0.8 * (1 - o.retained); if (o.retained < 0.6) notes.push(`keeps ${(o.retained * 100).toFixed(0)} %`);
     const lim = q.mode === "SPRINT" ? 3.0 : q.mode === "RUN" ? 2.0 : q.mode === "JOG" ? 1.5 : 1.0; if (o.sep > lim) { J += 0.6 * (o.sep - lim); notes.push(`ball ${o.sep.toFixed(1)}m away`); }
     J += 0.22 * (c.nContacts || 0);
     const d = abs(a.turnDeg || 0), prot = a.tech ? TEMPLATES[a.tech].protect : a.kind === "GENERIC" ? a.protect : 0; J -= 0.35 * prot * clamp((d - 30) / 60, 0, 1);
     const pref = this.o.foot; if ((a.tech || a.kind === "GENERIC") && pref !== "B" && a.F !== pref) { J += 0.18; notes.push("weak foot"); }
+    // (S99 MISSION: review-only explicit access — the forced family preferred wherever it is feasible, ONE move at a time: not again until a
+    // contact of another kind has been made since its last one)
+    if (this.o.forceFam && a.kind === "GENERIC" && a.fam === this.o.forceFam) { const lastF = this.contacts.filter((x) => !x.missed).slice(-1)[0]; if (!lastF || lastF.fam !== this.o.forceFam) { J -= 3.0; notes.push("REVIEW: forced family"); } }
     if (a.kind === "GENERIC") { if (a.fam === "URG") { J += CAPS.urgentEffort; notes.push("lunge"); } if (cur.action.kind === "GENERIC" && cur.action.fam === a.fam && cur.action.F === a.F) J -= 0.40; }
     // (a named move scaled beyond the body its reference demonstrates: its post-contact turn × its speed against the authored one — the body
     // would need ≈ that multiple of the reference's lateral acceleration: beyond 1.35 × it cannot follow its own technique)
@@ -475,12 +499,13 @@ export class PlaySim {
     // (urgency: the ball is escaping the ordinary carry — no touch it can make, or only by holding its line / chasing, or none for 0.65 s (a
     // sprint's touch → strides → touch is ordinary) — only then is a lunge an option)
     const bt = base.contacts.find((c) => !c.done && c.t > t + 1e-9), urgent = !bt || bt.t - t > 0.65 || !!base.action.chase;
-    for (const [key, G] of Object.entries(GENERIC)) { const tw = G.body ? turnB : turnBall, need = abs(tw) / DEG, sgnT = Math.sign(tw) || 1; if (!CAPS.vocabulary.includes(key === "ABG" ? "GATHER" : key)) continue; if (key === "URG" && !urgent) continue;
-      if (need < G.need[0] || need > G.need[1] || (G.vMax && st.s > G.vMax + 0.6)) continue;
+    for (const [key, G] of Object.entries(GENERIC)) { const tw = G.body ? turnB : turnBall, need = abs(tw) / DEG, sgnT = Math.sign(tw) || 1; if (!(G.expanded ? this.o.vocab === "EXPANDED" : CAPS.vocabulary.includes(key === "ABG" ? "GATHER" : key)) || (G.reviewOnly && this.o.forceFam !== key)) continue; if (key === "URG" && !urgent) continue;
+      if (need < G.need[0] || need > G.need[1] || (G.vMax && st.s > G.vMax + 0.6) || (G.vMin && st.s < G.vMin)) continue;
+      if (G.sprintOnly && (q.mode !== "SPRINT" || (this.volatility && this.volatility() > 0.25) || (this.opp && this.opp.some((e) => !e.hit && t > e.t0 - 1.0 && t < e.t1 + 0.3)))) continue;
       for (const X of ["R", "L"]) { if (G.side && sgnT !== G.side * sgn(X)) continue;
         // (the touching foot's landing: its natural ones on the stride, each a little sooner or later — as a technique's anchor — the touch at
         // the end of that swing; the first two that place the ball in the family's reach are kept)
-        let n = 0; for (const td of this.anchorTimes(X, keep, st)) { if (n >= 2) break; const tT = Math.round((td - CARRY.touchBefore) / DT) * DT; if (tT < lastBy[X] + 0.2 || tT <= t + R + 0.01 || tT > t + 1.1) continue;
+        const FF = this.o.forceFam === key; let n = 0; for (const td of this.anchorTimes(X, keep, st)) { if (n >= (FF ? 4 : 2)) break; const tT = Math.round((td - CARRY.touchBefore) / DT) * DT; if (tT < lastBy[X] + 0.2 || tT <= t + R + 0.01 || tT > t + (FF ? 1.6 : 1.1)) continue;   // (review-only: a forced family is searched over the next four swing ends)
           let any = false; for (const ap of ["line", "intercept"]) { const p = this.genericBuild(key, G, X, tT, { t0: Math.round(td / DT) * DT }, ap, st, keep, q, turnB, sgnT, null, base); if (p) { out.push(p); any = true; } } if (any) n++; } } }
     return out;
   }
@@ -493,6 +518,9 @@ export class PlaySim {
     const t = this.t, O = other(X), h0 = st.s > 0.6 ? st.h : st.psi, hold = { h: hPin != null ? hPin : ap === "intercept" ? this.approachH(G, X, tT, st, sgnT) : h0, until: tT + 0.02 }, f = ap;
     if (hPin == null && ap === "intercept" && abs(wrap(hold.h - h0)) < 2 * DEG) return null;
     const chKeys = this.carryChannels(st, q, t); chKeys.crouch = [[tT - 0.10, G.crouch || 0.045], [tT + 0.12, 0.035], [tT + 0.35, 0.022]]; chKeys.trunk = [[tT - 0.05, sgnT * 8], [tT + 0.3, 0]];
+    if (G.feint) { const fT = min(0.30, tT - t - 0.02); if (fT < 0.20) return this.rej("feint time"); const fk = -sgnT, f0 = tT - fT, f1 = tT - 0.4 * fT;   // (the feint: 0.20 – 0.30 s before the touch, as the state allows)
+      chKeys.side = [[t + 0.01, 0], [f0, fk * 9], [f1, fk * 9], [tT + 0.03, -fk * 6], [tT + 0.35, 0]];
+      chKeys.trunk = [[f0, fk * 16], [f1 + 0.05, fk * 12], [tT + 0.04, -fk * 10], [tT + 0.32, 0]]; chKeys.crouch = [[f0, 0.065], [tT - 0.05, 0.05], [tT + 0.12, 0.035], [tT + 0.35, 0.022]]; }
     const plan = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "GENERIC", fam: key, label: G.label, F: X, id: 0 }, req: q, prog: { kind: "carry", hold }, chKeys });
     const B = predict(this.ball.p, this.ball.v, tT - t), s = this.stateAt(tT, plan), th = s.psi, rel = toLocal(B.p, s.P, th), lat = rel[1] * sgn(X);
     if (rel[0] < G.box.a[0] || rel[0] > G.box.a[1] || lat < G.box.l[0] || lat > G.box.l[1] || (G.vMax && s.s > G.vMax)) return this.rej("box");
@@ -513,19 +541,22 @@ export class PlaySim {
         if (T <= 0.05 || path / T > (key === "URG" ? 1.0 * nat + 0.5 : 1.3 * nat + 1.0)) return this.rej("swing speed"); } }   // (a lunge's reach is its extra length, not extra speed)
     // the touch: to where the body plays it next (the preferred foot's next swing end ahead in its lane on the request's line; a braking touch:
     // where the braked body will be) — the redirect capped by the family; it must change the ball (else it is the carry's)
-    const laneFoot = this.o.foot === "B" ? X : this.o.foot, lane = sgn(laneFoot) * CARRY.lane(q.mode), nx = plan.stances[laneFoot].find((x) => x.t0 - CARRY.touchBefore > tT + 0.15);
-    const nxT = nx ? nx.t0 - CARRY.touchBefore : tT + 2 * this.gait(max(s.s, 1)).Ts, sN = this.stateAt(nxT, plan);
+    const laneFoot = G.aimFoot === "other" ? O : this.o.foot === "B" ? X : this.o.foot, lane = sgn(laneFoot) * CARRY.lane(q.mode), nxs = plan.stances[laneFoot].filter((x) => x.t0 - CARRY.touchBefore > tT + (G.aimFoot === "other" ? 0.10 : 0.15)), nx = nxs[0];
+    let nxT = nx ? nx.t0 - CARRY.touchBefore : tT + 2 * this.gait(max(s.s, 1)).Ts;
+    if (G.knock) { let best = null; for (const x of nxs) { const T2 = x.t0 - CARRY.touchBefore; if (T2 <= tT + G.knock + 0.10 && (best == null || abs(T2 - tT - G.knock) < abs(best - tT - G.knock))) best = T2; } if (best == null || best - tT < 0.6) return this.rej("knock"); nxT = best; }   // (the knock: the lane foot's swing end nearest 1.05 s later)
+    const sN = this.stateAt(nxT, plan);
     let aim = G.brake ? { kind: "target", P: fromLocal(this.stateAt(tT + 0.5, plan).P, q.h, 0.35, lane), T: tT + 0.55 } : { kind: "target", P: fromLocal(sN.P, q.h, CARRY.ahead(sN.s), lane), T: nxT };
     const d = [aim.P[0] - B.p[0], aim.P[1] - B.p[1]], D = hyp(d[0], d[1]), sp = min(CARRY.vCap, speedFor(D, max(0.1, aim.T - tT)) || CARRY.vCap); let vOut = [d[0] / max(D, 1e-6) * sp, d[1] / max(D, 1e-6) * sp];
     const inS = hyp(B.v[0], B.v[1]); if (G.redirect && inS > 1.0) { const dA = wrap(hdg(vOut) - hdg(B.v)); if (abs(dA) > G.redirect * DEG) { const hh = hdg(B.v) + Math.sign(dA) * G.redirect * DEG; vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; } }
     if (hyp(vOut[0] - B.v[0], vOut[1] - B.v[1]) < 0.8) return this.rej("no change");
     // the surface is the impulse's (the body's contact pose is built from it): it must be the family's
-    const surface = this.surfaceFor(X, B.v, vOut, s, "carry"); if (G.surface === "BRAKE" ? !(surface === "SOLE" || surface === "INSIDE") : G.surface ? surface !== G.surface : surface === "SOLE") return this.rej("surface");
+    if (G.minImpulseDeg) { const dv = [vOut[0] - B.v[0], vOut[1] - B.v[1]]; if (abs(wrap(hdg(dv) - (s.s > 0.6 ? s.h : s.psi))) < G.minImpulseDeg * DEG) return this.rej("impulse"); }
+    const surface = G.forceSurface || this.surfaceFor(X, B.v, vOut, s, "carry"); if (G.forceSurface) { /* (the sole's: the pose is built from it) */ } else if (G.surface === "BRAKE" ? !(surface === "SOLE" || surface === "INSIDE") : G.surface ? surface !== G.surface : surface === "SOLE") return this.rej("surface");
     // the touching foot's landing off the ball's new path (positions only, as the carry's)
     { const L = plan.stances[X].find((x) => x.t0 > tT - 1e-6); if (L && L.src === "gait") { const psi = this.stateAt(L.t0, plan).psi, r = rgt(psi); let need = 0, side = sgn(X);
         for (let x = max(tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(B.p, vOut, x - tT).p, dd = [b[0] - L.pos[0], b[1] - L.pos[1]], a = dd[0] * Math.cos(psi) + dd[1] * Math.sin(psi), l = dd[0] * r[0] + dd[1] * r[1]; if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
         if (need > 0) { const k = min(0.20, need); L.pos = [L.pos[0] + r[0] * side * k, L.pos[1] + r[1] * side * k]; } } }
-    const c = { id: ++this.cid, t: tT, k: Math.round(tT / DT), F: X, surface, role: G.label.toLowerCase(), aim, src: "generic", tech: "GENERIC", fam: key, bPred: B.p, vInPred: B.v, vOutPred: vOut };
+    const c = { id: ++this.cid, t: tT, k: Math.round(tT / DT), F: X, surface, role: G.label.toLowerCase(), aim, src: "generic", tech: "GENERIC", fam: key, bPred: B.p, vInPred: B.v, vOutPred: vOut, sc: G.knock && aim.kind === "target" ? true : undefined };
     const ca = this.plan.action, same = ca.kind === "GENERIC" && ca.fam === key && ca.F === X && !this.contacts.some((r) => r.actionId === ca.id);
     plan.contacts = keep.contacts.concat([c]); plan.nContacts = 1;
     plan.action = { kind: "GENERIC", fam: key, label: G.label, F: X, m: 0, id: same ? ca.id : ++this.aid, tC: tT, turnDeg: (G.body ? turnB : wrap(q.h - (inS > 1 ? hdg(B.v) : h0))) / DEG, protect: G.protect, approach: f, tPrep: plant ? plant.t0 : null };
@@ -569,9 +600,16 @@ export class PlaySim {
     if (q.h == null && hyp(bv[0], bv[1]) < 0.05) { const me = sAt(t), d = hyp(b0[0] - me.P[0], b0[1] - me.P[1]); if (d < 0.75) { out.ok = true; out.info = "the ball at rest at the feet"; return out; } }
     let first = null, alt = null;
     const lastBy = { R: -9, L: -9 }; for (const c of this.contacts) lastBy[c.F] = max(lastBy[c.F], c.t); // (a foot never plays the ball twice in one swing)
-    for (const e of ends) { if (e.tT < t + R - 1e-9 || e.tT < lastBy[e.F] + 0.2 || (skip && skip.has(e.F + e.tT.toFixed(4))) || (gKept && e.tT < gKept.t + 0.25)) continue; const s = sAt(e.tT), th = s.psi, bp = ballAt(e.tT).p, rel = toLocal(bp, s.P, th), slow = s.s < 1.6;
-      const wide = slow || recover, okA = wide ? rel[0] >= CARRY.reach.slow.a[0] && rel[0] <= CARRY.reach.slow.a[1] + (recover ? 0.12 : 0) : rel[0] >= CARRY.reach.a[0] && rel[0] <= CARRY.reach.a[1];
-      const okL = wide ? abs(rel[1]) <= CARRY.reach.slow.l && rel[1] * sgn(e.F) >= -0.12 : rel[1] * sgn(e.F) >= CARRY.reach.l[0] && rel[1] * sgn(e.F) <= CARRY.reach.l[1];
+    // (S99 MISSION — SPRINT_CARRY, the 99 pace only: open space at a steady sprint (sprintOpen) — the push planned the touch: none before it)
+    const SC = this.sprintOpen(q, sAt(t)), lc = this.contacts.length ? this.contacts[this.contacts.length - 1] : null, due = SC && lc && lc.sc && lc.aimT > t + R ? lc.aimT : null;
+    for (let pass = due != null ? 0 : 1; pass < 2 && !first && !alt; pass++)
+    for (const e of ends) { if (e.tT < t + R - 1e-9 || e.tT < lastBy[e.F] + 0.2 || (skip && skip.has(e.F + e.tT.toFixed(4))) || (gKept && e.tT < gKept.t + 0.25) || (pass === 0 && e.tT < due - 0.06)) continue; const s = sAt(e.tT), th = s.psi, bp = ballAt(e.tT).p, rel = toLocal(bp, s.P, th), slow = s.s < 1.6;
+      // (S99 MISSION, the 99 pace's RECOVERY: a ball just beside a body overtaking it is played by the foot that gets there — the inside of the
+      // other foot slightly across the body (to 0.22 m) or a ball slightly behind the centre of mass (to 0.22 m): without it no pursuit could
+      // touch it and control ended 0.3 s later with the ball 0.65 m away)
+      const R99 = recover && this.P.pace && this.P.pace.accGait;
+      const wide = slow || recover, okA = wide ? rel[0] >= (R99 ? -0.22 : CARRY.reach.slow.a[0]) && rel[0] <= CARRY.reach.slow.a[1] + (recover ? 0.12 : 0) : rel[0] >= CARRY.reach.a[0] && rel[0] <= CARRY.reach.a[1];
+      const okL = wide ? abs(rel[1]) <= CARRY.reach.slow.l && rel[1] * sgn(e.F) >= (R99 ? -0.22 : -0.12) : rel[1] * sgn(e.F) >= CARRY.reach.l[0] && rel[1] * sgn(e.F) <= CARRY.reach.l[1];
       if (!okA || !okL) continue;
       // the lane foot (the ball's side) first; the other foot plays it (across, with the inside) when the lane foot's chance is > 0.35 s later
       const laneOk = wide || abs(rel[1]) <= 0.06 || sgn(e.F) === Math.sign(rel[1]); if (!first && laneOk) { first = { e, s, th, bp, rel }; break; }
@@ -579,16 +617,19 @@ export class PlaySim {
     // (B2 prefFoot: when the touch must turn the ball, the other foot plays it whenever the lane foot's chance is > 0.10 s later — the preferred
     // foot stays the lane the ball is carried in, never a wait for it)
     let altGap = 0.35; if (this.L.prefFoot && q.h != null) { const bs = hyp(bv[0], bv[1]), s0 = sAt(t), ref = bs > 1.0 ? hdg(bv) : (s0.s > 1.0 ? s0.h : s0.psi); if (abs(wrap(q.h - ref)) > 12 * DEG) altGap = 0.10; }
+    if (SC && first) altGap = Infinity;   // (SPRINT_CARRY: the lane foot plays its push — the other foot never intercepts it)
     if (alt && (!first || first.e.tT - alt.e.tT > altGap)) first = alt;
     // a committed touch (inside the reaction time) IS this plan's touch: it stays, re-aimed below for this path
     if (kept) { const s = sAt(kept.t); first = { e: { F: kept.F, tT: kept.t }, s, th: s.psi, bp: ballAt(kept.t).p, rel: toLocal(ballAt(kept.t).p, s.P, s.psi) }; }
     if (!first) { if (out.sepMax > 1.6) out.sepPen = 0.8 + 0.4 * (out.sepMax - 1.6); out.info = "the ball out of reach"; out.ok = q.h == null && out.sepMax < 0.8; return out; }
     out.ok = true; const { e, s } = first, F = e.F, pref = this.o.foot === "B" ? F : this.o.foot;
     // where the ball goes: STOP — to rest where the body stops; else ahead on the planned path, at the touching foot's next touch of the rhythm
-    let aim, role = "carry", N = CARRY.rhythm(mode, s.s);
+    const scT = SC && q.h != null && (this.o.foot === "B" || F === pref) && s.s >= this.P.pace.sprintCarry.v; let aim, role = "carry", N = scT ? (SC === 2 ? this.P.pace.sprintCarry.N : 2) : CARRY.rhythm(mode, s.s);
     if (q.h == null) { const se = sAt(t + 1.4), stopAt = fromLocal(se.P, se.psi, 0.36, sgn(pref) * 0.08); aim = { kind: "rest", P: stopAt }; role = "stop"; }
     else { const laneFoot = this.o.foot === "B" ? F : pref, fe = ends.filter((x) => x.F === laneFoot && x.tT > e.tT + 0.15); let nx = fe[(laneFoot === F ? N : 1) - 1] || fe[fe.length - 1];
       if (!nx) { const Ts = this.gait(max(s.s, 1)).Ts; nx = { tT: e.tT + 2 * Ts * N }; }
+      // (SPRINT_CARRY: the N-th swing end can lie past the planned stances — continued at their own stride period)
+      if (scT && laneFoot === F && fe.length < N) { const per = fe.length >= 2 ? fe[1].tT - fe[0].tT : fe.length ? fe[0].tT - e.tT : 2 * this.gait(max(s.s, 1)).Ts; nx = { tT: (fe.length ? fe[fe.length - 1].tT : e.tT) + per * (N - fe.length) }; }
       const sN = sAt(nx.tT), thN = q.h != null ? q.h : (sN.s > 0.6 ? sN.h : sN.psi), laneF = laneFoot, lane = sgn(laneF) * CARRY.lane(mode);
       aim = { kind: "target", P: fromLocal(sN.P, thN, CARRY.ahead(sN.s), lane), T: nx.tT }; }
     // the touch: the ball arrives at e.tT; what the touch must do (its surface from the impulse it gives)
@@ -600,7 +641,10 @@ export class PlaySim {
     // a touch that would change nothing is not made ("quick feet, not busy feet"): the ball reaches the aim on its own — the next swing end decides
     if (!kept && aim.kind === "target" && hyp(vOut[0] - vIn[0], vOut[1] - vIn[1]) < 0.35 && (!skip || skip.size < 4)) return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), e.F + e.tT.toFixed(4)]));
     // a running touch redirects the ball within CARRY.redirect° (beyond it: the ball keeps more of its line — the next touch / a technique finishes it)
-    const inS = hyp(vIn[0], vIn[1]); if (inS > 1.0 && s.s > 1.6 && !(recover && s.s < 3.0)) { const dA = wrap(hdg(vOut) - hdg(vIn)); if (abs(dA) > CARRY.redirect * DEG) { const hh = hdg(vIn) + Math.sign(dA) * CARRY.redirect * DEG, sp = hyp(vOut[0], vOut[1]); vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; out.sepPen += 0.25; } }
+    // (S99 MISSION, the 99 pace: a slow ball rolling BACK at the running body (> 100° off its travel, < 3 m/s) is not a running redirect — the
+    // player meets it and pushes it on to its aim; capped at 48° it went off sideways at speed, out of every later reach (a 3 m loss))
+    const inS = hyp(vIn[0], vIn[1]), against = this.P.pace && this.P.pace.accGait && inS < 3.0 && s.s > 1.6 && abs(wrap(hdg(vIn) - s.h)) > 100 * DEG;
+    if (inS > 1.0 && s.s > 1.6 && !(recover && s.s < 3.0) && !against) { const dA = wrap(hdg(vOut) - hdg(vIn)); if (abs(dA) > CARRY.redirect * DEG) { const hh = hdg(vIn) + Math.sign(dA) * CARRY.redirect * DEG, sp = hyp(vOut[0], vOut[1]); vOut = [Math.cos(hh) * sp, Math.sin(hh) * sp]; aim = { kind: "vel", speed: sp, h: hh }; out.sepPen += 0.25; } }
     const surface = this.surfaceFor(F, vIn, vOut, s, role);
     // the touching foot lands right after its touch: its landing is placed off the path the touch gives the ball (planned before the touch,
     // it could stand where the redirected ball is about to roll — positions only, no decision reads them)
@@ -608,7 +652,7 @@ export class PlaySim {
       for (let x = max(e.tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(bArr.p, vOut, x - e.tT).p, d = [b[0] - L.pos[0], b[1] - L.pos[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
         if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
       if (need > 0) { const k = min(0.20, need); L.pos = [L.pos[0] + r[0] * side * k, L.pos[1] + r[1] * side * k]; } }
-    const c = { id: ++this.cid, t: Math.round(e.tT / DT) * DT, k: Math.round(e.tT / DT), F, surface, role: role === "stop" ? (hyp(vOut[0], vOut[1]) < 0.05 ? "stop (sole)" : "stop (cushion)") : this.carryRole(F, vIn, vOut, s), aim, src: "carry", tech: "CARRY", bPred: bArr.p, vInPred: vIn, vOutPred: vOut };
+    const c = { id: ++this.cid, t: Math.round(e.tT / DT) * DT, k: Math.round(e.tT / DT), F, surface, role: role === "stop" ? (hyp(vOut[0], vOut[1]) < 0.05 ? "stop (sole)" : "stop (cushion)") : this.carryRole(F, vIn, vOut, s), aim, src: "carry", tech: "CARRY", bPred: bArr.p, vInPred: vIn, vOutPred: vOut, sc: scT && aim.kind === "target" ? true : undefined };
     if (kept && abs(kept.t - c.t) < 0.03 && kept.F === c.F) { kept.aim = c.aim; out.list.push(kept); } else out.list.push(c);
     { const lim = q.h == null ? 1.2 : mode === "SPRINT" ? 3.0 : mode === "RUN" ? 2.0 : mode === "JOG" ? 1.5 : 1.0; let sa = 0; for (let x = 0; x <= 1.2; x += 0.1) { const T2 = c.t + x, s2 = sAt(T2), b2 = predict(bArr.p, vOut, x).p; sa = max(sa, hyp(b2[0] - s2.P[0], b2[1] - s2.P[1])); }
       out.sepMax = sa; out.sepPen = (out.sepPen || 0) + (sa > lim ? 0.6 * (sa - lim) : 0); if (q.h != null && hyp(vOut[0], vOut[1]) > 0.5 && abs(wrap(hdg(vOut) - q.h)) > 30 * DEG) out.sepPen += 0.4; }
@@ -618,6 +662,17 @@ export class PlaySim {
     out.info = `${c.role} ${F} ${surface.toLowerCase()} in ${(c.t - t).toFixed(2)} s`;
     return out;
   }
+  // (S99 MISSION — SPRINT_CARRY's open space: the 99 pace's sprintCarry, SPRINT asked along the travel (within ang°), the body at speed, the ball
+  // running along the request, a steady stick (the decision's volatility), no opponent's challenge active or within 1 s — any of these ends it)
+  // GRADED: 2 — the stick held within 4° for ≥ 0.8 s, the body ≥ 8.5 m/s, the request within 4° of the travel: the long push (N = 3);
+  // 1 — steering a little (within ang°): the lane foot every other swing (N = 2); 0 — the ordinary carry (either foot, the 0.35 s rule)
+  sprintOpen(q, s0) { const pc = this.P.pace && this.P.pace.sprintCarry; if (!pc || !q || q.mode !== "SPRINT" || q.h == null) { this.scHold = null; return 0; }
+    const H = this.scHold; if (!H || abs(wrap(q.h - H.h)) > 4 * DEG || this.t < H.t0) this.scHold = { h: q.h, t0: this.t };
+    if (s0.s < pc.v) return 0; const dev = abs(wrap(q.h - s0.h)); if (dev > pc.ang * DEG) return 0;
+    const bv = this.ball.v; if (hyp(bv[0], bv[1]) > 1.0 && abs(wrap(hdg(bv) - q.h)) > 15 * DEG) return 0;
+    if (this.volatility && this.volatility() > pc.vol) return 0;
+    if (this.opp && this.opp.some((e) => !e.hit && this.t > e.t0 - 1.0 && this.t < e.t1 + 0.3)) return 0;
+    return dev < 4 * DEG && s0.s >= pc.vLong && this.t - this.scHold.t0 >= pc.hold ? 2 : 1; }
   carryRole(F, vIn, vOut, s) { const a = abs(wrap(hdg(vOut) - (s.s > 0.6 ? s.h : s.psi))) / DEG; return a < 12 ? "carry" : a < 50 ? "carry correction" : "carry turn"; }
   // the contact surface from the impulse relative to the body and the touching foot (TECHNICAL-CONTROL-1.2: the laces / outer instep forward, the
   // inside across the body, the outside away from it, the sole to stop / pull back)

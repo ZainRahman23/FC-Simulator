@@ -9,4 +9,5 @@ import fs from "node:fs";
 export const DT = 1 / 240;
 const baked = JSON.parse(fs.readFileSync(new URL("../../tc_baseline_88573ef0/pt_baked.json", import.meta.url)));
 export const ENV = { E: X.RUN1_V13, M4: X.M4, skel: X.skel, body: X.RUN1_V13.r1Body(X.skel), baked };
-export function makeSim(engine, o = {}) { return engine === "BASE" ? new BaseSim(ENV, o) : engine === "UNIFIED" ? new UnifiedRef(ENV, o) : engine === "ASTRA" ? new AgilitySim(ENV, Object.assign({ profile: "A99-C", ballOn: true }, o)) : new TLSim(ENV, o); }
+// (S99 MISSION: S99_PACE=D38 / S99_VOCAB=EXPANDED run any tool on that pace / vocabulary — the speed99 TLSim only, never a reference engine; an explicit o.pace wins)
+export function makeSim(engine, o = {}) { if (process.env.S99_PACE && engine === "TL" && o.pace == null) o = Object.assign({}, o, { pace: process.env.S99_PACE }); if (process.env.S99_VOCAB && engine === "TL" && o.vocab == null) o = Object.assign({}, o, { vocab: process.env.S99_VOCAB }); return engine === "BASE" ? new BaseSim(ENV, o) : engine === "UNIFIED" ? new UnifiedRef(ENV, o) : engine === "ASTRA" ? new AgilitySim(ENV, Object.assign({ profile: "A99-C", ballOn: true }, o)) : new TLSim(ENV, o); }

@@ -1,0 +1,136 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/s99.html",
+ "defaults": {
+  "vocab": "EXPANDED",
+  "pace": "D38",
+  "ball": true,
+  "model": "CONTROLLED",
+  "config": "FULL",
+  "attrs": null,
+  "label": "S99 · 99 PACE: Sprint 99 = 38 km/h · Acceleration 99 = D38 · Agility 99 = A99-C · D99 · BC99 · CONTROLLED_BALL · FULL · EXPANDED techniques · BALL ON",
+  "paceButtons": [
+   "99 PACE",
+   "CURRENT PACE"
+  ]
+ },
+ "sprint": {
+  "vmax": 10.56,
+  "kmh": 38,
+  "touches": 15,
+  "phases": [
+   "ball rolling to the carry",
+   "SPRINT CARRY · pushed ahead to the next push"
+  ],
+  "exits": [],
+  "state": "CONTROLLED",
+  "determinism": true
+ },
+ "otherPace": {
+  "from": "D38",
+  "to": "CURRENT",
+  "replay": true,
+  "label": "S99 · CURRENT PACE (TC-CONTROLLED-1) · D99 · BC99 · CONTROLLED_BALL · FULL · EXPANDED techniques · BALL ON",
+  "inputIdentical": true
+ },
+ "presets": [
+  {
+   "name": "REVIEW · KNOCK-ON · run → sprint 35° into space",
+   "vocab": "EXPANDED",
+   "force": "KNK",
+   "actions": [
+    "KNOCK-ON",
+    "CARRY"
+   ],
+   "touches": [
+    "carry",
+    "knock-on",
+    "carry",
+    "carry",
+    "carry"
+   ],
+   "exits": [],
+   "determinism": true
+  },
+  {
+   "name": "REVIEW · LATERAL TRANSFER · run → 40° right",
+   "vocab": "EXPANDED",
+   "force": "LAT",
+   "actions": [
+    "LATERAL TRANSFER",
+    "CARRY"
+   ],
+   "touches": [
+    "carry",
+    "lateral transfer",
+    "carry",
+    "carry",
+    "carry"
+   ],
+   "exits": [],
+   "determinism": true
+  },
+  {
+   "name": "REVIEW · SOLE ROLL · walk → 120°",
+   "vocab": "EXPANDED",
+   "force": "SOL",
+   "actions": [
+    "SOLE ROLL",
+    "CARRY"
+   ],
+   "touches": [
+    "carry",
+    "sole roll",
+    "carry",
+    "carry",
+    "carry"
+   ],
+   "exits": [],
+   "determinism": true
+  },
+  {
+   "name": "B4 CHOOSES · run → sprint 35° (EXPANDED, unforced)",
+   "vocab": "EXPANDED",
+   "force": null,
+   "actions": [
+    "KNOCK-ON",
+    "CARRY"
+   ],
+   "touches": [
+    "carry",
+    "knock-on",
+    "carry",
+    "carry",
+    "carry"
+   ],
+   "exits": [],
+   "determinism": true
+  },
+  {
+   "name": "SPRINT CARRY → 90° cut + explode",
+   "vocab": "EXPANDED",
+   "force": null,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT",
+    "CARRY"
+   ],
+   "touches": [
+    "carry",
+    "carry",
+    "carry",
+    "carry",
+    "carry"
+   ],
+   "exits": [],
+   "determinism": true
+  }
+ ],
+ "otherVocab": {
+  "from": "EXPANDED",
+  "to": "CORE",
+  "replay": true,
+  "label": "S99 · 99 PACE: Sprint 99 = 38 km/h · Acceleration 99 = D38 · Agility 99 = A99-C · D99 · BC99 · CONTROLLED_BALL · FULL · CORE techniques · BALL ON",
+  "inputIdentical": true
+ },
+ "logs": [],
+ "http": []
+}

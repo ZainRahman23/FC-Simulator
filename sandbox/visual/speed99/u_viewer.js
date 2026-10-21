@@ -39,8 +39,11 @@ import * as BS from "../tc_baseline_88573ef0/pt_sim.js";
 import * as BB from "../tc_baseline_88573ef0/pt_body.js";
 import { TESTS as OWNER_TESTS, MORNING, MODES as TMODES } from "./u_tests.js";
 import { PACE, PACE_IDS, PACE_MAIN } from "./pace.js";
-import { PACE_TESTS } from "./s_tests.js";
-const TESTS = PACE_TESTS.map((x) => Object.assign({ fam: "pace" }, x)).concat(MORNING, OWNER_TESTS);
+// (S99 MISSION: THE PRIMARY PAGE — s99.html sets window.S99_PRIMARY: it opens straight into the owner's 99 player (S99 38 km/h · Acceleration 99
+// D38 · Agility 99 A99-C · D99 · BC99 · CONTROLLED_BALL · FULL · BALL ON · the joystick) with ONE pace switch, 99 PACE ⇄ CURRENT PACE, same input)
+const PRIMARY = !!window.S99_PRIMARY, PACE_SW = PRIMARY ? ["D38", "CURRENT"] : PACE_MAIN, PACE_NAME = (id) => (PRIMARY ? (id === "D38" ? "99 PACE" : id === "CURRENT" ? "CURRENT PACE" : id) : id);
+import { PACE_TESTS, MISSION_TESTS } from "./s_tests.js";
+const TESTS = (window.S99_PRIMARY ? MISSION_TESTS.map((x) => Object.assign({ fam: "s99" }, x)) : []).concat(PACE_TESTS.map((x) => Object.assign({ fam: "pace" }, x)), MORNING, OWNER_TESTS);
 const { DT, MODES, LABEL, wrap, dir, hdg, LAYERS, PRESETS, PRESET_LABEL, REJECTED, presetLayers, actionId } = TL;
 const ENG = { layered: { Sim: TL.ControlledSim, Body: TLBody }, baseline: { Sim: BS.PlaySim, Body: BB.PlayBody } };
 const CHAIN = ["A", "AC", "ACS", "ACS4", "FULL"];
@@ -117,7 +120,7 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, 
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
-  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; o.pace = V.pace; } else { delete o.layers; delete o.ballOn; delete o.control; delete o.pace; }
+  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; o.pace = V.pace; o.vocab = V.vocab; if (V.forceFam) o.forceFam = V.forceFam; else delete o.forceFam; } else { delete o.layers; delete o.ballOn; delete o.control; delete o.pace; delete o.vocab; delete o.forceFam; }
   V.sim = new ENG[V.engine].Sim(V.env, o); V.body = new ENG[V.engine].Body(V.env, V.sim);
   // (the REFERENCE runner: the same options and input with the reference pace, started 2.5 m to the side — BALL OFF, the unified engine only)
   V.ref = null; V.refBody = null; V.run = null; V.lastReq = null;
@@ -129,10 +132,10 @@ function showConfig() { const d = V.dom; if (!d.selEng) return; d.selEng.value =
   document.querySelectorAll("[data-preset]").forEach((b) => { const P = presetLayers(b.dataset.preset); b.classList.toggle("on", on && LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id])); });
   d.ver.textContent = on ? `TC-CONTROLLED-1 · ${configName("layered", V.layers)}${V.ballOn ? "" : " · BALL OFF (Astra's probe)"}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ff9b8d" : "#8dffa6"; if (d.cBall) d.cBall.checked = V.ballOn;
   document.querySelectorAll("[data-model]").forEach((b) => b.classList.toggle("on", on && b.dataset.model === V.control));
-  document.querySelectorAll("[data-pace]").forEach((b) => b.classList.toggle("on", on && b.dataset.pace === V.pace)); if (d.selRef) d.selRef.value = V.refPace;
-  if (on) { const pr = PACE[V.pace] || PACE.CURRENT; d.ver.textContent = `SPEED-99-V1 · ${pr.id === "CURRENT" ? "CURRENT pace" : "candidate " + pr.id}${V.ballOn ? " · BALL ON (not yet adapted)" : " · BALL OFF"}`; d.ver.style.background = pr.color; } }
+  document.querySelectorAll("[data-pace]").forEach((b) => b.classList.toggle("on", on && b.dataset.pace === V.pace)); document.querySelectorAll("[data-vocab]").forEach((b) => b.classList.toggle("on", on && b.dataset.vocab === (V.vocab || "CORE"))); if (d.selForce) d.selForce.value = V.forceFam || ""; if (d.selRef) d.selRef.value = V.refPace;
+  if (on) { const pr = PACE[V.pace] || PACE.CURRENT; d.ver.textContent = PRIMARY ? `S99 · ${pr.id === "D38" ? "99 PACE: Sprint 99 = 38 km/h · Acceleration 99 = D38 · Agility 99 = A99-C" : pr.id === "CURRENT" ? "CURRENT PACE (TC-CONTROLLED-1)" : pr.id} · D99 · BC99 · ${V.control === "CONTROLLED" ? "CONTROLLED_BALL" : "FREE ball"} · ${configName("layered", V.layers)} · ${V.vocab === "EXPANDED" ? "EXPANDED techniques" : "CORE techniques"}${V.forceFam ? " · REVIEW: " + V.forceFam + " forced" : ""}${V.ballOn ? " · BALL ON" : " · BALL OFF"}` : `SPEED-99-V1 · ${pr.id === "CURRENT" ? "CURRENT pace" : "candidate " + pr.id}${V.ballOn ? " · BALL ON (not yet adapted)" : " · BALL OFF"}`; d.ver.style.background = pr.color; } }
 // re-simulate a recorded session (its input every tick, its live changes, the stick's record) through a configuration — identical input
-function loadRec(rec, eng, layers, control, pace) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; if (control) V.control = control; else if (o0.control) V.control = o0.control; delete o0.control; if (pace) V.pace = pace; else if (o0.pace) V.pace = o0.pace; delete o0.pace; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
+function loadRec(rec, eng, layers, control, pace) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; if (control) V.control = control; else if (o0.control) V.control = o0.control; delete o0.control; if (pace) V.pace = pace; else if (o0.pace) V.pace = o0.pace; delete o0.pace; if (o0.vocab) V.vocab = o0.vocab; delete o0.vocab; V.forceFam = o0.forceFam || null; delete o0.forceFam; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
   for (let k = 0; k < I.length / 3; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); else if (S.applyEvent) S.applyEvent(e); }
     const h = I[3 * k], rq = { h: h === -99 ? null : h, mode: MODES[I[3 * k + 1]], keys: I[3 * k + 2] }; S.step(rq); if (V.ref) V.ref.step(rq); trackRun(rq); V.stickLog.push(L[4 * k] || 0, L[4 * k + 1] || 0, L[4 * k + 2] || 0, L[4 * k + 3] || 0); }
   V.paused = true; setRateButtons(); if (V.body.feetAt) for (let k = Math.max(0, S.k - Math.round(12.5 / DT)); k <= S.k; k++) V.body.feetAt(k * DT); return { t: S.t, hash: S.hash }; }
@@ -142,13 +145,16 @@ function sameInput(target) { if (V.sim.k < 10) return; stopTest(); const rec = W
 function otherModel() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", target = V.control === "CONTROLLED" ? "FREE" : "CONTROLLED";
   setTimeout(() => { loadRec(rec, "layered", V.layers, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 // SAME INPUT → THE NEXT PACE (N): this session's recorded input re-simulated with the next candidate, then its replay (same window)
-function nextPace() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", L = PACE_MAIN, target = L[(L.indexOf(V.pace) + 1) % L.length];
+function nextPace() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", L = PACE_SW, target = L[(L.indexOf(V.pace) + 1) % L.length];
   setTimeout(() => { loadRec(rec, "layered", V.layers, null, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
+// (S99 MISSION: the same input through the other technique vocabulary — CORE ⇄ EXPANDED — then its replay, same window)
+function otherVocab() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer"; rec.o0 = Object.assign({}, rec.o0, { vocab: V.vocab === "EXPANDED" ? "CORE" : "EXPANDED" });
+  setTimeout(() => { loadRec(rec, "layered", V.layers, null, null); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 function nextInChain() { const cur = V.engine === "baseline" ? -1 : CHAIN.findIndex((n) => { const P = presetLayers(n); return LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id]); }); sameInput(CHAIN[(cur + 1) % CHAIN.length]); }
 // THE OPPONENT POKE: a deterministic opponent foot aimed at the ball as it will be in 0.25 s, from alternate sides of its travel (recorded event)
 let pokeN = 0; function poke() { const S = V.sim; if (!S.addOpponent || V.replay) return; S.addOpponent(S.pokeProbe(pokeN++ % 2 ? 1 : -1, 8)); }
 // THE OWNER'S TESTS through the page's own stick (reset first: the same run-up as the report card's)
-function startTest(name) { const T = TESTS.find((x) => x.name === name); if (!T) return; if (V.replay) stopReplay(); if (V.dom.selTest) V.dom.selTest.value = name; newSim(); V.paused = false; setRateButtons(); V.test = { T, M: TMODES[T.mode] }; V.course = T.course && !T.courseAt ? makeCourse(T.course) : null; if (V.dom.selCourse) V.dom.selCourse.value = V.course ? V.course.id : "none"; V.src = "stick"; V.stick.moving = false; V.dom.bTest.textContent = "■ stop"; }
+function startTest(name) { const T = TESTS.find((x) => x.name === name); if (!T) return; if (V.replay) stopReplay(); if (V.dom.selTest) V.dom.selTest.value = name; if (T.force !== undefined) { V.forceFam = T.force; if (T.force) V.vocab = "EXPANDED"; } if (PRIMARY) setLock(false); newSim(); V.paused = false; setRateButtons(); V.test = { T, M: TMODES[T.mode] }; V.course = T.course && !T.courseAt ? makeCourse(T.course) : null; if (V.dom.selCourse) V.dom.selCourse.value = V.course ? V.course.id : "none"; V.src = "stick"; V.stick.moving = false; V.dom.bTest.textContent = "■ stop"; }
 function stopTest() { if (!V.test) return; V.test = null; V.btn.tSprint = false; const S = V.stick; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); if (V.dom.bTest) V.dom.bTest.textContent = "▶ play"; }
 // the request (pt_input.js): from the keys held — a direction in the camera frame latched when the combination changed, the base mode — or from
 // the stick when it is the active source — its continuous direction in the camera frame latched when it left its deadzone, its zone's mode; Shift
@@ -159,7 +165,9 @@ function request() {
   const sh = shK || V.btn.sprint || V.btn.lock || V.btn.tSprint, alt = altK || V.btn.walk, S = V.stick, useStick = V.src === "stick";
   const combo = (w ? "W" : "") + (a ? "A" : "") + (s ? "S" : "") + (d ? "D" : ""); if (combo !== V.latch.combo) { V.latch.combo = combo; V.latch.h = V.camH; }
   const bits = (w ? BITS.W : 0) | (a ? BITS.A : 0) | (s ? BITS.S : 0) | (d ? BITS.D : 0) | (shK ? BITS.SHIFT : 0) | (altK ? BITS.ALT : 0) | (useStick ? BITS.STICK : 0) | (V.btn.sprint || V.btn.lock || V.btn.tSprint ? BITS.SPRINT_BTN : 0) | (V.btn.walk ? BITS.WALK_BTN : 0);
-  if (useStick) { const v = S.v; if (v.m > 0 && !S.moving) S.latch = V.camH; S.moving = v.m > 0; V.inStick = v;
+  // (S99 MISSION, the primary page: a PRESET's stick frame is the player's own start heading, not the camera's — after another preset the camera
+  // can still be turning when the stick leaves its deadzone, and the same preset then played a different state than node's)
+  if (useStick) { const v = S.v; if (v.m > 0 && !S.moving) S.latch = PRIMARY && V.test && V.o0 && V.o0.start ? V.o0.start.h : V.camH; S.moving = v.m > 0; V.inStick = v;
     return { h: v.m > 0 ? headingFrom(S.latch, v.x, v.y) : null, mode: sh ? "SPRINT" : alt ? "WALK" : v.m > 0 ? stickMode(v.r, S.cfg) : V.baseMode, keys: bits }; }
   V.inStick = null; S.moving = false;
   const f = (w ? 1 : 0) - (s ? 1 : 0), r = (d ? 1 : 0) - (a ? 1 : 0);
@@ -461,11 +469,15 @@ function sprintSrc() { const K = V.keys, sh = K.has("ShiftLeft") || K.has("Shift
 function bindUI() {
   const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["pacebox", "selRef", "bNextPace", "paceBtns", "bTop", "bBoom", "sprintBanner", "bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
   // THE PACE (SPEED-99-V1): the candidates, the reference runner, same input → the next pace; the ball model / probes behind ⚙
-  d.paceBtns.innerHTML = PACE_MAIN.map((id) => `<button data-pace="${id}" title="${PACE[id].label}">${id === "CURRENT" ? "CURRENT" : id}</button>`).join("") + `<select id="selEarlier" title="the earlier candidates (V1: A 10.0 m/s, B 10.35, C 10.35)"><option value="">earlier…</option>${PACE_IDS.filter((x) => !PACE_MAIN.includes(x)).map((x) => `<option value="${x}">${x}</option>`).join("")}</select>`;
-  { const se = document.getElementById("selEarlier"); se.onchange = (e) => { if (se.value) { V.pace = se.value; stopTest(); newSim(); } se.value = ""; e.target.blur(); }; }
+  d.paceBtns.innerHTML = PACE_SW.map((id) => `<button data-pace="${id}" title="${PACE[id].label}">${PRIMARY ? PACE_NAME(id) : id === "CURRENT" ? "CURRENT" : id}</button>`).join("") + (PRIMARY ? "" : `<select id="selEarlier" title="the earlier candidates (V1: A 10.0 m/s, B 10.35, C 10.35)"><option value="">earlier…</option>${PACE_IDS.filter((x) => !PACE_MAIN.includes(x)).map((x) => `<option value="${x}">${x}</option>`).join("")}</select>`);
+  { const se = document.getElementById("selEarlier"); if (se) se.onchange = (e) => { if (se.value) { V.pace = se.value; stopTest(); newSim(); } se.value = ""; e.target.blur(); }; }
   document.querySelectorAll("[data-pace]").forEach((b) => (b.onclick = (e) => { V.pace = b.dataset.pace; stopTest(); newSim(); e.target.blur(); }));
   d.selRef.innerHTML = [["off", "off"], ...PACE_MAIN.concat(PACE_IDS.filter((x) => !PACE_MAIN.includes(x))).map((id) => [id, id === "CURRENT" ? "CURRENT pace" : "candidate " + id])].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
   d.selRef.onchange = (e) => { V.refPace = d.selRef.value; stopTest(); newSim(); e.target.blur(); }; d.bNextPace.onclick = (e) => { nextPace(); e.target.blur(); };
+  // (S99 MISSION: TECHNIQUES — CORE ⇄ EXPANDED, the same input through the other; the review-only forced family behind ⚙)
+  document.querySelectorAll("[data-vocab]").forEach((b) => (b.onclick = (e) => { V.vocab = b.dataset.vocab; stopTest(); newSim(); e.target.blur(); }));
+  { const bo = document.getElementById("bOtherVocab"); if (bo) bo.onclick = (e) => { otherVocab(); e.target.blur(); }; }
+  d.selForce = document.getElementById("selForce"); if (d.selForce) d.selForce.onchange = (e) => { V.forceFam = d.selForce.value || null; if (V.forceFam) V.vocab = "EXPANDED"; stopTest(); newSim(); e.target.blur(); };
   { const bo = $("ballOpts"); if (bo) { bo.append($("model"), $("pokeGrp")); $("model").style.display = ""; $("pokeGrp").style.display = ""; } }
   document.querySelectorAll("[data-model]").forEach((b) => (b.onclick = (e) => { V.engine = "layered"; V.control = b.dataset.model; stopTest(); newSim(); e.target.blur(); }));
   if (d.bOther) d.bOther.onclick = (e) => { otherModel(); e.target.blur(); };
@@ -537,6 +549,7 @@ function bindUI() {
     else if (c === "KeyX") nextInChain();
     else if (c === "KeyM") otherModel();
     else if (c === "KeyN") nextPace();
+    else if (c === "KeyT") otherVocab();   // (S99 MISSION: the same input → the other techniques)
     else if (c === "KeyP") poke();
     else if (c === "KeyK") { if (V.sim.requestRelease) V.sim.requestRelease(); }
     else if (/^Digit[1-4]$/.test(c)) setMode(MODES[+c.slice(5) - 1]);
@@ -546,7 +559,7 @@ function bindUI() {
   drawStick();
 }
 async function boot() {
-  const q = new URLSearchParams(location.search); bindUI(); V.cv = document.getElementById("gl"); V.ovc = document.getElementById("ov"); V.ov2d = V.ovc.getContext("2d");
+  const q = new URLSearchParams(location.search); if (PRIMARY) { V.pace = "D38"; V.ballOn = true; V.control = "CONTROLLED"; V.refPace = "off"; V.layers = presetLayers("FULL"); V.vocab = window.S99_VOCAB || "EXPANDED"; } if (q.get("vocab") === "CORE" || q.get("vocab") === "EXPANDED") V.vocab = q.get("vocab"); bindUI(); V.cv = document.getElementById("gl"); V.ovc = document.getElementById("ov"); V.ov2d = V.ovc.getContext("2d");
   const gl = V.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.getElementById("loading").textContent = "WebGL2 unavailable"; return; }
   V.gl = gl; V.R = { gl }; V.ground = groundProg(gl); V.ballProg = ballProg(gl); V.cone = coneProg(gl);
   const [colliders, baked, ent] = await Promise.all([fetch("dribble1/d1_colliders.json").then((r) => r.json()), fetch("tc_baseline_88573ef0/pt_baked.json").then((r) => r.json()), W.ofCharLoad(q.get("char") || "vinicius")]);
@@ -571,7 +584,7 @@ W.PT = { ready: () => V.ready, V,
   engine: (e) => { if (e && ENG[e] && e !== V.engine) { V.engine = e; newSim(); } return V.engine; }, preset: (n) => { if (n) { V.engine = "layered"; V.layers = presetLayers(n); newSim(); } return configName(V.engine, V.layers); },
   layers: (o) => { if (o) { V.engine = "layered"; V.layers = Object.assign({}, TL.LAYERS_OFF, o); newSim(); } return Object.assign({}, V.layers); }, same: (target) => sameInput(target), next: () => nextInChain(), load: (rec, eng, layers) => loadRec(rec, eng, layers),
   ball: (on) => { if (on != null) { V.ballOn = !!on; newSim(); } return V.ballOn; }, model: (m) => { if (m) { V.engine = "layered"; V.control = m; newSim(); } return V.control; }, other: () => otherModel(),
-  pace: (id) => { if (id && PACE[id]) { V.engine = "layered"; V.pace = id; newSim(); } return V.pace; }, refPace: (id) => { if (id) { V.refPace = id; newSim(); } return V.refPace; }, nextPace: () => nextPace(),
+  pace: (id) => { if (id && PACE[id]) { V.engine = "layered"; V.pace = id; newSim(); } return V.pace; }, vocab: (v) => { if (v) { V.vocab = v; newSim(); } return V.vocab || "CORE"; }, otherVocab: () => otherVocab(), force: (f) => { if (f !== undefined) { V.forceFam = f || null; if (f) V.vocab = "EXPANDED"; newSim(); } return V.forceFam; }, refPace: (id) => { if (id) { V.refPace = id; newSim(); } return V.refPace; }, nextPace: () => nextPace(),
   run: () => (V.run ? JSON.parse(JSON.stringify(V.run)) : null),
   // (the authoritative movement from the first tick the request had a direction: per tick the request (h, mode), the speed, the distance)
   traceFromPress: (dur = 10) => { const S = V.sim, I = S.log.input; let k0 = -1; for (let k = 0; k < I.length / 3; k++) if (I[3 * k] !== -99) { k0 = k; break; } if (k0 < 0) return null;

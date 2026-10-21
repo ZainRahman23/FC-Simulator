@@ -1,0 +1,37 @@
+{
+ "milestone": "S99 MISSION (4-hour mission)",
+ "date": "2026-10-21",
+ "state": "presented for the owner's playtest — NOT frozen, NOT integrated beyond sandbox/visual/speed99, no 1–98 calibration",
+ "local_only": "the character is a real player's model: never publish",
+ "page": "http://127.0.0.1:8361/sandbox/visual/s99.html",
+ "defaults": {
+  "pace": "99 PACE = D38 (Sprint Speed 99 38.0 km/h · Acceleration 99 D38 · Agility 99 A99-C)",
+  "attributes": "D99 / BC99",
+  "ball": "ON",
+  "control": "CONTROLLED_BALL",
+  "stack": "FULL",
+  "techniques": "EXPANDED (CORE one click; same-input replay T)",
+  "input": "joystick"
+ },
+ "owner_decisions_applied": {
+  "sprint_speed_99_kmh": 38.0,
+  "acceleration_99": "D38 (launch 11.1 m/s², p 2.2), preserved as implemented",
+  "agility_99": "A99-C"
+ },
+ "sprint_carry": {
+  "push": "lane foot to its next-but-one swing end (N = 2): ≈ every 0.83 s at 38 km/h, 1.2 touches/s",
+  "levels": "long (stick held ≤ 4° for ≥ 0.8 s, ≥ 8.5 m/s) · shorter (steering ≤ 10°) · ordinary carry (beyond, volatile stick, an opponent, < 7.5 m/s)",
+  "rejected_variant": "N = 3: 0.8 touches/s but a 20° cut waits ≈ 1.1 s for the ball"
+ },
+ "vocabulary": {
+  "core_retained": ["CARRY", "SPRINT_CARRY (new)", "COMPACT_INSIDE_REDIRECT", "COMPACT_OUTSIDE_REDIRECT", "GATHER", "URGENT_REACH", "BRAKING_TOUCH", "BRAKING_PIVOT", "RONALDO_CHOP", "CRUYFF", "HOOK", "DRAG_BACK", "OUTSIDE_CUT"],
+  "expanded_automatic": ["LATERAL_TRANSFER (LAT)", "KNOCK_ON (KNK)"],
+  "review_only": ["SOLE_ROLL (SOL): leg crossing in 90–120° pivots", "FEINT_OUTSIDE_CUT (FNO)", "FEINT_INSIDE_CUT (FNI): no defender model to value them"],
+  "not_built": ["elastico / reverse elastico", "stepover / scissors", "V-pull / pull-push", "automatic Matthews / shoulder feint"]
+ },
+ "open_questions": [
+  "SPRINT_CARRY push length: N = 2 (now) or N = 3",
+  "EXPANDED as the default",
+  "the next families need a defender-reaction model"
+ ]
+}

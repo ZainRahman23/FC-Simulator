@@ -36,7 +36,7 @@ export const POSS = { keepRunning: globalThis.KEEP_RUNNING !== false, slowTight:
 export const EXITS = ["PASS", "SHOT", "CROSS", "CLEARANCE", "INTENTIONAL_RELEASE", "OPPONENT_TACKLE", "OPPONENT_INTERCEPTION", "EXTERNAL_COLLISION", "TECHNICAL_ERROR", "CONTROLLER_FAILURE"];
 const EXT_EXIT = { tackle: "OPPONENT_TACKLE", poke: "OPPONENT_TACKLE", intercept: "OPPONENT_INTERCEPTION", block: "OPPONENT_INTERCEPTION", collision: "EXTERNAL_COLLISION" };
 export class ControlledSim extends UnifiedSim {
-  reset(o = {}) { super.reset(o); applyPace(this.P, this.o.pace);
+  reset(o = {}) { super.reset(o); applyPace(this.P, this.o.pace); this.scHold = null;
     this.poss = { state: "FREE", since: this.t, why: "start: the ball placed at the feet (not yet played)", log: [], ext: null, fallback: null, cont: null, noPlan: 0, sep: 0, threat: 0, nC: this.contacts.length, exits: {} };
     this.opp = (this.o.opponent || []).map((x) => Object.assign({ r: 0.07, z: 0.10, e: 0.55, kind: "tackle" }, x, { hit: false })); this.extLog = []; this.releaseReq = false; return this; }
   setAttrs(attrs) { super.setAttrs(attrs); applyPace(this.P, this.o.pace); }
@@ -66,7 +66,7 @@ export class ControlledSim extends UnifiedSim {
     if (!c) { const f = predict(b, bv, 1.0), s = this.stateAt(t + 1.0, plan); let ok = f.speed < POSS.restSpeed && hyp(f.p[0] - s.P[0], f.p[1] - s.P[1]) < POSS.restDist;
       if (ok) for (let x = t + 0.05; x < t + 1.0 - 1e-9; x += 0.05) { const g = predict(b, bv, x - t), q = this.stateAt(x, plan); if (hyp(g.p[0] - q.P[0], g.p[1] - q.P[1]) > this.envOf(q.s)) { ok = false; break; } }
       return { ok, c: null, why: ok ? "the ball comes to rest at the feet" : "no contact planned" }; }
-    if (c.t - t > POSS.H) return { ok: false, c, why: `next contact too late (+${(c.t - t).toFixed(2)} s)` };
+    if (c.t - t > (c.sc && this.P.pace && this.P.pace.sprintCarry ? this.P.pace.sprintCarry.H : POSS.H)) return { ok: false, c, why: `next contact too late (+${(c.t - t).toFixed(2)} s)` };
     for (let x = t + 0.05; x < c.t - 1e-9; x += 0.05) { const f = predict(b, bv, x - t), s = this.stateAt(x, plan); if (hyp(f.p[0] - s.P[0], f.p[1] - s.P[1]) > this.envOf(s.s)) return { ok: false, c, why: "the ball leaves the control envelope" }; }
     const f = predict(b, bv, c.t - t), s = this.stateAt(c.t, plan), d = hyp(f.p[0] - s.P[0], f.p[1] - s.P[1]);
     if (d > POSS.reach) return { ok: false, c, why: `the contact out of reach (${d.toFixed(2)} m)` };
@@ -144,7 +144,16 @@ export class ControlledSim extends UnifiedSim {
         const tgt = [f.p[0] - u[0] * 0.30, f.p[1] - u[1] * 0.30], d = [tgt[0] - st.P[0], tgt[1] - st.P[1]], D = hyp(d[0], d[1]), sp = clamp(D / T * 1.1, 1.0, this.P.speed.SPRINT), h = D > 0.05 ? Math.atan2(d[1], d[0]) : st.psi;
         const pl = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "CARRY", label: "CARRY", id: aid, chase: true }, req: q, prog: { kind: "chase", speed: sp, h, until: t + T + 0.1 }, chKeys: this.carryChannels(st, q, t) });
         pl.stances = this.gaitFrom(pl, keep, [], t + 1.5); const tc = this.carryTouches(pl, keep, q, true); if (!(tc.ok && tc.list.length)) continue;
-        const o = { plan: this.finishCarry(pl, tc, keep, q), label: `SECURE (pursuit ${T.toFixed(1)} s)` }; o.cont = this.contOf(o.plan); if (o.cont.ok) { out.push(o); break; } if (!rec) rec = o; } }
+        const o = { plan: this.finishCarry(pl, tc, keep, q), label: `SECURE (pursuit ${T.toFixed(1)} s)` }; o.cont = this.contOf(o.plan); if (o.cont.ok) { out.push(o); break; } if (!rec) rec = o; }
+      // (S99 MISSION, the 99 pace: THE TURN-BACK PURSUIT — a body faster than the ball overruns it: every pursuit above heads forward from where the
+      // body is now, but it cannot stop short of the ball (≈ 1.6 m from 9 m/s), so the ball ends behind it and nothing touches it. Here the run is
+      // aimed from the body's braking point to the ball's line behind it — the movement turns the body round for it, at Agility's limits)
+      if (this.P.pace && this.P.pace.accGait && st.s > 3.0 && !out.some((o) => (o.cont = o.cont || this.contOf(o.plan)).ok)) { const u0 = [Math.cos(st.h), Math.sin(st.h)], stop = st.s * st.s / (2 * 20), tS = st.s / 20, S0 = [st.P[0] + u0[0] * stop, st.P[1] + u0[1] * stop];
+        for (let T = 0.3; T <= 1.8 + 1e-9; T += 0.15) { const f = predict(b, bv, T), ub = f.speed > 0.3 ? [f.v[0] / f.speed, f.v[1] / f.speed] : u0, tgt = [f.p[0] - ub[0] * 0.30, f.p[1] - ub[1] * 0.30], d = [tgt[0] - S0[0], tgt[1] - S0[1]], D = hyp(d[0], d[1]);
+          const sp = clamp(D / max(0.15, T - tS) * 1.15, 1.0, this.P.speed.SPRINT), h = D > 0.05 ? Math.atan2(d[1], d[0]) : st.psi;
+          const pl = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "CARRY", label: "CARRY", id: aid, chase: true }, req: q, prog: { kind: "chase", speed: sp, h, until: t + T + 0.1 }, chKeys: this.carryChannels(st, q, t) });
+          pl.stances = this.gaitFrom(pl, keep, [], t + 1.5); const tc = this.carryTouches(pl, keep, q, true); if (!(tc.ok && tc.list.length)) continue;
+          const o = { plan: this.finishCarry(pl, tc, keep, q), label: `SECURE (turn back ${T.toFixed(2)} s)` }; o.cont = this.contOf(o.plan); if (o.cont.ok) { out.push(o); break; } if (!rec) rec = o; } } }
     { const base = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "CARRY", label: "CARRY", id: this.plan.action.kind === "CARRY" ? this.plan.action.id : ++this.aid }, req: q, prog: { kind: "carry" }, chKeys: this.carryChannels(st, q, t) });
       base.stances = this.gaitFrom(base, keep, [], t + 1.5); const tc = this.carryTouches(base, keep, q, true); if (tc.ok && tc.list.length) out.push({ plan: this.finishCarry(base, tc, keep, q), label: "SECURE (wide touch)" }); }
     for (const o of out) { o.cont = o.cont || this.contOf(o.plan); if (o.cont.ok) { o.plan.reason = "fallback"; o.plan.why = [{ label: o.label, id: "SECURE", J: 0, note: o.cont.why }]; return o; } }
@@ -236,7 +245,7 @@ export class ControlledSim extends UnifiedSim {
   possInfo() { const P = this.poss, t = this.t, plan = this.plan, c = this.firstContact(plan), st = this.stateAt(t, plan); let sup = null;
     for (const X of ["R", "L"]) if (plan.stances[X].some((s) => s.t0 <= t + 1e-9 && s.t1 > t)) sup = sup ? "both" : X;
     const a = plan.action, committed = !!(c && (c.t - t < this.P.react + 1e-9 || (a.tech && t >= a.tCommit - 1e-9 && t < a.tRelease)));
-    const bs = hyp(this.ball.v[0], this.ball.v[1]), phase = a.tech ? this.phaseOf(a) : c ? `ball rolling to the ${c.role} (${(c.t - t).toFixed(2)} s)` : P.sep < 0.8 && bs < POSS.restSpeed ? "ball at the feet" : `ball loose (${P.sep.toFixed(1)} m, ${bs.toFixed(1)} m/s, no touch planned)`;   // (HUD only)
+    const bs = hyp(this.ball.v[0], this.ball.v[1]), phase = a.tech ? this.phaseOf(a) : c && c.sc ? `SPRINT CARRY · pushed ahead to the next push (${(c.t - t).toFixed(2)} s)` : c ? `ball rolling to the ${c.role} (${(c.t - t).toFixed(2)} s)` : P.sep < 0.8 && bs < POSS.restSpeed ? "ball at the feet" : `ball loose (${P.sep.toFixed(1)} m, ${bs.toFixed(1)} m/s, no touch planned)`;   // (HUD only)
     return { model: this.CB ? "CONTROLLED" : "FREE", state: P.state, since: +(t - P.since).toFixed(2), action: a.label + (a.secure ? " · SECURE" : ""), phase, next: c ? `${c.role} · ${c.F} · ${c.surface} in ${(c.t - t).toFixed(2)} s` : "—", support: sup || "none (flight)",
       technical: c ? c.F : "—", committed, threat: +P.threat.toFixed(2), fallback: P.fallback, cont: P.cont ? P.cont.why : "—", lastExit: P.log.filter((e) => e.to === "FREE").slice(-1)[0] || null, volatility: +this.volatility().toFixed(2), speed: +st.s.toFixed(2) }; }
 }

@@ -1,0 +1,57 @@
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 6 (0.20/min) · missed contacts 0 · touches/s 2.67 · sep mean 0.42 m max 1.79 m · CPU 277.9 ms per simulated s, worst tick 190.8 ms
+   losses by cause {"no contact made":6} · by input segment {"wander":2,"hold":2,"oscillate":1,"rotate":1}
+   seed 3 {"t":4.325,"sep":0.17,"seg":"wander","mode":"RUN","prev":"wander","action":"CRUYFF TURN","speed":5,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.35,"sepUntil":0.17}
+   seed 7 {"t":16.471,"sep":0.26,"seg":"wander","mode":"SPRINT","prev":"wander","action":"LATERAL TRANSFER","speed":2.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0,"sepUntil":0.26}
+   seed 11 {"t":49.888,"sep":0.86,"seg":"hold","mode":"RUN","prev":"hold","action":"URGENT REACH","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.08,"sepUntil":0.86}
+   seed 13 {"t":47.217,"sep":0.91,"seg":"oscillate","mode":"WALK","prev":"wander","action":"CARRY","speed":0.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.25,"sepUntil":0.91}
+   seed 23 {"t":16.038,"sep":0.43,"seg":"hold","mode":"RUN","prev":"hold","action":"CARRY","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.15,"sepUntil":0.43}
+   seed 26 {"t":41.733,"sep":0.91,"seg":"rotate","mode":"RUN","prev":"wander","action":"CARRY","speed":1.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":0.9}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 7 (0.24/min) · missed contacts 0 · touches/s 2.69 · sep mean 0.42 m max 1.77 m · CPU 274.4 ms per simulated s, worst tick 288.1 ms
+   losses by cause {"no contact made":7} · by input segment {"rotate":3,"wander":2,"snap":2}
+   seed 36 {"t":37.467,"sep":1.36,"seg":"rotate","mode":"SPRINT","prev":"rotate","action":"CARRY","speed":3.7,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.66,"sepUntil":1.37}
+   seed 38 {"t":42.467,"sep":0.33,"seg":"rotate","mode":"WALK","prev":"rotate","action":"CARRY","speed":4.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.02,"sepUntil":0.33}
+   seed 40 {"t":46.563,"sep":0.83,"seg":"wander","mode":"SPRINT","prev":"wander","action":"CARRY","speed":2.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.81,"sepUntil":1.17}
+   seed 44 {"t":58.225,"sep":0.2,"seg":"snap","mode":"SPRINT","prev":"snap","action":"CARRY","speed":1.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.24,"sepUntil":0.31}
+   seed 47 {"t":47.333,"sep":0.12,"seg":"rotate","mode":"JOG","prev":"rotate","action":"CARRY","speed":3.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.25,"sepUntil":0.45}
+   seed 53 {"t":58.304,"sep":0.81,"seg":"wander","mode":"RUN","prev":"wander","action":"GATHER","speed":2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.17,"sepUntil":0.8}
+   seed 59 {"t":54.833,"sep":0.77,"seg":"snap","mode":"JOG","prev":"rotate","action":"CARRY","speed":1.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":1.13,"sepUntil":1.3}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 1 (0.03/min) · missed contacts 0 · touches/s 2.77 · sep mean 0.41 m max 1.85 m · CPU 281.8 ms per simulated s, worst tick 173.8 ms
+   losses by cause {"no contact made":1} · by input segment {"wander":1}
+   seed 83 {"t":12.171,"sep":0.59,"seg":"wander","mode":"SPRINT","prev":"abuse","action":"CARRY","speed":6.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":1.27,"sepUntil":0.71}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 7 (0.24/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.79 m · CPU 284.8 ms per simulated s, worst tick 173.8 ms
+   losses by cause {"no contact made":6,"no contact planned":1} · by input segment {"wander":4,"snap":1,"oscillate":1,"abuse":1}
+   seed 95 {"t":5.929,"sep":0.8,"seg":"wander","mode":"JOG","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.4,"sepUntil":0.92}
+   seed 101 {"t":59.679,"sep":0.86,"seg":"wander","mode":"SPRINT","prev":"wander","action":"CARRY","speed":0.6,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.18,"sepUntil":0.86}
+   seed 103 {"t":41.592,"sep":1.56,"seg":"snap","mode":"WALK","prev":"rotate","action":"CARRY","speed":1.9,"why":"no contact planned","poss":"CONTROLLED","nextTouch":1.03,"sepUntil":1.57}
+   seed 104 {"t":11.113,"sep":0.11,"seg":"oscillate","mode":"JOG","prev":"oscillate","action":"BRAKING PIVOT","speed":3.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.1,"sepUntil":0.1}
+   seed 105 {"t":48.529,"sep":0.86,"seg":"wander","mode":"RUN","prev":"wander","action":"CARRY","speed":0.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":0.86}
+   seed 111 {"t":45.046,"sep":0.23,"seg":"abuse","mode":"SPRINT","prev":"abuse","action":"CARRY","speed":3.6,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.81,"sepUntil":0.24}
+   seed 119 {"t":4.825,"sep":1.08,"seg":"wander","mode":"RUN","prev":"wander","action":"CARRY","speed":2.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":1.07}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 5 (0.17/min) · missed contacts 0 · touches/s 2.71 · sep mean 0.41 m max 1.79 m · CPU 270.5 ms per simulated s, worst tick 315.3 ms
+   losses by cause {"no contact made":5} · by input segment {"wander":1,"rotate":2,"oscillate":1,"hold":1}
+   seed 121 {"t":35.796,"sep":1.01,"seg":"wander","mode":"RUN","prev":"wander","action":"CARRY","speed":1.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.27,"sepUntil":1}
+   seed 123 {"t":3.05,"sep":0.57,"seg":"rotate","mode":"SPRINT","prev":"rotate","action":"CARRY","speed":2.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.37,"sepUntil":0.57}
+   seed 129 {"t":30.725,"sep":0.27,"seg":"rotate","mode":"RUN","prev":"rotate","action":"CARRY","speed":4.7,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.08,"sepUntil":0.27}
+   seed 130 {"t":39.742,"sep":0.46,"seg":"oscillate","mode":"RUN","prev":"oscillate","action":"RONALDO CHOP","speed":5.6,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.45,"sepUntil":0.46}
+   seed 133 {"t":32.813,"sep":0.43,"seg":"hold","mode":"RUN","prev":"abuse","action":"CARRY","speed":3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.3,"sepUntil":0.49}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 3 (0.10/min) · missed contacts 0 · touches/s 2.68 · sep mean 0.42 m max 1.81 m · CPU 274.4 ms per simulated s, worst tick 235.4 ms
+   losses by cause {"no contact made":3} · by input segment {"wander":1,"hold":1,"oscillate":1}
+   seed 155 {"t":39.063,"sep":0.87,"seg":"wander","mode":"JOG","prev":"wander","action":"CARRY","speed":0.5,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.91,"sepUntil":1.1}
+   seed 160 {"t":42.538,"sep":0.16,"seg":"hold","mode":"WALK","prev":"rotate","action":"LATERAL TRANSFER","speed":2.9,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.48,"sepUntil":0.16}
+   seed 163 {"t":24.046,"sep":0.43,"seg":"oscillate","mode":"SPRINT","prev":"oscillate","action":"RONALDO CHOP","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.73,"sepUntil":0.43}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 5 (0.17/min) · missed contacts 0 · touches/s 2.71 · sep mean 0.41 m max 2.09 m · CPU 271.2 ms per simulated s, worst tick 262.8 ms
+   losses by cause {"no contact made":5} · by input segment {"rotate":1,"hold":1,"oscillate":3}
+   seed 182 {"t":38.608,"sep":0.27,"seg":"rotate","mode":"SPRINT","prev":"abuse","action":"CARRY","speed":2.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.1,"sepUntil":0.29}
+   seed 189 {"t":35.133,"sep":0.3,"seg":"hold","mode":"WALK","prev":"hold","action":"COMPACT INSIDE REDIRECT","speed":1.6,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.21,"sepUntil":0.41}
+   seed 198 {"t":30.933,"sep":0.31,"seg":"oscillate","mode":"RUN","prev":"oscillate","action":"DRAG-BACK","speed":2.9,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.17,"sepUntil":0.33}
+   seed 202 {"t":52.85,"sep":0.41,"seg":"oscillate","mode":"JOG","prev":"oscillate","action":"RONALDO CHOP","speed":6.1,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.45,"sepUntil":0.41}
+   seed 204 {"t":17.288,"sep":0.91,"seg":"oscillate","mode":"RUN","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.45,"sepUntil":0.93}
+■ CONTROLLED: 29.4 simulated min (30 seeds × 60 s) · OBSERVED LOSSES 7 (0.24/min) · missed contacts 0 · touches/s 2.68 · sep mean 0.41 m max 1.85 m · CPU 268.3 ms per simulated s, worst tick 201.3 ms
+   losses by cause {"no contact made":7} · by input segment {"wander":5,"oscillate":2}
+   seed 212 {"t":18.254,"sep":0.85,"seg":"wander","mode":"WALK","prev":"wander","action":"DRAG-BACK","speed":1.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.07,"sepUntil":0.85}
+   seed 219 {"t":53.804,"sep":0.41,"seg":"wander","mode":"WALK","prev":"wander","action":"CARRY","speed":2.7,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.18,"sepUntil":0.46}
+   seed 221 {"t":30.767,"sep":0.89,"seg":"wander","mode":"JOG","prev":"wander","action":"CARRY","speed":0.5,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.35,"sepUntil":0.89}
+   seed 234 {"t":39.304,"sep":0.97,"seg":"oscillate","mode":"RUN","prev":"rotate","action":"CARRY","speed":0.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.31,"sepUntil":0.96}
+   seed 237 {"t":25.208,"sep":0.21,"seg":"oscillate","mode":"SPRINT","prev":"oscillate","action":"CARRY","speed":4.1,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.1,"sepUntil":0.2}
+   seed 239 {"t":54.021,"sep":0.8,"seg":"wander","mode":"JOG","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.82,"sepUntil":0.89}
+   seed 240 {"t":11.283,"sep":0.8,"seg":"wander","mode":"WALK","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.66,"sepUntil":1.01}

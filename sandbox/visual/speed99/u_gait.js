@@ -36,10 +36,15 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
       const cut=Math.min(1,Math.max(0,(turn-20)/60)), braking=Math.min(1,Math.max(0,(v-v2)/2));
       const reorg=Math.max(cut,braking);let Ts=G.Ts,D=G.D;
       const AG=this.P.pace&&this.P.pace.accGait;
-      if(AG){const c0=D*2*Ts,fc=topCadence(v);if(fc>0&&1/fc<Ts){Ts=1/fc;D=c0/(2*Ts);}const A=accCadence(G,v,v2,{Ts,D});Ts=A.Ts;D=A.D;const cM=topContact(v,lead(v));if(D*2*Ts>cM)D=cM/(2*Ts);}
+      if(AG){const c0=D*2*Ts,fc=topCadence(v);if(fc>0&&1/fc<Ts){Ts=1/fc;D=c0/(2*Ts);}const A=accCadence(G,v,v2,{Ts,D});Ts=A.Ts;D=A.D;const cM=topContact(v,lead(v));if(D*2*Ts>cM&&reorg<0.3)D=cM/(2*Ts);}   // (the top-speed contact cap: steady running only — never a braking / cutting plant)
       else if(v2>v+.6&&v<3){Ts=min(Ts,.23);D=min(D,.43);}
       Ts=Ts*(1-reorg)+min(Ts,.20+.04*Math.min(v/8,1))*reorg;
       const stance=AG?D*2*Ts:G.D*2*Ts;D=(stance*(1-reorg)+min(stance,.13)*reorg)/(2*Ts);
+      // (S99 MISSION, the 99 pace: a braking / reorganising step at LOW speed keeps a foot on the ground — the short reorganisation contact (≤ 0.13 s)
+      // left ≈ 0.08 s of flight every step below 3 m/s: the player hopped while stopping. No flight below 2.5 m/s, a partial one up to 5.5 m/s)
+      // (… and a HARD BRAKE or a CUT PLANT keeps the foot down until the next touchdown whatever the speed: braking from 38 km/h, A99-C sheds
+      // ≈ 10 m/s in 0.4 s — the plan had a 0.075 s top-speed contact and then 0.165 s with both feet in the air while the speed fell 5.4 → 0.3)
+      if(AG&&reorg>0){const Dmin=Math.max(0.5*(1-Math.min(1,Math.max(0,(v-2.5)/3))),0.5*Math.max(braking,0.8*cut));if(D<Dmin)D=D+(Dmin-D)*Math.max(reorg,braking);}
       return {Ts,D}; }; // accelerating: quick short steps
     const stanceD = (tt) => { const G = cad(tt); return G.D * 2 * G.Ts; };
     const step = (X, td) => { const st = { id: ++this.sid, F: X, t0: td, t1: td + stanceD(td), pos: place(X, td, td + stanceD(td)), yaw: yawOf(X, td), kind: this.stateAt(td, plan).s < 2.4 ? "walk" : "stride", src: "gait" }; S[X].push(st); return st; };
@@ -50,9 +55,11 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); if (abs(r.t0 - l.t0) < 1e-9) return r.src === "tech" ? r : l.src === "tech" ? l : r; return r.t0 > l.t0 ? r : l; };
     const moving = plan.req && plan.req.h != null;
     // standing and asked to move: the rear foot (relative to the request) steps first, quickly
+    // (S99 MISSION: … and, nearly at rest (< 0.4 m/s), a planted foot already given an end by an earlier re-plan is still a standing foot —
+    // without it a standing 90° start re-placed the rear foot in a 15 ms hop: lifted at t + 0.005, down 13 cm away at t + 0.02)
     // (SPEED-99-V1.1, the pace candidates: a standing stance shortened by the early-release rule — a hard launch leaves it ≥ 0.6 m behind within
     // 0.32 s — is still a standing start: without this E38 skipped the start step for an immediate re-step and a 0.16 s float)
-    const AGS = !!(this.P.pace && this.P.pace.accGait), standing = (l) => l.t1 === Infinity || (AGS && l.src === "stand" && l.t0 < t && l.t1 > t);
+    const AGS = !!(this.P.pace && this.P.pace.accGait), standing = (l) => l.t1 === Infinity || (AGS && l.t0 < t && l.t1 > t && (l.src === "stand" || this.stateAt(t, plan).s < 0.4));
     if (standing(lastOf("R")) && standing(lastOf("L"))) {
       if (!moving && !anchors.length) return S;
       const hq = plan.req.h, rr = toLocal(lastOf("R").pos, this.stateAt(t, plan).P, hq)[0], ll = toLocal(lastOf("L").pos, this.stateAt(t, plan).P, hq)[0];

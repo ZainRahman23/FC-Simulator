@@ -5,7 +5,7 @@
 //   OBSERVED LOSS (both models, model-blind): the stick on, the ball not at rest at the feet, and no planned contact for 0.5 s or none made for
 //                 1.8 s (the report card's definition), or the ball over 3 m from the player
 //   CONTROLLED EXITS (the controlled model): every transition out of CONTROLLED_BALL with the simulation's own reason
-//   node c_torture.mjs [--configs FREE,CONTROLLED] [--seeds 40] [--dur 60] [--from 1] [--json f] [--verbose]
+//   node c_torture.mjs [--configs FREE,CONTROLLED] [--seeds 40] [--dur 60] [--from 1] [--pace D38] [--vocab EXPANDED] [--json f] [--verbose]
 import { makeSim, DT } from "./u_env.mjs";
 import { presetLayers } from "../u_sim.js";
 import { stickVector, stickMode, headingFrom } from "../../tc_baseline_88573ef0/pt_input.js";
@@ -34,6 +34,8 @@ export function program(seed, dur) { const R = rng(seed), segs = []; let t = 1.2
 export function runOne(cfg, seed, dur, o = {}) { const P = program(seed, dur), opts = Object.assign(JSON.parse(JSON.stringify(PAGE)), { layers: presetLayers("FULL") }, cfg === "CONTROLLED" ? { control: "CONTROLLED" } : {}, o.simOpts || {}), sim = makeSim("TL", opts), n = Math.round(dur / DT);
   const res = { cfg, seed, dur, lost: 0, losses: [], missed: 0, contacts: 0, sepSum: 0, sepN: 0, sepMax: 0, cpu: 0, worstTick: 0, exits: {}, exitList: [] };
   let noC = 0, lastMade = 0, lostOn = false, nC = 0; const t0 = performance.now(), sepTr = new Float32Array(n + 2);
+  // (S99 MISSION: the recovery actions CONTROLLED_BALL took — each fallback adopted, by its kind)
+  res.recov = {}; if (sim.fallback) { const fb0 = sim.fallback.bind(sim); sim.fallback = () => { const r = fb0(); if (r) { const k = r.label.replace(/ \([^)]*\)/, "").replace(/ [0-9.]+ s$/, ""); res.recov[k] = (res.recov[k] || 0) + 1; } return r; }; }
   for (let k = 0; k < n; k++) { const q = P.req(k * DT), w0 = performance.now(); sim.step(q); const w = performance.now() - w0; if (w > res.worstTick) res.worstTick = w;
     const t = sim.t; if (t < 1.2) continue; const st = sim.stateAt(t), b = sim.ball.p, bv = sim.ball.v, sep = hyp(b[0] - st.P[0], b[1] - st.P[1]), plan = sim.plan, act = plan.action;
     while (nC < sim.contacts.length) { const c = sim.contacts[nC++]; if (c.missed) res.missed++; else { res.contacts++; lastMade = c.t; } }
@@ -47,12 +49,19 @@ export function runOne(cfg, seed, dur, o = {}) { const P = program(seed, dur), o
   for (const l of res.losses) { const nx = sim.contacts.find((c) => !c.missed && c.t > l.t + 1e-9), t1 = nx ? nx.t : sim.t; let m = 0; for (let k = Math.round(l.t / DT); k <= Math.round(t1 / DT) && k < sepTr.length; k++) m = Math.max(m, sepTr[k]);
     l.nextTouch = nx ? +(nx.t - l.t).toFixed(2) : null; l.sepUntil = +m.toFixed(2); }
   if (sim.poss && sim.poss.log) for (const e of sim.poss.log) if (e.to === "FREE" && e.from === "CONTROLLED") { res.exits[e.why] = (res.exits[e.why] || 0) + 1; res.exitList.push(e); }
+  // (S99 MISSION: what the player did — every made contact by its kind: the generic family, the named move, the carry and SPRINT_CARRY's pushes)
+  res.kinds = {}; for (const c of sim.contacts) if (!c.missed && c.t >= 1.2) { const k = c.fam ? c.fam : c.tech === "CARRY" ? (c.sc ? "SPRINT_CARRY push" : "carry") : c.tech || "?"; res.kinds[k] = (res.kinds[k] || 0) + 1; }
+  // (the contact gaps — the time between consecutive made contacts — and the BUSY alternations: the other foot within 0.25 s of a touch)
+  { const C = sim.contacts.filter((c) => !c.missed && c.t >= 1.2); res.gaps = []; res.busy = 0; for (let i = 1; i < C.length; i++) { const g = C[i].t - C[i - 1].t; res.gaps.push(+g.toFixed(3)); if (g < 0.25 && C[i].F !== C[i - 1].F) res.busy++; } }
   return res; }
 if ((process.argv[1] || "").endsWith("c_torture.mjs")) { const cfgs = opt("configs", "FREE").split(","), seeds = +opt("seeds", 40), dur = +opt("dur", 60), from = +opt("from", 1), all = {};
-  for (const cfg of cfgs) { const R = []; for (let s = from; s < from + seeds; s++) R.push(runOne(cfg, s, dur)); all[cfg] = R;
+  for (const cfg of cfgs) { const R = []; for (let s = from; s < from + seeds; s++) R.push(runOne(cfg, s, dur, { simOpts: Object.assign({}, opt("pace") ? { pace: opt("pace") } : {}, opt("vocab") ? { vocab: opt("vocab") } : {}) }));   // (S99 MISSION: --pace D38) all[cfg] = R;
     const lost = R.reduce((a, r) => a + r.lost, 0), mins = R.reduce((a, r) => a + (r.dur - 1.2), 0) / 60, missed = R.reduce((a, r) => a + r.missed, 0), cpu = R.reduce((a, r) => a + r.cpu, 0), ex = {}; for (const r of R) for (const [k, v] of Object.entries(r.exits)) ex[k] = (ex[k] || 0) + v;
     const why = {}, seg = {}; for (const r of R) for (const l of r.losses) { why[l.why] = (why[l.why] || 0) + 1; seg[l.seg] = (seg[l.seg] || 0) + 1; }
     console.log(`■ ${cfg}: ${mins.toFixed(1)} simulated min (${R.length} seeds × ${dur} s) · OBSERVED LOSSES ${lost} (${(lost / mins).toFixed(2)}/min) · missed contacts ${missed} · touches/s ${(R.reduce((a, r) => a + r.contacts, 0) / (mins * 60)).toFixed(2)} · sep mean ${(R.reduce((a, r) => a + r.sepSum, 0) / R.reduce((a, r) => a + r.sepN, 0)).toFixed(2)} m max ${Math.max(...R.map((r) => r.sepMax)).toFixed(2)} m · CPU ${(cpu / (mins * 60)).toFixed(1)} ms per simulated s, worst tick ${Math.max(...R.map((r) => r.worstTick)).toFixed(1)} ms`);
+    { const K = {}, RC = {}; for (const r of R) { for (const [k, v] of Object.entries(r.kinds || {})) K[k] = (K[k] || 0) + v; for (const [k, v] of Object.entries(r.recov || {})) RC[k] = (RC[k] || 0) + v; } console.log(`   contacts by kind ${JSON.stringify(Object.fromEntries(Object.entries(K).sort((a, b) => b[1] - a[1])))} · recovery actions ${JSON.stringify(RC)}`);
+      const G = R.flatMap((r) => r.gaps || []).sort((a, b) => a - b), q = (x) => G[Math.min(G.length - 1, Math.floor(x * G.length))]; if (G.length) console.log(`   contact gaps p10 ${q(0.1).toFixed(2)} · p50 ${q(0.5).toFixed(2)} · p90 ${q(0.9).toFixed(2)} · p99 ${q(0.99).toFixed(2)} · max ${G[G.length - 1].toFixed(2)} s · busy alternations (the other foot < 0.25 s after a touch) ${R.reduce((a, r) => a + (r.busy || 0), 0)} of ${G.length}`); }
     console.log(`   losses by cause ${JSON.stringify(why)} · by input segment ${JSON.stringify(seg)}${Object.keys(ex).length ? " · CONTROLLED exits " + JSON.stringify(ex) : ""}`);
-    if (has("verbose")) for (const r of R) for (const l of r.losses) console.log(`   seed ${r.seed} ${JSON.stringify(l)}`); }
-  if (opt("json")) fs.writeFileSync(opt("json"), JSON.stringify(Object.fromEntries(Object.entries(all).map(([k, R]) => [k, R.map(({ exitList, ...r }) => r)])), null, 1)); }
+    if (has("verbose")) for (const r of R) for (const l of r.losses) console.log(`   seed ${r.seed} ${JSON.stringify(l)}`);
+    if (has("verbose")) for (const r of R) for (const e of r.exitList || []) console.log(`   EXIT seed ${r.seed} ${JSON.stringify(e).slice(0, 400)}`); }
+  if (opt("json")) fs.writeFileSync(opt("json"), JSON.stringify(Object.fromEntries(Object.entries(all).map(([k, R]) => [k, R.map(({ exitList, gaps, ...r }) => r)])), null, 1)); }

@@ -1,0 +1,10902 @@
+{
+ "jog → 30°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4666666666666668,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4666666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.71,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.3416666666666668,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.3416666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.71,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.3416666666666668,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.3416666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4249999999999998,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4249999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5583333333333331,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5583333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.45833333333333304,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.45833333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.35833333333333295,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.35833333333333295,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.3416666666666668,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.3416666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.71,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.3416666666666668,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.3416666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.71,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.15833333333333321,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.15833333333333321,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "run → 40°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4916666666666667,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4916666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.7124999999999999,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.7124999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6499999999999999,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6499999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4916666666666667,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4916666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4916666666666667,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4916666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.69,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.06666666666666643,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.06666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4916666666666667,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4916666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3999999999999999,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3999999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "run → 25°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.41249999999999964,
+     "sep": 0.72,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.41249999999999964,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4458333333333333,
+     "sep": 0.7,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4458333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5625,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4708333333333332,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4708333333333332,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.41249999999999964,
+     "sep": 0.72,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.41249999999999964,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4458333333333333,
+     "sep": 0.7,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4458333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.45833333333333304,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.45833333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.36666666666666625,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.36666666666666625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6875,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6875,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6208333333333331,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6208333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.45833333333333304,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.45833333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.36666666666666625,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.36666666666666625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.41249999999999964,
+     "sep": 0.72,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.41249999999999964,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4458333333333333,
+     "sep": 0.7,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4458333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.45833333333333304,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.45833333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.36666666666666625,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.36666666666666625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.41249999999999964,
+     "sep": 0.72,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.41249999999999964,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4458333333333333,
+     "sep": 0.7,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4458333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.033333333333333215,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.033333333333333215,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.45833333333333304,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.45833333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.36666666666666625,
+     "sep": 0.66,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.36666666666666625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "run → sprint 35°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3624999999999998,
+     "sep": 1.01,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.188,
+        "act": "CARRY",
+        "depth": -2.9,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3624999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.188,
+        "act": "CARRY",
+        "depth": -2.9,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3666666666666667,
+     "sep": 0.98,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3666666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1416666666666666,
+     "sep": 1.1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1416666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.3624999999999998,
+     "sep": 0.93,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.3624999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1708333333333334,
+     "sep": 1.14,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1708333333333334,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.26249999999999973,
+     "sep": 1.05,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.26249999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.17499999999999982,
+     "sep": 1.52,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.17499999999999982,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.20833333333333348,
+     "sep": 1.57,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.20833333333333348,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16666666666666652,
+     "sep": 1.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16666666666666652,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.26249999999999973,
+     "sep": 1.05,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.26249999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.17499999999999982,
+     "sep": 1.52,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.17499999999999982,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16249999999999964,
+     "sep": 1.09,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16249999999999964,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.20833333333333348,
+     "sep": 1.57,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.20833333333333348,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16666666666666652,
+     "sep": 1.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16666666666666652,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.26249999999999973,
+     "sep": 1.05,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.26249999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.17499999999999982,
+     "sep": 1.52,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.17499999999999982,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.20833333333333348,
+     "sep": 1.57,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.20833333333333348,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16666666666666652,
+     "sep": 1.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16666666666666652,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16666666666666652,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.121,
+        "act": "CARRY",
+        "depth": -2.6,
+        "part": "thigh"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16666666666666652,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.121,
+        "act": "CARRY",
+        "depth": -2.6,
+        "part": "thigh"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.17499999999999982,
+     "sep": 1.52,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.17499999999999982,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.13749999999999973,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.13749999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.20833333333333348,
+     "sep": 1.57,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.20833333333333348,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.16666666666666652,
+     "sep": 1.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.16666666666666652,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.26249999999999973,
+     "sep": 1.05,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.26249999999999973,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "run → sprint 55°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4291666666666667,
+     "sep": 0.92,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4291666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4083333333333332,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4083333333333332,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1958333333333333,
+     "sep": 1.14,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1958333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.4500000000000002,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.4500000000000002,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2250000000000001,
+     "sep": 1.18,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2250000000000001,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.31666666666666643,
+     "sep": 1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.31666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.53,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1791666666666667,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1791666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 1.12,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2583333333333333,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2583333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.31666666666666643,
+     "sep": 1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.31666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.53,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1791666666666667,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1791666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 1.12,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2583333333333333,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2583333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.31666666666666643,
+     "sep": 1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.31666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.53,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1791666666666667,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1791666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.17916666666666625,
+     "sep": 1.58,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.17916666666666625,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2583333333333333,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2583333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.121,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "thigh"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.121,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "thigh"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.53,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.1791666666666667,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.1791666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "LAT/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2041666666666666,
+     "sep": 1.12,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "LAT/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2041666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2583333333333333,
+     "sep": 1.59,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2583333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.071,
+        "act": "KNOCK-ON",
+        "planted": false,
+        "kind": "swing→after the knock-on"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 1.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.31666666666666643,
+     "sep": 1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.31666666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.35,
+        "act": "CARRY",
+        "planted": true,
+        "kind": "after the compact inside redirect"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ "sprint → 45°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.85,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6291666666666669,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 2,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.288,
+        "act": "COMPACT INSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→plant · compact inside redirect"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.425,
+        "act": "COMPACT INSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→after the compact inside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6291666666666669,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 2,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.288,
+        "act": "COMPACT INSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→plant · compact inside redirect"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.425,
+        "act": "COMPACT INSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→after the compact inside redirect"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5958333333333337,
+     "sep": 0.95,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 2,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.258,
+        "act": "COMPACT OUTSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→plant · compact outside redirect"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.45,
+        "act": "COMPACT OUTSIDE REDIRECT",
+        "depth": -2.5,
+        "part": "shin"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.525,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the compact outside redirect"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5958333333333337,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 2,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.258,
+        "act": "COMPACT OUTSIDE REDIRECT",
+        "planted": false,
+        "kind": "swing→plant · compact outside redirect"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.45,
+        "act": "COMPACT OUTSIDE REDIRECT",
+        "depth": -2.5,
+        "part": "shin"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.525,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the compact outside redirect"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.85,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.02,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.24583333333333357,
+     "sep": 1.1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.24583333333333357,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.85,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.02,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.24583333333333357,
+     "sep": 1.1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.24583333333333357,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.85,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666634,
+     "sep": 0.99,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666634,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.02,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.25,
+     "sep": 1.07,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.067,
+        "act": "KNOCK-ON",
+        "depth": -4.1,
+        "part": "shin"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.25,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.067,
+        "act": "KNOCK-ON",
+        "depth": -4.1,
+        "part": "shin"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.24583333333333357,
+     "sep": 1.1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.24583333333333357,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.85,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.096,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.21666666666666679,
+     "sep": 1.02,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.21666666666666679,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.18333333333333313,
+     "sep": 0.8,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.18333333333333313,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2916666666666665,
+     "sep": 0.96,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "L",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2916666666666665,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 1,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.108,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       },
+       {
+        "k": "KNEE",
+        "X": "R",
+        "t": 0.242,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→stride"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "KNK/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.24583333333333357,
+     "sep": 1.1,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "KNK/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.24583333333333357,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "walk → 90°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.7541666666666664,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.7541666666666664,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.5541666666666667,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.5541666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2666666666666666,
+     "sep": 0.62,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2666666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R"
+     ],
+     "onLine": 0.7708333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L"
+     ],
+     "onLine": 0.7708333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.64,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.7541666666666664,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.7541666666666664,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.5541666666666667,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.5541666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2666666666666666,
+     "sep": 0.62,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2666666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R"
+     ],
+     "onLine": 0.7708333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L"
+     ],
+     "onLine": 0.7708333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.64,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "LAT/R",
+      "LAT/L",
+      "carry/R"
+     ],
+     "onLine": 0.9666666666666668,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "LAT/L",
+      "LAT/R",
+      "carry/L"
+     ],
+     "onLine": 0.9666666666666668,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "LAT/R",
+      "LAT/L",
+      "LAT/R"
+     ],
+     "onLine": null,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "LAT/L",
+      "LAT/R",
+      "LAT/L"
+     ],
+     "onLine": null,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "LAT/R",
+      "LAT/L"
+     ],
+     "onLine": 0.2666666666666666,
+     "sep": 0.62,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "LAT/L",
+      "LAT/R"
+     ],
+     "onLine": 0.2666666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R"
+     ],
+     "onLine": 0.7708333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L"
+     ],
+     "onLine": 0.7708333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.64,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.7541666666666664,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.7541666666666664,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.5541666666666667,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.5541666666666667,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.2666666666666666,
+     "sep": 0.62,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.2666666666666666,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R"
+     ],
+     "onLine": 0.7708333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L"
+     ],
+     "onLine": 0.7708333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.65,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.325,
+        "act": "CARRY",
+        "depth": -3.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.508,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "COR/L",
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.33333333333333304,
+     "sep": 0.64,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "COR/R",
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.33333333333333304,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.292,
+        "act": "CARRY",
+        "depth": -2.4,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.333,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "foot"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.512,
+        "act": "CARRY",
+        "depth": -2.2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R"
+     ],
+     "onLine": 1.0666666666666664,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.854,
+        "act": "SOLE ROLL",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L"
+     ],
+     "onLine": 1.0666666666666664,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.854,
+        "act": "SOLE ROLL",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R"
+     ],
+     "onLine": 0.9666666666666663,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.754,
+        "act": "SOLE ROLL",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L"
+     ],
+     "onLine": 0.9666666666666663,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.754,
+        "act": "SOLE ROLL",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.604,
+        "act": "CARRY",
+        "depth": -3,
+        "part": "thigh"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.604,
+        "act": "CARRY",
+        "depth": -3,
+        "part": "thigh"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7374999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7374999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6374999999999997,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6374999999999997,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.608333333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.608333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "walk → 120°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.0583333333333336,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.0583333333333336,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.9583333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.9583333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.8708333333333327,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.8708333333333327,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.7624999999999997,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.7624999999999997,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6624999999999996,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6624999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.0583333333333336,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.0583333333333336,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.9583333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.9583333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.8708333333333327,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.8708333333333327,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.7624999999999997,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.7624999999999997,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6624999999999996,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6624999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "LAT/R",
+      "LAT/L",
+      "carry/R"
+     ],
+     "onLine": 1.1958333333333329,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.767,
+        "act": "LATERAL TRANSFER",
+        "depth": -6.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "LAT/L",
+      "LAT/R",
+      "carry/L"
+     ],
+     "onLine": 1.1958333333333329,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.767,
+        "act": "LATERAL TRANSFER",
+        "depth": -6.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "LAT/R",
+      "LAT/L",
+      "carry/R"
+     ],
+     "onLine": 1.0958333333333328,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.667,
+        "act": "LATERAL TRANSFER",
+        "depth": -6.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "LAT/L",
+      "LAT/R",
+      "carry/L"
+     ],
+     "onLine": 1.0958333333333328,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.667,
+        "act": "LATERAL TRANSFER",
+        "depth": -6.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.8708333333333327,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.8708333333333327,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.7624999999999997,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.7624999999999997,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6624999999999996,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6624999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.0583333333333336,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.0583333333333336,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.9583333333333335,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.9583333333333335,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.8708333333333327,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.8708333333333327,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.7624999999999997,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.7624999999999997,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6624999999999996,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6624999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "BPV/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.9416666666666664,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.587,
+        "act": "BRAKING PIVOT",
+        "depth": -4,
+        "part": "footCalf"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.708,
+        "act": "BRAKING PIVOT",
+        "depth": -3,
+        "part": "foot"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.9416666666666664,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.587,
+        "act": "BRAKING PIVOT",
+        "depth": -4,
+        "part": "footCalf"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.708,
+        "act": "BRAKING PIVOT",
+        "depth": -3,
+        "part": "foot"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "BPV/L",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.8416666666666663,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.487,
+        "act": "BRAKING PIVOT",
+        "depth": -4,
+        "part": "footCalf"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.608,
+        "act": "BRAKING PIVOT",
+        "depth": -3,
+        "part": "foot"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/R",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.8416666666666663,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 2,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.487,
+        "act": "BRAKING PIVOT",
+        "depth": -4,
+        "part": "footCalf"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.608,
+        "act": "BRAKING PIVOT",
+        "depth": -3,
+        "part": "foot"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.629,
+        "act": "CARRY",
+        "depth": -2.6,
+        "part": "thigh"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.65,
+        "act": "CARRY",
+        "depth": -4.4,
+        "part": "shin"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.7,
+        "act": "CARRY",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 3,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.629,
+        "act": "CARRY",
+        "depth": -2.6,
+        "part": "thigh"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.65,
+        "act": "CARRY",
+        "depth": -4.4,
+        "part": "shin"
+       },
+       {
+        "k": "CROSS",
+        "t": 0.7,
+        "act": "CARRY",
+        "depth": -2.3,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.75,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 0,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.721,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the sole roll"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.75,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 0,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.721,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the sole roll"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.6499999999999999,
+     "sep": 0.61,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 0,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "L",
+        "t": 0.621,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the sole roll"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.6499999999999999,
+     "exits": [],
+     "body": {
+      "jump": 1,
+      "knee": 0,
+      "cross": 0,
+      "ev": [
+       {
+        "k": "JUMP",
+        "X": "R",
+        "t": 0.621,
+        "act": "CARRY",
+        "planted": false,
+        "kind": "swing→after the sole roll"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "BPV/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.670833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "BPV/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.670833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ },
+ "walk → 60°": {
+  "CORE": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 1.4124999999999996,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 1.4124999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "URG/L",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 1.420833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "URG/R",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 1.420833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.1124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.1124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7458333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7458333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.44166666666666643,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.44166666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 1.4124999999999996,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 1.4124999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "URG/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6749999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "URG/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6749999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.1124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.1124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7458333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7458333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.44166666666666643,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.44166666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+LAT": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "LAT/R",
+      "carry/L"
+     ],
+     "onLine": 1.333333333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "LAT/L",
+      "carry/R"
+     ],
+     "onLine": 1.333333333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "URG/L",
+      "LAT/R",
+      "carry/L",
+      "LAT/R"
+     ],
+     "onLine": 0.6749999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "URG/R",
+      "LAT/L",
+      "carry/R",
+      "LAT/L"
+     ],
+     "onLine": 0.6749999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "LAT/R",
+      "LAT/L",
+      "LAT/R"
+     ],
+     "onLine": null,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "LAT/L",
+      "LAT/R",
+      "LAT/L"
+     ],
+     "onLine": null,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7458333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7458333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.44166666666666643,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.44166666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+KNK": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 1.4124999999999996,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 1.4124999999999996,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "URG/L",
+      "LAT/R",
+      "carry/L",
+      "carry/R"
+     ],
+     "onLine": 0.6749999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "URG/R",
+      "LAT/L",
+      "carry/R",
+      "carry/L"
+     ],
+     "onLine": 0.6749999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.1124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.1124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7458333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7458333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.44166666666666643,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.44166666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ],
+  "EXP+SOL": [
+   {
+    "sign": 1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R"
+     ],
+     "onLine": 0.7124999999999999,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L"
+     ],
+     "onLine": 0.7124999999999999,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 1.045833333333333,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 1.045833333333333,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   },
+   {
+    "sign": 1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "SOL/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.5583333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -3.7,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "SOL/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.5583333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -3.7,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.7458333333333331,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.7458333333333331,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.779,
+        "act": "CARRY",
+        "depth": -2.5,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.1,
+    "R": {
+     "seq": [
+      "CIR/R",
+      "carry/R"
+     ],
+     "onLine": 0.6124999999999998,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    },
+    "L": {
+     "seq": [
+      "CIR/L",
+      "carry/L"
+     ],
+     "onLine": 0.6124999999999998,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 1,
+      "ev": [
+       {
+        "k": "CROSS",
+        "t": 0.633,
+        "act": "CARRY",
+        "depth": -2,
+        "part": "footCalf"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "sign": -1,
+    "ph": 0.2,
+    "R": {
+     "seq": [
+      "carry/R",
+      "carry/R",
+      "carry/R"
+     ],
+     "onLine": 0.44166666666666643,
+     "sep": 0.6,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    },
+    "L": {
+     "seq": [
+      "carry/L",
+      "carry/L",
+      "carry/L"
+     ],
+     "onLine": 0.44166666666666643,
+     "exits": [],
+     "body": {
+      "jump": 0,
+      "knee": 0,
+      "cross": 0,
+      "ev": []
+     }
+    }
+   }
+  ]
+ }
+}
