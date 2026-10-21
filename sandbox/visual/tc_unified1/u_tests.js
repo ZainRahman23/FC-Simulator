@@ -32,4 +32,27 @@ export const SCEN = [
   ["OUTSIDE CUT", "favourable", "SPRINT", 60], ["OUTSIDE CUT", "favourable", "JOG", 90], ["OUTSIDE CUT", "nearby", "SPRINT", 45] ];
 export const scenSpecs = (mode, ang) => { const L = []; for (const s of [1, -1]) for (let i = 0; i < 4; i++) { const t0 = RUNUP + PH[i]; L.push({ mode, fam: `${mode.toLowerCase()} ${ang}°`, name: `${mode.toLowerCase()} snap ${ang * s}° #${i}`, f: steps([[t0, ang * s]]), changes: [t0], held: [t0], dur: t0 + 2.4 }); } return L; };
 export const NAMED = SCEN.flatMap(([tech, kind, mode, ang]) => scenSpecs(mode, ang).slice(0, 1).concat(scenSpecs(mode, ang).slice(4, 5)).map((x) => Object.assign({}, x, { name: `named · ${tech.toLowerCase()} ${kind} · ${x.name}` })));
-export function reqOf(f, t, M) { const a = f(t), v = stickVector(Math.sin(a * DEG) * M.r, Math.cos(a * DEG) * M.r); return { h: t < 0.2 ? null : headingFrom(0, v.x, v.y), mode: M.sprint ? "SPRINT" : stickMode(v.r), keys: 64 }; }
+export function reqOf(f, t, M) { const a = f(t); if (a === null) return { h: null, mode: "RUN", keys: 64 }; const v = stickVector(Math.sin(a * DEG) * M.r, Math.cos(a * DEG) * M.r); return { h: t < 0.2 ? null : headingFrom(0, v.x, v.y), mode: M.sprint ? "SPRINT" : stickMode(v.r), keys: 64 }; }
+// ═══ TC-UNIFIED-1: THE OWNER'S MORNING PLAYTEST CASES (overnight brief §28) — one trace each, launched from the page (the same stick mapping) ═══
+// after the 3 s straight run-up (RUNUP); a null angle = the stick released (stop). The favourable examples: the states where the FULL stack
+// itself chooses each named move / generic family (tools/u_grid.mjs surveys JOG / RUN / SPRINT × 30 … 180°; the trace = the stride phase and
+// side where it wins — see the morning report §E)
+const fx = (L) => (t) => { let a = 0; for (const [t0, d] of L) if (t >= t0) a = d; return a; }, T0 = RUNUP;
+const ramp = (rate, cap = Infinity) => (t) => (t < T0 ? 0 : Math.sign(rate) * Math.min(cap, Math.abs(rate) * (t - T0)));
+const alt = (amp, every, n) => { const L = []; for (let j = 0; j < n; j++) L.push([T0 + j * every, (j % 2 ? -amp : amp)]); L.push([T0 + n * every, 0]); return L; };
+const M = (name, mode, f, dur, x = {}) => Object.assign({ name, mode, f, changes: [T0], held: [T0], dur, fam: "morning" }, x);
+const fav = (label, mode, ang, i) => { const sp = scenSpecs(mode, ang)[i]; return Object.assign({}, sp, { name: `favourable · ${label} (${mode.toLowerCase()} ${sp.name.split("snap ")[1]})`, fam: "favourable" }); };
+export const MORNING = [
+  M("straight run", "RUN", () => 0, T0 + 5), M("straight sprint", "SPRINT", () => 0, T0 + 5),
+  M("gentle analog curve · run (20°/s)", "RUN", ramp(20), T0 + 6, { continuous: true }), M("gentle analog curve · sprint (20°/s)", "SPRINT", ramp(20), T0 + 6, { continuous: true }),
+  M("tight analog curve · run (60°/s)", "RUN", ramp(60), T0 + 6, { continuous: true }), M("tight analog curve · sprint (60°/s)", "SPRINT", ramp(60), T0 + 6, { continuous: true }),
+  M("fast circle · run (270°/s)", "RUN", ramp(270), T0 + 4, { continuous: true }), M("fast circle · sprint (270°/s)", "SPRINT", ramp(270), T0 + 4, { continuous: true }),
+  M("repeated ±30° · sprint (every 0.45 s)", "SPRINT", fx(alt(30, 0.45, 8)), T0 + 4.6), M("rapid ±60° · run (every 0.35 s)", "RUN", fx(alt(60, 0.35, 8)), T0 + 4.2),
+  M("run 45°", "RUN", fx([[T0, 45]]), T0 + 2.4), M("run 90°", "RUN", fx([[T0, 90]]), T0 + 2.4),
+  ...[45, 60, 90, 120, 150, 180].map((a) => M(`sprint ${a}°`, "SPRINT", fx([[T0, a]]), T0 + 2.6)),
+  M("rapid sprint left / right (±60° every 0.35 s)", "SPRINT", fx(alt(60, 0.35, 8)), T0 + 4.2),
+  M("gradual 0 → 90° · sprint (90°/s)", "SPRINT", ramp(90, 90), T0 + 3, { continuous: true }),
+  M("0 → 90 → 0 → −90 · sprint (0.6 s each)", "SPRINT", fx([[T0, 90], [T0 + 0.6, 0], [T0 + 1.2, -90], [T0 + 1.8, 0]]), T0 + 3.4),
+  M("stop / restart · run", "RUN", fx([[T0, null], [T0 + 1.6, 0]]), T0 + 4.2),
+  fav("Ronaldo Chop", "RUN", 105, 0), fav("Cruyff Turn", "JOG", 105, 1), fav("Inside Hook", "RUN", 135, 0), fav("Drag-back", "SPRINT", 180, 0), fav("Outside Cut", "JOG", 90, 1),
+  fav("compact inside redirect", "RUN", 75, 6), fav("compact outside redirect", "RUN", 75, 2), fav("braking pivot", "JOG", 105, 6), fav("braking touch", "RUN", 165, 2), fav("urgent reach", "SPRINT", 30, 1) ];

@@ -676,11 +676,11 @@ export class PlaySim {
           if (rel[0] >= CARRY.reach.a[0] && rel[0] <= CARRY.reach.a[1] && rel[1] * sgn(F) >= CARRY.reach.l[0] && rel[1] * sgn(F) <= CARRY.reach.l[1]) { set = { t: Math.round(tT / DT) * DT, td }; tb = tbx; vA = vAx; break search; } } } }
     if (!set && !(pin && pin.setTouch)) { if (!pin) { // rolling there
         const bp = predict(this.ball.p, this.ball.v, tC - t).p, rel = toLocal(bp, st.P, h0), f = (tbx) => { const vAx = vAfor(tbx), dT = dispT(keysFor(vAx).K); return pos(tA, tbx, vAx) + dT[0] - (rel[0] - Bref[0]); };
-        const fLo = f(tbLo), fHi = f(tbHi); if (Math.sign(fLo) === Math.sign(fHi) && min(abs(fLo), abs(fHi)) > 0.05) return null;
+        const fLo = f(tbLo), fHi = f(tbHi); if (Math.sign(fLo) === Math.sign(fHi) && min(abs(fLo), abs(fHi)) > 0.05) return this.rej("rolling there");
         let lo = tbLo, hi = tbHi; for (let i = 0; i < 18; i++) { const mid = (lo + hi) / 2; if (Math.sign(f(mid)) === Math.sign(fLo)) lo = mid; else hi = mid; } tb = (lo + hi) / 2; vA = vAfor(tb);
-        const dT = dispT(keysFor(vA).K), needL = rel[1] - dT[1] - Bref[1]; if (abs(needL) > 0.16) return null; drift = needL; } }
+        const dT = dispT(keysFor(vA).K), needL = rel[1] - dT[1] - Bref[1]; if (abs(needL) > 0.16) return this.rej("drift"); drift = needL; } }
     if (tb == null) { tb = tA; vA = vAfor(tA); }
-    if (vA < T.vFloor - 1e-6 && T.vFloor > 0) return null;
+    if (vA < T.vFloor - 1e-6 && T.vFloor > 0) return this.rej("speed floor");
     const KS = keysFor(vA), sKeys = KS.K, sig = KS.sp, vC = KS.vC;
     const speedFit = (abs(sig - 1) > 0.2 ? (abs(sig - 1) - 0.2) * 1.2 : 0) + (v0 > T.vRange[1] - 1.0 ? 0.15 : 0);
     // (a re-planned instance inside its window starts its keys from the present)
@@ -698,7 +698,7 @@ export class PlaySim {
     action.O = O; action.B = Bw;
     // a set touch sends the ball along the entry line to the technique's point — one that would throw it off that line (> 60°) is no set touch
     if (set && !set.kept) { const bp = predict(this.ball.p, this.ball.v, set.t - t).p, dev = abs(wrap(hdg([Bw[0] - bp[0], Bw[1] - bp[1]]) - h0)) / DEG;
-      if (dev > 60 && hyp(Bw[0] - bp[0], Bw[1] - bp[1]) > 0.25) return null; action.setPen = dev > 25 ? 0.5 * ((dev - 25) / 35) ** 2 : 0; }
+      if (dev > 60 && hyp(Bw[0] - bp[0], Bw[1] - bp[1]) > 0.25) return this.rej("set off-line"); action.setPen = dev > 25 ? 0.5 * ((dev - 25) / 35) ** 2 : 0; }
     // the stances: the template's (world), the approach's steps fitted before them, the carry gait after
     const map = (p, w) => { const a = p[0], l = p[1] * 1; if (!w) return [a, m * l]; const c = Math.cos(rot * w), s2 = Math.sin(rot * w); return [a * c - l * s2, m * (a * s2 + l * c)]; };
     const anchors = T.stances.map((ts) => { const X = ts.F === "F" ? F : S, t0 = tau(ts.t0), t1 = tau(ts.t1); let pos;

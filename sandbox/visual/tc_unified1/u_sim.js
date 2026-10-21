@@ -106,9 +106,9 @@ UnifiedSim.prototype.gaitFrom = function (plan, keep, anchors, tTo) {
     if (A) { const want = A.pos || this.placeFor(F, A.t0, plan), allow = rem < 0.055 ? 0.03 : 0.08 + 4.8 * (rem - 0.055); if (hyp(want[0] - c.pos[0], want[1] - c.pos[1]) <= Math.max(cap, allow)) { L.splice(i, 1); i--; } else blocked.add(A); continue; }
     const want = this.placeFor(F, c.t0, plan), d = hyp(want[0] - c.pos[0], want[1] - c.pos[1]), k = Math.min(1, cap / Math.max(d, 1e-9)); c.pos = [c.pos[0] + (want[0] - c.pos[0]) * k, c.pos[1] + (want[1] - c.pos[1]) * k];
     const R0 = this.stateAt(c.t0, plan).P; if (hyp(c.pos[0] - R0[0], c.pos[1] - R0[1]) > 0.62) { L.splice(i, 1); i--; } } }
-  // (an anchor the body cannot stand on — its place over 0.9 m from the root at its touchdown: a plant planned beside a ball that has gone — is
+  // (an anchor the body cannot stand on — its place over 1.3 m from the root at its touchdown: a plant planned beside a ball that has gone — is
   // refused: the candidate is not feasible)
-  for (const a of anchors) if (a.pos && !blocked.has(a)) { const R0 = this.stateAt(a.t0, plan).P; if (hyp(a.pos[0] - R0[0], a.pos[1] - R0[1]) > 0.9) blocked.add(a); }
+  for (const a of anchors) if (a.pos && !blocked.has(a)) { const R0 = this.stateAt(a.t0, plan).P; if (hyp(a.pos[0] - R0[0], a.pos[1] - R0[1]) > 1.3) blocked.add(a); }
   const S = bodyGaitFrom.call(this, plan, K, anchors.filter((a) => !blocked.has(a)), tTo);
   for (const a of blocked) a.refused = true; return S; };
 // the times a technique's first stance can land: the stride (88573ef0's) — and, with the shared plan, the foot's own COMMITTED landing itself
@@ -119,13 +119,15 @@ UnifiedSim.prototype.anchorTimes = function (X, keep, st) {
   return out.filter((x) => x > this.t + 0.04).sort((a, b) => a - b); };
 // ═══ SUPPORT: THE CARRY'S TOUCH IS PLAYED BY A FOOT THAT CAN GET THERE ═══════════════════════════════════════════════════════════════════════════
 // (88573ef0's carry chose its touch by the ball's place against the body at the end of a swing; the shared foot plan adds the foot's own way
-// there: from where it lifted, its average speed to the ball no more than 1.2 × the body's speed + 2.5 m/s — a planted foot cannot reach a ball a
-// metre away 0.09 s after it lifts. Such an end is skipped (88573ef0's own skip: the next swing end decides) — positions of the plan only)
+// there: a foot still planted that would lift < 0.12 s before the touch must reach the ball no faster than 8 m/s relative to the body — a planted
+// foot cannot reach a ball a metre away 0.09 s after it lifts (ordinary swings are 88573ef0's, unchanged). Such an end is skipped (88573ef0's own skip: the next swing end decides) — positions of the plan only)
 UnifiedSim.prototype.carryTouches = function (plan, keep, q, recover = false, skip = null) {
   const out = PlaySim.prototype.carryTouches.call(this, plan, keep, q, recover, skip); if (!this.L.support || !out.list.length || (skip && skip.size >= 6)) return out;
   const c = out.list[0]; if (keep.contacts.includes(c) || !c.bPred) return out; const L = plan.stances[c.F]; let lift = null, land = null;
   for (const s of L) { if (s.t1 <= c.t + 1e-9) lift = s; else if (s.t0 > c.t && !land) land = s; } if (!lift || !land || lift.t1 === Infinity) return out;
-  const t0 = Math.max(lift.t1, this.t - 0.4), d = hyp(c.bPred[0] - lift.pos[0], c.bPred[1] - lift.pos[1]), v = d / Math.max(DT, c.t - t0), lim = 1.2 * this.stateAt(c.t, plan).s + 2.5;
+  // (relative to the body: the foot's way to the ball less the root's own travel meanwhile — a sprinting foot covers metres with the body)
+  const t0 = Math.max(lift.t1, this.t - 0.4), R0 = this.stateAt(t0, plan).P, R1 = this.stateAt(c.t, plan).P, rx = c.bPred[0] - lift.pos[0] - (R1[0] - R0[0]), ry = c.bPred[1] - lift.pos[1] - (R1[1] - R0[1]);
+  const d = hyp(rx, ry), v = d / Math.max(DT, c.t - t0), lim = lift.t1 > this.t && c.t - lift.t1 < 0.12 ? 8.0 : Infinity;   // (only a foot still down, lifting < 0.12 s before)
   if (v <= lim) return out; (this._rej = this._rej || {})["carry swing"] = (this._rej["carry swing"] || 0) + 1;
   return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), c.F + (land.t0 - CARRY.touchBefore).toFixed(4)])); };
 // ═══ THE UNIFIED B4 SCORING (A99-C on): B4's outcome scoring (u_tc.js costB4, unchanged) + two terms of the unified prototype ═══════════════════

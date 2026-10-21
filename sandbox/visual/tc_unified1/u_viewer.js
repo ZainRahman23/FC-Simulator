@@ -1,4 +1,9 @@
-// ═══ tc_unified1/u_viewer.js — TC-LAYERED-2: THE B4 + B5 PLAYGROUND on BASELINE-88573ef0 (TC-LAYERED-1's page, continued) — LOCAL ONLY ══════════════
+// ═══ tc_unified1/u_viewer.js — TC-UNIFIED-1: THE PRIMARY MORNING PAGE (owner's overnight brief §26 – 29) — LOCAL ONLY (a real player's model) ════════
+// One clean playable page: BC99 / D99 / A99-C, the FULL stack (88573ef0 + A99-C + the persistent support + B4 + B5), BALL ON, the joystick — open
+// it and dribble. The stack presets A · A + C · A + C + SUPPORT · A + C + SUPPORT + B4 · FULL stay in view (same input → next: X); the owner's
+// morning playtest cases and the favourable named-move / generic examples launch from one menu; BALL OFF = Astra's movement probe. Everything
+// diagnostic (the layer toggles, attributes, panels, body warnings, performance) behind ⚙. The simulation is u_sim.js (UnifiedSim).
+// ── (TC-LAYERED-2's header) ── THE B4 + B5 PLAYGROUND on BASELINE-88573ef0 (TC-LAYERED-1's page, continued)
 // The candidate stack A · A + B4 · A + B5 · A + B4 + B5 · (+ B2) as presets; the rejected layers (B1, B3, B6) as toggles, off; the HUD names the
 // SELECTED SOLUTION, why it won, the nearest alternative, the predicted contact time and exit (B4's predicted outcome); the owner's playtest list
 // and the named-move scenarios as stick tests.
@@ -16,24 +21,24 @@
 // mode. No skill button. Replay: the last 12 s are history (plans, contacts, the ball's track, every tick's input) — any recent instant is re-posed
 // from it; the WASD actually pressed is shown. Determinism: V re-simulates the whole session from the recorded input on a fresh simulation.
 // (The GL ground / ball programs and the camera math: TECHNICAL-CONTROL-1.5's lab, copied; the pitch gets a 1 m / 5 m grid.)
-import * as TL from "./u_tc.js";
+import * as TL from "./u_sim.js";
 import { PlayBody as TLBody } from "./u_body.js";
 import * as BS from "../tc_baseline_88573ef0/pt_sim.js";
 import * as BB from "../tc_baseline_88573ef0/pt_body.js";
-import { TESTS as OWNER_TESTS, NAMED, MODES as TMODES } from "./u_tests.js";
-const TESTS = OWNER_TESTS.concat(NAMED);
+import { TESTS as OWNER_TESTS, MORNING, MODES as TMODES } from "./u_tests.js";
+const TESTS = MORNING.concat(OWNER_TESTS);
 const { DT, MODES, LABEL, wrap, dir, hdg, LAYERS, PRESETS, PRESET_LABEL, REJECTED, presetLayers, actionId } = TL;
-const ENG = { layered: { Sim: TL.PlaySim, Body: TLBody }, baseline: { Sim: BS.PlaySim, Body: BB.PlayBody } };
-const CHAIN = ["A", "B4", "B5", "B45", "B452"];
+const ENG = { layered: { Sim: TL.UnifiedSim, Body: TLBody }, baseline: { Sim: BS.PlaySim, Body: BB.PlayBody } };
+const CHAIN = ["A", "AC", "ACS", "ACS4", "FULL"];
 import { DIRS } from "../technical_control15/tc15_ref.js";
 import { STICK, stickVector, stickMode, headingFrom, stickAngleDeg, BITS } from "../tc_baseline_88573ef0/pt_input.js";
 const W = window, hyp = Math.hypot, DEG = Math.PI / 180, max = Math.max, min = Math.min, abs = Math.abs;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const START = { P: [52.5, 34], h: 0 };
-const V = { engine: "layered", layers: presetLayers("A"), test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
+const V = { engine: "layered", layers: presetLayers("FULL"), ballOn: true, test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
   // the on-screen stick (input only): the source that last became active authors the movement — "keys" (a WASD key went down) or "stick"
   src: "keys", stick: { pid: null, raw: { x: 0, y: 0 }, v: { x: 0, y: 0, m: 0, r: 0 }, latch: 0, moving: false, cfg: Object.assign({}, STICK) }, btn: { sprint: false, walk: false, lock: false }, inStick: null, stickLog: [],
-  show: { hud: true, side: true, prot: false, body: false, anim: true, diag: true }, course: null, replay: null, perf: { frame: [], sim: [], pose: [], render: [], work: [] }, lastNow: null, lastShown: null, dom: {}, verify: null };
+  show: { hud: true, side: false, prot: false, body: false, anim: true, diag: false }, course: null, replay: null, perf: { frame: [], sim: [], pose: [], render: [], work: [] }, lastNow: null, lastShown: null, dom: {}, verify: null };
 // ── GL ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
 function lookAt(eye, at, up) { const fz = V3.norm(V3.sub(eye, at)), fx = V3.norm(V3.cross(fz, up)), fy = V3.cross(fx, fz), m = M4.ident();
@@ -98,19 +103,19 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, 
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
-  if (V.engine === "layered") o.layers = Object.assign({}, V.layers); else delete o.layers;
+  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; } else { delete o.layers; delete o.ballOn; }
   V.sim = new ENG[V.engine].Sim(V.env, o); V.body = new ENG[V.engine].Body(V.env, V.sim); V.o0 = JSON.parse(JSON.stringify(o)); V.stickLog = []; V.acc = 0; V.trail = []; V.cam = null; V.lastShown = null; V.replay = null; V.verify = null; V.diag = { prev: null, air: 0, hist: [] }; showReplayUI(false); showConfig(); }
 // ── THE CONFIGURATION: the engine and the layers (the label: a preset's name when the toggles are exactly one, else the toggles listed) ──────────
 function configName(eng, L) { if (eng === "baseline") return "locked 88573ef0"; for (const n of CHAIN) { const P = presetLayers(n); if (LAYERS.every((x) => !!P[x.id] === !!L[x.id])) return PRESET_LABEL[n]; } return "custom: " + LAYERS.filter((x) => L[x.id]).map((x) => x.id).join("+"); }
 function showConfig() { const d = V.dom; if (!d.selEng) return; d.selEng.value = V.engine; const on = V.engine === "layered";
   for (const x of LAYERS) { const c = document.getElementById("L_" + x.id); if (c) { c.checked = !!V.layers[x.id]; c.disabled = !on; } }
   document.querySelectorAll("[data-preset]").forEach((b) => { const P = presetLayers(b.dataset.preset); b.classList.toggle("on", on && LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id])); });
-  d.ver.textContent = on ? `TC-LAYERED-2 · ${configName("layered", V.layers)}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ffd45e" : "#8dffa6"; }
+  d.ver.textContent = on ? `TC-UNIFIED-1 · ${configName("layered", V.layers)}${V.ballOn ? "" : " · BALL OFF (Astra's probe)"}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ff9b8d" : "#8dffa6"; if (d.cBall) d.cBall.checked = V.ballOn; }
 // re-simulate a recorded session (its input every tick, its live changes, the stick's record) through a configuration — identical input
-function loadRec(rec, eng, layers) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
+function loadRec(rec, eng, layers) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
   for (let k = 0; k < I.length / 3; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); }
     const h = I[3 * k]; S.step({ h: h === -99 ? null : h, mode: MODES[I[3 * k + 1]], keys: I[3 * k + 2] }); V.stickLog.push(L[4 * k] || 0, L[4 * k + 1] || 0, L[4 * k + 2] || 0, L[4 * k + 3] || 0); }
-  V.paused = true; setRateButtons(); return { t: S.t, hash: S.hash }; }
+  V.paused = true; setRateButtons(); if (V.body.feetAt) for (let k = Math.max(0, S.k - Math.round(12.5 / DT)); k <= S.k; k++) V.body.feetAt(k * DT); return { t: S.t, hash: S.hash }; }
 // SAME INPUT → a configuration ("baseline" = the locked engine; else a preset name): the recorded session through it, then its replay (same window)
 function sameInput(target) { if (V.sim.k < 10) return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer";
   V.dom.bSame.textContent = "re-simulating…"; setTimeout(() => { if (target === "baseline") loadRec(rec, "baseline", null); else loadRec(rec, "layered", presetLayers(target)); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); V.dom.bSame.textContent = "▶ replay through it"; V.dom.selSame.value = target; }, 20); }
@@ -122,7 +127,7 @@ function stopTest() { if (!V.test) return; V.test = null; V.btn.tSprint = false;
 // the stick when it is the active source — its continuous direction in the camera frame latched when it left its deadzone, its zone's mode; Shift
 // or the SPRINT button = sprint, Alt or the WALK button = walk, for both. One source at a time — never the two added
 function request() {
-  if (V.test) { const T = V.test, tt = V.sim.t; if (tt > T.T.dur || V.src !== "stick") stopTest(); else { const a = T.T.f(tt) * DEG, r = T.M.r; V.stick.pid = -3; V.stick.raw = { x: Math.sin(a) * r, y: Math.cos(a) * r }; V.stick.v = stickVector(V.stick.raw.x, V.stick.raw.y, V.stick.cfg.deadzone); V.btn.tSprint = !!T.M.sprint; if (tt < 0.2) V.stick.v = stickVector(0, 0, V.stick.cfg.deadzone); } }
+  if (V.test) { const T = V.test, tt = V.sim.t; if (tt > T.T.dur || V.src !== "stick") stopTest(); else { const fa = T.T.f(tt), a = (fa ?? 0) * DEG, r = fa === null ? 0 : T.M.r; V.stick.pid = -3; V.stick.raw = { x: Math.sin(a) * r, y: Math.cos(a) * r }; V.stick.v = stickVector(V.stick.raw.x, V.stick.raw.y, V.stick.cfg.deadzone); V.btn.tSprint = !!T.M.sprint; if (tt < 0.2) V.stick.v = stickVector(0, 0, V.stick.cfg.deadzone); } }
   const K = V.keys, w = K.has("KeyW"), a = K.has("KeyA"), s = K.has("KeyS"), d = K.has("KeyD"), shK = K.has("ShiftLeft") || K.has("ShiftRight"), altK = K.has("AltLeft") || K.has("AltRight");
   const sh = shK || V.btn.sprint || V.btn.lock || V.btn.tSprint, alt = altK || V.btn.walk, S = V.stick, useStick = V.src === "stick";
   const combo = (w ? "W" : "") + (a ? "A" : "") + (s ? "S" : "") + (d ? "D" : ""); if (combo !== V.latch.combo) { V.latch.combo = combo; V.latch.h = V.camH; }
@@ -367,17 +372,21 @@ function frame(now) {
 function setRateButtons() { document.querySelectorAll("[data-rate]").forEach((b) => b.classList.toggle("on", +b.dataset.rate === V.rate)); V.dom.bPause.textContent = V.paused && !V.replay ? "▶" : "❚❚"; V.dom.bPause.classList.toggle("on", V.paused && !V.replay); }
 function setMode(m) { V.baseMode = m; document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", b.dataset.mode === m)); }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag"]) d[id] = $(id);
   // THE LAYERS: a checkbox each (its B-step and the owner's items in the tooltip), the presets, the engine, same input, the tests
   // (the candidate stack first, then B2 — optional, not developed — then the rejected layers, off)
   const grp = (ids, cap) => `<span class="lab" style="margin-left:6px">${cap}</span>` + ids.map((id) => LAYERS.find((x) => x.id === id)).map((x) => `<label class="lay${REJECTED.includes(x.id) ? " rej" : ""}" title="${x.label} — layer ${x.b}, owner ${x.items}"><input type="checkbox" id="L_${x.id}"><b>${x.b}</b>${x.label}</label>`).join("");
-  d.layBox.innerHTML = grp(["generic", "exits", "windups"], "candidate stack") + grp(["early", "prefFoot", "approach"], "optional B2") + grp(REJECTED, "rejected (off)");
+  d.layBox.innerHTML = grp(["c", "support"], "unified") + grp(["generic", "exits", "windups"], "B4 / B5") + grp(["early", "prefFoot", "approach"], "optional B2") + grp(REJECTED, "rejected (off)");
+  d.cBall.onchange = (e) => { V.ballOn = e.target.checked; stopTest(); newSim(); e.target.blur(); };
+  const setDiag = (on) => { document.body.classList.toggle("diagOn", on); d.bDiag.classList.toggle("on", on); V.show.side = on && $("cSide").checked; d.side.classList.toggle("hidden", !V.show.side); layout(); };
+  d.bDiag.onclick = (e) => { setDiag(!document.body.classList.contains("diagOn")); blur(e); }; V.setDiag = setDiag;
   for (const x of LAYERS) $("L_" + x.id).onchange = (e) => { V.layers[x.id] = e.target.checked; stopTest(); newSim(); e.target.blur(); };
   document.querySelectorAll("[data-preset]").forEach((b) => (b.onclick = (e) => { V.engine = "layered"; V.layers = presetLayers(b.dataset.preset); stopTest(); newSim(); blur(e); }));
   d.selEng.onchange = (e) => { V.engine = d.selEng.value; stopTest(); newSim(); blur(e); };
   d.selSame.innerHTML = [["baseline", "locked 88573ef0 (engine)"], ...CHAIN.map((n) => [n, PRESET_LABEL[n]])].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
   d.bSame.onclick = (e) => { sameInput(d.selSame.value); blur(e); }; d.bNext.onclick = (e) => { nextInChain(); blur(e); };
-  d.selTest.innerHTML = TESTS.map((x) => `<option value="${x.name}">${x.name}</option>`).join(""); d.bTest.onclick = (e) => { if (V.test) stopTest(); else startTest(d.selTest.value); blur(e); }; d.selTest.onchange = (e) => e.target.blur();
+  { const grpT = (fam, cap) => `<optgroup label="${cap}">` + TESTS.filter((x) => (fam === "*" ? !["morning", "favourable"].includes(x.fam) : x.fam === fam)).map((x) => `<option value="${x.name}">${x.name}</option>`).join("") + "</optgroup>";
+    d.selTest.innerHTML = grpT("morning", "the morning playtest cases") + grpT("favourable", "favourable examples (where FULL chooses them)") + grpT("*", "TC-LAYERED-2's report-card traces"); } d.bTest.onclick = (e) => { if (V.test) stopTest(); else startTest(d.selTest.value); blur(e); }; d.selTest.onchange = (e) => e.target.blur();
   const blur = (e) => { if (e && e.target && e.target.blur && e.target.tagName !== "INPUT") e.target.blur(); };
   $("bReset").onclick = (e) => { newSim(); blur(e); };
   document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = (e) => { setMode(b.dataset.mode); blur(e); }));
@@ -441,7 +450,8 @@ async function boot() {
   if (q.get("dz") != null) { V.dom.dz.value = q.get("dz"); V.dom.dz.oninput(); }
   if (q.get("foot")) V.dom.selFoot.value = q.get("foot"); if (q.get("cam")) { V.camId = q.get("cam"); V.dom.selCam.value = V.camId; }
   for (const [k, id] of [["bc", "aBC"], ["dri", "aDRI"], ["agi", "aAGI"]]) if (q.get(k)) { V.dom[id].value = q.get(k); V.dom["v" + id.slice(1)].textContent = q.get(k); }
-  if (q.get("engine") === "baseline") V.engine = "baseline"; if (q.get("preset") && PRESETS[q.get("preset")]) V.layers = presetLayers(q.get("preset"));
+  if (q.get("engine") === "baseline") V.engine = "baseline"; if (q.get("preset") && PRESETS[q.get("preset")]) V.layers = presetLayers(q.get("preset")); if (q.get("ball") === "0") V.ballOn = false;
+  if (q.get("diag") === "1") V.setDiag(true);
   if (q.get("layers")) for (const k of q.get("layers").split(",")) if (k in V.layers) V.layers[k] = true;
   newSim(); document.getElementById("loading").remove(); V.ready = true;
   if (q.get("external") === "1") V.external = true; else requestAnimationFrame(frame);
@@ -456,6 +466,7 @@ W.PT = { ready: () => V.ready, V,
   record: () => ({ o0: V.o0, engine: V.engine, layers: V.engine === "layered" ? Object.assign({}, V.layers) : null, input: Array.from(V.sim.log.input), events: V.sim.log.events, hash: V.sim.hash, k: V.sim.k, stick: Array.from(V.stickLog), deadzone: V.stick.cfg.deadzone }),
   engine: (e) => { if (e && ENG[e] && e !== V.engine) { V.engine = e; newSim(); } return V.engine; }, preset: (n) => { if (n) { V.engine = "layered"; V.layers = presetLayers(n); newSim(); } return configName(V.engine, V.layers); },
   layers: (o) => { if (o) { V.engine = "layered"; V.layers = Object.assign({}, TL.LAYERS_OFF, o); newSim(); } return Object.assign({}, V.layers); }, same: (target) => sameInput(target), next: () => nextInChain(), load: (rec, eng, layers) => loadRec(rec, eng, layers),
+  ball: (on) => { if (on != null) { V.ballOn = !!on; newSim(); } return V.ballOn; }, diagnostics: (on) => { if (on != null) V.setDiag(!!on); return document.body.classList.contains("diagOn"); },
   test: (name) => { if (name) startTest(name); else stopTest(); return !!V.test; }, diag: () => ({ now: V.diag.prev, n: V.diag.hist.length }),
   // the stick as a test would hold it: raw (x right, y up) in −1 … 1, null = released
   stick: (x, y) => { const S = V.stick; if (x == null) { S.pid = null; S.raw = { x: 0, y: 0 }; } else { S.pid = -1; V.src = "stick"; S.raw = { x, y }; } S.v = stickVector(S.raw.x, S.raw.y, S.cfg.deadzone); drawStick(); return S.v; },
@@ -465,4 +476,4 @@ W.PT = { ready: () => V.ready, V,
   tick: (dt, keys) => { if (keys) { V.keys = new Set(keys); } const now = (V.lastNow || 0) + dt * 1000; frame(now); return { t: V.sim.t, hash: V.sim.hash }; },
   hud: () => { const h = hudAt(V.replay ? V.replay.t : V.sim.t); return { t: h.t, config: configName(V.engine, V.layers), action: h.action, phase: h.phase, speed: h.speed, sep: h.sep, reqH: h.reqH, mode: h.mode, contacts: V.sim.contacts.length }; },
   state: () => ({ t: V.sim.t, hash: V.sim.hash, contacts: V.sim.contacts.map((c) => ({ t: c.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech, missed: !!c.missed })), actions: V.sim.log.actions.map((a) => ({ t: a.t, label: a.label, m: a.m })) }) };
-boot().catch((err) => { const l = document.getElementById("loading"); if (l) l.textContent = "LAYERED page failed: " + (err && err.stack || err); console.error(err); });
+boot().catch((err) => { const l = document.getElementById("loading"); if (l) l.textContent = "UNIFIED page failed: " + (err && err.stack || err); console.error(err); });

@@ -160,7 +160,9 @@ export class PlayBody {
       if (switched) { const old = this.rawAt(X, t, T.st.P); for (let i = 0; i < 3; i++) S.o[i] += old.ank[i] - raw.ank[i]; S.oy += wrap(old.yaw - raw.yaw); }
       // (the spring: ω so that it settles before the next contact / touchdown of this foot — 4 / ω ≈ the time left; at least 0.12 s's spring)
       const ev = this.nextEvent(X, t, P), left = Math.min(ev.tc != null ? ev.tc - t : 9, !raw.planted && ev.td != null ? ev.td - t : 9), w = Math.max(4 / 0.12, 4 / Math.max(0.012, left)), wy = Math.max(4 / 0.10, 4 / Math.max(0.012, left));
-      for (let i = 0; i < 3; i++) { const a = -w * w * S.o[i] - 2 * w * S.ov[i]; S.ov[i] += a * DT; S.o[i] += S.ov[i] * DT; if (Math.abs(w * DT) > 0.9) { S.o[i] = 0; S.ov[i] = 0; } }
+      // (a PLANTED foot never slides: its offset is held through the stance — the foot stays where it touched down — and decays in its next swing)
+      if (raw.planted) { S.ov[0] = S.ov[1] = S.ov[2] = 0; }
+      else for (let i = 0; i < 3; i++) { const a = -w * w * S.o[i] - 2 * w * S.ov[i]; S.ov[i] += a * DT; S.o[i] += S.ov[i] * DT; if (Math.abs(w * DT) > 0.9) { S.o[i] = 0; S.ov[i] = 0; } }
       { const a = -wy * wy * S.oy - 2 * wy * S.oyv; S.oyv += a * DT; S.oy += S.oyv * DT; if (Math.abs(wy * DT) > 0.9) { S.oy = 0; S.oyv = 0; } }
       { S.op = S.op || 0; S.opv = S.opv || 0; const a = -wy * wy * S.op - 2 * wy * S.opv; S.opv += a * DT; S.op += S.opv * DT; if (Math.abs(wy * DT) > 0.9) { S.op = 0; S.opv = 0; } }
       // (a FOOT SPEED LIMIT: the drawn ankle never moves more than 9 cm in a tick (≈ 22 m/s, a kicking foot's speed) — the excess goes into the
