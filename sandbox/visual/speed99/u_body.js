@@ -164,8 +164,11 @@ export class PlayBody {
     for (const X of SIDES) { const S = T.st[X], raw = this.rawAt(X, t, P);
       // (a planted foot across a plan switch keeps the BALL of its foot: the offset absorbs that point's difference, the yaw offset the turn — it
       // pivots about the ball of the foot, never slides)
-      if (switched) { const old = this.rawAt(X, t, T.st.P); if (old.planted && raw.planted && old.ballPt && raw.ballPt) { S.o[0] += old.ballPt[0] - raw.ballPt[0]; S.o[1] += old.ballPt[1] - raw.ballPt[1]; S.o[2] += old.ank[2] - raw.ank[2]; }
-        else for (let i = 0; i < 3; i++) S.o[i] += old.ank[i] - raw.ank[i]; S.oy += wrap(old.yaw - raw.yaw); }
+      // (S99 MISSION, the 99 pace: a foot drawn PLANTED on this same stance last tick, which the OLD plan still had swinging (on its own timing),
+      // is not re-based on that swing — folded into the offset, it dragged the planted foot 4 – 8 mm a tick when the plan switched every tick)
+      const keepPlant = FIX && raw.planted && raw.stance && S.plantId === raw.stance.id;
+      if (switched) { const old = this.rawAt(X, t, T.st.P); if (old.planted && raw.planted && old.ballPt && raw.ballPt) { S.o[0] += old.ballPt[0] - raw.ballPt[0]; S.o[1] += old.ballPt[1] - raw.ballPt[1]; S.o[2] += old.ank[2] - raw.ank[2]; S.oy += wrap(old.yaw - raw.yaw); }
+        else if (!keepPlant) { for (let i = 0; i < 3; i++) S.o[i] += old.ank[i] - raw.ank[i]; S.oy += wrap(old.yaw - raw.yaw); } }
       // (the spring: ω so that it settles before the next contact / touchdown of this foot — 4 / ω ≈ the time left; at least 0.12 s's spring)
       const ev = this.nextEvent(X, t, P), left = Math.min(ev.tc != null ? ev.tc - t : 9, !raw.planted && ev.td != null ? ev.td - t : 9), w = Math.max(4 / 0.12, 4 / Math.max(0.012, left)), wy = Math.max(4 / 0.10, 4 / Math.max(0.012, left));
       // (a PLANTED foot never slides: its offset is held through the stance — the foot stays where it touched down — and decays in its next swing)
@@ -187,6 +190,7 @@ export class PlayBody {
       if (f.ballPt) f.ballPt = [f.ballPt[0] + S.o[0], f.ballPt[1] + S.o[1]];
       // (planted: the ankle placed from the ball of the foot and the drawn yaw — the yaw offset turns the foot about that point)
       if (raw.planted && raw.ballPt && Math.abs(S.oy) > 1e-6) { const dx = raw.ank[0] - raw.ballPt[0], dy = raw.ank[1] - raw.ballPt[1], c = Math.cos(S.oy), sn = Math.sin(S.oy); f.ank = [f.ballPt[0] + dx * c - dy * sn, f.ballPt[1] + dx * sn + dy * c, f.ank[2]]; }
+      S.plantId = FIX && raw.planted && raw.stance ? raw.stance.id : null;
       pre[X] = { f, ev }; }
     // THE SWING CORRIDOR (Astra's: a swing foot passes the support leg on its own side): in the body's heading frame a swinging foot alongside
     // the other foot (fore–aft within 0.35 m) keeps ≥ 0.14 m of lateral separation from it on its own side, and its yaw within ±22° of the

@@ -23,7 +23,7 @@ Every change is gated by the 99 pace (`pace.accGait` / `pace.sprintCarry`), the 
 | File | What changed |
 |---|---|
 | `pace.js` | D38's `sprintCarry` (N = 2, the graded open-space conditions, continuation horizon 1.65 s) |
-| `u_body.js` | **Phase 1 body:** planted yaw hold; plant pivot (≤ 5° per tick about the ball of the foot, ≤ 70° from the facing); the heel rise from the drawn ankle; support compression weighted per tick in the foot timeline (rate-limited); the swinging knee clears the standing one; a planted foot settles its height above the stance |
+| `u_body.js` | **Phase 1 body:** planted yaw hold; plant pivot (≤ 5° per tick about the ball of the foot, ≤ 70° from the facing); the heel rise from the drawn ankle; support compression weighted per tick in the foot timeline (rate-limited); the swinging knee clears the standing one; a planted foot settles its height above the stance; a planted foot is not re-based on an old plan that still had it swinging |
 | `u_gait.js` | Braking / cut plants keep a foot down; top-speed contact cap only in steady running; near-rest feet are standing (the first step of a standing start) |
 | `u_tc.js` | **SPRINT_CARRY:** `sprintOpen()` levels, the due touch, lane foot only, the extrapolated swing end. The against-the-run push-on. The 99 RECOVERY reach. **EXPANDED families** LAT / KNK / SOL and the review-only feints FNO / FNI; `o.vocab`, `o.forceFam` |
 | `c_sim.js` | Continuation horizon for sprint-carry and knock contacts; the turn-back pursuit fallback; HUD phase "SPRINT CARRY" |

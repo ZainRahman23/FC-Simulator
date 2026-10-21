@@ -54,6 +54,7 @@ Each fix came from an instrumented cause (`tools/s_legs.mjs` and scratch traces)
 | 8 | The swinging knee went through the standing knee in hard turns | The pelvis turns ≈ 4° per tick at speed | Both knees swivel outward, continuously, as the knees come within 16 cm (≤ 20°). Normal running never comes closer than 26 cm, so it is untouched |
 | 9 | A planted technique foot hovered 13 cm, then dropped 12–14 cm | The foot timeline held the whole touchdown offset through the stance, including its height | The horizontal offset is held (no slide); a height above the stance settles at ≤ 1.5 cm per tick |
 | 10 | Larger touchdown deficit | The touchdown lead had been raised | RUN-1's lead is restored |
+| 11 | Ball on: planted feet dragged 4–8 mm a tick | With a re-plan every tick (the action flipping), each plan switch re-based a planted foot on the OLD plan's version of it, which still had it swinging on its own timing | A foot drawn planted on the same stance last tick is not re-based on that swing (when both plans have it planted, the ball-of-foot continuity is unchanged) |
 
 ### Ball-off leg torture, final
 
@@ -197,7 +198,7 @@ The model-blind observer flags "no contact planned 0.5 s / none made 1.8 s / bal
 
 | Check | Result |
 |---|---|
-| Posed-body torture, ball on, CONTROLLED, the seeded torture input incl. abuse (`s99_bodytorture.mjs`, 8 × 60 s each) | **99 PACE + EXPANDED vs CURRENT + CORE, per minute:** jumps 19.8 vs 27.6 · knee pops 34.7 vs 71.9 · crossings 81 vs 106 · floats 284 vs 490 (totals) · slides 260 vs 148 (totals) — better everywhere except planted-foot slides (below) |
+| Posed-body torture, ball on, CONTROLLED, the seeded torture input incl. abuse (`s99_bodytorture.mjs`, 8 × 60 s each) | **99 PACE + EXPANDED vs CURRENT + CORE:** jumps 19.9 vs 27.6 per min · knee pops 35.0 vs 71.9 per min · crossings 82 vs 106 per min · floats 284 vs 490 · planted-foot slides 27 vs 148 (totals over 7.8 min) — better in every category. Before fix 11 the 99 player had 260 slides |
 | Straight 38 km/h sprint carry with the ball, posed every tick | 0 failures |
 | Determinism (browser) | `PT.verify()` true for every preset; node ≡ browser (`u_resim.mjs`: IDENTICAL) |
 | Animation ON / OFF neutrality (`c_neutral.mjs` at 99 PACE + EXPANDED) | 16 / 16 identical (FREE and CONTROLLED, 8 programs × 20 s; 8 with an opponent's hit on the ball) |
@@ -205,7 +206,6 @@ The model-blind observer flags "no contact planned 0.5 s / none made 1.8 s / bal
 
 **Known body issues remaining (ball on):**
 
-- **Planted-foot slides (4–8 mm a tick)** when the plan switches every tick (the action flipping under abuse input). A switch carries the old plan's still-swinging foot into the planted foot's offset. A first fix (holding the point) fought the foot-speed limiter and was reverted.
 - **Thigh crossings** of 3–5 cm just after hard 60–90° cuts at 10 m/s.
 - **The 180° drag-back from 38 km/h:** single-tick knee changes of 20–35°.
 - The fast circle and A99-C's hardest stops (above).
