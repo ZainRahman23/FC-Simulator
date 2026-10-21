@@ -153,19 +153,44 @@ export class PlayBody {
     return T.frames.get(k); }
   tlTick(t, T) { const P = this.sim.planAt(Math.max(0, t - DT / 2)), out = {};
     if (!T.st) T.st = { P, R: { o: [0, 0, 0], ov: [0, 0, 0], oy: 0, oyv: 0, push: 0 }, L: { o: [0, 0, 0], ov: [0, 0, 0], oy: 0, oyv: 0, push: 0 } };
-    const switched = T.st.P !== P;
+    const switched = T.st.P !== P, pre = {};
     for (const X of SIDES) { const S = T.st[X], raw = this.rawAt(X, t, P);
       if (switched) { const old = this.rawAt(X, t, T.st.P); for (let i = 0; i < 3; i++) S.o[i] += old.ank[i] - raw.ank[i]; S.oy += wrap(old.yaw - raw.yaw); }
       // (the spring: ω so that it settles before the next contact / touchdown of this foot — 4 / ω ≈ the time left; at least 0.12 s's spring)
       const ev = this.nextEvent(X, t, P), left = Math.min(ev.tc != null ? ev.tc - t : 9, !raw.planted && ev.td != null ? ev.td - t : 9), w = Math.max(4 / 0.12, 4 / Math.max(0.012, left)), wy = Math.max(4 / 0.10, 4 / Math.max(0.012, left));
       for (let i = 0; i < 3; i++) { const a = -w * w * S.o[i] - 2 * w * S.ov[i]; S.ov[i] += a * DT; S.o[i] += S.ov[i] * DT; if (Math.abs(w * DT) > 0.9) { S.o[i] = 0; S.ov[i] = 0; } }
       { const a = -wy * wy * S.oy - 2 * wy * S.oyv; S.oyv += a * DT; S.oy += S.oyv * DT; if (Math.abs(wy * DT) > 0.9) { S.oy = 0; S.oyv = 0; } }
-      let f = Object.assign({}, raw, { ank: [raw.ank[0] + S.o[0], raw.ank[1] + S.o[1], Math.max(HB.ankleH - 0.012, raw.ank[2] + S.o[2])], yaw: raw.yaw + S.oy, tlOff: hyp(S.o[0], S.o[1], S.o[2]) });
+      { S.op = S.op || 0; S.opv = S.opv || 0; const a = -wy * wy * S.op - 2 * wy * S.opv; S.opv += a * DT; S.op += S.opv * DT; if (Math.abs(wy * DT) > 0.9) { S.op = 0; S.opv = 0; } }
+      // (a FOOT SPEED LIMIT: the drawn ankle never moves more than 9 cm in a tick (≈ 22 m/s, a kicking foot's speed) — the excess goes into the
+      // offset and is caught up by the spring; the spring itself is capped at 5 m/s relative — no plan switch, no fast authored swing teleports a foot)
+      { const m = hyp(S.ov[0], S.ov[1], S.ov[2]); if (m > 5) for (let i = 0; i < 3; i++) S.ov[i] *= 5 / m; }
+      let f = Object.assign({}, raw, { ank: [raw.ank[0] + S.o[0], raw.ank[1] + S.o[1], Math.max(HB.ankleH - 0.012, raw.ank[2] + S.o[2])], yaw: raw.yaw + S.oy, pitch: (raw.pitch || 0) + (S.op || 0), tlOff: hyp(S.o[0], S.o[1], S.o[2]) });
       if (f.ballPt) f.ballPt = [f.ballPt[0] + S.o[0], f.ballPt[1] + S.o[1]];
+      pre[X] = { f, ev }; }
+    // THE SWING CORRIDOR (Astra's: a swing foot passes the support leg on its own side): in the body's heading frame a swinging foot alongside
+    // the other foot (fore–aft within 0.35 m) keeps ≥ 0.14 m of lateral separation from it on its own side, and its yaw within ±22° of the
+    // heading (opening to ±45° late in the swing) — weighted off near its own contact (the boot that plays the ball is drawn exactly there) and
+    // rate-limited (≤ 2 cm / tick: a route, not a jump). Presentation only; the plan's stances and contacts are untouched
+    const st = this.sim.stateAt(t, P), ps = st.psi, fw = [Math.cos(ps), Math.sin(ps)], rt = [-Math.sin(ps), Math.cos(ps)];
+    for (const X of SIDES) { const S = T.st[X], { f, ev } = pre[X], o = pre[other(X)].f; let g = f;
+      let want = 0, wy = 0;
+      if (!f.planted) { const dc = ev.tc != null ? ev.tc - t : 9, con = f.swing && f.swing.con, dp = con ? abs(t - con.t) : 9, ex = sstep(0.03, 0.12, min(abs(dc), dp));
+        const d = [f.ank[0] - o.ank[0], f.ank[1] - o.ank[1]], a = d[0] * fw[0] + d[1] * fw[1], l = (d[0] * rt[0] + d[1] * rt[1]) * sgnF(X), near = 1 - sstep(0.22, 0.35, abs(a));
+        want = ex * near * max(0, 0.14 - l);
+        const w = f.swing, u = w ? clamp((t - w.t0) / max(1e-3, w.t1 - w.t0), 0, 1) : 0, lim = (22 + 23 * sstep(0.65, 0.95, u)) * DEG, e = wrap(f.yaw - ps);
+        wy = ex * (abs(e) > lim ? (abs(e) - lim) * Math.sign(e) : 0); }
+      S.sep = clamp(want, (S.sep || 0) - 0.02, (S.sep || 0) + 0.02); S.syaw = clamp(wy, (S.syaw || 0) - 3 * DEG, (S.syaw || 0) + 3 * DEG);
+      if (S.sep > 1e-6 || abs(S.syaw) > 1e-6) { const k = S.sep * sgnF(X); g = Object.assign({}, f, { ank: [f.ank[0] + rt[0] * k, f.ank[1] + rt[1] * k, f.ank[2]], yaw: f.yaw - S.syaw, corridor: S.sep }); }
       // (clearance: the baseline's push, rate-limited — the boot leaves the ball smoothly instead of jumping clear)
-      const c = this.clearOfBall(f, X, t), want = c.cleared || 0; S.push = clamp(want, S.push - 0.025, S.push + 0.025);
-      if (want > 1e-6 && S.push > 0) { const k2 = S.push / want; f = Object.assign({}, f, { ank: f.ank.map((x, i) => x + (c.ank[i] - x) * k2), cleared: S.push }); }
-      out[X] = f; }
+      const c = this.clearOfBall(g, X, t), cw = c.cleared || 0; S.push = clamp(cw, S.push - 0.025, S.push + 0.025);
+      if (cw > 1e-6 && S.push > 0) { const k2 = S.push / cw; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x + (c.ank[i] - x) * k2), cleared: S.push }); }
+      // (the speed limit on the foot as drawn — after the corridor and the clearance: the excess becomes offset, caught up by the spring)
+      if (S.last) { const q = [g.ank[0] - S.last[0], g.ank[1] - S.last[1], g.ank[2] - S.last[2]], m = hyp(q[0], q[1], q[2]);
+        if (m > 0.09) { const e = 1 - 0.09 / m, d = q.map((x) => x * e); for (let i = 0; i < 3; i++) S.o[i] -= d[i]; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x - d[i]), limited: m }); } }
+      // (and on its turning: yaw ≤ 5°, pitch ≤ 4° per tick — a swing key's orientation step becomes a fast turn, never a flip)
+      if (S.lastYaw != null) { const dy = wrap(g.yaw - S.lastYaw), dp = (g.pitch || 0) - S.lastPitch, ey = abs(dy) > 5 * DEG ? dy - Math.sign(dy) * 5 * DEG : 0, ep = abs(dp) > 4 * DEG ? dp - Math.sign(dp) * 4 * DEG : 0;
+        if (ey || ep) { S.oy -= ey; S.op -= ep; g = Object.assign({}, g, { yaw: g.yaw - ey, pitch: (g.pitch || 0) - ep }); } }
+      S.last = g.ank.slice(); S.lastYaw = g.yaw; S.lastPitch = g.pitch || 0; out[X] = g; }
     T.st.P = P; return out; }
   // (B2 early on: a swing re-timed toward a touch finishes its blend BEFORE that touch — the foot that plays the ball is the foot drawn there)
   // (also for B4 / B5: a generic touch or a quick step into a technique re-times the touching foot's swing in the same way)

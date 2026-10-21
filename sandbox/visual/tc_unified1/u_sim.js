@@ -14,7 +14,8 @@ import { PlaySim, Curve, DT, DEG, wrap, fromLocal, toLocal, rgt, TEMPLATES } fro
 import { WIDTH, lead } from "../tc_baseline_88573ef0/pt_params.js";
 import { predict } from "../tc_baseline_88573ef0/pt_ball.js";
 import { PROFILES, advance } from "../agility99/movement.js";
-import { bodyGaitFrom } from "../agility99/body_gait.js";
+import { bodyGaitFrom as astraGait } from "../agility99/body_gait.js";
+import { bodyGaitFrom } from "./u_gait.js";
 export * from "./u_tc.js";
 const C = PROFILES["A99-C"], abs = Math.abs, min = Math.min, max = Math.max, hyp = Math.hypot, sgn = (X) => (X === "R" ? 1 : -1), other = (X) => (X === "R" ? "L" : "R");
 export class UnifiedSim extends PlaySim {
@@ -37,7 +38,7 @@ export class UnifiedSim extends PlaySim {
       for (const stance of keep.stances[F]) if (stance.t0 <= this.t && stance.t1 > this.t) {
         for (let dt = 0.025; dt <= Math.min(0.32, stance.t1 - this.t); dt += DT) { const x = this.stateAt(this.t + dt, plan), dx = stance.pos[0] - x.P[0], dy = stance.pos[1] - x.P[1], side = (-dx * Math.sin(x.psi) + dy * Math.cos(x.psi)) * (F === "R" ? 1 : -1);
           if (Math.hypot(dx, dy) > 0.60 || side < -0.05) { stance.t1 = Math.min(stance.t1, Math.max(this.t + 0.025, stance.t0 + 0.06, this.t + dt)); break; } } } }
-    plan.stances = (this.L.support ? this.gaitFrom : this.L.c ? bodyGaitFrom : this.gaitFrom).call(this, plan, keep, [], this.t + 1.5); plan.reason = reason; this.adopt(plan); }
+    plan.stances = (this.L.support ? this.gaitFrom : this.L.c ? astraGait : this.gaitFrom).call(this, plan, keep, [], this.t + 1.5); plan.reason = reason; this.adopt(plan); }
   // ── C: the plan's root path — the carry by C's advance(), a technique's authored keys exactly (Astra's AgilitySim.mkPlan, profile A99-C) ──────
   mkPlan(o) {
     if (!this.L.c) return super.mkPlan(o);

@@ -33,3 +33,4 @@ if ((process.argv[1] || "").endsWith("u_audit.mjs")) { const cfgs = opt("configs
     console.log(`  ${cfg.padEnd(5)} foot jumps ${String(sum(R, "footJumps")).padStart(4)} (max step ${(mx(R, "maxFootStep") * 100).toFixed(1)} cm) · intersection frames ${String(sum(R, "intersectionFrames")).padStart(4)} · root↔render max ${(mx(R, "rootMax") * 100).toFixed(1)} cm · pelvis ${Math.min(...R.map((r) => r.pelvisMinZ)).toFixed(3)}–${mx(R, "pelvisMaxZ").toFixed(3)} m · air ${(sum(R, "airFrames") / sum(R, "frames") * 100).toFixed(1)} %` +
       (ballOn ? ` · contacts ${sum(R, "contactCount")}: >3 cm ${sum(R, "contactOver3cm")}, >10 cm ${sum(R, "contactOver10cm")}, worst ${(mx(R, "contactGapMax") * 100).toFixed(1)} cm` : "")); }
   if (opt("json")) fs.writeFileSync(opt("json"), JSON.stringify(rows, null, 1)); }
+export { specs };
