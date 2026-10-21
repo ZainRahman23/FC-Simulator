@@ -1,0 +1,182 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/speed99.html",
+ "defaults": {
+  "pace": "B",
+  "ref": "CURRENT",
+  "ball": false,
+  "model": "CONTROLLED"
+ },
+ "runs": [
+  {
+   "pace": "CURRENT",
+   "name": "0–30 m · standing → sprint",
+   "determinism": true,
+   "splits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55
+   },
+   "vmax": 8,
+   "refSplits": null,
+   "refPace": false,
+   "session": "CURRENT_0_30_m_standing_sprint_session.json"
+  },
+  {
+   "pace": "CURRENT",
+   "name": "sprint → 90° cut + accelerate",
+   "determinism": true,
+   "splits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55,
+    "40": 5.87
+   },
+   "vmax": 8,
+   "refSplits": null,
+   "refPace": false,
+   "session": "CURRENT_sprint_90_cut_accelerate_session.json"
+  },
+  {
+   "pace": "A",
+   "name": "0–30 m · standing → sprint",
+   "determinism": true,
+   "splits": {
+    "5": 1.25,
+    "10": 1.9,
+    "20": 3.03,
+    "30": 4.07,
+    "40": 5.07
+   },
+   "vmax": 10,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55
+   },
+   "refPace": true,
+   "session": "A_0_30_m_standing_sprint_session.json"
+  },
+  {
+   "pace": "A",
+   "name": "sprint → 90° cut + accelerate",
+   "determinism": true,
+   "splits": {
+    "5": 1.25,
+    "10": 1.9,
+    "20": 3.03,
+    "30": 4.07,
+    "40": 5.07,
+    "60": 7.26
+   },
+   "vmax": 10,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55,
+    "40": 5.87
+   },
+   "refPace": true,
+   "session": "A_sprint_90_cut_accelerate_session.json"
+  },
+  {
+   "pace": "B",
+   "name": "0–30 m · standing → sprint",
+   "determinism": true,
+   "splits": {
+    "5": 1.2,
+    "10": 1.83,
+    "20": 2.92,
+    "30": 3.92,
+    "40": 4.89
+   },
+   "vmax": 10.35,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55
+   },
+   "refPace": true,
+   "session": "B_0_30_m_standing_sprint_session.json"
+  },
+  {
+   "pace": "B",
+   "name": "sprint → 90° cut + accelerate",
+   "determinism": true,
+   "splits": {
+    "5": 1.2,
+    "10": 1.83,
+    "20": 2.92,
+    "30": 3.92,
+    "40": 4.89,
+    "60": 7.01
+   },
+   "vmax": 10.35,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55,
+    "40": 5.87
+   },
+   "refPace": true,
+   "session": "B_sprint_90_cut_accelerate_session.json"
+  },
+  {
+   "pace": "C",
+   "name": "0–30 m · standing → sprint",
+   "determinism": true,
+   "splits": {
+    "5": 1.09,
+    "10": 1.68,
+    "20": 2.7,
+    "30": 3.67,
+    "40": 4.64
+   },
+   "vmax": 10.35,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55
+   },
+   "refPace": true,
+   "session": "C_0_30_m_standing_sprint_session.json"
+  },
+  {
+   "pace": "C",
+   "name": "sprint → 90° cut + accelerate",
+   "determinism": true,
+   "splits": {
+    "5": 1.09,
+    "10": 1.68,
+    "20": 2.7,
+    "30": 3.67,
+    "40": 4.64,
+    "60": 6.72
+   },
+   "vmax": 10.35,
+   "refSplits": {
+    "5": 1.37,
+    "10": 2.05,
+    "20": 3.3,
+    "30": 4.55,
+    "40": 5.87
+   },
+   "refPace": true,
+   "session": "C_sprint_90_cut_accelerate_session.json"
+  }
+ ],
+ "nextPace": {
+  "from": "B",
+  "to": "C",
+  "replay": true,
+  "inputIdentical": true
+ },
+ "logs": [],
+ "http": []
+}

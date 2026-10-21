@@ -1,0 +1,24 @@
+{
+  "milestone": "SPEED-99-V1",
+  "date": "2026-10-21",
+  "state": "BALL-OFF playground presented for the owner's playtest — NOT frozen, NOT integrated, 1–98 NOT defined; ball-on (CONTROLLED-99-PACE) waits for the owner's ceiling",
+  "local_only": "the character is a real player's model: never publish",
+  "page": "http://127.0.0.1:8361/sandbox/visual/speed99.html",
+  "defaults": { "ball": "OFF", "pace": "B", "reference_runner": "CURRENT", "attributes": "BC99 / D99 / A99-C", "stack": "FULL" },
+  "candidates": {
+    "CURRENT": { "vmax_ms": 8.0, "accel": "7.0 · clamp(1 − s/11, 0.35, 1) (A99-C / baseline)", "note": "TC-CONTROLLED-1's movement exactly" },
+    "A": { "label": "elite realistic", "vmax_ms": 10.0, "kmh": 36.0, "tau_s": 1.10, "a0": 9.1, "shape": "linear", "basis": "INF: national-team V0 + 2–2.5 SD; 36 km/h league peaks" },
+    "B": { "label": "exceptional football ceiling", "vmax_ms": 10.35, "kmh": 37.3, "tau_s": 1.05, "a0": 9.9, "shape": "linear", "basis": "INF: league-record top speeds (37.0–37.4 km/h); a0 ≈ Bolt" },
+    "C": { "label": "responsive gameplay ceiling", "vmax_ms": 10.35, "tau_s": 0.95, "a0": 10.9, "shape": "p 1.35", "basis": "DESIGN: beyond human data (10 m faster than Bolt from first movement)" }
+  },
+  "standing_start_s": { "CURRENT": [1.37, 2.05, 3.30, 4.55, 5.80], "A": [1.25, 1.90, 3.03, 4.07, 5.07], "B": [1.20, 1.83, 2.92, 3.92, 4.89], "C": [1.09, 1.68, 2.70, 3.67, 4.64], "marks_m": [5, 10, 20, 30, 40], "national_team_mean_MF": [null, 2.01, 3.24, 4.39, 5.51] },
+  "post_cut_along_new_line_2s_m": { "90": { "CURRENT": 14.7, "A": 17.0, "B": 17.6, "C": 18.0 }, "120": { "CURRENT": 12.4, "B": 13.7, "C": 14.4 }, "180": { "CURRENT": 5.3, "B": 5.8, "C": 6.9 } },
+  "curved_sprint_20dps_speed_after_2s": { "CURRENT": 3.28, "A": 8.82, "B": 9.22, "C": 9.83 },
+  "audit_constraints_found": ["top speed and acceleration set by Agility (no Sprint Speed / Acceleration attributes)", "no acceleration while steering (every analog change restarts an A99-C motion that forbids gain)", "A99-C envelope speed scaling capped at 8 m/s", "hidden <3 m/s acceleration cadence rule → a 4.3 → 2.9 steps/s cliff", "RUN-1 lead / contact sized for ≤ 8 m/s", "no acceleration lean"],
+  "interaction_rules_added": ["steerGain: gain allowed during cost-free retargets (A99-C retention ≥ 0.995), friction circle", "envExtend: A99-C's own speed scaling continued above 8 m/s"],
+  "body_size_penalties": "none found",
+  "body": { "slides": 0, "jumps_intersections_straight_curve_45_90_120": "0 / 0 for every candidate", "cut_sweep_note": "candidates at parity with or better than CURRENT; 180° foot jumps 2–3 in all", "drawn_trunk_first_steps_deg": { "CURRENT": 5, "B": 25, "C": 28 } },
+  "cpu_ms_per_sim_s_ball_off": { "CURRENT": 5.6, "A": 5.6, "B": 5.6, "C": 6.7 },
+  "equivalence": "48/48 CURRENT ≡ TC-CONTROLLED-1 (ball off, ball on FREE, ball on CONTROLLED); node ≡ browser 8/8",
+  "owner_decisions_open": ["which ceiling (A / B / C / between)", "post-cut explosion enough?", "keep the two A99-C interaction rules; curve rule for CURRENT too?", "then the ball-on CONTROLLED-99-PACE integration"]
+}
