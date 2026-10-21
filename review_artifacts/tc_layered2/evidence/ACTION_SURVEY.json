@@ -1,0 +1,1255 @@
+{
+ "flowing carry · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.5766666666666662,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.5766666666666662,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.5766666666666662,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.5766666666666662,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.5766666666666662,
+   "line": 0.0016666666666664831
+  }
+ },
+ "small corrections · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.12749999999999995
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.12749999999999995
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.12749999999999995
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 6,
+    "GATHER": 2
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.12749999999999995
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 6,
+    "GATHER": 2
+   },
+   "contact": 0.09333333333333327,
+   "line": 0.12249999999999961
+  }
+ },
+ "snap 45° · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.25249999999999995
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 6,
+    "COMPACT INSIDE REDIRECT": 1,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.25249999999999995
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 6,
+    "OUTSIDE CUT": 2
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.25249999999999995
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 5,
+    "COMPACT INSIDE REDIRECT": 2,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.25249999999999995
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 6,
+    "COMPACT INSIDE REDIRECT": 1,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.18083333333333318,
+   "line": 0.2316666666666669
+  }
+ },
+ "snap 60° · jog": {
+  "A": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "CARRY": 6
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.5816666666666666
+  },
+  "B4": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "COMPACT INSIDE REDIRECT": 1,
+    "CARRY": 5
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.5591666666666666
+  },
+  "B5": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "CARRY": 6
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.563333333333333
+  },
+  "B45": {
+   "hist": {
+    "OUTSIDE CUT": 1,
+    "COMPACT INSIDE REDIRECT": 2,
+    "CARRY": 5
+   },
+   "contact": 0.14749999999999952,
+   "line": 0.5591666666666666
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 5,
+    "COMPACT INSIDE REDIRECT": 2,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.14749999999999952,
+   "line": 0.4258333333333333
+  }
+ },
+ "snap 90° · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 3,
+    "OUTSIDE CUT": 3,
+    "CRUYFF TURN": 2
+   },
+   "contact": 0.4849999999999999,
+   "line": 0.6549999999999998
+  },
+  "B4": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "OUTSIDE CUT": 5,
+    "COMPACT INSIDE REDIRECT": 1,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4841666666666664,
+   "line": 0.6549999999999998
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 3,
+    "OUTSIDE CUT": 3,
+    "CRUYFF TURN": 2
+   },
+   "contact": 0.4849999999999999,
+   "line": 0.6341666666666663
+  },
+  "B45": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "OUTSIDE CUT": 5,
+    "COMPACT INSIDE REDIRECT": 1,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4349999999999996,
+   "line": 0.6341666666666663
+  },
+  "B452": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "OUTSIDE CUT": 5,
+    "COMPACT INSIDE REDIRECT": 1,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4349999999999996,
+   "line": 0.6341666666666663
+  }
+ },
+ "snap 120° · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 2,
+    "INSIDE HOOK": 2,
+    "CRUYFF TURN": 2,
+    "OUTSIDE CUT": 2
+   },
+   "contact": 0.5333333333333332,
+   "line": 1.0633333333333335
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 1,
+    "INSIDE HOOK": 6,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.6424999999999996,
+   "line": 0.8633333333333333
+  },
+  "B5": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "CRUYFF TURN": 3,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.5333333333333332,
+   "line": 0.8083333333333331
+  },
+  "B45": {
+   "hist": {
+    "INSIDE HOOK": 5,
+    "CRUYFF TURN": 3
+   },
+   "contact": 0.5049999999999999,
+   "line": 0.7883333333333331
+  },
+  "B452": {
+   "hist": {
+    "INSIDE HOOK": 5,
+    "CRUYFF TURN": 3
+   },
+   "contact": 0.5049999999999999,
+   "line": 0.7883333333333331
+  }
+ },
+ "snap 150° · jog": {
+  "A": {
+   "hist": {
+    "DRAG-BACK": 5,
+    "INSIDE HOOK": 2,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4750000000000001,
+   "line": 0.7433333333333332
+  },
+  "B4": {
+   "hist": {
+    "BRAKING TOUCH": 4,
+    "INSIDE HOOK": 1,
+    "DRAG-BACK": 2,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4750000000000001,
+   "line": 0.7558333333333329
+  },
+  "B5": {
+   "hist": {
+    "DRAG-BACK": 5,
+    "INSIDE HOOK": 2,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.4733333333333336,
+   "line": 0.6941666666666664
+  },
+  "B45": {
+   "hist": {
+    "BRAKING TOUCH": 6,
+    "DRAG-BACK": 1,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.7708333333333335
+  },
+  "B452": {
+   "hist": {
+    "BRAKING TOUCH": 6,
+    "DRAG-BACK": 1,
+    "CRUYFF TURN": 1
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.7708333333333335
+  }
+ },
+ "snap 180° · jog": {
+  "A": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.4750000000000001,
+   "line": 0.7558333333333329
+  },
+  "B4": {
+   "hist": {
+    "BRAKING TOUCH": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.4466666666666663,
+   "line": 0.6758333333333333
+  },
+  "B5": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.4733333333333336,
+   "line": 0.7066666666666666
+  },
+  "B45": {
+   "hist": {
+    "BRAKING TOUCH": 6,
+    "DRAG-BACK": 2
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.5583333333333331
+  },
+  "B452": {
+   "hist": {
+    "BRAKING TOUCH": 6,
+    "DRAG-BACK": 2
+   },
+   "contact": 0.10000000000000009,
+   "line": 0.5583333333333331
+  }
+ },
+ "rapid L/R · jog": {
+  "A": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "CARRY": 6
+   },
+   "contact": 0.10000000000000009,
+   "line": 1.1208333333333336
+  },
+  "B4": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "COMPACT INSIDE REDIRECT": 1,
+    "CARRY": 5
+   },
+   "contact": 0.10000000000000009,
+   "line": 1.1208333333333336
+  },
+  "B5": {
+   "hist": {
+    "OUTSIDE CUT": 2,
+    "CARRY": 6
+   },
+   "contact": 0.10000000000000009,
+   "line": 1.4500000000000002
+  },
+  "B45": {
+   "hist": {
+    "OUTSIDE CUT": 1,
+    "COMPACT INSIDE REDIRECT": 2,
+    "CARRY": 5
+   },
+   "contact": 0.14749999999999952,
+   "line": 1.1641666666666666
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 5,
+    "COMPACT INSIDE REDIRECT": 2,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.14749999999999952,
+   "line": 0.7341666666666664
+  }
+ },
+ "gradual rotation · jog": {
+  "A": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 5,
+    "GATHER": 1,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 5,
+    "GATHER": 1,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.21833333333333327,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "GATHER": 1,
+    "CARRY": 6
+   },
+   "contact": 0.33583333333333343,
+   "line": 0.0016666666666664831
+  }
+ },
+ "flowing carry · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.0016666666666664831
+  }
+ },
+ "small corrections · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.2633333333333332
+  },
+  "B4": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 3,
+    "CARRY": 4,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.2633333333333332
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.2633333333333332
+  },
+  "B45": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 5,
+    "CARRY": 3
+   },
+   "contact": 0.17499999999999982,
+   "line": 0.23749999999999982
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.15833333333333321,
+   "line": 0.1466666666666665
+  }
+ },
+ "snap 45° · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2941666666666669,
+   "line": 0.4716666666666667
+  },
+  "B4": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.4716666666666667
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2941666666666669,
+   "line": 0.4716666666666667
+  },
+  "B45": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 5,
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 2
+   },
+   "contact": 0.10916666666666641,
+   "line": 0.3633333333333333
+  },
+  "B452": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 1,
+    "CARRY": 7
+   },
+   "contact": 0.10416666666666652,
+   "line": 0.355
+  }
+ },
+ "snap 60° · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.6999999999999997
+  },
+  "B4": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 3,
+    "CARRY": 4,
+    "RONALDO CHOP": 1
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.5799999999999996
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3374999999999999,
+   "line": 0.6999999999999997
+  },
+  "B45": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 4,
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 2,
+    "RONALDO CHOP": 1
+   },
+   "contact": 0.10916666666666641,
+   "line": 0.5224999999999995
+  },
+  "B452": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.10916666666666641,
+   "line": 0.4716666666666667
+  }
+ },
+ "snap 90° · run": {
+  "A": {
+   "hist": {
+    "RONALDO CHOP": 6,
+    "CARRY": 2
+   },
+   "contact": 0.5508333333333333,
+   "line": 0.7049999999999996
+  },
+  "B4": {
+   "hist": {
+    "RONALDO CHOP": 6,
+    "OUTSIDE CUT": 1,
+    "COMPACT OUTSIDE REDIRECT": 1
+   },
+   "contact": 0.5508333333333333,
+   "line": 0.7049999999999996
+  },
+  "B5": {
+   "hist": {
+    "RONALDO CHOP": 7,
+    "CARRY": 1
+   },
+   "contact": 0.5816666666666666,
+   "line": 0.7316666666666669
+  },
+  "B45": {
+   "hist": {
+    "RONALDO CHOP": 6,
+    "COMPACT OUTSIDE REDIRECT": 2
+   },
+   "contact": 0.4958333333333331,
+   "line": 0.6499999999999999
+  },
+  "B452": {
+   "hist": {
+    "RONALDO CHOP": 6,
+    "COMPACT OUTSIDE REDIRECT": 2
+   },
+   "contact": 0.4958333333333331,
+   "line": 0.6499999999999999
+  }
+ },
+ "snap 120° · run": {
+  "A": {
+   "hist": {
+    "RONALDO CHOP": 7,
+    "CARRY": 1
+   },
+   "contact": 0.6275,
+   "line": 0.7941666666666669
+  },
+  "B4": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.6275,
+   "line": 0.7941666666666669
+  },
+  "B5": {
+   "hist": {
+    "RONALDO CHOP": 7,
+    "CARRY": 1
+   },
+   "contact": 0.5816666666666666,
+   "line": 0.7441666666666671
+  },
+  "B45": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.5816666666666666,
+   "line": 0.7441666666666671
+  },
+  "B452": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.5816666666666666,
+   "line": 0.7441666666666671
+  }
+ },
+ "snap 150° · run": {
+  "A": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "CARRY": 1,
+    "DRAG-BACK": 3
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8383333333333334
+  },
+  "B4": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8383333333333334
+  },
+  "B5": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "CARRY": 1,
+    "DRAG-BACK": 3
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8024999999999998
+  },
+  "B45": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8024999999999998
+  },
+  "B452": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8024999999999998
+  }
+ },
+ "snap 180° · run": {
+  "A": {
+   "hist": {
+    "CARRY": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.9299999999999997,
+   "line": 1.1758333333333333
+  },
+  "B4": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8458333333333332
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.9299999999999997,
+   "line": 1.1758333333333333
+  },
+  "B45": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8458333333333332
+  },
+  "B452": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.4791666666666665,
+   "line": 0.8458333333333332
+  }
+ },
+ "rapid L/R · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.7541666666666664
+  },
+  "B4": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 3,
+    "CARRY": 4,
+    "RONALDO CHOP": 1
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.793333333333333
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.7541666666666664
+  },
+  "B45": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 4,
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 2,
+    "RONALDO CHOP": 1
+   },
+   "contact": 0.10916666666666641,
+   "line": 0.793333333333333
+  },
+  "B452": {
+   "hist": {
+    "COMPACT INSIDE REDIRECT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.10916666666666641,
+   "line": 0.8933333333333326
+  }
+ },
+ "gradual rotation · run": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.2174999999999998,
+   "line": 0.0016666666666664831
+  }
+ },
+ "flowing carry · sprint": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  }
+ },
+ "small corrections · sprint": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.22999999999999998
+  },
+  "B4": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 2,
+    "CARRY": 6
+   },
+   "contact": 0.2841666666666667,
+   "line": 0.22999999999999998
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.22999999999999998
+  },
+  "B45": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.2141666666666664,
+   "line": 0.22999999999999998
+  },
+  "B452": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "CARRY": 7
+   },
+   "contact": 0.21333333333333337,
+   "line": 0.16749999999999998
+  }
+ },
+ "snap 45° · sprint": {
+  "A": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.5466666666666664
+  },
+  "B4": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 2,
+    "CARRY": 5,
+    "COMPACT INSIDE REDIRECT": 1
+   },
+   "contact": 0.2841666666666667,
+   "line": 0.5466666666666664
+  },
+  "B5": {
+   "hist": {
+    "CARRY": 8
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.5466666666666664
+  },
+  "B45": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 3,
+    "CARRY": 2,
+    "COMPACT INSIDE REDIRECT": 3
+   },
+   "contact": 0.20499999999999963,
+   "line": 0.5883333333333334
+  },
+  "B452": {
+   "hist": {
+    "COMPACT OUTSIDE REDIRECT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.1549999999999998,
+   "line": 0.5099999999999998
+  }
+ },
+ "snap 60° · sprint": {
+  "A": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.8641666666666667
+  },
+  "B4": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.6266666666666665,
+   "line": 0.7641666666666662
+  },
+  "B5": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.8641666666666667
+  },
+  "B45": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.5891666666666664,
+   "line": 0.7349999999999999
+  },
+  "B452": {
+   "hist": {
+    "OUTSIDE CUT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.3333333333333335,
+   "line": 0.6916666666666664
+  }
+ },
+ "snap 90° · sprint": {
+  "A": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.6799999999999997,
+   "line": 0.8591666666666664
+  },
+  "B4": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.6799999999999997,
+   "line": 0.8591666666666664
+  },
+  "B5": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.648333333333333,
+   "line": 0.8458333333333332
+  },
+  "B45": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.648333333333333,
+   "line": 0.8458333333333332
+  },
+  "B452": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.648333333333333,
+   "line": 0.8458333333333332
+  }
+ },
+ "snap 120° · sprint": {
+  "A": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.6858333333333335,
+   "line": 0.9650000000000003
+  },
+  "B4": {
+   "hist": {
+    "INSIDE HOOK": 6,
+    "RONALDO CHOP": 2
+   },
+   "contact": 0.6591666666666667,
+   "line": 1.083333333333333
+  },
+  "B5": {
+   "hist": {
+    "RONALDO CHOP": 8
+   },
+   "contact": 0.648333333333333,
+   "line": 0.9025000000000003
+  },
+  "B45": {
+   "hist": {
+    "INSIDE HOOK": 6,
+    "RONALDO CHOP": 2
+   },
+   "contact": 0.6416666666666666,
+   "line": 1.0225
+  },
+  "B452": {
+   "hist": {
+    "INSIDE HOOK": 6,
+    "RONALDO CHOP": 2
+   },
+   "contact": 0.6416666666666666,
+   "line": 1.0225
+  }
+ },
+ "snap 150° · sprint": {
+  "A": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.6591666666666667,
+   "line": 1.2299999999999995
+  },
+  "B4": {
+   "hist": {
+    "INSIDE HOOK": 4,
+    "DRAG-BACK": 4
+   },
+   "contact": 0.5391666666666666,
+   "line": 1.083333333333333
+  },
+  "B5": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.6216666666666666,
+   "line": 1.1925
+  },
+  "B45": {
+   "hist": {
+    "DRAG-BACK": 6,
+    "INSIDE HOOK": 2
+   },
+   "contact": 0.5216666666666665,
+   "line": 1.0966666666666667
+  },
+  "B452": {
+   "hist": {
+    "DRAG-BACK": 6,
+    "INSIDE HOOK": 2
+   },
+   "contact": 0.5216666666666665,
+   "line": 1.0966666666666667
+  }
+ },
+ "snap 180° · sprint": {
+  "A": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.5391666666666666,
+   "line": 1.1099999999999994
+  },
+  "B4": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.5391666666666666,
+   "line": 1.1099999999999994
+  },
+  "B5": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.5216666666666665,
+   "line": 1.0966666666666667
+  },
+  "B45": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.5216666666666665,
+   "line": 1.0966666666666667
+  },
+  "B452": {
+   "hist": {
+    "DRAG-BACK": 8
+   },
+   "contact": 0.5216666666666665,
+   "line": 1.0966666666666667
+  }
+ },
+ "rapid L/R · sprint": {
+  "A": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.2141666666666664,
+   "line": 0.5316666666666667
+  },
+  "B4": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.2141666666666664,
+   "line": 1.2508333333333335
+  },
+  "B5": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.2141666666666664,
+   "line": 2.008333333333333
+  },
+  "B45": {
+   "hist": {
+    "OUTSIDE CUT": 4,
+    "CARRY": 4
+   },
+   "contact": 0.2141666666666664,
+   "line": 1.6758333333333333
+  },
+  "B452": {
+   "hist": {
+    "OUTSIDE CUT": 3,
+    "CARRY": 5
+   },
+   "contact": 0.09416666666666673,
+   "line": 0.6299999999999999
+  }
+ },
+ "gradual rotation · sprint": {
+  "A": {
+   "hist": {
+    "OUTSIDE CUT": 5,
+    "CARRY": 3
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B4": {
+   "hist": {
+    "URGENT REACH": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B5": {
+   "hist": {
+    "OUTSIDE CUT": 6,
+    "CARRY": 2
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B45": {
+   "hist": {
+    "URGENT REACH": 7,
+    "OUTSIDE CUT": 1
+   },
+   "contact": 0.3341666666666665,
+   "line": 0.0016666666666664831
+  },
+  "B452": {
+   "hist": {
+    "OUTSIDE CUT": 1,
+    "COMPACT OUTSIDE REDIRECT": 1,
+    "URGENT REACH": 5,
+    "CARRY": 1
+   },
+   "contact": 0.2549999999999999,
+   "line": 0.0016666666666664831
+  }
+ }
+}

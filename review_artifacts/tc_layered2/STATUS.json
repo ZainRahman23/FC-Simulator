@@ -1,0 +1,27 @@
+{
+ "milestone": "TC-LAYERED-2 — B4 (generic effort turns + outcome-scored selection) and B5 (short entries / exits) developed on BASELINE-88573ef0 (owner, 21 Oct)",
+ "status": "PRESENTED for the owner's playtest — NOT frozen, NOT integrated",
+ "url": "http://127.0.0.1:8361/sandbox/visual/tc_layered2.html",
+ "baseline_url": "http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html",
+ "local_only": "the character is a real player's model — never publish",
+ "date": "2026-10-21",
+ "owner_decisions_applied": { "A": "approved foundation (immutable)", "B4": "develop", "B5": "develop", "B2": "optional toggle, not developed", "B1_B3_B6": "rejected — toggles off, in no preset" },
+ "all_off_equals_88573ef0": "345/345 runs identical to the locked engine",
+ "presets": ["A", "A + B4", "A + B5", "A + B4 + B5", "A + B4 + B5 + B2"],
+ "b4": {
+  "selection": "every candidate (carry, generic, named) scored on its predicted outcome: useful contact, ball line / speed after, body line / speed kept, next useful touch (ball accessibility), separation, protection — no angle fit, deterministic",
+  "physical_checks": ["named move's body vs its authored reference (> 1.35× cannot follow)", "no magic foot: generic swing ≤ 1.3 × natural (lunge 1.0 ×); set touch inside its swing"],
+  "vocabulary": ["COMPACT_INSIDE_REDIRECT", "COMPACT_OUTSIDE_REDIRECT", "GATHER", "URGENT_REACH (only when the ball escapes)", "BRAKING_TOUCH (≥ 135°)", "BRAKING_PIVOT"]
+ },
+ "b5_measured": {
+  "contact_to_control_s": { "A": "0.12–0.40", "B5": "0.06–0.14" },
+  "ownership_s": { "CHOP": [0.64, 0.46], "DRAG_BACK": [0.56, 0.38], "HOOK": [0.70, 0.39], "CRUYFF": [0.76, 0.49], "OUTSIDE_CUT": [0.26, 0.20] },
+  "entry": "quick step into techniques, later entry, plant entries when slow, no extra generic plant — outside cut −0.18 s, chop −0.05 s to contact, generic redirects −0.10 s with B4",
+  "verdict": "mostly faster exits; entry smaller and selective"
+ },
+ "named_moves_survive": { "RONALDO_CHOP": "8/8 run 95°, 8/8 sprint 90°", "CRUYFF": "6/8 jog 100° (A 2/8)", "HOOK": "8/8 run 130°", "DRAG_BACK": "8/8 sprint / run 180°", "OUTSIDE_CUT": "4/8 sprint 60°, 5/8 jog 90°" },
+ "technique_good_movement_insufficient": ["sprint 90° compact redirect (body can't follow: ball 53° off, 26 % speed kept) → chop", "sprint 120° chop needs ≈ 1.9× its body → hook", "sprint 150 / 180° braking + acceleration floor", "rapid L/R at sprint"],
+ "body_warnings": "contact-foot gaps at baseline level; foot jumps higher in rapid L/R (85 → 129 run), lower in sprint rotation (48 → 29); 88573ef0's own issues remain",
+ "attribute_ready": "CAPS = techCaps(dri): D99 ceiling only (vocabulary, lunge effort, entry slack / lateness, quick step, exit share)",
+ "decision_owner": "playtest"
+}

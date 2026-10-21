@@ -1,0 +1,177 @@
+{
+ "runs": [
+  {
+   "cfg": "baseline",
+   "config": "locked 88573ef0",
+   "determinism": true,
+   "hash": 2903585391,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.44,
+     "p99": 4.4,
+     "worst": 5.5
+    },
+    "frameP99": 33.4,
+    "replanWorst": 2.9
+   },
+   "session": "baseline_session.json"
+  },
+  {
+   "cfg": "A",
+   "config": "A (88573ef0)",
+   "determinism": true,
+   "hash": 1897938516,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.36,
+     "p99": 3.7,
+     "worst": 8.7
+    },
+    "frameP99": 33.4,
+    "replanWorst": 6.6
+   },
+   "session": "A_session.json"
+  },
+  {
+   "cfg": "B4",
+   "config": "A + B4",
+   "determinism": true,
+   "hash": 2903585391,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.58,
+     "p99": 4.4,
+     "worst": 10.3
+    },
+    "frameP99": 33.4,
+    "replanWorst": 9
+   },
+   "session": "B4_session.json"
+  },
+  {
+   "cfg": "B5",
+   "config": "A + B5",
+   "determinism": true,
+   "hash": 3863737557,
+   "contacts": 7,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.86,
+     "p99": 3.9,
+     "worst": 4.3
+    },
+    "frameP99": 33.4,
+    "replanWorst": 2.3
+   },
+   "session": "B5_session.json"
+  },
+  {
+   "cfg": "B45",
+   "config": "A + B4 + B5",
+   "determinism": true,
+   "hash": 2903585391,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 1.96,
+     "p99": 6.6,
+     "worst": 8.4
+    },
+    "frameP99": 33.4,
+    "replanWorst": 5.8
+   },
+   "session": "B45_session.json"
+  },
+  {
+   "cfg": "B452",
+   "config": "A + B4 + B5 + B2",
+   "determinism": true,
+   "hash": 1897938516,
+   "contacts": 8,
+   "missed": 0,
+   "actions": [
+    "3.03 RONALDO CHOP"
+   ],
+   "perf": {
+    "work": {
+     "avg": 2.29,
+     "p99": 6.7,
+     "worst": 13.2
+    },
+    "frameP99": 33.5,
+    "replanWorst": 10.4
+   },
+   "session": "B452_session.json"
+  }
+ ],
+ "chain": [
+  {
+   "target": "A",
+   "config": "A (88573ef0)",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 1819271820
+  },
+  {
+   "target": "B4",
+   "config": "A + B4",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 1819271820
+  },
+  {
+   "target": "B5",
+   "config": "A + B5",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2088595926
+  },
+  {
+   "target": "B45",
+   "config": "A + B4 + B5",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2405530409
+  },
+  {
+   "target": "B452",
+   "config": "A + B4 + B5 + B2",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 2405530409
+  },
+  {
+   "target": "baseline",
+   "config": "locked 88573ef0",
+   "replay": true,
+   "inputIdentical": true,
+   "hash": 1819271820
+  }
+ ],
+ "chainBackIdentical": true,
+ "logs": [],
+ "http": []
+}
