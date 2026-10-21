@@ -78,9 +78,10 @@ export class UnifiedSim extends PlaySim {
 // uncommitted future landing, but it cannot arbitrarily rewrite the leg's past / current trajectory" — applied to the plan itself)
 UnifiedSim.prototype.committed = function (cur, t) {
   const out = PlaySim.prototype.committed.call(this, cur, t); if (!this.L.support) return out;
-  // LANDING COMMITMENT: a foot in the air keeps its coming landing (its time; its place revised within bounds by gaitFrom)
+  // LANDING COMMITMENT: a foot in the air keeps its coming landing once it is within 0.25 s (its time; its place revised within bounds by
+  // gaitFrom) — earlier in the swing the landing is still the uncommitted future the intent may re-plan (0.40 s cost a step on every technique)
   for (const X of ["R", "L"]) { const L = cur.stances[X]; if (L.some((s) => s.t0 <= t + 1e-9 && s.t1 > t)) continue;
-    const nx = L.find((s) => s.t0 > t + 1e-9); if (!nx || nx.t0 - t > 0.40 || out.stances[X].some((s) => s.id === nx.id)) continue;
+    const nx = L.find((s) => s.t0 > t + 1e-9); if (!nx || nx.t0 - t > 0.25 || out.stances[X].some((s) => s.id === nx.id)) continue;
     out.stances[X].push(Object.assign({}, nx, { commit: true, revT: nx.revT != null ? nx.revT : cur.t0 })); out.stances[X].sort((a, b) => a.t0 - b.t0); }
   return out; };
 // where the gait would place a footfall of X at tt on this plan's path (the stride rule; for revising a committed landing toward the new path)
@@ -139,6 +140,10 @@ UnifiedSim.prototype.carryTouches = function (plan, keep, q, recover = false, sk
   const d = hyp(rx, ry), v = d / Math.max(DT, c.t - t0), lim = lift.t1 > this.t && c.t - lift.t1 < 0.12 ? 8.0 : Infinity;   // (only a foot still down, lifting < 0.12 s before)
   if (v <= lim) return out; (this._rej = this._rej || {})["carry swing"] = (this._rej["carry swing"] || 0) + 1;
   return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), c.F + (land.t0 - CARRY.touchBefore).toFixed(4)])); };
+// ═══ SUPPORT: THE URGENT REACH WITHIN THE BODY'S REACH — the lunge's contact box ends at 0.86 m ahead of the body (B4's 0.98 m is beyond the leg:
+// the drawn boot stopped 6 – 8 cm short of the ball at its authoritative contact); the rest of URG unchanged
+UnifiedSim.prototype.genericBuild = function (key, G, ...rest) { if (this.L.support && key === "URG") G = Object.assign({}, G, { box: { a: [G.box.a[0], Math.min(G.box.a[1], 0.86)], l: G.box.l }, nom: [Math.min(G.nom[0], 0.74), G.nom[1]] });
+  return PlaySim.prototype.genericBuild.call(this, key, G, ...rest); };
 // ═══ THE UNIFIED B4 SCORING (A99-C on): B4's outcome scoring (u_tc.js costB4, unchanged) + two terms of the unified prototype ═══════════════════
 // · ANALOG FIRST — a request ROTATING steadily (the stick turned, not snapped: over the last 0.2 s one direction, no step > 20° in a tick, faster
 //   than 45°/s) is a CURVE: the carry follows it at C's limits; a named move or a braking / lunging action (a snap's answers) pays for it, and

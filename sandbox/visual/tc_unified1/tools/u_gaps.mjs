@@ -6,10 +6,13 @@ import { ENV, makeSim, DT } from "./u_env.mjs";
 import { PlayBody } from "../u_body.js";
 import { presetLayers } from "../u_sim.js";
 import { request } from "../../agility99/cases.js";
-process.argv.push("--ball"); const { specs } = await import("./u_audit.mjs");
+process.argv.push("--ball"); const { specs: astra } = await import("./u_audit.mjs");
+// (--tests <substr>: the owner's report-card traces (u_tests.js TESTS) instead of Astra's set — the page's own stick input)
+const ti = process.argv.indexOf("--tests"), { TESTS, MODES: TM, reqOf } = await import("../u_tests.js");
+const specs = ti > 0 ? TESTS.filter((x) => x.name.includes(process.argv[ti + 1])).map((x) => ({ id: x.name, t0: x.changes[0], end: x.dur, fn: (t) => x, test: x })) : astra;
 const cfg = process.argv[2], env = { ...ENV, colliders: JSON.parse(fs.readFileSync(new URL("../../dribble1/d1_colliders.json", import.meta.url))) };
 for (const spec of specs) { const sim = makeSim("TL", { layers: presetLayers(cfg), ballOn: true }), body = new PlayBody(env, sim), n = Math.round(spec.end / DT);
-  for (let k = 0; k < n; k++) sim.step(request(k * DT < 0.2 ? null : spec.fn(k * DT), spec.mode));
+  for (let k = 0; k < n; k++) sim.step(spec.test ? reqOf(spec.test.f, k * DT, TM[spec.test.mode]) : request(k * DT < 0.2 ? null : spec.fn(k * DT), spec.mode));
   for (let k = Math.round(spec.t0 / DT); k <= sim.k; k++) body.pose(k * DT);
   for (const c of sim.contacts.filter((c) => c.t >= spec.t0 && !c.missed)) { const p = body.pose(c.t), g = p.gap?.[c.F]?.gap; if (!(g > 0.03)) continue; const f = p.feet[c.F], P = sim.planAt(c.t);
     const raw = body.rawAt(c.F, c.t, sim.planAt(Math.max(0, c.t - DT / 2)));

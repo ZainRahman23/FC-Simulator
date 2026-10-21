@@ -8,6 +8,7 @@ import { ENV, makeSim, DT } from "./u_env.mjs";
 import { PlayBody } from "../u_body.js";
 import { presetLayers } from "../u_sim.js";
 import { scenario, request } from "../../agility99/cases.js";
+import { DirectionBody } from "../../agility99/direction_body.js";
 const A = process.argv, opt = (k, d) => { const i = A.indexOf("--" + k); return i > 0 ? A[i + 1] : d; }, has = (k) => A.includes("--" + k);
 const env = { ...ENV, colliders: JSON.parse(fs.readFileSync(new URL("../../dribble1/d1_colliders.json", import.meta.url))) }, wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a)), dist = (a, b) => Math.hypot(...a.map((x, i) => x - b[i])), DEG = Math.PI / 180;
 const ballOn = has("ball"), quick = has("quick"), specs = [];
@@ -15,7 +16,8 @@ const ballOn = has("ball"), quick = has("quick"), specs = [];
 for (const mode of ballOn ? ["SPRINT"] : ["JOG", "RUN", "SPRINT"]) for (const phase of mode === "SPRINT" && !ballOn && !quick ? [0, 0.12, 0.24, 0.36] : [0, 0.24]) for (const sign of [1, -1]) {
   for (const a of ballOn ? [30, 90, 180] : quick ? [0, 45, 90, 180] : [0, 15, 30, 45, 60, 90, 120, 150, 180]) specs.push(scenario("snap", mode, a, phase, sign));
   for (const k of ballOn ? ["rapid", "repeat30", "circle-fast"] : quick ? ["rapid", "circle-fast", "stop"] : ["gradual", "ramp-fast", "repeat30", "rapid", "sequence", "circle", "circle-fast", "stop"]) specs.push(scenario(k, mode, 90, phase, sign)); }
-export function auditOne(cfg, spec) { const sim = makeSim("TL", { layers: presetLayers(cfg), ballOn }), body = new PlayBody(env, sim), n = Math.round(spec.end / DT);
+// (cfg "ASTRA": Astra's own delivered stack — AgilitySim A99-C + DirectionBody, the handoff's body — on the same scenarios and metrics)
+export function auditOne(cfg, spec) { const sim = cfg === "ASTRA" ? makeSim("ASTRA", { ballOn }) : makeSim("TL", { layers: presetLayers(cfg), ballOn }), body = cfg === "ASTRA" ? new DirectionBody(env, sim) : new PlayBody(env, sim), n = Math.round(spec.end / DT);
   for (let k = 0; k < n; k++) { const t = k * DT; sim.step(request(t < 0.2 ? null : spec.fn(t), spec.mode)); }
   const o = { id: spec.id, cfg, frames: 0, rootMax: 0, pelvisMinZ: 99, pelvisMaxZ: 0, footJumps: 0, maxFootStep: 0, intersectionFrames: 0, clearanceMin: 99, airFrames: 0, plantToeSlide: 0, supportSwitches: 0, contactCount: 0, contactOver3cm: 0, contactOver10cm: 0, contactGapMax: 0, gaps: [] }; let prev = null;
   for (let k = Math.round(spec.t0 / DT); k <= sim.k; k++) { const t = k * DT, s = sim.stateAt(t), p = body.pose(t), air = !p.feet.R.planted && !p.feet.L.planted; o.frames++;
