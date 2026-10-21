@@ -4,7 +4,7 @@
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
   A                0.49 (0.52)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    51 / 1          0.61 / 0.69    0  | 0.046 / 0.226        0.000 / 0.001 (0)            0     0     1      0     127  · heading error 0.8°
   B45              0.49 (0.52)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    51 / 1          0.61 / 0.69    0  | 0.046 / 0.226        0.000 / 0.000 (0)            0     0     1      0     127  · heading error 0.8°
-  FULL             0.48 (0.53)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    49 / 0          0.61 / 0.69    0  | 0.040 / 0.040        0.000 / 0.001 (0)            0     0     0      3     112  · heading error 1°
+  FULL             0.48 (0.53)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    49 / 0          0.61 / 0.69    0  | 0.040 / 0.040        0.000 / 0.001 (0)            0     0     0      0     115  · heading error 1°
 
 ■ small corrections · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -12,8 +12,8 @@
                    actions: OUTSIDE CUT R ×5
   B45              0.10 (0.43)  0.20 (0.33)   0.16 (0.38)  0.15 (0.36)   0.00 (0.00)    98 / 0          0.61 / 0.74    0  | 0.049 / 0.340        0.002 / 0.002 (0)            8     0    22      0     235
                    actions: COMPACT OUTSIDE REDIRECT ×10, GATHER ×10, COMPACT INSIDE REDIRECT ×6
-  FULL             0.09 (0.34)  0.17 (0.41)   0.15 (0.42)  0.15 (0.42)!1 0.00 (0.00)    93 / 0          0.61 / 0.88    0  | 0.040 / 0.040        0.003 / 0.011 (0)           12     2     0     24     204
-                   actions: GATHER ×12, COMPACT OUTSIDE REDIRECT ×12, COMPACT INSIDE REDIRECT ×3, OUTSIDE CUT R ×2
+  FULL             0.09 (0.34)  0.16 (0.36)   0.15 (0.40)  0.15 (0.34)!1 0.00 (0.00)    94 / 0          0.61 / 0.81    0  | 0.040 / 0.040        0.003 / 0.011 (0)            9     0     0      5     228
+                   actions: GATHER ×13, COMPACT OUTSIDE REDIRECT ×12, COMPACT INSIDE REDIRECT ×3, OUTSIDE CUT R ×1
 
 ■ snap 45° · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -21,8 +21,8 @@
                    actions: OUTSIDE CUT R ×1
   B45              0.10 (0.43)  0.10 (0.34)   0.18 (0.42)  0.25 (0.49)   0.00 (0.00)    33 / 0          0.59 / 0.70    0  | 0.063 / 0.346        0.000 / 0.001 (0)            2     0     7      0      89
                    actions: COMPACT INSIDE REDIRECT ×2, OUTSIDE CUT R ×1
-  FULL             0.13 (0.26)  0.31 (0.55)   0.34 (0.58)  0.37 (1.12)   0.00 (0.00)    28 / 0          0.60 / 0.69    0  | 0.040 / 0.040        0.001 / 0.003 (0)            0     1     0     13      65
-                   actions: COMPACT INSIDE REDIRECT ×3, OUTSIDE CUT R ×2, GATHER ×1, COMPACT OUTSIDE REDIRECT ×1
+  FULL             0.13 (0.26)  0.31 (0.55)   0.34 (0.58)  0.37 (0.60)   0.00 (0.00)    28 / 0          0.60 / 0.69    0  | 0.040 / 0.040        0.000 / 0.001 (0)            0     0     0      2      80
+                   actions: COMPACT INSIDE REDIRECT ×4, GATHER ×1, COMPACT OUTSIDE REDIRECT ×1
 
 ■ snap 60° · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -30,7 +30,7 @@
                    actions: OUTSIDE CUT R ×2
   B45              0.09 (0.43)  0.15 (0.34)   0.21 (0.41)  0.56 (0.58)   0.00 (0.00)    33 / 0          0.61 / 0.91    0  | 0.065 / 0.342        0.000 / 0.001 (0)            2     0     7      1      90
                    actions: COMPACT INSIDE REDIRECT ×2, OUTSIDE CUT R ×1
-  FULL             0.14 (0.51)  0.36 (0.48)   0.38 (0.58)  0.75 (1.18)   0.00 (0.00)    28 / 0          0.59 / 0.78    0  | 0.040 / 0.040        0.001 / 0.007 (0)            0     1     0      9      64
+  FULL             0.14 (0.51)  0.36 (0.48)   0.38 (0.58)  0.75 (1.18)   0.00 (0.00)    28 / 0          0.59 / 0.78    0  | 0.040 / 0.040        0.001 / 0.007 (0)            2     0     0      4      72
                    actions: COMPACT OUTSIDE REDIRECT ×2, OUTSIDE CUT R ×2, COMPACT INSIDE REDIRECT ×2, URGENT REACH ×2
 
 ■ snap 90° · jog
@@ -39,7 +39,7 @@
                    actions: OUTSIDE CUT R ×3, CRUYFF TURN R ×2
   B45              0.19 (0.54)  0.43 (0.67)   0.38 (0.62)  0.63 (0.85)   0.00 (0.00)    32 / 1          0.59 / 0.98    3  | 0.054 / 0.223        0.057 / 0.131 (2)           10     0    32      9      74
                    actions: OUTSIDE CUT R ×3, OUTSIDE CUT L ×2, COMPACT OUTSIDE REDIRECT ×1, COMPACT INSIDE REDIRECT ×1, CRUYFF TURN R ×1
-  FULL             0.13 (0.26)  0.40 (0.55)   0.36 (0.60)  0.52 (0.70)   0.00 (0.00)    30 / 2          0.56 / 0.89    0  | 0.033 / 0.040        0.000 / 0.009 (0)            6     4     0      9      69
+  FULL             0.13 (0.26)  0.40 (0.55)   0.36 (0.60)  0.52 (0.70)   0.00 (0.00)    30 / 2          0.56 / 0.89    0  | 0.033 / 0.040        0.000 / 0.009 (0)            6     0     0      4      76
                    actions: COMPACT INSIDE REDIRECT ×4, COMPACT OUTSIDE REDIRECT ×3, OUTSIDE CUT R ×1
 
 ■ snap 120° · jog
@@ -48,8 +48,8 @@
                    actions: INSIDE HOOK L ×2, CRUYFF TURN R ×2, OUTSIDE CUT L ×2
   B45              0.29 (0.67)  0.50 (0.89)   0.50 (0.88)  0.79 (1.17)   0.00 (0.00)    33 / 1          0.56 / 0.85    0  | 0.057 / 0.333        0.057 / 0.229 (11)            2     0    21     11      60
                    actions: INSIDE HOOK L ×4, CRUYFF TURN R ×3, INSIDE HOOK R ×1
-  FULL             0.19 (0.64)  0.63 (0.95)   0.62 (0.93)  0.90 (1.18)   0.00 (0.00)    30 / 3          0.56 / 1.17    0  | 0.040 / 0.040        0.002 / 0.395 (3)            1     2     0     12      61
-                   actions: BRAKING PIVOT ×7, CRUYFF TURN L ×2, INSIDE HOOK L ×1, INSIDE HOOK R ×1
+  FULL             0.19 (0.41)  0.59 (0.95)   0.62 (0.93)  0.78 (1.18)   0.00 (0.00)    32 / 4          0.56 / 1.17    0  | 0.040 / 0.040        0.001 / 0.396 (2)            1     0     0      5      76
+                   actions: BRAKING PIVOT ×7, CRUYFF TURN L ×2, INSIDE HOOK L ×1
 
 ■ snap 150° · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -57,8 +57,8 @@
                    actions: DRAG-BACK R ×3, INSIDE HOOK L ×2, DRAG-BACK L ×2, CRUYFF TURN R ×1
   B45              0.03 (0.29)  0.10 (0.50)   0.19 (0.68)  0.77 (0.97)   0.00 (0.00)    31 / 1          0.54 / 0.92    0  | 0.071 / 0.176        0.057 / 0.265 (2)            6     0    11      1      68
                    actions: BRAKING TOUCH ×6, DRAG-BACK R ×1, CRUYFF TURN R ×1
-  FULL             0.13 (0.20)  0.31 (0.45)   0.44 (0.66)  0.69 (0.92)   0.00 (0.00)    34 / 1          0.57 / 0.73    0  | 0.040 / 0.040        0.004 / 0.009 (0)            9     0     0     10      63
-                   actions: BRAKING TOUCH ×8, DRAG-BACK R ×1
+  FULL             0.13 (0.20)  0.22 (0.45)   0.39 (0.66)  0.59 (0.92)   0.00 (0.00)    34 / 1          0.57 / 0.73    0  | 0.040 / 0.040        0.004 / 0.009 (0)            7     0     0      1      73
+                   actions: BRAKING TOUCH ×7, DRAG-BACK R ×1
 
 ■ snap 180° · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -66,8 +66,8 @@
                    actions: DRAG-BACK R ×4, DRAG-BACK L ×4
   B45              0.18 (0.24)  0.10 (0.45)     —  (  — )  0.56 (0.68)   0.00 (0.00)    36 / 2          0.58 / 0.81    0  | 0.087 / 0.315        0.002 / 0.056 (2)            6     0    26      0      78
                    actions: BRAKING TOUCH ×6, DRAG-BACK R ×2
-  FULL             0.48 (0.60)  0.68 (0.80)   0.54 (0.54)  0.92 (1.04)   0.00 (0.00)    38 / 0          0.54 / 0.87    0  | 0.033 / 0.037        0.001 / 0.003 (0)           16     0     0      6      52
-                   actions: DRAG-BACK R ×6, BRAKING TOUCH ×2
+  FULL             0.20 (0.48)  0.45 (0.68)   0.54 (0.54)  0.77 (0.92)   0.00 (0.00)    40 / 0          0.54 / 0.87    0  | 0.033 / 0.037        0.001 / 0.003 (0)           20     0     0      0      62
+                   actions: DRAG-BACK R ×4, BRAKING TOUCH ×4
 
 ■ rapid L/R · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -75,8 +75,8 @@
                    actions: OUTSIDE CUT R ×4, CRUYFF TURN R ×4, RONALDO CHOP L ×2, CRUYFF TURN L ×2, RONALDO CHOP R ×1, INSIDE HOOK R ×1
   B45              0.09 (0.31)  0.17 (1.07)   0.14 (0.35)  0.38 (1.32)   0.00 (0.00)    72 / 0          0.53 / 0.84    1  | 0.123 / 0.428        0.030 / 0.059 (4)           16     0    85      9     150
                    actions: BRAKING PIVOT ×11, COMPACT INSIDE REDIRECT ×8, COMPACT OUTSIDE REDIRECT ×7, CRUYFF TURN R ×6, CRUYFF TURN L ×6, OUTSIDE CUT R ×3, RONALDO CHOP L ×1, INSIDE HOOK L ×1
-  FULL             0.13 (0.14)  0.34 (0.88)   0.06 (0.27)  0.37 (0.73)   0.00 (0.00)    77 / 0          0.50 / 0.78    0  | 0.040 / 0.040        0.003 / 0.030 (0)           15    10     3     38     106
-                   actions: BRAKING PIVOT ×14, COMPACT INSIDE REDIRECT ×5, COMPACT OUTSIDE REDIRECT ×4, CRUYFF TURN R ×3, RONALDO CHOP L ×2, GATHER ×2, OUTSIDE CUT R ×1, CRUYFF TURN L ×1
+  FULL             0.13 (0.14)  0.28 (0.63)   0.08 (0.33)  0.19 (0.73)   0.00 (0.00)    76 / 0          0.50 / 0.78    0  | 0.040 / 0.040        0.004 / 0.042 (1)           20     0     0     31     115
+                   actions: BRAKING PIVOT ×12, COMPACT OUTSIDE REDIRECT ×5, COMPACT INSIDE REDIRECT ×5, CRUYFF TURN R ×4, RONALDO CHOP L ×2, GATHER ×2, OUTSIDE CUT R ×1, INSIDE HOOK R ×1
 
 ■ gradual rotation · jog
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -84,14 +84,14 @@
                    actions: OUTSIDE CUT L ×1, RONALDO CHOP R ×1
   B45              0.22 (0.29)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    50 / 0          0.56 / 0.76    0  | 0.060 / 0.322        0.001 / 0.021 (0)           11     0    34      3     126  · heading error 9.6°
                    actions: COMPACT OUTSIDE REDIRECT ×1, GATHER ×1, OUTSIDE CUT L ×1, BRAKING PIVOT ×1
-  FULL             0.15 (0.22)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    54 / 0          0.59 / 0.75    0  | 0.040 / 0.040        0.001 / 0.012 (0)            0     0     0     10     128  · heading error 12°
+  FULL             0.15 (0.22)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    54 / 0          0.59 / 0.75    0  | 0.040 / 0.040        0.001 / 0.012 (0)            0     0     0      1     134  · heading error 12°
                    actions: GATHER ×3, COMPACT INSIDE REDIRECT ×1
 
 ■ flowing carry · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
   A                0.40 (0.45)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    65 / 4          0.63 / 0.72    0  | 0.034 / 0.235        0.000 / 0.001 (0)            1     0     1      0     236  · heading error 0.9°
   B45              0.40 (0.45)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    65 / 4          0.63 / 0.72    0  | 0.034 / 0.235        0.000 / 0.001 (0)            1     0     1      0     236  · heading error 0.9°
-  FULL             0.40 (0.44)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    66 / 4          0.62 / 0.72    0  | 0.025 / 0.035        0.000 / 0.001 (0)            0     0     0     10     217  · heading error 0.8°
+  FULL             0.40 (0.44)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    66 / 4          0.62 / 0.72    0  | 0.025 / 0.035        0.000 / 0.001 (0)            0     0     0      2     229  · heading error 0.8°
 
 ■ small corrections · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -99,15 +99,15 @@
                    actions: OUTSIDE CUT L ×1
   B45              0.10 (0.31)  0.16 (0.44)!1 0.13 (0.50)  0.13 (0.48)!2 0.00 (0.00)    97 / 0          0.61 / 0.75    0  | 0.047 / 0.343        0.001 / 0.001 (0)            9     0    51      3     380
                    actions: COMPACT OUTSIDE REDIRECT ×14, COMPACT INSIDE REDIRECT ×2
-  FULL             0.10 (0.25)  0.16 (0.45)   0.18 (0.48)  0.17 (0.36)!4 0.00 (0.00)    96 / 0          0.61 / 0.76    0  | 0.023 / 0.040        0.001 / 0.005 (0)            2     0     0     21     347
-                   actions: COMPACT OUTSIDE REDIRECT ×14, COMPACT INSIDE REDIRECT ×4, OUTSIDE CUT R ×1
+  FULL             0.10 (0.25)  0.17 (0.50)   0.19 (0.53)  0.17 (0.38)!5 0.00 (0.00)   101 / 0          0.61 / 0.76    0  | 0.023 / 0.040        0.001 / 0.002 (0)            5     1     0      7     361
+                   actions: COMPACT OUTSIDE REDIRECT ×16, COMPACT INSIDE REDIRECT ×5, OUTSIDE CUT R ×1
 
 ■ snap 45° · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
   A                0.31 (0.71)  0.29 (0.61)   0.35 (0.74)  0.47 (0.86)   0.00 (0.00)    31 / 0          0.61 / 0.75    0  | 0.040 / 0.283        0.000 / 0.000 (0)            0     0     1      0     133
   B45              0.07 (0.21)  0.11 (0.41)   0.24 (0.54)  0.36 (0.67)   0.00 (0.00)    33 / 0          0.61 / 0.78    0  | 0.040 / 0.250        0.000 / 0.001 (0)            1     0     5      1     135
                    actions: COMPACT INSIDE REDIRECT ×5, COMPACT OUTSIDE REDIRECT ×1
-  FULL             0.09 (0.24)  0.11 (0.51)   0.15 (0.55)  0.18 (0.57)   0.00 (0.00)    33 / 0          0.61 / 0.68    0  | 0.024 / 0.038        0.000 / 0.000 (0)            0     0     0     16     114
+  FULL             0.08 (0.24)  0.11 (0.51)   0.15 (0.55)  0.18 (0.57)   0.00 (0.00)    33 / 0          0.61 / 0.68    0  | 0.024 / 0.038        0.000 / 0.000 (0)            0     0     0      6     124
                    actions: COMPACT INSIDE REDIRECT ×4, COMPACT OUTSIDE REDIRECT ×2
 
 ■ snap 60° · run
@@ -115,7 +115,7 @@
   A                0.42 (0.69)  0.34 (0.61)   0.45 (0.73)  0.70 (0.97)   0.00 (0.00)    31 / 0          0.62 / 0.83    0  | 0.044 / 0.261        0.000 / 0.001 (0)            0     0     3      0     138
   B45              0.07 (0.22)  0.11 (0.45)   0.23 (0.44)  0.52 (0.59)   0.00 (0.00)    36 / 1          0.61 / 0.85    0  | 0.044 / 0.266        0.054 / 0.526 (3)            1     0    15      2     134
                    actions: COMPACT INSIDE REDIRECT ×4, COMPACT OUTSIDE REDIRECT ×1, RONALDO CHOP R ×1
-  FULL             0.07 (0.24)  0.11 (0.51)   0.18 (0.57)  0.23 (0.62)   0.00 (0.00)    36 / 0          0.60 / 0.67    0  | 0.023 / 0.040        0.000 / 0.001 (0)            3     0     0     14     121
+  FULL             0.07 (0.24)  0.11 (0.51)   0.18 (0.57)  0.23 (0.62)   0.00 (0.00)    36 / 0          0.60 / 0.67    0  | 0.023 / 0.040        0.000 / 0.001 (0)            4     0     0      6     129
                    actions: COMPACT INSIDE REDIRECT ×5, COMPACT OUTSIDE REDIRECT ×2
 
 ■ snap 90° · run
@@ -124,7 +124,7 @@
                    actions: RONALDO CHOP R ×4, RONALDO CHOP L ×2
   B45              0.26 (0.39)  0.50 (0.63)   0.48 (0.60)  0.65 (0.77)   0.00 (0.00)    44 / 1          0.57 / 0.85    0  | 0.033 / 0.345        0.059 / 0.617 (12)            5     0    57      7     110
                    actions: RONALDO CHOP R ×4, RONALDO CHOP L ×2, COMPACT OUTSIDE REDIRECT ×2
-  FULL             0.11 (0.36)  0.30 (0.74)   0.37 (0.81)  0.48 (0.92)   0.00 (0.00)    33 / 2          0.58 / 0.71    0  | 0.020 / 0.029        0.000 / 0.019 (0)            5     0     0      7     121
+  FULL             0.11 (0.36)  0.30 (0.74)   0.37 (0.81)  0.48 (0.92)   0.00 (0.00)    33 / 2          0.58 / 0.71    0  | 0.020 / 0.029        0.000 / 0.019 (0)            6     0     0      2     123
                    actions: COMPACT OUTSIDE REDIRECT ×4, COMPACT INSIDE REDIRECT ×4
 
 ■ snap 120° · run
@@ -133,7 +133,7 @@
                    actions: RONALDO CHOP R ×4, RONALDO CHOP L ×3
   B45              0.34 (0.58)  0.58 (0.82)   0.56 (0.80)  0.74 (0.98)   0.00 (0.00)    38 / 1          0.53 / 0.93    0  | 0.030 / 0.345        0.059 / 0.116 (14)            8     0    72      9     112
                    actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
-  FULL             0.47 (0.67)  0.71 (0.90)   0.69 (0.88)  0.87 (1.06)   0.00 (0.00)    36 / 0          0.53 / 1.15    0  | 0.021 / 0.037        0.021 / 0.265 (8)            0    20     0     19      92
+  FULL             0.47 (0.67)  0.71 (0.90)   0.69 (0.88)  0.87 (1.06)   0.00 (0.00)    36 / 0          0.53 / 1.15    0  | 0.021 / 0.037        0.021 / 0.265 (8)            0     0     0     17      94
                    actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
 
 ■ snap 150° · run
@@ -142,8 +142,8 @@
                    actions: INSIDE HOOK R ×3, DRAG-BACK R ×2, INSIDE HOOK L ×1, DRAG-BACK L ×1
   B45              0.27 (0.28)  0.48 (0.48)   0.47 (0.51)  0.80 (0.85)   0.00 (0.00)    41 / 2          0.57 / 0.91    0  | 0.046 / 0.333        0.057 / 0.331 (10)            7     0    24      6      84
                    actions: DRAG-BACK R ×3, INSIDE HOOK R ×3, INSIDE HOOK L ×1, DRAG-BACK L ×1
-  FULL             0.28 (0.40)  0.49 (0.62)   0.59 (0.81)  0.88 (1.00)   0.00 (0.00)    38 / 0          0.57 / 0.96    0  | 0.040 / 0.040        0.024 / 0.389 (2)           13    10     0      6      79
-                   actions: DRAG-BACK R ×4, BRAKING TOUCH ×2, CRUYFF TURN L ×1, INSIDE HOOK R ×1, DRAG-BACK L ×1
+  FULL             0.28 (0.40)  0.49 (0.61)   0.51 (0.81)  0.88 (1.00)   0.00 (0.00)    39 / 0          0.57 / 0.96    0  | 0.040 / 0.040        0.001 / 0.086 (1)           10     0     0      3      86
+                   actions: DRAG-BACK R ×4, BRAKING TOUCH ×2, INSIDE HOOK R ×1, DRAG-BACK L ×1
 
 ■ snap 180° · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -151,8 +151,8 @@
                    actions: DRAG-BACK R ×4
   B45              0.27 (0.28)  0.48 (0.48)   0.50 (0.50)  0.85 (0.85)   0.00 (0.00)    44 / 2          0.58 / 0.87    0  | 0.051 / 0.333        0.002 / 0.056 (6)           18     0    22      2     100
                    actions: DRAG-BACK R ×6, DRAG-BACK L ×2
-  FULL             0.27 (0.28)  0.49 (0.56)   0.59 (0.59)  0.88 (0.96)   0.00 (0.00)    42 / 0          0.58 / 0.84    0  | 0.031 / 0.040        0.010 / 0.035 (0)           16     8     0     10      80
-                   actions: BRAKING TOUCH ×4, DRAG-BACK R ×4, DRAG-BACK L ×2
+  FULL             0.27 (0.28)  0.48 (0.49)   0.57 (0.57)  0.88 (0.88)   0.00 (0.00)    40 / 0          0.57 / 0.84    0  | 0.031 / 0.040        0.001 / 0.035 (0)           14     0     0      2      80
+                   actions: BRAKING TOUCH ×4, DRAG-BACK R ×4
 
 ■ rapid L/R · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -160,14 +160,14 @@
                    actions: INSIDE HOOK R ×4, RONALDO CHOP R ×3, RONALDO CHOP L ×3
   B45              0.07 (0.22)  0.51 (1.69)   0.12 (0.67)  0.33 (1.22)!1 0.00 (0.00)    67 / 1          0.52 / 1.30    2  | 0.128 / 0.576        0.043 / 0.059 (6)           26     0   129     19     170
                    actions: COMPACT INSIDE REDIRECT ×11, RONALDO CHOP L ×6, RONALDO CHOP R ×5, COMPACT OUTSIDE REDIRECT ×3, CRUYFF TURN L ×2, INSIDE HOOK R ×2, OUTSIDE CUT L ×1, BRAKING PIVOT ×1
-  FULL             0.07 (0.24)  0.20 (0.37)   0.16 (0.34)  0.30 (0.50)   0.00 (0.00)    86 / 0          0.51 / 0.90    0  | 0.033 / 0.040        0.007 / 0.049 (2)           25    19     1     37     177
-                   actions: COMPACT INSIDE REDIRECT ×18, RONALDO CHOP R ×8, COMPACT OUTSIDE REDIRECT ×8, RONALDO CHOP L ×5, BRAKING TOUCH ×2, CRUYFF TURN L ×1, CRUYFF TURN R ×1
+  FULL             0.07 (0.24)  0.28 (0.37)   0.16 (0.34)  0.38 (0.50)   0.00 (0.00)    85 / 1          0.51 / 1.13    0  | 0.038 / 0.040        0.009 / 0.049 (1)           23     0     0     30     192
+                   actions: COMPACT INSIDE REDIRECT ×20, RONALDO CHOP R ×7, COMPACT OUTSIDE REDIRECT ×7, RONALDO CHOP L ×5, BRAKING TOUCH ×2, BRAKING PIVOT ×1, CRUYFF TURN R ×1
 
 ■ gradual rotation · run
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
   A                0.18 (0.20)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    55 / 0          0.58 / 0.73    0  | 0.062 / 0.287        0.000 / 0.001 (0)            2     0    34      1     218  · heading error 10.6°
   B45              0.18 (0.20)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    55 / 0          0.58 / 0.73    0  | 0.062 / 0.306        0.000 / 0.001 (0)            2     0    34      1     219  · heading error 10.6°
-  FULL             0.17 (0.18)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    56 / 0          0.60 / 0.78    0  | 0.027 / 0.040        0.001 / 0.003 (0)            3     1     0     11     192  · heading error 11.2°
+  FULL             0.17 (0.18)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    56 / 0          0.60 / 0.78    0  | 0.027 / 0.040        0.001 / 0.003 (0)            4     0     0      5     197  · heading error 11.2°
                    actions: COMPACT OUTSIDE REDIRECT ×2
 
 ■ flowing carry · sprint
@@ -182,7 +182,7 @@
                    actions: OUTSIDE CUT R ×1
   B45              0.14 (0.38)  0.24 (0.48)!8 0.29 (0.57)  0.17 (0.48)!13 0.00 (0.00)    76 / 0          0.78 / 1.13    0  | 0.027 / 0.455        0.002 / 0.012 (0)           16     0    23      7     366
                    actions: COMPACT OUTSIDE REDIRECT ×9, URGENT REACH ×8, COMPACT INSIDE REDIRECT ×5
-  FULL             0.15 (0.50)  0.24 (0.59)!6 0.21 (0.57)  0.18 (0.51)!13 0.00 (0.00)    82 / 2          0.75 / 0.93    0  | 0.010 / 0.026        0.033 / 0.056 (4)            3     1     0     18     422
+  FULL             0.15 (0.50)  0.24 (0.59)!6 0.21 (0.57)  0.18 (0.51)!13 0.00 (0.00)    82 / 2          0.75 / 0.93    0  | 0.010 / 0.026        0.033 / 0.056 (4)            1     0     0      8     434
                    actions: COMPACT OUTSIDE REDIRECT ×11, URGENT REACH ×9, COMPACT INSIDE REDIRECT ×6, OUTSIDE CUT L ×1
 
 ■ snap 45° · sprint
@@ -190,7 +190,7 @@
   A                0.26 (0.38)  0.33 (0.45)   0.35 (0.48)  0.55 (0.67)   0.00 (0.00)    26 / 0          0.79 / 1.13    0  | 0.029 / 0.185        0.002 / 0.007 (0)            3     0     5      0     147
   B45              0.10 (0.17)  0.20 (0.32)   0.40 (0.52)  0.59 (0.71)   0.00 (0.00)    27 / 3          0.79 / 1.13    0  | 0.034 / 0.164        0.000 / 0.001 (0)            6     0     8      0     141
                    actions: COMPACT OUTSIDE REDIRECT ×3, COMPACT INSIDE REDIRECT ×3
-  FULL             0.15 (0.17)  0.28 (0.35)   0.33 (0.40)  0.35 (0.43)   0.00 (0.00)    27 / 3          0.77 / 0.92    0  | 0.010 / 0.027        0.000 / 0.018 (0)            0     0     0      9     151
+  FULL             0.15 (0.17)  0.28 (0.35)   0.33 (0.40)  0.35 (0.43)   0.00 (0.00)    27 / 3          0.77 / 0.92    0  | 0.010 / 0.027        0.000 / 0.018 (0)            0     0     0      0     160
                    actions: COMPACT OUTSIDE REDIRECT ×3, COMPACT INSIDE REDIRECT ×3
 
 ■ snap 60° · sprint
@@ -199,7 +199,7 @@
                    actions: OUTSIDE CUT R ×3, OUTSIDE CUT L ×1
   B45              0.32 (0.59)  0.59 (0.83)   0.57 (0.81)  0.73 (0.98)   0.00 (0.00)    30 / 0          0.78 / 1.37    0  | 0.131 / 0.472        0.004 / 0.030 (0)           13     0    30      5     136
                    actions: OUTSIDE CUT R ×3, OUTSIDE CUT L ×1
-  FULL             0.15 (0.17)  0.28 (0.35)   0.34 (0.42)  0.40 (0.48)   0.00 (0.00)    29 / 0          0.78 / 0.98    0  | 0.012 / 0.025        0.000 / 0.074 (2)            4     0     0      2     158
+  FULL             0.15 (0.17)  0.28 (0.35)   0.34 (0.42)  0.40 (0.48)   0.00 (0.00)    29 / 0          0.78 / 0.98    0  | 0.012 / 0.025        0.000 / 0.074 (2)            3     0     0      0     160
                    actions: COMPACT OUTSIDE REDIRECT ×3, COMPACT INSIDE REDIRECT ×3
 
 ■ snap 90° · sprint
@@ -208,7 +208,7 @@
                    actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
   B45              0.39 (0.51)  0.65 (0.77)   0.63 (0.75)  0.85 (1.02)   0.00 (0.00)    32 / 0          0.78 / 1.68    0  | 0.144 / 0.436        0.054 / 0.241 (13)            2     0    69     18     121
                    actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
-  FULL             0.16 (0.33)  0.33 (0.58)   0.41 (0.56)  0.53 (0.76)   0.00 (0.00)    29 / 0          0.79 / 1.74    0  | 0.017 / 0.024        0.036 / 0.246 (1)            2     3     0      8     153
+  FULL             0.16 (0.33)  0.33 (0.58)   0.41 (0.56)  0.53 (0.76)   0.00 (0.00)    29 / 0          0.79 / 1.74    0  | 0.017 / 0.024        0.036 / 0.246 (1)            2     2     2      8     153
                    actions: COMPACT INSIDE REDIRECT ×5, COMPACT OUTSIDE REDIRECT ×3, RONALDO CHOP L ×1
 
 ■ snap 120° · sprint
@@ -217,7 +217,7 @@
                    actions: RONALDO CHOP L ×4, RONALDO CHOP R ×4
   B45              0.41 (0.53)  0.64 (0.77)   0.63 (0.75)  1.02 (1.19)   0.00 (0.00)    36 / 0          0.58 / 1.31    0  | 0.151 / 0.421        0.055 / 0.253 (13)            0     0    55     12     121
                    actions: INSIDE HOOK R ×4, INSIDE HOOK L ×2, RONALDO CHOP L ×2
-  FULL             0.47 (0.61)  0.71 (0.83)   0.70 (0.82)  1.07 (1.28)   0.00 (0.00)    33 / 1          0.53 / 1.40    0  | 0.020 / 0.030        0.085 / 0.316 (10)            3    13     0     22      87
+  FULL             0.47 (0.61)  0.71 (0.83)   0.70 (0.82)  1.07 (1.28)   0.00 (0.00)    33 / 1          0.53 / 1.40    0  | 0.020 / 0.030        0.085 / 0.316 (10)            3     2     0     21      88
                    actions: CRUYFF TURN R ×4, CRUYFF TURN L ×2, RONALDO CHOP L ×2
 
 ■ snap 150° · sprint
@@ -226,7 +226,7 @@
                    actions: DRAG-BACK R ×8
   B45              0.32 (0.54)  0.52 (0.74)   0.55 (0.77)  1.10 (1.31)   0.00 (0.00)    41 / 0          0.65 / 1.24    0  | 0.189 / 0.430        0.045 / 0.328 (8)            8     0    54      4     113
                    actions: DRAG-BACK R ×4, DRAG-BACK L ×2, INSIDE HOOK R ×2
-  FULL             0.35 (0.57)  0.56 (0.77)   0.70 (0.80)  1.16 (1.37)   0.00 (0.00)    39 / 0          0.62 / 0.97    0  | 0.029 / 0.040        0.003 / 0.079 (2)           10    11     0      4      78
+  FULL             0.35 (0.57)  0.56 (0.77)   0.70 (0.80)  1.16 (1.37)   0.00 (0.00)    39 / 0          0.62 / 0.97    0  | 0.029 / 0.040        0.003 / 0.079 (2)           10     3     0      2      80
                    actions: DRAG-BACK R ×6, DRAG-BACK L ×2
 
 ■ snap 180° · sprint
@@ -235,7 +235,7 @@
                    actions: DRAG-BACK L ×4, DRAG-BACK R ×4
   B45              0.32 (0.44)  0.52 (0.64)   0.66 (0.66)  1.10 (1.22)   0.00 (0.00)    42 / 0          0.76 / 1.22    0  | 0.189 / 0.430        0.001 / 0.049 (6)           18     0    38      4     110
                    actions: DRAG-BACK L ×4, DRAG-BACK R ×4
-  FULL             0.35 (0.47)  0.56 (0.67)   0.69 (0.69)  1.19 (1.30)   0.00 (0.00)    44 / 0          0.66 / 1.24    0  | 0.029 / 0.040        0.017 / 0.079 (4)           10    10     0     10      96
+  FULL             0.35 (0.47)  0.56 (0.67)   0.69 (0.69)  1.19 (1.30)   0.00 (0.00)    44 / 0          0.66 / 1.24    0  | 0.029 / 0.040        0.017 / 0.079 (4)           10     2     0      4     106
                    actions: DRAG-BACK L ×4, DRAG-BACK R ×4
 
 ■ rapid L/R · sprint
@@ -244,8 +244,8 @@
                    actions: RONALDO CHOP L ×5, OUTSIDE CUT R ×4, INSIDE HOOK R ×2, RONALDO CHOP R ×2, CRUYFF TURN R ×1, OUTSIDE CUT L ×1, INSIDE HOOK L ×1
   B45              0.13 (0.32)  0.17 (1.56)   0.17 (0.34)  0.43 (0.89)!1 0.00 (0.00)    68 / 3          0.61 / 1.71    4  | 0.147 / 0.482        0.008 / 0.052 (3)           20     0   117     16     224
                    actions: RONALDO CHOP L ×5, COMPACT INSIDE REDIRECT ×5, OUTSIDE CUT R ×4, OUTSIDE CUT L ×4, INSIDE HOOK R ×3, RONALDO CHOP R ×2, COMPACT OUTSIDE REDIRECT ×2, URGENT REACH ×1
-  FULL             0.15 (0.17)  0.18 (0.41)   0.17 (0.34)  0.38 (0.45)   0.00 (0.00)    70 / 6          0.64 / 1.28    1  | 0.040 / 0.040        0.005 / 0.051 (2)           22    13     0     26     215
-                   actions: COMPACT OUTSIDE REDIRECT ×10, COMPACT INSIDE REDIRECT ×7, RONALDO CHOP L ×4, RONALDO CHOP R ×4, CRUYFF TURN R ×3, CRUYFF TURN L ×2, BRAKING PIVOT ×2, GATHER ×1
+  FULL             0.15 (0.17)  0.18 (0.41)   0.17 (0.34)  0.34 (0.44)   0.00 (0.00)    70 / 6          0.64 / 1.28    1  | 0.040 / 0.040        0.006 / 0.051 (2)           23     3     0     20     226
+                   actions: COMPACT OUTSIDE REDIRECT ×10, COMPACT INSIDE REDIRECT ×8, RONALDO CHOP L ×4, RONALDO CHOP R ×4, CRUYFF TURN R ×3, BRAKING PIVOT ×3, CRUYFF TURN L ×2
 
 ■ gradual rotation · sprint
   config           visible      contact      heading      line         lock         touches/redundant  sep med/max  LOST | root↔display p95/max  contact gap p95/max (>4 cm)  legs slides jumps unsupported pulled
@@ -253,7 +253,7 @@
                    actions: OUTSIDE CUT R ×3, OUTSIDE CUT L ×3
   B45              0.17 (0.17)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    61 / 0          0.80 / 1.07    0  | 0.026 / 0.489        0.012 / 0.014 (0)           19     0    29      9     200  · heading error 14.1°
                    actions: URGENT REACH ×12, OUTSIDE CUT L ×1
-  FULL             0.16 (0.22)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    49 / 0          0.77 / 0.99    0  | 0.013 / 0.029        0.042 / 0.062 (4)            0     1     1      6     240  · heading error 15.4°
+  FULL             0.16 (0.22)    —  (  — )     —  (  — )    —  (  — )   0.00 (0.00)    49 / 0          0.77 / 0.99    0  | 0.013 / 0.029        0.042 / 0.062 (4)            0     0     1      4     244  · heading error 15.4°
                    actions: COMPACT OUTSIDE REDIRECT ×4, COMPACT INSIDE REDIRECT ×4, URGENT REACH ×2
 
-(A, B45, FULL: 71.1 s)
+(A, B45, FULL: 59.0 s)

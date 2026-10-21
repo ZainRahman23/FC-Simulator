@@ -28,7 +28,7 @@ The locked BASELINE-88573ef0 page is untouched, and so is Astra's `agility99.htm
 - Each playtest case is fed every 240 Hz tick from its trace, exactly as in node; live stick input is read once per frame.
 - Node ≡ browser is bit-identical.
 - The same-input chain A → FULL replays identical input and returns to the original hash.
-- Frame work p99 is 2–8 ms (worst 15 ms on a re-plan).
+- Frame work p99 is 3–9 ms (worst 22.5 ms on a re-plan).
 
 Evidence: `evidence/browser/`.
 
@@ -64,15 +64,15 @@ Steady straight running, 3–7 s (`evidence/straight_run_look.txt`):
 | | pelvis height mean (range) | knee stance / swing | swing peak | posture vs 88573ef0 (every joint relative to the pelvis, phase-aligned) |
 |---|---|---|---|---|
 | Run, **88573ef0** | 0.886 m (0.822–0.931) | 62° / 111° | 0.453 m | — |
-| Run, **FULL** | **0.884 m** (0.799–0.931) | 68° / 120° | 0.477 m | mean **1.6 cm** |
+| Run, **FULL** | **0.882 m** (0.798–0.931) | 62° / 112° | 0.453 m | mean **0.3 cm** |
 | Run, Astra's body | 0.830 m (0.780–0.875) | 43° / 102° | 0.352 m | — |
 | Sprint, **88573ef0** | 0.890 m (0.830–0.937) | 60° / 129° | 0.612 m | — |
-| Sprint, **FULL** | **0.888 m** (0.784–0.937) | 71° / 134° | 0.612 m | mean **0.8 cm** |
+| Sprint, **FULL** | **0.888 m** (0.784–0.937) | 60° / 129° | 0.612 m | mean **0.8 cm** |
 | Sprint, Astra's body | 0.823 m | 44° / 108° | 0.384 m | — |
 
 On a steady straight run FULL's footfalls are identical to 88573ef0's in time and place (same 0.632 s / 0.494 s stride). The turning support (cut and brake cadence, early release, lean / side / crouch) switches on only when the movement demands it.
 
-One residual difference: the stance knee is 6–11° more bent at the deepest point. The pelvis dips up to 4.6 cm lower at sprint, at the moments a planted leg is out of reach (vertical compression instead of 88573ef0's horizontal pull).
+Pelvis, knees, swing height and foot spread now match 88573ef0. One residual difference: the pelvis dips up to 4.6 cm lower at sprint, at the moments a planted leg is out of reach (vertical compression instead of 88573ef0's horizontal pull).
 
 ## C. Contact integration: boot ↔ ball at every authoritative contact
 
@@ -87,7 +87,7 @@ This uses Astra's 24 BALL ON scenarios and Astra's metric (the contacting boot h
 | A + C + SUPPORT + B4 | 173 | 12 | 2 | 24.1 cm |
 | **FULL** | **183** | **12** | **2** | **12.8 cm** |
 
-On the owner's 240 traces (report card), contacts with a gap over 4 cm: A 114, B45 115, **FULL 44**, out of about 1,420 touches each.
+On the owner's 240 traces (report card), contacts with a gap over 4 cm: A 114, B45 115, **FULL 42**, out of about 1,420 touches each.
 
 The fixes behind this:
 - the plan's predicted ball is taken after the tick's own kick (88573ef0's body predicted the next touch from the pre-kick ball, up to 0.85 m off);
@@ -107,16 +107,16 @@ The remaining > 10 cm cases are a fast authored swing the drawn foot cannot catc
 | Astra's body | 0 | 7 cm | 0 | 0 |
 | A | 543 | 117 cm | 646 | 50 cm |
 | A + C | 490 | 124 cm | 373 | 84 cm |
-| **FULL** | **11** | 32 cm | **302** | **4 cm** |
+| **FULL** | **14** | 33 cm | **319** | **4 cm** |
 
 **The owner's 240 traces (report card):**
 
 | | A | B45 | **FULL** |
 |---|---|---|---|
-| Foot jumps | 911 | 1079 | **5** |
-| Leg-intersection episodes | 261 | 247 | **181** |
-| Planted-foot slides (> 4 mm per tick) | 0 | 0 | **130** |
-| No foot down > 0.15 s | 133 | 159 | **390** |
+| Foot jumps | 911 | 1079 | **3** |
+| Leg-intersection episodes | 261 | 247 | **184** |
+| Planted-foot slides (> 4 mm per tick) | 0 | 0 | **13** |
+| No foot down > 0.15 s | 133 | 159 | **200** |
 
 **BALL OFF** (Astra's 272 locomotion scenarios): FULL has 10 jumps and 1,771 intersection frames. Astra's body has 0 / 0; A + C has 898 / 3,977.
 
@@ -172,8 +172,8 @@ Owner's 240 traces, totals (`evidence/report_card.txt`):
 | | A | B45 | **FULL** |
 |---|---|---|---|
 | **Ball LOST** | 28 | 10 | **1** |
-| Redundant touches | 41 | 24 | 24 |
-| Touches | 1412 | 1435 | 1418 |
+| Redundant touches | 41 | 24 | 26 |
+| Touches | 1412 | 1435 | 1425 |
 
 Ball separation, median / max:
 - sprint carry: 0.84 / 1.03 m;
@@ -196,8 +196,10 @@ Medians in seconds after the stick change: visible response / relevant contact /
 | Sprint 180° | 0.33 / 0.54 / 1.11 | 0.32 / 0.52 / 1.10 | 0.35 / 0.56 / 1.19 |
 | Run 90° | 0.31 / 0.55 / 0.70 | 0.26 / 0.50 / 0.65 | **0.11 / 0.30 / 0.48** |
 | Run 60° | 0.42 / 0.34 / 0.70 | 0.07 / 0.11 / 0.52 | **0.07 / 0.11 / 0.23** |
-| Rapid L/R sprint | 0.13 / 0.14 / 0.43 | 0.13 / 0.17 / 0.43 | 0.15 / 0.18 / 0.38 |
-| Jog 180° | 0.27 / 0.48 / 0.76 | 0.18 / 0.10 / 0.56 | 0.48 / 0.68 / 0.92 (slower) |
+| Rapid L/R sprint | 0.13 / 0.14 / 0.43 | 0.13 / 0.17 / 0.43 | 0.15 / 0.18 / 0.34 |
+| Jog 150° | 0.27 / 0.48 / 0.74 | 0.03 / 0.10 / 0.77 | 0.13 / 0.22 / **0.59** |
+| Jog 180° | 0.27 / 0.48 / 0.76 | 0.18 / 0.10 / 0.56 | 0.20 / 0.45 / 0.77 (slower than B45) |
+| Rapid L/R jog | 0.09 / 0.23 / 0.41 | 0.09 / 0.17 / 0.38 | 0.13 / 0.28 / **0.19** |
 
 Gradual rotation responds visibly in 0.15–0.17 s at every speed.
 
@@ -207,16 +209,16 @@ Analog-first:
 
 ## I. Remaining issues, not hidden
 
-1. **Leg intersections.** 302 frames on Astra's BALL ON set (A: 646) and 1,771 in BALL OFF (Astra: 0). They concentrate in the fast circle and rapid L/R, where the swinging touch foot crosses the midline to reach the ball. I added Astra-style swing corridors and yaw limits, but not her full planted-foot ownership. Her BALL OFF 0 comes from a body that ignores the ball.
-2. **Flight phases longer than 0.15 s** (390 vs 133) and **130 planted-foot slides**. These come from shortened reorganisation stances in cuts and technique stances; ordinary running is identical to 88573ef0. I have not removed them yet.
+1. **Leg intersections.** 319 frames on Astra's BALL ON set (A: 646) and 1,771 in BALL OFF (Astra: 0). They concentrate in the fast circle and rapid L/R, where the swinging touch foot crosses the midline to reach the ball. I added Astra-style swing corridors and yaw limits, but not her full planted-foot ownership. Her BALL OFF 0 comes from a body that ignores the ball.
+2. **Flight phases longer than 0.15 s** (200 vs 133 / 159) and **13 planted-foot slides**. These were 390 and 130 before the last pass (a too-eager crossing release; the speed limit moving the ball of the foot). The rest come from shortened reorganisation stances in cuts and technique stances; ordinary running is identical to 88573ef0.
 3. **Fast circle at sprint** still flips between actions (redirect → chop → Cruyff → drag-back within about 0.25 s at 270°/s). It keeps the ball, but it will not look calm. In Chrome one of its touches was missed.
    - **Movement dependency (TECHNIQUE SOLUTION GOOD / CURRENT MOVEMENT ENVELOPE INSUFFICIENT):** A99-C regains speed only once a motion completes. A continuously rotating stick keeps restarting it, so the body decays to about 0.4–0.8 m/s in a fast circle and cannot re-accelerate while steering.
    - I re-plan steady rotations in 10° steps; I did not modify C.
-4. **Jog 180° and run 120°** are slower than B45 (see §H). B45 used a braking touch at 0.10 s at jog 180°; FULL tends to pick the drag-back.
+4. **Jog 180° and run 120°** are slower than B45 (see §H). B45 used a braking touch at 0.10 s at jog 180°; FULL picks the drag-back or the braking touch evenly.
 5. **Entries 0.05–0.12 s later than B45** (see §F). This is the cost of committed landings.
 6. **Named-move windows are narrower** under C (see §E). The Outside Cut is rare.
-7. **Two contacts over 10 cm** (worst 12.8 cm) on Astra's set, and 44 over 4 cm in 1,418 touches. All are fast authored or generic swings that the drawn foot, limited to 9 cm per tick, cannot catch; mostly the urgent reach and a compact redirect at sprint.
-8. **Straight run:** the stance knee bends 6–11° more at its deepest point (see §B).
+7. **Two contacts over 10 cm** (worst 12.8 cm) on Astra's set, and 42 over 4 cm in 1,425 touches. All are fast authored or generic swings that the drawn foot, limited to 9 cm per tick, cannot catch; mostly the urgent reach and a compact redirect at sprint.
+8. **Performance:** frame work p99 is ≤ 9 ms, but one 22.5 ms spike (a re-plan) appeared in Chrome.
 9. **Test fixture changes:**
    - The node traces now ask for the page's base mode (RUN) while the stick rests, exactly as the page does.
    - The favourable examples were re-found on FULL's own grid.

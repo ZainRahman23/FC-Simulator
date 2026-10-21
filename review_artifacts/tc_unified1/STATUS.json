@@ -7,10 +7,10 @@
   "defaults": { "attributes": "BC99 / D99 / A99-C", "stack": "FULL", "ball": "ON", "joystick": "visible", "diagnostics": "behind ⚙" },
   "stack_presets": ["A", "A + C", "A + C + SUPPORT", "A + C + SUPPORT + B4", "FULL"],
   "equivalence": { "all_off_vs_locked_88573ef0": "345/345 identical", "c_alone_vs_astra_agilitysim": "345/345 identical", "node_vs_browser": "identical (4 sessions)" },
-  "ball_on_audit_full": { "foot_jumps": 11, "intersection_frames": 302, "root_render_max_cm": 4.0, "contacts": 183, "over_3cm": 12, "over_10cm": 2, "worst_cm": 12.8 },
+  "ball_on_audit_full": { "foot_jumps": 14, "intersection_frames": 319, "root_render_max_cm": 4.0, "contacts": 183, "over_3cm": 12, "over_10cm": 2, "worst_cm": 12.8 },
   "ball_on_audit_astra_delivered": { "foot_jumps": 0, "intersection_frames": 0, "contacts": 144, "over_10cm": 51, "worst_cm": 53.6 },
-  "report_card_240_traces": { "A": { "lost": 28, "foot_jumps": 911 }, "B45": { "lost": 10, "foot_jumps": 1079 }, "FULL": { "lost": 1, "foot_jumps": 5, "slides": 130, "unsupported_over_0p15s": 390 } },
-  "straight_run_vs_88573ef0": { "run_joint_mean_cm": 1.6, "sprint_joint_mean_cm": 0.8, "pelvis_mean_m": { "run": [0.886, 0.884], "sprint": [0.890, 0.888] } },
+  "report_card_240_traces": { "A": { "lost": 28, "foot_jumps": 911 }, "B45": { "lost": 10, "foot_jumps": 1079 }, "FULL": { "lost": 1, "foot_jumps": 3, "slides": 13, "unsupported_over_0p15s": 200 } },
+  "straight_run_vs_88573ef0": { "run_joint_mean_cm": 0.3, "sprint_joint_mean_cm": 0.8, "pelvis_mean_m": { "run": [0.886, 0.882], "sprint": [0.890, 0.888] } },
   "owner_decisions_open": ["named-move style bias (B4 picks generic redirects more often under C)", "A99-C re-acceleration under continuous steering (movement envelope dependency — not modified)"],
   "report": "TC_UNIFIED1_MORNING_REPORT.md",
   "handoff": "HANDOFF.md"
