@@ -3859,6 +3859,84 @@ Stopped for owner visual review.
 | Codex standing-tackle labs | Local |
 | `touchline-current` | No changes except this chronicle |
 
+## Tuesday 20 October 2026 — The 19 Oct publication; the PLAYTEST joystick; PLAYTEST-1.2, then BASELINE-88573ef0 restored and locked; the FC 26/27 responsiveness research and TC-RESPONSIVE-1 (rejected on playtest); TC-LAYERED-1 and TC-LAYERED-2 (B4 + B5 approved for development); Astra's A99-C + persistent support handoff; the overnight TC-UNIFIED-1 begun
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `c266056` (the 19 Oct entry), pushed in the 20 Oct housekeeping.
+  - **`prototype/dribble-1`**, 11 commits this day, all pushed in the 21 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | PLAYTEST-1: the on-screen movement joystick | `88573ef` | 13:48 |
+    | TECHNICAL-CONTROL PLAYTEST-1.2 (rapid-direction control) | `0a95343` | 20:53 |
+    | BASELINE-88573ef0 restored, then LOCKED | `fcab49a`, `0a5b637` | 21:08 – 21:18 |
+    | TC-RESPONSIVE research synthesis + proposed architecture | `703d555` | 21 Oct 00:34 |
+    | TC-RESPONSIVE-1 (the experiment) | `8291071`, `c59e3be` | 21 Oct 02:42 – 02:55 |
+    | TC-LAYERED-1 | `b60496d` | 21 Oct 04:03 |
+    | TC-LAYERED-2 | `70b83e3` | 21 Oct 04:46 |
+    | Astra's A99-C + support V1.1 patch, applied verbatim | `c793713` | 21 Oct 05:47 |
+    | TC-UNIFIED-1 (work in progress) | `db65b13` | 21 Oct 05:48 |
+
+  - Tags: `tc-baseline-88573ef0` → `88573ef`, `tc-baseline-88573ef0-locked` → `0a5b637`.
+- **[Doc]:**
+  - `review_artifacts/tc_playtest12/`, `tc_baseline_88573ef0/` (with `bl_lock_check.sh`), `tc_responsive/`, `tc_layered/`, `tc_layered2/`, `tc_unified1/`: each milestone's report, handoff, status, evidence and sources;
+  - every owner instruction verbatim in that milestone's `sources/`; the owner's research report `Touchline_Dribbling_Research.pdf` (21 pp) in `tc_responsive/sources/`;
+  - the pages show a real player's model; they are local pages only.
+- **[Handoff, another workstream]** Astra's package `review_artifacts/agility99_c_support_v11/` (delivered 21 Oct ≈ 03:30; HANDOFF.md, notes, patches, tools, a 108 MB review with 20 clips). The patch is in Git (`c793713`); the package itself stays outside Git for its size.
+- **[Session]** Owner instructions (the time each was saved):
+
+  | Saved (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 13:37 | PLAYTEST-1: an on-screen analog movement joystick | `88573ef` |
+  | ≈ 13:53 | PLAYTEST-1.2: elite rapid-direction control at 99 / 99 / 99 | `0a95343` |
+  | ≈ 21:01 | TECHNICAL CONTROL RESET: revert to 1.2, research FC-style responsive dribbling (then corrected: restore 88573ef0) | `fcab49a` |
+  | ≈ 21:08 | Restore the playable state immediately before PLAYTEST-1.2 as BASELINE-88573ef0; never overwrite it | `fcab49a` |
+  | 21 Oct ≈ 00:31 | Read the attached FC 26/27 research report; synthesise; propose the architecture, no code | `703d555` |
+  | 21 Oct ≈ 01:52 | Architecture approved; build the experiment with five decisions | `8291071` |
+  | 21 Oct ≈ 03:18 | tc_responsive failed visually; a layered pass on 88573ef0, one change at a time | `b60496d` |
+  | 21 Oct ≈ 04:21 | Layer verdicts: A approved; develop B4 + B5; B2 later; B1 / B3 / B6 rejected | `70b83e3` |
+  | 21 Oct ≈ 05:34 | The overnight mission: unify A99-C, Astra's persistent support, B4, B5 — silky-smooth dribbling | `db65b13` |
+
+- **Owner media:** one screenshot, archived: `review_artifacts/chronicle_screens/2026-10-20_technical_control/` (the TC-RESPONSIVE architecture proposal as shown in the session; see `MANIFEST.tsv`). No recordings.
+
+**The 19 Oct housekeeping (06:00 – 06:24).** The chronicle `c266056` was committed and pushed. `prototype/dribble-1` up to `8899869` was pushed and verified.
+
+**PLAYTEST-1: the joystick** (≈ 13:37 → 13:48, `88573ef`). A large draggable on-screen stick (pointer events: mouse, trackpad, pen, touch): continuous direction in the camera frame, magnitude by zone, SPRINT / WALK hold buttons and a sprint lock. Input and UI only; WASD ≡ stick for equivalent vectors 6 / 6.
+
+**TECHNICAL-CONTROL PLAYTEST-1.2** (≈ 13:53 → 20:53, `0a95343`). Elite rapid-direction control: explicit commitment phases, every technique required to leave the ball near its contact point, a validated body plan, deterministic trig (node ≡ browser).
+- Torture suite LOST 26 → 0, double touches 11 → 0; body zeros not met (leg crossings 528 → 387 spans).
+- **Owner playtest: rejected** — "the bad / slower / jankier version I want to revert away from".
+
+**BASELINE-88573ef0** (≈ 21:01 → 21:18, `fcab49a`, `0a5b637`). The owner's correction: the joystick checkpoint `88573ef` restored as its own page (`sandbox/visual/tc_baseline_88573ef0.html`), then locked as the permanent A/B reference — read-only files, `bl_lock_check.sh`, two tags. Every later experiment is built beside it.
+
+**TC-RESPONSIVE research and architecture** (21 Oct ≈ 00:31 → 00:34, `703d555`). The owner's FC 26/27 report (21 pp) read in full and synthesised with primary EA sources and public animation techniques; the baseline measured (the body visibly answers 0.26 – 0.43 s after a sprint snap); causes found in the code (the carry hold, the technique approach cruise, the curvature limit, stride-phase touches, named moves for every turn); a proposed architecture — approved with five decisions.
+
+**TC-RESPONSIVE-1** (21 Oct ≈ 01:52 → 02:55, `8291071`, `c59e3be`). The experiment beside the baseline: velocity-vector root steering, two simulation-owned foot proxies, generic contact families, causal commitment (29 – 42 ms), the interceptor probe, an A/B page.
+- Response 0.01 s (baseline 0.05 – 0.43 s); torture LOST 0 (26), extended 0 (108).
+- **Owner playtest: a failed direction** — the character floated, phased and looked disconnected from the ground. Lesson recorded: the authoritative movement and contacts must never diverge from a feasible body.
+
+**TC-LAYERED-1** (21 Oct ≈ 03:18 → 04:03, `b60496d`). The responsiveness pass rebuilt on 88573ef0 itself as nine separately toggleable layers (B1 acknowledgement · B2 earlier touches · B3 narrow commitment · B4 generic effort turns · B5 short exits / wind-ups · B6 next-action targets); ALL OFF bit-identical to the locked engine 233 / 233; body warnings surfaced, never acted on.
+- **Owner verdicts:** A approved as the foundation; B4 and B5 promising — develop; B2 later; B1, B3 (fewer losses but rigid) and B6 rejected.
+
+**TC-LAYERED-2** (21 Oct ≈ 04:21 → 04:46, `70b83e3`). B4 and B5 developed: every candidate (carry, generic, named) scored on its predicted football outcome — no angle fit; named moves survive in their favourable states (chop 8 / 8 at run 95° and sprint 90°, drag-back 8 / 8 at 180°, Cruyff 6 / 8 at jog 100°); B5 measured directly (contact → control 0.26 – 0.40 → 0.08 – 0.14 s); movement-envelope limits reported, not compensated.
+
+**Astra's A99-C + persistent support V1.1** (another workstream; delivered ≈ 03:30, applied `c793713`). A99-C, the owner-selected provisional Agility-99 movement ceiling, and a persistent support-locomotion timeline (BALL OFF: foot jumps 898 → 0, intersections 2086 → 0), handed over for integration. Owner feedback carried in the handoff: straight running looks crouched; BALL ON not integrated (51 / 144 contacts > 10 cm). Reproduced here: 564 C fixtures, the BALL ON audit byte-identical.
+
+**TC-UNIFIED-1** (begun 21 Oct ≈ 05:34, `db65b13`, work in progress into 21 Oct). The overnight integration: A99-C exactly (345 / 345 bit-identical to Astra's own simulation), the persistent support moved into the shared foot plan, a continuous foot timeline in the body; first BALL ON audit: jumps 490 → 166, root ↔ render 84 → 3 cm, contacts > 10 cm 3 → 2. Continues on 21 Oct.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| BASELINE-88573ef0 | Approved foundation, locked (read-only, lock check) |
+| PLAYTEST-1.2 · TC-RESPONSIVE-1 | Rejected on the owner's playtest; kept as records |
+| TC-LAYERED-1 | Reviewed; B4 / B5 kept, B1 / B3 / B6 rejected, B2 later |
+| TC-LAYERED-2 | Presented; continued in TC-UNIFIED-1 |
+| Astra's A99-C + support V1.1 | Handed over; C selected; integration in progress |
+| TC-UNIFIED-1 | In progress (overnight mission) |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -3945,7 +4023,7 @@ Stopped for owner visual review.
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
-  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page).
+  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page). On 20 Oct its joystick checkpoint became **BASELINE-88573ef0**, the locked foundation (`tc_baseline_88573ef0.html`); PLAYTEST-1.2 and TC-RESPONSIVE-1 were rejected on playtest; TC-LAYERED-1 / -2 (toggleable layers on the baseline; B4 generic effort turns and B5 short entries / exits approved for development) led into **TC-UNIFIED-1**, the overnight integration with Astra's A99-C and persistent support (in progress).
 - **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; Phase C revision 2 and STANDING-TACKLE-V1 (a functional real-carrier review against TECHNICAL-CONTROL-1.3's carrier) followed on 19 – 20 Oct; no commits, not a freeze.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
@@ -4183,6 +4261,12 @@ An index to the narrative above, not a substitute for it.
 | 19 Oct | TECHNICAL-CONTROL-1.4 (20 Oct 00:26): the fastest technique, not the most touches | FC-Sim Git | `cd9de15` |
 | 19 Oct | **TECHNICAL-CONTROL-1.5 (20 Oct 04:07): the technique reset — five authored elite references; the Ronaldo chop 8 / 8** | FC-Sim Git | `a34070e` |
 | 19 Oct | **TECHNICAL-CONTROL PLAYTEST-1 (20 Oct 05:23 – 05:35): the playable WASD dribbling sandbox** | FC-Sim Git | `2be64dd`, `1877207`, `8899869` |
+| 20 Oct | PLAYTEST-1: the on-screen joystick (later BASELINE-88573ef0) | FC-Sim Git | `88573ef` |
+| 20 Oct | PLAYTEST-1.2: rapid-direction control (rejected on playtest) | FC-Sim Git | `0a95343` |
+| 20 Oct | **BASELINE-88573ef0 restored and locked — the approved dribbling foundation** | FC-Sim Git | `fcab49a`, `0a5b637` |
+| 20 Oct | TC-RESPONSIVE research + architecture; TC-RESPONSIVE-1 (rejected on playtest) | FC-Sim Git | `703d555`, `c59e3be` |
+| 20 Oct | TC-LAYERED-1 / TC-LAYERED-2: layers on the baseline; B4 + B5 approved for development | FC-Sim Git | `b60496d`, `70b83e3` |
+| 20 Oct | Astra's A99-C + persistent support V1.1 (applied verbatim); TC-UNIFIED-1 begun | FC-Sim Git | `c793713`, `db65b13` |
 
 ## Appendix B — Repository provenance
 
