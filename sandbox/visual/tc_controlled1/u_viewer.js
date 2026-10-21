@@ -1,4 +1,10 @@
-// ═══ tc_unified1/u_viewer.js — TC-UNIFIED-1: THE PRIMARY MORNING PAGE (owner's overnight brief §26 – 29) — LOCAL ONLY (a real player's model) ════════
+// ═══ tc_controlled1/u_viewer.js — TC-CONTROLLED-1 (owner, 21 Oct: "zero unforced loss at 99"): TC-UNIFIED-1's page with the BALL CONTROL MODEL
+// switch — CURRENT FREE (TC-UNIFIED-1's FULL, bit-identical) / CONTROLLED (CONTROLLED_BALL: c_sim.js) — same player, same C, same joystick, same
+// B4 / B5, same support; ⇄ M plays this session's input through the other model. OPPONENT POKE drives a deterministic opponent foot into the real
+// ball (recorded as an event — replays exactly); RELEASE turns the next touch into a knock-on (an intentional release). Diagnostics (⚙) show the
+// possession state, the controlled action, the ball's phase, the next planned contact, support / technical foot, committed, threat / fallback and
+// the reason the last CONTROLLED_BALL ended.
+// ── (TC-UNIFIED-1's header) ── tc_unified1/u_viewer.js — TC-UNIFIED-1: THE PRIMARY MORNING PAGE (owner's overnight brief §26 – 29) — LOCAL ONLY (a real player's model) ════════
 // One clean playable page: BC99 / D99 / A99-C, the FULL stack (88573ef0 + A99-C + the persistent support + B4 + B5), BALL ON, the joystick — open
 // it and dribble. The stack presets A · A + C · A + C + SUPPORT · A + C + SUPPORT + B4 · FULL stay in view (same input → next: X); the owner's
 // morning playtest cases and the favourable named-move / generic examples launch from one menu; BALL OFF = Astra's movement probe. Everything
@@ -21,21 +27,21 @@
 // mode. No skill button. Replay: the last 12 s are history (plans, contacts, the ball's track, every tick's input) — any recent instant is re-posed
 // from it; the WASD actually pressed is shown. Determinism: V re-simulates the whole session from the recorded input on a fresh simulation.
 // (The GL ground / ball programs and the camera math: TECHNICAL-CONTROL-1.5's lab, copied; the pitch gets a 1 m / 5 m grid.)
-import * as TL from "./u_sim.js";
+import * as TL from "./c_sim.js";
 import { PlayBody as TLBody } from "./u_body.js";
 import * as BS from "../tc_baseline_88573ef0/pt_sim.js";
 import * as BB from "../tc_baseline_88573ef0/pt_body.js";
 import { TESTS as OWNER_TESTS, MORNING, MODES as TMODES } from "./u_tests.js";
 const TESTS = MORNING.concat(OWNER_TESTS);
 const { DT, MODES, LABEL, wrap, dir, hdg, LAYERS, PRESETS, PRESET_LABEL, REJECTED, presetLayers, actionId } = TL;
-const ENG = { layered: { Sim: TL.UnifiedSim, Body: TLBody }, baseline: { Sim: BS.PlaySim, Body: BB.PlayBody } };
+const ENG = { layered: { Sim: TL.ControlledSim, Body: TLBody }, baseline: { Sim: BS.PlaySim, Body: BB.PlayBody } };
 const CHAIN = ["A", "AC", "ACS", "ACS4", "FULL"];
 import { DIRS } from "../technical_control15/tc15_ref.js";
 import { STICK, stickVector, stickMode, headingFrom, stickAngleDeg, BITS } from "../tc_baseline_88573ef0/pt_input.js";
 const W = window, hyp = Math.hypot, DEG = Math.PI / 180, max = Math.max, min = Math.min, abs = Math.abs;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const START = { P: [52.5, 34], h: 0 };
-const V = { engine: "layered", layers: presetLayers("FULL"), ballOn: true, test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
+const V = { engine: "layered", layers: presetLayers("FULL"), ballOn: true, control: "CONTROLLED", test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
   // the on-screen stick (input only): the source that last became active authors the movement — "keys" (a WASD key went down) or "stick"
   src: "keys", stick: { pid: null, raw: { x: 0, y: 0 }, v: { x: 0, y: 0, m: 0, r: 0 }, latch: 0, moving: false, cfg: Object.assign({}, STICK) }, btn: { sprint: false, walk: false, lock: false }, inStick: null, stickLog: [],
   show: { hud: true, side: false, prot: false, body: false, anim: true, diag: false }, course: null, replay: null, perf: { frame: [], sim: [], pose: [], render: [], work: [] }, lastNow: null, lastShown: null, dom: {}, verify: null };
@@ -103,23 +109,28 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, 
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
-  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; } else { delete o.layers; delete o.ballOn; }
+  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; } else { delete o.layers; delete o.ballOn; delete o.control; }
   V.sim = new ENG[V.engine].Sim(V.env, o); V.body = new ENG[V.engine].Body(V.env, V.sim); V.o0 = JSON.parse(JSON.stringify(o)); V.stickLog = []; V.acc = 0; V.trail = []; V.cam = null; V.lastShown = null; V.replay = null; V.verify = null; V.diag = { prev: null, air: 0, hist: [] }; showReplayUI(false); showConfig(); }
 // ── THE CONFIGURATION: the engine and the layers (the label: a preset's name when the toggles are exactly one, else the toggles listed) ──────────
 function configName(eng, L) { if (eng === "baseline") return "locked 88573ef0"; for (const n of CHAIN) { const P = presetLayers(n); if (LAYERS.every((x) => !!P[x.id] === !!L[x.id])) return PRESET_LABEL[n]; } return "custom: " + LAYERS.filter((x) => L[x.id]).map((x) => x.id).join("+"); }
 function showConfig() { const d = V.dom; if (!d.selEng) return; d.selEng.value = V.engine; const on = V.engine === "layered";
   for (const x of LAYERS) { const c = document.getElementById("L_" + x.id); if (c) { c.checked = !!V.layers[x.id]; c.disabled = !on; } }
   document.querySelectorAll("[data-preset]").forEach((b) => { const P = presetLayers(b.dataset.preset); b.classList.toggle("on", on && LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id])); });
-  d.ver.textContent = on ? `TC-UNIFIED-1 · ${configName("layered", V.layers)}${V.ballOn ? "" : " · BALL OFF (Astra's probe)"}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ff9b8d" : "#8dffa6"; if (d.cBall) d.cBall.checked = V.ballOn; }
+  d.ver.textContent = on ? `TC-CONTROLLED-1 · ${configName("layered", V.layers)}${V.ballOn ? "" : " · BALL OFF (Astra's probe)"}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ff9b8d" : "#8dffa6"; if (d.cBall) d.cBall.checked = V.ballOn;
+  document.querySelectorAll("[data-model]").forEach((b) => b.classList.toggle("on", on && b.dataset.model === V.control)); }
 // re-simulate a recorded session (its input every tick, its live changes, the stick's record) through a configuration — identical input
-function loadRec(rec, eng, layers) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
-  for (let k = 0; k < I.length / 3; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); }
+function loadRec(rec, eng, layers, control) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; if (control) V.control = control; else if (o0.control) V.control = o0.control; delete o0.control; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
+  for (let k = 0; k < I.length / 3; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); else if (S.applyEvent) S.applyEvent(e); }
     const h = I[3 * k]; S.step({ h: h === -99 ? null : h, mode: MODES[I[3 * k + 1]], keys: I[3 * k + 2] }); V.stickLog.push(L[4 * k] || 0, L[4 * k + 1] || 0, L[4 * k + 2] || 0, L[4 * k + 3] || 0); }
   V.paused = true; setRateButtons(); if (V.body.feetAt) for (let k = Math.max(0, S.k - Math.round(12.5 / DT)); k <= S.k; k++) V.body.feetAt(k * DT); return { t: S.t, hash: S.hash }; }
 // SAME INPUT → a configuration ("baseline" = the locked engine; else a preset name): the recorded session through it, then its replay (same window)
 function sameInput(target) { if (V.sim.k < 10) return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer";
   V.dom.bSame.textContent = "re-simulating…"; setTimeout(() => { if (target === "baseline") loadRec(rec, "baseline", null); else loadRec(rec, "layered", presetLayers(target)); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); V.dom.bSame.textContent = "▶ replay through it"; V.dom.selSame.value = target; }, 20); }
+function otherModel() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", target = V.control === "CONTROLLED" ? "FREE" : "CONTROLLED";
+  setTimeout(() => { loadRec(rec, "layered", V.layers, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 function nextInChain() { const cur = V.engine === "baseline" ? -1 : CHAIN.findIndex((n) => { const P = presetLayers(n); return LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id]); }); sameInput(CHAIN[(cur + 1) % CHAIN.length]); }
+// THE OPPONENT POKE: a deterministic opponent foot aimed at the ball as it will be in 0.25 s, from alternate sides of its travel (recorded event)
+let pokeN = 0; function poke() { const S = V.sim; if (!S.addOpponent || V.replay) return; S.addOpponent(S.pokeProbe(pokeN++ % 2 ? 1 : -1, 6)); }
 // THE OWNER'S TESTS through the page's own stick (reset first: the same run-up as the report card's)
 function startTest(name) { const T = TESTS.find((x) => x.name === name); if (!T) return; if (V.replay) stopReplay(); if (V.dom.selTest) V.dom.selTest.value = name; newSim(); V.paused = false; setRateButtons(); V.test = { T, M: TMODES[T.mode] }; V.src = "stick"; V.stick.moving = false; V.dom.bTest.textContent = "■ stop"; }
 function stopTest() { if (!V.test) return; V.test = null; V.btn.tSprint = false; const S = V.stick; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); if (V.dom.bTest) V.dom.bTest.textContent = "▶ play"; }
@@ -274,16 +285,22 @@ function updateHud(h) {
   const cfg = configName(V.engine, V.layers), acts = V.engine === "layered" ? LAYERS.filter((x) => V.layers[x.id]).map((x) => x.id).join(" · ") || "no layer (= 88573ef0)" : "the locked engine";
   // (the clean page: without ⚙ diagnostics the HUD is the action, its phase and the speeds — everything else behind the toggle)
   if (!document.body.classList.contains("diagOn")) { d.hud.innerHTML = `<span style="color:#ff9b8d;font-weight:700">${cfg}</span>${V.ballOn || V.engine !== "layered" ? "" : "  <span style=\"color:#9ad7ff\">BALL OFF</span>"}\n<div class="act">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}</div>` +
-      `${h.mode.toLowerCase()} · player ${h.speed.toFixed(1)} m/s · ball ${h.ballSpeed.toFixed(1)} m/s · separation ${h.sep.toFixed(2)} m`; d.prov.textContent = ""; return; }
+      `${h.mode.toLowerCase()} · player ${h.speed.toFixed(1)} m/s · ball ${h.ballSpeed.toFixed(1)} m/s · separation ${h.sep.toFixed(2)} m` + possLine(false); d.prov.textContent = ""; return; }
   d.hud.innerHTML = `<span style="color:${V.engine === "layered" ? "#ffd45e" : "#8dffa6"};font-weight:700">${cfg}</span>  <span style="color:#8fa49a">${acts}</span>\n` + solutionHtml(h) + `<div class="act" style="font-size:12px">${h.action}</div><div class="phase">${h.phase}${V.replay ? "  ·  REPLAY " + (h.t - V.sim.t).toFixed(2) + " s" : ""}${V.paused && !V.replay ? "  ·  PAUSED" : ""}</div>` +
     `mode ${h.mode.padEnd(6)} requested ${h.reqSpeed.toFixed(1)} m/s\nplayer ${h.speed.toFixed(2)} m/s   ball ${h.ballSpeed.toFixed(2)} m/s\n` +
-    `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" +
+    `requested ${deg(h.reqH)}   facing ${deg(h.facing)}\nturn angle ${deg(h.reqH != null ? h.turn : null)}   travel ${deg(h.travel)}\n` + inputLine(h) + "\n" + possLine(true) + "\n" +
     `foot ${lastC ? lastC.F : "—"} · ${lastC ? String(lastC.surface).toLowerCase() : "—"} (${lastC ? (LABEL[lastC.tech] || lastC.tech) + " · " + lastC.role : "no contact yet"})\n` +
     `ball separation ${h.sep.toFixed(2)} m   contacts/s ${h.cps.toFixed(1)}\n` + `<span style="color:#8fa49a">why (cost, lower = chosen):\n${top}</span>` +
     (prov ? `\n<span id="provH" style="color:#ffb36b">attributes below 99: PROVISIONAL linear scaling — not a calibration</span>` : "");
   d.prov.textContent = prov ? " provisional" : "";
   if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); }
 }
+// THE POSSESSION LINE (TC-CONTROLLED-1): compact — the model and the state; diagnostics — the whole controlled-ball view (possInfo)
+function possLine(full) { const S = V.sim; if (!S.possInfo || V.engine !== "layered" || !V.ballOn) return ""; const p = S.possInfo(), col = p.state === "CONTROLLED" ? "#8dffa6" : "#ffb36b", ex = p.lastExit;
+  if (!full) return `\n<span style="color:#9ad7ff">${p.model}</span> · <span style="color:${col};font-weight:700">${p.state === "CONTROLLED" ? "CONTROLLED BALL" : "FREE BALL"}</span>${ex && p.state !== "CONTROLLED" ? `  <span style="color:#8fa49a">(${ex.why})</span>` : ""}`;
+  return `<span style="color:#9ad7ff">BALL CONTROL MODEL ${p.model}</span> · possession <span style="color:${col};font-weight:700">${p.state}</span> for ${p.since.toFixed(1)} s\n` +
+    `controlled action ${p.action} · phase ${p.phase}\nnext planned ${p.next} · committed ${p.committed ? "yes" : "no"}\nsupport foot ${p.support} · technical foot ${p.technical} · stick activity ${p.volatility.toFixed(2)}\n` +
+    `control threat ${p.threat.toFixed(2)} (separation / envelope)${p.fallback ? ` · fallback: ${p.fallback}` : ""}\ncontinuation ${p.cont}\nlast exit ${ex ? `${ex.why} at ${ex.t.toFixed(2)} s — ${ex.detail}` : "none"}`; }
 // the input line: which source authored the request; for the stick its exact direction (from the camera forward it latched, + = right), its
 // analog magnitude beyond the deadzone, its zone and the deadzone itself
 function inputLine(h) {
@@ -348,7 +365,7 @@ function showReplayUI(on) { if (!V.dom.replay) return; V.dom.replay.style.displa
 // ── DETERMINISM: re-simulate this session from its recorded input (and live changes) on a fresh simulation; compare everything ─────────────────────
 function verifyDeterminism() {
   const S = V.sim, K = S.k, t0 = performance.now(), R = new ENG[V.engine].Sim(V.env, JSON.parse(JSON.stringify(V.o0))), I = S.log.input, E = S.log.events; let ei = 0;
-  for (let k = 0; k < K; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") R.setAttrs(e.v); else if (e.kind === "foot") R.setFoot(e.v); }
+  for (let k = 0; k < K; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") R.setAttrs(e.v); else if (e.kind === "foot") R.setFoot(e.v); else if (R.applyEvent) R.applyEvent(e); }
     const h = I[3 * k]; R.step({ h: h === -99 ? null : h, mode: MODES[I[3 * k + 1]], keys: I[3 * k + 2] }); }
   R.log.events.length = 0; const same = R.hash === S.hash, cs = JSON.stringify(R.contacts.map((c) => [c.k, c.F, c.surface, c.vOut])) === JSON.stringify(S.contacts.map((c) => [c.k, c.F, c.surface, c.vOut])),
     as = JSON.stringify(R.log.actions.map((a) => [a.t, a.label, a.m])) === JSON.stringify(S.log.actions.map((a) => [a.t, a.label, a.m])), bp = R.ball.p, sp = S.ball.p, bd = hyp(bp[0] - sp[0], bp[1] - sp[1], bp[2] - sp[2]);
@@ -376,7 +393,11 @@ function frame(now) {
 function setRateButtons() { document.querySelectorAll("[data-rate]").forEach((b) => b.classList.toggle("on", +b.dataset.rate === V.rate)); V.dom.bPause.textContent = V.paused && !V.replay ? "▶" : "❚❚"; V.dom.bPause.classList.toggle("on", V.paused && !V.replay); }
 function setMode(m) { V.baseMode = m; document.querySelectorAll("[data-mode]").forEach((b) => b.classList.toggle("on", b.dataset.mode === m)); }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
+  document.querySelectorAll("[data-model]").forEach((b) => (b.onclick = (e) => { V.engine = "layered"; V.control = b.dataset.model; stopTest(); newSim(); e.target.blur(); }));
+  if (d.bOther) d.bOther.onclick = (e) => { otherModel(); e.target.blur(); };
+  if (d.bPoke) d.bPoke.onclick = (e) => { poke(); e.target.blur(); };
+  if (d.bRelease) d.bRelease.onclick = (e) => { if (V.sim.requestRelease) V.sim.requestRelease(); e.target.blur(); };
   // THE LAYERS: a checkbox each (its B-step and the owner's items in the tooltip), the presets, the engine, same input, the tests
   // (the candidate stack first, then B2 — optional, not developed — then the rejected layers, off)
   const grp = (ids, cap) => `<span class="lab" style="margin-left:6px">${cap}</span>` + ids.map((id) => LAYERS.find((x) => x.id === id)).map((x) => `<label class="lay${REJECTED.includes(x.id) ? " rej" : ""}" title="${x.label} — layer ${x.b}, owner ${x.items}"><input type="checkbox" id="L_${x.id}"><b>${x.b}</b>${x.label}</label>`).join("");
@@ -439,6 +460,9 @@ function bindUI() {
     else if (c === "KeyC") { const o = ["follow", "touchline", "top", "side"], i = (o.indexOf(V.camId) + 1) % o.length; V.camId = o[i]; d.selCam.value = V.camId; V.cam = null; V.lastShown = null; }
     else if (c === "KeyV") verifyDeterminism();
     else if (c === "KeyX") nextInChain();
+    else if (c === "KeyM") otherModel();
+    else if (c === "KeyP") poke();
+    else if (c === "KeyK") { if (V.sim.requestRelease) V.sim.requestRelease(); }
     else if (/^Digit[1-4]$/.test(c)) setMode(MODES[+c.slice(5) - 1]);
   });
   window.addEventListener("keyup", (e) => { V.keys.delete(code(e)); if (code(e).startsWith("Alt")) e.preventDefault(); });
@@ -454,7 +478,7 @@ async function boot() {
   if (q.get("dz") != null) { V.dom.dz.value = q.get("dz"); V.dom.dz.oninput(); }
   if (q.get("foot")) V.dom.selFoot.value = q.get("foot"); if (q.get("cam")) { V.camId = q.get("cam"); V.dom.selCam.value = V.camId; }
   for (const [k, id] of [["bc", "aBC"], ["dri", "aDRI"], ["agi", "aAGI"]]) if (q.get(k)) { V.dom[id].value = q.get(k); V.dom["v" + id.slice(1)].textContent = q.get(k); }
-  if (q.get("engine") === "baseline") V.engine = "baseline"; if (q.get("preset") && PRESETS[q.get("preset")]) V.layers = presetLayers(q.get("preset")); if (q.get("ball") === "0") V.ballOn = false;
+  if (q.get("engine") === "baseline") V.engine = "baseline"; if (q.get("preset") && PRESETS[q.get("preset")]) V.layers = presetLayers(q.get("preset")); if (q.get("ball") === "0") V.ballOn = false; if (q.get("model") === "FREE" || q.get("model") === "CONTROLLED") V.control = q.get("model");
   if (q.get("diag") === "1") V.setDiag(true);
   if (q.get("layers")) for (const k of q.get("layers").split(",")) if (k in V.layers) V.layers[k] = true;
   newSim(); document.getElementById("loading").remove(); V.ready = true;
@@ -470,7 +494,8 @@ W.PT = { ready: () => V.ready, V,
   record: () => ({ o0: V.o0, engine: V.engine, layers: V.engine === "layered" ? Object.assign({}, V.layers) : null, input: Array.from(V.sim.log.input), events: V.sim.log.events, hash: V.sim.hash, k: V.sim.k, stick: Array.from(V.stickLog), deadzone: V.stick.cfg.deadzone }),
   engine: (e) => { if (e && ENG[e] && e !== V.engine) { V.engine = e; newSim(); } return V.engine; }, preset: (n) => { if (n) { V.engine = "layered"; V.layers = presetLayers(n); newSim(); } return configName(V.engine, V.layers); },
   layers: (o) => { if (o) { V.engine = "layered"; V.layers = Object.assign({}, TL.LAYERS_OFF, o); newSim(); } return Object.assign({}, V.layers); }, same: (target) => sameInput(target), next: () => nextInChain(), load: (rec, eng, layers) => loadRec(rec, eng, layers),
-  ball: (on) => { if (on != null) { V.ballOn = !!on; newSim(); } return V.ballOn; }, diagnostics: (on) => { if (on != null) V.setDiag(!!on); return document.body.classList.contains("diagOn"); },
+  ball: (on) => { if (on != null) { V.ballOn = !!on; newSim(); } return V.ballOn; }, model: (m) => { if (m) { V.engine = "layered"; V.control = m; newSim(); } return V.control; }, other: () => otherModel(),
+  poke: () => poke(), release: () => (V.sim.requestRelease ? V.sim.requestRelease() : false), poss: () => (V.sim.possInfo ? V.sim.possInfo() : null), possLog: () => (V.sim.poss ? V.sim.poss.log : []), diagnostics: (on) => { if (on != null) V.setDiag(!!on); return document.body.classList.contains("diagOn"); },
   test: (name) => { if (name) startTest(name); else stopTest(); return !!V.test; }, diag: () => ({ now: V.diag.prev, n: V.diag.hist.length }),
   // the stick as a test would hold it: raw (x right, y up) in −1 … 1, null = released
   stick: (x, y) => { const S = V.stick; if (x == null) { S.pid = null; S.raw = { x: 0, y: 0 }; } else { S.pid = -1; V.src = "stick"; S.raw = { x, y }; } S.v = stickVector(S.raw.x, S.raw.y, S.cfg.deadzone); drawStick(); return S.v; },
@@ -480,4 +505,4 @@ W.PT = { ready: () => V.ready, V,
   tick: (dt, keys) => { if (keys) { V.keys = new Set(keys); } const now = (V.lastNow || 0) + dt * 1000; frame(now); return { t: V.sim.t, hash: V.sim.hash }; },
   hud: () => { const h = hudAt(V.replay ? V.replay.t : V.sim.t); return { t: h.t, config: configName(V.engine, V.layers), action: h.action, phase: h.phase, speed: h.speed, sep: h.sep, reqH: h.reqH, mode: h.mode, contacts: V.sim.contacts.length }; },
   state: () => ({ t: V.sim.t, hash: V.sim.hash, contacts: V.sim.contacts.map((c) => ({ t: c.t, F: c.F, surface: c.surface, role: c.role, tech: c.tech, missed: !!c.missed })), actions: V.sim.log.actions.map((a) => ({ t: a.t, label: a.label, m: a.m })) }) };
-boot().catch((err) => { const l = document.getElementById("loading"); if (l) l.textContent = "UNIFIED page failed: " + (err && err.stack || err); console.error(err); });
+boot().catch((err) => { const l = document.getElementById("loading"); if (l) l.textContent = "CONTROLLED page failed: " + (err && err.stack || err); console.error(err); });

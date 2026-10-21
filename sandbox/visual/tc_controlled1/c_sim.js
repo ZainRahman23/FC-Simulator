@@ -101,6 +101,10 @@ export class ControlledSim extends UnifiedSim {
       else { const fb = P.state === "CONTROLLED" || reason === "contact" ? this.fallback() : null; if (fb) { super.adopt(fb.plan); cont = fb.cont; P.fallback = fb.label; } else { if (best) super.adopt(best); cont = this.contOf(this.plan); } } }
     this._cands = null; P.cont = cont; return this.afterReplan(reason, cont); }
   afterReplan(reason, cont) { const P = this.poss;
+    // (an opponent's contact this tick: control survives only a MINOR deflection — the ball's velocity changed < 2 m/s and the player's next touch
+    // within 0.6 s with a controlled continuation; anything more is contested possession: CONTROLLED → FREE, to be re-collected)
+    if (P.state === "CONTROLLED" && P.ext && abs(P.ext.t - this.t) < 1e-9) { const e = P.ext, dv = hyp(e.vOut[0] - e.vIn[0], e.vOut[1] - e.vIn[1]), nc = cont && cont.ok ? cont.c : null;
+      if (!(dv < 2.0 && cont && cont.ok && (!nc || nc.t - this.t < 0.6))) this.exitControl(EXT_EXIT[e.kind] || "EXTERNAL_COLLISION", `the opponent's ${e.kind} (Δv ${dv.toFixed(1)} m/s)`); }
     // (secured: the player's own contact just made, and a controlled continuation after it — the ball has been played, not merely found nearby)
     const last = this.contacts[this.contacts.length - 1]; if (P.state !== "CONTROLLED" && reason === "contact" && last && !last.missed && last.k === this.k && !last.release && cont.ok) this.enterControl(last.role); }
   // ── THE POSSESSION-PRESERVING FALLBACK: SECURE — to the ball along its own path, the touch in the wide reach sending it on toward the intent ─────
@@ -125,11 +129,24 @@ export class ControlledSim extends UnifiedSim {
   // own speed then + a little (less, the busier the stick). 88573ef0's touch aims the ball to ARRIVE at a point at a time — it rolls on past it;
   // a slow or turning body then never catches it up. A steady stick at speed keeps 88573ef0's longer push (V = 0 and the body ≥ 3 m/s: unchanged)
   carryTouches(plan, keep, q, recover = false, skip = null) { const out = super.carryTouches(plan, keep, q, recover, skip); if (!this.CB || !out.list.length) return out;
-    const c = out.list[0]; if (!c.aim || c.aim.kind !== "target" || !c.bPred || keep.contacts.includes(c)) return out;
+    this.controlledTouch(out, plan, keep, q); if (q.h != null && this.stateAt(this.t, this.plan).s > this.P.speed[q.mode] + 1.0) this.noOverrun(out.list[0], plan); return out; }
+  // (NO OVERRUN — the body faster than the request wants, braking (after a pursuit, a sprint released): a touch never sends the ball more than
+  // 1 m/s slower than the body will still be moving at that foot's next swing end — slowing
+  // the ball faster than the body can brake leaves it behind a body that runs past it; a stop keeps 88573ef0's own stop touch)
+  noOverrun(c, plan) { if (!c || !c.aim || !c.bPred || c.aim.kind === "rest" || c.done) return; const nx = plan.stances[c.F].find((s) => s.t0 - CARRY.touchBefore > c.t + 0.15), T = nx ? nx.t0 - CARRY.touchBefore : c.t + 0.4, vb = this.stateAt(T, plan).s;
+    let sp, h; if (c.aim.kind === "target") { const d = [c.aim.P[0] - c.bPred[0], c.aim.P[1] - c.bPred[1]], D = hyp(d[0], d[1]); sp = D > 1e-3 ? speedFor(D, max(0.05, c.aim.T - c.t)) ?? CARRY.vCap : 0; h = D > 1e-3 ? Math.atan2(d[1], d[0]) : null; } else { sp = c.aim.speed; h = c.aim.h; }
+    if (h == null || sp >= vb - 1.0) return; c.aim = { kind: "vel", speed: min(CARRY.vCap, vb - 0.5), h, noOverrun: true }; }
+  controlledTouch(out, plan, keep, q) {
+    const c = out.list[0]; if (!c.aim || !c.bPred || keep.contacts.includes(c)) return out;
     const V = this.volatility(), now = this.stateAt(this.t, this.plan), slow = clamp((3.0 - now.s) / 2.0, 0, 1), W = max(V, slow); if (W <= 0) return out;
+    // (a velocity aim — 88573ef0's redirect capped at its angle: the same speed rule, its direction kept)
+    if (c.aim.kind === "vel") { if (q.h == null) return out; const nx = plan.stances[c.F].find((s) => s.t0 - CARRY.touchBefore > c.t + 0.15), T = nx ? nx.t0 - CARRY.touchBefore : c.t + 0.4, sp0 = this.stateAt(min(T, c.t + 0.3), plan), vb = [sp0.V[0] + (now.V[0] - sp0.V[0]) * V, sp0.V[1] + (now.V[1] - sp0.V[1]) * V], cap = max(0.4, hyp(vb[0], vb[1])) + 0.4 + 1.2 * (1 - W);
+      if (c.aim.speed > cap) c.aim = Object.assign({}, c.aim, { speed: cap, controlled: +W.toFixed(2) }); return out; }
+    if (c.aim.kind !== "target") return out;
     let T = c.aim.T; const B = c.bPred, nx = plan.stances[c.F].find((s) => s.t0 - CARRY.touchBefore > c.t + 0.15); if (W > 0.4 && nx && nx.t0 - CARRY.touchBefore < T - 0.05) T = nx.t0 - CARRY.touchBefore;
-    const sp0 = this.stateAt(T, plan), inert = [now.P[0] + now.V[0] * (T - this.t), now.P[1] + now.V[1] * (T - this.t)], bodyP = [sp0.P[0] + (inert[0] - sp0.P[0]) * V, sp0.P[1] + (inert[1] - sp0.P[1]) * V];
-    const vb = [sp0.V[0] + (now.V[0] - sp0.V[0]) * V, sp0.V[1] + (now.V[1] - sp0.V[1]) * V], vs = hyp(vb[0], vb[1]), hB = vs > 0.5 ? Math.atan2(vb[1], vb[0]) : q.h != null ? q.h : now.psi, lane = (c.F === "R" ? 1 : -1) * CARRY.lane(q.mode || "RUN");
+    // (the body's velocity the ball must roll with: over the coming 0.3 s — not at a far rhythm touch, by which a braking body has already slowed)
+    const sp0 = this.stateAt(T, plan), sp3 = this.stateAt(min(T, c.t + 0.3), plan), inert = [now.P[0] + now.V[0] * (T - this.t), now.P[1] + now.V[1] * (T - this.t)], bodyP = [sp0.P[0] + (inert[0] - sp0.P[0]) * V, sp0.P[1] + (inert[1] - sp0.P[1]) * V];
+    const vb = [sp3.V[0] + (now.V[0] - sp3.V[0]) * V, sp3.V[1] + (now.V[1] - sp3.V[1]) * V], vs = hyp(vb[0], vb[1]), hB = vs > 0.5 ? Math.atan2(vb[1], vb[0]) : q.h != null ? q.h : now.psi, lane = (c.F === "R" ? 1 : -1) * CARRY.lane(q.mode || "RUN");
     const lead = [bodyP[0] + Math.cos(hB) * CARRY.ahead(vs) - Math.sin(hB) * lane, bodyP[1] + Math.sin(hB) * CARRY.ahead(vs) + Math.cos(hB) * lane], d = [lead[0] - B[0], lead[1] - B[1]], D = hyp(d[0], d[1]);
     if (q.h == null) return out;   // (a stop: 88573ef0's own stop touch — to rest where the body stops)
     let sp = D < 1e-3 ? 0 : speedFor(D, max(0.08, T - c.t)); if (sp == null) sp = CARRY.vCap; const cap = max(0.4, vs) + 0.4 + 1.2 * (1 - W); sp = min(sp, cap, CARRY.vCap);
@@ -150,7 +167,9 @@ export class ControlledSim extends UnifiedSim {
     const b = this.ball.p, bv = this.ball.v, now = this.stateAt(this.t, this.plan), inS = hyp(bv[0], bv[1]);
     if (q.h == null) { const sp = min(inS, now.s * 0.55), h = inS > 0.3 ? Math.atan2(bv[1], bv[0]) : now.psi; c.aim = { kind: "vel", speed: now.s < 2.4 || inS < 0.3 ? 0 : sp, h, reaim: "stop" }; return; }
     const T = this.t + 0.35, lane = (c.F === "R" ? 1 : -1) * CARRY.lane(q.mode), P = [now.P[0] + now.V[0] * 0.35 + Math.cos(q.h) * CARRY.ahead(now.s) - Math.sin(q.h) * lane, now.P[1] + now.V[1] * 0.35 + Math.sin(q.h) * CARRY.ahead(now.s) + Math.cos(q.h) * lane];
-    c.aim = { kind: "target", P, T, reaim: "new line" }; }
+    // (the same rule as the controlled carry touch: no faster than the body then + a little, less the busier the stick)
+    const d = [P[0] - b[0], P[1] - b[1]], D = hyp(d[0], d[1]), W = max(this.volatility(), clamp((3.0 - now.s) / 2.0, 0, 1)); let sp = D < 1e-3 ? 0 : speedFor(D, 0.35); if (sp == null) sp = CARRY.vCap;
+    sp = min(sp, max(0.4, now.s) + 0.4 + 1.2 * (1 - W), CARRY.vCap); c.aim = { kind: "vel", speed: sp, h: D > 1e-3 ? Math.atan2(d[1], d[0]) : q.h, reaim: "new line" }; }
   // ── the possession monitor (both models: in FREE it only observes, with the same rules) ────────────────────────────────────────────────────
   possStep() { const P = this.poss, t = this.t, st = this.stateAt(t), b = this.ball.p, bv = this.ball.v, sep = hyp(b[0] - st.P[0], b[1] - st.P[1]), plan = this.plan;
     P.sep = sep; P.threat = sep / this.envOf(st.s); let missed = null, release = null;
@@ -168,6 +187,13 @@ export class ControlledSim extends UnifiedSim {
   // ── INTENTIONAL RELEASE (a test hook — this sandbox has no pass / shot system): the next planned touch becomes a knock-on into space ──────────
   release() { const c = this.firstContact(this.plan); if (!c || c.done) return false; c.aim = { kind: "vel", speed: 14, h: this.req.h != null ? this.req.h : this.stateAt(this.t).h }; c.release = true; c.role = "release (knock-on)"; return true; }
   execute(c) { if (this.CB && c.src === "carry" && !c.release) this.reaim(c); const n = this.contacts.length; super.execute(c); if (c.release && this.contacts.length > n) this.contacts[this.contacts.length - 1].release = true; }
+  // ── page / test events (recorded in the input log's events — replay and re-simulation apply them at the same tick) ──────────────────────────
+  addOpponent(probe) { this.opp.push(Object.assign({ r: 0.07, z: 0.10, e: 0.55, kind: "poke" }, probe, { hit: false })); this.log.events.push({ k: this.k, kind: "opponent", v: probe }); }
+  requestRelease() { const ok = this.release(); this.log.events.push({ k: this.k, kind: "release" }); return ok; }
+  applyEvent(e) { if (e.kind === "opponent") this.addOpponent(e.v); else if (e.kind === "release") this.requestRelease(); }
+  // (an opponent's poke aimed at the ball as it will be in 0.25 s, from the given side of the ball's travel, at the given foot speed)
+  pokeProbe(side = 1, speed = 6) { const b = this.ball.p, bv = this.ball.v, f = predict(b, bv, 0.25), st = this.stateAt(this.t), h = hyp(bv[0], bv[1]) > 0.5 ? Math.atan2(bv[1], bv[0]) : st.psi, a = h + side * Math.PI / 2 + Math.PI, u = [Math.cos(a + Math.PI), Math.sin(a + Math.PI)];
+    return { id: "poke@" + this.k, kind: "poke", t0: this.t, t1: this.t + 0.45, p0: [f.p[0] - u[0] * (speed * 0.25 + BR + 0.06), f.p[1] - u[1] * (speed * 0.25 + BR + 0.06)], v: [u[0] * speed, u[1] * speed], r: 0.07, z: 0.1, e: 0.55 }; }
   // ── the HUD's view (diagnostics only, never read by the simulation) ────────────────────────────────────────────────────────────────────────
   possInfo() { const P = this.poss, t = this.t, plan = this.plan, c = this.firstContact(plan), st = this.stateAt(t, plan); let sup = null;
     for (const X of ["R", "L"]) if (plan.stances[X].some((s) => s.t0 <= t + 1e-9 && s.t1 > t)) sup = sup ? "both" : X;
