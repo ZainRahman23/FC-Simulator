@@ -276,9 +276,12 @@ export class PlayBody {
     const lean = ch.lean.at(t) * DEG, side = ch.side.at(t) * DEG, trunk = ch.trunk.at(t) * DEG, crouch = ch.crouch.at(t), arms = ch.arms.at(t);
     let pelvis = [0, b.pelvisY - 0.02 - crouch + bob + 0.012 * run, 0.02 * run], Rp = R3.mul3(R3.y(gTw), R3.x(lean * 0.35), R3.z(-side * 0.45));
     rot.pelvis = Rp; rot.spine = R3.mul3(R3.y(trunk * 0.45 - gTw * 0.6), R3.x(lean * 0.3), R3.z(-side * 0.3)); rot.chest = R3.mul3(R3.y(trunk * 0.55 - gTw * 0.5), R3.x(lean * 0.35), R3.z(-side * 0.25));
-    const swing = clamp(RF.armSwing[0] + RF.armSwing[1] * sp, 0, RF.armSwing[2]) * DEG * Math.sin(Math.PI * cy.u) * sgnF(cy.sw) * g, armSide = this.T.armSide ? new RCurve(this.T.armSide).at(t) : 0;
+    // (SPEED-99-V1.1: ARM DRIVE — while a pace candidate accelerates hard the arms drive harder: the swing up to 45 % larger, the elbows a little
+    // more flexed, by the forward acceleration the plan gives over the next 0.1 s (≥ 6 m/s² = full); steady running is unchanged)
+    const AD = this.sim.P && this.sim.P.pace && this.sim.P.pace.accGait ? (() => { const V2 = this.vel(t + 0.1); return clamp(((V2[0] - V[0]) * V[0] + (V2[1] - V[1]) * V[1]) / max(0.3, sp) / 0.1 / 6, 0, 1); })() : 0;
+    const swing = clamp(RF.armSwing[0] + RF.armSwing[1] * sp, 0, RF.armSwing[2]) * (1 + 0.45 * AD) * DEG * Math.sin(Math.PI * cy.u) * sgnF(cy.sw) * g, armSide = this.T.armSide ? new RCurve(this.T.armSide).at(t) : 0;
     for (const X of SIDES) { const sx = sgnF(X), abd = 10 + 38 * arms * (1 + 0.5 * sx * armSide), arm = sx * swing;
-      rot["clavicle_" + X] = R3.I(); rot["upperArm_" + X] = R3.mul3(R3.z(sx * abd * DEG), R3.x(-arm - 4 * DEG - 10 * DEG * arms), R3.y(-sx * 8 * DEG)); rot["foreArm_" + X] = R3.x(-(35 + 45 * run * g + 20 * arms) * DEG); rot["hand_" + X] = R3.mul(R3.x(-8 * DEG), R3.z(-sx * 6 * DEG)); }
+      rot["clavicle_" + X] = R3.I(); rot["upperArm_" + X] = R3.mul3(R3.z(sx * abd * DEG), R3.x(-arm - 4 * DEG - 10 * DEG * arms), R3.y(-sx * 8 * DEG)); rot["foreArm_" + X] = R3.x(-(35 + 45 * run * g + 20 * arms + 12 * AD) * DEG); rot["hand_" + X] = R3.mul(R3.x(-8 * DEG), R3.z(-sx * 6 * DEG)); }
     const ball = this.ballAt(t), Rch = R3.mul3(Rp, rot.spine, rot.chest), headW = [pelvis[0], pelvis[1] + 0.68, pelvis[2] + 0.05], lk = clamp(ch.look.at(t), 0, 1), dB = hyp(ball[0] - S[0], ball[1] - S[1]);
     { const wB = lk * (1 - sstep(1.2, 2.2, dB)) * (1 - 0.6 * min(1, abs(ak.L) / (30 * DEG)) * ak.inTech), hL = (sp > 0.5 ? hdg(V) : this.psi(t)) + ak.head, tgt = [lerp(S[0] + Math.cos(hL) * 6, ball[0], wB), lerp(S[1] + Math.sin(hL) * 6, ball[1], wB), lerp(0.7, ball[2], wB)], q = this.toM(tgt, S, psi), d = [q[0] - headW[0], q[1] - headW[1], q[2] - headW[2]];
       const yw = clamp(Math.atan2(d[0], d[2]), -75 * DEG, 75 * DEG), pt = clamp(Math.atan2(-d[1], hyp(d[0], d[2])), -45 * DEG, 55 * DEG), want = R3.mul(R3.y(yw), R3.x(pt)), Qm = R3.mul(R3.tr(Rch), want), qa = R3.toYXZ(Qm);

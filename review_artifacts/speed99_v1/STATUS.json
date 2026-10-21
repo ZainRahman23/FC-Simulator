@@ -1,7 +1,7 @@
 {
  "milestone": "SPEED-99-V1",
  "date": "2026-10-21",
- "state": "BALL-OFF playground — playtest blocker FIXED (manual sprint now reaches each candidate's top speed; manual = scripted proven); presented again for the owner's choice of ceiling — NOT frozen, NOT integrated, no candidate selected",
+ "state": "V1.1: Sprint Speed 99 = 38.0 km/h (owner decision); Acceleration-99 candidates C38 / D38 / E38 presented for the owner's choice — NOT frozen, NOT integrated, no ball, 1–98 not defined",
  "local_only": "the character is a real player's model: never publish",
  "page": "http://127.0.0.1:8361/sandbox/visual/speed99.html",
  "defaults": {
@@ -143,10 +143,8 @@
  },
  "equivalence": "48/48 CURRENT ≡ TC-CONTROLLED-1 (ball off, ball on FREE, ball on CONTROLLED); node ≡ browser 8/8",
  "owner_decisions_open": [
-  "which ceiling (A / B / C / between)",
-  "post-cut explosion enough?",
-  "keep the two A99-C interaction rules; curve rule for CURRENT too?",
-  "then the ball-on CONTROLLED-99-PACE integration"
+  "Acceleration 99: C38 / D38 / E38 / between",
+  "then the ball-on integration (S99 38 km/h + Acc99 + A99-C + D99 + BC99 + CONTROLLED_BALL)"
  ],
  "playtest_fix": {
   "limiting_term": "the page's input adapter (request() in the viewer, inherited from 88573ef0's page): the stick's magnitude zones stop at RUN (5.3 m/s) and the top-bar Mode SPRINT was ignored while the stick was in use",
@@ -165,5 +163,136 @@
   },
   "candidates_unchanged": true
  },
- "owner_feedback_preliminary": "C feels surprisingly good, may be preferred for Acceleration 99 — not final (owner had not reached the full speed envelope)"
+ "owner_feedback_preliminary": "C feels surprisingly good, may be preferred for Acceleration 99 — not final (owner had not reached the full speed envelope)",
+ "owner_decisions": {
+  "sprint_speed_99": "38.0 km/h (10.556 m/s)",
+  "agility_99": "C (A99-C)",
+  "acceleration_99": "NOT YET SELECTED"
+ },
+ "v1_1": {
+  "report": "V1_1_REPORT.md",
+  "study": "evidence_v1_1/acceleration_study.txt",
+  "curve": "a(v) = a0 · (1 − (v/vmax)^p), ≥ 0.7 m/s² below vmax; vmax 38/3.6 for all",
+  "candidates": {
+   "C38": {
+    "a0": 11.11,
+    "p": 1.35
+   },
+   "D38": {
+    "a0": 11.11,
+    "p": 2.2
+   },
+   "E38": {
+    "a0": 11.5,
+    "p": 3.0
+   }
+  },
+  "standing_5_10_20_30_40_m_s": {
+   "CURRENT": [
+    1.37,
+    2.05,
+    3.3,
+    4.55,
+    5.8
+   ],
+   "C38": [
+    1.08,
+    1.66,
+    2.67,
+    3.62,
+    4.57
+   ],
+   "D38": [
+    1.02,
+    1.55,
+    2.52,
+    3.47,
+    4.42
+   ],
+   "E38": [
+    0.98,
+    1.49,
+    2.45,
+    3.39,
+    4.34
+   ]
+  },
+  "time_to_25_50_70_80_90_95_99_pct_s": {
+   "C38": [
+    0.26,
+    0.58,
+    0.97,
+    1.27,
+    1.77,
+    2.26,
+    2.86
+   ],
+   "D38": [
+    0.24,
+    0.51,
+    0.8,
+    1.0,
+    1.33,
+    1.64,
+    2.17
+   ],
+   "E38": [
+    0.23,
+    0.47,
+    0.71,
+    0.88,
+    1.12,
+    1.35,
+    1.78
+   ]
+  },
+  "speed_at_025_05_075_1_15_2_s": {
+   "C38": [
+    2.6,
+    4.7,
+    6.32,
+    7.52,
+    9.02,
+    9.79
+   ],
+   "D38": [
+    2.73,
+    5.17,
+    7.09,
+    8.44,
+    9.83,
+    10.33
+   ],
+   "E38": [
+    2.86,
+    5.54,
+    7.67,
+    9.08,
+    10.23,
+    10.56
+   ]
+  },
+  "post_180_to_7ms_s": {
+   "CURRENT": 2.01,
+   "C38": 1.36,
+   "D38": 1.21,
+   "E38": 1.14
+  },
+  "body_fixes": [
+   "arm drive while accelerating (candidates)",
+   "push foot kept planted at a standing start (was a 0.17 s float for every pace; CURRENT unchanged)"
+  ],
+  "page": [
+   "switch CURRENT / C38 / D38 / E38 (A/B/C under 'earlier')",
+   "EXPLOSION TEST (first 15 m, close side-on camera)",
+   "reference runner may be C38"
+  ],
+  "verification": "manual = scripted ≤ 3.6e-15 m/s; node ≡ browser 8/8; CURRENT ≡ TC-CONTROLLED-1 24/24",
+  "cpu_ms_per_sim_s": {
+   "CURRENT": 6.2,
+   "C38": 7.7,
+   "D38": 7.4,
+   "E38": 7.3
+  }
+ }
 }

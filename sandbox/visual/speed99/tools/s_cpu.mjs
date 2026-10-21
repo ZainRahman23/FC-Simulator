@@ -12,7 +12,7 @@ const env = { ...ENV, colliders: JSON.parse(fs.readFileSync(new URL("../../dribb
 const T = {}, depth = {}; const wrap = (proto, m, g) => { let o = proto; while (o && !Object.prototype.hasOwnProperty.call(o, m)) o = Object.getPrototypeOf(o); if (!o) return; const f = o[m];
   o[m] = function (...a) { depth[m] = (depth[m] || 0) + 1; const t0 = depth[m] === 1 ? performance.now() : 0; try { return f.apply(this, a); } finally { if (depth[m] === 1) T[g] = (T[g] || 0) + performance.now() - t0; depth[m]--; } }; };
 wrap(ControlledSim.prototype, "replan", "decision"); wrap(ControlledSim.prototype, "mkPlan", "movement"); wrap(ControlledSim.prototype, "gaitFrom", "support");
-for (const pace of opt("pace", "CURRENT,A,B,C").split(",")) { for (const k of Object.keys(T)) delete T[k]; let whole = 0, body = 0; const ticks = [];
+for (const pace of opt("pace", "CURRENT,C38,D38,E38").split(",")) { for (const k of Object.keys(T)) delete T[k]; let whole = 0, body = 0; const ticks = [];
   for (let s = 1; s <= seeds; s++) { const P = program(s, dur), sim = makeSim("TL", Object.assign(JSON.parse(JSON.stringify(PAGE)), { layers: presetLayers("FULL"), ballOn: false, pace })), B = new PlayBody(env, sim);
     for (let k = 0; k < Math.round(dur / DT); k++) { const a = performance.now(); sim.step(P.req(k * DT)); const w = performance.now() - a; whole += w; ticks.push(w); if (k % 4 === 0) { const b = performance.now(); B.pose(sim.t); body += performance.now() - b; } } }
   const S = seeds * dur; ticks.sort((a, b) => a - b); const q = (x) => ticks[Math.floor(x * (ticks.length - 1))];

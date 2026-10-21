@@ -9,6 +9,9 @@ const SPR = () => "SPRINT";
 export const PACE_TESTS = [
   // (THE TOP SPEED RUN — owner, playtest blocker: from rest, perfectly straight, full sprint, long enough to reach the candidate's top speed)
   P("TOP SPEED RUN · standing → straight full sprint (80 m)", T1 + 10, standThen(0), SPR, { course: "straight" }),
+  // (THE EXPLOSION TEST — owner, V1.1: only the first 10–15 m, judged up close: the first steps, the lean, the stride opening)
+  P("EXPLOSION TEST · the first 15 m (close camera)", T1 + 2.6, standThen(0), SPR, { course: "explosion" }),
+  P("sprint → 60° cut + accelerate", T1 + 5 + 3, at([[0, null], [T1, 0], [T1 + 5, 60]]), SPR),
   P("0–5 m · standing → sprint", T1 + 2.2, standThen(0), SPR, { course: "straight" }),
   P("0–10 m · standing → sprint", T1 + 2.8, standThen(0), SPR, { course: "straight" }),
   P("0–20 m · standing → sprint", T1 + 4.0, standThen(0), SPR, { course: "straight" }),

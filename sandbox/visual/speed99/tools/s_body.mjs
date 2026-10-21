@@ -20,6 +20,7 @@ export const SCEN = {
   "standing → sprint": { pre: [[null, "RUN", 0.5]], f: () => R(0, "SPRINT"), dur: 6 },
   "jog → sprint": { pre: [[0, "JOG", 2.5]], f: () => R(0, "SPRINT"), dur: 5 },
   "sprint → 45° + go": { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5]], f: () => R(45 * DEG, "SPRINT"), dur: 3 },
+  "sprint → 60° + go": { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5]], f: () => R(60 * DEG, "SPRINT"), dur: 3 },
   "sprint → 90° + go": { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5]], f: () => R(90 * DEG, "SPRINT"), dur: 3 },
   "sprint → 120° + go": { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5]], f: () => R(120 * DEG, "SPRINT"), dur: 3 },
   "sprint → 180° + go": { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5]], f: () => R(Math.PI, "SPRINT"), dur: 4 },
@@ -51,7 +52,7 @@ export function bodyScen(pace, sc) { const sim = makeSim("TL", { layers: presetL
     top: top.length ? { cadence: +(1 / mean(top, "period")).toFixed(2), length: +mean(top.filter((x) => x.length), "length").toFixed(2), contact: +mean(top, "contact").toFixed(3), lead: +mean(top, "lead").toFixed(2) } : null, first: steps.slice(0, 4), steps });
   return o; }
 if ((process.argv[1] || "").endsWith("s_body.mjs") && AR.includes("--sweep")) { for (const p of opt("pace", "CURRENT").split(",")) { const row = [];
-    for (const ang of [90, 120, 150, 180]) { const T = { jumps: 0, ix: 0, flight: 0, pops: 0, n: 0, bad: 0 };
+    for (const ang of [60, 90, 120, 150, 180]) { const T = { jumps: 0, ix: 0, flight: 0, pops: 0, n: 0, bad: 0 };
       for (let i = 0; i < 6; i++) { const o = bodyScen(p, { pre: [[null, "RUN", 0.5], [0, "SPRINT", 5 + i * 0.04]], f: () => R(ang * DEG, "SPRINT"), dur: 3 }); T.jumps += o.jumps; T.ix += o.ix; T.flight += o.flight; T.pops += o.pops; T.n++; if (o.jumps || o.ix || o.flight) T.bad++; }
       row.push(`${ang}°: ${T.bad}/${T.n} with a warning (jumps ${T.jumps}, intersection frames ${T.ix}, flights > 0.15 s ${T.flight}; pelvis pops ${T.pops})`); }
     console.log(`■ ${p.padEnd(7)} ` + row.join(" · ")); } process.exit(0); }

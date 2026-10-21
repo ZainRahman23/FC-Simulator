@@ -50,11 +50,18 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); if (abs(r.t0 - l.t0) < 1e-9) return r.src === "tech" ? r : l.src === "tech" ? l : r; return r.t0 > l.t0 ? r : l; };
     const moving = plan.req && plan.req.h != null;
     // standing and asked to move: the rear foot (relative to the request) steps first, quickly
-    if (lastOf("R").t1 === Infinity && lastOf("L").t1 === Infinity) {
+    // (SPEED-99-V1.1, the pace candidates: a standing stance shortened by the early-release rule — a hard launch leaves it ≥ 0.6 m behind within
+    // 0.32 s — is still a standing start: without this E38 skipped the start step for an immediate re-step and a 0.16 s float)
+    const AGS = !!(this.P.pace && this.P.pace.accGait), standing = (l) => l.t1 === Infinity || (AGS && l.src === "stand" && l.t0 < t && l.t1 > t);
+    if (standing(lastOf("R")) && standing(lastOf("L"))) {
       if (!moving && !anchors.length) return S;
       const hq = plan.req.h, rr = toLocal(lastOf("R").pos, this.stateAt(t, plan).P, hq)[0], ll = toLocal(lastOf("L").pos, this.stateAt(t, plan).P, hq)[0];
       let X = rr < ll - 0.02 ? "R" : ll < rr - 0.02 ? "L" : (this.o.foot === "L" ? "R" : "L"); if (anchors.length) { const A0 = anchors[0]; X = A0.t0 - t < 0.3 ? A0.F : other(A0.F); }
-      const td = t + 0.03 + 0.17; lastOf(X).t1 = t + 0.03; if (!(anchors.length && anchors[0].F === X && anchors[0].t0 < td + 0.1)) step(X, td); lastOf(other(X)).t1 = Infinity; }
+      const td = t + 0.03 + 0.17; lastOf(X).t1 = t + 0.03; if (!(anchors.length && anchors[0].F === X && anchors[0].t0 < td + 0.1)) step(X, td); lastOf(other(X)).t1 = Infinity;
+      // (SPEED-99-V1.1, the pace candidates: THE PUSH FOOT — the standing foot that does not step first stays planted, driving, until just before
+      // the first step lands (a 0.03 s flight); the free-running loop below lifted it at once ("a standing foot: now"), both feet airborne for
+      // the first 0.17 s of the hardest push — a hop, not a start)
+      if (AGS && moving && !anchors.length) lastOf(other(X)).t1 = td - 0.03; }
     // the anchors (a technique's own stances): the steps before each spread evenly to land it on its foot at its time
     for (const A of anchors.slice().sort((x, y) => x.t0 - y.t0)) { if (A.t0 <= t + this.P.react) continue;
       const L0 = lastTD(), N = other(L0.F), gap = A.t0 - L0.t0, Ts = this.gait(max(this.stateAt(L0.t0, plan).s, 0.5)).Ts;

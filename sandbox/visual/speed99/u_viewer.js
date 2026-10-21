@@ -38,7 +38,7 @@ import { PlayBody as TLBody } from "./u_body.js";
 import * as BS from "../tc_baseline_88573ef0/pt_sim.js";
 import * as BB from "../tc_baseline_88573ef0/pt_body.js";
 import { TESTS as OWNER_TESTS, MORNING, MODES as TMODES } from "./u_tests.js";
-import { PACE, PACE_IDS } from "./pace.js";
+import { PACE, PACE_IDS, PACE_MAIN } from "./pace.js";
 import { PACE_TESTS } from "./s_tests.js";
 const TESTS = PACE_TESTS.map((x) => Object.assign({ fam: "pace" }, x)).concat(MORNING, OWNER_TESTS);
 const { DT, MODES, LABEL, wrap, dir, hdg, LAYERS, PRESETS, PRESET_LABEL, REJECTED, presetLayers, actionId } = TL;
@@ -49,7 +49,7 @@ import { STICK, stickVector, stickMode, headingFrom, stickAngleDeg, BITS } from 
 const W = window, hyp = Math.hypot, DEG = Math.PI / 180, max = Math.max, min = Math.min, abs = Math.abs;
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
 const START = { P: [52.5, 34], h: 0 };
-const V = { engine: "layered", layers: presetLayers("FULL"), ballOn: false, control: "CONTROLLED", pace: "B", refPace: "CURRENT", ref: null, refBody: null, run: null, lastReq: null, test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
+const V = { engine: "layered", layers: presetLayers("FULL"), ballOn: false, control: "CONTROLLED", pace: "C38", refPace: "CURRENT", ref: null, refBody: null, run: null, lastReq: null, test: null, diag: { prev: null, air: 0, hist: [] }, ready: false, paused: false, rate: 1, acc: 0, baseMode: "RUN", keys: new Set(), latch: { combo: "", h: 0 }, camId: "follow", cam: null, camH: 0,
   // the on-screen stick (input only): the source that last became active authors the movement — "keys" (a WASD key went down) or "stick"
   src: "keys", stick: { pid: null, raw: { x: 0, y: 0 }, v: { x: 0, y: 0, m: 0, r: 0 }, latch: 0, moving: false, cfg: Object.assign({}, STICK) }, btn: { sprint: false, walk: false, lock: false }, inStick: null, stickLog: [],
   show: { hud: true, side: false, prot: false, body: false, anim: true, diag: false }, course: null, replay: null, perf: { frame: [], sim: [], pose: [], render: [], work: [] }, lastNow: null, lastShown: null, dom: {}, verify: null };
@@ -142,7 +142,7 @@ function sameInput(target) { if (V.sim.k < 10) return; stopTest(); const rec = W
 function otherModel() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", target = V.control === "CONTROLLED" ? "FREE" : "CONTROLLED";
   setTimeout(() => { loadRec(rec, "layered", V.layers, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 // SAME INPUT → THE NEXT PACE (N): this session's recorded input re-simulated with the next candidate, then its replay (same window)
-function nextPace() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", target = PACE_IDS[(PACE_IDS.indexOf(V.pace) + 1) % PACE_IDS.length];
+function nextPace() { if (V.sim.k < 10 || V.engine !== "layered") return; stopTest(); const rec = W.PT.record(), tRep = V.replay ? V.replay.t : null, kind = V.replay ? V.replay.kind : "buffer", L = PACE_MAIN, target = L[(L.indexOf(V.pace) + 1) % L.length];
   setTimeout(() => { loadRec(rec, "layered", V.layers, null, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 function nextInChain() { const cur = V.engine === "baseline" ? -1 : CHAIN.findIndex((n) => { const P = presetLayers(n); return LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id]); }); sameInput(CHAIN[(cur + 1) % CHAIN.length]); }
 // THE OPPONENT POKE: a deterministic opponent foot aimed at the ball as it will be in 0.25 s, from alternate sides of its travel (recorded event)
@@ -169,7 +169,7 @@ function request() {
 function stepSim(req) { V.sim.step(req); if (V.ref) V.ref.step(req); trackRun(req); if (V.test && V.test.T.courseAt && !V.test.courseDone && V.sim.t >= V.test.T.courseAt) { V.course = makeCourse(V.test.T.course); V.test.courseDone = true; } const S = V.stick, on = !!(req.keys & BITS.STICK); V.stickLog.push(on ? S.raw.x : 0, on ? S.raw.y : 0, on ? S.v.x : 0, on ? S.v.y : 0); }
 // ── THE RUN being measured (the pace panel): it starts when the stick is pushed from rest, or SPRINT is pressed with the stick pushed — the
 // path length since then, the time and speed at 5 / 10 / 20 / 30 / 40 / 60 m, the top speed; the reference runner's beside it (same input)
-const MARKS = [5, 10, 20, 30, 40, 60, 80], TOP_NAME = "TOP SPEED RUN · standing → straight full sprint (80 m)";
+const MARKS = [5, 10, 20, 30, 40, 60, 80], TOP_NAME = "TOP SPEED RUN · standing → straight full sprint (80 m)", BOOM_NAME = "EXPLOSION TEST · the first 15 m (close camera)";
 function runOf(S, prev) { const st = S.stateAt(S.t); return { t0: S.t - DT, P: S.stateAt(Math.max(0, S.t - DT)).P.slice(), d: 0, entry: prev ? prev.s : st.s, splits: {}, vmax: 0 }; }
 function adv(R, S) { const st = S.stateAt(S.t), V0 = S.P.speed.SPRINT; R.d += hyp(st.P[0] - R.P[0], st.P[1] - R.P[1]); R.P = st.P.slice(); R.vmax = max(R.vmax, st.s); R.s = st.s; R.t = S.t - R.t0; for (const m of MARKS) if (R.splits[m] == null && R.d >= m) R.splits[m] = { t: R.t, v: st.s };
   R.pct = R.pct || {}; for (const f of [90, 95, 99]) if (R.pct[f] == null && st.s >= f / 100 * V0 - 1e-9) R.pct[f] = { t: R.t, d: R.d }; }
@@ -217,6 +217,12 @@ function cameraFor(h, vw, vh, dtc) {
     if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
     const D = 10.5, el = 27 * DEG, f = dir(C.yaw); tgt = [C.tgt[0], 0.55, -C.tgt[1]]; eye = [C.tgt[0] - f[0] * D * Math.cos(el), 0.55 + D * Math.sin(el), -(C.tgt[1] - f[1] * D * Math.cos(el))]; camH = C.yaw; fov = 50; }
   else if (V.camId === "touchline") { C.tx += (P[0] - C.tx) * k(0.5); C.ty += (P[1] - C.ty) * k(2.5); eye = [C.tx, 17, -(min(C.ty, 34) - 31)]; tgt = [C.tgt[0], 0.5, -C.tgt[1]]; fov = 26; camH = hdg([tgt[0] - eye[0], -(tgt[2] - eye[2])]); }
+  else if (V.camId === "explosion") {
+    // (SPEED-99-V1.1: THE EXPLOSION camera — close and side-on, on the player's side (the reference runner's lane beyond), following the player:
+    // the first steps, the lean, the stride opening)
+    if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
+    const f = dir(C.yaw), n = [-f[1], f[0]], A = [P[0] + f[0] * 0.6, P[1] + f[1] * 0.6]; C.em = C.em ? [C.em[0] + (A[0] - C.em[0]) * k(0.08), C.em[1] + (A[1] - C.em[1]) * k(0.08)] : A.slice();
+    tgt = [C.em[0], 0.85, -C.em[1]]; eye = [C.em[0] + n[0] * 6.2, 1.55, -(C.em[1] + n[1] * 6.2)]; fov = 48; camH = C.yaw; }
   else if (V.camId === "pair" && V.ref) {
     // (SPEED-99-V1: BOTH RUNNERS, side-on — the midpoint of the player and the reference runner, seen from the side of the travel; it backs off as
     // the gap grows, so the 99 player pulling away stays in the picture)
@@ -235,6 +241,7 @@ function makeCourse(id) {
   if (id === "none") return null; const h = hudAt(V.sim.t), P = h.st.P, th = h.st.s > 1 ? h.travel : h.st.psi, at = (a, l) => [P[0] + a * Math.cos(th) - l * Math.sin(th), P[1] + a * Math.sin(th) + l * Math.cos(th)];
   const cones = [], lines = [], labels = [];
   if (id === "straight") { for (const a of [5, 10, 20, 30, 40, 60, 80]) { cones.push(at(a, -1.6), at(a, 1.6)); labels.push([at(a, 2.4), a + " m"]); } lines.push([at(0, 0), at(80, 0), "rgba(255,255,255,0.35)", [6, 6]], [at(40, -1.6), at(40, 1.6), "rgba(255,212,94,0.9)"], [at(80, -1.6), at(80, 1.6), "rgba(255,212,94,0.9)"]); }
+  else if (id === "explosion") { for (const a of [2.5, 5, 7.5, 10, 12.5, 15]) { cones.push(at(a, -1.6), at(a, 1.6)); labels.push([at(a, 2.4), a + " m"]); } lines.push([at(0, 0), at(15, 0), "rgba(255,255,255,0.35)", [6, 6]], [at(15, -1.6), at(15, 1.6), "rgba(255,212,94,0.9)"]); }
   else if (id === "slalom") { for (let i = 0; i < 9; i++) cones.push(at(5 + i * 3.5, 0)); lines.push([at(0, 0), at(5 + 8 * 3.5 + 4, 0), "rgba(255,255,255,0.25)", [4, 6]]); labels.push([at(5, 1.2), "slalom · 3.5 m"]); }
   else if (id === "cuts") { const C = at(12, 0); cones.push(C); lines.push([at(0, 0), C, "rgba(255,255,255,0.45)", [6, 5]]);
     for (const d of [45, 90, 120, 150, 180, -45, -90, -120, -150]) { const e = th + d * DEG, E = [C[0] + Math.cos(e) * 7, C[1] + Math.sin(e) * 7]; lines.push([C, E, abs(d) >= 150 ? "rgba(255,140,120,0.75)" : abs(d) >= 120 ? "rgba(255,190,110,0.75)" : "rgba(140,220,255,0.75)"]); cones.push(E); labels.push([[C[0] + Math.cos(e) * 7.8, C[1] + Math.sin(e) * 7.8], (d > 0 ? "R " : d < 0 ? "L " : "") + abs(d) + "°"]); } }
@@ -452,11 +459,12 @@ function setLock(on) { V.btn.lock = !!on; const d = V.dom; if (d.bLock) { d.bLoc
 // (the sprint actually requested this tick, and by what: the lock, the SPRINT button held, Shift, a preset)
 function sprintSrc() { const K = V.keys, sh = K.has("ShiftLeft") || K.has("ShiftRight"); return V.btn.tSprint ? "preset" : V.btn.lock ? "SPRINT LOCK" : V.btn.sprint ? "SPRINT held" : sh ? "Shift held" : null; }
 function bindUI() {
-  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["pacebox", "selRef", "bNextPace", "paceBtns", "bTop", "sprintBanner", "bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
+  const $ = (id) => document.getElementById(id), d = V.dom; for (const id of ["pacebox", "selRef", "bNextPace", "paceBtns", "bTop", "bBoom", "sprintBanner", "bar", "stage", "hud", "side", "graph", "stats", "ctab", "keys", "replay", "rScrub", "rLabel", "perf", "prov", "bPause", "aBC", "aDRI", "aAGI", "vBC", "vDRI", "vAGI", "selFoot", "selStyle", "selCam", "selCourse", "help", "stickBox", "stickPad", "stickInfo", "dz", "bSprint", "bLock", "bWalk", "ver", "selEng", "layBox", "selSame", "bSame", "bNext", "selTest", "bTest", "diag", "cBall", "bDiag", "bPoke", "bRelease", "bOther"]) d[id] = $(id);
   // THE PACE (SPEED-99-V1): the candidates, the reference runner, same input → the next pace; the ball model / probes behind ⚙
-  d.paceBtns.innerHTML = PACE_IDS.map((id) => `<button data-pace="${id}" title="${PACE[id].label}">${id === "CURRENT" ? "CURRENT" : id}</button>`).join("");
+  d.paceBtns.innerHTML = PACE_MAIN.map((id) => `<button data-pace="${id}" title="${PACE[id].label}">${id === "CURRENT" ? "CURRENT" : id}</button>`).join("") + `<select id="selEarlier" title="the earlier candidates (V1: A 10.0 m/s, B 10.35, C 10.35)"><option value="">earlier…</option>${PACE_IDS.filter((x) => !PACE_MAIN.includes(x)).map((x) => `<option value="${x}">${x}</option>`).join("")}</select>`;
+  { const se = document.getElementById("selEarlier"); se.onchange = (e) => { if (se.value) { V.pace = se.value; stopTest(); newSim(); } se.value = ""; e.target.blur(); }; }
   document.querySelectorAll("[data-pace]").forEach((b) => (b.onclick = (e) => { V.pace = b.dataset.pace; stopTest(); newSim(); e.target.blur(); }));
-  d.selRef.innerHTML = [["off", "off"], ...PACE_IDS.map((id) => [id, id === "CURRENT" ? "CURRENT pace" : "candidate " + id])].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  d.selRef.innerHTML = [["off", "off"], ...PACE_MAIN.concat(PACE_IDS.filter((x) => !PACE_MAIN.includes(x))).map((id) => [id, id === "CURRENT" ? "CURRENT pace" : "candidate " + id])].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
   d.selRef.onchange = (e) => { V.refPace = d.selRef.value; stopTest(); newSim(); e.target.blur(); }; d.bNextPace.onclick = (e) => { nextPace(); e.target.blur(); };
   { const bo = $("ballOpts"); if (bo) { bo.append($("model"), $("pokeGrp")); $("model").style.display = ""; $("pokeGrp").style.display = ""; } }
   document.querySelectorAll("[data-model]").forEach((b) => (b.onclick = (e) => { V.engine = "layered"; V.control = b.dataset.model; stopTest(); newSim(); e.target.blur(); }));
@@ -509,6 +517,7 @@ function bindUI() {
   hold(d.bSprint, "sprint"); hold(d.bWalk, "walk");
   d.bLock.addEventListener("click", (e) => { setLock(!V.btn.lock); d.bLock.blur(); }); setLock(false);
   if (d.bTop) d.bTop.onclick = (e) => { startTest(TOP_NAME); if (V.ref) { V.camId = "pair"; d.selCam.value = "pair"; V.cam = null; V.lastShown = null; } blur(e); };
+  if (d.bBoom) d.bBoom.onclick = (e) => { startTest(BOOM_NAME); V.camId = "explosion"; d.selCam.value = "explosion"; V.cam = null; V.lastShown = null; blur(e); };
   d.dz.onchange = d.dz.oninput = () => { const x = clamp(+d.dz.value || 0, 0, 0.3); S.cfg.deadzone = x; S.v = stickVector(S.raw.x, S.raw.y, x); drawStick(); };
   const code = (e) => e.code;
   window.addEventListener("keydown", (e) => {
@@ -523,7 +532,7 @@ function bindUI() {
     else if (c === "KeyB") { if (V.replay) stopReplay(); else startReplay("buffer"); }
     else if (c === "Escape") stopReplay();
     else if (c === "KeyH") { V.show.hud = !V.show.hud; $("cHud").checked = V.show.hud; d.hud.classList.toggle("hidden", !V.show.hud); }
-    else if (c === "KeyC") { const o = ["follow", "pair", "touchline", "top", "side"], i = (o.indexOf(V.camId) + 1) % o.length; V.camId = o[i]; d.selCam.value = V.camId; V.cam = null; V.lastShown = null; }
+    else if (c === "KeyC") { const o = ["follow", "pair", "explosion", "touchline", "top", "side"], i = (o.indexOf(V.camId) + 1) % o.length; V.camId = o[i]; d.selCam.value = V.camId; V.cam = null; V.lastShown = null; }
     else if (c === "KeyV") verifyDeterminism();
     else if (c === "KeyX") nextInChain();
     else if (c === "KeyM") otherModel();

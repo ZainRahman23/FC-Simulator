@@ -1,6 +1,6 @@
 # SPEED-99-V1: handoff
 
-**Presented for the owner's playtest.** The playtest blocker is fixed: see `PLAYTEST_FIX_REPORT.md`. Ball-off only. Not frozen, not integrated, ratings 1–98 not defined. **LOCAL ONLY.** The brief is in `sources/`, verbatim. The results are in `SPEED99_V1_REPORT.md`; the research is in `RESEARCH.md`.
+**V1.1:** Sprint Speed 99 = 38.0 km/h (owner); the Acceleration-99 candidates C38 / D38 / E38 are in `V1_1_REPORT.md`. **Presented for the owner's playtest.** The playtest blocker is fixed: see `PLAYTEST_FIX_REPORT.md`. Ball-off only. Not frozen, not integrated, ratings 1–98 not defined. **LOCAL ONLY.** The brief is in `sources/`, verbatim. The results are in `SPEED99_V1_REPORT.md`; the research is in `RESEARCH.md`.
 
 **Page:** `http://127.0.0.1:8361/sandbox/visual/speed99.html` (`?pace=CURRENT|A|B|C`, `&ref=off|CURRENT|A|B|C`, `&ball=1`, `&cam=…`)
 
@@ -23,6 +23,7 @@ The directory is a copy of `tc_controlled1/`: TC-CONTROLLED-1's simulation, page
 
 | Command | What |
 |---|---|
+| `node s_accgrid.mjs` | the Acceleration-99 study (curve family grid at 38 km/h) |
 | `node s_equiv.mjs --seeds 8 --dur 30` | CURRENT / no pace ≡ TC-CONTROLLED-1 |
 | `node s_matrix.mjs --pace CURRENT,A,B,C` | starts over 5–60 m, slowing, cuts with recovery, repeated cuts, long sprint, curves |
 | `node s_body.mjs --pace CURRENT,A,B,C [--sweep]` | body integrity and steps; the 4 angles × 6 phases cut sweep |
@@ -34,5 +35,5 @@ The directory is a copy of `tc_controlled1/`: TC-CONTROLLED-1's simulation, page
 
 ## Next (only on the owner's word)
 
-1. The owner chooses a ceiling (A / B / C or between) and rules on the two A99-C interaction rules.
+1. The owner chooses Acceleration 99 (C38 / D38 / E38 or between). Sprint Speed 99 = 38 km/h and A99-C are decided.
 2. Build CONTROLLED-99-PACE beside CONTROLLED-CURRENT-PACE: the same code, `o.pace` with the ball on, then Technical Control adapts (§22–25: long sprint touches in open space, tightening under steering, zero controller failures).

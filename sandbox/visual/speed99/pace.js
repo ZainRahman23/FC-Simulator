@@ -25,10 +25,19 @@ export const PACE = {
   A: { id: "A", label: "A · elite realistic (10.0 m/s, τ 1.10)", color: "#a5d9b1", vmax: 10.0, tau: 1.10, p: 1.0, aEnd: 0.5, steerGain: { aLat: 9.0 }, accGait: true, accLean: true },
   B: { id: "B", label: "B · exceptional football ceiling (10.35 m/s, τ 1.05)", color: "#edcc76", vmax: 10.35, tau: 1.05, p: 1.0, aEnd: 0.5, steerGain: { aLat: 10.0 }, accGait: true, accLean: true },
   C: { id: "C", label: "C · responsive gameplay ceiling (10.35 m/s, τ 0.95, p 1.35)", color: "#ff9b8d", vmax: 10.35, tau: 0.95, p: 1.35, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
+  // ── SPEED-99-V1.1 (owner, 21 Oct): SPRINT SPEED 99 = 38.0 km/h (10.5556 m/s) for every candidate; ACCELERATION 99 not yet selected. The study
+  // (review_artifacts/speed99_v1/V1_1_REPORT.md): holding C's launch and raising p barely moves the first response (speed at 0.25 s 2.60 →
+  // 2.77 m/s) but transforms the middle of the curve (70 / 80 / 90 % of vmax 0.97 / 1.27 / 1.77 s → 0.74 / 0.90 / 1.16 s at p 3) — C is
+  // conservative through the middle, not at the launch. Each: a0 = the launch (m/s² at rest), p = how far into the speeds it holds
+  C38: { id: "C38", label: "C38 · C's acceleration at 38 km/h (launch 11.1 m/s², p 1.35)", color: "#ff9b8d", vmax: 38 / 3.6, tau: 0.95, p: 1.35, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
+  D38: { id: "D38", label: "D38 · C's launch, stronger middle (11.1 m/s², p 2.2)", color: "#ffb36b", vmax: 38 / 3.6, a0: (38 / 3.6) / 0.95, p: 2.2, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
+  E38: { id: "E38", label: "E38 · upper responsive ceiling (11.5 m/s², p 3.0)", color: "#ff6f6f", vmax: 38 / 3.6, a0: 11.5, p: 3.0, aEnd: 0.7, steerGain: { aLat: 11.0 }, accGait: true, accLean: true },
 };
+// (the page's main switch: CURRENT and the 38 km/h acceleration candidates; A / B / C stay selectable under "earlier")
+export const PACE_MAIN = ["CURRENT", "C38", "D38", "E38"];
 export const PACE_IDS = Object.keys(PACE);
 // the acceleration at speed s (m/s²) for a profile: a0 · (1 − (s / vmax)^p), never below aEnd while s < vmax (0 at and above vmax)
-export function accelOf(pr) { const a0 = pr.vmax / pr.tau; return (s) => { if (s >= pr.vmax) return 0; const x = Math.max(0, s / pr.vmax); return Math.max(a0 * (1 - Math.pow(x, pr.p)), pr.aEnd); }; }
+export function accelOf(pr) { const a0 = pr.a0 != null ? pr.a0 : pr.vmax / pr.tau; return (s) => { if (s >= pr.vmax) return 0; const x = Math.max(0, s / pr.vmax); return Math.max(a0 * (1 - Math.pow(x, pr.p)), pr.aEnd); }; }
 // apply a profile to the baseline's parameters (in place): the SPRINT request's speed, the acceleration curve, the steering rule, the body flags
 export function applyPace(P, id) { const pr = PACE[id]; if (!pr || !pr.vmax) return P;
   P.speed = Object.assign({}, P.speed, { SPRINT: pr.vmax }); P.accel = accelOf(pr); if (pr.steerGain) P.steerGain = pr.steerGain; P.envExtend = pr.vmax / 8 + 0.05; P.pace = pr; return P; }   // (envExtend: A99-C's own speed scaling continued to the candidate's top speed)

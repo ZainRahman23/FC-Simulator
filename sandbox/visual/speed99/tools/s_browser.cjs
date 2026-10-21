@@ -5,7 +5,7 @@
 const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path"), os = require("os");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-(async () => { const OUT = arg("out"), URL = arg("url", "http://127.0.0.1:8361/sandbox/visual/speed99.html"), paces = arg("paces", "CURRENT,A,B,C").split(","), prof = fs.mkdtempSync(path.join(process.env.PT_TMP || os.tmpdir(), "spb-")); fs.mkdirSync(OUT, { recursive: true });
+(async () => { const OUT = arg("out"), URL = arg("url", "http://127.0.0.1:8361/sandbox/visual/speed99.html"), paces = arg("paces", "CURRENT,C38,D38,E38").split(","), prof = fs.mkdtempSync(path.join(process.env.PT_TMP || os.tmpdir(), "spb-")); fs.mkdirSync(OUT, { recursive: true });
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: prof, args: ["--enable-webgl", "--ignore-gpu-blocklist", "--use-angle=metal", "--window-size=1500,920"] });
   try { const p = await b.newPage(); await p.setViewport({ width: 1500, height: 920 }); const logs = [], http = [];
     p.on("pageerror", (e) => logs.push(e.message)); p.on("console", (m) => { if (m.type() === "error") logs.push(m.text()); }); p.on("response", (r) => { if (r.status() >= 400) http.push(r.status() + " " + r.url()); });
@@ -20,7 +20,7 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
         res.runs.push({ pace, name, determinism: det.ok, splits: run && Object.fromEntries(Object.entries(run.splits).map(([m, x]) => [m, +x.t.toFixed(2)])), vmax: run && +run.vmax.toFixed(2), refSplits: run && run.ref ? Object.fromEntries(Object.entries(run.ref.splits).map(([m, x]) => [m, +x.t.toFixed(2)])) : null, refPace: ref ? true : false, session: sf });
         await p.evaluate(() => { window.PT.V.paused = false; }); } }
     // the same input through the next pace
-    await p.evaluate(() => window.PT.pace("B")); await p.evaluate((n) => window.PT.test(n), "0–20 m · standing → sprint"); await p.waitForFunction("!window.PT.V.test", { timeout: 30000 }); await sleep(150);
+    await p.evaluate(() => window.PT.pace("C38")); await p.evaluate((n) => window.PT.test(n), "0–20 m · standing → sprint"); await p.waitForFunction("!window.PT.V.test", { timeout: 30000 }); await sleep(150);
     const before = await p.evaluate(() => ({ pace: window.PT.pace(), rec: window.PT.record() })); await p.evaluate(() => window.PT.nextPace()); await sleep(2500);
     const after = await p.evaluate(() => ({ pace: window.PT.pace(), rec: window.PT.record(), replay: !!window.PT.V.replay })); await shot("next_pace_replay.jpg");
     res.nextPace = { from: before.pace, to: after.pace, replay: after.replay, inputIdentical: JSON.stringify(before.rec.input) === JSON.stringify(after.rec.input) };
