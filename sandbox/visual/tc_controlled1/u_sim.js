@@ -137,14 +137,15 @@ UnifiedSim.prototype.carryTouches = function (plan, keep, q, recover = false, sk
       const u = Math.max(0, Math.min(1, (this.t - f.a.t1) / Math.max(1e-3, c.t - f.a.t1))), g = [f.a.pos[0] + (c.bPred[0] - f.a.pos[0]) * u, f.a.pos[1] + (c.bPred[1] - f.a.pos[1]) * u];
       const uS = Math.max(0, Math.min(1, (this.t - f.a.t1) / Math.max(1e-3, f.b.t0 - f.a.t1))), Hs = Math.min(0.5, 0.05 * this.stateAt(this.t, this.plan).s) * Math.sin(Math.PI * uS);
       if (Math.hypot(g[0] - f.p[0], g[1] - f.p[1], Hs) > 0.12) { (this._rej = this._rej || {})["late retarget"] = (this._rej["late retarget"] || 0) + 1; const L2 = plan.stances[c.F], ld = L2.find((s) => s.t0 > c.t);
-        if (ld) return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), c.F + (ld.t0 - CARRY.touchBefore).toFixed(4)])); } } }
+        // (TC-CONTROLLED-1 fix: never re-skip an end already skipped — a committed touch comes back whatever the skip; TC-UNIFIED-1 recursed without end)
+        const key = c.F + (ld ? (ld.t0 - CARRY.touchBefore).toFixed(4) : ""); if (ld && !(skip && skip.has(key)) && !(skip && skip.size >= 6)) return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), key])); } } }
   const L = plan.stances[c.F]; let lift = null, land = null;
   for (const s of L) { if (s.t1 <= c.t + 1e-9) lift = s; else if (s.t0 > c.t && !land) land = s; } if (!lift || !land || lift.t1 === Infinity) return out;
   // (relative to the body: the foot's way to the ball less the root's own travel meanwhile — a sprinting foot covers metres with the body)
   const t0 = Math.max(lift.t1, this.t - 0.4), R0 = this.stateAt(t0, plan).P, R1 = this.stateAt(c.t, plan).P, rx = c.bPred[0] - lift.pos[0] - (R1[0] - R0[0]), ry = c.bPred[1] - lift.pos[1] - (R1[1] - R0[1]);
   const d = hyp(rx, ry), v = d / Math.max(DT, c.t - t0), lim = lift.t1 > this.t && c.t - lift.t1 < 0.12 ? 8.0 : Infinity;   // (only a foot still down, lifting < 0.12 s before)
   if (v <= lim) return out; (this._rej = this._rej || {})["carry swing"] = (this._rej["carry swing"] || 0) + 1;
-  return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), c.F + (land.t0 - CARRY.touchBefore).toFixed(4)])); };
+  const key = c.F + (land.t0 - CARRY.touchBefore).toFixed(4); if (skip && skip.has(key)) return out; return this.carryTouches(plan, keep, q, recover, new Set([...(skip || []), key])); };
 // ═══ SUPPORT: THE URGENT REACH WITHIN THE BODY'S REACH — the lunge's contact box ends at 0.86 m ahead of the body (B4's 0.98 m is beyond the leg:
 // the drawn boot stopped 6 – 8 cm short of the ball at its authoritative contact); the rest of URG unchanged
 UnifiedSim.prototype.genericBuild = function (key, G, ...rest) { if (this.L.support && key === "URG") G = Object.assign({}, G, { box: { a: [G.box.a[0], Math.min(G.box.a[1], 0.86)], l: G.box.l }, nom: [Math.min(G.nom[0], 0.74), G.nom[1]] });

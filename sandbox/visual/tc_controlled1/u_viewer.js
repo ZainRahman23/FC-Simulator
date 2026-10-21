@@ -130,7 +130,7 @@ function otherModel() { if (V.sim.k < 10 || V.engine !== "layered") return; stop
   setTimeout(() => { loadRec(rec, "layered", V.layers, target); startReplay(kind); if (tRep != null && V.replay) V.replay.t = clamp(tRep, V.replay.t0, V.replay.t1); }, 20); }
 function nextInChain() { const cur = V.engine === "baseline" ? -1 : CHAIN.findIndex((n) => { const P = presetLayers(n); return LAYERS.every((x) => !!P[x.id] === !!V.layers[x.id]); }); sameInput(CHAIN[(cur + 1) % CHAIN.length]); }
 // THE OPPONENT POKE: a deterministic opponent foot aimed at the ball as it will be in 0.25 s, from alternate sides of its travel (recorded event)
-let pokeN = 0; function poke() { const S = V.sim; if (!S.addOpponent || V.replay) return; S.addOpponent(S.pokeProbe(pokeN++ % 2 ? 1 : -1, 6)); }
+let pokeN = 0; function poke() { const S = V.sim; if (!S.addOpponent || V.replay) return; S.addOpponent(S.pokeProbe(pokeN++ % 2 ? 1 : -1, 8)); }
 // THE OWNER'S TESTS through the page's own stick (reset first: the same run-up as the report card's)
 function startTest(name) { const T = TESTS.find((x) => x.name === name); if (!T) return; if (V.replay) stopReplay(); if (V.dom.selTest) V.dom.selTest.value = name; newSim(); V.paused = false; setRateButtons(); V.test = { T, M: TMODES[T.mode] }; V.src = "stick"; V.stick.moving = false; V.dom.bTest.textContent = "■ stop"; }
 function stopTest() { if (!V.test) return; V.test = null; V.btn.tSprint = false; const S = V.stick; S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); if (V.dom.bTest) V.dom.bTest.textContent = "▶ play"; }
