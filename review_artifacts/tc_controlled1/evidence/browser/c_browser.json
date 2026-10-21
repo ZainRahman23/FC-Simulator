@@ -1,0 +1,166 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/tc_controlled1.html",
+ "defaults": {
+  "config": "FULL",
+  "model": "CONTROLLED",
+  "ball": true,
+  "diagnostics": false,
+  "attrs": [
+   99,
+   99,
+   99
+  ]
+ },
+ "runs": [
+  {
+   "model": "CONTROLLED",
+   "name": "rapid sprint left / right (±60° every 0.35 s)",
+   "determinism": true,
+   "contacts": 15,
+   "missed": 0,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT",
+    "COMPACT INSIDE REDIRECT",
+    "CRUYFF TURN"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "CONTROLLED_rapid_sprint_left_right_60_every_0_35_s_session.json"
+  },
+  {
+   "model": "CONTROLLED",
+   "name": "fast circle · sprint (270°/s)",
+   "determinism": true,
+   "contacts": 17,
+   "missed": 0,
+   "actions": [
+    "COMPACT INSIDE REDIRECT",
+    "CRUYFF TURN",
+    "DRAG-BACK",
+    "COMPACT OUTSIDE REDIRECT",
+    "RONALDO CHOP",
+    "INSIDE HOOK",
+    "DRAG-BACK",
+    "GATHER",
+    "GATHER",
+    "COMPACT INSIDE REDIRECT"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "CONTROLLED_fast_circle_sprint_270_s_session.json"
+  },
+  {
+   "model": "CONTROLLED",
+   "name": "sprint 90°",
+   "determinism": true,
+   "contacts": 7,
+   "missed": 0,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "CONTROLLED_sprint_90_session.json"
+  },
+  {
+   "model": "CONTROLLED",
+   "name": "favourable · Ronaldo Chop (run -105° #2)",
+   "determinism": true,
+   "contacts": 11,
+   "missed": 0,
+   "actions": [
+    "RONALDO CHOP"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "CONTROLLED_favourable_ronaldo_chop_run_105_2_session.json"
+  },
+  {
+   "model": "FREE",
+   "name": "rapid sprint left / right (±60° every 0.35 s)",
+   "determinism": true,
+   "contacts": 12,
+   "missed": 0,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT",
+    "COMPACT INSIDE REDIRECT",
+    "CRUYFF TURN",
+    "COMPACT OUTSIDE REDIRECT"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "FREE_rapid_sprint_left_right_60_every_0_35_s_session.json"
+  },
+  {
+   "model": "FREE",
+   "name": "fast circle · sprint (270°/s)",
+   "determinism": true,
+   "contacts": 10,
+   "missed": 1,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT",
+    "CRUYFF TURN",
+    "DRAG-BACK",
+    "CRUYFF TURN",
+    "COMPACT OUTSIDE REDIRECT",
+    "COMPACT INSIDE REDIRECT",
+    "DRAG-BACK",
+    "COMPACT OUTSIDE REDIRECT",
+    "INSIDE HOOK",
+    "INSIDE HOOK"
+   ],
+   "state": "CONTROLLED",
+   "exits": [
+    "CONTROLLER_FAILURE"
+   ],
+   "session": "FREE_fast_circle_sprint_270_s_session.json"
+  },
+  {
+   "model": "FREE",
+   "name": "sprint 90°",
+   "determinism": true,
+   "contacts": 7,
+   "missed": 0,
+   "actions": [
+    "COMPACT OUTSIDE REDIRECT"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "FREE_sprint_90_session.json"
+  },
+  {
+   "model": "FREE",
+   "name": "favourable · Ronaldo Chop (run -105° #2)",
+   "determinism": true,
+   "contacts": 11,
+   "missed": 0,
+   "actions": [
+    "RONALDO CHOP"
+   ],
+   "state": "CONTROLLED",
+   "exits": [],
+   "session": "FREE_favourable_ronaldo_chop_run_105_2_session.json"
+  }
+ ],
+ "freeplay": {
+  "determinism": true,
+  "events": [
+   "opponent",
+   "release"
+  ],
+  "opponentHits": 1,
+  "exits": [
+   "OPPONENT_TACKLE @2.6458",
+   "INTENTIONAL_RELEASE @6.5708"
+  ],
+  "entries": 2
+ },
+ "otherModel": {
+  "model": "FREE",
+  "replay": true,
+  "inputIdentical": true,
+  "eventsIdentical": true
+ },
+ "logs": [],
+ "http": []
+}

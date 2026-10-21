@@ -73,7 +73,8 @@ export class PlayBody {
       if (c.aim.kind === "target") { const d = [c.aim.P[0] - ball[0], c.aim.P[1] - ball[1]], D = hyp(d[0], d[1]), sp = min(13.5, speedFor(D, max(0.05, c.aim.T - c.t)) || 13.5); vOut = D > 1e-4 ? [d[0] / D * sp, d[1] / D * sp] : [0, 0]; }
       else vOut = [c.aim.speed * Math.cos(c.aim.h), c.aim.speed * Math.sin(c.aim.h)]; }
     const dv = [vOut[0] - vIn[0], vOut[1] - vIn[1]], m = hyp(dv[0], dv[1]);
-    o = { t: src.t, k: Math.round(src.t / DT), F: X, surface: src.surface, role: src.role, ball: [ball[0], ball[1], max(R, ball[2] || R)], vIn, vOut, dv: m, n: m > 1e-6 ? [dv[0] / m, dv[1] / m] : dir(this.psi(src.t)), swing: this.resolveSpec(src.swing, src.frame, src.t), frame: src.frame || null, done: !!rec };
+    o = { t: src.t, k: Math.round(src.t / DT), F: X, surface: src.surface, role: src.role, ball: [ball[0], ball[1], max(R, ball[2] || R)], vIn, vOut, dv: m, n: m > 1e-6 ? [dv[0] / m, dv[1] / m] : dir(this.psi(src.t)), swing: this.resolveSpec(src.swing, src.frame, src.t), frame: src.frame || null, done: !!rec,
+      soft: !!(src.soft || (c && c.aim && (c.aim.controlled != null || c.aim.reaim || c.aim.noOverrun))) };   // (a touch CONTROLLED_BALL shaped — see swingOf)
     this.cache.set(key, o); return o;
   }
   // a technique's swing spec in absolute time (dt from the contact / tau from the decisive contact) with its frame; the sweep heading on the pitch
@@ -91,7 +92,11 @@ export class PlayBody {
     if (con && !con.swing) { const vb = this.vel(con.t), out = hyp(con.vOut[0], con.vOut[1]), sole = con.surface === "SOLE", tF = con.t + min(0.045, 0.55 * (b.t0 - con.t));
       if (sole || out < 0.5) spec = { footSpeed: 0.3, via: [] };
       else { const dv = [0.8 * con.vOut[0] - vb[0], 0.8 * con.vOut[1] - vb[1]], m = hyp(dv[0], dv[1]);
-        spec = { footSpeed: clamp(m, 0.3, 6.0), sweep: m > 0.05 ? hdg(dv) / DEG : null, via: b.t0 - con.t > 0.03 ? [{ t: tF, rel: "behind", along: "out", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] };
+        // (CONTROLLED_BALL's soft push — the ball sent at about the body's own speed: the foot's velocity relative to the body is then ≈ 0 and its
+        // sideways part would set the sweep, the leg swinging across the other; the sweep follows the impulse — the ball's out-direction — itself.
+        // Only touches CONTROLLED_BALL shaped: FREE's pose is unchanged)
+        const soft = con.soft;
+        spec = { footSpeed: clamp(m, 0.3, 6.0), sweep: soft ? hdg(con.vOut) / DEG : m > 0.05 ? hdg(dv) / DEG : null, via: b.t0 - con.t > 0.03 ? [{ t: tF, rel: "behind", along: "out", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] };
         if (spec.sweep == null) delete spec.sweep; } }
     w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; }
     ctx.sw.set(key, w); return w;

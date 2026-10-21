@@ -1,0 +1,33 @@
+straight run                                   FREE exits none sep≤0.66 touches 8 | CONTROLLED exits none sep≤0.66 touches 8
+straight sprint                                FREE exits none sep≤0.92 touches 5 | CONTROLLED exits none sep≤0.92 touches 5
+gentle analog curve · run (20°/s)              FREE exits none sep≤0.66 touches 18 | CONTROLLED exits none sep≤0.66 touches 18
+gentle analog curve · sprint (20°/s)           FREE exits none sep≤1.03 touches 7 | CONTROLLED exits none sep≤1.03 touches 9
+tight analog curve · run (60°/s)               FREE exits none sep≤0.69 touches 10 | CONTROLLED exits none sep≤0.69 touches 10
+tight analog curve · sprint (60°/s)            FREE exits none sep≤0.93 touches 11 | CONTROLLED exits none sep≤0.93 touches 11
+fast circle · run (270°/s)                     FREE exits none sep≤0.77 touches 8 | CONTROLLED exits none sep≤0.66 touches 13
+fast circle · sprint (270°/s)                  FREE exits CONTROLLER_FAILURE sep≤1.84 touches 5 | CONTROLLED exits none sep≤0.92 touches 12
+repeated ±30° · sprint (every 0.45 s)          FREE exits none sep≤0.98 touches 11 | CONTROLLED exits none sep≤0.92 touches 16
+rapid ±60° · run (every 0.35 s)                FREE exits none sep≤0.77 touches 10 | CONTROLLED exits none sep≤0.66 touches 13
+run 45°                                        FREE exits none sep≤0.66 touches 5 | CONTROLLED exits none sep≤0.66 touches 5
+run 90°                                        FREE exits none sep≤0.70 touches 4 | CONTROLLED exits none sep≤0.70 touches 4
+sprint 45°                                     FREE exits none sep≤0.92 touches 4 | CONTROLLED exits none sep≤0.92 touches 4
+sprint 60°                                     FREE exits none sep≤0.92 touches 4 | CONTROLLED exits none sep≤0.92 touches 4
+sprint 90°                                     FREE exits none sep≤0.92 touches 3 | CONTROLLED exits none sep≤0.92 touches 3
+sprint 120°                                    FREE exits none sep≤0.92 touches 5 | CONTROLLED exits none sep≤1.25 touches 5
+sprint 150°                                    FREE exits none sep≤0.97 touches 5 | CONTROLLED exits none sep≤0.97 touches 5
+sprint 180°                                    FREE exits none sep≤1.25 touches 6 | CONTROLLED exits none sep≤1.25 touches 6
+rapid sprint left / right (±60° every 0.35 s)  FREE exits none sep≤1.21 touches 8 | CONTROLLED exits none sep≤0.92 touches 10
+gradual 0 → 90° · sprint (90°/s)               FREE exits none sep≤1.12 touches 6 | CONTROLLED exits none sep≤1.12 touches 6
+0 → 90 → 0 → −90 · sprint (0.6 s each)         FREE exits none sep≤0.92 touches 8 | CONTROLLED exits none sep≤0.92 touches 8
+stop / restart · run                           FREE exits none sep≤0.83 touches 6 | CONTROLLED exits none sep≤0.83 touches 6
+favourable · Ronaldo Chop (run -105° #2)       FREE exits none sep≤0.84 touches 5 | CONTROLLED exits none sep≤0.84 touches 5
+favourable · Cruyff Turn (jog -135° #0)        FREE exits none sep≤1.00 touches 4 | CONTROLLED exits none sep≤1.00 touches 4
+favourable · Inside Hook (run -135° #2)        FREE exits none sep≤0.66 touches 4 | CONTROLLED exits none sep≤0.66 touches 4
+favourable · Drag-back (sprint 180° #3)        FREE exits none sep≤0.97 touches 5 | CONTROLLED exits none sep≤0.97 touches 5
+favourable · Outside Cut (jog 75° #1)          FREE exits none sep≤0.68 touches 6 | CONTROLLED exits none sep≤0.66 touches 5
+favourable · compact inside redirect (run -75° FREE exits none sep≤0.66 touches 4 | CONTROLLED exits none sep≤0.66 touches 4
+favourable · compact outside redirect (run 75° FREE exits none sep≤0.66 touches 5 | CONTROLLED exits none sep≤0.66 touches 5
+favourable · braking pivot (jog -105° #0)      FREE exits none sep≤0.66 touches 4 | CONTROLLED exits none sep≤0.66 touches 5
+favourable · braking touch (run 165° #2)       FREE exits none sep≤0.78 touches 4 | CONTROLLED exits none sep≤0.78 touches 4
+favourable · urgent reach (jog -60° #2)        FREE exits none sep≤0.73 touches 4 | CONTROLLED exits none sep≤0.73 touches 4
+favourable · gather (jog 45° #1)               FREE exits none sep≤0.65 touches 5 | CONTROLLED exits none sep≤0.65 touches 5

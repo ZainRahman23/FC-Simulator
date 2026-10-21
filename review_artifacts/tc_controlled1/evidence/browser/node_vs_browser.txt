@@ -1,0 +1,11 @@
+freeplay_poke_release_session.json: layered [c,support,generic,exits,windups]: re-simulated 1999 ticks: hash bb0fc5db vs browser bb0fc5db → IDENTICAL (node ≡ browser)
+freeplay_other_model_session.json: layered [c,support,generic,exits,windups]: re-simulated 1999 ticks: hash bb0fc5db vs browser bb0fc5db → IDENTICAL (node ≡ browser)
+CONTROLLED_fast_circle_sprint_270_s_session.json: layered [c,support,generic,exits,windups]: re-simulated 1747 ticks: hash 702c17b2 vs browser 702c17b2 → IDENTICAL (node ≡ browser)
+FREE_fast_circle_sprint_270_s_session.json: layered [c,support,generic,exits,windups]: re-simulated 1747 ticks: hash 16422d1e vs browser 16422d1e → IDENTICAL (node ≡ browser)
+CONTROLLED_rapid_sprint_left_right_60_every_0_35_s_session.json: layered [c,support,generic,exits,windups]: re-simulated 1779 ticks: hash a9f97d6b vs browser a9f97d6b → IDENTICAL (node ≡ browser)
+FREE_sprint_90_session.json: layered [c,support,generic,exits,windups]: re-simulated 1391 ticks: hash 2448b7f vs browser 2448b7f → IDENTICAL (node ≡ browser)
+
+note: freeplay_other_model_session.json (the same input replayed through CURRENT FREE) has the same hash as the CONTROLLED session because
+on that calm input (straight run, one diagonal, one poke, one release) both models make every decision identically — checked: that input
+re-simulated under each model gives bb0fc5db; the fast circle differs (CONTROLLED 702c17b2, FREE 16422d1e), so the re-simulation does honour
+the model. CONTROLLED_BALL changes nothing where FREE keeps control.

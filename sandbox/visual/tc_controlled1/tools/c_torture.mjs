@@ -33,15 +33,19 @@ export function program(seed, dur) { const R = rng(seed), segs = []; let t = 1.2
     const v = stickVector(Math.sin(ang * DEG) * s.r, Math.cos(ang * DEG) * s.r); return { h: headingFrom(0, v.x, v.y), mode: s.sprint ? "SPRINT" : stickMode(v.r), keys: 64 }; } }; }
 export function runOne(cfg, seed, dur, o = {}) { const P = program(seed, dur), opts = Object.assign(JSON.parse(JSON.stringify(PAGE)), { layers: presetLayers("FULL") }, cfg === "CONTROLLED" ? { control: "CONTROLLED" } : {}, o.simOpts || {}), sim = makeSim("TL", opts), n = Math.round(dur / DT);
   const res = { cfg, seed, dur, lost: 0, losses: [], missed: 0, contacts: 0, sepSum: 0, sepN: 0, sepMax: 0, cpu: 0, worstTick: 0, exits: {}, exitList: [] };
-  let noC = 0, lastMade = 0, lostOn = false, nC = 0; const t0 = performance.now();
+  let noC = 0, lastMade = 0, lostOn = false, nC = 0; const t0 = performance.now(), sepTr = new Float32Array(n + 2);
   for (let k = 0; k < n; k++) { const q = P.req(k * DT), w0 = performance.now(); sim.step(q); const w = performance.now() - w0; if (w > res.worstTick) res.worstTick = w;
     const t = sim.t; if (t < 1.2) continue; const st = sim.stateAt(t), b = sim.ball.p, bv = sim.ball.v, sep = hyp(b[0] - st.P[0], b[1] - st.P[1]), plan = sim.plan, act = plan.action;
     while (nC < sim.contacts.length) { const c = sim.contacts[nC++]; if (c.missed) res.missed++; else { res.contacts++; lastMade = c.t; } }
     const future = plan.contacts.some((c) => !c.done && c.t > t - 1e-9) || !!(act.chase && act.closing), atFeet = hyp(bv[0], bv[1]) < 0.3 && sep < 0.8, on = q.h != null;
     if (on && !future && !atFeet) noC += DT; else noC = 0; const ln = (on && !atFeet && (noC > 0.5 || t - lastMade > 1.8)) || sep > 3.0;
     if (ln && !lostOn) { res.lost++; const s = P.at(t); res.losses.push({ t: +t.toFixed(3), sep: +sep.toFixed(2), seg: s.kind, mode: s.mode, prev: P.at(t - 0.6).kind, action: act.label, speed: +st.s.toFixed(1), why: sep > 3.0 ? "far" : noC > 0.5 ? "no contact planned" : "no contact made", poss: sim.poss ? sim.poss.state : null }); }
-    lostOn = ln; res.sepSum += sep; res.sepN++; if (sep > res.sepMax) res.sepMax = sep; }
+    lostOn = ln; sepTr[k] = sep; res.sepSum += sep; res.sepN++; if (sep > res.sepMax) res.sepMax = sep; }
   res.cpu = performance.now() - t0; res.touchesPerS = res.contacts / (dur - 1.2);
+  // (each observed loss followed up: the player's next made contact after it, and the ball's largest separation until then — a flag the player
+  // answers with a touch 0.3 s later at 1 m is not the same event as a ball never played again)
+  for (const l of res.losses) { const nx = sim.contacts.find((c) => !c.missed && c.t > l.t + 1e-9), t1 = nx ? nx.t : sim.t; let m = 0; for (let k = Math.round(l.t / DT); k <= Math.round(t1 / DT) && k < sepTr.length; k++) m = Math.max(m, sepTr[k]);
+    l.nextTouch = nx ? +(nx.t - l.t).toFixed(2) : null; l.sepUntil = +m.toFixed(2); }
   if (sim.poss && sim.poss.log) for (const e of sim.poss.log) if (e.to === "FREE" && e.from === "CONTROLLED") { res.exits[e.why] = (res.exits[e.why] || 0) + 1; res.exitList.push(e); }
   return res; }
 if ((process.argv[1] || "").endsWith("c_torture.mjs")) { const cfgs = opt("configs", "FREE").split(","), seeds = +opt("seeds", 40), dur = +opt("dur", 60), from = +opt("from", 1), all = {};

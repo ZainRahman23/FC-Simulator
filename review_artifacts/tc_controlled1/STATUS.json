@@ -1,0 +1,33 @@
+{
+  "milestone": "TC-CONTROLLED-1",
+  "date": "2026-10-21",
+  "state": "presented for the owner's playtest — NOT frozen, NOT integrated, lower ratings NOT calibrated",
+  "local_only": "the character is a real player's model: never publish",
+  "page": "http://127.0.0.1:8361/sandbox/visual/tc_controlled1.html",
+  "defaults": { "ball_control_model": "CONTROLLED", "attributes": "BC99 / D99 / A99-C", "stack": "FULL", "ball": "ON", "joystick": "visible" },
+  "switches": ["BALL CONTROL MODEL: CURRENT FREE / CONTROLLED", "⇄ same input (M)", "OPPONENT POKE (P)", "RELEASE (K)"],
+  "equivalence": { "full_free_vs_tc_unified1": "384/384 identical", "node_vs_browser": "identical (6 sessions)", "posed_vs_unposed": "16/16 identical (8 with an opponent hit)", "calm_freeplay_free_vs_controlled": "identical hash bb0fc5db" },
+  "torture_4h_each": {
+    "programs": "240 seeded random legal stick programs × 60 s (235.2 simulated min per model)",
+    "FREE": { "controller_failure": 705, "observed_losses": 784, "never_played_again": 37, "sep_max_m": 34.31, "missed_contacts": 4 },
+    "CONTROLLED": { "controller_failure": 0, "exits_of_any_kind": 0, "observed_flags": 28, "never_played_again": 0, "next_touch_after_flag_max_s": 1.33, "sep_during_flag_max_m": 1.48, "sep_max_m": 2.33, "missed_contacts": 0 }
+  },
+  "decisions_4h": { "replans": 524452, "planner_choice_pct": 96.11, "kept_running_plan_pct": 2.19, "kept_hold_ms": { "median": 37, "p95": 221, "max": 425 }, "reaimed_running_touch_pct": 1.39, "secure_pct": 0.25, "recovery_entries": 9 },
+  "opponent_probe_200": { "hits": 200, "broken": { "OPPONENT_TACKLE": 67, "OPPONENT_INTERCEPTION": 45 }, "survived_minor_deflection": 88, "position_discontinuity_m": 0.0001, "deviation_from_free_kernel_ball_m": 0.0, "recollected": 68 },
+  "tracking_poke_40": { "hits": 40, "broke_control": 26 },
+  "report_card_240_traces": {
+    "FULL-FREE": { "lost": 1, "touches": 1425, "redundant": 26, "legs": 184, "foot_jumps": 3, "contact_fail": 6, "line_fail": 19 },
+    "FULL-CONTROLLED": { "lost": 1, "touches": 1446, "redundant": 27, "legs": 224, "foot_jumps": 3, "contact_fail": 9, "line_fail": 18 },
+    "visible_response_clock": "identical in all 30 scenarios"
+  },
+  "ball_on_audit": {
+    "FULL-FREE": { "foot_jumps": 14, "intersection_frames": 319, "over_10cm": 2, "worst_cm": 12.8 },
+    "FULL-CONTROLLED": { "foot_jumps": 12, "intersection_frames": 339, "over_10cm": 1, "worst_cm": 18.1 }
+  },
+  "action_grid": "33/33 cells identical",
+  "cpu_ms_per_sim_s": { "FULL-FREE": 61.7, "FULL-CONTROLLED": 55.7, "controlled_evaluation": 0.6, "tick_p99_ms": [3.17, 3.03], "tick_p999_ms": [4.71, 4.42] },
+  "not_tested": ["the real standing-tackle system (Codex's tackle line, read-only)", "PASS / SHOT / CROSS / CLEARANCE exits (no such system in the sandbox)", "entry from a real pass (the receive line is protected)"],
+  "remaining_issues": ["more touches under never-settling input (rapid L/R +15–19 %)", "leg-crossing warnings +22 % on the report card (184 → 224), audit intersection frames +6 %", "touch gaps up to ≈ 3 s at walking pace under a swirling stick (28 observer flags in 4 h, ball within 1.48 m)", "running-plan holds 2.2 % of re-plans (max 425 ms)", "one contact gap of 18.1 cm (rapid sprint)", "RECOVERY episodes stay CONTROLLED (ball up to ≈ 2.3 m away)"],
+  "found_and_fixed_latent_bug": "TC-UNIFIED-1 UnifiedSim carry-touch skip could recurse without end — guarded in tc_controlled1's copy only; tc_unified1/ untouched",
+  "owner_decisions_open": ["does CONTROLLED feel better than CURRENT FREE", "touch count under busy input", "minor-deflection rule (Δv < 2 m/s keeps control)", "should a RECOVERY count as CONTROLLED", "make CONTROLLED FULL's default?"]
+}
