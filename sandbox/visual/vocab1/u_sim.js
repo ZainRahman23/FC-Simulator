@@ -30,6 +30,10 @@ export class UnifiedSim extends PlaySim {
     const i = Math.max(0, Math.min(plan.n, Math.round((t - plan.t0) / DT))); s.w = plan.aw[i]; s.h = plan.ah[i]; s.turnRate = plan.ar[i];
     let m = null; for (const x of plan.am) { if (x.t <= t + 1e-9) m = x.m; else break; } s.motion = m; return s; }
   step(req) {
+    // (DRIBBLING VOCAB-1: the heading quantised to 1e-6 rad HERE, as PlaySim.step does before use — the ring below, the feint recognition and
+    // the ball-off analog check read the request before PlaySim quantised it: the record held the quantised heading, so a re-simulation from it
+    // (the page's replay) differed by < 1e-6 rad and diverged in 2 of 18 seeded runs; idempotent for PlaySim's own quantisation)
+    if (req && req.h != null) req = Object.assign({}, req, { h: Math.round(req.h * 1e6) / 1e6 });
     // (the request's recent headings, for B4's analog reading — a ring of 0.25 s; recorded always, read only by the unified B4 scoring)
     { const R = this.rq || (this.rq = { h: new Float64Array(60).fill(NaN), k: -1 }); R.k = this.k; R.h[this.k % 60] = req && req.h != null ? req.h : NaN; }
     // (C + B4: a stick ROTATING steadily re-plans in 10° steps instead of 88573ef0's 4° — A99-C re-accelerates only once a motion completes, and
