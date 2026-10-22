@@ -1,0 +1,66 @@
+{
+ "seeds": 6,
+ "dur": 30,
+ "rows": [
+  {
+   "label": "(1) phys1 without ratings ≡ ballon1 · BALL OFF",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(1) phys1 without ratings ≡ ballon1 · BALL ON · CONTROLLED · CARRY-B",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(1) phys1 without ratings ≡ ballon1 · BALL ON · FREE",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(2) PHYSICAL-99 ≡ phys1 without ratings · BALL OFF",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(2) PHYSICAL-99 ≡ phys1 without ratings · BALL ON · CONTROLLED · CARRY-B",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(3) PHYSICAL-99 BALL OFF ≡ the S99 build (speed99/) BALL OFF",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(4) determinism · PHYSICAL-80-A BALL OFF, simulated twice",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(4) determinism · PHYSICAL-80-B BALL OFF, simulated twice",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(4) determinism · PHYSICAL-80-C BALL OFF, simulated twice",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  },
+  {
+   "label": "(4) determinism · S1 / Acc1 / A1-C BALL OFF, simulated twice",
+   "ok": 6,
+   "n": 6,
+   "bad": []
+  }
+ ]
+}

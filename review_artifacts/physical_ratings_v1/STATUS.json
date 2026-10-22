@@ -1,0 +1,15 @@
+{
+ "milestone": "PLAYER PHYSICAL RATINGS V1",
+ "date": "2026-10-22",
+ "state": "presented for the owner's playtest — NOT frozen; Sprint Speed mapping implemented exactly (approved); Acceleration and Agility mappings provisional; Agility scales A / B / C awaiting the owner's choice",
+ "local_only": "the character is a real player's model: never publish",
+ "page": "http://127.0.0.1:8361/sandbox/visual/phys1.html",
+ "defaults": "PHYSICAL-80-B (a starting point only) with PHYSICAL-99 as the reference runner beside · BALL OFF always",
+ "owner_decisions": { "sprint_speed_99_kmh": 38.0, "acceleration_99": "D38", "agility_99": "A99-C", "carry_b": "approved 22 Oct as the provisional D99 / BC99 ball-on envelope (implementation preserved: phys1 ≡ ballon1 bit-identical)", "sprint_speed_mapping": "approved: 90–99 35.3 + 0.3(r−90) · 40–89 25.3 + 0.2(r−40) · 1–39 21.4 + 0.1(r−1) km/h" },
+ "sprint_speed": { "steps_checked": 98, "step_errors": 0, "brief_anchors_exact": "23/23", "s80_ms": 9.25, "s99_bit_identical_to_s99_build": true },
+ "acceleration": { "capability_bands": "90–99 1.5 / 40–89 1.0 / 1–39 0.5 points per rating (99 100 %, 80 76.5 %, 50 46.5 %, 1 17 %)", "curve": "a0·max(1 − (v/vmax)^p, aEnd), p = 1 + 1.2c^1.5, aEnd = 0.7c, a0 = D38 launch × L (L solved: measured capability = c)", "acc80": { "launch": 9.15, "p": 1.80, "t25_50_70_80_90_95_99_at_S99": [0.30, 0.65, 1.04, 1.33, 1.80, 2.25, 2.98] }, "S99_Acc50_reaches_38kmh_at_s": 6.0, "S50_Acc99_at_27_3kmh_by_s": 2.0, "crossover": "3.48 s / 23.0 m" },
+ "agility": { "demand": "clamp((min(s/10.56,1.2)·sin(θ/2))^1.5 + 0.6·clamp(s|ω|/12), 0, 1)", "effects": "duration × (1 + 2.0(1−g)Dm) · retention ^ (1 + 4.5(1−g)Dm) · held-curve lateral capacity 11/(1−g) m/s² · stop duration · facing τ × (1 + 0.6(1−g))", "scales": { "A": "compressed: 90 91 %, 80 85 %, 50 67 %, 1 49.3 %", "B": "balanced: 90 86.5 %, 80 76.5 %, 50 46.5 %, 1 17 %", "C": "pronounced: 90 82 %, 80 70 %, 50 34 %, 1 6.4 %" }, "low_demand": "15° at 20 km/h and a 10°/s curve identical at every rating", "a40_a1_reach_38kmh": true },
+ "physical_80": { "vmax_ms": 9.25, "splits_5_10_20_40_s": [1.15, 1.77, 2.88, 5.05], "behind_99_at_40m_m": 5.8, "cut90_new_line_s": { "A": 0.29, "B": 0.31, "C": 0.32, "99": 0.27 }, "cut90_retained": { "A": 0.77, "B": 0.75, "C": 0.73, "99": 0.81 } },
+ "integrity": { "equivalence": "phys1 ≡ ballon1 (3 modes) · PHYSICAL-99 ≡ unrated (ball off, CARRY-B) · PHYSICAL-99 ≡ S99 build — all 6/6 bit-identical", "determinism": "80-A / B / C and S1/Acc1/A1-C simulated twice: identical; the page's own check passes", "legs": "no new failure class (52/136 runs with a visible failure at PHYSICAL-99 = the S99 build; 51 / 49 / 48 at 80-A / B / C)", "cpu": "−2 … +3 % (noise level)", "browser": "no console errors, no failed requests" },
+ "next_on_owner_word": ["choose the Agility scale A / B / C (or adjust)", "accept / adjust the Acceleration curve", "judge whether 80 / 80 / 80 feels right", "then the Dribbling scale (how much of the physical ability is usable with the ball)"]
+}

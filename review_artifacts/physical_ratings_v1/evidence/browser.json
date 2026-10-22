@@ -1,0 +1,244 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/phys1.html",
+ "defaults": {
+  "phys": {
+   "id": "PHYSICAL-80-B",
+   "sprint": 80,
+   "accel": 80,
+   "agility": 80,
+   "agiScale": "B"
+  },
+  "ref": {
+   "id": "PHYSICAL-99",
+   "sprint": 99,
+   "accel": 99,
+   "agility": 99,
+   "agiScale": "B"
+  },
+  "ball": false,
+  "label": "PHYSICAL RATINGS V1 · PHYSICAL-80-B · Sprint Speed 80 (33.3 km/h) · Acceleration 80 (76.5 %) · Agility 80 · scale B (76.5 %) · BALL OFF",
+  "buttons": [
+   "PHYSICAL-99",
+   "PHYSICAL-80-A",
+   "PHYSICAL-80-B",
+   "PHYSICAL-80-C"
+  ],
+  "tests": "PHYSICAL RATINGS V1 — the owner's tests (BALL OFF · the reference runner beside: 99 ⇄ 80): 21"
+ },
+ "runs": [
+  {
+   "id": "PHYSICAL-99",
+   "midBox": "CURRENT SPEED 10.56 m/s · 38.0 km/h  PHYSICAL-99 | SPRINT SPEED 99 → vmax 10.56 m/s · 38.0 km/h | ACCELERATION 99 → capability 100.0 % of Acc99 (D38) · launch 11.11 m/s² · p 2.20 · available now 0.00 m/s² |    CURRENT % VMAX 100.0 %  |   25 / 50 / 70 / 80 / 90 / 95 % vmax at 0.24 / 0.51 / 0.80 / 1.00 / 1.33 / 1.64 s | AGILITY 99 = A99-C exactly |    REDIRECTION DEMAND 0.00  |  |    LAST REDIRECTION — (a request ≥ 15° away from the travel, above 1 m/s)",
+   "cut90": {
+    "det": true,
+    "redir": {
+     "t0": 5.004166666666666,
+     "s0": 10.555555555555555,
+     "angle": 89.95224302123765,
+     "target": 1.5707963267948966,
+     "demand": 0.5946034117662982,
+     "vMin": 8.612734218372266,
+     "est": 0.2666666666666666,
+     "vEst": 8.612734218372266,
+     "open": true
+    },
+    "box": "AGILITY 99 = A99-C exactly |    REDIRECTION DEMAND 1.00  |  |    LAST REDIRECTION 90° at 10.6 m/s · demand 0.59 · NEW LINE 0.27 s · MOMENTUM RETAINED 82 % (8.6 m/s) · lowest 8.6 m/s"
+   },
+   "det": true,
+   "d": 58.23885663564185,
+   "refD": 50.22633292096313,
+   "peak": 10.555555555555555,
+   "refPeak": 9.25,
+   "splits": {
+    "5": 1.021,
+    "10": 1.554,
+    "20": 2.521,
+    "30": 3.471,
+    "40": 4.417
+   },
+   "refSplits": {
+    "5": 1.154,
+    "10": 1.771,
+    "20": 2.883,
+    "30": 3.967,
+    "40": 5.046
+   },
+   "ref": {
+    "id": "PHYSICAL-80-B",
+    "sprint": 80,
+    "accel": 80,
+    "agility": 80,
+    "agiScale": "B"
+   }
+  },
+  {
+   "id": "PHYSICAL-80-A",
+   "midBox": "CURRENT SPEED 9.00 m/s · 32.4 km/h  PHYSICAL-80-A | SPRINT SPEED 80 → vmax 9.25 m/s · 33.3 km/h | ACCELERATION 80 → capability 76.5 % of Acc99 (D38) · launch 9.15 m/s² · p 1.80 · available now 0.54 m/s² |    CURRENT % VMAX 97.3 %  |   25 / 50 / 70 / 80 / 90 / 95 % vmax at 0.26 / 0.57 / 0.91 / 1.16 / 1.57 / 1.97 s | AGILITY 80 · SCALE A compressed → capability 85.0 % · curve capacity 73.3 m/s² |    REDIRECTION DEMAND 0.00  |  |    LAST REDIRECTION — (a request ≥ 15° away from the travel, above 1 m/s)",
+   "cut90": {
+    "det": true,
+    "redir": {
+     "t0": 5.004166666666666,
+     "s0": 9.25,
+     "angle": 89.95880542682212,
+     "target": 1.5707963267948966,
+     "demand": 0.48777366857118754,
+     "vMin": 7.24830841966603,
+     "est": 0.28750000000000053,
+     "vEst": 7.24830841966603,
+     "open": true
+    },
+    "box": "AGILITY 80 · SCALE A compressed → capability 85.0 % · curve capacity 73.3 m/s² |    REDIRECTION DEMAND 0.82  |  |    LAST REDIRECTION 90° at 9.3 m/s · demand 0.49 · NEW LINE 0.29 s · MOMENTUM RETAINED 78 % (7.2 m/s) · lowest 7.2 m/s"
+   },
+   "det": true,
+   "d": 50.20073099578747,
+   "refD": 58.23885663564185,
+   "peak": 9.25,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.154,
+    "10": 1.771,
+    "20": 2.883,
+    "30": 3.967,
+    "40": 5.046
+   },
+   "refSplits": {
+    "5": 1.021,
+    "10": 1.554,
+    "20": 2.521,
+    "30": 3.471,
+    "40": 4.417
+   },
+   "ref": {
+    "id": "PHYSICAL-99",
+    "sprint": 99,
+    "accel": 99,
+    "agility": 99,
+    "agiScale": "B"
+   }
+  },
+  {
+   "id": "PHYSICAL-80-B",
+   "midBox": "CURRENT SPEED 8.99 m/s · 32.4 km/h  PHYSICAL-80-B | SPRINT SPEED 80 → vmax 9.25 m/s · 33.3 km/h | ACCELERATION 80 → capability 76.5 % of Acc99 (D38) · launch 9.15 m/s² · p 1.80 · available now 0.54 m/s² |    CURRENT % VMAX 97.2 %  |   25 / 50 / 70 / 80 / 90 / 95 % vmax at 0.26 / 0.57 / 0.91 / 1.16 / 1.57 / 1.97 s | AGILITY 80 · SCALE B balanced → capability 76.5 % · curve capacity 46.8 m/s² |    REDIRECTION DEMAND 0.00  |  |    LAST REDIRECTION — (a request ≥ 15° away from the travel, above 1 m/s)",
+   "cut90": {
+    "det": true,
+    "redir": {
+     "t0": 5.004166666666666,
+     "s0": 9.25,
+     "angle": 89.96415553358264,
+     "target": 1.5707963267948966,
+     "demand": 0.48777366857118754,
+     "vMin": 7.007595075250758,
+     "est": 0.30833333333333357,
+     "vEst": 7.007595075250758,
+     "open": true
+    },
+    "box": "AGILITY 80 · SCALE B balanced → capability 76.5 % · curve capacity 46.8 m/s² |    REDIRECTION DEMAND 0.82  |  |    LAST REDIRECTION 90° at 9.3 m/s · demand 0.49 · NEW LINE 0.31 s · MOMENTUM RETAINED 76 % (7.0 m/s) · lowest 7.0 m/s"
+   },
+   "det": true,
+   "d": 50.22633292096313,
+   "refD": 58.23885663564185,
+   "peak": 9.25,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.154,
+    "10": 1.771,
+    "20": 2.883,
+    "30": 3.967,
+    "40": 5.046
+   },
+   "refSplits": {
+    "5": 1.021,
+    "10": 1.554,
+    "20": 2.521,
+    "30": 3.471,
+    "40": 4.417
+   },
+   "ref": {
+    "id": "PHYSICAL-99",
+    "sprint": 99,
+    "accel": 99,
+    "agility": 99,
+    "agiScale": "B"
+   }
+  },
+  {
+   "id": "PHYSICAL-80-C",
+   "midBox": "CURRENT SPEED 9.03 m/s · 32.5 km/h  PHYSICAL-80-C | SPRINT SPEED 80 → vmax 9.25 m/s · 33.3 km/h | ACCELERATION 80 → capability 76.5 % of Acc99 (D38) · launch 9.15 m/s² · p 1.80 · available now 0.54 m/s² |    CURRENT % VMAX 97.6 %  |   25 / 50 / 70 / 80 / 90 / 95 % vmax at 0.26 / 0.57 / 0.91 / 1.16 / 1.57 / 1.97 s | AGILITY 80 · SCALE C pronounced → capability 70.0 % · curve capacity 36.7 m/s² |    REDIRECTION DEMAND 0.00  |  |    LAST REDIRECTION — (a request ≥ 15° away from the travel, above 1 m/s)",
+   "cut90": {
+    "det": true,
+    "redir": {
+     "t0": 5.004166666666666,
+     "s0": 9.25,
+     "angle": 89.96757356576119,
+     "target": 1.5707963267948966,
+     "demand": 0.48777366857118754,
+     "vMin": 6.845791752727084,
+     "est": 0.32083333333333375,
+     "vEst": 6.845791752727084,
+     "open": true
+    },
+    "box": "AGILITY 80 · SCALE C pronounced → capability 70.0 % · curve capacity 36.7 m/s² |    REDIRECTION DEMAND 0.82  |  |    LAST REDIRECTION 90° at 9.3 m/s · demand 0.49 · NEW LINE 0.32 s · MOMENTUM RETAINED 74 % (6.8 m/s) · lowest 6.8 m/s"
+   },
+   "det": true,
+   "d": 50.24168916956512,
+   "refD": 58.23885663564185,
+   "peak": 9.25,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.154,
+    "10": 1.771,
+    "20": 2.883,
+    "30": 3.967,
+    "40": 5.046
+   },
+   "refSplits": {
+    "5": 1.021,
+    "10": 1.554,
+    "20": 2.521,
+    "30": 3.471,
+    "40": 4.417
+   },
+   "ref": {
+    "id": "PHYSICAL-99",
+    "sprint": 99,
+    "accel": 99,
+    "agility": 99,
+    "agiScale": "B"
+   }
+  }
+ ],
+ "nextPhys": {
+  "from": "PHYSICAL-80-A",
+  "to": "PHYSICAL-80-B",
+  "replay": true,
+  "label": "PHYSICAL RATINGS V1 · PHYSICAL-80-B · Sprint Speed 80 (33.3 km/h) · Acceleration 80 (76.5 %) · Agility 80 · scale B (76.5 %) · BALL OFF",
+  "ref": {
+   "id": "PHYSICAL-99",
+   "sprint": 99,
+   "accel": 99,
+   "agility": 99,
+   "agiScale": "B"
+  },
+  "inputIdentical": true
+ },
+ "custom": {
+  "phys": {
+   "id": "CUSTOM",
+   "sprint": 50,
+   "accel": 99,
+   "agility": 40,
+   "agiScale": "C"
+  },
+  "vmax": 7.583333333333333,
+  "label": "PHYSICAL RATINGS V1 · CUSTOM S50 / Acc99 / A40-C · Sprint Speed 50 (27.3 km/h) · Acceleration 99 (100.0 %) · Agility 40 · scale C (22.0 %) · BALL OFF",
+  "ref": {
+   "id": "PHYSICAL-99",
+   "sprint": 99,
+   "accel": 99,
+   "agility": 99,
+   "agiScale": "B"
+  }
+ },
+ "logs": [],
+ "http": []
+}
