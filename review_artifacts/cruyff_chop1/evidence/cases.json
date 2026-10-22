@@ -1,0 +1,8548 @@
+[
+ {
+  "name": "CARRY·NORMAL",
+  "variant": "NORMAL",
+  "tech": "CARRY",
+  "skills": [],
+  "phases": [],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.004,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.637,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.271,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6563442592538674,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CLOSE_CARRY·NORMAL",
+  "variant": "NORMAL",
+  "tech": "CLOSE_CARRY",
+  "skills": [],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.770833333333333,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.0041666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.0641666666666665,
+    "tNext": 1.670833333333333,
+    "next": "COMPACT OUTSIDE REDIRECT"
+   },
+   {
+    "label": "COMPACT INSIDE REDIRECT (R)",
+    "tech": "CIR",
+    "tSel": 1.0041666666666664,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.2374999999999998,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.2974999999999999,
+    "tNext": 1.670833333333333,
+    "next": "COMPACT OUTSIDE REDIRECT"
+   },
+   {
+    "label": "COMPACT OUTSIDE REDIRECT (R)",
+    "tech": "COR",
+    "tSel": 1.670833333333333,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.8291666666666666,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.8891666666666662,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.771,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.004,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 1.237,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "compact inside redirect",
+    "missed": false
+   },
+   {
+    "t": 1.829,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "compact outside redirect",
+    "missed": false
+   },
+   {
+    "t": 2.546,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7082141705907626,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0.5,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.8041666666666663,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   },
+   {
+    "t": 1.4999999999999996,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 1.7999999999999998,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SPRINT_CARRY·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SPRINT_CARRY",
+  "skills": [],
+  "phases": [],
+  "contacts": [
+   {
+    "t": 0.104,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.983,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.817,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.65,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 3.483,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0222641819339902,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "KNOCK_ON·NORMAL",
+  "variant": "NORMAL",
+  "tech": "KNOCK_ON",
+  "skills": [
+   {
+    "intent": "KNOCK_ON",
+    "result": "PLAYED",
+    "played": "KNOCK_ON",
+    "rej": {
+     "committed landing": 10,
+     "plant timing": 1,
+     "box": 11
+    },
+    "t": 0,
+    "tPlayed": 0.1499999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "KNOCK-ON (R)",
+    "tech": "KNK",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.1499999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.20999999999999996,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.15,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "knock-on",
+    "missed": false
+   },
+   {
+    "t": 1.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.913,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.8894759684486128,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "KNOCK_ON·AUTO",
+  "variant": "AUTO",
+  "tech": "KNOCK_ON",
+  "skills": [],
+  "phases": [
+   {
+    "label": "KNOCK-ON (L)",
+    "tech": "KNK",
+    "tSel": 0.21666666666666634,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.3624999999999998,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.4224999999999999,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.217,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.362,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "knock-on",
+    "missed": false
+   },
+   {
+    "t": 1.496,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.346,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.133433252198202,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.3041666666666667,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_CUT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "INSIDE_CUT",
+  "skills": [],
+  "phases": [],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 0.925,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.558,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.188,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6565592889120958,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": -1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_REDIRECT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "OUTSIDE_REDIRECT",
+  "skills": [],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.892,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.525,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553796045685936,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_CUT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "OUTSIDE_CUT",
+  "skills": [
+   {
+    "intent": "OUTSIDE_CUT",
+    "result": "PLAYED",
+    "played": "OUTSIDE_CUT",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.795833333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE CUT (R)",
+    "tech": "OUTCUT",
+    "tSel": 0,
+    "tPrep": 0.6542023589940973,
+    "tCommit": 0.7142023589940973,
+    "tDecisive": 0.795833333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.8542023589940975,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.796,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "missed": false
+   },
+   {
+    "t": 1.087,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.404,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.033,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6573679842548426,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_CUT·MIRROR",
+  "variant": "MIRROR",
+  "tech": "OUTSIDE_CUT",
+  "skills": [
+   {
+    "intent": "OUTSIDE_CUT",
+    "result": "PLAYED",
+    "played": "OUTSIDE_CUT",
+    "rej": {
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.795833333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE CUT (L)",
+    "tech": "OUTCUT",
+    "tSel": 0,
+    "tPrep": 0.6542023589940973,
+    "tCommit": 0.7142023589940973,
+    "tDecisive": 0.795833333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.8542023589940975,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.796,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "missed": false
+   },
+   {
+    "t": 1.087,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.404,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.033,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6573679842542153,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_CUT·AUTO",
+  "variant": "AUTO",
+  "tech": "OUTSIDE_CUT",
+  "skills": [],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.896,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.529,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_HOOK·NORMAL",
+  "variant": "NORMAL",
+  "tech": "INSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "exit 210° beyond its 185°": 1,
+     "rolling there": 2,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (R)",
+    "tech": "HOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.033,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.75,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.8675727982348721,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_HOOK·MIRROR",
+  "variant": "MIRROR",
+  "tech": "INSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "rolling there": 2,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (L)",
+    "tech": "HOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.033,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.75,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.8675727982348721,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_HOOK·WALK",
+  "variant": "WALK",
+  "tech": "INSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 2
+    },
+    "t": 0,
+    "tPlayed": 0.545833333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (R)",
+    "tech": "HOOK",
+    "tSel": 0,
+    "tPrep": 0.24699999999999944,
+    "tCommit": 0.4669999999999992,
+    "tDecisive": 0.545833333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6369999999999991,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.546,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.925,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 2.05,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9463083466859591,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 2,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_HOOK·RUN",
+  "variant": "RUN",
+  "tech": "INSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 2,
+     "no controlled continuation: the foot cannot get there (it would jump": 2
+    },
+    "t": 0,
+    "tPlayed": 0.9791666666666665
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (R)",
+    "tech": "HOOK",
+    "tSel": 0,
+    "tPrep": 0.6807927167168057,
+    "tCommit": 0.9007927167168055,
+    "tDecisive": 0.9791666666666665,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.0707927167168054,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.025,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.979,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 1.362,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.567,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.175,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7000712919447605,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "INSIDE_HOOK·SPRINT",
+  "variant": "SPRINT",
+  "tech": "INSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "entry 9.7 m/s far above its 6.5 m/s": 1,
+     "the exit is on the wrong side for this foot": 7,
+     "rolling there": 37,
+     "support refused (braking, short)": 4,
+     "entry 9.5 m/s far above its 6.5 m/s": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 12,
+     "no controlled continuation: next contact too late (+1.25 s": 1
+    },
+    "t": 0,
+    "tPlayed": 1.8708333333333336
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (R)",
+    "tech": "HOOK",
+    "tSel": 0.7333333333333334,
+    "tPrep": 1.5717046440180988,
+    "tCommit": 1.7917046440180986,
+    "tDecisive": 1.8708333333333336,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.9617046440180985,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.017,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.192,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.412,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.871,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 2.25,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 2.458,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1324168083704986,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_HOOK·NORMAL",
+  "variant": "NORMAL",
+  "tech": "OUTSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "OUTSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "OUTHOOK",
+    "rej": {
+     "exit 210° beyond its 186°": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE HOOK (R)",
+    "tech": "OUTHOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.962,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.321,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9533192807714123,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 3,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1,
+   "FLOAT·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_HOOK·MIRROR",
+  "variant": "MIRROR",
+  "tech": "OUTSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "OUTSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "OUTHOOK",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE HOOK (L)",
+    "tech": "OUTHOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.429,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.962,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.321,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9533192807714123,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 3,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1,
+   "FLOAT·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "OUTSIDE_HOOK·SPRINT",
+  "variant": "SPRINT",
+  "tech": "OUTSIDE_HOOK",
+  "skills": [
+   {
+    "intent": "OUTSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "OUTHOOK",
+    "rej": {
+     "entry 9.7 m/s far above its 6.2 m/s": 1,
+     "the exit is on the wrong side for this foot": 7,
+     "rolling there": 38,
+     "support refused (braking, short)": 4,
+     "entry 9.5 m/s far above its 6.2 m/s": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 9,
+     "no feasible entry on the coming strides (foot / ball / support timing)": 1,
+     "no controlled continuation: next contact too late (+1.25 s": 1
+    },
+    "t": 0,
+    "tPlayed": 1.8708333333333336
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE HOOK (R)",
+    "tech": "OUTHOOK",
+    "tSel": 0.7333333333333334,
+    "tPrep": 1.5717046440180988,
+    "tCommit": 1.7917046440180986,
+    "tDecisive": 1.8708333333333336,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.9617046440180985,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.017,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.192,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.412,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.871,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 2.25,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1317614242315572,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "BRAKING_TOUCH·NORMAL",
+  "variant": "NORMAL",
+  "tech": "BRAKING_TOUCH",
+  "skills": [],
+  "phases": [],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.442,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.133,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.575,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.004,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.888,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0189445327349327,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -7.8,
+    "t": 0.908,
+    "v": 0,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "RONALDO_CHOP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.6583333333333332
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.5782095014217203,
+    "tDecisive": 0.6583333333333332,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7682095014217203,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.658,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 0.958,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.567,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.883,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.513,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "RONALDO_CHOP·LOW-SPEED",
+  "variant": "LOW-SPEED",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.6458333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.3242380711322137,
+    "tCommit": 0.5642380711322137,
+    "tDecisive": 0.6458333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7542380711322139,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.271,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.25,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.646,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 0.946,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.554,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.867,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.5,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6555144651371865,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "RONALDO_CHOP·JOG · NO HOP",
+  "variant": "JOG · NO HOP",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "entry 3.2 m/s below its 3.6 m/s": 1,
+     "the exit is on the wrong side for this foot": 2,
+     "speed floor": 4,
+     "rolling there": 7
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.8801297955020733,
+    "tCommit": 0.8201297955020732,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.0101297955020732,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.146,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.446,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 1.2,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.992,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.35,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6551454228340353,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "RONALDO_CHOP·REJECTED",
+  "variant": "REJECTED",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "REJECTED",
+    "alt": "CARRY",
+    "rej": {
+     "entry 1.5 m/s below its 3.6 m/s": 4,
+     "the exit is on the wrong side for this foot": 6,
+     "exit 52° below its 55°": 2
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "GATHER (L)",
+    "tech": "ABG",
+    "tSel": 0.30416666666666625,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": null,
+    "decisiveSurface": null,
+    "tControl": null,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.304,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.892,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.654,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.412,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.5956829340263909,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "RONALDO_CHOP·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "no feasible entry on the coming strides (foot / ball / support timing)": 1,
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 20
+    },
+    "t": 0,
+    "tPlayed": 1.0041666666666664
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.6821499948534977,
+    "tCommit": 0.9221499948534975,
+    "tDecisive": 1.0041666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.1121499948534979,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.004,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 1.304,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 2.242,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.073273053855473,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·normal": 1,
+   "KNEE·slow": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "KNEE",
+    "foot": "R",
+    "deg": -36.5,
+    "t": 0.55,
+    "v": 9.66,
+    "act": "RONALDO CHOP"
+   }
+  ]
+ },
+ {
+  "name": "RONALDO_CHOP·MIRROR",
+  "variant": "MIRROR",
+  "tech": "RONALDO_CHOP",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.6583333333333332
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (L)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.5782095014217203,
+    "tDecisive": 0.6583333333333332,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7682095014217203,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.658,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 0.958,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.567,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.883,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.513,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "RONALDO_CHOP·AUTO",
+  "variant": "AUTO",
+  "tech": "RONALDO_CHOP",
+  "skills": [],
+  "phases": [
+   {
+    "label": "COMPACT INSIDE REDIRECT (R)",
+    "tech": "CIR",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.26249999999999973,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.3224999999999998,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "compact inside redirect",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.437,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.071,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6568496399798847,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·SLOW · AT THE PLANT",
+  "variant": "SLOW · AT THE PLANT",
+  "tech": "CRUYFF",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.5083333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.2469999999999999,
+    "tCommit": 0.4269999999999996,
+    "tDecisive": 0.5083333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6019999999999999,
+    "tNext": 0.895833333333333,
+    "next": "OUTSIDE CUT"
+   },
+   {
+    "label": "OUTSIDE CUT (R)",
+    "tech": "OUTCUT",
+    "tSel": 0.895833333333333,
+    "tPrep": 1.4994468653971413,
+    "tCommit": 1.5594468653971414,
+    "tDecisive": 1.6374999999999997,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.6994468653971415,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.508,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.058,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.637,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "missed": false
+   },
+   {
+    "t": 1.921,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.162,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6992282842161884,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·NORMAL",
+  "variant": "NORMAL",
+  "tech": "CRUYFF",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 6,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.38749999999999973
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3091246376278374,
+    "tDecisive": 0.38749999999999973,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.48412463762783764,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.387,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.688,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.421,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.783,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.5,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6536862573043096,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "CRUYFF",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 11,
+     "no controlled continuation: the foot cannot get there (it would jump": 3
+    },
+    "t": 0,
+    "tPlayed": 0.645833333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.3856084300575775,
+    "tCommit": 0.5656084300575772,
+    "tDecisive": 0.645833333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7406084300575775,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.313,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.646,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.946,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.492,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.808,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.442,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 4,
+   "diag": 0
+  },
+  "kinds": {
+   "JUMP·slow": 2,
+   "KNEE·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·MIRROR",
+  "variant": "MIRROR",
+  "tech": "CRUYFF",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "rolling there": 11,
+     "no controlled continuation: the foot cannot get there (it would jump": 3
+    },
+    "t": 0,
+    "tPlayed": 0.645833333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (L)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.3856084300575775,
+    "tCommit": 0.5656084300575772,
+    "tDecisive": 0.645833333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7406084300575775,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.313,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.646,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.946,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.492,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.808,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.442,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 4,
+   "diag": 0
+  },
+  "kinds": {
+   "JUMP·slow": 2,
+   "KNEE·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·SPRINT",
+  "variant": "SPRINT",
+  "tech": "CRUYFF",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "no feasible entry on the coming strides (foot / ball / support timing)": 7,
+     "the exit is on the wrong side for this foot": 14,
+     "rolling there": 116,
+     "no controlled continuation: the foot cannot get there (it would jump": 14,
+     "set touch: the foot not in the air at the end of its swing": 2,
+     "no controlled continuation: next contact too late (+1.21 s": 1
+    },
+    "t": 0,
+    "tPlayed": 1.833333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0.7333333333333334,
+    "tPrep": 1.5717046440180988,
+    "tCommit": 1.7517046440180986,
+    "tDecisive": 1.833333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.9267046440180984,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.017,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.192,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.412,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.496,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.833,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 2.133,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1319328261385069,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CRUYFF·AUTO",
+  "variant": "AUTO",
+  "tech": "CRUYFF",
+  "skills": [],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3091246376278374,
+    "tDecisive": 0.38749999999999973,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.48412463762783764,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.387,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.688,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.421,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.783,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.5,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6536862573043096,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DRAG_BACK·NORMAL",
+  "variant": "NORMAL",
+  "tech": "DRAG_BACK",
+  "skills": [
+   {
+    "intent": "DRAG_BACK",
+    "result": "PLAYED",
+    "played": "DRAG_BACK",
+    "rej": {
+     "rolling there": 4,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "DRAG-BACK (R)",
+    "tech": "DRAGBACK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5091246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "DRAG-BACK",
+    "missed": false
+   },
+   {
+    "t": 0.671,
+    "F": "L",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.621,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.337,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7134363054544792,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DRAG_BACK·MIRROR",
+  "variant": "MIRROR",
+  "tech": "DRAG_BACK",
+  "skills": [
+   {
+    "intent": "DRAG_BACK",
+    "result": "PLAYED",
+    "played": "DRAG_BACK",
+    "rej": {
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "DRAG-BACK (L)",
+    "tech": "DRAGBACK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5091246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "DRAG-BACK",
+    "missed": false
+   },
+   {
+    "t": 0.671,
+    "F": "R",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.621,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.337,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7134363054544792,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DRAG_BACK·REJECTED",
+  "variant": "REJECTED",
+  "tech": "DRAG_BACK",
+  "skills": [
+   {
+    "intent": "DRAG_BACK",
+    "result": "REJECTED",
+    "alt": "BRAKING_TOUCH",
+    "rej": {
+     "entry 9.7 m/s far above its 5 m/s": 3,
+     "rolling there": 67,
+     "no controlled continuation: the foot cannot get there (it would jump": 2,
+     "entry 9.0 m/s far above its 5 m/s": 2,
+     "entry 8.4 m/s far above its 5 m/s": 2
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "BRAKING TOUCH (R)",
+    "tech": "BRT",
+    "tSel": 0.5499999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": null,
+    "decisiveSurface": null,
+    "tControl": null,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "BRAKING TOUCH (L)",
+    "tech": "BRT",
+    "tSel": 0.9791666666666665,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.291666666666667,
+    "decisiveSurface": "SOLE",
+    "tControl": 1.3516666666666666,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.292,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "braking touch",
+    "missed": false
+   },
+   {
+    "t": 1.725,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.967,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.4,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0143770370293883,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 3,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·slow": 3
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "L_DRAG·NORMAL",
+  "variant": "NORMAL",
+  "tech": "L_DRAG",
+  "skills": [
+   {
+    "intent": "L_DRAG",
+    "result": "PLAYED",
+    "played": "LDRAG",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "L-DRAG (R)",
+    "tech": "LDRAG",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "L-DRAG · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "L-drag · the inside behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.796,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.042,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.758,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.479,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6577294993157934,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "L_DRAG·MIRROR",
+  "variant": "MIRROR",
+  "tech": "L_DRAG",
+  "skills": [
+   {
+    "intent": "L_DRAG",
+    "result": "PLAYED",
+    "played": "LDRAG",
+    "rej": {
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "L-DRAG (L)",
+    "tech": "LDRAG",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "L-DRAG · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "L-drag · the inside behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.796,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.042,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.758,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.479,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6577294993151581,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "SOLE_ROLL·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SOLE_ROLL",
+  "skills": [
+   {
+    "intent": "SOLE_ROLL",
+    "result": "PLAYED",
+    "played": "SOLE_ROLL",
+    "rej": {
+     "box": 21,
+     "swing speed": 1
+    },
+    "t": 0,
+    "tPlayed": 0.30416666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "SOLE ROLL (R)",
+    "tech": "SOL",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.30416666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.3641666666666663,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.304,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "sole roll",
+    "missed": false
+   },
+   {
+    "t": 0.925,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.683,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.446,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.5994838048155234,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.6,
+    "t": 0.454,
+    "v": 1.37,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "CROQUETA·NORMAL",
+  "variant": "NORMAL",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 100,
+     "plant timing": 8
+    },
+    "t": 0,
+    "tPlayed": 0.5249999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5249999999999999,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.585,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.525,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.842,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.475,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.104,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553901417349404,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·MIRROR",
+  "variant": "MIRROR",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 100,
+     "plant timing": 8
+    },
+    "t": 0,
+    "tPlayed": 0.5249999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5249999999999999,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.585,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.525,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.842,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.475,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.104,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.655390141735447,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·PRESSURE",
+  "variant": "PRESSURE",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 59,
+     "plant timing": 3,
+     "swing speed": 2
+    },
+    "t": 0,
+    "tPlayed": 0.28749999999999964
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.05416666666666625,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.28749999999999964,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.3474999999999997,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.287,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.646,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.362,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.083,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6568118667457087,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·AUTO",
+  "variant": "AUTO",
+  "tech": "CROQUETA",
+  "skills": [],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.896,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.529,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "BODY_FEINT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "BODY_FEINT",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BODY_FEINT",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0.75,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.895833333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.9558333333333331,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.896,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 1.208,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.525,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "BODY_FEINT",
+    "side": 1,
+    "src": "manual"
+   },
+   {
+    "t": 0.44999999999999973,
+    "kind": "HIP_FAKE",
+    "side": -1,
+    "src": "analog"
+   },
+   {
+    "t": 0.75,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SHOULDER_DROP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SHOULDER_DROP",
+  "skills": [
+   {
+    "intent": "SHOULDER_DROP",
+    "result": "PLAYED",
+    "played": "SHOULDER_DROP",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   }
+  ],
+  "phases": [],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.771,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.071,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.429,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.146,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6551454228340353,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "SHOULDER_DROP",
+    "side": 1,
+    "src": "manual"
+   },
+   {
+    "t": 0.3999999999999999,
+    "kind": "HIP_FAKE",
+    "side": -1,
+    "src": "analog"
+   },
+   {
+    "t": 0.7041666666666666,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "HIP_FAKE·NORMAL",
+  "variant": "NORMAL",
+  "tech": "HIP_FAKE",
+  "skills": [
+   {
+    "intent": "HIP_FAKE",
+    "result": "PLAYED",
+    "played": "HIP_FAKE",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.44999999999999973,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.896,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.529,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "manual"
+   },
+   {
+    "t": 0.2999999999999998,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.6041666666666665,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "FEINT_OUTSIDE_CUT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "FEINT_OUTSIDE_CUT",
+  "skills": [
+   {
+    "intent": "FEINT_OUTSIDE_CUT",
+    "result": "PLAYED",
+    "played": "FEINT_OUTSIDE_CUT",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   }
+  ],
+  "phases": [
+   {
+    "label": "COMPACT OUTSIDE REDIRECT (L)",
+    "tech": "COR",
+    "tSel": 0.375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "compact outside redirect",
+    "missed": false
+   },
+   {
+    "t": 0.892,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.525,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.154,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6561660991198977,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "BODY_FEINT",
+    "side": 1,
+    "src": "manual"
+   },
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": -1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 1,
+   "slow": 3,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1,
+   "JUMP·slow": 3
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -8.8,
+    "t": 0.463,
+    "v": 5.3,
+    "act": "COMPACT OUTSIDE REDIRECT"
+   }
+  ]
+ },
+ {
+  "name": "FEINT_INSIDE_CUT·NORMAL",
+  "variant": "NORMAL",
+  "tech": "FEINT_INSIDE_CUT",
+  "skills": [
+   {
+    "intent": "FEINT_INSIDE_CUT",
+    "result": "PLAYED",
+    "played": "FEINT_INSIDE_CUT",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   }
+  ],
+  "phases": [
+   {
+    "label": "COMPACT INSIDE REDIRECT (R)",
+    "tech": "CIR",
+    "tSel": 0.41249999999999964,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.645833333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7058333333333331,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.412,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 0.646,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "compact inside redirect",
+    "missed": false
+   },
+   {
+    "t": 1.362,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.079,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6787342083408162,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "BODY_FEINT",
+    "side": 1,
+    "src": "manual"
+   },
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": -1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "MATTHEWS·NORMAL",
+  "variant": "NORMAL",
+  "tech": "MATTHEWS",
+  "skills": [
+   {
+    "intent": "MATTHEWS",
+    "result": "PLAYED",
+    "played": "MATTHEWS",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 2
+    },
+    "t": 0,
+    "tPlayed": 0.75
+   }
+  ],
+  "phases": [
+   {
+    "label": "MATTHEWS FEINT (drag-push) (R)",
+    "tech": "MATTHEWS",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.4883333333333333,
+    "tDecisive": 0.75,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.8091246376278378,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.508,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "matthews · the inside nudge left",
+    "missed": false
+   },
+   {
+    "t": 0.75,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "MATTHEWS · the outside of the same foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 0.992,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.35,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.067,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6552279856961462,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·slow": 1,
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -5.6,
+    "t": 1.025,
+    "v": 3.14,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "MATTHEWS·MIRROR",
+  "variant": "MIRROR",
+  "tech": "MATTHEWS",
+  "skills": [
+   {
+    "intent": "MATTHEWS",
+    "result": "PLAYED",
+    "played": "MATTHEWS",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 2
+    },
+    "t": 0,
+    "tPlayed": 0.75
+   }
+  ],
+  "phases": [
+   {
+    "label": "MATTHEWS FEINT (drag-push) (L)",
+    "tech": "MATTHEWS",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.4883333333333333,
+    "tDecisive": 0.75,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.8091246376278378,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.508,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "matthews · the inside nudge left",
+    "missed": false
+   },
+   {
+    "t": 0.75,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "MATTHEWS · the outside of the same foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 0.992,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.35,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.067,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6552279856965932,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·slow": 1,
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -5.6,
+    "t": 1.025,
+    "v": 3.14,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "SCISSORS·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SCISSORS",
+  "skills": [
+   {
+    "intent": "SCISSORS",
+    "result": "PLAYED",
+    "played": "SCISSORS",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS (R)",
+    "tech": "SCISSORS",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "SCISSORS · the outside of the other foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 1.142,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.775,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.404,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SCISSORS·MIRROR",
+  "variant": "MIRROR",
+  "tech": "SCISSORS",
+  "skills": [
+   {
+    "intent": "SCISSORS",
+    "result": "PLAYED",
+    "played": "SCISSORS",
+    "rej": {
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS (L)",
+    "tech": "SCISSORS",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "SCISSORS · the outside of the other foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 1.142,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.775,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.404,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SCISSORS·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "SCISSORS",
+  "skills": [
+   {
+    "intent": "SCISSORS",
+    "result": "PLAYED",
+    "played": "SCISSORS",
+    "rej": {
+     "no feasible entry on the coming strides (foot / ball / support timing)": 3,
+     "the exit is on the wrong side for this foot": 4,
+     "rolling there": 22,
+     "no controlled continuation: next contact too late (+1.23 s": 1
+    },
+    "t": 0,
+    "tPlayed": 1.7125000000000004
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS (R)",
+    "tech": "SCISSORS",
+    "tSel": 0.5249999999999999,
+    "tPrep": 1.1544002903475157,
+    "tCommit": 1.634400290347516,
+    "tDecisive": 1.7125000000000004,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.7744002903475158,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.713,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "SCISSORS · the outside of the other foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 1.95,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.379,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9421230995270132,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SCISSORS·REJECTED",
+  "variant": "REJECTED",
+  "tech": "SCISSORS",
+  "skills": [
+   {
+    "intent": "SCISSORS",
+    "result": "REJECTED",
+    "alt": "DRAG_BACK",
+    "rej": {
+     "exit 140° beyond its 92°": 4,
+     "exit 220° beyond its 92°": 4
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "DRAG-BACK (L)",
+    "tech": "DRAGBACK",
+    "tSel": 0.5499999999999998,
+    "tPrep": 0.7534151274909071,
+    "tCommit": 0.9734151274909069,
+    "tDecisive": 1.0541666666666663,
+    "decisiveSurface": "SOLE",
+    "tControl": 1.133415127490907,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.679,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.054,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "DRAG-BACK",
+    "missed": false
+   },
+   {
+    "t": 1.292,
+    "F": "R",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "missed": false
+   },
+   {
+    "t": 1.742,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.371,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7865826995921051,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "STEPOVER·AUTO",
+  "variant": "AUTO",
+  "tech": "STEPOVER",
+  "skills": [],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5791666666666666,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6391666666666667,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.579,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.896,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.529,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "HIP_FAKE",
+    "side": 1,
+    "src": "analog"
+   },
+   {
+    "t": 0.30416666666666625,
+    "kind": "GENUINE",
+    "src": "analog",
+    "confirmed": false
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SCISSORS_GO·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SCISSORS_GO",
+  "skills": [
+   {
+    "intent": "SCISSORS_GO",
+    "result": "PLAYED",
+    "played": "SCISSORS_GO",
+    "rej": {
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS → CONTINUE (R)",
+    "tech": "SCISSORS_GO",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "LACES",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "L",
+    "surface": "LACES",
+    "role": "SCISSORS → CONTINUE · the other foot pushes it on",
+    "missed": false
+   },
+   {
+    "t": 1.137,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.771,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.4,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SCISSORS_GO·MIRROR",
+  "variant": "MIRROR",
+  "tech": "SCISSORS_GO",
+  "skills": [
+   {
+    "intent": "SCISSORS_GO",
+    "result": "PLAYED",
+    "played": "SCISSORS_GO",
+    "rej": {
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS → CONTINUE (L)",
+    "tech": "SCISSORS_GO",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "LACES",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "LACES",
+    "role": "SCISSORS → CONTINUE · the other foot pushes it on",
+    "missed": false
+   },
+   {
+    "t": 1.137,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.771,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.4,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "STEPOVER·NORMAL",
+  "variant": "NORMAL",
+  "tech": "STEPOVER",
+  "skills": [
+   {
+    "intent": "STEPOVER",
+    "result": "PLAYED",
+    "played": "STEPOVER",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "STEPOVER (R)",
+    "tech": "STEPOVER",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "STEPOVER · the same foot's outside takes it back the other way",
+    "missed": false
+   },
+   {
+    "t": 1.133,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.446,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.075,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6568139622075075,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "STEPOVER·MIRROR",
+  "variant": "MIRROR",
+  "tech": "STEPOVER",
+  "skills": [
+   {
+    "intent": "STEPOVER",
+    "result": "PLAYED",
+    "played": "STEPOVER",
+    "rej": {
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "STEPOVER (L)",
+    "tech": "STEPOVER",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "STEPOVER · the same foot's outside takes it back the other way",
+    "missed": false
+   },
+   {
+    "t": 1.133,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.446,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.075,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.656813962207017,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DOUBLE_SCISSORS·NORMAL",
+  "variant": "NORMAL",
+  "tech": "DOUBLE_SCISSORS",
+  "skills": [
+   {
+    "intent": "DOUBLE_SCISSORS",
+    "result": "PLAYED",
+    "played": "DSCISSORS",
+    "rej": {
+     "no feasible entry on the coming strides (foot / ball / support timing)": 3,
+     "the exit is on the wrong side for this foot": 4,
+     "support refused (1st loop)": 6,
+     "rolling there": 5,
+     "support refused (set step (the touch that sets the ball))": 2
+    },
+    "t": 0,
+    "tPlayed": 1.458333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "DOUBLE SCISSORS (R)",
+    "tech": "DSCISSORS",
+    "tSel": 0.375,
+    "tPrep": 0.6164154109962512,
+    "tCommit": 1.376415410996251,
+    "tDecisive": 1.458333333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.516415410996251,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.542,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.458,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "DOUBLE SCISSORS · the first foot's outside takes it away",
+    "missed": false
+   },
+   {
+    "t": 1.717,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.075,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.792,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.654934696741662,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "HEEL_CHOP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "PLAYED",
+    "played": "HEELCHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "HEEL CHOP (R)",
+    "tech": "HEELCHOP",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.40912463762783746,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "HEEL",
+    "tControl": 0.5491246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "R",
+    "surface": "HEEL",
+    "role": "HEEL CHOP · the heel drives it back behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.371,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.729,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.446,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6541704625712751,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "HEEL_CHOP·MIRROR",
+  "variant": "MIRROR",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "PLAYED",
+    "played": "HEELCHOP",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "HEEL CHOP (L)",
+    "tech": "HEELCHOP",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.40912463762783746,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "HEEL",
+    "tControl": 0.5491246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "L",
+    "surface": "HEEL",
+    "role": "HEEL CHOP · the heel drives it back behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.371,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.729,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.446,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6541704625710084,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "HEEL_CHOP·REJECTED",
+  "variant": "REJECTED",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "REJECTED",
+    "alt": "CARRY",
+    "rej": {
+     "entry 9.7 m/s far above its 6 m/s": 2,
+     "the exit is on the wrong side for this foot": 4,
+     "rolling there": 32,
+     "entry 9.0 m/s far above its 6 m/s": 1,
+     "no feasible entry on the coming strides (foot / ball / support timing)": 1
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "L-DRAG (R)",
+    "tech": "LDRAG",
+    "tSel": 1.2333333333333334,
+    "tPrep": 1.6387423587187557,
+    "tCommit": 1.8587423587187555,
+    "tDecisive": null,
+    "decisiveSurface": null,
+    "tControl": 2.0787423587187552,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 1.6375000000000002,
+    "tPrep": 1.8614575460411737,
+    "tCommit": 1.9014575460411738,
+    "tDecisive": 1.9833333333333334,
+    "decisiveSurface": "INSIDE",
+    "tControl": 2.0764575460411736,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.563,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.983,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 2.283,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0143770370293883,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 2,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1,
+   "CROSS·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "ELASTICO·NORMAL",
+  "variant": "NORMAL",
+  "tech": "ELASTICO",
+  "skills": [
+   {
+    "intent": "ELASTICO",
+    "result": "PLAYED",
+    "played": "ELASTICO",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.608333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "ELASTICO (R)",
+    "tech": "ELASTICO",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.500833333333333,
+    "tDecisive": 0.608333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6891246376278377,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.521,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "elastico · outside cue",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "ELASTICO · the inside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 0.862,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.221,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.938,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6566534449972304,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "ELASTICO·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "ELASTICO",
+  "skills": [
+   {
+    "intent": "ELASTICO",
+    "result": "PLAYED",
+    "played": "ELASTICO",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1
+    },
+    "t": 0,
+    "tPlayed": 0.8166666666666664
+   }
+  ],
+  "phases": [
+   {
+    "label": "ELASTICO (R)",
+    "tech": "ELASTICO",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.7091666666666665,
+    "tDecisive": 0.8166666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.8982095014217206,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.729,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "elastico · outside cue",
+    "missed": false
+   },
+   {
+    "t": 0.817,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "ELASTICO · the inside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 1.05,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.292,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.925,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.554,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6554027003320628,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "ELASTICO·MIRROR",
+  "variant": "MIRROR",
+  "tech": "ELASTICO",
+  "skills": [
+   {
+    "intent": "ELASTICO",
+    "result": "PLAYED",
+    "played": "ELASTICO",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.608333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "ELASTICO (L)",
+    "tech": "ELASTICO",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.500833333333333,
+    "tDecisive": 0.608333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6891246376278377,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.521,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "elastico · outside cue",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "ELASTICO · the inside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 0.862,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.221,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.938,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6566534449972264,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "ELASTICO·REJECTED",
+  "variant": "REJECTED",
+  "tech": "ELASTICO",
+  "skills": [
+   {
+    "intent": "ELASTICO",
+    "result": "REJECTED",
+    "alt": "CARRY (pursuit)",
+    "rej": {
+     "the exit is on the wrong side for this foot": 5
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.533,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.85,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.567,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.929,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6536246171082833,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "REVERSE_ELASTICO·NORMAL",
+  "variant": "NORMAL",
+  "tech": "REVERSE_ELASTICO",
+  "skills": [
+   {
+    "intent": "REVERSE_ELASTICO",
+    "result": "PLAYED",
+    "played": "RELASTICO",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.608333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "REVERSE ELASTICO (R)",
+    "tech": "RELASTICO",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.500833333333333,
+    "tDecisive": 0.608333333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.6891246376278377,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.521,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "reverse elastico · inside cue",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "REVERSE ELASTICO · the outside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 0.917,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.279,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.996,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6548051924640653,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "REVERSE_ELASTICO·MIRROR",
+  "variant": "MIRROR",
+  "tech": "REVERSE_ELASTICO",
+  "skills": [
+   {
+    "intent": "REVERSE_ELASTICO",
+    "result": "PLAYED",
+    "played": "RELASTICO",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.608333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "REVERSE ELASTICO (L)",
+    "tech": "RELASTICO",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.500833333333333,
+    "tDecisive": 0.608333333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.6891246376278377,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.521,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "reverse elastico · inside cue",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "REVERSE ELASTICO · the outside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 0.917,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.279,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.996,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6548051924640544,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "V_PULL·NORMAL",
+  "variant": "NORMAL",
+  "tech": "V_PULL",
+  "skills": [
+   {
+    "intent": "V_PULL",
+    "result": "PLAYED",
+    "played": "VPULL",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "V-PULL (R)",
+    "tech": "VPULL",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "V-PULL · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "V-pull · the inside out across",
+    "missed": false
+   },
+   {
+    "t": 1.092,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.808,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.525,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6544560683376176,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "V_PULL·MIRROR",
+  "variant": "MIRROR",
+  "tech": "V_PULL",
+  "skills": [
+   {
+    "intent": "V_PULL",
+    "result": "PLAYED",
+    "played": "VPULL",
+    "rej": {
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "V-PULL (L)",
+    "tech": "VPULL",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "V-PULL · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "V-pull · the inside out across",
+    "missed": false
+   },
+   {
+    "t": 1.092,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.525,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6544560683375968,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "PULL_PUSH·NORMAL",
+  "variant": "NORMAL",
+  "tech": "PULL_PUSH",
+  "skills": [
+   {
+    "intent": "PULL_PUSH",
+    "result": "PLAYED",
+    "played": "PULLPUSH",
+    "rej": {
+     "rolling there": 5,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "PULL-PUSH (R)",
+    "tech": "PULLPUSH",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "PULL-PUSH · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "R",
+    "surface": "LACES",
+    "role": "pull-push · the push forward again",
+    "missed": false
+   },
+   {
+    "t": 0.796,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.108,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.825,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.542,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.654727067305197,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "ROULETTE·NORMAL",
+  "variant": "NORMAL",
+  "tech": "ROULETTE",
+  "skills": [
+   {
+    "intent": "ROULETTE",
+    "result": "PLAYED",
+    "played": "ROULETTE",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4083333333333332
+   }
+  ],
+  "phases": [
+   {
+    "label": "ROULETTE (Marseille turn) (R)",
+    "tech": "ROULETTE",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.32912463762783783,
+    "tDecisive": 0.4083333333333332,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.46912463762783796,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.408,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "ROULETTE · the right sole drags it back",
+    "missed": false
+   },
+   {
+    "t": 0.708,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "roulette · the left sole drags it on",
+    "missed": false
+   },
+   {
+    "t": 0.975,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.679,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.396,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6540728163472852,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 2,
+   "slow": 4,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1,
+   "KNEE·slow": 1,
+   "CROSS·normal": 2,
+   "JUMP·slow": 1,
+   "CROSS·slow": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -10.3,
+    "t": 0.737,
+    "v": 0.59,
+    "act": "CARRY"
+   },
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.4,
+    "t": 0.933,
+    "v": 1.99,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "ROULETTE·REJECTED",
+  "variant": "REJECTED",
+  "tech": "ROULETTE",
+  "skills": [
+   {
+    "intent": "ROULETTE",
+    "result": "REJECTED",
+    "alt": "COMPACT_INSIDE_REDIRECT",
+    "rej": {
+     "entry 9.7 m/s far above its 4.2 m/s": 2,
+     "the exit is on the wrong side for this foot": 4,
+     "rolling there": 34,
+     "entry 9.0 m/s far above its 4.2 m/s": 1,
+     "entry 8.4 m/s far above its 4.2 m/s": 1
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "COMPACT INSIDE REDIRECT (R)",
+    "tech": "CIR",
+    "tSel": 0.5499999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.5,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.5599999999999996,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.5,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "compact inside redirect",
+    "missed": false
+   },
+   {
+    "t": 1.737,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.971,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0815714743662306,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "HESITATION·NORMAL",
+  "variant": "NORMAL",
+  "tech": "HESITATION",
+  "skills": [
+   {
+    "intent": "HESITATION",
+    "result": "PLAYED",
+    "played": "HESITATE",
+    "rej": {
+     "rolling there": 5,
+     "drift": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.5666666666666664
+   }
+  ],
+  "phases": [
+   {
+    "label": "HESITATION (L)",
+    "tech": "HESITATE",
+    "tSel": 0,
+    "tPrep": 0.16781414399967565,
+    "tCommit": 0.4878141439996755,
+    "tDecisive": 0.5666666666666664,
+    "decisiveSurface": "LACES",
+    "tControl": 0.6278141439996756,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.092,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.567,
+    "F": "R",
+    "surface": "LACES",
+    "role": "HESITATION · the push after the stall",
+    "missed": false
+   },
+   {
+    "t": 0.867,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.5,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.133,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.676189785474913,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "HESITATION·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "HESITATION",
+  "skills": [
+   {
+    "intent": "HESITATION",
+    "result": "PLAYED",
+    "played": "HESITATE",
+    "rej": {
+     "rolling there": 11,
+     "support refused (the checked stride)": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.8624999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "HESITATION (L)",
+    "tech": "HESITATE",
+    "tSel": 0,
+    "tPrep": 0.4624204746678986,
+    "tCommit": 0.7824204746678984,
+    "tDecisive": 0.8624999999999998,
+    "decisiveSurface": "LACES",
+    "tControl": 0.9224204746678986,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.387,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.862,
+    "F": "R",
+    "surface": "LACES",
+    "role": "HESITATION · the push after the stall",
+    "missed": false
+   },
+   {
+    "t": 1.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.033,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9266681021656665,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 3,
+   "diag": 1
+  },
+  "kinds": {
+   "KNEE·slow": 2,
+   "SLIDE·diag": 1,
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DEADEN_EXPLODE·NORMAL",
+  "variant": "NORMAL",
+  "tech": "DEADEN_EXPLODE",
+  "skills": [
+   {
+    "intent": "DEADEN_EXPLODE",
+    "result": "PLAYED",
+    "played": "DEADEN",
+    "rej": {
+     "rolling there": 6,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "DEADEN-AND-EXPLODE (L)",
+    "tech": "DEADEN",
+    "tSel": 0,
+    "tPrep": 0.16781414399967565,
+    "tCommit": 0.44781414399967545,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5878141439996756,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.092,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "DEADEN · the sole stops it dead",
+    "missed": false
+   },
+   {
+    "t": 0.587,
+    "F": "L",
+    "surface": "LACES",
+    "role": "EXPLODE · the push away",
+    "missed": false
+   },
+   {
+    "t": 2.158,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.475,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.8098486351384997,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "DEADEN_EXPLODE·HIGH-SPEED",
+  "variant": "HIGH-SPEED",
+  "tech": "DEADEN_EXPLODE",
+  "skills": [
+   {
+    "intent": "DEADEN_EXPLODE",
+    "result": "PLAYED",
+    "played": "DEADEN",
+    "rej": {
+     "rolling there": 11,
+     "support refused (HARD BRAKE (penultimate))": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.7833333333333332
+   }
+  ],
+  "phases": [
+   {
+    "label": "DEADEN-AND-EXPLODE (L)",
+    "tech": "DEADEN",
+    "tSel": 0,
+    "tPrep": 0.4624204746678986,
+    "tCommit": 0.7424204746678984,
+    "tDecisive": 0.7833333333333332,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.8824204746678985,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.387,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.783,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "DEADEN · the sole stops it dead",
+    "missed": false
+   },
+   {
+    "t": 0.883,
+    "F": "L",
+    "surface": "LACES",
+    "role": "EXPLODE · the push away",
+    "missed": false
+   },
+   {
+    "t": 1.079,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.504,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.392,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1164578396623774,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 4,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 4
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "FAKE_STOP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "FAKE_STOP",
+  "skills": [
+   {
+    "intent": "FAKE_STOP",
+    "result": "PLAYED",
+    "played": "FAKESTOP",
+    "rej": {
+     "rolling there": 4,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.5666666666666664
+   }
+  ],
+  "phases": [
+   {
+    "label": "FAKE STOP (L)",
+    "tech": "FAKESTOP",
+    "tSel": 0,
+    "tPrep": 0.16781414399967565,
+    "tCommit": 0.4878141439996755,
+    "tDecisive": 0.5666666666666664,
+    "decisiveSurface": "LACES",
+    "tControl": 0.6278141439996756,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.092,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.567,
+    "F": "R",
+    "surface": "LACES",
+    "role": "FAKE STOP · the push away (the stop was only sold)",
+    "missed": false
+   },
+   {
+    "t": 1.096,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.412,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.042,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7904643864782472,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "FLOAT",
+    "air": 0.221,
+    "t": 0.671,
+    "v": 3.36,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "STOP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "STOP",
+  "skills": [],
+  "phases": [],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.287,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "stop (cushion)",
+    "missed": false
+   },
+   {
+    "t": 0.5,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "stop (sole)",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6491459351038948,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 2,
+   "diag": 0
+  },
+  "kinds": {
+   "JUMP·slow": 1,
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "SHIELD_ROLL·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SHIELD_ROLL",
+  "skills": [
+   {
+    "intent": "SHIELD_ROLL",
+    "result": "PLAYED",
+    "played": "SHIELDROLL",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8874999999999997
+   }
+  ],
+  "phases": [
+   {
+    "label": "SHIELD ROLL-AWAY (R)",
+    "tech": "SHIELDROLL",
+    "tSel": 0,
+    "tPrep": 0.6269999999999998,
+    "tCommit": 0.8069999999999995,
+    "tDecisive": 0.8874999999999997,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.9669999999999996,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.171,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "SHIELD ROLL · the far foot's sole rolls it away",
+    "missed": false
+   },
+   {
+    "t": 1.55,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.313,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.5850271233848917,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SHIELD_ROLL·MIRROR",
+  "variant": "MIRROR",
+  "tech": "SHIELD_ROLL",
+  "skills": [
+   {
+    "intent": "SHIELD_ROLL",
+    "result": "PLAYED",
+    "played": "SHIELDROLL",
+    "rej": {
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8874999999999997
+   }
+  ],
+  "phases": [
+   {
+    "label": "SHIELD ROLL-AWAY (L)",
+    "tech": "SHIELDROLL",
+    "tSel": 0,
+    "tPrep": 0.6269999999999998,
+    "tCommit": 0.8069999999999995,
+    "tDecisive": 0.8874999999999997,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.9669999999999996,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.171,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "SHIELD ROLL · the far foot's sole rolls it away",
+    "missed": false
+   },
+   {
+    "t": 1.55,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.313,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.5850271233848751,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "SHIELD_HOOK·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SHIELD_HOOK",
+  "skills": [
+   {
+    "intent": "INSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "HOOK",
+    "rej": {
+     "exit 210° beyond its 185°": 1,
+     "rolling there": 2,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "INSIDE HOOK (R)",
+    "tech": "HOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "INSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.033,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.75,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.8675727982348721,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "SHIELD_HOOK·AUTO",
+  "variant": "AUTO",
+  "tech": "SHIELD_HOOK",
+  "skills": [],
+  "phases": [
+   {
+    "label": "DRAG-BACK (R)",
+    "tech": "DRAGBACK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5091246376278376,
+    "tNext": 1.2583333333333333,
+    "next": "LATERAL TRANSFER"
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 1.2583333333333333,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.4916666666666663,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.5516666666666663,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "DRAG-BACK",
+    "missed": false
+   },
+   {
+    "t": 0.671,
+    "F": "L",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "missed": false
+   },
+   {
+    "t": 1.258,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.492,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 1.85,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.208,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6563272839853356,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "SHIELD_HOOK·AUTO-2",
+  "variant": "AUTO-2",
+  "tech": "SHIELD_HOOK",
+  "skills": [],
+  "phases": [
+   {
+    "label": "BRAKING TOUCH (R)",
+    "tech": "BRT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.18333333333333313,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.24333333333333318,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.183,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "braking touch",
+    "missed": false
+   },
+   {
+    "t": 0.662,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.379,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.096,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6568443214541511,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -9.5,
+    "t": 0.487,
+    "v": 1.26,
+    "act": "CARRY"
+   }
+  ]
+ },
+ {
+  "name": "SHIELD_OUTHOOK·NORMAL",
+  "variant": "NORMAL",
+  "tech": "SHIELD_OUTHOOK",
+  "skills": [
+   {
+    "intent": "OUTSIDE_HOOK",
+    "result": "PLAYED",
+    "played": "OUTHOOK",
+    "rej": {
+     "exit 210° beyond its 186°": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE HOOK (R)",
+    "tech": "OUTHOOK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.5191246376278373,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE HOOK",
+    "missed": false
+   },
+   {
+    "t": 0.808,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.962,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.321,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9533192807714123,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 3,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1,
+   "FLOAT·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Body feint → outside cut",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BODY_FEINT",
+    "rej": {},
+    "t": 0,
+    "tPlayed": 0
+   },
+   {
+    "intent": "OUTSIDE_CUT",
+    "result": "PLAYED",
+    "played": "OUTSIDE_CUT",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 7
+    },
+    "t": 0.2999999999999998,
+    "tPlayed": 0.9041666666666663
+   }
+  ],
+  "phases": [
+   {
+    "label": "OUTSIDE CUT (R)",
+    "tech": "OUTCUT",
+    "tSel": 0.2999999999999998,
+    "tPrep": 0.7647998591444289,
+    "tCommit": 0.824799859144429,
+    "tDecisive": 0.9041666666666663,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9647998591444291,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.375,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.904,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "missed": false
+   },
+   {
+    "t": 1.2,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.517,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.146,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6553686617327942,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0,
+    "kind": "BODY_FEINT",
+    "side": 1,
+    "src": "manual"
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Scissors → outside exit → sprint",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "SCISSORS",
+    "result": "PLAYED",
+    "played": "SCISSORS",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "SCISSORS (R)",
+    "tech": "SCISSORS",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "SCISSORS · the outside of the other foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 1.142,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.567,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.462,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0692537629449712,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Stepover → inside exit",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "STEPOVER",
+    "result": "PLAYED",
+    "played": "STEPOVER",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3
+    },
+    "t": 0,
+    "tPlayed": 0.8999999999999999
+   }
+  ],
+  "phases": [
+   {
+    "label": "STEPOVER (R)",
+    "tech": "STEPOVER",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.8182095014217206,
+    "tDecisive": 0.8999999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.9582095014217207,
+    "tNext": 0.9499999999999997,
+    "next": "COMPACT OUTSIDE REDIRECT"
+   },
+   {
+    "label": "COMPACT OUTSIDE REDIRECT (L)",
+    "tech": "COR",
+    "tSel": 0.9499999999999997,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.083333333333333,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 1.143333333333333,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "STEPOVER · the same foot's outside takes it back the other way",
+    "missed": false
+   },
+   {
+    "t": 1.083,
+    "F": "L",
+    "surface": "OUTSIDE",
+    "role": "compact outside redirect",
+    "missed": false
+   },
+   {
+    "t": 1.317,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.946,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.579,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6564897396822492,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1,
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.2,
+    "t": 1.046,
+    "v": 4.1,
+    "act": "COMPACT OUTSIDE REDIRECT"
+   }
+  ]
+ },
+ {
+  "name": "CHAIN·CHAIN·Drag-back → croqueta",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "DRAG_BACK",
+    "result": "PLAYED",
+    "played": "DRAG_BACK",
+    "rej": {
+     "rolling there": 4,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   },
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "swing speed": 8,
+     "box": 41,
+     "plant timing": 3
+    },
+    "t": 1.0499999999999998,
+    "tPlayed": 1.4916666666666663
+   }
+  ],
+  "phases": [
+   {
+    "label": "DRAG-BACK (R)",
+    "tech": "DRAGBACK",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5091246376278376,
+    "tNext": 1.0499999999999998,
+    "next": "LATERAL TRANSFER"
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 1.0499999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.4916666666666663,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.5516666666666663,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "GATHER (L)",
+    "tech": "ABG",
+    "tSel": 1.4916666666666663,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.7249999999999996,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.7849999999999997,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "DRAG-BACK",
+    "missed": false
+   },
+   {
+    "t": 0.671,
+    "F": "L",
+    "surface": "LACES",
+    "role": "push (2nd contact)",
+    "missed": false
+   },
+   {
+    "t": 0.9,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.492,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 1.725,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "gather",
+    "missed": false
+   },
+   {
+    "t": 2.083,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.8,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.7134363054544792,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·V-pull → 90° exit",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "V_PULL",
+    "result": "PLAYED",
+    "played": "VPULL",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.42916666666666625
+   }
+  ],
+  "phases": [
+   {
+    "label": "V-PULL (R)",
+    "tech": "VPULL",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3491246376278374,
+    "tDecisive": 0.42916666666666625,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5691246376278376,
+    "tNext": 0.8499999999999996,
+    "next": "LATERAL TRANSFER"
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0.8499999999999996,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.0333333333333332,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.0933333333333333,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.429,
+    "F": "R",
+    "surface": "SOLE",
+    "role": "V-PULL · the sole pulls it back",
+    "missed": false
+   },
+   {
+    "t": 0.629,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "V-pull · the inside out across",
+    "missed": false
+   },
+   {
+    "t": 1.033,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 1.392,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.75,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6544383784012602,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Ronaldo chop → accelerate",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 8
+    },
+    "t": 0,
+    "tPlayed": 0.6583333333333332
+   }
+  ],
+  "phases": [
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 0,
+    "tPrep": 0.33820950142172057,
+    "tCommit": 0.5782095014217203,
+    "tDecisive": 0.6583333333333332,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7682095014217203,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.262,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.658,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 0.958,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.462,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.679,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.571,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0473682265287994,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Cruyff → accelerate",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 6,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.38749999999999973
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.3091246376278374,
+    "tDecisive": 0.38749999999999973,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.48412463762783764,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.387,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 0.688,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.142,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.354,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.242,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1085299523129186,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Elastico → sprint",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "ELASTICO",
+    "result": "PLAYED",
+    "played": "ELASTICO",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.608333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "ELASTICO (R)",
+    "tech": "ELASTICO",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.500833333333333,
+    "tDecisive": 0.608333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.6891246376278377,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.521,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "elastico · outside cue",
+    "missed": false
+   },
+   {
+    "t": 0.608,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "ELASTICO · the inside snaps it back",
+    "missed": false
+   },
+   {
+    "t": 0.862,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.087,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.512,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.4,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.082550122727596,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Knock-on → sprint → chop",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "KNOCK_ON",
+    "result": "PLAYED",
+    "played": "KNOCK_ON",
+    "rej": {
+     "committed landing": 10,
+     "plant timing": 1,
+     "box": 11
+    },
+    "t": 0,
+    "tPlayed": 0.1499999999999999
+   },
+   {
+    "intent": "RONALDO_CHOP",
+    "result": "PLAYED",
+    "played": "RONALDO_CHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 2,
+     "rolling there": 15,
+     "no controlled continuation: the foot cannot get there (it would jump": 3
+    },
+    "t": 1.6,
+    "tPlayed": 2.233333333333333
+   }
+  ],
+  "phases": [
+   {
+    "label": "KNOCK-ON (R)",
+    "tech": "KNK",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.1499999999999999,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.20999999999999996,
+    "tNext": 1.6,
+    "next": "RONALDO CHOP"
+   },
+   {
+    "label": "RONALDO CHOP (R)",
+    "tech": "CHOP",
+    "tSel": 1.6,
+    "tPrep": 1.9148370088362472,
+    "tCommit": 2.1548370088362474,
+    "tDecisive": 2.233333333333333,
+    "decisiveSurface": "INSIDE",
+    "tControl": 2.344837008836248,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.15,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "knock-on",
+    "missed": false
+   },
+   {
+    "t": 1.05,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.842,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 2.233,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "RONALDO CHOP",
+    "missed": false
+   },
+   {
+    "t": 2.533,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.1663319882737215,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Stop → feint → explode",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "DEADEN_EXPLODE",
+    "result": "PLAYED",
+    "played": "DEADEN",
+    "rej": {
+     "rolling there": 6,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   },
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BODY_FEINT",
+    "rej": {},
+    "t": 0.5499999999999998,
+    "tPlayed": 0.5499999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "DEADEN-AND-EXPLODE (L)",
+    "tech": "DEADEN",
+    "tSel": 0,
+    "tPrep": 0.16781414399967565,
+    "tCommit": 0.44781414399967545,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "SOLE",
+    "tControl": 0.5878141439996756,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.092,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "L",
+    "surface": "SOLE",
+    "role": "DEADEN · the sole stops it dead",
+    "missed": false
+   },
+   {
+    "t": 0.587,
+    "F": "L",
+    "surface": "LACES",
+    "role": "EXPLODE · the push away",
+    "missed": false
+   },
+   {
+    "t": 1.708,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 2.642,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.6602951771897039,
+  "exits": [],
+  "feints": [
+   {
+    "t": 0.5499999999999998,
+    "kind": "BODY_FEINT",
+    "side": 1,
+    "src": "manual"
+   }
+  ],
+  "body": {
+   "normal": 0,
+   "slow": 2,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 2
+  },
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Croqueta → accelerate → outside cut",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 100,
+     "plant timing": 8
+    },
+    "t": 0,
+    "tPlayed": 0.5249999999999999
+   },
+   {
+    "intent": "OUTSIDE_CUT",
+    "result": "PLAYED",
+    "played": "OUTSIDE_CUT",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 1,
+     "set touch: the foot not in the air at the end of its swing": 1,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 1.5999999999999996,
+    "tPlayed": 2.1375
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.5249999999999999,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.585,
+    "tNext": 1.5999999999999996,
+    "next": "OUTSIDE CUT"
+   },
+   {
+    "label": "OUTSIDE CUT (R)",
+    "tech": "OUTCUT",
+    "tSel": 1.5999999999999996,
+    "tPrep": 1.9958389207211535,
+    "tCommit": 2.055838920721153,
+    "tDecisive": 2.1375,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 2.195838920721153,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.258,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.525,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "lateral transfer",
+    "missed": false
+   },
+   {
+    "t": 0.842,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.138,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "OUTSIDE CUT",
+    "missed": false
+   },
+   {
+    "t": 2.346,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.558,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 3.458,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0958933169045295,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CHAIN·CHAIN·Matthews → sprint",
+  "variant": "CHAIN",
+  "tech": "CHAIN",
+  "skills": [
+   {
+    "intent": "MATTHEWS",
+    "result": "PLAYED",
+    "played": "MATTHEWS",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 2
+    },
+    "t": 0,
+    "tPlayed": 0.75
+   }
+  ],
+  "phases": [
+   {
+    "label": "MATTHEWS FEINT (drag-push) (R)",
+    "tech": "MATTHEWS",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.4883333333333333,
+    "tDecisive": 0.75,
+    "decisiveSurface": "OUTSIDE",
+    "tControl": 0.8091246376278378,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.508,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "matthews · the inside nudge left",
+    "missed": false
+   },
+   {
+    "t": 0.75,
+    "F": "R",
+    "surface": "OUTSIDE",
+    "role": "MATTHEWS · the outside of the same foot takes it away",
+    "missed": false
+   },
+   {
+    "t": 0.992,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.212,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.637,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.529,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 1.0715685812441837,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 2,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·slow": 2
+  },
+  "bodyEvents": []
+ }
+]

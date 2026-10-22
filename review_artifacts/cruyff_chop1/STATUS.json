@@ -1,0 +1,69 @@
+{
+ "milestone": "CRUYFF + RONALDO CHOP FAMILY CLEANUP (CRUYFF-CHOP-1, 22 Oct 2026)",
+ "state": "stopped for the owner's review — NOT frozen, NOT integrated; VOCAB-1 pages unchanged beside it",
+ "local_only": "the character is a real player's model: never publish",
+ "pages": {
+  "dribbling_lab": "http://127.0.0.1:8361/sandbox/visual/cruyff_chop1_lab.html (COMPARE: A | B side by side)",
+  "joystick_sandbox": "http://127.0.0.1:8361/sandbox/visual/cruyff_chop1_sandbox.html",
+  "reference_vocab1_lab": "http://127.0.0.1:8361/sandbox/visual/vocab1_lab.html"
+ },
+ "code": "sandbox/visual/cruyff_chop1/ (a copy of vocab1/)",
+ "hierarchy_120_left_request_to_useful_exit_s": {
+  "inside_hook": {
+   "walk": 0.86,
+   "jog": 1.2,
+   "run": 1.33,
+   "fast": "2.31 (3/4; before rejected)",
+   "sprint": "2.11 (before rejected)"
+  },
+  "cruyff": {
+   "walk": "0.90 -> 0.60",
+   "jog": "1.19 -> 0.94",
+   "run": "1.28 -> 1.05",
+   "fast": "1.81 (2/4) -> 2.09 (3/4)",
+   "sprint": "rejected -> 2.06"
+  },
+  "ronaldo_chop": {
+   "jog": "rejected -> 0.99 (no-hop entry)",
+   "run": 1.15,
+   "fast": "1.31 -> 1.27",
+   "sprint": "1.14 -> 1.05 (lowest speed 3.2 -> 5.3; peak 83 -> 68 m/s2)"
+  },
+  "body_alone_ball_off": {
+   "walk": 0.17,
+   "jog": 0.19,
+   "run": 0.22,
+   "sprint": 0.29
+  }
+ },
+ "changes": [
+  "elite Cruyff template (quicker last steps, moving drag ~1.3 m/s, ~9 m/s2 re-acceleration, control back 0.09 s, drag below 3 m/s)",
+  "elite chop (credible post-contact speed, control back 0.11 s)",
+  "abbreviated Cruyff merged into CRUYFF as an internal entry; chop entered at its plant without its hop (3.0-6.0 m/s); the shortest valid entry chosen",
+  "preparation phase for over-speed hook / Cruyff / chop requests (braking along the entry line, ball CONTROLLED)",
+  "set touch that slows the ball = a sole stop (four techniques only)",
+  "Lab COMPARE (A | B, identical entry) + exit metrics shared by node and the Lab"
+ ],
+ "integrity": {
+  "possession_exits": 0,
+  "missed_contacts": 0,
+  "observed_losses_40min": "5 (VOCAB-1 12), all CONTROLLED",
+  "determinism": "18/18 + 18/18 replay",
+  "curated_body_normal_visible": "11 events in 10 of 97 clips (unchanged)",
+  "posed_torture_18x60s_normal_visible": "211 (VOCAB-1 236)",
+  "extreme_ball_on": "48/140 runs, 62 normal (VOCAB-1 45/55), slow-motion 133 (228)",
+  "cpu_ms_per_sim_s": "104.4 vs 106.3 (VOCAB-1)"
+ },
+ "honest": [
+  "left-foot outside hook can be quicker than the Cruyff at a jog",
+  "at a sprint the controlled carry arc gains more ground than the chop (no defender here)",
+  "Cruyff from a sprint is slow (2.06 s) because it brakes with the ball first (credible)",
+  "sprint chop knee step 36.5 deg (locked reference's own)"
+ ],
+ "owner_decisions": [
+  "is the Cruyff at walk/jog/run clearly the elite reversal at 1x?",
+  "the chop's speed-keeping sprint turn",
+  "keep the jog (no-hop) chop entry?",
+  "sprint arc vs chop: wait for defenders?"
+ ]
+}
