@@ -2,14 +2,73 @@
  "milestone": "DRIBBLING VOCAB-1 (overnight mission, 22 Oct 2026)",
  "state": "presented for the owner's visual review and playtest — NOT frozen; Dribbling not declared complete",
  "local_only": "the character is a real player's model: never publish",
- "pages": { "dribbling_lab": "http://127.0.0.1:8361/sandbox/visual/vocab1_lab.html", "joystick_sandbox": "http://127.0.0.1:8361/sandbox/visual/vocab1_sandbox.html" },
- "owner_decisions_recorded": { "agility_scale": "B (A99 = A99-C)", "carry": "CARRY-B (D99 / BC99 provisional)", "sprint_99_kmh": 38.0, "acceleration_99": "D38" },
- "phase1_extreme_redirection": { "runs_normal_visible_before": "126/140", "runs_normal_visible_after": "52/140", "events_before": 350, "events_after": 67, "support_swaps": "151 -> 0", "knee_pops": "56 -> 6", "floats": "80 -> 5", "remaining": "leg crossings on the on-the-spot relaunch after 165–180° reversals (A99-C's facing whip at zero speed)" },
- "library": { "catalogue_entries": 43, "integrated": 22, "review": 19, "experimental": 2, "auto": 11, "auto_manual": 18, "manual": 14, "authored_templates": 21, "new_templates": 16 },
- "curated_cases": { "clips": 88, "chains": 12, "requests_played": "68/73 (the 5 others = the deliberate REJECTED setups, each with its reason)", "possession_exits": 0, "missed_contacts": 0, "control_return_after_decisive_s": "0.06–0.14 (median 0.06)", "body_normal_visible": "21 events in 17 clips", "contact_gap": "median 0.0 cm, p90 0.6 cm, 11/582 > 5 cm" },
- "analog_feint": { "intended_confirmed": "38/48", "ball_toward_fake": 0, "genuine_cuts_misread": "0/16", "random_torture_per_min": 0.33 },
- "torture": { "controlled_exits": 0, "missed": 0, "observed_losses": "9 (8 before; all observer artifacts with possession CONTROLLED)", "touches_per_s": "2.76 (2.78 before)", "random_intents": "361 requests, 0 exits, 0 missed" },
- "determinism": "6/6 identical twice + 6/6 via the replay path",
- "performance": "98.7 vs 91.3 ms CPU per simulated s (+8 %); candidates per re-plan 2.6 vs 2.3; worst tick 14.4 ms",
- "next_on_owner_word": ["visual review of every technique at 1×", "the relaunch pivot-turn primitive", "heel family / roulette spin", "calibrate the Dribbling envelope (feasibilityFor) and Weak Foot", "defenders"]
+ "pages": {
+  "dribbling_lab": "http://127.0.0.1:8361/sandbox/visual/vocab1_lab.html",
+  "joystick_sandbox": "http://127.0.0.1:8361/sandbox/visual/vocab1_sandbox.html"
+ },
+ "owner_decisions_recorded": {
+  "agility_scale": "B (A99 = A99-C)",
+  "carry": "CARRY-B (D99 / BC99 provisional)",
+  "sprint_99_kmh": 38.0,
+  "acceleration_99": "D38"
+ },
+ "phase1_extreme_redirection": {
+  "runs_normal_visible_before": "126/140",
+  "runs_normal_visible_after": "45/140",
+  "events_before": 350,
+  "events_after": 55,
+  "support_swaps": "151 -> 0",
+  "knee_pops": "56 -> 8",
+  "floats": "80 -> 6",
+  "crossings": "62 -> 39 (none deeper than 10.4 cm)",
+  "ball_off_runs": "64 -> 49 /140",
+  "remaining": "crossings under A99-C's low-speed facing whip (~1000-1200 deg/s at a reversal's stop) when a touch is due: needs a low-speed facing-rate decision (owner's: no physical recalibration tonight); a 145 deg pivot's heel sweep (7.8 cm) in 4 sprint reversals"
+ },
+ "library": {
+  "catalogue_entries": 43,
+  "integrated": 22,
+  "review": 19,
+  "experimental": 2,
+  "auto": 11,
+  "auto_manual": 18,
+  "manual": 14,
+  "authored_templates": 22,
+  "new_templates": 17,
+  "new_this_morning": "HEELCHOP (EXPERIMENTAL, HEEL contact pose)"
+ },
+ "curated_cases": {
+  "clips": 91,
+  "chains": 12,
+  "requests_played": "75/81 (the 6 others = the deliberate REJECTED setups, each with its reason)",
+  "possession_exits": 0,
+  "missed_contacts": 0,
+  "control_return_after_decisive_s": "0.06-0.14 (median 0.06)",
+  "body_normal_visible": "13 events in 12 of 91 clips (21 in 17 of 88 at the first draft)",
+  "contact_gap": "median 0.0 cm, p90 0.7 cm, p99 8.3 cm, 12/603 > 5 cm"
+ },
+ "analog_feint": {
+  "intended_confirmed": "38/48",
+  "ball_toward_fake": 0,
+  "genuine_cuts_misread": "0/16",
+  "random_torture_per_min": 0.5
+ },
+ "torture": {
+  "controlled_exits": 0,
+  "missed": 0,
+  "observed_losses": "12 (8 for the build before tonight; all with possession CONTROLLED: observer artifacts)",
+  "touches_per_s": "2.73 (2.78 before)",
+  "random_intents": "361 requests: PLAYED 70, REJECTED 202, CANCELLED 87; 0 exits, 0 missed",
+  "posed_body_normal_visible_6x60s": "69 (140 before tonight; 103 at the first draft); 18 seeds 236",
+  "posed_body_all_levels": "jumps 61 (109), knee pops 141 (204), crossings 405 (566), floats 184 (239), slides 5 (11)"
+ },
+ "determinism": "18/18 identical twice + 18/18 via the replay path (a latent replay bug fixed this morning: the request quantised before the unified step reads it)",
+ "performance": "103.1 vs 91.4 ms CPU per simulated s (+13 %); candidates per re-plan 2.8 vs 2.3; worst tick 10.7 ms",
+ "next_on_owner_word": [
+  "visual review of every technique at 1x",
+  "a low-speed facing-rate decision for A99-C's reversal whip (the remaining crossings)",
+  "the roulette's drag and the heel chop's exit step (both EXPERIMENTAL)",
+  "calibrate the Dribbling envelope (feasibilityFor) and Weak Foot",
+  "defenders"
+ ],
+ "updated": "22 Oct 2026 morning (final build f89ead35 + report)"
 }
