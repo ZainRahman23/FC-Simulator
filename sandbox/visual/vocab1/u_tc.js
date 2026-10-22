@@ -812,7 +812,10 @@ export class PlaySim {
     if (prevSet) set = { t: prevSet.t, td: pin.setTd, kept: true };
     else if ((!pin || pin.setTouch) && !o.noSet) { const TsA = this.gait(max(v0, 0.5)).Ts, b0 = this.ball.p, bv = this.ball.v, R = P.react;
       const tds = []; for (let j = 0; j < 4; j++) tds.push((T.firstFoot === "F" ? tA : tA - TsA) - j * 2 * TsA);
-      search: for (const td of tds.sort((x, y) => x - y)) { const tT = td - CARRY.touchBefore; if (tT < t + R || tT > tA - 0.02) continue;
+      // (DRIBBLING VOCAB-1: never beyond a touch already committed — the set touch's ball is predicted rolling free; a carry touch committed
+      // before it sends the ball elsewhere: an inside hook's left foot then reached 0.47 m across, behind the standing leg, for its set touch)
+      const tK = SET_ABL ? Infinity : Math.min(Infinity, ...keep.contacts.filter((c) => !c.done && c.t > t - 1e-9 && c.role !== "set touch").map((c) => c.t));
+      search: for (const td of tds.sort((x, y) => x - y)) { const tT = td - CARRY.touchBefore; if (tT < t + R || tT > tA - 0.02 || tT > tK + 0.02) continue;
         for (const tbx of overSpeed ? [tbLo] : [tA, max(tT, tbLo), (tbLo + tA) / 2, tbLo]) { const vAx = vAfor(tbx), cp = fromLocal(st.P, h0, pos(tT, tbx, vAx), 0), bp = predict(b0, bv, tT - t).p, rel = toLocal(bp, cp, h0);
           if (rel[0] >= CARRY.reach.a[0] && rel[0] <= CARRY.reach.a[1] && rel[1] * sgn(F) >= CARRY.reach.l[0] && rel[1] * sgn(F) <= CARRY.reach.l[1]) { set = { t: Math.round(tT / DT) * DT, td }; tb = tbx; vA = vAx; break search; } } } }
     if (!set && !(pin && pin.setTouch)) { if (!pin) { // rolling there
