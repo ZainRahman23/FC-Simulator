@@ -1,4 +1,4 @@
-■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 9 (0.23/min) · missed contacts 0 · touches/s 2.76 · sep mean 0.41 m max 1.85 m · CPU 87.8 ms per simulated s, worst tick 21.4 ms
-   contacts by kind {"carry":3924,"DRAGBACK":405,"CIR":357,"OUTHOOK":236,"COR":182,"LAT":161,"BRT":157,"HOOK":156,"BPV":155,"LDRAG":147,"CRUYFF":123,"ABG":119,"CHOP":95,"VPULL":54,"KNK":52,"OUTCUT":51,"SPRINT_CARRY push":25,"URG":3} · recovery actions {"SECURE":133}
-   contact gaps p10 0.20 · p50 0.25 · p90 0.64 · p99 1.32 · max 3.87 s · busy alternations (the other foot < 0.25 s after a touch) 2975 of 6362
-   losses by cause {"no contact made":9} · by input segment {"wander":2,"oscillate":3,"rotate":3,"hold":1}
+■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 12 (0.31/min) · missed contacts 0 · touches/s 2.73 · sep mean 0.42 m max 1.70 m · CPU 99.1 ms per simulated s, worst tick 27.5 ms
+   contacts by kind {"carry":3852,"CIR":375,"DRAGBACK":352,"OUTHOOK":236,"COR":235,"LAT":186,"BRT":175,"HOOK":148,"CRUYFF":130,"BPV":127,"LDRAG":122,"ABG":120,"CHOP":93,"OUTCUT":69,"VPULL":47,"KNK":47,"SPRINT_CARRY push":21,"URG":3} · recovery actions {"SECURE":162,"SECURE · RECOVERY":1}
+   contact gaps p10 0.21 · p50 0.25 · p90 0.65 · p99 1.34 · max 4.19 s · busy alternations (the other foot < 0.25 s after a touch) 3043 of 6298
+   losses by cause {"no contact made":12} · by input segment {"wander":2,"rotate":7,"oscillate":1,"snap":2}

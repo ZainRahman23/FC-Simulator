@@ -1,21 +1,21 @@
 {
  "tot": {
-  "normal": 58,
-  "slow": 78,
+  "normal": 61,
+  "slow": 69,
   "diag": 0,
   "runs": 140,
-  "badNormal": 47,
+  "badNormal": 49,
   "missed": 0,
   "exits": 0
  },
  "kinds": {
-  "FLOAT·slow": 52,
-  "CROSS·slow": 16,
-  "KNEE·slow": 5,
-  "CROSS·normal": 21,
+  "FLOAT·slow": 50,
+  "CROSS·slow": 12,
+  "CROSS·normal": 23,
+  "KNEE·slow": 4,
   "FLOAT·normal": 36,
-  "JUMP·slow": 5,
-  "JUMP·normal": 1
+  "JUMP·normal": 2,
+  "JUMP·slow": 3
  },
  "all": {
   "JOG → 120° R": {
@@ -131,10 +131,10 @@
   },
   "JOG → 135° R": {
    "S": {
-    "normal": 0,
-    "slow": 3,
+    "normal": 1,
+    "slow": 2,
     "diag": 0,
-    "badNormal": 0,
+    "badNormal": 1,
     "missed": 0,
     "exits": 0,
     "acts": []
@@ -142,11 +142,11 @@
    "fails": [
     {
      "phase": 0,
-     "lvl": "slow",
+     "lvl": "normal",
      "kind": "CROSS",
-     "depth": -4.9,
-     "t": 0.137,
-     "v": 2.73,
+     "depth": -8.7,
+     "t": 0.142,
+     "v": 2.71,
      "act": "BODY MOVEMENT"
     },
     {
@@ -194,8 +194,8 @@
      "lvl": "slow",
      "kind": "CROSS",
      "depth": -2.6,
-     "t": 0.125,
-     "v": 2.8,
+     "t": 0.129,
+     "v": 2.77,
      "act": "BODY MOVEMENT"
     }
    ]
@@ -292,7 +292,7 @@
   "JOG → 150° L": {
    "S": {
     "normal": 2,
-    "slow": 2,
+    "slow": 3,
     "diag": 0,
     "badNormal": 2,
     "missed": 0,
@@ -314,9 +314,18 @@
      "phase": 2,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -5.3,
-     "t": 0.225,
-     "v": 1.99,
+     "depth": -9.2,
+     "t": 0.221,
+     "v": 2.02,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.2,
+     "t": 0.242,
+     "v": 1.92,
      "act": "BODY MOVEMENT"
     },
     {
@@ -484,7 +493,7 @@
   "JOG → 165° R": {
    "S": {
     "normal": 0,
-    "slow": 2,
+    "slow": 3,
     "diag": 0,
     "badNormal": 0,
     "missed": 0,
@@ -492,6 +501,16 @@
     "acts": []
    },
    "fails": [
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "KNEE",
+     "foot": "R",
+     "deg": 21.5,
+     "t": 0.138,
+     "v": 1.85,
+     "act": "BODY MOVEMENT"
+    },
     {
      "phase": 2,
      "lvl": "slow",
@@ -514,7 +533,7 @@
   },
   "JOG → 165° L": {
    "S": {
-    "normal": 3,
+    "normal": 4,
     "slow": 2,
     "diag": 0,
     "badNormal": 3,
@@ -526,9 +545,21 @@
     {
      "phase": 1,
      "lvl": "normal",
+     "kind": "JUMP",
+     "foot": "R",
+     "cm": 22.5,
+     "was": "swing",
+     "now": "swing",
+     "t": 0.279,
+     "v": 0.87,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.5,
-     "t": 0.283,
+     "depth": -9.3,
+     "t": 0.288,
      "v": 0.87,
      "act": "BODY MOVEMENT"
     },
@@ -545,8 +576,8 @@
      "phase": 2,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -6.9,
-     "t": 0.288,
+     "depth": -7.4,
+     "t": 0.283,
      "v": 0.87,
      "act": "BODY MOVEMENT"
     },
@@ -563,8 +594,8 @@
      "phase": 3,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.5,
-     "t": 0.283,
+     "depth": -9.4,
+     "t": 0.262,
      "v": 0.87,
      "act": "BODY MOVEMENT"
     }
@@ -573,7 +604,7 @@
   "RUN → 165° R": {
    "S": {
     "normal": 2,
-    "slow": 4,
+    "slow": 3,
     "diag": 0,
     "badNormal": 2,
     "missed": 0,
@@ -600,20 +631,11 @@
      "act": "BODY MOVEMENT"
     },
     {
-     "phase": 0,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -2.3,
-     "t": 0.4,
-     "v": 1.35,
-     "act": "BODY MOVEMENT"
-    },
-    {
      "phase": 1,
      "lvl": "normal",
      "kind": "CROSS",
      "depth": -9.5,
-     "t": 0.304,
+     "t": 0.292,
      "v": 1.03,
      "act": "BODY MOVEMENT"
     },
@@ -671,7 +693,7 @@
   "SPRINT → 165° R": {
    "S": {
     "normal": 5,
-    "slow": 2,
+    "slow": 3,
     "diag": 0,
     "badNormal": 4,
     "missed": 0,
@@ -711,7 +733,16 @@
      "lvl": "normal",
      "kind": "CROSS",
      "depth": -6.2,
-     "t": 0.412,
+     "t": 0.408,
+     "v": 0.01,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.1,
+     "t": 0.467,
      "v": 0.01,
      "act": "BODY MOVEMENT"
     },
@@ -805,7 +836,7 @@
   "JOG → 180° R": {
    "S": {
     "normal": 3,
-    "slow": 7,
+    "slow": 3,
     "diag": 0,
     "badNormal": 3,
     "missed": 0,
@@ -818,7 +849,7 @@
      "lvl": "slow",
      "kind": "KNEE",
      "foot": "R",
-     "deg": 24.1,
+     "deg": 24.8,
      "t": 0.138,
      "v": 1.09,
      "act": "BODY MOVEMENT"
@@ -827,18 +858,9 @@
      "phase": 1,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9,
-     "t": 0.3,
+     "depth": -9.6,
+     "t": 0.292,
      "v": 0,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 1,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -3.4,
-     "t": 0.329,
-     "v": 0.19,
      "act": "BODY MOVEMENT"
     },
     {
@@ -854,9 +876,9 @@
      "phase": 2,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.5,
-     "t": 0.317,
-     "v": 0.05,
+     "depth": -9.4,
+     "t": 0.313,
+     "v": 0,
      "act": "BODY MOVEMENT"
     },
     {
@@ -872,37 +894,9 @@
      "phase": 3,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.6,
-     "t": 0.308,
+     "depth": -9.5,
+     "t": 0.279,
      "v": 0,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 3,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -2.9,
-     "t": 0.321,
-     "v": 0.09,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 3,
-     "lvl": "slow",
-     "kind": "KNEE",
-     "foot": "R",
-     "deg": -20.6,
-     "t": 0.321,
-     "v": 0.09,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 3,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -4,
-     "t": 0.358,
-     "v": 0.51,
      "act": "BODY MOVEMENT"
     }
    ]
@@ -910,7 +904,7 @@
   "JOG → 180° L": {
    "S": {
     "normal": 0,
-    "slow": 6,
+    "slow": 3,
     "diag": 0,
     "badNormal": 0,
     "missed": 0,
@@ -923,7 +917,7 @@
      "lvl": "slow",
      "kind": "KNEE",
      "foot": "R",
-     "deg": 27.6,
+     "deg": 25.3,
      "t": 0.138,
      "v": 1.09,
      "act": "BODY MOVEMENT"
@@ -938,28 +932,6 @@
      "act": "BODY MOVEMENT"
     },
     {
-     "phase": 2,
-     "lvl": "slow",
-     "kind": "KNEE",
-     "foot": "L",
-     "deg": 23.3,
-     "t": 0.379,
-     "v": 0.74,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 2,
-     "lvl": "slow",
-     "kind": "JUMP",
-     "foot": "L",
-     "cm": 14.9,
-     "was": "swing",
-     "now": "swing",
-     "t": 0.504,
-     "v": 2.11,
-     "act": "BODY MOVEMENT"
-    },
-    {
      "phase": 3,
      "lvl": "slow",
      "kind": "FLOAT",
@@ -967,22 +939,13 @@
      "t": 0.104,
      "v": 1.79,
      "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 3,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -3.5,
-     "t": 0.392,
-     "v": 0.88,
-     "act": "BODY MOVEMENT"
     }
    ]
   },
   "RUN → 180° R": {
    "S": {
     "normal": 2,
-    "slow": 2,
+    "slow": 1,
     "diag": 0,
     "badNormal": 2,
     "missed": 0,
@@ -997,18 +960,6 @@
      "air": 0.15,
      "t": 0.221,
      "v": 0.32,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 0,
-     "lvl": "slow",
-     "kind": "JUMP",
-     "foot": "R",
-     "cm": 12.5,
-     "was": "swing",
-     "now": "swing",
-     "t": 0.492,
-     "v": 1.48,
      "act": "BODY MOVEMENT"
     },
     {
@@ -1033,10 +984,10 @@
   },
   "RUN → 180° L": {
    "S": {
-    "normal": 4,
-    "slow": 4,
+    "normal": 5,
+    "slow": 1,
     "diag": 0,
-    "badNormal": 2,
+    "badNormal": 3,
     "missed": 0,
     "exits": 0,
     "acts": []
@@ -1055,30 +1006,9 @@
      "phase": 0,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.3,
-     "t": 0.342,
+     "depth": -9.1,
+     "t": 0.337,
      "v": 0,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 0,
-     "lvl": "slow",
-     "kind": "CROSS",
-     "depth": -3.2,
-     "t": 0.404,
-     "v": 0.51,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 0,
-     "lvl": "slow",
-     "kind": "JUMP",
-     "foot": "R",
-     "cm": 12.7,
-     "was": "swing",
-     "now": "swing",
-     "t": 0.483,
-     "v": 1.38,
      "act": "BODY MOVEMENT"
     },
     {
@@ -1094,18 +1024,18 @@
      "phase": 1,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.5,
-     "t": 0.325,
+     "depth": -9.4,
+     "t": 0.308,
      "v": 0,
      "act": "BODY MOVEMENT"
     },
     {
      "phase": 2,
-     "lvl": "slow",
-     "kind": "FLOAT",
-     "air": 0.138,
-     "t": 0.508,
-     "v": 1.66,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -7.8,
+     "t": 0.267,
+     "v": 0,
      "act": "BODY MOVEMENT"
     },
     {
@@ -1179,10 +1109,10 @@
   },
   "SPRINT → 180° L": {
    "S": {
-    "normal": 4,
-    "slow": 3,
+    "normal": 3,
+    "slow": 4,
     "diag": 0,
-    "badNormal": 4,
+    "badNormal": 3,
     "missed": 0,
     "exits": 0,
     "acts": []
@@ -1211,7 +1141,7 @@
      "lvl": "slow",
      "kind": "JUMP",
      "foot": "L",
-     "cm": 16.2,
+     "cm": 18,
      "was": "swing",
      "now": "swing",
      "t": 0.392,
@@ -1220,10 +1150,10 @@
     },
     {
      "phase": 1,
-     "lvl": "normal",
+     "lvl": "slow",
      "kind": "CROSS",
-     "depth": -5.7,
-     "t": 0.408,
+     "depth": -5,
+     "t": 0.404,
      "v": 0,
      "act": "BODY MOVEMENT"
     },
@@ -1324,6 +1254,18 @@
     {
      "phase": 1,
      "lvl": "slow",
+     "kind": "JUMP",
+     "foot": "R",
+     "cm": 14,
+     "was": "swing",
+     "now": "swing",
+     "t": 1.546,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
      "kind": "FLOAT",
      "air": 0.112,
      "t": 1.583,
@@ -1380,7 +1322,7 @@
      "lvl": "normal",
      "kind": "JUMP",
      "foot": "R",
-     "cm": 21.4,
+     "cm": 22.8,
      "was": "swing",
      "now": "swing",
      "t": 2.762,
@@ -1391,7 +1333,7 @@
      "phase": 2,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -5.7,
+     "depth": -5.5,
      "t": 2.833,
      "v": 0.32,
      "act": "BODY MOVEMENT"
@@ -1437,7 +1379,7 @@
      "lvl": "slow",
      "kind": "JUMP",
      "foot": "L",
-     "cm": 16,
+     "cm": 16.8,
      "was": "swing",
      "now": "swing",
      "t": 1.558,
@@ -1448,9 +1390,9 @@
      "phase": 3,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -9.1,
-     "t": 1.638,
-     "v": 0.46,
+     "depth": -8.9,
+     "t": 1.633,
+     "v": 0.42,
      "act": "BODY MOVEMENT"
     },
     {
@@ -1469,15 +1411,6 @@
      "air": 0.125,
      "t": 2.758,
      "v": 0,
-     "act": "BODY MOVEMENT"
-    },
-    {
-     "phase": 3,
-     "lvl": "slow",
-     "kind": "FLOAT",
-     "air": 0.133,
-     "t": 3.004,
-     "v": 2.2,
      "act": "BODY MOVEMENT"
     }
    ]
@@ -1524,7 +1457,7 @@
      "phase": 0,
      "lvl": "normal",
      "kind": "CROSS",
-     "depth": -14.9,
+     "depth": -14.8,
      "t": 0.888,
      "v": 3.13,
      "act": "BODY MOVEMENT"
@@ -1543,8 +1476,8 @@
      "lvl": "normal",
      "kind": "CROSS",
      "depth": -14.9,
-     "t": 0.871,
-     "v": 2.95,
+     "t": 0.875,
+     "v": 3,
      "act": "BODY MOVEMENT"
     },
     {
@@ -1560,10 +1493,10 @@
   },
   "CURVE → REVERSE (60°/s for 1 s, then 180°)": {
    "S": {
-    "normal": 1,
+    "normal": 2,
     "slow": 1,
     "diag": 0,
-    "badNormal": 1,
+    "badNormal": 2,
     "missed": 0,
     "exits": 0,
     "acts": []
@@ -1585,6 +1518,15 @@
      "air": 0.117,
      "t": 1.375,
      "v": 0.21,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -8.6,
+     "t": 1.288,
+     "v": 0.02,
      "act": "BODY MOVEMENT"
     }
    ]

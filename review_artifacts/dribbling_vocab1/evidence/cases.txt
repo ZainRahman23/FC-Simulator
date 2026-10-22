@@ -4,7 +4,7 @@ SPRINT_CARRY·NORMAL                                        AUTO |  | sep 1.02 |
 KNOCK_ON·NORMAL                                            KNOCK_ON PLAYED | KNOCK-ON (R) @0.15 ctl+0.06 | sep 0.89 | body 0/0
 KNOCK_ON·AUTO                                              AUTO | KNOCK-ON (L) @0.36 ctl+0.06 | sep 1.13 | body 0/0
 INSIDE_CUT·NORMAL                                          AUTO |  | sep 0.66 | body 0/0
-OUTSIDE_REDIRECT·NORMAL                                    AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/1
+OUTSIDE_REDIRECT·NORMAL                                    AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
 OUTSIDE_CUT·NORMAL                                         OUTSIDE_CUT PLAYED | OUTSIDE CUT (R) @0.80 ctl+0.06 | sep 0.66 | body 0/0
 OUTSIDE_CUT·MIRROR                                         OUTSIDE_CUT PLAYED | OUTSIDE CUT (L) @0.80 ctl+0.06 | sep 0.66 | body 0/0
 OUTSIDE_CUT·AUTO                                           AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
@@ -12,78 +12,81 @@ INSIDE_HOOK·NORMAL                                         INSIDE_HOOK PLAYED |
 INSIDE_HOOK·MIRROR                                         INSIDE_HOOK PLAYED | INSIDE HOOK (L) @0.43 ctl+0.09 | sep 0.87 | body 0/1
 OUTSIDE_HOOK·NORMAL                                        OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.95 | body 0/3
 OUTSIDE_HOOK·MIRROR                                        OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (L) @0.43 ctl+0.09 | sep 0.95 | body 0/3
-BRAKING_TOUCH·NORMAL                                       AUTO |  | sep 1.02 | body 1/1
+BRAKING_TOUCH·NORMAL                                       AUTO |  | sep 1.02 | body 1/0
 RONALDO_CHOP·NORMAL                                        RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.66 ctl+0.14 | sep 0.66 | body 0/1
-RONALDO_CHOP·LOW-SPEED                                     RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.65 ctl+0.14 | sep 0.66 | body 0/2
-RONALDO_CHOP·REJECTED                                      RONALDO_CHOP REJECTED → OUTSIDE_CUT (entry 3.2 m/s below its 3.6 m/s; the exit is on the wrong side for this foot) | OUTSIDE CUT (L) (no decisive) → COMPACT INSIDE REDIRECT (R) @1.32 ctl+0.06 | sep 0.63 | body 0/1
+RONALDO_CHOP·LOW-SPEED                                     RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.65 ctl+0.14 | sep 0.66 | body 0/1
+RONALDO_CHOP·REJECTED                                      RONALDO_CHOP REJECTED → OUTSIDE_CUT (entry 3.2 m/s below its 3.6 m/s; the exit is on the wrong side for this foot) | OUTSIDE CUT (L) (no decisive) → GATHER (R) @1.19 ctl+0.06 | sep 0.63 | body 0/0
 RONALDO_CHOP·HIGH-SPEED                                    RONALDO_CHOP PLAYED | RONALDO CHOP (R) @1.00 ctl+0.14 | sep 1.39 | body 1/1
 RONALDO_CHOP·MIRROR                                        RONALDO_CHOP PLAYED | RONALDO CHOP (L) @0.66 ctl+0.14 | sep 0.66 | body 0/1
 RONALDO_CHOP·AUTO                                          AUTO | COMPACT INSIDE REDIRECT (R) @0.26 ctl+0.06 | sep 0.66 | body 0/0
-CRUYFF_SHORT·NORMAL                                        CRUYFF_SHORT PLAYED | CRUYFF TURN (R) @0.81 ctl+0.13 | sep 0.64 | body 1/0
+CRUYFF_SHORT·NORMAL                                        CRUYFF_SHORT PLAYED | CRUYFF TURN (R) @0.81 ctl+0.13 | sep 0.64 | body 0/0
 CRUYFF·NORMAL                                              CRUYFF PLAYED | CRUYFF TURN (R) @0.49 ctl+0.13 | sep 0.93 | body 0/3
 CRUYFF·HIGH-SPEED                                          CRUYFF PLAYED | CRUYFF TURN (R) @0.70 ctl+0.13 | sep 0.66 | body 0/4
 CRUYFF·MIRROR                                              CRUYFF PLAYED | CRUYFF TURN (L) @0.70 ctl+0.13 | sep 0.66 | body 0/4
 CRUYFF·AUTO                                                AUTO | L-DRAG (R) @0.43 ctl+0.14 | sep 0.75 | body 0/2
-DRAG_BACK·NORMAL                                           DRAG_BACK PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 | sep 0.71 | body 0/3
-DRAG_BACK·MIRROR                                           DRAG_BACK PLAYED | DRAG-BACK (L) @0.43 ctl+0.08 | sep 0.71 | body 0/3
-DRAG_BACK·REJECTED                                         DRAG_BACK REJECTED → BRAKING_TOUCH (entry 9.7 m/s far above its 5 m/s; rolling there) | BRAKING TOUCH (R) (no decisive) → BRAKING TOUCH (L) @1.29 ctl+0.06 | sep 1.01 | body 2/0
+DRAG_BACK·NORMAL                                           DRAG_BACK PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 | sep 0.71 | body 0/1
+DRAG_BACK·MIRROR                                           DRAG_BACK PLAYED | DRAG-BACK (L) @0.43 ctl+0.08 | sep 0.71 | body 0/1
+DRAG_BACK·REJECTED                                         DRAG_BACK REJECTED → BRAKING_TOUCH (entry 9.7 m/s far above its 5 m/s; rolling there) | BRAKING TOUCH (R) (no decisive) → BRAKING TOUCH (L) @1.29 ctl+0.06 | sep 1.01 | body 0/3
 L_DRAG·NORMAL                                              L_DRAG PLAYED | L-DRAG (R) @0.43 ctl+0.14 | sep 0.66 | body 0/1
 L_DRAG·MIRROR                                              L_DRAG PLAYED | L-DRAG (L) @0.43 ctl+0.14 | sep 0.66 | body 0/1
 SOLE_ROLL·NORMAL                                           SOLE_ROLL PLAYED | SOLE ROLL (R) @0.30 ctl+0.06 | sep 0.60 | body 1/0
 CROQUETA·NORMAL                                            CROQUETA PLAYED | LATERAL TRANSFER (L) @0.52 ctl+0.06 | sep 0.66 | body 0/0
 CROQUETA·MIRROR                                            CROQUETA PLAYED | LATERAL TRANSFER (R) @0.52 ctl+0.06 | sep 0.66 | body 0/0
-CROQUETA·PRESSURE                                          CROQUETA PLAYED | LATERAL TRANSFER (L) @0.29 ctl+0.06 | sep 0.66 | body 1/0
+CROQUETA·PRESSURE                                          CROQUETA PLAYED | LATERAL TRANSFER (L) @0.29 ctl+0.06 | sep 0.66 | body 0/0
 CROQUETA·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
 BODY_FEINT·NORMAL                                          BODY_FEINT PLAYED | LATERAL TRANSFER (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 SHOULDER_DROP·NORMAL                                       SHOULDER_DROP PLAYED |  | sep 0.66 | body 0/0
 HIP_FAKE·NORMAL                                            HIP_FAKE PLAYED | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
 FEINT_OUTSIDE_CUT·NORMAL                                   FEINT_OUTSIDE_CUT PLAYED | COMPACT OUTSIDE REDIRECT (L) @0.58 ctl+0.06 | sep 0.66 | body 1/3
 FEINT_INSIDE_CUT·NORMAL                                    FEINT_INSIDE_CUT PLAYED | COMPACT INSIDE REDIRECT (R) @0.65 ctl+0.06 | sep 0.68 | body 0/0
-MATTHEWS·NORMAL                                            MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (R) @0.75 ctl+0.06 | sep 0.66 | body 1/0
-MATTHEWS·MIRROR                                            MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (L) @0.75 ctl+0.06 | sep 0.66 | body 1/0
+MATTHEWS·NORMAL                                            MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (R) @0.75 ctl+0.06 | sep 0.66 | body 1/1
+MATTHEWS·MIRROR                                            MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (L) @0.75 ctl+0.06 | sep 0.66 | body 1/1
 SCISSORS·NORMAL                                            SCISSORS PLAYED | SCISSORS (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 SCISSORS·MIRROR                                            SCISSORS PLAYED | SCISSORS (L) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 SCISSORS·HIGH-SPEED                                        SCISSORS PLAYED | SCISSORS (R) @1.71 ctl+0.06 | sep 0.94 | body 0/0
-SCISSORS·REJECTED                                          SCISSORS REJECTED → DRAG_BACK (exit 140° beyond its 92°; exit 220° beyond its 92°) | DRAG-BACK (L) @1.05 ctl+0.08 | sep 0.79 | body 0/1
+SCISSORS·REJECTED                                          SCISSORS REJECTED → DRAG_BACK (exit 140° beyond its 92°; exit 220° beyond its 92°) | DRAG-BACK (L) @1.05 ctl+0.08 | sep 0.79 | body 0/0
 STEPOVER·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
 SCISSORS_GO·NORMAL                                         SCISSORS_GO PLAYED | SCISSORS → CONTINUE (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 SCISSORS_GO·MIRROR                                         SCISSORS_GO PLAYED | SCISSORS → CONTINUE (L) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 STEPOVER·NORMAL                                            STEPOVER PLAYED | STEPOVER (R) @0.90 ctl+0.06 | sep 0.66 | body 0/1
 STEPOVER·MIRROR                                            STEPOVER PLAYED | STEPOVER (L) @0.90 ctl+0.06 | sep 0.66 | body 0/1
 DOUBLE_SCISSORS·NORMAL                                     DOUBLE_SCISSORS PLAYED | DOUBLE SCISSORS (R) @1.46 ctl+0.06 | sep 0.65 | body 0/0
+HEEL_CHOP·NORMAL                                           HEEL_CHOP PLAYED | HEEL CHOP (R) @0.49 ctl+0.06 | sep 0.65 | body 1/0
+HEEL_CHOP·MIRROR                                           HEEL_CHOP PLAYED | HEEL CHOP (L) @0.49 ctl+0.06 | sep 0.65 | body 1/0
+HEEL_CHOP·REJECTED                                         HEEL_CHOP REJECTED → CARRY (entry 9.7 m/s far above its 6 m/s; the exit is on the wrong side for this foot) | CRUYFF TURN (R) @1.61 ctl+0.13 | sep 1.00 | body 0/1
 ELASTICO·NORMAL                                            ELASTICO PLAYED | ELASTICO (R) @0.61 ctl+0.08 | sep 0.66 | body 0/0
 ELASTICO·HIGH-SPEED                                        ELASTICO PLAYED | ELASTICO (R) @0.82 ctl+0.08 | sep 0.66 | body 0/0
 ELASTICO·MIRROR                                            ELASTICO PLAYED | ELASTICO (L) @0.61 ctl+0.08 | sep 0.66 | body 0/0
 ELASTICO·REJECTED                                          ELASTICO REJECTED → CARRY (pursuit) (the exit is on the wrong side for this foot) |  | sep 0.65 | body 0/0
-REVERSE_ELASTICO·NORMAL                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (R) @0.61 ctl+0.08 | sep 0.65 | body 0/1
-REVERSE_ELASTICO·MIRROR                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (L) @0.61 ctl+0.08 | sep 0.65 | body 0/1
+REVERSE_ELASTICO·NORMAL                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (R) @0.61 ctl+0.08 | sep 0.65 | body 0/0
+REVERSE_ELASTICO·MIRROR                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (L) @0.61 ctl+0.08 | sep 0.65 | body 0/0
 V_PULL·NORMAL                                              V_PULL PLAYED | V-PULL (R) @0.43 ctl+0.14 | sep 0.65 | body 0/1
 V_PULL·MIRROR                                              V_PULL PLAYED | V-PULL (L) @0.43 ctl+0.14 | sep 0.65 | body 0/1
 PULL_PUSH·NORMAL                                           PULL_PUSH PLAYED | PULL-PUSH (R) @0.43 ctl+0.14 | sep 0.65 | body 0/1
-ROULETTE·NORMAL                                            ROULETTE PLAYED | ROULETTE (Marseille turn) (R) @0.41 ctl+0.06 | sep 0.65 | body 4/4
+ROULETTE·NORMAL                                            ROULETTE PLAYED | ROULETTE (Marseille turn) (R) @0.41 ctl+0.06 | sep 0.65 | body 2/4
 ROULETTE·REJECTED                                          ROULETTE REJECTED → COMPACT_INSIDE_REDIRECT (entry 9.7 m/s far above its 4.2 m/s; the exit is on the wrong side for this foot) | COMPACT INSIDE REDIRECT (R) @1.50 ctl+0.06 | sep 1.08 | body 0/1
 HESITATION·NORMAL                                          HESITATION PLAYED | HESITATION (L) @0.57 ctl+0.06 | sep 0.68 | body 0/1
-HESITATION·HIGH-SPEED                                      HESITATION PLAYED | HESITATION (L) @0.86 ctl+0.06 | sep 0.93 | body 0/1
+HESITATION·HIGH-SPEED                                      HESITATION PLAYED | HESITATION (L) @0.86 ctl+0.06 | sep 0.93 | body 0/3
 DEADEN_EXPLODE·NORMAL                                      DEADEN_EXPLODE PLAYED | DEADEN-AND-EXPLODE (L) @0.49 ctl+0.10 | sep 1.81 | body 0/1
 DEADEN_EXPLODE·HIGH-SPEED                                  DEADEN_EXPLODE PLAYED | DEADEN-AND-EXPLODE (L) @0.78 ctl+0.10 | sep 1.12 | body 0/4
 FAKE_STOP·NORMAL                                           FAKE_STOP PLAYED | FAKE STOP (L) @0.57 ctl+0.06 | sep 0.79 | body 1/0
 STOP·NORMAL                                                AUTO |  | sep 0.65 | body 0/2
-SHIELD_ROLL·NORMAL                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (R) @0.89 ctl+0.08 | sep 0.59 | body 1/0
-SHIELD_ROLL·MIRROR                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (L) @0.89 ctl+0.08 | sep 0.59 | body 1/0
+SHIELD_ROLL·NORMAL                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (R) @0.89 ctl+0.08 | sep 0.59 | body 0/0
+SHIELD_ROLL·MIRROR                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (L) @0.89 ctl+0.08 | sep 0.59 | body 0/0
 SHIELD_HOOK·NORMAL                                         INSIDE_HOOK PLAYED | INSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.87 | body 0/1
-SHIELD_HOOK·AUTO                                           AUTO | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.26 → LATERAL TRANSFER (R) @1.49 ctl+0.06 | sep 0.66 | body 0/2
+SHIELD_HOOK·AUTO                                           AUTO | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.26 → LATERAL TRANSFER (R) @1.49 ctl+0.06 | sep 0.66 | body 0/1
 SHIELD_HOOK·AUTO-2                                         AUTO | BRAKING TOUCH (R) @0.18 ctl+0.06 | sep 0.66 | body 1/0
 SHIELD_OUTHOOK·NORMAL                                      OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.95 | body 0/3
 CHAIN·CHAIN·Body feint → outside cut                       BODY_FEINT PLAYED + OUTSIDE_CUT PLAYED | OUTSIDE CUT (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 CHAIN·CHAIN·Scissors → outside exit → sprint               SCISSORS PLAYED | SCISSORS (R) @0.90 ctl+0.06 | sep 1.07 | body 0/0
 CHAIN·CHAIN·Stepover → inside exit                         STEPOVER PLAYED | STEPOVER (R) @0.90 ctl+0.06 next COMPACT OUTSIDE REDIRECT @0.95 → COMPACT OUTSIDE REDIRECT (L) @1.08 ctl+0.06 | sep 0.66 | body 1/1
-CHAIN·CHAIN·Drag-back → croqueta                           DRAG_BACK PLAYED + CROQUETA PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.05 → LATERAL TRANSFER (R) @1.49 ctl+0.06 → GATHER (L) @1.72 ctl+0.06 | sep 0.71 | body 0/3
-CHAIN·CHAIN·V-pull → 90° exit                              V_PULL PLAYED | V-PULL (R) @0.43 ctl+0.14 next LATERAL TRANSFER @0.85 → LATERAL TRANSFER (R) @1.03 ctl+0.06 | sep 0.65 | body 1/1
+CHAIN·CHAIN·Drag-back → croqueta                           DRAG_BACK PLAYED + CROQUETA PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.05 → LATERAL TRANSFER (R) @1.49 ctl+0.06 → GATHER (L) @1.72 ctl+0.06 | sep 0.71 | body 0/1
+CHAIN·CHAIN·V-pull → 90° exit                              V_PULL PLAYED | V-PULL (R) @0.43 ctl+0.14 next LATERAL TRANSFER @0.85 → LATERAL TRANSFER (R) @1.03 ctl+0.06 | sep 0.65 | body 0/1
 CHAIN·CHAIN·Ronaldo chop → accelerate                      RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.66 ctl+0.14 | sep 1.05 | body 0/1
 CHAIN·CHAIN·Cruyff → accelerate                            CRUYFF PLAYED | CRUYFF TURN (R) @0.49 ctl+0.13 | sep 1.11 | body 0/1
 CHAIN·CHAIN·Elastico → sprint                              ELASTICO PLAYED | ELASTICO (R) @0.61 ctl+0.08 | sep 1.08 | body 0/0
 CHAIN·CHAIN·Knock-on → sprint → chop                       KNOCK_ON PLAYED + RONALDO_CHOP PLAYED | KNOCK-ON (R) @0.15 ctl+0.06 next RONALDO CHOP @1.60 → RONALDO CHOP (R) @2.23 ctl+0.14 | sep 1.43 | body 0/1
 CHAIN·CHAIN·Stop → feint → explode                         DEADEN_EXPLODE PLAYED + BODY_FEINT PLAYED | DEADEN-AND-EXPLODE (L) @0.49 ctl+0.10 | sep 1.66 | body 0/2
 CHAIN·CHAIN·Croqueta → accelerate → outside cut            CROQUETA PLAYED + OUTSIDE_CUT PLAYED | LATERAL TRANSFER (L) @0.52 ctl+0.06 next OUTSIDE CUT @1.60 → OUTSIDE CUT (R) @2.14 ctl+0.06 | sep 1.10 | body 0/0
-CHAIN·CHAIN·Matthews → sprint                              MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (R) @0.75 ctl+0.06 | sep 1.07 | body 1/0
-■ 88 cases · 68/73 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 21 (cases with any: 17)
+CHAIN·CHAIN·Matthews → sprint                              MATTHEWS PLAYED | MATTHEWS FEINT (drag-push) (R) @0.75 ctl+0.06 | sep 1.07 | body 0/2
+■ 91 cases · 70/76 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 13 (cases with any: 12)

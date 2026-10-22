@@ -51,7 +51,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CLOSE_CARRY·NORMAL",
@@ -174,7 +175,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SPRINT_CARRY·NORMAL",
@@ -228,7 +230,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "KNOCK_ON·NORMAL",
@@ -294,7 +297,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "KNOCK_ON·AUTO",
@@ -367,7 +371,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "INSIDE_CUT·NORMAL",
@@ -441,7 +446,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_REDIRECT·NORMAL",
@@ -525,12 +531,11 @@
   ],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "KNEE·slow": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_CUT·NORMAL",
@@ -616,7 +621,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_CUT·MIRROR",
@@ -701,7 +707,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_CUT·AUTO",
@@ -788,7 +795,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "INSIDE_HOOK·NORMAL",
@@ -870,7 +878,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "INSIDE_HOOK·MIRROR",
@@ -951,7 +960,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_HOOK·NORMAL",
@@ -1034,7 +1044,8 @@
   "kinds": {
    "KNEE·slow": 1,
    "FLOAT·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "OUTSIDE_HOOK·MIRROR",
@@ -1116,7 +1127,8 @@
   "kinds": {
    "KNEE·slow": 1,
    "FLOAT·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "BRAKING_TOUCH·NORMAL",
@@ -1174,13 +1186,22 @@
   "feints": [],
   "body": {
    "normal": 1,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
   "kinds": {
-   "JUMP·slow": 1,
-   "JUMP·normal": 1
-  }
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -7.8,
+    "t": 0.908,
+    "v": 0,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "RONALDO_CHOP·NORMAL",
@@ -1275,7 +1296,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "RONALDO_CHOP·LOW-SPEED",
@@ -1365,13 +1387,13 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 2,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "JUMP·slow": 1,
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "RONALDO_CHOP·REJECTED",
@@ -1408,14 +1430,14 @@
     "next": null
    },
    {
-    "label": "COMPACT INSIDE REDIRECT (R)",
-    "tech": "CIR",
+    "label": "GATHER (R)",
+    "tech": "ABG",
     "tSel": 1.025,
     "tPrep": null,
     "tCommit": null,
-    "tDecisive": 1.3166666666666664,
+    "tDecisive": 1.1874999999999996,
     "decisiveSurface": "INSIDE",
-    "tControl": 1.3766666666666665,
+    "tControl": 1.2474999999999996,
     "tNext": null,
     "next": null
    }
@@ -1443,14 +1465,21 @@
     "missed": false
    },
    {
-    "t": 1.317,
+    "t": 1.187,
     "F": "R",
     "surface": "INSIDE",
-    "role": "compact inside redirect",
+    "role": "gather",
     "missed": false
    },
    {
-    "t": 1.946,
+    "t": 1.817,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.533,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -1458,17 +1487,16 @@
    }
   ],
   "missed": 0,
-  "sepMax": 0.6275338356806961,
+  "sepMax": 0.6340190570872469,
   "exits": [],
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "CROSS·slow": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "RONALDO_CHOP·HIGH-SPEED",
@@ -1557,7 +1585,18 @@
   "kinds": {
    "KNEE·normal": 1,
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "KNEE",
+    "foot": "R",
+    "deg": -30.6,
+    "t": 0.542,
+    "v": 9.66,
+    "act": "RONALDO CHOP"
+   }
+  ]
  },
  {
   "name": "RONALDO_CHOP·MIRROR",
@@ -1651,7 +1690,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "RONALDO_CHOP·AUTO",
@@ -1718,7 +1758,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CRUYFF_SHORT·NORMAL",
@@ -1786,13 +1827,12 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
+   "normal": 0,
    "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "FLOAT·normal": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CRUYFF·NORMAL",
@@ -1867,7 +1907,8 @@
   },
   "kinds": {
    "FLOAT·slow": 3
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CRUYFF·HIGH-SPEED",
@@ -1963,7 +2004,8 @@
   "kinds": {
    "JUMP·slow": 2,
    "KNEE·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CRUYFF·MIRROR",
@@ -2058,7 +2100,8 @@
   "kinds": {
    "JUMP·slow": 2,
    "KNEE·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CRUYFF·AUTO",
@@ -2128,7 +2171,8 @@
   "kinds": {
    "FLOAT·slow": 1,
    "CROSS·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "DRAG_BACK·NORMAL",
@@ -2204,13 +2248,13 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 3,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "FLOAT·slow": 1,
-   "KNEE·slow": 2
-  }
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "DRAG_BACK·MIRROR",
@@ -2285,13 +2329,13 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 3,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "FLOAT·slow": 1,
-   "KNEE·slow": 2
-  }
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "DRAG_BACK·REJECTED",
@@ -2381,13 +2425,14 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 2,
-   "slow": 0,
+   "normal": 0,
+   "slow": 3,
    "diag": 0
   },
   "kinds": {
-   "CROSS·normal": 2
-  }
+   "CROSS·slow": 3
+  },
+  "bodyEvents": []
  },
  {
   "name": "L_DRAG·NORMAL",
@@ -2476,7 +2521,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "L_DRAG·MIRROR",
@@ -2564,7 +2610,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "SOLE_ROLL·NORMAL",
@@ -2638,7 +2685,17 @@
   },
   "kinds": {
    "CROSS·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.6,
+    "t": 0.454,
+    "v": 1.37,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "CROQUETA·NORMAL",
@@ -2717,7 +2774,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CROQUETA·MIRROR",
@@ -2796,7 +2854,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CROQUETA·PRESSURE",
@@ -2872,13 +2931,12 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
+   "normal": 0,
    "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "FLOAT·normal": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CROQUETA·AUTO",
@@ -2965,7 +3023,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "BODY_FEINT·NORMAL",
@@ -3067,7 +3126,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SHOULDER_DROP·NORMAL",
@@ -3149,7 +3209,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "HIP_FAKE·NORMAL",
@@ -3251,7 +3312,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "FEINT_OUTSIDE_CUT·NORMAL",
@@ -3356,7 +3418,17 @@
   "kinds": {
    "CROSS·normal": 1,
    "JUMP·slow": 3
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -8.8,
+    "t": 0.463,
+    "v": 5.3,
+    "act": "COMPACT OUTSIDE REDIRECT"
+   }
+  ]
  },
  {
   "name": "FEINT_INSIDE_CUT·NORMAL",
@@ -3451,7 +3523,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "MATTHEWS·NORMAL",
@@ -3535,12 +3608,23 @@
   "feints": [],
   "body": {
    "normal": 1,
-   "slow": 0,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
+   "CROSS·slow": 1,
    "CROSS·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -5.6,
+    "t": 1.025,
+    "v": 3.14,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "MATTHEWS·MIRROR",
@@ -3623,12 +3707,23 @@
   "feints": [],
   "body": {
    "normal": 1,
-   "slow": 0,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
+   "CROSS·slow": 1,
    "CROSS·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -5.6,
+    "t": 1.025,
+    "v": 3.14,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "SCISSORS·NORMAL",
@@ -3714,7 +3809,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SCISSORS·MIRROR",
@@ -3799,7 +3895,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SCISSORS·HIGH-SPEED",
@@ -3873,7 +3970,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SCISSORS·REJECTED",
@@ -3963,12 +4061,11 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "KNEE·slow": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "STEPOVER·AUTO",
@@ -4055,7 +4152,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SCISSORS_GO·NORMAL",
@@ -4140,7 +4238,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SCISSORS_GO·MIRROR",
@@ -4225,7 +4324,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "STEPOVER·NORMAL",
@@ -4313,7 +4413,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "STEPOVER·MIRROR",
@@ -4400,7 +4501,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "DOUBLE_SCISSORS·NORMAL",
@@ -4489,7 +4591,290 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "HEEL_CHOP·NORMAL",
+  "variant": "NORMAL",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "PLAYED",
+    "played": "HEELCHOP",
+    "rej": {
+     "the exit is on the wrong side for this foot": 1,
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "HEEL CHOP (R)",
+    "tech": "HEELCHOP",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.40912463762783746,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "HEEL",
+    "tControl": 0.5491246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "R",
+    "surface": "HEEL",
+    "role": "HEEL CHOP · the heel drives it back behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.371,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.729,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.446,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6541704625712751,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -10,
+    "t": 0.713,
+    "v": 0.8,
+    "act": "HEEL CHOP"
+   }
+  ]
+ },
+ {
+  "name": "HEEL_CHOP·MIRROR",
+  "variant": "MIRROR",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "PLAYED",
+    "played": "HEELCHOP",
+    "rej": {
+     "rolling there": 3,
+     "no controlled continuation: the foot cannot get there (it would jump": 1
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "HEEL CHOP (L)",
+    "tech": "HEELCHOP",
+    "tSel": 0,
+    "tPrep": 0.12912463762783766,
+    "tCommit": 0.40912463762783746,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "HEEL",
+    "tControl": 0.5491246376278376,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": 0.054,
+    "F": "L",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "L",
+    "surface": "HEEL",
+    "role": "HEEL CHOP · the heel drives it back behind the standing leg",
+    "missed": false
+   },
+   {
+    "t": 0.887,
+    "F": "R",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 1.371,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   },
+   {
+    "t": 1.729,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.446,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6541704625710084,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 1,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {
+   "CROSS·normal": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -10,
+    "t": 0.713,
+    "v": 0.8,
+    "act": "HEEL CHOP"
+   }
+  ]
+ },
+ {
+  "name": "HEEL_CHOP·REJECTED",
+  "variant": "REJECTED",
+  "tech": "HEEL_CHOP",
+  "skills": [
+   {
+    "intent": "HEEL_CHOP",
+    "result": "REJECTED",
+    "alt": "CARRY",
+    "rej": {
+     "entry 9.7 m/s far above its 6 m/s": 2,
+     "the exit is on the wrong side for this foot": 4,
+     "rolling there": 32,
+     "entry 9.0 m/s far above its 6 m/s": 1,
+     "no feasible entry on the coming strides (foot / ball / support timing)": 1
+    },
+    "t": 0,
+    "tPlayed": null
+   }
+  ],
+  "phases": [
+   {
+    "label": "CRUYFF TURN (R)",
+    "tech": "CRUYFF",
+    "tSel": 0.7583333333333333,
+    "tPrep": 1.24765820273144,
+    "tCommit": 1.5276582027314403,
+    "tDecisive": 1.6083333333333334,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.7376582027314402,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.183,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.171,
+    "F": "R",
+    "surface": "LACES",
+    "role": "set touch",
+    "missed": false
+   },
+   {
+    "t": 1.608,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "CRUYFF TURN",
+    "missed": false
+   },
+   {
+    "t": 1.987,
+    "F": "L",
+    "surface": "LACES",
+    "role": "exit touch",
+    "missed": false
+   },
+   {
+    "t": 2.392,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "carry correction",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.9964720963999418,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 1,
+   "diag": 0
+  },
+  "kinds": {
+   "KNEE·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "ELASTICO·NORMAL",
@@ -4576,7 +4961,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "ELASTICO·HIGH-SPEED",
@@ -4668,7 +5054,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "ELASTICO·MIRROR",
@@ -4754,7 +5141,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "ELASTICO·REJECTED",
@@ -4819,7 +5207,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "REVERSE_ELASTICO·NORMAL",
@@ -4903,12 +5292,11 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "CROSS·slow": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "REVERSE_ELASTICO·MIRROR",
@@ -4991,12 +5379,11 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "CROSS·slow": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "V_PULL·NORMAL",
@@ -5078,7 +5465,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "V_PULL·MIRROR",
@@ -5159,7 +5547,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "PULL_PUSH·NORMAL",
@@ -5254,7 +5643,8 @@
   },
   "kinds": {
    "CROSS·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "ROULETTE·NORMAL",
@@ -5330,16 +5720,35 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 4,
+   "normal": 2,
    "slow": 4,
    "diag": 0
   },
   "kinds": {
    "FLOAT·slow": 1,
-   "KNEE·slow": 3,
-   "CROSS·normal": 3,
-   "KNEE·normal": 1
-  }
+   "KNEE·slow": 1,
+   "CROSS·normal": 2,
+   "JUMP·slow": 1,
+   "CROSS·slow": 1
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -10.3,
+    "t": 0.737,
+    "v": 0.59,
+    "act": "CARRY"
+   },
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.4,
+    "t": 0.933,
+    "v": 1.99,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "ROULETTE·REJECTED",
@@ -5416,7 +5825,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "HESITATION·NORMAL",
@@ -5505,7 +5915,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "HESITATION·HIGH-SPEED",
@@ -5582,13 +5993,15 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 1,
+   "slow": 3,
    "diag": 1
   },
   "kinds": {
+   "KNEE·slow": 2,
    "SLIDE·diag": 1,
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "DEADEN_EXPLODE·NORMAL",
@@ -5676,7 +6089,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "DEADEN_EXPLODE·HIGH-SPEED",
@@ -5772,7 +6186,8 @@
   },
   "kinds": {
    "KNEE·slow": 4
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "FAKE_STOP·NORMAL",
@@ -5860,7 +6275,17 @@
   },
   "kinds": {
    "FLOAT·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "FLOAT",
+    "air": 0.221,
+    "t": 0.671,
+    "v": 3.36,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "STOP·NORMAL",
@@ -5903,7 +6328,8 @@
   "kinds": {
    "JUMP·slow": 1,
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "SHIELD_ROLL·NORMAL",
@@ -5971,13 +6397,12 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
+   "normal": 0,
    "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "FLOAT·normal": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SHIELD_ROLL·MIRROR",
@@ -6044,13 +6469,12 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
+   "normal": 0,
    "slow": 0,
    "diag": 0
   },
-  "kinds": {
-   "FLOAT·normal": 1
-  }
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "SHIELD_HOOK·NORMAL",
@@ -6132,7 +6556,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "SHIELD_HOOK·AUTO",
@@ -6215,13 +6640,13 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 2,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "FLOAT·slow": 1,
-   "KNEE·slow": 1
-  }
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "SHIELD_HOOK·AUTO-2",
@@ -6283,7 +6708,17 @@
   },
   "kinds": {
    "CROSS·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -9.5,
+    "t": 0.487,
+    "v": 1.26,
+    "act": "CARRY"
+   }
+  ]
  },
  {
   "name": "SHIELD_OUTHOOK·NORMAL",
@@ -6366,7 +6801,8 @@
   "kinds": {
    "KNEE·slow": 1,
    "FLOAT·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Body feint → outside cut",
@@ -6467,7 +6903,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Scissors → outside exit → sprint",
@@ -6553,7 +6990,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Stepover → inside exit",
@@ -6661,7 +7099,17 @@
   "kinds": {
    "KNEE·slow": 1,
    "CROSS·normal": 1
-  }
+  },
+  "bodyEvents": [
+   {
+    "lvl": "normal",
+    "kind": "CROSS",
+    "depth": -6.2,
+    "t": 1.046,
+    "v": 4.1,
+    "act": "COMPACT OUTSIDE REDIRECT"
+   }
+  ]
  },
  {
   "name": "CHAIN·CHAIN·Drag-back → croqueta",
@@ -6787,13 +7235,13 @@
   "feints": [],
   "body": {
    "normal": 0,
-   "slow": 3,
+   "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "FLOAT·slow": 1,
-   "KNEE·slow": 2
-  }
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·V-pull → 90° exit",
@@ -6888,14 +7336,14 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
+   "normal": 0,
    "slow": 1,
    "diag": 0
   },
   "kinds": {
-   "FLOAT·slow": 1,
-   "FLOAT·normal": 1
-  }
+   "FLOAT·slow": 1
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Ronaldo chop → accelerate",
@@ -6990,7 +7438,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Cruyff → accelerate",
@@ -7072,7 +7521,8 @@
   },
   "kinds": {
    "FLOAT·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Elastico → sprint",
@@ -7166,7 +7616,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Knock-on → sprint → chop",
@@ -7271,7 +7722,8 @@
   },
   "kinds": {
    "KNEE·slow": 1
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Stop → feint → explode",
@@ -7374,7 +7826,8 @@
   },
   "kinds": {
    "KNEE·slow": 2
-  }
+  },
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Croqueta → accelerate → outside cut",
@@ -7492,7 +7945,8 @@
    "slow": 0,
    "diag": 0
   },
-  "kinds": {}
+  "kinds": {},
+  "bodyEvents": []
  },
  {
   "name": "CHAIN·CHAIN·Matthews → sprint",
@@ -7582,12 +8036,13 @@
   "exits": [],
   "feints": [],
   "body": {
-   "normal": 1,
-   "slow": 0,
+   "normal": 0,
+   "slow": 2,
    "diag": 0
   },
   "kinds": {
-   "CROSS·normal": 1
-  }
+   "CROSS·slow": 2
+  },
+  "bodyEvents": []
  }
 ]
