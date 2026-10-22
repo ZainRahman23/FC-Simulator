@@ -184,7 +184,7 @@ function stopGo(kind) { const D = kind === "DEADEN", F = kind === "FAKESTOP";
       { F: "F", t0: 0.10, t1: 0.22, at: { rel: "O", p: [0.40, 0.10] }, yaw: 0, w: 1, kind: "the push-off (explosive)" },
     ] : [
       { F: "F", t0: -0.40, t1: -0.26, at: { rel: "travel", t: -0.40, p: [0.24, 0.08] }, yaw: "travel", kind: F ? "the SOLD stop · braking stride" : "the checked stride" },
-      { F: "S", t0: -0.26, t1: F ? 0.0 : -0.12, at: { rel: "travel", t: -0.26, p: [0.12, -0.10] }, yaw: "travel", kind: F ? "the SOLD stop · the plant" : "the stall" },   // (the fake stop's plant held to τ 0: ending at −0.12 it left 0.22 s with no foot down before the push-off at 2.6 m/s)
+      { F: "S", t0: -0.26, t1: -0.12, at: { rel: "travel", t: -0.26, p: [0.12, -0.10] }, yaw: "travel", kind: F ? "the SOLD stop · the plant" : "the stall" },   // (KNOWN: the fake stop has 0.22 s with no foot down before the push-off at 2.6 m/s; holding this plant longer pinned the foot that makes the τ 0 push, re-timing both delayed the move 0.22 s — kept as authored)
       { F: "F", t0: 0.10, t1: 0.22, at: { rel: "O", p: [0.42, 0.10] }, yaw: 0, w: 1, kind: "the push-off (explosive)" },
     ],
     contacts: D ? [
