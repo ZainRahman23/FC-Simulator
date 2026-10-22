@@ -238,7 +238,10 @@ export class PlayBody {
       if (S.last) { const q = [g.ank[0] - S.last[0], g.ank[1] - S.last[1], g.ank[2] - S.last[2]], m = hyp(q[0], q[1], q[2]);
         if (m > 0.09) { const e = 1 - 0.09 / m, d = q.map((x) => x * e); for (let i = 0; i < 3; i++) S.o[i] -= d[i]; g = Object.assign({}, g, { ank: g.ank.map((x, i) => x - d[i]), ballPt: g.ballPt ? [g.ballPt[0] - d[0], g.ballPt[1] - d[1]] : g.ballPt, limited: m }); } }
       // (and on its turning: yaw ≤ 5°, pitch ≤ 4° per tick — a swing key's orientation step becomes a fast turn, never a flip)
-      if (S.lastYaw != null) { const dy = wrap(g.yaw - S.lastYaw), dp = (g.pitch || 0) - S.lastPitch, ey = abs(dy) > 5 * DEG ? dy - Math.sign(dy) * 5 * DEG : 0, ep = abs(dp) > 4 * DEG ? dp - Math.sign(dp) * 4 * DEG : 0;
+      // (DRIBBLING VOCAB-1: a planted foot PIVOTING on its ball under a reversal's whip (≈ 1200°/s at zero speed) turns up to 10° a tick — at 5° it
+      // fell behind the hips by 175° and the leg's solve flipped, the toe 7 cm into the turf)
+      const yLim = (g.planted && g.stance && g.stance.autoPivot && !ABLB.pivlim ? 10 : 5) * DEG;
+      if (S.lastYaw != null) { const dy = wrap(g.yaw - S.lastYaw), dp = (g.pitch || 0) - S.lastPitch, ey = abs(dy) > yLim ? dy - Math.sign(dy) * yLim : 0, ep = abs(dp) > 4 * DEG ? dp - Math.sign(dp) * 4 * DEG : 0;
         if (ey || ep) { S.oy -= ey; S.op -= ep; g = Object.assign({}, g, { yaw: g.yaw - ey, pitch: (g.pitch || 0) - ep }); } }
       // (S99 MISSION: the support COMPRESSION WEIGHT, per tick and rate-limited — ≤ 0.06 a tick, ≈ 0.07 s from none to full: a planted foot weighted
       // out over the last 0.07 s of its stance, a swinging one in over the last 0.06 s before its landing. Judged from the plan of the moment, a

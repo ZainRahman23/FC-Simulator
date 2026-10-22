@@ -127,10 +127,14 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     // whips through 120° in 0.1 s at the stop; a braking plant; a turn on the spot) PIVOTS on the ball of the foot so that it never points more
     // than 60° from the hips — the pelvis turned over a foot still pointing the old way crossed the legs by 5 – 9 cm. The pivot is a function of
     // the plan's own facing (every plan applies the same rule: continuous across re-plans); a technique's authored pivot is its own)
-    if (!ABL.pivot) for (const X of ["R", "L"]) for (const st of S[X]) { if (st.pivot || st.src === "tech" || st.t1 <= t || st.yaw == null) continue;
-      const a = max(st.t0, t), b = min(st.t1 === Infinity ? t + 1.2 : st.t1, t + 1.2); if (b <= a) continue; const K = []; let need = false;
-      for (let x = a; x <= b + 1e-9; x += 0.02) { const rel = wrap(this.stateAt(x, plan).psi - st.yaw), e = abs(rel) - PIV_MAX; if (e > 0) need = true; K.push([x, e > 0 ? Math.sign(rel) * e : 0]); }
-      if (need) { if (K[0][1] !== 0 && st.t0 < t - 1e-9) K.unshift([st.t0, 0]); st.pivot = K; st.autoPivot = true; } }
+    // (… recomputed by EVERY plan from the stance's own start — the past from the facing as it was (the plans then), the future from this plan's:
+    // kept from the plan that first needed it, a reversal predicted one way and turned the other pivoted the foot AWAY from the hips, to 175°)
+    if (!ABL.pivot) for (const X of ["R", "L"]) for (const st of S[X]) { if ((st.pivot && (!st.autoPivot || ABL.pivkeep)) || st.src === "tech" || st.t1 <= t || st.yaw == null) continue;
+      const a = ABL.pivkeep ? max(st.t0, t) : max(st.t0, t - 1.0), b = min(st.t1 === Infinity ? t + 1.2 : st.t1, t + 1.2); if (b <= a) continue; const K = []; let need = false;
+      // (… the hips' angle over the foot followed CONTINUOUSLY through the stance — wrapped, it flipped from +148° to −148° as a reversal's facing
+      // passed 180° over the foot: the pivot reversed and the toe jumped 24 cm in a tick)
+      let rel = null, pPrev = null; for (let x = a; x <= b + 1e-9; x += 0.02) { const ps = (x < t ? this.stateAt(x) : this.stateAt(x, plan)).psi; rel = rel == null || ABL.unwrap ? wrap(ps - st.yaw) : rel + wrap(ps - pPrev); pPrev = ps; const e = abs(rel) - PIV_MAX; if (e > 0) need = true; K.push([x, e > 0 ? Math.sign(rel) * e : 0]); }
+      if (need) { if (K[0][1] !== 0 && st.t0 < a - 1e-9) K.unshift([st.t0, 0]); st.pivot = K; st.autoPivot = true; } else if (st.autoPivot) { st.pivot = null; st.autoPivot = false; } }
     return S;
   }
 // ═══ TC-UNIFIED-1: THE GAIT'S OWN FOOTFALL PLACE, for revising a COMMITTED landing (u_sim.js gaitFrom) — the same rule as place() / offBall()
