@@ -3937,6 +3937,70 @@ Stopped for owner visual review.
 | TC-UNIFIED-1 | In progress (overnight mission) |
 | `touchline-current` | No changes except this chronicle |
 
+## Wednesday 21 October 2026 — The 20 Oct publication; TC-UNIFIED-1 presented; TC-CONTROLLED-1, the controlled ball; SPEED-99-V1 → V1.1, Sprint Speed 99 = 38 km/h and Acceleration 99 = D38; the S99 mission; BALL-ON PACE V1 (CARRY-B selected); PLAYER PHYSICAL RATINGS V1 (Agility scale B selected); the overnight DRIBBLING VOCAB-1 begun
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `7f83848` (the 20 Oct entry), pushed in the 21 Oct housekeeping.
+  - **`prototype/dribble-1`**, 25 commits this day, all pushed in the 22 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | TC-UNIFIED-1 (work in progress → presented) | `cbbf897` … `410539b` (11) | 06:01 – 07:24 |
+    | TC-CONTROLLED-1 (work in progress → presented) | `f4646a8`, `5eb9183`, `2021bd7`, `33b81c5` | 12:17 – 15:24 |
+    | SPEED-99-V1, the playtest blocker fix, V1.1 | `31b9ef5`, `a2a0a30`, `3a3019c` | 17:14 – 20:18 |
+    | S99 MISSION + addendum | `f44be6b`, `aee4627` | 22:37 – 22:45 |
+    | BALL-ON PACE V1 | `b8f511d` | 22 Oct 03:35 |
+    | PLAYER PHYSICAL RATINGS V1 | `8099476` | 22 Oct 04:43 |
+    | DRIBBLING VOCAB-1 (work in progress) | `99e998d`, `91d3b1d` | 22 Oct 05:49 – 05:56 |
+
+- **[Doc]:**
+  - `review_artifacts/tc_unified1/`, `tc_controlled1/`, `speed99_v1/`, `s99_mission/`, `ballon_pace_v1/`, `physical_ratings_v1/`, `dribbling_vocab1/`: each milestone's report, handoff, status, evidence and sources (the last in progress);
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the pages show a real player's model; they are local pages only.
+- **[Session]** Owner instructions (the time each was saved):
+
+  | Saved (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 11:23 | CONTROLLED_BALL: zero unforced loss at 99 | `tc_controlled1/sources/` |
+  | ≈ 16:35 | SPEED-99-V1: a ball-off Sprint Speed 99 + Acceleration 99 playground | `speed99_v1/sources/` |
+  | ≈ 19:00 | The playtest blocker: manual sprint must reach top speed | `speed99_v1/sources/` |
+  | ≈ 20:05 | SPEED-99-V1.1: Sprint Speed 99 = 38.0 km/h; Acceleration candidates | `speed99_v1/sources/` |
+  | ≈ 20:20 | The 4-hour S99 mission: Acceleration 99 = D38, the 99 player ball on, SPRINT_CARRY, an expanded vocabulary | `s99_mission/sources/` |
+  | ≈ 23:50 | BALL-ON PACE V1: the D99 ball-carrying envelope, three candidates | `ballon_pace_v1/sources/` |
+  | 22 Oct ≈ 04:10 | PLAYER PHYSICAL RATINGS V1: CARRY-B approved; the Sprint Speed mapping; Acceleration and Agility scales; an 80/80/80 playtest | `physical_ratings_v1/sources/` |
+  | 22 Oct ≈ 05:15 | The 6-hour overnight mission: Agility scale B selected; fix 150–180° locomotion; a full researched dribbling vocabulary, the Dribbling Lab | `dribbling_vocab1/sources/` |
+
+- **Owner media:** none this day (no screenshots, no recordings).
+
+**The 20 Oct housekeeping (06:00).** The chronicle `7f83848` was committed and pushed; `prototype/dribble-1` up to `db65b13` was pushed and verified.
+
+**TC-UNIFIED-1 presented** (≈ 07:25, `f14cdd8`). The unified A99 dribbler — BASELINE-88573ef0 + A99-C (exact) + the persistent shared foot plan + B4 + B5 — on one joystick page (`tc_unified1.html`): LOST 1 vs 28 in the torture, contacts > 10 cm from the boot 2 / 183 (Astra's 51 / 144), straight run ≡ 88573ef0 within 0.3 – 0.8 cm. Not frozen.
+
+**TC-CONTROLLED-1** (≈ 11:23 → 15:24, `f4646a8` … `33b81c5`). CONTROLLED_BALL beside the free ball: once secured, every decision keeps a valid controlled continuation; no postponed touch; the running touch re-aimed for a new intent; the possession-preserving SECURE fallback; an opponent probe (a deterministic poke) and RELEASE. 4 simulated hours: CONTROLLED 0 controller failures vs FREE 705. **Owner: "much, much better"** (dribbling tuning paused). Not frozen.
+
+**SPEED-99-V1 → V1.1** (≈ 16:35 → 20:18, `31b9ef5`, `a2a0a30`, `3a3019c`). A ball-off pace playground with candidates, a reference runner on the same input and 0–5 / 10 / 20 / 40 m splits; the owner's blocker (manual sprint did not reach top speed) fixed. **Owner decisions: Sprint Speed 99 = 38.0 km/h; A99-C stays the Agility ceiling.**
+
+**S99 MISSION** (≈ 20:20 → 22:45, `f44be6b`, `aee4627`). **Owner decision: Acceleration 99 = D38.** The 99-everything reference player (S99 · D38 · A99-C · D99 · BC99) with CONTROLLED dribbling, SPRINT_CARRY in open space and an EXPANDED vocabulary (lateral transfer, knock-on; sole roll and body feints review only); 12 simulated hours 0 controller failures. Not frozen.
+
+**BALL-ON PACE V1** (≈ 23:50 → 22 Oct 03:35, `b8f511d`). The owner found the 99 player too fast with the ball: carrying must cost movement. A continuous control-demand envelope (open → tight, running onto the ball), three candidates A / B / C (open 95 / 91.5 / 88 %; 40 m 4.64 / 4.81 / 4.99 s against 4.42 s ball off); 24 simulated hours 0 failures. **Owner decision (22 Oct ≈ 04:10): CARRY-B**, the provisional D99 / BC99 envelope.
+
+**PLAYER PHYSICAL RATINGS V1** (22 Oct ≈ 04:10 → 04:43, `8099476`). Sprint Speed as the owner's exact piecewise mapping (98 steps, 23 / 23 listed values, S80 = 9.25 m/s); Acceleration as a measured capability (the owner's bands) driving a generated D38-family curve; Agility as a redirection-demand model on A99-C with three scales A / B / C; the PHYSICAL-99 / 80-A / B / C playground; PHYSICAL-99 bit-identical to the S99 build. **Owner decision (≈ 05:15): Agility scale B.**
+
+**DRIBBLING VOCAB-1** (begun 22 Oct ≈ 05:15, work in progress into 22 Oct). The 6-hour overnight mission. Phase 1, the 150–180° / braking / reversal support on the sandbox's own player: a footfall duplicated by a re-instantiated technique (one support, two identities) removed — the planted-support swaps 151 → 0; a technique entered above its speed range brakes from the request (a HARD BRAKE); a pivoting support and the turn step; extreme-redirection runs with a normal-speed-visible failure 126 → 58 / 140. The library begun: a research taxonomy (≈ 10 contact primitives), 15 new parametric techniques in the baseline's own format, the catalogue with status / mode / difficulty dimensions, the manual technical intent (recorded, replayable, with rejection reasons), body feints, the analog feint (intended 38 / 48 confirmed, genuine cuts 0 / 16, torture 0.5 per minute); the Dribbling Lab (`vocab1_lab.html`: 78 deterministic curated replays and chains, 62 / 66 requests played, 0 possession exits) and the joystick sandbox (`vocab1_sandbox.html`). Continues on 22 Oct.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| TC-UNIFIED-1 · TC-CONTROLLED-1 | Presented; CONTROLLED "much, much better"; not frozen |
+| Sprint Speed 99 · Acceleration 99 · Agility 99 | 38.0 km/h · D38 · A99-C (owner decisions) |
+| Sprint Speed rating mapping | Approved, implemented exactly |
+| Acceleration rating · Agility rating | Provisional; Agility scale B selected (22 Oct ≈ 05:15) |
+| CARRY-B | The provisional D99 / BC99 ball-on envelope (owner decision) |
+| DRIBBLING VOCAB-1 | In progress (overnight mission) |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
