@@ -49,6 +49,6 @@ It is a copy of `phys1/`, which carries CARRY-B and the physical ratings. Every 
 
 1. The owner's visual review of every technique.
 2. The remaining crossings under A99-C's low-speed facing whip: needs a low-speed facing-rate decision (agility / physical: the owner's).
-3. The heel chop's exit step and the roulette's drag (both EXPERIMENTAL, both playable).
+3. The roulette's drag; the heel chop's heel pose at 1× (both EXPERIMENTAL, both playable).
 4. Calibrating the Dribbling envelope (`feasibilityFor`) and Weak Foot.
 5. Defenders.

@@ -181,7 +181,7 @@ Every one is reached from the live state — the foot on the stride, the ball wh
 | **ELASTICO** | **elastico · reverse elastico (new)** | REVIEW |
 | **PULL / PUSH / V** | **V-pull (new, auto) · pull-push (new)** | INTEGRATED / REVIEW |
 | **SPIN** | **roulette (new)** | EXPERIMENTAL — the right foot now lands under the body and the spin turns on it; the left foot's drag still crosses the legs (2 events) |
-| **HEEL / SPEED CHANGE** | **hesitation (stall-and-go, new)** · **heel chop (new, with a HEEL contact pose)** | REVIEW · EXPERIMENTAL — the heel chop plays (normal, mirrored, rejected at a sprint); not yet reviewed at 1×, and its exit step crosses the planted heeling foot (≈ 10 cm) |
+| **HEEL / SPEED CHANGE** | **hesitation (stall-and-go, new)** · **heel chop (new, with a HEEL contact pose)** | REVIEW · EXPERIMENTAL — the heel chop plays (normal, mirrored, rejected at a sprint) and its clips measure clean; EXPERIMENTAL until you have reviewed its heel pose at 1× |
 | **STOP / HESITATION** | **deaden-and-explode · fake stop (new)** · sole stop | REVIEW / INTEGRATED |
 | **PROTECTION / SHIELD TURN** | **shield roll-away (new)** · inside shielding turn (hook) · outside shielding turn (outside hook) · **the threat** (see below) | REVIEW / INTEGRATED |
 
@@ -200,12 +200,11 @@ Every one is reached from the live state — the foot on the stride, the ball wh
   - chop from a jog: "entry 3.2 m/s below its 3.6 m/s".
 - **Possession and contacts:** 0 CONTROLLED exits, 0 missed contacts. The ball stays within 0.95 m of the body in every close technique; the pushes away (deaden-and-explode 1.81 m, the sprint chop, the knock-on) go further by design.
 - **Control returns after the decisive contact** in 0.06–0.14 s (median 0.06; B5).
-- **Body:** **13 normal-speed-visible events in 12 of the 91 clips** (21 in 17 of 88 at the start of the morning's support work):
+- **Body:** **11 normal-speed-visible events in 10 of the 91 clips** (21 in 17 of 88 at the start of the morning's support work):
 
   | Clip | Event |
   |---|---|
   | Roulette (experimental) | 2 crossings (10.3, 6.4 cm) |
-  | Heel chop, normal and mirrored (experimental, new) | 1 crossing each (10 cm, the exit step) |
   | Ronaldo chop at a sprint (the locked reference) | a 30.6° knee step |
   | Fake stop | a 0.22 s float (its authored timing, see the reverted list in §1) |
   | Braking touch · sole roll · feint → outside cut · Matthews (and mirror) · shield hook AUTO-2 · stepover → inside chain | 1 crossing each, 5.6 – 9.5 cm |
@@ -319,7 +318,7 @@ Every one is reached from the live state — the foot on the stride, the ball wh
 | **Random manual intents under the random stick** (12 × 60 s; a random technique every 1.2–2.6 s) | 361 requests: PLAYED 70 · REJECTED 202 (random requests in random states — the wrong speed, angle or side, each with its reason) · CANCELLED 87 (the stick then changed before commitment) · **0 CONTROLLED exits · 0 missed contacts · the ball never > 3 m** · action switches 4.2 / s |
 | **Determinism** | **18 / 18 bit-identical** simulated twice (every tick, with random manual intents) and **18 / 18** re-simulated from the recorded input + events (the page's replay path) · the Lab's case results are node's own. A latent replay bug was found and fixed this morning: the unified step read the stick's heading before it was quantised as the record holds it (< 1e-6 rad), so 2 of 18 seeds' replays diverged — the build tonight started from had it too |
 | **Body, posed every tick in the random torture** (6 × 60 s, seeds 1–6) | Normal-speed-visible events (v_extreme's classification): **69 vs 140 before tonight** (103 at the first draft); over 18 seeds 236. Every event at any level, s99_bodytorture's count: jumps 61 (109 before) · knee pops 141 (204) · crossings 405 (566) · floats 184 (239) · slides 5 (11) — all lower |
-| **Body, the curated cases** | 13 normal-speed-visible events in 12 / 91 clips; 0 missed contacts |
+| **Body, the curated cases** | 11 normal-speed-visible events in 10 / 91 clips; 0 missed contacts |
 | **Ball / contact gaps** (the drawn boot ↔ the ball at each authoritative contact, 603 contacts in the curated cases) | median 0.0 cm · p90 0.7 cm · p99 8.3 cm · 12 > 5 cm · 5 > 10 cm. The worst: a braking touch in the REJECTED drag-back case (21.6 cm), the REJECTED heel chop's set touch (11.1 cm), carry sole touches after hooks (10.8 cm) |
 | **The Lab and the sandbox in Chrome** | no console errors, no failed requests; the page's results equal node's; MIRROR, L \| R, CHAIN MODE (branch) and the sandbox's manual request verified; the palette has 32 skills (`v_browser.cjs`) |
 | **The locked BASELINE-88573ef0** | `bl_lock_check.sh` PASS |
@@ -343,7 +342,7 @@ The candidates scored per re-plan barely rise. MANUAL techniques are only built 
 2. **The remaining locomotion failures** (§1) sit under A99-C's low-speed facing whip (≈ 1000 – 1200°/s at a reversal's stop). The next step there is a low-speed facing-rate decision, which is yours, not a presentation fix.
 3. **The two EXPERIMENTAL techniques play, with their blockers named:**
    - **the roulette:** its spin now turns on the right foot under the body, but the left foot's drag still crosses the legs;
-   - **the heel chop**, new this morning with a HEEL contact pose: it plays and is rejected honestly at a sprint. It is not yet reviewed at 1×, and its exit step crosses the planted heeling foot (≈ 10 cm).
+   - **the heel chop**, new this morning with a HEEL contact pose: it plays, its clips measure clean, and it is rejected honestly at a sprint. It stays EXPERIMENTAL until you have seen its heel pose at 1×.
    - **Also known:** the fake stop keeps a 0.22 s float before its push-off (§1, reverted list).
 4. **Deception has no measurable value without defenders.** The deceptive moves are MANUAL; the threat is a review-harness point, not a defender.
 5. **Some rejections are honest limits of the locked references.** The Ronaldo chop needs ≥ 3.6 m/s (its hop), and a left-foot Cruyff from a jog sometimes finds no entry.

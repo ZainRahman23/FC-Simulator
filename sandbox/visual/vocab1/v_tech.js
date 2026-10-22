@@ -233,7 +233,7 @@ const ROULETTE = { id: "ROULETTE", label: "ROULETTE (Marseille turn)", turn: -1,
 // it and its HEEL drives it back behind the standing leg; the body turns on the plant onto it (reference 135° to the left). The heel contact is
 // the body's HEEL pose (u_body.js); the route over the front of the ball is authored ─────────────────────────────────────────────────────────
 const HEELCHOP = { id: "HEELCHOP", label: "HEEL CHOP", turn: -1, ref: 135, comfort: [110, 160], hard: [95, 175], vRange: [1.0, 6.0], vFloor: 1.0,
-  start: -0.36, end: 0.90, firstFoot: "F", B: [0.12, 0.14], tLine: 0.44, protect: 0.90, experimental: "new 22 Oct: the heel pose and the route over the front of the ball are authored, not yet reviewed at 1×; the exit step crosses the planted heeling foot (≈ 10 cm)",
+  start: -0.36, end: 0.90, firstFoot: "F", B: [0.12, 0.14], tLine: 0.44, protect: 0.90, experimental: "new 22 Oct: the heel pose and the route over the front of the ball are authored, not yet reviewed at 1×",
   com: { v: [[-0.36, 3.2], [-0.18, 2.2], [-0.06, 1.0], [0, 0.45], [0.10, 0.25], [0.20, 0.6], [0.32, 1.4], [0.50, 2.6], [0.90, 4.0]],
          h: [[-0.36, 0], [0, 0], [0.08, -50], [0.16, -120], [0.26, -135], [0.50, -135]] },
   face: [[-0.36, 0], [-0.12, 4], [-0.02, 8], [0.06, -30], [0.14, -90], [0.24, -130], [0.32, -135]],
@@ -243,7 +243,7 @@ const HEELCHOP = { id: "HEELCHOP", label: "HEEL CHOP", turn: -1, ref: 135, comfo
   stances: [
     { F: "F", t0: -0.36, t1: -0.20, at: { rel: "travel", t: -0.36, p: [0.16, 0.0] }, yaw: "travel", kind: "braking (penultimate)" },
     { F: "S", t0: -0.18, t1: 0.21, at: { rel: "O", p: [0.08, -0.10] }, yaw: -20, pivot: [[0, 0], [0.21, -100]], heel: [0.02, 12], kind: "PLANT · beside and past the ball; the pivot on the forefoot" },
-    { F: "F", t0: 0.16, t1: 0.32, at: { rel: "O", p: [0.32, 0.0] }, yaw: -80, w: 0.5, kind: "the heeling foot down in front, turned toward the new line" },
+    { F: "F", t0: 0.16, t1: 0.32, at: { rel: "O", p: [0.42, 0.10] }, yaw: -80, w: 0.5, kind: "the heeling foot down in front and to its side, turned toward the new line" },   // (0.32 m ahead it landed in line with the pivoting plant: the exit step crossed it by 10 cm)
     { F: "S", t0: 0.36, t1: 0.50, at: null, yaw: null, kind: "exit stride" },
   ],
   contacts: [
