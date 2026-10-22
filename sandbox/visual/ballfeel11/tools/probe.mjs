@@ -1,0 +1,3 @@
+import {BallWorld,LAWS} from '../world.js';import {GLOBAL} from '../config.js';import {resolveLaunch} from '../resolver.js';
+for(const spin of [110,120,125,130,135,140,150]){let min=100;const w=new BallWorld({v:[22.5,6.9,0],w:[0,spin,0],parameters:GLOBAL});let at=null;for(let i=0;i<3600;i++){w.step();if(w.ball.v[0]||w.ball.v[2])min=Math.min(min,w.ball.v[0]);if(!at&&w.ball.p[0]>=22)at=[w.time,w.ball.p[2]];if(w.ball.sleeping)break;}console.log(spin,{min,at,rest:w.time,p:w.ball.p});}
+for(const f of ['ground','short','chip','loft','cross']){const r=resolveLaunch({family:f});console.log(f,r.velocity,r.spin);}

@@ -1,0 +1,1618 @@
+{
+  "summary": "Browser PASS: CURRENT 20 / NEW 60 and CURRENT 99 / NEW 99 produced identical ideal and actual goal-plane positions, launch vectors, speed and standardized draws. NEW 60 repeated deterministically. The eight-rating replay and same-zone distance controls were exercised. No console warnings/errors or horizontal page overflow were observed.",
+  "checks": {
+    "new60EqualsCurrent20": true,
+    "new99EqualsCurrent99": true,
+    "new60RepeatIdentical": true
+  },
+  "logs": {
+    "playtest": [],
+    "report": []
+  },
+  "layout": {
+    "report": {
+      "viewport": 1280,
+      "width": 1280
+    },
+    "playtest": {
+      "viewport": 319,
+      "width": 319
+    }
+  },
+  "audits": {
+    "new60": {
+      "version": "SHOT-ACCURACY-PLAYTEST-1",
+      "accuracyCurve": "new",
+      "input": {
+        "player": {
+          "x": 84.85,
+          "z": 34
+        },
+        "aimZ": 37.41,
+        "ratings": {
+          "finishing": 60,
+          "longShots": 60,
+          "shotPower": 80
+        },
+        "seed": "20261018",
+        "accuracyCurve": "new",
+        "holdMs": 302.2948095202446,
+        "shotId": "session-shot:00001",
+        "drawEventId": "shot:00001"
+      },
+      "shooterPosition": [
+        84.85,
+        0,
+        34
+      ],
+      "ballPosition": [
+        85.23741464330152,
+        0.11,
+        34.22783742922432
+      ],
+      "startingVelocity": [
+        0,
+        0,
+        0
+      ],
+      "startingSpin": [
+        0,
+        0,
+        0
+      ],
+      "startingOrientation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "zone": {
+        "zone": 2,
+        "label": "ZONE 2 — LONG SHOTS",
+        "insideBox": false,
+        "insideEllipse": false,
+        "forward": 20.150000000000006,
+        "lateral": 0,
+        "ellipseValue": 1.4913590449954097,
+        "finishingWeight": 0,
+        "longShotsWeight": 1,
+        "effectiveAccuracy": 60
+      },
+      "dispersion": {
+        "accuracy": 60,
+        "sigmaBaseH": 3.040082264698766,
+        "sigmaBaseV": 1.8240493588192594,
+        "difficulty": 1.0723047715223408,
+        "powerIncreasePercent": 7.230477152234083,
+        "addedSigmaH": 0.21981245355816492,
+        "addedSigmaV": 0.13188747213489882,
+        "sigmaH": 3.259894718256931,
+        "sigmaV": 1.9559368309541583,
+        "maxH": 7.98507867492341,
+        "maxV": 4.791047204954046
+      },
+      "draws": {
+        "horizontal": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",0]",
+            "digest": "641adecb72ae00bb11d2f62c35dc799e1236fb71c7e5d00ff4006e754833c3aa",
+            "value": 0.3910350081156865
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",1]",
+            "digest": "2ba7c66c7225826ec16198bd157cf55da89c6445235978526a5be77fb26221e7",
+            "value": 0.17052879474262828
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",0]",
+            "digest": "1b43952ed82c692b8d22129ef8ac0aa8ffa8d361c63f627b56570af6817ed07d",
+            "value": 0.10649998086607726
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",1]",
+            "digest": "7d7885b92da361ff9bf3a16c56dae4c9670fbb6221f85e9f9bbc105691b4e06a",
+            "value": 0.490120275220432
+          }
+        ],
+        "standardizedHorizontal": 0.5401277078772648,
+        "standardizedElevation": -0.9396739761444554
+      },
+      "errorH": 1.760759462093318,
+      "errorV": -1.8379429390300794,
+      "yaw": 9.147225551202352,
+      "idealElevation": 15.215676014777273,
+      "actualElevation": 13.377733075747194,
+      "requestedSpeed": 28.374955298754585,
+      "capabilityCeiling": 30.771130104463438,
+      "speedFraction": 0.9221291256585574,
+      "requestedApex": 2.3873473727422025,
+      "distance": 20.150000000000006,
+      "idealLaunch": {
+        "velocity": [
+          27.032071634115344,
+          7.447097689651802,
+          4.352691968789004
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "actualLaunch": {
+        "velocity": [
+          27.10626760801694,
+          6.565108725656296,
+          5.22376224470487
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "charge": {
+        "version": "SHOT-CHARGE-1.3",
+        "family": "LACES",
+        "technique": "LACES",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 0.9221291256585574,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 0,
+          "elevationDeg": 15.215676014777273,
+          "kind": "pre-contact physical apex solve; no target correction after launch"
+        },
+        "speed": 28.374955298754585,
+        "horizontalVelocity": [
+          27.380263406459473,
+          0
+        ],
+        "horizontalSpeed": 27.380263406459473,
+        "verticalVelocity": 7.447097689651802,
+        "velocity": [
+          27.380263406459473,
+          7.447097689651802,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          -4
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "spinMagnitude": 4,
+        "spinAxis": [
+          0,
+          0,
+          -1
+        ],
+        "launchAngleDeg": 15.215676014777273,
+        "prepareSeconds": 0.28,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 1,
+        "bracketScale": 1,
+        "chargeFactor": 0.9221291256585574,
+        "executionFactor": 1,
+        "formula": "Faster continuous input timing; unchanged player ceiling and physical pre-contact apex solve",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A; unchanged physical solver and fc-b curve law",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "curve",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 34 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "foundationVersion": "BALL-SHOT-1.2 / SHOT-CHARGE-1.1 physical vertical solve",
+        "holdMs": 302.2948095202446,
+        "normalizedCharge": 0.6397434378542551,
+        "q": 0.6397434378542551,
+        "registered": true,
+        "minimumHoldMs": 0,
+        "fullHoldMs": 450,
+        "capabilityCeiling": 30.771130104463438,
+        "requestedSpeedFraction": 0.9221291256585574,
+        "chargeIntent": 0.6397434378542551,
+        "chargeFormula": {
+          "registration": "Every finite nonnegative duration from a valid press/release pair registers, including a timer-resolution 0 ms. No debounce dead zone. The 0–40 ms interval preserves the previous minimum valid weak shot exactly.",
+          "charge": "q = clamp((holdMs − 40) / 410, 0, 1)",
+          "speed": "f(q) = 0.40 + 0.60 × [1 − (1 − q)²]; launch speed = frozen BALL-SHOT-1.2 Laces ceiling × f(q). At/after 450 ms, f = 1.",
+          "trajectory": "For holdMs ≤ 310: requested centre apex = 0.32 + 2.68 × q^1.6 × (2.6 − 1.6q) metres.",
+          "overcharge": "For holdMs > 310: d = holdMs − 310; A0 = normal apex at 310; S0 = normal apex slope at 310; L = 10 − A0; requested apex = A0 + L × [1 − exp(−S0 × d / L − (d / 300)²)].",
+          "continuity": "Speed is continuous at 40 and 450 ms and capped from 450 onward. Apex and its first derivative are continuous at 40 and 310 ms. The red transition preserves the nonzero incoming height slope, removing the old shelf. There is no special trajectory boundary at 450 ms.",
+          "physical": "The unchanged pre-contact physical apex solver chooses initial elevation at the resolved scalar speed. One launch; frozen BALL-PHYS determines everything after contact.",
+          "selection": "Owner requested earlier red at the bar-height transition and rising elevation while speed still builds. This candidate uses 310 ms red onset, the unchanged 450 ms speed ceiling, 40 ms weak-tap plateau and 1.6 normal trajectory exponent. The former 3.0 m apex at 450 ms is intentionally superseded.",
+          "longHold": "Raw duration is never capped or rounded. The shared overcharge profile tends smoothly toward the existing reachable 10 m apex limit."
+        },
+        "tapFloorEndMs": 40,
+        "trajectoryProfile": {
+          "kind": "first-flight-apex",
+          "minimumApex": 0.32,
+          "maximumApex": 3,
+          "shapeFraction": 0.7713982734112697,
+          "desiredApex": 2.3873473727422025,
+          "heightConvention": "ball-centre height above turf"
+        },
+        "verticalSolve": {
+          "angleDeg": 15.215676014777273,
+          "velocity": [
+            27.380263406459473,
+            7.447097689651802,
+            0
+          ],
+          "desiredApex": 2.3873473727422025,
+          "predictedApex": 2.3873473784131636,
+          "predictedApexTime": 0.6416666666666666,
+          "predictedApexPosition": [
+            101.00954368597466,
+            2.3873473784131636,
+            34.22783742922432
+          ],
+          "error": 5.670961034098809e-9,
+          "iterations": 30,
+          "preContactOnly": true
+        }
+      },
+      "inputTiming": {
+        "kind": "fixed-representative-hold",
+        "holdMs": 302.2948095202446
+      },
+      "preparationMs": 19.799999997019768,
+      "actualPhysicsMs": 11.699999913573265,
+      "renderFps": 61.64860296292758,
+      "slowRenderFrames": 0,
+      "actualLaunchCount": 1,
+      "idealPlane": {
+        "x": 105,
+        "y": 2.1900000115862785,
+        "z": 37.409999999999975,
+        "time": 0.8385679190908852
+      },
+      "actualPlane": {
+        "x": 105,
+        "y": 1.5493826635918022,
+        "z": 38.03563593036949,
+        "time": 0.8366194594813519
+      },
+      "physicalDifference": {
+        "horizontal": 62.563593036951204,
+        "vertical": -64.06173479944763,
+        "total": 89.54389448314166
+      },
+      "observation": {
+        "actual": "plane-crossed",
+        "ideal": "plane-crossed",
+        "maximumSeconds": 12
+      }
+    },
+    "current20": {
+      "version": "SHOT-ACCURACY-PLAYTEST-1",
+      "accuracyCurve": "current",
+      "input": {
+        "player": {
+          "x": 84.85,
+          "z": 34
+        },
+        "aimZ": 37.41,
+        "ratings": {
+          "finishing": 20,
+          "longShots": 20,
+          "shotPower": 80
+        },
+        "seed": "20261018",
+        "accuracyCurve": "current",
+        "holdMs": 302.2948095202446,
+        "shotId": "session-shot:00002",
+        "drawEventId": "shot:00001"
+      },
+      "shooterPosition": [
+        84.85,
+        0,
+        34
+      ],
+      "ballPosition": [
+        85.23741464330152,
+        0.11,
+        34.22783742922432
+      ],
+      "startingVelocity": [
+        0,
+        0,
+        0
+      ],
+      "startingSpin": [
+        0,
+        0,
+        0
+      ],
+      "startingOrientation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "zone": {
+        "zone": 2,
+        "label": "ZONE 2 — LONG SHOTS",
+        "insideBox": false,
+        "insideEllipse": false,
+        "forward": 20.150000000000006,
+        "lateral": 0,
+        "ellipseValue": 1.4913590449954097,
+        "finishingWeight": 0,
+        "longShotsWeight": 1,
+        "effectiveAccuracy": 20
+      },
+      "dispersion": {
+        "accuracy": 20,
+        "sigmaBaseH": 3.040082264698766,
+        "sigmaBaseV": 1.8240493588192594,
+        "difficulty": 1.0723047715223408,
+        "powerIncreasePercent": 7.230477152234083,
+        "addedSigmaH": 0.21981245355816492,
+        "addedSigmaV": 0.13188747213489882,
+        "sigmaH": 3.259894718256931,
+        "sigmaV": 1.9559368309541583,
+        "maxH": 7.98507867492341,
+        "maxV": 4.791047204954046
+      },
+      "draws": {
+        "horizontal": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",0]",
+            "digest": "641adecb72ae00bb11d2f62c35dc799e1236fb71c7e5d00ff4006e754833c3aa",
+            "value": 0.3910350081156865
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",1]",
+            "digest": "2ba7c66c7225826ec16198bd157cf55da89c6445235978526a5be77fb26221e7",
+            "value": 0.17052879474262828
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",0]",
+            "digest": "1b43952ed82c692b8d22129ef8ac0aa8ffa8d361c63f627b56570af6817ed07d",
+            "value": 0.10649998086607726
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",1]",
+            "digest": "7d7885b92da361ff9bf3a16c56dae4c9670fbb6221f85e9f9bbc105691b4e06a",
+            "value": 0.490120275220432
+          }
+        ],
+        "standardizedHorizontal": 0.5401277078772648,
+        "standardizedElevation": -0.9396739761444554
+      },
+      "errorH": 1.760759462093318,
+      "errorV": -1.8379429390300794,
+      "yaw": 9.147225551202352,
+      "idealElevation": 15.215676014777273,
+      "actualElevation": 13.377733075747194,
+      "requestedSpeed": 28.374955298754585,
+      "capabilityCeiling": 30.771130104463438,
+      "speedFraction": 0.9221291256585574,
+      "requestedApex": 2.3873473727422025,
+      "distance": 20.150000000000006,
+      "idealLaunch": {
+        "velocity": [
+          27.032071634115344,
+          7.447097689651802,
+          4.352691968789004
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "actualLaunch": {
+        "velocity": [
+          27.10626760801694,
+          6.565108725656296,
+          5.22376224470487
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "charge": {
+        "version": "SHOT-CHARGE-1.3",
+        "family": "LACES",
+        "technique": "LACES",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 0.9221291256585574,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 0,
+          "elevationDeg": 15.215676014777273,
+          "kind": "pre-contact physical apex solve; no target correction after launch"
+        },
+        "speed": 28.374955298754585,
+        "horizontalVelocity": [
+          27.380263406459473,
+          0
+        ],
+        "horizontalSpeed": 27.380263406459473,
+        "verticalVelocity": 7.447097689651802,
+        "velocity": [
+          27.380263406459473,
+          7.447097689651802,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          -4
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "spinMagnitude": 4,
+        "spinAxis": [
+          0,
+          0,
+          -1
+        ],
+        "launchAngleDeg": 15.215676014777273,
+        "prepareSeconds": 0.28,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 1,
+        "bracketScale": 1,
+        "chargeFactor": 0.9221291256585574,
+        "executionFactor": 1,
+        "formula": "Faster continuous input timing; unchanged player ceiling and physical pre-contact apex solve",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A; unchanged physical solver and fc-b curve law",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "curve",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 34 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "foundationVersion": "BALL-SHOT-1.2 / SHOT-CHARGE-1.1 physical vertical solve",
+        "holdMs": 302.2948095202446,
+        "normalizedCharge": 0.6397434378542551,
+        "q": 0.6397434378542551,
+        "registered": true,
+        "minimumHoldMs": 0,
+        "fullHoldMs": 450,
+        "capabilityCeiling": 30.771130104463438,
+        "requestedSpeedFraction": 0.9221291256585574,
+        "chargeIntent": 0.6397434378542551,
+        "chargeFormula": {
+          "registration": "Every finite nonnegative duration from a valid press/release pair registers, including a timer-resolution 0 ms. No debounce dead zone. The 0–40 ms interval preserves the previous minimum valid weak shot exactly.",
+          "charge": "q = clamp((holdMs − 40) / 410, 0, 1)",
+          "speed": "f(q) = 0.40 + 0.60 × [1 − (1 − q)²]; launch speed = frozen BALL-SHOT-1.2 Laces ceiling × f(q). At/after 450 ms, f = 1.",
+          "trajectory": "For holdMs ≤ 310: requested centre apex = 0.32 + 2.68 × q^1.6 × (2.6 − 1.6q) metres.",
+          "overcharge": "For holdMs > 310: d = holdMs − 310; A0 = normal apex at 310; S0 = normal apex slope at 310; L = 10 − A0; requested apex = A0 + L × [1 − exp(−S0 × d / L − (d / 300)²)].",
+          "continuity": "Speed is continuous at 40 and 450 ms and capped from 450 onward. Apex and its first derivative are continuous at 40 and 310 ms. The red transition preserves the nonzero incoming height slope, removing the old shelf. There is no special trajectory boundary at 450 ms.",
+          "physical": "The unchanged pre-contact physical apex solver chooses initial elevation at the resolved scalar speed. One launch; frozen BALL-PHYS determines everything after contact.",
+          "selection": "Owner requested earlier red at the bar-height transition and rising elevation while speed still builds. This candidate uses 310 ms red onset, the unchanged 450 ms speed ceiling, 40 ms weak-tap plateau and 1.6 normal trajectory exponent. The former 3.0 m apex at 450 ms is intentionally superseded.",
+          "longHold": "Raw duration is never capped or rounded. The shared overcharge profile tends smoothly toward the existing reachable 10 m apex limit."
+        },
+        "tapFloorEndMs": 40,
+        "trajectoryProfile": {
+          "kind": "first-flight-apex",
+          "minimumApex": 0.32,
+          "maximumApex": 3,
+          "shapeFraction": 0.7713982734112697,
+          "desiredApex": 2.3873473727422025,
+          "heightConvention": "ball-centre height above turf"
+        },
+        "verticalSolve": {
+          "angleDeg": 15.215676014777273,
+          "velocity": [
+            27.380263406459473,
+            7.447097689651802,
+            0
+          ],
+          "desiredApex": 2.3873473727422025,
+          "predictedApex": 2.3873473784131636,
+          "predictedApexTime": 0.6416666666666666,
+          "predictedApexPosition": [
+            101.00954368597466,
+            2.3873473784131636,
+            34.22783742922432
+          ],
+          "error": 5.670961034098809e-9,
+          "iterations": 30,
+          "preContactOnly": true
+        }
+      },
+      "inputTiming": {
+        "kind": "repeat-exact-input",
+        "holdMs": 302.2948095202446,
+        "sourceShotId": "session-shot:00001"
+      },
+      "preparationMs": 19.200000002980232,
+      "actualPhysicsMs": 11.500000014901161,
+      "renderFps": 60.00393468424168,
+      "slowRenderFrames": 0,
+      "actualLaunchCount": 1,
+      "idealPlane": {
+        "x": 105,
+        "y": 2.1900000115862785,
+        "z": 37.409999999999975,
+        "time": 0.8385679190908852
+      },
+      "actualPlane": {
+        "x": 105,
+        "y": 1.5493826635918022,
+        "z": 38.03563593036949,
+        "time": 0.8366194594813519
+      },
+      "physicalDifference": {
+        "horizontal": 62.563593036951204,
+        "vertical": -64.06173479944763,
+        "total": 89.54389448314166
+      },
+      "observation": {
+        "actual": "plane-crossed",
+        "ideal": "plane-crossed",
+        "maximumSeconds": 12
+      }
+    },
+    "current99": {
+      "version": "SHOT-ACCURACY-PLAYTEST-1",
+      "accuracyCurve": "current",
+      "input": {
+        "player": {
+          "x": 84.85,
+          "z": 34
+        },
+        "aimZ": 37.41,
+        "ratings": {
+          "finishing": 99,
+          "longShots": 99,
+          "shotPower": 80
+        },
+        "seed": "20261018",
+        "accuracyCurve": "current",
+        "holdMs": 302.2948095202446,
+        "shotId": "session-shot:00003",
+        "drawEventId": "shot:00001"
+      },
+      "shooterPosition": [
+        84.85,
+        0,
+        34
+      ],
+      "ballPosition": [
+        85.23741464330152,
+        0.11,
+        34.22783742922432
+      ],
+      "startingVelocity": [
+        0,
+        0,
+        0
+      ],
+      "startingSpin": [
+        0,
+        0,
+        0
+      ],
+      "startingOrientation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "zone": {
+        "zone": 2,
+        "label": "ZONE 2 — LONG SHOTS",
+        "insideBox": false,
+        "insideEllipse": false,
+        "forward": 20.150000000000006,
+        "lateral": 0,
+        "ellipseValue": 1.4913590449954097,
+        "finishingWeight": 0,
+        "longShotsWeight": 1,
+        "effectiveAccuracy": 99
+      },
+      "dispersion": {
+        "accuracy": 99,
+        "sigmaBaseH": 0.02,
+        "sigmaBaseV": 0.012,
+        "difficulty": 1.0723047715223408,
+        "powerIncreasePercent": 7.230477152234083,
+        "addedSigmaH": 0.001446095430446815,
+        "addedSigmaV": 0.00086765725826809,
+        "sigmaH": 0.021446095430446815,
+        "sigmaV": 0.01286765725826809,
+        "maxH": 0.052531990779628654,
+        "maxV": 0.0315191944677772
+      },
+      "draws": {
+        "horizontal": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",0]",
+            "digest": "641adecb72ae00bb11d2f62c35dc799e1236fb71c7e5d00ff4006e754833c3aa",
+            "value": 0.3910350081156865
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",1]",
+            "digest": "2ba7c66c7225826ec16198bd157cf55da89c6445235978526a5be77fb26221e7",
+            "value": 0.17052879474262828
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",0]",
+            "digest": "1b43952ed82c692b8d22129ef8ac0aa8ffa8d361c63f627b56570af6817ed07d",
+            "value": 0.10649998086607726
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",1]",
+            "digest": "7d7885b92da361ff9bf3a16c56dae4c9670fbb6221f85e9f9bbc105691b4e06a",
+            "value": 0.490120275220432
+          }
+        ],
+        "standardizedHorizontal": 0.5401277078772648,
+        "standardizedElevation": -0.9396739761444554
+      },
+      "errorH": 0.011583630367764322,
+      "errorV": -0.012091402659540838,
+      "yaw": 9.147225551202352,
+      "idealElevation": 15.215676014777273,
+      "actualElevation": 15.203584612117732,
+      "requestedSpeed": 28.374955298754585,
+      "capabilityCeiling": 30.771130104463438,
+      "speedFraction": 0.9221291256585574,
+      "requestedApex": 2.3873473727422025,
+      "distance": 20.150000000000006,
+      "idealLaunch": {
+        "velocity": [
+          27.032071634115344,
+          7.447097689651802,
+          4.352691968789004
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "actualLaunch": {
+        "velocity": [
+          27.032742045478773,
+          7.441319335791672,
+          4.35840707732748
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "charge": {
+        "version": "SHOT-CHARGE-1.3",
+        "family": "LACES",
+        "technique": "LACES",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 0.9221291256585574,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 0,
+          "elevationDeg": 15.215676014777273,
+          "kind": "pre-contact physical apex solve; no target correction after launch"
+        },
+        "speed": 28.374955298754585,
+        "horizontalVelocity": [
+          27.380263406459473,
+          0
+        ],
+        "horizontalSpeed": 27.380263406459473,
+        "verticalVelocity": 7.447097689651802,
+        "velocity": [
+          27.380263406459473,
+          7.447097689651802,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          -4
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "spinMagnitude": 4,
+        "spinAxis": [
+          0,
+          0,
+          -1
+        ],
+        "launchAngleDeg": 15.215676014777273,
+        "prepareSeconds": 0.28,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 1,
+        "bracketScale": 1,
+        "chargeFactor": 0.9221291256585574,
+        "executionFactor": 1,
+        "formula": "Faster continuous input timing; unchanged player ceiling and physical pre-contact apex solve",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A; unchanged physical solver and fc-b curve law",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "curve",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 34 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "foundationVersion": "BALL-SHOT-1.2 / SHOT-CHARGE-1.1 physical vertical solve",
+        "holdMs": 302.2948095202446,
+        "normalizedCharge": 0.6397434378542551,
+        "q": 0.6397434378542551,
+        "registered": true,
+        "minimumHoldMs": 0,
+        "fullHoldMs": 450,
+        "capabilityCeiling": 30.771130104463438,
+        "requestedSpeedFraction": 0.9221291256585574,
+        "chargeIntent": 0.6397434378542551,
+        "chargeFormula": {
+          "registration": "Every finite nonnegative duration from a valid press/release pair registers, including a timer-resolution 0 ms. No debounce dead zone. The 0–40 ms interval preserves the previous minimum valid weak shot exactly.",
+          "charge": "q = clamp((holdMs − 40) / 410, 0, 1)",
+          "speed": "f(q) = 0.40 + 0.60 × [1 − (1 − q)²]; launch speed = frozen BALL-SHOT-1.2 Laces ceiling × f(q). At/after 450 ms, f = 1.",
+          "trajectory": "For holdMs ≤ 310: requested centre apex = 0.32 + 2.68 × q^1.6 × (2.6 − 1.6q) metres.",
+          "overcharge": "For holdMs > 310: d = holdMs − 310; A0 = normal apex at 310; S0 = normal apex slope at 310; L = 10 − A0; requested apex = A0 + L × [1 − exp(−S0 × d / L − (d / 300)²)].",
+          "continuity": "Speed is continuous at 40 and 450 ms and capped from 450 onward. Apex and its first derivative are continuous at 40 and 310 ms. The red transition preserves the nonzero incoming height slope, removing the old shelf. There is no special trajectory boundary at 450 ms.",
+          "physical": "The unchanged pre-contact physical apex solver chooses initial elevation at the resolved scalar speed. One launch; frozen BALL-PHYS determines everything after contact.",
+          "selection": "Owner requested earlier red at the bar-height transition and rising elevation while speed still builds. This candidate uses 310 ms red onset, the unchanged 450 ms speed ceiling, 40 ms weak-tap plateau and 1.6 normal trajectory exponent. The former 3.0 m apex at 450 ms is intentionally superseded.",
+          "longHold": "Raw duration is never capped or rounded. The shared overcharge profile tends smoothly toward the existing reachable 10 m apex limit."
+        },
+        "tapFloorEndMs": 40,
+        "trajectoryProfile": {
+          "kind": "first-flight-apex",
+          "minimumApex": 0.32,
+          "maximumApex": 3,
+          "shapeFraction": 0.7713982734112697,
+          "desiredApex": 2.3873473727422025,
+          "heightConvention": "ball-centre height above turf"
+        },
+        "verticalSolve": {
+          "angleDeg": 15.215676014777273,
+          "velocity": [
+            27.380263406459473,
+            7.447097689651802,
+            0
+          ],
+          "desiredApex": 2.3873473727422025,
+          "predictedApex": 2.3873473784131636,
+          "predictedApexTime": 0.6416666666666666,
+          "predictedApexPosition": [
+            101.00954368597466,
+            2.3873473784131636,
+            34.22783742922432
+          ],
+          "error": 5.670961034098809e-9,
+          "iterations": 30,
+          "preContactOnly": true
+        }
+      },
+      "inputTiming": {
+        "kind": "repeat-exact-input",
+        "holdMs": 302.2948095202446,
+        "sourceShotId": "session-shot:00002"
+      },
+      "preparationMs": 20.5,
+      "actualPhysicsMs": 9.69999997317791,
+      "renderFps": 60,
+      "slowRenderFrames": 0,
+      "actualLaunchCount": 1,
+      "idealPlane": {
+        "x": 105,
+        "y": 2.1900000115862785,
+        "z": 37.409999999999975,
+        "time": 0.8385679190908852
+      },
+      "actualPlane": {
+        "x": 105,
+        "y": 2.1858046949849483,
+        "z": 37.41409317864763,
+        "time": 0.838548634654779
+      },
+      "physicalDifference": {
+        "horizontal": 0.40931786476576804,
+        "vertical": -0.41953166013302123,
+        "total": 0.5861296172949942
+      },
+      "observation": {
+        "actual": "plane-crossed",
+        "ideal": "plane-crossed",
+        "maximumSeconds": 12
+      }
+    },
+    "new99": {
+      "version": "SHOT-ACCURACY-PLAYTEST-1",
+      "accuracyCurve": "new",
+      "input": {
+        "player": {
+          "x": 84.85,
+          "z": 34
+        },
+        "aimZ": 37.41,
+        "ratings": {
+          "finishing": 99,
+          "longShots": 99,
+          "shotPower": 80
+        },
+        "seed": "20261018",
+        "accuracyCurve": "new",
+        "holdMs": 302.2948095202446,
+        "shotId": "session-shot:00004",
+        "drawEventId": "shot:00001"
+      },
+      "shooterPosition": [
+        84.85,
+        0,
+        34
+      ],
+      "ballPosition": [
+        85.23741464330152,
+        0.11,
+        34.22783742922432
+      ],
+      "startingVelocity": [
+        0,
+        0,
+        0
+      ],
+      "startingSpin": [
+        0,
+        0,
+        0
+      ],
+      "startingOrientation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "zone": {
+        "zone": 2,
+        "label": "ZONE 2 — LONG SHOTS",
+        "insideBox": false,
+        "insideEllipse": false,
+        "forward": 20.150000000000006,
+        "lateral": 0,
+        "ellipseValue": 1.4913590449954097,
+        "finishingWeight": 0,
+        "longShotsWeight": 1,
+        "effectiveAccuracy": 99
+      },
+      "dispersion": {
+        "accuracy": 99,
+        "sigmaBaseH": 0.02,
+        "sigmaBaseV": 0.012,
+        "difficulty": 1.0723047715223408,
+        "powerIncreasePercent": 7.230477152234083,
+        "addedSigmaH": 0.001446095430446815,
+        "addedSigmaV": 0.00086765725826809,
+        "sigmaH": 0.021446095430446815,
+        "sigmaV": 0.01286765725826809,
+        "maxH": 0.052531990779628654,
+        "maxV": 0.0315191944677772
+      },
+      "draws": {
+        "horizontal": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",0]",
+            "digest": "641adecb72ae00bb11d2f62c35dc799e1236fb71c7e5d00ff4006e754833c3aa",
+            "value": 0.3910350081156865
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",1]",
+            "digest": "2ba7c66c7225826ec16198bd157cf55da89c6445235978526a5be77fb26221e7",
+            "value": 0.17052879474262828
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",0]",
+            "digest": "1b43952ed82c692b8d22129ef8ac0aa8ffa8d361c63f627b56570af6817ed07d",
+            "value": 0.10649998086607726
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",1]",
+            "digest": "7d7885b92da361ff9bf3a16c56dae4c9670fbb6221f85e9f9bbc105691b4e06a",
+            "value": 0.490120275220432
+          }
+        ],
+        "standardizedHorizontal": 0.5401277078772648,
+        "standardizedElevation": -0.9396739761444554
+      },
+      "errorH": 0.011583630367764322,
+      "errorV": -0.012091402659540838,
+      "yaw": 9.147225551202352,
+      "idealElevation": 15.215676014777273,
+      "actualElevation": 15.203584612117732,
+      "requestedSpeed": 28.374955298754585,
+      "capabilityCeiling": 30.771130104463438,
+      "speedFraction": 0.9221291256585574,
+      "requestedApex": 2.3873473727422025,
+      "distance": 20.150000000000006,
+      "idealLaunch": {
+        "velocity": [
+          27.032071634115344,
+          7.447097689651802,
+          4.352691968789004
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "actualLaunch": {
+        "velocity": [
+          27.032742045478773,
+          7.441319335791672,
+          4.35840707732748
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "charge": {
+        "version": "SHOT-CHARGE-1.3",
+        "family": "LACES",
+        "technique": "LACES",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 0.9221291256585574,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 0,
+          "elevationDeg": 15.215676014777273,
+          "kind": "pre-contact physical apex solve; no target correction after launch"
+        },
+        "speed": 28.374955298754585,
+        "horizontalVelocity": [
+          27.380263406459473,
+          0
+        ],
+        "horizontalSpeed": 27.380263406459473,
+        "verticalVelocity": 7.447097689651802,
+        "velocity": [
+          27.380263406459473,
+          7.447097689651802,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          -4
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "spinMagnitude": 4,
+        "spinAxis": [
+          0,
+          0,
+          -1
+        ],
+        "launchAngleDeg": 15.215676014777273,
+        "prepareSeconds": 0.28,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 1,
+        "bracketScale": 1,
+        "chargeFactor": 0.9221291256585574,
+        "executionFactor": 1,
+        "formula": "Faster continuous input timing; unchanged player ceiling and physical pre-contact apex solve",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A; unchanged physical solver and fc-b curve law",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "curve",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 34 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "foundationVersion": "BALL-SHOT-1.2 / SHOT-CHARGE-1.1 physical vertical solve",
+        "holdMs": 302.2948095202446,
+        "normalizedCharge": 0.6397434378542551,
+        "q": 0.6397434378542551,
+        "registered": true,
+        "minimumHoldMs": 0,
+        "fullHoldMs": 450,
+        "capabilityCeiling": 30.771130104463438,
+        "requestedSpeedFraction": 0.9221291256585574,
+        "chargeIntent": 0.6397434378542551,
+        "chargeFormula": {
+          "registration": "Every finite nonnegative duration from a valid press/release pair registers, including a timer-resolution 0 ms. No debounce dead zone. The 0–40 ms interval preserves the previous minimum valid weak shot exactly.",
+          "charge": "q = clamp((holdMs − 40) / 410, 0, 1)",
+          "speed": "f(q) = 0.40 + 0.60 × [1 − (1 − q)²]; launch speed = frozen BALL-SHOT-1.2 Laces ceiling × f(q). At/after 450 ms, f = 1.",
+          "trajectory": "For holdMs ≤ 310: requested centre apex = 0.32 + 2.68 × q^1.6 × (2.6 − 1.6q) metres.",
+          "overcharge": "For holdMs > 310: d = holdMs − 310; A0 = normal apex at 310; S0 = normal apex slope at 310; L = 10 − A0; requested apex = A0 + L × [1 − exp(−S0 × d / L − (d / 300)²)].",
+          "continuity": "Speed is continuous at 40 and 450 ms and capped from 450 onward. Apex and its first derivative are continuous at 40 and 310 ms. The red transition preserves the nonzero incoming height slope, removing the old shelf. There is no special trajectory boundary at 450 ms.",
+          "physical": "The unchanged pre-contact physical apex solver chooses initial elevation at the resolved scalar speed. One launch; frozen BALL-PHYS determines everything after contact.",
+          "selection": "Owner requested earlier red at the bar-height transition and rising elevation while speed still builds. This candidate uses 310 ms red onset, the unchanged 450 ms speed ceiling, 40 ms weak-tap plateau and 1.6 normal trajectory exponent. The former 3.0 m apex at 450 ms is intentionally superseded.",
+          "longHold": "Raw duration is never capped or rounded. The shared overcharge profile tends smoothly toward the existing reachable 10 m apex limit."
+        },
+        "tapFloorEndMs": 40,
+        "trajectoryProfile": {
+          "kind": "first-flight-apex",
+          "minimumApex": 0.32,
+          "maximumApex": 3,
+          "shapeFraction": 0.7713982734112697,
+          "desiredApex": 2.3873473727422025,
+          "heightConvention": "ball-centre height above turf"
+        },
+        "verticalSolve": {
+          "angleDeg": 15.215676014777273,
+          "velocity": [
+            27.380263406459473,
+            7.447097689651802,
+            0
+          ],
+          "desiredApex": 2.3873473727422025,
+          "predictedApex": 2.3873473784131636,
+          "predictedApexTime": 0.6416666666666666,
+          "predictedApexPosition": [
+            101.00954368597466,
+            2.3873473784131636,
+            34.22783742922432
+          ],
+          "error": 5.670961034098809e-9,
+          "iterations": 30,
+          "preContactOnly": true
+        }
+      },
+      "inputTiming": {
+        "kind": "repeat-exact-input",
+        "holdMs": 302.2948095202446,
+        "sourceShotId": "session-shot:00003"
+      },
+      "preparationMs": 20.100000008940697,
+      "actualPhysicsMs": 8.800000011920929,
+      "renderFps": 60,
+      "slowRenderFrames": 0,
+      "actualLaunchCount": 1,
+      "idealPlane": {
+        "x": 105,
+        "y": 2.1900000115862785,
+        "z": 37.409999999999975,
+        "time": 0.8385679190908852
+      },
+      "actualPlane": {
+        "x": 105,
+        "y": 2.1858046949849483,
+        "z": 37.41409317864763,
+        "time": 0.838548634654779
+      },
+      "physicalDifference": {
+        "horizontal": 0.40931786476576804,
+        "vertical": -0.41953166013302123,
+        "total": 0.5861296172949942
+      },
+      "observation": {
+        "actual": "plane-crossed",
+        "ideal": "plane-crossed",
+        "maximumSeconds": 12
+      }
+    },
+    "new60Repeat": {
+      "version": "SHOT-ACCURACY-PLAYTEST-1",
+      "accuracyCurve": "new",
+      "input": {
+        "player": {
+          "x": 84.85,
+          "z": 34
+        },
+        "aimZ": 37.41,
+        "ratings": {
+          "finishing": 60,
+          "longShots": 60,
+          "shotPower": 80
+        },
+        "seed": "20261018",
+        "accuracyCurve": "new",
+        "holdMs": 302.2948095202446,
+        "shotId": "session-shot:00005",
+        "drawEventId": "shot:00001"
+      },
+      "shooterPosition": [
+        84.85,
+        0,
+        34
+      ],
+      "ballPosition": [
+        85.23741464330152,
+        0.11,
+        34.22783742922432
+      ],
+      "startingVelocity": [
+        0,
+        0,
+        0
+      ],
+      "startingSpin": [
+        0,
+        0,
+        0
+      ],
+      "startingOrientation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "zone": {
+        "zone": 2,
+        "label": "ZONE 2 — LONG SHOTS",
+        "insideBox": false,
+        "insideEllipse": false,
+        "forward": 20.150000000000006,
+        "lateral": 0,
+        "ellipseValue": 1.4913590449954097,
+        "finishingWeight": 0,
+        "longShotsWeight": 1,
+        "effectiveAccuracy": 60
+      },
+      "dispersion": {
+        "accuracy": 60,
+        "sigmaBaseH": 3.040082264698766,
+        "sigmaBaseV": 1.8240493588192594,
+        "difficulty": 1.0723047715223408,
+        "powerIncreasePercent": 7.230477152234083,
+        "addedSigmaH": 0.21981245355816492,
+        "addedSigmaV": 0.13188747213489882,
+        "sigmaH": 3.259894718256931,
+        "sigmaV": 1.9559368309541583,
+        "maxH": 7.98507867492341,
+        "maxV": 4.791047204954046
+      },
+      "draws": {
+        "horizontal": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",0]",
+            "digest": "641adecb72ae00bb11d2f62c35dc799e1236fb71c7e5d00ff4006e754833c3aa",
+            "value": 0.3910350081156865
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"horizontal\",1]",
+            "digest": "2ba7c66c7225826ec16198bd157cf55da89c6445235978526a5be77fb26221e7",
+            "value": 0.17052879474262828
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",0]",
+            "digest": "1b43952ed82c692b8d22129ef8ac0aa8ffa8d361c63f627b56570af6817ed07d",
+            "value": 0.10649998086607726
+          },
+          {
+            "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00001\",\"elevation\",1]",
+            "digest": "7d7885b92da361ff9bf3a16c56dae4c9670fbb6221f85e9f9bbc105691b4e06a",
+            "value": 0.490120275220432
+          }
+        ],
+        "standardizedHorizontal": 0.5401277078772648,
+        "standardizedElevation": -0.9396739761444554
+      },
+      "errorH": 1.760759462093318,
+      "errorV": -1.8379429390300794,
+      "yaw": 9.147225551202352,
+      "idealElevation": 15.215676014777273,
+      "actualElevation": 13.377733075747194,
+      "requestedSpeed": 28.374955298754585,
+      "capabilityCeiling": 30.771130104463438,
+      "speedFraction": 0.9221291256585574,
+      "requestedApex": 2.3873473727422025,
+      "distance": 20.150000000000006,
+      "idealLaunch": {
+        "velocity": [
+          27.032071634115344,
+          7.447097689651802,
+          4.352691968789004
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "actualLaunch": {
+        "velocity": [
+          27.10626760801694,
+          6.565108725656296,
+          5.22376224470487
+        ],
+        "spin": [
+          0.6358875229464928,
+          0,
+          -3.949132443735076
+        ]
+      },
+      "charge": {
+        "version": "SHOT-CHARGE-1.3",
+        "family": "LACES",
+        "technique": "LACES",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 0.9221291256585574,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 0,
+          "elevationDeg": 15.215676014777273,
+          "kind": "pre-contact physical apex solve; no target correction after launch"
+        },
+        "speed": 28.374955298754585,
+        "horizontalVelocity": [
+          27.380263406459473,
+          0
+        ],
+        "horizontalSpeed": 27.380263406459473,
+        "verticalVelocity": 7.447097689651802,
+        "velocity": [
+          27.380263406459473,
+          7.447097689651802,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          -4
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "spinMagnitude": 4,
+        "spinAxis": [
+          0,
+          0,
+          -1
+        ],
+        "launchAngleDeg": 15.215676014777273,
+        "prepareSeconds": 0.28,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 1,
+        "bracketScale": 1,
+        "chargeFactor": 0.9221291256585574,
+        "executionFactor": 1,
+        "formula": "Faster continuous input timing; unchanged player ceiling and physical pre-contact apex solve",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A; unchanged physical solver and fc-b curve law",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "curve",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            85.23741464330152,
+            0.11,
+            34.22783742922432
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 34 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "foundationVersion": "BALL-SHOT-1.2 / SHOT-CHARGE-1.1 physical vertical solve",
+        "holdMs": 302.2948095202446,
+        "normalizedCharge": 0.6397434378542551,
+        "q": 0.6397434378542551,
+        "registered": true,
+        "minimumHoldMs": 0,
+        "fullHoldMs": 450,
+        "capabilityCeiling": 30.771130104463438,
+        "requestedSpeedFraction": 0.9221291256585574,
+        "chargeIntent": 0.6397434378542551,
+        "chargeFormula": {
+          "registration": "Every finite nonnegative duration from a valid press/release pair registers, including a timer-resolution 0 ms. No debounce dead zone. The 0–40 ms interval preserves the previous minimum valid weak shot exactly.",
+          "charge": "q = clamp((holdMs − 40) / 410, 0, 1)",
+          "speed": "f(q) = 0.40 + 0.60 × [1 − (1 − q)²]; launch speed = frozen BALL-SHOT-1.2 Laces ceiling × f(q). At/after 450 ms, f = 1.",
+          "trajectory": "For holdMs ≤ 310: requested centre apex = 0.32 + 2.68 × q^1.6 × (2.6 − 1.6q) metres.",
+          "overcharge": "For holdMs > 310: d = holdMs − 310; A0 = normal apex at 310; S0 = normal apex slope at 310; L = 10 − A0; requested apex = A0 + L × [1 − exp(−S0 × d / L − (d / 300)²)].",
+          "continuity": "Speed is continuous at 40 and 450 ms and capped from 450 onward. Apex and its first derivative are continuous at 40 and 310 ms. The red transition preserves the nonzero incoming height slope, removing the old shelf. There is no special trajectory boundary at 450 ms.",
+          "physical": "The unchanged pre-contact physical apex solver chooses initial elevation at the resolved scalar speed. One launch; frozen BALL-PHYS determines everything after contact.",
+          "selection": "Owner requested earlier red at the bar-height transition and rising elevation while speed still builds. This candidate uses 310 ms red onset, the unchanged 450 ms speed ceiling, 40 ms weak-tap plateau and 1.6 normal trajectory exponent. The former 3.0 m apex at 450 ms is intentionally superseded.",
+          "longHold": "Raw duration is never capped or rounded. The shared overcharge profile tends smoothly toward the existing reachable 10 m apex limit."
+        },
+        "tapFloorEndMs": 40,
+        "trajectoryProfile": {
+          "kind": "first-flight-apex",
+          "minimumApex": 0.32,
+          "maximumApex": 3,
+          "shapeFraction": 0.7713982734112697,
+          "desiredApex": 2.3873473727422025,
+          "heightConvention": "ball-centre height above turf"
+        },
+        "verticalSolve": {
+          "angleDeg": 15.215676014777273,
+          "velocity": [
+            27.380263406459473,
+            7.447097689651802,
+            0
+          ],
+          "desiredApex": 2.3873473727422025,
+          "predictedApex": 2.3873473784131636,
+          "predictedApexTime": 0.6416666666666666,
+          "predictedApexPosition": [
+            101.00954368597466,
+            2.3873473784131636,
+            34.22783742922432
+          ],
+          "error": 5.670961034098809e-9,
+          "iterations": 30,
+          "preContactOnly": true
+        }
+      },
+      "inputTiming": {
+        "kind": "repeat-exact-input",
+        "holdMs": 302.2948095202446,
+        "sourceShotId": "session-shot:00004"
+      },
+      "preparationMs": 19,
+      "actualPhysicsMs": 9.399999991059303,
+      "renderFps": 60.116290529221494,
+      "slowRenderFrames": 0,
+      "actualLaunchCount": 1,
+      "idealPlane": {
+        "x": 105,
+        "y": 2.1900000115862785,
+        "z": 37.409999999999975,
+        "time": 0.8385679190908852
+      },
+      "actualPlane": {
+        "x": 105,
+        "y": 1.5493826635918022,
+        "z": 38.03563593036949,
+        "time": 0.8366194594813519
+      },
+      "physicalDifference": {
+        "horizontal": 62.563593036951204,
+        "vertical": -64.06173479944763,
+        "total": 89.54389448314166
+      },
+      "observation": {
+        "actual": "plane-crossed",
+        "ideal": "plane-crossed",
+        "maximumSeconds": 12
+      }
+    }
+  }
+}

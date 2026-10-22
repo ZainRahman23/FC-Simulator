@@ -1,0 +1,27 @@
+{
+  "browser": "Chrome",
+  "url": "http://127.0.0.1:8769/sandbox/visual/ballfeel14/",
+  "pass": true,
+  "checks": [
+    "Both complete source clips played at 1x before implementation",
+    "Synchronized through and normal comparisons at 1x",
+    "Reference pauses at receiver touch while physical candidates continue",
+    "Play, pause, replay, scrub and numeric jump",
+    "Reference framing, Touchline wide, close physical side view",
+    "Quarter-speed playback and full-view dialog",
+    "Firm, driven, low-shot and short-pass selection",
+    "Tackle regression selection and physical deflection",
+    "Speed, height/contact and runner plots",
+    "38-stream browser determinism verification",
+    "Final console errors and warnings: none"
+  ],
+  "screenshots": [
+    "screenshots/through-comparison.png",
+    "screenshots/normal-comparison.png",
+    "screenshots/physical-close.png"
+  ],
+  "limitations": [
+    "Direct file browsing was unavailable; offline browser-open not claimed.",
+    "Reference A begins after the kick, so alignment is approximate."
+  ]
+}

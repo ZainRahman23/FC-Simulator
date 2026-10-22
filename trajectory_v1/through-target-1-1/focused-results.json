@@ -1,0 +1,1213 @@
+{
+  "tests": 99,
+  "passed": 99,
+  "rules": {
+    "initialCommitment": 0.6,
+    "infeasibleReplans": 4,
+    "infeasibleDuration": 0.45,
+    "reachableMargin": 0.25,
+    "receiveTolerance": 0.25,
+    "hopelessDeficit": 0.65,
+    "restGrace": 1.5,
+    "forecastLimit": 12,
+    "forecastSample": 0.1,
+    "arrivalStep": 0.008333333333333333,
+    "pitchBounds": {
+      "xMin": -20,
+      "xMax": 85,
+      "zMin": -34,
+      "zMax": 34
+    }
+  },
+  "matrix": [
+    {
+      "id": "terrible",
+      "outcome": "CHASE_ABANDONED",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        38.26302225899518,
+        0.11,
+        -15.321348280957324
+      ],
+      "receive": null,
+      "receiveTime": null,
+      "abandonment": {
+        "time": 1.05,
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "infeasibleReplans": 4,
+        "infeasibleSince": 0.6,
+        "intentReleased": "THROUGH_BALL_RUN",
+        "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+        "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+      },
+      "states": {
+        "MARGINAL": 4,
+        "UNREACHABLE": 4
+      },
+      "firstAssessment": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "ballArrivalTime": 6.258333333333333,
+        "runnerMinArrivalTime": 6.816666666666795,
+        "arrivalDeficit": 0.5583333333334624,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 6.816666666666795,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "ballArrivalTime": 5.208333333333333,
+        "runnerMinArrivalTime": 5.925000000000084,
+        "arrivalDeficit": 0.7166666666667512,
+        "ballSpeed": 0,
+        "assessedAt": 1.05,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 52,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 5.925000000000084,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 7.944109290391274e-15,
+      "simulationMs": 159.35441699999998
+    },
+    {
+      "id": "easy",
+      "outcome": "RECEIVED_MOVING",
+      "selected": "A",
+      "userEndpoint": [
+        30,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        30.01873512228862,
+        0.11,
+        0.0028142570609339013
+      ],
+      "receive": [
+        19.346907847969504,
+        0.11,
+        0.0018137730252984214
+      ],
+      "receiveTime": 1.325,
+      "abandonment": null,
+      "states": {
+        "REACHABLE": 9
+      },
+      "firstAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          20.164014347809392,
+          0.11,
+          0.0018903767771667683
+        ],
+        "meetingPoint": [
+          30.470513695350117,
+          0.11,
+          0.0028566113118387933
+        ],
+        "ballArrivalTime": 5.154166666666667,
+        "runnerMinArrivalTime": 2.6333333333333266,
+        "arrivalDeficit": -2.52083333333334,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 45,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.404166666666667,
+        "usefulUntil": 4.904166666666667,
+        "receiveUntil": 5.154166666666667,
+        "eventualLooseBallArrivalTime": 2.6333333333333266,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          20.164014347809392,
+          0.11,
+          0.0018903767771667683
+        ],
+        "meetingPoint": [
+          30.470513695350117,
+          0.11,
+          0.0028566113118387933
+        ],
+        "ballArrivalTime": 3.9541666666666666,
+        "runnerMinArrivalTime": 1.441666666666664,
+        "arrivalDeficit": -2.512500000000003,
+        "ballSpeed": 0,
+        "assessedAt": 1.2,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 42,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.404166666666667,
+        "usefulUntil": 4.904166666666667,
+        "receiveUntil": 5.154166666666667,
+        "eventualLooseBallArrivalTime": 1.441666666666664,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 3.552713685417946e-15,
+      "simulationMs": 189.95745900000009
+    },
+    {
+      "id": "difficult",
+      "outcome": "RECEIVED_MOVING",
+      "selected": "A",
+      "userEndpoint": [
+        30,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        37.87556056639991,
+        0.11,
+        -4.8374751582688695
+      ],
+      "receive": [
+        35.635411125347986,
+        0.11,
+        -4.551362765215287
+      ],
+      "receiveTime": 2.245833333333333,
+      "abandonment": null,
+      "states": {
+        "REACHABLE": 15
+      },
+      "firstAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          35.967811312065926,
+          0.11,
+          -4.593816992210372
+        ],
+        "meetingPoint": [
+          38.32368988309811,
+          0.11,
+          -4.894710335908529
+        ],
+        "ballArrivalTime": 5.137499999999999,
+        "runnerMinArrivalTime": 2.5249999999999937,
+        "arrivalDeficit": -2.6125000000000056,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 40,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.3874999999999997,
+        "usefulUntil": 4.887499999999999,
+        "receiveUntil": 5.137499999999999,
+        "eventualLooseBallArrivalTime": 2.5249999999999937,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          35.967811312065926,
+          0.11,
+          -4.593816992210372
+        ],
+        "meetingPoint": [
+          38.32368988309811,
+          0.11,
+          -4.894710335908529
+        ],
+        "ballArrivalTime": 3.037499999999999,
+        "runnerMinArrivalTime": 0.45000000000000057,
+        "arrivalDeficit": -2.5874999999999986,
+        "ballSpeed": 0,
+        "assessedAt": 2.1,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 32,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.3874999999999997,
+        "usefulUntil": 4.887499999999999,
+        "receiveUntil": 5.137499999999999,
+        "eventualLooseBallArrivalTime": 0.45000000000000057,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 7.160723346098895e-15,
+      "simulationMs": 256.5089170000001
+    },
+    {
+      "id": "overhit",
+      "outcome": "CHASE_ABANDONED",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        55.70081729593518,
+        0.11,
+        -14.545000997715263
+      ],
+      "receive": null,
+      "receiveTime": null,
+      "abandonment": {
+        "time": 0.6,
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "infeasibleReplans": 5,
+        "infeasibleSince": 0,
+        "intentReleased": "THROUGH_BALL_RUN",
+        "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+        "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+      },
+      "states": {
+        "UNREACHABLE": 5
+      },
+      "firstAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          56.137934178717636,
+          0.11,
+          -14.659144125318038
+        ],
+        "meetingPoint": [
+          56.137934178717636,
+          0.11,
+          -14.659144125318038
+        ],
+        "ballArrivalTime": 5.9625,
+        "runnerMinArrivalTime": 7.000000000000138,
+        "arrivalDeficit": 1.0375000000001373,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 41,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.2125,
+        "usefulUntil": 5.7125,
+        "receiveUntil": 5.9625,
+        "eventualLooseBallArrivalTime": 7.000000000000138,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          56.137934178717636,
+          0.11,
+          -14.659144125318038
+        ],
+        "meetingPoint": [
+          56.137934178717636,
+          0.11,
+          -14.659144125318038
+        ],
+        "ballArrivalTime": 5.362500000000001,
+        "runnerMinArrivalTime": 6.400000000000108,
+        "arrivalDeficit": 1.0375000000001071,
+        "ballSpeed": 0,
+        "assessedAt": 0.6,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 41,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.2125,
+        "usefulUntil": 5.7125,
+        "receiveUntil": 5.9625,
+        "eventualLooseBallArrivalTime": 6.400000000000108,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 1.464821375527116e-14,
+      "simulationMs": 85.53541599999994
+    },
+    {
+      "id": "underhit",
+      "outcome": "RECEIVED_MOVING",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        34.89346663971365,
+        0.11,
+        3.9626875492898432
+      ],
+      "receive": [
+        30.462809596488675,
+        0.11,
+        3.459518584118052
+      ],
+      "receiveTime": 1.9333333333333333,
+      "abandonment": null,
+      "states": {
+        "REACHABLE": 13
+      },
+      "firstAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          30.174476130283864,
+          0.11,
+          3.4267739030472124
+        ],
+        "meetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "ballArrivalTime": 5.120833333333334,
+        "runnerMinArrivalTime": 1.2333333333333314,
+        "arrivalDeficit": -3.887500000000002,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful remaining ball state has positive arrival-time margin; continue full-sprint planning.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 40,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 1.2333333333333314,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          31.015108334423093,
+          0.11,
+          3.522240564564967
+        ],
+        "meetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "ballArrivalTime": 3.3208333333333337,
+        "runnerMinArrivalTime": 2.7083333333333264,
+        "arrivalDeficit": -0.6125000000000074,
+        "ballSpeed": 0,
+        "assessedAt": 1.8,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful remaining ball state has positive arrival-time margin; continue full-sprint planning.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 35,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 2.7083333333333264,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 3.580361673049448e-15,
+      "simulationMs": 224.64033300000028
+    },
+    {
+      "id": "underhit-lost",
+      "outcome": "CHASE_ABANDONED",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        34.89346663971365,
+        0.11,
+        3.9626875492898432
+      ],
+      "receive": null,
+      "receiveTime": null,
+      "abandonment": {
+        "time": 3.6,
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "infeasibleReplans": 4,
+        "infeasibleSince": 3.15,
+        "intentReleased": "THROUGH_BALL_RUN",
+        "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+        "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+      },
+      "states": {
+        "REACHABLE": 5,
+        "MARGINAL": 16,
+        "UNREACHABLE": 4
+      },
+      "firstAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "meetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "ballArrivalTime": 5.120833333333334,
+        "runnerMinArrivalTime": 4.041666666666657,
+        "arrivalDeficit": -1.0791666666666764,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful remaining ball state has positive arrival-time margin; continue full-sprint planning.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 40,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 4.041666666666657,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "meetingPoint": [
+          35.34236316688675,
+          0.11,
+          4.01366662504392
+        ],
+        "ballArrivalTime": 1.5208333333333335,
+        "runnerMinArrivalTime": 2.2166666666666615,
+        "arrivalDeficit": 0.695833333333328,
+        "ballSpeed": 0,
+        "assessedAt": 3.6,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 16,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 2.2166666666666615,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 7.160723346098895e-15,
+      "simulationMs": 325.3827919999999
+    },
+    {
+      "id": "out-of-play",
+      "outcome": "CHASE_ABANDONED",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        28
+      ],
+      "actualEndpoint": [
+        55.68673459767201,
+        0.11,
+        41.97326681789761
+      ],
+      "receive": null,
+      "receiveTime": null,
+      "abandonment": {
+        "time": 0.6,
+        "reason": "Ball leaves the pitch before a controllable meeting is reachable.",
+        "infeasibleReplans": 5,
+        "infeasibleSince": 0,
+        "intentReleased": "THROUGH_BALL_RUN",
+        "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+        "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+      },
+      "states": {
+        "UNREACHABLE": 5
+      },
+      "firstAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          36.76816732906592,
+          0.11,
+          37.22610054631611
+        ],
+        "meetingPoint": null,
+        "ballArrivalTime": 0.95,
+        "runnerMinArrivalTime": null,
+        "arrivalDeficit": null,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Ball leaves the pitch before a controllable meeting is reachable.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 0,
+        "predictedExitTime": 0.95,
+        "predictedRestTime": null,
+        "usefulUntil": 0.95,
+        "receiveUntil": 0.95,
+        "eventualLooseBallArrivalTime": null,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "UNREACHABLE",
+        "plannedMeetingPoint": [
+          51.58421843429641,
+          0.11,
+          40.943837576090665
+        ],
+        "meetingPoint": null,
+        "ballArrivalTime": 0.35,
+        "runnerMinArrivalTime": null,
+        "arrivalDeficit": null,
+        "assessedAt": 0.6,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Ball leaves the pitch before a controllable meeting is reachable.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 0,
+        "predictedExitTime": 0.95,
+        "predictedRestTime": null,
+        "usefulUntil": 0.95,
+        "receiveUntil": 0.95,
+        "eventualLooseBallArrivalTime": null,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 1.4210854715202004e-14,
+      "simulationMs": 68.67683300000044
+    },
+    {
+      "id": "low-power",
+      "outcome": "RECEIVED_MOVING",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        38.03300902111419,
+        0.11,
+        0.005556775535130421
+      ],
+      "receive": [
+        29.24472410780755,
+        0.11,
+        0.004272771774741453
+      ],
+      "receiveTime": 1.5083333333333333,
+      "abandonment": null,
+      "states": {
+        "REACHABLE": 11
+      },
+      "firstAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          29.147175664847513,
+          0.11,
+          0.004258519555017543
+        ],
+        "meetingPoint": [
+          38.484778338084396,
+          0.11,
+          0.005622780848742837
+        ],
+        "ballArrivalTime": 5.120833333333334,
+        "runnerMinArrivalTime": 1.63333333333333,
+        "arrivalDeficit": -3.4875000000000034,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 40,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 1.63333333333333,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          31.350630323221683,
+          0.11,
+          0.004580453139910216
+        ],
+        "meetingPoint": [
+          38.484778338084396,
+          0.11,
+          0.005622780848742837
+        ],
+        "ballArrivalTime": 3.6208333333333336,
+        "runnerMinArrivalTime": 1.8583333333333292,
+        "arrivalDeficit": -1.7625000000000044,
+        "ballSpeed": 0,
+        "assessedAt": 1.5,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful remaining ball state has positive arrival-time margin; continue full-sprint planning.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 38,
+        "predictedExitTime": null,
+        "predictedRestTime": 3.370833333333333,
+        "usefulUntil": 4.870833333333334,
+        "receiveUntil": 5.120833333333334,
+        "eventualLooseBallArrivalTime": 1.8583333333333292,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 3.5527137052702805e-15,
+      "simulationMs": 204.46504099999947
+    },
+    {
+      "id": "marginal",
+      "outcome": "RECEIVED_MOVING",
+      "selected": "A",
+      "userEndpoint": [
+        45,
+        0.11,
+        0
+      ],
+      "actualEndpoint": [
+        38.26302225899518,
+        0.11,
+        -15.321348280957324
+      ],
+      "receive": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758869
+      ],
+      "receiveTime": 6.179166666666666,
+      "abandonment": null,
+      "states": {
+        "MARGINAL": 42
+      },
+      "firstAssessment": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "ballArrivalTime": 6.258333333333333,
+        "runnerMinArrivalTime": 6.18333333333343,
+        "arrivalDeficit": -0.07499999999990248,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 6.18333333333343,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "lastAssessment": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758869
+        ],
+        "ballArrivalTime": 0.1083333333333325,
+        "runnerMinArrivalTime": 0.03333333333333333,
+        "arrivalDeficit": -0.07499999999999918,
+        "ballSpeed": 0,
+        "assessedAt": 6.15,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 2,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 0.03333333333333333,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "maxBallDeviation": 7.944109290391274e-15,
+      "simulationMs": 572.8143330000003
+    }
+  ],
+  "accurateTerribleControl": {
+    "outcome": "RECEIVED_MOVING",
+    "receiveTime": 4.841666666666667,
+    "receive": [
+      45.43971429314791,
+      0.11,
+      -0.057066313353190457
+    ]
+  },
+  "determinismHash": "82e214b8f6cc146b09618348e6c43cf32e4a7c614679c6b2a6140ccde02d5c55",
+  "limitations": [
+    "The arrival estimate is an optimistic capability envelope, not a globally optimal physical path. The concrete meeting planner remains authoritative evidence of a feasible sprint.",
+    "The useful special-run window ends 1.5 s after predicted physical rest, with a 0.25 s receive tolerance; both are anchored across replans. Inbounds eventual loose-ball retrieval can remain possible after release.",
+    "Standing facing introduces no invented movement delay; existing MotionPlan can accelerate before yaw has aligned.",
+    "Unchanged RECEIVE post-contact prediction uses BALL-FEEL1.3; authoritative ball remains frozen PASSING BALL-FEEL1.4.",
+    "Neutral recovery is a labelled braking placeholder, not team AI. No reassignment or reacquisition."
+  ],
+  "results": [
+    {
+      "name": "terrible: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "terrible: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "terrible: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "terrible: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "terrible: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "terrible: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "terrible: commitment and consecutive bad replans respected",
+      "pass": true
+    },
+    {
+      "name": "terrible: irreversible neutral recovery",
+      "pass": true
+    },
+    {
+      "name": "terrible: player decelerates continuously rather than freezing",
+      "pass": true
+    },
+    {
+      "name": "terrible: physics runs to observation end",
+      "pass": true
+    },
+    {
+      "name": "terrible: no receive after released intent",
+      "pass": true
+    },
+    {
+      "name": "easy: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "easy: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "easy: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "easy: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "easy: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "easy: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "easy: actual receive launch executed",
+      "pass": true
+    },
+    {
+      "name": "easy: RECEIVE continuation not rewritten or bypassed",
+      "pass": true
+    },
+    {
+      "name": "difficult: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "difficult: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "difficult: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "difficult: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "difficult: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "difficult: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "difficult: actual receive launch executed",
+      "pass": true
+    },
+    {
+      "name": "difficult: RECEIVE continuation not rewritten or bypassed",
+      "pass": true
+    },
+    {
+      "name": "overhit: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "overhit: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "overhit: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "overhit: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "overhit: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "overhit: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "overhit: commitment and consecutive bad replans respected",
+      "pass": true
+    },
+    {
+      "name": "overhit: irreversible neutral recovery",
+      "pass": true
+    },
+    {
+      "name": "overhit: player decelerates continuously rather than freezing",
+      "pass": true
+    },
+    {
+      "name": "overhit: physics runs to observation end",
+      "pass": true
+    },
+    {
+      "name": "overhit: no receive after released intent",
+      "pass": true
+    },
+    {
+      "name": "underhit: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "underhit: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "underhit: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "underhit: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "underhit: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "underhit: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "underhit: actual receive launch executed",
+      "pass": true
+    },
+    {
+      "name": "underhit: RECEIVE continuation not rewritten or bypassed",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: commitment and consecutive bad replans respected",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: irreversible neutral recovery",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: player decelerates continuously rather than freezing",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: physics runs to observation end",
+      "pass": true
+    },
+    {
+      "name": "underhit-lost: no receive after released intent",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: commitment and consecutive bad replans respected",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: irreversible neutral recovery",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: player decelerates continuously rather than freezing",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: physics runs to observation end",
+      "pass": true
+    },
+    {
+      "name": "out-of-play: no receive after released intent",
+      "pass": true
+    },
+    {
+      "name": "low-power: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "low-power: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "low-power: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "low-power: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "low-power: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "low-power: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "low-power: actual receive launch executed",
+      "pass": true
+    },
+    {
+      "name": "low-power: RECEIVE continuation not rewritten or bypassed",
+      "pass": true
+    },
+    {
+      "name": "marginal: original endpoint/selection unchanged",
+      "pass": true
+    },
+    {
+      "name": "marginal: original pass/RNG/sigma unchanged",
+      "pass": true
+    },
+    {
+      "name": "marginal: same input/seed is deterministic",
+      "pass": true
+    },
+    {
+      "name": "marginal: same authoritative ball before first touch and after abandonment",
+      "pass": true
+    },
+    {
+      "name": "marginal: no reassignment",
+      "pass": true
+    },
+    {
+      "name": "marginal: full sprint while committed",
+      "pass": true
+    },
+    {
+      "name": "marginal: actual receive launch executed",
+      "pass": true
+    },
+    {
+      "name": "marginal: RECEIVE continuation not rewritten or bypassed",
+      "pass": true
+    },
+    {
+      "name": "easy reachable never abandons and receives",
+      "pass": true
+    },
+    {
+      "name": "difficult error remains playable",
+      "pass": true
+    },
+    {
+      "name": "terrible pass reacts before releasing intent",
+      "pass": true
+    },
+    {
+      "name": "overhit loses useful arrival window",
+      "pass": true
+    },
+    {
+      "name": "short ball has reachable and lost starting states",
+      "pass": true
+    },
+    {
+      "name": "pitch exit explicitly causes abandonment",
+      "pass": true
+    },
+    {
+      "name": "SP shortfall preserves requested45 and limited38.39",
+      "pass": true
+    },
+    {
+      "name": "marginal player keeps fighting and receives within verified timing tolerance",
+      "pass": true
+    },
+    {
+      "name": "terrible intent and roster are playable with accurate execution",
+      "pass": true
+    },
+    {
+      "name": "existing easy sprint path and RECEIVE are unchanged",
+      "pass": true
+    },
+    {
+      "name": "arrival estimate accounts for heading and momentum",
+      "pass": true
+    },
+    {
+      "name": "arrival estimate accounts for sprint capability",
+      "pass": true
+    },
+    {
+      "name": "arrival estimate accounts for acceleration",
+      "pass": true
+    },
+    {
+      "name": "unfinished bounded forecast is MARGINAL, not a false abandonment",
+      "pass": true
+    },
+    {
+      "name": "invalid pitch bounds rejected",
+      "pass": true
+    }
+  ]
+}

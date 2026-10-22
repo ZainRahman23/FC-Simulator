@@ -1,0 +1,546 @@
+{
+  "tests": [
+    {
+      "name": "drop 0.25: energy, decay, rest",
+      "pass": true,
+      "detail": {
+        "bounces": 6,
+        "maxEnergyRiseJ": 0
+      }
+    },
+    {
+      "name": "drop 0.5: energy, decay, rest",
+      "pass": true,
+      "detail": {
+        "bounces": 7,
+        "maxEnergyRiseJ": 0
+      }
+    },
+    {
+      "name": "drop 1: energy, decay, rest",
+      "pass": true,
+      "detail": {
+        "bounces": 7,
+        "maxEnergyRiseJ": 0
+      }
+    },
+    {
+      "name": "drop 2: energy, decay, rest",
+      "pass": true,
+      "detail": {
+        "bounces": 8,
+        "maxEnergyRiseJ": 0
+      }
+    },
+    {
+      "name": "rolling 0.04 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 0.0015098325730546302,
+        "restSeconds": 0.2
+      }
+    },
+    {
+      "name": "rolling 0.1 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 0.004144893936428333,
+        "restSeconds": 0.23333333333333334
+      }
+    },
+    {
+      "name": "rolling 1 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 0.0936435818905014,
+        "restSeconds": 0.43333333333333335
+      }
+    },
+    {
+      "name": "rolling 3 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 0.6307387566515461,
+        "restSeconds": 0.7
+      }
+    },
+    {
+      "name": "rolling 6 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 2.377877063443711,
+        "restSeconds": 1.1
+      }
+    },
+    {
+      "name": "rolling 12 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 9.749982688011322,
+        "restSeconds": 1.9166666666666667
+      }
+    },
+    {
+      "name": "rolling 20 m/s: monotone energy, rest",
+      "pass": true,
+      "detail": {
+        "distance": 26.804018733325876,
+        "restSeconds": 2.9833333333333334
+      }
+    },
+    {
+      "name": "slide transitions to roll then rest",
+      "pass": true,
+      "detail": {
+        "rollingAt": 1.1208333333333333
+      }
+    },
+    {
+      "name": "topspin/backspin alter bounce and landing",
+      "pass": true,
+      "detail": [
+        [
+          6.668308778186064,
+          0.1866544057477288,
+          0
+        ],
+        [
+          5.902789782452505,
+          0.19485910221953162,
+          0
+        ],
+        [
+          6.215302900115509,
+          0.22288142373959194,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "sidespin reverses curve; no-spin stays straight",
+      "pass": true,
+      "detail": [
+        1.6767404266747268,
+        0,
+        -1.6767404266747268
+      ]
+    },
+    {
+      "name": "Magnus alone does not add energy",
+      "pass": true,
+      "detail": 3.694822225952521e-13
+    },
+    {
+      "name": "ground-pass: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        11.854754720736238,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "driven-pass: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        30.62057825352,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "lofted-pass: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        36.34877160610214,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "power-shot: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        52.50925833859073,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "curved-shot: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        41.176512188953396,
+        0.11,
+        -10.612571072883588
+      ]
+    },
+    {
+      "name": "chip: launch exactly once then physics",
+      "pass": true,
+      "detail": [
+        24.31655076519838,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "post-rebound: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.19577893325385984,
+        "collider": "post-near",
+        "velocity": [
+          -19.9365170195805,
+          -1.1087736775820805,
+          -4.548832757526851
+        ],
+        "impulse": [
+          -20.903999517562692,
+          0.3178484542401963,
+          -1.6076790738191473
+        ]
+      }
+    },
+    {
+      "name": "crossbar: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.16160139011437002,
+        "collider": "crossbar",
+        "velocity": [
+          -13.907810213972311,
+          -15.250198381633666,
+          0
+        ],
+        "impulse": [
+          -18.472765955764306,
+          -6.508394508336978,
+          0
+        ]
+      }
+    },
+    {
+      "name": "shin-deflection: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.13437555984581268,
+        "collider": "shank_R",
+        "velocity": [
+          -3.2695174422505637,
+          -1.403111496137052,
+          -4.019475867045452
+        ],
+        "impulse": [
+          -7.275808299440682,
+          -0.030776829226784097,
+          -1.7283746228295442
+        ]
+      }
+    },
+    {
+      "name": "boot-deflection: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.30981688652574535,
+        "collider": "foot_R",
+        "velocity": [
+          -0.2257555008997989,
+          1.2133272582378334,
+          -0.23517789757991664
+        ],
+        "impulse": [
+          -0.7970952697638918,
+          0.5217307210422684,
+          -0.10112649595936415
+        ]
+      }
+    },
+    {
+      "name": "thigh-deflection: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.13298359497712087,
+        "collider": "thigh_R",
+        "velocity": [
+          -2.9402074396747455,
+          -1.0078481843529044,
+          -4.4906694506205485
+        ],
+        "impulse": [
+          -7.138656715730105,
+          0.12204437258057738,
+          -1.9309878637668358
+        ]
+      }
+    },
+    {
+      "name": "torso-deflection: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.12740394225607418,
+        "collider": "thorax",
+        "velocity": [
+          0.5279875724507885,
+          -6.569447779641812,
+          -0.07267343750927617
+        ],
+        "impulse": [
+          -5.65179006505833,
+          -2.2865982764924575,
+          -0.03124957812898875
+        ]
+      }
+    },
+    {
+      "name": "head-deflection: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.1327658055088199,
+        "collider": "head",
+        "velocity": [
+          -4.777604404264418,
+          -0.7111703412117344,
+          -0.35256665092449535
+        ],
+        "impulse": [
+          -7.928737410503664,
+          0.24961584513128046,
+          -0.151603659897533
+        ]
+      }
+    },
+    {
+      "name": "blocked-shot: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.051490864913819254,
+        "collider": "shank_R",
+        "velocity": [
+          -7.667869124626122,
+          -1.451175655115172,
+          -4.350655960596596
+        ],
+        "impulse": [
+          -13.857536872772538,
+          -0.3976848723945804,
+          -1.8707820630565362
+        ]
+      }
+    },
+    {
+      "name": "tackle-loose: actual contact",
+      "pass": true,
+      "detail": {
+        "time": 0.16529808185393913,
+        "collider": "tackler:foot_R",
+        "velocity": [
+          -0.5302787996392988,
+          2.234494314285024,
+          2.5965650501950504
+        ],
+        "impulse": [
+          -0.97886938157449,
+          0.9608325551425603,
+          1.1165229715838716
+        ]
+      }
+    },
+    {
+      "name": "no double impulse: selected boot contact only; defender live",
+      "pass": true,
+      "detail": {
+        "exactLaunchParity": true,
+        "defenderContact": true
+      }
+    },
+    {
+      "name": "no teleport when ball removed before contact",
+      "pass": true,
+      "detail": [
+        0.9337034980072103,
+        0.11,
+        0
+      ]
+    },
+    {
+      "name": "intervening contact cancels prepared action",
+      "pass": true
+    },
+    {
+      "name": "same-time defender wins and ordering is insertion-independent",
+      "pass": true
+    },
+    {
+      "name": "simultaneous deliberate actions: one stable winner",
+      "pass": true
+    },
+    {
+      "name": "CCD ball→post 1 m/s",
+      "pass": true
+    },
+    {
+      "name": "CCD ball→post 10 m/s",
+      "pass": true
+    },
+    {
+      "name": "CCD ball→post 35 m/s",
+      "pass": true
+    },
+    {
+      "name": "CCD ball→post 60 m/s",
+      "pass": true
+    },
+    {
+      "name": "CCD ball→post 100 m/s",
+      "pass": true
+    },
+    {
+      "name": "CCD boot→ball 0.04 m/s",
+      "pass": true,
+      "detail": {
+        "speedOut": 0.043714335054948324,
+        "firstImpulse": 0.02384492761906015
+      }
+    },
+    {
+      "name": "CCD boot→ball 0.15 m/s",
+      "pass": true,
+      "detail": {
+        "speedOut": 0.14766250664306527,
+        "firstImpulse": 0.08941847857147556
+      }
+    },
+    {
+      "name": "CCD boot→ball 1 m/s",
+      "pass": true,
+      "detail": {
+        "speedOut": 0.7566572155197017,
+        "firstImpulse": 0.5961231904765039
+      }
+    },
+    {
+      "name": "CCD boot→ball 10 m/s",
+      "pass": true,
+      "detail": {
+        "speedOut": 13.675944019825025,
+        "firstImpulse": 5.961232666802206
+      }
+    },
+    {
+      "name": "CCD boot→ball 60 m/s",
+      "pass": true,
+      "detail": {
+        "speedOut": 82.0166779200371,
+        "firstImpulse": 35.767382174503545
+      }
+    },
+    {
+      "name": "CCD spinning long collider sweeps a stationary ball",
+      "pass": true
+    },
+    {
+      "name": "state adapters preserve resolved velocity and foot metadata",
+      "pass": true
+    },
+    {
+      "name": "replay: full unrounded state/events identical for all scenes",
+      "pass": true,
+      "detail": 20
+    },
+    {
+      "name": "substep convergence 240 / 480 Hz",
+      "pass": true,
+      "detail": [
+        {
+          "id": "drop-1",
+          "errorM": 0.010413399199572737
+        },
+        {
+          "id": "lofted-pass",
+          "errorM": 0.007659449687328785
+        },
+        {
+          "id": "curved-shot",
+          "errorM": 0.01018269644356469
+        },
+        {
+          "id": "blocked-shot",
+          "errorM": 0.0054888310808804165
+        },
+        {
+          "id": "tackle-loose",
+          "errorM": 0.005041881188847223
+        }
+      ]
+    },
+    {
+      "name": "timestep configurations reject invalid inputs",
+      "pass": true
+    },
+    {
+      "name": "actual legacy functions load and return six comparison actions",
+      "pass": true,
+      "detail": [
+        {
+          "id": "current-ground",
+          "launch": [
+            12.971121771072847,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "current-driven",
+          "launch": [
+            16.09347693943108,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "current-loft",
+          "launch": [
+            16,
+            0,
+            7.6640625
+          ]
+        },
+        {
+          "id": "current-power",
+          "launch": [
+            28.736659528546397,
+            0,
+            7.787634732236074
+          ]
+        },
+        {
+          "id": "current-chip",
+          "launch": [
+            10.399999999999999,
+            0,
+            7.696469294532252
+          ]
+        },
+        {
+          "id": "current-curve",
+          "launch": [
+            16.69513883042727,
+            6.806362677578333,
+            6.007781440855424
+          ]
+        }
+      ]
+    },
+    {
+      "name": "overlong striker overlap fails closed, never doubles the kick",
+      "pass": true
+    },
+    {
+      "name": "TURN-1 axial vectors and geometry reflect coherently",
+      "pass": true
+    }
+  ],
+  "passed": 53,
+  "total": 53
+}

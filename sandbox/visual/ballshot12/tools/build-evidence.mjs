@@ -1,0 +1,11 @@
+import fs from 'node:fs';import crypto from 'node:crypto';
+import {resolveShot} from '../resolver.js';import {visualRuns,ratingRun} from '../experiments.js';
+import {RATINGS,FAMILY_ORDER,PLAYER,CONTEXT} from '../config.js';
+const out=new URL('../evidence/',import.meta.url),write=(name,d)=>fs.writeFileSync(new URL(name+'.json',out),JSON.stringify(d,null,2)+'\n');
+const runs=visualRuns(),anchors=FAMILY_ORDER.map(f=>ratingRun(f,90));
+const speedTable=RATINGS.map(shotPower=>({shotPower,...Object.fromEntries(FAMILY_ORDER.map(f=>[f,resolveShot({family:f,shotPower}).audit.speed]))}));
+const changes=FAMILY_ORDER.map(f=>{const s=p=>resolveShot({family:f,shotPower:p}).audit.speed;return {family:f,increase50to90Percent:100*(s(90)/s(50)-1),shortfall50vs90Percent:100*(1-s(50)/s(90)),increase90to99Percent:100*(s(99)/s(90)-1),energy50vs90Ratio:(s(50)/s(90))**2};});
+const raw=JSON.stringify(runs.map(r=>({id:r.id,frames:r.frames,events:r.events}))),parity={sha256:crypto.createHash('sha256').update(raw).digest('hex'),bytes:Buffer.byteLength(raw)};
+write('review',{version:'BALL-SHOT-1.2',player:PLAYER,context:CONTEXT,runs,anchors,parity});
+write('measurements',{version:'BALL-SHOT-1.2',formula:'C(s)=0.65+0.65*(s/99)^2; speed=anchor90*(C(s)/C(90))^e; e=1 for hard shots, 0.5 for Chip; full intent, clean preferred foot, FAST bracket',speedTable,changes,parity,runs:runs.map(r=>({id:r.id,family:r.definition.family,shotPower:r.definition.shotPower,launch:r.action.metadata,metrics:r.metrics,stats:r.stats}))});
+console.log(JSON.stringify({speedTable,changes,parity},null,2));

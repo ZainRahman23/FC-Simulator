@@ -1,0 +1,54 @@
+PASS drop 0.25: energy, decay, rest
+PASS drop 0.5: energy, decay, rest
+PASS drop 1: energy, decay, rest
+PASS drop 2: energy, decay, rest
+PASS rolling 0.04 m/s: monotone energy, rest
+PASS rolling 0.1 m/s: monotone energy, rest
+PASS rolling 1 m/s: monotone energy, rest
+PASS rolling 3 m/s: monotone energy, rest
+PASS rolling 6 m/s: monotone energy, rest
+PASS rolling 12 m/s: monotone energy, rest
+PASS rolling 20 m/s: monotone energy, rest
+PASS slide transitions to roll then rest
+PASS topspin/backspin alter bounce and landing
+PASS sidespin reverses curve; no-spin stays straight
+PASS Magnus alone does not add energy
+PASS ground-pass: launch exactly once then physics
+PASS driven-pass: launch exactly once then physics
+PASS lofted-pass: launch exactly once then physics
+PASS power-shot: launch exactly once then physics
+PASS curved-shot: launch exactly once then physics
+PASS chip: launch exactly once then physics
+PASS post-rebound: actual contact
+PASS crossbar: actual contact
+PASS shin-deflection: actual contact
+PASS boot-deflection: actual contact
+PASS thigh-deflection: actual contact
+PASS torso-deflection: actual contact
+PASS head-deflection: actual contact
+PASS blocked-shot: actual contact
+PASS tackle-loose: actual contact
+PASS no double impulse: selected boot contact only; defender live
+PASS no teleport when ball removed before contact
+PASS intervening contact cancels prepared action
+PASS same-time defender wins and ordering is insertion-independent
+PASS simultaneous deliberate actions: one stable winner
+PASS CCD ball→post 1 m/s
+PASS CCD ball→post 10 m/s
+PASS CCD ball→post 35 m/s
+PASS CCD ball→post 60 m/s
+PASS CCD ball→post 100 m/s
+PASS CCD boot→ball 0.04 m/s
+PASS CCD boot→ball 0.15 m/s
+PASS CCD boot→ball 1 m/s
+PASS CCD boot→ball 10 m/s
+PASS CCD boot→ball 60 m/s
+PASS CCD spinning long collider sweeps a stationary ball
+PASS state adapters preserve resolved velocity and foot metadata
+PASS replay: full unrounded state/events identical for all scenes
+PASS substep convergence 240 / 480 Hz
+PASS timestep configurations reject invalid inputs
+PASS actual legacy functions load and return six comparison actions
+PASS overlong striker overlap fails closed, never doubles the kick
+PASS TURN-1 axial vectors and geometry reflect coherently
+53/53 passed

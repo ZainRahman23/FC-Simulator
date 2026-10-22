@@ -1,0 +1,831 @@
+{
+  "terrible": [
+    {
+      "time": 0.15,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 6.258333333333333,
+        "runnerMinArrivalTime": 6.816666666666795,
+        "arrivalDeficit": 0.5583333333334624,
+        "ballSpeed": 0,
+        "assessedAt": 0,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 6.816666666666795,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "COMMITTED",
+      "abandonment": null,
+      "phase": "FULL_SPRINT",
+      "navigation": {
+        "phase": "BRAKE",
+        "kind": "REVERSAL",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.2177401477143004,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          28,
+          0,
+          14.1975
+        ],
+        "velocity": [
+          0,
+          0,
+          3.2999999999999963
+        ],
+        "heading": 0.49741883681838345,
+        "sprintCommand": 6
+      },
+      "ball": {
+        "p": [
+          2.9280832580826615,
+          0.11,
+          -1.1724683713968396
+        ],
+        "v": [
+          18.89885674476894,
+          0,
+          -7.567514252757587
+        ],
+        "w": [
+          42.104796374653276,
+          0,
+          105.15110885483637
+        ]
+      }
+    },
+    {
+      "time": 0.366666667,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 5.958333333333333,
+        "runnerMinArrivalTime": 5.833333333333413,
+        "arrivalDeficit": -0.12499999999992006,
+        "ballSpeed": 0,
+        "assessedAt": 0.3,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 5.833333333333413,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "COMMITTED",
+      "abandonment": null,
+      "phase": "FULL_SPRINT",
+      "navigation": {
+        "phase": "PLANT",
+        "kind": "REVERSAL",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.2284961264084024,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          28,
+          0,
+          14.50694635218167
+        ],
+        "velocity": [
+          0,
+          0,
+          0.18020233558119794
+        ],
+        "heading": -1.2461714916047752,
+        "sprintCommand": 6
+      },
+      "ball": {
+        "p": [
+          6.842364886340344,
+          0.11,
+          -2.7398320702272554
+        ],
+        "v": [
+          17.29377738201931,
+          0,
+          -6.924805483732337
+        ],
+        "w": [
+          38.87253504636378,
+          0,
+          97.07896762527213
+        ]
+      }
+    },
+    {
+      "time": 0.466666667,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "MARGINAL",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 5.808333333333333,
+        "runnerMinArrivalTime": 5.758333333333409,
+        "arrivalDeficit": -0.04999999999992344,
+        "ballSpeed": 0,
+        "assessedAt": 0.45,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 52,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 5.758333333333409,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "COMMITTED",
+      "abandonment": null,
+      "phase": "FULL_SPRINT",
+      "navigation": {
+        "phase": "REDIRECT",
+        "kind": "REVERSAL",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.2288206807275834,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          28.010052425370077,
+          0,
+          14.494297716764395
+        ],
+        "velocity": [
+          0.3710550640011561,
+          0,
+          -0.9522231672231485
+        ],
+        "heading": -1.2288206807275834,
+        "sprintCommand": 6
+      },
+      "ball": {
+        "p": [
+          8.535848273042873,
+          0.11,
+          -3.417939737730836
+        ],
+        "v": [
+          16.609896555255744,
+          0,
+          -6.6509646914762905
+        ],
+        "w": [
+          37.38072212561478,
+          0,
+          93.35336398085786
+        ]
+      }
+    },
+    {
+      "time": 0.7,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 5.658333333333333,
+        "runnerMinArrivalTime": 5.383333333333391,
+        "arrivalDeficit": -0.2749999999999426,
+        "ballSpeed": 0,
+        "assessedAt": 0.6,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "A useful remaining ball state has positive arrival-time margin; continue full-sprint planning.",
+        "physicalMeetingVerified": false,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 5.383333333333391,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "COMMITTED",
+      "abandonment": null,
+      "phase": "FULL_SPRINT",
+      "navigation": {
+        "phase": "ACCELERATE",
+        "kind": "REVERSAL",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.2288648598867344,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          28.22080451375555,
+          0,
+          13.904639471429348
+        ],
+        "velocity": [
+          1.2784452274346805,
+          0,
+          -3.5917591833429463
+        ],
+        "heading": -1.2288648598867344,
+        "sprintCommand": 6
+      },
+      "ball": {
+        "p": [
+          12.233073225532548,
+          0.11,
+          -4.898389211552093
+        ],
+        "v": [
+          15.132997267118656,
+          0,
+          -6.0595820187673315
+        ],
+        "w": [
+          33.899825310533785,
+          0,
+          84.66028881055792
+        ]
+      }
+    },
+    {
+      "time": 1,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 5.3583333333333325,
+        "runnerMinArrivalTime": 4.9583333333333695,
+        "arrivalDeficit": -0.39999999999996305,
+        "ballSpeed": 0,
+        "assessedAt": 0.9,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 53,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 4.9583333333333695,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "COMMITTED",
+      "abandonment": null,
+      "phase": "FULL_SPRINT",
+      "navigation": {
+        "phase": "RUN",
+        "kind": "REVERSAL",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.2288655722036794,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          28.73522308525353,
+          0,
+          12.459315636705753
+        ],
+        "velocity": [
+          2.0118401839208944,
+          0,
+          -5.65265416192793
+        ],
+        "heading": -1.2288655722036794,
+        "sprintCommand": 6
+      },
+      "ball": {
+        "p": [
+          16.51019162548177,
+          0.11,
+          -6.611040663937236
+        ],
+        "v": [
+          13.439180181923174,
+          0,
+          -5.38134073111223
+        ],
+        "w": [
+          29.42438654828694,
+          0,
+          73.48347787731512
+        ]
+      }
+    },
+    {
+      "time": 5.9,
+      "selectedId": "A",
+      "feasibility": {
+        "state": "REACHABLE",
+        "plannedMeetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "meetingPoint": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "ballArrivalTime": 0.5583333333333327,
+        "runnerMinArrivalTime": 0.14166666666666666,
+        "arrivalDeficit": -0.416666666666666,
+        "ballSpeed": 0,
+        "assessedAt": 5.7,
+        "timeBasis": "seconds remaining from assessment",
+        "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+        "physicalMeetingVerified": true,
+        "searchPoints": 6,
+        "predictedExitTime": null,
+        "predictedRestTime": 4.508333333333333,
+        "usefulUntil": 6.008333333333333,
+        "receiveUntil": 6.258333333333333,
+        "eventualLooseBallArrivalTime": 0.14166666666666666,
+        "forecastComplete": true,
+        "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+      },
+      "chaseState": "RECEIVED",
+      "abandonment": null,
+      "phase": "RECEIVE_CONTROL",
+      "navigation": {
+        "phase": "RUN",
+        "kind": "SMOOTH",
+        "target": [
+          38.682430324246916,
+          0.11,
+          -15.489288413758873
+        ],
+        "targetHeading": -1.22886558578877,
+        "correctionDegrees": 159.77137100766686,
+        "entrySpeed": 0.18020233558119794,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      },
+      "runner": {
+        "id": "A",
+        "position": [
+          38.59323962650487,
+          0,
+          -15.238689884855665
+        ],
+        "velocity": [
+          2.011840107128915,
+          0,
+          -5.652654189259021
+        ],
+        "heading": -1.2288655857888071,
+        "sprintCommand": null
+      },
+      "ball": {
+        "p": [
+          38.866478909720726,
+          0.11,
+          -15.999926216782805
+        ],
+        "v": [
+          2.872123022612016,
+          0,
+          -7.968627341011618
+        ],
+        "w": [
+          -72.44206673646926,
+          0,
+          -26.110209296472874
+        ]
+      }
+    }
+  ],
+  "turns": [
+    {
+      "angle": 180,
+      "pace": "sprint",
+      "time": 1.3,
+      "current": {
+        "time": 1.3,
+        "p": [
+          6.71355778085562,
+          6.842066489633256
+        ],
+        "v": [
+          -0.11144319655846305,
+          8.205556633862717
+        ],
+        "heading": 1.46082630497147,
+        "navigation": {
+          "phase": "RUN",
+          "kind": "CURRENT"
+        }
+      },
+      "candidate": {
+        "time": 1.3,
+        "p": [
+          -1.5734374999999945,
+          4.21431579756582e-16
+        ],
+        "v": [
+          -8.049999999999969,
+          9.858406733136157e-16
+        ],
+        "heading": 3.141592653589793,
+        "navigation": {
+          "phase": "RUN",
+          "kind": "REVERSAL",
+          "target": [
+            -20,
+            0,
+            2.4492935982947065e-15
+          ],
+          "targetHeading": 3.141592653589793,
+          "correctionDegrees": 180,
+          "entrySpeed": 0,
+          "exitSpeed": 2.2,
+          "started": 0,
+          "profile": "neutral/high reference"
+        }
+      },
+      "metrics": {
+        "current": {
+          "brakingDistance": null,
+          "maximumLateralExcursion": 13.4678902707945,
+          "timeToFace": 3.0875,
+          "timeOntoNewLine": 2.970833333333333,
+          "pathLength": 45.01670511379108,
+          "directDistance": 19.61980128368005,
+          "pathRatio": 2.2944526533628267,
+          "minSpeed": 8.2,
+          "arrivalTime": 5.4875,
+          "reached": true
+        },
+        "candidate": {
+          "brakingDistance": 1.867812499999997,
+          "maximumLateralExcursion": 2.28741059953277e-16,
+          "timeToFace": 0.3208333333333333,
+          "timeOntoNewLine": 1.2291666666666667,
+          "pathLength": 23.245312499999912,
+          "directDistance": 19.509687499999885,
+          "pathRatio": 1.19147538882927,
+          "minSpeed": 0,
+          "arrivalTime": 3.4875,
+          "reached": true
+        }
+      }
+    }
+  ],
+  "current": {
+    "time": 1.1,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "UNREACHABLE",
+      "plannedMeetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "meetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "ballArrivalTime": 5.208333333333333,
+      "runnerMinArrivalTime": 5.925000000000084,
+      "arrivalDeficit": 0.7166666666667512,
+      "ballSpeed": 0,
+      "assessedAt": 1.05,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 52,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.508333333333333,
+      "usefulUntil": 6.008333333333333,
+      "receiveUntil": 6.258333333333333,
+      "eventualLooseBallArrivalTime": 5.925000000000084,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "ABANDONED",
+    "abandonment": {
+      "time": 1.05,
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "infeasibleReplans": 4,
+      "infeasibleSince": 0.6,
+      "intentReleased": "THROUGH_BALL_RUN",
+      "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+      "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+    },
+    "phase": "NEUTRAL_RECOVERY",
+    "navigation": {
+      "phase": "RUN",
+      "kind": "CURRENT"
+    },
+    "runner": {
+      "id": "A",
+      "position": [
+        32.110503223144974,
+        0,
+        17.85960414950538
+      ],
+      "velocity": [
+        5.460683563254418,
+        0,
+        0.7035338457250545
+      ],
+      "heading": 0.26740669040060927,
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        17.82678645565348,
+        0.11,
+        -7.13823393689482
+      ],
+      "v": [
+        12.917711664541885,
+        0,
+        -5.172533368267931
+      ],
+      "w": [
+        27.932573627538027,
+        0,
+        69.75787423290086
+      ]
+    }
+  },
+  "overhit": {
+    "time": 0.7,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "UNREACHABLE",
+      "plannedMeetingPoint": [
+        56.137934178717636,
+        0.11,
+        -14.659144125318038
+      ],
+      "meetingPoint": [
+        56.137934178717636,
+        0.11,
+        -14.659144125318038
+      ],
+      "ballArrivalTime": 5.362500000000001,
+      "runnerMinArrivalTime": 6.45000000000011,
+      "arrivalDeficit": 1.0875000000001096,
+      "ballSpeed": 0,
+      "assessedAt": 0.6,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 41,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.2125,
+      "usefulUntil": 5.7125,
+      "receiveUntil": 5.9625,
+      "eventualLooseBallArrivalTime": 6.45000000000011,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "ABANDONED",
+    "abandonment": {
+      "time": 0.6,
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "infeasibleReplans": 5,
+      "infeasibleSince": 0,
+      "intentReleased": "THROUGH_BALL_RUN",
+      "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+      "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+    },
+    "phase": "NEUTRAL_RECOVERY",
+    "navigation": {
+      "phase": "RUN",
+      "kind": "SMOOTH",
+      "target": [
+        56.137934178717636,
+        0.11,
+        -14.659144125318038
+      ],
+      "targetHeading": -0.7711411702164938,
+      "correctionDegrees": 43.45415354642552,
+      "entrySpeed": 4.115528037522082,
+      "exitSpeed": 4.115528037522082,
+      "started": 0,
+      "profile": "neutral/high reference"
+    },
+    "runner": {
+      "id": "A",
+      "position": [
+        30.62945050783621,
+        0,
+        10.132164491129279
+      ],
+      "velocity": [
+        3.227036138472277,
+        0,
+        -3.1362776919494837
+      ],
+      "heading": -0.7711327027710896,
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        18.689508931715064,
+        0.11,
+        -4.880339988807336
+      ],
+      "v": [
+        23.835329811837536,
+        0,
+        -6.224054021543936
+      ],
+      "w": [
+        -56.582309286763056,
+        0,
+        -216.68481647125031
+      ]
+    }
+  },
+  "playback": {
+    "angle": 180,
+    "pace": "sprint",
+    "time": 1.733300000000003,
+    "current": {
+      "time": 1.7166666666666666,
+      "p": [
+        5.81131967246441,
+        10.102220940828664
+      ],
+      "v": [
+        -4.086970750815266,
+        7.1162275994453505
+      ],
+      "heading": 1.9685671643781792,
+      "navigation": {
+        "phase": "RUN",
+        "kind": "CURRENT"
+      }
+    },
+    "candidate": {
+      "time": 1.7166666666666666,
+      "p": [
+        -4.988854166666659,
+        8.396994886153699e-16
+      ],
+      "v": [
+        -8.2,
+        1.0042103753008295e-15
+      ],
+      "heading": 3.141592653589793,
+      "navigation": {
+        "phase": "RUN",
+        "kind": "SMOOTH",
+        "target": [
+          -20,
+          0,
+          2.4492935982947065e-15
+        ],
+        "targetHeading": 3.141592653589793,
+        "correctionDegrees": 180,
+        "entrySpeed": 0,
+        "exitSpeed": 2.2,
+        "started": 0,
+        "profile": "neutral/high reference"
+      }
+    },
+    "metrics": {
+      "current": {
+        "brakingDistance": null,
+        "maximumLateralExcursion": 13.4678902707945,
+        "timeToFace": 3.0875,
+        "timeOntoNewLine": 2.970833333333333,
+        "pathLength": 45.01670511379108,
+        "directDistance": 19.61980128368005,
+        "pathRatio": 2.2944526533628267,
+        "minSpeed": 8.2,
+        "arrivalTime": 5.4875,
+        "reached": true
+      },
+      "candidate": {
+        "brakingDistance": 1.867812499999997,
+        "maximumLateralExcursion": 2.28741059953277e-16,
+        "timeToFace": 0.3208333333333333,
+        "timeOntoNewLine": 1.2291666666666667,
+        "pathLength": 23.245312499999912,
+        "directDistance": 19.509687499999885,
+        "pathRatio": 1.19147538882927,
+        "minSpeed": 0,
+        "arrivalTime": 3.4875,
+        "reached": true
+      }
+    }
+  },
+  "traceSHA256": "e45008e9a36fccaaf53b67439466f2db621b65072d7181d9555d2fc787f89977",
+  "browserRepeatSHA256": "e45008e9a36fccaaf53b67439466f2db621b65072d7181d9555d2fc787f89977",
+  "browserRepeat": {
+    "aim": "0",
+    "compare": "Current: Run abandoned at 1.05 s · New: Received while moving at 5.84 s",
+    "hash": "e45008e9a36fccaaf53b67439466f2db621b65072d7181d9555d2fc787f89977",
+    "seed": "22"
+  }
+}

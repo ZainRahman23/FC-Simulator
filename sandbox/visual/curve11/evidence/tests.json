@@ -1,0 +1,186 @@
+{
+  "passed": 10,
+  "total": 10,
+  "tests": [
+    {
+      "name": "exact eleven requested ratings, 75 default, fixed global 56 anchor and 1.40 multiplier",
+      "pass": true
+    },
+    {
+      "name": "every rating has exactly 1.40 times intentional spin and unchanged relative capability",
+      "pass": true,
+      "detail": {
+        "ratio99To75": 2.1161654243835692,
+        "oldRatio99To75": 2.1161654243835692
+      }
+    },
+    {
+      "name": "zero Curve has zero intentional contribution and identical physical trajectory",
+      "pass": true
+    },
+    {
+      "name": "same frozen speed and all non-spin launch, foot, execution and body inputs",
+      "pass": true
+    },
+    {
+      "name": "exact same targeted solver algorithm, physical trace, world, camera, renderer and Courtois",
+      "pass": true,
+      "detail": {
+        "sameInitialGuess": true,
+        "sameNewtonSolver": true,
+        "sameTolerance": 1e-7,
+        "camera": {
+          "eye": [
+            76,
+            4.2,
+            25
+          ],
+          "look": [
+            105,
+            1,
+            34
+          ],
+          "focal": 1450,
+          "principal": [
+            960,
+            260
+          ],
+          "width": 1920,
+          "height": 1080
+        },
+        "origin": [
+          84,
+          0.11,
+          26
+        ],
+        "target": [
+          105,
+          2.1,
+          37.25
+        ],
+        "keeper": {
+          "reflex": 96,
+          "diving": 91,
+          "height": 199,
+          "jump": 68,
+          "handling": 95,
+          "weight": 96,
+          "acceleration": 42,
+          "sprint_speed": 52,
+          "strength": 70,
+          "positioning": 72,
+          "reactions": 94,
+          "agility": 63,
+          "source": "simulator/data/players.json p001 (OVR 93 in the record; not carried here, never read)",
+          "name": "COURTOIS"
+        }
+      }
+    },
+    {
+      "name": "natural target solve and unchanged bend definition for all ratings",
+      "pass": true
+    },
+    {
+      "name": "99 full first flight is finite, forward, continuous and naturally targeted; rejection gates work",
+      "pass": true,
+      "detail": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.487449142004839,
+        "minWorldForwardSpeed": 16.983512505132175,
+        "minTargetLineForwardSpeed": 14.178254289154035,
+        "maxOffTargetHeadingDegrees": 33.82108650946257,
+        "maxWorldHeadingDegrees": 48.201745237272135,
+        "minWorldHeadingDegrees": -5.642496399503392,
+        "maxHeadingChangePerStepDegrees": 0.1650667698563993,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 1.3520346532659788e-10,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "name": "unforced keeper results independently reproduce with frozen runtime",
+      "pass": true,
+      "detail": [
+        {
+          "curve": 0,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 25,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 50,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 60,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 70,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 75,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 80,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 85,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 90,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 95,
+          "result": "GOAL",
+          "contacts": 0
+        },
+        {
+          "curve": 99,
+          "result": "GOAL",
+          "contacts": 0
+        }
+      ]
+    },
+    {
+      "name": "postlaunch metadata cannot steer and complete eleven-shot replay is deterministic",
+      "pass": true,
+      "detail": {
+        "sha256": "6f0551a69301a33f89181ae56c63821295dcf4bfef5ddc892cc6f015cfed379c",
+        "bytes": 4082123
+      }
+    },
+    {
+      "name": "all frozen visual sources and historical outputs retain exact hashes",
+      "pass": true,
+      "detail": {
+        "sourceFiles": 2314,
+        "historicalOutputs": 7849
+      }
+    }
+  ]
+}

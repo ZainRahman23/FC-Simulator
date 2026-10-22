@@ -1,0 +1,103 @@
+{
+  "version": "SHOT-ACCURACY-1.0 · three-zone geometry calibration",
+  "scope": "Local visualizer only; no authoritative integration",
+  "lockedRadius": 20.16,
+  "lockedFullWidth": 40.32,
+  "widthApproved": true,
+  "radiusControl": {
+    "enabled": false
+  },
+  "approval": "Owner selected maximum width on 2026-10-18",
+  "geometry": {
+    "pitchLength": 105,
+    "pitchWidth": 68,
+    "goalX": 105,
+    "goalCentreZ": 34,
+    "goalWidth": 7.32,
+    "goalHeight": 2.44,
+    "penaltyDepth": 16.5,
+    "penaltyWidth": 40.32,
+    "penaltySpotDistance": 11,
+    "arcRadius": 9.15,
+    "ballRadius": 0.11,
+    "source": "sandbox/visual/match.js:759–768; sandbox/visual/shotcharge1/config.js:5"
+  },
+  "coordinates": {
+    "forward": "105 - world x",
+    "lateral": "world z - 34"
+  },
+  "equation": "(lateral / radius)^2 + (forward / 16.5)^2 <= 1; forward half only; box classification has priority",
+  "apex": {
+    "x": 88.5,
+    "z": 34
+  },
+  "boundaries": {
+    "box": "Inclusive world-coordinate comparisons",
+    "ellipse": "Inclusive, with dimensionless roundoff guard",
+    "ellipseRoundoff": 1e-12
+  },
+  "classification": [
+    "Outside box: Long Shots",
+    "Inside box + ellipse: Finishing",
+    "Remaining inside box: 0.50 Finishing + 0.50 Long Shots"
+  ],
+  "examples": [
+    {
+      "name": "Central",
+      "zone": 1,
+      "label": "ZONE 1 — FINISHING",
+      "insideBox": true,
+      "insideEllipse": true,
+      "forward": 10,
+      "lateral": 0,
+      "ellipseValue": 0.36730945821854916,
+      "finishingWeight": 1,
+      "longShotsWeight": 0,
+      "effectiveAccuracy": 90
+    },
+    {
+      "name": "Wide box",
+      "zone": 3,
+      "label": "ZONE 3 — MIXED",
+      "insideBox": true,
+      "insideEllipse": false,
+      "forward": 8,
+      "lateral": 18.159999999999997,
+      "ellipseValue": 1.0465072545700247,
+      "finishingWeight": 0.5,
+      "longShotsWeight": 0.5,
+      "effectiveAccuracy": 75
+    },
+    {
+      "name": "Top of D",
+      "zone": 2,
+      "label": "ZONE 2 — LONG SHOTS",
+      "insideBox": false,
+      "insideEllipse": false,
+      "forward": 20.150000000000006,
+      "lateral": 0,
+      "ellipseValue": 1.4913590449954097,
+      "finishingWeight": 0,
+      "longShotsWeight": 1,
+      "effectiveAccuracy": 60
+    }
+  ],
+  "projection": "Selected effective accuracy feeds the unchanged fixed top-of-D reference projection. The map probe does not change shot origin, speed, hold, target or physics.",
+  "checks": 4155,
+  "validation": "PASS",
+  "lockedModelAndProjection": {
+    "model.mjs": {
+      "before": "bb5eac3ce628f9cd2e65a4e7217105e3fa64848cba7cc1b489831fdc187d4bd6",
+      "after": "bb5eac3ce628f9cd2e65a4e7217105e3fa64848cba7cc1b489831fdc187d4bd6",
+      "unchanged": true
+    },
+    "data.js": {
+      "before": "a1857fbef27888116f90045c90efd65ae4b1268c51078d35a42da2cd9473be55",
+      "after": "a1857fbef27888116f90045c90efd65ae4b1268c51078d35a42da2cd9473be55",
+      "unchanged": true
+    }
+  },
+  "protectedGameplayFiles": 58,
+  "gameplayUnchanged": true,
+  "gitStatus": ""
+}

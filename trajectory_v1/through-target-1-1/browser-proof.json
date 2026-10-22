@@ -1,0 +1,415 @@
+{
+  "committed": {
+    "time": 0.4,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "MARGINAL",
+      "plannedMeetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "meetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "ballArrivalTime": 5.958333333333333,
+      "runnerMinArrivalTime": 6.558333333333449,
+      "arrivalDeficit": 0.600000000000116,
+      "ballSpeed": 0,
+      "assessedAt": 0.3,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 53,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.508333333333333,
+      "usefulUntil": 6.008333333333333,
+      "receiveUntil": 6.258333333333333,
+      "eventualLooseBallArrivalTime": 6.558333333333449,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "COMMITTED",
+    "abandonment": null,
+    "phase": "FULL_SPRINT",
+    "runner": {
+      "id": "A",
+      "position": [
+        28.65023920050113,
+        0,
+        15.780181980273758
+      ],
+      "velocity": [
+        3.1372036426796654,
+        0,
+        5.120031104013012
+      ],
+      "sprintCommand": 6
+    },
+    "ball": {
+      "p": [
+        7.414470163718502,
+        0.11,
+        -2.968915495701412
+      ],
+      "v": [
+        17.06211852293923,
+        0,
+        -6.832044226184237
+      ],
+      "w": [
+        38.37526407278078,
+        0,
+        95.8370997438007
+      ]
+    }
+  },
+  "recovery": {
+    "time": 1.25,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "UNREACHABLE",
+      "plannedMeetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "meetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "ballArrivalTime": 5.208333333333333,
+      "runnerMinArrivalTime": 5.925000000000084,
+      "arrivalDeficit": 0.7166666666667512,
+      "ballSpeed": 0,
+      "assessedAt": 1.05,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 52,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.508333333333333,
+      "usefulUntil": 6.008333333333333,
+      "receiveUntil": 6.258333333333333,
+      "eventualLooseBallArrivalTime": 5.925000000000084,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "ABANDONED",
+    "abandonment": {
+      "time": 1.05,
+      "reason": "Even the optimistic runner-arrival envelope misses every useful controllable ball state.",
+      "infeasibleReplans": 4,
+      "infeasibleSince": 0.6,
+      "intentReleased": "THROUGH_BALL_RUN",
+      "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+      "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+    },
+    "phase": "NEUTRAL_RECOVERY",
+    "runner": {
+      "id": "A",
+      "position": [
+        32.81802797358988,
+        0,
+        17.950758966088365
+      ],
+      "velocity": [
+        3.972979776011003,
+        0,
+        0.5118637087147135
+      ],
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        19.706345472940942,
+        0.11,
+        -7.89085034350147
+      ],
+      "v": [
+        12.170520749934393,
+        0,
+        -4.873341836622061
+      ],
+      "w": [
+        25.694854246414657,
+        0,
+        64.16946876627946
+      ]
+    }
+  },
+  "easy": {
+    "time": 1.5,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "REACHABLE",
+      "plannedMeetingPoint": [
+        20.164014347809395,
+        0.11,
+        0.0018903767771667728
+      ],
+      "meetingPoint": [
+        30.470513695350125,
+        0.11,
+        0.0028566113118388
+      ],
+      "ballArrivalTime": 3.9541666666666666,
+      "runnerMinArrivalTime": 1.441666666666664,
+      "arrivalDeficit": -2.512500000000003,
+      "ballSpeed": 0,
+      "assessedAt": 1.2,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+      "physicalMeetingVerified": true,
+      "searchPoints": 42,
+      "predictedExitTime": null,
+      "predictedRestTime": 3.404166666666667,
+      "usefulUntil": 4.904166666666667,
+      "receiveUntil": 5.154166666666667,
+      "eventualLooseBallArrivalTime": 1.441666666666664,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "RECEIVED",
+    "abandonment": null,
+    "phase": "RECEIVE_CONTROL",
+    "runner": {
+      "id": "A",
+      "position": [
+        20.550357600411132,
+        0,
+        -0.04879888345922674
+      ],
+      "velocity": [
+        8.478531420632738,
+        0,
+        -0.7904839821264953
+      ],
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        21.183159006666948,
+        0.11,
+        -0.12015314723967946
+      ],
+      "v": [
+        9.877357856864995,
+        0,
+        -0.6560708824883602
+      ],
+      "w": [
+        -5.964280749894184,
+        0,
+        -89.79416233513632
+      ]
+    }
+  },
+  "marginal": {
+    "time": 6.1,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "MARGINAL",
+      "plannedMeetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "meetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "ballArrivalTime": 0.25833333333333286,
+      "runnerMinArrivalTime": 0.18333333333333332,
+      "arrivalDeficit": -0.07499999999999954,
+      "ballSpeed": 0,
+      "assessedAt": 6,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Existing full-sprint MotionPlan supplies a useful physical meeting; diagnostics show the best remaining arrival margin.",
+      "physicalMeetingVerified": true,
+      "searchPoints": 3,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.508333333333333,
+      "usefulUntil": 6.008333333333333,
+      "receiveUntil": 6.258333333333333,
+      "eventualLooseBallArrivalTime": 0.18333333333333332,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "COMMITTED",
+    "abandonment": null,
+    "phase": "FULL_SPRINT",
+    "runner": {
+      "id": "A",
+      "position": [
+        38.3703604850586,
+        0,
+        -14.50124963955459
+      ],
+      "velocity": [
+        1.505909561278406,
+        0,
+        -4.767833510787149
+      ],
+      "sprintCommand": 5
+    },
+    "ball": {
+      "p": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "v": [
+        0,
+        0,
+        0
+      ],
+      "w": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "marginalReceived": {
+    "time": 6.3,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "MARGINAL",
+      "plannedMeetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "meetingPoint": [
+        38.682430324246916,
+        0.11,
+        -15.489288413758873
+      ],
+      "ballArrivalTime": 0.1083333333333325,
+      "runnerMinArrivalTime": 0.03333333333333333,
+      "arrivalDeficit": -0.07499999999999918,
+      "ballSpeed": 0,
+      "assessedAt": 6.15,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "A useful meeting remains within the fight-on arrival tolerance; keep committing.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 2,
+      "predictedExitTime": null,
+      "predictedRestTime": 4.508333333333333,
+      "usefulUntil": 6.008333333333333,
+      "receiveUntil": 6.258333333333333,
+      "eventualLooseBallArrivalTime": 0.03333333333333333,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "RECEIVED",
+    "abandonment": null,
+    "phase": "RECEIVE_CONTROL",
+    "runner": {
+      "id": "A",
+      "position": [
+        38.67158717938417,
+        0,
+        -15.455073569421604
+      ],
+      "velocity": [
+        1.5135072307192066,
+        0,
+        -4.811474444663952
+      ],
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        38.87775245273073,
+        0.11,
+        -16.244488606343182
+      ],
+      "v": [
+        1.5056656099949153,
+        0,
+        -5.821557278032935
+      ],
+      "w": [
+        -52.92324798211759,
+        0,
+        -13.687869181771957
+      ]
+    }
+  },
+  "outOfPlay": {
+    "time": 0.8,
+    "selectedId": "A",
+    "feasibility": {
+      "state": "UNREACHABLE",
+      "plannedMeetingPoint": [
+        51.58421843429641,
+        0.11,
+        40.943837576090665
+      ],
+      "meetingPoint": null,
+      "ballArrivalTime": 0.35,
+      "runnerMinArrivalTime": null,
+      "arrivalDeficit": null,
+      "assessedAt": 0.6,
+      "timeBasis": "seconds remaining from assessment",
+      "reason": "Ball leaves the pitch before a controllable meeting is reachable.",
+      "physicalMeetingVerified": false,
+      "searchPoints": 0,
+      "predictedExitTime": 0.95,
+      "predictedRestTime": null,
+      "usefulUntil": 0.95,
+      "receiveUntil": 0.95,
+      "eventualLooseBallArrivalTime": null,
+      "forecastComplete": true,
+      "arrivalMethod": "optimistic capability envelope; full-sprint MotionPlan verifies concrete meetings"
+    },
+    "chaseState": "ABANDONED",
+    "abandonment": {
+      "time": 0.6,
+      "reason": "Ball leaves the pitch before a controllable meeting is reachable.",
+      "infeasibleReplans": 5,
+      "infeasibleSince": 0,
+      "intentReleased": "THROUGH_BALL_RUN",
+      "handoff": "NEUTRAL_RECOVERY_PLACEHOLDER",
+      "placeholder": "No team AI in this lab: continuous neutral deceleration at existing Agility braking capability."
+    },
+    "phase": "NEUTRAL_RECOVERY",
+    "runner": {
+      "id": "A",
+      "position": [
+        39.65891679106683,
+        0,
+        32.47933664368669
+      ],
+      "velocity": [
+        0.030704953153948267,
+        0,
+        0.9844560780702724
+      ],
+      "sprintCommand": null
+    },
+    "ball": {
+      "p": [
+        21.032302864353564,
+        0.11,
+        33.277558144533955
+      ],
+      "v": [
+        22.959947674315206,
+        0,
+        5.761254943319775
+      ],
+      "w": [
+        52.37504493927069,
+        0,
+        -208.72679703922915
+      ]
+    }
+  }
+}

@@ -1,0 +1,465 @@
+{
+  "version": "SHOT-ACCURACY-1.0 \u00b7 locked reference projection / three-zone calibration",
+  "geometry": {
+    "pitchLength": 105,
+    "pitchWidth": 68,
+    "goalX": 105,
+    "goalCentreZ": 34,
+    "goalWidth": 7.32,
+    "goalHeight": 2.44,
+    "penaltyDepth": 16.5,
+    "penaltyWidth": 40.32,
+    "penaltySpotDistance": 11,
+    "arcRadius": 9.15,
+    "ballRadius": 0.11,
+    "source": "sandbox/visual/match.js:759\u2013768; sandbox/visual/shotcharge1/config.js:5"
+  },
+  "origin": [
+    84.85,
+    0.11,
+    34
+  ],
+  "target": [
+    105,
+    2.19,
+    37.41
+  ],
+  "targetLocal": {
+    "x": 3.4099999999999966,
+    "y": 2.19
+  },
+  "insidePenaltyArea": false,
+  "player": {
+    "id": "accuracy-visual-80",
+    "finishing": 80,
+    "longShots": 80,
+    "shotPower": 80,
+    "curve": 80,
+    "technique": 80,
+    "weakFoot": 80,
+    "preferredFoot": "R"
+  },
+  "effectiveAccuracy": 80,
+  "distanceToGoalCentre": 20.150000000000006,
+  "groundDistanceToTarget": 20.436501657573398,
+  "ideal": {
+    "holdMs": 305.9182929992676,
+    "speed": 28.491078514817065,
+    "capability": 30.771130104463438,
+    "relativeSpeed": 0.9259028972317255,
+    "yaw": 9.605204155012935,
+    "elevation": 15.255664566066116,
+    "requestedApex": 2.414275829236324,
+    "plane": {
+      "x": 3.4099999999999824,
+      "y": 2.1899999931665195,
+      "time": 0.8553135396678864,
+      "apex": 2.4142758254200656
+    },
+    "velocity": [
+      27.101745689796765,
+      7.496760539822546,
+      4.586449270580985
+    ],
+    "spin": [
+      0.6674332147716315,
+      0,
+      -3.9439235418323726
+    ]
+  },
+  "dispersion": {
+    "accuracy": 80,
+    "sigmaBaseH": 0.6251969823973177,
+    "sigmaBaseV": 0.3751181894383906,
+    "difficulty": 1.0734956731844696,
+    "powerIncreasePercent": 7.349567318446959,
+    "addedSigmaH": 0.045949273094189835,
+    "addedSigmaV": 0.027569563856513934,
+    "sigmaH": 0.6711462554915075,
+    "sigmaV": 0.4026877532949045,
+    "maxH": 1.6439658687337857,
+    "maxV": 0.9863795212402715
+  },
+  "spatialSigma": {
+    "horizontal": 0.24243133481715157,
+    "vertical": 0.14038797381570026,
+    "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+  },
+  "bounds": {
+    "left": 2.818859627346087,
+    "right": 4.007119764490284,
+    "bottom": 1.8340065861018142,
+    "top": 2.5418856842849724
+  },
+  "offsets": {
+    "left": 0.5911403726539097,
+    "right": 0.5971197644902873,
+    "down": 0.35599341389818573,
+    "up": 0.35188568428497247
+  },
+  "jacobian": {
+    "xx": 0.3612198277700429,
+    "yx": -0.006085597810345789,
+    "xy": 3.552713678800501e-12,
+    "yy": 0.34847980144681046
+  },
+  "contours": [
+    {
+      "mass": 0.5,
+      "k": 0.4320674818252781
+    },
+    {
+      "mass": 0.9,
+      "k": 0.14300723080456457
+    },
+    {
+      "mass": 0.99,
+      "k": 0.03618263273413838
+    }
+  ],
+  "method": {
+    "kind": "Deterministic theoretical push-forward of independent bounded triangular angular errors",
+    "gridSize": 25,
+    "projectionNodes": 625,
+    "projectionCalls": 664,
+    "maxInterpolationError": 0.00027821355784674056,
+    "minJacobian": 5.517781309722464,
+    "maxJacobian": 6.490983965112795,
+    "randomDraws": 0,
+    "monteCarlo": false,
+    "goalkeeper": false,
+    "colliders": false,
+    "density": "p_goal = ((1-|u|)(1-|v|)) / abs(det(d(goalX,goalY)/d(u,v))). u and v are angular errors normalized to their hard bounds.",
+    "contourMeaning": "50/90/99% exact angular probability sets, mapped to goal-plane space. Heat uses projected density per square metre; contours are not spatial iso-density contours.",
+    "boundMeaning": "Full rectangular support in angular-error coordinates mapped through frozen flight physics. Display uses a validated bilinear mesh; boundary is not a confidence ellipse.",
+    "maxPresetBoundError": 0.00018214302014491816,
+    "precise99Error": 3.9568870801147375e-05,
+    "idealReSolved": false,
+    "projectionDomainAccuracy": 1,
+    "allRatingsFirstFlight": true
+  },
+  "validation": {
+    "idealTargetError": 6.833480448179895e-09,
+    "deterministic": true,
+    "meshUnfolded": true,
+    "frozenSourceUnchanged": true,
+    "gitClean": true,
+    "frozenIdealIdentical": true,
+    "fixedOriginAndTarget": true,
+    "monotoneAll99Ratings": true,
+    "nonzeroFloor": true,
+    "fullViewContainsAllBounds": true
+  },
+  "formula": {
+    "accuracy": "Outside box: Long Shots only. Inside box and finishing ellipse: Finishing only. Remaining box: 0.50 Finishing + 0.50 Long Shots. Both boundaries inside.",
+    "base": "x = 99 \u2212 effectiveAccuracy; sigmaH0 = 0.02\u00b0 + 4.00\u00b0 \u00d7 x\u00b2 / (x\u00b2 + 45\u00b2); sigmaV0 = 0.60 sigmaH0",
+    "power": "r = requestedSpeed / capabilityCeiling; D = 1 + 0.10 r^4",
+    "final": "sigmaH = sigmaH0 \u00d7 D; sigmaV = sigmaV0 \u00d7 D",
+    "distribution": "epsilonAxis = sigmaAxis \u00d7 sqrt(6) \u00d7 (U1 \u2212 U2); independent axes; hard bound \u00b1sqrt(6) sigmaAxis"
+  },
+  "proposalStatus": "Dispersion curve and maximum zone width approved and locked; gameplay untouched",
+  "domain": {
+    "accuracy": 1,
+    "sigmaBaseH": 3.323465474245421,
+    "sigmaBaseV": 1.9940792845472524,
+    "difficulty": 1.0734956731844696,
+    "powerIncreasePercent": 7.349567318446959,
+    "addedSigmaH": 0.24426033233500988,
+    "addedSigmaV": 0.14655619940100562,
+    "sigmaH": 3.5677258065804307,
+    "sigmaV": 2.140635483948258,
+    "maxH": 8.739107768281604,
+    "maxV": 5.243464660968962
+  },
+  "presets": [
+    40,
+    60,
+    70,
+    80,
+    90,
+    95,
+    99
+  ],
+  "comparisons": [
+    {
+      "accuracy": 40,
+      "dispersion": {
+        "accuracy": 40,
+        "sigmaBaseH": 2.5488775880857246,
+        "sigmaBaseV": 1.5293265528514348,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.18733147420116758,
+        "addedSigmaV": 0.11239888452070046,
+        "sigmaH": 2.736209062286892,
+        "sigmaV": 1.6417254373721353,
+        "maxH": 6.70231603218212,
+        "maxV": 4.0213896193092715
+      },
+      "spatialSigma": {
+        "horizontal": 0.9883729662221018,
+        "vertical": 0.5723504274180885,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 1.0237339843350959,
+        "right": 5.8932488629498625,
+        "bottom": 0.6999320048132558,
+        "top": 3.6108690757322526
+      },
+      "offsets": {
+        "left": 2.3862660156649005,
+        "right": 2.483248862949866,
+        "down": 1.4900679951867442,
+        "up": 1.4208690757322526
+      },
+      "extent": {
+        "width": 4.869514878614766,
+        "height": 2.9109370709189966
+      },
+      "maxHorizontalDeviation": 2.483248862949866,
+      "maxVerticalDeviation": 1.4900679951867442
+    },
+    {
+      "accuracy": 60,
+      "dispersion": {
+        "accuracy": 60,
+        "sigmaBaseH": 1.735736040609137,
+        "sigmaBaseV": 1.0414416243654823,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.12756908877511441,
+        "addedSigmaV": 0.07654145326506856,
+        "sigmaH": 1.8633051293842515,
+        "sigmaV": 1.1179830776305508,
+        "maxH": 4.564146802102006,
+        "maxV": 2.7384880812612034
+      },
+      "spatialSigma": {
+        "horizontal": 0.6730627579192169,
+        "vertical": 0.3897595040936145,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 1.7791604235212692,
+        "right": 5.08569358460519,
+        "bottom": 1.1878604219582556,
+        "top": 3.16042990001879
+      },
+      "offsets": {
+        "left": 1.6308395764787273,
+        "right": 1.6756935846051935,
+        "down": 1.0021395780417444,
+        "up": 0.9704299000187899
+      },
+      "extent": {
+        "width": 3.306533161083921,
+        "height": 1.9725694780605343
+      },
+      "maxHorizontalDeviation": 1.6756935846051935,
+      "maxVerticalDeviation": 1.0021395780417444
+    },
+    {
+      "accuracy": 70,
+      "dispersion": {
+        "accuracy": 70,
+        "sigmaBaseH": 1.193761339846476,
+        "sigmaBaseV": 0.7162568039078855,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.08773629329361121,
+        "addedSigmaV": 0.052641775976166705,
+        "sigmaH": 1.2814976331400871,
+        "sigmaV": 0.7688985798840522,
+        "maxH": 3.139015307777563,
+        "maxV": 1.8834091846665377
+      },
+      "spatialSigma": {
+        "horizontal": 0.4629023543305799,
+        "vertical": 0.26805909247664556,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 2.285139031968077,
+        "right": 4.556156740143203,
+        "bottom": 1.5057295728302509,
+        "top": 2.85933855232019
+      },
+      "offsets": {
+        "left": 1.1248609680319195,
+        "right": 1.1461567401432067,
+        "down": 0.6842704271697491,
+        "up": 0.6693385523201902
+      },
+      "extent": {
+        "width": 2.271017708175126,
+        "height": 1.3536089794899393
+      },
+      "maxHorizontalDeviation": 1.1461567401432067,
+      "maxVerticalDeviation": 0.6842704271697491
+    },
+    {
+      "accuracy": 80,
+      "dispersion": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.045949273094189835,
+        "addedSigmaV": 0.027569563856513934,
+        "sigmaH": 0.6711462554915075,
+        "sigmaV": 0.4026877532949045,
+        "maxH": 1.6439658687337857,
+        "maxV": 0.9863795212402715
+      },
+      "spatialSigma": {
+        "horizontal": 0.24243133481715157,
+        "vertical": 0.14038797381570026,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 2.818859627346087,
+        "right": 4.007119764490284,
+        "bottom": 1.8340065861018142,
+        "top": 2.5418856842849724
+      },
+      "offsets": {
+        "left": 0.5911403726539097,
+        "right": 0.5971197644902873,
+        "down": 0.35599341389818573,
+        "up": 0.35188568428497247
+      },
+      "extent": {
+        "width": 1.188260137144197,
+        "height": 0.7078790981831582
+      },
+      "maxHorizontalDeviation": 0.5971197644902873,
+      "maxVerticalDeviation": 0.35599341389818573
+    },
+    {
+      "accuracy": 90,
+      "dispersion": {
+        "accuracy": 90,
+        "sigmaBaseH": 0.17384615384615384,
+        "sigmaBaseV": 0.10430769230769231,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.012776940107453949,
+        "addedSigmaV": 0.007666164064472361,
+        "sigmaH": 0.1866230939536078,
+        "sigmaV": 0.11197385637216467,
+        "maxH": 0.4571313544058236,
+        "maxV": 0.27427881264349413
+      },
+      "spatialSigma": {
+        "horizontal": 0.06741196185583474,
+        "vertical": 0.03903715145989603,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 3.245212391048969,
+        "right": 3.575496858176014,
+        "bottom": 2.0914494672390584,
+        "top": 2.2881875701866456
+      },
+      "offsets": {
+        "left": 0.1647876089510274,
+        "right": 0.16549685817601745,
+        "down": 0.0985505327609415,
+        "up": 0.0981875701866457
+      },
+      "extent": {
+        "width": 0.33028446712704485,
+        "height": 0.1967381029475872
+      },
+      "maxHorizontalDeviation": 0.16549685817601745,
+      "maxVerticalDeviation": 0.0985505327609415
+    },
+    {
+      "accuracy": 95,
+      "dispersion": {
+        "accuracy": 95,
+        "sigmaBaseH": 0.051357177853993144,
+        "sigmaBaseV": 0.030814306712395885,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.003774530359233759,
+        "addedSigmaV": 0.002264718215540258,
+        "sigmaH": 0.0551317082132269,
+        "sigmaV": 0.03307902492793614,
+        "maxH": 0.13504455377041438,
+        "maxV": 0.08102673226224863
+      },
+      "spatialSigma": {
+        "horizontal": 0.019914666145450084,
+        "vertical": 0.011532253582172095,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 3.3613204653434754,
+        "right": 3.458889038918209,
+        "bottom": 2.1609121326583027,
+        "top": 2.21902922254104
+      },
+      "offsets": {
+        "left": 0.048679534656521195,
+        "right": 0.04888903891821261,
+        "down": 0.029087867341697216,
+        "up": 0.029029222541040234
+      },
+      "extent": {
+        "width": 0.09756857357473381,
+        "height": 0.05811708988273745
+      },
+      "maxHorizontalDeviation": 0.04888903891821261,
+      "maxVerticalDeviation": 0.029087867341697216
+    },
+    {
+      "accuracy": 99,
+      "dispersion": {
+        "accuracy": 99,
+        "sigmaBaseH": 0.02,
+        "sigmaBaseV": 0.012,
+        "difficulty": 1.0734956731844696,
+        "powerIncreasePercent": 7.349567318446959,
+        "addedSigmaH": 0.0014699134636893922,
+        "addedSigmaV": 0.0008819480782136357,
+        "sigmaH": 0.021469913463689393,
+        "sigmaV": 0.012881948078213636,
+        "maxH": 0.05259033280774962,
+        "maxV": 0.03155419968464977
+      },
+      "spatialSigma": {
+        "horizontal": 0.007755358443591608,
+        "vertical": 0.004490999725474765,
+        "definition": "Local linearized spatial standard deviation; theoretical, not sampled."
+      },
+      "bounds": {
+        "left": 3.391042911906086,
+        "right": 3.429038673209945,
+        "bottom": 2.178674882297515,
+        "top": 2.2013071155002613
+      },
+      "offsets": {
+        "left": 0.018957088093910723,
+        "right": 0.019038673209948342,
+        "down": 0.0113251177024849,
+        "up": 0.011307115500261311
+      },
+      "extent": {
+        "width": 0.037995761303859066,
+        "height": 0.02263223320274621
+      },
+      "maxHorizontalDeviation": 0.019038673209948342,
+      "maxVerticalDeviation": 0.0113251177024849
+    }
+  ],
+  "fullView": {
+    "xmin": -4.8,
+    "xmax": 7.3,
+    "ymin": -0.25,
+    "ymax": 4.5
+  },
+  "candidateRationale": "Approved accuracy curve retained unchanged. The reference values here describe the original fixed 80/80 player and shot; live zone-selected ratings are displayed on the page."
+}

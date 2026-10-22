@@ -1,0 +1,29 @@
+import fs from 'node:fs';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';import {performance} from 'node:perf_hooks';
+import {GLOBAL,ENVIRONMENTS,FAMILIES,CANDIDATES} from '../config.js';
+import {actionExperiment,simulate,lowSpeed,globalExperiments,parityPayload} from '../experiments.js';
+import {resolveLaunch,scheduledLaunch} from '../resolver.js';
+import {SCENARIOS,runScenario,makeScenario} from '../../ballphys1/scenarios.js';
+import {fullCharacter} from '../../ballphys1/fixtures.js';import {BallWorld} from '../../ballphys1/ball.js';
+import {references} from '../../ballphys1/tools/reference.mjs';
+const out=new URL('../evidence/',import.meta.url);fs.mkdirSync(out,{recursive:true});const write=(name,data)=>fs.writeFileSync(new URL(name,out),JSON.stringify(data,null,name==='review.json'?0:2));
+const actions=Object.keys(FAMILIES).flatMap(f=>CANDIDATES.map(c=>actionExperiment(f,c.id)));
+const passMatrix=[];for(const [family,distances] of Object.entries({short:[5,10],ground:[5,10,15,20,30],firm:[10,15,20,30],driven:[10,15,20,30]}))for(const distance of distances)for(const c of CANDIDATES){const r=actionExperiment(family,c.id,GLOBAL,{distance});passMatrix.push({family,candidate:c.id,distance,power:c.power,...r.metrics});}
+const curveMatrix=[];for(const speed of [19,23,27])for(const spin of [12,30,50,60]){const action={id:`curve-${speed}-${spin}`,tick:0,position:[0,.11,0],velocity:[speed,6.9,0],spin:[0,spin,0]};const r=simulate({id:action.id,action,target:22,duration:3,record:false});curveMatrix.push({speed,spin,...r.metrics});}
+const techniqueMatrix=[];for(const curveSkill of [0,.5,1])for(const selectedFoot of ['R','L'])for(const technique of ['INSIDE','OUTSIDE','LACES']){const intent={actionId:'technique',family:'curve',power:.5,curve:.8,curveSkill,selectedFoot,technique};const r=simulate({id:'technique',action:scheduledLaunch(intent),target:22,duration:3,record:false});techniqueMatrix.push({curveSkill,selectedFoot,technique,...r.metrics});}
+const shotMatrix=[];for(const [label,family,power] of [['placed','placed',.5],['normal','shot',.5],['strong','shot',1],['power','power',.5],['max envelope','power',1]])for(const distance of [12,18,25]){const r=actionExperiment(family,'balanced',GLOBAL,{distance,power});shotMatrix.push({label,family,power,distance,...r.metrics});}
+const low=[.5,1,2,3,4,5].map(v=>lowSpeed(v));
+const globals=globalExperiments().map(e=>({...e,rebound2m:Math.max(...e.drop.frames.filter(f=>f.time>e.drop.events[0].time).map(f=>f.p[1]-.11))}));
+const regressions=['tackle-loose','blocked-shot','shin-deflection','boot-deflection','post-rebound','crossbar','slide-roll','drop-1'].map(id=>runScenario(id,{parameters:GLOBAL}));
+const payload=JSON.stringify(parityPayload()),hash=crypto.createHash('sha256').update(payload).digest('hex');
+// Baseline file hashes are verified against the preserved Git commit. No baseline
+// script is run in place and no BALL-PHYS-1 evidence is overwritten.
+const paths=execFileSync('git',['ls-tree','-r','--name-only','f3e2ff62','sandbox/visual/ballphys1'],{encoding:'utf8'}).trim().split('\n');
+const foundation=paths.map(path=>{const before=execFileSync('git',['show','f3e2ff62:'+path],{maxBuffer:40*1024*1024}),now=fs.readFileSync(path);if(!before.equals(now))throw Error('Foundation modified: '+path);return {path,sha256:crypto.createHash('sha256').update(now).digest('hex')};});
+const bench=(name,create)=>{for(let n=0;n<2;n++){const w=create();for(let i=0;i<180;i++)w.step();}const samples=[];for(let n=0;n<7;n++){const w=create(),a=performance.now();for(let i=0;i<300;i++)w.step();samples.push((performance.now()-a)/300);}samples.sort((a,b)=>a-b);return {name,medianMsPer60HzTick:samples[3],maxBatchMeanMs:samples[6],substeps:4,samples};};
+const crowd=Array.from({length:22},(_,i)=>fullCharacter([10+(i%11)*3,0,(Math.floor(i/11)*2-1)*5],`p${i}`)).flat();
+const cpu=[bench('free flight',()=>new BallWorld({p:[0,10,.2],v:[24,6,0],w:[0,35,0],parameters:GLOBAL})),bench('rolling',()=>new BallWorld({v:[10,0,0],w:[0,0,-10/.11],parameters:GLOBAL})),bench('22 × 14 actual V2 body colliders',()=>new BallWorld({v:[16,0,0],w:[0,0,-16/.11],parameters:GLOBAL,colliders:crowd})),...['blocked-shot','tackle-loose','post-rebound'].map(id=>bench(id,()=>makeScenario(id,{parameters:GLOBAL})))];
+const legacy=references().map(r=>({...r,target:r.targetDistance,events:[],duration:5}));
+write('review.json',{version:'BALL-FEEL-1',hash,parameters:GLOBAL,families:FAMILIES,candidates:CANDIDATES,actions,low,globals,regressions,legacy});
+write('measurements.json',{parameters:GLOBAL,actions:actions.map(({id,intent,launch,metrics})=>({id,intent,launch,metrics})),passMatrix,shotMatrix,curveMatrix,techniqueMatrix,low:low.map(r=>({speed:r.initial.v[0],separation:r.separation,...r.metrics})),global:globals.map(({id,parameters,roll,rebound2m})=>({id,parameters,roll,rebound2m})),cpu,parity:{hash,bytes:Buffer.byteLength(payload),runs:JSON.parse(payload).length,node:process.version},foundation:{commit:'f3e2ff62',files:foundation}});
+for(const [name,rows] of Object.entries({passes:passMatrix,shots:shotMatrix,curves:curveMatrix})){const keys=['family','candidate','label','distance','power','speed','spin','launchSpeed','horizontalSpeed','launchAngle','apex','range','stopTime'];const lines=[keys.concat(['arrivalTime','arrivalSpeed','arrivalHeight','arrivalLateral']).join(',')];for(const r of rows)lines.push(keys.map(k=>r[k]??'').concat([r.arrival?.time??'',r.arrival?.speed??'',r.arrival?.height??'',r.arrival?.lateral??'']).join(','));fs.writeFileSync(new URL(name+'.csv',out),lines.join('\n')+'\n');}
+console.log(JSON.stringify({actions:actions.length,passRows:passMatrix.length,shotRows:shotMatrix.length,curveRows:curveMatrix.length,techniqueRows:techniqueMatrix.length,hash,foundationFiles:foundation.length,cpu},null,2));

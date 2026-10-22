@@ -1,0 +1,33 @@
+{
+  "checks": 312,
+  "throughSolver": {
+    "samples": 12544,
+    "spinAlternatives": 3907,
+    "forwardRoll": 921,
+    "maxResidual": 0.0005560332797358569,
+    "maxCandidates": 300,
+    "maxIterations": 270,
+    "ms": {
+      "n": 12544,
+      "mean": 21.92606246277104,
+      "sd": 21.670075653111383,
+      "se": 0.19348281833135164,
+      "p10": 11.287770699998145,
+      "p25": 12.640218749998894,
+      "median": 15.026895499991952,
+      "p75": 24.983260749999317,
+      "p90": 37.2204788999894,
+      "min": 3.831292000017129,
+      "max": 391.1500829999859,
+      "rms": 30.827656315926923
+    }
+  },
+  "protected": {
+    "artifactFiles": 889,
+    "changed": [],
+    "productionFiles": 1308,
+    "productionChanged": [],
+    "commit": "7653bcb00513858117764caf00c86ea7e4c14a1e",
+    "gitStatus": ""
+  }
+}

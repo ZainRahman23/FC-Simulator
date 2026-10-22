@@ -1,0 +1,23 @@
+SHOT-ACCURACY-1.0 calibration review
+
+This directory is an isolated review artifact. It does not patch authoritative gameplay.
+Serve its parent directory locally and open /review/. No packages or network downloads are required.
+
+To reproduce calculations from the preserved modules, run these commands here in order:
+
+node study.mjs
+node extra-validation.mjs
+node make-report.mjs
+node verify-protected.mjs
+
+study.mjs performs a deterministic physical grid study, not random or Monte Carlo shots.
+The current shooting checkout must remain at the baseline for its protected-source check to pass.
+source-manifest.json records the original snapshot and missing tracked paths; do not overwrite it.
+snapshot.mjs is a one-time bootstrap and refuses to replace that snapshot.
+
+The distance study intentionally uses a separate lab-only pre-contact elevation solve at a fixed
+speed fraction and target. Approved charge mode calls the frozen charge resolver unchanged.
+Both modes launch once into the same preserved physical ball. Neither modifies gameplay.
+
+Browser review evidence is in browser-validation.json. Physics results, limits, RNG vectors,
+source placement and the proposed implementation contract are in report.html and study.json.

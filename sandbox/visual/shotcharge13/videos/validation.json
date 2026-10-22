@@ -1,0 +1,95 @@
+{
+  "pass": true,
+  "camera": {
+    "eye": [
+      74,
+      5.5,
+      23
+    ],
+    "look": [
+      105,
+      1.6,
+      34
+    ],
+    "focal": 1450,
+    "principal": [
+      960,
+      300
+    ],
+    "width": 1920,
+    "height": 1080
+  },
+  "viewport": {
+    "x": -160,
+    "y": -120,
+    "width": 2240,
+    "height": 1260
+  },
+  "allSubjectsInFrame": true,
+  "simulationSecondsPerVideoSecond": 1,
+  "segments": [
+    {
+      "runId": "sp80-hold20",
+      "holdMs": 20,
+      "frames": 120,
+      "startSeconds": 0,
+      "duration": 2
+    },
+    {
+      "runId": "sp80-hold100",
+      "holdMs": 100,
+      "frames": 120,
+      "startSeconds": 2,
+      "duration": 2
+    },
+    {
+      "runId": "sp80-hold200",
+      "holdMs": 200,
+      "frames": 120,
+      "startSeconds": 4,
+      "duration": 2
+    },
+    {
+      "runId": "sp80-hold300",
+      "holdMs": 300,
+      "frames": 122,
+      "startSeconds": 6,
+      "duration": 2.033333333333333
+    },
+    {
+      "runId": "sp80-hold450",
+      "holdMs": 450,
+      "frames": 155,
+      "startSeconds": 8.033333333333333,
+      "duration": 2.5833333333333335
+    },
+    {
+      "runId": "sp80-hold550",
+      "holdMs": 550,
+      "frames": 180,
+      "startSeconds": 10.616666666666667,
+      "duration": 3
+    },
+    {
+      "runId": "sp80-hold700",
+      "holdMs": 700,
+      "frames": 201,
+      "startSeconds": 13.616666666666667,
+      "duration": 3.35
+    }
+  ],
+  "contactSecondsIntoEachSegment": 0.15,
+  "coverage": "Each segment shows the physical first flight through first turf contact and at least 0.55 s afterward. Compact supporting audit, not a full-rest range replay.",
+  "files": [
+    {
+      "file": "progression-behind-1x.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60,
+      "duration": 16.966666666666665,
+      "frames": 1018,
+      "decoded": true,
+      "bytes": 333421
+    }
+  ]
+}

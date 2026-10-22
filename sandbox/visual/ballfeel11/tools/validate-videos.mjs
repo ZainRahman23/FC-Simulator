@@ -1,0 +1,4 @@
+import fs from 'node:fs';import path from 'node:path';import {execFileSync} from 'node:child_process';
+const dir=path.resolve(process.argv[2]),ffmpeg=process.env.BALL_FFMPEG||'ffmpeg',manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'))),results=[];
+for(const v of manifest){const log=execFileSync(ffmpeg,['-hide_banner','-v','error','-i',path.join(dir,v.file),'-progress','pipe:1','-f','null','-'],{encoding:'utf8'});const frames=Number([...log.matchAll(/frame=(\d+)/g)].at(-1)?.[1]);if(frames!==Math.round(v.seconds*30))throw Error('Frame mismatch: '+v.file);results.push({file:v.file,decodedFrames:frames,expectedFrames:Math.round(v.seconds*30),bytes:fs.statSync(path.join(dir,v.file)).size,pass:true});}
+fs.writeFileSync(path.join(dir,'validation.json'),JSON.stringify({pass:true,count:results.length,results},null,2));console.log(results.length+' videos decoded / frame counts matched');

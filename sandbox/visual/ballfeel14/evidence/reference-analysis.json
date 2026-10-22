@@ -1,0 +1,294 @@
+{
+  "mapping": "Owner confirmed visible content: A=5.44.46 PM short through-ball; B=5.36.19 PM long ordinary passes.",
+  "method": "Full clips played at 1x; extracted every third frame (20 Hz), inspected ordered sequences and original-pixel crops. Manual ball centres; median local grass-patch phase correlation estimates camera translation. Approximate 50\u201370 horizontal pixels/metre at ball depth from penalty-area 16.5 m depth and centre-circle 18.3 m diameter. NOT a solved camera homography; depth motion, zoom, grass texture and occlusion broaden bounds. Physical pitch dimensions are geometric assumptions, not source metadata.",
+  "through": {
+    "file": "Screen Recording 2026-10-16 at 5.44.46 PM.mov",
+    "duration": 3.3,
+    "fps": 60,
+    "observedStart": 0,
+    "firstReceiverTouchBand": [
+      2.5,
+      2.7
+    ],
+    "fullLaunchObserved": false,
+    "direct": "Ball is already travelling at first frame; chasing runner closes the visible gap and meets it near the penalty-area edge. Observation timestamps are exact to frame sampling; touch time bracket is visual.",
+    "usefulObservedDistanceBand": [
+      22,
+      31
+    ],
+    "launchSpeed": null,
+    "initialObservedSpeedBand": [
+      13,
+      21
+    ],
+    "firstThirdSpeedBand": [
+      9,
+      14
+    ],
+    "secondThirdSpeedBand": [
+      6,
+      11
+    ],
+    "lateSpeedBand": [
+      5,
+      10
+    ],
+    "stopDistance": null,
+    "absoluteDeceleration": "Early observed loss is stronger than late in the rough camera-corrected estimate; cannot establish an increasingly large absolute deceleration. Increasing catchability is directly visible. Tune a progressively dying feel, not a claimed exact source force law.",
+    "height": "Near-turf throughout observable interval; ball/shadow separation small. Exact clearance, discrete contact times and angular velocity cannot be recovered reliably. No clear large bounce.",
+    "spin": "Unresolved; no defensible direction or rad/s.",
+    "samples": [
+      {
+        "t": 0,
+        "imageX": 1610,
+        "imageY": 410,
+        "cameraX": 0.0,
+        "correctedX": 0.0,
+        "distanceEstimate": 0.0,
+        "distanceBand": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "t": 0.25,
+        "imageX": 1650,
+        "imageY": 420,
+        "cameraX": -232.0,
+        "correctedX": 272.0,
+        "distanceEstimate": 4.533333333333333,
+        "distanceBand": [
+          3.8857142857142857,
+          5.44
+        ]
+      },
+      {
+        "t": 0.5,
+        "imageX": 1646,
+        "imageY": 438,
+        "cameraX": -438.5,
+        "correctedX": 474.5,
+        "distanceEstimate": 7.908333333333333,
+        "distanceBand": [
+          6.7785714285714285,
+          9.49
+        ]
+      },
+      {
+        "t": 0.75,
+        "imageX": 1626,
+        "imageY": 450,
+        "cameraX": -630.5,
+        "correctedX": 646.5,
+        "distanceEstimate": 10.775,
+        "distanceBand": [
+          9.235714285714286,
+          12.93
+        ]
+      },
+      {
+        "t": 1,
+        "imageX": 1594,
+        "imageY": 465,
+        "cameraX": -779.0,
+        "correctedX": 763.0,
+        "distanceEstimate": 12.716666666666667,
+        "distanceBand": [
+          10.9,
+          15.26
+        ]
+      },
+      {
+        "t": 1.25,
+        "imageX": 1555,
+        "imageY": 475,
+        "cameraX": -942.0,
+        "correctedX": 887.0,
+        "distanceEstimate": 14.783333333333333,
+        "distanceBand": [
+          12.67142857142857,
+          17.74
+        ]
+      },
+      {
+        "t": 1.5,
+        "imageX": 1513,
+        "imageY": 482,
+        "cameraX": -1095.0,
+        "correctedX": 998.0,
+        "distanceEstimate": 16.633333333333333,
+        "distanceBand": [
+          14.257142857142858,
+          19.96
+        ]
+      },
+      {
+        "t": 1.75,
+        "imageX": 1478,
+        "imageY": 490,
+        "cameraX": -1215.0,
+        "correctedX": 1083.0,
+        "distanceEstimate": 18.05,
+        "distanceBand": [
+          15.471428571428572,
+          21.66
+        ]
+      },
+      {
+        "t": 2,
+        "imageX": 1450,
+        "imageY": 495,
+        "cameraX": -1337.5,
+        "correctedX": 1177.5,
+        "distanceEstimate": 19.625,
+        "distanceBand": [
+          16.821428571428573,
+          23.55
+        ]
+      },
+      {
+        "t": 2.25,
+        "imageX": 1430,
+        "imageY": 496,
+        "cameraX": -1440.0,
+        "correctedX": 1260.0,
+        "distanceEstimate": 21.0,
+        "distanceBand": [
+          18.0,
+          25.2
+        ]
+      },
+      {
+        "t": 2.5,
+        "imageX": 1456,
+        "imageY": 500,
+        "cameraX": -1553.0,
+        "correctedX": 1399.0,
+        "distanceEstimate": 23.316666666666666,
+        "distanceBand": [
+          19.985714285714284,
+          27.98
+        ]
+      }
+    ],
+    "speedSegments": [
+      {
+        "t": 0.25,
+        "distance": 3.9541666666666666,
+        "speed": 15.816666666666666,
+        "low": 12.057142857142857,
+        "high": 20.48
+      },
+      {
+        "t": 0.75,
+        "distance": 10.3125,
+        "speed": 9.616666666666667,
+        "low": 6.742857142857142,
+        "high": 13.04
+      },
+      {
+        "t": 1.25,
+        "distance": 14.675,
+        "speed": 7.833333333333333,
+        "low": 5.214285714285714,
+        "high": 10.9
+      },
+      {
+        "t": 1.75,
+        "distance": 18.129166666666666,
+        "speed": 5.983333333333333,
+        "low": 3.628571428571429,
+        "high": 8.68
+      },
+      {
+        "t": 2.25,
+        "distance": 21.47083333333333,
+        "speed": 7.383333333333334,
+        "low": 4.828571428571428,
+        "high": 10.36
+      }
+    ]
+  },
+  "normal": {
+    "file": "Screen Recording 2026-10-16 at 5.36.19 PM.mov",
+    "duration": 9.333333,
+    "fps": 60,
+    "passes": [
+      {
+        "releaseBand": [
+          1.1,
+          1.2
+        ],
+        "receiveBand": [
+          1.95,
+          2.05
+        ],
+        "distanceBand": [
+          10,
+          15
+        ],
+        "travelTimeBand": [
+          0.75,
+          0.95
+        ],
+        "initialSpeedBand": [
+          16,
+          23
+        ],
+        "arrivalSpeedBand": [
+          10,
+          17
+        ]
+      },
+      {
+        "releaseBand": [
+          2.3,
+          2.45
+        ],
+        "receiveBand": [
+          2.8,
+          3.0
+        ],
+        "distanceBand": [
+          6,
+          10
+        ],
+        "travelTimeBand": [
+          0.4,
+          0.7
+        ]
+      },
+      {
+        "releaseBand": [
+          3.85,
+          4.0
+        ],
+        "receiveBand": [
+          4.5,
+          4.65
+        ],
+        "distanceBand": [
+          11,
+          17
+        ],
+        "travelTimeBand": [
+          0.5,
+          0.8
+        ]
+      }
+    ],
+    "direct": "Several crisply struck free passes separated by dribble/receiving touches. First free pass is the main comparison; later passes cross-check that short and medium lengths do not look identical.",
+    "heightVisualBandM": [
+      0,
+      0.08
+    ],
+    "heightIsMeasured": false,
+    "texture": "Small nonuniform ball/shadow disturbances; approximately one to three possible low disturbances in the main pass. Contact count is NOT confidently resolved; feet, shadow displacement, compression and camera motion confound subpixel vertical movement.",
+    "hopCount": null,
+    "contactSpacing": null,
+    "stableRollTime": null,
+    "lateSlowdown": "Observed only until receiving touch. Natural rest is not shown, so terminal slowdown is a gameplay constraint rather than a measured source property.",
+    "spin": "Ball markings not resolved well enough for angular velocity."
+  },
+  "analysisCompletedBeforeImplementation": true
+}

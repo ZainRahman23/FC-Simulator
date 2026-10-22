@@ -1,0 +1,3 @@
+import fs from 'node:fs';import {simulate} from '../experiments.js';import {GRIP} from '../config.js';
+const rows=[];for(const speed of [18,20,22,24,26])for(const fraction of [.2,.4,.65]){const r=simulate({id:'low-range-boundary',initial:{v:[speed,.65,0],w:[0,0,-speed*fraction/.11]},contactLaw:GRIP,duration:8});rows.push({speed,fraction,...r.metrics});}
+fs.writeFileSync(new URL('../evidence/range-boundary.json',import.meta.url),JSON.stringify(rows,null,2));console.log(rows.filter(r=>r.range>=35&&r.range<=45).map(r=>({speed:r.speed,fraction:r.fraction,range:r.range,skid:r.skidDistance,time10:r.planes[10]?.time,time25:r.planes[25]?.time})));

@@ -1,0 +1,17 @@
+{
+  "baseCommit": "dbc8aa22",
+  "branch": "prototype/ball-phys-1",
+  "sourceSHA256": {
+    "simulator/fc_simulator/world.py": "afdbdef9196dd1c2e1b6c9f51db4107444256ab0cb5b73c94c3bd32fabf5b306",
+    "simulator/fc_simulator/continuous.py": "522a86f277dad63ef3ac0d0b0eb8ef05c96ec93ddf99782dd38678171c506a03",
+    "simulator/fc_simulator/engine.py": "429ec3eb301495a90b30b0756628bfd53452e10344961508c5968075ea6377de",
+    "simulator/fc_simulator/ballflight.py": "97c91fa776e99398aecb6c50498ac7dd735bba4173c62c1fa400b066f0db6191",
+    "sandbox/visual/match.js": "3da079656b8825921fc28ef5caaa94786703ac43e7054243a13639c26f19cb89",
+    "sandbox/visual/pt_defend.js": "892307c2b1450d2d3d13652ea2aefdb7e0477f95f43eb3c22f0368b7b1cb1826",
+    "sandbox/visual/pt_squad.js": "967af68fe50c829ca1b997b708ba6e55a3dc78bfdb4dd047eb8dddd0ea7eb134",
+    "sandbox/visual/physchar2/spec/v2_colliders.js": "526855172d1212ac58371f6141af7771d6931a67845b08f6eb5f47211476e79e"
+  },
+  "productionEnabled": false,
+  "weatherDirtyPrimaryInspected": true,
+  "scope": "standalone physical ball foundation and adapter; no live match migration"
+}

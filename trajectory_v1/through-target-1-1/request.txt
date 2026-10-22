@@ -1,0 +1,217 @@
+Yes. That's the main behavior I'd change before approving THROUGH-TARGET-1.
+Right now the system is interpreting “selected runner” too strongly. Once selected, the player effectively treats the through ball as theirs even when the actual execution has put it far enough away that a real player would recognize “I'm not getting that.”
+We want:
+Attack the through ball aggressively while it is realistically playable. If it becomes clearly unreachable, abandon the chase and return to normal movement/AI.
+
+Importantly, don't use a simple fixed distance like “if ball > 8 m away, stop.” A ball 15 m away rolling slowly toward the runner may be easy to reach, while a ball 5 m away moving rapidly away could already be hopeless.
+Send Astra:
+THROUGH-TARGET-1 — ADD RUN ABANDONMENT / UNREACHABLE-BALL LOGIC
+THROUGH-TARGET-1 is directionally approved, but there is one important behavioral problem:
+When the Through Ball gets too far away / becomes clearly unreachable, the selected player continues chasing it.
+
+Fix this before freezing THROUGH-TARGET-1.
+Preserve frozen PASSING-V1 completely.
+Core rule
+The selected runner should initially commit aggressively:
+Through Ball played
+→ runner selected
+→ FULL SPRINT toward best meeting point
+
+But this commitment is not permanent.
+Continuously determine whether there remains a realistically feasible meeting with the authoritative physical ball.
+If yes:
+KEEP CHASING
+
+If the ball becomes clearly unreachable:
+ABANDON THROUGH-BALL CHASE
+
+and return control of that player to their normal movement/AI state.
+Do not use raw ball distance
+Do NOT implement:
+if distanceToBall > X:
+    abandon
+
+Reachability depends on:
+runner position
+runner velocity
+runner heading
+runner maximum movement capability
+ball position
+ball velocity
+ball direction
+predicted ball deceleration
+remaining ball trajectory
+pitch boundaries
+
+Use the existing meeting-point prediction.
+Feasibility over the future ball trajectory
+At each replan, search the remaining authoritative trajectory for a feasible meeting.
+Conceptually:
+for future ball states:
+    ball arrival time = t
+    runner minimum arrival time = T
+
+    if T <= t + reasonable receive tolerance:
+        feasible meeting exists
+
+If at least one useful future receive point exists:
+CHASE
+
+If none exists, the pass is potentially lost.
+Do not abandon instantly
+Avoid one bad prediction causing:
+chase
+→ abandon
+→ chase
+→ abandon
+
+Add a small deterministic commitment/hysteresis rule.
+For example, require the ball to remain clearly infeasible across multiple replans or exceed a meaningful time-to-arrival deficit before abandoning.
+Expose the exact rule for review.
+Distinguish marginal from hopeless
+We effectively want three states:
+COMFORTABLY REACHABLE
+→ full sprint
+
+MARGINAL
+→ keep fighting for it
+
+CLEARLY UNREACHABLE
+→ abandon
+
+Footballers should chase a difficult ball.
+They should not sprint indefinitely after an obviously lost one.
+Execution errors matter
+This is particularly important for inaccurate Through Balls.
+Example:
+intended endpoint = good
+runner selected correctly
+
+actual execution =
+8 m too wide and travelling away
+
+Initially the runner reacts toward the actual ball.
+If prediction then determines there is no realistic meeting:
+abandon chase
+
+Do NOT:
+- move the ball toward him;
+- increase his speed;
+- teleport his path;
+- pretend the inaccurate pass was reachable.
+Passing error must remain meaningful.
+Shot Power shortfalls
+The same applies to capability-limited balls.
+If:
+requested endpoint = 50 m
+actual capability endpoint = 35 m
+
+the runner should react to the actual 35 m ball.
+If that produces a feasible meeting, chase it.
+If not, abandon.
+Do not continue sprinting toward the original 50 m intent.
+Ball leaving play
+If the trajectory clearly takes the ball out of play before the runner can reach it:
+abandon
+
+There is no reason to continue a Through-Ball sprint toward an unreachable dead ball.
+What happens after abandonment
+Do NOT simply freeze the player.
+End the special:
+THROUGH_BALL_RUN
+
+intent and hand the player back to the normal movement/team-AI layer.
+For the isolated lab, if full team AI is unavailable, transition into a neutral recovery/deceleration behavior and explicitly label this as the placeholder.
+Do not build team tactical AI as part of this task.
+No automatic runner reassignment yet
+Keep the current limitation:
+no automatic reassignment
+
+If Runner A owns the Through Ball and eventually determines it is hopeless, do NOT suddenly make Runner B own it during this task.
+We can consider loose-ball ownership/reassignment later.
+Diagnostics
+Show:
+selected runner
+current ball state
+predicted meeting point
+ball arrival time
+runner minimum arrival time
+arrival-time deficit
+feasibility state:
+    REACHABLE
+    MARGINAL
+    UNREACHABLE
+chase state:
+    COMMITTED
+    ABANDONED
+abandonment time/reason
+
+Required tests
+Test at minimum:
+1. Easy reachable Through Ball
+→ never abandons
+
+2. Difficult but reachable ball
+→ keeps chasing and receives
+
+3. Initially reachable-looking ball that execution sends too wide
+→ reacts
+→ recognizes hopeless trajectory
+→ abandons
+
+4. Massive overhit
+→ abandons
+
+5. Massive underhit
+→ replans backward/shorter if feasible
+→ receives if possible
+→ otherwise abandons
+
+6. Ball heading out of play
+→ abandons once clearly unreachable
+
+7. SP capability-limited pass
+→ reacts to actual capability-limited ball
+
+8. Marginal case
+→ does NOT give up prematurely
+
+Run these across different starting:
+distances
+headings
+runner speeds
+ball speeds
+
+Important acceptance case
+Create an intentionally terrible Through Ball.
+I want to see:
+pass played
+↓
+runner initially commits
+↓
+runner reacts to actual error
+↓
+prediction becomes clearly hopeless
+↓
+runner stops chasing
+↓
+returns to ordinary movement
+
+That should look like a footballer recognizing a lost cause.
+Preserve everything else
+Do not change:
+- frozen PASSING-V1;
+- Through Ball accuracy;
+- Long Passing/Vision equation;
+- Through Ball physics;
+- Shot Power range capability;
+- endpoint intent;
+- initial runner selection;
+- full-sprint commitment while reachable;
+- RECEIVE;
+- deterministic execution randomness.
+This is purely an ongoing run-feasibility/abandonment layer.
+Do not freeze automatically
+Keep THROUGH-TARGET-1 provisional and present reachable, marginal and abandoned examples for review.
+The central behavior is:
+The selected runner attacks a Through Ball at full sprint while there is a plausible football meeting point. Once the actual physical ball becomes clearly unreachable, they recognize that and stop the special chase instead of blindly following it forever.

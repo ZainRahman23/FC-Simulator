@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-22",
+  "status": "PASS under documented execution mode",
+  "node": "v22.19.0",
+  "platform": "darwin arm64",
+  "totalSuites": 10,
+  "reportedChecks": 3101,
+  "suites": [
+    {
+      "suite": "ballphys1",
+      "exitCode": 0,
+      "seconds": 14.248039722442627,
+      "command": "node sandbox/visual/ballphys1/tools/test.mjs",
+      "reportedChecks": 53
+    },
+    {
+      "suite": "ballfeel14",
+      "exitCode": 0,
+      "seconds": 1.3103809356689453,
+      "command": "node sandbox/visual/ballfeel14/tools/test.mjs",
+      "reportedChecks": 27
+    },
+    {
+      "suite": "foundation",
+      "exitCode": 0,
+      "seconds": 3.5014119148254395,
+      "command": "node sandbox/visual/ballfeel14/tools/foundation-regression.mjs",
+      "reportedChecks": 53
+    },
+    {
+      "suite": "ballshot12",
+      "exitCode": 0,
+      "seconds": 8.488339900970459,
+      "command": "node sandbox/visual/ballshot12/tools/test.mjs",
+      "reportedChecks": 18
+    },
+    {
+      "suite": "curve11",
+      "exitCode": 0,
+      "seconds": 7.185625076293945,
+      "command": "node --jitless sandbox/visual/curve11/tools/test.mjs",
+      "reportedChecks": 10,
+      "initialDefaultJitExitCode": 1,
+      "note": "Unchanged suite passed with --jitless; initial default-JIT saved-hash failure retained in logs. No golden data or trajectory source changed."
+    },
+    {
+      "suite": "shotcharge13",
+      "exitCode": 0,
+      "seconds": 5.496833086013794,
+      "command": "node --jitless sandbox/visual/shotcharge13/tools/test.mjs",
+      "reportedChecks": 11,
+      "initialDefaultJitExitCode": 1,
+      "note": "Unchanged suite passed with --jitless; initial default-JIT saved-hash failure retained in logs. No golden data or trajectory source changed."
+    },
+    {
+      "suite": "shooting-playtest",
+      "exitCode": 0,
+      "seconds": 2.0377790927886963,
+      "command": "node validate.mjs",
+      "reportedChecks": 109
+    },
+    {
+      "suite": "short-pass",
+      "exitCode": 0,
+      "seconds": 9.460584163665771,
+      "command": "node passing-stabilization-6/short-regression.mjs",
+      "reportedChecks": 2155
+    },
+    {
+      "suite": "passing-range",
+      "exitCode": 0,
+      "seconds": 5.290009021759033,
+      "command": "node passing-range-7/study.mjs",
+      "reportedChecks": 154
+    },
+    {
+      "suite": "passing-assist",
+      "exitCode": 0,
+      "seconds": 6.620423793792725,
+      "command": "node passing-assist-9/study.mjs",
+      "reportedChecks": 511
+    }
+  ],
+  "historicalArchive": "Full legacy preservation assertions were run using the original workspace archive. This archive is ~3.87 GB and is not duplicated into this milestone.",
+  "sourceEdits": 0,
+  "supportingThroughIntegration": {
+    "status": "PASS",
+    "checks": 320,
+    "scope": "Existing runner/receiving integration regression only; not certified as animation or body mechanics by this milestone."
+  }
+}

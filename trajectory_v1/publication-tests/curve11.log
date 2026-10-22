@@ -1,0 +1,16 @@
+PASS exact eleven requested ratings, 75 default, fixed global 56 anchor and 1.40 multiplier
+PASS every rating has exactly 1.40 times intentional spin and unchanged relative capability
+PASS zero Curve has zero intentional contribution and identical physical trajectory
+PASS same frozen speed and all non-spin launch, foot, execution and body inputs
+PASS exact same targeted solver algorithm, physical trace, world, camera, renderer and Courtois
+PASS natural target solve and unchanged bend definition for all ratings
+PASS 99 full first flight is finite, forward, continuous and naturally targeted; rejection gates work
+PASS unforced keeper results independently reproduce with frozen runtime
+FAIL postlaunch metadata cannot steer and complete eleven-shot replay is deterministic Expected values to be strictly equal:
++ actual - expected
+
++ 'b5258ca105297ae72b2b9f161f4a5e5ac0e3b4fd489ab5767a29697aad19f725'
+- '6f0551a69301a33f89181ae56c63821295dcf4bfef5ddc892cc6f015cfed379c'
+
+PASS all frozen visual sources and historical outputs retain exact hashes
+9/10 passed

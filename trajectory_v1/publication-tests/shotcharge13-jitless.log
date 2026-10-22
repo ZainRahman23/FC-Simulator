@@ -1,0 +1,12 @@
+Warning: disabling flag --expose_wasm due to conflicting flags
+PASS Every nonnegative tap, including timer-resolution zero, registers; old 80 ms floor preserved exactly through 40 ms
+PASS 450 ms speed ceiling matches old 600 ms at all ratings; owner-approved elevation continues rising
+PASS Existing speed-curve shape preserved; earlier red follows a physical apex profile with no shelf
+PASS Continuous, monotonic, nonlinear timing; exact off-grid duration is retained
+PASS Trajectory brackets match the requested faster low→normal→rising distribution
+PASS Approved tap-through-300-ms trajectories retained; manual durations replay exactly on final profile
+PASS 75 supporting scenarios maintain shared apex across SP and retain varied pace
+PASS All progression shots repeat deterministically; single launch and stable forward physical flight
+PASS Actual input controller forwards sub-millisecond/quick holds without a debounce; ignores repeats, cancels safely
+PASS No artificial miss and no trajectory-only UI implementation
+PASS All frozen physics, Shot Power, Curve and prior-output bytes remain unchanged

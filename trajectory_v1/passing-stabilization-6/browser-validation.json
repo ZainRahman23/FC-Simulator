@@ -1,0 +1,105 @@
+{
+  "checks": [
+    {
+      "name": "Locked Through repeat: exact velocity, spin and physical result (new pass ID expected)",
+      "pass": true
+    },
+    {
+      "name": "20 to 50 m increases difficulty and actual miss with locked draw",
+      "pass": true
+    },
+    {
+      "name": "Elite 50 m Through: same ideal, smaller miss",
+      "pass": true
+    },
+    {
+      "name": "Matched replay sequence reaches 50 m and completes",
+      "pass": true
+    },
+    {
+      "name": "Extreme 70 m / Curve 99 Cross resolves physically with diagnostics",
+      "pass": true
+    },
+    {
+      "name": "Short 99 primary / Vision 60 gives 93.15 without override",
+      "pass": true
+    },
+    {
+      "name": "Extreme Cross repeats with identical physical launch and result",
+      "pass": true
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "crossTimings": {
+    "firstMs": 252.00000001490116,
+    "repeatedMs": 89.59999999403954
+  },
+  "errors": [],
+  "nodeReproduction": [
+    {
+      "family": "THROUGH",
+      "draw": "pass-event-1",
+      "velocityDelta": 4.440892098500626e-16,
+      "spinDelta": 3.552713678800501e-15,
+      "physicalMissDelta": 0,
+      "baselinePreserved": null
+    },
+    {
+      "family": "THROUGH",
+      "draw": "pass-event-1",
+      "velocityDelta": 4.440892098500626e-16,
+      "spinDelta": 3.552713678800501e-15,
+      "physicalMissDelta": 0,
+      "baselinePreserved": null
+    },
+    {
+      "family": "THROUGH",
+      "draw": "pass-event-1",
+      "velocityDelta": 0,
+      "spinDelta": 0,
+      "physicalMissDelta": 0,
+      "baselinePreserved": null
+    },
+    {
+      "family": "THROUGH",
+      "draw": "pass-event-1",
+      "velocityDelta": 6.938893903907228e-18,
+      "spinDelta": 2.7755575615628914e-17,
+      "physicalMissDelta": 0,
+      "baselinePreserved": null
+    },
+    {
+      "family": "CROSS",
+      "draw": "pass-event-1",
+      "velocityDelta": 3.552713678800501e-15,
+      "spinDelta": 0,
+      "physicalMissDelta": 1.0658141036401503e-14,
+      "baselinePreserved": true
+    },
+    {
+      "family": "SHORT",
+      "draw": "pass-event-1",
+      "velocityDelta": 0,
+      "spinDelta": 0,
+      "physicalMissDelta": 0,
+      "baselinePreserved": true
+    },
+    {
+      "family": "CROSS",
+      "draw": "pass-event-1",
+      "velocityDelta": 3.552713678800501e-15,
+      "spinDelta": 0,
+      "physicalMissDelta": 1.0658141036401503e-14,
+      "baselinePreserved": true
+    }
+  ],
+  "report": {
+    "all49Cells": true,
+    "ratingSelector": true,
+    "matchedSequence": true,
+    "finalDecisionVisible": "YES",
+    "consoleErrors": [],
+    "proof": "review-proof.png"
+  }
+}

@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+const manifest=JSON.parse(fs.readFileSync('source-manifest.json'));
+const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+const changed=Object.entries(manifest.hashes).filter(([p,h])=>!fs.existsSync(manifest.repo+'/'+p)||sha(fs.readFileSync(manifest.repo+'/'+p))!==h).map(([p])=>p);
+const frozenChanges=Object.entries(manifest.frozenCopies).filter(([p,h])=>sha(fs.readFileSync('frozen/'+p))!==h).map(([p])=>p);
+const lockedModelUnchanged=sha(fs.readFileSync('locked-model.mjs'))===manifest.lockedModelHash;
+const gitStatus=execFileSync('git',['status','--porcelain'],{cwd:manifest.repo,encoding:'utf8'});
+const result={status:changed.length===0&&frozenChanges.length===0&&lockedModelUnchanged&&gitStatus===manifest.gitStatus?'PASS':'FAIL',verifiedAt:new Date().toISOString(),protectedPresentTrackedSources:Object.keys(manifest.hashes).length,missingTrackedSourcesAtBaseline:manifest.missingTrackedSources.length,frozenModules:Object.keys(manifest.frozenCopies).length,changed,frozenChanges,lockedModelUnchanged,gitStatus,baselineCommit:manifest.commit};
+fs.writeFileSync('protected-verification.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(result,null,2));
+assert.equal(result.status,'PASS');

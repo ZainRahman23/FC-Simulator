@@ -1,0 +1,2943 @@
+{
+  "version": "SHOT-ACCURACY-1.0 · complete calibration",
+  "width": {
+    "radius": 20.16,
+    "fullWidth": 40.32,
+    "locked": true,
+    "ownerInstruction": "Keep at 20.16; alternatives are historical comparisons only"
+  },
+  "geometry": {
+    "pitchLength": 105,
+    "pitchWidth": 68,
+    "goalX": 105,
+    "goalCentreZ": 34,
+    "goalWidth": 7.32,
+    "goalHeight": 2.44,
+    "penaltyDepth": 16.5,
+    "penaltyWidth": 40.32,
+    "penaltySpotDistance": 11,
+    "arcRadius": 9.15,
+    "ballRadius": 0.11,
+    "source": "sandbox/visual/match.js:759–768; sandbox/visual/shotcharge1/config.js:5",
+    "sixYardDepth": 5.5,
+    "sixYardWidth": 18.32
+  },
+  "profiles": [
+    {
+      "id": "finisher",
+      "name": "Elite finisher",
+      "finishing": 95,
+      "longShots": 60
+    },
+    {
+      "id": "balanced",
+      "name": "Balanced attacker",
+      "finishing": 80,
+      "longShots": 80
+    },
+    {
+      "id": "long",
+      "name": "Long-shot specialist",
+      "finishing": 65,
+      "longShots": 95
+    },
+    {
+      "id": "poor",
+      "name": "Poor shooter",
+      "finishing": 50,
+      "longShots": 50
+    },
+    {
+      "id": "player-c",
+      "name": "Comparison player C",
+      "finishing": 60,
+      "longShots": 95
+    }
+  ],
+  "method": {
+    "randomShots": 0,
+    "monteCarlo": false,
+    "projection": "Frozen BALL-PHYS at 240 Hz, independent bounded triangular yaw/elevation errors; no frame or keeper colliders. Deterministic physical grid and Jacobian push-forward.",
+    "controlledTargeting": "At fixed speed, a lab-only pre-contact elevation solve hits the target. It is not the charge-selected apex resolver. Approved-charge mode is separately available.",
+    "spatialSigma": "Local Jacobian approximation, not empirical standard deviation",
+    "support": "Bounds from the deterministic projection mesh; unresolved non-crossing cells retain separate probability mass and are not renormalized."
+  },
+  "curve": [
+    {
+      "accuracy": 1,
+      "base": {
+        "accuracy": 1,
+        "sigmaBaseH": 3.323465474245421,
+        "sigmaBaseV": 1.9940792845472524,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 3.323465474245421,
+        "sigmaV": 1.9940792845472524,
+        "maxH": 8.140794589658189,
+        "maxV": 4.884476753794913
+      },
+      "fullSpeed": {
+        "accuracy": 1,
+        "sigmaBaseH": 3.323465474245421,
+        "sigmaBaseV": 1.9940792845472524,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.3323465474245424,
+        "addedSigmaV": 0.19940792845472521,
+        "sigmaH": 3.655812021669963,
+        "sigmaV": 2.1934872130019776,
+        "maxH": 8.954874048624008,
+        "maxV": 5.372924429174404
+      }
+    },
+    {
+      "accuracy": 10,
+      "base": {
+        "accuracy": 10,
+        "sigmaBaseH": 3.205602252161673,
+        "sigmaBaseV": 1.9233613512970038,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 3.205602252161673,
+        "sigmaV": 1.9233613512970038,
+        "maxH": 7.852089836112673,
+        "maxV": 4.711253901667603
+      },
+      "fullSpeed": {
+        "accuracy": 10,
+        "sigmaBaseH": 3.205602252161673,
+        "sigmaBaseV": 1.9233613512970038,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.32056022521616745,
+        "addedSigmaV": 0.19233613512970038,
+        "sigmaH": 3.5261624773778406,
+        "sigmaV": 2.115697486426704,
+        "maxH": 8.63729881972394,
+        "maxV": 5.182379291834364
+      }
+    },
+    {
+      "accuracy": 20,
+      "base": {
+        "accuracy": 20,
+        "sigmaBaseH": 3.040082264698766,
+        "sigmaBaseV": 1.8240493588192594,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 3.040082264698766,
+        "sigmaV": 1.8240493588192594,
+        "maxH": 7.446650324596681,
+        "maxV": 4.467990194758008
+      },
+      "fullSpeed": {
+        "accuracy": 20,
+        "sigmaBaseH": 3.040082264698766,
+        "sigmaBaseV": 1.8240493588192594,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.3040082264698767,
+        "addedSigmaV": 0.18240493588192597,
+        "sigmaH": 3.3440904911686427,
+        "sigmaV": 2.0064542947011854,
+        "maxH": 8.19131535705635,
+        "maxV": 4.914789214233809
+      }
+    },
+    {
+      "accuracy": 30,
+      "base": {
+        "accuracy": 30,
+        "sigmaBaseH": 2.826366047745358,
+        "sigmaBaseV": 1.6958196286472147,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 2.826366047745358,
+        "sigmaV": 1.6958196286472147,
+        "maxH": 6.923154643302884,
+        "maxV": 4.15389278598173
+      },
+      "fullSpeed": {
+        "accuracy": 30,
+        "sigmaBaseH": 2.826366047745358,
+        "sigmaBaseV": 1.6958196286472147,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.2826366047745359,
+        "addedSigmaV": 0.1695819628647217,
+        "sigmaH": 3.109002652519894,
+        "sigmaV": 1.8654015915119364,
+        "maxH": 7.615470107633173,
+        "maxV": 4.5692820645799035
+      }
+    },
+    {
+      "accuracy": 40,
+      "base": {
+        "accuracy": 40,
+        "sigmaBaseH": 2.5488775880857246,
+        "sigmaBaseV": 1.5293265528514348,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 2.5488775880857246,
+        "sigmaV": 1.5293265528514348,
+        "maxH": 6.2434495076259084,
+        "maxV": 3.7460697045755453
+      },
+      "fullSpeed": {
+        "accuracy": 40,
+        "sigmaBaseH": 2.5488775880857246,
+        "sigmaBaseV": 1.5293265528514348,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.2548877588085725,
+        "addedSigmaV": 0.15293265528514355,
+        "sigmaH": 2.803765346894297,
+        "sigmaV": 1.6822592081365784,
+        "maxH": 6.8677944583885,
+        "maxV": 4.1206766750331
+      }
+    },
+    {
+      "accuracy": 50,
+      "base": {
+        "accuracy": 50,
+        "sigmaBaseH": 2.1899051061906913,
+        "sigmaBaseV": 1.3139430637144147,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 2.1899051061906913,
+        "sigmaV": 1.3139430637144147,
+        "maxH": 5.3641500952826044,
+        "maxV": 3.2184900571695625
+      },
+      "fullSpeed": {
+        "accuracy": 50,
+        "sigmaBaseH": 2.1899051061906913,
+        "sigmaBaseV": 1.3139430637144147,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.2189905106190695,
+        "addedSigmaV": 0.13139430637144156,
+        "sigmaH": 2.408895616809761,
+        "sigmaV": 1.4453373700858563,
+        "maxH": 5.900565104810866,
+        "maxV": 3.540339062886519
+      }
+    },
+    {
+      "accuracy": 60,
+      "base": {
+        "accuracy": 60,
+        "sigmaBaseH": 1.735736040609137,
+        "sigmaBaseV": 1.0414416243654823,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 1.735736040609137,
+        "sigmaV": 1.0414416243654823,
+        "maxH": 4.251667627651167,
+        "maxV": 2.5510005765907002
+      },
+      "fullSpeed": {
+        "accuracy": 60,
+        "sigmaBaseH": 1.735736040609137,
+        "sigmaBaseV": 1.0414416243654823,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.17357360406091393,
+        "addedSigmaV": 0.10414416243654823,
+        "sigmaH": 1.909309644670051,
+        "sigmaV": 1.1455857868020305,
+        "maxH": 4.676834390416284,
+        "maxV": 2.8061006342497703
+      }
+    },
+    {
+      "accuracy": 70,
+      "base": {
+        "accuracy": 70,
+        "sigmaBaseH": 1.193761339846476,
+        "sigmaBaseV": 0.7162568039078855,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 1.193761339846476,
+        "sigmaV": 0.7162568039078855,
+        "maxH": 2.924106157285046,
+        "maxV": 1.7544636943710274
+      },
+      "fullSpeed": {
+        "accuracy": 70,
+        "sigmaBaseH": 1.193761339846476,
+        "sigmaBaseV": 0.7162568039078855,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.11937613398464775,
+        "addedSigmaV": 0.07162568039078865,
+        "sigmaH": 1.3131374738311237,
+        "sigmaV": 0.7878824842986741,
+        "maxH": 3.216516773013551,
+        "maxV": 1.9299100638081306
+      }
+    },
+    {
+      "accuracy": 80,
+      "base": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 0.6251969823973177,
+        "sigmaV": 0.3751181894383906,
+        "maxH": 1.5314135956012247,
+        "maxV": 0.9188481573607348
+      },
+      "fullSpeed": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.0625196982397318,
+        "addedSigmaV": 0.03751181894383909,
+        "sigmaH": 0.6877166806370495,
+        "sigmaV": 0.4126300083822297,
+        "maxH": 1.6845549551613472,
+        "maxV": 1.0107329730968084
+      }
+    },
+    {
+      "accuracy": 90,
+      "base": {
+        "accuracy": 90,
+        "sigmaBaseH": 0.17384615384615384,
+        "sigmaBaseV": 0.10430769230769231,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 0.17384615384615384,
+        "sigmaV": 0.10430769230769231,
+        "maxH": 0.42583437066846014,
+        "maxV": 0.25550062240107607
+      },
+      "fullSpeed": {
+        "accuracy": 90,
+        "sigmaBaseH": 0.17384615384615384,
+        "sigmaBaseV": 0.10430769230769231,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.017384615384615387,
+        "addedSigmaV": 0.010430769230769243,
+        "sigmaH": 0.19123076923076923,
+        "sigmaV": 0.11473846153846155,
+        "maxH": 0.46841780773530617,
+        "maxV": 0.2810506846411837
+      }
+    },
+    {
+      "accuracy": 95,
+      "base": {
+        "accuracy": 95,
+        "sigmaBaseH": 0.051357177853993144,
+        "sigmaBaseV": 0.030814306712395885,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 0.051357177853993144,
+        "sigmaV": 0.030814306712395885,
+        "maxH": 0.12579888037164758,
+        "maxV": 0.07547932822298854
+      },
+      "fullSpeed": {
+        "accuracy": 95,
+        "sigmaBaseH": 0.051357177853993144,
+        "sigmaBaseV": 0.030814306712395885,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.00513571778539932,
+        "addedSigmaV": 0.003081430671239588,
+        "sigmaH": 0.056492895639392464,
+        "sigmaV": 0.03389573738363547,
+        "maxH": 0.13837876840881236,
+        "maxV": 0.0830272610452874
+      }
+    },
+    {
+      "accuracy": 99,
+      "base": {
+        "accuracy": 99,
+        "sigmaBaseH": 0.02,
+        "sigmaBaseV": 0.012,
+        "difficulty": 1,
+        "powerIncreasePercent": 0,
+        "addedSigmaH": 0,
+        "addedSigmaV": 0,
+        "sigmaH": 0.02,
+        "sigmaV": 0.012,
+        "maxH": 0.04898979485566356,
+        "maxV": 0.029393876913398134
+      },
+      "fullSpeed": {
+        "accuracy": 99,
+        "sigmaBaseH": 0.02,
+        "sigmaBaseV": 0.012,
+        "difficulty": 1.1,
+        "powerIncreasePercent": 10.000000000000009,
+        "addedSigmaH": 0.0020000000000000018,
+        "addedSigmaV": 0.0012000000000000014,
+        "sigmaH": 0.022000000000000002,
+        "sigmaV": 0.013200000000000002,
+        "maxH": 0.05388877434122992,
+        "maxV": 0.032333264604737955
+      }
+    }
+  ],
+  "power": [
+    {
+      "r": 0.4,
+      "D": 1.00256,
+      "increasePercent": 0.25600000000000006
+    },
+    {
+      "r": 0.5,
+      "D": 1.00625,
+      "increasePercent": 0.625
+    },
+    {
+      "r": 0.6,
+      "D": 1.01296,
+      "increasePercent": 1.2959999999999998
+    },
+    {
+      "r": 0.7,
+      "D": 1.02401,
+      "increasePercent": 2.4009999999999994
+    },
+    {
+      "r": 0.8,
+      "D": 1.04096,
+      "increasePercent": 4.096000000000001
+    },
+    {
+      "r": 0.9,
+      "D": 1.06561,
+      "increasePercent": 6.561000000000002
+    },
+    {
+      "r": 1,
+      "D": 1.1,
+      "increasePercent": 10
+    }
+  ],
+  "widthStudy": [
+    {
+      "radius": 8,
+      "fullWidth": 16,
+      "status": "HISTORICAL ALTERNATIVE",
+      "finishingArea": 207.34511513692635,
+      "mixedArea": 457.93488486307365,
+      "positions": [
+        {
+          "id": "six",
+          "name": "Central six-yard",
+          "forward": 5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "spot",
+          "name": "Penalty spot",
+          "forward": 11,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central12",
+          "name": "Central 12 m",
+          "forward": 12,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central16",
+          "name": "Central 16 m",
+          "forward": 16,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "moderate",
+          "name": "12 m / moderate angle",
+          "forward": 12,
+          "lateral": 8,
+          "zone": 3
+        },
+        {
+          "id": "wide12",
+          "name": "12 m / wide",
+          "forward": 12,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "six-corner",
+          "name": "Six-yard corner",
+          "forward": 5.5,
+          "lateral": 9.16,
+          "zone": 3
+        },
+        {
+          "id": "mixed",
+          "name": "Wide box / Mixed",
+          "forward": 8,
+          "lateral": 18.16,
+          "zone": 3
+        },
+        {
+          "id": "apex",
+          "name": "Fixed apex",
+          "forward": 16.5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "corner",
+          "name": "Penalty-area corner",
+          "forward": 16.5,
+          "lateral": 20.16,
+          "zone": 3
+        },
+        {
+          "id": "top-d",
+          "name": "Top of D",
+          "forward": 20.15,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "byline",
+          "name": "Wide byline",
+          "forward": 1,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "byline-edge",
+          "name": "Byline / edge strip",
+          "forward": 1,
+          "lateral": 20.14,
+          "zone": 3
+        },
+        {
+          "id": "central20",
+          "name": "Central 20 m",
+          "forward": 20,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central25",
+          "name": "Central 25 m",
+          "forward": 25,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central30",
+          "name": "Central 30 m",
+          "forward": 30,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "wide25",
+          "name": "25 m / wide",
+          "forward": 25,
+          "lateral": 18,
+          "zone": 2
+        },
+        {
+          "id": "wide30",
+          "name": "30 m / wide",
+          "forward": 30,
+          "lateral": 24,
+          "zone": 2
+        }
+      ]
+    },
+    {
+      "radius": 12,
+      "fullWidth": 24,
+      "status": "HISTORICAL ALTERNATIVE",
+      "finishingArea": 311.01767270538954,
+      "mixedArea": 354.26232729461043,
+      "positions": [
+        {
+          "id": "six",
+          "name": "Central six-yard",
+          "forward": 5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "spot",
+          "name": "Penalty spot",
+          "forward": 11,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central12",
+          "name": "Central 12 m",
+          "forward": 12,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central16",
+          "name": "Central 16 m",
+          "forward": 16,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "moderate",
+          "name": "12 m / moderate angle",
+          "forward": 12,
+          "lateral": 8,
+          "zone": 1
+        },
+        {
+          "id": "wide12",
+          "name": "12 m / wide",
+          "forward": 12,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "six-corner",
+          "name": "Six-yard corner",
+          "forward": 5.5,
+          "lateral": 9.16,
+          "zone": 1
+        },
+        {
+          "id": "mixed",
+          "name": "Wide box / Mixed",
+          "forward": 8,
+          "lateral": 18.16,
+          "zone": 3
+        },
+        {
+          "id": "apex",
+          "name": "Fixed apex",
+          "forward": 16.5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "corner",
+          "name": "Penalty-area corner",
+          "forward": 16.5,
+          "lateral": 20.16,
+          "zone": 3
+        },
+        {
+          "id": "top-d",
+          "name": "Top of D",
+          "forward": 20.15,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "byline",
+          "name": "Wide byline",
+          "forward": 1,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "byline-edge",
+          "name": "Byline / edge strip",
+          "forward": 1,
+          "lateral": 20.14,
+          "zone": 3
+        },
+        {
+          "id": "central20",
+          "name": "Central 20 m",
+          "forward": 20,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central25",
+          "name": "Central 25 m",
+          "forward": 25,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central30",
+          "name": "Central 30 m",
+          "forward": 30,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "wide25",
+          "name": "25 m / wide",
+          "forward": 25,
+          "lateral": 18,
+          "zone": 2
+        },
+        {
+          "id": "wide30",
+          "name": "30 m / wide",
+          "forward": 30,
+          "lateral": 24,
+          "zone": 2
+        }
+      ]
+    },
+    {
+      "radius": 16,
+      "fullWidth": 32,
+      "status": "HISTORICAL ALTERNATIVE",
+      "finishingArea": 414.6902302738527,
+      "mixedArea": 250.58976972614727,
+      "positions": [
+        {
+          "id": "six",
+          "name": "Central six-yard",
+          "forward": 5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "spot",
+          "name": "Penalty spot",
+          "forward": 11,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central12",
+          "name": "Central 12 m",
+          "forward": 12,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central16",
+          "name": "Central 16 m",
+          "forward": 16,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "moderate",
+          "name": "12 m / moderate angle",
+          "forward": 12,
+          "lateral": 8,
+          "zone": 1
+        },
+        {
+          "id": "wide12",
+          "name": "12 m / wide",
+          "forward": 12,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "six-corner",
+          "name": "Six-yard corner",
+          "forward": 5.5,
+          "lateral": 9.16,
+          "zone": 1
+        },
+        {
+          "id": "mixed",
+          "name": "Wide box / Mixed",
+          "forward": 8,
+          "lateral": 18.16,
+          "zone": 3
+        },
+        {
+          "id": "apex",
+          "name": "Fixed apex",
+          "forward": 16.5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "corner",
+          "name": "Penalty-area corner",
+          "forward": 16.5,
+          "lateral": 20.16,
+          "zone": 3
+        },
+        {
+          "id": "top-d",
+          "name": "Top of D",
+          "forward": 20.15,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "byline",
+          "name": "Wide byline",
+          "forward": 1,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "byline-edge",
+          "name": "Byline / edge strip",
+          "forward": 1,
+          "lateral": 20.14,
+          "zone": 3
+        },
+        {
+          "id": "central20",
+          "name": "Central 20 m",
+          "forward": 20,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central25",
+          "name": "Central 25 m",
+          "forward": 25,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central30",
+          "name": "Central 30 m",
+          "forward": 30,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "wide25",
+          "name": "25 m / wide",
+          "forward": 25,
+          "lateral": 18,
+          "zone": 2
+        },
+        {
+          "id": "wide30",
+          "name": "30 m / wide",
+          "forward": 30,
+          "lateral": 24,
+          "zone": 2
+        }
+      ]
+    },
+    {
+      "radius": 20.16,
+      "fullWidth": 40.32,
+      "status": "OWNER APPROVED",
+      "finishingArea": 522.5096901450544,
+      "mixedArea": 142.7703098549456,
+      "positions": [
+        {
+          "id": "six",
+          "name": "Central six-yard",
+          "forward": 5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "spot",
+          "name": "Penalty spot",
+          "forward": 11,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central12",
+          "name": "Central 12 m",
+          "forward": 12,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "central16",
+          "name": "Central 16 m",
+          "forward": 16,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "moderate",
+          "name": "12 m / moderate angle",
+          "forward": 12,
+          "lateral": 8,
+          "zone": 1
+        },
+        {
+          "id": "wide12",
+          "name": "12 m / wide",
+          "forward": 12,
+          "lateral": 18,
+          "zone": 3
+        },
+        {
+          "id": "six-corner",
+          "name": "Six-yard corner",
+          "forward": 5.5,
+          "lateral": 9.16,
+          "zone": 1
+        },
+        {
+          "id": "mixed",
+          "name": "Wide box / Mixed",
+          "forward": 8,
+          "lateral": 18.16,
+          "zone": 3
+        },
+        {
+          "id": "apex",
+          "name": "Fixed apex",
+          "forward": 16.5,
+          "lateral": 0,
+          "zone": 1
+        },
+        {
+          "id": "corner",
+          "name": "Penalty-area corner",
+          "forward": 16.5,
+          "lateral": 20.16,
+          "zone": 3
+        },
+        {
+          "id": "top-d",
+          "name": "Top of D",
+          "forward": 20.15,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "byline",
+          "name": "Wide byline",
+          "forward": 1,
+          "lateral": 18,
+          "zone": 1
+        },
+        {
+          "id": "byline-edge",
+          "name": "Byline / edge strip",
+          "forward": 1,
+          "lateral": 20.14,
+          "zone": 3
+        },
+        {
+          "id": "central20",
+          "name": "Central 20 m",
+          "forward": 20,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central25",
+          "name": "Central 25 m",
+          "forward": 25,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "central30",
+          "name": "Central 30 m",
+          "forward": 30,
+          "lateral": 0,
+          "zone": 2
+        },
+        {
+          "id": "wide25",
+          "name": "25 m / wide",
+          "forward": 25,
+          "lateral": 18,
+          "zone": 2
+        },
+        {
+          "id": "wide30",
+          "name": "30 m / wide",
+          "forward": 30,
+          "lateral": 24,
+          "zone": 2
+        }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "name": "Ellipse boundary",
+      "on": {
+        "forward": 13.258564809824875,
+        "lateral": 12
+      },
+      "inside": {
+        "forward": 13.258464809824876,
+        "lateral": 12
+      },
+      "outside": {
+        "forward": 13.258664809824875,
+        "lateral": 12
+      },
+      "separation": 0.0002,
+      "profiles": [
+        {
+          "profile": "finisher",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258464809824872,
+            "lateral": 12,
+            "ellipseValue": 0.9999902600442165,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 95
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258564809824875,
+            "lateral": 12,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 95
+          },
+          "outside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 13.258664809824879,
+            "lateral": 12,
+            "ellipseValue": 1.0000097400292454,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "jump": -17.5
+        },
+        {
+          "profile": "balanced",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258464809824872,
+            "lateral": 12,
+            "ellipseValue": 0.9999902600442165,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258564809824875,
+            "lateral": 12,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 13.258664809824879,
+            "lateral": 12,
+            "ellipseValue": 1.0000097400292454,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "jump": 0
+        },
+        {
+          "profile": "long",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258464809824872,
+            "lateral": 12,
+            "ellipseValue": 0.9999902600442165,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 65
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258564809824875,
+            "lateral": 12,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 65
+          },
+          "outside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 13.258664809824879,
+            "lateral": 12,
+            "ellipseValue": 1.0000097400292454,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "jump": 15
+        },
+        {
+          "profile": "poor",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258464809824872,
+            "lateral": 12,
+            "ellipseValue": 0.9999902600442165,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 50
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258564809824875,
+            "lateral": 12,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 50
+          },
+          "outside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 13.258664809824879,
+            "lateral": 12,
+            "ellipseValue": 1.0000097400292454,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 50
+          },
+          "jump": 0
+        },
+        {
+          "profile": "player-c",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258464809824872,
+            "lateral": 12,
+            "ellipseValue": 0.9999902600442165,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 60
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 13.258564809824875,
+            "lateral": 12,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 60
+          },
+          "outside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 13.258664809824879,
+            "lateral": 12,
+            "ellipseValue": 1.0000097400292454,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "jump": 17.5
+        }
+      ]
+    },
+    {
+      "name": "Front box line, wide",
+      "on": {
+        "forward": 16.5,
+        "lateral": 10
+      },
+      "inside": {
+        "forward": 16.4999,
+        "lateral": 10
+      },
+      "outside": {
+        "forward": 16.5001,
+        "lateral": 10
+      },
+      "separation": 0.0002,
+      "profiles": [
+        {
+          "profile": "finisher",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.499899999999997,
+            "lateral": 10,
+            "ellipseValue": 1.246035371895912,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.5,
+            "lateral": 10,
+            "ellipseValue": 1.2460474930713026,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 10,
+            "ellipseValue": 1.246059614320155,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 60
+          },
+          "jump": -17.5
+        },
+        {
+          "profile": "balanced",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.499899999999997,
+            "lateral": 10,
+            "ellipseValue": 1.246035371895912,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.5,
+            "lateral": 10,
+            "ellipseValue": 1.2460474930713026,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 10,
+            "ellipseValue": 1.246059614320155,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 80
+          },
+          "jump": 0
+        },
+        {
+          "profile": "long",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.499899999999997,
+            "lateral": 10,
+            "ellipseValue": 1.246035371895912,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.5,
+            "lateral": 10,
+            "ellipseValue": 1.2460474930713026,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 10,
+            "ellipseValue": 1.246059614320155,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 15
+        },
+        {
+          "profile": "poor",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.499899999999997,
+            "lateral": 10,
+            "ellipseValue": 1.246035371895912,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 50
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.5,
+            "lateral": 10,
+            "ellipseValue": 1.2460474930713026,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 50
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 10,
+            "ellipseValue": 1.246059614320155,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 50
+          },
+          "jump": 0
+        },
+        {
+          "profile": "player-c",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.499899999999997,
+            "lateral": 10,
+            "ellipseValue": 1.246035371895912,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 16.5,
+            "lateral": 10,
+            "ellipseValue": 1.2460474930713026,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 10,
+            "ellipseValue": 1.246059614320155,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 17.5
+        }
+      ]
+    },
+    {
+      "name": "Front box line, apex",
+      "on": {
+        "forward": 16.5,
+        "lateral": 0
+      },
+      "inside": {
+        "forward": 16.4999,
+        "lateral": 0
+      },
+      "outside": {
+        "forward": 16.5001,
+        "lateral": 0
+      },
+      "separation": 0.0002,
+      "profiles": [
+        {
+          "profile": "finisher",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.499899999999997,
+            "lateral": 0,
+            "ellipseValue": 0.9999878788246094,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 95
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.5,
+            "lateral": 0,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 95
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 0,
+            "ellipseValue": 1.0000121212488524,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 60
+          },
+          "jump": -35
+        },
+        {
+          "profile": "balanced",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.499899999999997,
+            "lateral": 0,
+            "ellipseValue": 0.9999878788246094,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.5,
+            "lateral": 0,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 0,
+            "ellipseValue": 1.0000121212488524,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 80
+          },
+          "jump": 0
+        },
+        {
+          "profile": "long",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.499899999999997,
+            "lateral": 0,
+            "ellipseValue": 0.9999878788246094,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 65
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.5,
+            "lateral": 0,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 65
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 0,
+            "ellipseValue": 1.0000121212488524,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 30
+        },
+        {
+          "profile": "poor",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.499899999999997,
+            "lateral": 0,
+            "ellipseValue": 0.9999878788246094,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 50
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.5,
+            "lateral": 0,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 50
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 0,
+            "ellipseValue": 1.0000121212488524,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 50
+          },
+          "jump": 0
+        },
+        {
+          "profile": "player-c",
+          "inside": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.499899999999997,
+            "lateral": 0,
+            "ellipseValue": 0.9999878788246094,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 60
+          },
+          "on": {
+            "zone": 1,
+            "label": "ZONE 1 — FINISHING",
+            "insideBox": true,
+            "insideEllipse": true,
+            "forward": 16.5,
+            "lateral": 0,
+            "ellipseValue": 1,
+            "finishingWeight": 1,
+            "longShotsWeight": 0,
+            "effectiveAccuracy": 60
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 16.500100000000003,
+            "lateral": 0,
+            "ellipseValue": 1.0000121212488524,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 35
+        }
+      ]
+    },
+    {
+      "name": "Side box line",
+      "on": {
+        "forward": 8,
+        "lateral": 20.16
+      },
+      "inside": {
+        "forward": 8,
+        "lateral": 20.1599
+      },
+      "outside": {
+        "forward": 8,
+        "lateral": 20.1601
+      },
+      "separation": 0.0002,
+      "profiles": [
+        {
+          "profile": "finisher",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1599,
+            "ellipseValue": 1.2350681326495556,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.159999999999997,
+            "ellipseValue": 1.235078053259871,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1601,
+            "ellipseValue": 1.235087973919397,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 60
+          },
+          "jump": -17.5
+        },
+        {
+          "profile": "balanced",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1599,
+            "ellipseValue": 1.2350681326495556,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.159999999999997,
+            "ellipseValue": 1.235078053259871,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1601,
+            "ellipseValue": 1.235087973919397,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 80
+          },
+          "jump": 0
+        },
+        {
+          "profile": "long",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1599,
+            "ellipseValue": 1.2350681326495556,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.159999999999997,
+            "ellipseValue": 1.235078053259871,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 80
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1601,
+            "ellipseValue": 1.235087973919397,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 15
+        },
+        {
+          "profile": "poor",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1599,
+            "ellipseValue": 1.2350681326495556,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 50
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.159999999999997,
+            "ellipseValue": 1.235078053259871,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 50
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1601,
+            "ellipseValue": 1.235087973919397,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 50
+          },
+          "jump": 0
+        },
+        {
+          "profile": "player-c",
+          "inside": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1599,
+            "ellipseValue": 1.2350681326495556,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "on": {
+            "zone": 3,
+            "label": "ZONE 3 — MIXED",
+            "insideBox": true,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.159999999999997,
+            "ellipseValue": 1.235078053259871,
+            "finishingWeight": 0.5,
+            "longShotsWeight": 0.5,
+            "effectiveAccuracy": 77.5
+          },
+          "outside": {
+            "zone": 2,
+            "label": "ZONE 2 — LONG SHOTS",
+            "insideBox": false,
+            "insideEllipse": false,
+            "forward": 8,
+            "lateral": 20.1601,
+            "ellipseValue": 1.235087973919397,
+            "finishingWeight": 0,
+            "longShotsWeight": 1,
+            "effectiveAccuracy": 95
+          },
+          "jump": 17.5
+        }
+      ]
+    }
+  ],
+  "distance": [
+    {
+      "zoneName": "Long Shots",
+      "forward": 18,
+      "zone": 2,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          87,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.08655756904675,
+          5.76862044707635,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 12.022654861211777,
+        "plane": {
+          "x": 0,
+          "y": 1.2200000302058185,
+          "time": 0.7512545898295203,
+          "apex": 1.519040743876013,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 3.0205818513096006e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.20910364287006325,
+      "sigmaV": 0.12296993421026878,
+      "bound": {
+        "left": -0.5124090301104047,
+        "right": 0.5124090301104047,
+        "bottom": 0.9180348139330639,
+        "top": 1.5214624608360932
+      },
+      "maxH": 0.5124090301104047,
+      "maxV": 0.3019651860669361,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Long Shots",
+      "forward": 20,
+      "zone": 2,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          85,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.002699513717864,
+          6.149211475918855,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 12.828948050737381,
+        "plane": {
+          "x": 0,
+          "y": 1.2200000488066374,
+          "time": 0.8490878797031753,
+          "apex": 1.7014522449046963,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 4.8806637398257635e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.23230892097336592,
+      "sigmaV": 0.13554792136546667,
+      "bound": {
+        "left": -0.569283323768019,
+        "right": 0.569283323768019,
+        "bottom": 0.8868684124160758,
+        "top": 1.5521221843902333
+      },
+      "maxH": 0.569283323768019,
+      "maxV": 0.33313158758392414,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Long Shots",
+      "forward": 25,
+      "zone": 2,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          80,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.702532629366708,
+          7.343931779456918,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 15.377718061208725,
+        "plane": {
+          "x": 0,
+          "y": 1.2200000412328484,
+          "time": 1.1120403511976036,
+          "apex": 2.3381240397447662,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 4.12328484689084e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.29026758017609855,
+      "sigmaV": 0.16476131823341383,
+      "bound": {
+        "left": -0.7113453367634861,
+        "right": 0.7113453367634861,
+        "bottom": 0.8138685023661942,
+        "top": 1.6233593560958877
+      },
+      "maxH": 0.7113453367634861,
+      "maxV": 0.40613149763380574,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Long Shots",
+      "forward": 30,
+      "zone": 2,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          75,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.235159622915386,
+          8.86989190260294,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 18.679972738027573,
+        "plane": {
+          "x": 0,
+          "y": 1.220000063067169,
+          "time": 1.4088447799121306,
+          "apex": 3.2873369790265765,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 6.306716904269649e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.3481088935287112,
+      "sigmaV": 0.1886024768392304,
+      "bound": {
+        "left": -0.8531357202806191,
+        "right": 0.8531357202806191,
+        "bottom": 0.7529049097485712,
+        "top": 1.6814104817112272
+      },
+      "maxH": 0.8531357202806191,
+      "maxV": 0.4670950902514288,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Long Shots",
+      "forward": 35,
+      "zone": 2,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          70,
+          0.11,
+          34
+        ],
+        "velocity": [
+          25.50147429069995,
+          10.799694060688969,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 22.952314168214798,
+        "plane": {
+          "x": 0,
+          "y": 1.2200000225479988,
+          "time": 1.7572803240309638,
+          "apex": 4.695569774078595,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 2.2547998801414337e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.40574413511000135,
+      "sigmaV": 0.2020351260698601,
+      "bound": {
+        "left": -0.9944409623661699,
+        "right": 0.9944409623661699,
+        "bottom": 0.7164015322627729,
+        "top": 1.7127647517515718
+      },
+      "maxH": 0.9944409623661699,
+      "maxV": 0.503598467737227,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Finishing",
+      "forward": 5,
+      "zone": 1,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          100,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.796913411178693,
+          6.9917104085840425,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 14.623298794031143,
+        "plane": {
+          "x": 0,
+          "y": 1.2199999878440162,
+          "time": 0.19313400611473455,
+          "apex": 1.2323013289043705,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 1.2155983775130608e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.058107506922213115,
+      "sigmaV": 0.03652737881448992,
+      "bound": {
+        "left": -0.14237826017409816,
+        "right": 0.14237826017409816,
+        "bottom": 1.1308557386518778,
+        "top": 1.3102330722597073
+      },
+      "maxH": 0.14237826017409816,
+      "maxV": 0.09023307225970734,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Finishing",
+      "forward": 8,
+      "zone": 1,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          97,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.154031141517827,
+          5.442166440783605,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 11.332979053258896,
+        "plane": {
+          "x": 0,
+          "y": 1.220000000741359,
+          "time": 0.3110858864667341,
+          "apex": 1.2225515838715353,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 7.413589742100157e-10
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.09296849901799442,
+      "sigmaV": 0.05663937200438015,
+      "bound": {
+        "left": -0.2278014609961332,
+        "right": 0.2278014609961332,
+        "bottom": 1.0815709673539158,
+        "top": 1.3593831130965444
+      },
+      "maxH": 0.2278014609961332,
+      "maxV": 0.1393831130965444,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Finishing",
+      "forward": 11,
+      "zone": 1,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          94,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.22119298670915,
+          5.095609402617891,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 10.602646917104721,
+        "plane": {
+          "x": 0,
+          "y": 1.2200000041581989,
+          "time": 0.43540376468267766,
+          "apex": 1.220350597647842,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 4.1581988963201866e-9
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.12782273013935236,
+      "sigmaV": 0.07688890674135476,
+      "bound": {
+        "left": -0.313212203424456,
+        "right": 0.313212203424456,
+        "bottom": 1.0319250548481447,
+        "top": 1.4087938264876338
+      },
+      "maxH": 0.313212203424456,
+      "maxV": 0.18879382648763388,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Finishing",
+      "forward": 14,
+      "zone": 1,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          91,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.197096139897788,
+          5.222695124250299,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 10.870257765054703,
+        "plane": {
+          "x": 0,
+          "y": 1.2199999896310882,
+          "time": 0.5660955936344622,
+          "apex": 1.2751160306159082,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 1.036891172923049e-8
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.16266703048174203,
+      "sigmaV": 0.09695489562699126,
+      "bound": {
+        "left": -0.3986028724687998,
+        "right": 0.3986028724687998,
+        "bottom": 0.9824450038880994,
+        "top": 1.4577339009275292
+      },
+      "maxH": 0.3986028724687998,
+      "maxV": 0.23773390092752922,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    },
+    {
+      "zoneName": "Finishing",
+      "forward": 16,
+      "zone": 1,
+      "effectiveAccuracy": 80,
+      "shotPower": 80,
+      "fraction": 0.9,
+      "target": {
+        "x": 0,
+        "y": 1.22
+      },
+      "ideal": {
+        "origin": [
+          89,
+          0.11,
+          34
+        ],
+        "velocity": [
+          27.151546186861072,
+          5.454550620029218,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          -4
+        ],
+        "speed": 27.694017094017095,
+        "capability": 30.771130104463438,
+        "fraction": 0.9,
+        "yaw": 0,
+        "elevation": 11.359111219644547,
+        "plane": {
+          "x": 0,
+          "y": 1.2199999918474274,
+          "time": 0.6570222101209375,
+          "apex": 1.3761178132994532,
+          "landed": false,
+          "status": "first-flight"
+        },
+        "mode": "targeted",
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "targetError": 8.15257261699287e-9
+      },
+      "ds": {
+        "accuracy": 80,
+        "sigmaBaseH": 0.6251969823973177,
+        "sigmaBaseV": 0.3751181894383906,
+        "difficulty": 1.06561,
+        "powerIncreasePercent": 6.560999999999995,
+        "addedSigmaH": 0.041019174015088034,
+        "addedSigmaV": 0.024611504409052798,
+        "sigmaH": 0.6662161564124057,
+        "sigmaV": 0.3997296938474434,
+        "maxH": 1.631889641608621,
+        "maxV": 0.9791337849651726
+      },
+      "sigmaH": 0.1858891236005657,
+      "sigmaV": 0.11009750959436153,
+      "bound": {
+        "left": -0.45551420917354335,
+        "right": 0.45551420917354335,
+        "bottom": 0.9499641565404666,
+        "top": 1.489917517900597
+      },
+      "maxH": 0.45551420917354335,
+      "maxV": 0.27003584345953335,
+      "quality": {
+        "unmappedMass": 0,
+        "turfTriangleMass": 0,
+        "foldedTriangles": 0
+      }
+    }
+  ],
+  "charge": {
+    "join": {
+      "holdMs": 310,
+      "height": 2.4440661949859144,
+      "slope": 0.0072266395137270505,
+      "limit": 10
+    },
+    "samples": [
+      {
+        "hold": 0,
+        "q": 0,
+        "fraction": 0.4,
+        "apex": 0.32
+      },
+      {
+        "hold": 20,
+        "q": 0,
+        "fraction": 0.4,
+        "apex": 0.32
+      },
+      {
+        "hold": 40,
+        "q": 0,
+        "fraction": 0.4,
+        "apex": 0.32
+      },
+      {
+        "hold": 100,
+        "q": 0.14634146341463414,
+        "fraction": 0.562760261748959,
+        "apex": 0.6128940177274693
+      },
+      {
+        "hold": 200,
+        "q": 0.3902439024390244,
+        "fraction": 0.7769185008923261,
+        "apex": 1.4948265637093718
+      },
+      {
+        "hold": 300,
+        "q": 0.6341463414634146,
+        "fraction": 0.9196906603212374,
+        "apex": 2.370064286284037
+      },
+      {
+        "hold": 309,
+        "q": 0.6560975609756098,
+        "fraction": 0.9290386674598453,
+        "apex": 2.4368218178726555
+      },
+      {
+        "hold": 310,
+        "q": 0.6585365853658537,
+        "fraction": 0.9300416418798335,
+        "apex": 2.4440661949859144
+      },
+      {
+        "hold": 311,
+        "q": 0.6609756097560976,
+        "fraction": 0.9310374776918501,
+        "apex": 2.451373253849524
+      },
+      {
+        "hold": 450,
+        "q": 1,
+        "fraction": 1,
+        "apex": 4.684342368855653
+      },
+      {
+        "hold": 600,
+        "q": 1,
+        "fraction": 1,
+        "apex": 7.7509066002586575
+      },
+      {
+        "hold": 1000,
+        "q": 1,
+        "fraction": 1,
+        "apex": 9.980309047240388
+      }
+    ],
+    "ceilings": [
+      {
+        "shotPower": 1,
+        "speed": 18.61728395061728
+      },
+      {
+        "shotPower": 50,
+        "speed": 23.36372269705603
+      },
+      {
+        "shotPower": 80,
+        "speed": 30.771130104463438
+      },
+      {
+        "shotPower": 99,
+        "speed": 37.230769230769226
+      }
+    ]
+  },
+  "rng": {
+    "keys": {
+      "matchSeed": "20261018",
+      "shooterId": "calibration-player",
+      "stableShotEventId": "shot:00017"
+    },
+    "horizontal": [
+      {
+        "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00017\",\"horizontal\",0]",
+        "digest": "8b5448a6d7a244bfb4fe9f3aee4ef4c52aead5a36d078f96da93c3e746bbf109",
+        "value": 0.5442548186616786
+      },
+      {
+        "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00017\",\"horizontal\",1]",
+        "digest": "032d127e72b902502b9782821a3bdd9d928330621f88773391359f958eb613cb",
+        "value": 0.012406497832419316
+      }
+    ],
+    "elevation": [
+      {
+        "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00017\",\"elevation\",0]",
+        "digest": "b3e1c435d64668c4e60b6b989e79457a0a1c1fda13c5705cfc078e3f5620e4f2",
+        "value": 0.7026636725843446
+      },
+      {
+        "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00017\",\"elevation\",1]",
+        "digest": "e07869455f945ea03373a7960866655231237ec5a05f79fab5dd66dd37a84b98",
+        "value": 0.8768373293274448
+      }
+    ],
+    "standardizedHorizontal": 1.3027570065877274,
+    "standardizedElevation": -0.4266365856552622,
+    "matchedProfiles": [
+      {
+        "profile": "finisher",
+        "effectiveAccuracy": 95,
+        "horizontalError": 0.07129562091477824,
+        "elevationError": -0.014009053165911915
+      },
+      {
+        "profile": "balanced",
+        "effectiveAccuracy": 80,
+        "horizontalError": 0.8679177656682069,
+        "elevationError": -0.1705393117680965
+      },
+      {
+        "profile": "long",
+        "effectiveAccuracy": 65,
+        "horizontalError": 2.0457399881633562,
+        "elevationError": -0.40197251794846245
+      },
+      {
+        "profile": "poor",
+        "effectiveAccuracy": 50,
+        "horizontalError": 3.0400939228822748,
+        "elevationError": -0.5973555857789807
+      },
+      {
+        "profile": "player-c",
+        "effectiveAccuracy": 60,
+        "horizontalError": 2.409602395038248,
+        "elevationError": -0.4734687436294207
+      }
+    ]
+  },
+  "validation": {
+    "status": "PASS",
+    "checks": 2610,
+    "deterministic": true,
+    "totalAngularMassError": 0,
+    "maximumSpotInterpolationError": 0.013916233389835012,
+    "protectedSourceFiles": 1308,
+    "sourceChanges": [],
+    "frozenCopyChanges": [],
+    "gitStatus": "",
+    "sweepPositions": 323,
+    "sweepCases": 1292,
+    "unreachableSweepCases": 8,
+    "rotationAdapterTests": [
+      {
+        "yaw": -75,
+        "spinError": 0,
+        "speedError": 0
+      },
+      {
+        "yaw": -45,
+        "spinError": 0,
+        "speedError": 0
+      },
+      {
+        "yaw": 0,
+        "spinError": 0,
+        "speedError": 0
+      },
+      {
+        "yaw": 45,
+        "spinError": 0,
+        "speedError": 0
+      },
+      {
+        "yaw": 75,
+        "spinError": 0,
+        "speedError": 0
+      }
+    ],
+    "targetTests": [
+      {
+        "target": {
+          "x": 0,
+          "y": 1.22
+        },
+        "error": 4.8806637398257635e-8,
+        "bound": {
+          "left": -0.569283323768019,
+          "right": 0.569283323768019,
+          "bottom": 0.8868684124160758,
+          "top": 1.5521221843902333
+        },
+        "turfTriangleMass": 0,
+        "unmappedMass": 0,
+        "foldedTriangles": 0
+      },
+      {
+        "target": {
+          "x": 3.41,
+          "y": 0.25
+        },
+        "error": 2.9296883863345296e-8,
+        "bound": {
+          "left": 2.826790266125691,
+          "right": 3.9988927996009593,
+          "bottom": 0.11360445677524458,
+          "top": 0.6025604365534108
+        },
+        "turfTriangleMass": 0.19824583333333332,
+        "unmappedMass": 0,
+        "foldedTriangles": 229
+      },
+      {
+        "target": {
+          "x": 3.41,
+          "y": 1.22
+        },
+        "error": 4.027667999118038e-8,
+        "bound": {
+          "left": 2.8270074551841446,
+          "right": 3.9986803746671455,
+          "bottom": 0.865699724409859,
+          "top": 1.568830597472537
+        },
+        "turfTriangleMass": 0,
+        "unmappedMass": 0,
+        "foldedTriangles": 0
+      },
+      {
+        "target": {
+          "x": 3.41,
+          "y": 2.19
+        },
+        "error": 1.9741448032051206e-8,
+        "bound": {
+          "left": 2.8272817191865514,
+          "right": 3.9983981261452755,
+          "bottom": 1.839222770233528,
+          "top": 2.5365926508744225
+        },
+        "turfTriangleMass": 0,
+        "unmappedMass": 0,
+        "foldedTriangles": 0
+      }
+    ],
+    "powerRatingAngularParity": true,
+    "originalExpectedBylineFinishing": true,
+    "edgeStripMixed": true
+  },
+  "powerRatingStudy": [
+    {
+      "shotPower": 50,
+      "speed": 21.027350427350427,
+      "capability": 23.36372269705603,
+      "fraction": 0.9,
+      "D": 1.06561,
+      "sigmaH": 0.6662161564124057,
+      "sigmaV": 0.3997296938474434,
+      "spatialSigmaH": 0.23207279528755329,
+      "spatialSigmaV": 0.12487792613067374,
+      "elevation": 20.552129298448563
+    },
+    {
+      "shotPower": 80,
+      "speed": 27.694017094017095,
+      "capability": 30.771130104463438,
+      "fraction": 0.9,
+      "D": 1.06561,
+      "sigmaH": 0.6662161564124057,
+      "sigmaV": 0.3997296938474434,
+      "spatialSigmaH": 0.23230892097336592,
+      "spatialSigmaV": 0.13554792136546667,
+      "elevation": 12.828948050737381
+    },
+    {
+      "shotPower": 99,
+      "speed": 33.5076923076923,
+      "capability": 37.230769230769226,
+      "fraction": 0.9,
+      "D": 1.06561,
+      "sigmaH": 0.6662161564124057,
+      "sigmaV": 0.3997296938474434,
+      "spatialSigmaH": 0.2323859299058538,
+      "spatialSigmaV": 0.1378978802049785,
+      "elevation": 9.76814553141594
+    }
+  ]
+}

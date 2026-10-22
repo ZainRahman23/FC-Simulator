@@ -1,0 +1,288 @@
+{
+  "pass": true,
+  "nativeQuickInputs": {
+    "scope": "Controlled native keyboard and pointer events, not human manual timings. Before the early-red revision; sub-40ms launch unchanged byte-for-byte.",
+    "cases": [
+      {
+        "kind": "keyboard",
+        "requestedMs": 0,
+        "forwardedHoldMs": "1.699999999254942",
+        "holdMs": "1.699999999254942",
+        "inputKind": "keyboard",
+        "pressTime": "19055.20000000298",
+        "releaseTime": "19056.900000002235",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "keyboard",
+        "requestedMs": 5,
+        "forwardedHoldMs": "7.099999997764826",
+        "holdMs": "7.099999997764826",
+        "inputKind": "keyboard",
+        "pressTime": "19231.400000002235",
+        "releaseTime": "19238.5",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "keyboard",
+        "requestedMs": 10,
+        "forwardedHoldMs": "12.599999997764826",
+        "holdMs": "12.599999997764826",
+        "inputKind": "keyboard",
+        "pressTime": "19423.20000000298",
+        "releaseTime": "19435.800000000745",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "keyboard",
+        "requestedMs": 20,
+        "forwardedHoldMs": "22.899999998509884",
+        "holdMs": "22.899999998509884",
+        "inputKind": "keyboard",
+        "pressTime": "19663.20000000298",
+        "releaseTime": "19686.10000000149",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "pointer",
+        "requestedMs": 0,
+        "forwardedHoldMs": "1.8999999985098839",
+        "holdMs": "1.8999999985098839",
+        "inputKind": "pointer",
+        "pressTime": "19955.400000002235",
+        "releaseTime": "19957.300000000745",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "pointer",
+        "requestedMs": 5,
+        "forwardedHoldMs": "10",
+        "holdMs": "10",
+        "inputKind": "pointer",
+        "pressTime": "20155.10000000149",
+        "releaseTime": "20165.10000000149",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "pointer",
+        "requestedMs": 10,
+        "forwardedHoldMs": "17.200000002980232",
+        "holdMs": "17.200000002980232",
+        "inputKind": "pointer",
+        "pressTime": "20456",
+        "releaseTime": "20473.20000000298",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      },
+      {
+        "kind": "pointer",
+        "requestedMs": 20,
+        "forwardedHoldMs": "25.800000000745058",
+        "holdMs": "25.800000000745058",
+        "inputKind": "pointer",
+        "pressTime": "20687.5",
+        "releaseTime": "20713.300000000745",
+        "requestedApex": "0.32",
+        "result": "TURF-FIRST / SHORT",
+        "shotPower": "80",
+        "speed": "12.308452041785376"
+      }
+    ]
+  },
+  "manualSample": {
+    "count": 10,
+    "keyboard": 10,
+    "pointer": 0,
+    "minimumMs": 196,
+    "maximumMs": 383.5999999977648,
+    "allRegistered": true,
+    "exactForwarding": true,
+    "weakFloorSamples": 0
+  },
+  "timedDomEvents": {
+    "pass": true,
+    "scope": "Timed synthetic DOM keyboard/pointer events; actual monotonic input clock, event handlers, worker and physical resolver. Not a hardware input timing claim.",
+    "liveOvercharge": true,
+    "ratings": [
+      50,
+      70,
+      80,
+      90,
+      99
+    ],
+    "cases": [
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 5,
+        "measuredHoldMs": 6.300000000745058,
+        "forwardedHoldMs": 6.300000000745058,
+        "shotPower": 80,
+        "apex": 0.3200000000388662,
+        "speed": 12.308452041785376,
+        "physicalResult": "TURF-FIRST / SHORT",
+        "exactForwarding": true
+      },
+      {
+        "input": "pointer",
+        "requestedTimerMs": 20,
+        "measuredHoldMs": 21.900000002235174,
+        "forwardedHoldMs": 21.900000002235174,
+        "shotPower": 80,
+        "apex": 0.3200000000388662,
+        "speed": 12.308452041785376,
+        "physicalResult": "TURF-FIRST / SHORT",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 173,
+        "measuredHoldMs": 174.59999999776483,
+        "forwardedHoldMs": 174.59999999776483,
+        "shotPower": 80,
+        "apex": 1.2556526774600454,
+        "speed": 22.44094109961491,
+        "physicalResult": "TURF-FIRST / GOAL",
+        "exactForwarding": true
+      },
+      {
+        "input": "pointer",
+        "requestedTimerMs": 700,
+        "measuredHoldMs": 703.5,
+        "forwardedHoldMs": 703.5,
+        "shotPower": 80,
+        "apex": 9.071780628106701,
+        "speed": 30.771130104463438,
+        "physicalResult": "OVER",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 200,
+        "measuredHoldMs": 201.80000000074506,
+        "forwardedHoldMs": 201.80000000074506,
+        "shotPower": 50,
+        "apex": 1.5117921032916866,
+        "speed": 18.226491227960675,
+        "physicalResult": "TURF-FIRST / GOAL",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 200,
+        "measuredHoldMs": 201.80000000074506,
+        "forwardedHoldMs": 201.80000000074506,
+        "shotPower": 70,
+        "apex": 1.511792104242296,
+        "speed": 21.78259064647182,
+        "physicalResult": "GOAL",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 200,
+        "measuredHoldMs": 201.20000000298023,
+        "forwardedHoldMs": 201.20000000298023,
+        "shotPower": 80,
+        "apex": 1.5061379010189515,
+        "speed": 23.972401024696616,
+        "physicalResult": "GOAL",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 200,
+        "measuredHoldMs": 202.19999999925494,
+        "forwardedHoldMs": 202.19999999925494,
+        "shotPower": 90,
+        "apex": 1.515560972630048,
+        "speed": 26.548133634696413,
+        "physicalResult": "GOAL",
+        "exactForwarding": true
+      },
+      {
+        "input": "keyboard",
+        "requestedTimerMs": 200,
+        "measuredHoldMs": 201.30000000074506,
+        "forwardedHoldMs": 201.30000000074506,
+        "shotPower": 99,
+        "apex": 1.5070803413488083,
+        "speed": 29.011425993734317,
+        "physicalResult": "GOAL",
+        "exactForwarding": true
+      }
+    ]
+  },
+  "earlyRed": {
+    "normalFill": "100%",
+    "readout": {
+      "forwardedHoldMs": "403.8999999985099",
+      "holdMs": "403.8999999985099",
+      "inputKind": "keyboard",
+      "pressTime": "45880.10000000149",
+      "releaseTime": "46284",
+      "requestedApex": "3.7376442373485204",
+      "result": "OVER",
+      "shotPower": "80",
+      "speed": "30.537715065509715"
+    },
+    "redFill": "25.4724%",
+    "state": "Hold403.9 msShot Power80Charge88.8%StateOVERCHARGEDResultOVERLaunch speed30.538 m/sLaunch angle18.38°Actual apex3.738 mGoal-plane height3.723 m",
+    "viewport": [
+      1470,
+      919
+    ]
+  },
+  "video": {
+    "currentTime": 0.186443,
+    "duration": 16.966667,
+    "error": null,
+    "paused": false,
+    "playbackRate": 1,
+    "readyState": 4,
+    "rows": 7,
+    "src": "http://127.0.0.1:8878/videos/progression-behind-1x.mp4"
+  },
+  "report": {
+    "checks": true,
+    "earlyRed": true,
+    "functions": true,
+    "links": [
+      "live.html",
+      "review.html",
+      "evidence/tests.json",
+      "evidence/manual-taps.json",
+      "evidence/ui-validation.json",
+      "evidence/measurements.json",
+      "videos/validation.json"
+    ],
+    "manual": true,
+    "title": "SHOT-CHARGE-1.3 · Input calibration evidence"
+  },
+  "ready": {
+    "manualRecords": 10,
+    "normalMeterLabel": "NORMAL SHOTOVERCHARGE",
+    "sp": "80",
+    "testPanelHidden": true,
+    "version": "TOUCHLINE / SHOT-CHARGE-1.3"
+  }
+}

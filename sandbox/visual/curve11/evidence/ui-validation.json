@@ -1,0 +1,118 @@
+{
+  "pass": true,
+  "default75": {
+    "duration": 2.2,
+    "error": null,
+    "height": 1080,
+    "paused": false,
+    "ready": 4,
+    "selected": "75",
+    "source": "http://127.0.0.1:8875/videos/curve-75-behind-1x.mp4",
+    "videoCount": 1,
+    "width": 1920
+  },
+  "ratings": [
+    {
+      "error": null,
+      "label": "0 Curve · 1× speed",
+      "selected": "0",
+      "source": "videos/curve-0-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "25 Curve · 1× speed",
+      "selected": "25",
+      "source": "videos/curve-25-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "50 Curve · 1× speed",
+      "selected": "50",
+      "source": "videos/curve-50-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "60 Curve · 1× speed",
+      "selected": "60",
+      "source": "videos/curve-60-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "70 Curve · 1× speed",
+      "selected": "70",
+      "source": "videos/curve-70-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "75 Curve · 1× speed",
+      "selected": "75",
+      "source": "videos/curve-75-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "80 Curve · 1× speed",
+      "selected": "80",
+      "source": "videos/curve-80-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "85 Curve · 1× speed",
+      "selected": "85",
+      "source": "videos/curve-85-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "90 Curve · 1× speed",
+      "selected": "90",
+      "source": "videos/curve-90-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "95 Curve · 1× speed",
+      "selected": "95",
+      "source": "videos/curve-95-behind-1x.mp4"
+    },
+    {
+      "error": null,
+      "label": "99 Curve · 1× speed",
+      "selected": "99",
+      "source": "videos/curve-99-behind-1x.mp4"
+    }
+  ],
+  "comparison": {
+    "duration": 8.8,
+    "error": null,
+    "label": "50 → 75 → 90 → 99 · Sequential · 1× speed",
+    "paused": false,
+    "ready": 4,
+    "source": "http://127.0.0.1:8875/videos/comparison-50-75-90-99-behind-1x.mp4"
+  },
+  "report": {
+    "allRatings": [
+      "00.0000000.000000°0.000000 mGOAL",
+      "252.8837700.475666°0.050867 mGOAL",
+      "5018.7387943.092603°0.330813 mGOAL",
+      "6030.6570945.064415°0.541993 mGOAL",
+      "7046.4822697.694061°0.824236 mGOAL",
+      "7556.0000009.284449°0.995396 mGOAL",
+      "8066.66004211.075965°1.188733 mGOAL",
+      "8578.51519513.083757°1.406251 mGOAL",
+      "9091.61727915.325602°1.650312 mGOAL",
+      "95106.01720517.823104°1.923996 mGOAL",
+      "99118.50526420.023155°2.166858 mGOAL"
+    ],
+    "oldToNew": [
+      "5013.384853 → 18.7387942.208387° → 3.092603°0.236196 → 0.330813 m+40.058%",
+      "7540.000000 → 56.0000006.614975° → 9.284449°0.708315 → 0.995396 m+40.530%",
+      "9065.440914 → 91.61727910.870470° → 15.325602°1.166525 → 1.650312 m+41.472%",
+      "9984.646617 → 118.50526414.129589° → 20.023155°1.519939 → 2.166858 m+42.562%"
+    ],
+    "title": "Same Curve system, 40% stronger"
+  },
+  "restoredDefault": {
+    "error": null,
+    "ready": 4,
+    "selected": "75",
+    "videoCount": 1
+  }
+}

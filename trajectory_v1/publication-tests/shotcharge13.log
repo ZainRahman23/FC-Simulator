@@ -1,0 +1,30 @@
+PASS Every nonnegative tap, including timer-resolution zero, registers; old 80 ms floor preserved exactly through 40 ms
+PASS 450 ms speed ceiling matches old 600 ms at all ratings; owner-approved elevation continues rising
+PASS Existing speed-curve shape preserved; earlier red follows a physical apex profile with no shelf
+PASS Continuous, monotonic, nonlinear timing; exact off-grid duration is retained
+PASS Trajectory brackets match the requested faster low→normal→rising distribution
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '826b9ce3d2bcf1c0f4dcec32a24755afacf827445f625933d29d6ef40cdab6a3'
+- 'a9bb420fb5076790f96fca3dfa1ce229e7784aa427cbfd786910c3e045d8f263'
+
+    at file:///private/tmp/pass-shooting-v1-publish/repo/sandbox/visual/shotcharge13/tools/test.mjs:13:699
+    at test (file:///private/tmp/pass-shooting-v1-publish/repo/sandbox/visual/shotcharge13/tools/test.mjs:6:100)
+    at file:///private/tmp/pass-shooting-v1-publish/repo/sandbox/visual/shotcharge13/tools/test.mjs:13:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:345:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:651:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '826b9ce3d2bcf1c0f4dcec32a24755afacf827445f625933d29d6ef40cdab6a3',
+  expected: 'a9bb420fb5076790f96fca3dfa1ce229e7784aa427cbfd786910c3e045d8f263',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.19.0

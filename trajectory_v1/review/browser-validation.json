@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-18T10:20:29.571451+00:00",
+  "url": "http://127.0.0.1:8879/review/#distance",
+  "checks": {
+    "longShotsSeries": "18/20/25/30/35 m: all Zone C, accuracy 80, identical angular sigma, distinct physical spreads",
+    "longShotsSlider": "18 and 35 m verified; shared bounds remain lateral -1.17..1.17 m, vertical 0.59..1.84 m",
+    "finishingSeries": "5/8/11/14/16 m all Zone A; 16.5 m slider endpoint remains Finishing",
+    "players": "All nine projections complete: effective accuracy [95,80,60], [77.5,80,77.5], [60,80,95]",
+    "historicalWidthIsolation": "Selecting radius 8 m leaves main map and accuracy overlay at radius 20.16 m",
+    "boundaryOverlay": "95/60 gives 95 / 77.5 / 60 in the three zones",
+    "fullSweep": "323 visible data rows for selected profile",
+    "browserNodeRngParity": "PASS",
+    "chargeMode": "450 ms SP80: 30.771/30.771 m/s, D 1.1, ideal plane height 4.637 m; fraction control disabled",
+    "distanceAfterCharge": "Fraction control enabled; controlled fixed-speed targeting restored",
+    "unavailableShot": "SP1,35 m shows bracket-unavailable message and clears preceding metrics",
+    "bottomCorner": "Turf branches rendered, 229 folded triangles disclosed, 0 unmapped angular mass",
+    "console": "No error or warning entries during final review",
+    "narrowLayout": "319 px viewport and 319 px page width; no horizontal page overflow",
+    "screenshots": [
+      "preview-distance.png"
+    ]
+  },
+  "limitations": [
+    "Desktop viewport was not separately exercised.",
+    "Physical support/density are deterministic mesh approximations, not exact continuous extrema or scoring probabilities."
+  ]
+}

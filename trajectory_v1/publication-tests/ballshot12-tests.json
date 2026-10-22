@@ -1,0 +1,186 @@
+{
+  "passed": 18,
+  "total": 18,
+  "tests": [
+    {
+      "name": "original nonlinear capability function reused without modification",
+      "pass": true
+    },
+    {
+      "name": "all five exact 90-SP anchors and explicit technique products",
+      "pass": true
+    },
+    {
+      "name": "strict monotonicity 1–99 under identical bracket, charge, foot and context; zero intent nondecreasing",
+      "pass": true,
+      "detail": {
+        "comparisons": 17640,
+        "ratingRange": [
+          1,
+          99
+        ],
+        "contexts": 3
+      }
+    },
+    {
+      "name": "hard-family shape is unchanged: only normalization and Trivela conversion differ",
+      "pass": true
+    },
+    {
+      "name": "Chip uses a compressed transform of the same capability at every rating",
+      "pass": true
+    },
+    {
+      "name": "50–60 lose meaningful hard-shot pace and kinetic energy; Power does not erase low rating",
+      "pass": true
+    },
+    {
+      "name": "90→99 bounded useful headroom and family hierarchy across all ratings/brackets",
+      "pass": true
+    },
+    {
+      "name": "charge, execution and foot penalties remain separate from rating",
+      "pass": true
+    },
+    {
+      "name": "launch angles, spin vectors, preparation, commitment and aim are frozen",
+      "pass": true
+    },
+    {
+      "name": "Candidate A world and environment are exactly the same imports",
+      "pass": true
+    },
+    {
+      "name": "contact scheduling and validation remain authoritative",
+      "pass": true
+    },
+    {
+      "name": "post-launch ratings and family metadata cannot steer physical state",
+      "pass": true
+    },
+    {
+      "name": "visual runs launch exactly once with finite states and no CCD exhaustion",
+      "pass": true,
+      "detail": {
+        "runs": 16,
+        "anchors": 5
+      }
+    },
+    {
+      "name": "rating effect reaches physical arrival, range and energy without save modifiers",
+      "pass": true,
+      "detail": [
+        {
+          "id": "laces-50",
+          "arrival": 0.9640793797011415,
+          "landing": 12.886535174786218
+        },
+        {
+          "id": "laces-60",
+          "arrival": 0.8744681668566887,
+          "landing": 14.951052625736365
+        },
+        {
+          "id": "laces-70",
+          "arrival": 0.7880321366841218,
+          "landing": 17.496047264977694
+        },
+        {
+          "id": "laces-80",
+          "arrival": 0.7097342665984241,
+          "landing": 20.54620099987121
+        },
+        {
+          "id": "laces-90",
+          "arrival": 0.6423702846196406,
+          "landing": 24.113511190347385
+        },
+        {
+          "id": "laces-99",
+          "arrival": 0.5866946004385004,
+          "landing": 27.76286052122426
+        },
+        {
+          "id": "power-50",
+          "arrival": 0.819958980876297,
+          "landing": 18.830314909550307
+        },
+        {
+          "id": "power-60",
+          "arrival": 0.7517220240254797,
+          "landing": 21.605496633273
+        },
+        {
+          "id": "power-70",
+          "arrival": 0.6852489026093009,
+          "landing": 24.961751870651707
+        },
+        {
+          "id": "power-80",
+          "arrival": 0.6218763094500551,
+          "landing": 28.90044623692626
+        },
+        {
+          "id": "power-90",
+          "arrival": 0.5629312682213446,
+          "landing": 33.40386059079935
+        },
+        {
+          "id": "power-99",
+          "arrival": 0.514199844655236,
+          "landing": 37.90929184359254
+        },
+        {
+          "id": "chip-50",
+          "arrival": 1.9429453482135397,
+          "landing": 15.999846019496955
+        },
+        {
+          "id": "chip-70",
+          "arrival": 1.6644606524148855,
+          "landing": 18.69537663922023
+        },
+        {
+          "id": "chip-90",
+          "arrival": 1.4995139616188295,
+          "landing": 22.09897742357802
+        },
+        {
+          "id": "chip-99",
+          "arrival": 1.4347287112068374,
+          "landing": 23.825838318938924
+        }
+      ]
+    },
+    {
+      "name": "full-precision rating replay repeats deterministically",
+      "pass": true,
+      "detail": {
+        "sha256": "8b088bb4b4e6fbe1a613787e6de6f50af3e3d56200b2d76fcb587a4e63edfe42",
+        "bytes": 4891524
+      }
+    },
+    {
+      "name": "Candidate A normal/through/firm/driven ground replay remains bit-exact",
+      "pass": true,
+      "detail": "4bd0e797103f4a29c7bb6fd45e1c0b35f6a5cefeb393c8355cb9e1616d3e42bf"
+    },
+    {
+      "name": "all 53 physics foundation assertions pass with evidence redirected to this version",
+      "pass": true,
+      "detail": {
+        "passed": 53,
+        "total": 53
+      }
+    },
+    {
+      "name": "all frozen source and historical keeper heatmap files retain original SHA-256",
+      "pass": true,
+      "detail": {
+        "sourceFiles": 2075,
+        "heatmapFiles": 963,
+        "keeperRerun": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "scope": "Runner navigation, seeded launch, handoff time and same-browser replay determinism. Cross-runtime RECEIVE continuation is reported separately.",
+  "browserSameInputRepeatExact": true,
+  "browserInput": {
+    "id": "terrible",
+    "origin": [
+      0,
+      0.11,
+      0
+    ],
+    "aimDeg": 0,
+    "holdMs": 400,
+    "shotPower": 99,
+    "longPassing": 1,
+    "vision": 1,
+    "seed": "22",
+    "players": [
+      {
+        "id": "A",
+        "position": [
+          28,
+          0,
+          13.5
+        ],
+        "velocity": [
+          0,
+          0,
+          6
+        ],
+        "sprintSpeed": 6,
+        "agility": 80,
+        "ballControl": 99,
+        "dribbling": 99
+      }
+    ],
+    "requestedDistance": 45
+  },
+  "browserSHA256": "e45008e9a36fccaaf53b67439466f2db621b65072d7181d9555d2fc787f89977",
+  "sampledPhases": [
+    "BRAKE",
+    "PLANT",
+    "REDIRECT",
+    "ACCELERATE",
+    "RUN",
+    "RECEIVED"
+  ],
+  "allFrameChaseStatesMatch": true,
+  "allFrameCount": 472,
+  "preReceiveMaximumDifference": {
+    "ballPosition": 3.552713678800501e-15,
+    "ballVelocity": 1.7763568394002505e-15,
+    "runnerPosition": 1.634344830529453e-13,
+    "runnerVelocity": 4.279603177636784e-13
+  },
+  "sameReceiveTime": true,
+  "receiveTime": 5.8375,
+  "crossRuntimeReceiveContinuation": {
+    "bitExact": false,
+    "firstMaterialBallPositionDifferenceAt": 5.85,
+    "maximumDifferences": {
+      "ballPosition": 0.24152544320079003,
+      "ballVelocity": 0.3616709422237721,
+      "ballSpin": 3.287917656579748,
+      "runnerPosition": 0.05650856453842173
+    },
+    "note": "Browser and Node floating-point drift enters the frozen receiving controller. No RECEIVE code is changed; same-runtime repeated runs are exact."
+  },
+  "pageErrors": []
+}

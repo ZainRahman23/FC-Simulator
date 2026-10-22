@@ -1,0 +1,367 @@
+{
+  "runtime": {
+    "node": "v22.19.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "curve": {
+    "numericDifferences": 7058,
+    "maxAbsoluteDifference": 0,
+    "maxPath": null,
+    "structuralDifferences": 0,
+    "examples": [
+      {
+        "path": "root.runs.0.physical.action.spin.0",
+        "saved": 0,
+        "current": 0
+      },
+      {
+        "path": "root.runs.0.physical.action.metadata.angularVelocity.0",
+        "saved": 0,
+        "current": 0
+      },
+      {
+        "path": "root.runs.0.physical.action.metadata.spin.0",
+        "saved": 0,
+        "current": 0
+      },
+      {
+        "path": "root.runs.0.physical.action.metadata.techniqueDirection.inheritedSpin.0",
+        "saved": 0,
+        "current": 0
+      },
+      {
+        "path": "root.runs.0.physical.action.metadata.techniqueDirection.correctedSpin.0",
+        "saved": 0,
+        "current": 0
+      }
+    ],
+    "sameRuntimeExact": true,
+    "rejected": [],
+    "outcomes": [
+      {
+        "curve": 0,
+        "result": "GOAL",
+        "aimError": 1.4273785145045686e-10
+      },
+      {
+        "curve": 25,
+        "result": "GOAL",
+        "aimError": 8.20348230225917e-10
+      },
+      {
+        "curve": 50,
+        "result": "GOAL",
+        "aimError": 4.373120022670968e-8
+      },
+      {
+        "curve": 60,
+        "result": "GOAL",
+        "aimError": 9.450674411235123e-12
+      },
+      {
+        "curve": 70,
+        "result": "GOAL",
+        "aimError": 2.1406020914789276e-11
+      },
+      {
+        "curve": 75,
+        "result": "GOAL",
+        "aimError": 3.11851129687277e-11
+      },
+      {
+        "curve": 80,
+        "result": "GOAL",
+        "aimError": 4.372276169225638e-11
+      },
+      {
+        "curve": 85,
+        "result": "GOAL",
+        "aimError": 5.863623069758726e-11
+      },
+      {
+        "curve": 90,
+        "result": "GOAL",
+        "aimError": 8.780452591972238e-11
+      },
+      {
+        "curve": 95,
+        "result": "GOAL",
+        "aimError": 1.0368245325177695e-10
+      },
+      {
+        "curve": 99,
+        "result": "GOAL",
+        "aimError": 1.3520346532659788e-10
+      }
+    ]
+  },
+  "charge": [
+    {
+      "shotPower": 80,
+      "holdMs": 20,
+      "difference": {
+        "numericDifferences": 828,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.222.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.222.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.223.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.223.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.224.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 100,
+      "difference": {
+        "numericDifferences": 926,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.316.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.316.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.317.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.317.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.318.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 200,
+      "difference": {
+        "numericDifferences": 774,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.508.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.508.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.509.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.509.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.510.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 300,
+      "difference": {
+        "numericDifferences": 736,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.616.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.616.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.617.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.617.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.618.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 450,
+      "difference": {
+        "numericDifferences": 655,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.882.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.882.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.883.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.883.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.884.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 550,
+      "difference": {
+        "numericDifferences": 587,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.1079.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1079.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1080.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1080.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1081.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    },
+    {
+      "shotPower": 80,
+      "holdMs": 700,
+      "difference": {
+        "numericDifferences": 529,
+        "maxAbsoluteDifference": 0,
+        "maxPath": null,
+        "structuralDifferences": 0,
+        "examples": [
+          {
+            "path": "root.frames.1275.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1275.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1276.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1276.groundContact.frictionImpulse.2",
+            "saved": 0,
+            "current": 0
+          },
+          {
+            "path": "root.frames.1277.groundContact.frictionImpulse.1",
+            "saved": 0,
+            "current": 0
+          }
+        ]
+      },
+      "sameRuntimeExact": true
+    }
+  ]
+}

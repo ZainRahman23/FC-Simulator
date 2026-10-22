@@ -1,0 +1,14 @@
+Local playtest
+
+Serve the parent directory (SHOT-ACCURACY-1.0-VISUAL) on loopback:
+python3 -m http.server 8879 --bind 127.0.0.1
+
+Then open http://127.0.0.1:8879/playtest/
+Reuse the existing server if port 8879 is already in use by this accuracy lab.
+The playtest itself is self-contained; its foundation directory contains the frozen imported modules.
+Links to the earlier calibration review require the parent directory layout.
+
+Run deterministic validation from the playtest directory:
+node validate.mjs
+
+No dependency installation, external assets, analytics or remote service is required.

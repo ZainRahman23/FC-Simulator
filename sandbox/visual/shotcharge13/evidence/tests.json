@@ -1,0 +1,123 @@
+{
+  "status": "PASS",
+  "checkCount": 11,
+  "checks": [
+    {
+      "name": "Every nonnegative tap, including timer-resolution zero, registers; old 80 ms floor preserved exactly through 40 ms",
+      "status": "PASS"
+    },
+    {
+      "name": "450 ms speed ceiling matches old 600 ms at all ratings; owner-approved elevation continues rising",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing speed-curve shape preserved; earlier red follows a physical apex profile with no shelf",
+      "status": "PASS"
+    },
+    {
+      "name": "Continuous, monotonic, nonlinear timing; exact off-grid duration is retained",
+      "status": "PASS"
+    },
+    {
+      "name": "Trajectory brackets match the requested faster low→normal→rising distribution",
+      "status": "PASS"
+    },
+    {
+      "name": "Approved tap-through-300-ms trajectories retained; manual durations replay exactly on final profile",
+      "status": "PASS"
+    },
+    {
+      "name": "75 supporting scenarios maintain shared apex across SP and retain varied pace",
+      "status": "PASS"
+    },
+    {
+      "name": "All progression shots repeat deterministically; single launch and stable forward physical flight",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual input controller forwards sub-millisecond/quick holds without a debounce; ignores repeats, cancels safely",
+      "status": "PASS"
+    },
+    {
+      "name": "No artificial miss and no trajectory-only UI implementation",
+      "status": "PASS"
+    },
+    {
+      "name": "All frozen physics, Shot Power, Curve and prior-output bytes remain unchanged",
+      "status": "PASS"
+    }
+  ],
+  "charge": {
+    "minimumHoldMs": 0,
+    "tapFloorEndMs": 40,
+    "fullHoldMs": 450,
+    "floorFraction": 0.4
+  },
+  "trajectory": {
+    "minimumApex": 0.32,
+    "maximumApex": 3,
+    "power": 1.6
+  },
+  "overcharge": {
+    "startMs": 310,
+    "scaleMs": 300,
+    "extraApexLimit": 7,
+    "power": 2
+  },
+  "continuity": [
+    {
+      "holdMs": 39.999,
+      "q": 0,
+      "speedFraction": 0.4,
+      "requestedApex": 0.32
+    },
+    {
+      "holdMs": 40,
+      "q": 0,
+      "speedFraction": 0.4,
+      "requestedApex": 0.32
+    },
+    {
+      "holdMs": 40.001,
+      "q": 0.0000024390243902382183,
+      "speedFraction": 0.40000292682569905,
+      "requestedApex": 0.32000000728875444
+    },
+    {
+      "holdMs": 309.999,
+      "q": 0.6585341463414635,
+      "speedFraction": 0.9300406424711481,
+      "requestedApex": 2.444058968328621
+    },
+    {
+      "holdMs": 310,
+      "q": 0.6585365853658537,
+      "speedFraction": 0.9300416418798335,
+      "requestedApex": 2.4440661949859144
+    },
+    {
+      "holdMs": 310.001,
+      "q": 0.6585390243902438,
+      "speedFraction": 0.9300426412813801,
+      "requestedApex": 2.444073421705927
+    },
+    {
+      "holdMs": 449.999,
+      "q": 0.9999975609756098,
+      "speedFraction": 0.9999999999964307,
+      "requestedApex": 4.684320747272662
+    },
+    {
+      "holdMs": 450,
+      "q": 1,
+      "speedFraction": 1,
+      "requestedApex": 4.684342368855653
+    },
+    {
+      "holdMs": 450.001,
+      "q": 1,
+      "speedFraction": 1,
+      "requestedApex": 4.684363990468821
+    }
+  ]
+}

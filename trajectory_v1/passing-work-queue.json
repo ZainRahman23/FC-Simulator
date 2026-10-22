@@ -1,0 +1,36 @@
+{
+  "active": null,
+  "queued": [],
+  "stabilizationReview": "http://127.0.0.1:8879/passing-stabilization-6/",
+  "completed": [
+    {
+      "title": "PASSING-V1 stabilization",
+      "status": "complete",
+      "review": "http://127.0.0.1:8879/passing-stabilization-6/",
+      "technicalReady": true,
+      "freezeOrTag": false
+    },
+    {
+      "title": "PASSING-V1 Shot Power physical range capability",
+      "status": "complete",
+      "review": "http://127.0.0.1:8879/passing-range-7/",
+      "automatedChecks": 154,
+      "archetypePhysicalExecutions": 128,
+      "browserVerification": "PASS",
+      "provisional": true,
+      "freezeOrTag": false
+    },
+    {
+      "title": "Pass Target Assistance \u2014 Short Pass and Cross",
+      "status": "complete",
+      "review": "http://127.0.0.1:8879/passing-assist-8/",
+      "playground": "http://127.0.0.1:8879/passing/?setup=assistance&family=CROSS&scenario=crowded&angle=0&range=40",
+      "automatedChecks": 457,
+      "browserVerification": "PASS",
+      "provisional": true,
+      "freezeOrTag": false
+    }
+  ],
+  "rangeReview": "http://127.0.0.1:8879/passing-range-7/",
+  "allQueuedWorkComplete": true
+}

@@ -1,0 +1,14 @@
+{
+  "rejected": [
+    {
+      "choice": "Driven 33 m/s, lift 1.55 m/s, rolling fraction .18",
+      "reason": "240/480 Hz range disagreement 1.20\u20131.32 m; a poor calibration near a slip transition."
+    }
+  ],
+  "retained": {
+    "choice": "Driven 33 m/s, lift 1.60 m/s, rolling fraction .20",
+    "reason": "Reuses the established 1.3 medium launch. Intermediate pre-terminal-fix ranges were 41.20 / 37.87 m. Final common turf plus terminal-contact correction gives A 41.05 / B 37.71 m; final convergence values are in measurements.json."
+  },
+  "normalTexture": "Small-lift candidate A and more visible candidate B remain a visual bracket; footage cannot establish centimetre-exact hop heights.",
+  "runner": "Final representative runner holds 10 m ahead for .12 s, enters at RUN 5 m/s and accelerates toward SPRINT 8.2 m/s. The earlier 11 m exploratory setup was discarded. This lane is diagnostic, not a reconstructed source player trajectory."
+}

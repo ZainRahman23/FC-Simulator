@@ -1,0 +1,381 @@
+{
+  "passed": 27,
+  "total": 27,
+  "tests": [
+    {
+      "name": "529 frozen source and evidence files preserved",
+      "pass": true,
+      "detail": 529
+    },
+    {
+      "name": "world retains frozen solver methods except terminal turf restitution blend",
+      "pass": true
+    },
+    {
+      "name": "global rolling law is continuous, positive and increasingly important as ball slows",
+      "pass": true
+    },
+    {
+      "name": "frozen airborne/bounce streams exact until terminal sub-3-mm rebound for both laws",
+      "pass": true,
+      "detail": [
+        {
+          "id": "drop-0.25",
+          "variant": "A",
+          "throughTime": 0.8009588189848379,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-0.25",
+          "variant": "B",
+          "throughTime": 0.8009588189848379,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-0.5",
+          "variant": "A",
+          "throughTime": 1.2023207904735458,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-0.5",
+          "variant": "B",
+          "throughTime": 1.2023207904735458,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-1",
+          "variant": "A",
+          "throughTime": 1.6901094888058952,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-1",
+          "variant": "B",
+          "throughTime": 1.6901094888058952,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-2",
+          "variant": "A",
+          "throughTime": 2.42225118600474,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "drop-2",
+          "variant": "B",
+          "throughTime": 2.42225118600474,
+          "oldFinalX": 0,
+          "newFinalX": 0
+        },
+        {
+          "id": "lofted-pass",
+          "variant": "A",
+          "throughTime": 3.375040176304386,
+          "oldFinalX": 38.622698033212814,
+          "newFinalX": 36.34877160610214
+        },
+        {
+          "id": "lofted-pass",
+          "variant": "B",
+          "throughTime": 3.375040176304386,
+          "oldFinalX": 38.622698033212814,
+          "newFinalX": 36.084529563054225
+        },
+        {
+          "id": "chip",
+          "variant": "A",
+          "throughTime": 3.615983794348976,
+          "oldFinalX": 25.24717403936856,
+          "newFinalX": 24.31655076519838
+        },
+        {
+          "id": "chip",
+          "variant": "B",
+          "throughTime": 3.615983794348976,
+          "oldFinalX": 25.24717403936856,
+          "newFinalX": 24.209262489136833
+        },
+        {
+          "id": "curved-shot",
+          "variant": "A",
+          "throughTime": 1.8885140395275226,
+          "oldFinalX": 46.60176433718579,
+          "newFinalX": 41.176512188953396
+        },
+        {
+          "id": "curved-shot",
+          "variant": "B",
+          "throughTime": 1.8885140395275226,
+          "oldFinalX": 46.60176433718579,
+          "newFinalX": 40.48129334123666
+        },
+        {
+          "id": "power-shot",
+          "variant": "A",
+          "throughTime": 2.491323163573891,
+          "oldFinalX": 59.888398454521386,
+          "newFinalX": 52.50937998811537
+        },
+        {
+          "id": "power-shot",
+          "variant": "B",
+          "throughTime": 2.491323163573891,
+          "oldFinalX": 59.888398454521386,
+          "newFinalX": 51.5813471815081
+        }
+      ]
+    },
+    {
+      "name": "all non-ground and curve launch families remain exact",
+      "pass": true
+    },
+    {
+      "name": "low shot launch and visible skim before terminal rebound are preserved",
+      "pass": true
+    },
+    {
+      "name": "one authoritative launch, no lateral steering, exact rest for every candidate",
+      "pass": true
+    },
+    {
+      "name": "normal 13 m arrival approaches observed pace band",
+      "pass": true,
+      "detail": [
+        {
+          "id": "ground-A",
+          "plane": {
+            "distance": 13,
+            "time": 0.7554843477851133,
+            "clearance": 0,
+            "verticalVelocity": 0,
+            "horizontalSpeed": 14.455945063575491,
+            "spin": [
+              0,
+              0,
+              -131.41768239614083
+            ],
+            "mode": "ROLLING",
+            "interpolationCrossesImpact": false
+          }
+        },
+        {
+          "id": "ground-B",
+          "plane": {
+            "distance": 13,
+            "time": 0.7207508623119587,
+            "clearance": 0,
+            "verticalVelocity": 0,
+            "horizontalSpeed": 15.046334322805508,
+            "spin": [
+              0,
+              0,
+              -136.78485748005008
+            ],
+            "mode": "ROLLING",
+            "interpolationCrossesImpact": false
+          }
+        },
+        {
+          "id": "ground-current",
+          "plane": {
+            "distance": 13,
+            "time": 1.21138510766155,
+            "clearance": 0,
+            "verticalVelocity": 0,
+            "horizontalSpeed": 8.784289809381066,
+            "spin": [
+              0,
+              0,
+              -79.85718008528242
+            ],
+            "mode": "ROLLING",
+            "interpolationCrossesImpact": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "normal texture lies in broad visual envelope with diminishing physical hops",
+      "pass": true
+    },
+    {
+      "name": "5 m layoff has less height than ordinary pass; nearby distances vary continuously",
+      "pass": true
+    },
+    {
+      "name": "through is a distinct launch intent and legacy THROUGH maps to it once",
+      "pass": true
+    },
+    {
+      "name": "through progressively slows after slide-to-roll, with no crawl",
+      "pass": true
+    },
+    {
+      "name": "sprint runner catches moving ball inside 20–31 m zone; old ball escapes it",
+      "pass": true
+    },
+    {
+      "name": "through runout reduced >=40%, firm >=20%, driven >=35%",
+      "pass": true
+    },
+    {
+      "name": "normal/firm/driven retain speed and skid distinctions",
+      "pass": true
+    },
+    {
+      "name": "attributes/seed/pressure affect launch once without changing turf",
+      "pass": true
+    },
+    {
+      "name": "foot, direction, explicit spin and existing execution contract survive",
+      "pass": true
+    },
+    {
+      "name": "invalid launch settings fail explicitly",
+      "pass": true
+    },
+    {
+      "name": "resolved metadata has zero influence on physics",
+      "pass": true
+    },
+    {
+      "name": "read-only contact instrumentation cannot change trajectories",
+      "pass": true
+    },
+    {
+      "name": "all contact impulses conserve accounting and dissipate total energy",
+      "pass": true
+    },
+    {
+      "name": "reported submillimetre chatter case settles without repeated artificial flight",
+      "pass": true,
+      "detail": {
+        "contacts": 5,
+        "stableRoll": {
+          "time": 0.15000000000000005,
+          "x": 2.881106484556325,
+          "horizontalSpeed": 18.53922283655531
+        },
+        "rangeError": 0.17710736939104166
+      }
+    },
+    {
+      "name": "240/480 Hz selected-profile convergence",
+      "pass": true,
+      "detail": [
+        {
+          "id": "through-A",
+          "apexError": 0.0009270624825259005,
+          "rangeError": 0.10680824387512189,
+          "time15Error": 0.0023996784071030897
+        },
+        {
+          "id": "through-B",
+          "apexError": 0.0012486149152920456,
+          "rangeError": 0.1140911237299882,
+          "time15Error": 0.0024953052673000187
+        },
+        {
+          "id": "ground-A",
+          "apexError": 0.0012603918168588857,
+          "rangeError": 0.12462472761477272,
+          "time15Error": 0.002685284473743388
+        },
+        {
+          "id": "ground-B",
+          "apexError": 0.001639543685148931,
+          "rangeError": 0.07194682368261596,
+          "time15Error": 0.001527039076072656
+        },
+        {
+          "id": "short-A",
+          "apexError": 0.0005401294844599586,
+          "rangeError": 0.014390025759558611,
+          "time15Error": null
+        },
+        {
+          "id": "short-B",
+          "apexError": 0.0007224761162583221,
+          "rangeError": 0.1255181317614582,
+          "time15Error": null
+        },
+        {
+          "id": "firm-A",
+          "apexError": 0.0016843515182471125,
+          "rangeError": 0.3043777127161107,
+          "time15Error": 0.003324557993625521
+        },
+        {
+          "id": "firm-B",
+          "apexError": 0.0021578246545322366,
+          "rangeError": 0.20029522852075132,
+          "time15Error": 0.001932291736088776
+        },
+        {
+          "id": "driven-A",
+          "apexError": 0.0016468073634978153,
+          "rangeError": 0.3760895032599194,
+          "time15Error": 0.0033713875480898547
+        },
+        {
+          "id": "driven-B",
+          "apexError": 0.0016468073634978153,
+          "rangeError": 0.4258773174312651,
+          "time15Error": 0.0033713875480898547
+        },
+        {
+          "id": "power-A",
+          "apexError": 0.0012194098689534416,
+          "rangeError": 0.21700961426162735,
+          "time15Error": 0.0007324632603795123
+        },
+        {
+          "id": "power-B",
+          "apexError": 0.0012194098689534416,
+          "rangeError": 0.238264020774956,
+          "time15Error": 0.0007324632603795123
+        }
+      ]
+    },
+    {
+      "name": "42 distance/strength profiles settle; stronger/longer intentions raise launch speed",
+      "pass": true
+    },
+    {
+      "name": "full unrounded Node stream hash repeats",
+      "pass": true,
+      "detail": {
+        "hash": "4bd0e797103f4a29c7bb6fd45e1c0b35f6a5cefeb393c8355cb9e1616d3e42bf",
+        "bytes": 19372439,
+        "runs": 38,
+        "node": "v22.19.0"
+      }
+    },
+    {
+      "name": "308-collider isolated benchmark under 1 ms per tick",
+      "pass": true,
+      "detail": {
+        "colliders": 308,
+        "msPerTick": [
+          0.3292147233333344,
+          0.3270784700000028,
+          0.32477402999999566,
+          0.3193019433333393,
+          0.3192416666666698
+        ]
+      }
+    },
+    {
+      "name": "Chrome and Node full streams identical",
+      "pass": true
+    }
+  ]
+}

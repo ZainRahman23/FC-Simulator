@@ -1,0 +1,41 @@
+{
+  "pass": true,
+  "method": "Codex in-app browser, actual family buttons and native video playback",
+  "url": "http://127.0.0.1:8872/review.html",
+  "families": [
+    {
+      "family": "LACES",
+      "readyState": 4,
+      "playbackRate": 1,
+      "playedToEnd": true,
+      "duration": 2.5,
+      "mediaError": null
+    },
+    {
+      "family": "POWER",
+      "readyState": 4,
+      "playbackRate": 1,
+      "playedToEnd": true,
+      "duration": 2.5,
+      "mediaError": null
+    },
+    {
+      "family": "CHIP",
+      "readyState": 4,
+      "playbackRate": 1,
+      "playedToEnd": true,
+      "duration": 3,
+      "mediaError": null
+    }
+  ],
+  "familyButtonsUpdateMediaAndDownload": true,
+  "chipCaptionHasFourRatings": true,
+  "finalSelectedFamily": "LACES",
+  "screenshot": "review-browser.png",
+  "packagedSourceTests": {
+    "passed": 18,
+    "total": 18,
+    "foundationPassed": 53,
+    "foundationTotal": 53
+  }
+}

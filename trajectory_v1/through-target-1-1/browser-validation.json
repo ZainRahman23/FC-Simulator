@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "key": "committed",
+      "id": "terrible",
+      "time": 0.4,
+      "chase": "COMMITTED",
+      "feasibility": "MARGINAL",
+      "maxPhysicalDelta": 8.881784197001252e-16
+    },
+    {
+      "key": "recovery",
+      "id": "terrible",
+      "time": 1.25,
+      "chase": "ABANDONED",
+      "feasibility": "UNREACHABLE",
+      "maxPhysicalDelta": 1.7763568394002505e-15
+    },
+    {
+      "key": "easy",
+      "id": "easy",
+      "time": 1.5,
+      "chase": "RECEIVED",
+      "feasibility": "REACHABLE",
+      "maxPhysicalDelta": 3.552713678800501e-15
+    },
+    {
+      "key": "marginal",
+      "id": "marginal",
+      "time": 6.1,
+      "chase": "COMMITTED",
+      "feasibility": "MARGINAL",
+      "maxPhysicalDelta": 2.1316282072803006e-14
+    },
+    {
+      "key": "marginalReceived",
+      "id": "marginal",
+      "time": 6.3,
+      "chase": "RECEIVED",
+      "feasibility": "MARGINAL",
+      "maxPhysicalDelta": 1.9095836023552692e-14
+    },
+    {
+      "key": "outOfPlay",
+      "id": "out-of-play",
+      "time": 0.8,
+      "chase": "ABANDONED",
+      "feasibility": "UNREACHABLE",
+      "maxPhysicalDelta": 7.105427357601002e-15
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+export function drawSpeedTrace(canvas,state){
+ const g=canvas.getContext('2d'),r=canvas.getBoundingClientRect(),w=r.width,h=r.height,dpr=Math.min(devicePixelRatio,2);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);g.font='10px system-ui';g.fillStyle='#bdd4c6';
+ const p=state.prepared;if(!p){g.fillText('Release a pass to see its physical speed trace.',8,30);return;}
+ const o=p.idealAction.position,t=p.target,d=Math.hypot(t[0]-o[0],t[2]-o[2]),ux=(t[0]-o[0])/d,uz=(t[2]-o[2])/d,max=Math.max(1,Math.hypot(...p.idealAction.velocity),Math.hypot(...p.actualAction.velocity)),X=q=>32+q*(w-46)/1.1,Y=s=>h-24-s/max*(h-40);
+ for(const q of [0,.25,.5,.75,1]){g.fillText(q*100+'%',X(q)-8,h-8);g.strokeStyle=q===1?'#d7bd7a77':'#9db3a433';g.beginPath();g.moveTo(X(q),12);g.lineTo(X(q),h-24);g.stroke();}g.fillText(max.toFixed(1)+' m/s',2,10);g.fillText('0',10,h-23);
+ for(const [frames,color,launch] of [[p.ideal.frames,'#f4cc77',p.idealAction],[state.flight?.frames??[], '#76e4b4',p.actualAction]]){g.strokeStyle=color;g.lineWidth=1.8;g.beginPath();g.moveTo(X(0),Y(Math.hypot(launch.velocity[0],launch.velocity[2])));for(let k=1;k<frames.length;k+=3){const f=frames[k],q=((f.p[0]-o[0])*ux+(f.p[2]-o[2])*uz)/d;if(q>1.1)break;g.lineTo(X(q),Y(Math.hypot(f.v[0],f.v[2])));}g.stroke();}
+}

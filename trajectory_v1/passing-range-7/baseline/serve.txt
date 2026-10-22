@@ -1,0 +1,11 @@
+Existing review server: http://127.0.0.1:8879/passing/
+
+To restart if that server is no longer running, serve the parent directory:
+python3 -m http.server 8879 --bind 127.0.0.1 --directory outputs/SHOT-ACCURACY-1.0-VISUAL
+
+Reproduce calibration from the task root:
+node outputs/SHOT-ACCURACY-1.0-VISUAL/passing/calibrate.mjs
+node outputs/SHOT-ACCURACY-1.0-VISUAL/passing/contract-checks.mjs
+python3 outputs/SHOT-ACCURACY-1.0-VISUAL/passing/verify-protected.py
+
+No build step or external packages. Keep frozen imports untouched. New constants are provisional.

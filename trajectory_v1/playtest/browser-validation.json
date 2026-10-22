@@ -1,0 +1,310 @@
+{
+  "initial80": {
+    "complete": "true",
+    "differenceCm": "11.115445343298921",
+    "drawEventId": "shot:00001",
+    "drawH": "0.5401277078772648",
+    "drawV": "-0.9396739761444554",
+    "effectiveAccuracy": "80",
+    "errorH": "0.36005107029696953",
+    "errorV": "-0.3758340287751728",
+    "holdMs": "284.3999999910593",
+    "shotId": "session-shot:00001",
+    "sigmaH": "0.6666035921615509",
+    "sigmaV": "0.39996215529693047",
+    "speed": "27.759180865132123"
+  },
+  "rating99": {
+    "complete": "true",
+    "differenceCm": "0.35522976688560265",
+    "drawEventId": "shot:00001",
+    "drawH": "0.5401277078772648",
+    "drawV": "-0.9396739761444554",
+    "effectiveAccuracy": "99",
+    "errorH": "0.011518004099007445",
+    "errorV": "-0.012022899641454995",
+    "holdMs": "284.3999999910593",
+    "shotId": "session-shot:00002",
+    "sigmaH": "0.021324594037721023",
+    "sigmaV": "0.012794756422632614",
+    "speed": "27.759180865132123"
+  },
+  "rating60": {
+    "complete": "true",
+    "differenceCm": "30.919999335828305",
+    "drawEventId": "shot:00001",
+    "drawH": "0.5401277078772648",
+    "drawV": "-0.9396739761444554",
+    "effectiveAccuracy": "60",
+    "errorH": "0.9996107415265496",
+    "errorV": "-1.0434290110150053",
+    "holdMs": "284.3999999910593",
+    "shotId": "session-shot:00003",
+    "sigmaH": "1.850693321131555",
+    "sigmaV": "1.110415992678933",
+    "speed": "27.759180865132123"
+  },
+  "newDraw": {
+    "complete": "true",
+    "differenceCm": "30.50728006875151",
+    "drawEventId": "shot:00002",
+    "drawH": "-0.7039838576374579",
+    "drawV": "-0.48937657113314326",
+    "effectiveAccuracy": "60",
+    "errorH": "-1.3028582235140707",
+    "errorV": "-0.5434115710286217",
+    "holdMs": "284.3999999910593",
+    "shotId": "session-shot:00004",
+    "sigmaH": "1.850693321131555",
+    "sigmaV": "1.110415992678933",
+    "speed": "27.759180865132123"
+  },
+  "wideHigh": {
+    "version": "SHOT-ACCURACY-PLAYTEST-1",
+    "input": {
+      "player": {
+        "x": 93,
+        "z": 34
+      },
+      "aimZ": 59,
+      "ratings": {
+        "finishing": 80,
+        "longShots": 80,
+        "shotPower": 80
+      },
+      "seed": "20261018",
+      "holdMs": 808,
+      "shotId": "session-shot:00005",
+      "drawEventId": "shot:00002"
+    },
+    "shooterPosition": [
+      93,
+      0,
+      34
+    ],
+    "ballPosition": [
+      93.03750335919068,
+      0.11,
+      34.447876654950235
+    ],
+    "startingVelocity": [
+      0,
+      0,
+      0
+    ],
+    "startingSpin": [
+      0,
+      0,
+      0
+    ],
+    "startingOrientation": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "zone": {
+      "zone": 1,
+      "label": "ZONE 1 — FINISHING",
+      "insideBox": true,
+      "insideEllipse": true,
+      "forward": 12,
+      "lateral": 0,
+      "ellipseValue": 0.5289256198347108,
+      "finishingWeight": 1,
+      "longShotsWeight": 0,
+      "effectiveAccuracy": 80
+    },
+    "dispersion": {
+      "accuracy": 80,
+      "sigmaBaseH": 0.6251969823973177,
+      "sigmaBaseV": 0.3751181894383906,
+      "difficulty": 1.1,
+      "powerIncreasePercent": 10.000000000000009,
+      "addedSigmaH": 0.0625196982397318,
+      "addedSigmaV": 0.03751181894383909,
+      "sigmaH": 0.6877166806370495,
+      "sigmaV": 0.4126300083822297,
+      "maxH": 1.6845549551613472,
+      "maxV": 1.0107329730968084
+    },
+    "draws": {
+      "horizontal": [
+        {
+          "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00002\",\"horizontal\",0]",
+          "digest": "70caf92e57794f41b03838b03b3bd83cf1f25661c4ef8eafbc29172d97307932",
+          "value": 0.4405971277369406
+        },
+        {
+          "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00002\",\"horizontal\",1]",
+          "digest": "ba5e0885ab9c7feee3b17666ef3d2434b68477fe49b0e27e488b84cb3c1545cb",
+          "value": 0.7279973341315883
+        }
+      ],
+      "elevation": [
+        {
+          "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00002\",\"elevation\",0]",
+          "digest": "b667ce92c9f16b21ab0c9356d267dac961d2c8c8595d262cd0f6b876ebd222e1",
+          "value": 0.7125214680072013
+        },
+        {
+          "key": "[\"shot-accuracy-v1\",\"20261018\",\"calibration-player\",\"shot:00002\",\"elevation\",1]",
+          "digest": "e98d0eb801dd71fcbd17bf4771a4aa01d529e33138a61ac138c62340a39ffe20",
+          "value": 0.9123086165653741
+        }
+      ],
+      "standardizedHorizontal": -0.7039838576374579,
+      "standardizedElevation": -0.48937657113314326
+    },
+    "errorH": -0.4841414417964977,
+    "errorV": -0.2019314586487357,
+    "yaw": 64.02333197194825,
+    "idealElevation": 32.2071501868777,
+    "actualElevation": 32.00521872822896,
+    "requestedSpeed": 30.771130104463438,
+    "capabilityCeiling": 30.771130104463438,
+    "speedFraction": 1,
+    "requestedApex": 9.701672537893062,
+    "distance": 12,
+    "idealLaunch": {
+      "velocity": [
+        11.404020688669078,
+        16.400454526864685,
+        23.405893517455542
+      ],
+      "spin": [
+        3.595889940609397,
+        0,
+        -1.7520204151276737
+      ]
+    },
+    "actualLaunch": {
+      "velocity": [
+        11.627071086531013,
+        16.308591429945036,
+        23.360297759782387
+      ],
+      "spin": [
+        3.595889940609397,
+        0,
+        -1.7520204151276737
+      ]
+    },
+    "inputTiming": {
+      "kind": "pointer",
+      "holdMs": 808,
+      "pressTime": 239511.80000001192,
+      "releaseTime": 240319.80000001192,
+      "pressTrusted": true,
+      "releaseTrusted": true
+    },
+    "preparationMs": 56.8999999910593,
+    "actualPhysicsMs": 15.300000071525574,
+    "renderFps": 60,
+    "slowRenderFrames": 0,
+    "actualLaunchCount": 1,
+    "idealPlane": {
+      "x": 105,
+      "y": 9.701665375186122,
+      "z": 59.000000000000036,
+      "time": 1.2825350649476501
+    },
+    "actualPlane": {
+      "x": 105,
+      "y": 9.602002672290263,
+      "z": 58.485066885037526,
+      "time": 1.253571695849506
+    },
+    "physicalDifference": {
+      "horizontal": -51.49331149625098,
+      "vertical": -9.966270289585921,
+      "total": 52.44890534925411
+    },
+    "observation": {
+      "actual": "plane-crossed",
+      "ideal": "plane-crossed",
+      "maximumSeconds": 12
+    }
+  },
+  "boundaries": [
+    {
+      "preset": "ellipseIn",
+      "zone": "FINISHING ZONE",
+      "effective": "95",
+      "player": "{\"x\":91.75143519017513,\"z\":46}"
+    },
+    {
+      "preset": "ellipseOut",
+      "zone": "MIXED ZONE",
+      "effective": "77.5",
+      "player": "{\"x\":91.73143519017512,\"z\":46}"
+    },
+    {
+      "preset": "boxIn",
+      "zone": "MIXED ZONE",
+      "effective": "77.5",
+      "player": "{\"x\":88.51,\"z\":44}"
+    },
+    {
+      "preset": "boxOut",
+      "zone": "LONG SHOTS ZONE",
+      "effective": "60",
+      "player": "{\"x\":88.49,\"z\":44}"
+    },
+    {
+      "preset": "mixed",
+      "zone": "MIXED ZONE",
+      "effective": "77.5",
+      "player": "{\"x\":97,\"z\":52.16}"
+    }
+  ],
+  "weak": {
+    "holdMs": 13,
+    "speedFraction": 0.4,
+    "idealPlane": null,
+    "actualPlane": null,
+    "observation": {
+      "actual": "rest-before-plane",
+      "ideal": "rest-before-plane",
+      "maximumSeconds": 12
+    },
+    "launches": 1
+  },
+  "finalShot": {
+    "holdMs": 303.59999999403954,
+    "inputKind": "keyboard",
+    "preparationMs": 26.099999994039536,
+    "actualPhysicsMs": 9.000000044703484,
+    "renderFps": 60,
+    "idealPlane": {
+      "x": 105,
+      "y": 2.2197096494508504,
+      "z": 37.30000000000002,
+      "time": 0.82948400052086
+    },
+    "actualPlane": {
+      "x": 105,
+      "y": 2.2119972409039415,
+      "z": 37.28784670991501,
+      "time": 0.8292988958649681
+    },
+    "difference": {
+      "horizontal": -1.2153290085009871,
+      "vertical": -0.7712408546908911,
+      "total": 1.439387736104601
+    },
+    "launchCount": 1
+  },
+  "status": "PASS",
+  "matchedInputAndDraw": true,
+  "checkedAt": "2026-10-18T17:54:12.413Z",
+  "page": {
+    "pageWidth": 319,
+    "viewportWidth": 319
+  },
+  "screenshots": [
+    "preview-playtest.png",
+    "preview-wide-high.png"
+  ],
+  "scope": "Actual browser keyboard and pointer handlers, frozen worker resolver, live physical world, and visible diagnostics. Automated input timing is not a human timing sample."
+}

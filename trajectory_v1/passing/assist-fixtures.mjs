@@ -1,0 +1,11 @@
+import {defaultInput} from './resolver.mjs';
+export const ASSIST_SCENARIOS={line:'Crowded line · 10 / 18 / 27 / 38 m',three:'Three depths · 10 / 20 / 32 m',crossline:'Cross depths · 20 / 35 / 50 / 65 m',diagonal:'Diagonal conflict · 12 m / 3°, 25 m / 5°, 35 m / 12°',capability:'Capability · 20 / 32 / 45 m',one:'One receiver',close:'Two close receivers',depth:'Two depths · A 15 m / 8°, B 25 m / 2°',left:'Receiver slightly left',right:'Receiver slightly right',between:'Aim between two receivers',outside:'Just outside assistance',manual:'Deliberate manual miss',crowded:'Crowded penalty area'};
+const polar=(id,d,a)=>({id,position:[20+d*Math.cos(a*Math.PI/180),.11,34+d*Math.sin(a*Math.PI/180)],velocity:[0,0,0]});
+export function assistanceFixture(family='SHORT',scenario='line',angle,range,holdMs){
+ const i=defaultInput();i.family=family;i.origin=[20,.11,34];i.facingYaw=0;i.holdMs=holdMs??0;i.seed='20261019';i.drawEventId='assist9-locked';i.passId='assist9';i.attributes={short_passing:80,long_passing:80,crossing:80,vision:80,shot_power:80,curve:80};i.accuracyModel='variation';i.crossCurveModel='newest';i.dominantFoot='right';i.targetAssistance=true;i.manualTargetMode='point';
+ const dist=family==='CROSS'?40:20;
+ const setups={line:[polar('A',10,-1),polar('B',18,0),polar('C',27,1),polar('D',38,0)],three:[polar('A',10,0),polar('B',20,0),polar('C',32,0)],crossline:[polar('A',20,-1),polar('B',35,0),polar('C',50,1),polar('D',65,0)],diagonal:[polar('A',12,3),polar('B',25,5),polar('C',35,12)],capability:[polar('A',20,0),polar('B',32,1),polar('C',45,0)],one:[polar('A',dist,3)],close:[polar('A',dist,-2),polar('B',dist,2)],depth:[polar('A',15,8),polar('B',25,2)],left:[polar('A',dist,-4)],right:[polar('A',dist,4)],between:[polar('A',dist,-3),polar('B',dist,3)],outside:[polar('A',dist,0)],manual:[polar('A',dist,0),polar('B',dist+5,3)],crowded:[polar('A',37,-6),polar('B',42,-1),polar('C',46,3),polar('D',51,7),polar('E',39,12)]};
+ i.candidates=setups[scenario]??setups.depth;i.receiver=i.candidates[0];
+ const yaw=angle??(scenario==='outside'?(family==='SHORT'?12:11):scenario==='manual'?30:0),d=range??(['line','three','diagonal','capability'].includes(scenario)?40:scenario==='crossline'?70:scenario==='depth'?30:dist);
+ i.aimPoint=[20+d*Math.cos(yaw*Math.PI/180),.11,34+d*Math.sin(yaw*Math.PI/180)];return i;
+}

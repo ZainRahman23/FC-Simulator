@@ -1,0 +1,481 @@
+{
+  "verified": true,
+  "audit": {
+    "executionDistribution": {
+      "directionDeg": 2.0894719182010584,
+      "depthFraction": 0.0016824701159502933,
+      "lateral": 1.1731806117057306,
+      "depth": 0.054101056145407646,
+      "backspinMultiplier": 0.984375
+    },
+    "executionSolve": {
+      "method": "Physical-demand spread → bounded delivery error → contact-only pace/backspin inverse",
+      "residual": 0.000060102846717313696,
+      "candidates": 59,
+      "iterations": 53,
+      "candidateRetries": 2,
+      "fallback": true,
+      "cpuMs": 43.5,
+      "referenceTime": 2.861573668952616,
+      "requestedLateral": 1.1731806117057306,
+      "requestedDepth": 0.054101056145407646,
+      "weightControl": 0.0022044538328125363
+    },
+    "version": "PACE-WHIP-2-provisional",
+    "input": {
+      "family": "THROUGH",
+      "passId": "pass-3",
+      "drawEventId": "pass-event-1",
+      "seed": "20261018",
+      "passerId": "calibration-passer",
+      "origin": [
+        20,
+        0.11,
+        34
+      ],
+      "facingYaw": 0,
+      "receiver": {
+        "id": "A",
+        "position": [
+          26,
+          0.11,
+          34
+        ],
+        "velocity": [
+          5,
+          0,
+          0
+        ]
+      },
+      "aimPoint": [
+        50,
+        0.11,
+        34
+      ],
+      "holdMs": 400,
+      "attributes": {
+        "short_passing": 80,
+        "long_passing": 80,
+        "crossing": 80,
+        "shot_power": 40,
+        "vision": 80
+      },
+      "accuracyModel": "variation",
+      "requestedDistance": 50
+    },
+    "capability": {
+      "version": "PASSING-RANGE-7-provisional",
+      "shotPower": 40,
+      "requestedRange": 50,
+      "physicalMaxRange": 32.15573081061845,
+      "resolvedRange": 32.15573081061845,
+      "limited": true,
+      "shortfall": 17.84426918938155,
+      "source": "explicit distance intent",
+      "classification": "PHYSICAL CAPABILITY LIMIT"
+    },
+    "requestedTarget": [
+      70,
+      0.11,
+      34
+    ],
+    "attribute": "long_passing",
+    "accuracy": {
+      "version": "PASSING-ATTRIBUTES-5-provisional",
+      "family": "THROUGH",
+      "primaryAttribute": "long_passing",
+      "primary": 80,
+      "vision": 80,
+      "primaryWeight": 0.7,
+      "visionWeight": 0.3,
+      "effective": 80,
+      "legacyVisionFallback": false,
+      "formula": "0.7 × 80 + 0.3 × 80 = 80"
+    },
+    "effectivePassingAccuracy": 80,
+    "primaryRating": 80,
+    "rating": 80,
+    "charge": {
+      "holdMs": 400,
+      "normalized": 1,
+      "fullMs": 400
+    },
+    "intent": {
+      "distance": 32.15573081061845,
+      "target": [
+        52.15573081061845,
+        0.11,
+        34
+      ],
+      "requestedTarget": [
+        70,
+        0.11,
+        34
+      ],
+      "capability": {
+        "version": "PASSING-RANGE-7-provisional",
+        "shotPower": 40,
+        "requestedRange": 50,
+        "physicalMaxRange": 32.15573081061845,
+        "resolvedRange": 32.15573081061845,
+        "limited": true,
+        "shortfall": 17.84426918938155,
+        "source": "explicit distance intent",
+        "classification": "PHYSICAL CAPABILITY LIMIT"
+      },
+      "directYaw": 0,
+      "runnerLookahead": 0.55,
+      "aheadOfRunner": 26.15573081061845,
+      "runnerId": "A",
+      "aimOffset": [
+        24,
+        0,
+        0
+      ],
+      "warning": null
+    },
+    "idealTarget": [
+      52.15573081061845,
+      0.11,
+      34
+    ],
+    "receiverAtIdealArrival": [
+      40.30786834476308,
+      0.11,
+      34
+    ],
+    "ceiling": 40,
+    "difficulty": {
+      "value": 1.1709075778916838,
+      "terms": {
+        "floor": 0.12,
+        "distance": 0.9765470781891258,
+        "redirection": 0,
+        "motion": 0.07436049970255802
+      },
+      "distance": 32.15573081061845,
+      "redirectionDeg": 0
+    },
+    "sigma": {
+      "model": "variation",
+      "rating": 80,
+      "factor": 0.15676038202017537,
+      "ratingDifficulty": 1.0011682933536263,
+      "extraTerms": {
+        "paceAndDyingControl": 0.9268077936510682,
+        "redirection": 0,
+        "motion": 0.07436049970255802
+      },
+      "floors": {
+        "direction": 0.017563613668375257,
+        "weight": 0.0008196353045241786,
+        "elevation": 0
+      },
+      "spreads": {
+        "direction": 1.294784074093962,
+        "weight": 0.06621054924344125,
+        "elevation": 0
+      },
+      "sigmaDirection": 1.3123476877623372,
+      "sigmaWeight": 0.06703018454796543,
+      "sigmaElevation": 0,
+      "bounds": {
+        "direction": 18,
+        "weight": 0.36,
+        "elevation": 0
+      },
+      "note": "Sigma fields are pre-saturation scale. Rating error uses bound × tanh(spread × z / bound), plus unchanged tiny floor × z.",
+      "physicalDemand": {
+        "value": 1.0011682933536263,
+        "terms": {
+          "paceAndDyingControl": 0.9268077936510682,
+          "redirection": 0,
+          "motion": 0.07436049970255802
+        },
+        "controlDistance": 49.49753239863341,
+        "ratio": 1.8606944961407879,
+        "launchSpeed": 19.797311942610353,
+        "endpointSpeed": 2.5,
+        "travelTime": 2.861573668952616,
+        "requiredSpeedReduction": 17.297311942610353,
+        "referenceControlDistance": 26.601643903012988,
+        "formula": "D = D20 × [T × (launchSpeed − endpointSpeed)] / [T20 × (launchSpeed20 − endpointSpeed)] + existing redirection + motion"
+      },
+      "baseSpreads": {
+        "direction": 1.2932731516664469,
+        "weight": 0.06613328616476148
+      }
+    },
+    "draws": {
+      "contract": "pass-execution-v1",
+      "seed": "20261018",
+      "passerId": "calibration-passer",
+      "drawEventId": "pass-event-1",
+      "uniforms": {
+        "direction": [
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"direction\",0]",
+            "hash": "c326d97a6e4314dc32aa96365d5bba99039523dadf50f321577fe6e35dcbc7d6",
+            "u": 0.7623115466979126
+          },
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"direction\",1]",
+            "hash": "1c0765f627e5b5f465041de69a1dd53a30e1afcc8d3a3c31b73684c9be85116c",
+            "u": 0.10948788890518457
+          }
+        ],
+        "weight": [
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"weight\",0]",
+            "hash": "795bba655e95f4c572c8b4764aebc28db6efbf4c5727047233e47ded8cdb927b",
+            "u": 0.47405590987053603
+          },
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"weight\",1]",
+            "hash": "762ff4067fef35cf977de6d3f1e9cf83bdd031468fb08ac8dc0a6f431cd12f29",
+            "u": 0.46166920813260226
+          }
+        ],
+        "elevation": [
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"elevation\",0]",
+            "hash": "aa33f62a18093ed7faa5995a13c7b909efdab75596b255a7149f448d09f6a81e",
+            "u": 0.6648553707855499
+          },
+          {
+            "key": "[\"pass-execution-v1\",\"20261018\",\"calibration-passer\",\"pass-event-1\",\"elevation\",1]",
+            "hash": "400f1facc570e193cd3df770f503a541277c2c619ccaa5c99881625a064a5dda",
+            "u": 0.2502307698063678
+          }
+        ]
+      },
+      "z": {
+        "direction": 1.5990848536094826,
+        "weight": 0.030341098853983332,
+        "elevation": 1.0156187072040745
+      }
+    },
+    "error": {
+      "directionDeg": 2.0859654518809982,
+      "requestedWeightFraction": 0.0022044538328125363,
+      "appliedWeightFraction": 0.0022044538328125363,
+      "elevationDeg": 0,
+      "spinRadPerSecond": 0,
+      "spinFraction": 0,
+      "ratingError": {
+        "direction": 2.061386209609311,
+        "weight": 0.002008879967958746,
+        "elevation": 0
+      },
+      "backspinMultiplier": 0.984375
+    },
+    "idealLaunch": {
+      "id": "pass-3:ideal",
+      "tick": 0,
+      "position": [
+        20,
+        0.11,
+        34
+      ],
+      "velocity": [
+        19.797311942610353,
+        0,
+        0
+      ],
+      "spin": [
+        0,
+        0,
+        8
+      ],
+      "metadata": {
+        "version": "PACE-WHIP-2-provisional",
+        "family": "THROUGH"
+      }
+    },
+    "actualLaunch": {
+      "id": "pass-3",
+      "tick": 0,
+      "position": [
+        20,
+        0.11,
+        34
+      ],
+      "velocity": [
+        19.82780638897057,
+        0,
+        0.7221893651732494
+      ],
+      "spin": [
+        -0.2866415189817976,
+        0,
+        7.869781549674413
+      ],
+      "metadata": {
+        "version": "PACE-WHIP-2-provisional",
+        "family": "THROUGH"
+      }
+    },
+    "idealArrival": {
+      "time": 2.861573668952616,
+      "p": [
+        52.15573081061845,
+        0.11,
+        34
+      ],
+      "v": [
+        2.508443364800976,
+        0,
+        0
+      ],
+      "w": [
+        0,
+        0,
+        -22.80403058909978
+      ]
+    },
+    "solver": {
+      "speed": 19.797311942610353,
+      "velocity": [
+        19.797311942610353,
+        0,
+        0
+      ],
+      "spin": [
+        0,
+        0,
+        8
+      ],
+      "residual": 0.0027780867312472424,
+      "timeResidual": 0.16567874505950098,
+      "requestedArrivalSpeed": 2.5,
+      "requestedApex": 0.11,
+      "requestedTravelTime": 2.69700788647783,
+      "timeObjectiveReached": false,
+      "valid": true,
+      "status": "resolved",
+      "candidates": 15,
+      "trajectoryCpuMs": 30.700000002980232,
+      "spinConstraint": "Joint speed/backspin solve for depth and fast travel time; endpoint takes priority at physical bounds",
+      "yawOffset": 0,
+      "pitch": 0,
+      "reversed": false,
+      "maxHeading": 0
+    },
+    "performance": {
+      "candidates": 15,
+      "trajectoryCpuMs": 30.700000002980232,
+      "resolverCpuMs": 36.30000001192093,
+      "executionCpuMs": 44.099999994039536,
+      "livePhysicsTotalCpuMs": 31.200000077486038,
+      "observedFrameRate": 59.99999999999999
+    },
+    "excludedContext": [
+      "shot power accuracy modifier",
+      "pressure",
+      "fatigue",
+      "receiving",
+      "match AI"
+    ],
+    "actualArrival": {
+      "time": 2.8406982386275663,
+      "p": [
+        52.15573081061845,
+        0.11,
+        35.171210085736945
+      ],
+      "v": [
+        2.6839892376376113,
+        0,
+        0.0977590987946897
+      ],
+      "w": [
+        0.8887190799517246,
+        0,
+        -24.39990216034192
+      ]
+    },
+    "actualDyingEndpoint": {
+      "time": 2.865123191707346,
+      "p": [
+        52.218627460171305,
+        0.11,
+        35.17350097412474
+      ],
+      "v": [
+        2.4983433491029885,
+        0,
+        0.09099730761326971
+      ],
+      "w": [
+        0.8272482510297247,
+        0,
+        -22.71221226457262
+      ]
+    },
+    "actualLanding": null,
+    "measurements": {
+      "runnerTargetTime": 5.23114616212369,
+      "runnerPathOffset": 0,
+      "closestApproach": {
+        "distance": 0.3018521681679463,
+        "time": 0.4583333333333333,
+        "ball": [
+          28.285856692890494,
+          0.11,
+          34.301796248539326
+        ],
+        "receiver": [
+          28.291666666666668,
+          0.11,
+          34
+        ]
+      },
+      "referenceTime": 2.861573668952616,
+      "idealPoint": [
+        52.15573081061845,
+        0.11,
+        34
+      ],
+      "actualPoint": [
+        52.20977180374461,
+        0.11,
+        35.17317842402679
+      ],
+      "lateral": 1.173178424026787,
+      "depth": 0.054040993126157844,
+      "height": 0,
+      "physicalMiss": 1.1744224297670909,
+      "targetPlane": {
+        "time": 2.8406982386275663,
+        "p": [
+          52.15573081061845,
+          0.11,
+          35.171210085736945
+        ],
+        "v": [
+          2.6839892376376113,
+          0,
+          0.0977590987946897
+        ],
+        "w": [
+          0.8887190799517246,
+          0,
+          -24.39990216034192
+        ]
+      },
+      "planeLateral": 1.171210085736945,
+      "planeHeightError": 0,
+      "planeTimeError": -0.02087543032504957,
+      "ballRunnerTimingError": -2.390447923496124,
+      "idealBallRunnerTiming": -2.3695724931710744,
+      "idealArrivalSpeed": 2.508443364800976,
+      "actualArrivalSpeed": 2.685768990280377,
+      "arrivalVerticalVelocity": 0,
+      "idealLanding": null,
+      "actualLanding": null,
+      "landingError": null,
+      "apex": 0.11,
+      "launchCount": 1
+    }
+  }
+}

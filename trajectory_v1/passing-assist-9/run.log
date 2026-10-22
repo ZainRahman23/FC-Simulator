@@ -1,0 +1,474 @@
+{
+  "checks": 511,
+  "three": [
+    {
+      "family": "SHORT",
+      "hold": 0,
+      "preferred": 8,
+      "selected": "A"
+    },
+    {
+      "family": "SHORT",
+      "hold": 175,
+      "preferred": 21.928809012737986,
+      "selected": "B"
+    },
+    {
+      "family": "SHORT",
+      "hold": 350,
+      "preferred": 40,
+      "selected": "C"
+    },
+    {
+      "family": "CROSS",
+      "hold": 0,
+      "preferred": 10,
+      "selected": "A"
+    },
+    {
+      "family": "CROSS",
+      "hold": 275,
+      "preferred": 25,
+      "selected": "B"
+    },
+    {
+      "family": "CROSS",
+      "hold": 550,
+      "preferred": 70,
+      "selected": "C"
+    }
+  ],
+  "diagonal": [
+    {
+      "family": "SHORT",
+      "angle": 0,
+      "hold": 0,
+      "preferred": 8,
+      "selected": "A"
+    },
+    {
+      "family": "SHORT",
+      "angle": 0,
+      "hold": 350,
+      "preferred": 40,
+      "selected": "B"
+    },
+    {
+      "family": "SHORT",
+      "angle": 12,
+      "hold": 350,
+      "preferred": 40,
+      "selected": "C"
+    },
+    {
+      "family": "CROSS",
+      "angle": 0,
+      "hold": 0,
+      "preferred": 10,
+      "selected": "A"
+    },
+    {
+      "family": "CROSS",
+      "angle": 0,
+      "hold": 550,
+      "preferred": 70,
+      "selected": "B"
+    },
+    {
+      "family": "CROSS",
+      "angle": 12,
+      "hold": 550,
+      "preferred": 70,
+      "selected": "C"
+    }
+  ],
+  "boundaries": [
+    {
+      "family": "SHORT",
+      "distance": 20,
+      "angle": 11.609603271277798,
+      "oldAngle": 5.77493451390638,
+      "cases": [
+        {
+          "angle": 11.599603271277799,
+          "selected": "A"
+        },
+        {
+          "angle": 11.609603271277798,
+          "selected": "A"
+        },
+        {
+          "angle": 11.619603271277798,
+          "selected": "MANUAL"
+        },
+        {
+          "angle": 30,
+          "selected": "MANUAL"
+        }
+      ]
+    },
+    {
+      "family": "CROSS",
+      "distance": 40,
+      "angle": 10.863967307523122,
+      "oldAngle": 5.40751726406059,
+      "cases": [
+        {
+          "angle": 10.853967307523122,
+          "selected": "A"
+        },
+        {
+          "angle": 10.863967307523122,
+          "selected": "A"
+        },
+        {
+          "angle": 10.873967307523122,
+          "selected": "MANUAL"
+        },
+        {
+          "angle": 30,
+          "selected": "MANUAL"
+        }
+      ]
+    }
+  ],
+  "capability": [
+    {
+      "sp": 40,
+      "selected": "C",
+      "requested": 45,
+      "maximum": 38.45173805929425,
+      "resolved": 38.45173805929425,
+      "shortfall": 6.54826194070575,
+      "launch": {
+        "id": "assist9:ideal",
+        "tick": 0,
+        "position": [
+          20,
+          0.11,
+          34
+        ],
+        "velocity": [
+          21.912294291897194,
+          11.884679336645272,
+          10.958571767763779
+        ],
+        "spin": [
+          -3.578342126417284,
+          85.96000000000001,
+          7.155100811750135
+        ],
+        "metadata": {
+          "version": "PACE-WHIP-2-provisional",
+          "family": "CROSS",
+          "physics": "continuous-magnus"
+        }
+      }
+    },
+    {
+      "sp": 60,
+      "selected": "C",
+      "requested": 45,
+      "maximum": 48.8228993846043,
+      "resolved": 45,
+      "shortfall": 0,
+      "launch": {
+        "id": "assist9:ideal",
+        "tick": 0,
+        "position": [
+          20,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.181128252497235,
+          12.327082887494146,
+          13.229860927055054
+        ],
+        "spin": [
+          -3.6080678823698933,
+          85.96000000000001,
+          7.140157292119749
+        ],
+        "metadata": {
+          "version": "PACE-WHIP-2-provisional",
+          "family": "CROSS",
+          "physics": "continuous-magnus"
+        }
+      }
+    },
+    {
+      "sp": 80,
+      "selected": "C",
+      "requested": 45,
+      "maximum": 59.552166379245,
+      "resolved": 45,
+      "shortfall": 0,
+      "launch": {
+        "id": "assist9:ideal",
+        "tick": 0,
+        "position": [
+          20,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.181128252497235,
+          12.327082887494146,
+          13.229860927055054
+        ],
+        "spin": [
+          -3.6080678823698933,
+          85.96000000000001,
+          7.140157292119749
+        ],
+        "metadata": {
+          "version": "PACE-WHIP-2-provisional",
+          "family": "CROSS",
+          "physics": "continuous-magnus"
+        }
+      }
+    },
+    {
+      "sp": 99,
+      "selected": "C",
+      "requested": 45,
+      "maximum": 70,
+      "resolved": 45,
+      "shortfall": 0,
+      "launch": {
+        "id": "assist9:ideal",
+        "tick": 0,
+        "position": [
+          20,
+          0.11,
+          34
+        ],
+        "velocity": [
+          26.181128252497235,
+          12.327082887494146,
+          13.229860927055054
+        ],
+        "spin": [
+          -3.6080678823698933,
+          85.96000000000001,
+          7.140157292119749
+        ],
+        "metadata": {
+          "version": "PACE-WHIP-2-provisional",
+          "family": "CROSS",
+          "physics": "continuous-magnus"
+        }
+      }
+    }
+  ],
+  "stability": [
+    {
+      "family": "SHORT",
+      "scoreCrossingHold": 88.45232043682003,
+      "holdJitterChanges": 0,
+      "aimJitterChanges": 0,
+      "forwardTransitions": [
+        {
+          "hold": 0,
+          "selected": "A"
+        },
+        {
+          "hold": 82,
+          "selected": "B"
+        },
+        {
+          "hold": 193,
+          "selected": "C"
+        },
+        {
+          "hold": 274,
+          "selected": "D"
+        }
+      ],
+      "reverseTransitions": [
+        {
+          "hold": 350,
+          "selected": "D"
+        },
+        {
+          "hold": 251,
+          "selected": "C"
+        },
+        {
+          "hold": 177,
+          "selected": "B"
+        },
+        {
+          "hold": 74,
+          "selected": "A"
+        }
+      ]
+    },
+    {
+      "family": "CROSS",
+      "scoreCrossingHold": 144.51043941830832,
+      "holdJitterChanges": 0,
+      "aimJitterChanges": 0,
+      "forwardTransitions": [
+        {
+          "hold": 0,
+          "selected": "A"
+        },
+        {
+          "hold": 136,
+          "selected": "B"
+        },
+        {
+          "hold": 257,
+          "selected": "C"
+        },
+        {
+          "hold": 339,
+          "selected": "D"
+        }
+      ],
+      "reverseTransitions": [
+        {
+          "hold": 550,
+          "selected": "D"
+        },
+        {
+          "hold": 320,
+          "selected": "C"
+        },
+        {
+          "hold": 242,
+          "selected": "B"
+        },
+        {
+          "hold": 124,
+          "selected": "A"
+        }
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "family": "SHORT",
+      "scenario": "line",
+      "samples": 17871,
+      "components": [
+        {
+          "id": "A",
+          "size": 3203
+        },
+        {
+          "id": "B",
+          "size": 2066
+        },
+        {
+          "id": "C",
+          "size": 963
+        },
+        {
+          "id": "D",
+          "size": 317
+        }
+      ],
+      "tinyIslands": 0,
+      "sha256": "7b78379256ae6dcb7b8d7da50f3332f9564129da075d5815b69a1775d7efee68"
+    },
+    {
+      "family": "SHORT",
+      "scenario": "diagonal",
+      "samples": 17871,
+      "components": [
+        {
+          "id": "A",
+          "size": 3374
+        },
+        {
+          "id": "C",
+          "size": 2242
+        },
+        {
+          "id": "B",
+          "size": 1377
+        }
+      ],
+      "tinyIslands": 0,
+      "sha256": "3b9efe2fd63c2751b8a4bc84c61e96a0120ca3824146e0849f90beaa80533bd3"
+    },
+    {
+      "family": "CROSS",
+      "scenario": "line",
+      "samples": 17871,
+      "components": [
+        {
+          "id": "A",
+          "size": 3550
+        },
+        {
+          "id": "B",
+          "size": 2243
+        },
+        {
+          "id": "C",
+          "size": 1425
+        },
+        {
+          "id": "D",
+          "size": 1329
+        }
+      ],
+      "tinyIslands": 0,
+      "sha256": "787cbbf9bd3e3b0d64d39e6e01d59eeb8e31b4ede4871cc8441f34dce7719ef1"
+    },
+    {
+      "family": "CROSS",
+      "scenario": "diagonal",
+      "samples": 17871,
+      "components": [
+        {
+          "id": "A",
+          "size": 3899
+        },
+        {
+          "id": "C",
+          "size": 2615
+        },
+        {
+          "id": "B",
+          "size": 2144
+        }
+      ],
+      "tinyIslands": 0,
+      "sha256": "51b9c80bc48447270c287e676a7af02366ef2013c68ba15eef0da5353a277920"
+    },
+    {
+      "family": "CROSS",
+      "scenario": "crossline",
+      "samples": 17871,
+      "components": [
+        {
+          "id": "A",
+          "size": 5065
+        },
+        {
+          "id": "B",
+          "size": 1292
+        },
+        {
+          "id": "C",
+          "size": 461
+        },
+        {
+          "id": "D",
+          "size": 175
+        }
+      ],
+      "tinyIslands": 0,
+      "sha256": "973cf72e6204f9393c1869304274a31ce9919b7314cf16c6196d6ec45a83a6a2"
+    }
+  ],
+  "performance": {
+    "microseconds": 19.574804199999924
+  },
+  "deliveryFilesUnchanged": 88
+}

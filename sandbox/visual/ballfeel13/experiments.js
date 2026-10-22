@@ -1,0 +1,26 @@
+import {BallWorld} from './world.js';import {GLOBAL,PROPOSED,CANDIDATES} from './config.js';import {scheduledLaunch} from './resolver.js';
+import {measure} from '../ballfeel1/experiments.js';import {SCENARIOS} from '../ballphys1/scenarios.js';
+export {makeScenario,runScenario} from '../ballfeel12/experiments.js';
+const horizontal=v=>Math.hypot(v[0],v[2]);
+// Read-only instrumentation around the existing contact solver. No extra force,
+// impulse or state write. Pre/post values are captured at the exact CCD contact.
+export class ObservedWorld extends BallWorld{
+ constructor(o={}){super(o);this.turfImpacts=[];}
+ impulse(hit){const pre={v:this.ball.v.slice(),w:this.ball.w.slice(),energy:this.energy()},n=this.events.length;super.impulse(hit);if(!hit.c&&this.events.length>n){const event=this.events.at(-1),post={v:this.ball.v.slice(),w:this.ball.w.slice(),energy:this.energy()};this.turfImpacts.push({time:this.time,x:this.ball.p[0],z:this.ball.p[2],pre,post,horizontalBefore:horizontal(pre.v),horizontalAfter:horizontal(post.v),horizontalLoss:horizontal(pre.v)-horizontal(post.v),horizontalEnergyLoss:.5*this.cfg.mass*(horizontal(pre.v)**2-horizontal(post.v)**2),totalEnergyLoss:pre.energy-post.energy,impulse:event.impulse});}}
+}
+function atPlane(samples,x,impacts){const i=samples.findIndex(f=>f.p[0]>=x);if(i<0)return null;const b=samples[i],a=samples[Math.max(0,i-1)],u=b.p[0]===a.p[0]?0:(x-a.p[0])/(b.p[0]-a.p[0]),mix=(a,b)=>a+(b-a)*u;return {distance:x,time:mix(a.time,b.time),clearance:Math.max(0,mix(a.p[1],b.p[1])-.11),verticalVelocity:mix(a.v[1],b.v[1]),horizontalSpeed:horizontal(b.v.map((v,j)=>mix(a.v[j],v))),spin:b.w.map((v,j)=>mix(a.w[j],v)),mode:b.mode,interpolationCrossesImpact:impacts.some(e=>e.time>a.time&&e.time<=b.time)};}
+export function simulate({id,title=id,initial={},action,colliders=[],target=25,duration=7,maxTime=45,worldOptions={}}={}){
+ const world=new ObservedWorld({...initial,...PROPOSED,...worldOptions,colliders}),samples=[world.snapshot()];if(action)world.schedule(action);world.onSubstep=f=>samples.push(f);for(let n=0;n<maxTime*60;n++){world.step();if(world.ball.sleeping&&world.time>=duration)break;}
+ const impacts=world.turfImpacts,metrics=measure(samples,world.events,target,action),launch=world.events.find(e=>e.kind==='AUTHORITATIVE_LAUNCH');
+ // Every contact-delimited flight interval is retained, including submillimetre
+ // contacts. A meaningful hop is >=1 mm peak and >=12.5 ms duration, at 240 Hz.
+ let start=launch?.time??0,startX=launch?.position[0]??samples[0].p[0],up=launch?.velocity[1]??samples[0].v[1];const hops=[];
+ for(const hit of impacts){const fs=samples.filter(f=>f.time>=start&&f.time<=hit.time),height=Math.max(0,...fs.map(f=>f.p[1]-.11)),duration=hit.time-start;hops.push({index:hops.length+1,start,end:hit.time,startX,endX:hit.x,height,duration,distance:hit.x-startX,launchVerticalVelocity:up,meaningful:height>=.001&&duration>=.0125,impact:hit});start=hit.time;startX=hit.x;up=hit.post.v[1];}
+ let skidTime=0,skidDistance=0,rollingDistance=0,lastNonRoll=-1;const trace=[];
+ for(let i=0;i<samples.length;i++){const f=samples[i],p=samples[Math.max(0,i-1)],dx=horizontal(f.p.map((x,j)=>x-p.p[j])),dt=f.time-p.time;if(f.mode==='SLIDING'){skidTime+=dt;skidDistance+=dx;}if(f.mode==='ROLLING')rollingDistance+=dx;if(!['ROLLING','REST'].includes(f.mode))lastNonRoll=i;if(i%4===0)trace.push({t:f.time,x:f.p[0],height:Math.max(0,f.p[1]-.11),horizontalSpeed:horizontal(f.v),verticalVelocity:f.v[1],w:f.w,mode:f.mode,slip:f.slip});}
+ const stable=samples.slice(lastNonRoll+1).find(f=>f.mode==='ROLLING'),meaningful=hops.filter(h=>h.meaningful);
+ Object.assign(metrics,{planes:Object.fromEntries([5,10,15,20,25].map(x=>[x,atPlane(samples,x,impacts)])),hops,meaningfulHops:meaningful.length,firstHopHeight:hops[0]?.height??0,subsequentHopHeights:hops.slice(1).map(h=>h.height),skidTime,skidDistance,rollingDistance,stableRoll:stable?{time:stable.time,x:stable.p[0],horizontalSpeed:horizontal(stable.v)}:null,postTransitionDistance:stable?metrics.forwardRange-stable.p[0]:null,impactHorizontalLoss:impacts.reduce((s,e)=>s+e.horizontalLoss,0),impactHorizontalEnergyLoss:impacts.reduce((s,e)=>s+e.horizontalEnergyLoss,0),impactTotalEnergyLoss:impacts.reduce((s,e)=>s+e.totalEnergyLoss,0)});
+ return {id,title,target,duration,initial,action,colliders,frames:samples.filter(f=>f.time<=duration+1e-8),trace,events:world.events,impacts,metrics,stats:world.stats};
+}
+export function candidateRun(c,options={}){const target=c.family==='ground'?15:c.family==='short'?5:c.family==='power'?20:25,action=scheduledLaunch({family:c.family,actionId:c.id,distance:target,power:.5},{turfCandidate:c});return {...simulate({id:c.id,title:c.title,target,action,...options}),definition:c,note:c.note};}
+export function parityPayload(){const runs=[];function capture(id,w,seconds){const frames=[];w.onSubstep=f=>frames.push(f);for(let i=0;i<seconds*60;i++)w.step();runs.push({id,frames,events:w.events});}for(const c of CANDIDATES){const r=candidateRun(c),w=new BallWorld(PROPOSED);w.schedule(r.action);capture(c.id,w,8);}for(const s of SCENARIOS){const w=new BallWorld({...s.initial,...PROPOSED,colliders:s.colliders});if(s.action)w.schedule(s.action);capture(s.id,w,s.duration);}return runs;}

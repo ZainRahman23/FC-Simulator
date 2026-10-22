@@ -1,0 +1,3098 @@
+{
+  "version": "CURVE-1.1",
+  "foundation": "4f72fbf9fd99a1ced295ba57c262b7fc60d5c61c",
+  "defaultCurve": 75,
+  "shotPower": 80,
+  "launchSpeed": 27.15099715099715,
+  "anchor": 56,
+  "oldAnchor": 40,
+  "multiplier": 1.4,
+  "exponent": 2.7,
+  "scenario": {
+    "id": "A",
+    "name": "Left half-space, right-foot inside finesse to top-right",
+    "origin": [
+      84,
+      0.11,
+      26
+    ],
+    "target": [
+      105,
+      2.1,
+      37.25
+    ],
+    "depth": 21
+  },
+  "keeper": {
+    "reflex": 96,
+    "diving": 91,
+    "height": 199,
+    "jump": 68,
+    "handling": 95,
+    "weight": 96,
+    "acceleration": 42,
+    "sprint_speed": 52,
+    "strength": 70,
+    "positioning": 72,
+    "reactions": 94,
+    "agility": 63,
+    "source": "simulator/data/players.json p001 (OVR 93 in the record; not carried here, never read)",
+    "name": "COURTOIS"
+  },
+  "healthLimits": {
+    "targetErrorMetres": 1e-7,
+    "maxOffTargetHeadingDegrees": 45,
+    "maxHeadingChangePer240HzStepDegrees": 0.5,
+    "speedGainTolerance": 1e-7
+  },
+  "sidewaysDefinition": "Lateral velocity magnitude at least as large as forward velocity along the direct shooter-target line (45 degrees or more away from that bearing). World-X and target-line reversal are checked independently. Wide initial world yaw alone is not pathological sideways travel toward this diagonal target.",
+  "parity": {
+    "sha256": "6f0551a69301a33f89181ae56c63821295dcf4bfef5ddc892cc6f015cfed379c",
+    "bytes": 4082123
+  },
+  "runs": [
+    {
+      "id": "A-targeted-0",
+      "curve": 0,
+      "aim": {
+        "yawDeg": 28.178590109959103,
+        "elevationDeg": 16.780384980321397
+      },
+      "aimError": 1.4273785145045686e-10,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 28.178590109959096,
+        "degrees": -7.815970093361102e-14,
+        "initialRayGoalPlaneOffsetMetres": -3.552713678800501e-14
+      },
+      "spin": [
+        0,
+        0,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        22.913951933390678,
+        7.838602699620606,
+        12.275331392887825
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 0,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 28.178590109959103,
+          "elevationDeg": 16.780384980321397,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          22.913951933390678,
+          12.275331392887825
+        ],
+        "horizontalSpeed": 25.994863992930522,
+        "verticalVelocity": 7.838602699620606,
+        "velocity": [
+          22.913951933390678,
+          7.838602699620606,
+          12.275331392887825
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "spin": [
+          0,
+          0,
+          0
+        ],
+        "spinMagnitude": 0,
+        "spinAxis": [
+          0,
+          0,
+          0
+        ],
+        "launchAngleDeg": 16.780384980321397,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 0,
+          "capability": 0,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 0,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            0,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            0,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 1.0737071818662548e-14,
+        "time": 0.075,
+        "position": [
+          85.69456569059938,
+          0.6608524883385092,
+          26.907803048535392
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 1.0737071818662548e-14,
+        "time": 0.075,
+        "position": [
+          85.69456569059938,
+          0.6608524883385092,
+          26.907803048535392
+        ]
+      },
+      "actualDeparture": {
+        "metres": 1.0737071818662548e-14,
+        "time": 0.075,
+        "position": [
+          85.69456569059938,
+          0.6608524883385092,
+          26.907803048535392
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0818540962696128,
+        "p": [
+          105,
+          2.100000000142738,
+          37.24999999999991
+        ],
+        "v": [
+          16.63483660178078,
+          -3.4701423166205725,
+          8.911519608096812
+        ],
+        "w": [
+          0,
+          0,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0818540962696128,
+        "p": [
+          105,
+          2.100000000142738,
+          37.24999999999991
+        ],
+        "v": [
+          16.63483660178078,
+          -3.4701423166205725,
+          8.911519608096812
+        ],
+        "w": [
+          0,
+          0,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.08847569444954,
+        "p": [
+          105.11,
+          2.0767075105924624,
+          37.30892857142848
+        ],
+        "v": [
+          16.606842575364205,
+          -3.5291724791428893,
+          8.89652280823079
+        ],
+        "w": [
+          0,
+          0,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4676590026151584,
+        "minWorldForwardSpeed": 15.117414691536593,
+        "minTargetLineForwardSpeed": 17.150037670218374,
+        "maxOffTargetHeadingDegrees": 1.1869099271259686e-13,
+        "maxWorldHeadingDegrees": 28.178590109959114,
+        "minWorldHeadingDegrees": 28.17859010995905,
+        "maxHeadingChangePerStepDegrees": 6.3611093629270335e-15,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 1.4273785145045686e-10,
+        "solverIterations": 3,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-25",
+      "curve": 25,
+      "aim": {
+        "yawDeg": 28.654256045168275,
+        "elevationDeg": 16.780522893135473
+      },
+      "aimError": 8.20348230225917e-10,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 28.654256045168275,
+        "degrees": 0.4756659352091006,
+        "initialRayGoalPlaneOffsetMetres": 0.22538222220501325
+      },
+      "spin": [
+        0,
+        2.8837701310255883,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        22.81123788770677,
+        7.8386652700852055,
+        12.465127320146657
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 25,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 28.654256045168275,
+          "elevationDeg": 16.780522893135473,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          22.81123788770677,
+          12.465127320146657
+        ],
+        "horizontalSpeed": 25.99484512508231,
+        "verticalVelocity": 7.8386652700852055,
+        "velocity": [
+          22.81123788770677,
+          7.8386652700852055,
+          12.465127320146657
+        ],
+        "angularVelocity": [
+          0,
+          2.8837701310255883,
+          0
+        ],
+        "spin": [
+          0,
+          2.8837701310255883,
+          0
+        ],
+        "spinMagnitude": 2.8837701310255883,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.780522893135473,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 25,
+          "capability": 0.051495895196885515,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 2.8837701310255883,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -2.8837701310255883,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            2.8837701310255883,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 0.050867420899607996,
+        "time": 0.5083333333333333,
+        "position": [
+          94.6781489364499,
+          2.5616076461452475,
+          31.77814376718474
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 0.050867420899607996,
+        "time": 0.5083333333333333,
+        "position": [
+          94.6781489364499,
+          2.5616076461452475,
+          31.77814376718474
+        ]
+      },
+      "actualDeparture": {
+        "metres": 0.050867420899607996,
+        "time": 0.5083333333333333,
+        "position": [
+          94.6781489364499,
+          2.5616076461452475,
+          31.77814376718474
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.081870292620072,
+        "p": [
+          105,
+          2.0999999996147682,
+          37.25000000072427
+        ],
+        "v": [
+          16.712301132736417,
+          -3.4702422326549303,
+          8.765193797043391
+        ],
+        "w": [
+          0,
+          2.53267005689817,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.081870292620072,
+        "p": [
+          105,
+          2.0999999996147682,
+          37.25000000072427
+        ],
+        "v": [
+          16.712301132736417,
+          -3.4702422326549303,
+          8.765193797043391
+        ],
+        "w": [
+          0,
+          2.53267005689817,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.0884608990558016,
+        "p": [
+          105.11,
+          2.0768168570048973,
+          37.30768130681425
+        ],
+        "v": [
+          16.685160332500686,
+          -3.528996188804431,
+          8.748887473139348
+        ],
+        "w": [
+          0,
+          2.530667813013553,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4676697380274994,
+        "minWorldForwardSpeed": 15.23191810473973,
+        "minTargetLineForwardSpeed": 17.14826875410806,
+        "maxOffTargetHeadingDegrees": 0.8211443785368118,
+        "maxWorldHeadingDegrees": 28.654256045168275,
+        "minWorldHeadingDegrees": 27.35744573142236,
+        "maxHeadingChangePerStepDegrees": 0.004016823534295566,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 8.20348230225917e-10,
+        "solverIterations": 3,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-50",
+      "curve": 50,
+      "aim": {
+        "yawDeg": 31.271192850817297,
+        "elevationDeg": 16.78621402167379
+      },
+      "aimError": 4.373120022670968e-8,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 31.27119285081729,
+        "degrees": 3.0926027408581156,
+        "initialRayGoalPlaneOffsetMetres": 1.503743008455345
+      },
+      "spin": [
+        0,
+        18.73879359572856,
+        0
+      ],
+      "launchSpeed": 27.150997150997146,
+      "launchVelocity": [
+        22.21764649494388,
+        7.841247271593524,
+        13.493245411867756
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 50,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 31.271192850817297,
+          "elevationDeg": 16.78621402167379,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          22.21764649494388,
+          13.493245411867756
+        ],
+        "horizontalSpeed": 25.994066390605038,
+        "verticalVelocity": 7.841247271593524,
+        "velocity": [
+          22.21764649494388,
+          7.841247271593524,
+          13.493245411867756
+        ],
+        "angularVelocity": [
+          0,
+          18.73879359572856,
+          0
+        ],
+        "spin": [
+          0,
+          18.73879359572856,
+          0
+        ],
+        "spinMagnitude": 18.73879359572856,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.78621402167379,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 50,
+          "capability": 0.3346213142094386,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 18.73879359572856,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -18.73879359572856,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            18.73879359572856,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 0.33081256763954836,
+        "time": 0.5083333333333333,
+        "position": [
+          94.54049488729426,
+          2.5627990839187613,
+          32.02198590145601
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 0.33081256763954836,
+        "time": 0.5083333333333333,
+        "position": [
+          94.54049488729426,
+          2.5627990839187613,
+          32.02198590145601
+        ]
+      },
+      "actualDeparture": {
+        "metres": 0.33081256763954836,
+        "time": 0.5083333333333333,
+        "position": [
+          94.54049488729426,
+          2.5627990839187613,
+          32.02198590145601
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0825390091387865,
+        "p": [
+          105,
+          2.099999985438544,
+          37.25000004123569
+        ],
+        "v": [
+          17.112458125152152,
+          -3.4743688812040947,
+          7.947048300241955
+        ],
+        "w": [
+          0,
+          16.45601784958059,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0825390091387865,
+        "p": [
+          105,
+          2.099999985438544,
+          37.25000004123569
+        ],
+        "v": [
+          17.112458125152152,
+          -3.4743688812040947,
+          7.947048300241955
+        ],
+        "w": [
+          0,
+          16.45601784958059,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.0889743616202907,
+        "p": [
+          105.11,
+          2.0773313427837747,
+          37.301014873231274
+        ],
+        "v": [
+          17.08937345619273,
+          -3.5317312529037195,
+          7.923497405376515
+        ],
+        "w": [
+          0,
+          16.443314874874126,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4681128551546365,
+        "minWorldForwardSpeed": 15.804523287145843,
+        "minTargetLineForwardSpeed": 17.07544767875384,
+        "maxOffTargetHeadingDegrees": 5.33409552111793,
+        "maxWorldHeadingDegrees": 31.27119285081729,
+        "minWorldHeadingDegrees": 22.844494588841243,
+        "maxHeadingChangePerStepDegrees": 0.026101396186093674,
+        "maxSpeed": 27.150997150997146,
+        "launchSpeed": 27.150997150997146,
+        "finite": true,
+        "targetError": 4.373120022670968e-8,
+        "solverIterations": 3,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-60",
+      "curve": 60,
+      "aim": {
+        "yawDeg": 33.24300496767105,
+        "elevationDeg": 16.796050645941033
+      },
+      "aimError": 9.450674411235123e-12,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 33.243004967671055,
+        "degrees": 5.064414857711881,
+        "initialRayGoalPlaneOffsetMetres": 2.514537738528901
+      },
+      "spin": [
+        0,
+        30.657094450947344,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        21.73909149812403,
+        7.845709855821582,
+        14.248978348917193
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 60,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 33.24300496767105,
+          "elevationDeg": 16.796050645941033,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          21.73909149812403,
+          14.248978348917193
+        ],
+        "horizontalSpeed": 25.99271981058772,
+        "verticalVelocity": 7.845709855821582,
+        "velocity": [
+          21.73909149812403,
+          7.845709855821582,
+          14.248978348917193
+        ],
+        "angularVelocity": [
+          0,
+          30.657094450947344,
+          0
+        ],
+        "spin": [
+          0,
+          30.657094450947344,
+          0
+        ],
+        "spinMagnitude": 30.657094450947344,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.796050645941033,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 60,
+          "capability": 0.5474481151954883,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 30.657094450947344,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -30.657094450947344,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            30.657094450947344,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 0.5419933287679837,
+        "time": 0.5083333333333333,
+        "position": [
+          94.43135854263849,
+          2.5648584471900353,
+          32.20309522637137
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 0.5419933287679837,
+        "time": 0.5083333333333333,
+        "position": [
+          94.43135854263849,
+          2.5648584471900353,
+          32.20309522637137
+        ]
+      },
+      "actualDeparture": {
+        "metres": 0.5419933287679837,
+        "time": 0.5083333333333333,
+        "position": [
+          94.43135854263849,
+          2.5648584471900353,
+          32.20309522637137
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.083692708181554,
+        "p": [
+          105,
+          2.0999999999975083,
+          37.250000000009116
+        ],
+        "v": [
+          17.384364548139224,
+          -3.481480618744953,
+          7.316968473149086
+        ],
+        "w": [
+          0,
+          26.91869393462055,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.083692708181554,
+        "p": [
+          105,
+          2.0999999999975083,
+          37.250000000009116
+        ],
+        "v": [
+          17.384364548139224,
+          -3.481480618744953,
+          7.316968473149086
+        ],
+        "w": [
+          0,
+          26.91869393462055,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.09002675112218,
+        "p": [
+          105.11,
+          2.0776393856398565,
+          37.29618713432604
+        ],
+        "v": [
+          17.363649049898445,
+          -3.5379283375321102,
+          7.287929568288274
+        ],
+        "w": [
+          0,
+          26.898241746489262,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.46887929004309,
+        "minWorldForwardSpeed": 16.169833638975433,
+        "minTargetLineForwardSpeed": 16.950855102804756,
+        "maxOffTargetHeadingDegrees": 8.721855975314497,
+        "maxWorldHeadingDegrees": 33.243004967671055,
+        "minWorldHeadingDegrees": 19.456734134644673,
+        "maxHeadingChangePerStepDegrees": 0.0427024800935091,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 9.450674411235123e-12,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-70",
+      "curve": 70,
+      "aim": {
+        "yawDeg": 35.87265064774275,
+        "elevationDeg": 16.816727817648754
+      },
+      "aimError": 2.1406020914789276e-11,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 35.87265064774275,
+        "degrees": 7.694060537783578,
+        "initialRayGoalPlaneOffsetMetres": 3.9361934038176827
+      },
+      "spin": [
+        0,
+        46.482269449616844,
+        0
+      ],
+      "launchSpeed": 27.150997150997153,
+      "launchVelocity": [
+        21.060162561478798,
+        7.855089720288669,
+        15.229700084497972
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 70,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 35.87265064774275,
+          "elevationDeg": 16.816727817648754,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          21.060162561478798,
+          15.229700084497972
+        ],
+        "horizontalSpeed": 25.98988672117812,
+        "verticalVelocity": 7.855089720288669,
+        "velocity": [
+          21.060162561478798,
+          7.855089720288669,
+          15.229700084497972
+        ],
+        "angularVelocity": [
+          0,
+          46.482269449616844,
+          0
+        ],
+        "spin": [
+          0,
+          46.482269449616844,
+          0
+        ],
+        "spinMagnitude": 46.482269449616844,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.816727817648754,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 70,
+          "capability": 0.8300405258860151,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 46.482269449616844,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -46.482269449616844,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            46.482269449616844,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 0.8242355497865234,
+        "time": 0.5083333333333333,
+        "position": [
+          94.27839736307446,
+          2.569187669312345,
+          32.441343041279666
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 0.8242355497865234,
+        "time": 0.5083333333333333,
+        "position": [
+          94.27839736307446,
+          2.569187669312345,
+          32.441343041279666
+        ]
+      },
+      "actualDeparture": {
+        "metres": 0.8242355497865234,
+        "time": 0.5083333333333333,
+        "position": [
+          94.27839736307446,
+          2.569187669312345,
+          32.441343041279666
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0861072843128445,
+        "p": [
+          105,
+          2.099999999994278,
+          37.25000000002063
+        ],
+        "v": [
+          17.706475725280455,
+          -3.4963260762347987,
+          6.460498687172483
+        ],
+        "w": [
+          0,
+          40.80228527241483,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0861072843128445,
+        "p": [
+          105,
+          2.099999999994278,
+          37.25000000002063
+        ],
+        "v": [
+          17.706475725280455,
+          -3.4963260762347987,
+          6.460498687172483
+        ],
+        "w": [
+          0,
+          40.80228527241483,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.0923249742028793,
+        "p": [
+          105.11,
+          2.077980213915885,
+          37.28998503538355
+        ],
+        "v": [
+          17.68804829641212,
+          -3.551720290932317,
+          6.424124802563146
+        ],
+        "w": [
+          0,
+          40.7718526558419,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4704926587994316,
+        "minWorldForwardSpeed": 16.5660365064574,
+        "minTargetLineForwardSpeed": 16.69435028674799,
+        "maxOffTargetHeadingDegrees": 13.208675427436045,
+        "maxWorldHeadingDegrees": 35.872650647742745,
+        "minWorldHeadingDegrees": 14.96991468252313,
+        "maxHeadingChangePerStepDegrees": 0.06474547512653045,
+        "maxSpeed": 27.150997150997153,
+        "launchSpeed": 27.150997150997153,
+        "finite": true,
+        "targetError": 2.1406020914789276e-11,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-75",
+      "curve": 75,
+      "aim": {
+        "yawDeg": 37.4630391099603,
+        "elevationDeg": 16.833413674526817
+      },
+      "aimError": 3.11851129687277e-11,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 37.46303910996029,
+        "degrees": 9.284449000001118,
+        "initialRayGoalPlaneOffsetMetres": 4.842354246043101
+      },
+      "spin": [
+        0,
+        56,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        20.62754888789938,
+        7.862658243529183,
+        15.806943996745199
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 75,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 37.4630391099603,
+          "elevationDeg": 16.833413674526817,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          20.62754888789938,
+          15.806943996745199
+        ],
+        "horizontalSpeed": 25.987598035195905,
+        "verticalVelocity": 7.862658243529183,
+        "velocity": [
+          20.62754888789938,
+          7.862658243529183,
+          15.806943996745199
+        ],
+        "angularVelocity": [
+          0,
+          56,
+          0
+        ],
+        "spin": [
+          0,
+          56,
+          0
+        ],
+        "spinMagnitude": 56,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.833413674526817,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 75,
+          "capability": 1,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 56,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -56,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            56,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 0.99539581869232,
+        "time": 0.5083333333333333,
+        "position": [
+          94.1816923891462,
+          2.5726812213787076,
+          32.58371055249609
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 0.99539581869232,
+        "time": 0.5083333333333333,
+        "position": [
+          94.1816923891462,
+          2.5726812213787076,
+          32.58371055249609
+        ]
+      },
+      "actualDeparture": {
+        "metres": 0.99539581869232,
+        "time": 0.5083333333333333,
+        "position": [
+          94.1816923891462,
+          2.5726812213787076,
+          32.58371055249609
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0880566323005125,
+        "p": [
+          105,
+          2.0999999999916588,
+          37.25000000003005
+        ],
+        "v": [
+          17.878438733149128,
+          -3.5083144093367804,
+          5.934496308716812
+        ],
+        "w": [
+          0,
+          49.1454814910042,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0880566323005125,
+        "p": [
+          105,
+          2.0999999999916588,
+          37.25000000003005
+        ],
+        "v": [
+          17.878438733149128,
+          -3.5083144093367804,
+          5.934496308716812
+        ],
+        "w": [
+          0,
+          49.1454814910042,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.0942145185610326,
+        "p": [
+          105.11,
+          2.0781036531578385,
+          37.286326303000386
+        ],
+        "v": [
+          17.860928381757393,
+          -3.56315484589843,
+          5.893699842106131
+        ],
+        "w": [
+          0,
+          49.10917977920155,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4717919051901818,
+        "minWorldForwardSpeed": 16.741835377602087,
+        "minTargetLineForwardSpeed": 16.46904129909557,
+        "maxOffTargetHeadingDegrees": 15.963755039485664,
+        "maxWorldHeadingDegrees": 37.46303910996029,
+        "minWorldHeadingDegrees": 12.214835070473505,
+        "maxHeadingChangePerStepDegrees": 0.07800278669470022,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 3.11851129687277e-11,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-80",
+      "curve": 80,
+      "aim": {
+        "yawDeg": 39.25455506398796,
+        "elevationDeg": 16.85613013657483
+      },
+      "aimError": 4.372276169225638e-11,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 39.25455506398796,
+        "degrees": 11.075964954028784,
+        "initialRayGoalPlaneOffsetMetres": 5.910503845089224
+      },
+      "spin": [
+        0,
+        66.66004165764667,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        20.120882011722358,
+        7.8729611116688645,
+        16.442117768035622
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 80,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 39.25455506398796,
+          "elevationDeg": 16.85613013657483,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          20.120882011722358,
+          16.442117768035622
+        ],
+        "horizontalSpeed": 25.984478629127914,
+        "verticalVelocity": 7.8729611116688645,
+        "velocity": [
+          20.120882011722358,
+          7.8729611116688645,
+          16.442117768035622
+        ],
+        "angularVelocity": [
+          0,
+          66.66004165764667,
+          0
+        ],
+        "spin": [
+          0,
+          66.66004165764667,
+          0
+        ],
+        "spinMagnitude": 66.66004165764667,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.85613013657483,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 80,
+          "capability": 1.1903578867436908,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 66.66004165764667,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -66.66004165764667,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            66.66004165764667,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 1.1887329098869408,
+        "time": 0.5083333333333333,
+        "position": [
+          94.0688804620804,
+          2.5774377118889644,
+          32.74260796186371
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 1.1887329098869408,
+        "time": 0.5083333333333333,
+        "position": [
+          94.0688804620804,
+          2.5774377118889644,
+          32.74260796186371
+        ]
+      },
+      "actualDeparture": {
+        "metres": 1.1887329098869408,
+        "time": 0.5083333333333333,
+        "position": [
+          94.0688804620804,
+          2.5774377118889644,
+          32.74260796186371
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0907004369891073,
+        "p": [
+          105,
+          2.0999999999883507,
+          37.25000000004214
+        ],
+        "v": [
+          18.051187572231935,
+          -3.5245366517231065,
+          5.33563136225781
+        ],
+        "w": [
+          0,
+          58.48215515597751,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0907004369891073,
+        "p": [
+          105,
+          2.0999999999883507,
+          37.25000000004214
+        ],
+        "v": [
+          18.051187572231935,
+          -3.5245366517231065,
+          5.33563136225781
+        ],
+        "w": [
+          0,
+          58.48215515597751,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.09679901764238,
+        "p": [
+          105.11,
+          2.078226660226658,
+          37.282304848549465
+        ],
+        "v": [
+          18.034308197696152,
+          -3.5788281210656137,
+          5.289864378565744
+        ],
+        "w": [
+          0,
+          58.43937183539368,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.47356155698004,
+        "minWorldForwardSpeed": 16.908020285253787,
+        "minTargetLineForwardSpeed": 16.197282748176196,
+        "maxOffTargetHeadingDegrees": 18.97843360788203,
+        "maxWorldHeadingDegrees": 39.254555063987965,
+        "minWorldHeadingDegrees": 9.200156502077142,
+        "maxHeadingChangePerStepDegrees": 0.09285123032547311,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 4.372276169225638e-11,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-85",
+      "curve": 85,
+      "aim": {
+        "yawDeg": 41.26234710092132,
+        "elevationDeg": 16.886570476125225
+      },
+      "aimError": 5.863623069758726e-11,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 41.26234710092132,
+        "degrees": 13.083756990962144,
+        "initialRayGoalPlaneOffsetMetres": 7.174513152234134
+      },
+      "spin": [
+        0,
+        78.51519529641628,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        19.529325946713065,
+        7.886765141553954,
+        17.13420584568963
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 85,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 41.26234710092132,
+          "elevationDeg": 16.886570476125225,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          19.529325946713065,
+          17.13420584568963
+        ],
+        "horizontalSpeed": 25.980292182641534,
+        "verticalVelocity": 7.886765141553954,
+        "velocity": [
+          19.529325946713065,
+          7.886765141553954,
+          17.13420584568963
+        ],
+        "angularVelocity": [
+          0,
+          78.51519529641628,
+          0
+        ],
+        "spin": [
+          0,
+          78.51519529641628,
+          0
+        ],
+        "spinMagnitude": 78.51519529641628,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.886570476125225,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 85,
+          "capability": 1.4020570588645764,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 78.51519529641628,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -78.51519529641628,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            78.51519529641628,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 1.4062512684123587,
+        "time": 0.5125,
+        "position": [
+          94.01828529642887,
+          2.592302401322959,
+          32.96226835633493
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 1.4062512684123587,
+        "time": 0.5125,
+        "position": [
+          94.01828529642887,
+          2.592302401322959,
+          32.96226835633493
+        ]
+      },
+      "actualDeparture": {
+        "metres": 1.4062512684123587,
+        "time": 0.5125,
+        "position": [
+          94.01828529642887,
+          2.592302401322959,
+          32.96226835633493
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0942337169964067,
+        "p": [
+          105,
+          2.099999999984584,
+          37.25000000005657
+        ],
+        "v": [
+          18.218087892091226,
+          -3.546182074754011,
+          4.657466689195108
+        ],
+        "w": [
+          0,
+          68.85371352924585,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0942337169964067,
+        "p": [
+          105,
+          2.099999999984584,
+          37.25000000005657
+        ],
+        "v": [
+          18.218087892091226,
+          -3.546182074754011,
+          4.657466689195108
+        ],
+        "w": [
+          0,
+          68.85371352924585,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.1002761111226769,
+        "p": [
+          105.11,
+          2.078311601505801,
+          37.27789320173319
+        ],
+        "v": [
+          18.201422737934408,
+          -3.599946011682922,
+          4.60616282833981
+        ],
+        "w": [
+          0,
+          68.80380516973747,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.475933828414615,
+        "minWorldForwardSpeed": 17.02252000963544,
+        "minTargetLineForwardSpeed": 15.817447082137917,
+        "maxOffTargetHeadingDegrees": 22.40733410916813,
+        "maxWorldHeadingDegrees": 41.26234710092132,
+        "minWorldHeadingDegrees": 5.771256000791039,
+        "maxHeadingChangePerStepDegrees": 0.10936435220805181,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 5.863623069758726e-11,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-90",
+      "curve": 90,
+      "aim": {
+        "yawDeg": 43.504192360854546,
+        "elevationDeg": 16.92692498004039
+      },
+      "aimError": 8.780452591972238e-11,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 43.504192360854546,
+        "degrees": 15.325602250895372,
+        "initialRayGoalPlaneOffsetMetres": 8.681176426919777
+      },
+      "spin": [
+        0,
+        91.61727944131836,
+        0
+      ],
+      "launchSpeed": 27.150997150997153,
+      "launchVelocity": [
+        18.840095792305004,
+        7.905061596271399,
+        17.881203482690474
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 90,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 43.504192360854546,
+          "elevationDeg": 16.92692498004039,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          18.840095792305004,
+          17.881203482690474
+        ],
+        "horizontalSpeed": 25.97473094090891,
+        "verticalVelocity": 7.905061596271399,
+        "velocity": [
+          18.840095792305004,
+          7.905061596271399,
+          17.881203482690474
+        ],
+        "angularVelocity": [
+          0,
+          91.61727944131836,
+          0
+        ],
+        "spin": [
+          0,
+          91.61727944131836,
+          0
+        ],
+        "spinMagnitude": 91.61727944131836,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.92692498004039,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 90,
+          "capability": 1.6360228471663996,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 91.61727944131836,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -91.61727944131836,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            91.61727944131836,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 1.650311721859277,
+        "time": 0.5125,
+        "position": [
+          93.86512272953249,
+          2.600816195771263,
+          33.15709276029389
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 1.650311721859277,
+        "time": 0.5125,
+        "position": [
+          93.86512272953249,
+          2.600816195771263,
+          33.15709276029389
+        ]
+      },
+      "actualDeparture": {
+        "metres": 1.650311721859277,
+        "time": 0.5125,
+        "position": [
+          93.86512272953249,
+          2.600816195771263,
+          33.15709276029389
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.0989029335189788,
+        "p": [
+          105,
+          2.099999999977399,
+          37.250000000084846
+        ],
+        "v": [
+          18.37069227997188,
+          -3.5747322393160994,
+          3.892902452179033
+        ],
+        "w": [
+          0,
+          80.29855022486534,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.0989029335189788,
+        "p": [
+          105,
+          2.099999999977399,
+          37.250000000084846
+        ],
+        "v": [
+          18.37069227997188,
+          -3.5747322393160994,
+          3.892902452179033
+        ],
+        "w": [
+          0,
+          80.29855022486534,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.1048953737405711,
+        "p": [
+          105.11,
+          2.0783118247927206,
+          37.27304043212899
+        ],
+        "v": [
+          18.35365852858578,
+          -3.628009406170904,
+          3.835486126194911
+        ],
+        "w": [
+          0,
+          80.24082837092202,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4790790122415343,
+        "minWorldForwardSpeed": 17.09559421016456,
+        "minTargetLineForwardSpeed": 15.364116092258374,
+        "maxOffTargetHeadingDegrees": 26.08800123866236,
+        "maxWorldHeadingDegrees": 43.504192360854546,
+        "minWorldHeadingDegrees": 2.0905888712968106,
+        "maxHeadingChangePerStepDegrees": 0.12761433000479688,
+        "maxSpeed": 27.150997150997153,
+        "launchSpeed": 27.150997150997153,
+        "finite": true,
+        "targetError": 8.780452591972238e-11,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-95",
+      "curve": 95,
+      "aim": {
+        "yawDeg": 46.0016946095304,
+        "elevationDeg": 16.980096887110726
+      },
+      "aimError": 1.0368245325177695e-10,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 46.0016946095304,
+        "degrees": 17.823104499571222,
+        "initialRayGoalPlaneOffsetMetres": 10.497423763018986
+      },
+      "spin": [
+        0,
+        106.01720492014853,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        18.037907941959666,
+        7.929163384504823,
+        18.679906086291545
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 95,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 46.0016946095304,
+          "elevationDeg": 16.980096887110726,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          18.037907941959666,
+          18.679906086291545
+        ],
+        "horizontalSpeed": 25.967383663266567,
+        "verticalVelocity": 7.929163384504823,
+        "velocity": [
+          18.037907941959666,
+          7.929163384504823,
+          18.679906086291545
+        ],
+        "angularVelocity": [
+          0,
+          106.01720492014853,
+          0
+        ],
+        "spin": [
+          0,
+          106.01720492014853,
+          0
+        ],
+        "spinMagnitude": 106.01720492014853,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 16.980096887110726,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 95,
+          "capability": 1.893164373574081,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 106.01720492014853,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -106.01720492014853,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            106.01720492014853,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 1.9239956552258355,
+        "time": 0.5166666666666666,
+        "position": [
+          93.76698050213679,
+          2.6204918024797403,
+          33.41499887256883
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 1.9239956552258355,
+        "time": 0.5166666666666666,
+        "position": [
+          93.76698050213679,
+          2.6204918024797403,
+          33.41499887256883
+        ]
+      },
+      "actualDeparture": {
+        "metres": 1.9239956552258355,
+        "time": 0.5166666666666666,
+        "position": [
+          93.76698050213679,
+          2.6204918024797403,
+          33.41499887256883
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.1050250528124055,
+        "p": [
+          105,
+          2.099999999975361,
+          37.25000000010071
+        ],
+        "v": [
+          18.49825491487993,
+          -3.612055931282203,
+          3.0340319372935176
+        ],
+        "w": [
+          0,
+          92.8512179972787,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.1050250528124055,
+        "p": [
+          105,
+          2.099999999975361,
+          37.25000000010071
+        ],
+        "v": [
+          18.49825491487993,
+          -3.612055931282203,
+          3.0340319372935176
+        ],
+        "w": [
+          0,
+          92.8512179972787,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.110976624586938,
+        "p": [
+          105.11,
+          2.0782298723425257,
+          37.26772638428185
+        ],
+        "v": [
+          18.480083884861454,
+          -3.6649156196386308,
+          2.9699065457486418
+        ],
+        "w": [
+          0,
+          92.78492918239164,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.4832200175683792,
+        "minWorldForwardSpeed": 17.075730824680864,
+        "minTargetLineForwardSpeed": 14.764017575026351,
+        "maxOffTargetHeadingDegrees": 30.22338871677711,
+        "maxWorldHeadingDegrees": 46.0016946095304,
+        "minWorldHeadingDegrees": -2.044798606817934,
+        "maxHeadingChangePerStepDegrees": 0.14767207676312913,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 1.0368245325177695e-10,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    },
+    {
+      "id": "A-targeted-99",
+      "curve": 99,
+      "aim": {
+        "yawDeg": 48.20174523727213,
+        "elevationDeg": 17.03441324277965
+      },
+      "aimError": 1.3520346532659788e-10,
+      "aimOffset": {
+        "directBearingDegrees": 28.178590109959174,
+        "launchBearingDegrees": 48.201745237272135,
+        "degrees": 20.02315512731296,
+        "initialRayGoalPlaneOffsetMetres": 12.238661711649776
+      },
+      "spin": [
+        0,
+        118.50526376547987,
+        0
+      ],
+      "launchSpeed": 27.15099715099715,
+      "launchVelocity": [
+        17.30249689752752,
+        7.953776877922325,
+        19.35297601870922
+      ],
+      "launchMetadata": {
+        "version": "CURVE-1.1",
+        "family": "INSIDE",
+        "technique": "INSIDE",
+        "bracket": "fast",
+        "shotPower": 80,
+        "attributes": {
+          "id": "controlled-90",
+          "shotPower": 80,
+          "finishing": 50,
+          "longShots": 50,
+          "curve": 99,
+          "technique": 50,
+          "weakFoot": 50,
+          "preferredFoot": "R"
+        },
+        "context": {
+          "selectedFoot": "R",
+          "pressure": 0,
+          "stamina": 1,
+          "energy": 1,
+          "bodySetup": 1,
+          "executionQuality": 1,
+          "charge": 1,
+          "startingVelocity": [
+            0,
+            0,
+            0
+          ],
+          "contactPosition": [
+            84,
+            0.11,
+            26
+          ],
+          "description": "Preferred foot; neutral 50 technique attributes; full intent; clean stationary ball and body setup; no pressure; full stamina/energy."
+        },
+        "aim": {
+          "yawDeg": 48.20174523727213,
+          "elevationDeg": 17.03441324277965,
+          "kind": "Physical target compensation solved before launch; no post-launch control"
+        },
+        "speed": 27.15099715099715,
+        "horizontalVelocity": [
+          17.30249689752752,
+          19.35297601870922
+        ],
+        "horizontalSpeed": 25.959855155021256,
+        "verticalVelocity": 7.953776877922325,
+        "velocity": [
+          17.30249689752752,
+          7.953776877922325,
+          19.35297601870922
+        ],
+        "angularVelocity": [
+          0,
+          118.50526376547987,
+          0
+        ],
+        "spin": [
+          0,
+          118.50526376547987,
+          0
+        ],
+        "spinMagnitude": 118.50526376547987,
+        "spinAxis": [
+          0,
+          1,
+          0
+        ],
+        "launchAngleDeg": 17.03441324277965,
+        "prepareSeconds": 0.24,
+        "commitment": 1,
+        "strikeCapability": 1.0744464850525457,
+        "referenceCapability": 1.1871900826446282,
+        "ratingRatio": 0.9050332383665717,
+        "referenceLacesSpeed": 34,
+        "techniqueConversion": 0.8823529411764706,
+        "bracketScale": 1,
+        "chargeFactor": 1,
+        "executionFactor": 1,
+        "formula": "speed = 34 × (capability(SP)/capability(90))^ratingExponent × technique conversion × commitment × bracket scale × charge × execution/context; capability and physical solver unchanged",
+        "frozenEnvironment": "BALL-FEEL-1.4 Candidate A contacts/drag/turf; separately authorized ordinary continuous-Magnus Finesse candidate",
+        "neutralAttributesReserved": [
+          "finishing",
+          "longShots",
+          "technique"
+        ],
+        "postLaunchControl": false,
+        "contact": {
+          "tick": 0,
+          "preparedAt": 0,
+          "position": [
+            84,
+            0.11,
+            26
+          ],
+          "colliderId": null
+        },
+        "referenceAdjustment": "90-SP anchor 30 m/s; existing technique preserved.",
+        "referenceRating": 90,
+        "capabilityRatio": 0.9050332383665717,
+        "ratingExponent": 1,
+        "curve": {
+          "rating": 99,
+          "capability": 2.1161654243835692,
+          "exponent": 2.7,
+          "referenceRating": 75,
+          "referenceSpin": 56,
+          "execution": 1,
+          "intentionalSideSpin": 118.50526376547987,
+          "incidentalSideSpin": 0,
+          "formula": "intentional sidespin = foot sign × 56 rad/s × (Curve/75)^2.7 × existing execution factor × charge",
+          "calibrationStatus": "Owner-requested +40% global intentional sidespin; rating progression unchanged",
+          "postLaunchControl": false
+        },
+        "techniqueDirection": {
+          "scope": "Local CURVE-1 simple review, pre-contact only",
+          "inheritedSpin": [
+            0,
+            -118.50526376547987,
+            0
+          ],
+          "correctedSpin": [
+            0,
+            118.50526376547987,
+            0
+          ],
+          "preferredFoot": "R",
+          "selectedFoot": "R",
+          "reason": "Positive world-Y gives inward -Z Magnus for +X forward; inherited negative Y gave outward +Z Magnus"
+        },
+        "magnitude": {
+          "oldAnchor": 40,
+          "newAnchor": 56,
+          "multiplier": 1.4
+        }
+      },
+      "maxDeparture": {
+        "metres": 2.166857725231824,
+        "time": 0.5208333333333333,
+        "position": [
+          93.68258978948253,
+          2.640399589371737,
+          33.64530582834298
+        ]
+      },
+      "departureThroughGoal": {
+        "metres": 2.166857725231824,
+        "time": 0.5208333333333333,
+        "position": [
+          93.68258978948253,
+          2.640399589371737,
+          33.64530582834298
+        ]
+      },
+      "actualDeparture": {
+        "metres": 2.166857725231824,
+        "time": 0.5208333333333333,
+        "position": [
+          93.68258978948253,
+          2.640399589371737,
+          33.64530582834298
+        ]
+      },
+      "unopposedPlane": {
+        "t": 1.1112434824815218,
+        "p": [
+          105,
+          2.099999999969942,
+          37.25000000013182
+        ],
+        "v": [
+          18.5731754108095,
+          -3.649836823004198,
+          2.273066325312552
+        ],
+        "w": [
+          0,
+          103.71100032725977,
+          0
+        ]
+      },
+      "actualPlane": {
+        "t": 1.1112434824815218,
+        "p": [
+          105,
+          2.099999999969942,
+          37.25000000013182
+        ],
+        "v": [
+          18.5731754108095,
+          -3.649836823004198,
+          2.273066325312552
+        ],
+        "w": [
+          0,
+          103.71100032725977,
+          0
+        ]
+      },
+      "wholeBallPlane": {
+        "t": 1.117171211687186,
+        "p": [
+          105.11,
+          2.0781072904488864,
+          37.26313176307505
+        ],
+        "v": [
+          18.553399764149088,
+          -3.7024355688620814,
+          2.20312944756132
+        ],
+        "w": [
+          0,
+          103.6372527219981,
+          0
+        ]
+      },
+      "result": "GOAL",
+      "contacts": [],
+      "health": {
+        "scope": "Entire unopposed first airborne flight, including goal-to-first-turf segment",
+        "firstFlightEndTime": 1.487449142004839,
+        "minWorldForwardSpeed": 16.983512505132175,
+        "minTargetLineForwardSpeed": 14.178254289154035,
+        "maxOffTargetHeadingDegrees": 33.82108650946257,
+        "maxWorldHeadingDegrees": 48.201745237272135,
+        "minWorldHeadingDegrees": -5.642496399503392,
+        "maxHeadingChangePerStepDegrees": 0.1650667698563993,
+        "maxSpeed": 27.15099715099715,
+        "launchSpeed": 27.15099715099715,
+        "finite": true,
+        "targetError": 1.3520346532659788e-10,
+        "solverIterations": 4,
+        "ccdExhausted": 0,
+        "inwardBeforeGoal": true,
+        "preGoalTurfContact": false,
+        "firstFlightCompleted": true,
+        "rejected": false,
+        "reasons": []
+      }
+    }
+  ],
+  "oldToNew": [
+    {
+      "curve": 50,
+      "old": {
+        "spin": 13.384852568377543,
+        "outsideAim": 2.208386623013503,
+        "actualBend": 0.23619608713164839,
+        "plane": [
+          105,
+          2.099999992709372,
+          37.250000020777854
+        ],
+        "result": "GOAL"
+      },
+      "new": {
+        "spin": 18.73879359572856,
+        "outsideAim": 3.0926027408581156,
+        "actualBend": 0.33081256763954836,
+        "plane": [
+          105,
+          2.099999985438544,
+          37.25000004123569
+        ],
+        "result": "GOAL"
+      },
+      "bendChangePercent": 40.05844536076657
+    },
+    {
+      "curve": 75,
+      "old": {
+        "spin": 40,
+        "outsideAim": 6.614974897424645,
+        "actualBend": 0.7083147769330248,
+        "plane": [
+          105,
+          2.099999999995778,
+          37.25000000001533
+        ],
+        "result": "GOAL"
+      },
+      "new": {
+        "spin": 56,
+        "outsideAim": 9.284449000001118,
+        "actualBend": 0.99539581869232,
+        "plane": [
+          105,
+          2.0999999999916588,
+          37.25000000003005
+        ],
+        "result": "GOAL"
+      },
+      "bendChangePercent": 40.530150027695996
+    },
+    {
+      "curve": 90,
+      "old": {
+        "spin": 65.44091388665598,
+        "outsideAim": 10.870470030171063,
+        "actualBend": 1.1665253328500251,
+        "plane": [
+          105,
+          2.0999999999887162,
+          37.250000000040735
+        ],
+        "result": "GOAL"
+      },
+      "new": {
+        "spin": 91.61727944131836,
+        "outsideAim": 15.325602250895372,
+        "actualBend": 1.650311721859277,
+        "plane": [
+          105,
+          2.099999999977399,
+          37.250000000084846
+        ],
+        "result": "GOAL"
+      },
+      "bendChangePercent": 41.472428877929055
+    },
+    {
+      "curve": 99,
+      "old": {
+        "spin": 84.64661697534277,
+        "outsideAim": 14.129589176839964,
+        "actualBend": 1.51993872691704,
+        "plane": [
+          105,
+          2.0999999999797616,
+          37.25000000007441
+        ],
+        "result": "GOAL"
+      },
+      "new": {
+        "spin": 118.50526376547987,
+        "outsideAim": 20.02315512731296,
+        "actualBend": 2.166857725231824,
+        "plane": [
+          105,
+          2.099999999969942,
+          37.25000000013182
+        ],
+        "result": "GOAL"
+      },
+      "bendChangePercent": 42.562176149492494
+    }
+  ]
+}

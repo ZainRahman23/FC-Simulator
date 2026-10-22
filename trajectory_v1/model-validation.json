@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "validation": {
+    "idealTargetError": 6.833480448179895e-9,
+    "deterministic": true,
+    "meshUnfolded": true,
+    "frozenSourceUnchanged": true,
+    "gitClean": true,
+    "frozenIdealIdentical": true,
+    "fixedOriginAndTarget": true,
+    "monotoneAll99Ratings": true,
+    "nonzeroFloor": true,
+    "fullViewContainsAllBounds": true
+  },
+  "method": {
+    "kind": "Deterministic theoretical push-forward of independent bounded triangular angular errors",
+    "gridSize": 25,
+    "projectionNodes": 625,
+    "projectionCalls": 664,
+    "maxInterpolationError": 0.00027821355784674056,
+    "minJacobian": 5.517781309722464,
+    "maxJacobian": 6.490983965112795,
+    "randomDraws": 0,
+    "monteCarlo": false,
+    "goalkeeper": false,
+    "colliders": false,
+    "density": "p_goal = ((1-|u|)(1-|v|)) / abs(det(d(goalX,goalY)/d(u,v))). u and v are angular errors normalized to their hard bounds.",
+    "contourMeaning": "50/90/99% exact angular probability sets, mapped to goal-plane space. Heat uses projected density per square metre; contours are not spatial iso-density contours.",
+    "boundMeaning": "Full rectangular support in angular-error coordinates mapped through frozen flight physics. Display uses a validated bilinear mesh; boundary is not a confidence ellipse.",
+    "maxPresetBoundError": 0.00018214302014491816,
+    "precise99Error": 0.000039568870801147375,
+    "idealReSolved": false,
+    "projectionDomainAccuracy": 1,
+    "allRatingsFirstFlight": true
+  },
+  "protectedFileCount": 58
+}
