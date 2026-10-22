@@ -21,6 +21,10 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
     for (const i of want) { await p.evaluate((i) => { const b = document.querySelector(`#labPanel [data-case="${i}"]`); if (b) b.click(); }, i); await sleep(1500);
       const r = await p.evaluate(() => ({ title: window.PT.V.replay && window.PT.V.replay.title, info: document.getElementById("labInfo").innerText.split("\n").slice(0, 4).join(" | "), hash: window.PT.V.sim.hash, k: window.PT.V.sim.k }));
       await p.screenshot({ path: path.join(OUT, `case_${i}.jpg`), type: "jpeg", quality: 80 }); res.runs.push(Object.assign({ i }, r)); }
+    // CHAIN MODE: branch the croqueta case at 0.9 s into an outside cut toward 80°
+    await p.evaluate(() => { const b = [...document.querySelectorAll("#labPanel [data-case]")].find((x) => /Beat the reaching leg/.test(x.title)); b.click(); }); await sleep(800);
+    await p.evaluate(() => { const R = window.PT.V.replay; R.t = window.PT.V.labT0 + 0.9; R.playing = false; document.getElementById("selBranch").value = "OUTSIDE_CUT"; document.getElementById("brAng").value = "80"; }); await p.click("#bBranch"); await sleep(1500);
+    res.branch = await p.evaluate(() => ({ title: window.PT.V.replay.title, skills: window.PT.V.labSum.skills.map((x) => x.intent + " " + x.result) })); await p.screenshot({ path: path.join(OUT, "branch.jpg"), type: "jpeg", quality: 80 });
     await p.click("#bPairNow"); await sleep(1500); await p.screenshot({ path: path.join(OUT, "pair.jpg"), type: "jpeg", quality: 80 }); res.pair = await p.evaluate(() => ({ ref: !!window.PT.V.ref, title: window.PT.V.replay.title }));
     await p.click("#bLabDiag"); await sleep(600); await p.screenshot({ path: path.join(OUT, "diag.jpg"), type: "jpeg", quality: 80 });
     // the sandbox

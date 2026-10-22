@@ -375,7 +375,7 @@ function overlay(c, vw, dpr, pose, h) {
   const text = (q, s, col, size) => { const p = P(q); if (!p) return; ctx.font = `600 ${(size || 11) * dpr}px -apple-system, Helvetica`; const w = ctx.measureText(s).width; ctx.fillStyle = "rgba(0,0,0,0.6)"; ctx.fillRect(p[0] - 3 * dpr, p[1] - 12 * dpr, w + 6 * dpr, 15 * dpr); ctx.fillStyle = col; ctx.fillText(s, p[0], p[1]); };
   const arrow = (from, hh, len, col, wid) => { const e = [from[0] + Math.cos(hh) * len, from[1] + Math.sin(hh) * len], l = 0.28; line([G(from, 0.03), G(e, 0.03)], col, wid); line([G([e[0] - Math.cos(hh - 0.45) * l, e[1] - Math.sin(hh - 0.45) * l], 0.03), G(e, 0.03), G([e[0] - Math.cos(hh + 0.45) * l, e[1] - Math.sin(hh + 0.45) * l], 0.03)], col, wid); };
   // the reference runner's label (its pace and speed)
-  if (V.ref) { const rs = V.ref.stateAt(Math.min(t, V.ref.t)), rp = PHYS ? { id: physName(V.ref.o.phys) } : BALLON ? { id: "BALL OFF" } : PACE[V.refPace] || PACE.CURRENT; text([rs.P[0], 2.05, -rs.P[1]], `reference ${rp.id} · ${rs.s.toFixed(1)} m/s`, "#c8d4ce", 10.5); }
+  if (V.ref) { const rs = V.ref.stateAt(Math.min(t, V.ref.t)), rp = LAB ? { id: V.ref.o.foot === "L" ? "MIRROR · left-footed" : "MIRROR" } : PHYS ? { id: physName(V.ref.o.phys) } : BALLON ? { id: "BALL OFF" } : PACE[V.refPace] || PACE.CURRENT; text([rs.P[0], 2.05, -rs.P[1]], `reference ${rp.id} · ${rs.s.toFixed(1)} m/s`, "#c8d4ce", 10.5); }
   // the course
   if (V.course) { for (const [a, b, col, dash] of V.course.lines) line([G(a), G(b)], col, 1.6, dash); for (const [q, s] of V.course.labels) text(G(q, 0.05), s, "#ffe2a8", 10.5); }
   // the request (where the keys point) — a thin arrow at the feet; the WASD actually pressed during a replay
@@ -680,6 +680,10 @@ function labInit(q) { const L = document.getElementById("labList"); if (!L) retu
   if ($("bPairNow")) $("bPairNow").onclick = (e) => { if (V.labCase) labPlay(V.labCase, V.labMode === "pair" ? "single" : "pair"); e.target.blur(); };
   if ($("bAutoForce")) $("bAutoForce").onclick = (e) => { const c = V.labCase; if (!c) return; if (c.intents && c.intents.length) labPlay(Object.assign({}, c, { intents: [], variant: "AUTO", title: "AUTO — the same state, no request: " + c.title }), "single"); else { const f = CASES.find((x) => x.tech === c.tech && x.variant === "NORMAL"); if (f) labPlay(f, "single"); } e.target.blur(); };
   if ($("bReqLive")) $("bReqLive").onclick = (e) => { labRequestLive(); e.target.blur(); };
+  // (CHAIN MODE: at the replay's current moment, request another technique toward an exit — the case re-simulated from its exact start with
+  // that intent added at that tick: a technique → technique transition, never a queued clip)
+  if ($("selBranch")) { $("selBranch").innerHTML = META.filter((m) => m.kind !== "carry" && m.kind !== "none").map((m) => `<option value="${m.id}">${esc(m.name)}</option>`).join(""); $("selBranch").value = "OUTSIDE_CUT"; }
+  if ($("bBranch")) $("bBranch").onclick = (e) => { labBranch(); e.target.blur(); };
   const first = +(q.get("case") || 0); labPlay(ALL_CASES[Math.max(0, Math.min(ALL_CASES.length - 1, first))] || CASES[0], q.get("mode") || "single"); }
 // one curated case: simulated at once from its exact initial conditions (the same runner as node), then the deterministic replay of its clip
 function labPlay(c, mode) { stopTest(); V.labCase = c; V.labMode = mode; V.live = null; const mirror = mode === "mirror", o0 = caseOpts(c, mirror); V.engine = "layered";
@@ -693,6 +697,10 @@ function labPlay(c, mode) { stopTest(); V.labCase = c; V.labMode = mode; V.live 
   V.camId = mode === "pair" ? "pair" : V.labCam || "follow"; if (V.dom.selCam) V.dom.selCam.value = V.camId; V.cam = null; V.lastShown = null;
   V.replay = { t0: r.clip[0], t1: r.clip[1], t: r.clip[0], tz: r.t0, rate: V.labRate || 1, playing: true, wasPaused: false, kind: "case", loop: V.labLoop !== false, title: (mirror ? "MIRROR · " : mode === "pair" ? "L | R · " : "") + (c.title || c.name) };
   V.paused = true; showReplayUI(true); setRateButtons(); labInfoBox(); }
+function labBranch() { const c = V.labCase, R = V.replay; if (!c || !R) return; const tRel = Math.round((R.t - V.labT0) / DT) * DT, id = document.getElementById("selBranch").value, ang = +document.getElementById("brAng").value || 0, mode = document.getElementById("brMode").value || c.mode;
+  const base = c.stick ? c.stick.filter((x) => x[0] < tRel) : [[0, c.ang, c.mode]], d = Object.assign({}, c, { variant: "CHAIN", title: `BRANCH: ${c.title || c.name} → ${META_BY_ID[id] ? META_BY_ID[id].name : id} at ${tRel.toFixed(2)} s`,
+    intents: (c.intents || []).filter((x) => x.t < tRel).concat([{ t: tRel, id }]), stick: base.concat([[tRel, ang, mode]]), dur: Math.max(c.dur, tRel + 2.2) });
+  labPlay(d, V.labMode === "pair" ? "single" : V.labMode || "single"); }
 // the info box: the technique, the request → result, the phases, the contacts
 function labInfoBox() { const el = document.getElementById("labInfo"); if (!el || !V.labCase) return; const c = V.labCase, m = META_BY_ID[c.tech], S = V.labSum;
   const sk = S.skills.map((x) => `<div class="req">REQUESTED <b>${esc(x.intent)}</b> → <b class="${x.result === "PLAYED" ? "ok" : "bad"}">${esc(x.result)}</b>${x.result !== "PLAYED" ? ` · ALTERNATIVE <b>${esc(x.alt)}</b><br>REASON: ${esc(Object.entries(x.rej || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([k]) => k).join(" · ") || "—")}` : x.tPlayed != null ? ` · decisive at ${x.tPlayed.toFixed(2)} s` : ""}</div>`).join("") || `<div class="req">AUTO — no request: B4 chose from the same state</div>`;

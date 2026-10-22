@@ -97,7 +97,10 @@ export class PlayBody {
         // Only touches CONTROLLED_BALL shaped: FREE's pose is unchanged)
         const soft = con.soft;
         spec = { footSpeed: clamp(m, 0.3, 6.0), sweep: soft ? hdg(con.vOut) / DEG : m > 0.05 ? hdg(dv) / DEG : null, via: b.t0 - con.t > 0.03 ? [{ t: tF, rel: "behind", along: "out", d: 0.30, h: 0.13, pitch: con.surface === "LACES" ? -26 : -6 }] : [] };
-        if (spec.sweep == null) delete spec.sweep; } }
+        if (spec.sweep == null) delete spec.sweep; }
+      // (DRIBBLING VOCAB-1: a TURN STEP that also plays the ball — the relaunch after a reversal — keeps its route AROUND the planted foot before
+      // the touch: the touch's own swing alone sent the foot straight through the support)
+      if (b.swingIn && b.swingIn.turnStep) { const r = this.resolveSpec(b.swingIn, null, 0); const pre = (r.via || []).filter((w) => w.t < con.t - 0.04); if (pre.length) spec = Object.assign({}, spec, { via: pre.concat(spec.via || []) }); } }
     w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; }
     ctx.sw.set(key, w); return w;
   }
@@ -197,6 +200,9 @@ export class PlayBody {
     // heading (opening to ±45° late in the swing) — weighted off near its own contact (the boot that plays the ball is drawn exactly there) and
     // rate-limited (≤ 2 cm / tick: a route, not a jump). Presentation only; the plan's stances and contacts are untouched
     const st = this.sim.stateAt(t, P), ps = st.psi, fw = [Math.cos(ps), Math.sin(ps)], rt = [-Math.sin(ps), Math.cos(ps)];
+    // (DRIBBLING VOCAB-1: right after the hips have turned — > 15° in the last 0.25 s: a technique's exit, a cut — the feet point different ways
+    // and 0.14 m between them let the boots / shins overlap as the swing passed: the corridor is 0.20 m then; straight running keeps 0.14 m)
+    const corr = abs(wrap(ps - this.sim.stateAt(Math.max(0, t - 0.25)).psi)) > 15 * DEG ? (+(globalThis.process?.env?.CORR) || 0.20) : 0.14;
     for (const X of SIDES) { const S = T.st[X], { f, ev } = pre[X], o = pre[other(X)].f; let g = f;
       // (S99 MISSION, the 99 pace: A PLANT PIVOT — a planted foot never points more than 70° from the body's facing: in a reversal the body turns
       // ≈ 180° over the planted foot in ≈ 0.2 s, the foot kept its yaw, the leg was asked for an impossible ≈ 170° twist and its solve flipped
@@ -206,7 +212,7 @@ export class PlayBody {
       let want = 0, wy = 0;
       if (!f.planted) { const dc = ev.tc != null ? ev.tc - t : 9, con = f.swing && f.swing.con, dp = con ? abs(t - con.t) : 9, ex = sstep(0.03, 0.12, min(abs(dc), dp));
         const d = [f.ank[0] - o.ank[0], f.ank[1] - o.ank[1]], a = d[0] * fw[0] + d[1] * fw[1], l = (d[0] * rt[0] + d[1] * rt[1]) * sgnF(X), near = 1 - sstep(0.22, 0.35, abs(a));
-        want = ex * near * max(0, 0.14 - l);
+        want = ex * near * max(0, corr - l);
         const w = f.swing, u = w ? clamp((t - w.t0) / max(1e-3, w.t1 - w.t0), 0, 1) : 0, lim = (22 + 23 * sstep(0.65, 0.95, u)) * DEG, e = wrap(f.yaw - ps);
         wy = ex * (abs(e) > lim ? (abs(e) - lim) * Math.sign(e) : 0); }
       S.sep = clamp(want, (S.sep || 0) - 0.02, (S.sep || 0) + 0.02); S.syaw = clamp(wy, (S.syaw || 0) - 3 * DEG, (S.syaw || 0) + 3 * DEG);

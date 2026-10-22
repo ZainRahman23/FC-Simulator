@@ -599,7 +599,7 @@ export class PlaySim {
   // never an animation: for its window (0.7 s) the resolver also builds that technique's instances from the live state (the foot on the stride,
   // the ball, the entry speed, the requested exit — the stick) and prefers a feasible one strongly (J − 6); none feasible → REJECTED with the
   // resolver's reasons, the best ordinary solution played instead. Recorded as an event (a replay re-issues it at the same tick)
-  requestSkill(o) { const st0 = this.stateAt(this.t, this.plan), S = { intent: o.intent, ids: o.ids || [], gen: o.gen || null, foot: o.foot || null, t: this.t, until: this.t + (o.window || 0.55), rej: {}, done: false, k: this.k, feintSide: o.feintSide || 0, h0: st0.s > 1.0 ? st0.h : st0.psi };
+  requestSkill(o) { const st0 = this.stateAt(this.t, this.plan), S = { intent: o.intent, ids: o.ids || [], gen: o.gen || null, foot: o.foot || null, trim: !!o.trim, t: this.t, until: this.t + (o.window || 0.55), rej: {}, done: false, k: this.k, feintSide: o.feintSide || 0, h0: st0.s > 1.0 ? st0.h : st0.psi };
     this.skill = S; this.flags.replan = this.flags.replan || "skill"; this.log.events.push({ k: this.k, kind: "skill", v: Object.assign({}, o) });
     // (a FEINT intent is the feint itself — played at once, the fake side the one AWAY from the requested exit (none asked: o.feintSide); a
     // feint-and-cut prefers its cut family for the next 0.6 s — B4 still chooses the touch, the foot and the moment)
@@ -613,16 +613,16 @@ export class PlaySim {
     for (const id of S.ids) { if (!TEMPLATES[id]) continue; for (const m of S.foot === "R" ? [1] : S.foot === "L" ? [-1] : [1, -1]) {
         // (every stride anchor the next 1.25 s offers — not only the earliest: the earliest may need a foot already swinging to jump to a new
         // touch (the possession model's veto); the resolver's cost then picks the stride)
-        const T = TEMPLATES[id], firstF = T.firstFoot === "F" ? (m > 0 ? "R" : "L") : (m > 0 ? "L" : "R"), entryMin = this.L.windups ? CAPS.entryMin : this.P.commit + 0.04; let got = 0;
+        const tr = S.trim && TRIMMED[id], T = tr ? TRIMMED[id] : TEMPLATES[id], firstF = T.firstFoot === "F" ? (m > 0 ? "R" : "L") : (m > 0 ? "L" : "R"), entryMin = this.L.windups ? CAPS.entryMin : this.P.commit + 0.04; let got = 0;
         for (const ta of this.anchorTimes(firstF, keep, st)) { const tc = ta - T.start; if (ta < t + this.P.react + 0.02 || tc < t + entryMin || tc > t + 1.25) continue; if (got >= 3) break;
-          const p = this.instantiate(id, m, q, st, keep, { tA: ta }); if (p) { got++; p.skill = S.intent; out.push(p); if (p.action.setTouch) { const p2 = this.instantiate(id, m, q, st, keep, { tA: ta, noSet: true }); if (p2) { p2.skill = S.intent; out.push(p2); } } } }
+          const p = this.instantiate(id, m, q, st, keep, { tA: ta, trim: !!tr }); if (p) { got++; p.skill = S.intent; out.push(p); if (p.action.setTouch) { const p2 = this.instantiate(id, m, q, st, keep, { tA: ta, noSet: true, trim: !!tr }); if (p2) { p2.skill = S.intent; out.push(p2); } } } }
         if (!got) { const why = this.whyNot(id, m, q, st); S.rej[why] = (S.rej[why] || 0) + 1; } } }
     this.noteRej(r0); return out; }
   // (why a technique has no instance now — the gate it fails first: the reasons the Lab shows for a REJECTED request)
   whyNot(id, m, q, st) { const T = TEMPLATES[id], h0 = st.s > 1.0 ? st.h : st.psi; let dr = m * wrap(q.h - h0) / DEG;
     if (T.free) { if (abs(dr) > T.hard[1]) return `exit ${abs(dr).toFixed(0)}° beyond its ${T.hard[1]}°`; }
     else { if (Math.sign(dr) !== T.turn && abs(dr) > 140) dr += T.turn * 360; if (Math.sign(dr) !== T.turn) return `the exit is on the wrong side for this foot`; if (abs(dr) < T.hard[0]) return `exit ${abs(dr).toFixed(0)}° below its ${T.hard[0]}°`; if (abs(dr) > T.hard[1]) return `exit ${abs(dr).toFixed(0)}° beyond its ${T.hard[1]}°`; }
-    if (st.s < T.vRange[0] - 0.4) return `entry ${st.s.toFixed(1)} m/s below its ${T.vRange[0]} m/s`;
+    if (st.s < T.vRange[0] - 0.4 || (T.vFloor > 0 && st.s < T.vFloor)) return `entry ${st.s.toFixed(1)} m/s below its ${Math.max(T.vFloor || 0, T.vRange[0])} m/s`;
     if (st.s > T.vRange[1] + 2.5) return `entry ${st.s.toFixed(1)} m/s far above its ${T.vRange[1]} m/s`;
     return "no feasible entry on the coming strides (foot / ball / support timing)"; }
   // ── DRIBBLING VOCAB-1: THE BODY FEINT (no ball contact) — a false weight shift: the shoulders / trunk / head and the side lean SOLD toward the

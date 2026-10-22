@@ -53,7 +53,7 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
       // hard brake, a turn on the spot) swings AROUND the planted foot on its own side — the foot's own side in the hips' frame at mid-swing —
       // instead of straight through it: the legs crossed 5 – 9 cm there)
       { const ts = prevX && prevX.t1 !== Infinity ? max(prevX.t1, t) : td - 0.16, tm = (ts + td) / 2, dpsi = abs(wrap(this.stateAt(td, plan).psi - this.stateAt(ts, plan).psi));
-        if (dpsi > 60 * DEG && this.stateAt(tm, plan).s < 3.0 && td - ts > 0.08) { st.swingIn = { via: [{ t: tm, rel: "stance", at: [-0.02, sgn(X) * 0.27, 0.13] }] }; st.kind += " · turn step";
+        if (dpsi > 60 * DEG && this.stateAt(tm, plan).s < 3.0 && td - ts > 0.08) { st.swingIn = { turnStep: true, via: [{ t: tm, rel: "stance", at: [-0.02, sgn(X) * 0.27, 0.13] }] }; st.kind += " · turn step";
           // (… and it lands clear of the planted foot: ≥ 0.22 m to its own side of it in the hips' frame then — the feet point different ways
           // after the turn, and 0.13 m between their centres left the toes overlapping)
           const o = lastOf(other(X)); if (o && o.pos) { const r = rgt(this.stateAt(td, plan).psi), l = ((st.pos[0] - o.pos[0]) * r[0] + (st.pos[1] - o.pos[1]) * r[1]) * sgn(X); if (l < 0.22) st.pos = [st.pos[0] + r[0] * sgn(X) * (0.22 - l), st.pos[1] + r[1] * sgn(X) * (0.22 - l)]; } } }

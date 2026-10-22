@@ -29,7 +29,7 @@ function elastico(rev) { const s = rev ? 1 : -1;   // s: the exit side (− left
     arms: [[-0.30, 0.2], [-0.12, 0.55], [0.06, 0.5], [0.30, 0.2]], gait: [[-0.30, 0.8], [-0.16, 0.4], [0.12, 0.5], [0.30, 1]], look: [[-0.30, 1], [0.30, 1]],
     stances: [
       { F: "S", t0: -0.30, t1: 0.04, at: null, yaw: -4, kind: "PLANT · the standing foot beside the ball" },
-      { F: "F", t0: 0.08, t1: 0.22, at: { rel: "O", p: [0.34, s > 0 ? 0.24 : -0.20] }, yaw: s * 30, w: 1, kind: `the ${rev ? "reverse elastico" : "elastico"} foot down on the new line` },
+      { F: "F", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, 0.09] }, yaw: "travel", kind: `the ${rev ? "reverse elastico" : "elastico"} foot down on the new line` },
       { F: "S", t0: 0.26, t1: 0.38, at: null, yaw: null, kind: s > 0 ? "exit stride (crossover)" : "exit stride" },
     ],
     // (the decisive snap first: the body draws ONE swing with both touches — the cue is its waypoint at τ −0.09, the snap its contact pose)
@@ -55,7 +55,7 @@ const SCISSORS = { id: "SCISSORS", label: "SCISSORS", turn: -1, ref: 45, comfort
     { F: "S", t0: -0.38, t1: -0.15, at: null, yaw: 0, kind: "support · the ball ahead between the feet" },
     { F: "F", t0: -0.12, t1: 0.05, at: { rel: "B", p: [0.04, 0.30] }, yaw: 18, kind: "SCISSORS · the right leg loops round the front of the ball, down outside it (≈ 2 o'clock)",
       swingIn: { via: [{ tau: -0.30, rel: "ballNow", at: [-0.22, -0.10, 0.12], yaw: -10 }, { tau: -0.24, rel: "ballNow", at: [0.10, -0.12, 0.20], yaw: 20 }, { tau: -0.19, rel: "ballNow", at: [0.22, 0.06, 0.24], yaw: 45 }, { tau: -0.15, rel: "ballNow", at: [0.12, 0.24, 0.13], yaw: 30 }] } },
-    { F: "S", t0: 0.08, t1: 0.22, at: { rel: "O", p: [0.30, -0.24] }, yaw: -30, w: 1, kind: "the exit foot down on the new line" },
+    { F: "S", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, -0.09] }, yaw: "travel", kind: "the exit foot down on the new line" },
     { F: "F", t0: 0.26, t1: 0.38, at: null, yaw: null, kind: "exit stride (accelerating)" },
   ],
   contacts: [{ F: "S", tau: 0, surface: "OUTSIDE", role: "SCISSORS · the outside of the other foot takes it away", decisive: true, aim: { v: 5.4, launch: -45 },
@@ -70,7 +70,7 @@ const STEPOVER = { id: "STEPOVER", label: "STEPOVER", turn: 1, ref: 45, comfort:
     { F: "S", t0: -0.36, t1: 0.02, at: null, yaw: 0, kind: "support · the standing foot" },
     { F: "F", t0: -0.22, t1: -0.11, at: { rel: "B", p: [0.04, -0.13] }, yaw: -15, kind: "STEPOVER · the right foot over the front of the ball toward the midline, down inside it",
       swingIn: { via: [{ tau: -0.34, rel: "ballNow", at: [-0.10, 0.15, 0.12], yaw: 5 }, { tau: -0.29, rel: "ballNow", at: [0.10, 0.10, 0.23], yaw: -10 }, { tau: -0.25, rel: "ballNow", at: [0.13, -0.06, 0.18], yaw: -20 }] } },
-    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "O", p: [0.32, 0.26] }, yaw: 30, w: 1, kind: "the stepover foot down on the new line" },
+    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, 0.09] }, yaw: "travel", kind: "the stepover foot down on the new line" },
     { F: "S", t0: 0.26, t1: 0.38, at: null, yaw: null, kind: "exit stride" },
   ],
   contacts: [{ F: "F", tau: 0, surface: "OUTSIDE", role: "STEPOVER · the same foot's outside takes it back the other way", decisive: true, aim: { v: 5.2, launch: 45 },
@@ -89,7 +89,7 @@ const DSCISSORS = { id: "DSCISSORS", label: "DOUBLE SCISSORS", turn: 1, ref: 45,
       swingIn: { via: [{ tau: -0.58, rel: "ballNow", at: [-0.22, -0.10, 0.12], yaw: -10 }, { tau: -0.53, rel: "ballNow", at: [0.10, -0.12, 0.20], yaw: 20 }, { tau: -0.48, rel: "ballNow", at: [0.22, 0.06, 0.24], yaw: 45 }, { tau: -0.44, rel: "ballNow", at: [0.12, 0.24, 0.13], yaw: 30 }] } },
     { F: "S", t0: -0.17, t1: 0.04, at: { rel: "B", p: [0.02, -0.30] }, yaw: -18, kind: "2nd loop · the left leg round the front of the ball, down outside it",
       swingIn: { via: [{ tau: -0.36, rel: "ballNow", at: [-0.22, 0.10, 0.12], yaw: 10 }, { tau: -0.30, rel: "ballNow", at: [0.10, 0.12, 0.20], yaw: -20 }, { tau: -0.25, rel: "ballNow", at: [0.22, -0.06, 0.24], yaw: -45 }, { tau: -0.20, rel: "ballNow", at: [0.12, -0.24, 0.13], yaw: -30 }] } },
-    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "O", p: [0.30, 0.24] }, yaw: 30, w: 1, kind: "the exit foot down on the new line" },
+    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, 0.09] }, yaw: "travel", kind: "the exit foot down on the new line" },
     { F: "S", t0: 0.26, t1: 0.38, at: null, yaw: null, kind: "exit stride (crossover, accelerating)" },
   ],
   contacts: [{ F: "F", tau: 0, surface: "OUTSIDE", role: "DOUBLE SCISSORS · the first foot's outside takes it away", decisive: true, aim: { v: 5.3, launch: 45 },
@@ -105,7 +105,7 @@ const MATTHEWS = { id: "MATTHEWS", label: "MATTHEWS FEINT (drag-push)", turn: 1,
   stances: [
     { F: "S", t0: -0.42, t1: -0.20, at: null, yaw: 0, kind: "support · the shoulder drops left" },
     { F: "S", t0: -0.12, t1: 0.06, at: { rel: "B", p: [-0.10, -0.32] }, yaw: -10, kind: "the HOP left (the weight sold left)" },
-    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "O", p: [0.30, 0.26] }, yaw: 32, w: 1, kind: "the pushing foot down on the new line" },
+    { F: "F", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, 0.09] }, yaw: "travel", kind: "the pushing foot down on the new line" },
     { F: "S", t0: 0.26, t1: 0.38, at: null, yaw: null, kind: "exit stride (crossover)" },
   ],
   contacts: [
@@ -131,7 +131,7 @@ function solePull(kind) {
     stances: [
       { F: "F", t0: -0.30, t1: -0.18, at: { rel: "travel", t: -0.30, p: [0.16, 0.0] }, yaw: "travel", kind: "braking (penultimate)" },
       { F: "S", t0: -0.15, t1: 0.20, at: { rel: "O", p: [0.10, -0.14] }, yaw: ex * 0.3, kind: "STANDING FOOT beside the ball", pivot: ex ? [[0.10, 0], [0.24, ex * 0.6]] : undefined },
-      { F: "F", t0: 0.26, t1: 0.42, at: { rel: "O", p: Ld ? [-0.10, -0.34] : V ? [0.18, -0.30] : [0.32, 0.08] }, yaw: ex * 0.9, w: 1, kind: "the pulling foot down on the new line" },
+      { F: "F", t0: 0.26, t1: 0.42, at: { rel: "travel", t: 0.26, p: [0.16, 0.09] }, yaw: "travel", kind: "the pulling foot down on the new line" },
       { F: "S", t0: 0.44, t1: 0.58, at: null, yaw: null, kind: "exit stride" },
     ],
     contacts: [
@@ -144,20 +144,22 @@ function solePull(kind) {
 // ── P4 · THE OUTSIDE HOOK — the right foot's outside goes over and beyond the ball and pulls it back to the right, the standing knee bent; the
 // spin-off away from a defender pressing on the left (reference 150°) ────────────────────────────────────────────────────────────────────────
 const OUTHOOK = { id: "OUTHOOK", label: "OUTSIDE HOOK", turn: 1, ref: 150, comfort: [122, 172], hard: [104, 186], vRange: [0.6, 6.2], vFloor: 0.6,
-  start: -0.30, end: 0.98, firstFoot: "F", B: [0.30, 0.06], tLine: 0.42, protect: 0.60,
+  start: -0.30, end: 0.98, firstFoot: "F", B: [0.30, 0.10], tLine: 0.42, protect: 0.60,
   com: { v: [[-0.30, 2.6], [-0.20, 1.6], [-0.08, 0.8], [0, 0.4], [0.08, 0.15], [0.16, 0.45], [0.28, 1.3], [0.43, 2.3], [0.68, 3.4], [0.98, 4.4]], h: [[-0.30, 0], [0, 0], [0.08, 70], [0.16, 140], [0.28, 150]] },
   face: [[-0.30, 0], [-0.14, 0], [-0.02, 20], [0.04, 50], [0.12, 100], [0.20, 140], [0.30, 150]], trunk: [[-0.30, 0], [-0.10, 0], [0, 10], [0.08, 22], [0.18, 10], [0.30, 0]],
   lean: [[-0.30, 7], [-0.20, 6], [-0.06, 16], [0.04, 14], [0.16, 8], [0.33, 15], [0.58, 13]], side: [[-0.30, 0], [-0.02, 0], [0.06, 12], [0.18, 8], [0.36, 0]],
   crouch: [[-0.30, 0.04], [-0.08, 0.09], [0.04, 0.12], [0.18, 0.07], [0.43, 0.03]], arms: [[-0.30, 0.25], [-0.04, 0.65], [0.10, 0.75], [0.33, 0.3]], gait: [[-0.30, 0.5], [-0.17, 0.4], [0.20, 0.2], [0.38, 0.8], [0.58, 1]], look: [[-0.30, 1], [0.28, 1], [0.53, 0.7]],
   stances: [
-    { F: "F", t0: -0.30, t1: -0.18, at: { rel: "travel", t: -0.30, p: [0.16, 0.04] }, yaw: "travel", kind: "braking, short" },
-    { F: "S", t0: -0.12, t1: 0.28, at: { rel: "O", p: [0.04, -0.14] }, yaw: 20, pivot: [[0.14, 0], [0.28, 110]], heel: [0.12, 16], kind: "STANDING FOOT beside the ball (knee bent); pivots with the body" },
-    { F: "F", t0: 0.15, t1: 0.32, at: { rel: "O", p: [0.24, 0.46] }, yaw: 140, w: 1, kind: "the hooking foot down beside the standing foot" },
+    { F: "F", t0: -0.30, t1: -0.18, at: { rel: "travel", t: -0.30, p: [0.16, 0.06] }, yaw: "travel", kind: "braking, short" },
+    { F: "S", t0: -0.12, t1: 0.28, at: { rel: "O", p: [0.02, -0.20] }, yaw: 15, pivot: [[0.14, 0], [0.28, 110]], heel: [0.12, 16], kind: "STANDING FOOT beside the ball (knee bent); pivots with the body" },
+    { F: "F", t0: 0.15, t1: 0.32, at: { rel: "travel", t: 0.15, p: [0.10, 0.14] }, yaw: "travel", kind: "the hooking foot down on its own side of the standing foot" },
   ],
+  // (the hooking foot stays on its OWN side: up beside the ball, OVER it to the front, the toes turned in so the outside faces back, then it pulls
+  // the ball back to its side — it never wraps round past the standing foot)
   contacts: [
     { F: "F", tau: 0, surface: "OUTSIDE", role: "OUTSIDE HOOK", decisive: true, aim: { v: 3.0, launch: 150 },
-      swing: { contact: { pitch: 2, roll: 8 }, footSpeed: 2.0, via: [{ dt: -0.15, rel: "ballNow", at: [-0.40, -0.06, 0.24], yaw: -20 }, { dt: -0.10, rel: "ballNow", at: [-0.12, -0.18, 0.22], yaw: -10 }, { dt: -0.05, rel: "ballNow", at: [0.16, -0.10, 0.22], yaw: 30 },
-        { dt: 0.04, rel: "O", at: [0.44, 0.02, 0.16], yaw: 85, w: 0.5 }, { dt: 0.09, rel: "O", at: [0.44, 0.26, 0.16], yaw: 120, w: 1 }] } },
+      swing: { contact: { pitch: 2, roll: 8 }, footSpeed: 2.0, via: [{ dt: -0.16, rel: "ballNow", at: [-0.32, 0.12, 0.20], yaw: 5 }, { dt: -0.11, rel: "ballNow", at: [-0.04, 0.16, 0.26], yaw: -15 }, { dt: -0.05, rel: "ballNow", at: [0.16, 0.06, 0.22], yaw: -55 },
+        { dt: 0.04, rel: "O", at: [0.38, 0.20, 0.16], yaw: 60, w: 0.5 }, { dt: 0.09, rel: "O", at: [0.24, 0.36, 0.16], yaw: 110, w: 1 }] } },
     { F: "S", tau: 0.38, surface: "LACES", role: "exit touch", aim: { v: 4.8, launch: "exit" }, swing: { via: [{ dt: 0.03, rel: "ballNow", exitAt: [-0.20, -0.17], h: 0.13, yaw: -10, wYawExit: true }] } },
   ] };
 // ── P10 + P1 · STOP / HESITATION (free: the exit is the request — straight on or turned): DEADEN-AND-EXPLODE (the sole stops the ball dead
@@ -203,7 +205,7 @@ const SHIELDROLL = { id: "SHIELDROLL", label: "SHIELD ROLL-AWAY", turn: 1, ref: 
   crouch: [[-0.26, 0.04], [-0.06, 0.08], [0.16, 0.08], [0.45, 0.035]], arms: [[-0.26, 0.3], [-0.08, 0.75], [0.20, 0.7], [0.50, 0.3]], gait: [[-0.26, 0.5], [0, 0.35], [0.30, 0.6], [0.50, 1]], look: [[-0.26, 1], [0.30, 1]],
   stances: [
     { F: "S", t0: -0.26, t1: 0.18, at: { rel: "B", p: [-0.10, -0.32] }, yaw: -10, pivot: [[0.0, 0], [0.18, 50]], kind: "STANDING FOOT · the near foot, the hip toward the threat" },
-    { F: "F", t0: 0.16, t1: 0.36, at: { rel: "O", p: [0.10, 0.40] }, yaw: 60, w: 1, kind: "the rolling foot down beside the ball's path" },
+    { F: "F", t0: 0.16, t1: 0.36, at: { rel: "travel", t: 0.16, p: [0.10, 0.10] }, yaw: "travel", kind: "the rolling foot down beside the ball's path" },
     { F: "S", t0: 0.38, t1: 0.52, at: null, yaw: null, kind: "exit stride (side-on)" },
   ],
   contacts: [{ F: "F", tau: 0, surface: "SOLE", role: "SHIELD ROLL · the far foot's sole rolls it away", decisive: true, aim: { v: 1.9, launch: 82 },
@@ -233,7 +235,14 @@ const ROULETTE = { id: "ROULETTE", label: "ROULETTE (Marseille turn)", turn: -1,
 function withSetStep(T, lead = 0.18) { const s0 = T.start, s1 = s0 - lead; T.stances.unshift({ F: "F", t0: s1, t1: s1 + 0.13, at: null, yaw: "travel", kind: "set step (the touch that sets the ball)" });   // (at: null — the gait's own footfall)
   T.start = s1; T.firstFoot = "F"; T.com.v.unshift([s1, T.com.v[0][1] + 0.2]); T.com.h.unshift([s1, 0]); if (T.com.hFrac) T.com.hFrac.unshift([s1, 0]);
   for (const k of ["face", "trunk", "side", "lean", "crouch", "arms", "gait", "look"]) if (T[k] && T[k].length) T[k].unshift([s1, T[k][0][1]]); return T; }
-export const NEW_TEMPLATES = { ELASTICO: withSetStep(elastico(false)), RELASTICO: withSetStep(elastico(true)), SCISSORS: withSetStep(SCISSORS), STEPOVER: withSetStep(STEPOVER, 0.20), DSCISSORS: withSetStep(DSCISSORS, 0.20), MATTHEWS: withSetStep(MATTHEWS, 0.20), VPULL: solePull("VPULL"), LDRAG: solePull("LDRAG"), PULLPUSH: solePull("PULLPUSH"),
+// ── P7 → P1 · SCISSORS → CONTINUE: the loop sells the cut, the other foot's laces push the ball straight on (free: the exit is the request) ──
+const SCISSORS_GO = Object.assign(JSON.parse(JSON.stringify(SCISSORS)), { id: "SCISSORS_GO", label: "SCISSORS → CONTINUE", turn: 0, ref: 0, free: true, comfort: [0, 25], hard: [0, 40] });
+SCISSORS_GO.com.h = [[-0.38, 0], [-0.20, 6], [-0.08, 7], [0.06, 0], [0.30, 0]]; SCISSORS_GO.com.hFrac = [[-0.38, 0], [0, 0], [0.20, 0.8], [0.30, 1]];
+SCISSORS_GO.face = [[-0.38, 0], [-0.24, 14], [-0.10, 16], [0.04, 2], [0.20, 0]]; SCISSORS_GO.com.v = [[-0.38, 4.6], [-0.20, 4.0], [-0.06, 3.8], [0, 3.9], [0.10, 4.6], [0.30, 5.8], [0.70, 6.8]];
+SCISSORS_GO.contacts = [{ F: "S", tau: 0, surface: "LACES", role: "SCISSORS → CONTINUE · the other foot pushes it on", decisive: true, aim: { v: 5.6, launch: "exit" },
+  swing: { contact: { pitch: -22 }, footSpeed: 3.0, via: [{ dt: -0.10, rel: "ballNow", at: [-0.26, -0.02, 0.15] }, { dt: 0.04, rel: "ballNow", exitAt: [-0.12, -0.04], h: 0.12, w: 1 }] } }];
+SCISSORS_GO.stances[2] = { F: "S", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, -0.09] }, yaw: "travel", kind: "the pushing foot down, running on" };
+export const NEW_TEMPLATES = { ELASTICO: withSetStep(elastico(false)), RELASTICO: withSetStep(elastico(true)), SCISSORS: withSetStep(SCISSORS), SCISSORS_GO: withSetStep(SCISSORS_GO), STEPOVER: withSetStep(STEPOVER, 0.20), DSCISSORS: withSetStep(DSCISSORS, 0.20), MATTHEWS: withSetStep(MATTHEWS, 0.20), VPULL: solePull("VPULL"), LDRAG: solePull("LDRAG"), PULLPUSH: solePull("PULLPUSH"),
   OUTHOOK, DEADEN: stopGo("DEADEN"), FAKESTOP: stopGo("FAKESTOP"), HESITATE: stopGo("HESITATE"), SHIELDROLL, ROULETTE };
 export const TEMPLATES = Object.assign({}, BASE, NEW_TEMPLATES);
 export const TECH_ALL = Object.keys(TEMPLATES);

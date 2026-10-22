@@ -26,10 +26,13 @@ export const CASES = [
   C("BRAKING_TOUCH", "NORMAL", "SPRINT", 180, { auto: true, runup: 3.0, dur: 3.0, title: "Reverse from a sprint: the hard brake with the ball (B4)" }),
   // ── CHOP ──
   C("RONALDO_CHOP", "NORMAL", "RUN", -90, { title: "A sharp protected redirect at speed: the chop behind the shielding leg" }),
+  C("RONALDO_CHOP", "LOW-SPEED", "RUN", -90, { runup: 0.95, title: "The lower-speed chop (≈ 4 m/s, early in the run)" }),
+  C("RONALDO_CHOP", "REJECTED", "JOG", -90, { title: "REJECTED: the chop asked from a jog (its hop needs ≥ 3.6 m/s)" }),
   C("RONALDO_CHOP", "HIGH-SPEED", "SPRINT", -80, { runup: 3.0, title: "The sprint chop" }),
   C("RONALDO_CHOP", "MIRROR", "RUN", 90, { foot: "L", title: "Ronaldo chop, left foot" }),
   C("RONALDO_CHOP", "AUTO", "RUN", -90, { auto: true, title: "Would B4 chop here?" }),
   // ── CRUYFF / BEHIND-BODY ──
+  C("CRUYFF_SHORT", "NORMAL", "WALK", -125, { title: "Already slow: the Cruyff from its plant, a step sooner" }),
   C("CRUYFF", "NORMAL", "JOG", -125, { title: "Sell the pass, drag it behind the standing leg, go back" }),
   C("CRUYFF", "HIGH-SPEED", "RUN", -120, { title: "The running Cruyff" }),
   C("CRUYFF", "MIRROR", "RUN", 120, { foot: "L", title: "Cruyff, left foot" }),
@@ -44,6 +47,7 @@ export const CASES = [
   // ── LATERAL TRANSFER ──
   C("CROQUETA", "NORMAL", "RUN", 35, { def: [2.4, 0.1], title: "Beat the reaching leg: inside to inside across the body in one stride" }),
   C("CROQUETA", "MIRROR", "RUN", -35, { foot: "L", def: [2.4, -0.1], title: "Croqueta to the left" }),
+  C("CROQUETA", "PRESSURE", "JOG", 35, { def: [1.6, -0.3], threat: -1, title: "Pressure escape: a defender closing on the ball's side — transfer it away across the body" }),
   C("CROQUETA", "AUTO", "RUN", 35, { auto: true, def: [2.4, 0.1], title: "Would B4 play the croqueta here?" }),
   // ── FEINT ──
   C("BODY_FEINT", "NORMAL", "RUN", 0, { stick: [[0, 0, "RUN"], [0.45, -40, "RUN"]], title: "Sell one way with the body (no touch), then go the other" }),
@@ -56,7 +60,11 @@ export const CASES = [
   // ── STEPOVER / SCISSORS ──
   C("SCISSORS", "NORMAL", "RUN", -45, { title: "Loop round the front of the ball, sell it, take it the other way" }),
   C("SCISSORS", "MIRROR", "RUN", 45, { foot: "L", title: "Scissors, left leg" }),
-  C("SCISSORS", "REJECTED", "SPRINT", -40, { runup: 3.0, title: "REJECTED: scissors requested at full sprint (beyond its useful entry speed)" }),
+  C("SCISSORS", "HIGH-SPEED", "SPRINT", -40, { runup: 3.0, title: "Scissors from a full sprint: the body brakes into it (its useful entry is ≤ 8 m/s)" }),
+  C("SCISSORS", "REJECTED", "RUN", -140, { title: "REJECTED: scissors asked for a 140° exit (its range ends at 92°)" }),
+  C("STEPOVER", "AUTO", "RUN", 45, { auto: true, title: "The same state, no request: B4 does not stepover by itself (MANUAL)" }),
+  C("SCISSORS_GO", "NORMAL", "RUN", 0, { foot: "R", title: "Sell the cut with the loop, then go straight on past the defender" }),
+  C("SCISSORS_GO", "MIRROR", "RUN", 0, { foot: "L", title: "Scissors → continue, left leg" }),
   C("STEPOVER", "NORMAL", "RUN", 45, { title: "Over the front of the ball toward the midline, then back out with the same foot" }),
   C("STEPOVER", "MIRROR", "RUN", -45, { foot: "L", title: "Stepover, left foot" }),
   C("DOUBLE_SCISSORS", "NORMAL", "JOG", 45, { dur: 3.0, title: "Sell one side, then the other, then go" }),
