@@ -229,6 +229,29 @@ const ROULETTE = { id: "ROULETTE", label: "ROULETTE (Marseille turn)", turn: -1,
       swing: { contact: { pitch: 16 }, footSpeed: 1.2, via: [{ dt: -0.12, rel: "ballNow", at: [-0.26, 0.0, 0.28], pitch: -20 }, { dt: 0.06, rel: "ballNow", at: [0.04, 0.10, 0.14], yaw: 60 }] } },
     { F: "S", tau: 0.30, surface: "SOLE", role: "roulette · the left sole drags it on", aim: { v: 2.6, launch: "exit" } },
   ] };
+// ── P9 · HEEL CHOP — EXPERIMENTAL (new 22 Oct): the plant goes beside and past the ball; the right foot passes the ball's outside and in front of
+// it and its HEEL drives it back behind the standing leg; the body turns on the plant onto it (reference 135° to the left). The heel contact is
+// the body's HEEL pose (u_body.js); the route over the front of the ball is authored ─────────────────────────────────────────────────────────
+const HEELCHOP = { id: "HEELCHOP", label: "HEEL CHOP", turn: -1, ref: 135, comfort: [110, 160], hard: [95, 175], vRange: [1.0, 6.0], vFloor: 1.0,
+  start: -0.36, end: 0.90, firstFoot: "F", B: [0.12, 0.14], tLine: 0.44, protect: 0.90, experimental: "new 22 Oct: the heel pose and the route over the front of the ball are authored, not yet reviewed at 1×; the exit step crosses the planted heeling foot (≈ 10 cm)",
+  com: { v: [[-0.36, 3.2], [-0.18, 2.2], [-0.06, 1.0], [0, 0.45], [0.10, 0.25], [0.20, 0.6], [0.32, 1.4], [0.50, 2.6], [0.90, 4.0]],
+         h: [[-0.36, 0], [0, 0], [0.08, -50], [0.16, -120], [0.26, -135], [0.50, -135]] },
+  face: [[-0.36, 0], [-0.12, 4], [-0.02, 8], [0.06, -30], [0.14, -90], [0.24, -130], [0.32, -135]],
+  trunk: [[-0.36, 0], [-0.10, 4], [0, 6], [0.08, -14], [0.18, -8], [0.30, 0]], lean: [[-0.36, 6], [-0.18, 4], [-0.06, 6], [0.04, 2], [0.16, 6], [0.30, 14], [0.55, 13]],
+  side: [[-0.36, 0], [-0.04, 4], [0.08, -8], [0.20, -4], [0.36, 0]], crouch: [[-0.36, 0.03], [-0.10, 0.06], [0.04, 0.08], [0.20, 0.05], [0.45, 0.03]],
+  arms: [[-0.36, 0.2], [-0.08, 0.6], [0.08, 0.7], [0.30, 0.3]], gait: [[-0.36, 0.6], [-0.15, 0.4], [0.20, 0.2], [0.40, 0.8], [0.55, 1]], look: [[-0.36, 1], [0.30, 1], [0.55, 0.7]],
+  stances: [
+    { F: "F", t0: -0.36, t1: -0.20, at: { rel: "travel", t: -0.36, p: [0.16, 0.0] }, yaw: "travel", kind: "braking (penultimate)" },
+    { F: "S", t0: -0.18, t1: 0.21, at: { rel: "O", p: [0.08, -0.10] }, yaw: -20, pivot: [[0, 0], [0.21, -100]], heel: [0.02, 12], kind: "PLANT · beside and past the ball; the pivot on the forefoot" },
+    { F: "F", t0: 0.16, t1: 0.32, at: { rel: "O", p: [0.32, 0.0] }, yaw: -80, w: 0.5, kind: "the heeling foot down in front, turned toward the new line" },
+    { F: "S", t0: 0.36, t1: 0.50, at: null, yaw: null, kind: "exit stride" },
+  ],
+  contacts: [
+    { F: "F", tau: 0, surface: "HEEL", role: "HEEL CHOP · the heel drives it back behind the standing leg", decisive: true, aim: { v: 2.4, launch: -150 },
+      swing: { contact: { pitch: -8 }, footSpeed: 1.6, via: [{ tau: -0.14, rel: "ballNow", at: [-0.22, 0.16, 0.24], yaw: 4, pitch: -20 }, { dt: -0.06, rel: "ballNow", at: [0.20, 0.10, 0.20], yaw: 30, pitch: -10 },
+        { dt: 0.05, rel: "O", at: [0.14, 0.10, 0.16], yaw: -30, pitch: 0 }] } },
+    { F: "S", tau: 0.40, surface: "LACES", role: "exit touch", aim: { v: 4.5, launch: "exit" }, swing: { via: [{ dt: 0.03, rel: "ballNow", exitAt: [-0.18, 0.17], h: 0.13, yaw: 10, wYawExit: true }] } },
+  ] };
 // (the SET STEP: a technique that opens with its support / other foot gets a first stance of the striking foot `lead` s before — the step whose
 // swing end plays the SET TOUCH that places the ball at the technique's point (the resolver's set touch is the striking foot's), as the
 // baseline's chop / Cruyff open with theirs; the approach keys are held back to it)
@@ -243,7 +266,7 @@ SCISSORS_GO.contacts = [{ F: "S", tau: 0, surface: "LACES", role: "SCISSORS → 
   swing: { contact: { pitch: -22 }, footSpeed: 3.0, via: [{ dt: -0.10, rel: "ballNow", at: [-0.26, -0.02, 0.15] }, { dt: 0.04, rel: "ballNow", exitAt: [-0.12, -0.04], h: 0.12, w: 1 }] } }];
 SCISSORS_GO.stances[2] = { F: "S", t0: 0.08, t1: 0.22, at: { rel: "travel", t: 0.08, p: [0.22, -0.09] }, yaw: "travel", kind: "the pushing foot down, running on" };
 export const NEW_TEMPLATES = { ELASTICO: withSetStep(elastico(false)), RELASTICO: withSetStep(elastico(true)), SCISSORS: withSetStep(SCISSORS), SCISSORS_GO: withSetStep(SCISSORS_GO), STEPOVER: withSetStep(STEPOVER, 0.20), DSCISSORS: withSetStep(DSCISSORS, 0.20), MATTHEWS: withSetStep(MATTHEWS, 0.20), VPULL: solePull("VPULL"), LDRAG: solePull("LDRAG"), PULLPUSH: solePull("PULLPUSH"),
-  OUTHOOK, DEADEN: stopGo("DEADEN"), FAKESTOP: stopGo("FAKESTOP"), HESITATE: stopGo("HESITATE"), SHIELDROLL, ROULETTE };
+  OUTHOOK, DEADEN: stopGo("DEADEN"), FAKESTOP: stopGo("FAKESTOP"), HESITATE: stopGo("HESITATE"), SHIELDROLL, ROULETTE, HEELCHOP };
 export const TEMPLATES = Object.assign({}, BASE, NEW_TEMPLATES);
 export const TECH_ALL = Object.keys(TEMPLATES);
 export const LABEL_V = Object.fromEntries(Object.entries(NEW_TEMPLATES).map(([k, T]) => [k, T.label]));

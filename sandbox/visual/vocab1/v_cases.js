@@ -69,6 +69,10 @@ export const CASES = [
   C("STEPOVER", "NORMAL", "RUN", 45, { title: "Over the front of the ball toward the midline, then back out with the same foot" }),
   C("STEPOVER", "MIRROR", "RUN", -45, { foot: "L", title: "Stepover, left foot" }),
   C("DOUBLE_SCISSORS", "NORMAL", "JOG", 45, { dur: 3.0, title: "Sell one side, then the other, then go" }),
+  // ── HEEL CHOP (EXPERIMENTAL, new 22 Oct) ──
+  C("HEEL_CHOP", "NORMAL", "JOG", -135, { title: "EXPERIMENTAL — past the ball, the heel drives it back behind the standing leg" }),
+  C("HEEL_CHOP", "MIRROR", "JOG", 135, { foot: "L", title: "EXPERIMENTAL — heel chop, left foot" }),
+  C("HEEL_CHOP", "REJECTED", "SPRINT", -135, { runup: 3.0, title: "REJECTED: a heel chop requested at full sprint" }),
   // ── ELASTICO ──
   C("ELASTICO", "NORMAL", "JOG", -45, { title: "Outside cue, inside snap: the elastico" }),
   C("ELASTICO", "HIGH-SPEED", "RUN", -45, { title: "The elastico at a run" }),

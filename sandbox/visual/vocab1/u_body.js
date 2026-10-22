@@ -380,5 +380,17 @@ export class PlayBody {
   }
 }
 for (const k of BORROW) PlayBody.prototype[k] = RefSim.prototype[k];
+// (DRIBBLING VOCAB-1: THE HEEL CONTACT — the boot's heel on the ball (the heel chop): the toes point away from the impulse, the boot's back face
+// searched onto the ball on DRIBBLE-1's hull exactly as RefSim places the other surfaces (its own search, its own surface direction); every
+// other surface is RefSim's unchanged)
+PlayBody.prototype.contactPose = function (X, c, spec) { if (c.surface !== "HEEL") return RefSim.prototype.contactPose.call(this, X, c, spec);
+  const hn = hdg(c.n), yaw = hn + Math.PI + sgnF(X) * ((spec && spec.yawOff) || 0) * DEG, pitch = (spec && spec.pitch != null ? spec.pitch : -8) * DEG, roll = 0, ball = [c.ball[0], c.ball[1], max(R, c.ball[2])], H = this.hull;
+  if (!H) { const n = c.n; return { ank: [ball[0] - n[0] * 0.18, ball[1] - n[1] * 0.18, 0.12], yaw, pitch, roll }; }
+  const Rf = Q.mul3(Q.y(0), Q.x(-pitch), Q.z(roll)), bM = [0, ball[2], 0], faces = H[X], lowest = Math.min(...H.P[X].map((p) => Q.v(Rf, p)[1]));
+  const wd = Q.v(Rf, [0, 0.15, -0.99]), hl = hyp(wd[0], wd[2]) || 1, a = [wd[0] / hl, 0, wd[2] / hl], y0 = RF.clear - lowest + (spec && spec.up || 0); let A = null;
+  for (const dy of [0.02, 0.04, 0.07, 0]) { const at = (l) => [bM[0] - a[0] * l, y0 + dy, bM[2] - a[2] * l]; let lo = 0, hi = 0.6; if (ballGap(faces, X, Rf, at(hi), bM, R).gap < 0) continue;
+    for (let i = 0; i < 26; i++) { const m = (lo + hi) / 2; if (ballGap(faces, X, Rf, at(m), bM, R).gap < 0) lo = m; else hi = m; } A = at(hi); break; }
+  if (!A) A = [bM[0] - a[0] * 0.2, y0, bM[2] - a[2] * 0.2];
+  return { ank: this.fromM(A, [ball[0], ball[1]], yaw), yaw, pitch, roll }; };
 // (the pose's footAt / loadOf / cycle are the adapter's — RefSim.poseAt calls this.footAt(X, t))
 export { DIRS };
