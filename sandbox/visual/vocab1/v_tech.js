@@ -184,7 +184,7 @@ function stopGo(kind) { const D = kind === "DEADEN", F = kind === "FAKESTOP";
       { F: "F", t0: 0.10, t1: 0.22, at: { rel: "O", p: [0.40, 0.10] }, yaw: 0, w: 1, kind: "the push-off (explosive)" },
     ] : [
       { F: "F", t0: -0.40, t1: -0.26, at: { rel: "travel", t: -0.40, p: [0.24, 0.08] }, yaw: "travel", kind: F ? "the SOLD stop · braking stride" : "the checked stride" },
-      { F: "S", t0: -0.26, t1: -0.12, at: { rel: "travel", t: -0.26, p: [0.12, -0.10] }, yaw: "travel", kind: F ? "the SOLD stop · the plant" : "the stall" },
+      { F: "S", t0: -0.26, t1: F ? 0.0 : -0.12, at: { rel: "travel", t: -0.26, p: [0.12, -0.10] }, yaw: "travel", kind: F ? "the SOLD stop · the plant" : "the stall" },   // (the fake stop's plant held to τ 0: ending at −0.12 it left 0.22 s with no foot down before the push-off at 2.6 m/s)
       { F: "F", t0: 0.10, t1: 0.22, at: { rel: "O", p: [0.42, 0.10] }, yaw: 0, w: 1, kind: "the push-off (explosive)" },
     ],
     contacts: D ? [
@@ -221,7 +221,7 @@ const ROULETTE = { id: "ROULETTE", label: "ROULETTE (Marseille turn)", turn: -1,
   stances: [
     { F: "F", t0: -0.28, t1: -0.16, at: { rel: "travel", t: -0.28, p: [0.16, 0.04] }, yaw: "travel", kind: "braking" },
     { F: "S", t0: -0.12, t1: 0.16, at: { rel: "O", p: [0.08, -0.14] }, yaw: 0, pivot: [[-0.02, 0], [0.16, 120]], kind: "the left foot beside the ball, pivoting (back to the threat)" },
-    { F: "F", t0: 0.14, t1: 0.36, at: { rel: "O", p: [0.0, 0.10] }, yaw: 180, pivot: [[0.20, 0], [0.36, 80]], w: 0, kind: "the right foot down past the ball, pivoting on (the spin)" },
+    { F: "F", t0: 0.14, t1: 0.36, at: { rel: "com", t: 0.25, p: [0.0, 0.04] }, yaw: 180, pivot: [[0.20, 0], [0.36, 80]], w: 0, kind: "the right foot down under the body, the spin turning on it" },
     { F: "S", t0: 0.40, t1: 0.56, at: null, yaw: null, kind: "exit stride" },
   ],
   contacts: [
