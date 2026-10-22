@@ -34,7 +34,11 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const offBall = (p, psi, X, tt, tEnd) => { const r = rgt(psi); let need = 0, side = sgn(X);
       for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
         if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
-      return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; };
+      return need > 0 ? inSide(p, X, tt, side, min(0.20, need)) : p; };
+    // (DRIBBLING VOCAB-1: … never past its own side of the centre line — ≥ 0.06 m on its side of the root at its time: after a croqueta the ball
+    // leaves across the landing foot's place, the shift put that foot 0.17 m on the wrong side and the early release lifted it 0.05 s later, a
+    // 0.3 s float)
+    const inSide = (p, X, tt, side, d) => offSide(this.stateAt(tt, plan), p, X, side, d);
     const yawOf = (X, tt) => { const s0 = this.stateAt(tt, plan); return (s0.s > 0.6 ? s0.h : s0.psi) + sgn(X) * 5 * DEG; };
     const cad = (tt) => { const v = this.stateAt(tt, plan).s, G = this.gait(max(v, 0.01)), v2 = this.stateAt(tt + 0.3, plan).s;
       const turn=plan.req?.h==null?0:abs(wrap(plan.req.h-this.stateAt(tt,plan).h))/DEG;
@@ -144,4 +148,8 @@ export function gaitPlace(plan, S, X, tt, t1, st) {
   const tEnd = min(t1 != null ? t1 : tt + 0.25, tt + 0.6); let need = 0, side = sgn(X);
   for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(s0.psi) + d[1] * Math.sin(s0.psi), l = d[0] * r[0] + d[1] * r[1];
     if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
-  return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; }
+  return need > 0 ? offSide(s0, p, X, side, min(0.20, need)) : p; }
+// the off-ball shift of a footfall, capped where it would cross the root's line: ≥ 0.06 m on the foot's own side of it (the shift away from the
+// ball's path toward the other foot only)
+function offSide(s0, p, X, side, d) { const r = rgt(s0.psi); if (ABL.side || side !== -sgn(X)) return [p[0] + r[0] * side * d, p[1] + r[1] * side * d];
+  const l = ((p[0] - s0.P[0]) * r[0] + (p[1] - s0.P[1]) * r[1]) * sgn(X), dd = Math.max(0, Math.min(d, l - 0.06)); return [p[0] + r[0] * side * dd, p[1] + r[1] * side * dd]; }

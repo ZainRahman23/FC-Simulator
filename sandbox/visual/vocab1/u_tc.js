@@ -37,6 +37,7 @@ import { LABEL as LABEL0 } from "../tc_baseline_88573ef0/pt_tech.js";
 // technical intent (requestSkill) — never by chance)
 import { TEMPLATES, LABEL_V } from "./v_tech.js";
 import { AUTO_TECH } from "./v_meta.js";
+const SET_ABL = String(globalThis.process?.env?.ABL || "").includes("set");   // (tools only: ABL=set)
 const TECH_IDS = AUTO_TECH, LABEL = Object.assign({}, LABEL0, LABEL_V);
 import { pchip, pchipAt } from "../technical_control11/tc11_leg.js";
 export { DT, R, DEG, MODES, TEMPLATES, LABEL };
@@ -851,7 +852,12 @@ export class PlaySim {
       const yaw = !ts.at ? null : ts.yaw === "travel" ? this.stateAt(t0, plan).h + sgn(X) * 5 * DEG : h0 + m * (ts.yaw + (ts.w || ts.wYaw ? (dr - refS) * (ts.w || ts.wYaw) : 0)) * DEG;
       const pivot = ts.pivot ? ts.pivot.map(([x, dd]) => [tau(x), m * dd * k * DEG]) : null;
       return { id: ++this.sid, F: X, t0, t1, pos, yaw, kind: ts.kind, src: "tech", pivot, heel: ts.heel ? [tau(ts.heel[0]), ts.heel[1]] : null, swingIn: ts.swingIn ? this.mapSpec(ts.swingIn, { tC, h0, m, rot, O, B: Bw, k }) : null }; });
-    if (set && set.td != null && set.td < tA - 0.05) anchors.push({ id: ++this.sid, F, t0: set.td, t1: set.td + 0.16, pos: null, yaw: null, kind: "after the set touch", src: "tech" });
+    // (DRIBBLING VOCAB-1: the set touch's landing holds until the standing foot's own landing — 0.16 s left the body with no support for 0.2 s
+    // before a shield roll / short Cruyff's standing foot came down (a float at walking pace) — leaving its own foot ≥ 0.16 s to swing on)
+    if (set && set.td != null && set.td < tA - 0.05) { let t1 = set.td + 0.16; const sA = anchors.filter((a) => a.F === S && a.t0 > set.td).sort((a, b) => a.t0 - b.t0)[0];
+      const fN = Math.min(...anchors.filter((a) => a.F === F && a.t0 > set.td).map((a) => a.t0), ...T.contacts.filter((c) => c.F === "F").map((c) => tau(c.tau)));
+      if (sA && !SET_ABL) t1 = max(t1, min(sA.t0 + 0.03, fN - 0.16));
+      anchors.push({ id: ++this.sid, F, t0: set.td, t1, pos: null, yaw: null, kind: "after the set touch", src: "tech" }); }
     plan.stances = this.gaitFrom(plan, keep, anchors, t + 1.5);
     // (SUPPORT: a technique whose own step the shared foot plan refused — a committed landing it cannot take within bounds — is not this plan)
     { const rf = anchors.find((a) => a.refused); if (rf) return this.rej(`support refused (${(rf.kind || "a step").split(" ·")[0].slice(0, 40)})`); }
