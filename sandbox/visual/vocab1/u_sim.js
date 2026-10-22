@@ -132,7 +132,7 @@ UnifiedSim.prototype.gaitFrom = function (plan, keep, anchors, tTo) {
     const A = anchors.find((a) => a.F === F && a.t0 >= c.t0 - 0.03 - 1e-9 && a.t0 <= c.t0 + (rem > 0.055 ? 0.13 : 0.03) + 1e-9);
     if (A) { const want = A.pos || gaitPlace.call(this, plan, K.stances, F, A.t0, A.t1), allow = rem < 0.055 ? 0.03 : 0.08 + 4.8 * (rem - 0.055); if (hyp(want[0] - c.pos[0], want[1] - c.pos[1]) <= Math.max(cap, allow)) { L.splice(i, 1); i--; } else blocked.add(A); continue; }
     // (revised toward the gait's OWN place for it on the new path — 88573ef0's rule: its own side of the other foot, off the free ball's path)
-    const want = gaitPlace.call(this, plan, K.stances, F, c.t0, c.t1), d = hyp(want[0] - c.pos[0], want[1] - c.pos[1]), k = Math.min(1, cap / Math.max(d, 1e-9)); c.pos = [c.pos[0] + (want[0] - c.pos[0]) * k, c.pos[1] + (want[1] - c.pos[1]) * k];
+    const want = gaitPlace.call(this, plan, K.stances, F, c.t0, c.t1, c), d = hyp(want[0] - c.pos[0], want[1] - c.pos[1]), k = Math.min(1, cap / Math.max(d, 1e-9)); c.pos = [c.pos[0] + (want[0] - c.pos[0]) * k, c.pos[1] + (want[1] - c.pos[1]) * k];
     const R0 = this.stateAt(c.t0, plan).P; if (hyp(c.pos[0] - R0[0], c.pos[1] - R0[1]) > 0.62) { L.splice(i, 1); i--; } } }
   // (an anchor the body cannot stand on — its place over 1.3 m from the root at its touchdown: a plant planned beside a ball that has gone — is
   // refused: the candidate is not feasible)

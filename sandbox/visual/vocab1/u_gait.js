@@ -17,13 +17,16 @@ const {abs,min,max,hypot:hyp}=Math;
 const sgn=X=>X==='R'?1:-1,other=X=>X==='R'?'L':'R';
 const ABL = Object.fromEntries(String(globalThis.process?.env?.ABL || "").split(",").filter(Boolean).map((k) => [k, true]));   // (ablation switches for the tools only: pivot, turn, dup)
 const PIV_MAX = (+(globalThis.process?.env?.PIV_MAX) || 30) * DEG;   // (the pivoting support: a planted foot at most this far from the hips)
+const REACH_T = +(globalThis.process?.env?.REACH_T) || 0.32;
+const ANT_F = +(globalThis.process?.env?.ANT_F) || 1;   // (the share of the remaining whip a turn step's landing anticipates)   // (a turn step's landing: at most this far from the root at touchdown)
+const inReach = (p, P) => { const d = hyp(p[0] - P[0], p[1] - P[1]); return d > REACH_T ? [P[0] + (p[0] - P[0]) * REACH_T / d, P[1] + (p[1] - P[1]) * REACH_T / d] : p; };
 export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const S = { R: keep.stances.R.map((x) => Object.assign({}, x)), L: keep.stances.L.map((x) => Object.assign({}, x)) }, lastOf = (X) => S[X][S[X].length - 1], t = this.t;
     // a footfall: the lead ahead of the centre of mass on the foot's side — kept on its own side of the other foot (no crossing outside an
     // authored crossover) and off the free ball's path while it stands (the ball is authoritative: the presentation never has it roll through a
     // planted boot). Positions only: no decision reads them
     const bp0 = this.ball.p, bv0 = this.ball.v;
-    const place = (X, tt, t1) => { const s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h)-s0.h))/(60*DEG)), ld0 = v < 0.3 ? 0 : lead(v), ld = this.P.pace && this.P.pace.accGait ? accLead(ld0, v, this.stateAt(tt + 0.3, plan).s) : ld0;
+    const place = (X, tt, t1, psiOv) => { const s0 = Object.assign({}, this.stateAt(tt, plan)); if (psiOv != null) s0.psi = psiOv; const v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h)-s0.h))/(60*DEG)), ld0 = v < 0.3 ? 0 : lead(v), ld = this.P.pace && this.P.pace.accGait ? accLead(ld0, v, this.stateAt(tt + 0.3, plan).s) : ld0;
       let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X);
       const o = lastOf(other(X)); if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) { p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; } }
       return offBall(p, s0.psi, X, tt, min(t1 != null ? t1 : tt + 0.25, tt + 0.6)); };
@@ -57,7 +60,16 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
         if (!ABL.turn && dpsi > 60 * DEG && this.stateAt(tm, plan).s < 3.0 && td - ts > 0.08) { st.swingIn = { turnStep: true, via: [{ t: tm, rel: "stance", at: [-0.02, sgn(X) * 0.27, 0.13] }] }; st.kind += " · turn step";
           // (… and it lands clear of the planted foot: ≥ 0.22 m to its own side of it in the hips' frame then — the feet point different ways
           // after the turn, and 0.13 m between their centres left the toes overlapping)
-          const o = lastOf(other(X)); if (o && o.pos) { const r = rgt(this.stateAt(td, plan).psi), l = ((st.pos[0] - o.pos[0]) * r[0] + (st.pos[1] - o.pos[1]) * r[1]) * sgn(X); if (l < 0.22) st.pos = [st.pos[0] + r[0] * sgn(X) * (0.22 - l), st.pos[1] + r[1] * sgn(X) * (0.22 - l)]; } } }
+          // (… and, while the hips are still whipping round, it lands for the facing it will STAND under — the facing at its mid-stance (≤ 0.2 s
+          // after it lands), not the facing at touchdown: placed for the touchdown facing it stood on the centre line once the turn finished and
+          // the next step crossed in front of it; it lands already turned toward that facing — as far as the pivoting support allows (30°): pointing
+          // the old way, the hips stood ahead of it along its own length and its heel rose 31° in the first planted tick, a knee pop)
+          const tf = min(st.t1, td + 0.2, (td + st.t1) / 2), psi0 = this.stateAt(td, plan).psi, psiF = psi0 + ANT_F * wrap(this.stateAt(tf, plan).psi - psi0);
+          if (!ABL.ant && abs(wrap(psiF - this.stateAt(td, plan).psi)) > 20 * DEG) { st.pos = place(X, td, st.t1, psiF); st.ant = true; if (!ABL.anty) { const dy = wrap(psiF - psi0); st.yaw = psi0 + Math.max(-PIV_MAX, Math.min(PIV_MAX, dy)) + sgn(X) * 5 * DEG; } }
+          const o = lastOf(other(X)); if (o && o.pos) { const r = rgt(st.ant ? psiF : this.stateAt(td, plan).psi), l = ((st.pos[0] - o.pos[0]) * r[0] + (st.pos[1] - o.pos[1]) * r[1]) * sgn(X); if (l < 0.22) st.pos = [st.pos[0] + r[0] * sgn(X) * (0.22 - l), st.pos[1] + r[1] * sgn(X) * (0.22 - l)]; }
+          // (… within the leg's reach of the hips: ≤ REACH_T from the root at touchdown — the root overruns a braking plant by up to 0.36 m, and
+          // clearing it by 0.22 m threw the foot 0.47 m out: the heel lifted on landing, a 36° knee pop)
+          if (!ABL.ant) st.pos = inReach(st.pos, this.stateAt(td, plan).P); } }
       S[X].push(st); return st; };
     // a planted foot that must step lifts in time (a standing foot: now)
     const lift = (X, tdNext) => { const l = lastOf(X); if (l.t1 !== Infinity && l.t1 <= t + 1e-9) return;   // (TC-UNIFIED-1: a stance already lifted stays lifted — never re-extended to t + 0.02)
@@ -120,10 +132,15 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
 // ═══ TC-UNIFIED-1: THE GAIT'S OWN FOOTFALL PLACE, for revising a COMMITTED landing (u_sim.js gaitFrom) — the same rule as place() / offBall()
 // above (the lead / width on the plan's path, its own side of the other foot's stance, off the free ball's path while it stands); `this` is the
 // simulation, S the kept stances (the other foot's stance before tt is the one it keeps its side of)
-export function gaitPlace(plan, S, X, tt, t1) {
-  const t = this.t, bp0 = this.ball.p, bv0 = this.ball.v, s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h) - s0.h)) / (60 * DEG)), ld0 = v < 0.3 ? 0 : lead(v), ld = this.P.pace && this.P.pace.accGait ? accLead(ld0, v, this.stateAt(tt + 0.3, plan).s) : ld0;
+// (DRIBBLING VOCAB-1: a committed TURN STEP keeps its anticipation — revised toward its place for the facing it will stand under, ≥ 0.22 m to
+// its own side of the other foot then: revised toward the touchdown facing's place it was pulled back onto the centre line)
+export function gaitPlace(plan, S, X, tt, t1, st) {
+  const turn = !!(st && st.swingIn && st.swingIn.turnStep), s00 = this.stateAt(tt, plan); let s0 = s00;
+  if (turn && !ABL.ant) { const tf = min(t1 != null && t1 !== Infinity ? t1 : tt + 0.4, tt + 0.2, ((t1 != null && t1 !== Infinity ? t1 : tt + 0.4) + tt) / 2), pf = s00.psi + ANT_F * wrap(this.stateAt(tf, plan).psi - s00.psi); if (abs(wrap(pf - s00.psi)) > 20 * DEG) s0 = Object.assign({}, s00, { psi: pf }); }
+  const t = this.t, bp0 = this.ball.p, bv0 = this.ball.v, v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h) - s0.h)) / (60 * DEG)), ld0 = v < 0.3 ? 0 : lead(v), ld = this.P.pace && this.P.pace.accGait ? accLead(ld0, v, this.stateAt(tt + 0.3, plan).s) : ld0;
   let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X), L = S[other(X)]; let o = null; for (const q of L) if (q.t0 <= tt + 1e-9) o = q;
-  if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; }
+  const gMin = turn ? 0.22 : 0.13; if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < gMin) p = [p[0] + r[0] * sx * (gMin - l), p[1] + r[1] * sx * (gMin - l)]; }
+  if (turn && !ABL.ant) p = inReach(p, s0.P);
   const tEnd = min(t1 != null ? t1 : tt + 0.25, tt + 0.6); let need = 0, side = sgn(X);
   for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(s0.psi) + d[1] * Math.sin(s0.psi), l = d[0] * r[0] + d[1] * r[1];
     if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }

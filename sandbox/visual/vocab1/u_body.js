@@ -25,6 +25,7 @@ const DEG = Math.PI / 180, PI2 = Math.PI / 2, DT = 1 / 240, hyp = Math.hypot, ab
 const clamp = (x, a, b) => (x < a ? a : x > b ? b : x), s5 = (t) => { t = clamp(t, 0, 1); return t * t * t * (t * (6 * t - 15) + 10); };
 const wrap = (a) => { a = (a + Math.PI) % (2 * Math.PI); if (a < 0) a += 2 * Math.PI; return a - Math.PI; };
 const dir = (h) => [Math.cos(h), Math.sin(h)], hdg = (v) => Math.atan2(v[1], v[0]), sgnF = (F) => (F === "R" ? 1 : -1), other = (F) => (F === "R" ? "L" : "R");
+const ABLB = Object.fromEntries(String(globalThis.process?.env?.ABL || "").split(",").filter(Boolean).map((k) => [k, true])), APP_SEP = +(globalThis.process?.env?.APP_SEP) || 0.15;   // (tools only: ABL=app)
 function herm3(a, b, t) { const T = b.t - a.t, u = clamp((t - a.t) / T, 0, 1), u2 = u * u, u3 = u2 * u, h00 = 2 * u3 - 3 * u2 + 1, h10 = u3 - 2 * u2 + u, h01 = -2 * u3 + 3 * u2, h11 = u3 - u2;
   return [0, 1, 2].map((i) => h00 * a.p[i] + h10 * T * a.v[i] + h01 * b.p[i] + h11 * T * b.v[i]); }
 const BLEND = 0.12;
@@ -101,8 +102,21 @@ export class PlayBody {
       // (DRIBBLING VOCAB-1: a TURN STEP that also plays the ball — the relaunch after a reversal — keeps its route AROUND the planted foot before
       // the touch: the touch's own swing alone sent the foot straight through the support)
       if (b.swingIn && b.swingIn.turnStep) { const r = this.resolveSpec(b.swingIn, null, 0); const pre = (r.via || []).filter((w) => w.t < con.t - 0.04); if (pre.length) spec = Object.assign({}, spec, { via: pre.concat(spec.via || []) }); } }
-    w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); } finally { this.ctx = prevCtx; }
+    w = { F: X, t0: a.t1, t1: b.t0, from: a, to: b, con, spec }; const prevCtx = this.ctx; this.ctx = ctx; try { w.keys = this.swingKeys(X, w); if (con && !con.swing && !ABLB.app) this.approachOwnSide(X, w, ctx); } finally { this.ctx = prevCtx; }
     ctx.sw.set(key, w); return w;
+  }
+  // (DRIBBLING VOCAB-1: A CARRY TOUCH'S APPROACH ON ITS OWN SIDE — the preparation key behind a carry touch lies along the impulse, 0.16 m back
+  // from the contact; for a touch played OUTWARD (the outside of the foot turning the ball to its own side) that put it 0.16 m to the far side
+  // of the contact, through the planted foot (the commonest leg crossing in the random torture). A key before the contact, alongside the support
+  // (fore – aft within 0.30 m), keeps ≥ 0.15 m of lateral separation on its own side in the body's frame; the contact itself is untouched)
+  approachOwnSide(X, w, ctx) { const K = w.keys, c = w.con, L = ctx.st[other(X)], moved = [];
+    for (let i = 1; i < K.length - 1; i++) { const k = K[i]; if (k.contact || k.t >= c.t - 1e-6 || k.t <= w.t0 + 1e-6) continue;
+      const o = L.find((q) => q.t0 <= k.t + 1e-6 && q.t1 >= k.t - 1e-6); if (!o) continue; const base = this.stanceFoot(o, k.t).ank, ps = this.psi(k.t), fw = [Math.cos(ps), Math.sin(ps)], rt = [-Math.sin(ps), Math.cos(ps)];
+      const d = [k.p[0] - base[0], k.p[1] - base[1]], a = d[0] * fw[0] + d[1] * fw[1], l = (d[0] * rt[0] + d[1] * rt[1]) * sgnF(X);
+      if (abs(a) < 0.30 && l < APP_SEP) { const e = (APP_SEP - l) * sgnF(X); k.p = [k.p[0] + rt[0] * e, k.p[1] + rt[1] * e, k.p[2]]; moved.push(i); } }
+    // (the moved keys' and their neighbours' velocities again: the neighbours' finite difference, as the swing's own keys have them)
+    for (const i of new Set(moved.flatMap((i) => [i - 1, i, i + 1]))) { const k = K[i]; if (!k || i === 0 || i === K.length - 1 || k.contact) continue; const p = K[i - 1], n = K[i + 1], dt = n.t - p.t; k.v = [(n.p[0] - p.p[0]) / dt, (n.p[1] - p.p[1]) / dt, (n.p[2] - p.p[2]) / dt]; }
+    if (moved.includes(1)) { K[0].v = [K[1].p[0] - K[0].p[0], K[1].p[1] - K[0].p[1], 0].map((x) => x / max(0.02, K[1].t - K[0].t) * 0.5); K[0].v[2] = 0.3; }
   }
   // ── a waypoint (TECHNICAL-CONTROL-1.5's, in the technique's frame: [ahead, right] from h0, mirrored by m, rotated by its exit weight) ──────────────
   wayKey(X, w, sw) {
@@ -338,7 +352,10 @@ export class PlayBody {
       // (S99 MISSION: the heel rise pivots about the ball of the foot AS DRAWN — reconstructed from the drawn ankle and yaw; the stored ballPt can
       // disagree with them by the yaw limiter's correction, and rebuilding the ankle from it moved a planted foot up to 18 cm for a frame)
       const FIXB = !!(this.sim.P.pace && this.sim.P.pace.accGait), bp0 = f.planted && FIXB ? (() => { const q = -(f.pitch || 0), bk = this.mtpZ * Math.cos(q) - this.mtpY * Math.sin(q); return [f.ank[0] + Math.cos(f.yaw) * bk, f.ank[1] + Math.sin(f.yaw) * bk]; })() : null;
-      if (f.planted) for (let it = 0; it < 3; it++) { const df = -L.A.fp / DEG + (L.A.err > 0.5 ? -L.A.res[1] / DEG : 0); if (df <= RF.dfRise) break; const p0 = -f.pitch, p1 = p0 + (df - RF.dfRise + 1) * DEG, my = this.mtpY, mz = this.mtpZ, BP = bp0 || f.ballPt;
+      // (DRIBBLING VOCAB-1: … and a foot just landed raises its heel over its first ticks — ≤ 6° a tick from touchdown, stateless: a step landing
+      // behind the hips (the turn step at a reversal, the root ahead of both feet) rose 25 – 31° in its first planted tick, a 30 – 38° knee pop)
+      const hCap = f.planted && f.stance && f.stance.t0 > -1e9 && !ABLB.heel ? ((t - f.stance.t0) / DT + 1) * 6 * DEG : Infinity;
+      if (f.planted) for (let it = 0; it < 3; it++) { const df = -L.A.fp / DEG + (L.A.err > 0.5 ? -L.A.res[1] / DEG : 0); if (df <= RF.dfRise) break; const p0 = -f.pitch, p1 = Math.min(p0 + (df - RF.dfRise + 1) * DEG, Math.max(p0, hCap)), my = this.mtpY, mz = this.mtpZ, BP = bp0 || f.ballPt; if (p1 <= p0 + 1e-9) break;
         const back = mz * Math.cos(p1) - my * Math.sin(p1), up = my * Math.cos(p1) + mz * Math.sin(p1); f = Object.assign({}, f, { ank: [BP[0] - Math.cos(f.yaw) * back, BP[1] - Math.sin(f.yaw) * back, HB.ankleH - my + up], pitch: -p1, toe: p1 }); L = solve(f); }
       feet[X] = f; legRot["thigh_" + X] = L.ik.Rthigh; legRot["shin_" + X] = Q.mul(Q.x(L.ik.k), Q.y(L.A.tau)); legRot["foot_" + X] = Q.yxz(L.A.fy, L.A.fp, L.A.fr); legRot["toe_" + X] = Q.x(-(f.toe || 0));
       legs[X] = { short: L.ik.short, err: L.A.err, Rfoot: Q.mul(L.Rsh0, Q.mul(Q.y(L.A.tau), Q.yxz(L.A.fy, L.A.fp, L.A.fr))), an: L.an, ik: L.ik }; }
