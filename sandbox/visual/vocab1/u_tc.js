@@ -218,7 +218,8 @@ export class PlaySim {
     const t = this.t, cur = this.plan, st = this.stateAt(t, cur), P = this.P;
     // (DRIBBLING VOCAB-1: a pending MANUAL intent prepares — the body keeps running at the ball on its ENTRY line (the heading when it was asked)
     // until its technique is played (or its window closes): the request is the technique's exit, not a turn to make first)
-    const SK = this.skill && !this.skill.done && (this.skill.until > t || this.skill.state === "ENTERED") ? this.skill : null, qReal = this.req, q = SK && qReal.h != null && SK.h0 != null ? Object.assign({}, qReal, { h: SK.h0 }) : qReal;
+    const SK = this.skill && !this.skill.done && (this.skill.until > t || this.skill.state === "ENTERED") ? this.skill : null, FH = !SK && this.fhold && this.fhold.until > t ? this.fhold : null, qReal = this.req,
+      q = SK && qReal.h != null && SK.h0 != null ? Object.assign({}, qReal, { h: SK.h0 }) : FH && qReal.h != null ? Object.assign({}, qReal, { h: FH.h }) : qReal;   // (the analog feint's ≤ 0.15 s ball hold — u_sim.js feintTick)
     // what cannot change any more: the footfalls already made (and the swinging foot's coming one within `react`), the contacts within `react`
     const keep = this.committed(cur, t), act = cur.action;
     const setDone = act.tech && cur.contacts.some((c) => c.role === "set touch" && c.done && c.tech === act.tech) && t < act.tC;

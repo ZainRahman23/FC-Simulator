@@ -52,6 +52,15 @@ import { CARRY_ENV } from "./carry_env.js";
 import * as RATINGS from "./ratings.js";
 const PHYS = !!window.PHYS, { PHYS_PRESETS, PHYS_IDS } = RATINGS, physOf = (id) => Object.assign({ id }, PHYS_PRESETS[id]);
 const physName = (p) => (p ? (p.id && p.id !== "CUSTOM" ? p.id : `CUSTOM S${p.sprint} / Acc${p.accel} / A${p.agility}-${p.agiScale}`) : "—");
+// (DRIBBLING VOCAB-1: vocab1_lab.html sets window.LAB — THE DRIBBLING LAB: the technique gallery by family, every card a deterministic curated
+// replay (v_cases.js, run by v_run.js — the same code as node), PLAY at 1× in the gameplay camera, LOOP, 0.5× / 0.25×, frame step, scrub,
+// cameras (gameplay · close side · front · rear · overhead), MIRROR and L | R side by side, AUTO (B4 decides from the same state) vs FORCE,
+// REJECTED setups with their reasons, the CHAINS, diagnostics off by default, TRY IT LIVE. vocab1_sandbox.html sets window.VOCAB_SANDBOX: the
+// joystick sandbox with the full vocabulary and the manual skill palette)
+import { META, FAMILIES, META_BY_ID, intentOf } from "./v_meta.js";
+import { CASES, CHAINS, caseKey } from "./v_cases.js";
+import { caseOpts, runCaseOn, summarize } from "./v_run.js";
+const LAB = !!window.LAB, SANDBOX = !!window.VOCAB_SANDBOX;
 const BALLON = !!window.BALLON, CARRY_SW = ["OFF", "A", "B", "C"], carryName = (c) => (c === "OFF" ? "BALL OFF" : "CARRY-" + c);
 const PRIMARY = !!window.S99_PRIMARY, PACE_SW = PRIMARY ? ["D38", "CURRENT"] : PACE_MAIN, PACE_NAME = (id) => (PRIMARY ? (id === "D38" ? "99 PACE" : id === "CURRENT" ? "CURRENT PACE" : id) : id);
 import { PACE_TESTS, MISSION_TESTS, BALLON_TESTS, PHYS_TESTS } from "./s_tests.js";
@@ -133,7 +142,7 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, 
 const QA = (q) => [-q[0], -q[1], q[2], q[3]];
 // ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: { bc: +V.dom.aBC.value, dri: +V.dom.aDRI.value, agi: +V.dom.aAGI.value }, foot: V.dom.selFoot.value, style: V.dom.selStyle.value, seed: 1, start: START };
-  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; o.pace = V.pace; o.vocab = V.vocab; if (V.forceFam) o.forceFam = V.forceFam; else delete o.forceFam; if (BALLON && V.ballOn && V.carry && V.carry !== "OFF") o.carry = V.carry; else delete o.carry; if (PHYS) { o.ballOn = false; delete o.carry; o.phys = JSON.parse(JSON.stringify(V.phys)); } } else { delete o.layers; delete o.ballOn; delete o.control; delete o.pace; delete o.vocab; delete o.forceFam; delete o.phys; }
+  if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; o.pace = V.pace; o.vocab = V.vocab; if (V.forceFam) o.forceFam = V.forceFam; else delete o.forceFam; if (BALLON && V.ballOn && V.carry && V.carry !== "OFF") o.carry = V.carry; else delete o.carry; if (PHYS) { o.ballOn = false; delete o.carry; o.phys = JSON.parse(JSON.stringify(V.phys)); } if (V.noFeint) o.noFeint = true; else delete o.noFeint; } else { delete o.layers; delete o.ballOn; delete o.control; delete o.pace; delete o.vocab; delete o.forceFam; delete o.phys; }
   V.sim = new ENG[V.engine].Sim(V.env, o); V.body = new ENG[V.engine].Body(V.env, V.sim);
   // (the REFERENCE runner: the same options and input with the reference pace, started 2.5 m to the side — BALL OFF, the unified engine only)
   V.ref = null; V.refBody = null; V.run = null; V.lastReq = null; V.redir = null; V.demandNow = 0;
@@ -149,7 +158,7 @@ function showConfig() { const d = V.dom; if (!d.selEng) return; d.selEng.value =
   d.ver.textContent = on ? `TC-CONTROLLED-1 · ${configName("layered", V.layers)}${V.ballOn ? "" : " · BALL OFF (Astra's probe)"}` : "LOCKED 88573ef0 engine"; d.ver.style.background = on ? "#ff9b8d" : "#8dffa6"; if (d.cBall) d.cBall.checked = V.ballOn;
   document.querySelectorAll("[data-model]").forEach((b) => b.classList.toggle("on", on && b.dataset.model === V.control));
   document.querySelectorAll("[data-pace]").forEach((b) => b.classList.toggle("on", on && b.dataset.pace === V.pace)); document.querySelectorAll("[data-vocab]").forEach((b) => b.classList.toggle("on", on && b.dataset.vocab === (V.vocab || "CORE"))); document.querySelectorAll("[data-carry]").forEach((b) => b.classList.toggle("on", on && b.dataset.carry === (V.ballOn ? V.carry : "OFF"))); if (d.cRefOff) d.cRefOff.checked = !!V.refBallOff; document.querySelectorAll("[data-phys]").forEach((b) => b.classList.toggle("on", on && !!V.phys && b.dataset.phys === V.phys.id)); if (d.cRefPhys) d.cRefPhys.checked = !!V.refPhys; if (d.selForce) d.selForce.value = V.forceFam || ""; if (d.selRef) d.selRef.value = V.refPace;
-  if (on) { const pr = PACE[V.pace] || PACE.CURRENT; d.ver.textContent = PHYS ? physTitle() : BALLON ? `BALL-ON PACE V1 · S99 38 km/h · D38 · A99-C · D99 · BC99 · ${V.ballOn ? "CONTROLLED · BALL ON · " + carryName(V.carry) + (CARRY_ENV[V.carry] ? " — " + CARRY_ENV[V.carry].label.slice(CARRY_ENV[V.carry].label.indexOf("· ") + 2) : "") : "BALL OFF (the physical capability)"} · ${V.vocab === "EXPANDED" ? "EXPANDED" : "CORE"} techniques${V.forceFam ? " · REVIEW: " + V.forceFam + " forced" : ""}` : PRIMARY ? `S99 · ${pr.id === "D38" ? "99 PACE: Sprint 99 = 38 km/h · Acceleration 99 = D38 · Agility 99 = A99-C" : pr.id === "CURRENT" ? "CURRENT PACE (TC-CONTROLLED-1)" : pr.id} · D99 · BC99 · ${V.control === "CONTROLLED" ? "CONTROLLED_BALL" : "FREE ball"} · ${configName("layered", V.layers)} · ${V.vocab === "EXPANDED" ? "EXPANDED techniques" : "CORE techniques"}${V.forceFam ? " · REVIEW: " + V.forceFam + " forced" : ""}${V.ballOn ? " · BALL ON" : " · BALL OFF"}` : `SPEED-99-V1 · ${pr.id === "CURRENT" ? "CURRENT pace" : "candidate " + pr.id}${V.ballOn ? " · BALL ON (not yet adapted)" : " · BALL OFF"}`; d.ver.style.background = pr.color; } }
+  if (on) { const pr = PACE[V.pace] || PACE.CURRENT; d.ver.textContent = (LAB || SANDBOX) ? `DRIBBLING VOCAB-1 · ${LAB ? "THE DRIBBLING LAB" : "THE JOYSTICK SANDBOX"} · S99 · D38 · A99-C (Agility scale B below 99) · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED + the library${V.sim && V.sim.o && V.sim.o.foot === "L" ? " · left-footed" : ""}` : PHYS ? physTitle() : BALLON ? `BALL-ON PACE V1 · S99 38 km/h · D38 · A99-C · D99 · BC99 · ${V.ballOn ? "CONTROLLED · BALL ON · " + carryName(V.carry) + (CARRY_ENV[V.carry] ? " — " + CARRY_ENV[V.carry].label.slice(CARRY_ENV[V.carry].label.indexOf("· ") + 2) : "") : "BALL OFF (the physical capability)"} · ${V.vocab === "EXPANDED" ? "EXPANDED" : "CORE"} techniques${V.forceFam ? " · REVIEW: " + V.forceFam + " forced" : ""}` : PRIMARY ? `S99 · ${pr.id === "D38" ? "99 PACE: Sprint 99 = 38 km/h · Acceleration 99 = D38 · Agility 99 = A99-C" : pr.id === "CURRENT" ? "CURRENT PACE (TC-CONTROLLED-1)" : pr.id} · D99 · BC99 · ${V.control === "CONTROLLED" ? "CONTROLLED_BALL" : "FREE ball"} · ${configName("layered", V.layers)} · ${V.vocab === "EXPANDED" ? "EXPANDED techniques" : "CORE techniques"}${V.forceFam ? " · REVIEW: " + V.forceFam + " forced" : ""}${V.ballOn ? " · BALL ON" : " · BALL OFF"}` : `SPEED-99-V1 · ${pr.id === "CURRENT" ? "CURRENT pace" : "candidate " + pr.id}${V.ballOn ? " · BALL ON (not yet adapted)" : " · BALL OFF"}`; d.ver.style.background = pr.color; } }
 // re-simulate a recorded session (its input every tick, its live changes, the stick's record) through a configuration — identical input
 function loadRec(rec, eng, layers, control, pace) { V.engine = eng; if (layers) V.layers = Object.assign({}, layers); const o0 = JSON.parse(JSON.stringify(rec.o0)); delete o0.layers; if (o0.ballOn != null) V.ballOn = o0.ballOn; if (control) V.control = control; else if (o0.control) V.control = o0.control; delete o0.control; if (pace) V.pace = pace; else if (o0.pace) V.pace = o0.pace; delete o0.pace; if (o0.vocab) V.vocab = o0.vocab; delete o0.vocab; if (BALLON) V.carry = o0.ballOn === false ? "OFF" : o0.carry || V.carry; delete o0.carry; if (PHYS && o0.phys) V.phys = o0.phys; delete o0.phys; V.forceFam = o0.forceFam || null; delete o0.forceFam; newSim(o0); const S = V.sim, I = rec.input, E = rec.events || [], L = rec.stick || []; let ei = 0;
   for (let k = 0; k < I.length / 3; k++) { while (ei < E.length && E[ei].k === k) { const e = E[ei++]; if (e.kind === "attrs") S.setAttrs(e.v); else if (e.kind === "foot") S.setFoot(e.v); else if (S.applyEvent) S.applyEvent(e); }
@@ -314,6 +323,9 @@ function cameraFor(h, vw, vh, dtc) {
     const rs = V.ref.stateAt(Math.min(h.t, V.ref.t)), M = [(P[0] + rs.P[0]) / 2, (P[1] + rs.P[1]) / 2], gap = hyp(P[0] - rs.P[0], P[1] - rs.P[1]), D = max(10, 0.62 * gap + 7), f = dir(C.yaw), n = [-f[1], f[0]];
     C.pm = C.pm ? [C.pm[0] + (M[0] - C.pm[0]) * k(0.12), C.pm[1] + (M[1] - C.pm[1]) * k(0.12)] : M.slice(); C.pd = C.pd ? C.pd + (D - C.pd) * k(0.4) : D;
     tgt = [C.pm[0], 0.8, -C.pm[1]]; eye = [C.pm[0] + n[0] * C.pd, 2.2 + 0.16 * C.pd, -(C.pm[1] + n[1] * C.pd)]; fov = 42; camH = C.yaw; }
+  else if (V.camId === "front" || V.camId === "rear") { if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
+    const f = dir(C.yaw), sgnF = V.camId === "front" ? 1 : -1, A = [P[0] + f[0] * 0.4, P[1] + f[1] * 0.4]; C.fm = C.fm ? [C.fm[0] + (A[0] - C.fm[0]) * k(0.08), C.fm[1] + (A[1] - C.fm[1]) * k(0.08)] : A.slice();
+    tgt = [C.fm[0], 0.8, -C.fm[1]]; eye = [C.fm[0] + sgnF * f[0] * 5.6, 1.7, -(C.fm[1] + sgnF * f[1] * 5.6)]; fov = 46; camH = V.camId === "front" ? C.yaw + Math.PI : C.yaw; }
   else if (V.camId === "top") { tgt = [C.tgt[0], 0, -C.tgt[1]]; eye = [C.tgt[0], 14, -C.tgt[1]]; up = [1, 0, 0]; fov = 40; camH = 0; }
   else { const e = wrap(st.psi + Math.PI / 2 - C.side); C.side += snap ? e : e * k(0.6); const f = dir(C.side); tgt = [P[0], 0.75, -P[1]]; eye = [P[0] - f[0] * 5.2, 1.15, -(P[1] - f[1] * 5.2)]; fov = 40; camH = C.side; }
   return { view: lookAt(eye, tgt, up), proj: persp(1 / Math.tan(fov / 2 * DEG), vw / vh, 0.1, 400), h: camH, eye, tgt };
@@ -351,7 +363,9 @@ function render(pose, h, dtc) {
   if (pose && V.refBody) { const rp = V.refBody.pose(tRef); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); W.ofCharDraw(V.R, V.ent, rp.skin, c.view, c.proj); gl.disable(gl.CULL_FACE); }
   const Bp = V.ballProg; if (ballShown) { gl.useProgram(Bp.p); gl.uniformMatrix4fv(Bp.u.view, false, c.view); gl.uniformMatrix4fv(Bp.u.proj, false, c.proj); gl.uniform3fv(Bp.u.c, A3(B)); gl.uniform4fv(Bp.u.q, QA(h.ball.q)); gl.uniform1f(Bp.u.r, 0.11); gl.uniform3fv(Bp.u.tint, [1, 1, 1]);
   gl.bindVertexArray(Bp.vao); gl.drawElements(gl.TRIANGLES, Bp.n, gl.UNSIGNED_SHORT, 0); gl.bindVertexArray(null); }
+  if (V.ref && V.refBall && V.refBody) { const tR = Math.min(h.t, V.ref.t), RB = V.ref.ballTrack(tR); gl.useProgram(Bp.p); gl.uniformMatrix4fv(Bp.u.view, false, c.view); gl.uniformMatrix4fv(Bp.u.proj, false, c.proj); gl.uniform3fv(Bp.u.c, A3(RB.p)); gl.uniform4fv(Bp.u.q, QA(RB.q)); gl.uniform1f(Bp.u.r, 0.11); gl.uniform3fv(Bp.u.tint, [1, 1, 1]); gl.bindVertexArray(Bp.vao); gl.drawElements(gl.TRIANGLES, Bp.n, gl.UNSIGNED_SHORT, 0); gl.bindVertexArray(null); }
   overlay(c, vw, dpr, pose, h);
+  if (LAB && V.labDiag) labOverlay(c, vw, dpr, h);
 }
 function overlay(c, vw, dpr, pose, h) {
   const ctx = V.ov2d, S = V.sim, t = h.t, P = (q) => proj3(c, vw, dpr, q); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, V.ovc.width, V.ovc.height);
@@ -520,7 +534,7 @@ function verifyDeterminism() {
 let hudClock = 0;
 function frame(now) {
   if (V.lastNow == null) V.lastNow = now; const dtReal = min(0.1, (now - V.lastNow) / 1000); V.lastNow = now; const w0 = performance.now(); let nSteps = 0;
-  if (V.replay) { const R = V.replay; if (R.playing) { R.t = min(R.t1, R.t + dtReal * R.rate); if (R.t >= R.t1) R.playing = false; } }
+  if (V.replay) { const R = V.replay; if (R.playing) { R.t = R.t + dtReal * R.rate; if (R.t >= R.t1) { if (R.loop) { R.t = R.t0; V.lastShown = null; V.cam = null; } else { R.t = R.t1; R.playing = false; } } } }
   // (a playtest case is fed every 240 Hz tick from its own trace — exactly the node traces; live input is read once per frame)
   else if (!V.paused) { V.acc += dtReal * V.rate; const wasTest = !!V.test, req = request(); while (V.acc >= DT - 1e-12 && nSteps < 60) { stepSim(V.test || wasTest ? request() : req); V.acc -= DT; nSteps++; } if (nSteps >= 60) V.acc = 0; }   // (SPEED-99-V1: a test ending mid-frame no longer leaves its last request for the rest of the frame)
   else if (V.stepReq) { const req = request(); for (let i = 0; i < V.stepReq; i++) stepSim(req); V.stepReq = 0; }
@@ -530,7 +544,9 @@ function frame(now) {
   render(pose, h, dtc); const w3 = performance.now();
   const P = V.perf; P.frame.push(dtReal * 1000); P.sim.push(w1 - w0); P.pose.push(w2 - w1); P.render.push(w3 - w2); P.work.push(w3 - w0); for (const k of Object.keys(P)) if (P[k].length > 1200) P[k].shift();
   if (now - hudClock > 100) { hudClock = now; paceBox(h); if (V.show.hud) updateHud(h); else if (V.show.side) { drawGraph(h); stats(h); contactsTable(h); } showKeys(h); V.dom.perf.textContent = perfText(); diagPanel(dg);
-    if (V.replay) { const R = V.replay, b0 = bufStart(); V.dom.rScrub.value = String(Math.round((R.t - b0) / max(1e-6, V.sim.t - b0) * 1000)); V.dom.rLabel.textContent = `REPLAY ${R.kind === "last" ? "LAST ACTION" : "BUFFER"} · ${(R.t - V.sim.t).toFixed(2)} s · ${R.rate}×${R.playing ? "" : " (end — Esc: live)"}`; } }
+    if (V.replay && V.replay.kind === "case") { const R = V.replay; V.dom.rScrub.value = String(Math.round((R.t - R.t0) / max(1e-6, R.t1 - R.t0) * 1000)); V.dom.rLabel.textContent = `${R.title} · t ${(R.t - R.tz).toFixed(2)} s · ${R.rate}×${R.loop ? " · LOOP" : ""}${R.playing ? "" : " · paused"}`; labTimeline(); }
+    else if (V.replay) { const R = V.replay, b0 = bufStart(); V.dom.rScrub.value = String(Math.round((R.t - b0) / max(1e-6, V.sim.t - b0) * 1000)); V.dom.rLabel.textContent = `REPLAY ${R.kind === "last" ? "LAST ACTION" : "BUFFER"} · ${(R.t - V.sim.t).toFixed(2)} s · ${R.rate}×${R.playing ? "" : " (end — Esc: live)"}`; }
+    if (SANDBOX) sandboxInfo(); }
   if (!V.external) requestAnimationFrame(frame);
 }
 // ── UI ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -588,7 +604,7 @@ function bindUI() {
   $("rSlow").onclick = () => { if (V.replay) V.replay.rate = 0.25; }; $("rHalf").onclick = () => { if (V.replay) V.replay.rate = 0.5; }; $("rOne").onclick = () => { if (V.replay) V.replay.rate = 1; };
   $("rPlay").onclick = () => { if (V.replay) { if (!V.replay.playing && V.replay.t >= V.replay.t1 - 1e-6) V.replay.t = V.replay.t0; V.replay.playing = !V.replay.playing; } };
   $("rLive").onclick = (e) => { stopReplay(); blur(e); };
-  d.rScrub.oninput = () => { if (!V.replay) return; const b0 = bufStart(); V.replay.t = b0 + (+d.rScrub.value / 1000) * (V.sim.t - b0); V.replay.t0 = b0; V.replay.t1 = V.sim.t; V.replay.playing = false; };
+  d.rScrub.oninput = () => { if (!V.replay) return; if (V.replay.kind === "case") { const R = V.replay; R.t = R.t0 + (+d.rScrub.value / 1000) * (R.t1 - R.t0); R.playing = false; return; } const b0 = bufStart(); V.replay.t = b0 + (+d.rScrub.value / 1000) * (V.sim.t - b0); V.replay.t0 = b0; V.replay.t1 = V.sim.t; V.replay.playing = false; };
   d.selCam.onchange = (e) => { V.camId = e.target.value; V.cam = null; V.lastShown = null; blur(e); };
   d.selCourse.onchange = (e) => { V.course = makeCourse(e.target.value); blur(e); };
   d.selFoot.onchange = (e) => { V.sim.setFoot(e.target.value); blur(e); };
@@ -621,6 +637,7 @@ function bindUI() {
     else if (c === "Period") { if (V.replay) { V.replay.playing = false; V.replay.t = min(V.replay.t1, V.replay.t + (e.shiftKey ? DT : 4 * DT)); } else { V.paused = true; V.stepReq = e.shiftKey ? 1 : 4; } setRateButtons(); }
     else if (c === "Comma") { if (V.replay) { V.replay.playing = false; V.replay.t = max(V.replay.t0, V.replay.t - (e.shiftKey ? DT : 4 * DT)); } }
     else if (c === "KeyR") newSim();
+    else if (c === "KeyE" && (LAB || SANDBOX)) { if (LAB) labRequestLive(); else { const it = intentOf(V.skillSel || "CRUYFF"); if (it) V.sim.requestSkill(it); } }
     else if (c === "KeyQ") { if (V.replay) stopReplay(); else startReplay("last"); }
     else if (c === "KeyB") { if (V.replay) stopReplay(); else startReplay("buffer"); }
     else if (c === "Escape") stopReplay();
@@ -639,8 +656,79 @@ function bindUI() {
   window.addEventListener("blur", () => { V.keys.clear(); V.btn.sprint = V.btn.walk = false; d.bSprint.classList.remove("on"); d.bWalk.classList.remove("on"); if (S.pid != null) { S.pid = null; S.raw = { x: 0, y: 0 }; S.v = stickVector(0, 0, S.cfg.deadzone); drawStick(); } });
   drawStick();
 }
+// ═══ THE DRIBBLING LAB ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+const esc = (x) => String(x == null ? "" : x).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[ch]);
+const ALL_CASES = CASES.concat(CHAINS);
+function labInit(q) { const L = document.getElementById("labList"); if (!L) return; V.labLoop = true; V.labRate = 1; V.labDiag = false;
+  const badge = (x, k) => `<span class="b ${k}">${esc(x)}</span>`, byTech = {}; for (const c of CASES) (byTech[c.tech] = byTech[c.tech] || []).push(c);
+  let html = ""; for (const fam of FAMILIES) { const items = META.filter((m) => m.family === fam); if (!items.length) continue; html += `<h3>${esc(fam)}</h3>`;
+    for (const m of items) { const cs = byTech[m.id] || [];
+      html += `<div class="card" data-tech="${m.id}"><div class="nm">${esc(m.name)} ${badge(m.status, m.status.toLowerCase())} ${badge(m.mode, "mode")}</div><div class="pp">${esc(m.purpose)}</div><div class="en">entry: ${esc(m.entry)} · exit: ${esc(m.exit)}${m.blocker ? `<br><span class="blk">BLOCKER: ${esc(m.blocker)}</span>` : ""}</div>`;
+      html += `<div class="vs">${cs.length ? cs.map((c) => `<button class="${c.variant === "NORMAL" ? "play" : ""}" data-case="${ALL_CASES.indexOf(c)}" title="${esc(c.title)}">${c.variant === "NORMAL" ? "▶ PLAY" : esc(c.variant)}</button>`).join("") : `<i>no curated replay (${esc(m.status)})</i>`}${cs.some((c) => c.variant === "NORMAL") ? `<button data-pair="${ALL_CASES.indexOf(cs.find((c) => c.variant === "NORMAL"))}" title="left and right versions side by side, synchronised">L | R</button>` : ""}${m.kind !== "carry" && cs.length ? `<button data-try="${m.id}" title="play it yourself: the stick and REQUEST (E)">TRY</button>` : ""}</div></div>`; } }
+  html += `<h3>CHAINS</h3>` + CHAINS.map((c) => `<div class="card chain"><div class="nm">${esc(c.name)}</div><div class="vs"><button class="play" data-case="${ALL_CASES.indexOf(c)}">▶ PLAY</button><button data-mir="${ALL_CASES.indexOf(c)}">MIRROR</button></div></div>`).join("");
+  L.innerHTML = html;
+  L.querySelectorAll("[data-case]").forEach((b) => (b.onclick = (e) => { labPlay(ALL_CASES[+b.dataset.case], "single"); e.target.blur(); }));
+  L.querySelectorAll("[data-mir]").forEach((b) => (b.onclick = (e) => { labPlay(ALL_CASES[+b.dataset.mir], "mirror"); e.target.blur(); }));
+  L.querySelectorAll("[data-pair]").forEach((b) => (b.onclick = (e) => { labPlay(ALL_CASES[+b.dataset.pair], "pair"); e.target.blur(); }));
+  L.querySelectorAll("[data-try]").forEach((b) => (b.onclick = (e) => { labTry(b.dataset.try); e.target.blur(); }));
+  const $ = (id) => document.getElementById(id);
+  const tg = (id, key, after) => { const el = $(id); if (!el) return; el.onclick = (e) => { V[key] = !V[key]; el.classList.toggle("on", !!V[key]); if (after) after(); e.target.blur(); }; el.classList.toggle("on", !!V[key]); };
+  tg("bLoop", "labLoop", () => { if (V.replay) V.replay.loop = V.labLoop; }); tg("bLabDiag", "labDiag");
+  for (const r of [1, 0.5, 0.25]) { const el = $("bRate" + String(r).replace(".", "")); if (el) el.onclick = (e) => { V.labRate = r; if (V.replay) { V.replay.rate = r; V.replay.playing = true; } document.querySelectorAll("[id^=bRate]").forEach((x) => x.classList.toggle("on", x === el)); e.target.blur(); }; }
+  if ($("bRestart")) $("bRestart").onclick = (e) => { if (V.replay && V.replay.kind === "case") { V.replay.t = V.replay.t0; V.replay.playing = true; V.lastShown = null; V.cam = null; } e.target.blur(); };
+  if ($("bMirror")) $("bMirror").onclick = (e) => { if (V.labCase) labPlay(V.labCase, V.labMode === "mirror" ? "single" : "mirror"); e.target.blur(); };
+  if ($("bPairNow")) $("bPairNow").onclick = (e) => { if (V.labCase) labPlay(V.labCase, V.labMode === "pair" ? "single" : "pair"); e.target.blur(); };
+  if ($("bAutoForce")) $("bAutoForce").onclick = (e) => { const c = V.labCase; if (!c) return; if (c.intents && c.intents.length) labPlay(Object.assign({}, c, { intents: [], variant: "AUTO", title: "AUTO — the same state, no request: " + c.title }), "single"); else { const f = CASES.find((x) => x.tech === c.tech && x.variant === "NORMAL"); if (f) labPlay(f, "single"); } e.target.blur(); };
+  if ($("bReqLive")) $("bReqLive").onclick = (e) => { labRequestLive(); e.target.blur(); };
+  const first = +(q.get("case") || 0); labPlay(ALL_CASES[Math.max(0, Math.min(ALL_CASES.length - 1, first))] || CASES[0], q.get("mode") || "single"); }
+// one curated case: simulated at once from its exact initial conditions (the same runner as node), then the deterministic replay of its clip
+function labPlay(c, mode) { stopTest(); V.labCase = c; V.labMode = mode; V.live = null; const mirror = mode === "mirror", o0 = caseOpts(c, mirror); V.engine = "layered";
+  newSim(o0); const r = runCaseOn(V.sim, c, mirror); V.stickLog = new Array(V.sim.k * 4).fill(0); V.labSum = summarize(V.sim, r.t0); V.labT0 = r.t0;
+  V.ref = null; V.refBody = null; V.refBall = false;
+  if (mode === "pair") { const o1 = caseOpts(c, true); o1.start = { P: [o0.start.P[0], o0.start.P[1] + 4.0], h: 0 }; o1.layers = Object.assign({}, V.layers); V.ref = new ENG.layered.Sim(V.env, o1); runCaseOn(V.ref, c, true); V.refBody = new ENG.layered.Body(V.env, V.ref); V.refBall = true; V.refSum = summarize(V.ref, r.t0); }
+  // (the defender marker where the move's purpose is: [ahead, right] from the player at t = 0 — visual only)
+  const st = V.sim.stateAt(r.t0), m = mirror ? -1 : 1, cones = []; if (c.def) { const a = c.def[0], l = m * c.def[1]; cones.push([st.P[0] + a * Math.cos(st.h) - l * Math.sin(st.h), st.P[1] + a * Math.sin(st.h) + l * Math.cos(st.h)]); }
+  if (mode === "pair" && c.def) { const rs = V.ref.stateAt(r.t0), a = c.def[0], l = -c.def[1]; cones.push([rs.P[0] + a * Math.cos(rs.h) - l * Math.sin(rs.h), rs.P[1] + a * Math.sin(rs.h) + l * Math.cos(rs.h)]); }
+  V.course = cones.length ? { id: "lab", cones, lines: [], labels: [] } : null;
+  V.camId = mode === "pair" ? "pair" : V.labCam || "follow"; if (V.dom.selCam) V.dom.selCam.value = V.camId; V.cam = null; V.lastShown = null;
+  V.replay = { t0: r.clip[0], t1: r.clip[1], t: r.clip[0], tz: r.t0, rate: V.labRate || 1, playing: true, wasPaused: false, kind: "case", loop: V.labLoop !== false, title: (mirror ? "MIRROR · " : mode === "pair" ? "L | R · " : "") + (c.title || c.name) };
+  V.paused = true; showReplayUI(true); setRateButtons(); labInfoBox(); }
+// the info box: the technique, the request → result, the phases, the contacts
+function labInfoBox() { const el = document.getElementById("labInfo"); if (!el || !V.labCase) return; const c = V.labCase, m = META_BY_ID[c.tech], S = V.labSum;
+  const sk = S.skills.map((x) => `<div class="req">REQUESTED <b>${esc(x.intent)}</b> → <b class="${x.result === "PLAYED" ? "ok" : "bad"}">${esc(x.result)}</b>${x.result !== "PLAYED" ? ` · ALTERNATIVE <b>${esc(x.alt)}</b><br>REASON: ${esc(Object.entries(x.rej || {}).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([k]) => k).join(" · ") || "—")}` : x.tPlayed != null ? ` · decisive at ${x.tPlayed.toFixed(2)} s` : ""}</div>`).join("") || `<div class="req">AUTO — no request: B4 chose from the same state</div>`;
+  const ph = S.phases.map((p) => `<tr><td class="l">${esc(p.label)}</td><td>${p.tPrep != null ? p.tPrep.toFixed(2) : "—"}</td><td>${p.tCommit != null ? p.tCommit.toFixed(2) : "—"}</td><td>${p.tDecisive != null ? p.tDecisive.toFixed(2) : "—"}</td><td>${p.tControl != null ? p.tControl.toFixed(2) : "—"}</td><td>${p.tNext != null ? p.tNext.toFixed(2) : "—"}</td></tr>`).join("");
+  el.innerHTML = `<div class="tt">${esc(c.title || c.name)}</div>${m ? `<div class="mt">${esc(m.family)} · ${esc(m.status)} · ${esc(m.mode)} · primitives ${esc(m.prim)}</div>` : ""}${sk}
+    <table><tr><th class="l">action</th><th>prep</th><th>commit</th><th>decisive</th><th>control</th><th>next</th></tr>${ph || `<tr><td class="l" colspan="6">the carry only</td></tr>`}</table>
+    <div class="ct">${S.contacts.filter((x) => x.t >= -0.05).slice(0, 7).map((x) => `${x.t.toFixed(2)} ${x.F} ${x.surface} <i>${esc(x.role)}</i>`).join("<br>")}</div>
+    <div class="mt">possession: ${S.exits.length ? "EXITS " + esc(S.exits.join(", ")) : "kept (CONTROLLED)"} · ball ≤ ${S.sepMax.toFixed(2)} m from the body${m && m.diff ? ` · difficulty: tech ${m.diff.tech} · max useful entry ${m.diff.vmax} m/s · support ${m.diff.support} · weak foot ${m.diff.weak} · prep ${m.diff.prep} · chain ${m.diff.chain} · deceive ${m.diff.deceive}` : ""}</div>
+    <canvas id="labTL" width="560" height="34"></canvas>`; }
+// the phase timeline under the info box: preparation · commitment · decisive · control returned · next action, and the replay's cursor
+function labTimeline() { const cv = document.getElementById("labTL"); if (!cv || !V.replay || !V.labSum) return; const g = cv.getContext("2d"), R = V.replay, W = cv.width, H = cv.height, X = (t) => ((t - R.t0) / (R.t1 - R.t0)) * W;
+  g.clearRect(0, 0, W, H); g.fillStyle = "#26302b"; g.fillRect(0, 12, W, 8);
+  for (const p of V.labSum.phases) { const z = V.labT0; const seg = (a, b, col) => { if (a == null || b == null) return; g.fillStyle = col; g.fillRect(X(z + a), 12, Math.max(2, X(z + b) - X(z + a)), 8); };
+    seg(p.tPrep != null ? p.tPrep : p.tSel, p.tCommit, "#5b7a9a"); seg(p.tCommit, p.tDecisive, "#ffb36b"); seg(p.tDecisive, p.tControl, "#ff8a80");
+    for (const [tt, col, lab] of [[p.tDecisive, "#ff8a80", "D"], [p.tControl, "#8dffa6", "C"], [p.tNext, "#9ad7ff", "N"]]) if (tt != null) { g.fillStyle = col; g.fillRect(X(z + tt) - 1, 4, 2, 24); g.font = "9px Menlo"; g.fillText(lab, X(z + tt) + 2, 10); } }
+  g.fillStyle = "#ffd45e"; g.fillRect(X(R.t) - 1, 0, 2, H); }
+// diagnostics (off by default): the ball's and the body's paths over the clip, every contact with its surface and foot
+function labOverlay(c, vw, dpr, h) { const ctx = V.ov2d, P = (q) => proj3(c, vw, dpr, q), R = V.replay; if (!R) return; const S = V.sim;
+  const path = (f, col) => { ctx.beginPath(); let first = true; for (let t = R.t0; t <= R.t1; t += 0.02) { const p = P(f(t)); if (!p) { first = true; continue; } if (first) { ctx.moveTo(p[0], p[1]); first = false; } else ctx.lineTo(p[0], p[1]); } ctx.strokeStyle = col; ctx.lineWidth = 1.5 * dpr; ctx.stroke(); };
+  path((t) => { const b = S.ballTrack(t).p; return [b[0], 0.03, -b[1]]; }, "rgba(255,255,255,0.75)"); path((t) => { const p = S.stateAt(t).P; return [p[0], 0.02, -p[1]]; }, "rgba(154,215,255,0.7)");
+  for (const k of S.contacts) { if (k.t < R.t0 || k.t > R.t1) continue; const p = P([k.ball[0], 0.12, -k.ball[1]]); if (!p) continue; ctx.fillStyle = k.missed ? "#ff6b5e" : k.decisive ? "#ffd45e" : "#7df0ff"; ctx.beginPath(); ctx.arc(p[0], p[1], 4 * dpr, 0, 6.283); ctx.fill(); ctx.font = `${10 * dpr}px Menlo`; ctx.fillText(`${k.F} ${k.surface}${k.decisive ? " ★" : ""}`, p[0] + 6 * dpr, p[1] - 4 * dpr); } }
+// TRY IT LIVE: the case's entry, then the joystick is yours — REQUEST (E) sends this technique's intent (its exit = the stick)
+function labTry(id) { V.labCase = null; stopReplay(); V.live = { id }; V.course = null; const c = CASES.find((x) => x.tech === id) || CASES[0]; newSim(caseOpts(c)); V.paused = false; setRateButtons(); const el = document.getElementById("labInfo"); const m = META_BY_ID[id];
+  if (el) el.innerHTML = `<div class="tt">TRY IT LIVE · ${esc(m ? m.name : id)}</div><div class="mt">drag the stick (or WASD + Shift), then press <b>E</b> / REQUEST — the technique's exit is the stick's direction. The resolver decides foot, entry and timing from the live state, or REJECTS it with the reason.</div><div id="liveRes" class="req"></div>`; }
+function labRequestLive() { const id = V.live && V.live.id; if (!id) return; const it = intentOf(id); if (it) V.sim.requestSkill(it); }
+// ═══ THE JOYSTICK SANDBOX: the manual skill palette (each a TECHNICAL INTENT; the stick is its exit) and the last request's outcome ═════════════
+function sandboxInit() { const box = document.getElementById("skillBox"); if (!box) return; const pal = META.filter((m) => m.mode !== "AUTO" && m.kind !== "carry" && m.kind !== "none" && m.status !== "EXPERIMENTAL" || m.id === "ROULETTE");
+  box.innerHTML = `<span class="lab">MANUAL SKILLS (exit = the stick)</span>` + pal.map((m, i) => `<button data-skill="${m.id}" title="${esc(m.purpose)} · ${esc(m.status)} · ${esc(m.mode)}">${esc(m.name.replace(/ \(.*\)/, ""))}</button>`).join("") + `<label title="the analog feint: established line → a brief fake → back the other way"><input id="cFeint" type="checkbox" checked>analog feints</label>`;
+  box.querySelectorAll("[data-skill]").forEach((b) => (b.onclick = (e) => { V.skillSel = b.dataset.skill; const it = intentOf(b.dataset.skill); if (it) V.sim.requestSkill(it); box.querySelectorAll("[data-skill]").forEach((x) => x.classList.toggle("on", x === b)); e.target.blur(); }));
+  const cf = document.getElementById("cFeint"); if (cf) cf.onchange = (e) => { V.noFeint = !e.target.checked; newSim(); e.target.blur(); }; V.skillSel = "CRUYFF"; }
+function sandboxInfo() { const el = document.getElementById("skillRes"); if (!el || !V.sim.log) return; const L = V.sim.log.skill, S = V.sim.skill, f = V.sim.log.feints.filter((x) => x.confirmed).slice(-1)[0];
+  const last = S && !S.done ? `${S.intent}: ${S.state || "PENDING"}…` : L.length ? (() => { const x = L[L.length - 1]; return `${x.intent} → ${x.result}${x.result !== "PLAYED" ? ` (${Object.keys(x.rej || {}).slice(0, 1).join("")}) → ${x.alt}` : ""}`; })() : "—";
+  el.textContent = `last request: ${last}${f ? ` · last analog feint ${(V.sim.t - f.t).toFixed(1)} s ago (${f.dev}° for ${f.dur} s)` : ""}`; }
 async function boot() {
   const q = new URLSearchParams(location.search); if (PRIMARY) { V.pace = "D38"; V.ballOn = true; V.control = "CONTROLLED"; V.refPace = "off"; V.layers = presetLayers("FULL"); V.vocab = window.S99_VOCAB || "EXPANDED"; } if (BALLON) { V.carry = "B"; V.refBallOff = true; if (q.get("carry") && CARRY_SW.includes(q.get("carry"))) { V.carry = q.get("carry"); V.ballOn = V.carry !== "OFF"; } if (q.get("ref") === "0") V.refBallOff = false; } if (q.get("vocab") === "CORE" || q.get("vocab") === "EXPANDED") V.vocab = q.get("vocab");
+  if (LAB || SANDBOX) { V.refBallOff = false; V.carry = "B"; V.ballOn = true; V.control = "CONTROLLED"; V.vocab = "EXPANDED"; V.pace = "D38"; V.layers = presetLayers("FULL"); }
   if (PHYS) { V.ballOn = false; V.lastScale = "B"; V.refPhys = q.get("ref") !== "0"; V.phys = physOf(PHYS_IDS.includes(q.get("phys")) ? q.get("phys") : "PHYSICAL-80-B"); if (V.phys.id !== "PHYSICAL-99") V.lastScale = V.phys.agiScale; } bindUI(); V.cv = document.getElementById("gl"); V.ovc = document.getElementById("ov"); V.ov2d = V.ovc.getContext("2d");
   const gl = V.cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { document.getElementById("loading").textContent = "WebGL2 unavailable"; return; }
   V.gl = gl; V.R = { gl }; V.ground = groundProg(gl); V.ballProg = ballProg(gl); V.cone = coneProg(gl);
@@ -653,6 +741,7 @@ async function boot() {
   if (q.get("diag") === "1") V.setDiag(true);
   if (q.get("layers")) for (const k of q.get("layers").split(",")) if (k in V.layers) V.layers[k] = true;
   newSim(); document.getElementById("loading").remove(); V.ready = true;
+  if (LAB) labInit(q); if (SANDBOX) sandboxInit();
   if (q.get("external") === "1") V.external = true; else requestAnimationFrame(frame);
 }
 // the automation / test surface (puppeteer: performance, determinism, scripted input, captures)

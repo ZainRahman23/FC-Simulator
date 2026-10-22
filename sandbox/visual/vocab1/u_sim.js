@@ -35,6 +35,9 @@ export class UnifiedSim extends PlaySim {
     // (C + B4: a stick ROTATING steadily re-plans in 10° steps instead of 88573ef0's 4° — A99-C re-accelerates only once a motion completes, and
     // a 270°/s circle restarted it every 15 ms: the body stalled at 0.6 m/s while the ball ran on. A snap is unaffected)
     this.reqThresh = this.L.c && this.L.generic && this.o.ballOn !== false && this.rotation().coh ? 10 : 4;
+    // (DRIBBLING VOCAB-1 — ANALOG FEINT RECOGNITION: established direction → a brief meaningful fake → a reversal before ball / body commitment →
+    // the real exit; ball on, at speed, the carry (or a generic touch not yet committed) running)
+    if (this.o.ballOn !== false && this.L.generic && !this.o.noFeint) this.feintTick(req);
     // (BALL OFF: Astra's movement probe samples analog changes at up to 60 Hz; BALL ON keeps 88573ef0's request thresholds)
     if (this.o.ballOn === false && this.L.c && this.k % 4 === 0 && req?.h != null && this.req?.h != null && Math.abs(wrap(req.h - this.plan.req.h)) > 0.1 * DEG) this.flags.replan = "analog movement";
     return super.step(req); }
@@ -211,4 +214,26 @@ UnifiedSim.prototype.costB4 = function (c, st, q, cur) {
     if (a.kind !== ca.kind || (a.m || 0) !== (ca.m || 0) || (a.fam || "") !== (ca.fam || "") || (a.tech || "") !== (ca.tech || "")) { o.J += 0.5 * R; notes.push("(flow)"); } }
   if (this.L.support) { const v = this.swingCont(c, cur); if (v > 0) { o.J += 3.0 * Math.min(3, v); notes.push(`foot ${(100 * v).toFixed(0)} % past its reach`); } }
   if (notes.length) o.note = (o.note ? o.note + " · " : "") + notes.join(" · "); return o; };
+// ═══ DRIBBLING VOCAB-1: THE ANALOG FEINT (owner-approved concept, conservative) ═══════════════════════════════════════════════════════════════
+//   ESTABLISHED  the request held within ±6° of a line for ≥ 0.35 s, the body ≥ 3 m/s, the carry running (no technique in its window), no feint
+//                in the last 0.8 s
+//   A FAKE       the request leaves that line by 20 – 75° → at once the body SELLS it (the feint overlay toward that side) and for ≤ 0.15 s no
+//                NEW touch takes the ball toward it (the carry keeps the ball's line — the root follows the request as A99-C allows: no input
+//                delay of the body)
+//   CONFIRMED    within 0.30 s of the fake the request comes back across the line (≥ 12° to the other side) or back onto it → FEINT (logged): the
+//                ball was never played toward the fake; the real exit is the next ordinary decision
+//   GENUINE      the fake held past 0.30 s (or beyond 75°): a real change of direction — the sell is withdrawn, nothing else changes
+// Noise: a jittering stick never re-establishes a line for 0.35 s, so it cannot produce FEINT FEINT FEINT (tools/v_feint.mjs measures it)
+UnifiedSim.prototype.feintTick = function (req) { const t = this.t, F = this.fr || (this.fr = { base: null, est: 0, dev: null, last: -9 }), h = req && req.h != null ? req.h : null, st = this.stateAt(t, this.plan), a = this.plan.action;
+  const busy = (a.tech && t < (a.tRelease || 0)) || (this.skill && !this.skill.done);
+  if (h == null || st.s < 3.0 || busy) { F.base = null; F.est = 0; if (F.dev) { F.dev = null; this.fhold = null; } return; }
+  if (F.dev) { const d = wrap(h - F.base), age = t - F.dev.t; F.dev.max = Math.max(F.dev.max, Math.abs(d));
+    if (d * F.dev.side <= -12 * DEG || (Math.abs(d) <= 6 * DEG && age >= 0.05)) { this.log.feints.push({ t, kind: "ANALOG", side: F.dev.side, dev: +(F.dev.max / DEG).toFixed(0), dur: +age.toFixed(3), src: "analog", confirmed: true }); F.last = t; F.dev = null; F.base = h; F.est = 0; this.fhold = null; this.flags.replan = this.flags.replan || "feint"; return; }
+    if (age > 0.30 || Math.abs(d) > 75 * DEG) { F.dev = null; F.base = h; F.est = 0; this.fhold = null; if (this.feint && this.feint.src === "analog") this.feint = null; this.log.feints.push({ t, kind: "GENUINE", src: "analog", confirmed: false }); return; }
+    return; }
+  if (F.base == null || Math.abs(wrap(h - F.base)) > 75 * DEG) { F.base = h; F.est = 0; return; }
+  const d = wrap(h - F.base);
+  if (Math.abs(d) <= 6 * DEG) { F.est += DT; F.base = F.base + d * 0.02; return; }
+  if (Math.abs(d) >= 20 * DEG && F.est >= 0.35 && t - F.last >= 0.8) { F.dev = { side: Math.sign(d), t, max: Math.abs(d) }; this.fhold = { h: F.base, until: t + 0.15 }; this.startFeint("HIP_FAKE", Math.sign(d), "analog"); this.flags.replan = this.flags.replan || "feint"; return; }
+  if (Math.abs(d) > 6 * DEG) { F.est = 0; F.base = h; } };
 export { PlaySim as TCSim };
