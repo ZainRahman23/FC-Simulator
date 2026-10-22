@@ -1,0 +1,20 @@
+{
+ "milestone": "BALL-ON PACE V1",
+ "date": "2026-10-22",
+ "state": "three D99 ball-carrying envelope candidates presented for the owner's playtest — NONE chosen, NOT frozen, no Dribbling 1–98 scaling",
+ "local_only": "the character is a real player's model: never publish",
+ "page": "http://127.0.0.1:8361/sandbox/visual/ballon1.html",
+ "defaults": "S99 38 km/h · D38 · A99-C · D99 · BC99 · CONTROLLED · BALL ON · CARRY-B (a starting point only) · the same player BALL OFF beside · EXPANDED",
+ "physical_ceilings_unchanged": { "sprint_speed_99_kmh": 38.0, "acceleration_99": "D38", "agility_99": "A99-C" },
+ "candidates": {
+  "A": { "open": 0.95, "open_kmh": 36.1, "tight": 0.75, "knock": 0.98, "per_touch_cost": 0.20, "split_40m_s": 4.64, "behind_ball_off_at_40m_m": 2.4 },
+  "B": { "open": 0.915, "open_kmh": 34.8, "tight": 0.70, "knock": 0.96, "per_touch_cost": 0.32, "split_40m_s": 4.81, "behind_ball_off_at_40m_m": 4.1 },
+  "C": { "open": 0.88, "open_kmh": 33.4, "tight": 0.65, "knock": 0.94, "per_touch_cost": 0.45, "split_40m_s": 4.99, "behind_ball_off_at_40m_m": 6.1 }
+ },
+ "ball_off_40m_s": 4.42,
+ "torture_final": "24 simulated hours (8 h per candidate, seeds 1–240 + 1001–1240): 0 controller failures, 0 missed contacts",
+ "cpu": "+0–3 % (b_cpu.mjs); worst tick ≈ 11 ms vs 10 ms",
+ "sprint_carry_cadence": "every other stride kept (pushes every 0.83–0.85 s)",
+ "recorded_not_implemented": "DESIGN_NOTES.md — the future Dribbling model, skill-move entry envelopes, Ball Control kept separate",
+ "next_on_owner_word": ["choose / adjust the D99 envelope", "locomotion and support integrity against it", "Dribbling 1–98"]
+}

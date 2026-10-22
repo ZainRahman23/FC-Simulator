@@ -495,8 +495,8 @@ function bindUI() {
   d.selEng.onchange = (e) => { V.engine = d.selEng.value; stopTest(); newSim(); blur(e); };
   d.selSame.innerHTML = [["baseline", "locked 88573ef0 (engine)"], ...CHAIN.map((n) => [n, PRESET_LABEL[n]])].map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
   d.bSame.onclick = (e) => { sameInput(d.selSame.value); blur(e); }; d.bNext.onclick = (e) => { nextInChain(); blur(e); };
-  { const grpT = (fam, cap) => `<optgroup label="${cap}">` + TESTS.filter((x) => (fam === "*" ? !["morning", "favourable", "pace"].includes(x.fam) : x.fam === fam)).map((x) => `<option value="${x.name}">${x.name}</option>`).join("") + "</optgroup>";
-    d.selTest.innerHTML = grpT("pace", "SPEED-99 pace presets (BALL OFF)") + grpT("morning", "the morning playtest cases") + grpT("favourable", "favourable examples (where FULL chooses them)") + grpT("*", "TC-LAYERED-2's report-card traces"); } d.bTest.onclick = (e) => { if (V.test) stopTest(); else startTest(d.selTest.value); blur(e); }; d.selTest.onchange = (e) => e.target.blur();
+  { const grpT = (fam, cap) => `<optgroup label="${cap}">` + TESTS.filter((x) => (fam === "*" ? !["morning", "favourable", "pace", "s99", "ballon"].includes(x.fam) : x.fam === fam)).map((x) => `<option value="${x.name}">${x.name}</option>`).join("") + "</optgroup>";
+    d.selTest.innerHTML = grpT("s99", "S99 mission — sprint carry, cuts, the EXPANDED families (review)") + grpT("pace", "SPEED-99 pace presets (BALL OFF)") + grpT("morning", "the morning playtest cases") + grpT("favourable", "favourable examples (where FULL chooses them)") + grpT("*", "TC-LAYERED-2's report-card traces"); } d.bTest.onclick = (e) => { if (V.test) stopTest(); else startTest(d.selTest.value); blur(e); }; d.selTest.onchange = (e) => e.target.blur();
   const blur = (e) => { if (e && e.target && e.target.blur && e.target.tagName !== "INPUT") e.target.blur(); };
   $("bReset").onclick = (e) => { newSim(); blur(e); };
   document.querySelectorAll("[data-mode]").forEach((b) => (b.onclick = (e) => { setMode(b.dataset.mode); blur(e); }));

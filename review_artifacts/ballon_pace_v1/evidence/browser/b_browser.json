@@ -1,0 +1,144 @@
+{
+ "url": "http://127.0.0.1:8361/sandbox/visual/ballon1.html",
+ "defaults": {
+  "carry": "B",
+  "ball": true,
+  "model": "CONTROLLED",
+  "pace": "D38",
+  "vocab": "EXPANDED",
+  "twin": true,
+  "label": "BALL-ON PACE V1 · S99 38 km/h · D38 · A99-C · D99 · BC99 · CONTROLLED · BALL ON · CARRY-B (medium cost (open 91.5 % ) · EXPANDED techniques",
+  "buttons": [
+   "BALL OFF",
+   "CARRY-A",
+   "CARRY-B",
+   "CARRY-C"
+  ]
+ },
+ "races": [
+  {
+   "carry": "OFF",
+   "midCtl": {
+    "D": 0,
+    "raw": 0,
+    "O": 0,
+    "vA": null,
+    "mul": 1,
+    "aPhys": 0,
+    "aBall": 0,
+    "type": ""
+   },
+   "midBox": "CURRENT SPEED 10.56 m/s · 38.0 km/h | PHYSICAL VMAX 10.56 m/s · 38.0 km/h (S99) · PHYSICAL ACCELERATION D38 · launch 11.1 m/s² · p 2.2 · now — m/s² | BALL OFF — the full physical capability (no envelope) | this run (from rest): 27.0 m in 3.18 s · PEAK 10.56 m/s (38.0 km/h) · 90 % 1.33 s · 95 % 1.64 s · 99 % 2.17 s | 5 m 1.02 · 10 m 1.55 · 20 m 2.52 · 30 m   —  · 40 m   —  · 60 m   —  · 80 m   — ",
+   "det": true,
+   "d": 74.072189968975,
+   "refD": null,
+   "peak": 10.555555555555555,
+   "refPeak": null,
+   "splits": {
+    "5": 1.02,
+    "10": 1.55,
+    "20": 2.52,
+    "30": 3.47,
+    "40": 4.42,
+    "60": 6.31
+   },
+   "exits": []
+  },
+  {
+   "carry": "A",
+   "midCtl": {
+    "D": 0,
+    "raw": 0,
+    "O": 0,
+    "vA": 10.027777777777777,
+    "mul": 0,
+    "aPhys": 1.1856790225276994,
+    "aBall": 0,
+    "type": "OPEN SPRINT CARRY",
+    "m": 0.95
+   },
+   "midBox": "CURRENT SPEED 10.03 m/s · 36.1 km/h | PHYSICAL VMAX 10.56 m/s · 38.0 km/h (S99) · PHYSICAL ACCELERATION D38 · launch 11.1 m/s² · p 2.2 · now 1.19 m/s² | BALL-ON AVAILABLE VMAX 10.03 m/s · 36.1 km/h (95.0 % of physical) · OPEN SPRINT CARRY | BALL-ON ACCELERATION push available 95 % of D38's  |  · now 0.00 m/s² (0 % of the physical 1.19 at this speed; 0 at the available vmax) | CONTROL DEMAND 0.00 (instant 0.00) ",
+   "det": true,
+   "d": 70.24510646877732,
+   "refD": 74.072189968975,
+   "peak": 10.027777777777777,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.07,
+    "10": 1.63,
+    "20": 2.65,
+    "30": 3.64,
+    "40": 4.64,
+    "60": 6.63
+   },
+   "exits": []
+  },
+  {
+   "carry": "B",
+   "midCtl": {
+    "D": 0,
+    "raw": 0,
+    "O": 0,
+    "vA": 9.658333333333333,
+    "mul": 0,
+    "aPhys": 1.972422122372862,
+    "aBall": 0,
+    "type": "OPEN SPRINT CARRY",
+    "m": 0.92
+   },
+   "midBox": "CURRENT SPEED 9.66 m/s · 34.8 km/h | PHYSICAL VMAX 10.56 m/s · 38.0 km/h (S99) · PHYSICAL ACCELERATION D38 · launch 11.1 m/s² · p 2.2 · now 1.97 m/s² | BALL-ON AVAILABLE VMAX 9.66 m/s · 34.8 km/h (91.5 % of physical) · OPEN SPRINT CARRY | BALL-ON ACCELERATION push available 92 % of D38's  |  · now 0.00 m/s² (0 % of the physical 1.97 at this speed; 0 at the available vmax) | CONTROL DEMAND 0.00 (instant 0.00) ",
+   "det": true,
+   "d": 67.54172410253481,
+   "refD": 74.072189968975,
+   "peak": 9.658333333333333,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.11,
+    "10": 1.68,
+    "20": 2.74,
+    "30": 3.77,
+    "40": 4.81,
+    "60": 6.88
+   },
+   "exits": []
+  },
+  {
+   "carry": "C",
+   "midCtl": {
+    "D": 0,
+    "raw": 0,
+    "O": 0,
+    "vA": 9.28888888888889,
+    "mul": 0,
+    "aPhys": 2.7238653404994935,
+    "aBall": 0,
+    "type": "OPEN SPRINT CARRY",
+    "m": 0.8875
+   },
+   "midBox": "CURRENT SPEED 9.29 m/s · 33.4 km/h | PHYSICAL VMAX 10.56 m/s · 38.0 km/h (S99) · PHYSICAL ACCELERATION D38 · launch 11.1 m/s² · p 2.2 · now 2.72 m/s² | BALL-ON AVAILABLE VMAX 9.29 m/s · 33.4 km/h (88.0 % of physical) · OPEN SPRINT CARRY | BALL-ON ACCELERATION push available 89 % of D38's  |  · now 0.00 m/s² (0 % of the physical 2.72 at this speed; 0 at the available vmax) | CONTROL DEMAND 0.00 (instant 0.00) ",
+   "det": true,
+   "d": 64.77724520029244,
+   "refD": 74.072189968975,
+   "peak": 9.288888888888891,
+   "refPeak": 10.555555555555555,
+   "splits": {
+    "5": 1.15,
+    "10": 1.75,
+    "20": 2.84,
+    "30": 3.92,
+    "40": 4.99,
+    "60": 7.15
+   },
+   "exits": []
+  }
+ ],
+ "nextCarry": {
+  "from": "A",
+  "to": "B",
+  "replay": true,
+  "label": "BALL-ON PACE V1 · S99 38 km/h · D38 · A99-C · D99 · BC99 · CONTROLLED · BALL ON · CARRY-B (medium cost (open 91.5 % ) · EXPANDED techniques",
+  "inputIdentical": true
+ },
+ "logs": [],
+ "http": []
+}
