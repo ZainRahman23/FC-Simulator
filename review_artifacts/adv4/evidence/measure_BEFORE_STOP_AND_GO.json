@@ -1,0 +1,1333 @@
+[
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.5375,
+  "tExit": 0.3605,
+  "total": 0.898,
+  "vMin": 1.4749999999999999,
+  "vC": 1.6524999999999999,
+  "v1": 7.83,
+  "ctl": 0.1,
+  "p25": 15.602500000000001,
+  "prep": 0.21775,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "CROSS -6.7"
+  ],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.896,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.883,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.867,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.49499999999999994,
+  "total": 0.49499999999999994,
+  "vMin": 3.3649999999999998,
+  "vC": 5.3,
+  "v1": 7.1025,
+  "ctl": null,
+  "p25": 18.549999999999997,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.817,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.49499999999999994,
+  "total": 0.49499999999999994,
+  "vMin": 3.3649999999999998,
+  "vC": 5.3,
+  "v1": 7.1025,
+  "ctl": null,
+  "p25": 18.549999999999997,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.817,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.6345000000000001,
+  "tExit": 0.417,
+  "total": 1.051,
+  "vMin": 2.08,
+  "vC": 3.0725000000000002,
+  "v1": 7.63,
+  "ctl": 0.09925,
+  "p25": 17.9775,
+  "prep": 0.31375,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.971,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.929,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 1.217,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 1.087,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.73425,
+  "total": 0.73425,
+  "vMin": 6.1075,
+  "vC": 9.66,
+  "v1": 7.1525,
+  "ctl": null,
+  "p25": 20.65,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.462,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.742,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.362,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "HESITATION",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.73425,
+  "total": 0.73425,
+  "vMin": 6.1075,
+  "vC": 9.66,
+  "v1": 7.1525,
+  "ctl": null,
+  "p25": 20.65,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.462,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.742,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.362,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.5690000000000001,
+  "tExit": 0.33225000000000005,
+  "total": 0.90125,
+  "vMin": 0.66,
+  "vC": 0.6775,
+  "v1": 7.165,
+  "ctl": 0.09975,
+  "p25": 13.3275,
+  "prep": 0.24825000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.867,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.867,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.867,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.56775,
+  "total": 0.56775,
+  "vMin": 0.945,
+  "vC": 3.2,
+  "v1": 6.0024999999999995,
+  "ctl": null,
+  "p25": 16.229999999999997,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.546,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.525,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.525,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.675,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.56775,
+  "total": 0.56775,
+  "vMin": 0.945,
+  "vC": 3.2,
+  "v1": 6.0024999999999995,
+  "ctl": null,
+  "p25": 16.229999999999997,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.546,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.525,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.525,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.675,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.5375,
+  "tExit": 0.3605,
+  "total": 0.898,
+  "vMin": 1.4749999999999999,
+  "vC": 1.6524999999999999,
+  "v1": 7.83,
+  "ctl": 0.1,
+  "p25": 15.602500000000001,
+  "prep": 0.21775,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "CROSS -6.7"
+  ],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.896,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.883,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.867,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.7679999999999999,
+  "total": 0.7679999999999999,
+  "vMin": 0.8225,
+  "vC": 5.3,
+  "v1": 4.49,
+  "ctl": null,
+  "p25": 15.28,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 6,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.725,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.938,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.646,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.763,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.7679999999999999,
+  "total": 0.7679999999999999,
+  "vMin": 0.8225,
+  "vC": 5.3,
+  "v1": 4.49,
+  "ctl": null,
+  "p25": 15.28,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 6,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.725,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.938,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.646,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.763,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.6345000000000001,
+  "tExit": 0.417,
+  "total": 1.051,
+  "vMin": 2.08,
+  "vC": 3.0725000000000002,
+  "v1": 7.63,
+  "ctl": 0.09925,
+  "p25": 17.9775,
+  "prep": 0.31375,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.971,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.929,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 1.217,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 1.087,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.9884999999999999,
+  "total": 0.9884999999999999,
+  "vMin": 0.9425,
+  "vC": 9.66,
+  "v1": 3.4175,
+  "ctl": null,
+  "p25": 17.15,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 2,
+  "bodyEv": [
+   "FLOAT 0.15",
+   "FLOAT 0.15"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.779,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.254,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.171,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 0,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.9884999999999999,
+  "total": 0.9884999999999999,
+  "vMin": 0.9425,
+  "vC": 9.66,
+  "v1": 3.4175,
+  "ctl": null,
+  "p25": 17.15,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 2,
+  "bodyEv": [
+   "FLOAT 0.15",
+   "FLOAT 0.15"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.779,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.254,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.171,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.595,
+  "tExit": 0.35450000000000004,
+  "total": 0.94925,
+  "vMin": 0.71,
+  "vC": 0.71,
+  "v1": 7.0649999999999995,
+  "ctl": 0.09975,
+  "p25": 12.5775,
+  "prep": 0.274,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 7,
+  "bodyEv": [
+   "CROSS -5.7",
+   "CROSS -5.6"
+  ],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.896,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 1.038,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 0.963,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 1,
+   "CARRY (a controlled arc)": 3
+  },
+  "tDec": 0.1385,
+  "tExit": 0.56475,
+  "total": 0.70325,
+  "vMin": 0.9425,
+  "vC": 3.035,
+  "v1": 5.140000000000001,
+  "ctl": null,
+  "p25": 14.2125,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 4,
+  "bodyEv": [
+   "CROSS -14.9"
+  ],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.571,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.875,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.713,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "JOG"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 1,
+   "CARRY (a controlled arc)": 3
+  },
+  "tDec": 0.1385,
+  "tExit": 0.56475,
+  "total": 0.70325,
+  "vMin": 0.9425,
+  "vC": 3.035,
+  "v1": 5.140000000000001,
+  "ctl": null,
+  "p25": 14.2125,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 4,
+  "bodyEv": [
+   "CROSS -14.9"
+  ],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.571,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.875,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.713,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.5375,
+  "tExit": 0.4165,
+  "total": 0.95425,
+  "vMin": 1.4749999999999999,
+  "vC": 1.6524999999999999,
+  "v1": 7.6775,
+  "ctl": 0.1,
+  "p25": 13.592500000000001,
+  "prep": 0.21775,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "CROSS -6.6"
+  ],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 1,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.954,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.942,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.921,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.379,
+  "tExit": 0.425,
+  "total": 0.80425,
+  "vMin": 0.95,
+  "vC": 4.4624999999999995,
+  "v1": 6.3025,
+  "ctl": null,
+  "p25": 14.165,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.829,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.854,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.692,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.842,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "RUN"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.379,
+  "tExit": 0.425,
+  "total": 0.80425,
+  "vMin": 0.95,
+  "vC": 4.4624999999999995,
+  "v1": 6.3025,
+  "ctl": null,
+  "p25": 14.165,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.829,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.854,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.692,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.842,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "STOP_AND_GO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DEADEN-AND-EXPLODE": 4
+  },
+  "tDec": 0.6345000000000001,
+  "tExit": 0.47150000000000003,
+  "total": 1.10625,
+  "vMin": 2.0775,
+  "vC": 3.0725000000000002,
+  "v1": 7.62,
+  "ctl": 0.09925,
+  "p25": 15.740000000000002,
+  "prep": 0.31375,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 6,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 1.017,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 0.975,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (L)",
+    "result": "PLAYED",
+    "total": 1.262,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "PLAYED",
+    "total": 1.171,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "AUTO",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.91875,
+  "tExit": 0.4205,
+  "total": 1.33925,
+  "vMin": 0.7875,
+  "vC": 6.342499999999999,
+  "v1": 6.6025,
+  "ctl": null,
+  "p25": 12.69,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 6,
+  "bodyEv": [
+   "FLOAT 0.15",
+   "CROSS -8.4",
+   "FLOAT 0.15",
+   "CROSS -8.7"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.858,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.783,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 1.883,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 1.833,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "STOP_AND_GO",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "stop": "STOP",
+   "ang": 45,
+   "mode": "SPRINT"
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.91875,
+  "tExit": 0.4205,
+  "total": 1.33925,
+  "vMin": 0.7875,
+  "vC": 6.342499999999999,
+  "v1": 6.6025,
+  "ctl": null,
+  "p25": 12.69,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 6,
+  "bodyEv": [
+   "FLOAT 0.15",
+   "CROSS -8.4",
+   "FLOAT 0.15",
+   "CROSS -8.7"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.858,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.783,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 1.883,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 1.833,
+    "rej": null
+   }
+  ]
+ }
+]

@@ -1,0 +1,7578 @@
+[
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.2585,
+  "tExit": 0,
+  "total": 0.2585,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.7050000000000005,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.325,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.192,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.117,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.004,
+  "total": 0.004,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.75,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.004,
+  "total": 0.004,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.75,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→GATHER": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.838,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.763,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→GATHER": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.838,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.763,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.3315,
+  "tExit": 0,
+  "total": 0.3315,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.885000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.438,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.296,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.221,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "GATHER": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.0165,
+  "total": 0.22075,
+  "vMin": 3.1950000000000003,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.7825,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "GATHER",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "GATHER": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.0165,
+  "total": 0.22075,
+  "vMin": 3.1950000000000003,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.7825,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "GATHER",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "REJECTED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.121,
+  "tExit": 0.017,
+  "total": 0.1375,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.925000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.158,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.117,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.37925,
+  "tExit": 0,
+  "total": 0.37949999999999995,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 13.055,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.488,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.346,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.271,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.001,
+  "total": 0.31675,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.9975,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.496,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.421,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.346,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.004,
+  "total": 0.004,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.959999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.38325,
+  "tExit": 0.009500000000000001,
+  "total": 0.39275000000000004,
+  "vMin": 5.297499999999999,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.957500000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -9"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.196,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.646,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.608,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.121,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.05,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 0.925,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 0.679,
+    "rej": [
+     "box",
+     "knock"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 1,
+   "URGENT REACH": 1,
+   "KNOCK-ON": 2
+  },
+  "tDec": 0.4825,
+  "tExit": 0.004,
+  "total": 0.4865,
+  "vMin": 8.9125,
+  "vC": 8.915000000000001,
+  "v1": 8.9025,
+  "ctl": null,
+  "p25": 21.525000000000002,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.329,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.667,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 1,
+   "URGENT REACH": 1,
+   "KNOCK-ON": 2
+  },
+  "tDec": 0.4825,
+  "tExit": 0.004,
+  "total": 0.4865,
+  "vMin": 8.9125,
+  "vC": 8.915000000000001,
+  "v1": 8.9025,
+  "ctl": null,
+  "p25": 21.525000000000002,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.329,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.667,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.05,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 0.925,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 0.679,
+    "rej": [
+     "box",
+     "knock"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -25
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 1.052,
+  "tExit": 0.004,
+  "total": 1.056,
+  "vMin": 8.205,
+  "vC": 8.205,
+  "v1": 8.934999999999999,
+  "ctl": null,
+  "p25": 20.689999999999998,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 3,
+  "bodyEv": [
+   "CROSS -6.6"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.05,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.279,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.833,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.2585,
+  "tExit": 0.025,
+  "total": 0.2835,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6500000000000004,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.35,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.217,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.142,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.09575,
+  "tExit": 0.022,
+  "total": 0.11775000000000002,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.7125,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.167,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.025,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.025,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.09575,
+  "tExit": 0.022,
+  "total": 0.11775000000000002,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.7125,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.167,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.025,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.025,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.018750000000000003,
+  "total": 0.21025,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6825,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.329,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.154,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.104,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 1.1164999999999998,
+  "tExit": 0.025,
+  "total": 1.1415000000000002,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.3499999999999996,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.575,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.575,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.179,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.104,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.3315,
+  "tExit": 0.031,
+  "total": 0.3625,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.717499999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.471,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.325,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.254,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.029,
+  "total": 0.5415,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.592499999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.683,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.029,
+  "total": 0.5415,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.592499999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.683,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.31775000000000003,
+  "tExit": 0.029,
+  "total": 0.347,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.739999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.325,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.25,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.38749999999999996,
+  "tExit": 0.0375,
+  "total": 0.42499999999999993,
+  "vMin": 3.185,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.654999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.188,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.146,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.37925,
+  "tExit": 0.033,
+  "total": 0.41250000000000003,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.737499999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.304,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.19974999999999998,
+  "total": 0.5155000000000001,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.6075,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.529,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.7,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.19974999999999998,
+  "total": 0.5155000000000001,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.6075,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.529,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.7,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.35649999999999993,
+  "tExit": 0.033,
+  "total": 0.3895,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.764999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.304,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CANCELLED→COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 0.1395,
+  "tExit": 0.052000000000000005,
+  "total": 0.1915,
+  "vMin": 5.265,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.915,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -8.4"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "CANCELLED",
+    "total": 0.988,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "CANCELLED",
+    "total": 0.942,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.154,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "REJECTED→URGENT REACH": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.912,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.371,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.279,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.142,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 2,
+   "URGENT REACH": 2
+  },
+  "tDec": 0.825,
+  "tExit": 0.03825,
+  "total": 0.8634999999999999,
+  "vMin": 8.125,
+  "vC": 8.2175,
+  "v1": 8.7625,
+  "ctl": null,
+  "p25": 19.85,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.162,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 2,
+   "URGENT REACH": 2
+  },
+  "tDec": 0.825,
+  "tExit": 0.03825,
+  "total": 0.8634999999999999,
+  "vMin": 8.125,
+  "vC": 8.2175,
+  "v1": 8.7625,
+  "ctl": null,
+  "p25": 19.85,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.162,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 1.4855,
+  "tExit": 0.037,
+  "total": 1.5230000000000001,
+  "vMin": 7.4,
+  "vC": 7.42,
+  "v1": 8.7,
+  "ctl": null,
+  "p25": 17.225,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.912,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.371,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.571,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.475,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -40
+  },
+  "n": 4,
+  "nOk": 1,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "CANCELLED→KNOCK-ON": 1,
+   "COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": 1.208,
+  "tExit": 0.042,
+  "total": 1.25,
+  "vMin": 7.36,
+  "vC": 7.39,
+  "v1": 8.69,
+  "ctl": null,
+  "p25": 17.86,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.912,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.371,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "CANCELLED",
+    "total": 1.521,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.25,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.26675,
+  "tExit": 0.054,
+  "total": 0.321,
+  "vMin": 1.49,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.555,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.488,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.246,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.171,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.13725,
+  "total": 0.13725,
+  "vMin": 1.49,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6675000000000004,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.183,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.054,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.054,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.13725,
+  "total": 0.13725,
+  "vMin": 1.49,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6675000000000004,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.183,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.054,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.054,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.04375,
+  "total": 0.23525000000000001,
+  "vMin": 1.4925000000000002,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6199999999999997,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.358,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.283,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.167,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "GATHER": 2
+  },
+  "tDec": 0.49550000000000005,
+  "tExit": 0.583,
+  "total": 1.0795,
+  "vMin": 1.48,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.14,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 7,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.563,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.563,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "PLAYED",
+    "total": 1.117,
+    "rej": null
+   },
+   {
+    "played": "GATHER",
+    "result": "PLAYED",
+    "total": 1.042,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.3315,
+  "tExit": 0.047,
+  "total": 0.37825,
+  "vMin": 3.1975000000000002,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.4799999999999995,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.483,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.342,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.271,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.38725,
+  "total": 0.5915,
+  "vMin": 3.17,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.21,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.504,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.429,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.754,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.679,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.38725,
+  "total": 0.5915,
+  "vMin": 3.17,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.21,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.504,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.429,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.754,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.679,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.31775000000000003,
+  "tExit": 0.058,
+  "total": 0.376,
+  "vMin": 3.17,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.5,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.429,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.354,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.279,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 3,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "COMPACT OUTSIDE REDIRECT": 3
+  },
+  "tDec": 0.4693333333333333,
+  "tExit": 0.06366666666666666,
+  "total": 0.5336666666666666,
+  "vMin": 3.1633333333333336,
+  "vC": 3.2000000000000006,
+  "v1": 3.2000000000000006,
+  "ctl": null,
+  "p25": 7.2700000000000005,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 6,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.671,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.788,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.175,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.638,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.37925,
+  "tExit": 0.067,
+  "total": 0.446,
+  "vMin": 5.24,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.264999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.554,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.479,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.338,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.22849999999999998,
+  "total": 0.54425,
+  "vMin": 5.24,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.0425,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.563,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.488,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.713,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.22849999999999998,
+  "total": 0.54425,
+  "vMin": 5.24,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.0425,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.563,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.488,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.713,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.44999999999999996,
+  "tExit": 0.067,
+  "total": 0.517,
+  "vMin": 5.24,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.104999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.696,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.621,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.338,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CANCELLED→COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 0.1395,
+  "tExit": 0.08349999999999999,
+  "total": 0.223,
+  "vMin": 5.195,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.690000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "CANCELLED",
+    "total": 1.013,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "CANCELLED",
+    "total": 0.958,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.188,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.933,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.375,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.317,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.179,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 1,
+   "URGENT REACH": 2,
+   "KNOCK-ON": 1
+  },
+  "tDec": 0.5365,
+  "tExit": 0.39675,
+  "total": 0.9332499999999999,
+  "vMin": 8,
+  "vC": 8.72,
+  "v1": 8.535,
+  "ctl": null,
+  "p25": 17.9925,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.346,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.408,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.779,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.2,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 1,
+   "URGENT REACH": 2,
+   "KNOCK-ON": 1
+  },
+  "tDec": 0.5365,
+  "tExit": 0.39675,
+  "total": 0.9332499999999999,
+  "vMin": 8,
+  "vC": 8.72,
+  "v1": 8.535,
+  "ctl": null,
+  "p25": 17.9925,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.346,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.408,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.779,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.2,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 1,
+   "COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 1.4874999999999998,
+  "tExit": 0.075,
+  "total": 1.5625,
+  "vMin": 7.28,
+  "vC": 7.39,
+  "v1": 8.6,
+  "ctl": null,
+  "p25": 14.61,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.933,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.375,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.608,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.517,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -55
+  },
+  "n": 4,
+  "nOk": 1,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 1,
+   "CANCELLED→COMPACT INSIDE REDIRECT": 1,
+   "COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": 1.208,
+  "tExit": 0.083,
+  "total": 1.292,
+  "vMin": 7.26,
+  "vC": 7.39,
+  "v1": 8.58,
+  "ctl": null,
+  "p25": 15.6,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.933,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.375,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "CANCELLED",
+    "total": 1.567,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.292,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "LATERAL TRANSFER": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.5045000000000001,
+  "tExit": 0.008,
+  "total": 0.5125,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.635,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.55,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.592,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.517,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.2345,
+  "tExit": 0.025,
+  "total": 0.2595,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6574999999999998,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.217,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.142,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.2345,
+  "tExit": 0.025,
+  "total": 0.2595,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6574999999999998,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.217,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.142,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.5045000000000001,
+  "tExit": 0.025,
+  "total": 0.5295,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.565,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.567,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.592,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.517,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.025,
+  "total": 0.2165,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6725000000000003,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.329,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.179,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.104,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 3,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "LATERAL TRANSFER": 3
+  },
+  "tDec": 0.654,
+  "tExit": 0,
+  "total": 0.654,
+  "vMin": 3.2000000000000006,
+  "vC": 3.2000000000000006,
+  "v1": 3.2000000000000006,
+  "ctl": null,
+  "p25": 7.613333333333333,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.579,
+    "rej": [
+     "surface",
+     "box"
+    ]
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.729,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.579,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.25625000000000003,
+  "total": 0.46049999999999996,
+  "vMin": 3.1950000000000003,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.67,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.25625000000000003,
+  "total": 0.46049999999999996,
+  "vMin": 3.1950000000000003,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.67,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "REJECTED→GATHER": 1,
+   "REJECTED→CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.121,
+  "tExit": 0.027000000000000003,
+  "total": 0.14800000000000002,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.895,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.25"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.167,
+    "rej": null
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.75,
+    "rej": [
+     "plant timing",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.129,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.733,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.31775000000000003,
+  "tExit": 0.029,
+  "total": 0.347,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.739999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.413,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.325,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.25,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.627,
+  "tExit": 0.025,
+  "total": 0.6519999999999999,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.55,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.746,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.671,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.633,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.558,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.1945,
+  "total": 0.5102500000000001,
+  "vMin": 5.2925,
+  "vC": 5.3,
+  "v1": 5.185,
+  "ctl": null,
+  "p25": 12.649999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.529,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.679,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.1945,
+  "total": 0.5102500000000001,
+  "vMin": 5.2925,
+  "vC": 5.3,
+  "v1": 5.185,
+  "ctl": null,
+  "p25": 12.649999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.529,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.679,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.38325,
+  "tExit": 0.027000000000000003,
+  "total": 0.41025,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.7525,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.204,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.671,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.633,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.35649999999999993,
+  "tExit": 0.033,
+  "total": 0.3895,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.764999999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.379,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.304,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→OUTSIDE CUT": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "REJECTED",
+    "total": 1.75,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.412,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.362,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.233,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 3,
+   "DEADEN-AND-EXPLODE": 1
+  },
+  "tDec": 0.80025,
+  "tExit": 0.126,
+  "total": 0.926,
+  "vMin": 6.51,
+  "vC": 6.59,
+  "v1": 8.4075,
+  "ctl": 0.139,
+  "p25": 18.7975,
+  "prep": 0.5,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.121,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "AUTO",
+    "total": 1.217,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.633,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 3,
+   "DEADEN-AND-EXPLODE": 1
+  },
+  "tDec": 0.80025,
+  "tExit": 0.126,
+  "total": 0.926,
+  "vMin": 6.51,
+  "vC": 6.59,
+  "v1": 8.4075,
+  "ctl": 0.139,
+  "p25": 18.7975,
+  "prep": 0.5,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.121,
+    "rej": null
+   },
+   {
+    "played": "DEADEN-AND-EXPLODE (R)",
+    "result": "AUTO",
+    "total": 1.217,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.633,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 3,
+  "played": {
+   "REJECTED→OUTSIDE CUT": 1,
+   "COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": 1.3179999999999998,
+  "tExit": 0.037,
+  "total": 1.3556666666666668,
+  "vMin": 7.400000000000001,
+  "vC": 7.419999999999999,
+  "v1": 8.71,
+  "ctl": null,
+  "p25": 17.81,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "REJECTED",
+    "total": 1.75,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.371,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.25,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 40
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→OUTSIDE CUT": 1,
+   "REJECTED→KNOCK-ON": 1,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 1.4855,
+  "tExit": 0.037,
+  "total": 1.5230000000000001,
+  "vMin": 7.4,
+  "vC": 7.42,
+  "v1": 8.7,
+  "ctl": null,
+  "p25": 17.225,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -9.6"
+  ],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "REJECTED",
+    "total": 1.75,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.412,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.571,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 1.475,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.27625,
+  "tExit": 0.017,
+  "total": 0.29275,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.2,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.36,
+  "fwd": 2.1575,
+  "dh": 31.75,
+  "ballLat": 0.2825,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.488,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.342,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.208,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 0.5355,
+  "tExit": 0.00425,
+  "total": 0.5397500000000001,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.3,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.715,
+  "fwd": 2.0324999999999998,
+  "dh": 35,
+  "ballLat": 0.645,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.246,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.154,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.842,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "COMPACT OUTSIDE REDIRECT": 2
+  },
+  "tDec": 0.5355,
+  "tExit": 0.00425,
+  "total": 0.5397500000000001,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.3,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.715,
+  "fwd": 2.0324999999999998,
+  "dh": 35,
+  "ballLat": 0.645,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.246,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.154,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.842,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.0105,
+  "total": 0.20224999999999999,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.2874999999999996,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.6675,
+  "fwd": 2.05,
+  "dh": 35,
+  "ballLat": 0.5974999999999999,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.321,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.238,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.154,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.096,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "CANCELLED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.3315,
+  "tExit": 0.025,
+  "total": 0.3565,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.76,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.6950000000000001,
+  "fwd": 4.557499999999999,
+  "dh": 39.5,
+  "ballLat": 0.58,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.396,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.321,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.246,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.017,
+  "total": 0.4255,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.640000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.2575,
+  "fwd": 4.7250000000000005,
+  "dh": 17.25,
+  "ballLat": 0.1325,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.017,
+  "total": 0.4255,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.640000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.2575,
+  "fwd": 4.7250000000000005,
+  "dh": 17.25,
+  "ballLat": 0.1325,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.31775000000000003,
+  "tExit": 0.017,
+  "total": 0.33475,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.7475,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.6125,
+  "fwd": 4.6075,
+  "dh": 35,
+  "ballLat": 0.52,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.313,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.238,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.121,
+  "tExit": 0.038,
+  "total": 0.1585,
+  "vMin": 3.19,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.86,
+  "prep": null,
+  "tRel": null,
+  "lat": 1.37,
+  "fwd": 4.22,
+  "dh": 35,
+  "ballLat": 1.3050000000000002,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.179,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.138,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 4
+  },
+  "tDec": 0.37925,
+  "tExit": 0.021,
+  "total": 0.4,
+  "vMin": 5.2924999999999995,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.1125,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.7575000000000001,
+  "fwd": 7.735,
+  "dh": 32.5,
+  "ballLat": 0.665,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.508,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.433,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.292,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "LATERAL TRANSFER": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.021,
+  "total": 0.442,
+  "vMin": 5.295,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.0275,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.49,
+  "fwd": 7.819999999999999,
+  "dh": 23.75,
+  "ballLat": 0.39249999999999996,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.517,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.021,
+  "total": 0.442,
+  "vMin": 5.295,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.1375,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.8300000000000001,
+  "fwd": 7.72,
+  "dh": 24.75,
+  "ballLat": 0.72,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 6,
+  "bodyEv": [
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.517,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.35649999999999993,
+  "tExit": 0.021,
+  "total": 0.3775,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.192499999999999,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.9750000000000001,
+  "fwd": 7.68,
+  "dh": 34.25,
+  "ballLat": 0.8624999999999999,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 6,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.292,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.1395,
+  "tExit": 0.042,
+  "total": 0.1815,
+  "vMin": 5.28,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.405000000000001,
+  "prep": null,
+  "tRel": null,
+  "lat": 1.8199999999999998,
+  "fwd": 7.35,
+  "dh": 35,
+  "ballLat": 1.73,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -8.4"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.221,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.142,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "knock"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 3,
+   "URGENT REACH": 1
+  },
+  "tDec": 0.08125,
+  "tExit": 0.025,
+  "total": 0.35,
+  "vMin": 8.424999999999999,
+  "vC": 9.56,
+  "v1": 8.4175,
+  "ctl": null,
+  "p25": 18.447499999999998,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.43,
+  "fwd": 12.934999999999999,
+  "dh": 8.75,
+  "ballLat": 0.32999999999999996,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.35,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 3,
+   "URGENT REACH": 1
+  },
+  "tDec": 0.08125,
+  "tExit": 0.025,
+  "total": 0.35,
+  "vMin": 8.424999999999999,
+  "vC": 9.56,
+  "v1": 8.4175,
+  "ctl": null,
+  "p25": 18.447499999999998,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.43,
+  "fwd": 12.934999999999999,
+  "dh": 8.75,
+  "ballLat": 0.32999999999999996,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.35,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "CANCELLED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "CANCELLED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "knock"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "WALK",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "LATERAL TRANSFER": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.5045000000000001,
+  "tExit": 0.015,
+  "total": 0.5185,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.125,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.12000000000000001,
+  "fwd": 2.2300000000000004,
+  "dh": 22.5,
+  "ballLat": 0.23,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.554,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.483,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.488,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.2345,
+  "tExit": 0.012750000000000001,
+  "total": 0.24675,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.2275,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.4774999999999999,
+  "fwd": 2.105,
+  "dh": 35.75,
+  "ballLat": 0.59,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.208,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.2345,
+  "tExit": 0.012750000000000001,
+  "total": 0.24675,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.2275,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.4774999999999999,
+  "fwd": 2.105,
+  "dh": 35.75,
+  "ballLat": 0.59,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.208,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.5045000000000001,
+  "tExit": 0.015,
+  "total": 0.5185,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.125,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.12000000000000001,
+  "fwd": 2.2300000000000004,
+  "dh": 22.5,
+  "ballLat": 0.23,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.554,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.483,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.488,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.012750000000000001,
+  "total": 0.20425000000000001,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.2375,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.52,
+  "fwd": 2.0875,
+  "dh": 37.5,
+  "ballLat": 0.6299999999999999,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.321,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.171,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.096,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "JOG",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "CANCELLED→CARRY (a controlled arc)": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.171",
+   "CROSS -11"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.433,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": 0.358,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.20625,
+  "total": 0.4105,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.6450000000000005,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.34750000000000003,
+  "fwd": 4.665,
+  "dh": 25.25,
+  "ballLat": 0.5025,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.171",
+   "CROSS -11"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.433,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.358,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.017,
+  "total": 0.4255,
+  "vMin": 2.725,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.5875,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.295,
+  "fwd": 4.635,
+  "dh": 17.25,
+  "ballLat": 0.45499999999999996,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "REJECTED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.121,
+  "tExit": 0.015,
+  "total": 0.1355,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.115,
+  "prep": null,
+  "tRel": null,
+  "lat": 1.76,
+  "fwd": 4.26,
+  "dh": 35,
+  "ballLat": 1.935,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.158,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.113,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.31775000000000003,
+  "tExit": 0.017,
+  "total": 0.33475,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.795,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.7375,
+  "fwd": 4.5775,
+  "dh": 35,
+  "ballLat": 0.9,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.313,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.238,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "RUN",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 1,
+  "played": {
+   "CANCELLED→CARRY (a controlled arc)": 3,
+   "LATERAL TRANSFER": 1
+  },
+  "tDec": 0.533,
+  "tExit": 0.008,
+  "total": 0.542,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.15,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.7,
+  "fwd": 7.82,
+  "dh": 28,
+  "ballLat": 0.83,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "box"
+    ]
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PLAYED",
+    "total": 0.542,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.11575,
+  "total": 0.4315,
+  "vMin": 5.2925,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.0975,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.7225,
+  "fwd": 7.742500000000001,
+  "dh": 30,
+  "ballLat": 0.8625,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.396,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.1335,
+  "total": 0.44925000000000004,
+  "vMin": 5.2925,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.1,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.7275,
+  "fwd": 7.74,
+  "dh": 33.5,
+  "ballLat": 0.8650000000000001,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.467,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CANCELLED→CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.1395,
+  "tExit": 0.021,
+  "total": 0.1605,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.58,
+  "prep": null,
+  "tRel": null,
+  "lat": 2.395,
+  "fwd": 7.165,
+  "dh": 39,
+  "ballLat": 2.5650000000000004,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -7.5"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.2,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "plant timing",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.121,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 4
+  },
+  "tDec": 0.35649999999999993,
+  "tExit": 0.021,
+  "total": 0.3775,
+  "vMin": 5.29,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.2475,
+  "prep": null,
+  "tRel": null,
+  "lat": 1.18,
+  "fwd": 7.6075,
+  "dh": 34.25,
+  "ballLat": 1.3375000000000001,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.367,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PLAYED",
+    "total": 0.292,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "CROQUETA",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": null,
+  "total": null,
+  "vMin": 6.36,
+  "vC": 9.66,
+  "v1": 6.735,
+  "ctl": null,
+  "p25": 16.5,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.0025,
+  "fwd": 11.8,
+  "dh": 0.25,
+  "ballLat": 0.1175,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": null,
+  "total": null,
+  "vMin": 6.36,
+  "vC": 9.66,
+  "v1": 6.735,
+  "ctl": null,
+  "p25": 16.5,
+  "prep": null,
+  "tRel": null,
+  "lat": 0.0025,
+  "fwd": 11.8,
+  "dh": 0.25,
+  "ballLat": 0.1175,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": null,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "INSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "CANCELLED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "no controlled continuation: next contact too late (+1.28 s"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "CROQUETA",
+  "lane": "OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 35,
+   "lane": true
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "CANCELLED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "tRel": null,
+  "lat": null,
+  "fwd": null,
+  "dh": null,
+  "ballLat": null,
+  "tPress": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "committed landing",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": null,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "CANCELLED",
+    "total": null,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ }
+]

@@ -1,0 +1,3337 @@
+[
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "WALK",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 0.8355,
+  "tExit": 0.033,
+  "total": 0.8685,
+  "vMin": 1.03,
+  "vC": 1.3,
+  "v1": 1.5,
+  "ctl": 0.05975,
+  "p25": 3.4,
+  "prep": 0.21525,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.258",
+   "FLOAT 0.263",
+   "FLOAT 0.258",
+   "FLOAT 0.258"
+  ],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.883,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.883,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.808,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.18125000000000002,
+  "tExit": 0.001,
+  "total": 0.18225000000000002,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.7125000000000004,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.192,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.18125000000000002,
+  "tExit": 0.001,
+  "total": 0.18225000000000002,
+  "vMin": 1.5,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.7125000000000004,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.192,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→GATHER": 1,
+   "REJECTED→LATERAL TRANSFER": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.642,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "REJECTED",
+    "total": 1.15,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.004,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 3,
+   "PENDING→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.192,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "PENDING",
+    "total": 0.004,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "JOG",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0294999999999999,
+  "tExit": 0.113,
+  "total": 1.1415,
+  "vMin": 1.96,
+  "vC": 2.19,
+  "v1": 3.2,
+  "ctl": 0.06,
+  "p25": 6.994999999999999,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -6.9",
+   "CROSS -6.9",
+   "CROSS -6.9",
+   "CROSS -6.9"
+  ],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.254,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.179,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.104,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.029,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0,
+  "total": 0.5125,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.81,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.579,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0,
+  "total": 0.5125,
+  "vMin": 3.2,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.81,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.579,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.37474999999999997,
+  "tExit": 0,
+  "total": 0.37499999999999994,
+  "vMin": 3.2,
+  "vC": 4.2175,
+  "v1": 3.2,
+  "ctl": 0.05925,
+  "p25": 8.2575,
+  "prep": 0.23425,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.429,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.388,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.35,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.333,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 2,
+   "PENDING→LATERAL TRANSFER": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.371,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.654,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.579,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "RUN",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0795,
+  "tExit": 0.3,
+  "total": 1.3794999999999997,
+  "vMin": 1.85,
+  "vC": 2.6,
+  "v1": 5.3,
+  "ctl": 0.059,
+  "p25": 10.55,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.492,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.417,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.342,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.267,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "LATERAL TRANSFER": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0,
+  "total": 0.46275,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.932500000000001,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.496,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.421,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.346,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "LATERAL TRANSFER": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0,
+  "total": 0.46275,
+  "vMin": 5.3,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.932500000000001,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.496,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.421,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.346,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.9124999999999999,
+  "tExit": 0,
+  "total": 0.9124999999999999,
+  "vMin": 4.95,
+  "vC": 4.95,
+  "v1": 5.3,
+  "ctl": 0.061,
+  "p25": 12.579999999999998,
+  "prep": 0.7735,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.025,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.95,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.875,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.8,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 3,
+   "PENDING→LATERAL TRANSFER": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.496,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.421,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.346,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 1,
+   "REJECTED→KNOCK-ON": 2,
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.637,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.208,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.108,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 0.917,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 2,
+   "COMPACT OUTSIDE REDIRECT": 1,
+   "URGENT REACH": 1
+  },
+  "tDec": 0.9229999999999999,
+  "tExit": 0.004,
+  "total": 0.9272499999999999,
+  "vMin": 8.275,
+  "vC": 8.282499999999999,
+  "v1": 8.93,
+  "ctl": null,
+  "p25": 20.7325,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.979,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.196,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.392,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 2,
+   "COMPACT OUTSIDE REDIRECT": 1,
+   "URGENT REACH": 1
+  },
+  "tDec": 0.9229999999999999,
+  "tExit": 0.004,
+  "total": 0.9272499999999999,
+  "vMin": 8.275,
+  "vC": 8.282499999999999,
+  "v1": 8.93,
+  "ctl": null,
+  "p25": 20.7325,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.979,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.196,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.392,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 1.0267499999999998,
+  "tExit": 0.004,
+  "total": 1.0310000000000001,
+  "vMin": 7.18,
+  "vC": 7.18,
+  "v1": 8.7375,
+  "ctl": 0.06025,
+  "p25": 20.5525,
+  "prep": 0.8875,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 7,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.137,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.062,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.008,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 30
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→KNOCK-ON": 2,
+   "PENDING→COMPACT OUTSIDE REDIRECT": 1,
+   "PENDING→URGENT REACH": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 0.979,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 1.196,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "PENDING",
+    "total": 0.392,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "WALK",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 0.8355,
+  "tExit": 0.096,
+  "total": 0.9314999999999999,
+  "vMin": 1.03,
+  "vC": 1.3,
+  "v1": 1.5,
+  "ctl": 0.05975,
+  "p25": 3.1075,
+  "prep": 0.21525,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.258",
+   "FLOAT 0.263",
+   "FLOAT 0.258",
+   "FLOAT 0.258"
+  ],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.963,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.946,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.871,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 3,
+   "COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": 0.05625,
+  "tExit": 0.17174999999999999,
+  "total": 0.22799999999999998,
+  "vMin": 1.2674999999999998,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6225,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.183,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.267,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 3,
+   "COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": 0.05625,
+  "tExit": 0.17174999999999999,
+  "total": 0.22799999999999998,
+  "vMin": 1.2674999999999998,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.6225,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.183,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.267,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→GATHER": 2,
+   "REJECTED→CARRY (a controlled arc)": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.733,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.692,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.654,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.592,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→CARRY (a controlled arc)": 3,
+   "PENDING→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "PENDING",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "PENDING",
+    "total": 0.183,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.267,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "PENDING",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "JOG",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0294999999999999,
+  "tExit": 0.163,
+  "total": 1.1915,
+  "vMin": 1.75,
+  "vC": 2.19,
+  "v1": 3.2,
+  "ctl": 0.06,
+  "p25": 6.19,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -6.1",
+   "CROSS -6.1",
+   "CROSS -6.1",
+   "CROSS -6.1"
+  ],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.304,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.229,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.154,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.079,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.027000000000000003,
+  "total": 0.54,
+  "vMin": 3.1900000000000004,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.4625,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.663,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.027000000000000003,
+  "total": 0.54,
+  "vMin": 3.1900000000000004,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.4625,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.663,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.37474999999999997,
+  "tExit": 0.013,
+  "total": 0.38775000000000004,
+  "vMin": 3.2,
+  "vC": 4.23,
+  "v1": 3.2,
+  "ctl": 0.05925,
+  "p25": 7.915,
+  "prep": 0.23425,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.363,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.346,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 2,
+   "PENDING→LATERAL TRANSFER": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.417,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.663,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.588,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "RUN",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0795,
+  "tExit": 0.283,
+  "total": 1.3625,
+  "vMin": 2.07,
+  "vC": 2.6,
+  "v1": 5.3,
+  "ctl": 0.059,
+  "p25": 9.45,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.475,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.4,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.325,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.25,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "LATERAL TRANSFER": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0.04575,
+  "total": 0.50825,
+  "vMin": 5.2675,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.35,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.55,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "LATERAL TRANSFER": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0.04575,
+  "total": 0.50825,
+  "vMin": 5.2675,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 12.35,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.55,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.9124999999999999,
+  "tExit": 0.017,
+  "total": 0.9295,
+  "vMin": 4.95,
+  "vC": 4.95,
+  "v1": 5.3,
+  "ctl": 0.061,
+  "p25": 11.515,
+  "prep": 0.7735,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.042,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.967,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.892,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.817,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 3,
+   "PENDING→LATERAL TRANSFER": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.55,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.475,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.4,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.608,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→KNOCK-ON": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 10,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "REJECTED",
+    "total": 1.467,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.471,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.396,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.304,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 4
+  },
+  "tDec": 0.7272500000000001,
+  "tExit": 0.05725,
+  "total": 0.78425,
+  "vMin": 8.4525,
+  "vC": 8.625,
+  "v1": 8.79,
+  "ctl": null,
+  "p25": 19.567500000000003,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.579,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.658,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "KNOCK-ON": 4
+  },
+  "tDec": 0.7272500000000001,
+  "tExit": 0.05725,
+  "total": 0.78425,
+  "vMin": 8.4525,
+  "vC": 8.625,
+  "v1": 8.79,
+  "ctl": null,
+  "p25": 19.567500000000003,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.579,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "AUTO",
+    "total": 0.658,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 1.0267499999999998,
+  "tExit": 0.017,
+  "total": 1.04375,
+  "vMin": 6.859999999999999,
+  "vC": 6.859999999999999,
+  "v1": 8.6525,
+  "ctl": 0.06025,
+  "p25": 18.1,
+  "prep": 0.8875,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.929,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.15,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.075,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.021,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 50
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→KNOCK-ON": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 1.142,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 0.579,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "KNOCK-ON",
+    "result": "PENDING",
+    "total": 0.658,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "WALK",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 0.8355,
+  "tExit": 0.117,
+  "total": 0.9522499999999999,
+  "vMin": 1.03,
+  "vC": 1.3,
+  "v1": 1.5,
+  "ctl": 0.05975,
+  "p25": 2.7224999999999997,
+  "prep": 0.21525,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 2,
+  "bodyEv": [
+   "FLOAT 0.258",
+   "FLOAT 0.263",
+   "FLOAT 0.258",
+   "FLOAT 0.258"
+  ],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.983,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.967,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.967,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 0.892,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.13425,
+  "tExit": 0.10724999999999998,
+  "total": 0.2415,
+  "vMin": 1.2525,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.535,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.13425,
+  "tExit": 0.10724999999999998,
+  "total": 0.2415,
+  "vMin": 1.2525,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.535,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→GATHER": 1,
+   "REJECTED→CARRY (a controlled arc)": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.825,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.142,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.692,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.825,
+    "rej": [
+     "entry 1.5 m/s below its 2.8 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "WALK",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 3,
+   "PENDING→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.304,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "PENDING",
+    "total": 0.204,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "JOG",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0294999999999999,
+  "tExit": 0.192,
+  "total": 1.2205,
+  "vMin": 1.76,
+  "vC": 2.19,
+  "v1": 3.2,
+  "ctl": 0.06,
+  "p25": 5.1899999999999995,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.333,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.258,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.183,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.108,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.06699999999999999,
+  "total": 0.579,
+  "vMin": 3.15,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.9425,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.533,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.458,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.7,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.625,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "LATERAL TRANSFER": 2
+  },
+  "tDec": 0.5125,
+  "tExit": 0.06699999999999999,
+  "total": 0.579,
+  "vMin": 3.15,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.9425,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.533,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.458,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.7,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "AUTO",
+    "total": 0.625,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.37474999999999997,
+  "tExit": 0.033,
+  "total": 0.4085,
+  "vMin": 3.2,
+  "vC": 4.2475000000000005,
+  "v1": 3.2,
+  "ctl": 0.05925,
+  "p25": 7.4375,
+  "prep": 0.23425,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 8,
+  "bodyEv": [
+   "CROSS -5.5"
+  ],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.463,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.421,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.383,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.367,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "JOG",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 2,
+   "PENDING→LATERAL TRANSFER": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.533,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.458,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.7,
+    "rej": null
+   },
+   {
+    "played": "LATERAL TRANSFER",
+    "result": "PENDING",
+    "total": 0.625,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "RUN",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "MATTHEWS FEINT (drag-push)": 4
+  },
+  "tDec": 1.0795,
+  "tExit": 0.492,
+  "total": 1.5705,
+  "vMin": 2.27,
+  "vC": 2.6,
+  "v1": 5.3,
+  "ctl": 0.059,
+  "p25": 7.26,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.683,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.608,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.533,
+    "rej": null
+   },
+   {
+    "played": "MATTHEWS FEINT (drag-push) (R)",
+    "result": "PLAYED",
+    "total": 1.458,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "COMPACT INSIDE REDIRECT": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0.09475000000000001,
+  "total": 0.5575,
+  "vMin": 5.1425,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.440000000000001,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -6.8",
+   "CROSS -6.8",
+   "CROSS -6.8"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.596,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.667,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 3,
+   "COMPACT INSIDE REDIRECT": 1
+  },
+  "tDec": 0.46249999999999997,
+  "tExit": 0.09475000000000001,
+  "total": 0.5575,
+  "vMin": 5.1425,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.440000000000001,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -6.8",
+   "CROSS -6.8",
+   "CROSS -6.8"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.596,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.667,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 0.9124999999999999,
+  "tExit": 0.038,
+  "total": 0.9505000000000001,
+  "vMin": 4.95,
+  "vC": 4.95,
+  "v1": 5.3,
+  "ctl": 0.061,
+  "p25": 10.08,
+  "prep": 0.7735,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.063,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.988,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.913,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.838,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "RUN",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 3,
+   "PENDING→COMPACT INSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -6.8",
+   "CROSS -6.8",
+   "CROSS -6.8"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.596,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.521,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.667,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "MATTHEWS",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→OUTSIDE CUT": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "REJECTED",
+    "total": 1.783,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.533,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.45,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.558,
+    "rej": [
+     "entry 9.7 m/s far above its 6.4 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 1.10625,
+  "tExit": 0.11224999999999999,
+  "total": 1.21875,
+  "vMin": 7.48,
+  "vC": 7.7975,
+  "v1": 8.5475,
+  "ctl": null,
+  "p25": 14.157499999999999,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 11,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.379,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.317,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT OUTSIDE REDIRECT": 2,
+   "COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": 1.10625,
+  "tExit": 0.11224999999999999,
+  "total": 1.21875,
+  "vMin": 7.48,
+  "vC": 7.7975,
+  "v1": 8.5475,
+  "ctl": null,
+  "p25": 14.157499999999999,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 11,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.379,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 1.317,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "OUTSIDE_CUT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "OUTSIDE CUT": 4
+  },
+  "tDec": 1.05175,
+  "tExit": 0.043750000000000004,
+  "total": 1.09575,
+  "vMin": 6.9825,
+  "vC": 7.0075,
+  "v1": 8.64,
+  "ctl": 0.06,
+  "p25": 15.170000000000002,
+  "prep": 0.91225,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 12,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 0.958,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.179,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.104,
+    "rej": null
+   },
+   {
+    "played": "OUTSIDE CUT (R)",
+    "result": "PLAYED",
+    "total": 1.142,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "MATTHEWS",
+  "lane": "COMPACT_OUTSIDE_REDIRECT",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": 70
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "PENDING→COMPACT OUTSIDE REDIRECT": 2,
+   "PENDING→COMPACT INSIDE REDIRECT": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 11,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 1.379,
+    "rej": null
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 0.733,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "PENDING",
+    "total": 1.317,
+    "rej": null
+   }
+  ]
+ }
+]

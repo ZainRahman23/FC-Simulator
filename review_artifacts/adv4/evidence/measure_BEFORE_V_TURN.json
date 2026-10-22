@@ -1,0 +1,6666 @@
+[
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.49999999999999994,
+  "tExit": 0.283,
+  "total": 0.7835,
+  "vMin": 0.19,
+  "vC": 0.28500000000000003,
+  "v1": 1.5,
+  "ctl": 0.141,
+  "p25": 2.9375,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 0,
+  "bodyEv": [
+   "FLOAT 0.154",
+   "FLOAT 0.154",
+   "FLOAT 0.154",
+   "FLOAT 0.154"
+  ],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.829,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.754,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.813,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.738,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.13974999999999999,
+  "total": 0.13974999999999999,
+  "vMin": 1.48,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.66,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.179,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.063,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.063,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CARRY (a controlled arc)": 4
+  },
+  "tDec": 0,
+  "tExit": 0.13974999999999999,
+  "total": 0.13974999999999999,
+  "vMin": 1.48,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.66,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.254,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.179,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.063,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.063,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.875,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.713,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.875,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.713,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.875,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.713,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "WALK",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.875,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.713,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.7625,
+  "tExit": 0.388,
+  "total": 1.1504999999999999,
+  "vMin": 0.42,
+  "vC": 0.64,
+  "v1": 3.2,
+  "ctl": 0.14,
+  "p25": 5.6125,
+  "prep": 0.4625,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.263,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.188,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.113,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.038,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.39575000000000005,
+  "total": 0.6000000000000001,
+  "vMin": 3.16,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.07,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.517,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.683,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.20425,
+  "tExit": 0.39575000000000005,
+  "total": 0.6000000000000001,
+  "vMin": 3.16,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 7.07,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.517,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.442,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.758,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.683,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.775,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.775,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.775,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "JOG",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.833,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.758,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.775,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.8045,
+  "tExit": 0.548,
+  "total": 1.3525,
+  "vMin": 0.36750000000000005,
+  "vC": 0.5549999999999999,
+  "v1": 5.3,
+  "ctl": 0.141,
+  "p25": 8.1025,
+  "prep": 0.5055000000000001,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.471,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.388,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.313,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.238,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.2385,
+  "total": 0.55425,
+  "vMin": 5.21,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.8275,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.5,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.717,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.31575,
+  "tExit": 0.2385,
+  "total": 0.55425,
+  "vMin": 5.21,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 11.8275,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.5,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.717,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.942,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.867,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.792,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.942,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.867,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.792,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.942,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.867,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.792,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "RUN",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 3,
+   "REJECTED→COMPACT OUTSIDE REDIRECT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.942,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.867,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.792,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT OUTSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.7,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.387,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.329,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.192,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "URGENT REACH": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.8885000000000001,
+  "tExit": 0.428,
+  "total": 1.3165,
+  "vMin": 7.695,
+  "vC": 8.6425,
+  "v1": 8.4625,
+  "ctl": null,
+  "p25": 16.185000000000002,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 2.108,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.521,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.212,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "URGENT REACH": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.8885000000000001,
+  "tExit": 0.428,
+  "total": 1.3165,
+  "vMin": 7.695,
+  "vC": 8.6425,
+  "v1": 8.4625,
+  "ctl": null,
+  "p25": 16.185000000000002,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 2.108,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 1.521,
+    "rej": null
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "AUTO",
+    "total": 1.212,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 3,
+   "REJECTED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.579,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.596,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.821,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.746,
+    "rej": [
+     "exit 60° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.7,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.387,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.329,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.192,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→URGENT REACH": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.7,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.387,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.329,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   },
+   {
+    "played": "URGENT REACH",
+    "result": "REJECTED",
+    "total": 1.192,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 60° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -60
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 3,
+   "REJECTED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.687,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.804,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.821,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.746,
+    "rej": [
+     "exit 60° below its 80°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.49999999999999994,
+  "tExit": 0.346,
+  "total": 0.8460000000000001,
+  "vMin": 0.19,
+  "vC": 0.28500000000000003,
+  "v1": 1.5,
+  "ctl": 0.141,
+  "p25": 2.5700000000000003,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.892,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.817,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.875,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 0.8,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.11975,
+  "tExit": 0.10124999999999999,
+  "total": 0.22074999999999997,
+  "vMin": 1.4349999999999998,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.5025000000000004,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.283,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.113,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.11975,
+  "tExit": 0.10124999999999999,
+  "total": 0.22074999999999997,
+  "vMin": 1.4349999999999998,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.5025000000000004,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.283,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.258,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.229,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.113,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.2"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.733,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.929,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.158,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.754,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.2"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.733,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.929,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.158,
+    "rej": [
+     "box",
+     "no change"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.754,
+    "rej": [
+     "box",
+     "no change"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→GATHER": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.2"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.733,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.929,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.158,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 0.754,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "WALK",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.4625,
+  "tExit": 0.142,
+  "total": 0.6040000000000001,
+  "vMin": 0.72,
+  "vC": 1.3,
+  "v1": 1.5,
+  "ctl": 0.0935,
+  "p25": 3.0850000000000004,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 6,
+  "bodyEv": [
+   "FLOAT 0.2",
+   "FLOAT 0.2",
+   "FLOAT 0.196",
+   "FLOAT 0.196"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.65,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.633,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.558,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.8335,
+  "tExit": 0.454,
+  "total": 1.2874999999999999,
+  "vMin": 0.3,
+  "vC": 0.45,
+  "v1": 3.2,
+  "ctl": 0.141,
+  "p25": 4.15,
+  "prep": 0.5345,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "FLOAT 0.188"
+  ],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.4,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.325,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.25,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.175,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.3335,
+  "tExit": 0.129,
+  "total": 0.4625,
+  "vMin": 2.99,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.65,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.5,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.35,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.3335,
+  "tExit": 0.129,
+  "total": 0.4625,
+  "vMin": 2.99,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 6.65,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.5,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.425,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.35,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→GATHER": 2,
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→BRAKING PIVOT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 3,
+  "bodyEv": [
+   "CROSS -5.2",
+   "CROSS -7.6",
+   "CROSS -5.2"
+  ],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.225,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.842,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.896,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→GATHER": 2,
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→BRAKING PIVOT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 3,
+  "bodyEv": [
+   "CROSS -5.2",
+   "CROSS -7.6",
+   "CROSS -5.2"
+  ],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.225,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.842,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.896,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "box",
+     "surface"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→GATHER": 2,
+   "REJECTED→CARRY (a controlled arc)": 1,
+   "REJECTED→BRAKING PIVOT": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 3,
+  "bodyEv": [
+   "CROSS -5.2",
+   "CROSS -7.6",
+   "CROSS -5.2"
+  ],
+  "runs": [
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.225,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.842,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.896,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "GATHER",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "JOG",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.6705000000000001,
+  "tExit": 0.267,
+  "total": 0.9375,
+  "vMin": 0.72,
+  "vC": 1.28,
+  "v1": 3.2,
+  "ctl": 0.093,
+  "p25": 5.24,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.975,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.825,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "V-PULL": 4
+  },
+  "tDec": 0.8510000000000001,
+  "tExit": 0.604,
+  "total": 1.455,
+  "vMin": 0.3,
+  "vC": 0.45,
+  "v1": 5.3,
+  "ctl": 0.14175,
+  "p25": 6.084999999999999,
+  "prep": 0.55275,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 14,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.521,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.508,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.433,
+    "rej": null
+   },
+   {
+    "played": "V-PULL (R)",
+    "result": "PLAYED",
+    "total": 1.358,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.38349999999999995,
+  "tExit": 0.146,
+  "total": 0.5295,
+  "vMin": 4.85,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 10.6325,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.642,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.567,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": 0.38349999999999995,
+  "tExit": 0.146,
+  "total": 0.5295,
+  "vMin": 4.85,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 10.6325,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.642,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.567,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.492,
+    "rej": null
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "AUTO",
+    "total": 0.417,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.133,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.133,
+    "rej": [
+     "surface",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "surface",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1,
+    "rej": [
+     "surface",
+     "box"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "surface",
+     "box"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.133,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.058,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 0.796,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "RUN",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.7165,
+  "tExit": 0.292,
+  "total": 1.0085,
+  "vMin": 1.25,
+  "vC": 2.45,
+  "v1": 5.3,
+  "ctl": 0.096,
+  "p25": 7.8175,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.121,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.046,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.971,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.896,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.883,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.746,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.683,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.604,
+    "rej": [
+     "entry 9.7 m/s far above its 4.6 m/s",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.91475,
+  "tExit": 0.11325,
+  "total": 1.02775,
+  "vMin": 5.54,
+  "vC": 7.3,
+  "v1": 7.54,
+  "ctl": 0.10925,
+  "p25": 11.0125,
+  "prep": 0.594,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -36.4",
+   "KNEE -36.4"
+  ],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.987,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.208,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.133,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.783,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.91475,
+  "tExit": 0.11325,
+  "total": 1.02775,
+  "vMin": 5.54,
+  "vC": 7.3,
+  "v1": 7.54,
+  "ctl": 0.10925,
+  "p25": 11.0125,
+  "prep": 0.594,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -36.4",
+   "KNEE -36.4"
+  ],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.987,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.208,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.133,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.783,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 5,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.646,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.725,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.896,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.817,
+    "rej": [
+     "exit 90° below its 112°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.883,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.746,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.683,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.604,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 1,
+   "REJECTED→COMPACT INSIDE REDIRECT": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.883,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.746,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.683,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   },
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.604,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 90° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -90
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 1.6925000000000001,
+  "tExit": 0.35625,
+  "total": 2.049,
+  "vMin": 0.9849999999999999,
+  "vC": 1.8675,
+  "v1": 6.445,
+  "ctl": 0.09475,
+  "p25": 2.7024999999999997,
+  "prep": 1.5025,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.121,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.975,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→BRAKING PIVOT": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.9,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.17175,
+  "tExit": 0.167,
+  "total": 0.33875,
+  "vMin": 1.31,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.11,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.471,
+    "rej": null
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.396,
+    "rej": null
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.321,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.167,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 3,
+   "CARRY (a controlled arc)": 1
+  },
+  "tDec": 0.17175,
+  "tExit": 0.167,
+  "total": 0.33875,
+  "vMin": 1.31,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 3.11,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.471,
+    "rej": null
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.396,
+    "rej": null
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.321,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.167,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.49999999999999994,
+  "tExit": 0.358,
+  "total": 0.8585,
+  "vMin": 0.09,
+  "vC": 0.23,
+  "v1": 1.5,
+  "ctl": 0.091,
+  "p25": 2.3475,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.904,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.829,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.888,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.813,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→BRAKING PIVOT": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "swing speed",
+     "box"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.9,
+    "rej": [
+     "box",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 2,
+   "REJECTED→BRAKING PIVOT": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.717,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.975,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "BRAKING PIVOT",
+    "result": "REJECTED",
+    "total": 0.9,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "WALK",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.4625,
+  "tExit": 0.142,
+  "total": 0.6040000000000001,
+  "vMin": 0.72,
+  "vC": 1.3,
+  "v1": 1.8275000000000001,
+  "ctl": 0.0935,
+  "p25": 3.2775,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 7,
+  "bodyEv": [
+   "CROSS -9.5",
+   "CROSS -9.3"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.65,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.633,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.558,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 1,
+   "REJECTED→OUTSIDE HOOK": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "FLOAT 0.217"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.275,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.533,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.525,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.325,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 1,
+   "CRUYFF TURN": 3
+  },
+  "tDec": 0.629,
+  "tExit": 0.24825,
+  "total": 0.877,
+  "vMin": 1.2049999999999998,
+  "vC": 1.7600000000000002,
+  "v1": 3.2,
+  "ctl": 0.09300000000000001,
+  "p25": 4.4275,
+  "prep": 0.371,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.808,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.975,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.825,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 1,
+   "CRUYFF TURN": 3
+  },
+  "tDec": 0.629,
+  "tExit": 0.24825,
+  "total": 0.877,
+  "vMin": 1.2049999999999998,
+  "vC": 1.7600000000000002,
+  "v1": 3.2,
+  "ctl": 0.09300000000000001,
+  "p25": 4.4275,
+  "prep": 0.371,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 0.808,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.975,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "AUTO",
+    "total": 0.825,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.81575,
+  "tExit": 0.389,
+  "total": 1.204,
+  "vMin": 0.1675,
+  "vC": 0.44499999999999995,
+  "v1": 3.2,
+  "ctl": 0.09075,
+  "p25": 3.43,
+  "prep": 0.5165,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 7,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.283,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.208,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 1,
+   "REJECTED→OUTSIDE HOOK": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "FLOAT 0.217"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.275,
+    "rej": [
+     "surface",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.533,
+    "rej": [
+     "surface",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.525,
+    "rej": [
+     "surface",
+     "swing speed"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.325,
+    "rej": [
+     "surface",
+     "swing speed"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→COMPACT INSIDE REDIRECT": 1,
+   "REJECTED→OUTSIDE HOOK": 3
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 7,
+  "bodyEv": [
+   "FLOAT 0.217"
+  ],
+  "runs": [
+   {
+    "played": "COMPACT INSIDE REDIRECT",
+    "result": "REJECTED",
+    "total": 1.275,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.533,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.525,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.325,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "JOG",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.6705000000000001,
+  "tExit": 0.267,
+  "total": 0.9375,
+  "vMin": 0.72,
+  "vC": 1.28,
+  "v1": 3.2,
+  "ctl": 0.093,
+  "p25": 4.260000000000001,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.975,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.9,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.825,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→OUTSIDE HOOK": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.646,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.571,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.55,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.475,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.7795000000000001,
+  "tExit": 0.375,
+  "total": 1.1544999999999999,
+  "vMin": 2.2,
+  "vC": 3.64,
+  "v1": 5.3,
+  "ctl": 0.109,
+  "p25": 6.0725,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.267,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.117,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.042,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.7795000000000001,
+  "tExit": 0.375,
+  "total": 1.1544999999999999,
+  "vMin": 2.2,
+  "vC": 3.64,
+  "v1": 5.3,
+  "ctl": 0.109,
+  "p25": 6.0725,
+  "prep": 0.45749999999999996,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.267,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.117,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.042,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.8664999999999999,
+  "tExit": 0.458,
+  "total": 1.3255000000000001,
+  "vMin": 0.22,
+  "vC": 0.59,
+  "v1": 5.3,
+  "ctl": 0.092,
+  "p25": 4.6825,
+  "prep": 0.5685,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.438,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.363,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.288,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.213,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→OUTSIDE HOOK": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.646,
+    "rej": []
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.571,
+    "rej": [
+     "box"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.55,
+    "rej": [
+     "box"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.475,
+    "rej": [
+     "box"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→OUTSIDE HOOK": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.646,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.571,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.55,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.475,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "RUN",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.7665,
+  "tExit": 0.288,
+  "total": 1.0545,
+  "vMin": 1.25,
+  "vC": 2.42,
+  "v1": 5.3,
+  "ctl": 0.093,
+  "p25": 5.8125,
+  "prep": 0.5055000000000001,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.167,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.092,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.017,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.942,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.971,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.696,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.662,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.612,
+    "rej": [
+     "exit 120° beyond its 108°",
+     "the exit is on the wrong side for this foot"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.91475,
+  "tExit": 0.131,
+  "total": 1.04575,
+  "vMin": 5.297499999999999,
+  "vC": 7.3,
+  "v1": 7.675,
+  "ctl": 0.10925,
+  "p25": 6.6675,
+  "prep": 0.594,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -32.7",
+   "KNEE -32.7"
+  ],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.225,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.15,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.804,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "RONALDO CHOP": 4
+  },
+  "tDec": 0.91475,
+  "tExit": 0.131,
+  "total": 1.04575,
+  "vMin": 5.297499999999999,
+  "vC": 7.3,
+  "v1": 7.675,
+  "ctl": 0.10925,
+  "p25": 6.6675,
+  "prep": 0.594,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -32.7",
+   "KNEE -32.7"
+  ],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.225,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 1.15,
+    "rej": null
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "AUTO",
+    "total": 0.804,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 1.6552499999999999,
+  "tExit": 0.458,
+  "total": 2.1135,
+  "vMin": 0.22,
+  "vC": 0.585,
+  "v1": 6.8075,
+  "ctl": 0.0905,
+  "p25": -2.7025,
+  "prep": 1.3557500000000002,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 2.329,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 2.258,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.971,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.896,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.971,
+    "rej": []
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.696,
+    "rej": []
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.662,
+    "rej": []
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.612,
+    "rej": []
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→RONALDO CHOP": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.971,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.696,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.662,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   },
+   {
+    "played": "RONALDO CHOP (R)",
+    "result": "REJECTED",
+    "total": 1.612,
+    "rej": [
+     "the exit is on the wrong side for this foot",
+     "exit 120° below its 138°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -120
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 1.70825,
+  "tExit": 0.35525,
+  "total": 2.0635,
+  "vMin": 0.9849999999999999,
+  "vC": 1.8575,
+  "v1": 6.5175,
+  "ctl": 0.09375,
+  "p25": -2.6849999999999996,
+  "prep": 1.517,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 3,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.121,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.108,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.975,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CARRY (a controlled arc)": 4
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 2,
+  "bodyEv": [
+   "CROSS -9.2",
+   "CROSS -8.8",
+   "CROSS -9.8",
+   "CROSS -10.2"
+  ],
+  "runs": [
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.85,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.854,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.188,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 1.092,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.08125,
+  "tExit": 0.3,
+  "total": 0.38125000000000003,
+  "vMin": 1,
+  "vC": 1.5,
+  "v1": 1.275,
+  "ctl": null,
+  "p25": 2.9074999999999998,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "FLOAT 0.158"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.471,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.3,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.3,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 2,
+   "CARRY (a controlled arc)": 2
+  },
+  "tDec": 0.08125,
+  "tExit": 0.3,
+  "total": 0.38125000000000003,
+  "vMin": 1,
+  "vC": 1.5,
+  "v1": 1.275,
+  "ctl": null,
+  "p25": 2.9074999999999998,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "FLOAT 0.158"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.471,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.3,
+    "rej": null
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "AUTO",
+    "total": 0.3,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.49999999999999994,
+  "tExit": 0.358,
+  "total": 0.8585,
+  "vMin": 0.09,
+  "vC": 0.23,
+  "v1": 1.5,
+  "ctl": 0.091,
+  "p25": 2.1449999999999996,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.904,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.829,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.888,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 0.813,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 4
+  },
+  "tDec": 0.1915,
+  "tExit": 0.3,
+  "total": 0.4915,
+  "vMin": 1,
+  "vC": 1.5,
+  "v1": 1.5,
+  "ctl": null,
+  "p25": 2.695,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.604,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.529,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.454,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.379,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DRAG-BACK": 4
+  },
+  "tDec": 0.49999999999999994,
+  "tExit": 0.28350000000000003,
+  "total": 0.7835,
+  "vMin": 0.10999999999999999,
+  "vC": 0.255,
+  "v1": 1.5,
+  "ctl": 0.081,
+  "p25": 2.1725,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 2,
+  "bodyEv": [
+   "FLOAT 0.242",
+   "FLOAT 0.242",
+   "FLOAT 0.233",
+   "FLOAT 0.233"
+  ],
+  "runs": [
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "PLAYED",
+    "total": 0.825,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "PLAYED",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "PLAYED",
+    "total": 0.817,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "PLAYED",
+    "total": 0.742,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "WALK",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.4625,
+  "tExit": 0.142,
+  "total": 0.6040000000000001,
+  "vMin": 0.72,
+  "vC": 1.3,
+  "v1": 3.03,
+  "ctl": 0.0935,
+  "p25": 3.5599999999999996,
+  "prep": 0.201,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 10,
+  "bodyEv": [
+   "CROSS -9.3",
+   "CROSS -9.2"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.65,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.575,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.633,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.558,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→DRAG-BACK": 3,
+   "REJECTED→CARRY (a controlled arc)": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 6,
+  "bodyEv": [
+   "CROSS -8.6",
+   "CROSS -6.8",
+   "CROSS -8.4",
+   "CROSS -7.6"
+  ],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 1.558,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 1.496,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 1.438,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "CARRY (a controlled arc)",
+    "result": "REJECTED",
+    "total": 0.992,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 4
+  },
+  "tDec": 0.2085,
+  "tExit": 0.576,
+  "total": 0.7845000000000001,
+  "vMin": 1.225,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 4.945,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.5",
+   "FLOAT 0.15",
+   "CROSS -9.4",
+   "CROSS -7.3"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.871,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.6,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 4
+  },
+  "tDec": 0.2085,
+  "tExit": 0.576,
+  "total": 0.7845000000000001,
+  "vMin": 1.225,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 4.945,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.5",
+   "FLOAT 0.15",
+   "CROSS -9.4",
+   "CROSS -7.3"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.871,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 0.6,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.81575,
+  "tExit": 0.389,
+  "total": 1.204,
+  "vMin": 0.1675,
+  "vC": 0.44499999999999995,
+  "v1": 3.2,
+  "ctl": 0.09075,
+  "p25": 2.6825,
+  "prep": 0.5165,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 7,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.192,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.283,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.208,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.133,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 4
+  },
+  "tDec": 0.2085,
+  "tExit": 0.576,
+  "total": 0.7845000000000001,
+  "vMin": 1.225,
+  "vC": 3.2,
+  "v1": 3.2,
+  "ctl": null,
+  "p25": 4.945,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 4,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9.5",
+   "FLOAT 0.15",
+   "CROSS -9.4",
+   "CROSS -7.3"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.917,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.75,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.871,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.6,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DRAG-BACK": 4
+  },
+  "tDec": 0.499,
+  "tExit": 0.379,
+  "total": 0.87825,
+  "vMin": 0.22,
+  "vC": 0.5075000000000001,
+  "v1": 2.99,
+  "ctl": 0.07975,
+  "p25": 4.2925,
+  "prep": 0.19874999999999998,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 0.896,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 0.892,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 0.854,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 0.871,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "JOG",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.6705000000000001,
+  "tExit": 0.271,
+  "total": 0.9415,
+  "vMin": 0.72,
+  "vC": 1.28,
+  "v1": 3.2,
+  "ctl": 0.093,
+  "p25": 3.54,
+  "prep": 0.40850000000000003,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 4,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.054,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.979,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.904,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.829,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→DRAG-BACK": 2,
+   "REJECTED→OUTSIDE HOOK": 2
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 1,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 1.675,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.571,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "OUTSIDE HOOK (L)",
+    "result": "REJECTED",
+    "total": 1.504,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 1.55,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DRAG-BACK": 4
+  },
+  "tDec": 0.62825,
+  "tExit": 0.49,
+  "total": 1.1179999999999999,
+  "vMin": 0.22,
+  "vC": 0.5,
+  "v1": 5.3,
+  "ctl": 0.079,
+  "p25": 5.3875,
+  "prep": 0.32725,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 30,
+  "bodyEv": [
+   "CROSS -9",
+   "CROSS -8.6",
+   "CROSS -8.6"
+  ],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "AUTO",
+    "total": 1.042,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "AUTO",
+    "total": 1.288,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "AUTO",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "AUTO",
+    "total": 1.138,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DRAG-BACK": 4
+  },
+  "tDec": 0.62825,
+  "tExit": 0.49,
+  "total": 1.1179999999999999,
+  "vMin": 0.22,
+  "vC": 0.5,
+  "v1": 5.3,
+  "ctl": 0.079,
+  "p25": 5.3875,
+  "prep": 0.32725,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 30,
+  "bodyEv": [
+   "CROSS -9",
+   "CROSS -8.6",
+   "CROSS -8.6"
+  ],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "AUTO",
+    "total": 1.042,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "AUTO",
+    "total": 1.288,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "AUTO",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (R)",
+    "result": "AUTO",
+    "total": 1.138,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 0.8664999999999999,
+  "tExit": 0.458,
+  "total": 1.3255000000000001,
+  "vMin": 0.22,
+  "vC": 0.59,
+  "v1": 5.3,
+  "ctl": 0.092,
+  "p25": 3.2,
+  "prep": 0.5685,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.438,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.363,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.288,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.213,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING TOUCH": 4
+  },
+  "tDec": 0.248,
+  "tExit": 0.56075,
+  "total": 0.8085,
+  "vMin": 2.0025,
+  "vC": 5.3,
+  "v1": 5.3,
+  "ctl": null,
+  "p25": 7.585,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 2,
+  "bodyS": 0,
+  "bodyEv": [
+   "CROSS -8",
+   "CROSS -5.2"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.775,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.883,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.863,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 0.713,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "DRAG-BACK": 4
+  },
+  "tDec": 0.51775,
+  "tExit": 0.489,
+  "total": 1.0065,
+  "vMin": 0.22,
+  "vC": 0.5075000000000001,
+  "v1": 5.3,
+  "ctl": 0.08,
+  "p25": 6.48,
+  "prep": 0.21775,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -9"
+  ],
+  "runs": [
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 1.042,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 1.017,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 1.004,
+    "rej": null
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "PLAYED",
+    "total": 0.963,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "RUN",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 0.7665,
+  "tExit": 0.288,
+  "total": 1.0545,
+  "vMin": 1.25,
+  "vC": 2.42,
+  "v1": 5.3,
+  "ctl": 0.093,
+  "p25": 4.75,
+  "prep": 0.5055000000000001,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 8,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.167,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.092,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 1.017,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 0.942,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "V_TURN",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CRUYFF TURN": 1,
+   "REJECTED→DRAG-BACK": 2,
+   "REJECTED→BRAKING TOUCH": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -30.6"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "REJECTED",
+    "total": 2.992,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 2.442,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "REJECTED",
+    "total": 1.862,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 2.108,
+    "rej": [
+     "exit 150° beyond its 108°",
+     "exit 210° beyond its 108°"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "AUTO",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 1,
+   "BRAKING TOUCH": 3
+  },
+  "tDec": 0.9530000000000001,
+  "tExit": 0.78325,
+  "total": 1.73625,
+  "vMin": 1.47,
+  "vC": 6.44,
+  "v1": 4.58,
+  "ctl": null,
+  "p25": -1.3025,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -7.1",
+   "CROSS -9.9",
+   "CROSS -9.9"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 1.125,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 2.262,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 2.112,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BASIC (B4 without it)",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "BRAKING PIVOT": 1,
+   "BRAKING TOUCH": 3
+  },
+  "tDec": 0.9530000000000001,
+  "tExit": 0.78325,
+  "total": 1.73625,
+  "vMin": 1.47,
+  "vC": 6.44,
+  "v1": 4.58,
+  "ctl": null,
+  "p25": -1.3025,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 3,
+  "bodyS": 1,
+  "bodyEv": [
+   "CROSS -7.1",
+   "CROSS -9.9",
+   "CROSS -9.9"
+  ],
+  "runs": [
+   {
+    "played": "BRAKING PIVOT",
+    "result": "AUTO",
+    "total": 1.125,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 2.262,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 1.446,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "AUTO",
+    "total": 2.112,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "INSIDE_HOOK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "INSIDE HOOK": 4
+  },
+  "tDec": 1.6855,
+  "tExit": 0.457,
+  "total": 2.1425,
+  "vMin": 0.22,
+  "vC": 0.58,
+  "v1": 6.8125,
+  "ctl": 0.08975,
+  "p25": -6.865,
+  "prep": 1.38525,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 0,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 2.329,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 2.258,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 2.029,
+    "rej": null
+   },
+   {
+    "played": "INSIDE HOOK (R)",
+    "result": "PLAYED",
+    "total": 1.954,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "BRAKING_TOUCH",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 2,
+  "played": {
+   "REJECTED→CRUYFF TURN": 1,
+   "REJECTED→DRAG-BACK": 1,
+   "BRAKING TOUCH": 2
+  },
+  "tDec": 1.3395,
+  "tExit": 0.569,
+  "total": 1.9085,
+  "vMin": 2.365,
+  "vC": 7.39,
+  "v1": 6.3149999999999995,
+  "ctl": null,
+  "p25": -6.744999999999999,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -30.6"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "REJECTED",
+    "total": 2.992,
+    "rej": [
+     "box",
+     "committed landing"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 2.442,
+    "rej": [
+     "box",
+     "plant timing"
+    ]
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 1.967,
+    "rej": null
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "PLAYED",
+    "total": 1.85,
+    "rej": null
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "DRAG_BACK",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 0,
+  "played": {
+   "REJECTED→CRUYFF TURN": 1,
+   "REJECTED→DRAG-BACK": 2,
+   "REJECTED→BRAKING TOUCH": 1
+  },
+  "tDec": null,
+  "tExit": null,
+  "total": null,
+  "vMin": null,
+  "vC": null,
+  "v1": null,
+  "ctl": null,
+  "p25": null,
+  "prep": null,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 1,
+  "bodyS": 4,
+  "bodyEv": [
+   "KNEE -30.6"
+  ],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "REJECTED",
+    "total": 2.992,
+    "rej": [
+     "entry 9.7 m/s far above its 5 m/s",
+     "rolling there"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 2.442,
+    "rej": [
+     "entry 9.7 m/s far above its 5 m/s",
+     "rolling there"
+    ]
+   },
+   {
+    "played": "BRAKING TOUCH",
+    "result": "REJECTED",
+    "total": 1.862,
+    "rej": [
+     "entry 9.7 m/s far above its 5 m/s",
+     "rolling there"
+    ]
+   },
+   {
+    "played": "DRAG-BACK (L)",
+    "result": "REJECTED",
+    "total": 2.108,
+    "rej": [
+     "entry 9.7 m/s far above its 5 m/s",
+     "rolling there"
+    ]
+   }
+  ]
+ },
+ {
+  "fam": "V_TURN",
+  "lane": "CRUYFF",
+  "prob": {
+   "mode": "SPRINT",
+   "ang": -150
+  },
+  "n": 4,
+  "nOk": 4,
+  "played": {
+   "CRUYFF TURN": 4
+  },
+  "tDec": 1.7229999999999999,
+  "tExit": 0.35625,
+  "total": 2.0789999999999997,
+  "vMin": 0.9849999999999999,
+  "vC": 1.8575,
+  "v1": 7.1925,
+  "ctl": 0.09375,
+  "p25": -6.602500000000001,
+  "prep": 1.53175,
+  "exits": 0,
+  "missed": 0,
+  "bodyN": 0,
+  "bodyS": 2,
+  "bodyEv": [],
+  "runs": [
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.121,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.05,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.108,
+    "rej": null
+   },
+   {
+    "played": "CRUYFF TURN (R)",
+    "result": "PLAYED",
+    "total": 2.037,
+    "rej": null
+   }
+  ]
+ }
+]

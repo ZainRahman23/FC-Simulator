@@ -1,0 +1,67 @@
+{
+ "milestone": "TECHNICAL CONTROL — FOUR HIGH-VALUE DRIBBLING SOLUTIONS (ADV-4, 22 Oct 2026)",
+ "state": "stopped for the owner's review — NOT frozen, NOT integrated; CRUYFF-CHOP-1 and VOCAB-1 pages unchanged beside it",
+ "local_only": "the character is a real player's model: never publish",
+ "owner_instruction": "review_artifacts/adv4/sources/2026-10-22_user_instruction_four_advanced_solutions.md (verbatim)",
+ "pages": {
+  "dribbling_lab": "http://127.0.0.1:8361/sandbox/visual/adv4_lab.html (ADVANCED AUTO SOLUTIONS at the top: PLAY / COMPARE / MIRROR / AUTO / TRY / 1x 0.5x 0.25x)",
+  "joystick_sandbox": "http://127.0.0.1:8361/sandbox/visual/adv4_sandbox.html (STOP-AND-GO with the sprint key held = the hesitation)",
+  "reference_cruyff_chop1_lab": "http://127.0.0.1:8361/sandbox/visual/cruyff_chop1_lab.html"
+ },
+ "code": "sandbox/visual/adv4/ (a copy of cruyff_chop1/)",
+ "default_player": "S99 · Acc99-D38 · A99-C · Agility B · D99 · BC99 · CARRY-B · CONTROLLED",
+ "families": {
+  "CROQUETA": {
+   "now": "unchanged geometry (B4 LAT): right inside across, left inside receives next stride (0.23 s)",
+   "measured": "far-side 40-55 deg jog/run 0.36-0.45 s vs B4 0.52-0.59 (B4 waits for the analog-feint hold) vs requested inside cut 0.35-0.52 (level); rejected at a sprint; body clean",
+   "recommended_class": "AUTO + MANUAL"
+  },
+  "V_TURN": {
+   "now": "one parameterized family VTURN, 70-120 deg, >= 2.0 m/s: moving sole pull (~1.2 m/s), the same inside out 0.15 s later, exit touch; V-pull / L-drag / pull-push no longer player-facing or AUTO",
+   "measured": "120 deg: jog 1.01 vs hook 1.20, run 1.25 vs 1.33, sprint 1.79 vs 2.11; vs Cruyff from sprint 1.73-1.79 vs 2.05-2.06; never beats B4's ordinary choice (inside cut 0.46-0.53 at 90; B4 0.88-1.15 at 120)",
+   "recommended_class": "MANUAL (B4 never chooses it)"
+  },
+  "MATTHEWS": {
+   "now": "compact MATTHEWS_C, 35-95 deg, >= 2.0 m/s: inside cue nudge 0.6 m/s, round the ball, the same outside 0.12 s later, sidestep (no hop)",
+   "measured": "0.75-0.99 s vs drag-push 1.14-1.57 (walk/jog events gone); never beats the outside redirect / cut (0.36-0.50)",
+   "recommended_class": "MANUAL (its value is a defender's reaction — not modelled)"
+  },
+  "STOP_AND_GO": {
+   "now": "deaden braked at the rated A99-C stop rate (bodyBrake), contact <= 1.5 m/s, re-acceleration <= D38 ball-on, straight on (<= 15 deg); sprint key held = the hesitation",
+   "measured": "vs stop-settle-go: run 0.98 vs 1.14, sprint 1.07 vs 1.33; v 1 s after the lowest 7.3 vs 2.9 m/s; vs the ordinary A99-C stop: level at run/sprint (0.98/0.93, 1.07/1.06), slower at jog (0.85/0.57); hesitation sprint 0.59 vs 0.65",
+   "recommended_class": "MANUAL (a stick cannot say 'stop, then go')"
+  }
+ },
+ "rules_added_ablatable": [
+  "bodybrake",
+  "vcmax (deaden 1.5, V-turn 2.2)",
+  "d38 (ADV-4 templates only)",
+  "credible",
+  "release (releaseAt)",
+  "the V-turn exit touch",
+  "noFam (the BASIC lane)"
+ ],
+ "ablation_findings": "bodybrake: sprint stop-and-go 1.07 -> 1.70 without it; vcmax keeps the V-turn's body (run -90: 0.13 s quicker without it, 12 slow events); credible and d38 do not bind once the contact-speed caps exist; release: no time or body change now that the exit touch exists",
+ "cruyff_chop_untouched": "the D38 cap would slow the approved Cruyff at a run 1.05 -> 1.13 s: not applied, a finding",
+ "integrity": {
+  "cases": "105 cases · 0 exits · 0 missed · normal-visible 10 in 9 cases (CRUYFF-CHOP-1: 11 in 10)",
+  "extreme_ball_on": "140 runs · normal 62 · slow 131 (CRUYFF-CHOP-1 62 / 133)",
+  "extreme_ball_off": "140 runs · normal 61 · slow 69 (unchanged)",
+  "body_torture_classified_18_seeds": "normal 180 · slow 276 (CRUYFF-CHOP-1 same seeds 211 / 311)",
+  "body_torture_s99_8_seeds": "all levels 1084 vs 1013 (+7 %; the rise is the plain carry: L-drag / V-pull folded out of AUTO)",
+  "possession_torture_40_seeds": "observed losses 10 (0.26/min) vs 5 (0.13/min) on seeds 1-40 — noise: see the wide run",
+  "determinism": "18/18 simulated twice + 18/18 replay path",
+  "browser": "0 console errors · 0 HTTP errors · 6 ADVANCED cards, 30 card buttons clicked, every COMPARE drew lane B",
+  "possession_torture_160_seeds": "adv4 25 losses (0.16/min) vs cruyff_chop1 33 (0.21/min); 0 missed contacts; none during a new family's action",
+  "cpu": "103.5 ms per simulated s vs 105.8 (cruyff_chop1); worst tick 12.0 vs 15.3 ms",
+  "battery": "67/72 PLAYED — all 22 family rows play; the 5 failures are CRUYFF-CHOP-1's own",
+  "intent_torture": "361 random manual requests: PLAYED 78 / REJECTED 209 / CANCELLED 71; 0 exits, 0 missed"
+ },
+ "owner_decisions": [
+  "classification: CROQUETA AUTO+MANUAL; V-TURN, MATTHEWS, STOP-AND-GO MANUAL until defenders / protection (left AUTO+MANUAL in code)",
+  "the V-turn envelope 70-120 deg, >= 2 m/s — or fix the walk exit-stride float / the 60 deg continuation",
+  "stop-and-go straight on only (<= 15 deg) — or the angled deaden back with its 5-8 cm crossings at a run",
+  "the D38 cap on the approved Cruyff / chop (Cruyff run 1.05 -> 1.13)",
+  "the VOCAB-1 analog-feint hold (costs B4 ~0.15-0.2 s on every 20-75 deg diagonal at >= 3 m/s)"
+ ]
+}

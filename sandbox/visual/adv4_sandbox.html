@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dribbling Sandbox</title>
+<link rel="icon" href="data:,">
+<!-- TECHNICAL-CONTROL PLAYTEST-1 — LOCAL ONLY (the character is a real player's model: never publish). Provisional, not frozen, not integrated. -->
+<!-- DRIBBLING VOCAB-1 (owner, 22 Oct overnight mission) — THE UNIFIED JOYSTICK SANDBOX: S99 · Acc99 D38 · A99-C · Agility scale B
+     below 99 · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED + the full vocabulary: automatic Technical Control (B4 / B5), the analog feint, and the
+     MANUAL SKILL palette (each a technical intent — the stick is its exit; E requests the selected one). Nothing frozen. LOCAL ONLY (a real player's model). -->
+<!-- (the page it is copied from:) PHYSICAL RATINGS V1 (owner, 22 Oct): THE BALL-OFF PHYSICAL-ATTRIBUTE PLAYGROUND — Sprint Speed (the approved mapping, exact),
+     Acceleration (provisional: the capability bands, a generated curve) and Agility (three provisional scaling candidates A / B / C on A99-C's
+     redirection envelope) as ratings (phys1/ratings.js). The switch PHYSICAL-99 (S99 · Acc99 = D38 · A99-C, exact) / PHYSICAL-80-A / -B / -C
+     (S80 · Acc80 · Agility 80; A / B / C = the Agility scale only), the other one (99 ⇄ 80) as the reference runner beside on the same input,
+     ⇄ N the same input through the next; the ratings readout; the owner's tests. BALL OFF always (Dribbling is not calibrated). Provisional,
+     nothing frozen. LOCAL ONLY. (ballon1.html, BALL-ON PACE V1 — CARRY-B approved 22 Oct — is unchanged.)
+     (the page it is copied from:) BALL-ON PACE V1 (owner, 21 Oct): THE D99 BALL-CARRYING ENVELOPE PLAYGROUND — the same 99 player (S99 38 km/h · D38 · A99-C · D99 · BC99 ·
+     CONTROLLED · BALL ON) with the switch BALL OFF / CARRY-A / CARRY-B / CARRY-C (instant; ⇄ N replays the same input through the next), the same
+     player BALL OFF as the reference runner beside on the same input, and the envelope's readout (physical vmax, the available vmax now, the
+     acceleration availability, the control demand, the carry type). Candidates for the owner's playtest — none chosen, nothing frozen. LOCAL ONLY.
+     (s99.html, the S99 mission's page, is unchanged.)
+     (the S99 page it is built from:) S99 MISSION (owner, 21 Oct, the 4-hour mission) — THE PRIMARY PLAYABLE PAGE: opens straight into Sprint Speed 99 = 38 km/h · Acceleration 99 =
+     D38 · Agility 99 = A99-C · D99 · BC99 · CONTROLLED_BALL · FULL · BALL ON · the joystick; ONE pace switch (99 PACE ⇄ CURRENT PACE, the same input
+     through the other with ⇄); SPRINT_CARRY in open space at a steady sprint. Not frozen, not calibrated for 1–98. LOCAL ONLY.
+     (the speed99.html playground it is built from:) SPEED-99-V1 (owner, 21 Oct): the BALL-OFF playground for SPRINT SPEED 99 + ACCELERATION 99 — the PACE switch (CURRENT = TC-CONTROLLED-1's
+     movement exactly · candidates A / B / C), a REFERENCE runner on the same input beside the player, the pace presets (0–5 / 10 / 20 / 30 m, long
+     sprint, cuts + re-acceleration), a live pace panel (speed, top speed, distance, the 5 – 40 m splits). BALL is OFF by default: the ball-on
+     integration (CONTROLLED-99-PACE) is not built yet. tc_controlled1.html is unchanged.
+     (TC-CONTROLLED-1's note:) TC-UNIFIED-1's page + the BALL CONTROL MODEL switch — CURRENT FREE (TC-UNIFIED-1's
+     FULL, bit-identical) / CONTROLLED (CONTROLLED_BALL). OPPONENT POKE (P) drives a deterministic opponent foot into the real ball; RELEASE (K) knocks
+     the ball on. tc_unified1.html is kept unchanged as the comparison page.
+     (TC-UNIFIED-1's note:) ONE PLAYABLE A99 / BC99 / D99 DRIBBLER — BASELINE-88573ef0 + A99-C (Astra's movement,
+     exact) + the persistent support (one shared foot plan, a continuous foot timeline) + B4 (generic vocabulary + named moves by predicted
+     outcome) + B5 (short entries / exits). Defaults: FULL, BALL ON, the joystick. A = exact 88573ef0 (checked against the locked engine); the
+     immutable baseline page is tc_baseline_88573ef0.html (never modified). Diagnostics behind the ⚙ toggle. -->
+<style>
+  :root { --bg: #0d1210; --panel: rgba(16, 22, 19, 0.86); --solid: #151d19; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --line: #2a3530; --ok: #8dffa6; --bad: #ff8a80; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font: 12.5px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #bar { position: absolute; left: 0; right: 0; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; padding: 6px 10px; background: var(--solid); border-bottom: 1px solid var(--line); }
+  #bar .grp { display: inline-flex; gap: 3px; align-items: center; }
+  #bar .lab { color: var(--dim); margin-right: 2px; }
+  button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 3px 8px; font: inherit; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  button.warn { border-color: #6b4b2a; }
+  label { display: inline-flex; gap: 3px; align-items: center; cursor: pointer; }
+  input[type=range] { width: 74px; }
+  #stage { position: absolute; left: 0; right: 0; bottom: 0; }
+  #gl, #ov { position: absolute; left: 0; top: 0; display: block; }
+  .box { position: absolute; z-index: 4; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; pointer-events: none; }
+  #hud { left: 10px; top: 10px; min-width: 250px; font: 12px/1.45 Menlo, Consolas, monospace; white-space: pre; }
+  #hud .act { font: 700 17px/1.2 -apple-system, Helvetica, sans-serif; color: var(--acc); letter-spacing: 0.02em; }
+  #hud .phase { color: #cfe; font: 600 11.5px -apple-system, Helvetica, sans-serif; }
+  #prov { color: #ffb36b; font: 600 11px -apple-system, Helvetica, sans-serif; }
+  #side { right: 10px; top: 10px; width: 540px; max-height: calc(100% - 92px); overflow: hidden; pointer-events: auto; font: 10.5px/1.35 Menlo, Consolas, monospace; }
+  #side h4 { margin: 2px 0 4px; font: 600 11.5px -apple-system, Helvetica, sans-serif; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; }
+  #side table { border-collapse: collapse; width: 100%; } #side td, #side th { padding: 1px 4px; text-align: right; white-space: nowrap; } #side th { color: var(--dim); font-weight: 500; }
+  #side td.l, #side th.l { text-align: left; }
+  #side .sec { margin-bottom: 8px; } #side .tech { color: var(--acc); }
+  #graph { display: block; width: 100%; height: 86px; }
+  #stats { white-space: pre; }
+  #keys { left: 50%; bottom: 70px; transform: translateX(-50%); display: none; text-align: center; font: 700 15px -apple-system, Helvetica, sans-serif; }
+  #keys .k { display: inline-block; width: 34px; height: 30px; line-height: 30px; margin: 2px; border-radius: 6px; border: 1px solid #50605a; color: #9ab; background: #1a221e; }
+  #keys .k.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); }
+  #keys .k.w { width: 70px; font-size: 12px; }
+  #replay { left: 50%; bottom: 12px; transform: translateX(-50%); display: none; pointer-events: auto; width: min(760px, 80%); }
+  #replay input { width: 100%; }
+  #replay .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; font: 600 12px -apple-system, Helvetica, sans-serif; }
+  #help { left: 10px; bottom: 8px; color: var(--dim); font-size: 11px; padding: 4px 8px; }
+  #perf { right: 10px; bottom: 10px; font: 11px Menlo, Consolas, monospace; color: var(--dim); white-space: pre; }
+  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: 600 15px -apple-system, Helvetica, sans-serif; color: var(--dim); z-index: 9; }
+  .hidden { display: none !important; }
+  /* the on-screen movement stick (input only) and its SPRINT / WALK buttons */
+  #stickBox { position: absolute; left: 14px; bottom: 44px; width: 210px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickPad { width: 210px; height: 210px; cursor: grab; touch-action: none; border-radius: 50%; }
+  #stickPad:active { cursor: grabbing; }
+  #stickInfo { text-align: center; font: 600 12px Menlo, Consolas, monospace; color: #9ad7ff; text-shadow: 0 1px 2px #000; margin-top: -4px; }
+  #stickBtns { position: absolute; left: 230px; bottom: 74px; display: flex; flex-direction: column; gap: 7px; z-index: 6; user-select: none; -webkit-user-select: none; }
+  #stickBtns button { touch-action: none; width: 96px; font-weight: 700; letter-spacing: 0.04em; background: rgba(34,44,39,0.82); }
+  #bSprint { height: 58px; font-size: 15px; } #bSprint.on { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; }
+  #bLock { height: 26px; font-size: 11px; } #bLock.on { background: #ffb36b; border-color: #ffb36b; color: #1a1209; }
+  #bWalk { height: 40px; font-size: 13px; } #bWalk.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; }
+  /* TC-LAYERED-1: the layer bar and the body-warning panel */
+  #lbar { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; width: 100%; padding-top: 4px; border-top: 1px solid var(--line); }
+  #lbar .lay { display: inline-flex; gap: 2px; align-items: center; padding: 1px 5px; border-radius: 5px; background: #1b2420; border: 1px solid #2c3833; font-size: 11.5px; }
+  #lbar .lay b { color: var(--acc); font-size: 10.5px; margin-right: 2px; }
+  #lbar .lay.rej { opacity: 0.55; } #lbar .lay.rej b { color: #ff8a80; }
+  #lbar button[data-preset] { padding: 2px 7px; }
+  #diag { left: 10px; bottom: 270px; font: 11px/1.4 Menlo, Consolas, monospace; white-space: pre; min-width: 330px; }
+  #diag .w { color: #ffb36b; } #diag .b { color: #ff8a80; font-weight: 700; } #diag .ok { color: #8dffa6; }
+  /* TC-UNIFIED-1: the stack presets always in view; everything diagnostic behind ⚙ */
+  #stack button { padding: 3px 9px; font-weight: 600; } #stack button.on { background: #ff9b8d; border-color: #ff9b8d; color: #1a0f0d; }
+  #bDiag.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; }
+  body:not(.diagOn) #lbar, body:not(.diagOn) #perf, body:not(.diagOn) #help { display: none !important; }
+  #ver { font-weight: 700; color: #1a0f0d; background: #ff9b8d; border-radius: 5px; padding: 2px 7px; }
+  /* TC-CONTROLLED-1: the BALL CONTROL MODEL switch, prominent */
+  #model { padding: 2px 6px; border-radius: 6px; background: #1f2a26; border: 1px solid #3c4b44; }
+  #model .lab { color: #9ad7ff; font-weight: 700; } #model button { font-weight: 700; padding: 3px 10px; } #model button.on { background: #8dffa6; border-color: #8dffa6; color: #0d1a12; }
+  #bPoke { border-color: #ff8a80; } #bRelease { border-color: #9ad7ff; }
+  /* SPEED-99-V1: the PACE switch, prominent, and the pace panel */
+  #pace { padding: 2px 6px; border-radius: 6px; background: #2a2316; border: 1px solid #5b4a26; }
+  #pace .lab { color: #ffd45e; font-weight: 700; } #pace button { font-weight: 700; padding: 3px 10px; } #pace button.on { background: #ffd45e; border-color: #ffd45e; color: #1a1408; }
+  #ref .lab { color: #c8d4ce; }
+  #pacebox { left: 400px; top: 10px; min-width: 360px; font: 12px/1.5 Menlo, Consolas, monospace; white-space: pre; text-align: left; }
+  #pacebox .big { font: 700 22px/1.15 -apple-system, Helvetica, sans-serif; color: #ffd45e; } #pacebox .ref { color: #b9c7c0; } #pacebox .lab2 { color: #8fa49a; font: 600 10.5px -apple-system, Helvetica, sans-serif; letter-spacing: 0.06em; }
+  #bTop, #bBoom { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; font-weight: 800; } #bBoom { background: #ffd45e; border-color: #ffd45e; }
+  #bLock.on { background: #ff8a3d !important; border-color: #ffd45e !important; color: #1a1209; font-weight: 800; box-shadow: 0 0 0 3px rgba(255,138,61,0.55); }
+  #bLock { height: 30px !important; font-size: 12px !important; }
+  #sprintBanner { left: 50%; bottom: 18px; transform: translateX(-50%); font: 800 18px/1.2 -apple-system, Helvetica, sans-serif; color: #1a1209; background: #ff8a3d; border-color: #ffd45e; letter-spacing: 0.08em; padding: 6px 16px; }
+  /* S99 MISSION, the primary page: the pace panel at the right (the BALL ON HUD is wider) */
+  #pacebox { left: auto; right: 10px; min-width: 0; font-size: 11.5px; }
+  #physGrp { padding: 2px 6px; border-radius: 6px; background: #2a2316; border: 1px solid #8a6b26; } #physGrp .lab { color: #ffd45e; font-weight: 700; } #physGrp button { font-weight: 700; } #physGrp button.on { background: #ffd45e; border-color: #ffd45e; color: #1a1408; }
+  #labPanel { position: absolute; left: 0; top: 0; bottom: 0; width: 360px; overflow-y: auto; z-index: 5; background: rgba(13,18,16,0.95); border-right: 1px solid var(--line); padding: 6px 8px; font: 11.5px/1.35 -apple-system, Helvetica, sans-serif; }
+  #labPanel h3 { margin: 10px 0 4px; font: 700 11px -apple-system, Helvetica, sans-serif; letter-spacing: 0.08em; color: #ffd45e; }
+  #labPanel .card { border: 1px solid #2c3833; border-radius: 6px; padding: 5px 7px; margin-bottom: 5px; background: #151d19; }
+  #labPanel .nm { font-weight: 700; } #labPanel .pp { color: #cfe; margin: 2px 0; } #labPanel .en { color: #8fa49a; font-size: 10.5px; } #labPanel .blk { color: #ff8a80; }
+  #labPanel .vs { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; } #labPanel .vs button { padding: 1px 6px; font-size: 10.5px; } #labPanel .vs button.play { background: #ffd45e; color: #1a1408; border-color: #ffd45e; font-weight: 800; }
+  .b { font: 700 9px Menlo, monospace; padding: 0 4px; border-radius: 3px; margin-left: 3px; } .b.integrated { background: #8dffa6; color: #0d1a12; } .b.review { background: #9ad7ff; color: #0d1a22; } .b.experimental { background: #ff8a80; color: #1a0f0d; } .b.mode { background: #3a4a42; color: #e6efe9; }
+  #labInfo { position: absolute; right: 10px; bottom: 60px; width: 580px; z-index: 5; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; font: 11.5px/1.4 -apple-system, Helvetica, sans-serif; }
+  #labInfo .tt { font: 700 14px -apple-system, Helvetica, sans-serif; color: #ffd45e; } #labInfo .mt { color: #8fa49a; font-size: 10.5px; } #labInfo .req { margin: 3px 0; } #labInfo .ok { color: #8dffa6; } #labInfo .bad { color: #ff8a80; }
+  #labInfo table { border-collapse: collapse; margin: 3px 0; font: 10.5px Menlo, monospace; } #labInfo td, #labInfo th { padding: 0 6px; text-align: right; } #labInfo .l { text-align: left; } #labInfo .ct { font: 10px Menlo, monospace; color: #b9c7c0; }
+  #labCtl button.on, #skillBox button.on { background: #ffd45e; color: #1a1408; border-color: #ffd45e; font-weight: 700; }
+  #skillBox { flex-wrap: wrap; gap: 3px; } #skillBox button { padding: 2px 6px; font-size: 11px; }
+  body.lab #stickBox, body.lab #stickBtns { left: 380px; } body.lab #hud { left: 372px; }
+  #pacebox { display: none !important; }
+  body.lab #pace, body.lab #stack, body.lab #stickBox, body.lab #stickBtns, body.lab #sprintBanner { display: none !important; }
+  body.lab #bar .grp:has(#selTest) { display: none !important; }
+  #pace { display: none !important; }
+
+
+  #carryGrp { padding: 2px 6px; border-radius: 6px; background: #2a1f16; border: 1px solid #6b4b2a; } #carryGrp .lab { color: #ffb36b; font-weight: 700; } #carryGrp button { font-weight: 700; } #carryGrp button.on { background: #ffb36b; border-color: #ffb36b; color: #1a1209; }
+  #vocabGrp { padding: 2px 6px; border-radius: 6px; background: #16232a; border: 1px solid #2b4a5b; } #vocabGrp .lab { color: #9ad7ff; font-weight: 700; } #vocabGrp button.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <span class="grp" id="ver">DRIBBLING VOCAB-1</span>
+  <span class="grp" id="skillBox"></span><span class="grp" id="skillRes" style="color:#ffd45e;font:600 11.5px Menlo,monospace"></span>
+  <span class="grp" id="carryGrp" style="display:none"><span class="lab">BALL-ON PACE</span><button data-carry="OFF" title="the same player without the ball: the full physical capability">BALL OFF</button><button data-carry="A" title="D99-CARRY-A · light cost">CARRY-A</button><button data-carry="B" title="D99-CARRY-B · medium cost">CARRY-B</button><button data-carry="C" title="D99-CARRY-C · stronger cost">CARRY-C</button><button id="bNextCarry" title="N: this session's input through the next of BALL OFF → A → B → C (replay)">⇄ same input → next (N)</button><label title="the same player BALL OFF on the same input, 2.5 m to the side"><input id="cRefOff" type="checkbox" checked>BALL-OFF twin beside</label></span>
+  <span class="grp" id="pace"><span id="paceBtns" style="display:none"></span><button id="bNextPace" style="display:none">⇄</button><button id="bTop" title="reset, then a straight full sprint from rest for 10 s (80 m): splits, peak, time to 90 / 95 / 99 % of top speed">▶ TOP SPEED RUN</button><button id="bBoom" title="reset, then the first 15 m of a full sprint from rest, a close side-on camera (try 0.5× / 0.25×)">▶ EXPLOSION TEST</button></span>
+  <span class="grp" id="vocabGrp" style="display:none"><span class="lab">TECHNIQUES</span><button data-vocab="CORE" title="TC-CONTROLLED-1's vocabulary: carry, the six generic actions (B4), the named moves">CORE</button><button data-vocab="EXPANDED" title="CORE + LATERAL TRANSFER (La Croqueta) and KNOCK-ON (push-and-go), chosen by the same outcome cost; SOLE ROLL and the BODY FEINTS through the REVIEW presets / ⚙ force">EXPANDED</button><button id="bOtherVocab" title="T: this session's input through the other vocabulary (replay)">⇄ same input → other techniques (T)</button></span>
+  <span class="grp" id="ref" style="display:none"><span class="lab">reference runner</span><select id="selRef" title="a second player on the same input, in a lane 2.5 m to the side (BALL OFF only)"></select></span>
+  <span class="grp" id="model" style="display:none"><span class="lab">BALL CONTROL MODEL</span><button data-model="FREE" title="TC-UNIFIED-1's FULL exactly: the ball free between touches">CURRENT FREE</button><button data-model="CONTROLLED" class="on" title="CONTROLLED_BALL: once secured, every decision keeps a valid controlled continuation">CONTROLLED</button><button id="bOther" title="M: this session's input through the other model (replay)">⇄ same input (M)</button></span>
+  <span class="grp" id="pokeGrp" style="display:none"><button id="bPoke" title="P: an opponent's foot into the real ball (from alternate sides, 6 m/s)">OPPONENT POKE (P)</button><button id="bRelease" title="K: the next touch becomes a knock-on (an intentional release)">RELEASE (K)</button></span>
+  <span class="grp"><button id="bReset" class="warn" title="R">⟲ RESET</button></span>
+  <span class="grp"><span class="lab">Mode</span><button data-mode="WALK">WALK</button><button data-mode="JOG">JOG</button><button data-mode="RUN" class="on">RUN</button><button data-mode="SPRINT">SPRINT</button></span>
+  <span class="grp"><span class="lab">Time</span><button id="bPause" title="Space">❚❚</button><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button><button id="bStep" title=". (shift: one 240 Hz tick)">▸| step</button></span>
+  <span class="grp"><button id="bReplay" title="Q">⟲ REPLAY LAST ACTION</button><button id="bBuffer" title="B">replay 10 s</button></span>
+  <span class="grp"><span class="lab">Camera</span><select id="selCam" title="C"><option value="follow">gameplay (behind / above)</option><option value="explosion">close side</option><option value="front">front</option><option value="rear">rear</option><option value="top">overhead</option><option value="pair">both (L | R)</option><option value="touchline">touchline (fixed side)</option><option value="side">side / debug</option></select></span>
+  <span class="grp" id="stack" style="display:none"><span class="lab">Stack</span><button data-preset="A" title="exact 88573ef0 (checked against the locked engine)">A</button><button data-preset="AC" title="+ A99-C, Astra's movement (exact)">A + C</button><button data-preset="ACS" title="+ the persistent support: one shared foot plan, a continuous foot timeline">A + C + SUPPORT</button><button data-preset="ACS4" title="+ B4: generic vocabulary + named moves by predicted outcome">A + C + SUPPORT + B4</button><button data-preset="FULL" title="+ B5: short entries / exits — everything">FULL</button></span>
+  <span class="grp" style="display:none"><label title="the ball (never on this page)"><input id="cBall" type="checkbox">BALL</label></span>
+  <span class="grp"><span class="lab">Playtest</span><select id="selTest"></select><button id="bTest" title="reset, then play the case through the stick">▶ play</button><button id="bNext" title="X: this session's input through the next stack (A → A+C → … → FULL)">⇄ same input → next (X)</button></span>
+  <span class="grp"><button id="bDiag" title="diagnostics: layer toggles, attributes, panels, body warnings, performance">⚙ diagnostics</button></span>
+  <div id="lbar">
+    <span class="grp"><span class="lab">Engine</span><select id="selEng" title="the unified copy (its toggles) or the LOCKED 88573ef0 engine itself (read-only)"><option value="layered">unified (toggles)</option><option value="baseline">locked 88573ef0</option></select></span>
+    <span class="grp" id="layBox"></span>
+    <span class="grp"><span class="lab">Same input →</span><select id="selSame"></select><button id="bSame" title="re-simulate this session's recorded input with that configuration and replay it">▶ replay through it</button></span>
+    <span class="grp"><span class="lab">Course</span><select id="selCourse"><option value="none">none</option><option value="straight">straight acceleration</option><option value="slalom">slalom</option><option value="cuts">sharp-cut 45 / 90 / 120 / 150 / 180°</option><option value="box">tight box</option></select></span>
+    <span class="grp"><span class="lab">Foot</span><select id="selFoot"><option value="R">right-dominant</option><option value="L">left-dominant</option><option value="B">two-footed</option></select>
+      <select id="selStyle" title="dribbling style"><option value="NEUTRAL">style: neutral elite</option></select></span>
+    <span class="grp" id="custGrp"><span class="lab" style="color:#ffd45e;font-weight:700">CUSTOM RATINGS</span><span class="lab">Sprint</span><input id="cuS" type="text" inputmode="numeric" value="80" style="width:30px"><span class="lab">Acc</span><input id="cuA" type="text" inputmode="numeric" value="80" style="width:30px"><span class="lab">Agility</span><input id="cuG" type="text" inputmode="numeric" value="80" style="width:30px"><select id="cuSc" title="the Agility scaling candidate"><option value="A">scale A</option><option value="B" selected>scale B</option><option value="C">scale C</option></select><button id="bCust" title="play this rating set (the reference: PHYSICAL-99)">▶ apply</button></span>
+    <span class="grp" style="display:none"><span class="lab">BC</span><input id="aBC" type="range" min="1" max="99" value="99"><span id="vBC">99</span>
+      <span class="lab">DRI</span><input id="aDRI" type="range" min="1" max="99" value="99"><span id="vDRI">99</span>
+      <span class="lab">AGI</span><input id="aAGI" type="range" min="1" max="99" value="99"><span id="vAGI">99</span><span id="prov"></span></span>
+    <span class="grp"><span class="lab">Stick dz</span><input id="dz" type="number" min="0" max="0.3" step="0.01" value="0.08" style="width:58px" title="share of the stick's radius"><span class="lab" id="zones" style="font-size:11px" title="stick zones (share of the radius): walk below 0.40, jog below 0.72, run beyond; sprint only with SPRINT / Shift">zones .40 / .72</span></span>
+    <span class="grp"><label><input id="cHud" type="checkbox" checked>HUD</label><label><input id="cSide" type="checkbox">panels</label><label><input id="cProt" type="checkbox">protection</label><label><input id="cBody" type="checkbox">body debug</label><label><input id="cAnim" type="checkbox" checked>body</label><label><input id="cDiag" type="checkbox">body warnings</label></span>
+    <span class="grp"><a href="tc_baseline_88573ef0.html" style="color:#8dffa6;font-weight:600">the immutable BASELINE-88573ef0 page</a> · <a href="agility99.html" style="color:#ff9b8d;font-weight:600">Astra's A99 page</a> · <a href="tc_unified1.html" style="color:#ffd45e;font-weight:600">TC-UNIFIED-1 (unchanged)</a> · <a href="tc_controlled1.html" style="color:#8dffa6;font-weight:600">TC-CONTROLLED-1 (unchanged)</a></span>
+    <span class="grp"><span class="lab">REVIEW ONLY</span><select id="selForce" title="review-only explicit access: the family preferred wherever it is feasible, one move at a time (EXPANDED)"><option value="">force a family: none</option><option value="LAT">LATERAL TRANSFER</option><option value="KNK">KNOCK-ON</option><option value="SOL">SOLE ROLL</option><option value="FNO">BODY FEINT + OUTSIDE CUT</option><option value="FNI">BODY FEINT + INSIDE CUT</option></select></span>
+    <span class="grp" id="ballOpts"><span class="lab">ball model / probes (BALL ON):</span></span>
+  </div>
+</div>
+<div id="stage">
+  <canvas id="gl"></canvas><canvas id="ov"></canvas>
+  <div id="hud" class="box"></div>
+  <div id="pacebox" class="box"></div>
+  <div id="sprintBanner" class="box hidden"></div>
+  <div id="side" class="box hidden">
+    <div class="sec"><h4>Ball separation (player ↔ ball, last 8 s)</h4><canvas id="graph"></canvas></div>
+    <div class="sec"><h4>Technique frequency (since reset)</h4><div id="stats"></div></div>
+    <div class="sec"><h4>Last contacts</h4><table id="ctab"></table></div>
+  </div>
+  <div id="keys" class="box"></div>
+  <div id="replay" class="box"><div class="row"><span id="rLabel">REPLAY</span><span><button id="rSlow" class="on">0.25×</button><button id="rHalf">0.5×</button><button id="rOne">1×</button><button id="rPlay">❚❚</button><button id="rLive">LIVE ▸ (Esc)</button></span></div><input id="rScrub" type="range" min="0" max="1000" value="0"></div>
+  <div id="stickBox"><div id="stickPad" title="drag in any direction — continuous direction and magnitude (the camera's forward = up)"></div><div id="stickInfo">drag to move</div></div>
+  <div id="stickBtns"><button id="bSprint" title="hold: sprint (= Shift)">SPRINT</button><button id="bLock" title="keep sprinting without holding anything (= top-bar Mode SPRINT, key 4); click again — or WALK / JOG / RUN — to release">sprint lock (off)</button><button id="bWalk" title="hold: walk (= Alt / Option)">WALK</button></div>
+  <div id="help" class="box">Stick (left): drag = direction + magnitude · SPRINT hold / lock · WASD move (camera frame) · Shift sprint · Alt/Option walk · 1–4 mode · Space pause · . step · Q replay last action · B replay buffer · X same input → next stack · R reset · C camera · H HUD</div>
+  <div id="perf" class="box"></div>
+  <div id="diag" class="box"></div>
+  <div id="loading">loading the player…</div>
+</div>
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="run1/run1_gait_v13.js"></script>
+<script>window.S99_PRIMARY = true; window.BALLON = true; window.VOCAB_SANDBOX = true;</script>
+<script type="module" src="adv4/u_viewer.js"></script>
+</body>
+</html>
