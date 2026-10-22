@@ -202,7 +202,7 @@ export class PlayBody {
     const st = this.sim.stateAt(t, P), ps = st.psi, fw = [Math.cos(ps), Math.sin(ps)], rt = [-Math.sin(ps), Math.cos(ps)];
     // (DRIBBLING VOCAB-1: right after the hips have turned — > 15° in the last 0.25 s: a technique's exit, a cut — the feet point different ways
     // and 0.14 m between them let the boots / shins overlap as the swing passed: the corridor is 0.20 m then; straight running keeps 0.14 m)
-    const corr = abs(wrap(ps - this.sim.stateAt(Math.max(0, t - 0.25)).psi)) > 15 * DEG ? (+(globalThis.process?.env?.CORR) || 0.20) : 0.14;
+    const corr = abs(wrap(ps - this.sim.stateAt(Math.max(0, t - 0.25)).psi)) > 15 * DEG ? (+(globalThis.process?.env?.CORR) || 0.20) : 0.14;   // (CORR=0.14: the ablation)
     for (const X of SIDES) { const S = T.st[X], { f, ev } = pre[X], o = pre[other(X)].f; let g = f;
       // (S99 MISSION, the 99 pace: A PLANT PIVOT — a planted foot never points more than 70° from the body's facing: in a reversal the body turns
       // ≈ 180° over the planted foot in ≈ 0.2 s, the foot kept its yaw, the leg was asked for an impossible ≈ 170° twist and its solve flipped

@@ -5,7 +5,8 @@
 // a DEFENDER MARKER where the move's purpose is (visual only: `def` [ahead, right] metres from the player at t = 0; `threat` the side of it).
 // variant: NORMAL · HIGH-SPEED · MIRROR (the left-foot / left-side version) · AUTO (the same state, no request) · REJECTED (a deliberately
 // invalid setup) · CHAIN. The clip shown: from `pre` s before t = 0 to `dur` s after it (approach → preparation → decisive → exit → continuation)
-const C = (tech, variant, mode, ang, o = {}) => Object.assign({ tech, variant, mode, ang, runup: 2.2, dur: 2.6, pre: 1.1, def: [3.2, 0], intents: o.auto ? [] : [{ t: 0, id: o.req || tech, foot: o.foot || null }] }, o);
+// (MIRROR: the mirrored player — LEFT-footed, the ball in the left lane, the left foot playing the move — not a right-footer reaching across)
+const C = (tech, variant, mode, ang, o = {}) => Object.assign({ tech, variant, mode, ang, runup: 2.2, dur: 2.6, pre: 1.1, def: [3.2, 0], intents: o.auto ? [] : [{ t: 0, id: o.req || tech, foot: o.foot || null }] }, variant === "MIRROR" && o.foot === "L" ? { pref: "L" } : {}, o);
 export const CASES = [
   // ── CARRY / PACE ──
   C("CARRY", "NORMAL", "RUN", 0, { auto: true, dur: 2.4, def: null, title: "Run with the ball: the ordinary carry, no skill when none is needed" }),
@@ -94,6 +95,8 @@ export const CASES = [
   C("SHIELD_ROLL", "NORMAL", "WALK", 75, { def: [0.6, -1.0], threat: -1, title: "A threat on the left: roll it away with the far foot, hip between" }),
   C("SHIELD_ROLL", "MIRROR", "WALK", -75, { foot: "L", def: [0.6, 1.0], threat: 1, title: "Shield roll, threat on the right" }),
   C("SHIELD_HOOK", "NORMAL", "JOG", -150, { req: "INSIDE_HOOK", def: [1.2, 0.8], threat: 1, title: "Turn away from a threat coming from the right (the inside hook)" }),
+  C("SHIELD_HOOK", "AUTO", "JOG", 160, { auto: true, def: [1.0, 0.8], threat: 1, title: "AUTO, a threat close on the right: B4's reversal with the threat in mind (the harness's threat)" }),
+  C("SHIELD_HOOK", "AUTO-2", "JOG", 160, { auto: true, def: null, title: "AUTO, the same request with no threat: compare" }),
   C("SHIELD_OUTHOOK", "NORMAL", "JOG", 150, { req: "OUTSIDE_HOOK", def: [1.2, -0.8], threat: -1, title: "Turn away from a threat on the left (the outside hook)" }),
 ];
 // ── THE CHAINS: techniques genuinely branched one into the next (the decisive contact, the branch, the next action's start are measured) ─────

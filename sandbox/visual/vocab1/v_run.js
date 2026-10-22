@@ -10,6 +10,8 @@ export function caseOpts(c, mirror = false, extra = {}) { const pref = c.pref ||
 export function runCaseOn(sim, c, mirror = false, onTick = null) { const s = mirror ? -1 : 1, R = (h, mode) => ({ h, mode, keys: 0 });
   for (let k = 0; k < Math.round(c.runup / DT); k++) { sim.step(R(k < 24 ? null : 0, c.mode)); if (onTick) onTick(sim); }
   const t0 = sim.t, n = Math.round(c.dur / DT), I = (c.intents || []).map((x) => ({ k: Math.round(x.t / DT), x }));
+  // (a case with a THREAT: the defender marker's point is the harness's threat from t = 0)
+  if (c.threat && c.def) { const st = sim.stateAt(sim.t), a = c.def[0], l = s * c.def[1]; sim.setThreat({ P: [st.P[0] + a * Math.cos(st.h) - l * Math.sin(st.h), st.P[1] + a * Math.sin(st.h) + l * Math.cos(st.h)] }); }
   for (let k = 0; k < n; k++) { const t = k * DT;
     for (const q of I) if (q.k === k) { const it = intentOf(q.x.id); if (it) { const foot = q.x.foot ? (mirror ? (q.x.foot === "R" ? "L" : "R") : q.x.foot) : null; sim.requestSkill(Object.assign({}, it, { foot })); } }
     const st = stickAt(c, t); sim.step(R(st.ang == null ? null : s * st.ang * DEG, st.mode)); if (onTick) onTick(sim); }

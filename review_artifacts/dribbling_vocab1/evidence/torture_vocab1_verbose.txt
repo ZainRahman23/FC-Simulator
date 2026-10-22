@@ -1,0 +1,13 @@
+■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 9 (0.23/min) · missed contacts 0 · touches/s 2.76 · sep mean 0.41 m max 1.85 m · CPU 94.5 ms per simulated s, worst tick 19.9 ms
+   contacts by kind {"carry":3924,"DRAGBACK":405,"CIR":357,"OUTHOOK":236,"COR":182,"LAT":161,"BRT":157,"HOOK":156,"BPV":155,"LDRAG":147,"CRUYFF":123,"ABG":119,"CHOP":95,"VPULL":54,"KNK":52,"OUTCUT":51,"SPRINT_CARRY push":25,"URG":3} · recovery actions {"SECURE":133}
+   contact gaps p10 0.20 · p50 0.25 · p90 0.64 · p99 1.32 · max 3.87 s · busy alternations (the other foot < 0.25 s after a touch) 2975 of 6362
+   losses by cause {"no contact made":9} · by input segment {"wander":2,"oscillate":3,"rotate":3,"hold":1}
+   seed 3 {"t":3.858,"sep":0.92,"seg":"wander","mode":"RUN","prev":"snap","action":"OUTSIDE HOOK","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.63,"sepUntil":0.91}
+   seed 3 {"t":9.083,"sep":0.39,"seg":"oscillate","mode":"SPRINT","prev":"oscillate","action":"CARRY","speed":1.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.14,"sepUntil":0.4}
+   seed 16 {"t":46.438,"sep":0.61,"seg":"oscillate","mode":"JOG","prev":"oscillate","action":"BRAKING PIVOT","speed":3.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.07,"sepUntil":0.61}
+   seed 22 {"t":21.783,"sep":0.74,"seg":"rotate","mode":"RUN","prev":"rotate","action":"COMPACT INSIDE REDIRECT","speed":4.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.09,"sepUntil":0.73}
+   seed 23 {"t":19.683,"sep":0.81,"seg":"rotate","mode":"RUN","prev":"rotate","action":"COMPACT INSIDE REDIRECT","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.28,"sepUntil":0.81}
+   seed 25 {"t":44.271,"sep":0.29,"seg":"hold","mode":"SPRINT","prev":"oscillate","action":"CARRY","speed":2.7,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":0.28}
+   seed 29 {"t":52.063,"sep":1.22,"seg":"wander","mode":"WALK","prev":"wander","action":"COMPACT OUTSIDE REDIRECT","speed":1.5,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.44,"sepUntil":1.22}
+   seed 31 {"t":31.246,"sep":0.88,"seg":"rotate","mode":"RUN","prev":"oscillate","action":"CARRY","speed":2.2,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.44,"sepUntil":0.87}
+   seed 39 {"t":30.758,"sep":0.67,"seg":"oscillate","mode":"WALK","prev":"oscillate","action":"OUTSIDE CUT","speed":5.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.15,"sepUntil":0.66}

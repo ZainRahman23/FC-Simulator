@@ -251,7 +251,7 @@ export class ControlledSim extends UnifiedSim {
   // ── page / test events (recorded in the input log's events — replay and re-simulation apply them at the same tick) ──────────────────────────
   addOpponent(probe) { this.opp.push(Object.assign({ r: 0.07, z: 0.10, e: 0.55, kind: "poke" }, probe, { hit: false })); this.log.events.push({ k: this.k, kind: "opponent", v: probe }); }
   requestRelease() { const ok = this.release(); this.log.events.push({ k: this.k, kind: "release" }); return ok; }
-  applyEvent(e) { if (e.kind === "opponent") this.addOpponent(e.v); else if (e.kind === "release") this.requestRelease(); else if (e.kind === "skill") this.requestSkill(e.v); }
+  applyEvent(e) { if (e.kind === "opponent") this.addOpponent(e.v); else if (e.kind === "release") this.requestRelease(); else if (e.kind === "skill") this.requestSkill(e.v); else if (e.kind === "threat") this.setThreat(e.v); }
   // (an opponent's poke aimed at the ball as it will be in 0.12 s, from the given side of the ball's travel, at the given foot speed — a 10 cm
   // foot: a lunging boot)
   pokeProbe(side = 1, speed = 8) { const b = this.ball.p, bv = this.ball.v, f = predict(b, bv, 0.12), st = this.stateAt(this.t), h = hyp(bv[0], bv[1]) > 0.5 ? Math.atan2(bv[1], bv[0]) : st.psi, a = h + side * Math.PI / 2 + Math.PI, u = [Math.cos(a + Math.PI), Math.sin(a + Math.PI)];

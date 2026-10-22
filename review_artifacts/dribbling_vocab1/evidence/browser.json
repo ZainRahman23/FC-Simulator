@@ -1,0 +1,90 @@
+{
+ "cards": 55,
+ "buttons": 88,
+ "runs": [
+  {
+   "i": 0,
+   "title": "Run with the ball: the ordinary carry, no skill when none is needed",
+   "info": "Run with the ball: the ordinary carry, no skill when none is needed | CARRY / PACE · INTEGRATED · AUTO · primitives P1 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3529034712,
+   "k": 1104
+  },
+  {
+   "i": 15,
+   "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+   "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 377538736,
+   "k": 1152
+  },
+  {
+   "i": 19,
+   "title": "Ronaldo chop, left foot",
+   "info": "Ronaldo chop, left foot | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2096265322,
+   "k": 1152
+  },
+  {
+   "i": 45,
+   "title": "Scissors from a full sprint: the body brakes into it (its useful entry is ≤ 8 m/s)",
+   "info": "Scissors from a full sprint: the body brakes into it (its useful entry is ≤ 8 m/s) | STEPOVER / SCISSORS · REVIEW · MANUAL · primitives P7 → P2 | REQUESTED SCISSORS → PLAYED · decisive at 1.71 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2864985263,
+   "k": 1344
+  },
+  {
+   "i": 39,
+   "title": "Sell inside, cut outside",
+   "info": "Sell inside, cut outside | FEINT · REVIEW · AUTO+MANUAL · primitives P7 + P2 | REQUESTED FEINT_OUTSIDE_CUT → PLAYED · decisive at 0.00 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2917058418,
+   "k": 1152
+  },
+  {
+   "i": 42,
+   "title": "Matthews, left foot",
+   "info": "Matthews, left foot | FEINT · REVIEW · MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.75 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 1561681605,
+   "k": 1152
+  },
+  {
+   "i": 29,
+   "title": "Pull back and play it behind the standing leg: 90° behind the body",
+   "info": "Pull back and play it behind the standing leg: 90° behind the body | SOLE / DRAG · INTEGRATED · AUTO+MANUAL · primitives P5 → P3 | REQUESTED L_DRAG → PLAYED · decisive at 0.43 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 1300182763,
+   "k": 1152
+  },
+  {
+   "i": 25,
+   "title": "Would B4 Cruyff here?",
+   "info": "Would B4 Cruyff here? | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2861456022,
+   "k": 1152
+  },
+  {
+   "i": 87,
+   "title": "Matthews → sprint",
+   "info": "Matthews → sprint | REQUESTED MATTHEWS → PLAYED · decisive at 0.75 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS FEINT (drag-push) (R)\t0.13\t0.49\t0.75\t0.81\t—",
+   "hash": 2478498367,
+   "k": 1248
+  }
+ ],
+ "branch": {
+  "title": "BRANCH: Beat the reaching leg: inside to inside across the body in one stride → Outside cut at 0.90 s",
+  "skills": [
+   "CROQUETA PLAYED",
+   "OUTSIDE_CUT PLAYED"
+  ]
+ },
+ "pair": {
+  "ref": true,
+  "title": "L | R · BRANCH: Beat the reaching leg: inside to inside across the body in one stride → Outside cut at 0.90 s"
+ },
+ "sandbox": {
+  "skills": 31,
+  "label": "DRIBBLING VOCAB-1 · THE JOYSTICK SANDBOX · S99 · D38 · A99-C (Agility scale B below 99) · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED + the library",
+  "after": {
+   "res": "last request: ELASTICO → PLAYED",
+   "skill": "PLAYED"
+  }
+ },
+ "logs": [],
+ "http": []
+}

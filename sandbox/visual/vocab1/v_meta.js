@@ -77,3 +77,17 @@ export const META_BY_ID = Object.fromEntries(META.map((x) => [x.id, x]));
 export const AUTO_TECH = ["CHOP", "OUTCUT", "CRUYFF", "HOOK", "DRAGBACK", ...[...new Set(META.filter((x) => x.kind === "tech" && x.status === "INTEGRATED" && x.mode !== "MANUAL").flatMap((x) => x.ids))].filter((id) => !["CHOP", "OUTCUT", "CRUYFF", "HOOK", "DRAGBACK"].includes(id))];
 // the manual intent for a catalogue entry: { intent, ids, gen, feint }
 export function intentOf(id) { const M = META_BY_ID[id]; if (!M) return null; return { intent: id, ids: M.ids || [], gen: M.gen || null, feint: M.kind === "feint" ? M.feint : null, prefer: M.prefer || null, trim: !!M.trim }; }
+// ── FUTURE DRIBBLING-RATING READINESS (owner: "higher Dribbling → broader feasible entry states → higher usable entry speeds → shorter
+// preparation → later branching → stronger chaining"; NOT CALIBRATED — the interface and the shape only). feasibilityFor(id, dri) gives the
+// envelope a Dribbling rating would grant a technique; AT D99 IT IS THE CEILING ITSELF (the identity — tonight's behaviour); below 99 the
+// provisional shape, s = (99 − D) / 98 scaled by the technique's own difficulty dimensions, is what a future Dribbling scale will set:
+//   vMaxUseful   the highest entry speed the technique is usable from          diff.vmax × (1 − 0.55 s · diff.tech)
+//   entryWindow  the share of A99's feasible entry states (stride phase, ball place, set-touch reach) still usable   1 − 0.6 s · diff.support
+//   prepScale    the preparation (set touch, braking, the approach) stretched by   1 + s · diff.prep
+//   commitLead   how early before its decisive contact it must commit (s added)  0.10 s · diff.chain
+//   branchDelay  control returned later after the decisive phase (s added)        0.12 s · diff.chain
+//   deception    the sell's quality (body / timing) kept                           1 − 0.7 s · diff.deceive
+//   weakFoot     the extra cost on the non-preferred foot (with Weak Foot later)   diff.weak (the scale's own rating decides it)
+// It never degrades into self-inflicted loss: the envelope shrinks, the technique is REJECTED / not chosen — the ball stays controlled
+export function feasibilityFor(id, dri = 99) { const M = META_BY_ID[id]; if (!M || !M.diff) return null; const d = M.diff, s = Math.max(0, Math.min(1, (99 - dri) / 98));
+  return { id, dri, calibrated: false, vMaxUseful: d.vmax * (1 - 0.55 * s * d.tech), entryWindow: 1 - 0.6 * s * d.support, prepScale: 1 + s * d.prep, commitLead: 0.10 * s * d.chain, branchDelay: 0.12 * s * d.chain, deception: 1 - 0.7 * s * d.deceive, weakFoot: d.weak }; }

@@ -57,7 +57,7 @@ const physName = (p) => (p ? (p.id && p.id !== "CUSTOM" ? p.id : `CUSTOM S${p.sp
 // cameras (gameplay · close side · front · rear · overhead), MIRROR and L | R side by side, AUTO (B4 decides from the same state) vs FORCE,
 // REJECTED setups with their reasons, the CHAINS, diagnostics off by default, TRY IT LIVE. vocab1_sandbox.html sets window.VOCAB_SANDBOX: the
 // joystick sandbox with the full vocabulary and the manual skill palette)
-import { META, FAMILIES, META_BY_ID, intentOf } from "./v_meta.js";
+import { META, FAMILIES, META_BY_ID, intentOf, feasibilityFor } from "./v_meta.js";
 import { CASES, CHAINS, caseKey } from "./v_cases.js";
 import { caseOpts, runCaseOn, summarize } from "./v_run.js";
 const LAB = !!window.LAB, SANDBOX = !!window.VOCAB_SANDBOX;
@@ -709,6 +709,7 @@ function labInfoBox() { const el = document.getElementById("labInfo"); if (!el |
     <table><tr><th class="l">action</th><th>prep</th><th>commit</th><th>decisive</th><th>control</th><th>next</th></tr>${ph || `<tr><td class="l" colspan="6">the carry only</td></tr>`}</table>
     <div class="ct">${S.contacts.filter((x) => x.t >= -0.05).slice(0, 7).map((x) => `${x.t.toFixed(2)} ${x.F} ${x.surface} <i>${esc(x.role)}</i>`).join("<br>")}</div>
     <div class="mt">possession: ${S.exits.length ? "EXITS " + esc(S.exits.join(", ")) : "kept (CONTROLLED)"} · ball ≤ ${S.sepMax.toFixed(2)} m from the body${m && m.diff ? ` · difficulty: tech ${m.diff.tech} · max useful entry ${m.diff.vmax} m/s · support ${m.diff.support} · weak foot ${m.diff.weak} · prep ${m.diff.prep} · chain ${m.diff.chain} · deceive ${m.diff.deceive}` : ""}</div>
+    ${m && m.diff ? `<div class="mt">future Dribbling envelope (NOT calibrated — the interface only): ${[99, 80, 50].map((d) => { const f = feasibilityFor(m.id, d); return `D${d}: entry ≤ ${f.vMaxUseful.toFixed(1)} m/s · states ${(f.entryWindow * 100).toFixed(0)} % · prep ×${f.prepScale.toFixed(2)} · branch +${(f.branchDelay * 1000).toFixed(0)} ms`; }).join(" | ")}</div>` : ""}
     <canvas id="labTL" width="560" height="34"></canvas>`; }
 // the phase timeline under the info box: preparation · commitment · decisive · control returned · next action, and the replay's cursor
 function labTimeline() { const cv = document.getElementById("labTL"); if (!cv || !V.replay || !V.labSum) return; const g = cv.getContext("2d"), R = V.replay, W = cv.width, H = cv.height, X = (t) => ((t - R.t0) / (R.t1 - R.t0)) * W;

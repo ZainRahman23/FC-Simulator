@@ -327,7 +327,8 @@ export class PlaySim {
     for (let T = tLast + 0.12; T <= t + 1.45 + 1e-9; T += 0.02) { const B = predict(bp, bv, T - tLast).p, s = this.stateAt(T, c), rel = toLocal(B, s.P, s.s > 0.6 ? s.h : s.psi); if (T <= tLast + 1.0) sep = max(sep, hyp(rel[0], rel[1])); if (tNext == null && rel[0] >= -0.02 && rel[0] <= 0.80 && abs(rel[1]) <= 0.45) tNext = T; }
     if (tNext == null) { const B = predict(bp, bv, t + 1.45 - tLast).p, s = this.stateAt(t + 1.45, c); tNext = t + 1.5 + 0.4 * max(0, hyp(B[0] - s.P[0], B[1] - s.P[1]) - 0.8); }
     const tE = min(t + 1.45, max(tLast, tRel != null ? tRel : tLast) + 0.25), sE = this.stateAt(tE, c), u = dir(q.h), bs = hyp(bv[0], bv[1]);
-    return { tRel, tLast, tNext, eB: bs > 0.5 ? abs(wrap(hdg(bv) - q.h)) : 0, ballSpeed: bs, ballDir: bs > 0.05 ? hdg(bv) : null, bodyDir: sE.s > 0.3 ? sE.h : sE.psi, bodySpeed: sE.s, retained: clamp((sE.V[0] * u[0] + sE.V[1] * u[1]) / vReq, 0, 1), sep };
+    const bE = predict(bp, bv, max(0, tE - tLast)).p;   // (DRIBBLING VOCAB-1: where the ball and the body are then — for the threat's exposure)
+    return { bE, pE: sE.P, tRel, tLast, tNext, eB: bs > 0.5 ? abs(wrap(hdg(bv) - q.h)) : 0, ballSpeed: bs, ballDir: bs > 0.05 ? hdg(bv) : null, bodyDir: sE.s > 0.3 ? sE.h : sE.psi, bodySpeed: sE.s, retained: clamp((sE.V[0] * u[0] + sE.V[1] * u[1]) / vReq, 0, 1), sep };
   }
   // ── B4: THE COST on that outcome — the same terms for every candidate (carry, generic, named): the body's new line, the useful contact, the
   // ball's accessibility after the action (beyond a stride: the body cannot follow it), the ball's line against the request, the speed kept,
@@ -342,6 +343,11 @@ export class PlaySim {
     const lim = q.mode === "SPRINT" ? 3.0 : q.mode === "RUN" ? 2.0 : q.mode === "JOG" ? 1.5 : 1.0; if (o.sep > lim) { J += 0.6 * (o.sep - lim); notes.push(`ball ${o.sep.toFixed(1)}m away`); }
     J += 0.22 * (c.nContacts || 0);
     const d = abs(a.turnDeg || 0), prot = a.tech ? TEMPLATES[a.tech].protect : a.kind === "GENERIC" ? a.protect : 0; J -= 0.35 * prot * clamp((d - 30) / 60, 0, 1);
+    // (DRIBBLING VOCAB-1 — THE THREAT (the review harness's, setThreat: a point on the pitch; no defender model, no force field): within 3.5 m, a
+    // solution that leaves the ball NEARER the threat than the body is (the ball exposed) pays; one whose body ends between them gains by its
+    // protection — the body has to place itself there)
+    if (this.threat && this.threat.P) { const T = this.threat.P, dB = hyp(o.bE[0] - T[0], o.bE[1] - T[1]), dP = hyp(o.pE[0] - T[0], o.pE[1] - T[1]), near = clamp((3.5 - hyp(st.P[0] - T[0], st.P[1] - T[1])) / 2.0, 0, 1);
+      if (near > 0) { const ex = clamp((dP - dB + 0.15) / 0.5, 0, 1); J += 1.2 * near * ex; J -= 0.5 * near * prot * (1 - ex); if (ex > 0.3) notes.push("ball exposed to the threat"); } }
     const pref = this.o.foot; if ((a.tech || a.kind === "GENERIC") && pref !== "B" && a.F !== pref) { J += 0.18; notes.push("weak foot"); }
     // (S99 MISSION: review-only explicit access — the forced family preferred wherever it is feasible, ONE move at a time: not again until a
     // contact of another kind has been made since its last one)
@@ -606,6 +612,8 @@ export class PlaySim {
     if (o.feint) { const q = this.req, tr = q && q.h != null ? wrap(q.h - S.h0) : 0, side = abs(tr) > 8 * DEG ? -Math.sign(tr) : (o.feintSide || 1); this.startFeint(o.feint, side, "manual");
       if (!S.ids.length && !S.gen) { S.done = true; S.result = "PLAYED"; S.state = "FEINT"; S.tPlayed = this.t; S.played = o.intent; S.prefer = o.prefer || null; S.preferUntil = this.t + 0.6; this.prefer = S.prefer ? { fam: S.prefer, until: this.t + 0.6 } : null; this.log.skill.push(Object.assign({}, S)); } }
     return S; }
+  // (DRIBBLING VOCAB-1: the review harness's THREAT — a point on the pitch (a defender's place), or null; recorded as an event)
+  setThreat(o) { this.threat = o && o.P ? { P: o.P.slice() } : null; this.flags.replan = this.flags.replan || "threat"; this.log.events.push({ k: this.k, kind: "threat", v: o ? Object.assign({}, o) : null }); }
   noteRej(r0) { const S = this.skill; if (!S) return; const r1 = this._rej || {}; for (const [k, v] of Object.entries(r1)) { const d = v - (r0[k] || 0); if (d > 0) S.rej[k] = (S.rej[k] || 0) + d; } }
   skillCands(st, keep, q, act) { const S = this.skill, out = []; if (!S || S.done || q.h == null) return out; const r0 = Object.assign({}, this._rej || {}), t = this.t;
     // (ENTERED: its own running instance, pinned — re-targeted to the latest exit before its commitment, kept through it)

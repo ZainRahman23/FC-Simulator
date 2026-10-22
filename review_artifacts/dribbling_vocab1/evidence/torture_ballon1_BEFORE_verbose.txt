@@ -1,0 +1,12 @@
+■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 8 (0.20/min) · missed contacts 0 · touches/s 2.78 · sep mean 0.42 m max 1.83 m · CPU 85.6 ms per simulated s, worst tick 18.2 ms
+   contacts by kind {"carry":4297,"DRAGBACK":438,"CIR":342,"COR":214,"CRUYFF":196,"LAT":164,"HOOK":162,"BPV":136,"BRT":131,"ABG":117,"CHOP":114,"KNK":62,"OUTCUT":51,"SPRINT_CARRY push":24} · recovery actions {"SECURE":130}
+   contact gaps p10 0.21 · p50 0.25 · p90 0.64 · p99 1.37 · max 4.17 s · busy alternations (the other foot < 0.25 s after a touch) 3134 of 6408
+   losses by cause {"no contact made":8} · by input segment {"wander":4,"rotate":2,"snap":1,"oscillate":1}
+   seed 3 {"t":3.858,"sep":0.92,"seg":"wander","mode":"RUN","prev":"snap","action":"BRAKING TOUCH","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":0.91}
+   seed 4 {"t":27.863,"sep":0.95,"seg":"wander","mode":"SPRINT","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.52,"sepUntil":0.99}
+   seed 16 {"t":38.7,"sep":0.53,"seg":"rotate","mode":"RUN","prev":"rotate","action":"INSIDE HOOK","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.13,"sepUntil":0.52}
+   seed 24 {"t":16.583,"sep":0.8,"seg":"wander","mode":"RUN","prev":"wander","action":"CARRY","speed":0.5,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.51,"sepUntil":0.87}
+   seed 24 {"t":33.029,"sep":0.33,"seg":"rotate","mode":"RUN","prev":"rotate","action":"CARRY","speed":4.1,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.05,"sepUntil":0.33}
+   seed 25 {"t":15.683,"sep":0.42,"seg":"snap","mode":"JOG","prev":"oscillate","action":"CARRY","speed":3.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.19,"sepUntil":0.42}
+   seed 29 {"t":51.413,"sep":0.82,"seg":"wander","mode":"WALK","prev":"wander","action":"CARRY","speed":0.5,"why":"no contact made","poss":"CONTROLLED","nextTouch":1.75,"sepUntil":1.32}
+   seed 39 {"t":30.992,"sep":0.34,"seg":"oscillate","mode":"WALK","prev":"oscillate","action":"CARRY","speed":1.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.55,"sepUntil":0.34}

@@ -15,6 +15,7 @@ import {predict} from '../tc_baseline_88573ef0/pt_ball.js';
 import {accCadence,accLead,topContact,topCadence} from './pace.js';   // (SPEED-99-V1: the acceleration gait — only with a candidate's pace.accGait)
 const {abs,min,max,hypot:hyp}=Math;
 const sgn=X=>X==='R'?1:-1,other=X=>X==='R'?'L':'R';
+const ABL = Object.fromEntries(String(globalThis.process?.env?.ABL || "").split(",").filter(Boolean).map((k) => [k, true]));   // (ablation switches for the tools only: pivot, turn, dup)
 const PIV_MAX = (+(globalThis.process?.env?.PIV_MAX) || 30) * DEG;   // (the pivoting support: a planted foot at most this far from the hips)
 export function bodyGaitFrom(plan, keep, anchors, tTo) {
     const S = { R: keep.stances.R.map((x) => Object.assign({}, x)), L: keep.stances.L.map((x) => Object.assign({}, x)) }, lastOf = (X) => S[X][S[X].length - 1], t = this.t;
@@ -53,7 +54,7 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
       // hard brake, a turn on the spot) swings AROUND the planted foot on its own side — the foot's own side in the hips' frame at mid-swing —
       // instead of straight through it: the legs crossed 5 – 9 cm there)
       { const ts = prevX && prevX.t1 !== Infinity ? max(prevX.t1, t) : td - 0.16, tm = (ts + td) / 2, dpsi = abs(wrap(this.stateAt(td, plan).psi - this.stateAt(ts, plan).psi));
-        if (dpsi > 60 * DEG && this.stateAt(tm, plan).s < 3.0 && td - ts > 0.08) { st.swingIn = { turnStep: true, via: [{ t: tm, rel: "stance", at: [-0.02, sgn(X) * 0.27, 0.13] }] }; st.kind += " · turn step";
+        if (!ABL.turn && dpsi > 60 * DEG && this.stateAt(tm, plan).s < 3.0 && td - ts > 0.08) { st.swingIn = { turnStep: true, via: [{ t: tm, rel: "stance", at: [-0.02, sgn(X) * 0.27, 0.13] }] }; st.kind += " · turn step";
           // (… and it lands clear of the planted foot: ≥ 0.22 m to its own side of it in the hips' frame then — the feet point different ways
           // after the turn, and 0.13 m between their centres left the toes overlapping)
           const o = lastOf(other(X)); if (o && o.pos) { const r = rgt(this.stateAt(td, plan).psi), l = ((st.pos[0] - o.pos[0]) * r[0] + (st.pos[1] - o.pos[1]) * r[1]) * sgn(X); if (l < 0.22) st.pos = [st.pos[0] + r[0] * sgn(X) * (0.22 - l), st.pos[1] + r[1] * sgn(X) * (0.22 - l)]; } } }
@@ -85,7 +86,7 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
       // made, committed with it) TAKES that footfall — its identity kept, the technique's own stance attributes adopted while it is still in
       // the air — instead of adding a second stance of the same foot at the same instant (the body then swapped supports 5 – 7 cm apart the
       // moment the first one ended); one beyond a swing's reach of it (> 0.12 m) is refused: the candidate is not feasible)
-      { const dup = S[A.F].find((s) => s.t0 > t + 1e-9 && abs(s.t0 - A.t0) < 0.03); if (dup) { const want = A.pos || dup.pos; if (hyp(want[0] - dup.pos[0], want[1] - dup.pos[1]) > 0.12) { A.refused = true; continue; }
+      { const dup = ABL.dup ? null : S[A.F].find((s) => s.t0 > t + 1e-9 && abs(s.t0 - A.t0) < 0.03); if (dup) { const want = A.pos || dup.pos; if (hyp(want[0] - dup.pos[0], want[1] - dup.pos[1]) > 0.12) { A.refused = true; continue; }
         Object.assign(dup, { pos: want.slice(), yaw: A.yaw != null ? A.yaw : dup.yaw, kind: A.kind || dup.kind, src: A.src || dup.src, pivot: A.pivot || dup.pivot, heel: A.heel || dup.heel, swingIn: A.swingIn || dup.swingIn, t1: A.t1 != null ? A.t1 : dup.t1, took: A.id }); A.took = dup.id; continue; } }
       const L0 = lastTD(), N = other(L0.F), gap = A.t0 - L0.t0, Ts = this.gait(max(this.stateAt(L0.t0, plan).s, 0.5)).Ts;
       let best = null; for (let j = (A.F === N ? 0 : 1); j <= 7; j += 2) { const per = gap / (j + 1); if (per < 0.13) break; const e = abs(per - Ts); if (!best || e < best.e) best = { j, per, e }; }
@@ -110,7 +111,7 @@ export function bodyGaitFrom(plan, keep, anchors, tTo) {
     // whips through 120° in 0.1 s at the stop; a braking plant; a turn on the spot) PIVOTS on the ball of the foot so that it never points more
     // than 60° from the hips — the pelvis turned over a foot still pointing the old way crossed the legs by 5 – 9 cm. The pivot is a function of
     // the plan's own facing (every plan applies the same rule: continuous across re-plans); a technique's authored pivot is its own)
-    for (const X of ["R", "L"]) for (const st of S[X]) { if (st.pivot || st.src === "tech" || st.t1 <= t || st.yaw == null) continue;
+    if (!ABL.pivot) for (const X of ["R", "L"]) for (const st of S[X]) { if (st.pivot || st.src === "tech" || st.t1 <= t || st.yaw == null) continue;
       const a = max(st.t0, t), b = min(st.t1 === Infinity ? t + 1.2 : st.t1, t + 1.2); if (b <= a) continue; const K = []; let need = false;
       for (let x = a; x <= b + 1e-9; x += 0.02) { const rel = wrap(this.stateAt(x, plan).psi - st.yaw), e = abs(rel) - PIV_MAX; if (e > 0) need = true; K.push([x, e > 0 ? Math.sign(rel) * e : 0]); }
       if (need) { if (K[0][1] !== 0 && st.t0 < t - 1e-9) K.unshift([st.t0, 0]); st.pivot = K; st.autoPivot = true; } }
