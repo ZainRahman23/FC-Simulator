@@ -1,0 +1,1660 @@
+{
+ "tot": {
+  "normal": 61,
+  "slow": 69,
+  "diag": 0,
+  "runs": 140,
+  "badNormal": 49,
+  "missed": 0,
+  "exits": 0
+ },
+ "kinds": {
+  "FLOAT·slow": 50,
+  "CROSS·slow": 12,
+  "CROSS·normal": 23,
+  "KNEE·slow": 4,
+  "FLOAT·normal": 36,
+  "JUMP·normal": 2,
+  "JUMP·slow": 3
+ },
+ "all": {
+  "JOG → 120° R": {
+   "S": {
+    "normal": 0,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 2.71,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.98,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 120° L": {
+   "S": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.98,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 120° R": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "RUN → 120° L": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "SPRINT → 120° R": {
+   "S": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.5,
+     "t": 0.021,
+     "v": 10.52,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 120° L": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "JOG → 135° R": {
+   "S": {
+    "normal": 1,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 1,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -8.7,
+     "t": 0.142,
+     "v": 2.71,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 2.51,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.9,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 135° L": {
+   "S": {
+    "normal": 0,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.9,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.6,
+     "t": 0.129,
+     "v": 2.77,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 135° R": {
+   "S": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -3.5,
+     "t": 0.167,
+     "v": 4.22,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 135° L": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "SPRINT → 135° R": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "SPRINT → 135° L": {
+   "S": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": []
+  },
+  "JOG → 150° R": {
+   "S": {
+    "normal": 0,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 2.26,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.79,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 150° L": {
+   "S": {
+    "normal": 2,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 2,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "KNEE",
+     "foot": "L",
+     "deg": 21.6,
+     "t": 0.017,
+     "v": 3.19,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.2,
+     "t": 0.221,
+     "v": 2.02,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.2,
+     "t": 0.242,
+     "v": 1.92,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.79,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.4,
+     "t": 0.237,
+     "v": 1.94,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 150° R": {
+   "S": {
+    "normal": 1,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 1,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.6,
+     "t": 0.254,
+     "v": 2.78,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -7.1,
+     "t": 0.258,
+     "v": 2.74,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.108,
+     "t": 0.437,
+     "v": 3.02,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 150° L": {
+   "S": {
+    "normal": 2,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 1,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -10.3,
+     "t": 0.288,
+     "v": 2.53,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.154,
+     "t": 0.437,
+     "v": 3.02,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 150° R": {
+   "S": {
+    "normal": 2,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 2,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.35,
+     "v": 2.51,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.421,
+     "v": 1.66,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 150° L": {
+   "S": {
+    "normal": 3,
+    "slow": 0,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.35,
+     "v": 2.51,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.421,
+     "v": 1.66,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.175,
+     "t": 0.558,
+     "v": 2.22,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 165° R": {
+   "S": {
+    "normal": 0,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "KNEE",
+     "foot": "R",
+     "deg": 21.5,
+     "t": 0.138,
+     "v": 1.85,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 1.31,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.31,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 165° L": {
+   "S": {
+    "normal": 4,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "JUMP",
+     "foot": "R",
+     "cm": 22.5,
+     "was": "swing",
+     "now": "swing",
+     "t": 0.279,
+     "v": 0.87,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.3,
+     "t": 0.288,
+     "v": 0.87,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 1.31,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -7.4,
+     "t": 0.283,
+     "v": 0.87,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 2.31,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.4,
+     "t": 0.262,
+     "v": 0.87,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 165° R": {
+   "S": {
+    "normal": 2,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 2,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.221,
+     "v": 1.58,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -3,
+     "t": 0.296,
+     "v": 1.03,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.5,
+     "t": 0.292,
+     "v": 1.03,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -3.7,
+     "t": 0.3,
+     "v": 1.03,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.429,
+     "v": 1.67,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 165° L": {
+   "S": {
+    "normal": 1,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 1,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.221,
+     "v": 1.58,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.092,
+     "t": 0.429,
+     "v": 1.67,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 165° R": {
+   "S": {
+    "normal": 5,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 4,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0.06,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.146,
+     "t": 0.571,
+     "v": 0.89,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 2.48,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -6.2,
+     "t": 0.408,
+     "v": 0.01,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.1,
+     "t": 0.467,
+     "v": 0.01,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.154,
+     "t": 0.412,
+     "v": 0.01,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.154,
+     "t": 0.338,
+     "v": 0.33,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.087,
+     "t": 0.542,
+     "v": 0.57,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 165° L": {
+   "S": {
+    "normal": 4,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0.06,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 2.48,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.154,
+     "t": 0.412,
+     "v": 0.01,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.154,
+     "t": 0.338,
+     "v": 0.33,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.142,
+     "t": 0.542,
+     "v": 0.57,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 180° R": {
+   "S": {
+    "normal": 3,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "KNEE",
+     "foot": "R",
+     "deg": 24.8,
+     "t": 0.138,
+     "v": 1.09,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.6,
+     "t": 0.292,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 0.36,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.4,
+     "t": 0.313,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 1.79,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.5,
+     "t": 0.279,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "JOG → 180° L": {
+   "S": {
+    "normal": 0,
+    "slow": 3,
+    "diag": 0,
+    "badNormal": 0,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "KNEE",
+     "foot": "R",
+     "deg": 25.3,
+     "t": 0.138,
+     "v": 1.09,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 0.179,
+     "v": 0.36,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.104,
+     "v": 1.79,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 180° R": {
+   "S": {
+    "normal": 2,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 2,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.221,
+     "v": 0.32,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.146,
+     "t": 0.146,
+     "v": 2.16,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.2,
+     "t": 0.267,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 180° L": {
+   "S": {
+    "normal": 5,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.221,
+     "v": 0.32,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.1,
+     "t": 0.337,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.146,
+     "t": 0.146,
+     "v": 2.16,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.4,
+     "t": 0.308,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -7.8,
+     "t": 0.267,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.425,
+     "v": 0.74,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 180° R": {
+   "S": {
+    "normal": 3,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 1.61,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.408,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.346,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.546,
+     "v": 0.79,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → 180° L": {
+   "S": {
+    "normal": 3,
+    "slow": 4,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 1.61,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "JUMP",
+     "foot": "L",
+     "cm": 18,
+     "was": "swing",
+     "now": "swing",
+     "t": 0.392,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -5,
+     "t": 0.404,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.408,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.346,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.121,
+     "t": 0.546,
+     "v": 0.79,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "REPEATED REVERSALS (SPRINT, 180° every 1.2 s)": {
+   "S": {
+    "normal": 6,
+    "slow": 17,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.1,
+     "t": 1.45,
+     "v": 0.29,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.112,
+     "t": 1.654,
+     "v": 0.65,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.125,
+     "t": 2.767,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 1.61,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.092,
+     "t": 1.371,
+     "v": 2.45,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "JUMP",
+     "foot": "R",
+     "cm": 14,
+     "was": "swing",
+     "now": "swing",
+     "t": 1.546,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.112,
+     "t": 1.583,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.129,
+     "t": 2.717,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.1,
+     "t": 2.921,
+     "v": 1.29,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.408,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.121,
+     "t": 1.529,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.108,
+     "t": 2.629,
+     "v": 0.91,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "JUMP",
+     "foot": "R",
+     "cm": 22.8,
+     "was": "swing",
+     "now": "swing",
+     "t": 2.762,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -5.5,
+     "t": 2.833,
+     "v": 0.32,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.112,
+     "t": 2.833,
+     "v": 0.32,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.346,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.546,
+     "v": 0.79,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.1,
+     "t": 1.438,
+     "v": 0.52,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "JUMP",
+     "foot": "L",
+     "cm": 16.8,
+     "was": "swing",
+     "now": "swing",
+     "t": 1.558,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -8.9,
+     "t": 1.633,
+     "v": 0.42,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.108,
+     "t": 1.642,
+     "v": 0.51,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.125,
+     "t": 2.758,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "STOP → REVERSE (released 0.6 s, then 180°)": {
+   "S": {
+    "normal": 6,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.221,
+     "v": 0.48,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.175,
+     "t": 0.575,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -9.5,
+     "t": 0.783,
+     "v": 2.02,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -14.8,
+     "t": 0.888,
+     "v": 3.13,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.146,
+     "t": 0.146,
+     "v": 2.35,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -14.9,
+     "t": 0.875,
+     "v": 3,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.171,
+     "t": 0.942,
+     "v": 3.68,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "CURVE → REVERSE (60°/s for 1 s, then 180°)": {
+   "S": {
+    "normal": 2,
+    "slow": 1,
+    "diag": 0,
+    "badNormal": 2,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.146,
+     "t": 1.167,
+     "v": 1.57,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.117,
+     "t": 1.375,
+     "v": 0.21,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -8.6,
+     "t": 1.288,
+     "v": 0.02,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "SPRINT → REVERSE → ACCELERATE (3 s)": {
+   "S": {
+    "normal": 3,
+    "slow": 2,
+    "diag": 0,
+    "badNormal": 3,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.362,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.133,
+     "t": 0.258,
+     "v": 1.61,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.15,
+     "t": 0.408,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "normal",
+     "kind": "FLOAT",
+     "air": 0.163,
+     "t": 0.346,
+     "v": 0,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.104,
+     "t": 0.546,
+     "v": 0.79,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  },
+  "RUN → 150° → 150° back": {
+   "S": {
+    "normal": 1,
+    "slow": 5,
+    "diag": 0,
+    "badNormal": 1,
+    "missed": 0,
+    "exits": 0,
+    "acts": []
+   },
+   "fails": [
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.6,
+     "t": 0.254,
+     "v": 2.78,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 0,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.158,
+     "t": 1.592,
+     "v": 3.58,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "normal",
+     "kind": "CROSS",
+     "depth": -7.1,
+     "t": 0.258,
+     "v": 2.74,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 1,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.083,
+     "t": 1.396,
+     "v": 2.48,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 2,
+     "lvl": "slow",
+     "kind": "CROSS",
+     "depth": -2.8,
+     "t": 1.325,
+     "v": 3.08,
+     "act": "BODY MOVEMENT"
+    },
+    {
+     "phase": 3,
+     "lvl": "slow",
+     "kind": "FLOAT",
+     "air": 0.108,
+     "t": 0.437,
+     "v": 3.02,
+     "act": "BODY MOVEMENT"
+    }
+   ]
+  }
+ }
+}

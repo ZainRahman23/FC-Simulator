@@ -1,0 +1,1101 @@
+{
+ "tot": {
+  "runs": 28,
+  "normal": 2,
+  "slow": 48,
+  "spikes": 59,
+  "turned": 0,
+  "exits": 0,
+  "missed": 0,
+  "pelJump": 0.013409829344580248,
+  "handStep": 0.11340132357906116
+ },
+ "out": [
+  {
+   "name": "Fake L → exit R → at once LEFT",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "BRAKING PIVOT (R) @1.26/1.39"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 796.3435980213612,
+    "sh": 705.9496648605835,
+    "roll": 412.8794274890582
+   },
+   "pelJump": 0.0023217209764414444,
+   "pelJAt": "@1.517 CARRY",
+   "pelZ": 0.011681318283081055,
+   "pelZAt": "@1.550 CARRY",
+   "handStep": 0.03570075542019746,
+   "handAt": "R @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake L → exit R → at once LEFT",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "BRAKING PIVOT (L) @1.26/1.39"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 796.3435980213612,
+    "sh": 705.9496648605835,
+    "roll": 412.8794274890582
+   },
+   "pelJump": 0.002321720976441446,
+   "pelJAt": "@1.517 CARRY",
+   "pelZ": 0.011681318283081055,
+   "pelZAt": "@1.550 CARRY",
+   "handStep": 0.03570075542019746,
+   "handAt": "L @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake L → exit R → at once FAKE R → exit L",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED BFEINT_J @1.10"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "GATHER (R) @1.26/1.39",
+    "BODY FEINT V2 (L) @2.10/2.91"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.083 @2.98 BODY FEINT V2"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 852.596830433561,
+    "sh": 744.8899823284725,
+    "roll": 835.6878621879935
+   },
+   "pelJump": 0.001119802563631615,
+   "pelJAt": "@1.346 GATHER",
+   "pelZ": 0.009288430213928223,
+   "pelZAt": "@1.275 GATHER",
+   "handStep": 0.03880580915141822,
+   "handAt": "R @1.475 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake L → exit R → at once FAKE R → exit L",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED BFEINT_J @1.10"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "GATHER (L) @1.26/1.39",
+    "BODY FEINT V2 (R) @2.10/2.91"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.083 @2.98 BODY FEINT V2"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 852.596830433561,
+    "sh": 744.8899823284739,
+    "roll": 835.6878621879935
+   },
+   "pelJump": 0.001119802563631615,
+   "pelJAt": "@1.346 GATHER",
+   "pelZ": 0.009288430213928223,
+   "pelZAt": "@1.275 GATHER",
+   "handStep": 0.03880580915141822,
+   "handAt": "L @1.475 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake L → LEFT inside the lie (before the touch)",
+   "mirror": false,
+   "requests": [
+    "CANCELLED BFEINT_J → CARRY @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 747.997965948172,
+    "sh": 796.2561020776582,
+    "roll": 874.7054719399338
+   },
+   "pelJump": 0.0010100973973158674,
+   "pelJAt": "@0.883 CARRY",
+   "pelZ": 0.007525444030761719,
+   "pelZAt": "@0.000 BODY FEINT V2",
+   "handStep": 0.048753346266188956,
+   "handAt": "R @1.388 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake L → LEFT inside the lie (before the touch)",
+   "mirror": true,
+   "requests": [
+    "CANCELLED BFEINT_J → CARRY @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 747.9979659481703,
+    "sh": 796.2561020776612,
+    "roll": 874.7054719399338
+   },
+   "pelJump": 0.0010100973973158674,
+   "pelJAt": "@0.883 CARRY",
+   "pelZ": 0.007525444030761719,
+   "pelZAt": "@0.000 BODY FEINT V2",
+   "handStep": 0.048753346266188956,
+   "handAt": "L @1.388 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel: straight on during the lie",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/0.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @1.52 CARRY"
+   ],
+   "spikes": [
+    "shoulder roll 923°/s @1.09",
+    "shoulder roll 924°/s @1.09"
+   ],
+   "wMax": {
+    "pel": 849.3475166928005,
+    "sh": 729.7757439822301,
+    "roll": 923.5867774258418
+   },
+   "pelJump": 0.0005661049408345435,
+   "pelJAt": "@1.183 CARRY",
+   "pelZ": 0.011326372623443604,
+   "pelZAt": "@1.188 CARRY",
+   "handStep": 0.04029878868393402,
+   "handAt": "R @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel: straight on during the lie",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/0.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @1.52 CARRY"
+   ],
+   "spikes": [
+    "shoulder roll 923°/s @1.09",
+    "shoulder roll 924°/s @1.09"
+   ],
+   "wMax": {
+    "pel": 849.3475166928005,
+    "sh": 729.7757439822301,
+    "roll": 923.5867774258418
+   },
+   "pelJump": 0.0005661049408345435,
+   "pelJAt": "@1.183 CARRY",
+   "pelZ": 0.011326372623443604,
+   "pelZAt": "@1.188 CARRY",
+   "handStep": 0.04029878868393402,
+   "handAt": "L @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel: stick released during the lie",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/0.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 747.586674716967,
+    "sh": 340.1339159280397,
+    "roll": 428.4811651816713
+   },
+   "pelJump": 0.0027339432579880562,
+   "pelJAt": "@1.513 STANDING",
+   "pelZ": 0.01903831958770752,
+   "pelZAt": "@1.458 STANDING",
+   "handStep": 0.0870012425243564,
+   "handAt": "L @1.158 STANDING",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel: stick released during the lie",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/0.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [
+    "pelvis yaw 1031°/s @1.46"
+   ],
+   "wMax": {
+    "pel": 1030.6870532891521,
+    "sh": 340.1339159280397,
+    "roll": 428.4811651816713
+   },
+   "pelJump": 0.0027339432579880562,
+   "pelJAt": "@1.513 STANDING",
+   "pelZ": 0.01903831958770752,
+   "pelZAt": "@1.458 STANDING",
+   "handStep": 0.11340132357906116,
+   "handAt": "L @1.458 STANDING",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel before the window",
+   "mirror": false,
+   "requests": [
+    "CANCELLED BFEINT_J → CARRY @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 232.77788932311856,
+    "sh": 52.286165895369834,
+    "roll": 74.87855612942582
+   },
+   "pelJump": 0.0001914314499350915,
+   "pelJAt": "@0.450 CARRY",
+   "pelZ": 0.008390963077545166,
+   "pelZAt": "@0.000 BODY FEINT V2",
+   "handStep": 0.04029878868393402,
+   "handAt": "R @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Fake R → cancel before the window",
+   "mirror": true,
+   "requests": [
+    "CANCELLED BFEINT_J → CARRY @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [],
+   "wMax": {
+    "pel": 232.77788932311856,
+    "sh": 52.286165895369834,
+    "roll": 74.87855612942582
+   },
+   "pelJump": 0.0001914314499350915,
+   "pelJAt": "@0.450 CARRY",
+   "pelZ": 0.008390963077545166,
+   "pelZAt": "@0.000 BODY FEINT V2",
+   "handStep": 0.04029878868393402,
+   "handAt": "L @0.000 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → straight",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "LATERAL TRANSFER (R) @1.26/1.39",
+    "LATERAL TRANSFER (L) @1.39/1.62"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [
+    "shoulder roll 903°/s @1.39",
+    "shoulder roll 1035°/s @1.40",
+    "shoulder roll 1036°/s @1.40",
+    "shoulder roll 908°/s @1.40"
+   ],
+   "wMax": {
+    "pel": 618.2240155395718,
+    "sh": 412.42197213626804,
+    "roll": 1036.3290045596618
+   },
+   "pelJump": 0.0008268691615741664,
+   "pelJAt": "@1.700 CARRY",
+   "pelZ": 0.01209878921508789,
+   "pelZAt": "@1.492 LATERAL TRANSFER",
+   "handStep": 0.03961310400914272,
+   "handAt": "R @1.304 LATERAL TRANSFER",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → straight",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "LATERAL TRANSFER (L) @1.26/1.39",
+    "LATERAL TRANSFER (R) @1.39/1.62"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "bodyEv": [],
+   "spikes": [
+    "shoulder roll 903°/s @1.39",
+    "shoulder roll 1035°/s @1.40",
+    "shoulder roll 1036°/s @1.40",
+    "shoulder roll 908°/s @1.40"
+   ],
+   "wMax": {
+    "pel": 618.2240155395718,
+    "sh": 412.4219721362711,
+    "roll": 1036.3290045596618
+   },
+   "pelJump": 0.0008268691615741664,
+   "pelJAt": "@1.700 CARRY",
+   "pelZ": 0.01209878921508789,
+   "pelZAt": "@1.492 LATERAL TRANSFER",
+   "handStep": 0.03961310400914272,
+   "handAt": "L @1.304 LATERAL TRANSFER",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → hard cut RIGHT (outside cut 90°)",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED OUTSIDE_CUT @1.15"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "OUTSIDE CUT (R) @1.26/1.96"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.192 @2.38 CARRY"
+   ],
+   "spikes": [
+    "pelvis yaw 1967°/s @1.83",
+    "shoulder yaw 1971°/s @1.83"
+   ],
+   "wMax": {
+    "pel": 1966.5710140207539,
+    "sh": 1970.7692928793163,
+    "roll": 837.8754326276376
+   },
+   "pelJump": 0.0006066094507452043,
+   "pelJAt": "@1.883 OUTSIDE CUT",
+   "pelZ": 0.010853230953216553,
+   "pelZAt": "@1.975 CARRY",
+   "handStep": 0.06149830441300494,
+   "handAt": "L @2.046 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → hard cut RIGHT (outside cut 90°)",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED OUTSIDE_CUT @1.15"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "OUTSIDE CUT (L) @1.26/1.96"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.192 @2.38 CARRY"
+   ],
+   "spikes": [
+    "pelvis yaw 1967°/s @1.83",
+    "shoulder yaw 1971°/s @1.83"
+   ],
+   "wMax": {
+    "pel": 1966.5710140207555,
+    "sh": 1970.769292879319,
+    "roll": 837.8754326276376
+   },
+   "pelJump": 0.0006066094507452043,
+   "pelJAt": "@1.883 OUTSIDE CUT",
+   "pelZ": 0.010853230953216553,
+   "pelZAt": "@1.975 CARRY",
+   "handStep": 0.06149830441300494,
+   "handAt": "R @2.046 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → hard cut LEFT (stick −90°)",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "CRUYFF TURN (R) @1.26/1.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.192 @2.47 CARRY"
+   ],
+   "spikes": [
+    "shoulder yaw 1024°/s @1.72",
+    "shoulder yaw 1202°/s @1.73",
+    "shoulder yaw 1250°/s @1.73",
+    "shoulder yaw 1277°/s @1.73",
+    "shoulder yaw 1283°/s @1.74",
+    "shoulder yaw 1268°/s @1.74",
+    "shoulder yaw 1231°/s @1.75",
+    "shoulder yaw 1172°/s @1.75",
+    "shoulder yaw 1092°/s @1.75",
+    "shoulder yaw 990°/s @1.76",
+    "pelvis yaw 918°/s @1.77",
+    "pelvis yaw 945°/s @1.78",
+    "pelvis yaw 960°/s @1.78",
+    "pelvis yaw 965°/s @1.78",
+    "pelvis yaw 958°/s @1.79",
+    "pelvis yaw 940°/s @1.79",
+    "pelvis yaw 911°/s @1.80"
+   ],
+   "wMax": {
+    "pel": 964.5315790880171,
+    "sh": 1283.0683917166625,
+    "roll": 203.76155310385536
+   },
+   "pelJump": 0.001460940707312116,
+   "pelJAt": "@1.792 CRUYFF TURN",
+   "pelZ": 0.009102404117584229,
+   "pelZAt": "@1.913 CRUYFF TURN",
+   "handStep": 0.052467249085668737,
+   "handAt": "R @1.738 CRUYFF TURN",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Feint → hard cut LEFT (stick −90°)",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "CRUYFF TURN (L) @1.26/1.72"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.192 @2.47 CARRY"
+   ],
+   "spikes": [
+    "shoulder yaw 1024°/s @1.72",
+    "shoulder yaw 1202°/s @1.73",
+    "shoulder yaw 1250°/s @1.73",
+    "shoulder yaw 1277°/s @1.73",
+    "shoulder yaw 1283°/s @1.74",
+    "shoulder yaw 1268°/s @1.74",
+    "shoulder yaw 1231°/s @1.75",
+    "shoulder yaw 1172°/s @1.75",
+    "shoulder yaw 1092°/s @1.75",
+    "shoulder yaw 990°/s @1.76",
+    "pelvis yaw 918°/s @1.77",
+    "pelvis yaw 945°/s @1.78",
+    "pelvis yaw 960°/s @1.78",
+    "pelvis yaw 965°/s @1.78",
+    "pelvis yaw 958°/s @1.79",
+    "pelvis yaw 940°/s @1.79",
+    "pelvis yaw 911°/s @1.80"
+   ],
+   "wMax": {
+    "pel": 964.5315790880171,
+    "sh": 1283.0683917166625,
+    "roll": 203.76155310385536
+   },
+   "pelJump": 0.001460940707312116,
+   "pelJAt": "@1.792 CRUYFF TURN",
+   "pelZ": 0.009102404117584229,
+   "pelZAt": "@1.913 CRUYFF TURN",
+   "handStep": 0.052467249085668737,
+   "handAt": "L @1.738 CRUYFF TURN",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 4 (at the feint's own cycle)",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED BFEINT_J @1.90",
+    "PLAYED BFEINT_J @3.80",
+    "PLAYED BFEINT_J @5.70"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "BODY FEINT V2 (L) @2.10/2.91",
+    "BODY FEINT V2 (R) @3.80/4.80",
+    "BODY FEINT V2 (L) @5.89/6.70"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 6,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @1.82 CARRY",
+    "FLOAT 0.217 @3.71 CARRY",
+    "FLOAT 0.083 @4.87 BODY FEINT V2",
+    "FLOAT 0.221 @5.60 CARRY",
+    "FLOAT 0.083 @6.76 BODY FEINT V2",
+    "FLOAT 0.221 @7.50 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 412.3587396782561,
+    "sh": 588.1081248517028,
+    "roll": 205.1369321853683
+   },
+   "pelJump": 0.0005429476577825838,
+   "pelJAt": "@2.888 BODY FEINT V2",
+   "pelZ": 0.009972572326660156,
+   "pelZAt": "@5.383 CARRY",
+   "handStep": 0.03961807659991073,
+   "handAt": "R @2.983 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 4 (at the feint's own cycle)",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "PLAYED BFEINT_J @1.90",
+    "PLAYED BFEINT_J @3.80",
+    "PLAYED BFEINT_J @5.70"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "BODY FEINT V2 (R) @2.10/2.91",
+    "BODY FEINT V2 (L) @3.80/4.80",
+    "BODY FEINT V2 (R) @5.89/6.70"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 6,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @1.82 CARRY",
+    "FLOAT 0.217 @3.71 CARRY",
+    "FLOAT 0.083 @4.87 BODY FEINT V2",
+    "FLOAT 0.221 @5.60 CARRY",
+    "FLOAT 0.083 @6.76 BODY FEINT V2",
+    "FLOAT 0.221 @7.50 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 412.38617422843885,
+    "sh": 588.1081248517028,
+    "roll": 205.13611098335898
+   },
+   "pelJump": 0.0005429476577825838,
+   "pelJAt": "@2.888 BODY FEINT V2",
+   "pelZ": 0.009972572326660156,
+   "pelZAt": "@5.383 CARRY",
+   "handStep": 0.03961961856195273,
+   "handAt": "L @2.983 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 3 · RUN",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_R @0.00",
+    "PLAYED BFEINT_R @1.80",
+    "REJECTED → CRUYFF @3.60"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/0.97",
+    "BODY FEINT V2 (L) @1.80/2.75",
+    "CRUYFF TURN (L) @4.15/4.62"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 3,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.2 @1.64 CARRY",
+    "FLOAT 0.213 @2.35 BODY FEINT V2",
+    "FLOAT 0.204 @3.42 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 600.309174049744,
+    "sh": 857.43839963172,
+    "roll": 497.4050082510065
+   },
+   "pelJump": 0.0004922895311627665,
+   "pelJAt": "@4.775 CRUYFF TURN",
+   "pelZ": 0.00992286205291748,
+   "pelZAt": "@2.613 BODY FEINT V2",
+   "handStep": 0.04239275722775252,
+   "handAt": "R @2.817 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 3 · RUN",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_R @0.00",
+    "PLAYED BFEINT_R @1.80",
+    "REJECTED → CRUYFF @3.60"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/0.97",
+    "BODY FEINT V2 (R) @1.80/2.75",
+    "CRUYFF TURN (R) @4.15/4.62"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 3,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.2 @1.64 CARRY",
+    "FLOAT 0.213 @2.35 BODY FEINT V2",
+    "FLOAT 0.204 @3.42 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 600.309174049744,
+    "sh": 857.43839963172,
+    "roll": 497.4035301813338
+   },
+   "pelJump": 0.0004922895311629183,
+   "pelJAt": "@4.775 CRUYFF TURN",
+   "pelZ": 0.00992286205291748,
+   "pelZAt": "@2.613 BODY FEINT V2",
+   "handStep": 0.04239275722775252,
+   "handAt": "L @2.817 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 3 · WALK",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_L @0.00",
+    "PLAYED BFEINT_L @2.00",
+    "PLAYED BFEINT_L @4.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/0.81",
+    "BODY FEINT V2 (L) @2.00/2.87",
+    "BODY FEINT V2 (R) @4.00/4.92"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 7,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.087 @0.88 BODY FEINT V2",
+    "FLOAT 0.117 @1.68 CARRY",
+    "FLOAT 0.092 @2.94 BODY FEINT V2",
+    "FLOAT 0.112 @3.74 CARRY",
+    "FLOAT 0.087 @5.00 BODY FEINT V2",
+    "CROSS -3.7 @5.05 BODY FEINT V2",
+    "FLOAT 0.112 @5.80 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 390.2060343812602,
+    "sh": 523.2417599182454,
+    "roll": 183.17281549847905
+   },
+   "pelJump": 0.0018689108030989898,
+   "pelJAt": "@2.083 BODY FEINT V2",
+   "pelZ": 0.009804725646972656,
+   "pelZAt": "@0.404 BODY FEINT V2",
+   "handStep": 0.03084796555385564,
+   "handAt": "R @2.946 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating feints × 3 · WALK",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_L @0.00",
+    "PLAYED BFEINT_L @2.00",
+    "PLAYED BFEINT_L @4.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/0.81",
+    "BODY FEINT V2 (R) @2.00/2.87",
+    "BODY FEINT V2 (L) @4.00/4.92"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 7,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.087 @0.88 BODY FEINT V2",
+    "FLOAT 0.117 @1.68 CARRY",
+    "FLOAT 0.092 @2.94 BODY FEINT V2",
+    "FLOAT 0.112 @3.74 CARRY",
+    "FLOAT 0.087 @5.00 BODY FEINT V2",
+    "CROSS -3.8 @5.05 BODY FEINT V2",
+    "FLOAT 0.112 @5.80 CARRY"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 390.2060343812602,
+    "sh": 523.2417599182454,
+    "roll": 183.17281549847905
+   },
+   "pelJump": 0.0018689108030989898,
+   "pelJAt": "@2.083 BODY FEINT V2",
+   "pelZ": 0.009804725646972656,
+   "pelZAt": "@0.404 BODY FEINT V2",
+   "handStep": 0.03084754977989816,
+   "handAt": "L @2.946 BODY FEINT V2",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating requests faster than a feint (every 1.25 s)",
+   "mirror": false,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "SUPERSEDED·ENTERED BFEINT_J @1.25",
+    "SUPERSEDED·ENTERED BFEINT_J @2.50"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00/1.02",
+    "BODY FEINT V2 (L) @2.07",
+    "BODY FEINT V2 (R) @3.58/4.32",
+    "BODY FEINT V2 (L) @5.05"
+   ],
+   "body": {
+    "normal": 1,
+    "slow": 3,
+    "diag": 0
+   },
+   "bodyEv": [
+    "‼CROSS -7.1 @1.78 CARRY",
+    "FLOAT 0.217 @1.82 CARRY",
+    "FLOAT 0.217 @5.13 BODY FEINT V2",
+    "FLOAT 0.108 @5.72 BODY FEINT V2"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 301.3722567295143,
+    "sh": 372.7256748072107,
+    "roll": 891.0455613471921
+   },
+   "pelJump": 0.0005449606875083564,
+   "pelJAt": "@4.300 BODY FEINT V2",
+   "pelZ": 0.012901246547698975,
+   "pelZAt": "@2.154 BODY FEINT V2",
+   "handStep": 0.04656238838524296,
+   "handAt": "R @4.542 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Alternating requests faster than a feint (every 1.25 s)",
+   "mirror": true,
+   "requests": [
+    "PLAYED BFEINT_J @0.00",
+    "SUPERSEDED·ENTERED BFEINT_J @1.25",
+    "SUPERSEDED·ENTERED BFEINT_J @2.50"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00/1.02",
+    "BODY FEINT V2 (R) @2.07",
+    "BODY FEINT V2 (L) @3.58/4.32",
+    "BODY FEINT V2 (R) @5.05"
+   ],
+   "body": {
+    "normal": 1,
+    "slow": 3,
+    "diag": 0
+   },
+   "bodyEv": [
+    "‼CROSS -7.1 @1.78 CARRY",
+    "FLOAT 0.217 @1.82 CARRY",
+    "FLOAT 0.217 @5.13 BODY FEINT V2",
+    "FLOAT 0.108 @5.72 BODY FEINT V2"
+   ],
+   "spikes": [],
+   "wMax": {
+    "pel": 301.37225672951274,
+    "sh": 372.7256748072122,
+    "roll": 891.048053997719
+   },
+   "pelJump": 0.0005449606875083599,
+   "pelJAt": "@4.300 BODY FEINT V2",
+   "pelZ": 0.012901246547698975,
+   "pelZAt": "@2.154 BODY FEINT V2",
+   "handStep": 0.04656238838524296,
+   "handAt": "L @4.542 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Request spam: feint every 0.25 s, alternating",
+   "mirror": false,
+   "requests": [
+    "SUPERSEDED·ENTERED BFEINT_J @0.00",
+    "SUPERSEDED @0.25",
+    "SUPERSEDED @0.50",
+    "SUPERSEDED @0.75",
+    "SUPERSEDED @1.00",
+    "SUPERSEDED @1.25",
+    "SUPERSEDED @1.50",
+    "SUPERSEDED·ENTERED BFEINT_J @1.75",
+    "PLAYED BFEINT_J @2.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (R) @0.00",
+    "OUTSIDE CUT (L) @0.58",
+    "BODY FEINT V2 (L) @1.75",
+    "LATERAL TRANSFER (R) @2.44/2.90",
+    "BODY FEINT V2 (R) @3.25/4.06"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @2.44 LATERAL TRANSFER"
+   ],
+   "spikes": [
+    "shoulder roll 902°/s @0.51",
+    "shoulder roll 1034°/s @0.52",
+    "shoulder roll 1034°/s @0.52",
+    "shoulder roll 902°/s @0.53"
+   ],
+   "wMax": {
+    "pel": 429.0912711646841,
+    "sh": 480.34047886403454,
+    "roll": 1034.4130821830533
+   },
+   "pelJump": 0.013409829344580248,
+   "pelJAt": "@0.738 OUTSIDE CUT",
+   "pelZ": 0.010032296180725098,
+   "pelZAt": "@0.521 CARRY",
+   "handStep": 0.053054101269722286,
+   "handAt": "L @2.017 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  },
+  {
+   "name": "Request spam: feint every 0.25 s, alternating",
+   "mirror": true,
+   "requests": [
+    "SUPERSEDED·ENTERED BFEINT_J @0.00",
+    "SUPERSEDED @0.25",
+    "SUPERSEDED @0.50",
+    "SUPERSEDED @0.75",
+    "SUPERSEDED @1.00",
+    "SUPERSEDED @1.25",
+    "SUPERSEDED @1.50",
+    "SUPERSEDED·ENTERED BFEINT_J @1.75",
+    "PLAYED BFEINT_J @2.00"
+   ],
+   "acts": [
+    "BODY FEINT V2 (L) @0.00",
+    "OUTSIDE CUT (R) @0.58",
+    "BODY FEINT V2 (R) @1.75",
+    "LATERAL TRANSFER (L) @2.44/2.90",
+    "BODY FEINT V2 (L) @3.25/4.06"
+   ],
+   "body": {
+    "normal": 0,
+    "slow": 1,
+    "diag": 0
+   },
+   "bodyEv": [
+    "FLOAT 0.217 @2.44 LATERAL TRANSFER"
+   ],
+   "spikes": [
+    "shoulder roll 902°/s @0.51",
+    "shoulder roll 1034°/s @0.52",
+    "shoulder roll 1034°/s @0.52",
+    "shoulder roll 902°/s @0.53"
+   ],
+   "wMax": {
+    "pel": 429.0912711646841,
+    "sh": 480.34047886403454,
+    "roll": 1034.4130821830533
+   },
+   "pelJump": 0.013409829344580248,
+   "pelJAt": "@0.738 OUTSIDE CUT",
+   "pelZ": 0.010032296180725098,
+   "pelZAt": "@0.521 CARRY",
+   "handStep": 0.053054101269722286,
+   "handAt": "R @2.017 CARRY",
+   "turned": [],
+   "exits": 0,
+   "missed": 0
+  }
+ ]
+}

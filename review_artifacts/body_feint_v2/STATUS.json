@@ -1,0 +1,71 @@
+{
+ "milestone": "BODY FEINT V2 — a whole-body feint rebuilt from the support up (overnight 22 → 23 Oct 2026)",
+ "state": "stopped for the owner's visual review — NOT frozen, NOT integrated; ADV-4, CRUYFF-CHOP-1, VOCAB-1 and the locked BASELINE-88573ef0 unchanged",
+ "local_only": "the character is a real player's model: never publish",
+ "owner_instruction": "review_artifacts/body_feint_v2/sources/2026-10-23_user_instruction_body_feint_v2.md (verbatim, commit 273cf9ab)",
+ "video": "I cannot play video in real time; no Messi footage was stepped through; nothing claims to replicate him",
+ "pages": {
+  "dribbling_lab": "http://127.0.0.1:8361/sandbox/visual/feint2_lab.html (BODY FEINT V2 first: cameras GAMEPLAY / FRONT / REAR / SIDE close / SIDE / OVERHEAD CLOSE · FEINT DIAG (off by default) · curated cards PLAY / OLD | V2 / MIRROR / TRY / 1x 0.5x 0.25x · RAPID INPUT)",
+  "joystick_sandbox": "http://127.0.0.1:8361/sandbox/visual/feint2_sandbox.html"
+ },
+ "code": "sandbox/visual/feint2/ (a copy of adv4/ at c11579a3)",
+ "default_player": "S99 · Acc99-D38 · A99-C · Agility B · D99 · BC99 · CARRY-B · CONTROLLED",
+ "adv4_croqueta_status": {
+  "croqueta_refinement": "c11579a3 (local), unchanged tonight, nothing reverted",
+  "torture_rerun_tonight": "possession 40 seeds page config: 10 losses (0.26/min), 0 missed — as reported; feint2 identical line for line. Body torture 18 seeds: 251 / 305",
+  "published": "prototype/dribble-1 pushed to 3d27eca2 on 23 Oct 06:10; c11579a3 + 273cf9ab + this milestone follow the daily rule after 06:00 24 Oct"
+ },
+ "family": {
+  "ids": "BFEINT_J (jog 2.4-4.6 m/s) · BFEINT_L (low speed 1.0-2.9) · BFEINT_R (running 4.0-7.6) · BFEINT_JS (shallow) · BFEINT_JX (strong); exact mirrors",
+  "classification": "MANUAL / REVIEW — B4 never plays it",
+  "phases": "approach on the entry line · last stride · FALSE STEP wide (toe out, knee loaded) · the centre of mass to the fake (small) · segments exaggerate (shoulder drop, trunk twist over the hips, head, arms) · reversal (hips first) · the exit-side foot's OUTSIDE at 45 deg · exit plant · laces exit touch · burst on A99-C / Agility B / D38 (no bonus)",
+  "new_channels": "armSide · armHold · shDrop (clavicle) · headYaw — zero for every other action"
+ },
+ "measured_jog_fake_left_exit_right": {
+  "timings_s": "false step plants 0.70 · false load 0.73 → max 0.12 m @ 0.92 · reversal 0.92 · touch 1.02 · exit plant 1.08 · useful exit 1.07 · control +0.20",
+  "lie": "shoulder drop 13 deg · trunk vs hips 20 deg · pelvis 9 deg · false step 0.23 m wide, toe-out 24 deg · knee 75 deg · arms 0.62 m · head 14 deg",
+  "speeds_m_s": "3.2 → 2.6 → 3.2",
+  "integrity": "body 0 normal-visible / 1 slow · 0 spikes · pelvis yaw ≤ 225 deg/s",
+  "old_vocab1": "shift 0.03 m · drop 1 · trunk 4 · head 0 · no false step · 3.2 → 3.2 → 3.2 · touch 0.45 · useful 0.48"
+ },
+ "cases": {
+  "low_speed": "touch 0.81 · shift 0.08 m · 1.5 → 1.2 → 1.5 · body 0/2",
+  "running": "touch 0.97 · shift 0.13 m · 5.3 → 4.5 → 5.3 · body 0/1",
+  "right_footed_r_to_l": "touch 0.72 (the false-step entry) · body 0/1",
+  "shallow": "shift 0.08 · drop 7 · trunk 12 · 3.2 → 2.8 → 3.2",
+  "strong": "shift 0.16 · drop 17 · trunk 28 · 3.2 → 2.4 → 3.2 · body 0/2",
+  "mirror": "every left/right pair identical"
+ },
+ "rapid_input": "14 sequences × as written + mirrored = 28 runs: 2 normal-visible (one stress case + its mirror: a carry crossing after the exit touch when feints are requested faster than one can complete) · 48 slow · 0 exits · 0 missed · 0 planted-foot turns; alternating feints at the feint's own cycle: jog 4/4 and walk 3/3 PLAYED with 0 visible",
+ "rules_added_ablatable": [
+  "bfdrift (the approach never drifts toward the exit > 4 cm, nor > 8 cm toward the fake)",
+  "bfseq (the next feint waits for the previous one's authored exit; the running instance does not fulfil a new request; the window extended)",
+  "bfflight (no entry flight longer than the gait's)",
+  "cycle9 (restores the ±9 s gait-cycle sentinels)"
+ ],
+ "integrity": {
+  "cases": "116 cases (10 new) · 0 exits · 0 missed · 10 normal-visible in 9 cases — every old case line-identical to ADV-4",
+  "extreme_ball_on": "140 runs · normal 61 · slow 131 (ADV-4 62 / 131)",
+  "extreme_ball_off": "140 runs · normal 61 · slow 69 (ADV-4 61 / 69)",
+  "body_torture_18_seeds": "254 / 328 with the gait-cycle fix · 251 / 305 with ABL=cycle9 = ADV-4 HEAD 251 / 305 (the feint leaves random play unchanged; the delta is the restored arm swing / pelvis twist / bob after 9 s)",
+  "possession_torture_40_seeds_page_config": "10 losses (0.26/min), 0 missed — identical to ADV-4 HEAD",
+  "determinism": "18/18 simulated twice + 18/18 replay path",
+  "battery": "67/72 PLAYED (as ADV-4)",
+  "intent_torture": "361 random manual requests: 0 exits, 0 missed; V2 families played 3 of 31",
+  "cpu": "110.4 ms per simulated s vs 108.9 (adv4); worst tick 12.4 vs 10.6 ms",
+  "browser": "0 console errors · 0 HTTP errors · 10 + 14 cards, 128 buttons, all replays; OLD | V2 both lanes 9/9; six cameras; FEINT DIAG; frame step; TRY; sandbox request PLAYED"
+ },
+ "findings": [
+  "the gait cycle froze after 9 s of simulated time in every build since BASELINE-88573ef0 (u_body.js cycle() ±9 sentinels): arm swing 46.8 cm → 0.0 cm after 9 s on the committed ADV-4 — fixed in feint2 only (ABL=cycle9 restores)",
+  "every template with an approach drift snaps its heading back at the window start (≈ 1250 deg/s) — fixed for the feint only",
+  "the approved Cruyff (1223-1962 deg/s), the outside cut (2109-3180 deg/s, a 5.7 cm crossing alone) and the croqueta hand-overs (1022-1036 deg/s) exceed 1000 deg/s — reported, not touched",
+  "the plain carry can play a ball across the body with the far foot (a 7 cm crossing) after a feint's exit touch under over-fast alternation",
+  "at a stop the gait phase falls back to 0.5: an 8-11 cm hand step in one tick (pre-existing)"
+ ],
+ "owner_decisions": [
+  "the look at 1x: amplitude (shallow / normal / strong) and the false phase's length (≈ 0.3 s false step → touch)",
+  "the entry: keep refusing the short entry when it would steer toward the exit (jog latency up to 1.02 s), or accept the steer for speed",
+  "the gait-cycle fix: carry it to other builds, or feint2 only",
+  "classification: MANUAL / REVIEW as built; AUTO only with defenders"
+ ]
+}

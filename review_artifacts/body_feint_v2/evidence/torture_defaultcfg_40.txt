@@ -1,0 +1,8 @@
+■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 3 (0.08/min) · missed contacts 0 · touches/s 2.63 · sep mean 0.41 m max 1.79 m · CPU 119.8 ms per simulated s, worst tick 64.3 ms
+   contacts by kind {"carry":4076,"CIR":361,"DRAGBACK":253,"CRUYFF":225,"BRT":221,"COR":198,"BPV":192,"OUTHOOK":176,"ABG":154,"CHOP":94,"MATTHEWS_C":55,"HOOK":54,"OUTCUT":21,"VTURN":19,"URG":4} · recovery actions {"SECURE":205,"SECURE · RECOVERY":1}
+   contact gaps p10 0.21 · p50 0.28 · p90 0.67 · p99 1.35 · max 5.52 s · busy alternations (the other foot < 0.25 s after a touch) 2589 of 6063
+   losses by cause {"no contact made":2,"no contact planned":1} · by input segment {"rotate":2,"oscillate":1} · CONTROLLED exits {"CONTROLLER_FAILURE":1}
+   seed 5 {"t":18.45,"sep":0.44,"seg":"rotate","mode":"RUN","prev":"rotate","action":"CARRY","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.07,"sepUntil":0.43}
+   seed 12 {"t":45.017,"sep":1.58,"seg":"oscillate","mode":"SPRINT","prev":"oscillate","action":"CARRY","speed":3,"why":"no contact planned","poss":"FREE","nextTouch":0.38,"sepUntil":1.59}
+   seed 29 {"t":54.067,"sep":0.8,"seg":"rotate","mode":"SPRINT","prev":"rotate","action":"CARRY","speed":0.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.1,"sepUntil":0.85}
+   EXIT seed 12 {"t":44.8125,"from":"CONTROLLED","to":"FREE","why":"CONTROLLER_FAILURE","detail":"no contact planned","action":"CARRY","speed":4.53,"sep":0.92,"reqH":0.308176}
