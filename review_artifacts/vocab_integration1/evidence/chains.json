@@ -1,0 +1,522 @@
+[
+ {
+  "name": "CARRY → BODY FEINT → CARRY",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (R)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 2,
+  "kinds": {
+   "FLOAT·slow": 2
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.66,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · CARRY → BODY FEINT → CARRY",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (L)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 2,
+  "kinds": {
+   "FLOAT·slow": 2
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.66,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "CARRY → CROQUETA → CARRY",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (R)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · CARRY → CROQUETA → CARRY",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (L)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "BODY FEINT → ordinary cut",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (R)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": "LATERAL TRANSFER",
+    "tNext": 1.263
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "decisive": 1.388,
+    "control": 1.448,
+    "next": null,
+    "tNext": null
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "decisive": 1.621,
+    "control": 1.681,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 1,
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.66,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · BODY FEINT → ordinary cut",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (L)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": "LATERAL TRANSFER",
+    "tNext": 1.263
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "decisive": 1.388,
+    "control": 1.448,
+    "next": null,
+    "tNext": null
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "decisive": 1.621,
+    "control": 1.681,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 1,
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.66,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "BODY FEINT → CROQUETA",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   },
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 2.2,
+    "tPlayed": 2.817
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (R)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": "LA CROQUETA",
+    "tNext": 2.2
+   },
+   {
+    "label": "LA CROQUETA (R)",
+    "decisive": 2.817,
+    "control": 3.058,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 2,
+  "kinds": {
+   "FLOAT·slow": 2
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · BODY FEINT → CROQUETA",
+  "skills": [
+   {
+    "intent": "BODY_FEINT",
+    "result": "PLAYED",
+    "played": "BFEINT_J",
+    "t": 0,
+    "tPlayed": 1.021
+   },
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 2.2,
+    "tPlayed": 2.817
+   }
+  ],
+  "phases": [
+   {
+    "label": "BODY FEINT V2 (L)",
+    "decisive": 1.021,
+    "control": 1.221,
+    "next": "LA CROQUETA",
+    "tNext": 2.2
+   },
+   {
+    "label": "LA CROQUETA (L)",
+    "decisive": 2.817,
+    "control": 3.058,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 2,
+  "kinds": {
+   "FLOAT·slow": 2
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "CROQUETA → ordinary cut",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (R)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": "MATTHEWS (compact)",
+    "tNext": 1.2
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · CROQUETA → ordinary cut",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (L)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": "MATTHEWS (compact)",
+    "tNext": 1.2
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "CROQUETA → CRUYFF",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   },
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "t": 1.5,
+    "tPlayed": 1.875
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (R)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": "CRUYFF TURN",
+    "tNext": 1.5
+   },
+   {
+    "label": "CRUYFF TURN (R)",
+    "decisive": 1.875,
+    "control": 1.968,
+    "next": "OUTSIDE CUT",
+    "tNext": 2.262
+   },
+   {
+    "label": "OUTSIDE CUT (R)",
+    "decisive": 2.975,
+    "control": 3.034,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 1,
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.7,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · CROQUETA → CRUYFF",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   },
+   {
+    "intent": "CRUYFF",
+    "result": "PLAYED",
+    "played": "CRUYFF",
+    "t": 1.5,
+    "tPlayed": 1.875
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (L)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": "CRUYFF TURN",
+    "tNext": 1.5
+   },
+   {
+    "label": "CRUYFF TURN (L)",
+    "decisive": 1.875,
+    "control": 1.968,
+    "next": "OUTSIDE CUT",
+    "tNext": 2.262
+   },
+   {
+    "label": "OUTSIDE CUT (L)",
+    "decisive": 2.975,
+    "control": 3.034,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 1,
+  "kinds": {
+   "FLOAT·slow": 1
+  },
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.7,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "CROQUETA → carry (back to the first line)",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (R)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ },
+ {
+  "name": "MIRROR · CROQUETA → carry (back to the first line)",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "CROQ_LW",
+    "t": 0,
+    "tPlayed": 0.567
+   }
+  ],
+  "phases": [
+   {
+    "label": "LA CROQUETA (L)",
+    "decisive": 0.567,
+    "control": 0.808,
+    "next": null,
+    "tNext": null
+   }
+  ],
+  "normal": 0,
+  "slow": 0,
+  "kinds": {},
+  "exits": [],
+  "missed": 0,
+  "sepMax": 0.68,
+  "deterministic": true,
+  "ok": true
+ }
+]

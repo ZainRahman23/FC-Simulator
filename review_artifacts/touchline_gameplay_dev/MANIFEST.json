@@ -11,7 +11,7 @@
  "local_checkout": "/Users/zainrahman/Downloads/FC Simulator worktrees/dribble-1",
  "serve": "python3 -m http.server 8361 --bind 127.0.0.1   (from the checkout root)",
  "local_only": "the characters are real players' models: never publish pages or captures to claude.ai / the web",
- "current_build_folder": "sandbox/visual/feint2/",
+ "current_build_folder": "sandbox/visual/vocab2/",
  "lineage": [
   "tc_baseline_88573ef0 (LOCKED)",
   "tc_layered",
@@ -24,13 +24,22 @@
   "vocab1",
   "cruyff_chop1",
   "adv4",
-  "feint2 (CURRENT)"
+  "feint2 (23 Oct milestone build)",
+  "feint2vg (7853a88f)",
+  "feint2ef (f8a0e374)",
+  "croqvg (4a549b8f)",
+  "croqhs (753d0cc6)",
+  "croqxs (f7645d10)",
+  "croqlw (b489e4fd)",
+  "vocab2 (CURRENT, 24 Oct)"
  ],
  "playables": {
   "current_lab": "http://127.0.0.1:8361/sandbox/visual/feint2_lab.html",
   "current_sandbox": "http://127.0.0.1:8361/sandbox/visual/feint2_sandbox.html",
   "latest_owner_reviewed": "BODY FEINT V2 (feint2_lab.html / feint2_sandbox.html) — owner 23 Oct: 'an improvement', not approved",
-  "locked_baseline": "http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html"
+  "locked_baseline": "http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html",
+  "current_lab_2026_10_24": "http://127.0.0.1:8361/sandbox/visual/vocab2_lab.html",
+  "current_sandbox_2026_10_24": "http://127.0.0.1:8361/sandbox/visual/vocab2_sandbox.html"
  },
  "components": {
   "simulation": [
@@ -227,5 +236,55 @@
   "sandbox/visual/tc_baseline_88573ef0/pt_baked.json": "dbb948d388cf9eb9d57f9ec5bb5236a39fdb5f07",
   "sandbox/visual/feint2_lab.html": "45b46ff0c0d5c60a5d8039ba65367338493abbd8",
   "sandbox/visual/feint2_sandbox.html": "86c6b38011d2b3fa07a1f4716ba84170f2681524"
+ },
+ "current_build_folder_note": "24 Oct: vocab2 (DRIBBLING VOCABULARY INTEGRATION); on 23 Oct (this milestone tag) it was feint2",
+ "dribbling_vocabulary_2026_10_24": {
+  "report": "review_artifacts/vocab_integration1/INTEGRATION_REPORT.md",
+  "vocabulary": "review_artifacts/vocab_integration1/VOCABULARY.md",
+  "handoff": "review_artifacts/vocab_integration1/HANDOFF.md",
+  "status": "review_artifacts/vocab_integration1/STATUS.json",
+  "pre_integration_tag": "checkpoint/touchline-feint-croqueta-approved-2026-10-23 (commit 9140be54; code = b489e4fd)",
+  "current_body_feint": {
+   "request": "BODY_FEINT (alias BODY_FEINT_V2)",
+   "templates": [
+    "BFEINT_L",
+    "BFEINT_J",
+    "BFEINT_R"
+   ],
+   "source": "sandbox/visual/vocab2/v_tech.js bodyFeintOf()",
+   "motion_from": "feint2vg 7853a88f -> feint2ef f8a0e374 (unchanged)",
+   "class": "AUTHORITATIVE · PROVISIONALLY APPROVED MOTION FOUNDATION (owner, 23 Oct); not frozen",
+   "validated": "walk 45-55, jog 35-60, run 35-40 deg; settled carry; exit to the carrying foot side; mirror = left-footed twin"
+  },
+  "current_croqueta": {
+   "request": "CROQUETA",
+   "templates": [
+    "CROQ_LW"
+   ],
+   "source": "sandbox/visual/vocab2/v_tech.js croqLWOf()",
+   "motion_from": "croqlw b489e4fd (unchanged)",
+   "class": "AUTHORITATIVE · PROVISIONALLY APPROVED MOTION FOUNDATION (owner, 23 Oct); not frozen",
+   "validated": "settled jog 2.6-3.6 m/s, 40-45 deg, the ball on the carrying foot; mirror = left-footed twin",
+   "declined": "CROQUETA V4 NOT CURRENTLY FEASIBLE + reason; no ADV-4 fallback for a CROQUETA request"
+  },
+  "superseded_not_eligible": [
+   "BODY_FEINT_OVERLAY",
+   "FEINT_OUTSIDE_CUT",
+   "FEINT_INSIDE_CUT"
+  ],
+  "experimental_not_eligible": [
+   "BODY_FEINT_V2_SHALLOW (BFEINT_JS)",
+   "BODY_FEINT_V2_STRONG (BFEINT_JX)"
+  ],
+  "historical_templates": [
+   "CROQ_W",
+   "CROQ_J",
+   "CROQ_R (video-guided V1)",
+   "CROQ_HS (hop/sweep V2)",
+   "CROQ_XS (x-sweep V3)",
+   "ADV-4 croqueta + c11579a3"
+  ],
+  "b4_lateral_transfer": "GENERIC.LAT kept as an AUTOMATIC redirect of EXPANDED; not the Croqueta; never played for a CROQUETA request",
+  "analog_feint": "VOCAB-1 feintTick (an AUTO old Body Feint) off; ABL=analogfeint restores it for tools"
  }
 }

@@ -1,5 +1,14 @@
 # CURRENT TOUCHLINE GAMEPLAY DEVELOPMENT — source of truth
 
+> **UPDATED 24 Oct 2026 — DRIBBLING VOCABULARY INTEGRATION.**
+> - **The current build is `sandbox/visual/vocab2/`.** The pages are `vocab2_lab.html` (Dribbling Lab) and `vocab2_sandbox.html` (Joystick Sandbox).
+> - **The current Body Feint** is the video-guided + exit-foot feint: `BODY_FEINT` → `BFEINT_L/J/R`. It came from `feint2vg/` 7853a88f → `feint2ef/` f8a0e374.
+> - **The current Croqueta** is LEG-WAVE V4: `CROQUETA` → `CROQ_LW`, from `croqlw/` b489e4fd.
+> - Both are **PROVISIONALLY APPROVED MOTION FOUNDATIONS**, integrated as AUTHORITATIVE vocabulary entries, their motions unchanged. They are not frozen.
+> - What is superseded or historical, the validated entries and what is not generalized: `review_artifacts/vocab_integration1/VOCABULARY.md`.
+> - The report is `INTEGRATION_REPORT.md` beside it. The pre-integration recovery point is tag `checkpoint/touchline-feint-croqueta-approved-2026-10-23`.
+> - The sections below were written for the 23 Oct milestone (current build `feint2/`). The component paths now read `vocab2/`, which descends from it by copies: feint2 → feint2vg → feint2ef → croqvg → croqhs → croqxs → croqlw → vocab2.
+
 Milestone of 23 Oct 2026. **Nothing here is frozen except the items marked FROZEN / LOCKED.** Owner instruction (verbatim): `sources/2026-10-23_user_instruction_preserve_publish.md`. Machine-readable copy: `MANIFEST.json`.
 
 ## 1. Where it is
@@ -16,7 +25,7 @@ Milestone of 23 Oct 2026. **Nothing here is frozen except the items marked FROZE
 
 **Local only:** the characters are real players' models. Never publish the pages or captures to claude.ai or any web host.
 
-## 2. The current build is `sandbox/visual/feint2/`
+## 2. The current build is `sandbox/visual/vocab2/` (24 Oct; it was `feint2/` on 23 Oct)
 
 All gameplay lives in browser-sandbox prototypes under `sandbox/visual/`. **None of it is wired into the production game** (`server.py`, `web/`, `simulator/` are untouched since `main`).
 
@@ -27,8 +36,12 @@ tc_baseline_88573ef0 (LOCKED; owner-approved 88573ef0)
  → tc_layered (B1–B6 layers) → tc_layered2 (B4 + B5) → tc_unified1 (UnifiedSim + Astra's A99-C + support gait)
  → tc_controlled1 (CONTROLLED ball) → speed99 (S99 38 km/h · D38; s99.html) → ballon1 (CARRY-B) → phys1 (ratings · Agility scale B)
  → vocab1 (DRIBBLING VOCAB-1) → cruyff_chop1 (elite Cruyff / chop) → adv4 (croqueta · V-turn · Matthews · stop-and-go; croqueta refinement c11579a3)
- → feint2  ← CURRENT (BODY FEINT V2, 0c65eac3)
+ → feint2 (BODY FEINT V2, 0c65eac3) → feint2vg (Body Feint video-guided, 7853a88f) → feint2ef (exit foot, f8a0e374)
+ → croqvg (croqueta video-guided V1, 4a549b8f) → croqhs (HOP/SWEEP V2, 753d0cc6) → croqxs (X-SWEEP V3, f7645d10) → croqlw (LEG-WAVE V4, b489e4fd)
+ → vocab2  ← CURRENT (DRIBBLING VOCABULARY INTEGRATION: the Body Feint and La Croqueta integrated, 24 Oct)
 ```
+
+`vocab2/` differs from `croqlw/` only in `v_tech.js` (entry gates; no motion parameter), `u_tc.js`, `c_sim.js`, `u_sim.js`, `v_meta.js`, `v_cases.js`, `u_viewer.js` and new tools (`review_artifacts/vocab_integration1/HANDOFF.md`). The paragraph below is the 23 Oct state.
 
 `feint2/` differs from `adv4/` only in `u_tc.js`, `u_body.js`, `v_tech.js`, `v_meta.js`, `v_cases.js` and `u_viewer.js` (`BODY_FEINT_V2_REPORT.md`, HANDOFF). Every other module is byte-identical to `adv4/`.
 
@@ -36,23 +49,35 @@ tc_baseline_88573ef0 (LOCKED; owner-approved 88573ef0)
 
 | Component | Current source | Notes |
 |---|---|---|
-| **Simulation** | `feint2/c_sim.js` `ControlledSim` ⟶ extends `feint2/u_sim.js` `UnifiedSim` ⟶ extends `feint2/u_tc.js` `PlaySim` | `c_sim`: the CONTROLLED ball model. `u_sim`: 88573ef0's sim + A99-C + the shared support plan + B4 / B5. `u_tc`: the layered copy of 88573ef0's PlaySim + Technical Control. |
+| **Simulation** | `vocab2/c_sim.js` `ControlledSim` ⟶ extends `vocab2/u_sim.js` `UnifiedSim` ⟶ extends `vocab2/u_tc.js` `PlaySim` | `c_sim`: the CONTROLLED ball model. `u_sim`: 88573ef0's sim + A99-C + the shared support plan + B4 / B5. `u_tc`: the layered copy of 88573ef0's PlaySim + Technical Control. |
 | Ball / contact physics | `tc_baseline_88573ef0/pt_ball.js` → `dribble15/d15_core.js` (**FROZEN**, tag `dribble-v1-foundation-1`) → `ballfeel13/` → `ballfeel12/` → `ballfeel11/` → `ballfeel1/`, `ballphys1/`, `physchar2/core/v2_math.js`, `dribble1/d1_rng.js`, `dribble1/d1_attrs.js` | the shared modules are 88573ef0's, checked by the lock check |
-| **Movement** (Agility) | `agility99/movement.js` (**Astra's A99-C — never modify**) and `feint2/s_movement.js` (a verbatim copy plus two pace hooks that are inert at CURRENT pace) | `agility99/support.js` and `direction_body.js` (Astra's support-body V1.1) are **not** used by feint2 |
-| **Pace** | `feint2/pace.js` (S99 38.0 km/h · D38) · `feint2/ratings.js` (Sprint / Acceleration / Agility ratings, scale B) · `feint2/carry_env.js` (CARRY-B ball-on envelope) | |
-| **Body / PlayBody** | `feint2/u_body.js` `PlayBody` | Built on 88573ef0's presentation (`tc_baseline_88573ef0/pt_body.js`), `technical_control15/tc15_ref.js` and `receive_turn11/rt11_body.js` (`HumanTurnBody`). Holds the continuous foot timeline, the committed landings, the gait cycle (arm swing / pelvis twist / bob; **9 s fix here only**) and the feint channels (`armSide` `armHold` `shDrop` `headYaw`). |
-| **Gait / support** | `feint2/u_gait.js` (`bodyGaitFrom`: Astra's `agility99/body_gait.js` + one TC line) · `agility99/body_gait.js` · the support rules in `feint2/u_tc.js` | The support rules are ABL-switchable for tools: `ant app heel pivkeep set side turn dup pivot` (VOCAB-1), `bfdrift bfseq bfflight cycle9` (feint). The S99 leg fixes are in `u_body` / `u_gait`: planted-foot yaw hold, plant pivot ≤ 5°/tick, compression ramps. |
+| **Movement** (Agility) | `agility99/movement.js` (**Astra's A99-C — never modify**) and `vocab2/s_movement.js` (a verbatim copy plus two pace hooks that are inert at CURRENT pace) | `agility99/support.js` and `direction_body.js` (Astra's support-body V1.1) are **not** used by feint2 |
+| **Pace** | `vocab2/pace.js` (S99 38.0 km/h · D38) · `vocab2/ratings.js` (Sprint / Acceleration / Agility ratings, scale B) · `vocab2/carry_env.js` (CARRY-B ball-on envelope) | |
+| **Body / PlayBody** | `vocab2/u_body.js` `PlayBody` | Built on 88573ef0's presentation (`tc_baseline_88573ef0/pt_body.js`), `technical_control15/tc15_ref.js` and `receive_turn11/rt11_body.js` (`HumanTurnBody`). Holds the continuous foot timeline, the committed landings, the gait cycle (arm swing / pelvis twist / bob; **9 s fix here only**) and the feint channels (`armSide` `armHold` `shDrop` `headYaw`). |
+| **Gait / support** | `vocab2/u_gait.js` (`bodyGaitFrom`: Astra's `agility99/body_gait.js` + one TC line) · `agility99/body_gait.js` · the support rules in `vocab2/u_tc.js` | The support rules are ABL-switchable for tools: `ant app heel pivkeep set side turn dup pivot` (VOCAB-1), `bfdrift bfseq bfflight cycle9` (feint). The S99 leg fixes are in `u_body` / `u_gait`: planted-foot yaw hold, plant pivot ≤ 5°/tick, compression ramps. |
 | **Leg / IK** | `technical_control11/tc11_leg.js` (`legIK`, ROM, boot hull, ball gap) for the sim and body; `anim3d/ik.js` for the renderer rig | |
-| **Technical Control** | `feint2/u_tc.js` (templates → `instantiate`, `channels()`, the skill-request state machine, B4 outcome scoring, B5 exits, `TRIMMED` / `ENTRY_FAMILY` entries) + `feint2/c_sim.js` (CONTROLLED) | |
-| **Dribbling vocabulary** | `feint2/v_tech.js` (authored templates: `ELITE` Cruyff / chop, `VTURN`, `MATTHEWS_C`, `DEADEN` / `HESITATE`, `BFEINT_L/J/R/JS/JX`, …) · `feint2/v_meta.js` (catalogue, STATUS, AUTO / MANUAL, `AUTO_TECH`) · `tc_baseline_88573ef0/pt_tech.js` (base techniques) | In `v_meta`, STATUS `INTEGRATED` means "in the sandbox's automatic library". It is an engineering tag, **not owner approval**. |
+| **Technical Control** | `vocab2/u_tc.js` (templates → `instantiate`, `channels()`, the skill-request state machine, B4 outcome scoring, B5 exits, `TRIMMED` / `ENTRY_FAMILY` entries) + `vocab2/c_sim.js` (CONTROLLED) | |
+| **Dribbling vocabulary** | `vocab2/v_tech.js` (authored templates: `ELITE` Cruyff / chop, `VTURN`, `MATTHEWS_C`, `DEADEN` / `HESITATE`, the Body Feint `BFEINT_L/J/R` (+ unreviewed `JS/JX`), the Croqueta `CROQ_LW` (+ historical `CROQ_W/J/R/HS/XS`), …) · `vocab2/v_meta.js` (catalogue, STATUS, AUTO / MANUAL, `AUTO_TECH`, the classes `lib`: AUTHORITATIVE / PRODUCTION / SUPERSEDED / EXPERIMENTAL, `eligible`) · `tc_baseline_88573ef0/pt_tech.js` (base techniques) | In `v_meta`, STATUS `INTEGRATED` means "in the sandbox's automatic library". It is an engineering tag, **not owner approval**. |
 | **Character skeleton / rendering** | classic scripts loaded by the page: `anim3d/m4.js` `skeleton.js` `ik.js` `of_rig.js` `of_motion.js` `of_loco.js` `of_character.js` `of_char_gl.js`, `run1/run1_gait_v13.js` (**FROZEN**, tag `locomotion-v2-straight-baseline-1`) | Assets `assets/characters/outfield/<name>/{rig.json, mesh.bin, atlas.png}`, default `vinicius`, `?char=` to switch. Also `dribble1/d1_colliders.json` and `tc_baseline_88573ef0/pt_baked.json`. |
-| **Viewer / review** | `feint2/u_viewer.js` (Lab + sandbox UI, cameras, FEINT DIAG, OLD \| V2, replays) · `feint2/v_cases.js` (curated cases, `BF_COMPARES`, `BF_RAPID`) · `feint2/v_run.js` (deterministic runner shared with node) | The page's engine switch: `layered` = feint2 `ControlledSim` + `PlayBody`; `baseline` = the locked 88573ef0 `PlaySim` + `PlayBody`. |
+| **Viewer / review** | `vocab2/u_viewer.js` (Lab + sandbox UI, cameras, FEINT DIAG, OLD \| V2, replays) · `vocab2/v_cases.js` (curated cases, `BF_COMPARES`, `BF_RAPID`) · `vocab2/v_run.js` (deterministic runner shared with node) | The page's engine switch: `layered` = feint2 `ControlledSim` + `PlayBody`; `baseline` = the locked 88573ef0 `PlaySim` + `PlayBody`. |
 
-ES-module chain from the page: `feint2_lab.html` → `feint2/u_viewer.js` → { `c_sim` → `u_sim` → `u_tc` → (`pt_ball` `pt_params` `pt_tech` `v_tech` `v_meta` `agility99/movement` `tc11_leg`); `u_sim` → (`s_movement` `pace` `carry_env` `agility99/body_gait` `u_gait`); `u_body` → (`tc15_ref` `rt11_body` `tc11_leg` `pt_ball` `v_tech`); `ratings` `u_tests` `s_tests` `v_cases` `v_run` `tc_baseline_88573ef0/{pt_sim, pt_body, pt_input}` }.
+ES-module chain from the page: `vocab2_lab.html` → `vocab2/u_viewer.js` → { `c_sim` → `u_sim` → `u_tc` → (`pt_ball` `pt_params` `pt_tech` `v_tech` `v_meta` `agility99/movement` `tc11_leg`); `u_sim` → (`s_movement` `pace` `carry_env` `agility99/body_gait` `u_gait`); `u_body` → (`tc15_ref` `rt11_body` `tc11_leg` `pt_ball` `v_tech`); `ratings` `u_tests` `s_tests` `v_cases` `v_run` `tc_baseline_88573ef0/{pt_sim, pt_body, pt_input}` }.
 
 ## 4. Playables (LOCAL, server on :8361)
 
-- **Current Lab:** http://127.0.0.1:8361/sandbox/visual/feint2_lab.html. The BODY FEINT V2 section comes first, then every earlier curated case.
+- **Current Lab (24 Oct):** http://127.0.0.1:8361/sandbox/visual/vocab2_lab.html. Its first section is THE DRIBBLING VOCABULARY — INTEGRATED:
+  - the Body Feint and La Croqueta cards (PLAY · MIRROR · A · REVIEW BUILD · A | B · TRY · 1× / 0.5× / 0.25×);
+  - ordinary-play and declined entries;
+  - the chains;
+  - every entry's class.
+
+  Then come the advanced solutions, the families and the older cases.
+- **Current joystick sandbox (24 Oct):** http://127.0.0.1:8361/sandbox/visual/vocab2_sandbox.html. It has temporary explicit requests from ordinary dribbling (not the final control scheme):
+  - 7 / 8 — BODY FEINT fake L → exit R / fake R → exit L;
+  - 9 / 0 — CROQUETA → LEFT / → RIGHT;
+  - U — CRUISE.
+- **The two moves' own review pages (unchanged):** `feint2ef_lab.html` (EXIT-FOOT REVIEW) and `croqlw_lab.html` (LEG-WAVE V4 REVIEW). On 23 Oct the owner approved both moves as provisional motion foundations.
+- 23 Oct's Lab: http://127.0.0.1:8361/sandbox/visual/feint2_lab.html. The BODY FEINT V2 section comes first, then every earlier curated case.
 - **Current joystick sandbox:** http://127.0.0.1:8361/sandbox/visual/feint2_sandbox.html.
 - **Latest the owner has reviewed:** BODY FEINT V2, in these two pages. On 23 Oct the owner called it "an improvement", not approved.
 - **Earlier pages the owner gave verdicts on (kept unchanged as references):**
@@ -71,6 +96,8 @@ ES-module chain from the page: `feint2_lab.html` → `feint2/u_viewer.js` → { 
 | **LOCKED** | BASELINE-88573ef0 (`tc_baseline_88573ef0*`) | owner-approved foundation, 20 Oct; tag `tc-baseline-88573ef0-locked`; never modify |
 | **FROZEN deps** | DRIBBLE-V1 foundation (`dribble15/`), RUN-1.3 straight gait (`run1/run1_gait_v13.js`) | tags `dribble-v1-foundation-1`, `locomotion-v2-straight-baseline-1` |
 | **APPROVED** (owner decisions; not frozen) | Sprint Speed 99 = 38.0 km/h and the Sprint mapping · Acceleration 99 = D38 · A99-C as the Agility-99 ceiling ("selected provisional ceiling") · Agility scale B · CARRY-B (the "provisional D99 / BC99 envelope") · CONTROLLED possession ("much, much better") · the hook → Cruyff / Ronaldo-chop hierarchy ("looking good", 22 Oct) | owner messages 21–22 Oct; recorded in the milestone STATUS files |
+| **AUTHORITATIVE — PROVISIONALLY APPROVED MOTION FOUNDATION** (owner, 23 Oct ≈ 23:31 EEST; integrated 24 Oct) | the Body Feint, video-guided + exit foot (`BODY_FEINT` → `BFEINT_L/J/R`) · La Croqueta LEG-WAVE V4 (`CROQUETA` → `CROQ_LW`). Validated entries only; elsewhere they are declined with the reason. | `review_artifacts/vocab_integration1/` |
+| **SUPERSEDED / HISTORICAL** (24 Oct) | the old overlay Body Feint (`BODY_FEINT_OVERLAY`), the feint → cut combos, VOCAB-1's analog feint (off), Body Feint V2 before video-guidance, ADV-4's croqueta and its refinement, the croqueta V1 / V2 / V3 templates | not eligible / reachable by no entry (`VOCABULARY.md`) |
 | **PROVISIONAL** (built, presented, owner review open) | B4 / B5 ("promising — develop") · Technical Control 1.x carry / contact model · the support, committed-landing and leg fixes (TC-UNIFIED-1, S99, VOCAB-1) · DRIBBLING VOCAB-1 library · CRUYFF-CHOP-1 elite templates · **ADV-4**: croqueta + its refinement `c11579a3`, V-turn, compact Matthews, stop-and-go (stopped for owner review, not frozen, 5 decisions open in `adv4/ADV4_REPORT.md` §9) · **BODY FEINT V2** (4 decisions open in `body_feint_v2/BODY_FEINT_V2_REPORT.md` §11) · the 9 s gait-cycle fix (feint2 only) | the owner listed carry / Cruyff / chop / croqueta / V-turn / Matthews / stop-and-go / movement / CONTROLLED as the "current known-good" regression set (23 Oct) — that protects them from regression, it does not freeze them |
 | **EXPERIMENTAL** | heel chop, roulette, SOL sole roll, the old FNO / FNI body feints (owner: "failures visually"), B2 (optional toggle) · Astra's A99-C support-body V1.1 (`agility99/support.js`, `direction_body.js`: handoff only, BALL ON not integrated) · Acceleration / Agility mappings below 99 · REJECTED and kept as records: TC-RESPONSIVE-1, PLAYTEST-1.2, B1 / B3 / B6 | |
 
@@ -95,6 +122,20 @@ ES-module chain from the page: `feint2_lab.html` → `feint2/u_viewer.js` → { 
 9. **No production integration:** nothing here runs in `server.py` / `web/`.
 
 ## 7. Test commands (from the checkout root; node ≥ 18)
+
+**The current build (24 Oct), vocab2** — the evidence is `review_artifacts/vocab_integration1/evidence/` (the commands: its `HANDOFF.md`):
+
+```sh
+bash review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh          # must PASS before every commit
+cd sandbox/visual/vocab2/tools
+node lib_repro.mjs --a ../../croqlw/ --set all  # the approved motions ≡ their review builds (0.000 mm)
+node lib_bf_sweep.mjs … · node lib_croq_sweep.mjs … · node lib_chains.mjs · node lib_vi_cases.mjs   # entry envelopes, chains, the Lab's cards
+node v_cases_run.mjs --body 1 · node v_battery.mjs · node v_extreme.mjs --ball 1|0 · node v_intent_torture.mjs --seeds 12 --dur 60
+node v_bodytort.mjs --seeds 18 --dur 60 · node c_torture.mjs --configs CONTROLLED --seeds 40 --dur 60 --pace D38 --vocab EXPANDED --carry B · node v_det.mjs --seeds 18 --dur 30
+#   (each also with ABL=analogfeint: then ≡ croqlw outside the Body Feint / Croqueta requests — review_artifacts/vocab_integration1/tools/regress_compare.mjs)
+```
+
+**The 23 Oct milestone (feint2):**
 
 ```sh
 bash review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh          # must PASS before every commit

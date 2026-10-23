@@ -1,0 +1,123 @@
+CARRY·NORMAL                                               AUTO |  | sep 0.66 | body 0/0
+CLOSE_CARRY·NORMAL                                         AUTO | LATERAL TRANSFER (L) @1.00 ctl+0.06 next COMPACT OUTSIDE REDIRECT @1.67 → COMPACT INSIDE REDIRECT (R) @1.24 ctl+0.06 next COMPACT OUTSIDE REDIRECT @1.67 → COMPA | sep 0.71 | body 0/0
+SPRINT_CARRY·NORMAL                                        AUTO |  | sep 1.02 | body 0/0
+KNOCK_ON·NORMAL                                            KNOCK_ON PLAYED | KNOCK-ON (R) @0.15 ctl+0.06 | sep 0.89 | body 0/0
+KNOCK_ON·AUTO                                              AUTO | KNOCK-ON (L) @0.36 ctl+0.06 | sep 1.13 | body 0/0
+INSIDE_CUT·NORMAL                                          AUTO |  | sep 0.66 | body 0/0
+OUTSIDE_REDIRECT·NORMAL                                    AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
+OUTSIDE_CUT·NORMAL                                         OUTSIDE_CUT PLAYED | OUTSIDE CUT (R) @0.80 ctl+0.06 | sep 0.66 | body 0/0
+OUTSIDE_CUT·MIRROR                                         OUTSIDE_CUT PLAYED | OUTSIDE CUT (L) @0.80 ctl+0.06 | sep 0.66 | body 0/0
+OUTSIDE_CUT·AUTO                                           AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
+INSIDE_HOOK·NORMAL                                         INSIDE_HOOK PLAYED | INSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.87 | body 0/1
+INSIDE_HOOK·MIRROR                                         INSIDE_HOOK PLAYED | INSIDE HOOK (L) @0.43 ctl+0.09 | sep 0.87 | body 0/1
+INSIDE_HOOK·WALK                                           INSIDE_HOOK PLAYED | INSIDE HOOK (R) @0.55 ctl+0.09 | sep 0.95 | body 0/2
+INSIDE_HOOK·RUN                                            INSIDE_HOOK PLAYED | INSIDE HOOK (R) @0.98 ctl+0.09 | sep 0.70 | body 0/0
+INSIDE_HOOK·SPRINT                                         INSIDE_HOOK PLAYED | INSIDE HOOK (R) @1.87 ctl+0.09 | sep 1.13 | body 0/0
+OUTSIDE_HOOK·NORMAL                                        OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.95 | body 0/3
+OUTSIDE_HOOK·MIRROR                                        OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (L) @0.43 ctl+0.09 | sep 0.95 | body 0/3
+OUTSIDE_HOOK·SPRINT                                        OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (R) @1.87 ctl+0.09 | sep 1.13 | body 0/0
+BRAKING_TOUCH·NORMAL                                       AUTO |  | sep 1.02 | body 1/0
+RONALDO_CHOP·NORMAL                                        RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.66 ctl+0.11 | sep 0.66 | body 0/1
+RONALDO_CHOP·LOW-SPEED                                     RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.65 ctl+0.11 | sep 0.66 | body 0/1
+RONALDO_CHOP·JOG · NO HOP                                  RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.90 ctl+0.11 | sep 0.66 | body 0/1
+RONALDO_CHOP·REJECTED                                      RONALDO_CHOP REJECTED → CARRY (entry 1.5 m/s below its 3.6 m/s; the exit is on the wrong side for this foot) | GATHER (L) (no decisive) | sep 0.60 | body 0/0
+RONALDO_CHOP·HIGH-SPEED                                    RONALDO_CHOP PLAYED | RONALDO CHOP (R) @1.00 ctl+0.11 | sep 1.07 | body 1/1
+RONALDO_CHOP·MIRROR                                        RONALDO_CHOP PLAYED | RONALDO CHOP (L) @0.66 ctl+0.11 | sep 0.66 | body 0/1
+RONALDO_CHOP·AUTO                                          AUTO | COMPACT INSIDE REDIRECT (R) @0.26 ctl+0.06 | sep 0.66 | body 0/0
+CRUYFF·SLOW · AT THE PLANT                                 CRUYFF PLAYED | CRUYFF TURN (R) @0.51 ctl+0.09 next OUTSIDE CUT @0.90 → OUTSIDE CUT (R) @1.64 ctl+0.06 | sep 0.70 | body 0/1
+CRUYFF·NORMAL                                              CRUYFF PLAYED | CRUYFF TURN (R) @0.39 ctl+0.10 | sep 0.65 | body 0/1
+CRUYFF·HIGH-SPEED                                          CRUYFF PLAYED | CRUYFF TURN (R) @0.65 ctl+0.09 | sep 0.66 | body 0/4
+CRUYFF·MIRROR                                              CRUYFF PLAYED | CRUYFF TURN (L) @0.65 ctl+0.09 | sep 0.66 | body 0/4
+CRUYFF·SPRINT                                              CRUYFF PLAYED | CRUYFF TURN (R) @1.83 ctl+0.09 | sep 1.13 | body 0/0
+CRUYFF·AUTO                                                AUTO | CRUYFF TURN (R) @0.39 ctl+0.10 | sep 0.65 | body 0/1
+DRAG_BACK·NORMAL                                           DRAG_BACK PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 | sep 0.71 | body 0/1
+DRAG_BACK·MIRROR                                           DRAG_BACK PLAYED | DRAG-BACK (L) @0.43 ctl+0.08 | sep 0.71 | body 0/1
+DRAG_BACK·REJECTED                                         DRAG_BACK REJECTED → BRAKING_TOUCH (entry 9.7 m/s far above its 5 m/s; rolling there) | BRAKING TOUCH (R) (no decisive) → BRAKING TOUCH (L) @1.29 ctl+0.06 | sep 1.01 | body 0/3
+SOLE_ROLL·NORMAL                                           SOLE_ROLL PLAYED | SOLE ROLL (R) @0.30 ctl+0.06 | sep 0.60 | body 1/0
+CROQUETA·NORMAL                                            CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 0.65 | body 0/0
+CROQUETA·MIRROR                                            CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 0.65 | body 0/0
+CROQUETA·JOG                                               CROQUETA PLAYED | LA CROQUETA (R) @0.57 ctl+0.24 | sep 0.68 | body 0/0
+CROQUETA·CURRENT (before)                                  CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 0.65 | body 0/0
+CROQUETA·REJECTED                                          CROQUETA REJECTED → CARRY (entry 9.7 m/s outside its validated 2.6–3.6 m/s; the carry is about to accelerate) |  | sep 1.44 | body 0/0
+CROQUETA·PRESSURE                                          CROQUETA REJECTED → COMPACT_OUTSIDE_REDIRECT (the exit is on the wrong side for this foot; exit 35° below its validated 40 – 45°) | COMPACT OUTSIDE REDIRECT (R) @0.65 ctl+0.06 | sep 0.71 | body 0/0
+CROQUETA·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
+CROQUETA·REF · WALK L → R                                  CROQUETA REJECTED → COMPACT_INSIDE_REDIRECT (entry 1.5 m/s outside its validated 2.6–3.6 m/s) | COMPACT INSIDE REDIRECT (L) @0.99 ctl+0.06 | sep 0.60 | body 0/0
+CROQUETA·REF · JOG L → R                                   CROQUETA PLAYED | LA CROQUETA (L) @0.57 ctl+0.24 | sep 0.68 | body 0/0
+CROQUETA·REF · WALK R → L                                  CROQUETA REJECTED → COMPACT_INSIDE_REDIRECT (entry 1.5 m/s outside its validated 2.6–3.6 m/s) | COMPACT INSIDE REDIRECT (R) @0.99 ctl+0.06 | sep 0.60 | body 0/0
+CROQUETA·REF · JOG R → L                                   CROQUETA PLAYED | LA CROQUETA (R) @0.57 ctl+0.24 | sep 0.68 | body 0/0
+CROQUETA·REF · RUN L → R                                   CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 0.65 | body 0/0
+CROQUETA·REF · RUN R → L                                   CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 0.65 | body 0/0
+BODY_FEINT·NORMAL                                          BODY_FEINT REJECTED → LATERAL_TRANSFER (entry 5.3 m/s outside its validated 0.6–2.65 m/s; entry 5.3 m/s outside its validated 2.65–4.3 m/s) | LATERAL TRANSFER (R) @0.90 ctl+0.06 → LATERAL TRANSFER (L) @1.10 ctl+0.06 | sep 0.66 | body 0/0
+SHOULDER_DROP·NORMAL                                       SHOULDER_DROP PLAYED |  | sep 0.66 | body 0/0
+HIP_FAKE·NORMAL                                            HIP_FAKE PLAYED | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
+FEINT_OUTSIDE_CUT·NORMAL                                   FEINT_OUTSIDE_CUT REJECTED → CARRY (SUPERSEDED — superseded by BODY_FEINT → an ordinary cut (a chain): not eligible) |  | sep 0.66 | body 0/0
+FEINT_INSIDE_CUT·NORMAL                                    FEINT_INSIDE_CUT REJECTED → CARRY (SUPERSEDED — superseded by BODY_FEINT → an ordinary cut (a chain): not eligible) | LATERAL TRANSFER (R) @0.65 ctl+0.06 → LATERAL TRANSFER (L) (no decisive) | sep 0.66 | body 0/0
+MATTHEWS·NORMAL                                            MATTHEWS PLAYED | MATTHEWS (compact) (R) @0.82 ctl+0.06 | sep 0.66 | body 0/1
+MATTHEWS·MIRROR                                            MATTHEWS PLAYED | MATTHEWS (compact) (L) @0.82 ctl+0.06 | sep 0.66 | body 0/1
+MATTHEWS·RUN                                               MATTHEWS PLAYED | MATTHEWS (compact) (R) @0.87 ctl+0.06 | sep 0.66 | body 0/0
+MATTHEWS·REJECTED                                          MATTHEWS REJECTED → GATHER (entry 1.5 m/s below its 2 m/s; the exit is on the wrong side for this foot) | GATHER (L) @0.69 ctl+0.06 | sep 0.60 | body 0/0
+BODY_FEINT_V2·FAKE LEFT → RIGHT                            BODY_FEINT PLAYED | BODY FEINT V2 (R) @1.02 ctl+0.20 | sep 0.66 | body 0/2
+BODY_FEINT_V2·FAKE RIGHT → LEFT                            BODY_FEINT PLAYED | BODY FEINT V2 (L) @1.02 ctl+0.20 | sep 0.66 | body 0/2
+BODY_FEINT_V2·R → L · RIGHT-FOOTED                         BODY_FEINT REJECTED → CARRY (entry 3.2 m/s outside its validated 0.6–2.65 m/s; the exit is on the wrong side for this foot) |  | sep 0.66 | body 0/0
+BODY_FEINT_V2·LOW-SPEED L → R                              BODY_FEINT PLAYED | BODY FEINT V2 (R) @0.81 ctl+0.22 | sep 0.60 | body 0/2
+BODY_FEINT_V2·LOW-SPEED R → L                              BODY_FEINT PLAYED | BODY FEINT V2 (L) @0.81 ctl+0.22 | sep 0.60 | body 0/2
+BODY_FEINT_V2·RUNNING L → R                                BODY_FEINT PLAYED | BODY FEINT V2 (R) @0.97 ctl+0.16 | sep 0.81 | body 0/1
+BODY_FEINT_V2·RUNNING R → L                                BODY_FEINT PLAYED | BODY FEINT V2 (L) @0.97 ctl+0.16 | sep 0.81 | body 0/1
+BODY_FEINT_V2·SHALLOW L → R                                BODY_FEINT_V2_SHALLOW REJECTED → CARRY (EXPERIMENTAL: not eligible) | COMPACT OUTSIDE REDIRECT (R) @0.45 ctl+0.06 | sep 0.69 | body 0/0
+BODY_FEINT_V2·STRONG L → R                                 BODY_FEINT_V2_STRONG REJECTED → CARRY (EXPERIMENTAL: not eligible) | COMPACT OUTSIDE REDIRECT (R) @0.45 ctl+0.06 | sep 0.69 | body 0/0
+BODY_FEINT_V2·OLD (VOCAB-1)                                BODY_FEINT_OVERLAY REJECTED → CARRY (SUPERSEDED — superseded by BODY_FEINT: not eligible) | COMPACT OUTSIDE REDIRECT (R) @0.45 ctl+0.06 | sep 0.69 | body 0/0
+SCISSORS·NORMAL                                            SCISSORS PLAYED | SCISSORS (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+SCISSORS·MIRROR                                            SCISSORS PLAYED | SCISSORS (L) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+SCISSORS·HIGH-SPEED                                        SCISSORS PLAYED | SCISSORS (R) @1.71 ctl+0.06 | sep 0.94 | body 0/0
+SCISSORS·REJECTED                                          SCISSORS REJECTED → DRAG_BACK (exit 140° beyond its 92°; exit 220° beyond its 92°) | DRAG-BACK (L) @1.05 ctl+0.08 | sep 0.79 | body 0/0
+STEPOVER·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
+SCISSORS_GO·NORMAL                                         SCISSORS_GO PLAYED | SCISSORS → CONTINUE (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+SCISSORS_GO·MIRROR                                         SCISSORS_GO PLAYED | SCISSORS → CONTINUE (L) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+STEPOVER·NORMAL                                            STEPOVER PLAYED | STEPOVER (R) @0.90 ctl+0.06 | sep 0.66 | body 0/1
+STEPOVER·MIRROR                                            STEPOVER PLAYED | STEPOVER (L) @0.90 ctl+0.06 | sep 0.66 | body 0/1
+DOUBLE_SCISSORS·NORMAL                                     DOUBLE_SCISSORS PLAYED | DOUBLE SCISSORS (R) @1.46 ctl+0.06 | sep 0.65 | body 0/0
+HEEL_CHOP·NORMAL                                           HEEL_CHOP PLAYED | HEEL CHOP (R) @0.49 ctl+0.06 | sep 0.65 | body 0/0
+HEEL_CHOP·MIRROR                                           HEEL_CHOP PLAYED | HEEL CHOP (L) @0.49 ctl+0.06 | sep 0.65 | body 0/0
+HEEL_CHOP·REJECTED                                         HEEL_CHOP REJECTED → CARRY (entry 9.7 m/s far above its 6 m/s; the exit is on the wrong side for this foot) | CRUYFF TURN (R) @2.00 ctl+0.09 | sep 1.01 | body 0/2
+ELASTICO·NORMAL                                            ELASTICO PLAYED | ELASTICO (R) @0.61 ctl+0.08 | sep 0.66 | body 0/0
+ELASTICO·HIGH-SPEED                                        ELASTICO PLAYED | ELASTICO (R) @0.82 ctl+0.08 | sep 0.66 | body 0/0
+ELASTICO·MIRROR                                            ELASTICO PLAYED | ELASTICO (L) @0.61 ctl+0.08 | sep 0.66 | body 0/0
+ELASTICO·REJECTED                                          ELASTICO REJECTED → CARRY (pursuit) (the exit is on the wrong side for this foot) |  | sep 0.65 | body 0/0
+REVERSE_ELASTICO·NORMAL                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (R) @0.61 ctl+0.08 | sep 0.65 | body 0/0
+REVERSE_ELASTICO·MIRROR                                    REVERSE_ELASTICO PLAYED | REVERSE ELASTICO (L) @0.61 ctl+0.08 | sep 0.65 | body 0/0
+V_TURN·NORMAL                                              V_TURN PLAYED | V-TURN (R) @0.78 ctl+0.24 | sep 0.66 | body 0/3
+V_TURN·MIRROR                                              V_TURN PLAYED | V-TURN (L) @0.78 ctl+0.24 | sep 0.66 | body 0/3
+V_TURN·WIDE                                                V_TURN PLAYED | V-TURN (R) @0.78 ctl+0.24 | sep 0.66 | body 0/4
+V_TURN·RUN                                                 V_TURN PLAYED | V-TURN (R) @0.77 ctl+0.24 | sep 0.71 | body 0/1
+V_TURN·REJECTED                                            V_TURN REJECTED → CARRY (exit 150° beyond its 120°; exit 210° beyond its 120°) | DRAG-BACK (L) @1.18 ctl+0.08 | sep 0.89 | body 0/1
+ROULETTE·NORMAL                                            ROULETTE PLAYED | ROULETTE (Marseille turn) (R) @0.41 ctl+0.06 | sep 0.65 | body 2/4
+ROULETTE·REJECTED                                          ROULETTE REJECTED → COMPACT_INSIDE_REDIRECT (entry 9.7 m/s far above its 4.2 m/s; the exit is on the wrong side for this foot) | COMPACT INSIDE REDIRECT (R) @1.50 ctl+0.06 | sep 1.08 | body 0/1
+STOP_AND_GO·NORMAL                                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 | sep 1.15 | body 0/0
+STOP_AND_GO·SPRINT                                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.55 ctl+0.14 | sep 1.15 | body 0/1
+STOP_AND_GO·HESITATION                                     STOP_AND_GO PLAYED | HESITATION (L) @0.68 ctl+0.06 | sep 0.92 | body 0/3
+STOP_AND_GO·MIRROR                                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (R) @0.57 ctl+0.14 | sep 1.15 | body 0/0
+STOP·NORMAL                                                AUTO |  | sep 0.65 | body 0/2
+SHIELD_ROLL·NORMAL                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (R) @0.89 ctl+0.08 | sep 0.59 | body 0/0
+SHIELD_ROLL·MIRROR                                         SHIELD_ROLL PLAYED | SHIELD ROLL-AWAY (L) @0.89 ctl+0.08 | sep 0.59 | body 0/0
+SHIELD_HOOK·NORMAL                                         INSIDE_HOOK PLAYED | INSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.87 | body 0/1
+SHIELD_HOOK·AUTO                                           AUTO | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.26 → LATERAL TRANSFER (R) @1.49 ctl+0.06 | sep 0.66 | body 0/1
+SHIELD_HOOK·AUTO-2                                         AUTO | BRAKING TOUCH (R) @0.18 ctl+0.06 | sep 0.66 | body 1/0
+SHIELD_OUTHOOK·NORMAL                                      OUTSIDE_HOOK PLAYED | OUTSIDE HOOK (R) @0.43 ctl+0.09 | sep 0.95 | body 0/3
+CHAIN·CHAIN·Body feint → outside cut                       BODY_FEINT SUPERSEDED + OUTSIDE_CUT PLAYED | OUTSIDE CUT (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+CHAIN·CHAIN·Scissors → outside exit → sprint               SCISSORS PLAYED | SCISSORS (R) @0.90 ctl+0.06 | sep 1.07 | body 0/0
+CHAIN·CHAIN·Stepover → inside exit                         STEPOVER PLAYED | STEPOVER (R) @0.90 ctl+0.06 next COMPACT OUTSIDE REDIRECT @0.95 → COMPACT OUTSIDE REDIRECT (L) @1.08 ctl+0.06 | sep 0.66 | body 1/1
+CHAIN·CHAIN·Drag-back → croqueta                           DRAG_BACK PLAYED + CROQUETA REJECTED → CARRY (exit 35° below its validated 40 – 45°; the exit is on the wrong side for this foot) | DRAG-BACK (R) @0.43 ctl+0.08 | sep 0.71 | body 0/1
+CHAIN·CHAIN·V-turn → accelerate                            V_TURN PLAYED | V-TURN (R) @0.78 ctl+0.24 | sep 1.09 | body 0/3
+CHAIN·CHAIN·V-turn → croqueta                              V_TURN PLAYED + CROQUETA REJECTED → CARRY (no feasible entry on the coming strides (foot / ball / support timing); the exit is on the wrong side for this foot) | V-TURN (R) @0.78 ctl+0.24 | sep 0.66 | body 0/4
+CHAIN·CHAIN·Croqueta → accelerate                          CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) |  | sep 1.10 | body 0/0
+CHAIN·CHAIN·Croqueta → outside cut                         CROQUETA REJECTED → CARRY (entry 5.3 m/s outside its validated 2.6–3.6 m/s) + OUTSIDE_CUT PLAYED | COMPACT OUTSIDE REDIRECT (R) (no decisive) → OUTSIDE CUT (R) @1.62 ctl+0.06 | sep 0.66 | body 0/0
+CHAIN·CHAIN·Stop-and-go → D38 sprint                       STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 | sep 1.15 | body 0/0
+CHAIN·CHAIN·Stop-and-go → 45° exit                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 next OUTSIDE CUT @0.88 → OUTSIDE CUT (R) (no decisive) → LATERAL TRANSFER (L) @1.20 ctl+0.06 → LATERAL TRANSFER (R) @1.54  | sep 1.01 | body 1/1
+CHAIN·CHAIN·Ronaldo chop → accelerate                      RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.66 ctl+0.11 | sep 1.05 | body 0/1
+CHAIN·CHAIN·Cruyff → accelerate                            CRUYFF PLAYED | CRUYFF TURN (R) @0.39 ctl+0.10 | sep 1.11 | body 0/0
+CHAIN·CHAIN·Elastico → sprint                              ELASTICO PLAYED | ELASTICO (R) @0.61 ctl+0.08 | sep 1.08 | body 0/0
+CHAIN·CHAIN·Knock-on → sprint → chop                       KNOCK_ON PLAYED + RONALDO_CHOP PLAYED | KNOCK-ON (R) @0.15 ctl+0.06 next RONALDO CHOP @1.60 → RONALDO CHOP (R) @2.23 ctl+0.11 | sep 1.17 | body 0/1
+CHAIN·CHAIN·Stop → feint → explode                         STOP_AND_GO PLAYED + BODY_FEINT REJECTED → COMPACT_OUTSIDE_REDIRECT (exit 7° below its 12°; the exit is on the wrong side for this foot) | DEADEN-AND-EXPLODE (L) @0.49 ctl+0.14 next COMPACT OUTSIDE REDIRECT @1.10 → COMPACT OUTSIDE REDIRECT (R) @1.22 ctl+0.06 | sep 1.06 | body 0/0
+CHAIN·CHAIN·Croqueta → accelerate → outside cut            CROQUETA REJECTED → COMPACT_OUTSIDE_REDIRECT (entry 5.3 m/s outside its validated 2.6–3.6 m/s) + OUTSIDE_CUT PLAYED | COMPACT OUTSIDE REDIRECT (R) @0.90 ctl+0.06 next OUTSIDE CUT @1.60 → OUTSIDE CUT (R) @2.70 ctl+0.06 | sep 1.10 | body 0/0
+CHAIN·CHAIN·Matthews → outside exit → accelerate           MATTHEWS PLAYED | MATTHEWS (compact) (R) @0.82 ctl+0.06 | sep 1.03 | body 1/0
+■ 122 cases · 76/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 9 (cases with any: 8)

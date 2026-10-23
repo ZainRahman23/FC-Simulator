@@ -1,0 +1,35 @@
+✓ BODY_FEINT approved FAKE LEFT → RIGHT                                    PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · FAKE LEFT → RIGHT                           PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved FAKE RIGHT → LEFT                                    PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · FAKE RIGHT → LEFT                           PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved LOW-SPEED L → R                                      PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · LOW-SPEED L → R                             PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved LOW-SPEED R → L                                      PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · LOW-SPEED R → L                             PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT approved RUNNING L → R                                        PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · RUNNING L → R                               PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT approved RUNNING R → L                                        PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT approved MIRROR · RUNNING R → L                               PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT play     ORDINARY · WALK 50°                                  PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT play     MIRROR · ORDINARY · WALK 50°                         PLAYED BFEINT_L · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT play     ORDINARY · JOG 40°                                   PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT play     MIRROR · ORDINARY · JOG 40°                          PLAYED BFEINT_J · body 0/2 · exits 0 · missed 0
+✓ BODY_FEINT play     ORDINARY · RUN 35°                                   PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT play     MIRROR · ORDINARY · RUN 35°                          PLAYED BFEINT_R · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT declined DECLINED · FAKE TOWARD THE CARRYING FOOT             REJECTED  — the ball is on the right foot · body 0/0 · exits 0 · missed 0
+✓ BODY_FEINT declined MIRROR · DECLINED · FAKE TOWARD THE CARRYING FOOT    REJECTED  — the ball is on the left foot · body 0/0 · exits 0 · missed 0
+✓ BODY_FEINT declined DECLINED · 75° FROM A JOG                            REJECTED  — exit 75° beyond its validated 35 – 60° · body 0/1 · exits 0 · missed 0
+✓ BODY_FEINT declined MIRROR · DECLINED · 75° FROM A JOG                   REJECTED  — exit 75° beyond its validated 35 – 60° · body 0/1 · exits 0 · missed 0
+✓ CROQUETA   approved REF · JOG R → L                                      PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   approved MIRROR · REF · JOG R → L                             PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   approved REF · JOG L → R                                      PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   approved MIRROR · REF · JOG L → R                             PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   play     ORDINARY · JOG 42° (another stride phase)            PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   play     MIRROR · ORDINARY · JOG 42° (another stride phase)   PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   play     ORDINARY · JOG 45°                                   PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   play     MIRROR · ORDINARY · JOG 45°                          PLAYED CROQ_LW · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   declined DECLINED · FROM A RUN                                REJECTED  — entry 5.3 m/s outside its validated 2.6–3.6 m/s · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   declined MIRROR · DECLINED · FROM A RUN                       REJECTED  — entry 5.3 m/s outside its validated 2.6–3.6 m/s · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   declined DECLINED · TO THE RIGHT, BALL ON THE RIGHT FOOT      REJECTED  — the ball is on the right foot · body 0/0 · exits 0 · missed 0
+✓ CROQUETA   declined MIRROR · DECLINED · TO THE RIGHT, BALL ON THE RIGHT FOOT REJECTED  — the ball is on the left foot · body 0/0 · exits 0 · missed 0
+■ 34 / 34 as expected (played clean / declined with a reason), possession kept

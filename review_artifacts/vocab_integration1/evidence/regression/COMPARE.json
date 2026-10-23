@@ -1,0 +1,597 @@
+[
+ {
+  "suite": "cases",
+  "lane": "A · vocab2",
+  "lines": 124,
+  "differ": 39,
+  "request": 30,
+  "other": 9,
+  "oldSummary": "■ 122 cases · 97/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)",
+  "newSummary": "■ 122 cases · 76/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 9 (cases with any: 8)",
+  "others": [
+   {
+    "i": 1,
+    "old": "CLOSE_CARRY·NORMAL                                         AUTO | LATERAL TRANSFER (L) @1.00 ctl+0.06 next COMPACT OUTSIDE REDIRECT @1.67 → COMPACT INSIDE REDIRECT (R) @1.24 ctl+0.06 next COMPACT OUTSIDE REDIRECT @1.67 → COMPA | sep 0.71 | body 0/0",
+    "now": "CLOSE_CARRY·NORMAL                                         AUTO | COMPACT OUTSIDE REDIRECT (R) @0.65 ctl+0.06 next COMPACT OUTSIDE REDIRECT @1.00 → COMPACT OUTSIDE REDIRECT (L) @1.10 ctl+0.06 next GATHER @1.50 → GATHER (L) @1. | sep 0.72 | body 0/1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 4,
+    "old": "KNOCK_ON·AUTO                                              AUTO | KNOCK-ON (L) @0.36 ctl+0.06 | sep 1.13 | body 0/0",
+    "now": "KNOCK_ON·AUTO                                              AUTO | KNOCK-ON (R) @0.15 ctl+0.06 | sep 0.89 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 5,
+    "old": "INSIDE_CUT·NORMAL                                          AUTO |  | sep 0.66 | body 0/0",
+    "now": "INSIDE_CUT·NORMAL                                          AUTO | COMPACT OUTSIDE REDIRECT (L) @0.16 ctl+0.06 | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 6,
+    "old": "OUTSIDE_REDIRECT·NORMAL                                    AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0",
+    "now": "OUTSIDE_REDIRECT·NORMAL                                    AUTO | COMPACT INSIDE REDIRECT (L) @0.09 ctl+0.06 | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 9,
+    "old": "OUTSIDE_CUT·AUTO                                           AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0",
+    "now": "OUTSIDE_CUT·AUTO                                           AUTO | COMPACT INSIDE REDIRECT (L) @0.09 ctl+0.06 | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 50,
+    "old": "SHOULDER_DROP·NORMAL                                       SHOULDER_DROP PLAYED |  | sep 0.66 | body 0/0",
+    "now": "SHOULDER_DROP·NORMAL                                       SHOULDER_DROP PLAYED | LATERAL TRANSFER (R) @0.65 ctl+0.06 → LATERAL TRANSFER (L) @0.88 ctl+0.06 | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 51,
+    "old": "HIP_FAKE·NORMAL                                            HIP_FAKE PLAYED | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0",
+    "now": "HIP_FAKE·NORMAL                                            HIP_FAKE PLAYED |  | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 72,
+    "old": "STEPOVER·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0",
+    "now": "STEPOVER·AUTO                                              AUTO | COMPACT INSIDE REDIRECT (L) @0.09 ctl+0.06 | sep 0.66 | body 0/0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 122,
+    "old": "■ 122 cases · 97/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)",
+    "now": "■ 122 cases · 76/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 9 (cases with any: 8)",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "cases",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 124,
+  "differ": 30,
+  "request": 29,
+  "other": 1,
+  "oldSummary": "■ 122 cases · 97/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)",
+  "newSummary": "■ 122 cases · 76/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 9 (cases with any: 8)",
+  "others": [
+   {
+    "i": 122,
+    "old": "■ 122 cases · 97/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)",
+    "now": "■ 122 cases · 76/107 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 9 (cases with any: 8)",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "battery",
+  "lane": "A · vocab2",
+  "lines": 74,
+  "differ": 9,
+  "request": 8,
+  "other": 1,
+  "oldSummary": "■ 67/72 PLAYED",
+  "newSummary": "■ 59/72 PLAYED",
+  "others": [
+   {
+    "i": 72,
+    "old": "■ 67/72 PLAYED",
+    "now": "■ 59/72 PLAYED",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "battery",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 74,
+  "differ": 9,
+  "request": 8,
+  "other": 1,
+  "oldSummary": "■ 67/72 PLAYED",
+  "newSummary": "■ 59/72 PLAYED",
+  "others": [
+   {
+    "i": 72,
+    "old": "■ 67/72 PLAYED",
+    "now": "■ 59/72 PLAYED",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "extreme_ball_on",
+  "lane": "A · vocab2",
+  "lines": 38,
+  "differ": 0,
+  "request": 0,
+  "other": 0,
+  "oldSummary": "■ BALL ON (CONTROLLED · CARRY-B · EXPANDED): 140 runs · 47 with a normal-speed-visible failure · normal 61 · slow-motion 131 · diagnostic 1 · missed contacts 0 · CONTROLLED exits 0",
+  "newSummary": "■ BALL ON (CONTROLLED · CARRY-B · EXPANDED): 140 runs · 47 with a normal-speed-visible failure · normal 61 · slow-motion 131 · diagnostic 1 · missed contacts 0 · CONTROLLED exits 0",
+  "others": []
+ },
+ {
+  "suite": "extreme_ball_on",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 38,
+  "differ": 0,
+  "request": 0,
+  "other": 0,
+  "oldSummary": "■ BALL ON (CONTROLLED · CARRY-B · EXPANDED): 140 runs · 47 with a normal-speed-visible failure · normal 61 · slow-motion 131 · diagnostic 1 · missed contacts 0 · CONTROLLED exits 0",
+  "newSummary": "■ BALL ON (CONTROLLED · CARRY-B · EXPANDED): 140 runs · 47 with a normal-speed-visible failure · normal 61 · slow-motion 131 · diagnostic 1 · missed contacts 0 · CONTROLLED exits 0",
+  "others": []
+ },
+ {
+  "suite": "extreme_ball_off",
+  "lane": "A · vocab2",
+  "lines": 38,
+  "differ": 0,
+  "request": 0,
+  "other": 0,
+  "oldSummary": "■ BALL OFF: 140 runs · 49 with a normal-speed-visible failure · normal 61 · slow-motion 69 · diagnostic 0",
+  "newSummary": "■ BALL OFF: 140 runs · 49 with a normal-speed-visible failure · normal 61 · slow-motion 69 · diagnostic 0",
+  "others": []
+ },
+ {
+  "suite": "extreme_ball_off",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 38,
+  "differ": 0,
+  "request": 0,
+  "other": 0,
+  "oldSummary": "■ BALL OFF: 140 runs · 49 with a normal-speed-visible failure · normal 61 · slow-motion 69 · diagnostic 0",
+  "newSummary": "■ BALL OFF: 140 runs · 49 with a normal-speed-visible failure · normal 61 · slow-motion 69 · diagnostic 0",
+  "others": []
+ },
+ {
+  "suite": "body_torture_18",
+  "lane": "A · vocab2",
+  "lines": 2,
+  "differ": 1,
+  "request": 0,
+  "other": 1,
+  "oldSummary": "■ all rules · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+  "newSummary": "■ all rules · 18 × 60 s posed: normal-visible 234 · slow-motion 298 · diag 2 · CROSS·normal 164 · CROSS·slow 105 · FLOAT·slow 98 · KNEE·slow 63 · FLOAT·normal 39 · JUMP·slow 32 · JUMP·normal 27 · KNEE·normal 3 · SLIDE·diag 2 · SWAP·normal 1",
+  "others": [
+   {
+    "i": 0,
+    "old": "■ all rules · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+    "now": "■ all rules · 18 × 60 s posed: normal-visible 234 · slow-motion 298 · diag 2 · CROSS·normal 164 · CROSS·slow 105 · FLOAT·slow 98 · KNEE·slow 63 · FLOAT·normal 39 · JUMP·slow 32 · JUMP·normal 27 · KNEE·normal 3 · SLIDE·diag 2 · SWAP·normal 1",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "body_torture_18",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 2,
+  "differ": 1,
+  "request": 0,
+  "other": 1,
+  "oldSummary": "■ all rules · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+  "newSummary": "■ analogfeint · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+  "others": [
+   {
+    "i": 0,
+    "old": "■ all rules · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+    "now": "■ analogfeint · 18 × 60 s posed: normal-visible 254 · slow-motion 328 · diag 21 · CROSS·normal 180 · CROSS·slow 112 · FLOAT·slow 85 · KNEE·slow 84 · JUMP·slow 47 · FLOAT·normal 42 · JUMP·normal 25 · SLIDE·diag 21 · KNEE·normal 5 · SWAP·normal 2",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "torture_page_40",
+  "lane": "A · vocab2",
+  "lines": 15,
+  "differ": 13,
+  "request": 0,
+  "other": 13,
+  "oldSummary": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 10 (0.26/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.76 m · CPU — ms",
+  "newSummary": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 8 (0.20/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.70 m · CPU — ms",
+  "others": [
+   {
+    "i": 0,
+    "old": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 10 (0.26/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.76 m · CPU — ms",
+    "now": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 8 (0.20/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.70 m · CPU — ms",
+    "cls": "OTHER"
+   },
+   {
+    "i": 1,
+    "old": "   contacts by kind {\"carry\":3936,\"CIR\":354,\"DRAGBACK\":325,\"CRUYFF\":320,\"LAT\":208,\"COR\":196,\"OUTHOOK\":187,\"BRT\":168,\"BPV\":139,\"ABG\":118,\"CHOP\":114,\"MATTHEWS_C\":63,\"OUTCUT\":59,\"KNK\":47,\"HOOK\":45,\"SPRINT_CARRY push\":26,\"VTURN\":15,\"URG\":2} · recovery actions {\"SECURE\":162}",
+    "now": "   contacts by kind {\"carry\":3951,\"CIR\":331,\"DRAGBACK\":300,\"CRUYFF\":290,\"LAT\":220,\"OUTHOOK\":206,\"COR\":193,\"BPV\":153,\"BRT\":152,\"CHOP\":123,\"ABG\":102,\"MATTHEWS_C\":76,\"HOOK\":71,\"OUTCUT\":54,\"KNK\":44,\"VTURN\":27,\"SPRINT_CARRY push\":18,\"URG\":1} · recovery actions {\"SECURE\":158,\"SECURE · RECOVERY\":1}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 2,
+    "old": "   contact gaps p10 0.21 · p50 0.25 · p90 0.66 · p99 1.38 · max 4.00 s · busy alternations (the other foot < 0.25 s after a touch) 2986 of 6282",
+    "now": "   contact gaps p10 0.21 · p50 0.25 · p90 0.65 · p99 1.39 · max 4.00 s · busy alternations (the other foot < 0.25 s after a touch) 2955 of 6272",
+    "cls": "OTHER"
+   },
+   {
+    "i": 3,
+    "old": "   losses by cause {\"no contact made\":10} · by input segment {\"wander\":4,\"oscillate\":3,\"rotate\":1,\"hold\":2}",
+    "now": "   losses by cause {\"no contact made\":8} · by input segment {\"wander\":3,\"hold\":3,\"rotate\":1,\"snap\":1}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 5,
+    "old": "   seed 11 {\"t\":30.675,\"sep\":0.86,\"seg\":\"wander\",\"mode\":\"RUN\",\"prev\":\"wander\",\"action\":\"GATHER\",\"speed\":1.1,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.12,\"sepUntil\":0.86}",
+    "now": "   seed 9 {\"t\":51.138,\"sep\":0.8,\"seg\":\"wander\",\"mode\":\"JOG\",\"prev\":\"wander\",\"action\":\"CARRY\",\"speed\":0.8,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.25,\"sepUntil\":0.8}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 6,
+    "old": "   seed 12 {\"t\":54.708,\"sep\":0.17,\"seg\":\"wander\",\"mode\":\"RUN\",\"prev\":\"snap\",\"action\":\"CARRY\",\"speed\":2.7,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.07,\"sepUntil\":0.19}",
+    "now": "   seed 9 {\"t\":59.367,\"sep\":1.04,\"seg\":\"hold\",\"mode\":\"RUN\",\"prev\":\"wander\",\"action\":\"CARRY\",\"speed\":0.7,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.15,\"sepUntil\":1.04}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 7,
+    "old": "   seed 20 {\"t\":37.654,\"sep\":0.82,\"seg\":\"oscillate\",\"mode\":\"RUN\",\"prev\":\"oscillate\",\"action\":\"OUTSIDE HOOK\",\"speed\":5.3,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.05,\"sepUntil\":0.82}",
+    "now": "   seed 22 {\"t\":22.279,\"sep\":0.6,\"seg\":\"hold\",\"mode\":\"RUN\",\"prev\":\"rotate\",\"action\":\"CARRY\",\"speed\":4,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.07,\"sepUntil\":0.6}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 8,
+    "old": "   seed 20 {\"t\":58.517,\"sep\":1.45,\"seg\":\"rotate\",\"mode\":\"WALK\",\"prev\":\"rotate\",\"action\":\"CARRY\",\"speed\":0.2,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.68,\"sepUntil\":1.45}",
+    "now": "   seed 23 {\"t\":20.171,\"sep\":1.08,\"seg\":\"rotate\",\"mode\":\"RUN\",\"prev\":\"rotate\",\"action\":\"CARRY\",\"speed\":5.3,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.36,\"sepUntil\":1.07}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 9,
+    "old": "   seed 23 {\"t\":16.279,\"sep\":0.58,\"seg\":\"hold\",\"mode\":\"RUN\",\"prev\":\"hold\",\"action\":\"CARRY\",\"speed\":5.3,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.05,\"sepUntil\":0.57}",
+    "now": "   seed 30 {\"t\":19.6,\"sep\":1.01,\"seg\":\"wander\",\"mode\":\"RUN\",\"prev\":\"wander\",\"action\":\"CARRY\",\"speed\":0.4,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.43,\"sepUntil\":1.03}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 10,
+    "old": "   seed 30 {\"t\":19.6,\"sep\":1.01,\"seg\":\"wander\",\"mode\":\"RUN\",\"prev\":\"wander\",\"action\":\"CARRY\",\"speed\":0.4,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.43,\"sepUntil\":1.03}",
+    "now": "   seed 31 {\"t\":46.754,\"sep\":0.8,\"seg\":\"snap\",\"mode\":\"WALK\",\"prev\":\"wander\",\"action\":\"CARRY\",\"speed\":0.4,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.13,\"sepUntil\":0.8}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 11,
+    "old": "   seed 32 {\"t\":37.192,\"sep\":0.52,\"seg\":\"oscillate\",\"mode\":\"SPRINT\",\"prev\":\"abuse\",\"action\":\"COMPACT OUTSIDE REDIRECT\",\"speed\":7.2,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.06,\"sepUntil\":0.51}",
+    "now": "   seed 38 {\"t\":11.333,\"sep\":0.8,\"seg\":\"hold\",\"mode\":\"SPRINT\",\"prev\":\"rotate\",\"action\":\"CARRY\",\"speed\":1,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.15,\"sepUntil\":0.8}",
+    "cls": "OTHER"
+   },
+   {
+    "i": 12,
+    "old": "   seed 36 {\"t\":25.233,\"sep\":0.34,\"seg\":\"oscillate\",\"mode\":\"RUN\",\"prev\":\"oscillate\",\"action\":\"CARRY\",\"speed\":3,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.03,\"sepUntil\":0.34}",
+    "now": "",
+    "cls": "OTHER"
+   },
+   {
+    "i": 13,
+    "old": "   seed 38 {\"t\":11.333,\"sep\":0.8,\"seg\":\"hold\",\"mode\":\"SPRINT\",\"prev\":\"rotate\",\"action\":\"CARRY\",\"speed\":1,\"why\":\"no contact made\",\"poss\":\"CONTROLLED\",\"nextTouch\":0.15,\"sepUntil\":0.8}",
+    "now": "",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "torture_page_40",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 15,
+  "differ": 0,
+  "request": 0,
+  "other": 0,
+  "oldSummary": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 10 (0.26/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.76 m · CPU — ms",
+  "newSummary": "■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 10 (0.26/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.76 m · CPU — ms",
+  "others": []
+ },
+ {
+  "suite": "intent_torture",
+  "lane": "A · vocab2",
+  "lines": 39,
+  "differ": 31,
+  "request": 7,
+  "other": 24,
+  "oldSummary": "■ 12 × 60 s · 361 random manual requests: PLAYED 73 · REJECTED 218 · CANCELLED 67 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.16 /s · CPU — ms · worst tick — ms",
+  "newSummary": "■ 12 × 60 s · 361 random manual requests: PLAYED 36 · REJECTED 260 · CANCELLED 63 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.27 /s · CPU — ms · worst tick — ms",
+  "others": [
+   {
+    "i": 0,
+    "old": "■ 12 × 60 s · 361 random manual requests: PLAYED 73 · REJECTED 218 · CANCELLED 67 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.16 /s · CPU — ms · worst tick — ms",
+    "now": "■ 12 × 60 s · 361 random manual requests: PLAYED 36 · REJECTED 260 · CANCELLED 63 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.27 /s · CPU — ms · worst tick — ms",
+    "cls": "OTHER"
+   },
+   {
+    "i": 5,
+    "old": "   BRAKING_PIVOT        played 1 · rejected 6 · cancelled 1",
+    "now": "   BRAKING_PIVOT        played 1 · rejected 7 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 6,
+    "old": "   BRAKING_TOUCH        played 1 · rejected 10 · cancelled 0",
+    "now": "   BRAKING_TOUCH        played 2 · rejected 9 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 8,
+    "old": "   CRUYFF               played 2 · rejected 8 · cancelled 4",
+    "now": "   CRUYFF               played 1 · rejected 8 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 9,
+    "old": "   DOUBLE_SCISSORS      played 0 · rejected 14 · cancelled 2",
+    "now": "   DOUBLE_SCISSORS      played 0 · rejected 13 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 10,
+    "old": "   DRAG_BACK            played 0 · rejected 3 · cancelled 2",
+    "now": "   DRAG_BACK            played 1 · rejected 3 · cancelled 1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 11,
+    "old": "   ELASTICO             played 0 · rejected 4 · cancelled 1",
+    "now": "   ELASTICO             played 0 · rejected 2 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 14,
+    "old": "   GATHER               played 1 · rejected 8 · cancelled 1",
+    "now": "   GATHER               played 3 · rejected 7 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 15,
+    "old": "   HEEL_CHOP            played 0 · rejected 5 · cancelled 2",
+    "now": "   HEEL_CHOP            played 1 · rejected 6 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 18,
+    "old": "   INSIDE_HOOK          played 1 · rejected 9 · cancelled 2",
+    "now": "   INSIDE_HOOK          played 0 · rejected 9 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 20,
+    "old": "   MATTHEWS             played 1 · rejected 8 · cancelled 0",
+    "now": "   MATTHEWS             played 1 · rejected 7 · cancelled 1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 21,
+    "old": "   OUTSIDE_CUT          played 2 · rejected 4 · cancelled 6",
+    "now": "   OUTSIDE_CUT          played 1 · rejected 6 · cancelled 5",
+    "cls": "OTHER"
+   },
+   {
+    "i": 22,
+    "old": "   OUTSIDE_HOOK         played 0 · rejected 9 · cancelled 4",
+    "now": "   OUTSIDE_HOOK         played 1 · rejected 7 · cancelled 5",
+    "cls": "OTHER"
+   },
+   {
+    "i": 23,
+    "old": "   OUTSIDE_REDIRECT     played 5 · rejected 5 · cancelled 2",
+    "now": "   OUTSIDE_REDIRECT     played 1 · rejected 10 · cancelled 1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 24,
+    "old": "   REVERSE_ELASTICO     played 1 · rejected 5 · cancelled 4",
+    "now": "   REVERSE_ELASTICO     played 0 · rejected 6 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 25,
+    "old": "   RONALDO_CHOP         played 2 · rejected 6 · cancelled 1",
+    "now": "   RONALDO_CHOP         played 0 · rejected 6 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 26,
+    "old": "   ROULETTE             played 1 · rejected 1 · cancelled 5",
+    "now": "   ROULETTE             played 1 · rejected 3 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 27,
+    "old": "   SCISSORS             played 2 · rejected 5 · cancelled 2",
+    "now": "   SCISSORS             played 2 · rejected 4 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 28,
+    "old": "   SCISSORS_GO          played 0 · rejected 4 · cancelled 3",
+    "now": "   SCISSORS_GO          played 0 · rejected 3 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 30,
+    "old": "   SHIELD_OUTHOOK       played 0 · rejected 7 · cancelled 5",
+    "now": "   SHIELD_OUTHOOK       played 0 · rejected 6 · cancelled 6",
+    "cls": "OTHER"
+   },
+   {
+    "i": 31,
+    "old": "   SHIELD_ROLL          played 0 · rejected 1 · cancelled 3",
+    "now": "   SHIELD_ROLL          played 0 · rejected 2 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 33,
+    "old": "   SOLE_ROLL            played 1 · rejected 11 · cancelled 1",
+    "now": "   SOLE_ROLL            played 1 · rejected 12 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 34,
+    "old": "   STEPOVER             played 1 · rejected 7 · cancelled 0",
+    "now": "   STEPOVER             played 1 · rejected 5 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 35,
+    "old": "   STOP_AND_GO          played 2 · rejected 6 · cancelled 5",
+    "now": "   STOP_AND_GO          played 3 · rejected 6 · cancelled 4",
+    "cls": "OTHER"
+   }
+  ]
+ },
+ {
+  "suite": "intent_torture",
+  "lane": "B · vocab2 + ABL=analogfeint",
+  "lines": 39,
+  "differ": 28,
+  "request": 7,
+  "other": 21,
+  "oldSummary": "■ 12 × 60 s · 361 random manual requests: PLAYED 73 · REJECTED 218 · CANCELLED 67 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.16 /s · CPU — ms · worst tick — ms",
+  "newSummary": "■ 12 × 60 s · 361 random manual requests: PLAYED 34 · REJECTED 259 · CANCELLED 66 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.40 /s · CPU — ms · worst tick — ms",
+  "others": [
+   {
+    "i": 0,
+    "old": "■ 12 × 60 s · 361 random manual requests: PLAYED 73 · REJECTED 218 · CANCELLED 67 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.16 /s · CPU — ms · worst tick — ms",
+    "now": "■ 12 × 60 s · 361 random manual requests: PLAYED 34 · REJECTED 259 · CANCELLED 66 · CONTROLLED exits 0 {} · missed contacts 0 · ball > 3 m 0.0 s · action switches 4.40 /s · CPU — ms · worst tick — ms",
+    "cls": "OTHER"
+   },
+   {
+    "i": 6,
+    "old": "   BRAKING_TOUCH        played 1 · rejected 10 · cancelled 0",
+    "now": "   BRAKING_TOUCH        played 2 · rejected 9 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 8,
+    "old": "   CRUYFF               played 2 · rejected 8 · cancelled 4",
+    "now": "   CRUYFF               played 1 · rejected 10 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 9,
+    "old": "   DOUBLE_SCISSORS      played 0 · rejected 14 · cancelled 2",
+    "now": "   DOUBLE_SCISSORS      played 0 · rejected 12 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 11,
+    "old": "   ELASTICO             played 0 · rejected 4 · cancelled 1",
+    "now": "   ELASTICO             played 0 · rejected 3 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 14,
+    "old": "   GATHER               played 1 · rejected 8 · cancelled 1",
+    "now": "   GATHER               played 3 · rejected 6 · cancelled 1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 15,
+    "old": "   HEEL_CHOP            played 0 · rejected 5 · cancelled 2",
+    "now": "   HEEL_CHOP            played 1 · rejected 6 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 18,
+    "old": "   INSIDE_HOOK          played 1 · rejected 9 · cancelled 2",
+    "now": "   INSIDE_HOOK          played 0 · rejected 9 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 20,
+    "old": "   MATTHEWS             played 1 · rejected 8 · cancelled 0",
+    "now": "   MATTHEWS             played 1 · rejected 6 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 21,
+    "old": "   OUTSIDE_CUT          played 2 · rejected 4 · cancelled 6",
+    "now": "   OUTSIDE_CUT          played 1 · rejected 4 · cancelled 7",
+    "cls": "OTHER"
+   },
+   {
+    "i": 22,
+    "old": "   OUTSIDE_HOOK         played 0 · rejected 9 · cancelled 4",
+    "now": "   OUTSIDE_HOOK         played 1 · rejected 11 · cancelled 1",
+    "cls": "OTHER"
+   },
+   {
+    "i": 23,
+    "old": "   OUTSIDE_REDIRECT     played 5 · rejected 5 · cancelled 2",
+    "now": "   OUTSIDE_REDIRECT     played 2 · rejected 8 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 24,
+    "old": "   REVERSE_ELASTICO     played 1 · rejected 5 · cancelled 4",
+    "now": "   REVERSE_ELASTICO     played 1 · rejected 9 · cancelled 0",
+    "cls": "OTHER"
+   },
+   {
+    "i": 25,
+    "old": "   RONALDO_CHOP         played 2 · rejected 6 · cancelled 1",
+    "now": "   RONALDO_CHOP         played 0 · rejected 6 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 26,
+    "old": "   ROULETTE             played 1 · rejected 1 · cancelled 5",
+    "now": "   ROULETTE             played 1 · rejected 3 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 28,
+    "old": "   SCISSORS_GO          played 0 · rejected 4 · cancelled 3",
+    "now": "   SCISSORS_GO          played 0 · rejected 3 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 29,
+    "old": "   SHIELD_HOOK          played 0 · rejected 7 · cancelled 3",
+    "now": "   SHIELD_HOOK          played 0 · rejected 6 · cancelled 4",
+    "cls": "OTHER"
+   },
+   {
+    "i": 30,
+    "old": "   SHIELD_OUTHOOK       played 0 · rejected 7 · cancelled 5",
+    "now": "   SHIELD_OUTHOOK       played 0 · rejected 6 · cancelled 6",
+    "cls": "OTHER"
+   },
+   {
+    "i": 33,
+    "old": "   SOLE_ROLL            played 1 · rejected 11 · cancelled 1",
+    "now": "   SOLE_ROLL            played 0 · rejected 11 · cancelled 2",
+    "cls": "OTHER"
+   },
+   {
+    "i": 34,
+    "old": "   STEPOVER             played 1 · rejected 7 · cancelled 0",
+    "now": "   STEPOVER             played 0 · rejected 5 · cancelled 3",
+    "cls": "OTHER"
+   },
+   {
+    "i": 37,
+    "old": "   V_TURN               played 0 · rejected 12 · cancelled 2",
+    "now": "   V_TURN               played 0 · rejected 11 · cancelled 3",
+    "cls": "OTHER"
+   }
+  ]
+ }
+]

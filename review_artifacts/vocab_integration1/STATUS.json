@@ -1,0 +1,31 @@
+{
+ "milestone": "DRIBBLING VOCABULARY INTEGRATION — Body Feint (video-guided + exit foot) and La Croqueta (leg-wave V4)",
+ "date": "2026-10-24",
+ "instruction": "sources/2026-10-23_user_instruction_integrate_body_feint_croqueta.md (owner, 23 Oct ≈ 23:31 EEST)",
+ "state": "integrated as AUTHORITATIVE vocabulary entries; PROVISIONALLY APPROVED MOTION FOUNDATIONS; NOT frozen; NOT in production; local commits only; stopped — the final left-stick recognizer not started",
+ "build": "sandbox/visual/vocab2/ (copy of croqlw/, b489e4fd)",
+ "pages": { "lab": "http://127.0.0.1:8361/sandbox/visual/vocab2_lab.html", "sandbox": "http://127.0.0.1:8361/sandbox/visual/vocab2_sandbox.html" },
+ "pre_integration_tag": "checkpoint/touchline-feint-croqueta-approved-2026-10-23 → 9140be54 (code ≡ b489e4fd); milestone/APPROVED_MOTIONS_MANIFEST.json",
+ "body_feint": {
+  "request": "BODY_FEINT (alias BODY_FEINT_V2)", "templates": ["BFEINT_L", "BFEINT_J", "BFEINT_R"], "motion_source": "feint2vg 7853a88f → feint2ef f8a0e374 (unchanged)",
+  "reproduction": "six approved cases + mirror vs feint2ef: 0.000 mm every joint + ball, every tick; contacts identical; browser A | B 0 mm",
+  "validated": "walk 45–55° (≤ 2.65 m/s) · jog 35–60° (2.65–4.3) · run 35–40° (≥ 4.3); settled carry; exit to the carrying foot's side; ball ≥ 0.42 m ahead on that side; set touch; previous touch the carrying foot's",
+  "sweep": { "right_footed": "158 pass / 0 played-and-failed / 402 declined of 560", "left_footed_twin": "158 / 0 / 402 of 560 (identical)", "inside_bands_steady": "walk 24/24 · jog 48/48 · run 16/16 every stride phase clean" },
+  "request_to_exit_touch_s": { "walk": [0.74, 0.97, 1.27], "jog": [0.63, 0.82, 1.12], "run": [0.55, 0.74, 0.97] },
+  "auto": "none"
+ },
+ "croqueta": {
+  "request": "CROQUETA", "templates": ["CROQ_LW"], "motion_source": "croqlw b489e4fd (unchanged)",
+  "reproduction": "REF R → L, REF L → R + mirror vs croqlw: 0.000 mm; contacts identical; browser A | B 0 mm",
+  "validated": "settled jog 2.6–3.6 m/s · 40–45° · ball on the carrying foot, rolling 0.39–0.47 m ahead / 0.20–0.30 m out, first touch ≤ 0.62 s; no set touch; previous touch the carrying foot's",
+  "sweep": "inside 40–45°, both sides: 102/102 stride phases clean; 0 played-and-failed; outside declined; in transition from +0.6 s",
+  "decline_policy": "REJECTED — 'CROQUETA V4 NOT CURRENTLY FEASIBLE' + reason; no ADV-4 fallback; the carry / B4's ordinary answer continues",
+  "request_to_first_touch_s": [0.37, 0.72, 1.04],
+  "auto": "none"
+ },
+ "integration_fixes": ["a pending integrated request holds its line (c_sim reaim)", "a pending integrated request is retried every 0.05 s", "entry gates on new instances only (pinned re-plans never gated)", "the old analog feint off (ABL=analogfeint restores)"],
+ "vocabulary": { "AUTHORITATIVE": ["BODY_FEINT", "CROQUETA"], "SUPERSEDED_not_eligible": ["BODY_FEINT_OVERLAY", "FEINT_OUTSIDE_CUT", "FEINT_INSIDE_CUT"], "EXPERIMENTAL_not_eligible": ["BODY_FEINT_V2_SHALLOW", "BODY_FEINT_V2_STRONG"], "HISTORICAL_templates": ["CROQ_W", "CROQ_J", "CROQ_R", "CROQ_HS", "CROQ_XS", "ADV-4 croqueta"], "B4_LAT": "kept, automatic, not the Croqueta" },
+ "chains": "7 curated × straight + mirrored = 14/14: every request PLAYED, 0 normal-visible, possession kept, deterministic",
+ "regression": "see INTEGRATION_REPORT.md §6",
+ "owner_decisions": ["the validated envelopes as scope, or the next entries to validate", "the decline policy (no ADV-4 fallback)", "the old analog feint stays off"]
+}

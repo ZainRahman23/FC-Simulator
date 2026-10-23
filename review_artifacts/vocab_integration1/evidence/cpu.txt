@@ -1,0 +1,8 @@
+ABL=— · 5 interleaved rounds × 4 programs × 60 s · no Body Feint / Croqueta request
+vocab2 (the integrated library)                best 133.0 · median 144.5 ms CPU / simulated s · rounds 144.5 133.0 133.6 165.6 156.0 · re-plans 40.8/s, mean 3.07 ms, p99 10.1 ms · worst tick 84.9 ms
+croqlw (LEG-WAVE V4 review build, b489e4fd)    best 121.3 · median 130.3 ms CPU / simulated s · rounds 152.4 121.3 130.3 126.8 130.9 · re-plans 40.8/s, mean 2.79 ms, p99 8.3 ms · worst tick 154.8 ms
+feint2ef (BODY FEINT review build, f8a0e374)   best 117.0 · median 120.8 ms CPU / simulated s · rounds 157.3 117.0 134.2 120.8 120.2 · re-plans 40.8/s, mean 2.69 ms, p99 7.5 ms · worst tick 43.2 ms
+ABL=analogfeint · 5 interleaved rounds × 4 programs × 60 s · no Body Feint / Croqueta request
+vocab2 (the integrated library)                best 115.3 · median 117.1 ms CPU / simulated s · rounds 139.6 121.4 117.1 115.3 116.2 · re-plans 40.8/s, mean 2.67 ms, p99 7.4 ms · worst tick 34.3 ms
+croqlw (LEG-WAVE V4 review build, b489e4fd)    best 116.6 · median 122.5 ms CPU / simulated s · rounds 148.6 127.2 122.5 116.6 118.6 · re-plans 40.8/s, mean 2.67 ms, p99 7.6 ms · worst tick 29.1 ms
+feint2ef (BODY FEINT review build, f8a0e374)   best 115.3 · median 118.4 ms CPU / simulated s · rounds 155.1 128.1 115.5 115.3 118.4 · re-plans 40.8/s, mean 2.66 ms, p99 7.4 ms · worst tick 47.5 ms
