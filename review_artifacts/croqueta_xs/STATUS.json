@@ -1,0 +1,26 @@
+{
+ "milestone": "LA CROQUETA — X-SWEEP V3: the reference case as one continuous elastic X-shaped sweep — the right leg and side open and bow, the whole athlete sweeps through, the left leg and side open and bow (23 Oct 2026)",
+ "state": "ONE reference case, stopped for the owner's 1× review — NOT generalized, NOT frozen, NOT integrated; HOP/SWEEP V2 (croqhs/, 753d0cc6), VIDEO-GUIDED V1 (croqvg/, 4a549b8f) and ADV-4 (feint2ef/, f8a0e374) unchanged and running beside it in the Lab",
+ "classification": "PROVISIONAL · MANUAL / REVIEW",
+ "local_only": "the characters are real players' models: never publish; the reference recording is third-party footage: never committed",
+ "owner_instruction": "review_artifacts/croqueta_xs/sources/2026-10-23_user_instruction_croqueta_x_sweep_v3.md (verbatim)",
+ "pages": {
+  "review": "http://127.0.0.1:8361/sandbox/visual/croqxs_lab.html — LA CROQUETA — X-SWEEP V3 REVIEW first: the one card (the right foot's ball to the left, a jog); B · X-SWEEP V3, A · HOP/SWEEP V2, C · VIDEO-GUIDED V1, A | B | C side by side, ADV-4 alone; REFERENCE-LIKE REAR LOW (default) / FRONT HIGH / REAR CLOSE / OVERHEAD CLOSE / SIDE CLOSE + GAMEPLAY, FRONT, OVERHEAD · FIXED, ALL THREE; ⇄ B → A → C; BALL SHOWN / DIM / HIDDEN; LANE GUIDE; 11 landmark buttons (paused frames to step from); THE X-SHAPE table per lane; 1× / 0.5× / 0.25×; frame step; loop",
+  "sandbox": "http://127.0.0.1:8361/sandbox/visual/croqxs_sandbox.html — jog at half stick, request with the stick LEFT"
+ },
+ "code": "sandbox/visual/croqxs/ (a copy of croqhs/: the CROQ_XS template, its meta entry, the per-template lateral band, two new body channels bend / proll (0 unless keyed), x_geom.js, the case card, the Lab)",
+ "measured": {
+  "right_leg_max_out": "−0.175 s: foot out 0.53 m, forward 0.37 m · thigh abduction 26° (V2 18°) · knee out 0.31 · left foot −0.10 · pelvis roll +6° (right hip up) · torso bend +22°",
+  "right_leg_at_touch_1": "foot out 0.40, forward 0.51 · left foot −0.60 (trailing)",
+  "left_leg_at_receive": "+0.183 s: foot out 0.36 (V2 0.30), forward 0.12 (V2 0.18) · thigh abduction 24° · right foot −0.20 (trailing; V2 −0.09) · pelvis roll −5° (left hip up; V2 +9°: the wrong side) · yaw 41° toward the exit · torso bend −26°",
+  "bows": "29° toward the right @−0.121 · 26° toward the left @+0.183 (V2 3° / 10°, V1 0° / 10°) · the bend crosses the centre at +0.087 (mid-sweep +0.092)",
+  "ball_path": "touch 1 → mid-sweep → receive: across 0.45 + 0.42 = 0.87 m · forward −0.08 + −0.07 = −0.15 m: −10° (across and back; V2 +5°, V1 +21°) — the angle authored within what the reference allows",
+  "rhythm": "request → touch 1 0.57 s (V2 0.53) · touch to touch 0.18 s · pelvis max lateral velocity 2.57 m/s (V2 3.11) · pelvis ≥ 0.70 m · speed 3.2 → 2.1 → 3.2 m/s"
+ },
+ "integrity": {
+  "reference_case_and_mirror": "0 slides / jumps / crossings / knee pops / floats / swaps · no ankle snaps (≤ 836°/s) · 0 spikes · contacts INSIDE −1.4 · INSIDE +0.1 · LACES 0.0 cm · least leg clearance 1.3 cm · 0 missed / exits · the mirror identical",
+  "regression": "Body Feint identical (measure, integrity, rapid, sync, exit-angle sweep) · extremes identical · cases: 0 non-croqueta lines differ, the summary identical · battery identical (67/72) · body torture 254 / 328 identical · possession identical apart from CPU · intent torture identical outcomes, 12/12 seeds identical to V2 · determinism 18/18 + 18/18 · CPU +5 % interleaved against V2 under load (flagged) · browser 0 errors · sandbox V3 2/4 at a jog (V2 3/4)"
+ },
+ "limitations": ["one case only: walk / run still V1's templates", "the left side less extended than the right, especially forward (0.12 vs 0.51 m): the faster-ball fix broke the following carry", "the hip concavity, the forward/back offsets and the ball's backward angle are authored — the reference frames cannot show them", "the legs do not cross (the rear clip's shins overlap briefly)", "speed dips to 2.1 m/s; touch 1 0.04 s later than V2", "first contact overlap 1.4 cm", "more selective than V2: in the sandbox V1's walking template or ADV-4's transfer won 2 of 4 jog entries", "CPU +5 % (measured under load)"],
+ "owner_decisions": ["at 1×, ball hidden: right leg/body opens and bows → the athlete sweeps through → left leg/body opens and bows — not a cut?", "the left side: open it further forward at the cost of a faster ball (and a carry correction) or a slower body?", "the bows (29° / 26°) and the hip hike: stronger, weaker, right?", "then generalize — on your word"]
+}

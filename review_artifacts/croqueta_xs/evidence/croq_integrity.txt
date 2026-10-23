@@ -1,0 +1,64 @@
+
+■ X-SWEEP V3
+case               | onset first latMax(v) lift  recv  t→t   plant  head   ctl  | lead  footP | pel@R ball@R recv−ball | pel@.5 ball@.5
+REF · WALK L → R   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · WALK R → L   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · JOG L → R    | 0.06  0.57  0.63(2.2) 0.59  0.75  0.18  0.78  0.85  1.03 | 0.28  0.42 | 0.49  0.74  0.10 | 1.11  1.32
+REF · JOG R → L    | 0.06  0.57  0.63(2.2) 0.59  0.75  0.18  0.78  0.85  1.03 | 0.28  0.42 | 0.49  0.74  0.10 | 1.11  1.32
+REF · RUN L → R    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+REF · RUN R → L    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+case               | SLIDE JUMP CROSS KNEE FLOAT SWAP | foot step cm · toe °/s | pelvis / root jump cm | min clr | spikes | missed exits | contacts (surface · nearest face · gap cm)
+REF · WALK L → R   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.758) · 1689 (L @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 L INSIDE·INSIDE·-0.1  0.883 R INSIDE·INSIDE·-0.1  1.333 R LACES·LACES·0.0
+REF · WALK R → L   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.758) · 1689 (R @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 R INSIDE·INSIDE·-0.1  0.883 L INSIDE·INSIDE·-0.1  1.333 L LACES·LACES·0.0
+REF · JOG L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.088) · 836 (R @0.617) | 0.42 / 0.00 | 0.013 | 0 | 0 0 | 0.567 L INSIDE·INSIDE·-1.4  0.75 R INSIDE·INSIDE·0.1  1.029 R LACES·LACES·0.0
+REF · JOG R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.088) · 836 (L @0.617) | 0.42 / 0.00 | 0.013 | 0 | 0 0 | 0.567 R INSIDE·INSIDE·-1.4  0.75 L INSIDE·INSIDE·0.1  1.029 L LACES·LACES·0.0
+REF · RUN L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.167) · 1230 (L @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 L INSIDE·INSIDE·-2.0  1.133 R INSIDE·INSIDE·0.3  1.396 R INSIDE·INSIDE·-0.4
+REF · RUN R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.167) · 1230 (R @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 R INSIDE·INSIDE·-2.0  1.133 L INSIDE·INSIDE·0.3  1.396 L INSIDE·INSIDE·-0.4
+
+■ HOP/SWEEP V2
+case               | onset first latMax(v) lift  recv  t→t   plant  head   ctl  | lead  footP | pel@R ball@R recv−ball | pel@.5 ball@.5
+REF · WALK L → R   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · WALK R → L   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · JOG L → R    | 0.46  0.53  0.69(2.4) 0.59  0.71  0.18  0.74  0.78  0.99 | 0.20  0.36 | 0.41  0.63  0.12 | 1.09  1.22
+REF · JOG R → L    | 0.46  0.53  0.69(2.4) 0.59  0.71  0.18  0.74  0.78  0.99 | 0.20  0.36 | 0.41  0.63  0.12 | 1.09  1.22
+REF · RUN L → R    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+REF · RUN R → L    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+case               | SLIDE JUMP CROSS KNEE FLOAT SWAP | foot step cm · toe °/s | pelvis / root jump cm | min clr | spikes | missed exits | contacts (surface · nearest face · gap cm)
+REF · WALK L → R   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.758) · 1689 (L @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 L INSIDE·INSIDE·-0.1  0.883 R INSIDE·INSIDE·-0.1  1.333 R LACES·LACES·0.0
+REF · WALK R → L   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.758) · 1689 (R @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 R INSIDE·INSIDE·-0.1  0.883 L INSIDE·INSIDE·-0.1  1.333 L LACES·LACES·0.0
+REF · JOG L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.033) · 888 (R @0.892) | 0.42 / 0.00 | 0.000 | 0 | 0 0 | 0.529 L INSIDE·INSIDE·-1.3  0.708 R INSIDE·INSIDE·0.0  0.987 R LACES·LACES·0.0
+REF · JOG R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.033) · 888 (L @0.892) | 0.42 / 0.00 | 0.000 | 0 | 0 0 | 0.529 R INSIDE·INSIDE·-1.3  0.708 L INSIDE·INSIDE·0.0  0.987 L LACES·LACES·0.0
+REF · RUN L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.167) · 1230 (L @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 L INSIDE·INSIDE·-2.0  1.133 R INSIDE·INSIDE·0.3  1.396 R INSIDE·INSIDE·-0.4
+REF · RUN R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.167) · 1230 (R @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 R INSIDE·INSIDE·-2.0  1.133 L INSIDE·INSIDE·0.3  1.396 L INSIDE·INSIDE·-0.4
+
+■ VIDEO-GUIDED V1
+case               | onset first latMax(v) lift  recv  t→t   plant  head   ctl  | lead  footP | pel@R ball@R recv−ball | pel@.5 ball@.5
+REF · WALK L → R   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · WALK R → L   | 0.40  0.58  0.71(1.3) 0.76  0.88  0.30  0.93  0.88  1.33 | 0.26  0.42 | 0.51  0.55  -0.01 | 0.74  0.80
+REF · JOG L → R    | 0.60  0.78  1.57(2.1) 0.94  1.05  0.27  1.09  1.05  1.24 | 0.25  0.42 | 0.69  0.83  0.06 | 1.12  1.27
+REF · JOG R → L    | 0.60  0.78  1.57(2.1) 0.94  1.05  0.27  1.09  1.05  1.24 | 0.25  0.42 | 0.69  0.83  0.06 | 1.12  1.27
+REF · RUN L → R    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+REF · RUN R → L    | 0.74  0.90  1.63(3.3) 1.03  1.13  0.23  1.17  1.13  1.29 | 0.23  0.41 | 1.02  1.12  0.05 | 1.75  1.94
+case               | SLIDE JUMP CROSS KNEE FLOAT SWAP | foot step cm · toe °/s | pelvis / root jump cm | min clr | spikes | missed exits | contacts (surface · nearest face · gap cm)
+REF · WALK L → R   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.758) · 1689 (L @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 L INSIDE·INSIDE·-0.1  0.883 R INSIDE·INSIDE·-0.1  1.333 R LACES·LACES·0.0
+REF · WALK R → L   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.758) · 1689 (R @0.096) | 0.69 / 0.00 | 0.014 | 0 | 0 0 | 0.583 R INSIDE·INSIDE·-0.1  0.883 L INSIDE·INSIDE·-0.1  1.333 L LACES·LACES·0.0
+REF · JOG L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @0.504) · 1368 (L @0.513) | 0.50 / 0.00 | 0.087 | 0 | 0 0 | 0.783 L INSIDE·INSIDE·-1.2  1.05 R INSIDE·INSIDE·0.2  1.375 R INSIDE·INSIDE·-0.1
+REF · JOG R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @0.504) · 1368 (R @0.513) | 0.50 / 0.00 | 0.087 | 0 | 0 0 | 0.783 R INSIDE·INSIDE·-1.2  1.05 L INSIDE·INSIDE·0.2  1.375 L INSIDE·INSIDE·-0.1
+REF · RUN L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @1.167) · 1230 (L @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 L INSIDE·INSIDE·-2.0  1.133 R INSIDE·INSIDE·0.3  1.396 R INSIDE·INSIDE·-0.4
+REF · RUN R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @1.167) · 1230 (R @0.675) | 0.42 / 0.00 | 0.073 | 0 | 0 0 | 0.9 R INSIDE·INSIDE·-2.0  1.133 L INSIDE·INSIDE·0.3  1.396 L INSIDE·INSIDE·-0.4
+
+■ CURRENT ADV-4
+case               | onset first latMax(v) lift  recv  t→t   plant  head   ctl  | lead  footP | pel@R ball@R recv−ball | pel@.5 ball@.5
+REF · WALK L → R   | 0.34  0.40  0.52(1.1) 0.43  0.70  0.30  0.78  0.70  — | 0.14  0.29 | 0.36  0.56  0.07 | 0.57  0.75
+REF · WALK R → L   | 0.34  0.40  0.52(1.1) 0.43  0.70  0.30  0.78  0.70  — | 0.14  0.29 | 0.36  0.56  0.07 | 0.57  0.75
+REF · JOG L → R    | 0.37  0.44  0.53(2.2) 0.43  0.67  0.23  0.75  0.67  — | 0.17  0.31 | 0.51  0.71  0.08 | 1.09  1.26
+REF · JOG R → L    | 0.37  0.44  0.53(2.2) 0.43  0.67  0.23  0.75  0.67  — | 0.17  0.31 | 0.51  0.71  0.08 | 1.09  1.26
+REF · RUN L → R    | 0.42  0.49  0.55(3.4) 0.46  0.69  0.20  0.77  0.69  — | 0.23  0.35 | 0.75  0.95  0.10 | 1.77  1.96
+REF · RUN R → L    | 0.42  0.49  0.55(3.4) 0.46  0.69  0.20  0.77  0.69  — | 0.23  0.35 | 0.75  0.95  0.10 | 1.77  1.96
+case               | SLIDE JUMP CROSS KNEE FLOAT SWAP | foot step cm · toe °/s | pelvis / root jump cm | min clr | spikes | missed exits | contacts (surface · nearest face · gap cm)
+REF · WALK L → R   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @0.467) · 1056 (L @0.467) | 0.26 / 0.00 | 0.034 | 0 | 0 0 | 0.4 L INSIDE·INSIDE·0.0  0.704 R INSIDE·INSIDE·0.0  1.083 L LACES·LACES·0.0
+REF · WALK R → L   | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @0.467) · 1056 (R @0.467) | 0.26 / 0.00 | 0.034 | 0 | 0 0 | 0.4 R INSIDE·INSIDE·0.0  0.704 L INSIDE·INSIDE·0.0  1.083 R LACES·LACES·0.0
+REF · JOG L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @0.504) · 865 (L @0.308) | 0.29 / 0.00 | 0.094 | 4 shoulder roll 906°/s @0.44; shoulder roll 1038°/s @0.45; shoulder roll 1039°/s @0.45 | 0 0 | 0.438 L INSIDE·INSIDE·-5.5  0.671 R INSIDE·INSIDE·0.2  1.029 L LACES·LACES·0.3
+REF · JOG R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @0.504) · 865 (R @0.308) | 0.29 / 0.00 | 0.094 | 4 shoulder roll 906°/s @0.44; shoulder roll 1038°/s @0.45; shoulder roll 1039°/s @0.45 | 0 0 | 0.438 R INSIDE·SOLE·-6.0  0.671 L INSIDE·INSIDE·0.2  1.029 R LACES·LACES·0.3
+REF · RUN L → R    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (L @0.546) · 1840 (L @0.363) | 0.22 / 0.00 | 0.110 | 0 | 0 0 | 0.487 L INSIDE·SOLE·-5.3  0.692 R INSIDE·INSIDE·0.0  1.008 L LACES·LACES·0.6
+REF · RUN R → L    | 0/0   0/0  0/0   0/0  0/0   0/0  | 9.0 (R @0.546) · 1840 (R @0.363) | 0.22 / 0.00 | 0.110 | 0 | 0 0 | 0.487 R INSIDE·SOLE·-5.3  0.692 L INSIDE·INSIDE·0.0  1.008 R LACES·LACES·0.6

@@ -1,0 +1,2690 @@
+{
+ "X-SWEEP V3": [
+  {
+   "v": "REF · WALK L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "R",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.758",
+   "toeRate": 1689,
+   "tToe": "L @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · WALK R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "L",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.758",
+   "toeRate": 1689,
+   "tToe": "R @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · JOG L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.567,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the ball-side inside establishes",
+     "face": "INSIDE",
+     "gapCm": -1.4,
+     "missed": false
+    },
+    {
+     "t": 0.75,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the receiving inside, the leg op",
+     "face": "INSIDE",
+     "gapCm": 0.1,
+     "missed": false
+    },
+    {
+     "t": 1.029,
+     "F": "R",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.088",
+   "toeRate": 836,
+   "tToe": "R @0.617",
+   "pelJumpCm": 0.42,
+   "tPel": 1.129,
+   "rootJumpCm": 0,
+   "minClr": 0.013,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.079,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.083,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.088,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.092,
+     "was": false,
+     "now": true,
+     "act": "CARRY"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.058333333333351334,
+    "first": 0.567,
+    "latMax": 0.633,
+    "vLatMax": 2.2,
+    "lift": 0.592,
+    "receive": 0.75,
+    "exitPlant": 0.779,
+    "exitHeading": 0.85,
+    "control": 1.029,
+    "touchToTouch": 0.183
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.28,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.15,
+    "pelvisAtReceive": 0.49,
+    "ballAtReceive": 0.74,
+    "recvFootMinusBall": 0.1,
+    "recvFootFromPelvis": 0.35,
+    "pelvisAt05": 1.11,
+    "ballAt05": 1.32
+   }
+  },
+  {
+   "v": "REF · JOG R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.567,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the ball-side inside establishes",
+     "face": "INSIDE",
+     "gapCm": -1.4,
+     "missed": false
+    },
+    {
+     "t": 0.75,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the receiving inside, the leg op",
+     "face": "INSIDE",
+     "gapCm": 0.1,
+     "missed": false
+    },
+    {
+     "t": 1.029,
+     "F": "L",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.088",
+   "toeRate": 836,
+   "tToe": "L @0.617",
+   "pelJumpCm": 0.42,
+   "tPel": 1.129,
+   "rootJumpCm": 0,
+   "minClr": 0.013,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.079,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.083,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.088,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.092,
+     "was": false,
+     "now": true,
+     "act": "CARRY"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.058333333333351334,
+    "first": 0.567,
+    "latMax": 0.633,
+    "vLatMax": 2.2,
+    "lift": 0.592,
+    "receive": 0.75,
+    "exitPlant": 0.779,
+    "exitHeading": 0.85,
+    "control": 1.029,
+    "touchToTouch": 0.183
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.28,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.15,
+    "pelvisAtReceive": 0.49,
+    "ballAtReceive": 0.74,
+    "recvFootMinusBall": 0.1,
+    "recvFootFromPelvis": 0.35,
+    "pelvisAt05": 1.11,
+    "ballAt05": 1.32
+   }
+  },
+  {
+   "v": "REF · RUN L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.167",
+   "toeRate": 1230,
+   "tToe": "L @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  },
+  {
+   "v": "REF · RUN R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.167",
+   "toeRate": 1230,
+   "tToe": "R @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  }
+ ],
+ "HOP/SWEEP V2": [
+  {
+   "v": "REF · WALK L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "R",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.758",
+   "toeRate": 1689,
+   "tToe": "L @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · WALK R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "L",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.758",
+   "toeRate": 1689,
+   "tToe": "R @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · JOG L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.529,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the ball-side inside sweeps it a",
+     "face": "INSIDE",
+     "gapCm": -1.3,
+     "missed": false
+    },
+    {
+     "t": 0.708,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the receiving inside meets it be",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 0.987,
+     "F": "R",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.033",
+   "toeRate": 888,
+   "tToe": "R @0.892",
+   "pelJumpCm": 0.42,
+   "tPel": 0.592,
+   "rootJumpCm": 0,
+   "minClr": 0,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.033,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 8.6,
+     "t": 1.388,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 8.1,
+     "t": 1.038,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 8,
+     "t": 1.383,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4625000000000381,
+    "first": 0.529,
+    "latMax": 0.688,
+    "vLatMax": 2.44,
+    "lift": 0.592,
+    "receive": 0.708,
+    "exitPlant": 0.742,
+    "exitHeading": 0.783,
+    "control": 0.988,
+    "touchToTouch": 0.179
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.2,
+    "firstFootFromPelvis": 0.36,
+    "rootAtFirst": 0.06,
+    "pelvisAtReceive": 0.41,
+    "ballAtReceive": 0.63,
+    "recvFootMinusBall": 0.12,
+    "recvFootFromPelvis": 0.34,
+    "pelvisAt05": 1.09,
+    "ballAt05": 1.22
+   }
+  },
+  {
+   "v": "REF · JOG R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.529,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the ball-side inside sweeps it a",
+     "face": "INSIDE",
+     "gapCm": -1.3,
+     "missed": false
+    },
+    {
+     "t": 0.708,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the receiving inside meets it be",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 0.987,
+     "F": "L",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.033",
+   "toeRate": 888,
+   "tToe": "L @0.892",
+   "pelJumpCm": 0.42,
+   "tPel": 0.592,
+   "rootJumpCm": 0,
+   "minClr": 0,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.033,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 8.6,
+     "t": 1.388,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 8.1,
+     "t": 1.038,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 8,
+     "t": 1.383,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4625000000000381,
+    "first": 0.529,
+    "latMax": 0.688,
+    "vLatMax": 2.44,
+    "lift": 0.592,
+    "receive": 0.708,
+    "exitPlant": 0.742,
+    "exitHeading": 0.783,
+    "control": 0.988,
+    "touchToTouch": 0.179
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.2,
+    "firstFootFromPelvis": 0.36,
+    "rootAtFirst": 0.06,
+    "pelvisAtReceive": 0.41,
+    "ballAtReceive": 0.63,
+    "recvFootMinusBall": 0.12,
+    "recvFootFromPelvis": 0.34,
+    "pelvisAt05": 1.09,
+    "ballAt05": 1.22
+   }
+  },
+  {
+   "v": "REF · RUN L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.167",
+   "toeRate": 1230,
+   "tToe": "L @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  },
+  {
+   "v": "REF · RUN R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.167",
+   "toeRate": 1230,
+   "tToe": "R @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  }
+ ],
+ "VIDEO-GUIDED V1": [
+  {
+   "v": "REF · WALK L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "R",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.758",
+   "toeRate": 1689,
+   "tToe": "L @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · WALK R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.583,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 0.883,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    },
+    {
+     "t": 1.333,
+     "F": "L",
+     "surface": "LACES",
+     "role": "exit touch",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.758",
+   "toeRate": 1689,
+   "tToe": "R @0.096",
+   "pelJumpCm": 0.69,
+   "tPel": 1.479,
+   "rootJumpCm": 0,
+   "minClr": 0.014,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.063,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.067,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.071,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.075,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4041666666666961,
+    "first": 0.583,
+    "latMax": 0.708,
+    "vLatMax": 1.32,
+    "lift": 0.762,
+    "receive": 0.883,
+    "exitPlant": 0.933,
+    "exitHeading": 0.883,
+    "control": 1.333,
+    "touchToTouch": 0.3
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.26,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.17,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.55,
+    "recvFootMinusBall": -0.01,
+    "recvFootFromPelvis": 0.03,
+    "pelvisAt05": 0.74,
+    "ballAt05": 0.8
+   }
+  },
+  {
+   "v": "REF · JOG L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.783,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -1.2,
+     "missed": false
+    },
+    {
+     "t": 1.05,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.2,
+     "missed": false
+    },
+    {
+     "t": 1.375,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @0.504",
+   "toeRate": 1368,
+   "tToe": "L @0.513",
+   "pelJumpCm": 0.5,
+   "tPel": 1.483,
+   "rootJumpCm": 0,
+   "minClr": 0.087,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.504,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.508,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.688,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "R",
+     "cm": 8.7,
+     "t": 1.092,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.6041666666667118,
+    "first": 0.783,
+    "latMax": 1.575,
+    "vLatMax": 2.06,
+    "lift": 0.942,
+    "receive": 1.05,
+    "exitPlant": 1.092,
+    "exitHeading": 1.05,
+    "control": 1.242,
+    "touchToTouch": 0.267
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.25,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.24,
+    "pelvisAtReceive": 0.69,
+    "ballAtReceive": 0.83,
+    "recvFootMinusBall": 0.06,
+    "recvFootFromPelvis": 0.19,
+    "pelvisAt05": 1.12,
+    "ballAt05": 1.27
+   }
+  },
+  {
+   "v": "REF · JOG R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.783,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -1.2,
+     "missed": false
+    },
+    {
+     "t": 1.05,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.2,
+     "missed": false
+    },
+    {
+     "t": 1.375,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.1,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @0.504",
+   "toeRate": 1368,
+   "tToe": "R @0.513",
+   "pelJumpCm": 0.5,
+   "tPel": 1.483,
+   "rootJumpCm": 0,
+   "minClr": 0.087,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.504,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.508,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.688,
+     "was": false,
+     "now": false,
+     "act": "CARRY"
+    },
+    {
+     "X": "L",
+     "cm": 8.7,
+     "t": 1.092,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.6041666666667118,
+    "first": 0.783,
+    "latMax": 1.575,
+    "vLatMax": 2.06,
+    "lift": 0.942,
+    "receive": 1.05,
+    "exitPlant": 1.092,
+    "exitHeading": 1.05,
+    "control": 1.242,
+    "touchToTouch": 0.267
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.25,
+    "firstFootFromPelvis": 0.42,
+    "rootAtFirst": 0.24,
+    "pelvisAtReceive": 0.69,
+    "ballAtReceive": 0.83,
+    "recvFootMinusBall": 0.06,
+    "recvFootFromPelvis": 0.19,
+    "pelvisAt05": 1.12,
+    "ballAt05": 1.27
+   }
+  },
+  {
+   "v": "REF · RUN L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @1.167",
+   "toeRate": 1230,
+   "tToe": "L @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  },
+  {
+   "v": "REF · RUN R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.9,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the first inside sweeps it acros",
+     "face": "INSIDE",
+     "gapCm": -2,
+     "missed": false
+    },
+    {
+     "t": 1.133,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "LA CROQUETA · the other inside receives it int",
+     "face": "INSIDE",
+     "gapCm": 0.3,
+     "missed": false
+    },
+    {
+     "t": 1.396,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "carry correction",
+     "face": "INSIDE",
+     "gapCm": -0.4,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @1.167",
+   "toeRate": 1230,
+   "tToe": "R @0.675",
+   "pelJumpCm": 0.42,
+   "tPel": 1.125,
+   "rootJumpCm": 0,
+   "minClr": 0.073,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.658,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.663,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.667,
+     "was": false,
+     "now": false,
+     "act": "LA CROQUETA"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 1.167,
+     "was": false,
+     "now": true,
+     "act": "LA CROQUETA"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.7416666666667187,
+    "first": 0.9,
+    "latMax": 1.633,
+    "vLatMax": 3.32,
+    "lift": 1.029,
+    "receive": 1.133,
+    "exitPlant": 1.167,
+    "exitHeading": 1.133,
+    "control": 1.292,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.41,
+    "rootAtFirst": 0.33,
+    "pelvisAtReceive": 1.02,
+    "ballAtReceive": 1.12,
+    "recvFootMinusBall": 0.05,
+    "recvFootFromPelvis": 0.15,
+    "pelvisAt05": 1.75,
+    "ballAt05": 1.94
+   }
+  }
+ ],
+ "CURRENT ADV-4": [
+  {
+   "v": "REF · WALK L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.4,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 0.704,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "gather",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 1.083,
+     "F": "L",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @0.467",
+   "toeRate": 1056,
+   "tToe": "L @0.467",
+   "pelJumpCm": 0.26,
+   "tPel": 1.963,
+   "rootJumpCm": 0,
+   "minClr": 0.034,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.463,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.467,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.471,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.341666666666693,
+    "first": 0.4,
+    "latMax": 0.517,
+    "vLatMax": 1.11,
+    "lift": 0.429,
+    "receive": 0.704,
+    "exitPlant": 0.779,
+    "exitHeading": 0.704,
+    "control": null,
+    "touchToTouch": 0.304
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.14,
+    "firstFootFromPelvis": 0.29,
+    "rootAtFirst": 0.03,
+    "pelvisAtReceive": 0.36,
+    "ballAtReceive": 0.56,
+    "recvFootMinusBall": 0.07,
+    "recvFootFromPelvis": 0.27,
+    "pelvisAt05": 0.57,
+    "ballAt05": 0.75
+   }
+  },
+  {
+   "v": "REF · WALK R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.4,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 0.704,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "gather",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 1.083,
+     "F": "R",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @0.467",
+   "toeRate": 1056,
+   "tToe": "R @0.467",
+   "pelJumpCm": 0.26,
+   "tPel": 1.963,
+   "rootJumpCm": 0,
+   "minClr": 0.034,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.463,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.467,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.471,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.341666666666693,
+    "first": 0.4,
+    "latMax": 0.517,
+    "vLatMax": 1.11,
+    "lift": 0.429,
+    "receive": 0.704,
+    "exitPlant": 0.779,
+    "exitHeading": 0.704,
+    "control": null,
+    "touchToTouch": 0.304
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.14,
+    "firstFootFromPelvis": 0.29,
+    "rootAtFirst": 0.03,
+    "pelvisAtReceive": 0.36,
+    "ballAtReceive": 0.56,
+    "recvFootMinusBall": 0.07,
+    "recvFootFromPelvis": 0.27,
+    "pelvisAt05": 0.57,
+    "ballAt05": 0.75
+   }
+  },
+  {
+   "v": "REF · JOG L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.438,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "INSIDE",
+     "gapCm": -5.5,
+     "missed": false
+    },
+    {
+     "t": 0.671,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "gather",
+     "face": "INSIDE",
+     "gapCm": 0.2,
+     "missed": false
+    },
+    {
+     "t": 1.029,
+     "F": "L",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0.3,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @0.504",
+   "toeRate": 865,
+   "tToe": "L @0.308",
+   "pelJumpCm": 0.29,
+   "tPel": 0.45,
+   "rootJumpCm": 0,
+   "minClr": 0.094,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.496,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.5,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.504,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "L",
+     "cm": 7.7,
+     "t": 0.508,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    }
+   ],
+   "spikes": 4,
+   "spk": [
+    "shoulder roll 906°/s @0.44",
+    "shoulder roll 1038°/s @0.45",
+    "shoulder roll 1039°/s @0.45"
+   ],
+   "rhythm": {
+    "onset": 0.3708333333333669,
+    "first": 0.438,
+    "latMax": 0.529,
+    "vLatMax": 2.16,
+    "lift": 0.429,
+    "receive": 0.671,
+    "exitPlant": 0.746,
+    "exitHeading": 0.671,
+    "control": null,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.17,
+    "firstFootFromPelvis": 0.31,
+    "rootAtFirst": 0.04,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.71,
+    "recvFootMinusBall": 0.08,
+    "recvFootFromPelvis": 0.28,
+    "pelvisAt05": 1.09,
+    "ballAt05": 1.26
+   }
+  },
+  {
+   "v": "REF · JOG R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.438,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "SOLE",
+     "gapCm": -6,
+     "missed": false
+    },
+    {
+     "t": 0.671,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "gather",
+     "face": "INSIDE",
+     "gapCm": 0.2,
+     "missed": false
+    },
+    {
+     "t": 1.029,
+     "F": "R",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0.3,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @0.504",
+   "toeRate": 865,
+   "tToe": "R @0.308",
+   "pelJumpCm": 0.29,
+   "tPel": 0.45,
+   "rootJumpCm": 0,
+   "minClr": 0.094,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.496,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.5,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.504,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    },
+    {
+     "X": "R",
+     "cm": 7.7,
+     "t": 0.508,
+     "was": false,
+     "now": false,
+     "act": "GATHER"
+    }
+   ],
+   "spikes": 4,
+   "spk": [
+    "shoulder roll 906°/s @0.44",
+    "shoulder roll 1038°/s @0.45",
+    "shoulder roll 1039°/s @0.45"
+   ],
+   "rhythm": {
+    "onset": 0.3708333333333669,
+    "first": 0.438,
+    "latMax": 0.529,
+    "vLatMax": 2.16,
+    "lift": 0.429,
+    "receive": 0.671,
+    "exitPlant": 0.746,
+    "exitHeading": 0.671,
+    "control": null,
+    "touchToTouch": 0.233
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.17,
+    "firstFootFromPelvis": 0.31,
+    "rootAtFirst": 0.04,
+    "pelvisAtReceive": 0.51,
+    "ballAtReceive": 0.71,
+    "recvFootMinusBall": 0.08,
+    "recvFootFromPelvis": 0.28,
+    "pelvisAt05": 1.09,
+    "ballAt05": 1.26
+   }
+  },
+  {
+   "v": "REF · RUN L → R",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.487,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "SOLE",
+     "gapCm": -5.3,
+     "missed": false
+    },
+    {
+     "t": 0.692,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "croqueta · the other foot receives and carries",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 1.008,
+     "F": "L",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0.6,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "L @0.546",
+   "toeRate": 1840,
+   "tToe": "L @0.363",
+   "pelJumpCm": 0.22,
+   "tPel": 0.471,
+   "rootJumpCm": 0,
+   "minClr": 0.11,
+   "bigSteps": [
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.546,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.55,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.554,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "L",
+     "cm": 9,
+     "t": 0.558,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4166666666667025,
+    "first": 0.487,
+    "latMax": 0.554,
+    "vLatMax": 3.41,
+    "lift": 0.462,
+    "receive": 0.692,
+    "exitPlant": 0.767,
+    "exitHeading": 0.692,
+    "control": null,
+    "touchToTouch": 0.204
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.35,
+    "rootAtFirst": 0.1,
+    "pelvisAtReceive": 0.75,
+    "ballAtReceive": 0.95,
+    "recvFootMinusBall": 0.1,
+    "recvFootFromPelvis": 0.3,
+    "pelvisAt05": 1.77,
+    "ballAt05": 1.96
+   }
+  },
+  {
+   "v": "REF · RUN R → L",
+   "N": {
+    "normal": 0,
+    "slow": 0,
+    "diag": 0
+   },
+   "SLIDE": "0/0",
+   "JUMP": "0/0",
+   "CROSS": "0/0",
+   "KNEE": "0/0",
+   "FLOAT": "0/0",
+   "SWAP": "0/0",
+   "missed": 0,
+   "exits": 0,
+   "contacts": [
+    {
+     "t": 0.487,
+     "F": "R",
+     "surface": "INSIDE",
+     "role": "croqueta · the inside plays it across",
+     "face": "SOLE",
+     "gapCm": -5.3,
+     "missed": false
+    },
+    {
+     "t": 0.692,
+     "F": "L",
+     "surface": "INSIDE",
+     "role": "croqueta · the other foot receives and carries",
+     "face": "INSIDE",
+     "gapCm": 0,
+     "missed": false
+    },
+    {
+     "t": 1.008,
+     "F": "R",
+     "surface": "LACES",
+     "role": "carry",
+     "face": "LACES",
+     "gapCm": 0.6,
+     "missed": false
+    }
+   ],
+   "footStepCm": 9,
+   "tFoot": "R @0.546",
+   "toeRate": 1840,
+   "tToe": "R @0.363",
+   "pelJumpCm": 0.22,
+   "tPel": 0.471,
+   "rootJumpCm": 0,
+   "minClr": 0.11,
+   "bigSteps": [
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.546,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.55,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.554,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    },
+    {
+     "X": "R",
+     "cm": 9,
+     "t": 0.558,
+     "was": false,
+     "now": false,
+     "act": "LATERAL TRANSFER"
+    }
+   ],
+   "spikes": 0,
+   "spk": [],
+   "rhythm": {
+    "onset": 0.4166666666667025,
+    "first": 0.487,
+    "latMax": 0.554,
+    "vLatMax": 3.41,
+    "lift": 0.462,
+    "receive": 0.692,
+    "exitPlant": 0.767,
+    "exitHeading": 0.692,
+    "control": null,
+    "touchToTouch": 0.204
+   },
+   "transfer": {
+    "pelvisLeadOverBall": 0.23,
+    "firstFootFromPelvis": 0.35,
+    "rootAtFirst": 0.1,
+    "pelvisAtReceive": 0.75,
+    "ballAtReceive": 0.95,
+    "recvFootMinusBall": 0.1,
+    "recvFootFromPelvis": 0.3,
+    "pelvisAt05": 1.77,
+    "ballAt05": 1.96
+   }
+  }
+ ]
+}
