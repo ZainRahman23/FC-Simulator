@@ -1,0 +1,26 @@
+{
+ "milestone": "LA CROQUETA — LEG-WAVE V4: X-SWEEP V3 kept to the first touch (the owner's screenshot, L1 `\\ \\`), then one wave through both legs, the hips and the trunk — `| | → \\ \\ → / / → | |` — the left leg opening out instead of jumping forward, the left inside cushioning (23 Oct 2026)",
+ "state": "ONE reference case, stopped for the owner's review — NOT generalized, NOT frozen, NOT integrated; X-SWEEP V3 (croqxs/, f7645d10) unchanged and running beside it in the Lab",
+ "classification": "PROVISIONAL · MANUAL / REVIEW",
+ "local_only": "the characters are real players' models: never publish",
+ "owner_instruction": "review_artifacts/croqueta_lw/sources/2026-10-23_user_instruction_croqueta_leg_wave_v4.md (verbatim) + the owner's screenshot beside it",
+ "pages": {
+  "review": "http://127.0.0.1:8361/sandbox/visual/croqlw_lab.html — LA CROQUETA — LEG-WAVE V4 REVIEW first: B · LEG-WAVE V4, A · X-SWEEP V3, A | B; REAR LOW (default) / REAR CLOSE / OVERHEAD CLOSE / GAMEPLAY + the others; ⇄ A | B; BALL SHOWN / DIM / HIDDEN; L0 – L6 (paused frames); ◀ / ▶ one frame, ◀ / ▶ one landmark; L1 → L5 LOOP 0.25×; the leg-wave table and the live wave plot",
+  "sandbox": "http://127.0.0.1:8361/sandbox/visual/croqlw_sandbox.html — jog at half stick, request with the stick LEFT"
+ },
+ "code": "sandbox/visual/croqlw/ (a copy of croqxs/: the CROQ_LW template — V3's to the first touch — its meta entry, lw_geom.js, the case card, the Lab, tools/croq_legwave.mjs)",
+ "measured": {
+  "landmarks_s_from_touch_1": "L0 −0.400 · L1 +0.004 · L2 +0.046 · L3 +0.087 · L4 +0.167 · L5 +0.183 · L6 +0.325",
+  "the_wave": "L1 right +24° left +12° (`\\ \\`, as V3) · L3 right 0° left −2° (both through vertical; V3 +10° / −11°) · L4 right +2° left −21° (left out 0.40 m, forward 0.10) · the legs cross vertical 8 ms apart (V3 46 ms, the left first) · the right leg `/` +0.10 – +0.16, at most −9° (V3 never below 0°)",
+  "left_foot_L1_to_L4": "forward velocity max 7.1 m/s (V3 12.7) · lateral 3.8 m/s OUTWARD (V3 5.8 inward) · 13.9 cm per 60 fps frame (V3 23.4) · acceleration max 677 m/s² at the push-off (V3 1591 at the ball waypoint) · never ahead of the ball (V3 0.11 m ahead)",
+  "right_foot": "8.5 cm / tick, 15.0 cm / frame (V3 8.4 / 14.9)",
+  "cushion": "the left inside takes the ball from 4.5 to 2.2 m/s (V3 sent it on at 3.1)",
+  "kept": "the start identical to V3 (the right toe ≤ 1.7 mm in the last 0.04 s) · the ball 0.87 m across, 0.15 m back · the bows 29° / 26°, the bend crossing at +0.087"
+ },
+ "integrity": {
+  "reference_case_and_mirror": "0 slides / jumps / crossings / knee pops / floats / swaps · no ankle snaps (≤ 759°/s) · 0 spikes · contacts −1.4 · +0.1 · 0.0 cm · least leg clearance 5.0 cm · 0 missed / exits · the mirror identical",
+  "regression": "everything identical to V3: Body Feint, extremes, all 122 curated cases, battery, body torture, possession (apart from CPU), intent torture (12/12 seeds identical), determinism 18/18 + 18/18 · CPU 128.8 vs 131.9 ms / simulated s · browser 0 errors · sandbox V4 3/4 at a jog"
+ },
+ "limitations": ["one case only", "the right leg's `/` is brief (−9°, back to +2° by L4): a plant further inward crosses the ball's path in the 0.1 s the foot has and snaps 35 cm in a frame; a later landing changes the frames before L1", "the left foot still progresses 0.7 m forward (from 0.62 m behind at L1 to the ball 0.15 m ahead) — evenly, without a jump", "the far left is 0.40 m out", "wave 2 is V3's exit: the right leg swings through to +30° before the legs settle"],
+ "owner_decisions": ["frame by frame L1 → L5 and at 1×, ball hidden: one wave, the left leg opening out, never jumping forward?", "the right leg at L4: the smooth brief `/`, the inward plant with a right-foot snap, or a later landing (changes the frames before L1)?", "the cushion's strength (2.2 m/s)", "then generalize — on your word"]
+}
