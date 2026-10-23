@@ -1,0 +1,27 @@
+{
+ "milestone": "LA CROQUETA — VIDEO-GUIDED: the croqueta rebuilt from the owner's reference recording — the whole footballer shifts ball and body into the new lane as one continuous action (23 Oct 2026)",
+ "state": "stopped for the owner's 1× review — NOT frozen, NOT integrated; CURRENT ADV-4 (feint2ef/, f8a0e374) unchanged and running beside it in the Lab as lane A",
+ "classification": "PROVISIONAL · MANUAL / REVIEW",
+ "local_only": "the characters are real players' models: never publish; the reference recording is third-party footage: never committed",
+ "owner_instruction": "review_artifacts/croqueta_vg/sources/2026-10-23_user_instruction_croqueta_video_guided.md (verbatim)",
+ "pages": {
+  "review": "http://127.0.0.1:8361/sandbox/visual/croqvg_lab.html — LA CROQUETA — VIDEO-GUIDED REVIEW first: six cards (walk / jog / run × the reference's side and its mirror); B · VIDEO-GUIDED, A · CURRENT ADV-4, A | B side by side; REAR HIGH (default) · GAMEPLAY · FRONT HIGH · FRONT · REAR CLOSE · SIDE CLOSE · OVERHEAD CLOSE · OVERHEAD FIXED · BOTH LANES; ⇄; BALL SHOWN / DIM / HIDDEN; LANE GUIDE; 1× / 0.5× / 0.25×; frame step; loop",
+  "sandbox": "http://127.0.0.1:8361/sandbox/visual/croqvg_sandbox.html — the right-footed player: request with the stick LEFT for the video-guided croqueta"
+ },
+ "code": "sandbox/visual/croqvg/ (a copy of feint2ef/: the croqueta template, its meta entry, gated planner additions, the cases, the Lab)",
+ "reference_lesson": "a low wide set-up, the ball inside the left foot; the pelvis translates toward the right foot ≈ 0.10 s BEFORE the touch (≈ 0.2 m across at it: the body leads); the left inside rolls the ball under the moving body, the leg long; the left foot down beside the right; the right foot steps out and receives beyond the body's line at +0.28 s and keeps the ball; trunk pitched ≈ 35–40°, the exit arm open ≈ 45°",
+ "measured": {
+  "touch_to_touch": "0.30 / 0.27 / 0.23 s (walk / jog / run; reference ≈ 0.28; CURRENT 0.30 / 0.23 / 0.20)",
+  "body_leads": "root across at the first touch 0.17 / 0.24 / 0.33 m (CURRENT 0.03 / 0.04 / 0.10); pelvis 0.23–0.26 m across from the ball; the first foot 0.41–0.42 m from the pelvis",
+  "receive": "the ball arrives at the receiving foot beyond the body's line (pelvis 0.51 / 0.69 / 1.02 m, ball 0.55 / 0.83 / 1.12 m); CURRENT's ball 0.20 m ahead of the pelvis",
+  "posture": "trunk pitch 27°, lean toward the exit 26°, pelvis ≥ 0.82 m, exit arm 0.32 m out (CURRENT 6–10°, 11–17°, 0.85–0.86 m, running arms)",
+  "speed": "jog 3.2 → 2.0 → 3.2 m/s by +1.0 s (CURRENT constant 3.2)",
+  "latency": "request → first touch 0.58 / 0.78 / 0.90 s (CURRENT 0.40 / 0.44 / 0.49): the set-up's cost"
+ },
+ "integrity": {
+  "six_cases": "0 slides / jumps / crossings / knee pops / floats / swaps (normal and slow) · 0 torso / shoulder spikes (CURRENT 4) · contacts INSIDE, gaps −2.0…+0.3 cm (CURRENT down to −6.0, sole nearest at a run) · 0 missed / exits · mirrors identical",
+  "regression": "Body Feint identical · extreme ball on / off identical · cases: 0 non-croqueta lines differ · battery identical apart from CROQUETA (67/72) · body torture 254 / 328 identical · possession 10 losses / 40 seeds identical · intent torture 12/12 seeds identical until their first croqueta · determinism 18/18 + 18/18 · CPU in the noise · browser 0 errors"
+ },
+ "limitations": ["latency +0.18–0.41 s (the set-up)", "jog / run extrapolated from a walking reference", "the shared set touch meets the ball high at jog / run (as in 16 / 51 set touches across moves on CURRENT)", "control returns at +0.34 s: at jog / run the carry plays the receiving foot's next touch", "ball on the receiving foot's side → ADV-4's transfer (the fallback)", "the chain 'Croqueta → outside cut' now reports the croqueta SUPERSEDED (its scripted second request lands at the new first touch)"],
+ "owner_decisions": ["at 1×: does the entire footballer shift ball and body into the new lane as one continuous action?", "the set-up's latency: keep the reference's rhythm or shorten it at a jog / run", "the jog / run versions: the same structure or a lighter set-up", "ball on the wrong foot: ADV-4's transfer as the fallback, or another solution", "freeze nothing yet"]
+}
