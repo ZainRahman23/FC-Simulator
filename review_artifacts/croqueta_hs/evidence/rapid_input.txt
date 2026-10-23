@@ -1,0 +1,124 @@
+■ Fake L → exit R → at once LEFT                             body 0/1 · spikes 0 (max °/s pelvis 805 · shoulders 738 · roll 223) · pelvis jump 0.2 cm · vertical 1.1 cm (@1.463 CARRY) · hand step 3.6 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → BRAKING PIVOT (R) @1.26/1.39
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+■ Fake L → exit R → at once LEFT · MIRROR                    body 0/1 · spikes 0 (max °/s pelvis 805 · shoulders 738 · roll 223) · pelvis jump 0.2 cm · vertical 1.1 cm (@1.463 CARRY) · hand step 3.6 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → BRAKING PIVOT (L) @1.26/1.39
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+■ Fake L → exit R → at once FAKE R → exit L                  body 0/2 · spikes 0 (max °/s pelvis 874 · shoulders 808 · roll 815) · pelvis jump 0.3 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 4.5 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED BFEINT_J @1.10
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → GATHER (R) @1.26/1.39 → BODY FEINT V2 (L) @2.10/2.90
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; FLOAT 0.092 @2.62 BODY FEINT V2
+■ Fake L → exit R → at once FAKE R → exit L · MIRROR         body 0/2 · spikes 0 (max °/s pelvis 874 · shoulders 808 · roll 815) · pelvis jump 0.3 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 4.5 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED BFEINT_J @1.10
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → GATHER (L) @1.26/1.39 → BODY FEINT V2 (R) @2.10/2.90
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; FLOAT 0.092 @2.62 BODY FEINT V2
+■ Fake L → LEFT inside the lie (before the touch)            body 0/1 · spikes 0 (max °/s pelvis 749 · shoulders 797 · roll 570) · pelvis jump 0.1 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 4.7 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: CANCELLED BFEINT_J → CARRY @0.00
+     actions:  BODY FEINT V2 (R) @0.00
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+■ Fake L → LEFT inside the lie (before the touch) · MIRROR   body 0/1 · spikes 0 (max °/s pelvis 749 · shoulders 797 · roll 570) · pelvis jump 0.1 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 4.7 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: CANCELLED BFEINT_J → CARRY @0.00
+     actions:  BODY FEINT V2 (L) @0.00
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+■ Fake R → cancel: straight on during the lie                body 0/2 · spikes 0 (max °/s pelvis 836 · shoulders 712 · roll 642) · pelvis jump 0.3 cm · vertical 1.0 cm (@1.158 CARRY) · hand step 4.0 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (L) @0.00/0.72
+     events:   FLOAT 0.092 @0.43 BODY FEINT V2; FLOAT 0.217 @1.52 CARRY
+■ Fake R → cancel: straight on during the lie · MIRROR       body 0/2 · spikes 0 (max °/s pelvis 836 · shoulders 712 · roll 642) · pelvis jump 0.3 cm · vertical 1.0 cm (@1.158 CARRY) · hand step 4.0 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (R) @0.00/0.72
+     events:   FLOAT 0.092 @0.43 BODY FEINT V2; FLOAT 0.217 @1.52 CARRY
+■ Fake R → cancel: stick released during the lie             body 0/1 · spikes 0 (max °/s pelvis 745 · shoulders 339 · roll 138) · pelvis jump 0.3 cm · vertical 1.9 cm (@1.458 STANDING) · hand step 8.5 cm (L @1.158 STANDING) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (L) @0.00/0.72
+     events:   FLOAT 0.092 @0.43 BODY FEINT V2
+■ Fake R → cancel: stick released during the lie · MIRROR    body 0/1 · spikes 1 (max °/s pelvis 1030 · shoulders 339 · roll 138) · pelvis jump 0.3 cm · vertical 1.9 cm (@1.458 STANDING) · hand step 11.3 cm (L @1.458 STANDING) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (R) @0.00/0.72
+     events:   FLOAT 0.092 @0.43 BODY FEINT V2
+     spikes:   pelvis yaw 1030°/s @1.46
+■ Fake R → cancel before the window                          body 0/1 · spikes 0 (max °/s pelvis 233 · shoulders 70 · roll 76) · pelvis jump 0.0 cm · vertical 0.8 cm (@0.000 BODY FEINT V2) · hand step 4.0 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: CANCELLED BFEINT_J → CARRY @0.00
+     actions:  BODY FEINT V2 (L) @0.00
+     events:   FLOAT 0.092 @0.43 CARRY
+■ Fake R → cancel before the window · MIRROR                 body 0/1 · spikes 0 (max °/s pelvis 233 · shoulders 70 · roll 76) · pelvis jump 0.0 cm · vertical 0.8 cm (@0.000 BODY FEINT V2) · hand step 4.0 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: CANCELLED BFEINT_J → CARRY @0.00
+     actions:  BODY FEINT V2 (R) @0.00
+     events:   FLOAT 0.092 @0.43 CARRY
+■ Feint → straight                                           body 0/1 · spikes 4 (max °/s pelvis 604 · shoulders 395 · roll 1081) · pelvis jump 0.2 cm · vertical 1.3 cm (@1.463 LATERAL TRANSFER) · hand step 3.9 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → LATERAL TRANSFER (R) @1.26/1.39 → LATERAL TRANSFER (L) @1.39/1.62
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+     spikes:   shoulder roll 942°/s @1.39; shoulder roll 1080°/s @1.40; shoulder roll 1081°/s @1.40; shoulder roll 945°/s @1.40
+■ Feint → straight · MIRROR                                  body 0/1 · spikes 4 (max °/s pelvis 604 · shoulders 395 · roll 1081) · pelvis jump 0.2 cm · vertical 1.3 cm (@1.463 LATERAL TRANSFER) · hand step 3.9 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → LATERAL TRANSFER (L) @1.26/1.39 → LATERAL TRANSFER (R) @1.39/1.62
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+     spikes:   shoulder roll 942°/s @1.39; shoulder roll 1080°/s @1.40; shoulder roll 1081°/s @1.40; shoulder roll 945°/s @1.40
+■ Feint → hard cut RIGHT (outside cut 90°)                   body 0/1 · spikes 2 (max °/s pelvis 2028 · shoulders 2015 · roll 809) · pelvis jump 0.2 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 6.4 cm (L @2.050 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED OUTSIDE_CUT @1.15
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → OUTSIDE CUT (R) @1.26/1.97
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+     spikes:   pelvis yaw 2028°/s @1.83; shoulder yaw 2015°/s @1.83
+■ Feint → hard cut RIGHT (outside cut 90°) · MIRROR          body 0/1 · spikes 2 (max °/s pelvis 2028 · shoulders 2015 · roll 809) · pelvis jump 0.2 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 6.4 cm (R @2.050 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED OUTSIDE_CUT @1.15
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → OUTSIDE CUT (L) @1.26/1.97
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2
+     spikes:   pelvis yaw 2028°/s @1.83; shoulder yaw 2015°/s @1.83
+■ Feint → hard cut LEFT (stick −90°)                         body 1/1 · spikes 17 (max °/s pelvis 953 · shoulders 1270 · roll 149) · pelvis jump 0.2 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 5.2 cm (R @1.738 CRUYFF TURN) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → CRUYFF TURN (R) @1.26/1.72
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; ‼FLOAT 0.154 @2.43 CARRY
+     spikes:   shoulder yaw 1014°/s @1.72; shoulder yaw 1189°/s @1.73; shoulder yaw 1237°/s @1.73; shoulder yaw 1264°/s @1.73
+■ Feint → hard cut LEFT (stick −90°) · MIRROR                body 1/1 · spikes 17 (max °/s pelvis 953 · shoulders 1270 · roll 149) · pelvis jump 0.2 cm · vertical 1.0 cm (@0.642 BODY FEINT V2) · hand step 5.2 cm (L @1.738 CRUYFF TURN) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → CRUYFF TURN (L) @1.26/1.72
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; ‼FLOAT 0.154 @2.43 CARRY
+     spikes:   shoulder yaw 1014°/s @1.72; shoulder yaw 1189°/s @1.73; shoulder yaw 1237°/s @1.73; shoulder yaw 1264°/s @1.73
+■ Alternating feints × 4 (at the feint's own cycle)          body 2/5 · spikes 0 (max °/s pelvis 569 · shoulders 489 · roll 138) · pelvis jump 0.3 cm · vertical 1.0 cm (@4.254 BODY FEINT V2) · hand step 5.4 cm (R @5.229 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED BFEINT_J @1.90 | PLAYED BFEINT_L @3.80 | PLAYED BFEINT_J @5.70
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → BODY FEINT V2 (L) @1.90/2.91 → BODY FEINT V2 (R) @3.93/4.80 → BODY FEINT V2 (L) @5.94/6.75
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; FLOAT 0.217 @1.82 CARRY; FLOAT 0.092 @2.63 BODY FEINT V2; ‼FLOAT 0.183 @3.68 CARRY; FLOAT 0.1 @4.48 BODY FEINT V2; FLOAT 0.092 @6.46 BODY FEINT V2
+■ Alternating feints × 4 (at the feint's own cycle) · MIRROR body 2/5 · spikes 0 (max °/s pelvis 569 · shoulders 489 · roll 138) · pelvis jump 0.3 cm · vertical 1.0 cm (@4.254 BODY FEINT V2) · hand step 5.4 cm (L @5.229 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED BFEINT_J @1.90 | PLAYED BFEINT_L @3.80 | PLAYED BFEINT_J @5.70
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → BODY FEINT V2 (R) @1.90/2.91 → BODY FEINT V2 (L) @3.93/4.80 → BODY FEINT V2 (R) @5.94/6.75
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; FLOAT 0.217 @1.82 CARRY; FLOAT 0.092 @2.63 BODY FEINT V2; ‼FLOAT 0.183 @3.68 CARRY; FLOAT 0.1 @4.48 BODY FEINT V2; FLOAT 0.092 @6.46 BODY FEINT V2
+■ Alternating feints × 3 · RUN                               body 0/4 · spikes 0 (max °/s pelvis 382 · shoulders 516 · roll 154) · pelvis jump 0.3 cm · vertical 1.5 cm (@3.800 BODY FEINT V2) · hand step 5.4 cm (L @3.600 BODY FEINT V2) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_R @0.00 | PLAYED BFEINT_R @1.80 | PLAYED BFEINT_R @3.60
+     actions:  BODY FEINT V2 (R) @0.00/0.97 → BODY FEINT V2 (L) @1.88/2.56 → BODY FEINT V2 (R) @3.60/4.20
+     events:   FLOAT 0.204 @1.64 CARRY; FLOAT 0.204 @3.23 CARRY; KNEE 22.6 @3.80 BODY FEINT V2; FLOAT 0.204 @4.87 CARRY
+■ Alternating feints × 3 · RUN · MIRROR                      body 0/4 · spikes 0 (max °/s pelvis 382 · shoulders 516 · roll 154) · pelvis jump 0.3 cm · vertical 1.5 cm (@3.800 BODY FEINT V2) · hand step 5.4 cm (R @3.600 BODY FEINT V2) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_R @0.00 | PLAYED BFEINT_R @1.80 | PLAYED BFEINT_R @3.60
+     actions:  BODY FEINT V2 (L) @0.00/0.97 → BODY FEINT V2 (R) @1.88/2.56 → BODY FEINT V2 (L) @3.60/4.20
+     events:   FLOAT 0.204 @1.64 CARRY; FLOAT 0.204 @3.23 CARRY; KNEE 22.6 @3.80 BODY FEINT V2; FLOAT 0.204 @4.87 CARRY
+■ Alternating feints × 3 · WALK                              body 0/6 · spikes 0 (max °/s pelvis 328 · shoulders 399 · roll 123) · pelvis jump 0.4 cm · vertical 1.0 cm (@2.442 BODY FEINT V2) · hand step 2.9 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_L @0.00 | PLAYED BFEINT_L @2.00 | PLAYED BFEINT_L @4.00
+     actions:  BODY FEINT V2 (R) @0.00/0.81 → BODY FEINT V2 (L) @2.00/2.87 → BODY FEINT V2 (R) @4.00/4.92
+     events:   FLOAT 0.1 @0.48 BODY FEINT V2; FLOAT 0.117 @1.68 CARRY; FLOAT 0.104 @2.55 BODY FEINT V2; FLOAT 0.112 @3.74 CARRY; FLOAT 0.1 @4.60 BODY FEINT V2; FLOAT 0.112 @5.80 CARRY
+■ Alternating feints × 3 · WALK · MIRROR                     body 0/6 · spikes 0 (max °/s pelvis 328 · shoulders 399 · roll 123) · pelvis jump 0.4 cm · vertical 1.0 cm (@2.442 BODY FEINT V2) · hand step 2.9 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_L @0.00 | PLAYED BFEINT_L @2.00 | PLAYED BFEINT_L @4.00
+     actions:  BODY FEINT V2 (L) @0.00/0.81 → BODY FEINT V2 (R) @2.00/2.87 → BODY FEINT V2 (L) @4.00/4.92
+     events:   FLOAT 0.1 @0.48 BODY FEINT V2; FLOAT 0.117 @1.68 CARRY; FLOAT 0.104 @2.55 BODY FEINT V2; FLOAT 0.112 @3.74 CARRY; FLOAT 0.1 @4.60 BODY FEINT V2; FLOAT 0.112 @5.80 CARRY
+■ Alternating requests faster than a feint (every 1.25 s)    body 2/5 · spikes 8 (max °/s pelvis 577 · shoulders 503 · roll 1085) · pelvis jump 0.2 cm · vertical 1.2 cm (@1.483 CARRY) · hand step 4.8 cm · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | SUPERSEDED·ENTERED BFEINT_L @1.25 | SUPERSEDED·ENTERED BFEINT_L @2.50
+     actions:  BODY FEINT V2 (R) @0.00/1.02 → BODY FEINT V2 (L) @1.81 → COMPACT OUTSIDE REDIRECT (L) @3.17/3.37 → BODY FEINT V2 (R) @3.73
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; CROSS -3.2 @1.61 CARRY; CROSS -4.4 @1.72 CARRY; ‼CROSS -11.6 @1.78 CARRY; FLOAT 0.204 @1.81 BODY FEINT V2; FLOAT 0.104 @2.63 CARRY
+     spikes:   shoulder roll 938°/s @1.47; shoulder roll 1080°/s @1.47; shoulder roll 1085°/s @1.48; shoulder roll 950°/s @1.48
+■ Alternating requests faster than a feint (every 1.25 s) · MIRROR body 3/13 · spikes 17 (max °/s pelvis 970 · shoulders 983 · roll 1085) · pelvis jump 0.3 cm · vertical 1.2 cm (@1.483 CARRY) · hand step 5.4 cm (R @4.917 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: PLAYED BFEINT_J @0.00 | PLAYED BFEINT_J @1.25 | REJECTED → CARRY @2.50 | PLAYED BFEINT_L @3.75
+     actions:  BODY FEINT V2 (L) @0.00/1.02 → BODY FEINT V2 (R) @1.81/2.33 → BODY FEINT V2 (R) @3.75/4.49
+     events:   FLOAT 0.092 @0.73 BODY FEINT V2; CROSS -3.3 @1.61 CARRY; CROSS -4.4 @1.72 CARRY; ‼CROSS -12.6 @1.78 CARRY; FLOAT 0.204 @1.81 BODY FEINT V2; KNEE 20.2 @2.68 CARRY
+     spikes:   shoulder roll 938°/s @1.47; shoulder roll 1080°/s @1.47; shoulder roll 1085°/s @1.48; shoulder roll 950°/s @1.48
+■ Request spam: feint every 0.25 s, alternating              body 1/1 · spikes 4 (max °/s pelvis 429 · shoulders 480 · roll 1034) · pelvis jump 1.3 cm (@0.738 OUTSIDE CUT) · vertical 1.1 cm (@4.475 CARRY) · hand step 5.2 cm (L @0.521 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: SUPERSEDED·ENTERED BFEINT_J @0.00 | SUPERSEDED @0.25 | SUPERSEDED @0.50 | SUPERSEDED @0.75 | SUPERSEDED @1.00 | SUPERSEDED @1.25 | SUPERSEDED @1.50 | SUPERSEDED·ENTERED BFEINT_J @1.75 | PLAYED BFEINT_J @2.00
+     actions:  BODY FEINT V2 (R) @0.00 → OUTSIDE CUT (L) @0.58 → BODY FEINT V2 (L) @1.75 → BODY FEINT V2 (R) @3.27/4.01
+     events:   ‼FLOAT 0.175 @2.38 CARRY; FLOAT 0.092 @3.73 BODY FEINT V2
+     spikes:   shoulder roll 902°/s @0.51; shoulder roll 1034°/s @0.52; shoulder roll 1034°/s @0.52; shoulder roll 902°/s @0.53
+■ Request spam: feint every 0.25 s, alternating · MIRROR     body 1/1 · spikes 4 (max °/s pelvis 429 · shoulders 480 · roll 1034) · pelvis jump 1.3 cm (@0.738 OUTSIDE CUT) · vertical 1.1 cm (@4.475 CARRY) · hand step 5.2 cm (R @0.521 CARRY) · planted foot turned 0 · exits 0 · missed 0
+     requests: SUPERSEDED·ENTERED BFEINT_J @0.00 | SUPERSEDED @0.25 | SUPERSEDED @0.50 | SUPERSEDED @0.75 | SUPERSEDED @1.00 | SUPERSEDED @1.25 | SUPERSEDED @1.50 | SUPERSEDED·ENTERED BFEINT_J @1.75 | PLAYED BFEINT_J @2.00
+     actions:  BODY FEINT V2 (L) @0.00 → OUTSIDE CUT (R) @0.58 → BODY FEINT V2 (R) @1.75 → BODY FEINT V2 (L) @3.27/4.01
+     events:   ‼FLOAT 0.175 @2.38 CARRY; FLOAT 0.092 @3.73 BODY FEINT V2
+     spikes:   shoulder roll 902°/s @0.51; shoulder roll 1034°/s @0.52; shoulder roll 1034°/s @0.52; shoulder roll 902°/s @0.53
+■ TOTAL 28 runs · body normal 13 · slow 72 · spikes 80 · planted foot turned 0 · exits 0 · missed 0 · worst pelvis jump 1.3 cm · worst hand step 11.3 cm
