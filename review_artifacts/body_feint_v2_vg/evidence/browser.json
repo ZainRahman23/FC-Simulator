@@ -1,0 +1,3416 @@
+{
+ "cards": 118,
+ "buttons": 140,
+ "runs": [
+  {
+   "i": 0,
+   "title": "Run with the ball: the ordinary carry, no skill when none is needed",
+   "info": "Run with the ball: the ordinary carry, no skill when none is needed | CARRY / PACE · INTEGRATED · AUTO · primitives P1 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3529034712,
+   "k": 1104
+  },
+  {
+   "i": 15,
+   "title": "The outside hook: reverse away to the hooking foot's side",
+   "info": "The outside hook: reverse away to the hooking foot's side | CUT / REDIRECT · INTEGRATED · AUTO+MANUAL · primitives P4 | REQUESTED OUTSIDE_HOOK → PLAYED · decisive at 0.43 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 1448410004,
+   "k": 1152
+  },
+  {
+   "i": 19,
+   "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+   "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3919487059,
+   "k": 1152
+  },
+  {
+   "i": 45,
+   "title": "The hip fake: the subtlest sell",
+   "info": "The hip fake: the subtlest sell | FEINT · REVIEW · MANUAL · primitives P7 | REQUESTED HIP_FAKE → PLAYED · decisive at 0.00 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3752319411,
+   "k": 1152
+  },
+  {
+   "i": 39,
+   "title": "CURRENT — the croqueta before its body upgrade: ball across, the body following afterward",
+   "info": "CURRENT — the croqueta before its body upgrade: ball across, the body following afterward | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3451598325,
+   "k": 1248
+  },
+  {
+   "i": 42,
+   "title": "Would B4 play the croqueta here?",
+   "info": "Would B4 play the croqueta here? | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2823699995,
+   "k": 1152
+  },
+  {
+   "i": 29,
+   "title": "Cruyff, left foot",
+   "info": "Cruyff, left foot | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.65 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 1248820601,
+   "k": 1152
+  },
+  {
+   "i": 25,
+   "title": "Would B4 chop here?",
+   "info": "Would B4 chop here? | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3110851891,
+   "k": 1152
+  },
+  {
+   "i": 115,
+   "title": "Matthews → outside exit → accelerate",
+   "info": "Matthews → outside exit → accelerate | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—",
+   "hash": 1373005455,
+   "k": 1284
+  }
+ ],
+ "branch": {
+  "title": "BRANCH: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on → Outside cut at 0.90 s",
+  "skills": [
+   "CROQUETA PLAYED",
+   "OUTSIDE_CUT REJECTED"
+  ]
+ },
+ "pair": {
+  "ref": true,
+  "title": "L | R · BRANCH: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on → Outside cut at 0.90 s"
+ },
+ "bf": {
+  "cards": 16,
+  "rapid": 14,
+  "clicks": [
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · ▶ VIDEO-GUIDED V2",
+    "title": "FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · JOG — FAKE LEFT → RIGHT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · JOG — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · OLD",
+    "title": "OLD (VOCAB-1) · JOG — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · MIRROR",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · 1×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · 0.5×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE LEFT → RIGHT · 0.25×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · ▶ VIDEO-GUIDED V2",
+    "title": "FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · JOG — FAKE RIGHT → LEFT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · JOG — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · OLD",
+    "title": "OLD (VOCAB-1) · JOG — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · MIRROR",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · 1×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · 0.5×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "JOG — FAKE RIGHT → LEFT · 0.25×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · ▶ VIDEO-GUIDED V2",
+    "title": "LOW-SPEED: fake left → exit right from a walk",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · LOW SPEED — FAKE LEFT → RIGHT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · LOW SPEED — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · OLD",
+    "title": "OLD (VOCAB-1) · LOW SPEED — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · MIRROR",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · 1×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · 0.5×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE LEFT → RIGHT · 0.25×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · ▶ VIDEO-GUIDED V2",
+    "title": "LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · LOW SPEED — FAKE RIGHT → LEFT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · LOW SPEED — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · OLD",
+    "title": "OLD (VOCAB-1) · LOW SPEED — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · MIRROR",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · 1×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · 0.5×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "LOW SPEED — FAKE RIGHT → LEFT · 0.25×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · ▶ VIDEO-GUIDED V2",
+    "title": "RUNNING: fake left → exit right at a run",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · RUN — FAKE LEFT → RIGHT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · RUN — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · OLD",
+    "title": "OLD (VOCAB-1) · RUN — FAKE LEFT → RIGHT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · MIRROR",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · 1×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · 0.5×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE LEFT → RIGHT · 0.25×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · ▶ VIDEO-GUIDED V2",
+    "title": "RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · A | B | C — PREVIOUS · VIDEO-GUIDED · OLD",
+    "title": "A | B | C · RUN — FAKE RIGHT → LEFT",
+    "mode": "trio",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · PREVIOUS V2",
+    "title": "PREVIOUS V2 (feint2 · 0c65eac3) · RUN — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · OLD",
+    "title": "OLD (VOCAB-1) · RUN — FAKE RIGHT → LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · MIRROR",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · 1×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · 0.5×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "RUN — FAKE RIGHT → LEFT · 0.25×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · ▶ PLAY",
+    "title": "FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · JOG · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · MIRROR",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · 1×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · 0.5×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "FAKE LEFT → RIGHT · 0.25×",
+    "title": "MIRROR · FAKE LEFT → EXIT RIGHT: the false step wide left, the load, hips / trunk / shoulder / head / arms sell left — the left leg drives out right",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · ▶ PLAY",
+    "title": "FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · JOG · fake RIGHT → exit LEFT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · MIRROR",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · 1×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · 0.5×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "FAKE RIGHT → LEFT · 0.25×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT: the exact mirror (the left-footed twin, the same entry)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · ▶ PLAY",
+    "title": "FAKE RIGHT → EXIT LEFT by the right-footed player: the left foot plays it out",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · JOG · fake RIGHT → exit LEFT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · MIRROR",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT by the right-footed player: the left foot plays it out",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · 1×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT by the right-footed player: the left foot plays it out",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · 0.5×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT by the right-footed player: the left foot plays it out",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "R → L · RIGHT-FOOTED · 0.25×",
+    "title": "MIRROR · FAKE RIGHT → EXIT LEFT by the right-footed player: the left foot plays it out",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED L → R · ▶ PLAY",
+    "title": "LOW-SPEED: fake left → exit right from a walk",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED L → R · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · WALK · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "LOW-SPEED L → R · MIRROR",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED L → R · 1×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED L → R · 0.5×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED L → R · 0.25×",
+    "title": "MIRROR · LOW-SPEED: fake left → exit right from a walk",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED R → L · ▶ PLAY",
+    "title": "LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED R → L · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · WALK · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "LOW-SPEED R → L · MIRROR",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED R → L · 1×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED R → L · 0.5×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "LOW-SPEED R → L · 0.25×",
+    "title": "MIRROR · LOW-SPEED: fake right → exit left from a walk (the mirror)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING L → R · ▶ PLAY",
+    "title": "RUNNING: fake left → exit right at a run",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING L → R · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · RUN · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "RUNNING L → R · MIRROR",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING L → R · 1×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING L → R · 0.5×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING L → R · 0.25×",
+    "title": "MIRROR · RUNNING: fake left → exit right at a run",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING R → L · ▶ PLAY",
+    "title": "RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING R → L · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · RUN · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "RUNNING R → L · MIRROR",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING R → L · 1×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING R → L · 0.5×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "RUNNING R → L · 0.25×",
+    "title": "MIRROR · RUNNING: fake right → exit left at a run (the mirror)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "SHALLOW L → R · ▶ PLAY",
+    "title": "SHALLOW: the same feint, a smaller and quicker sell",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "SHALLOW L → R · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · JOG · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "SHALLOW L → R · MIRROR",
+    "title": "MIRROR · SHALLOW: the same feint, a smaller and quicker sell",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "SHALLOW L → R · 1×",
+    "title": "MIRROR · SHALLOW: the same feint, a smaller and quicker sell",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "SHALLOW L → R · 0.5×",
+    "title": "MIRROR · SHALLOW: the same feint, a smaller and quicker sell",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "SHALLOW L → R · 0.25×",
+    "title": "MIRROR · SHALLOW: the same feint, a smaller and quicker sell",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "STRONG L → R · ▶ PLAY",
+    "title": "STRONG: the same feint, a deeper sell (more cost)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "STRONG L → R · OLD | V2",
+    "title": "A | B · OLD body feint | BODY FEINT V2 · JOG · fake LEFT → exit RIGHT",
+    "mode": "vs",
+    "rate": 1,
+    "ref": true
+   },
+   {
+    "lab": "STRONG L → R · MIRROR",
+    "title": "MIRROR · STRONG: the same feint, a deeper sell (more cost)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "STRONG L → R · 1×",
+    "title": "MIRROR · STRONG: the same feint, a deeper sell (more cost)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "STRONG L → R · 0.5×",
+    "title": "MIRROR · STRONG: the same feint, a deeper sell (more cost)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "STRONG L → R · 0.25×",
+    "title": "MIRROR · STRONG: the same feint, a deeper sell (more cost)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "OLD (VOCAB-1) · ▶ PLAY",
+    "title": "OLD: the VOCAB-1 body feint — the same entry and input (a shoulder / trunk overlay on the ordinary carry, then the cut)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "OLD (VOCAB-1) · 1×",
+    "title": "OLD: the VOCAB-1 body feint — the same entry and input (a shoulder / trunk overlay on the ordinary carry, then the cut)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "OLD (VOCAB-1) · 0.5×",
+    "title": "OLD: the VOCAB-1 body feint — the same entry and input (a shoulder / trunk overlay on the ordinary carry, then the cut)",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "OLD (VOCAB-1) · 0.25×",
+    "title": "OLD: the VOCAB-1 body feint — the same entry and input (a shoulder / trunk overlay on the ordinary carry, then the cut)",
+    "mode": "single",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once LEFT · ▶ PLAY",
+    "title": "Fake L → exit R → at once LEFT",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once LEFT · MIRROR",
+    "title": "MIRROR · Fake L → exit R → at once LEFT",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once LEFT · 1×",
+    "title": "MIRROR · Fake L → exit R → at once LEFT",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once LEFT · 0.5×",
+    "title": "MIRROR · Fake L → exit R → at once LEFT",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once LEFT · 0.25×",
+    "title": "MIRROR · Fake L → exit R → at once LEFT",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once FAKE R → exit L · ▶ PLAY",
+    "title": "Fake L → exit R → at once FAKE R → exit L",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once FAKE R → exit L · MIRROR",
+    "title": "MIRROR · Fake L → exit R → at once FAKE R → exit L",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once FAKE R → exit L · 1×",
+    "title": "MIRROR · Fake L → exit R → at once FAKE R → exit L",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once FAKE R → exit L · 0.5×",
+    "title": "MIRROR · Fake L → exit R → at once FAKE R → exit L",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → exit R → at once FAKE R → exit L · 0.25×",
+    "title": "MIRROR · Fake L → exit R → at once FAKE R → exit L",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → LEFT inside the lie (before the touch) · ▶ PLAY",
+    "title": "Fake L → LEFT inside the lie (before the touch)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → LEFT inside the lie (before the touch) · MIRROR",
+    "title": "MIRROR · Fake L → LEFT inside the lie (before the touch)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → LEFT inside the lie (before the touch) · 1×",
+    "title": "MIRROR · Fake L → LEFT inside the lie (before the touch)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → LEFT inside the lie (before the touch) · 0.5×",
+    "title": "MIRROR · Fake L → LEFT inside the lie (before the touch)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake L → LEFT inside the lie (before the touch) · 0.25×",
+    "title": "MIRROR · Fake L → LEFT inside the lie (before the touch)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: straight on during the lie · ▶ PLAY",
+    "title": "Fake R → cancel: straight on during the lie",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: straight on during the lie · MIRROR",
+    "title": "MIRROR · Fake R → cancel: straight on during the lie",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: straight on during the lie · 1×",
+    "title": "MIRROR · Fake R → cancel: straight on during the lie",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: straight on during the lie · 0.5×",
+    "title": "MIRROR · Fake R → cancel: straight on during the lie",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: straight on during the lie · 0.25×",
+    "title": "MIRROR · Fake R → cancel: straight on during the lie",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: stick released during the lie · ▶ PLAY",
+    "title": "Fake R → cancel: stick released during the lie",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: stick released during the lie · MIRROR",
+    "title": "MIRROR · Fake R → cancel: stick released during the lie",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: stick released during the lie · 1×",
+    "title": "MIRROR · Fake R → cancel: stick released during the lie",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: stick released during the lie · 0.5×",
+    "title": "MIRROR · Fake R → cancel: stick released during the lie",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel: stick released during the lie · 0.25×",
+    "title": "MIRROR · Fake R → cancel: stick released during the lie",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel before the window · ▶ PLAY",
+    "title": "Fake R → cancel before the window",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel before the window · MIRROR",
+    "title": "MIRROR · Fake R → cancel before the window",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel before the window · 1×",
+    "title": "MIRROR · Fake R → cancel before the window",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel before the window · 0.5×",
+    "title": "MIRROR · Fake R → cancel before the window",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Fake R → cancel before the window · 0.25×",
+    "title": "MIRROR · Fake R → cancel before the window",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Feint → straight · ▶ PLAY",
+    "title": "Feint → straight",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → straight · MIRROR",
+    "title": "MIRROR · Feint → straight",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → straight · 1×",
+    "title": "MIRROR · Feint → straight",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → straight · 0.5×",
+    "title": "MIRROR · Feint → straight",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Feint → straight · 0.25×",
+    "title": "MIRROR · Feint → straight",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut RIGHT (outside cut 90°) · ▶ PLAY",
+    "title": "Feint → hard cut RIGHT (outside cut 90°)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut RIGHT (outside cut 90°) · MIRROR",
+    "title": "MIRROR · Feint → hard cut RIGHT (outside cut 90°)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut RIGHT (outside cut 90°) · 1×",
+    "title": "MIRROR · Feint → hard cut RIGHT (outside cut 90°)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut RIGHT (outside cut 90°) · 0.5×",
+    "title": "MIRROR · Feint → hard cut RIGHT (outside cut 90°)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut RIGHT (outside cut 90°) · 0.25×",
+    "title": "MIRROR · Feint → hard cut RIGHT (outside cut 90°)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut LEFT (stick −90°) · ▶ PLAY",
+    "title": "Feint → hard cut LEFT (stick −90°)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut LEFT (stick −90°) · MIRROR",
+    "title": "MIRROR · Feint → hard cut LEFT (stick −90°)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut LEFT (stick −90°) · 1×",
+    "title": "MIRROR · Feint → hard cut LEFT (stick −90°)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut LEFT (stick −90°) · 0.5×",
+    "title": "MIRROR · Feint → hard cut LEFT (stick −90°)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Feint → hard cut LEFT (stick −90°) · 0.25×",
+    "title": "MIRROR · Feint → hard cut LEFT (stick −90°)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 4 (at the feint's own cycle) · ▶ PLAY",
+    "title": "Alternating feints × 4 (at the feint's own cycle)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 4 (at the feint's own cycle) · MIRROR",
+    "title": "MIRROR · Alternating feints × 4 (at the feint's own cycle)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 4 (at the feint's own cycle) · 1×",
+    "title": "MIRROR · Alternating feints × 4 (at the feint's own cycle)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 4 (at the feint's own cycle) · 0.5×",
+    "title": "MIRROR · Alternating feints × 4 (at the feint's own cycle)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 4 (at the feint's own cycle) · 0.25×",
+    "title": "MIRROR · Alternating feints × 4 (at the feint's own cycle)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · RUN · ▶ PLAY",
+    "title": "Alternating feints × 3 · RUN",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · RUN · MIRROR",
+    "title": "MIRROR · Alternating feints × 3 · RUN",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · RUN · 1×",
+    "title": "MIRROR · Alternating feints × 3 · RUN",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · RUN · 0.5×",
+    "title": "MIRROR · Alternating feints × 3 · RUN",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · RUN · 0.25×",
+    "title": "MIRROR · Alternating feints × 3 · RUN",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · WALK · ▶ PLAY",
+    "title": "Alternating feints × 3 · WALK",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · WALK · MIRROR",
+    "title": "MIRROR · Alternating feints × 3 · WALK",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · WALK · 1×",
+    "title": "MIRROR · Alternating feints × 3 · WALK",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · WALK · 0.5×",
+    "title": "MIRROR · Alternating feints × 3 · WALK",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Alternating feints × 3 · WALK · 0.25×",
+    "title": "MIRROR · Alternating feints × 3 · WALK",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Alternating requests faster than a feint (every 1.25 s) · ▶ PLAY",
+    "title": "Alternating requests faster than a feint (every 1.25 s)",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating requests faster than a feint (every 1.25 s) · MIRROR",
+    "title": "MIRROR · Alternating requests faster than a feint (every 1.25 s)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating requests faster than a feint (every 1.25 s) · 1×",
+    "title": "MIRROR · Alternating requests faster than a feint (every 1.25 s)",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Alternating requests faster than a feint (every 1.25 s) · 0.5×",
+    "title": "MIRROR · Alternating requests faster than a feint (every 1.25 s)",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Alternating requests faster than a feint (every 1.25 s) · 0.25×",
+    "title": "MIRROR · Alternating requests faster than a feint (every 1.25 s)",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   },
+   {
+    "lab": "Request spam: feint every 0.25 s, alternating · ▶ PLAY",
+    "title": "Request spam: feint every 0.25 s, alternating",
+    "mode": "single",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Request spam: feint every 0.25 s, alternating · MIRROR",
+    "title": "MIRROR · Request spam: feint every 0.25 s, alternating",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Request spam: feint every 0.25 s, alternating · 1×",
+    "title": "MIRROR · Request spam: feint every 0.25 s, alternating",
+    "mode": "mirror",
+    "rate": 1,
+    "ref": false
+   },
+   {
+    "lab": "Request spam: feint every 0.25 s, alternating · 0.5×",
+    "title": "MIRROR · Request spam: feint every 0.25 s, alternating",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false
+   },
+   {
+    "lab": "Request spam: feint every 0.25 s, alternating · 0.25×",
+    "title": "MIRROR · Request spam: feint every 0.25 s, alternating",
+    "mode": "mirror",
+    "rate": 0.25,
+    "ref": false
+   }
+  ],
+  "cams": [
+   "follow",
+   "front",
+   "fronthigh",
+   "rear",
+   "rearclose",
+   "explosion",
+   "side",
+   "topclose",
+   "triofront"
+  ],
+  "diag": [
+   true,
+   false
+  ],
+  "frameStep": {
+   "dt": 0.0333,
+   "playing": false
+  },
+  "tryInfo": "TRY IT LIVE · Body feint V2"
+ },
+ "vg": [
+  {
+   "title": "A | B | C · JOG — FAKE LEFT → RIGHT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (R) | 1.02 | 1.07 | 2.6 | 3.2",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (R) | 1.02 | 1.15 | 1.7 | 3.2",
+    "C · OLD | COMPACT OUTSIDE REDIRECT | 0.45 | 0.48 | 3.2 | 3.2"
+   ]
+  },
+  {
+   "title": "A | B | C · JOG — FAKE RIGHT → LEFT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (L) | 1.02 | 1.07 | 2.6 | 3.2",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (L) | 1.02 | 1.15 | 1.7 | 3.2",
+    "C · OLD | COMPACT OUTSIDE REDIRECT | 0.45 | 0.48 | 3.2 | 3.2"
+   ]
+  },
+  {
+   "title": "A | B | C · LOW SPEED — FAKE LEFT → RIGHT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (R) | 0.81 | 0.86 | 1.2 | 1.5",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (R) | 0.81 | 0.95 | 0.8 | 1.5",
+    "C · OLD | CARRY (a controlled arc) | 0.00 | 0.27 | 1.5 | 1.5"
+   ]
+  },
+  {
+   "title": "A | B | C · LOW SPEED — FAKE RIGHT → LEFT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (L) | 0.81 | 0.86 | 1.2 | 1.5",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (L) | 0.81 | 0.95 | 0.8 | 1.5",
+    "C · OLD | CARRY (a controlled arc) | 0.00 | 0.27 | 1.5 | 1.5"
+   ]
+  },
+  {
+   "title": "A | B | C · RUN — FAKE LEFT → RIGHT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (R) | 0.97 | 1.00 | 4.5 | 5.3",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (R) | 0.97 | 1.02 | 3.5 | 5.3",
+    "C · OLD | COMPACT OUTSIDE REDIRECT | 0.50 | 0.53 | 5.3 | 5.3"
+   ]
+  },
+  {
+   "title": "A | B | C · RUN — FAKE RIGHT → LEFT",
+   "mode": "trio",
+   "cam": "triofront",
+   "ref": true,
+   "ref2": true,
+   "rows": [
+    "A · PREVIOUS V2 | BODY FEINT V2 (L) | 0.97 | 1.00 | 4.5 | 5.3",
+    "B · VIDEO-GUIDED V2 | BODY FEINT V2 (L) | 0.97 | 1.02 | 3.5 | 5.3",
+    "C · OLD | COMPACT OUTSIDE REDIRECT | 0.50 | 0.53 | 5.3 | 5.3"
+   ]
+  }
+ ],
+ "adv": {
+  "cards": 36,
+  "why": [
+   473,
+   324,
+   268,
+   357,
+   270,
+   319
+  ],
+  "clicks": [
+   {
+    "card": 0,
+    "k": "advp",
+    "title": null,
+    "mode": "trio",
+    "rate": null,
+    "ref": false,
+    "info": "TRY IT LIVE · Body feint V2 | drag the stick (or WASD + Shift), then press E / REQUEST — the technique's exit is the stick's direction. The resolver decides foot, entry and timing from the live state, or REJECTS it with the reason."
+   },
+   {
+    "card": 0,
+    "k": "advc",
+    "title": null,
+    "mode": "trio",
+    "rate": null,
+    "ref": false,
+    "info": "TRY IT LIVE · Body feint V2 | drag the stick (or WASD + Shift), then press E / REQUEST — the technique's exit is the stick's direction. The resolver decides foot, entry and timing from the live state, or REJECTS it with the reason."
+   },
+   {
+    "card": 0,
+    "k": "advm",
+    "title": null,
+    "mode": "trio",
+    "rate": null,
+    "ref": false,
+    "info": "TRY IT LIVE · Body feint V2 | drag the stick (or WASD + Shift), then press E / REQUEST — the technique's exit is the stick's direction. The resolver decides foot, entry and timing from the live state, or REJECTS it with the reason."
+   },
+   {
+    "card": 0,
+    "k": "adva",
+    "title": null,
+    "mode": "trio",
+    "rate": null,
+    "ref": false,
+    "info": "TRY IT LIVE · Body feint V2 | drag the stick (or WASD + Shift), then press E / REQUEST — the technique's exit is the stick's direction. The resolver decides foot, entry and timing from the live state, or REJECTS it with the reason."
+   },
+   {
+    "card": 0,
+    "k": "advr",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 0,
+    "k": "trio",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 1,
+    "k": "advp",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 1,
+    "k": "advc",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 1,
+    "k": "advm",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 1,
+    "k": "adva",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 1,
+    "k": "advr",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 1,
+    "k": "trio",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 2,
+    "k": "advp",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 2,
+    "k": "advc",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 2,
+    "k": "advm",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 2,
+    "k": "adva",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 2,
+    "k": "advr",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 2,
+    "k": "trio",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 3,
+    "k": "advp",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 3,
+    "k": "advc",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 3,
+    "k": "advm",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 3,
+    "k": "adva",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 3,
+    "k": "advr",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 3,
+    "k": "trio",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 4,
+    "k": "advp",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 4,
+    "k": "advc",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 4,
+    "k": "advm",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 4,
+    "k": "adva",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 4,
+    "k": "advr",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 4,
+    "k": "trio",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 5,
+    "k": "advp",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 5,
+    "k": "advc",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 5,
+    "k": "advm",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 5,
+    "k": "adva",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 5,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 5,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 6,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 7,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 8,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 9,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 10,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 11,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 12,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 13,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 14,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 15,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 16,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 17,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 18,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 19,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 20,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 21,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 22,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 23,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 24,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 25,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 26,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 27,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 28,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "advc",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "advm",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "adva",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "advr",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 29,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 30,
+    "k": "advp",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 30,
+    "k": "advc",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 30,
+    "k": "advm",
+    "title": "MIRROR · The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (L)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 30,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.50\t0.56\t—"
+   },
+   {
+    "card": 30,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.50\t0.56\t—"
+   },
+   {
+    "card": 30,
+    "k": "trio",
+    "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left",
+    "mode": "trio",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left | the ball on the right foot, the exit 55° left: CURRENT (ball across, the body after it) · UPGRADED (ball and hips across together, the support underneath) · the ordinary inside cut — the identical entry (RUN, 55° left); B in the middle, A and C 4 m either side, synchronised | lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacro"
+   },
+   {
+    "card": 31,
+    "k": "advp",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 31,
+    "k": "advc",
+    "title": "A | B · V-TURN | INSIDE HOOK · JOG",
+    "mode": "vs",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B · V-TURN | INSIDE HOOK · JOG | the V-turn's moving pull against the accessible brake → hook → exit — the identical entry (JOG, 120° left), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · V-TURN (R)\t0.78\t+0.34\t1.12\t0.52\t1.2\t0.6\t3.2\t+0.24\t2.32\t3.50 | B · INSIDE HOOK (R)\t0.88\t+0.32\t1.19\t0.58\t0.6\t0.2\t3.2\t+0.09\t2.4"
+   },
+   {
+    "card": 31,
+    "k": "advm",
+    "title": "MIRROR · Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (L)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 31,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 31,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 31,
+    "k": "trio",
+    "title": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 32,
+    "k": "advp",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 32,
+    "k": "advc",
+    "title": "A | B · MATTHEWS | OUTSIDE REDIRECT · JOG",
+    "mode": "vs",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B · MATTHEWS | OUTSIDE REDIRECT · JOG | honest: without a defender the outside redirect is quicker — the Matthews' inside cue is for a defender's reaction — the identical entry (JOG, 50° right), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · MATTHEWS (compact) (R)\t0.82\t+0.04\t0.86\t0.52\t2.8\t2.6\t3.2\t+0.06\t3.12\t6.8"
+   },
+   {
+    "card": 32,
+    "k": "advm",
+    "title": "MIRROR · The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (L)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
+    "card": 32,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT OUTSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 32,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT OUTSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 32,
+    "k": "trio",
+    "title": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT OUTSIDE REDIRECT (R)\t—\t—\t0.45\t0.51\t—"
+   },
+   {
+    "card": 33,
+    "k": "advp",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 33,
+    "k": "advc",
+    "title": "A | B · STOP-AND-GO | STOP → SETTLE → GO · RUN",
+    "mode": "vs",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B · STOP-AND-GO | STOP → SETTLE → GO · RUN | a run, stopped and relaunched: the deaden-and-push against the full stop, settle, restart — the identical entry (RUN, 0° right), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · DEADEN-AND-EXPLODE (L)\t0.57\t+0.43\t1.01\t0.25\t1.0\t1.0\t7.3\t+0.14\t4.31\t14.45 | B · CARRY (arc)\t"
+   },
+   {
+    "card": 33,
+    "k": "advm",
+    "title": "MIRROR · Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (R)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 33,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | the carry only"
+   },
+   {
+    "card": 33,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | the carry only"
+   },
+   {
+    "card": 33,
+    "k": "trio",
+    "title": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | the carry only"
+   },
+   {
+    "card": 34,
+    "k": "advp",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 34,
+    "k": "advc",
+    "title": "A | B · INSIDE HOOK | CRUYFF · JOG",
+    "mode": "vs",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B · INSIDE HOOK | CRUYFF · JOG | the same ball, the same stride: the Cruyff's quicker last steps, a moving drag and a ≈ 9 m/s² restart — the identical entry (JOG, 120° left), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · INSIDE HOOK (R)\t0.88\t+0.32\t1.19\t0.58\t0.6\t0.2\t3.2\t+0.09\t2.40\t3.24 | B · CRUYFF TURN (R)\t0.7"
+   },
+   {
+    "card": 34,
+    "k": "advm",
+    "title": "MIRROR · Sell the pass, drag it behind the standing leg, go back",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (L)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 34,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 34,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 34,
+    "k": "trio",
+    "title": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
+    "card": 35,
+    "k": "advp",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 35,
+    "k": "advc",
+    "title": "A | B · INSIDE HOOK | RONALDO CHOP · RUN",
+    "mode": "vs",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B · INSIDE HOOK | RONALDO CHOP · RUN | the chop keeps running into the new lane behind the shielding leg — the identical entry (RUN, 120° left), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · INSIDE HOOK (R)\t0.98\t+0.46\t1.44\t0.68\t0.6\t0.2\t5.3\t+0.09\t3.32\t3.78 | B · RONALDO CHOP (R)\t0.89\t+0.38\t1.27\t0.57\t3.5\t2.2\t5.3"
+   },
+   {
+    "card": 35,
+    "k": "advm",
+    "title": "MIRROR · A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "mirror",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (L)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 35,
+    "k": "adva",
+    "title": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.26\t0.32\t—"
+   },
+   {
+    "card": 35,
+    "k": "advr",
+    "title": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.26\t0.32\t—"
+   },
+   {
+    "card": 35,
+    "k": "trio",
+    "title": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "AUTO — the same state, no request: A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext | COMPACT INSIDE REDIRECT (R)\t—\t—\t0.26\t0.32\t—"
+   }
+  ],
+  "tryInfo": "TRY IT LIVE · Body feint V2"
+ },
+ "trio": [
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.55\t0.67\t0.21\t1.07\t10°\t5.2 | B · UPGRADED\tLATERAL TRANSFER\t0.50\t0.59\t0.54\t1.41\t0°\t5.3 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.70\t0.81\t0.00\t0.46\t10°\t5.2"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 40° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.52\t0.68\t0.24\t0.92\t11°\t5.3 | B · UPGRADED\tLATERAL TRANSFER\t0.49\t0.62\t0.44\t1.12\t0°\t5.3 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.48\t0.63\t0.39\t1.07\t11°\t5.3"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · JOG 55° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.48\t0.71\t0.27\t0.75\t0°\t3.2 | B · UPGRADED\tLATERAL TRANSFER\t0.45\t0.62\t0.45\t0.96\t1°\t3.2 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.44\t0.63\t0.42\t0.94\t13°\t3.2"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · WALK 40° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.43\t0.95\t0.16\t0.35\t5°\t1.5 | B · UPGRADED\tLATERAL TRANSFER\t0.40\t0.86\t0.23\t0.44\t7°\t1.5 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.33\t0.86\t0.25\t0.45\t5°\t1.5"
+  }
+ ],
+ "sandbox": {
+  "skills": 30,
+  "label": "BODY FEINT V2 — VIDEO-GUIDED · THE JOYSTICK SANDBOX · S99 · D38 · A99-C (Agility scale B below 99) · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED + the library",
+  "after": {
+   "res": "last request: ELASTICO → PLAYED",
+   "skill": "PLAYED"
+  },
+  "bf": {
+   "has": true,
+   "res": "last request: BODY_FEINT_V2 → PLAYED",
+   "last": "PLAYED BFEINT_R",
+   "simT": 9.1
+  }
+ },
+ "logs": [],
+ "http": []
+}

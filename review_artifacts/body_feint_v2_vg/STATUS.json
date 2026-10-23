@@ -1,0 +1,42 @@
+{
+ "milestone": "BODY FEINT V2 — VIDEO-GUIDED: the feint rebuilt from the owner's reference recording (23 Oct 2026)",
+ "state": "stopped for the owner's 1× review — NOT frozen, NOT integrated; PREVIOUS V2 (feint2/, 0c65eac3) unchanged and running beside it in the Lab; ADV-4, CRUYFF-CHOP-1, VOCAB-1 and the locked BASELINE-88573ef0 unchanged",
+ "classification": "PROVISIONAL · MANUAL / REVIEW (B4 never plays it)",
+ "local_only": "the characters are real players' models: never publish",
+ "owner_instruction": "review_artifacts/body_feint_v2_vg/sources/2026-10-23_user_instruction_body_feint_v2_video_guided.md (verbatim)",
+ "reference": "the owner's Screen Recording 2026-10-23 12.11.32 PM.mov — EA FC 26 tutorial footage (third-party): never committed; studied frame by frame (VIDEO_STUDY.md); I cannot play video in real time",
+ "pages": {
+  "review": "http://127.0.0.1:8361/sandbox/visual/feint2vg_lab.html — BODY FEINT V2 — VIDEO-GUIDED REVIEW first: six cards (jog / low speed / run × both directions), A | B | C (PREVIOUS V2 · VIDEO-GUIDED V2 · OLD) from the identical entry, PREVIOUS / OLD alone, MIRROR, TRY, 1× / 0.5× / 0.25×, cameras GAMEPLAY · FRONT · FRONT HIGH (the reference's view) · REAR CLOSE · SIDE CLOSE · OVERHEAD CLOSE · THREE LANES, frame step, LOOP",
+  "sandbox": "http://127.0.0.1:8361/sandbox/visual/feint2vg_sandbox.html"
+ },
+ "code": "sandbox/visual/feint2vg/ (a copy of feint2/)",
+ "video_lessons": [
+  "the penultimate step on the exit side launches the false step and the brake",
+  "the false step lands wide (≈ 0.25 m outside the running line, ≈ 0.6 m from the ball), toe out",
+  "the lie, held ≈ 0.15 s: the trunk flexed forward and leaning toward the fake with the head; the exit arm thrown out (counterweight); the fake hand low; the free leg lifted behind; no running arm cycle",
+  "the momentum commits (≈ 3.2 → 0.8 m/s); the centre of mass moves only a little; the ball rolls on, untouched, on the exit side",
+  "the hips go back first while the upper body still sells; the free foot swings through and collects the ball on its landing step (plant → touch 0.28 s)",
+  "upright and running again by +0.40"
+ ],
+ "measured_jog": {
+  "trunk_pitch_deg": "23 (PREVIOUS 5, OLD 8)", "lean_to_fake_deg": "29 (8, 0)", "head_drop_cm": "19 (4.5, 2.7)",
+  "exit_hand": "+0.15 m above its shoulder, 0.53 m out (PREVIOUS −0.33, hanging)", "free_foot": "0.24 m behind, 0.28 m up (PREVIOUS 0.15 m in front)",
+  "false_step_out_m": "0.39 (0.15)", "speeds_m_s": "3.2 → 1.7 → 3.2 (PREVIOUS 3.2 → 2.6 → 3.2)",
+  "plant_to_touch_s": "0.29 (0.32; reference 0.28)", "request_to_touch_s": "1.02 (= PREVIOUS)", "useful_exit_s": "1.15 (PREVIOUS 1.07)"
+ },
+ "low_speed_and_run": "walk: touch 0.81, useful 0.95, 1.5 → 0.8 → 1.5 · run: touch 0.97, useful 1.02, 5.3 → 3.5 → 5.3 · mirrors identical",
+ "integrity": {
+  "six_cases": "0 normal-visible events (slides / jumps / crossings / knee pops / floats / swaps) · slow-motion floats 1–2 per case, a running knee 0/1 · pelvis step ≤ 0.4 cm/tick · 0 torso / shoulder spikes · 0 missed, 0 exits",
+  "exit_angles_15_90": "0 visible at jog / walk / run, 4 stride phases each",
+  "rapid_input_28_runs": "13 normal / 75 slow · spikes 80 (PREVIOUS 2 / 48 · 59): the feint's own phases 0 visible; remaining = carry floats below 3 m/s after chained requests, the carry's far-foot crossing under over-fast alternation (11.5–12.6 cm; PREVIOUS 7 cm), a carry lean burst in the same sequence",
+  "regression": "every non-feint curated / extreme / battery line identical to PREVIOUS V2 · body torture 254 / 328 identical · possession 10 losses / 40 seeds identical · determinism 18/18 + 18/18 · 361 random requests 0 exits 0 missed · CPU +2 % · browser 0 errors"
+ },
+ "rules_added_ablatable": ["bfball (the trimmed entry takes the ball where it rolls; the walking trimmed entry ≤ 50°)", "bftrim (the trimmed entry's facing / heading from the entry line)", "bfturn (a larger exit turns more slowly)", "bfblend (posture blended ≥ 0.18 s when control leaves a feint)"],
+ "latency": "jog 0.65–1.14 s (unchanged) · walk 0.47–0.81 s in most phases (was up to 1.24) · run 0.53–0.97 s",
+ "owner_decisions": [
+  "at 1×: one believable lie, then the escape?",
+  "deeper toward the reference (trunk 35°+, brake toward 1 m/s) or this compact version?",
+  "keep the request's exit up to 90°, or shape toward the reference's shallower exits (10–30°)?",
+  "classification: MANUAL / REVIEW; never AUTO without defenders"
+ ]
+}
