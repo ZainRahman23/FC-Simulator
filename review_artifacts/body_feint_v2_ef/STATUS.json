@@ -1,0 +1,13 @@
+{
+ "milestone": "BODY FEINT V2 — EXIT FOOT: the eventual exit foot sells the lie, then its outside collects the ball into the exit (23 Oct 2026)",
+ "state": "stopped for the owner's 1× review — NOT frozen, NOT integrated; PREVIOUS VIDEO-GUIDED V2 (feint2vg/, 7853a88f) unchanged and running beside it in the Lab",
+ "classification": "PROVISIONAL · MANUAL / REVIEW",
+ "local_only": "the characters are real players' models: never publish",
+ "owner_instruction": "review_artifacts/body_feint_v2_ef/sources/2026-10-23_user_instruction_body_feint_v2_exit_foot.md (verbatim)",
+ "pages": { "review": "http://127.0.0.1:8361/sandbox/visual/feint2ef_lab.html — EXIT-FOOT REVIEW first: six cards; B · EXIT-FOOT, A · VIDEO-GUIDED (previous), A | B side by side; cameras FRONT HIGH (default) · REAR CLOSE · OVERHEAD CLOSE · GAMEPLAY · …; ⇄ A | B at the same moment", "sandbox": "http://127.0.0.1:8361/sandbox/visual/feint2ef_sandbox.html" },
+ "code": "sandbox/visual/feint2ef/ (a copy of feint2vg/: only the feint template and the Lab differ)",
+ "reference_lesson": "the free (exit-side) foot lifts on the exit side, tucks in behind toward the midline (toward the fake) through the lie, releases only after the hips reverse, lands at the ball's inner side — its outside takes the ball",
+ "measured_jog": { "free_foot_in_the_lie": "+0.06 m across (PREVIOUS +0.22 out on the exit side) · toe −5…−10° toward the fake (PREVIOUS +18° toward the exit)", "order": "pelvis reverses −0.12 s → free foot releases −0.11 → touch (PREVIOUS: foot −0.15 before pelvis −0.10)", "contact": "OUTSIDE, gap 0.0 cm", "foot_step_max": "3.6 cm/tick (PREVIOUS 9.0, the landing)", "toe_turn_max": "≤ 258°/s (PREVIOUS 1164)", "upper_body": "unchanged", "timing": "touch 1.02 · useful exit 1.15 (= PREVIOUS)" },
+ "integrity": { "six_cases": "0 visible slides / jumps / crossings / knee pops / swaps · no ankle snaps (≤ 635°/s) · foot step ≤ 4.8 cm/tick · OUTSIDE contact gap 0.0 cm · 0 missed / exits · mirrors identical", "exit_angles": "15–90° clean at jog / walk / run", "rapid_input": "13 normal / 72 slow (PREVIOUS VIDEO-GUIDED 13 / 75): the same ordinary-carry events", "regression": "every non-feint line identical to PREVIOUS VIDEO-GUIDED · body torture 254 / 328 · possession 10 / 40 seeds · determinism 18/18 + 18/18 · CPU +2 % (noise) · browser 0 errors" },
+ "owner_decisions": ["at 1×: one elastic action — the whole player sells, the sharp reversal, the outside-foot exit?", "the tuck's depth: to the midline as built, or a touch further toward the fake", "freeze nothing yet"]
+}
