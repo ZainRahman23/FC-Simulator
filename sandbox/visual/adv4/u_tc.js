@@ -152,7 +152,16 @@ export const GENERIC = {
 // defender model B4 has no reason to choose it, so it is generated only when forced (the review select / presets))
 GENERIC.FNO = Object.assign({}, GENERIC.COR, { label: "FEINT + OUTSIDE CUT", feint: true, reviewOnly: true, expanded: true });
 GENERIC.FNI = Object.assign({}, GENERIC.CIR, { label: "FEINT + INSIDE CUT", feint: true, reviewOnly: true, expanded: true });
-export const EXPANDED = ["LAT", "KNK"];   // (chosen automatically; SOL, FNO, FNI: review only)
+export const EXPANDED = ["LAT", "KNK"];
+// ── ADV-4 · THE CROQUETA'S BODY (owner, 22 Oct: "ball transfers across body + hips/pelvis shift across the lane + support reorganizes underneath
+// → player emerges through the new lane" — not "ball across → body follows afterward"). Before: the body held its old line until the touch,
+// then A99-C turned it after the ball had gone (0.49 s straight, then 0 → 40° in 0.1 s, the pelvis overshooting to 49°). Now, in the touching
+// foot's swing, the root itself starts across — A99-C's own carry toward a heading `f` of the way to the request from `lead` s before the touch,
+// to the request after it (the authoritative root: no offset, nothing A99-C cannot do) — while the pelvis TRANSLATES before it rotates (its yaw
+// `psiF` of the travel's turn until the receive, then turning into the lane by `psiEnd`), a low wide base (`crouch`), and the side lean of the
+// demand-driven channels from the real lateral acceleration. CURRENT (sim option croq: "CURRENT", tools ABL=croq): the old behaviour, kept for
+// the Lab's three-lane comparison
+export const CROQ = { lead: 0.08, f: 0.4, psiF: 0.35, psiEnd: 0.26, crouch: 0.06, reach: 0.06, eB: 25 };   // (chosen automatically; SOL, FNO, FNI: review only)
 // ── B3 / B5: a technique's commitment window and its release, from its own decisive swing ───────────────────────────────────────────────────────
 //   finalApproach: the striking foot's last authored segment into the ball (from its last waypoint before the contact; ≥ react, ≤ 0.08 s)
 //   exitRelease:   the end of that foot's authored follow-through (its last waypoint after the contact; ≥ 0.06 s) — ordinary control returns there
@@ -370,7 +379,9 @@ export class PlaySim {
     const tLine = c.tLine != null ? c.tLine - t : 3.0; J += 2.0 * min(3.0, tLine); notes.push(c.tLine != null ? `line +${tLine.toFixed(2)}s` : "never on the line");
     const tR = o.tRel != null ? o.tRel - t : 1.6; J += 0.8 * min(2.0, tR); notes.push(o.tRel != null ? `contact +${tR.toFixed(2)}s` : "no contact onto the line");
     const gap = o.tNext - o.tLast; if (gap > 0.30 && !(a.kind === "GENERIC" && GENERIC[a.fam] && GENERIC[a.fam].knock)) { J += 0.8 * min(2.0, gap - 0.30); notes.push(`next touch +${gap.toFixed(2)}s`); }
-    if (o.eB > 15 * DEG) { J += 0.5 * min(4, (o.eB / (30 * DEG)) ** 2); notes.push(`ball ${(o.eB / DEG).toFixed(0)}° off`); }
+    // (ADV-4: the croqueta's transfer goes ACROSS — its receive puts the ball on the line; its own line is judged from 25°, not 15°)
+    const eB0 = a.kind === "GENERIC" && a.fam === "LAT" && this.o.croq !== "CURRENT" && !CC_ABL.croq ? CROQ.eB : 15;
+    if (o.eB > eB0 * DEG) { J += 0.5 * min(4, (o.eB / (30 * DEG)) ** 2); notes.push(`ball ${(o.eB / DEG).toFixed(0)}° off`); }
     J += 0.8 * (1 - o.retained); if (o.retained < 0.6) notes.push(`keeps ${(o.retained * 100).toFixed(0)} %`);
     const lim = q.mode === "SPRINT" ? 3.0 : q.mode === "RUN" ? 2.0 : q.mode === "JOG" ? 1.5 : 1.0; if (o.sep > lim) { J += 0.6 * (o.sep - lim); notes.push(`ball ${o.sep.toFixed(1)}m away`); }
     J += 0.22 * (c.nContacts || 0);
@@ -419,6 +430,8 @@ export class PlaySim {
     // paced: no faster than keeps the body ≈ 0.42 m behind the free ball (along the request) until the touch that plays it
     if (prog.kind === "carry" && prog.pace && t < prog.pace.until && q && q.h != null) { const f = predict(prog.pace.b0, prog.pace.bv, t - prog.pace.t0), u = dir(q.h), gap = (f.p[0] - p[0]) * u[0] + (f.p[1] - p[1]) * u[1], va = f.v[0] * u[0] + f.v[1] * u[1];
       return { speed: clamp(va + 2.5 * (gap - 0.42), 0.6, this.P.speed[q.mode]), h: q.h }; }
+    if (prog.kind === "carry" && prog.croq && t >= prog.croq.t0 && t < prog.croq.tP && q && q.h != null) { const C = prog.croq, f = t < C.t1 ? C.psiF : C.psiF + (1 - C.psiF) * clamp((t - C.t1) / max(0.02, C.tP - C.t1), 0, 1);
+      return { speed: this.P.speed[q.mode], h: t < C.t1 ? C.hS : q.h, psi: C.h0 + f * wrap(h - C.h0) }; }   // (the pelvis a share `f` of the travel's turn: translating before it rotates)
     if (prog.kind === "carry") { if (prog.hold && t < prog.hold.until && q && q.h != null) return { speed: prog.hold.speed != null ? prog.hold.speed : this.P.speed[q.mode], h: prog.hold.h }; return { speed: q && q.h != null ? this.P.speed[q.mode] : 0, h: q ? q.h : null, stop: !q || q.h == null }; }
     if (prog.kind === "chase") return t < prog.until ? { speed: prog.speed, h: prog.h } : { speed: q && q.h != null ? this.P.speed[q.mode] : 0, h: q ? q.h : null, stop: !q || q.h == null };
     // a technique: the approach (a speed ramp along the entry heading), its keys, then the carry
@@ -581,15 +594,23 @@ export class PlaySim {
     for (let i = 0; i < 2; i++) { const c = fromLocal(B, h, -G.nom[0], -sgn(X) * G.nom[1]), d = [c[0] - st.P[0], c[1] - st.P[1]]; if (hyp(d[0], d[1]) < 0.2) return h0; h = hdg(d); }
     return h0 + clamp(wrap(h - h0), -50 * DEG, 50 * DEG); }
   genericBuild(key, G, X, tT, e, ap, st, keep, q, turnB, sgnT, hPin = null, base = null) {
-    const t = this.t, O = other(X), h0 = st.s > 0.6 ? st.h : st.psi, hold = { h: hPin != null ? hPin : ap === "intercept" ? this.approachH(G, X, tT, st, sgnT) : h0, until: tT + 0.02 }, f = ap;
+    // (… and the OTHER foot's touch within 0.45 s of the transfer is its RECEIVE — the same manoeuvre: no second shift, no held line, the body
+    // carrying on into the lane; before, B4 took it as a second lateral transfer, which re-ran the shift and held the root's turn 0.15 s)
+    const t = this.t, O = other(X), h0 = st.s > 0.6 ? st.h : st.psi, lastLAT = key === "LAT" ? this.contacts.filter((c) => c.fam === "LAT" && !c.missed && c.t < t + 1e-9).pop() : null, RCV = !!(lastLAT && lastLAT.F === O && t - lastLAT.t < 0.45 && this.o.croq !== "CURRENT" && !CC_ABL.croq);
+    const CQ = key === "LAT" && !RCV && this.o.croq !== "CURRENT" && !CC_ABL.croq && q.h != null, hold = { h: hPin != null ? hPin : ap === "intercept" ? this.approachH(G, X, tT, st, sgnT) : h0, until: CQ ? max(t, tT - CROQ.lead) : RCV ? t : tT + 0.02 }, f = ap;
+    // (ADV-4 croqueta: the root across from `lead` s before the touch, the pelvis translating before it rotates — CROQ above)
+    const croq = CQ ? { t0: hold.until, t1: tT + 0.02, h0: hold.h, hS: hold.h + CROQ.f * wrap(q.h - hold.h), tP: tT + CROQ.psiEnd, psiF: CROQ.psiF } : null;
     if (hPin == null && ap === "intercept" && abs(wrap(hold.h - h0)) < 2 * DEG) return null;
     const chKeys = this.carryChannels(st, q, t); chKeys.crouch = [[tT - 0.10, G.crouch || 0.045], [tT + 0.12, 0.035], [tT + 0.35, 0.022]]; chKeys.trunk = [[tT - 0.05, sgnT * 8], [tT + 0.3, 0]];
     if (G.feint) { const fT = min(0.30, tT - t - 0.02); if (fT < 0.20) return this.rej("feint time"); const fk = -sgnT, f0 = tT - fT, f1 = tT - 0.4 * fT;   // (the feint: 0.20 – 0.30 s before the touch, as the state allows)
       chKeys.side = [[t + 0.01, 0], [f0, fk * 9], [f1, fk * 9], [tT + 0.03, -fk * 6], [tT + 0.35, 0]];
       chKeys.trunk = [[f0, fk * 16], [f1 + 0.05, fk * 12], [tT + 0.04, -fk * 10], [tT + 0.32, 0]]; chKeys.crouch = [[f0, 0.065], [tT - 0.05, 0.05], [tT + 0.12, 0.035], [tT + 0.35, 0.022]]; }
-    const plan = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "GENERIC", fam: key, label: G.label, F: X, id: 0 }, req: q, prog: { kind: "carry", hold }, chKeys });
+    if (croq) { chKeys.crouch = [[tT - 0.16, CROQ.crouch], [tT + 0.14, CROQ.crouch - 0.01], [tT + 0.40, 0.022]]; chKeys.arms = [[tT - 0.14, 0.45], [tT + 0.12, 0.5], [tT + 0.40, 0.18]]; }
+    const plan = this.mkPlan({ t0: t, st, stances: null, contacts: [], action: { kind: "GENERIC", fam: key, label: G.label, F: X, id: 0 }, req: q, prog: { kind: "carry", hold, croq }, chKeys });
     const B = predict(this.ball.p, this.ball.v, tT - t), s = this.stateAt(tT, plan), th = s.psi, rel = toLocal(B.p, s.P, th), lat = rel[1] * sgn(X);
-    if (rel[0] < G.box.a[0] || rel[0] > G.box.a[1] || lat < G.box.l[0] || lat > G.box.l[1] || (G.vMax && s.s > G.vMax)) return this.rej("box");
+    // (ADV-4: the croqueta's body already moving across at its touch leaves the ball up to 6 cm further to the touching foot's side — its reach
+    // widened by that much; the swing-speed check below still forbids a magic foot)
+    if (rel[0] < G.box.a[0] || rel[0] > G.box.a[1] || lat < G.box.l[0] || lat > G.box.l[1] + (CQ ? CROQ.reach : 0) || (G.vMax && s.s > G.vMax)) return this.rej("box");
     // the plant (the other foot, just before the touch, beside / behind the ball) and the touching foot's landing at its swing end
     const anchors = []; let plant = null;
     // (B5 windups: no extra plant when the other foot is already down through the touch in the ordinary gait — the support exists)
@@ -622,7 +643,7 @@ export class PlaySim {
     { const L = plan.stances[X].find((x) => x.t0 > tT - 1e-6); if (L && L.src === "gait") { const psi = this.stateAt(L.t0, plan).psi, r = rgt(psi); let need = 0, side = sgn(X);
         for (let x = max(tT, L.t0 - 0.04); x <= min(L.t1, L.t0 + 0.3); x += 0.02) { const b = predict(B.p, vOut, x - tT).p, dd = [b[0] - L.pos[0], b[1] - L.pos[1]], a = dd[0] * Math.cos(psi) + dd[1] * Math.sin(psi), l = dd[0] * r[0] + dd[1] * r[1]; if (a > -0.22 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
         if (need > 0) { const k = min(0.20, need); L.pos = [L.pos[0] + r[0] * side * k, L.pos[1] + r[1] * side * k]; } } }
-    const c = { id: ++this.cid, t: tT, k: Math.round(tT / DT), F: X, surface, role: G.label.toLowerCase(), aim, src: "generic", tech: "GENERIC", fam: key, bPred: B.p, vInPred: B.v, vOutPred: vOut, sc: G.knock && aim.kind === "target" ? true : undefined };
+    const c = { id: ++this.cid, t: tT, k: Math.round(tT / DT), F: X, surface, role: RCV ? "croqueta · the other foot receives and carries on" : key === "LAT" && this.o.croq !== "CURRENT" ? "croqueta · the inside plays it across" : G.label.toLowerCase(), aim, src: "generic", tech: "GENERIC", fam: key, bPred: B.p, vInPred: B.v, vOutPred: vOut, sc: G.knock && aim.kind === "target" ? true : undefined };
     const ca = this.plan.action, same = ca.kind === "GENERIC" && ca.fam === key && ca.F === X && !this.contacts.some((r) => r.actionId === ca.id);
     plan.contacts = keep.contacts.concat([c]); plan.nContacts = 1;
     plan.action = { kind: "GENERIC", fam: key, label: G.label, F: X, m: 0, id: same ? ca.id : ++this.aid, tC: tT, turnDeg: (G.body ? turnB : wrap(q.h - (inS > 1 ? hdg(B.v) : h0))) / DEG, protect: G.protect, approach: f, tPrep: plant ? plant.t0 : null };

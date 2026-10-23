@@ -30,10 +30,13 @@ const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ?
     // ADV-4: THE ADVANCED AUTO SOLUTIONS — six cards; every button of every card clicked (PLAY · COMPARE · MIRROR · AUTO · 0.5× · TRY), the A | B
     // table read back, a screenshot of each COMPARE
     res.adv = { cards: await p.evaluate(() => document.querySelectorAll("#labPanel .card.adv").length), why: await p.evaluate(() => [...document.querySelectorAll("#labPanel .card.adv .why")].map((x) => x.innerText.length)), clicks: [] };
-    for (let i = 0; i < res.adv.cards; i++) for (const k of ["advp", "advc", "advm", "adva", "advr"]) {
+    for (let i = 0; i < res.adv.cards; i++) for (const k of ["advp", "advc", "advm", "adva", "advr", "trio"]) {
       await p.evaluate((i, k) => { const b = k === "advr" ? document.querySelector(`#labPanel [data-advr="${i}"][data-rate="0.5"]`) : document.querySelectorAll(`#labPanel .card.adv`)[i].querySelector(`[data-${k}]`); if (b) b.click(); }, i, k); await sleep(k === "advc" ? 1800 : 1100);
       const r = await p.evaluate(() => ({ title: window.PT.V.replay && window.PT.V.replay.title, mode: window.PT.V.labMode, rate: window.PT.V.replay && window.PT.V.replay.rate, ref: !!window.PT.V.ref, info: document.getElementById("labInfo").innerText.split("\n").slice(0, 5).join(" | ").slice(0, 400) }));
       res.adv.clicks.push(Object.assign({ card: i, k }, r)); if (k === "advc") await p.screenshot({ path: path.join(OUT, `adv_compare_${i}.jpg`), type: "jpeg", quality: 80 }); }
+    // (the croqueta trio: CURRENT | UPGRADED | BASIC — three lanes, the table read back)
+    res.trio = []; for (let i = 0; i < 4; i++) { await p.evaluate((i) => { const b = document.querySelector(`#labPanel [data-trio="${i}"]`); if (b) b.click(); }, i); await sleep(1800);
+      res.trio.push(await p.evaluate(() => ({ title: window.PT.V.replay.title, mode: window.PT.V.labMode, ref: !!window.PT.V.ref, ref2: !!window.PT.V.ref2, info: document.getElementById("labInfo").innerText.split("\n").slice(2, 6).join(" | ") }))); if (i === 0) await p.screenshot({ path: path.join(OUT, "trio_0.jpg"), type: "jpeg", quality: 80 }); }
     await p.evaluate(() => { const b = document.querySelectorAll("#labPanel .card.adv")[0].querySelector("[data-try]"); if (b) b.click(); }); await sleep(900); res.adv.tryInfo = await p.evaluate(() => document.getElementById("labInfo").innerText.split("\n")[0]);
     // the sandbox
     await p.goto(BASE + "adv4_sandbox.html", { waitUntil: "load" }); await p.waitForFunction("window.PT && window.PT.ready()", { timeout: 60000 }); await sleep(600);

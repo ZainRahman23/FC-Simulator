@@ -1,0 +1,14 @@
+BODY TORTURE — 36 seeds × 60 s (v_bodytort's programs, BALL ON, CONTROLLED, CARRY-B), normal-visible events per 6-seed group (1, 7, 13, 19, 25, 31)
+cur70: 83 63 59 61 70 74 → 410
+cur40: 69 52 70 69 66 82 → 408
+up40: 66 79 70 61 90 58 → 424
+up70: 96 72 83 76 65 60 → 452
+(cur = croq CURRENT, up = upgraded; 40 / 70 = the V-turn's lower limit; cur70 = the committed b6092d3; cur70 seeds 1 and 13 run on the committed code itself)
+
+THE CROQUETA'S OWN WINDOWS — events within [-0.2, +0.8] s of every croqueta touch (V-turn 70)
+CURRENT seeds 1–12: croqueta touches 63 · events within [-0.2, +0.8] s: normal 11 (0.175 per touch) slow 18 · {"CROSS":9,"FLOAT":1,"KNEE":1} · all normal 146
+CURRENT seeds 13–24: croqueta touches 58 · events within [-0.2, +0.8] s: normal 5 (0.086 per touch) slow 8 · {"FLOAT":1,"CROSS":4} · all normal 120
+CURRENT seeds 25–36: croqueta touches 43 · events within [-0.2, +0.8] s: normal 7 (0.163 per touch) slow 10 · {"CROSS":5,"FLOAT":1,"JUMP":1} · all normal 144
+UPGRADED seeds 1–12: croqueta touches 58 · events within [-0.2, +0.8] s: normal 6 (0.103 per touch) slow 12 · {"CROSS":4,"FLOAT":1,"SWAP":1} · all normal 168
+UPGRADED seeds 13–24: croqueta touches 53 · events within [-0.2, +0.8] s: normal 5 (0.094 per touch) slow 14 · {"CROSS":4,"FLOAT":1} · all normal 159
+UPGRADED seeds 25–36: croqueta touches 67 · events within [-0.2, +0.8] s: normal 12 (0.179 per touch) slow 29 · {"CROSS":9,"FLOAT":3} · all normal 125

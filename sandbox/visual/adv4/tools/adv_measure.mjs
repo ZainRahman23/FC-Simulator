@@ -26,9 +26,9 @@ export const FAMS = {
   STOP_AND_GO: { intent: "STOP_AND_GO", hold: ["DEADEN", "HESITATE", "FAKESTOP"], kinds: [["HESITATION", 0], ["STOP", 0], ["STOP", 45]] },
 };
 const legacy = (id) => (META_BY_ID[id] ? id : { V_TURN: "V_PULL", STOP_AND_GO: "DEADEN_EXPLODE" }[id] || id);
-export function mk(o = {}) { const sim = makeSim("TL", { layers: presetLayers("FULL"), attrs: { bc: 99, dri: 99, agi: 99 }, foot: o.pref || "R", style: "NEUTRAL", seed: 1, start: { P: [30, 34], h: 0 }, pace: "D38", vocab: "EXPANDED", control: "CONTROLLED", carry: "B", ballOn: true }); if (o.hold) sim.o.noFam = new Set(o.hold); return sim; }
+export function mk(o = {}) { const sim = makeSim("TL", { layers: presetLayers("FULL"), attrs: { bc: 99, dri: 99, agi: 99 }, foot: o.pref || "R", style: "NEUTRAL", seed: 1, start: { P: [30, 34], h: 0 }, pace: "D38", vocab: "EXPANDED", control: "CONTROLLED", carry: "B", ballOn: true, croq: o.croq || null }); if (o.hold) sim.o.noFam = new Set(o.hold); return sim; }   // (croq: "CURRENT" — the croqueta before its body upgrade)
 // one lane: lane = { req: intent id | null (AUTO), hold: [...] }, problem = { mode, ang } (turn) or { stop: "HESITATION" | "STOP", ang }
-export function runLane(lane, prob, o = {}) { const sim = mk({ hold: lane.hold }), mode = prob.mode, R = (h, mm) => ({ h, mode: mm || mode, keys: 0 });
+export function runLane(lane, prob, o = {}) { const sim = mk({ hold: lane.hold, croq: lane.croq, pref: lane.pref }), mode = prob.mode, R = (h, mm) => ({ h, mode: mm || mode, keys: 0 });
   const nU = Math.round((RUNUP[mode] + (o.phase || 0)) / DT); for (let k = 0; k < nU; k++) sim.step(R(k < 24 ? null : 0));
   const t0 = sim.t, v0 = sim.stateAt(t0).s, k0 = sim.k, c0 = sim.contacts.length, ex0 = sim.poss.log.length, hq = prob.ang * DEG, dur = o.dur || 3.4;
   if (lane.req) { const it = intentOf(legacy(lane.req)); if (it) sim.requestSkill(Object.assign({}, it, { sprint: prob.stop === "HESITATION" })); }

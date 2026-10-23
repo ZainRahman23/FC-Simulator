@@ -93,6 +93,30 @@
     "tDecisive": 1.8291666666666666,
     "decisiveSurface": "OUTSIDE",
     "tControl": 1.8891666666666662,
+    "tNext": 2,
+    "next": "LATERAL TRANSFER"
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 2,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 2.4124999999999996,
+    "decisiveSurface": "INSIDE",
+    "tControl": 2.4724999999999993,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 2.4124999999999996,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": null,
+    "decisiveSurface": null,
+    "tControl": null,
     "tNext": null,
     "next": null
    }
@@ -116,7 +140,7 @@
     "t": 1.004,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -134,15 +158,15 @@
     "missed": false
    },
    {
-    "t": 2.546,
+    "t": 2.412,
     "F": "R",
     "surface": "INSIDE",
-    "role": "carry",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    }
   ],
   "missed": 0,
-  "sepMax": 0.7082141705907626,
+  "sepMax": 0.708111653719168,
   "exits": [],
   "feints": [
    {
@@ -487,18 +511,18 @@
     "t": 0.579,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
-    "t": 0.892,
+    "t": 0.896,
     "F": "R",
     "surface": "INSIDE",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 1.525,
+    "t": 1.529,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -513,7 +537,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 0.6553796045685936,
+  "sepMax": 0.6553686617327942,
   "exits": [],
   "feints": [
    {
@@ -748,7 +772,7 @@
     "t": 0.579,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -3065,6 +3089,306 @@
     "tControl": 0.5474999999999999,
     "tNext": null,
     "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.4874999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.6916666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7516666666666665,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.025,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "croqueta · the inside plays it across",
+    "missed": false
+   },
+   {
+    "t": 0.692,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "croqueta · the other foot receives and carries on",
+    "missed": false
+   },
+   {
+    "t": 1.008,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.642,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.271,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6560489119337323,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·MIRROR",
+  "variant": "MIRROR",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 55,
+     "plant timing": 8,
+     "swing speed": 2
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.5474999999999999,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0.4874999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.6916666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7516666666666665,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.025,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.487,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "croqueta · the inside plays it across",
+    "missed": false
+   },
+   {
+    "t": 0.692,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "croqueta · the other foot receives and carries on",
+    "missed": false
+   },
+   {
+    "t": 1.008,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.642,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.271,
+    "F": "L",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6560489119302957,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·JOG",
+  "variant": "JOG",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 39,
+     "swing speed": 6,
+     "plant timing": 3
+    },
+    "t": 0,
+    "tPlayed": 0.4375
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.4375,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.49750000000000005,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "GATHER (L)",
+    "tech": "ABG",
+    "tSel": 0.4375,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.6708333333333334,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7308333333333334,
+    "tNext": null,
+    "next": null
+   }
+  ],
+  "contacts": [
+   {
+    "t": -0.146,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 0.438,
+    "F": "R",
+    "surface": "INSIDE",
+    "role": "croqueta · the inside plays it across",
+    "missed": false
+   },
+   {
+    "t": 0.671,
+    "F": "L",
+    "surface": "INSIDE",
+    "role": "gather",
+    "missed": false
+   },
+   {
+    "t": 1.029,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 1.746,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   },
+   {
+    "t": 2.467,
+    "F": "R",
+    "surface": "LACES",
+    "role": "carry",
+    "missed": false
+   }
+  ],
+  "missed": 0,
+  "sepMax": 0.6576206436621602,
+  "exits": [],
+  "feints": [],
+  "body": {
+   "normal": 0,
+   "slow": 0,
+   "diag": 0
+  },
+  "kinds": {},
+  "bodyEvents": []
+ },
+ {
+  "name": "CROQUETA·CURRENT (before)",
+  "variant": "CURRENT (before)",
+  "tech": "CROQUETA",
+  "skills": [
+   {
+    "intent": "CROQUETA",
+    "result": "PLAYED",
+    "played": "LATERAL_TRANSFER",
+    "rej": {
+     "box": 55,
+     "plant timing": 8,
+     "swing speed": 2
+    },
+    "t": 0,
+    "tPlayed": 0.4874999999999998
+   }
+  ],
+  "phases": [
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 0,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.4874999999999998,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.5474999999999999,
+    "tNext": null,
+    "next": null
    }
   ],
   "contacts": [
@@ -3113,194 +3437,6 @@
   ],
   "missed": 0,
   "sepMax": 0.6547003726228635,
-  "exits": [],
-  "feints": [],
-  "body": {
-   "normal": 0,
-   "slow": 0,
-   "diag": 0
-  },
-  "kinds": {},
-  "bodyEvents": []
- },
- {
-  "name": "CROQUETA·MIRROR",
-  "variant": "MIRROR",
-  "tech": "CROQUETA",
-  "skills": [
-   {
-    "intent": "CROQUETA",
-    "result": "PLAYED",
-    "played": "LATERAL_TRANSFER",
-    "rej": {
-     "box": 55,
-     "plant timing": 8,
-     "swing speed": 2
-    },
-    "t": 0,
-    "tPlayed": 0.4874999999999998
-   }
-  ],
-  "phases": [
-   {
-    "label": "LATERAL TRANSFER (L)",
-    "tech": "LAT",
-    "tSel": 0,
-    "tPrep": null,
-    "tCommit": null,
-    "tDecisive": 0.4874999999999998,
-    "decisiveSurface": "INSIDE",
-    "tControl": 0.5474999999999999,
-    "tNext": null,
-    "next": null
-   }
-  ],
-  "contacts": [
-   {
-    "t": -0.025,
-    "F": "L",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 0.487,
-    "F": "L",
-    "surface": "INSIDE",
-    "role": "lateral transfer",
-    "missed": false
-   },
-   {
-    "t": 0.8,
-    "F": "R",
-    "surface": "INSIDE",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 1.117,
-    "F": "L",
-    "surface": "INSIDE",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 1.75,
-    "F": "L",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 2.379,
-    "F": "L",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   }
-  ],
-  "missed": 0,
-  "sepMax": 0.6547003726230579,
-  "exits": [],
-  "feints": [],
-  "body": {
-   "normal": 0,
-   "slow": 0,
-   "diag": 0
-  },
-  "kinds": {},
-  "bodyEvents": []
- },
- {
-  "name": "CROQUETA·JOG",
-  "variant": "JOG",
-  "tech": "CROQUETA",
-  "skills": [
-   {
-    "intent": "CROQUETA",
-    "result": "PLAYED",
-    "played": "LATERAL_TRANSFER",
-    "rej": {
-     "box": 40,
-     "swing speed": 5,
-     "plant timing": 3
-    },
-    "t": 0,
-    "tPlayed": 0.4375
-   }
-  ],
-  "phases": [
-   {
-    "label": "LATERAL TRANSFER (R)",
-    "tech": "LAT",
-    "tSel": 0,
-    "tPrep": null,
-    "tCommit": null,
-    "tDecisive": 0.4375,
-    "decisiveSurface": "INSIDE",
-    "tControl": 0.49750000000000005,
-    "tNext": null,
-    "next": null
-   },
-   {
-    "label": "GATHER (L)",
-    "tech": "ABG",
-    "tSel": 0.4375,
-    "tPrep": null,
-    "tCommit": null,
-    "tDecisive": 0.6708333333333334,
-    "decisiveSurface": "INSIDE",
-    "tControl": 0.7308333333333334,
-    "tNext": null,
-    "next": null
-   }
-  ],
-  "contacts": [
-   {
-    "t": -0.146,
-    "F": "R",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 0.438,
-    "F": "R",
-    "surface": "INSIDE",
-    "role": "lateral transfer",
-    "missed": false
-   },
-   {
-    "t": 0.671,
-    "F": "L",
-    "surface": "INSIDE",
-    "role": "gather",
-    "missed": false
-   },
-   {
-    "t": 1.029,
-    "F": "R",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 1.746,
-    "F": "R",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   },
-   {
-    "t": 2.467,
-    "F": "R",
-    "surface": "LACES",
-    "role": "carry",
-    "missed": false
-   }
-  ],
-  "missed": 0,
-  "sepMax": 0.6576208211620854,
   "exits": [],
   "feints": [],
   "body": {
@@ -3416,7 +3552,7 @@
     "t": 0.287,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -3442,7 +3578,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 0.6568118667457087,
+  "sepMax": 0.656812483572148,
   "exits": [],
   "feints": [],
   "body": {
@@ -3491,7 +3627,7 @@
     "t": 0.579,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -3567,6 +3703,18 @@
     "tControl": 0.9558333333333331,
     "tNext": null,
     "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.895833333333333,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.0999999999999996,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.1599999999999997,
+    "tNext": null,
+    "next": null
    }
   ],
   "contacts": [
@@ -3588,25 +3736,25 @@
     "t": 0.896,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
-    "t": 1.208,
+    "t": 1.1,
     "F": "L",
     "surface": "INSIDE",
-    "role": "carry",
+    "role": "croqueta · the other foot receives and carries on",
     "missed": false
    },
    {
-    "t": 1.525,
+    "t": 1.417,
     "F": "R",
-    "surface": "INSIDE",
+    "surface": "LACES",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 2.158,
+    "t": 2.05,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -3774,7 +3922,7 @@
     "t": 0.579,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -4781,7 +4929,7 @@
     "t": 0.579,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -7392,7 +7540,7 @@
     "t": 1.492,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -7908,12 +8056,12 @@
     "result": "PLAYED",
     "played": "LATERAL_TRANSFER",
     "rej": {
-     "swing speed": 8,
-     "box": 41,
+     "swing speed": 7,
+     "box": 42,
      "plant timing": 3
     },
     "t": 1.0499999999999998,
-    "tPlayed": 1.4916666666666663
+    "tPlayed": 1.5124999999999997
    }
   ],
   "phases": [
@@ -7935,21 +8083,21 @@
     "tSel": 1.0499999999999998,
     "tPrep": null,
     "tCommit": null,
-    "tDecisive": 1.4916666666666663,
+    "tDecisive": 1.5124999999999997,
     "decisiveSurface": "INSIDE",
-    "tControl": 1.5516666666666663,
+    "tControl": 1.5724999999999998,
     "tNext": null,
     "next": null
    },
    {
     "label": "GATHER (L)",
     "tech": "ABG",
-    "tSel": 1.4916666666666663,
+    "tSel": 1.5124999999999997,
     "tPrep": null,
     "tCommit": null,
-    "tDecisive": 1.7249999999999996,
+    "tDecisive": 1.7458333333333331,
     "decisiveSurface": "INSIDE",
-    "tControl": 1.7849999999999997,
+    "tControl": 1.8058333333333332,
     "tNext": null,
     "next": null
    }
@@ -7977,28 +8125,28 @@
     "missed": false
    },
    {
-    "t": 1.492,
+    "t": 1.512,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
-    "t": 1.725,
+    "t": 1.746,
     "F": "L",
     "surface": "INSIDE",
     "role": "gather",
     "missed": false
    },
    {
-    "t": 2.083,
+    "t": 2.104,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 2.8,
+    "t": 2.821,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -8219,7 +8367,7 @@
     "t": 1.417,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -8245,7 +8393,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 0.6564170381752954,
+  "sepMax": 0.6564193901144831,
   "exits": [],
   "feints": [],
   "body": {
@@ -8289,6 +8437,18 @@
     "tControl": 0.5474999999999999,
     "tNext": null,
     "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.4874999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.6916666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7516666666666665,
+    "tNext": null,
+    "next": null
    }
   ],
   "contacts": [
@@ -8303,25 +8463,25 @@
     "t": 0.487,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
-    "t": 0.7,
+    "t": 0.692,
     "F": "L",
     "surface": "INSIDE",
-    "role": "carry",
+    "role": "croqueta · the other foot receives and carries on",
     "missed": false
    },
    {
-    "t": 0.917,
+    "t": 0.904,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 1.817,
+    "t": 1.804,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -8329,7 +8489,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 1.0940151439319852,
+  "sepMax": 1.095252857247005,
   "exits": [],
   "feints": [],
   "body": {
@@ -8363,7 +8523,7 @@
     "played": "OUTSIDE_CUT",
     "rej": {
      "the exit is on the wrong side for this foot": 1,
-     "rolling there": 3
+     "rolling there": 6
     },
     "t": 0.8999999999999999,
     "tPlayed": 1.5375
@@ -8383,14 +8543,26 @@
     "next": "OUTSIDE CUT"
    },
    {
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
+    "tSel": 0.4874999999999998,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 0.6916666666666664,
+    "decisiveSurface": "INSIDE",
+    "tControl": 0.7516666666666665,
+    "tNext": 0.8999999999999999,
+    "next": "OUTSIDE CUT"
+   },
+   {
     "label": "OUTSIDE CUT (R)",
     "tech": "OUTCUT",
     "tSel": 0.8999999999999999,
-    "tPrep": 1.3967665711833188,
-    "tCommit": 1.4567665711833189,
+    "tPrep": 1.39865238181142,
+    "tCommit": 1.45865238181142,
     "tDecisive": 1.5375,
     "decisiveSurface": "OUTSIDE",
-    "tControl": 1.5967665711833186,
+    "tControl": 1.5986523818114198,
     "tNext": null,
     "next": null
    }
@@ -8407,18 +8579,18 @@
     "t": 0.487,
     "F": "R",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
-    "t": 0.8,
+    "t": 0.692,
     "F": "L",
     "surface": "INSIDE",
-    "role": "carry",
+    "role": "croqueta · the other foot receives and carries on",
     "missed": false
    },
    {
-    "t": 1.004,
+    "t": 1.008,
     "F": "R",
     "surface": "LACES",
     "role": "set touch",
@@ -8439,14 +8611,14 @@
     "missed": false
    },
    {
-    "t": 2.142,
+    "t": 2.146,
     "F": "R",
     "surface": "INSIDE",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 2.775,
+    "t": 2.779,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -8454,7 +8626,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 0.6564417827728253,
+  "sepMax": 0.654972670746322,
   "exits": [],
   "feints": [],
   "body": {
@@ -8600,14 +8772,26 @@
     "next": null
    },
    {
-    "label": "COMPACT INSIDE REDIRECT (L)",
-    "tech": "CIR",
+    "label": "LATERAL TRANSFER (L)",
+    "tech": "LAT",
     "tSel": 1.0416666666666665,
     "tPrep": null,
     "tCommit": null,
     "tDecisive": 1.2041666666666666,
     "decisiveSurface": "INSIDE",
     "tControl": 1.2641666666666667,
+    "tNext": null,
+    "next": null
+   },
+   {
+    "label": "LATERAL TRANSFER (R)",
+    "tech": "LAT",
+    "tSel": 1.2041666666666666,
+    "tPrep": null,
+    "tCommit": null,
+    "tDecisive": 1.5416666666666665,
+    "decisiveSurface": "INSIDE",
+    "tControl": 1.6016666666666661,
     "tNext": null,
     "next": null
    }
@@ -8659,18 +8843,25 @@
     "t": 1.204,
     "F": "L",
     "surface": "INSIDE",
-    "role": "compact inside redirect",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
     "t": 1.542,
     "F": "R",
-    "surface": "LACES",
+    "surface": "INSIDE",
+    "role": "croqueta · the other foot receives and carries on",
+    "missed": false
+   },
+   {
+    "t": 1.754,
+    "F": "L",
+    "surface": "INSIDE",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 1.967,
+    "t": 1.975,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -8678,7 +8869,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 1.1131205024065163,
+  "sepMax": 1.0144638880428396,
   "exits": [],
   "feints": [],
   "body": {
@@ -8697,7 +8888,7 @@
     "air": 0.208,
     "t": 1.046,
     "v": 2.97,
-    "act": "COMPACT INSIDE REDIRECT"
+    "act": "LATERAL TRANSFER"
    }
   ]
  },
@@ -9218,8 +9409,8 @@
     "result": "PLAYED",
     "played": "LATERAL_TRANSFER",
     "rej": {
-     "box": 100,
-     "plant timing": 8
+     "box": 106,
+     "plant timing": 6
     },
     "t": 0,
     "tPlayed": 0.5249999999999999
@@ -9235,7 +9426,7 @@
      "no controlled continuation: the foot cannot get there (it would jump": 1
     },
     "t": 1.5999999999999996,
-    "tPlayed": 2.1375
+    "tPlayed": 2.133333333333333
    }
   ],
   "phases": [
@@ -9255,11 +9446,11 @@
     "label": "OUTSIDE CUT (R)",
     "tech": "OUTCUT",
     "tSel": 1.5999999999999996,
-    "tPrep": 1.9958389207211535,
-    "tCommit": 2.055838920721153,
-    "tDecisive": 2.1375,
+    "tPrep": 1.9929694790311867,
+    "tCommit": 2.0529694790311863,
+    "tDecisive": 2.133333333333333,
     "decisiveSurface": "OUTSIDE",
-    "tControl": 2.195838920721153,
+    "tControl": 2.192969479031186,
     "tNext": null,
     "next": null
    }
@@ -9276,7 +9467,7 @@
     "t": 0.525,
     "F": "L",
     "surface": "INSIDE",
-    "role": "lateral transfer",
+    "role": "croqueta · the inside plays it across",
     "missed": false
    },
    {
@@ -9287,21 +9478,21 @@
     "missed": false
    },
    {
-    "t": 2.138,
+    "t": 2.133,
     "F": "R",
     "surface": "OUTSIDE",
     "role": "OUTSIDE CUT",
     "missed": false
    },
    {
-    "t": 2.346,
+    "t": 2.342,
     "F": "L",
     "surface": "INSIDE",
     "role": "carry",
     "missed": false
    },
    {
-    "t": 2.558,
+    "t": 2.554,
     "F": "R",
     "surface": "LACES",
     "role": "carry",
@@ -9316,7 +9507,7 @@
    }
   ],
   "missed": 0,
-  "sepMax": 1.0958933169045295,
+  "sepMax": 1.097313563025311,
   "exits": [],
   "feints": [],
   "body": {

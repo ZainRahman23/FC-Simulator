@@ -1,6 +1,6 @@
 {
- "cards": 81,
- "buttons": 105,
+ "cards": 85,
+ "buttons": 106,
  "runs": [
   {
    "i": 0,
@@ -25,23 +25,23 @@
   },
   {
    "i": 45,
-   "title": "Sell inside, cut outside",
-   "info": "Sell inside, cut outside | FEINT · REVIEW · AUTO+MANUAL · primitives P7 + P2 | REQUESTED FEINT_OUTSIDE_CUT → PLAYED · decisive at 0.00 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
-   "hash": 2917058418,
+   "title": "The hip fake: the subtlest sell",
+   "info": "The hip fake: the subtlest sell | FEINT · REVIEW · MANUAL · primitives P7 | REQUESTED HIP_FAKE → PLAYED · decisive at 0.00 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3752319411,
    "k": 1152
   },
   {
    "i": 39,
-   "title": "REJECTED: the croqueta at a sprint (its useful entry ends at 6.2 m/s) — B4's ordinary solution instead",
-   "info": "REJECTED: the croqueta at a sprint (its useful entry ends at 6.2 m/s) — B4's ordinary solution instead | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → REJECTED · ALTERNATIVE CARRY | REASON: box · swing speed",
-   "hash": 186317039,
-   "k": 1704
+   "title": "CURRENT — the croqueta before its body upgrade: ball across, the body following afterward",
+   "info": "CURRENT — the croqueta before its body upgrade: ball across, the body following afterward | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 3451598325,
+   "k": 1248
   },
   {
    "i": 42,
-   "title": "Sell one way with the body (no touch), then go the other",
-   "info": "Sell one way with the body (no touch), then go the other | FEINT · REVIEW · AUTO+MANUAL · primitives P7 | REQUESTED BODY_FEINT → PLAYED · decisive at 0.00 s | action\tprep\tcommit\tdecisive\tcontrol\tnext",
-   "hash": 1375470752,
+   "title": "Would B4 play the croqueta here?",
+   "info": "Would B4 play the croqueta here? | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | AUTO — no request: B4 chose from the same state | action\tprep\tcommit\tdecisive\tcontrol\tnext",
+   "hash": 2823699995,
    "k": 1152
   },
   {
@@ -59,7 +59,7 @@
    "k": 1152
   },
   {
-   "i": 104,
+   "i": 105,
    "title": "Matthews → outside exit → accelerate",
    "info": "Matthews → outside exit → accelerate | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—",
    "hash": 1373005455,
@@ -80,7 +80,7 @@
  "adv": {
   "cards": 6,
   "why": [
-   324,
+   473,
    324,
    268,
    357,
@@ -100,11 +100,11 @@
    {
     "card": 0,
     "k": "advc",
-    "title": "A | B · CROQUETA | INSIDE CUT · RUN",
-    "mode": "vs",
+    "title": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on",
+    "mode": "single",
     "rate": 1,
-    "ref": true,
-    "info": "A | B · CROQUETA | INSIDE CUT · RUN | the ball on the right foot, the exit 40° left: across the body to the other foot, or the ordinary inside cut — the same entry — the identical entry (RUN, 40° left), lane A nearer, lane B 4 m beside it, synchronised | lane · played\treq→dec\t→exit\ttotal\tprep\tv dec\tv min\tv +1s\tctl\tm 1s\tm 2.5s | A · LATERAL TRANSFER\t0.49\t+0.03\t0.52\t—\t5.3\t5.3\t5.3\t—\t5.26\t12.60 | B · "
+    "ref": false,
+    "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
    },
    {
     "card": 0,
@@ -132,6 +132,15 @@
     "rate": 0.5,
     "ref": false,
     "info": "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on | LATERAL TRANSFER · INTEGRATED · AUTO+MANUAL · primitives P6 | REQUESTED CROQUETA → PLAYED · decisive at 0.49 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | LATERAL TRANSFER (R)\t—\t—\t0.49\t0.55\t—"
+   },
+   {
+    "card": 0,
+    "k": "trio",
+    "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left",
+    "mode": "trio",
+    "rate": 0.5,
+    "ref": true,
+    "info": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left | the ball on the right foot, the exit 55° left: CURRENT (ball across, the body after it) · UPGRADED (ball and hips across together, the support underneath) · the ordinary inside cut — the identical entry (RUN, 55° left); B in the middle, A and C 4 m either side, synchronised | lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacro"
    },
    {
     "card": 1,
@@ -172,6 +181,15 @@
    {
     "card": 1,
     "k": "advr",
+    "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away | PULL / PUSH / V · INTEGRATED · AUTO+MANUAL · primitives P5 → P2 / P3 / P1 | REQUESTED V_TURN → PLAYED · decisive at 0.78 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | V-TURN (R)\t0.52\t0.70\t0.78\t1.02\t—"
+   },
+   {
+    "card": 1,
+    "k": "trio",
     "title": "Reset under pressure: the sole rolls it back, the same inside pushes it out across, away",
     "mode": "single",
     "rate": 0.5,
@@ -224,6 +242,15 @@
     "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
    },
    {
+    "card": 2,
+    "k": "trio",
+    "title": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "The compact Matthews: the inside cue, round the ball, the same foot's outside takes it out | FEINT · INTEGRATED · AUTO+MANUAL · primitives P8 + P7 | REQUESTED MATTHEWS → PLAYED · decisive at 0.82 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | MATTHEWS (compact) (R)\t0.52\t0.68\t0.82\t0.88\t—"
+   },
+   {
     "card": 3,
     "k": "advp",
     "title": "Run → stop it dead under the sole → push → the D38 relaunch",
@@ -262,6 +289,15 @@
    {
     "card": 3,
     "k": "advr",
+    "title": "Run → stop it dead under the sole → push → the D38 relaunch",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Run → stop it dead under the sole → push → the D38 relaunch | STOP / HESITATION · INTEGRATED · AUTO+MANUAL · primitives P10 → P1 (deaden) · speed change → P1 (hesitation) | REQUESTED STOP_AND_GO → PLAYED · decisive at 0.57 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | DEADEN-AND-EXPLODE (L)\t0.25\t0.53\t0.57\t0.71\t—"
+   },
+   {
+    "card": 3,
+    "k": "trio",
     "title": "Run → stop it dead under the sole → push → the D38 relaunch",
     "mode": "single",
     "rate": 0.5,
@@ -314,6 +350,15 @@
     "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
    },
    {
+    "card": 4,
+    "k": "trio",
+    "title": "Sell the pass, drag it behind the standing leg, go back",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "Sell the pass, drag it behind the standing leg, go back | CRUYFF / BEHIND-BODY · INTEGRATED · AUTO+MANUAL · primitives P3 + P7 | REQUESTED CRUYFF → PLAYED · decisive at 0.39 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | CRUYFF TURN (R)\t0.13\t0.31\t0.39\t0.48\t—"
+   },
+   {
     "card": 5,
     "k": "advp",
     "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
@@ -357,10 +402,49 @@
     "rate": 0.5,
     "ref": false,
     "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
+   },
+   {
+    "card": 5,
+    "k": "trio",
+    "title": "A sharp protected redirect at speed: the chop behind the shielding leg",
+    "mode": "single",
+    "rate": 0.5,
+    "ref": false,
+    "info": "A sharp protected redirect at speed: the chop behind the shielding leg | CHOP · INTEGRATED · AUTO+MANUAL · primitives P3 | REQUESTED RONALDO_CHOP → PLAYED · decisive at 0.66 s | action\tprep\tcommit\tdecisive\tcontrol\tnext | RONALDO CHOP (R)\t0.34\t0.58\t0.66\t0.77\t—"
    }
   ],
   "tryInfo": "TRY IT LIVE · La Croqueta (lateral transfer)"
  },
+ "trio": [
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 55° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.55\t0.67\t0.21\t1.07\t10°\t5.2 | B · UPGRADED\tLATERAL TRANSFER\t0.50\t0.59\t0.54\t1.41\t0°\t5.3 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.70\t0.81\t0.00\t0.46\t10°\t5.2"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · RUN 40° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.52\t0.68\t0.24\t0.92\t11°\t5.3 | B · UPGRADED\tLATERAL TRANSFER\t0.49\t0.62\t0.44\t1.12\t0°\t5.3 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.48\t0.63\t0.39\t1.07\t11°\t5.3"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · JOG 55° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.48\t0.71\t0.27\t0.75\t0°\t3.2 | B · UPGRADED\tLATERAL TRANSFER\t0.45\t0.62\t0.45\t0.96\t1°\t3.2 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.44\t0.63\t0.42\t0.94\t13°\t3.2"
+  },
+  {
+   "title": "A | B | C · CURRENT | UPGRADED | BASIC REDIRECT · croqueta · WALK 40° left",
+   "mode": "trio",
+   "ref": true,
+   "ref2": true,
+   "info": "lane\tplayed\texit\t0.5 m across\tacross 0.6 s\tacross 0.8 s\tpelvis over\tv min | A · CURRENT\tLATERAL TRANSFER\t0.43\t0.95\t0.16\t0.35\t5°\t1.5 | B · UPGRADED\tLATERAL TRANSFER\t0.40\t0.86\t0.23\t0.44\t7°\t1.5 | C · BASIC REDIRECT\tCOMPACT INSIDE REDIRECT\t0.33\t0.86\t0.25\t0.45\t5°\t1.5"
+  }
+ ],
  "sandbox": {
   "skills": 27,
   "label": "ADV-4 · THE JOYSTICK SANDBOX · S99 · D38 · A99-C (Agility scale B below 99) · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED + the library",

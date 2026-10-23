@@ -53,6 +53,7 @@ export const CASES = [
   C("CROQUETA", "NORMAL", "RUN", -40, { runup: 2.6, def: [2.4, -0.1], title: "The ball on the wrong side: the right inside plays it across, the left inside receives and carries on" }),
   C("CROQUETA", "MIRROR", "RUN", 40, { foot: "L", runup: 2.6, def: [2.4, 0.1], title: "Croqueta, left-footed (to the right)" }),
   C("CROQUETA", "JOG", "JOG", -40, { runup: 2.4, def: [2.2, -0.1], title: "The jogging croqueta (40° left)" }),
+  C("CROQUETA", "CURRENT (before)", "RUN", -40, { runup: 2.6, def: [2.4, -0.1], simOpts: { croq: "CURRENT" }, title: "CURRENT — the croqueta before its body upgrade: ball across, the body following afterward" }),
   C("CROQUETA", "REJECTED", "SPRINT", -40, { runup: 4.5, title: "REJECTED: the croqueta at a sprint (its useful entry ends at 6.2 m/s) — B4's ordinary solution instead" }),
   C("CROQUETA", "PRESSURE", "JOG", 35, { def: [1.6, -0.3], threat: -1, title: "Pressure escape: a defender closing on the ball's side — transfer it away across the body" }),
   C("CROQUETA", "AUTO", "RUN", 35, { auto: true, def: [2.4, 0.1], title: "Would B4 play the croqueta here?" }),
@@ -164,6 +165,15 @@ const FAM = { CROQUETA: ["LAT"], V_TURN: ["VTURN", "VTURN_B", "VPULL", "LDRAG", 
 const BASIC = (fam, label) => ({ tech: "AUTO", label: label || "B4 WITHOUT IT", auto: true, noFam: FAM[fam] });
 const SG = (mode, ang) => ({ tech: "STOP_AND_GO", label: "STOP-AND-GO", stick: [[0, ang, "RUN"], [0.25, ang, "SPRINT"]] });
 const REL = (mode, ang, tP, label) => ({ tech: "AUTO", label, auto: true, noFam: FAM.STOP_AND_GO, stick: [[0, null, "SPRINT"], [tP, ang, "SPRINT"]] });
+// (the croqueta refinement, owner 22 Oct: CURRENT → UPGRADED → BASIC REDIRECT from the identical entry, three lanes side by side)
+const TRIO = (mode, ang, note) => { const L = (x, o = {}) => C(x.tech, "TRIO", mode, ang, Object.assign({ runup: RUNUP[mode], dur: 3.0, pre: 0.9, def: null, title: `${x.label} · ${mode} · ${Math.abs(ang)}° ${ang < 0 ? "left" : "right"}` }, o));
+  return { name: `CURRENT | UPGRADED | BASIC REDIRECT · croqueta · ${mode} ${Math.abs(ang)}° ${ang < 0 ? "left" : "right"}`, mode, note, trio: true, lanes: [L({ tech: "CROQUETA", label: "CURRENT croqueta" }, { simOpts: { croq: "CURRENT" } }), L({ tech: "CROQUETA", label: "UPGRADED croqueta" }), L({ tech: "INSIDE_CUT", label: "BASIC inside cut" }, { noFam: ["LAT"] })] }; };
+export const CROQ_TRIOS = [
+  TRIO("RUN", -55, "the ball on the right foot, the exit 55° left: CURRENT (ball across, the body after it) · UPGRADED (ball and hips across together, the support underneath) · the ordinary inside cut"),
+  TRIO("RUN", -40, "running, 40° left — level with the inside cut on time; no pelvis overshoot"),
+  TRIO("JOG", -55, "jogging, 55° left"),
+  TRIO("WALK", -40, "honest: at a walk the inside cut / B4's arc is the quicker answer"),
+];
 export const ADV_COMPARES = [
   P4("RUN", -40, CRO, ICUT, "the ball on the right foot, the exit 40° left: across the body to the other foot, or the ordinary inside cut — the same entry"),
   P4("JOG", -40, CRO, BASIC("CROQUETA"), "the croqueta requested against B4 without it (B4's own choice waits 0.15 s for the analog feint)"),
@@ -182,7 +192,7 @@ export const ADV_COMPARES = [
 // basic solution in THIS replay — the numbers are tools/adv_compare.mjs's on these exact replays ══════════════════════════════════════════
 const find = (tech, variant) => CASES.find((c) => c.tech === tech && c.variant === variant);
 export const ADVANCED = [
-  { id: "CROQUETA", name: "LA CROQUETA", play: find("CROQUETA", "NORMAL"), cmp: ADV_COMPARES[0], cls: "AUTO + MANUAL", why: "Not on time here — the ordinary inside cut reaches the 40° exit 0.05 s sooner (0.47 vs 0.52 s), both keeping 5.3 m/s; what the croqueta changes is the foot: the left inside receives it on the exit side in the next stride, and B4 chooses it by itself in this state (0.53 s)." },
+  { id: "CROQUETA", name: "LA CROQUETA", play: find("CROQUETA", "NORMAL"), cmp: ADV_COMPARES[0], trio: CROQ_TRIOS[0], cls: "AUTO + MANUAL", why: "In the COMPARE replay (run, 55° left) the ball and the hips go across together: the body is 0.5 m into the new lane 0.22 s sooner than with the ordinary inside cut (0.59 vs 0.81 s) and 0.95 m further across 0.8 s after the request (1.41 vs 0.46 m), the useful exit 0.20 s sooner (0.50 vs 0.70 s), with no pelvis overshoot (the inside cut's 10°); at 40° it is level with the inside cut, at a walk the inside cut is quicker." },
   { id: "V_TURN", name: "V-TURN", play: find("V_TURN", "NORMAL"), cmp: ADV_COMPARES[2], cls: "AUTO + MANUAL · recommend MANUAL", why: "Against the hook, yes: 0.07 s sooner (1.12 vs 1.19 s) — the pull is made moving (1.2 m/s at the contact, the hook's 0.6), the body never below 0.6 m/s (the hook 0.2), the ball within 0.66 m (0.88); but B4's braking pivot is 0.31 s quicker still, so AUTO does not choose it." },
   { id: "MATTHEWS", name: "MATTHEWS", play: find("MATTHEWS", "NORMAL"), cmp: ADV_COMPARES[5], cls: "AUTO + MANUAL · recommend MANUAL", why: "It is not: the outside redirect is 0.43 s quicker (0.43 vs 0.86 s) — the inside cue costs a stride that pays only against a defender's reaction, which nothing models yet; kept honest, not buffed (B4 never chooses it)." },
   { id: "STOP_AND_GO", name: "STOP-AND-GO", play: find("STOP_AND_GO", "NORMAL"), cmp: ADV_COMPARES[6], cls: "AUTO + MANUAL · recommend MANUAL", why: "Against stop → settle → go, yes: the relaunch 0.31 s sooner (1.01 vs 1.32 s), 7.3 m/s one second after the lowest speed (5.5) — the ball dead under the sole, the push already the first step; the ordinary A99-C stop (released → pressed) is 0.21 s quicker still, and a stick cannot say 'stop, then go' to B4." },

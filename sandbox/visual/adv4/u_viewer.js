@@ -58,7 +58,7 @@ const physName = (p) => (p ? (p.id && p.id !== "CUSTOM" ? p.id : `CUSTOM S${p.sp
 // REJECTED setups with their reasons, the CHAINS, diagnostics off by default, TRY IT LIVE. vocab1_sandbox.html sets window.VOCAB_SANDBOX: the
 // joystick sandbox with the full vocabulary and the manual skill palette)
 import { META, FAMILIES, META_BY_ID, intentOf, feasibilityFor } from "./v_meta.js";
-import { CASES, CHAINS, COMPARES, ADV_COMPARES, ADVANCED, caseKey } from "./v_cases.js";
+import { CASES, CHAINS, COMPARES, ADV_COMPARES, ADVANCED, CROQ_TRIOS, caseKey } from "./v_cases.js";
 import { caseOpts, runCaseOn, summarize, exitMetrics } from "./v_run.js";
 const LAB = !!window.LAB, SANDBOX = !!window.VOCAB_SANDBOX;
 const BALLON = !!window.BALLON, CARRY_SW = ["OFF", "A", "B", "C"], carryName = (c) => (c === "OFF" ? "BALL OFF" : "CARRY-" + c);
@@ -145,7 +145,7 @@ function newSim(o0) { const o = o0 ? JSON.parse(JSON.stringify(o0)) : { attrs: {
   if (V.engine === "layered") { o.layers = Object.assign({}, V.layers); o.ballOn = V.ballOn; o.control = V.control; o.pace = V.pace; o.vocab = V.vocab; if (V.forceFam) o.forceFam = V.forceFam; else delete o.forceFam; if (BALLON && V.ballOn && V.carry && V.carry !== "OFF") o.carry = V.carry; else delete o.carry; if (PHYS) { o.ballOn = false; delete o.carry; o.phys = JSON.parse(JSON.stringify(V.phys)); } if (V.noFeint) o.noFeint = true; else delete o.noFeint; } else { delete o.layers; delete o.ballOn; delete o.control; delete o.pace; delete o.vocab; delete o.forceFam; delete o.phys; }
   V.sim = new ENG[V.engine].Sim(V.env, o); V.body = new ENG[V.engine].Body(V.env, V.sim);
   // (the REFERENCE runner: the same options and input with the reference pace, started 2.5 m to the side — BALL OFF, the unified engine only)
-  V.ref = null; V.refBody = null; V.run = null; V.lastReq = null; V.redir = null; V.demandNow = 0;
+  V.ref = null; V.refBody = null; V.ref2 = null; V.ref2Body = null; V.run = null; V.lastReq = null; V.redir = null; V.demandNow = 0;
   if (PHYS && V.engine === "layered" && V.refPhys) { const r = JSON.parse(JSON.stringify(o)), h0 = r.start.h; r.phys = refPhysOf(); r.start = { P: [r.start.P[0] + 2.5 * Math.sin(h0), r.start.P[1] - 2.5 * Math.cos(h0)], h: h0 }; V.ref = new ENG.layered.Sim(V.env, r); V.refBody = new ENG.layered.Body(V.env, V.ref); }
   else if (PHYS) {}
   else if (BALLON && V.engine === "layered" && V.ballOn && V.refBallOff) { const r = JSON.parse(JSON.stringify(o)), h0 = r.start.h; r.ballOn = false; delete r.carry; r.start = { P: [r.start.P[0] + 2.5 * Math.sin(h0), r.start.P[1] - 2.5 * Math.cos(h0)], h: h0 }; V.ref = new ENG.layered.Sim(V.env, r); V.refBody = new ENG.layered.Body(V.env, V.ref); }
@@ -320,13 +320,15 @@ function cameraFor(h, vw, vh, dtc) {
     // (SPEED-99-V1: BOTH RUNNERS, side-on — the midpoint of the player and the reference runner, seen from the side of the travel; it backs off as
     // the gap grows, so the 99 player pulling away stays in the picture)
     if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
-    const rs = V.ref.stateAt(Math.min(h.t, V.ref.t)), M = [(P[0] + rs.P[0]) / 2, (P[1] + rs.P[1]) / 2], gap = hyp(P[0] - rs.P[0], P[1] - rs.P[1]), D = max(10, 0.62 * gap + 7), f = dir(C.yaw), n = [-f[1], f[0]];
+    const rs = V.ref.stateAt(Math.min(h.t, V.ref.t)), r2 = V.ref2 ? V.ref2.stateAt(Math.min(h.t, V.ref2.t)) : null, M = r2 ? [(P[0] + rs.P[0] + r2.P[0]) / 3, (P[1] + rs.P[1] + r2.P[1]) / 3] : [(P[0] + rs.P[0]) / 2, (P[1] + rs.P[1]) / 2], gap = r2 ? max(hyp(P[0] - rs.P[0], P[1] - rs.P[1]), hyp(P[0] - r2.P[0], P[1] - r2.P[1]), hyp(rs.P[0] - r2.P[0], rs.P[1] - r2.P[1])) : hyp(P[0] - rs.P[0], P[1] - rs.P[1]), D = max(10, 0.62 * gap + 7), f = dir(C.yaw), n = [-f[1], f[0]];
     C.pm = C.pm ? [C.pm[0] + (M[0] - C.pm[0]) * k(0.12), C.pm[1] + (M[1] - C.pm[1]) * k(0.12)] : M.slice(); C.pd = C.pd ? C.pd + (D - C.pd) * k(0.4) : D;
     tgt = [C.pm[0], 0.8, -C.pm[1]]; eye = [C.pm[0] + n[0] * C.pd, 2.2 + 0.16 * C.pd, -(C.pm[1] + n[1] * C.pd)]; fov = 42; camH = C.yaw; }
   else if (V.camId === "front" || V.camId === "rear") { if (st.s > 1.4 || snap) { const e = wrap(h.travel - C.yaw), rate = 110 * DEG * max(0, dtc); C.yaw += snap ? e : clamp(e * k(0.85), -rate, rate); }
     const f = dir(C.yaw), sgnF = V.camId === "front" ? 1 : -1, A = [P[0] + f[0] * 0.4, P[1] + f[1] * 0.4]; C.fm = C.fm ? [C.fm[0] + (A[0] - C.fm[0]) * k(0.08), C.fm[1] + (A[1] - C.fm[1]) * k(0.08)] : A.slice();
     tgt = [C.fm[0], 0.8, -C.fm[1]]; eye = [C.fm[0] + sgnF * f[0] * 5.6, 1.7, -(C.fm[1] + sgnF * f[1] * 5.6)]; fov = 46; camH = V.camId === "front" ? C.yaw + Math.PI : C.yaw; }
   else if (V.camId === "top") { tgt = [C.tgt[0], 0, -C.tgt[1]]; eye = [C.tgt[0], 14, -C.tgt[1]]; up = [1, 0, 0]; fov = 40; camH = 0; }
+  // (ADV-4: OVERHEAD CLOSE — 5.5 m above the player, north up: the hips' and the feet's lateral transfer read directly, for frame stepping)
+  else if (V.camId === "topclose") { tgt = [P[0], 0, -P[1]]; eye = [P[0], 5.5, -P[1]]; up = [1, 0, 0]; fov = 40; camH = 0; }
   else { const e = wrap(st.psi + Math.PI / 2 - C.side); C.side += snap ? e : e * k(0.6); const f = dir(C.side); tgt = [P[0], 0.75, -P[1]]; eye = [P[0] - f[0] * 5.2, 1.15, -(P[1] - f[1] * 5.2)]; fov = 40; camH = C.side; }
   return { view: lookAt(eye, tgt, up), proj: persp(1 / Math.tan(fov / 2 * DEG), vw / vh, 0.1, 400), h: camH, eye, tgt };
 }
@@ -353,7 +355,7 @@ function render(pose, h, dtc) {
   const c = cameraFor(h, vw.w, vw.h, dtc); V.camH = c.h; V.camNow = c;
   gl.viewport(0, 0, cv.width, cv.height); gl.clearColor(0.06, 0.08, 0.07, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL); gl.disable(gl.CULL_FACE);
   const B = h.ball.p, sh = new Float32Array(64); let ns = 0; const push = (x, y, s, w) => { if (ns < 16) { sh.set([x, y, s, w], ns * 4); ns++; } };
-  push(h.st.P[0], h.st.P[1], 0.42, 0.40); const tRef = V.ref ? Math.min(h.t, V.ref.t) : null, refSt = V.ref ? V.ref.stateAt(tRef) : null; if (refSt) push(refSt.P[0], refSt.P[1], 0.42, 0.32); if (pose) for (const X of ["R", "L"]) { const a = pose.feet[X].ank, hg = max(0, a[2] - 0.09); push(a[0], a[1], 0.15 + hg * 0.3, 0.5 * Math.exp(-hg * 7)); }
+  push(h.st.P[0], h.st.P[1], 0.42, 0.40); const tRef = V.ref ? Math.min(h.t, V.ref.t) : null, refSt = V.ref ? V.ref.stateAt(tRef) : null; if (refSt) push(refSt.P[0], refSt.P[1], 0.42, 0.32); if (V.ref2) { const r2 = V.ref2.stateAt(Math.min(h.t, V.ref2.t)); push(r2.P[0], r2.P[1], 0.42, 0.32); } if (pose) for (const X of ["R", "L"]) { const a = pose.feet[X].ank, hg = max(0, a[2] - 0.09); push(a[0], a[1], 0.15 + hg * 0.3, 0.5 * Math.exp(-hg * 7)); }
   const ballShown = V.ballOn || V.engine !== "layered";   // (SPEED-99-V1: BALL OFF draws no ball — the simulation's ball-off ball is left untouched at the start spot)
   const bh = max(0, B[2] - 0.11); if (ballShown) push(B[0], B[1], 0.12 + bh * 0.4, 0.65 * Math.exp(-bh * 5));
   const G = V.ground; gl.useProgram(G.p); gl.uniformMatrix4fv(G.u.view, false, c.view); gl.uniformMatrix4fv(G.u.proj, false, c.proj); gl.uniform4fv(G.u.sh, sh); gl.uniform1i(G.u.nsh, ns); gl.bindVertexArray(G.vao); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
@@ -361,9 +363,11 @@ function render(pose, h, dtc) {
     for (const q of V.course.cones) { gl.uniform3fv(K.u.off, [q[0], 0, -q[1]]); gl.drawArrays(gl.TRIANGLES, 0, K.n); } gl.bindVertexArray(null); }
   if (pose) { gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); W.ofCharDraw(V.R, V.ent, pose.skin, c.view, c.proj); gl.disable(gl.CULL_FACE); }
   if (pose && V.refBody) { const rp = V.refBody.pose(tRef); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); W.ofCharDraw(V.R, V.ent, rp.skin, c.view, c.proj); gl.disable(gl.CULL_FACE); }
+  if (pose && V.ref2Body) { const rp = V.ref2Body.pose(Math.min(h.t, V.ref2.t)); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK); W.ofCharDraw(V.R, V.ent, rp.skin, c.view, c.proj); gl.disable(gl.CULL_FACE); }
   const Bp = V.ballProg; if (ballShown) { gl.useProgram(Bp.p); gl.uniformMatrix4fv(Bp.u.view, false, c.view); gl.uniformMatrix4fv(Bp.u.proj, false, c.proj); gl.uniform3fv(Bp.u.c, A3(B)); gl.uniform4fv(Bp.u.q, QA(h.ball.q)); gl.uniform1f(Bp.u.r, 0.11); gl.uniform3fv(Bp.u.tint, [1, 1, 1]);
   gl.bindVertexArray(Bp.vao); gl.drawElements(gl.TRIANGLES, Bp.n, gl.UNSIGNED_SHORT, 0); gl.bindVertexArray(null); }
   if (V.ref && V.refBall && V.refBody) { const tR = Math.min(h.t, V.ref.t), RB = V.ref.ballTrack(tR); gl.useProgram(Bp.p); gl.uniformMatrix4fv(Bp.u.view, false, c.view); gl.uniformMatrix4fv(Bp.u.proj, false, c.proj); gl.uniform3fv(Bp.u.c, A3(RB.p)); gl.uniform4fv(Bp.u.q, QA(RB.q)); gl.uniform1f(Bp.u.r, 0.11); gl.uniform3fv(Bp.u.tint, [1, 1, 1]); gl.bindVertexArray(Bp.vao); gl.drawElements(gl.TRIANGLES, Bp.n, gl.UNSIGNED_SHORT, 0); gl.bindVertexArray(null); }
+  if (V.ref2 && V.ref2Body) { const tR = Math.min(h.t, V.ref2.t), RB = V.ref2.ballTrack(tR); gl.useProgram(Bp.p); gl.uniformMatrix4fv(Bp.u.view, false, c.view); gl.uniformMatrix4fv(Bp.u.proj, false, c.proj); gl.uniform3fv(Bp.u.c, A3(RB.p)); gl.uniform4fv(Bp.u.q, QA(RB.q)); gl.uniform1f(Bp.u.r, 0.11); gl.uniform3fv(Bp.u.tint, [1, 1, 1]); gl.bindVertexArray(Bp.vao); gl.drawElements(gl.TRIANGLES, Bp.n, gl.UNSIGNED_SHORT, 0); gl.bindVertexArray(null); }
   overlay(c, vw, dpr, pose, h);
   if (LAB && V.labDiag) labOverlay(c, vw, dpr, h);
 }
@@ -375,9 +379,11 @@ function overlay(c, vw, dpr, pose, h) {
   const text = (q, s, col, size) => { const p = P(q); if (!p) return; ctx.font = `600 ${(size || 11) * dpr}px -apple-system, Helvetica`; const w = ctx.measureText(s).width; ctx.fillStyle = "rgba(0,0,0,0.6)"; ctx.fillRect(p[0] - 3 * dpr, p[1] - 12 * dpr, w + 6 * dpr, 15 * dpr); ctx.fillStyle = col; ctx.fillText(s, p[0], p[1]); };
   const arrow = (from, hh, len, col, wid) => { const e = [from[0] + Math.cos(hh) * len, from[1] + Math.sin(hh) * len], l = 0.28; line([G(from, 0.03), G(e, 0.03)], col, wid); line([G([e[0] - Math.cos(hh - 0.45) * l, e[1] - Math.sin(hh - 0.45) * l], 0.03), G(e, 0.03), G([e[0] - Math.cos(hh + 0.45) * l, e[1] - Math.sin(hh + 0.45) * l], 0.03)], col, wid); };
   // the reference runner's label (its pace and speed)
-  if (V.ref) { const rs = V.ref.stateAt(Math.min(t, V.ref.t)), rp = LAB && V.labMode === "vs" && V.labCmp ? { id: "B · " + V.labCmp.b.title.split(" · ")[0] } : LAB ? { id: V.ref.o.foot === "L" ? "MIRROR · left-footed" : "MIRROR" } : PHYS ? { id: physName(V.ref.o.phys) } : BALLON ? { id: "BALL OFF" } : PACE[V.refPace] || PACE.CURRENT; text([rs.P[0], 2.05, -rs.P[1]], `${LAB && V.labMode === "vs" ? "" : "reference "}${rp.id} · ${rs.s.toFixed(1)} m/s`, "#c8d4ce", 10.5);
+  if (V.ref2 && LAB && V.labMode === "trio") { const r2 = V.ref2.stateAt(Math.min(t, V.ref2.t)); text([r2.P[0], 2.05, -r2.P[1]], `C · BASIC REDIRECT · ${r2.s.toFixed(1)} m/s`, "#c8d4ce", 10.5); }
+  if (V.ref) { const rs = V.ref.stateAt(Math.min(t, V.ref.t)), rp = LAB && V.labMode === "trio" ? { id: "A · CURRENT (before the upgrade)" } : LAB && V.labMode === "vs" && V.labCmp ? { id: "B · " + V.labCmp.b.title.split(" · ")[0] } : LAB ? { id: V.ref.o.foot === "L" ? "MIRROR · left-footed" : "MIRROR" } : PHYS ? { id: physName(V.ref.o.phys) } : BALLON ? { id: "BALL OFF" } : PACE[V.refPace] || PACE.CURRENT; text([rs.P[0], 2.05, -rs.P[1]], `${LAB && V.labMode === "vs" ? "" : "reference "}${rp.id} · ${rs.s.toFixed(1)} m/s`, "#c8d4ce", 10.5);
     // (CRUYFF-CHOP-1: A | B — lane A named above its player too)
-    if (LAB && V.labMode === "vs" && V.labCmp) { const ms = V.sim.stateAt(Math.min(t, V.sim.t)); text([ms.P[0], 2.05, -ms.P[1]], `A · ${V.labCmp.a.title.split(" · ")[0]} · ${ms.s.toFixed(1)} m/s`, "#ffe2a8", 10.5); } }
+    if (LAB && V.labMode === "vs" && V.labCmp) { const ms = V.sim.stateAt(Math.min(t, V.sim.t)); text([ms.P[0], 2.05, -ms.P[1]], `A · ${V.labCmp.a.title.split(" · ")[0]} · ${ms.s.toFixed(1)} m/s`, "#ffe2a8", 10.5); }
+    if (LAB && V.labMode === "trio" && V.labCmp) { const ms = V.sim.stateAt(Math.min(t, V.sim.t)); text([ms.P[0], 2.05, -ms.P[1]], `B · UPGRADED CROQUETA · ${ms.s.toFixed(1)} m/s`, "#ffe2a8", 10.5); } }
   // the course
   if (V.course) { for (const [a, b, col, dash] of V.course.lines) line([G(a), G(b)], col, 1.6, dash); for (const [q, s] of V.course.labels) text(G(q, 0.05), s, "#ffe2a8", 10.5); }
   // the request (where the keys point) — a thin arrow at the feet; the WASD actually pressed during a replay
@@ -666,13 +672,14 @@ function labInit(q) { const L = document.getElementById("labList"); if (!L) retu
   // (ADV-4: THE ADVANCED AUTO SOLUTIONS — six prominent cards; COMPARE: the advanced solution | the basic one from the identical entry)
   const CMPS = ADV_COMPARES.concat(COMPARES), cmpOf = (a) => (a.cmp ? CMPS.indexOf(a.cmp) : ADV_COMPARES.length + a.cmpIdx);
   let html = `<h3 class="adv">ADVANCED AUTO SOLUTIONS</h3><div class="advgrid">` + ADVANCED.map((a, i) => `<div class="card adv" data-adv="${i}"><div class="nm">${esc(a.name)} <span class="b mode">${esc(a.cls)}</span></div><div class="pp">${esc(a.play ? a.play.title : "")}</div><div class="why"><b>Why better than the basic solution in this replay?</b> ${esc(a.why)}</div>
-    <div class="vs"><button class="play" data-advp="${i}">▶ PLAY</button><button data-advc="${cmpOf(a)}" title="${esc(CMPS[cmpOf(a)] ? CMPS[cmpOf(a)].name : "")}">COMPARE</button><button data-advm="${i}">MIRROR</button><button data-adva="${i}" title="the same state, no request: what B4 does by itself">AUTO</button><button data-try="${a.id}">TRY</button>
+    <div class="vs"><button class="play" data-advp="${i}">▶ PLAY</button>${a.trio ? `<button data-trio="${CROQ_TRIOS.indexOf(a.trio)}" title="${esc(a.trio.name)}">COMPARE: CURRENT | UPGRADED | BASIC</button>` : `<button data-advc="${cmpOf(a)}" title="${esc(CMPS[cmpOf(a)] ? CMPS[cmpOf(a)].name : "")}">COMPARE</button>`}<button data-advm="${i}">MIRROR</button><button data-adva="${i}" title="the same state, no request: what B4 does by itself">AUTO</button><button data-try="${a.id}">TRY</button>
     <span class="rates">${[1, 0.5, 0.25].map((r) => `<button data-advr="${i}" data-rate="${r}">${r === 1 ? "1×" : r + "×"}</button>`).join("")}</span></div></div>`).join("") + `</div>`;
   for (const fam of FAMILIES) { const items = META.filter((m) => m.family === fam); if (!items.length) continue; html += `<h3>${esc(fam)}</h3>`;
     for (const m of items) { const cs = byTech[m.id] || [];
       html += `<div class="card" data-tech="${m.id}"><div class="nm">${esc(m.name)} ${badge(m.status, m.status.toLowerCase())} ${badge(m.mode, "mode")}</div><div class="pp">${esc(m.purpose)}</div><div class="en">entry: ${esc(m.entry)} · exit: ${esc(m.exit)}${m.blocker ? `<br><span class="blk">BLOCKER: ${esc(m.blocker)}</span>` : ""}</div>`;
       html += `<div class="vs">${cs.length ? cs.map((c) => `<button class="${c.variant === "NORMAL" ? "play" : ""}" data-case="${ALL_CASES.indexOf(c)}" title="${esc(c.title)}">${c.variant === "NORMAL" ? "▶ PLAY" : esc(c.variant)}</button>`).join("") : `<i>no curated replay (${esc(m.status)})</i>`}${cs.some((c) => c.variant === "NORMAL") ? `<button data-pair="${ALL_CASES.indexOf(cs.find((c) => c.variant === "NORMAL"))}" title="left and right versions side by side, synchronised">L | R</button>` : ""}${m.kind !== "carry" && cs.length ? `<button data-try="${m.id}" title="play it yourself: the stick and REQUEST (E)">TRY</button>` : ""}</div></div>`; } }
   // (CRUYFF-CHOP-1: COMPARE — the simple and the elite solution from the identical entry, side by side, synchronised, at 1×)
+  html += `<h3>CROQUETA — CURRENT | UPGRADED | BASIC REDIRECT (the same entry, three lanes)</h3>` + CROQ_TRIOS.map((p, i) => `<div class="card chain"><div class="nm">${esc(p.name)}</div><div class="pp">${esc(p.note)}</div><div class="vs"><button class="play" data-trio="${i}">▶ A | B | C</button><button data-trioa="${i}">A · CURRENT</button><button data-triob="${i}">B · UPGRADED</button><button data-trioc="${i}">C · BASIC</button></div></div>`).join("");
   html += `<h3>COMPARE — the advanced solution | the basic one (the same entry, side by side)</h3>` + CMPS.map((p, i) => `<div class="card chain"><div class="nm">${esc(p.name)}</div><div class="pp">${esc(p.note)}</div><div class="vs"><button class="play" data-cmp="${i}">▶ A | B</button><button data-cmpa="${i}">A</button><button data-cmpb="${i}">B</button></div></div>`).join("");
   html += `<h3>CHAINS</h3>` + CHAINS.map((c) => `<div class="card chain"><div class="nm">${esc(c.name)}</div><div class="vs"><button class="play" data-case="${ALL_CASES.indexOf(c)}">▶ PLAY</button><button data-mir="${ALL_CASES.indexOf(c)}">MIRROR</button></div></div>`).join("");
   L.innerHTML = html;
@@ -684,6 +691,8 @@ function labInit(q) { const L = document.getElementById("labList"); if (!L) retu
   L.querySelectorAll("[data-cmpa]").forEach((b) => (b.onclick = (e) => { labPlay(CMPS[+b.dataset.cmpa].a, "single"); e.target.blur(); }));
   L.querySelectorAll("[data-cmpb]").forEach((b) => (b.onclick = (e) => { labPlay(CMPS[+b.dataset.cmpb].b, "single"); e.target.blur(); }));
   const setRate = (r) => { V.labRate = r; if (V.replay) V.replay.rate = r; document.querySelectorAll("[id^=bRate]").forEach((x) => x.classList.toggle("on", x.id === "bRate" + String(r).replace(".", ""))); };
+  L.querySelectorAll("[data-trio]").forEach((b) => (b.onclick = (e) => { const p = CROQ_TRIOS[+b.dataset.trio]; labPlay(p.lanes[1], "trio", p); e.target.blur(); }));
+  for (const [k, j] of [["trioa", 0], ["triob", 1], ["trioc", 2]]) L.querySelectorAll(`[data-${k}]`).forEach((b) => (b.onclick = (e) => { labPlay(CROQ_TRIOS[+b.dataset[k]].lanes[j], "single"); e.target.blur(); }));
   L.querySelectorAll("[data-advp]").forEach((b) => (b.onclick = (e) => { labPlay(ADVANCED[+b.dataset.advp].play, "single"); e.target.blur(); }));
   L.querySelectorAll("[data-advc]").forEach((b) => (b.onclick = (e) => { const p = CMPS[+b.dataset.advc]; if (p) labPlay(p.a, "vs", p); e.target.blur(); }));
   L.querySelectorAll("[data-advm]").forEach((b) => (b.onclick = (e) => { labPlay(ADVANCED[+b.dataset.advm].play, "mirror"); e.target.blur(); }));
@@ -704,26 +713,42 @@ function labInit(q) { const L = document.getElementById("labList"); if (!L) retu
   if ($("bBranch")) $("bBranch").onclick = (e) => { labBranch(); e.target.blur(); };
   const first = +(q.get("case") || 0); labPlay(ALL_CASES[Math.max(0, Math.min(ALL_CASES.length - 1, first))] || CASES[0], q.get("mode") || "single"); }
 // one curated case: simulated at once from its exact initial conditions (the same runner as node), then the deterministic replay of its clip
-function labPlay(c, mode, cmp = null) { stopTest(); V.labCase = c; V.labMode = mode; V.labCmp = mode === "vs" ? cmp : null; V.live = null; const mirror = mode === "mirror", o0 = caseOpts(c, mirror); V.engine = "layered";
+function labPlay(c, mode, cmp = null) { stopTest(); V.labCase = c; V.labMode = mode; V.labCmp = mode === "vs" || mode === "trio" ? cmp : null; V.live = null; const mirror = mode === "mirror", o0 = caseOpts(c, mirror); V.engine = "layered";
   newSim(o0); const r = runCaseOn(V.sim, c, mirror); V.stickLog = new Array(V.sim.k * 4).fill(0); V.labSum = summarize(V.sim, r.t0); V.labT0 = r.t0;
-  V.ref = null; V.refBody = null; V.refBall = false;
+  V.ref = null; V.refBody = null; V.refBall = false; V.ref2 = null; V.ref2Body = null;
   // (CRUYFF-CHOP-1: A | B — lane B runs the comparison's other technique from the identical entry, 4 m to the side, not mirrored)
   if (mode === "vs" && cmp) { const o1 = caseOpts(cmp.b, false); o1.start = { P: [o0.start.P[0], o0.start.P[1] + 4.0], h: 0 }; o1.layers = Object.assign({}, V.layers); V.ref = new ENG.layered.Sim(V.env, o1); runCaseOn(V.ref, cmp.b, false); V.refBody = new ENG.layered.Body(V.env, V.ref); V.refBall = true; V.refSum = summarize(V.ref, r.t0);
     const hq = cmp.a.ang * DEG, so = { stop: !!cmp.stop }; V.cmpM = { a: exitMetrics(V.sim, r.t0, hq, c.mode, null, so), b: exitMetrics(V.ref, r.t0, hq, c.mode, null, so) }; }
+  // (ADV-4 croqueta refinement: CURRENT → UPGRADED → BASIC — the main sim is the UPGRADED lane, CURRENT 4 m to one side, the BASIC REDIRECT 4 m
+  // to the other, the identical entry, synchronised)
+  if (mode === "trio" && cmp) { const mk = (lc, dy) => { const o1 = caseOpts(lc, false); o1.start = { P: [o0.start.P[0], o0.start.P[1] + dy], h: 0 }; o1.layers = Object.assign({}, V.layers); const S1 = new ENG.layered.Sim(V.env, o1); runCaseOn(S1, lc, false); return S1; };
+    V.ref = mk(cmp.lanes[0], 4.0); V.refBody = new ENG.layered.Body(V.env, V.ref); V.refBall = true; V.ref2 = mk(cmp.lanes[2], -4.0); V.ref2Body = new ENG.layered.Body(V.env, V.ref2);
+    const hq = c.ang * DEG; V.cmpM = { a: exitMetrics(V.ref, r.t0, hq, c.mode), b: exitMetrics(V.sim, r.t0, hq, c.mode), c: exitMetrics(V.ref2, r.t0, hq, c.mode) };
+    V.trioM = { a: croqMetrics(V.ref, r.t0, c.ang), b: croqMetrics(V.sim, r.t0, c.ang), c: croqMetrics(V.ref2, r.t0, c.ang) }; }
   if (mode === "pair") { const o1 = caseOpts(c, true); o1.start = { P: [o0.start.P[0], o0.start.P[1] + 4.0], h: 0 }; o1.layers = Object.assign({}, V.layers); V.ref = new ENG.layered.Sim(V.env, o1); runCaseOn(V.ref, c, true); V.refBody = new ENG.layered.Body(V.env, V.ref); V.refBall = true; V.refSum = summarize(V.ref, r.t0); }
   // (the defender marker where the move's purpose is: [ahead, right] from the player at t = 0 — visual only)
   const st = V.sim.stateAt(r.t0), m = mirror ? -1 : 1, cones = []; if (c.def) { const a = c.def[0], l = m * c.def[1]; cones.push([st.P[0] + a * Math.cos(st.h) - l * Math.sin(st.h), st.P[1] + a * Math.sin(st.h) + l * Math.cos(st.h)]); }
   if (mode === "pair" && c.def) { const rs = V.ref.stateAt(r.t0), a = c.def[0], l = -c.def[1]; cones.push([rs.P[0] + a * Math.cos(rs.h) - l * Math.sin(rs.h), rs.P[1] + a * Math.sin(rs.h) + l * Math.cos(rs.h)]); }
   V.course = cones.length ? { id: "lab", cones, lines: [], labels: [] } : null;
-  V.camId = mode === "pair" || mode === "vs" ? "pair" : V.labCam || "follow"; if (V.dom.selCam) V.dom.selCam.value = V.camId; V.cam = null; V.lastShown = null;
-  V.replay = { t0: r.clip[0], t1: r.clip[1], t: r.clip[0], tz: r.t0, rate: V.labRate || 1, playing: true, wasPaused: false, kind: "case", loop: V.labLoop !== false, title: (mirror ? "MIRROR · " : mode === "pair" ? "L | R · " : mode === "vs" && cmp ? "A | B · " : "") + (mode === "vs" && cmp ? cmp.name : (c.title || c.name)) };
+  V.camId = mode === "pair" || mode === "vs" || mode === "trio" ? "pair" : V.labCam || "follow"; if (V.dom.selCam) V.dom.selCam.value = V.camId; V.cam = null; V.lastShown = null;
+  V.replay = { t0: r.clip[0], t1: r.clip[1], t: r.clip[0], tz: r.t0, rate: V.labRate || 1, playing: true, wasPaused: false, kind: "case", loop: V.labLoop !== false, title: (mirror ? "MIRROR · " : mode === "pair" ? "L | R · " : mode === "vs" && cmp ? "A | B · " : mode === "trio" ? "A | B | C · " : "") + ((mode === "vs" || mode === "trio") && cmp ? cmp.name : (c.title || c.name)) };
   V.paused = true; showReplayUI(true); setRateButtons(); labInfoBox(); }
 function labBranch() { const c = V.labCase, R = V.replay; if (!c || !R) return; const tRel = Math.round((R.t - V.labT0) / DT) * DT, id = document.getElementById("selBranch").value, ang = +document.getElementById("brAng").value || 0, mode = document.getElementById("brMode").value || c.mode;
   const base = c.stick ? c.stick.filter((x) => x[0] < tRel) : [[0, c.ang, c.mode]], d = Object.assign({}, c, { variant: "CHAIN", title: `BRANCH: ${c.title || c.name} → ${META_BY_ID[id] ? META_BY_ID[id].name : id} at ${tRel.toFixed(2)} s`,
     intents: (c.intents || []).filter((x) => x.t < tRel).concat([{ t: tRel, id }]), stick: base.concat([[tRel, ang, mode]]), dur: Math.max(c.dur, tRel + 2.2) });
   labPlay(d, V.labMode === "pair" ? "single" : V.labMode || "single"); }
+// (ADV-4: the croqueta's lane-transfer metrics — the root 0.5 m across, its displacement 0.6 / 0.8 s after the request, the pelvis's overshoot
+// beyond the exit — tools/croq_compare.mjs measures the same over 4 stride phases)
+function croqMetrics(S, t0, ang) { const st0 = S.stateAt(t0), h0 = st0.h, side = Math.sign(ang) || 1, lat = (p) => (-(p[0] - st0.P[0]) * Math.sin(h0) + (p[1] - st0.P[1]) * Math.cos(h0)) * side; let tLane = null, over = 0;
+  for (let t = t0; t <= Math.min(S.t, t0 + 2.0); t += DT) { const s = S.stateAt(t); if (tLane == null && lat(s.P) >= 0.5) tLane = t - t0; if (t < t0 + 1.2) over = Math.max(over, wrap(s.psi - h0) / DEG * side - Math.abs(ang)); }
+  return { tLane, a06: lat(S.stateAt(Math.min(S.t, t0 + 0.6)).P), a08: lat(S.stateAt(Math.min(S.t, t0 + 0.8)).P), over: Math.max(0, over) }; }
 // the info box: the technique, the request → result, the phases, the contacts
 function labInfoBox() { const el = document.getElementById("labInfo"); if (!el || !V.labCase) return; const c = V.labCase, m = META_BY_ID[c.tech], S = V.labSum;
+  if (V.labMode === "trio" && V.labCmp && V.cmpM && V.trioM) { const P = V.labCmp, M = V.cmpM, T = V.trioM, f = (x, d = 2) => (x == null ? "—" : x.toFixed(d));
+    const row = (k, nm, x, y) => `<tr><td class="l" title="${esc(x ? x.label : "")}">${k} · ${esc(nm)}</td><td>${esc(x ? x.label.replace(/ \(a controlled arc\)/, " (arc)").slice(0, 26) : "—")}</td><td><b>${f(x && x.total)}</b></td><td>${f(y.tLane)}</td><td>${f(y.a06)}</td><td>${f(y.a08)}</td><td>${f(y.over, 0)}°</td><td>${f(x && x.vMin, 1)}</td></tr>`;
+    el.innerHTML = `<div class="tt">A | B | C · ${esc(P.name)}</div><div class="mt">${esc(P.note)} — the identical entry (${esc(P.mode)}, ${Math.abs(P.lanes[1].ang)}° ${P.lanes[1].ang < 0 ? "left" : "right"}); B in the middle, A and C 4 m either side, synchronised</div>
+      <table class="cmp"><tr><th class="l">lane</th><th>played</th><th title="request → useful exit">exit</th><th title="request → the body 0.5 m across toward the exit">0.5 m across</th><th title="the body's lateral displacement 0.6 s after the request">across 0.6 s</th><th title="… 0.8 s after the request">across 0.8 s</th><th title="the pelvis's overshoot beyond the exit heading">pelvis over</th><th title="lowest speed">v min</th></tr>${row("A", "CURRENT", M.a, T.a)}${row("B", "UPGRADED", M.b, T.b)}${row("C", "BASIC REDIRECT", M.c, T.c)}</table>
+      <div class="mt">1× first; 0.5× / 0.25× and , / . (shift: one tick) to step · DIAG draws every lane's ball and body path · tools/croq_compare.mjs measures the same over 4 stride phases</div><canvas id="labTL" width="560" height="34"></canvas>`; return; }
   if (V.labMode === "vs" && V.labCmp && V.cmpM) { const P = V.labCmp, M = V.cmpM, f = (x, d = 2) => (x == null ? "—" : x.toFixed(d)), row = (k, x) => `<tr><td class="l" title="${esc(x ? x.label : "")}">${k} · ${esc(x ? x.label.replace(/ \(a controlled arc\)/, " (arc)") : "no decisive contact")}</td><td>${f(x && x.tDec)}</td><td>${x && x.tExit != null ? "+" + f(x.tExit) : "—"}</td><td><b>${f(x && x.total)}</b></td><td>${f(x && x.prep)}</td><td>${f(x && x.vC, 1)}</td><td>${f(x && x.vMin, 1)}</td><td>${f(x && x.v1, 1)}</td><td>${x && x.ctl != null ? "+" + f(x.ctl) : "—"}</td><td>${f(x && x.d1)}</td><td>${f(x && x.p25)}</td></tr>`;
     const dT = M.a && M.b && M.a.total != null && M.b.total != null ? M.a.total - M.b.total : null;
     el.innerHTML = `<div class="tt">A | B · ${esc(P.name)}</div><div class="mt">${esc(P.note)} — the identical entry (${esc(P.mode)}, ${Math.abs(P.a.ang)}° ${P.a.ang < 0 ? "left" : "right"}), lane A nearer, lane B 4 m beside it, synchronised</div>
@@ -749,7 +774,8 @@ function labTimeline() { const cv = document.getElementById("labTL"); if (!cv ||
 function labOverlay(c, vw, dpr, h) { const ctx = V.ov2d, P = (q) => proj3(c, vw, dpr, q), R = V.replay; if (!R) return; const S = V.sim;
   const path = (f, col) => { ctx.beginPath(); let first = true; for (let t = R.t0; t <= R.t1; t += 0.02) { const p = P(f(t)); if (!p) { first = true; continue; } if (first) { ctx.moveTo(p[0], p[1]); first = false; } else ctx.lineTo(p[0], p[1]); } ctx.strokeStyle = col; ctx.lineWidth = 1.5 * dpr; ctx.stroke(); };
   path((t) => { const b = S.ballTrack(t).p; return [b[0], 0.03, -b[1]]; }, "rgba(255,255,255,0.75)"); path((t) => { const p = S.stateAt(t).P; return [p[0], 0.02, -p[1]]; }, "rgba(154,215,255,0.7)");
-  if (V.ref && (V.labMode === "vs" || V.labMode === "pair")) { const Rf = V.ref; path((t) => { const b = Rf.ballTrack(t).p; return [b[0], 0.03, -b[1]]; }, "rgba(255,230,160,0.75)"); path((t) => { const p = Rf.stateAt(t).P; return [p[0], 0.02, -p[1]]; }, "rgba(255,170,120,0.7)"); }
+  if (V.ref2 && V.labMode === "trio") { const Rf = V.ref2; path((t) => { const b = Rf.ballTrack(t).p; return [b[0], 0.03, -b[1]]; }, "rgba(200,255,200,0.75)"); path((t) => { const p = Rf.stateAt(t).P; return [p[0], 0.02, -p[1]]; }, "rgba(120,230,160,0.7)"); }
+  if (V.ref && (V.labMode === "vs" || V.labMode === "pair" || V.labMode === "trio")) { const Rf = V.ref; path((t) => { const b = Rf.ballTrack(t).p; return [b[0], 0.03, -b[1]]; }, "rgba(255,230,160,0.75)"); path((t) => { const p = Rf.stateAt(t).P; return [p[0], 0.02, -p[1]]; }, "rgba(255,170,120,0.7)"); }
   for (const k of S.contacts) { if (k.t < R.t0 || k.t > R.t1) continue; const p = P([k.ball[0], 0.12, -k.ball[1]]); if (!p) continue; ctx.fillStyle = k.missed ? "#ff6b5e" : k.decisive ? "#ffd45e" : "#7df0ff"; ctx.beginPath(); ctx.arc(p[0], p[1], 4 * dpr, 0, 6.283); ctx.fill(); ctx.font = `${10 * dpr}px Menlo`; ctx.fillText(`${k.F} ${k.surface}${k.decisive ? " ★" : ""}`, p[0] + 6 * dpr, p[1] - 4 * dpr); } }
 // TRY IT LIVE: the case's entry, then the joystick is yours — REQUEST (E) sends this technique's intent (its exit = the stick)
 function labTry(id) { V.labCase = null; stopReplay(); V.live = { id }; V.course = null; const c = CASES.find((x) => x.tech === id) || CASES[0]; newSim(caseOpts(c)); V.paused = false; setRateButtons(); const el = document.getElementById("labInfo"); const m = META_BY_ID[id];

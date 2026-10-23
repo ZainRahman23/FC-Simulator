@@ -63,5 +63,14 @@
   "stop-and-go straight on only (<= 15 deg) — or the angled deaden back with its 5-8 cm crossings at a run",
   "the D38 cap on the approved Cruyff / chop (Cruyff run 1.05 -> 1.13)",
   "the VOCAB-1 analog-feint hold (costs B4 ~0.15-0.2 s on every 20-75 deg diagonal at >= 3 m/s)"
- ]
+ ],
+ "croqueta_refinement": {
+  "owner_instruction": "review_artifacts/adv4/sources/2026-10-22_user_instruction_croqueta_upgrade.md (22 Oct ≈ 17:33; the attached recording was third-party broadcast footage — used as the real-football reference)",
+  "diagnosis": "the body held its old line until the touch, then A99-C turned it after the ball had gone; the pelvis rotated (overshoot 10–14°) instead of translating",
+  "change": "the existing croqueta (B4 LAT): the authoritative root starts across 0.08 s before the touch (heading 0.4 of the way, A99-C's own carry), the pelvis translates before it rotates (yaw share 0.35 until the receive), the other foot's touch within 0.45 s is the receive (no second shift), reach +6 cm and the transfer's line judged from 25°; the old behaviour kept as croq: CURRENT",
+  "measured_far_side": "useful exit jog/run 0.33–0.40 vs inside cut 0.35–0.52; body 0.5 m across 0.48–0.55 vs 0.55–0.63 s; pelvis overshoot 0–2° vs 9–13°; walk: the inside cut quicker; the ball's own side: the outside redirect quicker",
+  "integrity": "determinism 18/18 + 18/18; possession 40 seeds 10 losses (as committed), 0 missed; curated cases unchanged (10 visible); the croqueta's own windows 0.129 visible per touch (current 0.140), slow-motion 0.31 vs 0.22; random-play totals 452 vs 410 over 36 seeds — inconclusive (≈ 1.2 sd), outside the croqueta's windows",
+  "lab": "the croqueta card's COMPARE = CURRENT | UPGRADED | BASIC REDIRECT (three lanes, 1×, frame stepping); four trios; the overhead-close camera",
+  "correction": "the ADV-4 body_torture_classified.txt mixed two code states (seeds 1–6 before the V-turn's 70° floor); the committed b6092d3 gives 410 visible over 36 seeds"
+ }
 }

@@ -184,6 +184,9 @@ The decisive actions flow into the next one: the next request is taken at its ti
   - The Matthews replays are now clean (were 1/1 each). The two new events are the chain continuations in §4.
 - **Extremes, ball on (140 runs):** 62 normal-visible, 131 slow-motion, 0 missed, 0 exits. CRUYFF-CHOP-1: 62 / 133. B4 does not choose the new families in the reversal scenarios. Ball off: `extreme_ball_off.txt`.
 - **Body torture, classified** (18 seeds × 60 s; `body_torture_classified.txt`): **normal-visible 180, slow-motion 276.** The same seeds on CRUYFF-CHOP-1 gave 211 / 311.
+  - **CORRECTION (23 Oct):** that file mixes two code states. Seeds 1–6 ran before the V-turn's 70° floor (69); seeds 13–18 ran after it (59).
+  - The committed `b6092d3` gives 83 / 63 / 59 = 205 on seeds 1–18 and 410 on seeds 1–36 (`croqueta/body_torture_36.txt`).
+  - Across 36 seeds the V-turn's floor makes no difference (40°: 408). Random-play variation is about ±10 per 6 seeds.
 - **Body torture, S99** (8 seeds, S99_CARRY=B; `body_torture_s99.txt` and the reference on the same seeds `body_torture_s99_REF_cruyff_chop1_same8seeds.txt`):
   - **All levels, 1084 vs 1013 (+7 %):** crossings 549 vs 487, jumps 107 vs 91, knees 160 vs 173, floats 263 vs 260.
   - **The rise is in the plain CARRY** (741 vs 660 events). L-drag and V-pull are no longer separate AUTO techniques (folded into V-TURN), so B4 carries more in those states.
@@ -245,3 +248,74 @@ The decisive actions flow into the next one: the next request is taken at its ti
 3. **Stop-and-go straight on only** (≤ 15°), with the new line as the next action, or the angled deaden back with its 5–8 cm crossings at a run.
 4. **The D38 cap on the Cruyff and chop** (Cruyff run 1.05 → 1.13 s): apply it for consistency, or keep the reviewed version.
 5. **The analog-feint hold** costs B4 ≈ 0.15–0.2 s on every 20–75° diagonal at ≥ 3 m/s. It is a VOCAB-1 design choice; keep it, shorten it, or skip it when the request is held steady.
+
+
+---
+
+## 10. THE CROQUETA REFINEMENT (owner, 22 Oct ≈ 17:33; done 23 Oct) — `sources/2026-10-22_user_instruction_croqueta_upgrade.md`
+
+**The attached recording** (3.57 s, 60 fps) is broadcast football footage, croquetas by a Spain player, not the simulation. I studied it frame by frame as the real-football reference. What it shows:
+- a wide, low base;
+- the ball crossing between the feet in ≈ 0.1–0.15 s;
+- the hips and the body travelling across WITH the ball;
+- the receiving foot landing wide on the new side;
+- the player running on through the new lane.
+
+The CURRENT behaviour was captured from our own simulation (node traces, headless-Chrome frames).
+
+**The diagnosis, confirmed** (run, 40° left):
+- The body held its old line for the whole approach (root lateral 0.00 m until the touch at 0.49 s).
+- The ball went across.
+- Only then did A99-C turn the body (0 → 30° in 0.05 s, 40° by 0.60 s), the pelvis overshooting to 49°.
+- That is "ball across → body follows afterward", with the hips rotating rather than translating.
+
+**The upgrade** (the existing croqueta family, B4's LAT — no second croqueta; `u_tc.js` CROQ, `u_sim.js`):
+1. **The root starts across with the touch.**
+   - From 0.08 s before the touch, A99-C's own carry runs toward a heading 0.4 of the way to the request, then to the request after it.
+   - It is the authoritative root: no offset, nothing A99-C cannot do. The posed pelvis follows it within 1–4 cm.
+2. **The pelvis translates before it rotates.** Its yaw is 0.35 of the travel's turn until the receive, then turns into the lane by 0.26 s after the touch.
+3. **Support and body.**
+   - The touching (right) foot lands under the body as it moves across; the receiving (left) foot steps wide onto the new side.
+   - A low wide base (crouch); the side lean comes from the real lateral acceleration (the demand-driven channels).
+4. **One manoeuvre.**
+   - The other foot's touch within 0.45 s is the croqueta's RECEIVE: no second shift, no held line.
+   - Before, B4 took it as a second lateral transfer, which re-ran the shift and held the root's turn for 0.15 s.
+5. **B4's judgement of it** (it chose the inside cut once the body led):
+   - The reach box is widened by the body's lead (+6 cm; the swing-speed check still forbids a magic foot).
+   - Its transfer's ball line is judged from 25°, not 15°, because the receive puts the ball on the line.
+6. **The old behaviour is kept** as sim option `croq: "CURRENT"` (tools `ABL=croq`).
+
+**CURRENT → UPGRADED → BASIC REDIRECT, the identical entry** (`croqueta/croq_compare.txt`, 4 stride phases; right-footed; far side = the exit to the left):
+
+| | exit (s) upgraded / inside cut / current | body 0.5 m across (s) | across 0.8 s after (m) | pelvis overshoot |
+|---|---|---|---|---|
+| JOG 40° | **0.33** / 0.35 / 0.36 | **0.55** / 0.60 / 0.61 | **1.02** / 0.92 / 0.89 | **2°** / 9° / 14° |
+| JOG 55° | **0.34** / 0.38 / 0.38 | **0.51** / 0.57 / 0.60 | **1.26** / 1.12 / 1.02 | **0°** / 13° / 0° |
+| RUN 40° | **0.38** / 0.39 / 0.41 | **0.51** / 0.55 / 0.57 | **1.49** / 1.36 / 1.29 | **0°** / 11° / 11° |
+| RUN 55° | **0.40** / 0.52 / 0.45 | **0.48** / 0.63 / 0.56 | **1.88** / 1.23 / 1.54 | **0°** / 10° / 10° |
+| WALK 40° / 55° | 0.28 / 0.21 · 0.29 / 0.24 — the inside cut quicker | 0.73 / 0.72 · 0.67 / 0.63 | | |
+| the ball's own side (40° right) | slower than the outside redirect (0.63 vs 0.39 at a run) | | | |
+
+**B4 alone** ("AUTO"):
+- With the upgraded croqueta it chooses it on the far side and is 0.02–0.03 s quicker than with the current one (run 55°: 0.51 vs 0.54; lane 0.60 vs 0.66).
+- On the ball's own side it picks it in 1–2 of 4 phases, where the ball happened to be on the left foot's side. At a jog that is 0.07 s slower by the 30° useful-exit measure, though B4's own measure (the body on the exact line) is sooner. I left B4's cost as approved and report it.
+
+**The Lab replays (phase 0), run 55° left:** CURRENT 0.55 s · UPGRADED **0.50 s** · inside cut 0.70 s; body 0.5 m across 0.67 · **0.59** · 0.81 s; across at 0.8 s 1.07 · **1.41** · 0.46 m. Body 0/0 in all three lanes.
+
+**Integrity:**
+- **Determinism:** 18/18 + 18/18.
+- **Possession (40 seeds):** 10 losses, as the committed ADV-4 on the same seeds; 0 missed contacts. B4 plays the croqueta 208 times in 39 min (155 before).
+- **Curated replays:** 106 cases, 0 exits, 0 missed, 10 normal-visible (as before).
+- **The croqueta's own body cost** (36 seeds; `croqueta/body_torture_36.txt`), events 0.2 s before to 0.8 s after every croqueta touch:
+  - normal-visible **0.129 per touch** (current 0.140);
+  - slow-motion 0.31 per touch (current 0.22).
+- **Random-play totals over 36 seeds:** 452 (upgraded) vs 410 (current). The excess lies outside the croqueta's windows (429 vs 387), about 1.2 standard deviations of the random-play spread: **inconclusive, reported, not hidden.** B4 choosing the croqueta more often changes the later play; I found no croqueta-specific mechanism.
+
+**The Lab:**
+- The croqueta card's COMPARE is now **CURRENT | UPGRADED | BASIC REDIRECT**: three lanes side by side, the identical entry, at 1×.
+- The table shows exit, 0.5 m across, across at 0.6 / 0.8 s, pelvis overshoot and the lowest speed. 0.5× / 0.25× and frame stepping (`,` / `.`, Shift = one tick) work as before.
+- The new "CROQUETA — CURRENT | UPGRADED | BASIC REDIRECT" section has four trios (run 55°, run 40°, jog 55°, walk 40°) and each lane alone.
+- A CURRENT variant replay.
+- A new camera, **overhead close (diagnosis)**.
+
+**Known limits:** the ball reaches the exit side of the body later (0.42–0.47 s vs 0.36–0.39 s), because the body now leads; more slow-motion-only events per croqueta (0.31 vs 0.22 per touch).

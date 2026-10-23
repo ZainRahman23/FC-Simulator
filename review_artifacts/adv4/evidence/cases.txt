@@ -34,13 +34,14 @@ DRAG_BACK·NORMAL                                           DRAG_BACK PLAYED | D
 DRAG_BACK·MIRROR                                           DRAG_BACK PLAYED | DRAG-BACK (L) @0.43 ctl+0.08 | sep 0.71 | body 0/1
 DRAG_BACK·REJECTED                                         DRAG_BACK REJECTED → BRAKING_TOUCH (entry 9.7 m/s far above its 5 m/s; rolling there) | BRAKING TOUCH (R) (no decisive) → BRAKING TOUCH (L) @1.29 ctl+0.06 | sep 1.01 | body 0/3
 SOLE_ROLL·NORMAL                                           SOLE_ROLL PLAYED | SOLE ROLL (R) @0.30 ctl+0.06 | sep 0.60 | body 1/0
-CROQUETA·NORMAL                                            CROQUETA PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 | sep 0.65 | body 0/0
-CROQUETA·MIRROR                                            CROQUETA PLAYED | LATERAL TRANSFER (L) @0.49 ctl+0.06 | sep 0.65 | body 0/0
+CROQUETA·NORMAL                                            CROQUETA PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 → LATERAL TRANSFER (L) @0.69 ctl+0.06 | sep 0.66 | body 0/0
+CROQUETA·MIRROR                                            CROQUETA PLAYED | LATERAL TRANSFER (L) @0.49 ctl+0.06 → LATERAL TRANSFER (R) @0.69 ctl+0.06 | sep 0.66 | body 0/0
 CROQUETA·JOG                                               CROQUETA PLAYED | LATERAL TRANSFER (R) @0.44 ctl+0.06 → GATHER (L) @0.67 ctl+0.06 | sep 0.66 | body 0/0
+CROQUETA·CURRENT (before)                                  CROQUETA PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 | sep 0.65 | body 0/0
 CROQUETA·REJECTED                                          CROQUETA REJECTED → CARRY (box; committed landing) |  | sep 1.40 | body 0/0
 CROQUETA·PRESSURE                                          CROQUETA PLAYED | LATERAL TRANSFER (L) @0.29 ctl+0.06 | sep 0.66 | body 0/0
 CROQUETA·AUTO                                              AUTO | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
-BODY_FEINT·NORMAL                                          BODY_FEINT PLAYED | LATERAL TRANSFER (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
+BODY_FEINT·NORMAL                                          BODY_FEINT PLAYED | LATERAL TRANSFER (R) @0.90 ctl+0.06 → LATERAL TRANSFER (L) @1.10 ctl+0.06 | sep 0.66 | body 0/0
 SHOULDER_DROP·NORMAL                                       SHOULDER_DROP PLAYED |  | sep 0.66 | body 0/0
 HIP_FAKE·NORMAL                                            HIP_FAKE PLAYED | LATERAL TRANSFER (L) @0.58 ctl+0.06 | sep 0.66 | body 0/0
 FEINT_OUTSIDE_CUT·NORMAL                                   FEINT_OUTSIDE_CUT PLAYED | COMPACT OUTSIDE REDIRECT (L) @0.58 ctl+0.06 | sep 0.66 | body 1/3
@@ -89,18 +90,18 @@ SHIELD_OUTHOOK·NORMAL                                      OUTSIDE_HOOK PLAYED 
 CHAIN·CHAIN·Body feint → outside cut                       BODY_FEINT PLAYED + OUTSIDE_CUT PLAYED | OUTSIDE CUT (R) @0.90 ctl+0.06 | sep 0.66 | body 0/0
 CHAIN·CHAIN·Scissors → outside exit → sprint               SCISSORS PLAYED | SCISSORS (R) @0.90 ctl+0.06 | sep 1.07 | body 0/0
 CHAIN·CHAIN·Stepover → inside exit                         STEPOVER PLAYED | STEPOVER (R) @0.90 ctl+0.06 next COMPACT OUTSIDE REDIRECT @0.95 → COMPACT OUTSIDE REDIRECT (L) @1.08 ctl+0.06 | sep 0.66 | body 1/1
-CHAIN·CHAIN·Drag-back → croqueta                           DRAG_BACK PLAYED + CROQUETA PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.05 → LATERAL TRANSFER (R) @1.49 ctl+0.06 → GATHER (L) @1.72 ctl+0.06 | sep 0.71 | body 0/1
+CHAIN·CHAIN·Drag-back → croqueta                           DRAG_BACK PLAYED + CROQUETA PLAYED | DRAG-BACK (R) @0.43 ctl+0.08 next LATERAL TRANSFER @1.05 → LATERAL TRANSFER (R) @1.51 ctl+0.06 → GATHER (L) @1.75 ctl+0.06 | sep 0.71 | body 0/1
 CHAIN·CHAIN·V-turn → accelerate                            V_TURN PLAYED | V-TURN (R) @0.78 ctl+0.24 | sep 1.09 | body 0/3
 CHAIN·CHAIN·V-turn → croqueta                              V_TURN PLAYED + CROQUETA PLAYED | V-TURN (R) @0.78 ctl+0.24 next LATERAL TRANSFER @1.25 → LATERAL TRANSFER (R) @1.42 ctl+0.06 | sep 0.66 | body 0/2
-CHAIN·CHAIN·Croqueta → accelerate                          CROQUETA PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 | sep 1.09 | body 0/0
-CHAIN·CHAIN·Croqueta → outside cut                         CROQUETA PLAYED + OUTSIDE_CUT PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 next OUTSIDE CUT @0.90 → OUTSIDE CUT (R) @1.54 ctl+0.06 | sep 0.66 | body 0/0
+CHAIN·CHAIN·Croqueta → accelerate                          CROQUETA PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 → LATERAL TRANSFER (L) @0.69 ctl+0.06 | sep 1.10 | body 0/0
+CHAIN·CHAIN·Croqueta → outside cut                         CROQUETA PLAYED + OUTSIDE_CUT PLAYED | LATERAL TRANSFER (R) @0.49 ctl+0.06 next OUTSIDE CUT @0.90 → LATERAL TRANSFER (L) @0.69 ctl+0.06 next OUTSIDE CUT @0.90 → OUTSIDE CUT (R) @1.54 ctl+0.06 | sep 0.65 | body 0/0
 CHAIN·CHAIN·Stop-and-go → D38 sprint                       STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 | sep 1.15 | body 0/0
-CHAIN·CHAIN·Stop-and-go → 45° exit                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 next OUTSIDE CUT @0.88 → OUTSIDE CUT (R) (no decisive) → COMPACT INSIDE REDIRECT (L) @1.20 ctl+0.06 | sep 1.11 | body 1/1
+CHAIN·CHAIN·Stop-and-go → 45° exit                         STOP_AND_GO PLAYED | DEADEN-AND-EXPLODE (L) @0.57 ctl+0.14 next OUTSIDE CUT @0.88 → OUTSIDE CUT (R) (no decisive) → LATERAL TRANSFER (L) @1.20 ctl+0.06 → LATERAL TRANSFER (R) @1.54  | sep 1.01 | body 1/1
 CHAIN·CHAIN·Ronaldo chop → accelerate                      RONALDO_CHOP PLAYED | RONALDO CHOP (R) @0.66 ctl+0.11 | sep 1.05 | body 0/1
 CHAIN·CHAIN·Cruyff → accelerate                            CRUYFF PLAYED | CRUYFF TURN (R) @0.39 ctl+0.10 | sep 1.11 | body 0/0
 CHAIN·CHAIN·Elastico → sprint                              ELASTICO PLAYED | ELASTICO (R) @0.61 ctl+0.08 | sep 1.08 | body 0/0
 CHAIN·CHAIN·Knock-on → sprint → chop                       KNOCK_ON PLAYED + RONALDO_CHOP PLAYED | KNOCK-ON (R) @0.15 ctl+0.06 next RONALDO CHOP @1.60 → RONALDO CHOP (R) @2.23 ctl+0.11 | sep 1.17 | body 0/1
 CHAIN·CHAIN·Stop → feint → explode                         STOP_AND_GO PLAYED + BODY_FEINT PLAYED | DEADEN-AND-EXPLODE (L) @0.49 ctl+0.14 next COMPACT OUTSIDE REDIRECT @0.85 → COMPACT OUTSIDE REDIRECT (R) @1.24 ctl+0.06 | sep 1.05 | body 0/0
-CHAIN·CHAIN·Croqueta → accelerate → outside cut            CROQUETA PLAYED + OUTSIDE_CUT PLAYED | LATERAL TRANSFER (L) @0.52 ctl+0.06 next OUTSIDE CUT @1.60 → OUTSIDE CUT (R) @2.14 ctl+0.06 | sep 1.10 | body 0/0
+CHAIN·CHAIN·Croqueta → accelerate → outside cut            CROQUETA PLAYED + OUTSIDE_CUT PLAYED | LATERAL TRANSFER (L) @0.52 ctl+0.06 next OUTSIDE CUT @1.60 → OUTSIDE CUT (R) @2.13 ctl+0.06 | sep 1.10 | body 0/0
 CHAIN·CHAIN·Matthews → outside exit → accelerate           MATTHEWS PLAYED | MATTHEWS (compact) (R) @0.82 ctl+0.06 | sep 1.03 | body 1/0
-■ 105 cases · 81/90 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)
+■ 106 cases · 82/91 with every request PLAYED · possession exits 0 · missed contacts 0 · body normal-visible 10 (cases with any: 9)

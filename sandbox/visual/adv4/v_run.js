@@ -5,7 +5,7 @@ import { stickAt } from "./v_cases.js";
 const DT = 1 / 240, DEG = Math.PI / 180;
 // the sandbox's player (S99 · D38 · A99-C · Agility scale B below 99 · D99 · BC99 · CARRY-B · CONTROLLED · EXPANDED); mirror: the left-footed twin
 export function caseOpts(c, mirror = false, extra = {}) { const pref = c.pref || "R", foot = mirror ? (pref === "R" ? "L" : "R") : pref;
-  return Object.assign({ layers: null, attrs: { bc: 99, dri: 99, agi: 99 }, foot, style: "NEUTRAL", seed: 1, start: { P: [30, 34], h: 0 }, pace: "D38", vocab: "EXPANDED", control: "CONTROLLED", carry: "B", ballOn: true }, extra); }
+  return Object.assign({ layers: null, attrs: { bc: 99, dri: 99, agi: 99 }, foot, style: "NEUTRAL", seed: 1, start: { P: [30, 34], h: 0 }, pace: "D38", vocab: "EXPANDED", control: "CONTROLLED", carry: "B", ballOn: true }, c.simOpts || {}, extra); }   // (ADV-4: c.simOpts — e.g. croq: "CURRENT", the croqueta before its body upgrade)
 // step the case through sim (built by the caller with caseOpts); returns { t0, clip: [a, b] }
 export function runCaseOn(sim, c, mirror = false, onTick = null) { const s = mirror ? -1 : 1, R = (h, mode) => ({ h, mode, keys: 0 });
   // (CRUYFF-CHOP-1: a player who cannot access the elite solutions — the Cruyff and the chop gated off, as a low Dribbling rating would)

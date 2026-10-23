@@ -79,7 +79,7 @@ export class UnifiedSim extends PlaySim {
       if (d.keyed) { x.s = d.s; x.turnRate = wrap(d.h - x.h) / DT; x.h = d.h; x.m = null;
         if (d.psi != null) { x.w = wrap(d.psi - x.psi) / DT; x.psi = d.psi; }
         else { const tgt = x.s > 1 ? x.h : o.req?.h ?? x.psi, err = wrap(tgt - x.psi), a = Math.max(-9000 * DEG, Math.min(9000 * DEG, 360 * err - 38 * x.w)); x.w = Math.max(-this.P.yawRate, Math.min(this.P.yawRate, x.w + a * DT)); x.psi += x.w * DT; } }
-      else x = advance(x, d, t + DT, profile, this.P);
+      else { const psiPrev = x.psi; x = advance(x, d, t + DT, profile, this.P); if (d.psi != null) { x.w = wrap(d.psi - psiPrev) / DT; x.psi = d.psi; } }   // (ADV-4: a carry that keys only its pelvis — the croqueta's hips translating before they rotate; the root stays A99-C's)
       if (ENV) E.on = false;
       pos = [pos[0] + x.s * Math.cos(x.h) * DT, pos[1] + x.s * Math.sin(x.h) * DT]; }
     const plan = { t0: o.t0, k0: Math.round(o.t0 / DT), n, P, V, psi, aw, ah, ar, am, stances: o.stances, contacts: o.contacts, action: o.action, req: o.req, prog: o.prog }; plan.ch = this.channels(o, plan);
