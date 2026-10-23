@@ -1,0 +1,231 @@
+{
+ "milestone": "CURRENT TOUCHLINE GAMEPLAY DEVELOPMENT (23 Oct 2026)",
+ "state": "development checkpoint: NOT frozen, NOT integrated into the production game; Body Feint V2 PROVISIONAL; ADV-4 stopped for owner review",
+ "repository": "https://github.com/ZainRahman23/FC-Simulator",
+ "remote_name_in_dribble1_worktree": "fc-simulator (origin there = ZainRahman23/TouchlineSimulator, not this line)",
+ "development_branch": "prototype/dribble-1",
+ "milestone_tag": "checkpoint/touchline-gameplay-dev-2026-10-23",
+ "milestone_branch": "milestone/touchline-gameplay-dev",
+ "code_commit": "0c65eac377c43287832ac2913198bc61fe5d4b82",
+ "code_commit_note": "the last commit that changes gameplay source; later commits up to the tag are documentation / housekeeping",
+ "local_checkout": "/Users/zainrahman/Downloads/FC Simulator worktrees/dribble-1",
+ "serve": "python3 -m http.server 8361 --bind 127.0.0.1   (from the checkout root)",
+ "local_only": "the characters are real players' models: never publish pages or captures to claude.ai / the web",
+ "current_build_folder": "sandbox/visual/feint2/",
+ "lineage": [
+  "tc_baseline_88573ef0 (LOCKED)",
+  "tc_layered",
+  "tc_layered2",
+  "tc_unified1",
+  "tc_controlled1",
+  "speed99",
+  "ballon1",
+  "phys1",
+  "vocab1",
+  "cruyff_chop1",
+  "adv4",
+  "feint2 (CURRENT)"
+ ],
+ "playables": {
+  "current_lab": "http://127.0.0.1:8361/sandbox/visual/feint2_lab.html",
+  "current_sandbox": "http://127.0.0.1:8361/sandbox/visual/feint2_sandbox.html",
+  "latest_owner_reviewed": "BODY FEINT V2 (feint2_lab.html / feint2_sandbox.html) — owner 23 Oct: 'an improvement', not approved",
+  "locked_baseline": "http://127.0.0.1:8361/sandbox/visual/tc_baseline_88573ef0.html"
+ },
+ "components": {
+  "simulation": [
+   "sandbox/visual/feint2/c_sim.js (ControlledSim)",
+   "sandbox/visual/feint2/u_sim.js (UnifiedSim)",
+   "sandbox/visual/feint2/u_tc.js (PlaySim + Technical Control)"
+  ],
+  "ball_contact": [
+   "sandbox/visual/tc_baseline_88573ef0/pt_ball.js",
+   "sandbox/visual/dribble15/d15_core.js (FROZEN dribble-v1-foundation-1)",
+   "sandbox/visual/ballfeel13/",
+   "sandbox/visual/ballphys1/"
+  ],
+  "movement": [
+   "sandbox/visual/agility99/movement.js (Astra's A99-C; never modify)",
+   "sandbox/visual/feint2/s_movement.js"
+  ],
+  "pace": [
+   "sandbox/visual/feint2/pace.js",
+   "sandbox/visual/feint2/ratings.js",
+   "sandbox/visual/feint2/carry_env.js"
+  ],
+  "body_playbody": [
+   "sandbox/visual/feint2/u_body.js (PlayBody)",
+   "sandbox/visual/tc_baseline_88573ef0/pt_body.js",
+   "sandbox/visual/technical_control15/tc15_ref.js",
+   "sandbox/visual/receive_turn11/rt11_body.js"
+  ],
+  "gait_support": [
+   "sandbox/visual/feint2/u_gait.js",
+   "sandbox/visual/agility99/body_gait.js",
+   "support rules in sandbox/visual/feint2/u_tc.js"
+  ],
+  "leg_ik": [
+   "sandbox/visual/technical_control11/tc11_leg.js",
+   "sandbox/visual/anim3d/ik.js"
+  ],
+  "technical_control": [
+   "sandbox/visual/feint2/u_tc.js",
+   "sandbox/visual/feint2/c_sim.js"
+  ],
+  "dribbling_vocabulary": [
+   "sandbox/visual/feint2/v_tech.js",
+   "sandbox/visual/feint2/v_meta.js",
+   "sandbox/visual/tc_baseline_88573ef0/pt_tech.js"
+  ],
+  "character_skeleton_rendering": [
+   "sandbox/visual/anim3d/{m4,skeleton,ik,of_rig,of_motion,of_loco,of_character,of_char_gl}.js",
+   "sandbox/visual/run1/run1_gait_v13.js (FROZEN locomotion-v2-straight-baseline-1)",
+   "assets/characters/outfield/<name>/{rig.json,mesh.bin,atlas.png}"
+  ],
+  "review_viewer": [
+   "sandbox/visual/feint2/u_viewer.js",
+   "sandbox/visual/feint2/v_cases.js",
+   "sandbox/visual/feint2/v_run.js",
+   "sandbox/visual/feint2_lab.html",
+   "sandbox/visual/feint2_sandbox.html"
+  ]
+ },
+ "status": {
+  "LOCKED": [
+   "BASELINE-88573ef0 (tag tc-baseline-88573ef0-locked)"
+  ],
+  "FROZEN_dependencies": [
+   "DRIBBLE-V1 foundation (dribble-v1-foundation-1)",
+   "RUN-1.3 straight gait (locomotion-v2-straight-baseline-1)"
+  ],
+  "APPROVED": [
+   "Sprint Speed 99 = 38.0 km/h + Sprint mapping",
+   "Acceleration 99 = D38",
+   "A99-C (selected provisional Agility-99 ceiling)",
+   "Agility scale B",
+   "CARRY-B (provisional D99/BC99 envelope)",
+   "CONTROLLED possession",
+   "hook -> Cruyff / Ronaldo chop hierarchy ('looking good')"
+  ],
+  "PROVISIONAL": [
+   "B4 / B5",
+   "Technical Control carry / contact model",
+   "support / committed-landing / leg fixes",
+   "DRIBBLING VOCAB-1",
+   "CRUYFF-CHOP-1 elite templates",
+   "ADV-4: croqueta (+ refinement c11579a3), V-turn, compact Matthews, stop-and-go",
+   "BODY FEINT V2",
+   "9 s gait-cycle fix (feint2 only)"
+  ],
+  "EXPERIMENTAL": [
+   "heel chop",
+   "roulette",
+   "SOL sole roll",
+   "old FNO/FNI body feints",
+   "B2",
+   "Astra's support-body V1.1 (agility99/support.js, direction_body.js)",
+   "Acceleration / Agility mappings below 99"
+  ],
+  "REJECTED_kept_as_records": [
+   "TC-RESPONSIVE-1",
+   "PLAYTEST-1.2",
+   "B1",
+   "B3",
+   "B6"
+  ]
+ },
+ "known_issues": [
+  "gait cycle freezes after 9 s of sim time in every build since 88573ef0 incl. the locked baseline; fixed in feint2 only (ABL=cycle9 restores)",
+  "angular spikes > 1000 deg/s: Cruyff 1223-1962, outside cut 2109-3180 (+5.7 cm crossing), croqueta hand-overs ~1030, approach-drift snap ~1250 in every template (fixed for the feint only)",
+  "carry far-foot crossing (7 cm) under over-fast feint alternation; 8-11 cm hand step at a stop",
+  "random-play body totals 18 x 60 s: 254 normal-visible / 328 slow-motion; possession torture 10 losses / 40 seeds (0.26/min), 0 missed",
+  "croqueta refinement: slow-motion per touch 0.31 vs 0.22; random totals 452 vs 410 inconclusive",
+  "A99-C low-speed facing whip (~1000-1200 deg/s) causes crossings (an Agility decision); fake stop 0.22 s float",
+  "D38 cap not applied to Cruyff / chop",
+  "Body Feint V2: stride-dependent latency 0.70-1.02 s at a jog, no sprint variant, exits 12-90 deg, no defenders",
+  "Astra's support body (unused by feint2): BALL ON 51/144 contacts > 10 cm; straight running judged worse",
+  "no production integration (server.py / web/ untouched)"
+ ],
+ "test_commands": {
+  "cwd_lock": "<checkout root>",
+  "lock": "bash review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh",
+  "cwd_tools": "sandbox/visual/feint2/tools",
+  "cases": "node v_cases_run.mjs --body 1",
+  "feint": "node feint_measure.mjs",
+  "rapid": "node feint_rapid.mjs",
+  "determinism": "node v_det.mjs --seeds 18 --dur 30",
+  "battery": "node v_battery.mjs",
+  "extreme": "node v_extreme.mjs --ball 1  /  --ball 0",
+  "body_torture": "node v_bodytort.mjs --seeds 18 --dur 60",
+  "possession_torture": "node c_torture.mjs --configs CONTROLLED --seeds 40 --dur 60 --pace D38 --vocab EXPANDED --carry B --verbose",
+  "cpu": "node v_cpu.mjs",
+  "browser": "PUPPETEER_NODE_MODULES=<dir> PT_TMP=<dir> node v_browser.cjs --out <dir>",
+  "expected": "review_artifacts/body_feint_v2/evidence/"
+ },
+ "reports": {
+  "body_feint_v2": "review_artifacts/body_feint_v2/BODY_FEINT_V2_REPORT.md",
+  "adv4": "review_artifacts/adv4/ADV4_REPORT.md",
+  "cruyff_chop1": "review_artifacts/cruyff_chop1/CRUYFF_CHOP1_REPORT.md",
+  "vocab1": "review_artifacts/dribbling_vocab1/DRIBBLING_VOCAB1_REPORT.md",
+  "astra_a99c_support_v11": "review_artifacts/agility99_c_support_v11/HANDOFF.md"
+ },
+ "git_blobs_at_code_commit": {
+  "sandbox/visual/agility99/body_gait.js": "d709d65c32c0d3a65cb8ec6711f7618229ba7871",
+  "sandbox/visual/agility99/movement.js": "8d1d99640022437e12c8c554665ec2493184efec",
+  "sandbox/visual/ballfeel1/config.js": "e1d1a2ba787c5fcb781c3f2deb7a3b080e692e11",
+  "sandbox/visual/ballfeel11/config.js": "957492419c23e4927a12b291d2b358a350e4b89a",
+  "sandbox/visual/ballfeel11/world.js": "8b93f2f94a43dcb916b060f796d49c630c51d9f3",
+  "sandbox/visual/ballfeel12/config.js": "5465860f4accd2fda98d8fd5593e0621ea4d6205",
+  "sandbox/visual/ballfeel12/world.js": "39c4c13c8f61b21746882920dde9868c1954ced1",
+  "sandbox/visual/ballfeel13/config.js": "be78f58a5d8a76d1399ecc6d3bafad212134f861",
+  "sandbox/visual/ballfeel13/world.js": "92e97fa616978b688d59dc1b3c9ed339955597ad",
+  "sandbox/visual/ballphys1/adapter.js": "ed72d1ffef8d4824630f7ad92f98e169a6c9db30",
+  "sandbox/visual/ballphys1/ball.js": "726984aa3d07ba00164fbed2cc06c468b9527171",
+  "sandbox/visual/ballphys1/geometry.js": "c81b1d43e21e6bcc39b5ad540c456aa34d287956",
+  "sandbox/visual/ballphys1/math.js": "b379317c3d7aeb51d28da38f7b220f9bfda1b469",
+  "sandbox/visual/dribble1/d1_attrs.js": "c2b390b4075974bad43e9bb9f4a30c575f47a980",
+  "sandbox/visual/dribble1/d1_rng.js": "3191e92911d250c1fb7ef6dc1864c2d07d631e02",
+  "sandbox/visual/dribble15/d15_core.js": "b8f5166499b3c321d43212dae4db2be757be7e52",
+  "sandbox/visual/feint2/c_sim.js": "0732f4f3118d3a6ff3c02b3f37a1f199c6c4c50b",
+  "sandbox/visual/feint2/carry_env.js": "b08a808afa0a59d2cc013177835555578cd9bc47",
+  "sandbox/visual/feint2/pace.js": "4f610a7430032c31c3e827397dc023649df91b4e",
+  "sandbox/visual/feint2/ratings.js": "59176854f59104d4f6b191b1e1f33763b5f4c8cd",
+  "sandbox/visual/feint2/s_movement.js": "f446bf92094327cad6e7b494815e275b84ca6191",
+  "sandbox/visual/feint2/s_tests.js": "7936b5bc10d166c2685ce2e42ce2f9f440d1451d",
+  "sandbox/visual/feint2/u_body.js": "f8906eff98064d7639be5c4c72df45a8c06ad882",
+  "sandbox/visual/feint2/u_gait.js": "0b9f8696f558e994b705b4fd393330840c9fa68c",
+  "sandbox/visual/feint2/u_sim.js": "3c9304c6ea7cbca9606df3d460539a9e1c0e2dae",
+  "sandbox/visual/feint2/u_tc.js": "17f6fd0c711849f7e78a5472e19c1fb1a3f87628",
+  "sandbox/visual/feint2/u_tests.js": "6fe244322ae2d9ed914c0faa06bc976a2a048a44",
+  "sandbox/visual/feint2/u_viewer.js": "e6f6710c2f94caec31502ccd4c1806c180707fde",
+  "sandbox/visual/feint2/v_cases.js": "322b8ce30bccb90d77b9aa0556d9a4b48bc32866",
+  "sandbox/visual/feint2/v_meta.js": "3e17ae0aa1f06b82d8ede530183120abf89d9b83",
+  "sandbox/visual/feint2/v_run.js": "d7825657eac82d0279adc60994096db37878552a",
+  "sandbox/visual/feint2/v_tech.js": "a74a87a2827d78817e573cf9f8301de51bbef22d",
+  "sandbox/visual/physchar2/core/v2_math.js": "a54f9359fac1a2f7e32d5365ac50a66d2eb1f5c6",
+  "sandbox/visual/receive_turn1/rk_model.js": "55b1a5388ebeac9aba269436dec1ce6b3fb07460",
+  "sandbox/visual/receive_turn1/rt_actions.js": "94fe5eaff45afaff765aa65a30480112c884b6b8",
+  "sandbox/visual/receive_turn11/rt11_body.js": "a0a8656d56f68b4acbf425a24f16ce5975d051a5",
+  "sandbox/visual/tc_baseline_88573ef0/pt_ball.js": "3f86c047235f54143addeff98c7b2d1df5cd839f",
+  "sandbox/visual/tc_baseline_88573ef0/pt_body.js": "5872609dc5c61849f516b9a35b6b6ad94ff9e1df",
+  "sandbox/visual/tc_baseline_88573ef0/pt_input.js": "a1346a419a0cf408ac4b191a6004c6b8e8304150",
+  "sandbox/visual/tc_baseline_88573ef0/pt_params.js": "917348d90439b995c3fe453a6c8000e74da750f9",
+  "sandbox/visual/tc_baseline_88573ef0/pt_sim.js": "90e94ae567449f7fef841820bed7fe3e6fd1d1a3",
+  "sandbox/visual/tc_baseline_88573ef0/pt_tech.js": "aff04d059be9147d0f8ce869791ce11d3452bb1d",
+  "sandbox/visual/technical_control11/tc11_leg.js": "28c4c6620252ff09c05a1fc7a88d7aa9e93001e5",
+  "sandbox/visual/technical_control15/tc15_ref.js": "513658712c3e4a73ddacaa79700231fe81ecedae",
+  "sandbox/visual/anim3d/m4.js": "bbf83e6e5b12ad0998abfcdfe70dc125dff20546",
+  "sandbox/visual/anim3d/skeleton.js": "89b5faa02dd6cdb8868feb742aa9d19cec60846b",
+  "sandbox/visual/anim3d/ik.js": "dcece177b3c44bb3e1235bb4d396f66d8ee5b594",
+  "sandbox/visual/anim3d/of_rig.js": "09cc8ff909e2f29eecf915d174e783640ee75ad5",
+  "sandbox/visual/anim3d/of_motion.js": "fe999be78fa863407c3b14cb8116dfaba09933b8",
+  "sandbox/visual/anim3d/of_loco.js": "44b3f46cfaf14446e90d239fe4db9dc48f47e0ab",
+  "sandbox/visual/anim3d/of_character.js": "216bd4f61d19ba86686e576bfa716cb61132cf8d",
+  "sandbox/visual/anim3d/of_char_gl.js": "adae61837acea778502f16cf23df0e849018da95",
+  "sandbox/visual/run1/run1_gait_v13.js": "7ba8297c2e7db1e764bdd08452c27fd6aec7a977",
+  "sandbox/visual/dribble1/d1_colliders.json": "90bb3324092da4c77d833dc9f9993e65e1649e63",
+  "sandbox/visual/tc_baseline_88573ef0/pt_baked.json": "dbb948d388cf9eb9d57f9ec5bb5236a39fdb5f07",
+  "sandbox/visual/feint2_lab.html": "45b46ff0c0d5c60a5d8039ba65367338493abbd8",
+  "sandbox/visual/feint2_sandbox.html": "86c6b38011d2b3fa07a1f4716ba84170f2681524"
+ }
+}
