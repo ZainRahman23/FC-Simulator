@@ -1,0 +1,25 @@
+{
+  "patch": "patches/A99-C-support-v1.1-from-c59e3be5.patch",
+  "patchSHA256": "6f64e720fd3cb1a0d86d9a57f9f43f79f6016473da44739006cd3534e5383e41",
+  "patchBase": "c59e3be5bdb039289adc7cbc5b9084445dcbe85c",
+  "groundedBaseline": "88573ef09e3d372bd674f0f623317b52f1dc4903",
+  "destinationHeadAtInspection": "70b83e3b6cc1523f1561e3868ae6d40c7a08cd8b",
+  "baseRuntimeFilesIdentical": 1596,
+  "modifiedBaseFiles": [],
+  "newSourceFiles": [
+    "sandbox/visual/agility99.html",
+    "sandbox/visual/agility99/bench.mjs",
+    "sandbox/visual/agility99/body.js",
+    "sandbox/visual/agility99/body_gait.js",
+    "sandbox/visual/agility99/cases.js",
+    "sandbox/visual/agility99/direction_body.js",
+    "sandbox/visual/agility99/draw.js",
+    "sandbox/visual/agility99/metrics.js",
+    "sandbox/visual/agility99/movement.js",
+    "sandbox/visual/agility99/sim.js",
+    "sandbox/visual/agility99/support.js",
+    "sandbox/visual/agility99/viewer.js"
+  ],
+  "commitCreated": false,
+  "reason": "Active Claude B4/B5 worktree; deliver isolated patch without changing its branch, index or history."
+}

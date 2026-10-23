@@ -1,0 +1,255 @@
+AGILITY-99-V1.1 — HAND OFF A99-C + SUPPORT LOCOMOTION TO CLAUDE
+Stop further feature/presentation development in this workstream.
+
+The work is useful and I want to hand the implementation to Claude for continued integration and visual refinement.
+Owner decisions to preserve
+A99-C = selected provisional Agility-99 movement ceiling
+
+Preserve C exactly as currently implemented.
+
+I also want to preserve the important architectural improvement from V1.1:
+persistent trajectory-aware support planning
+continuous swing paths
+landing commitment across replans
+curved-running support
+cut/replacement/braking support vocabulary
+
+The reduction in catastrophic foot failures is valuable:
+BALL OFF large foot jumps: 898 → 0
+fast-circle jumps: 87 → 0
+flagged intersection frames: 2086 → 0
+
+These are worth carrying forward.    Pasted text(20261021-021558)
+
+However, this implementation is not approved/frozen as final presentation.
+KNOWN OWNER FEEDBACK TO INCLUDE IN HANDOFF
+Make this extremely prominent for Claude:
+1. Straight running presentation is currently worse
+The new turning footwork is substantially better, but normal straight running looks overly:
+compact
+crouched
+awkward
+
+The owner described it as looking somewhat like the player “needs to use the bathroom.”
+
+The original 88573ef0 RUN appearance is preferred for ordinary straight running.
+
+Your diagnostics likewise show that straight sprint retained its cadence but changed pelvis height, foot arcs and flight share.    Pasted text(20261021-021558)
+
+Claude should therefore preserve the new support architecture without globally replacing the good original straight RUN presentation.
+
+Desired eventual behavior:
+stable straight trajectory
+→ original/approved RUN appearance
+
+curved trajectory
+→ curved-running support
+
+significant redirect
+→ cut/replacement support
+
+braking/reversal
+→ braking/replacement support
+
+trajectory stabilizes
+→ smoothly return to ordinary RUN
+
+2. BALL ON is NOT integrated
+Make this unmistakable.
+
+The new body fixes the diagnosed foot jumps in BALL ON tests but currently conflicts badly with Technical Control contact choreography.
+
+Current evidence includes:
+144 successful simulation contacts
+
+original body >10 cm from ball:
+3
+
+new support body >10 cm from ball:
+51
+
+worst new contact gap:
+53.6 cm
+
+Therefore:
+Do not represent this package as Technical-Control ready.
+
+The physical/simulation contacts remain authoritative; the new body simply does not yet visually witness many of them correctly.    Pasted text(20261021-021558)
+
+Claude will own that integration.
+3. Some locomotion compromises remain
+Include the existing findings around:
+airborne turning
+late landing compromises
+ankle-centred plant pivots
+incomplete crossover support
+
+Do not conceal them.
+PACKAGE THE ACTUAL IMPLEMENTATION
+Create a self-contained handoff package in a clear location inside the project/worktree that Claude can access.
+
+Prefer something obvious such as:
+handoffs/agility99_c_support_v11/
+
+or the project's existing handoff convention if one already exists.
+
+Do not invent a new convention if Touchline already has one.
+
+The package should contain everything necessary for Claude to understand and integrate the work without having to reverse-engineer your session.
+REQUIRED HANDOFF CONTENT
+Include:
+HANDOFF.md
+
+as the entry point.
+
+It should explain:
+OWNER DECISIONS
+A99-C selected
+provisional
+no lower-rating calibration
+no freeze
+
+AUTHORITATIVE MOVEMENT
+Exact C:
+formulas
+parameters
+angle/speed behavior
+momentum retention
+response clocks
+
+and where the implementation lives.
+SUPPORT LOCOMOTION
+Explain:
+persistent support timeline
+swing-path continuity
+landing commitment
+retiming
+STRAIGHT_RUN
+CURVED_RUN
+CUT_SUPPORT
+BRAKE_REPLACE
+REPLACEMENT_STEP
+pelvis/body presentation
+
+WHY THE OLD BODY FAILED
+Preserve the diagnosis:
+movement replans could rewrite in-flight landing anchors
+support changes could bypass the old blend
+large corrections could abandon continuity
+reach correction could create touchdown/root/pelvis discontinuities
+
+Include the relevant traces/evidence.
+WHAT V1.1 FIXED
+Include the before/after matrices and fast-circle evidence.
+WHAT V1.1 DID NOT FIX
+Explicitly include:
+straight-running visual regression
+BALL ON contact mismatch
+airborne-turning compromises
+landing compromises
+incomplete crossover model
+
+INCLUDE SOURCE, NOT JUST REPORTS
+Claude needs the actual implementation.
+
+Include or clearly reference:
+modified/new source files
+exact base revision
+patches/diffs
+runtime dependencies
+test scripts
+diagnostics
+replay definitions
+relevant research memo
+
+If copying source would create unnecessary duplication, provide exact repository-relative paths and a clean patch/commit containing only this work.
+
+The important thing is that Claude can reliably reproduce it.
+CREATE A CLEAN COMMIT
+If practical within the existing repository workflow, make a local handoff commit containing the isolated A99-C/support-locomotion work.
+
+Do NOT:
+merge to production
+freeze
+retune lower ratings
+modify Claude's B4/B5 work
+
+Report:
+commit hash
+parent/base commit
+changed files
+new files
+
+If a commit is inappropriate for the current worktree arrangement, package a clean patch instead.
+INCLUDE THE PLAYABLE REVIEW
+Preserve the current playground/review so Claude can reproduce:
+C BALL OFF
+original vs new body
+fast circle
+repeated ±30°
+rapid ±60°
+30/45/60/90/120/150/180°
+straight run
+straight sprint
+BALL ON diagnostics
+
+Include instructions for launching it.
+DO NOT SPEND ANOTHER LARGE PASS POLISHING IT
+This is now a handoff task, not another implementation task.
+
+Do not spend substantial time trying to:
+perfect straight running
+integrate Technical Control
+solve B4/B5
+redesign contact choreography
+calibrate lower Agility
+
+Claude will continue from here.
+
+Only fix something if it is required to make the package reproducible or understandable.
+HANDOFF TO CLAUDE — INTENDED NEXT ARCHITECTURE
+Tell Claude that the intended next integration experiment is:
+88573ef0 grounded baseline
++
+A99-C authoritative movement
++
+Astra V1.1 persistent support/direction-change locomotion
++
+Claude B4 generic technical vocabulary
++
+Claude B5 short technical entry/exit
+
+But Claude should not blindly flatten these together.
+
+The desired integration needs to preserve separable toggles:
+A
+A + C
+A + C + support locomotion
+A + C + support + B4
+A + C + support + B4 + B5
+
+so the owner can playtest each layer.
+IMPORTANT INTEGRATION PHILOSOPHY FOR CLAUDE
+Include these owner rules verbatim or very clearly:
+C is the selected A99 movement target. Do not slow C merely because the old animation cannot explain it.
+
+The persistent support architecture is valuable because it eliminated the catastrophic foot discontinuities. Preserve that architectural lesson.
+
+Do not globally replace the original good straight-running presentation. Specialized support/cutting behavior should activate when directional demand requires it and return cleanly to normal RUN afterward.
+
+Technical Control contacts remain authoritative. The support locomotion must eventually coordinate with B4/B5 so the visible foot witnesses the real contact; do not move the authoritative ball or contact to fit animation.
+
+Simulation decides what happens; animation explains what happened.
+
+FINAL RESPONSE
+When complete, give me only the information I need to pass to Claude:
+handoff/package path
+commit or patch identifier
+base revision
+entry HANDOFF.md path
+playable review path/launch instruction
+concise known-issues summary
+
+Then stop.
+
+Do not freeze or integrate anything.

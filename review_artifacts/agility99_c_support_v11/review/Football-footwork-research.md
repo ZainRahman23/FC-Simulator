@@ -1,0 +1,33 @@
+# Make support explain the turning athlete
+
+**A99-C needs a continuing support plan that follows its accepted trajectory, with distinct running, redirecting and braking solutions.** Football evidence supports asymmetric curved running, coordinated whole-body cuts and braking distributed across contacts. It does not establish numeric limits for C or prove that ten separate animations are necessary. A practical minimum is three reusable families: straight/curved running, redirecting support transfer, and braking/reversal support. Crossover, lateral replacement and recovery are transfer variants selected from the current feet and support phase. This inventory and the landing-commitment rules below are **implementation inferences**, not experimentally validated animation algorithms. Preserve C’s root, velocity and response exactly; evaluate whether the new presentation explains them, including any bounded visual orientation lag.
+
+## Continuous curves need asymmetric running support
+
+In nine soccer players, the inside leg changed more from straight to curved sprinting, with different muscle-activation patterns between inside and outside legs. A natural-turf study of six men in soccer boots found greater outside-leg propulsive force and impulse during curved running. These small studies support **different leg roles through a curve**, rather than ordinary straight running rotated beneath an otherwise unchanged body. They do not prescribe a universal stance width, contact time or lean angle. ([Filter et al., 2020](https://pubmed.ncbi.nlm.nih.gov/32492732/); [Smith et al., 2006](https://pubmed.ncbi.nlm.nih.gov/16473010/))
+
+**Implementation inference:** use one continuous running family whose straight form blends into curved support. Derive inside/outside roles from signed trajectory curvature and blend them across changes of sign. Forecast the root and travel tangent at the next landing and through its support interval; place feet relative to that future pelvis path. Coordinate inward inclination, pelvis orientation and asymmetric foot placement without restarting the stride for every input update. Keep ordinary running simple. The extreme circle can increase compact transfers and pivoting, but must retain continuous foot trajectories and recognizable loading and release.
+
+## Redirecting contacts need several transfer options
+
+Experienced soccer players used different segment mechanics in 45° and 90° sidesteps; larger-angle demands did not simply enlarge every joint action. Another study of skilled soccer athletes found the 45° action distributed braking and redirection more evenly across approach and execution, whereas 90° cutting emphasized deceleration in the approach. **One generic forward stride scaled by angle is therefore an inadequate reference.** ([Havens and Sigward, segment mechanics](https://pubmed.ncbi.nlm.nih.gov/25194689/); [Havens and Sigward, step contributions](https://www.sciencedirect.com/science/article/abs/pii/S0966636214006584))
+
+Soccer players also self-selected sidestep and crossover cuts in a timed agility task. Crossover involves deliberate passage of the free leg across the support leg, so a reversal of left/right screen order is not itself a collision. ([Primary soccer cutting study, 2014](https://pmc.ncbi.nlm.nih.gov/articles/PMC4196326/))
+
+**Implementation inference:** the redirecting family should share a load–transfer–exit structure, with lateral placement, crossover or compact replacement chosen from the available leg and actual commitment. A shallow correction can preserve running rhythm; a hard cut can expose an outside support, flexed hip/knee and outgoing opposite leg. Crossover requires a swing route with vertical and fore–aft clearance, followed by a reachable landing. Avoid permanently widening both legs to eliminate every crossing. For repeated ±30° and ±60° requests, continue the existing contact sequence and alter only the support events that remain adaptable.
+
+## Braking and reversal belong to a connected sequence
+
+In twenty university male soccer players performing 180° turns, substantial braking occurred before the final turn contact; the third-last contact produced greater peak braking forces in less contact time than the subsequent contacts. The final plant does not perform the entire reversal. ([Dos’Santos, Thomas and Jones](https://doi.org/10.1080/02640414.2020.1823130))
+
+**Implementation inference:** a braking/reversal family should coordinate compression, unloading, reorientation and exit across whichever contacts C’s existing trajectory permits. Use replacement steps and articulated pivots when an old support cannot accommodate the turn. C already removes incoming speed at 180°; presentation should make that existing event readable. There is no research-derived requirement to introduce a new stop, delay or angle threshold at 120° or 150°.
+
+## Landing commitment should prevent late target jumps
+
+Anticipation changed lower-limb mechanics in side- and cross-cutting among young male soccer players. Soccer sidestepping research also found different trunk–pelvis coordination under anticipated and unanticipated conditions. These findings support adaptable, coordinated solutions, but provide no universal late-swing freeze fraction or segment-lag constant. ([Kim et al., 2014](https://journals.sagepub.com/doi/10.1177/0363546514531578); [Weir et al.](https://doi.org/10.1016/j.gaitpost.2018.09.007))
+
+**Implementation inference:** retain foot identity, current swing position and velocity through replanning. Allow broad endpoint adaptation early, then progressively preserve the landing near touchdown. If a late request makes that destination unsuitable, finish or shorten the reachable contact and schedule a replacement; do not overwrite the foot into a distant target. A planted foot can roll, pivot, release early or slide slightly under an explicit bounded policy. Pelvis and torso should participate smoothly, while any visual heading lag is measured separately from authoritative motion. IK should realize the planned support geometry, not invent a new gait after each root rotation.
+
+## Conclusion
+
+The useful architectural test is whether support events retain identity and continuity while requests change. Record family, next support, predicted and actual landing, revisions and three-dimensional leg clearance alongside root/pose separation. These distinguish intentional crossover from tangling, and controlled pivoting from slipping. No retrieved study supplies a complete solution for C’s 270°/s circle or rapid command alternation: any remaining failure must be attributed to the exact trajectory and presentation compromise, without silently reducing C.

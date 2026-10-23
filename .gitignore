@@ -63,3 +63,13 @@ __pycache__/
 chrome-manifest/
 /*.zip
 review_artifacts/*.zip
+
+# ── clip-capture stdout logs (regenerable; absolute local paths, 404 noise) — the clips themselves are committed ──
+review_artifacts/technical_control1*/clips/*.log
+review_artifacts/technical_control1*/strips/*.log
+
+# ── Astra's A99-C support V1.1 handoff package: its docs / patches / tools are committed; the self-contained runtime
+#    copy (lab/: duplicates the repo + character meshes), the MP4/JPG replays (65 MB) and the regenerable traces stay local ──
+review_artifacts/agility99_c_support_v11/review/lab/
+review_artifacts/agility99_c_support_v11/review/replays/
+review_artifacts/agility99_c_support_v11/review/data/

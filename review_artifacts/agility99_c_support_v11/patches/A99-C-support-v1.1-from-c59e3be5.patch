@@ -1,0 +1,562 @@
+diff --git a/sandbox/visual/agility99.html b/sandbox/visual/agility99.html
+new file mode 100644
+index 0000000..ddf3eed
+--- /dev/null
++++ b/sandbox/visual/agility99.html
+@@ -0,0 +1,9 @@
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Touchline · Agility 99 V1.1</title><style>
++*{box-sizing:border-box}body{margin:0;background:#0e1914;color:#e6eee7;font:14px system-ui}header{min-height:84px;flex-wrap:wrap;padding:14px 22px;display:flex;align-items:center;gap:24px;border-bottom:1px solid #35503e}h1{margin:0;font-size:21px}header p{margin:5px 0 0;font-size:12px;color:#9db8a7}.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}select,button{background:#213a2b;border:1px solid #54705c;border-radius:5px;color:inherit;padding:9px 12px;font:inherit}button{cursor:pointer}button.active{background:#d1de99;color:#14271c;border-color:#d1de99}label{display:flex;align-items:center;gap:7px;font-size:12px;color:#c2d1c7}#stage{position:relative;width:100%;aspect-ratio:1600/820;max-height:calc(100vh - 166px);background:#122419}canvas{position:absolute;width:100%;height:100%;inset:0}#controls{position:absolute;left:25px;bottom:24px;display:flex;align-items:flex-end;gap:15px}#stick{width:164px;height:164px;border-radius:50%;border:2px solid #a2b6a080;background:radial-gradient(circle,#13221a55 0 40%,#a5c6a512 41% 71%,#13221a77 72%);position:relative;touch-action:none;user-select:none}#stick:before,#stick:after{content:'';position:absolute;background:#b5c5b12f}#stick:before{height:1px;width:100%;top:50%}#stick:after{width:1px;height:100%;left:50%}#nub{width:49px;height:49px;border-radius:50%;background:#d2dfbca8;border:1px solid #ebf4de;position:absolute;left:56px;top:56px;pointer-events:none}#liveHelp{background:#102317e3;padding:10px 13px;border-radius:6px;color:#c6d6cc;font-size:12px;max-width:300px}#replaybar{display:none;padding:10px 18px;gap:12px;align-items:center}#replaybar input{flex:1}footer{height:76px;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:12px;color:#b3c8ba}.hint{max-width:780px}#toast{color:#ead994}#compareOpts{display:none}.rootlegend{color:#efc86b}a{color:#d9e7a5}@media(max-width:850px){header{height:auto;flex-wrap:wrap;gap:12px}#stage{min-height:430px}#controls{transform:scale(.8);transform-origin:left bottom}footer{height:auto}.hint{max-width:400px}}
++</style></head><body>
++<header><div><h1>TOUCHLINE · AGILITY 99 V1.1</h1><p>Owner-selected C · identical authoritative movement · provisional footwork review</p></div><div class="bar"><button id="live" class="active">Play</button><button id="compare">Compare</button><select id="profile" aria-label="Movement candidate"><option>CURRENT</option><option>A99-A</option><option>A99-B</option><option selected>A99-C</option></select><select id="ball" aria-label="Ball mode"><option value="off">BALL OFF · movement</option><option value="on">BALL ON · baseline TC</option></select><select id="bodymode" aria-label="Body presentation"><option value="original">BODY · ORIGINAL</option><option value="new" selected>BODY · NEW DIRECTION-CHANGE LOCOMOTION</option></select><button id="reset">Reset</button><label><input id="guides" type="checkbox">Support guides</label></div></header>
++<div class="bar" id="compareOpts"><select id="case" aria-label="Comparison case"><option value="snap0">Straight sprint</option><option value="snap15">Sprint 15°</option><option value="snap30">Sprint 30°</option><option value="snap45">Sprint 45°</option><option value="snap60">Sprint 60°</option><option value="snap90">Sprint 90°</option><option value="snap120">Sprint 120°</option><option value="snap150">Sprint 150°</option><option value="snap180">Sprint 180°</option><option value="rapid">Rapid ±60°</option><option value="repeat30">Repeated ±30°</option><option value="sequence">90 / 0 / -90 / 0</option><option value="gradual">Gradual 0 → 90°</option><option value="ramp-fast">Rapid 0 → 90°</option><option value="circle">Slow analog circle</option><option value="circle-fast" selected>Fast analog circle</option><option value="stop">Release sprint</option></select><select id="phase" aria-label="Stride phase"><option value="0">Phase 0.00 s</option><option value=".12">Phase 0.12 s</option><option value=".24">Phase 0.24 s</option><option value=".36">Phase 0.36 s</option></select><select id="direction" aria-label="Direction"><option value="1">Right first</option><option value="-1">Left first</option></select><button id="playback">Play 1×</button><select id="view" aria-label="Camera"><option value="body">Body view</option><option value="top">Top view</option></select></div>
++<div id="stage"><canvas id="scene" width="1600" height="820"></canvas><canvas id="hud" width="1600" height="820"></canvas><div id="controls"><div id="stick" role="application" aria-label="Analog movement joystick"><div id="nub"></div></div><div id="liveHelp"><div>Drag the stick · WASD also works</div><div>Inner: walk · middle: jog · outer: run</div><div style="margin-top:10px" class="bar"><button id="sprint">Sprint lock</button><select id="mode" aria-label="Keyboard mode"><option>RUN</option><option>JOG</option><option>WALK</option></select></div><div style="margin-top:8px">Shift: sprint · Alt: walk · Space: reset</div></div></div></div>
++<div id="replaybar"><span>Same input · normal speed</span><input id="scrub" aria-label="Replay timeline" type="range" min="0" max="4700" value="0"><span id="clock"></span></div>
++<footer><div class="hint"><span class="rootlegend">Gold dot = authoritative root.</span> Compare shows the original and new bodies on one shared trajectory. BALL ON is diagnostic: the new support feet do not yet follow baseline touch choreography. C movement is owner-selected; the new body awaits your review.</div><div id="toast">Loading original character…</div></footer>
++<script src="anim3d/m4.js"></script><script src="anim3d/skeleton.js"></script><script src="anim3d/ik.js"></script><script src="anim3d/of_rig.js"></script><script src="anim3d/of_motion.js"></script><script src="anim3d/of_loco.js"></script><script src="anim3d/of_character.js"></script><script src="anim3d/of_char_gl.js"></script><script src="run1/run1_gait_v13.js"></script><script type="module" src="agility99/viewer.js"></script></body></html>
+diff --git a/sandbox/visual/agility99/bench.mjs b/sandbox/visual/agility99/bench.mjs
+new file mode 100644
+index 0000000..c768936
+--- /dev/null
++++ b/sandbox/visual/agility99/bench.mjs
+@@ -0,0 +1,19 @@
++import fs from 'node:fs';
++import {ENV} from '../tc_baseline_88573ef0/tools/pt_env.mjs';
++import {run,scenario,PROFILES} from './cases.js';import {measure} from './metrics.js';
++const suite=process.argv[2]||'quick',out=process.argv[3]||'a99-results.json',cases=[];
++if(suite==='quick'){for(const a of [30,45,60,90,120,180])cases.push(scenario('snap','SPRINT',a));for(const k of ['rapid','repeat30','circle','circle-fast','stop'])cases.push(scenario(k));}
++else{
++ for(const mode of ['JOG','RUN','SPRINT'])for(const angle of [15,30,45,60,90,120,150,180])for(const phase of [0,.12,.24,.36])for(const sign of [1,-1])cases.push(scenario('snap',mode,angle,phase,sign));
++ for(const mode of ['JOG','RUN','SPRINT'])for(const kind of ['gradual','ramp-fast','rapid','repeat30','sequence','circle','circle-fast','stop'])for(const phase of [0,.24])for(const sign of (kind==='stop'?[1]:[1,-1]))cases.push(scenario(kind,mode,90,phase,sign));
++}
++const rows=[],t=Date.now();let n=0;
++for(const ballOn of [false,true])for(const c of cases)for(const p of Object.keys(PROFILES)){
++ const main=run(ENV,c,p,ballOn),cfs=[];
++ for(let i=0;i<c.steps.length;i++){
++  const [tc]=c.steps[i],prev=c.fn(tc-1/240),end=c.steps[i+1]?.[0]??c.end;
++  cfs.push(run(ENV,{...c,end,fn:t=>t<tc-1e-9?c.fn(t):prev},p,ballOn));
++ }
++ rows.push(measure(main,c,cfs));n++;if(n%16===0){fs.writeFileSync(out,JSON.stringify({suite,profiles:PROFILES,cases:cases.map(({fn,...x})=>x),rows},null,1));console.log(n,'/',cases.length*8,((Date.now()-t)/1000).toFixed(1)+'s',ballOn?'BALL ON':'BODY');}
++}
++fs.writeFileSync(out,JSON.stringify({suite,profiles:PROFILES,cases:cases.map(({fn,...x})=>x),rows},null,1));console.log('DONE',rows.length);
+diff --git a/sandbox/visual/agility99/body.js b/sandbox/visual/agility99/body.js
+new file mode 100644
+index 0000000..0bc956e
+--- /dev/null
++++ b/sandbox/visual/agility99/body.js
+@@ -0,0 +1,13 @@
++// Small BALL OFF swing-clearance adapter over the existing baseline body/IK.
++// No root offsets or simulation feedback; no changes at planted feet or contacts.
++import {PlayBody} from '../tc_baseline_88573ef0/pt_body.js';
++export class Body99 extends PlayBody {
++ footAt(F,t){
++  const f=super.footAt(F,t);if(this.sim.o.ballOn!==false||this.sim.o.profile==='CURRENT'||f.planted||f.contact)return f;
++  const plan=this.sim.planAt(t),list=plan.stances[F],prev=[...list].reverse().find(s=>s.t0<=t),next=list.find(s=>s.t0>t);
++  if(!prev||!next||!Number.isFinite(prev.t1)||next.t0<=prev.t1)return f;
++  const u=Math.max(0,Math.min(1,(t-prev.t1)/(next.t0-prev.t1))),weight=Math.sin(Math.PI*u),st=this.sim.stateAt(t),sx=F==='R'?1:-1,r=[-Math.sin(st.psi),Math.cos(st.psi)],lat=(f.ank[0]-st.P[0])*r[0]+(f.ank[1]-st.P[1])*r[1];
++  const offset=Math.min(.12,Math.max(0,.14-sx*lat))*weight;
++  return {...f,ank:[f.ank[0]+r[0]*sx*offset,f.ank[1]+r[1]*sx*offset,f.ank[2]+.02*weight],kneeOut:sx*18*Math.PI/180*weight,a99SwingOffset:offset};
++ }
++}
+diff --git a/sandbox/visual/agility99/body_gait.js b/sandbox/visual/agility99/body_gait.js
+new file mode 100644
+index 0000000..d709d65
+--- /dev/null
++++ b/sandbox/visual/agility99/body_gait.js
+@@ -0,0 +1,68 @@
++// BALL OFF support adapter, derived verbatim from the locked baseline gaitFrom.
++// Retain RUN1 duty at speed, shorten reorganization steps smoothly on hard
++// turns/braking, and use compact low-speed restart steps. No contact is scheduled.
++// No new root path, foot proxy, ball contact, technique or IK solver.
++import {DT,DEG,wrap,fromLocal,toLocal,rgt} from '../tc_baseline_88573ef0/pt_sim.js';
++import {WIDTH,lead} from '../tc_baseline_88573ef0/pt_params.js';
++import {predict} from '../tc_baseline_88573ef0/pt_ball.js';
++const {abs,min,max,hypot:hyp}=Math;
++const sgn=X=>X==='R'?1:-1,other=X=>X==='R'?'L':'R';
++export function bodyGaitFrom(plan, keep, anchors, tTo) {
++    const S = { R: keep.stances.R.map((x) => Object.assign({}, x)), L: keep.stances.L.map((x) => Object.assign({}, x)) }, lastOf = (X) => S[X][S[X].length - 1], t = this.t;
++    // a footfall: the lead ahead of the centre of mass on the foot's side — kept on its own side of the other foot (no crossing outside an
++    // authored crossover) and off the free ball's path while it stands (the ball is authoritative: the presentation never has it roll through a
++    // planted boot). Positions only: no decision reads them
++    const bp0 = this.ball.p, bv0 = this.ball.v;
++    const place = (X, tt, t1) => { const s0 = this.stateAt(tt, plan), v = s0.s, th = v > 0.6 ? s0.h : s0.psi, w = (v > 2.4 ? WIDTH.run : WIDTH.walk) + 0.04 * Math.min(1, abs(wrap((plan.req?.h ?? s0.h)-s0.h))/(60*DEG)), ld = v < 0.3 ? 0 : lead(v);
++      let p = fromLocal(fromLocal(s0.P, th, ld, 0), s0.psi, 0, sgn(X) * w); const r = rgt(s0.psi), sx = sgn(X);
++      const o = lastOf(other(X)); if (o && o.pos) { const l = ((p[0] - o.pos[0]) * r[0] + (p[1] - o.pos[1]) * r[1]) * sx; if (l < 0.13) { p = [p[0] + r[0] * sx * (0.13 - l), p[1] + r[1] * sx * (0.13 - l)]; } }
++      return offBall(p, s0.psi, X, tt, min(t1 != null ? t1 : tt + 0.25, tt + 0.6)); };
++    // a stance off the free ball's path while it stands (a stance that never lifts: off where the ball comes to rest)
++    const offBall = (p, psi, X, tt, tEnd) => { const r = rgt(psi); let need = 0, side = sgn(X);
++      for (let x = max(t, tt - 0.04); x <= tEnd + 1e-9; x += x > tt + 0.6 ? 0.2 : 0.02) { const b = predict(bp0, bv0, x - t).p, d = [b[0] - p[0], b[1] - p[1]], a = d[0] * Math.cos(psi) + d[1] * Math.sin(psi), l = d[0] * r[0] + d[1] * r[1];
++        if (a > -0.24 && a < 0.30 && abs(l) < 0.20) { const nd = 0.20 - abs(l); if (nd > need) { need = nd; side = l >= 0 ? -1 : 1; } } }
++      return need > 0 ? [p[0] + r[0] * side * min(0.20, need), p[1] + r[1] * side * min(0.20, need)] : p; };
++    const yawOf = (X, tt) => { const s0 = this.stateAt(tt, plan); return (s0.s > 0.6 ? s0.h : s0.psi) + sgn(X) * 5 * DEG; };
++    const cad = (tt) => { const v = this.stateAt(tt, plan).s, G = this.gait(max(v, 0.01)), v2 = this.stateAt(tt + 0.3, plan).s;
++      const turn=plan.req?.h==null?0:abs(wrap(plan.req.h-this.stateAt(tt,plan).h))/DEG;
++      const cut=Math.min(1,Math.max(0,(turn-20)/60)), braking=Math.min(1,Math.max(0,(v-v2)/2));
++      const reorg=Math.max(cut,braking);let Ts=G.Ts,D=G.D;
++      if(v2>v+.6&&v<3){Ts=min(Ts,.23);D=min(D,.43);}
++      Ts=Ts*(1-reorg)+min(Ts,.20+.04*Math.min(v/8,1))*reorg;
++      const stance=G.D*2*Ts;D=(stance*(1-reorg)+min(stance,.13)*reorg)/(2*Ts);
++      return {Ts,D}; }; // accelerating: quick short steps
++    const stanceD = (tt) => { const G = cad(tt); return G.D * 2 * G.Ts; };
++    const step = (X, td) => { const st = { id: ++this.sid, F: X, t0: td, t1: td + stanceD(td), pos: place(X, td, td + stanceD(td)), yaw: yawOf(X, td), kind: this.stateAt(td, plan).s < 2.4 ? "walk" : "stride", src: "gait" }; S[X].push(st); return st; };
++    // a planted foot that must step lifts in time (a standing foot: now)
++    const lift = (X, tdNext) => { const l = lastOf(X); if (l.t1 === Infinity || l.t1 > tdNext - 0.14) l.t1 = max(l.t0 + 0.06, min(tdNext - 0.14, l.t1 === Infinity ? t + 0.02 : l.t1), t + 0.02); };
++    // the last touchdown (a tie — both feet down together — goes to a technique's own stance, else to the right foot: never the mirror's opposite)
++    const lastTD = () => { const r = lastOf("R"), l = lastOf("L"); if (abs(r.t0 - l.t0) < 1e-9) return r.src === "tech" ? r : l.src === "tech" ? l : r; return r.t0 > l.t0 ? r : l; };
++    const moving = plan.req && plan.req.h != null;
++    // standing and asked to move: the rear foot (relative to the request) steps first, quickly
++    if (lastOf("R").t1 === Infinity && lastOf("L").t1 === Infinity) {
++      if (!moving && !anchors.length) return S;
++      const hq = plan.req.h, rr = toLocal(lastOf("R").pos, this.stateAt(t, plan).P, hq)[0], ll = toLocal(lastOf("L").pos, this.stateAt(t, plan).P, hq)[0];
++      let X = rr < ll - 0.02 ? "R" : ll < rr - 0.02 ? "L" : (this.o.foot === "L" ? "R" : "L"); if (anchors.length) { const A0 = anchors[0]; X = A0.t0 - t < 0.3 ? A0.F : other(A0.F); }
++      const td = t + 0.03 + 0.17; lastOf(X).t1 = t + 0.03; if (!(anchors.length && anchors[0].F === X && anchors[0].t0 < td + 0.1)) step(X, td); lastOf(other(X)).t1 = Infinity; }
++    // the anchors (a technique's own stances): the steps before each spread evenly to land it on its foot at its time
++    for (const A of anchors.slice().sort((x, y) => x.t0 - y.t0)) { if (A.t0 <= t + this.P.react) continue;
++      const L0 = lastTD(), N = other(L0.F), gap = A.t0 - L0.t0, Ts = this.gait(max(this.stateAt(L0.t0, plan).s, 0.5)).Ts;
++      let best = null; for (let j = (A.F === N ? 0 : 1); j <= 7; j += 2) { const per = gap / (j + 1); if (per < 0.13) break; const e = abs(per - Ts); if (!best || e < best.e) best = { j, per, e }; }
++      if (!best) best = { j: A.F === N ? 0 : 1, per: gap / ((A.F === N ? 0 : 1) + 1) };
++      for (let i = 1; i <= best.j; i++) { const X = i % 2 === 1 ? N : other(N), td = L0.t0 + i * best.per; lift(X, td); step(X, td); }
++      if (!A.pos) { A.pos = place(A.F, A.t0); A.yaw = yawOf(A.F, A.t0); }
++      lift(A.F, A.t0); const prev = lastOf(other(A.F)); if (prev.t1 === Infinity) prev.t1 = A.t0 + 0.08; S[A.F].push(A); }
++    // free running / walking after: the cadence at the speed then; stopping: the last step beside the other foot, both planted
++    for (let guard = 0; guard < 30; guard++) {
++      const L0 = lastTD(), X = other(L0.F), s0 = this.stateAt(max(t, L0.t0), plan), v = s0.s, G = cad(max(t, L0.t0));
++      const tEnd = this.stateAt(min(tTo, max(t, L0.t0) + 0.4), plan).s;
++      if (!moving && v < 0.45 && tEnd < 0.3) { // settle
++        const lx = lastOf(X); if (lx.t1 === Infinity && L0.t1 === Infinity) break;
++        const td = max(L0.t0 + 0.14, lx.t1 === Infinity ? t + 0.16 : lx.t1 + 0.16, t + 0.05); if (td > tTo) break; lift(X, td); const s1 = this.stateAt(td, plan);
++        S[X].push({ id: ++this.sid, F: X, t0: td, t1: Infinity, pos: offBall(fromLocal(s1.P, s1.psi, X === (this.o.foot === "L" ? "L" : "R") ? -0.02 : 0.04, sgn(X) * WIDTH.stand), s1.psi, X, td, td + 3.0), yaw: s1.psi + sgn(X) * 6 * DEG, kind: "settle", src: "gait" }); L0.t1 = Infinity; break; }
++      let td = L0.t0 + G.Ts; const lx = lastOf(X); if (lx.t1 !== Infinity) td = max(td, lx.t1 + 0.16); td = max(td, t + 0.02); if (td > tTo) break;
++      lift(X, td); step(X, td); if (L0.t1 === Infinity) L0.t1 = td + 0.6 * stanceD(td); }
++    // a stance ends before its foot's next one begins (the swing ≥ 0.14 s), never before it began
++    for (const X of ["R", "L"]) { const L = S[X]; for (let i = 0; i + 1 < L.length; i++) if (L[i].t1 > L[i + 1].t0 - 0.14 && L[i].t1 > t) L[i].t1 = max(L[i].t0 + 0.05, L[i + 1].t0 - 0.14, t + 0.005); }
++    return S;
++  }
+diff --git a/sandbox/visual/agility99/cases.js b/sandbox/visual/agility99/cases.js
+new file mode 100644
+index 0000000..87e6aaa
+--- /dev/null
++++ b/sandbox/visual/agility99/cases.js
+@@ -0,0 +1,27 @@
++import {stickVector,stickMode,headingFrom} from '../tc_baseline_88573ef0/pt_input.js';
++import {AgilitySim,DT,DEG,PROFILES} from './sim.js';
++export {AgilitySim,DT,DEG,PROFILES};
++export function request(deg,mode='SPRINT'){
++ const r=mode==='WALK'?.25:mode==='JOG'?.56:.95,v=stickVector(Math.sin((deg||0)*DEG)*r,Math.cos((deg||0)*DEG)*r);
++ return {h:deg===null?null:headingFrom(0,v.x,v.y),mode:mode==='SPRINT'?'SPRINT':stickMode(v.r),keys:64|(mode==='SPRINT'?128:0)};
++}
++export function scenario(kind='snap',mode='SPRINT',angle=90,phase=0,sign=1){
++ const t0=Math.round((4+phase)/DT)*DT,steps=[];let duration=4,fn;
++ if(kind==='snap')steps.push([t0,sign*angle]);
++ if(kind==='stop')steps.push([t0,null]);
++ if(kind==='rapid'){for(let i=0;i<8;i++)steps.push([t0+i*.35,sign*(i%2?-60:60)]);steps.push([t0+2.8,0]);duration=4.2;}
++ if(kind==='repeat30'){for(let i=0;i<8;i++)steps.push([t0+i*.45,sign*(i%2?-30:30)]);steps.push([t0+3.6,0]);duration=4.6;}
++ if(kind==='sequence'){[90,0,-90,0].forEach((a,i)=>steps.push([t0+i*.6,sign*a]));duration=4;}
++ if(kind==='gradual'||kind==='ramp-fast'){const ramp=kind==='gradual'?1.0:.15;fn=t=>t<t0?0:sign*90*Math.min(1,(t-t0)/ramp);steps.push([t0,sign*90]);}
++ if(kind==='circle'||kind==='circle-fast'){const hz=kind==='circle'?.25:.75;fn=t=>t<t0?0:sign*360*hz*(t-t0);duration=4;}
++ fn??=t=>{let a=0;for(const [s,v]of steps)if(t>=s-1e-9)a=v;return a;};
++ return {id:`${mode}_${kind}${kind==='snap'?'_'+angle:''}_p${phase}_${sign>0?'R':'L'}`,kind,mode,angle,phase,sign,t0,duration,end:t0+duration,steps,fn};
++}
++export function run(env,spec,profile='CURRENT',ballOn=false,{straight=false}={}){
++ const sim=new AgilitySim(env,{profile,ballOn}),ticks=[];
++ for(let k=0;k<Math.round(spec.end/DT);k++){
++  const t=k*DT,req=request(t<.2?null:straight?0:spec.fn(t),spec.mode);sim.step(req);const x=sim.stateAt(sim.t),b=sim.ball.p,plan=sim.plan;
++  ticks.push({t:sim.t,p:x.P,v:x.V,s:x.s,h:x.h,psi:x.psi,b:b.slice(),bv:sim.ball.v.slice(),sep:Math.hypot(x.P[0]-b[0],x.P[1]-b[1]),req:sim.req.h,prog:plan.prog.kind,action:plan.action.kind,hold:!!(plan.prog.hold&&sim.t<plan.prog.hold.until),keyed:!!sim.progAt(plan.prog,sim.t,x.s,x.h,plan.req,x.P).keyed,future:plan.contacts.some(c=>!c.done&&c.t>=sim.t-1e-9)});
++ }
++ return {sim,ticks};
++}
+diff --git a/sandbox/visual/agility99/direction_body.js b/sandbox/visual/agility99/direction_body.js
+new file mode 100644
+index 0000000..094a737
+--- /dev/null
++++ b/sandbox/visual/agility99/direction_body.js
+@@ -0,0 +1,24 @@
++import {PlayBody} from '../tc_baseline_88573ef0/pt_body.js';
++import {clearancesOf} from '../technical_control15/tc15_ref.js';
++import {Q,legIK,swivelFor,footOut,ankleFor,ballGap} from '../technical_control11/tc11_leg.js';
++import {SupportTimeline,clamp} from './support.js';
++const DEG=Math.PI/180,wrap=a=>Math.atan2(Math.sin(a),Math.cos(a));
++export class DirectionBody extends PlayBody{
++ constructor(env,sim){super(env,sim);this.support=new SupportTimeline(sim);}
++ pose(t){const z=this.support.at(t),s=this.sim.stateAt(t),P=s.P.slice(),psi=z.psi,V=s.V,b=this.b,E=this.E,R3=E.R3,sp=s.s,run=clamp(sp/6,0,1),cy=z.cycle,rot={},feet=structuredClone(z.feet),gTw=(cy.sw==='R'?1:-1)*6*DEG*Math.sin(Math.PI*cy.u)*run;
++ const lean=(6+6*run)*DEG,side=z.side*DEG,trunk=z.trunk*DEG,bob=-.014*run*Math.cos(2*Math.PI*(cy.u-.35));let pelvis=[0,b.pelvisY-.02-z.crouch+bob,0.015*run];const Rp=R3.mul3(R3.y(gTw),R3.x(lean*.3),R3.z(-side*.40));rot.pelvis=Rp;rot.spine=R3.mul3(R3.y(trunk*.45-gTw*.6),R3.x(lean*.3),R3.z(-side*.3));rot.chest=R3.mul3(R3.y(trunk*.55-gTw*.4),R3.x(lean*.4),R3.z(-side*.3));
++ const swing=(20+28*run)*DEG*Math.sin(Math.PI*cy.u)*(cy.sw==='R'?1:-1);
++ for(const X of ['R','L']){const sx=X==='R'?1:-1;rot['clavicle_'+X]=R3.I();rot['upperArm_'+X]=R3.mul3(R3.z(sx*(12+Math.abs(z.side)*.35)*DEG),R3.x(-sx*swing-8*DEG),R3.y(-sx*8*DEG));rot['foreArm_'+X]=R3.x(-(45+35*run)*DEG);rot['hand_'+X]=R3.x(-8*DEG);}
++ rot.neck=R3.y(-trunk*.3);rot.head=R3.y(-trunk*.2);
++ // A small COM compression is shared by the whole body before the leg solve.
++ // It follows continuous targets, including the approaching swing, so touchdown
++ // cannot suddenly switch on a pelvis/root reach correction.
++ const nominalY=pelvis[1];for(const X of ['R','L']){const sx=X==='R'?1:-1,a=this.toM(feet[X].ank,P,psi),hip=Q.v(Rp,[sx*b.hipX,0,0]),dx=a[0]-hip[0],dz=a[2]-pelvis[2]-hip[2],vertical=Math.sqrt(Math.max(.1,(b.legLen*.985)**2-dx*dx-dz*dz));pelvis[1]=Math.min(pelvis[1],Math.max(nominalY-.075,a[1]+vertical-hip[1]));}
++ const legs={};
++ for(const X of ['R','L']){const f=feet[X],sx=X==='R'?1:-1,hip=Q.v(Rp,[sx*b.hipX,0,0]).map((x,i)=>x+pelvis[i]),an=this.toM(f.ank,P,psi),Rf=Q.mul3(Q.y(wrap(f.yaw-psi)),Q.x(-f.pitch),Q.z(f.roll)),sw=swivelFor(footOut(Rp,Rf,X),X)+f.kneeOut,ik=legIK(b,Rp,sw,hip,an,7*DEG),Rsh=Q.mul3(Rp,ik.Rthigh,Q.x(ik.k)),A=ankleFor(Rsh,Rf,X,ik.k);
++ rot['thigh_'+X]=ik.Rthigh;rot['shin_'+X]=Q.mul(Q.x(ik.k),Q.y(A.tau));rot['foot_'+X]=Q.yxz(A.fy,A.fp,A.fr);rot['toe_'+X]=Q.I();legs[X]={short:ik.short,err:A.err,an,Rfoot:Q.mul(Rsh,Q.mul(Q.y(A.tau),Q.yxz(A.fy,A.fp,A.fr)))};}
++ const pose={rot,pelvisPos:pelvis},fk=E.r1FK({body:b},pose,E.r1RootMatrix(P[0],P[1],psi,0),this.fk);this.fk=fk;const sk=b.skel,skin=new Float32Array(16*sk.bones.length);for(let i=0;i<fk.world.length;i++)skin.set(this.M4.mul(fk.world[i],sk.invBind[i]),i*16);const J={};for(const bn of sk.bones){const w=fk.joint[bn.idx],q=fk.tip[bn.idx];J[bn.name]={j:[w[0],-w[2],w[1]],t:[q[0],-q[2],q[1]]};}
++ const ball=this.ballAt(t),gap={};if(this.hull)for(const X of ['R','L'])gap[X]=ballGap(this.hull[X],X,legs[X].Rfoot,this.toM(J['foot_'+X].j,P,psi),this.toM(ball,P,psi),.11);
++ return{t,skin,J,pose,P,psi,V,feet,legs,ball,gap,clr:clearancesOf(J),support:z,plan:this.sim.planAt(t),reach:0};
++ }
++}
+diff --git a/sandbox/visual/agility99/draw.js b/sandbox/visual/agility99/draw.js
+new file mode 100644
+index 0000000..232de3e
+--- /dev/null
++++ b/sandbox/visual/agility99/draw.js
+@@ -0,0 +1,64 @@
++function persp(fyNdc, aspect, n, f) { const m = new Float32Array(16); m[0] = fyNdc / aspect; m[5] = fyNdc; m[10] = -(f + n) / (f - n); m[11] = -1; m[14] = -2 * f * n / (f - n); return m; }
++function lookAt(eye, at, up) { const fz = V3.norm(V3.sub(eye, at)), fx = V3.norm(V3.cross(fz, up)), fy = V3.cross(fx, fz), m = M4.ident();
++  m[0] = fx[0]; m[4] = fx[1]; m[8] = fx[2]; m[1] = fy[0]; m[5] = fy[1]; m[9] = fy[2]; m[2] = fz[0]; m[6] = fz[1]; m[10] = fz[2]; m[12] = -V3.dot(fx, eye); m[13] = -V3.dot(fy, eye); m[14] = -V3.dot(fz, eye); return m; }
++function shader(gl, t, src) { const s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
++function program(gl, vs, fs) { const p = gl.createProgram(); gl.attachShader(p, shader(gl, gl.VERTEX_SHADER, vs)); gl.attachShader(p, shader(gl, gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; }
++function groundProg(gl) {
++  const VS = `#version 300 es
++  layout(location=0) in vec2 aXZ; uniform mat4 uView, uProj; out vec3 vW; void main(){ vW = vec3(aXZ.x, 0.0, aXZ.y); gl_Position = uProj * (uView * vec4(vW, 1.0)); }`;
++  const FS = `#version 300 es
++  precision highp float; in vec3 vW; uniform vec4 uSh[16]; uniform int uNSh; out vec4 o;
++  float seg(vec2 p, vec2 a, vec2 b, float w){ vec2 pa=p-a, ba=b-a; float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.); float d=length(pa-ba*h); float aa=max(fwidth(d),1e-4); return 1.-smoothstep(w*0.5-aa, w*0.5+aa, d); }
++  float ring(vec2 p, vec2 c, float r, float w){ float d=abs(length(p-c)-r); float aa=max(fwidth(d),1e-4); return 1.-smoothstep(w*0.5-aa, w*0.5+aa, d); }
++  float grid(vec2 p, float s, float w){ vec2 q = abs(fract(p / s + 0.5) - 0.5) * s; float d = min(q.x, q.y); float aa = max(fwidth(d), 1e-4); return 1.0 - smoothstep(w * 0.5 - aa, w * 0.5 + aa, d); }
++  void main(){ vec2 p = vec2(vW.x, -vW.z); bool inP = p.x > -2.0 && p.x < 107.0 && p.y > -2.0 && p.y < 70.0; float stripe = mod(floor(p.x / 5.25), 2.0);
++    vec3 g = mix(vec3(0.20, 0.42, 0.22), vec3(0.235, 0.475, 0.245), stripe); float n = fract(sin(dot(floor(p * 7.0), vec2(12.9898, 78.233))) * 43758.5453); g *= 0.97 + 0.06 * n; if (!inP) g = vec3(0.17, 0.33, 0.19) * (0.97 + 0.06 * n);
++    float fade = 1.0 - smoothstep(0.05, 0.16, length(fwidth(p)));   // the 1 m lines fade where a pixel spans > 5 – 16 cm (far away)
++    g = mix(g, g * 1.10 + 0.015, grid(p, 1.0, 0.018) * 0.55 * fade); g = mix(g, g * 1.22 + 0.03, grid(p, 5.0, 0.04) * 0.7);
++    float w = 0.12, L = 0.0; L = max(L, seg(p, vec2(0,0), vec2(105,0), w)); L = max(L, seg(p, vec2(0,68), vec2(105,68), w)); L = max(L, seg(p, vec2(0,0), vec2(0,68), w)); L = max(L, seg(p, vec2(105,0), vec2(105,68), w));
++    L = max(L, seg(p, vec2(52.5,0), vec2(52.5,68), w)); L = max(L, ring(p, vec2(52.5,34), 9.15, w)); L = max(L, ring(p, vec2(52.5,34), 0.15, 0.3));
++    L = max(L, seg(p, vec2(0,13.84), vec2(16.5,13.84), w)); L = max(L, seg(p, vec2(16.5,13.84), vec2(16.5,54.16), w)); L = max(L, seg(p, vec2(0,54.16), vec2(16.5,54.16), w));
++    L = max(L, seg(p, vec2(105,13.84), vec2(88.5,13.84), w)); L = max(L, seg(p, vec2(88.5,13.84), vec2(88.5,54.16), w)); L = max(L, seg(p, vec2(105,54.16), vec2(88.5,54.16), w));
++    vec3 c = mix(g, vec3(0.93, 0.95, 0.92), L * 0.92); float sh = 0.0; for (int i = 0; i < 16; i++) { if (i >= uNSh) break; vec4 s = uSh[i]; vec2 d = (p - s.xy) / s.z; sh += s.w * exp(-dot(d, d)); }
++    c *= 1.0 - min(0.6, sh); o = vec4(c, 1.0); }`;
++  const p = program(gl, VS, FS), vao = gl.createVertexArray(); gl.bindVertexArray(vao); const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
++  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-200, 200, 320, 200, -200, -270, 320, -270]), gl.STATIC_DRAW); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.enableVertexAttribArray(0); gl.bindVertexArray(null);
++  return { p, vao, u: { view: gl.getUniformLocation(p, "uView"), proj: gl.getUniformLocation(p, "uProj"), sh: gl.getUniformLocation(p, "uSh"), nsh: gl.getUniformLocation(p, "uNSh") } };
++}
++function ballProg(gl) {
++  const VS = `#version 300 es
++  layout(location=0) in vec3 aP; uniform mat4 uView, uProj; uniform vec3 uC; uniform vec4 uQ; uniform float uR; out vec3 vL; out vec3 vN;
++  vec3 rot(vec4 q, vec3 v){ vec3 t = 2.0 * cross(q.xyz, v); return v + q.w * t + cross(q.xyz, t); }
++  void main(){ vL = aP; vN = rot(uQ, aP); gl_Position = uProj * (uView * vec4(uC + uR * vN, 1.0)); }`;
++  const FS = `#version 300 es
++  precision highp float; in vec3 vL; in vec3 vN; uniform vec3 uTint; out vec4 o;
++  void main(){ vec3 n = normalize(vL); const float P = 1.6180339887; vec3 c[6] = vec3[6](vec3(0,1,P), vec3(0,-1,P), vec3(1,P,0), vec3(-1,P,0), vec3(P,0,1), vec3(P,0,-1));
++    float m = 0.0; for (int i = 0; i < 6; i++) { vec3 a = normalize(c[i]); m = max(m, abs(dot(n, a))); }
++    float dark = smoothstep(0.928, 0.936, m); vec3 base = mix(vec3(0.95, 0.94, 0.90), vec3(0.11, 0.13, 0.14), dark) * uTint;
++    float l = 0.45 + 0.55 * max(0.0, dot(normalize(vN), normalize(vec3(0.35, 0.9, 0.25)))); o = vec4(base * l, 1.0); }`;
++  const p = program(gl, VS, FS), pts = [], idx = [], NU = 28, NV = 16;
++  for (let j = 0; j <= NV; j++) { const v = Math.PI * j / NV; for (let i = 0; i <= NU; i++) { const u = 2 * Math.PI * i / NU; pts.push(Math.sin(v) * Math.cos(u), Math.cos(v), Math.sin(v) * Math.sin(u)); } }
++  for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) { const a = j * (NU + 1) + i, b = a + NU + 1; idx.push(a, b, a + 1, a + 1, b, b + 1); }
++  const vao = gl.createVertexArray(); gl.bindVertexArray(vao); const vb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pts), gl.STATIC_DRAW);
++  gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0); gl.enableVertexAttribArray(0); const ib = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(idx), gl.STATIC_DRAW); gl.bindVertexArray(null);
++  const U = (n) => gl.getUniformLocation(p, n); return { p, vao, n: idx.length, u: { view: U("uView"), proj: U("uProj"), c: U("uC"), q: U("uQ"), r: U("uR"), tint: U("uTint") } };
++}
++// a training cone (flat-shaded; visual only — never a physical obstacle)
++function coneProg(gl) {
++  const VS = `#version 300 es
++  layout(location=0) in vec3 aP; layout(location=1) in vec3 aN; uniform mat4 uView, uProj; uniform vec3 uOff; out vec3 vN; void main(){ vN = aN; gl_Position = uProj * (uView * vec4(aP + uOff, 1.0)); }`;
++  const FS = `#version 300 es
++  precision highp float; in vec3 vN; uniform vec3 uCol; out vec4 o; void main(){ float l = 0.5 + 0.5 * max(0.0, dot(normalize(vN), normalize(vec3(0.35, 0.9, 0.25)))); o = vec4(uCol * l, 1.0); }`;
++  const p = program(gl, VS, FS), N = 18, r = 0.11, h = 0.30, v = [];
++  for (let i = 0; i < N; i++) { const a0 = 2 * Math.PI * i / N, a1 = 2 * Math.PI * (i + 1) / N, nrm = (a) => { const k = r / h; const l = Math.hypot(1, k); return [Math.cos(a) / l, k / l, Math.sin(a) / l]; };
++    v.push(Math.cos(a0) * r, 0, Math.sin(a0) * r, ...nrm(a0), 0, h, 0, ...nrm((a0 + a1) / 2), Math.cos(a1) * r, 0, Math.sin(a1) * r, ...nrm(a1));
++    v.push(Math.cos(a0) * r * 1.6, 0.004, Math.sin(a0) * r * 1.6, 0, 1, 0, 0, 0.004, 0, 0, 1, 0, Math.cos(a1) * r * 1.6, 0.004, Math.sin(a1) * r * 1.6, 0, 1, 0); }
++  const vao = gl.createVertexArray(); gl.bindVertexArray(vao); const vb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(v), gl.STATIC_DRAW);
++  gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12); gl.enableVertexAttribArray(1); gl.bindVertexArray(null);
++  const U = (n) => gl.getUniformLocation(p, n); return { p, vao, n: v.length / 6, u: { view: U("uView"), proj: U("uProj"), off: U("uOff"), col: U("uCol") } };
++}
++const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]];   // pitch [x, y, h] → anim3d world [x, h, −y]
++const QA = (q) => [-q[0], -q[1], q[2], q[3]];
++// ── THE SIMULATION + THE BODY ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
++
++export { persp, lookAt, groundProg, ballProg, A3, QA };
+diff --git a/sandbox/visual/agility99/metrics.js b/sandbox/visual/agility99/metrics.js
+new file mode 100644
+index 0000000..881344a
+--- /dev/null
++++ b/sandbox/visual/agility99/metrics.js
+@@ -0,0 +1,34 @@
++import {DT,DEG,wrap} from './sim.js';
++const median=a=>a.length?a.slice().sort((x,y)=>x-y)[Math.floor(a.length/2)]:null;
++const residual=(v,h)=>{if(h===null)return Math.hypot(...v);const c=Math.cos(h),s=Math.sin(h),along=Math.max(0,v[0]*c+v[1]*s);return Math.hypot(v[0]-along*c,v[1]-along*s);};
++export function measure(main,spec,counterfactuals=[]){
++ const T=main.ticks,sim=main.sim,entry=T[Math.round(spec.t0/DT)-1],modeSpeed=sim.P.speed[spec.mode],per=[];
++ for(let i=0;i<spec.steps.length;i++){
++  const [tc,deg]=spec.steps[i],tn=spec.steps[i+1]?.[0]??spec.end,start=T[Math.round(tc/DT)-1],h=deg===null?null:deg*DEG,angle=h===null?0:Math.abs(wrap(h-start.h))/DEG,tol=Math.min(10,Math.max(2,angle*.2))*DEG,initialResidual=residual(start.v,h);
++  const q={inputTime:tc,requestedDeg:deg,entrySpeed:start.s,entryAngle:angle,toleranceDeg:tol/DEG,ack:null,old50:null,old90:null,newLine:null,directionalLine:null,recovery90:null,heading10:null,minSpeed:Infinity,speedAtLine:null,speedAfterLine025:null,speedAfterLine050:null,path:0,pathToLine:null,lateralMax:0,oldAxisProgress:0,tcOwnedSeconds:0};let lineStart=null,dirStart=null,recStart=null,prev=start,dist=0;
++  const C=counterfactuals[i]?.ticks;
++  for(let k=Math.round(tc/DT);k<T.length&&T[k].t<=tn+1e-9;k++){
++   const x=T[k],dt=x.t-tc,e=h===null?0:Math.abs(wrap(x.h-h));
++   if(C&&q.ack===null&&(Math.hypot(x.v[0]-C[k].v[0],x.v[1]-C[k].v[1])>=.05||Math.abs(wrap(x.psi-C[k].psi))>=1*DEG))q.ack=dt;
++   const old=residual(x.v,h);if(q.old50===null&&old<=initialResidual*.5+.005)q.old50=dt;if(q.old90===null&&old<=initialResidual*.1+.005)q.old90=dt;
++   const good=h===null?x.s<.3:e<=tol&&x.s>=modeSpeed*.6;
++   if(good){lineStart??=x.t;if(q.newLine===null&&x.t-lineStart>=.06-1e-9)q.newLine=lineStart-tc;}else lineStart=null;
++   const directionGood=h!==null&&e<=tol&&x.s>=.5;if(directionGood){dirStart??=x.t;if(q.directionalLine===null&&x.t-dirStart>=.06-1e-9)q.directionalLine=dirStart-tc;}else dirStart=null;
++   const high=h!==null&&e<=tol&&x.s>=modeSpeed*.9;if(high){recStart??=x.t;if(q.recovery90===null&&x.t-recStart>=.06-1e-9)q.recovery90=recStart-tc;}else recStart=null;
++   if(q.heading10===null&&x.s>=.5&&Math.abs(wrap(x.h-start.h))>=Math.min(10,Math.max(2,angle*.5))*DEG)q.heading10=dt;
++   q.minSpeed=Math.min(q.minSpeed,x.s);dist+=Math.hypot(x.p[0]-prev.p[0],x.p[1]-prev.p[1]);
++   if(h!==null)q.lateralMax=Math.max(q.lateralMax,Math.abs(-(x.p[0]-start.p[0])*Math.sin(h)+(x.p[1]-start.p[1])*Math.cos(h)));
++   q.oldAxisProgress=Math.max(q.oldAxisProgress,(x.p[0]-start.p[0])*Math.cos(start.h)+(x.p[1]-start.p[1])*Math.sin(start.h));if(x.keyed||x.hold)q.tcOwnedSeconds+=DT;prev=x;
++  }
++  q.path=dist;q.failed=q.newLine===null;
++  if(q.newLine!==null){const line=tc+q.newLine,k=Math.max(0,Math.round(line/DT)-1);q.speedAtLine=T[k].s;
++   q.minSpeedToLine=Math.min(start.s,...T.slice(Math.round(tc/DT),k+1).map(x=>x.s));
++   for(const [name,d]of [['speedAfterLine025',.25],['speedAfterLine050',.5]])if(line+d<=tn)q[name]=T[Math.min(T.length-1,Math.round((line+d)/DT)-1)].s;
++   let last=start,dd=0;for(const x of T.slice(Math.round(tc/DT),k+1)){dd+=Math.hypot(x.p[0]-last.p[0],x.p[1]-last.p[1]);last=x;}q.pathToLine=dd;
++  }
++  q.retainedMin=q.minSpeed/(q.entrySpeed||1);per.push(q);
++ }
++ const A=T.slice(Math.round(spec.t0/DT)),made=sim.contacts.filter(c=>!c.missed),contacts=made.filter(c=>c.t>=spec.t0);let lost=0,onPrev=false,noFuture=0,lastTouch=0,j=0,lossSeconds=0;
++ for(const x of T){while(j<made.length&&made[j].t<=x.t+1e-9){lastTouch=made[j].t;j++;}const atFeet=Math.hypot(...x.bv)<.3&&x.sep<.8;noFuture=x.req!==null&&!x.future&&!atFeet?noFuture+DT:0;const on=x.req!==null&&!atFeet&&(noFuture>.5||x.t-lastTouch>1.8);if(x.t>=spec.t0){if(on&&!onPrev)lost++;if(on)lossSeconds+=DT;}onPrev=on;}
++ return {id:spec.id,kind:spec.kind,mode:spec.mode,angle:spec.angle,phase:spec.phase,sign:spec.sign,profile:sim.o.profile,ballOn:sim.o.ballOn,entrySpeed:entry.s,per,meanHeadingError:A.reduce((s,x)=>s+(x.req===null?0:Math.abs(wrap(x.h-x.req))/DEG),0)/A.length,minSpeed:Math.min(...A.map(x=>x.s)),maxSpeed:Math.max(...A.map(x=>x.s)),separationMedian:sim.o.ballOn?median(A.map(x=>x.sep)):null,separationMax:sim.o.ballOn?Math.max(...A.map(x=>x.sep)):null,losses:sim.o.ballOn?lost:null,lossSeconds:sim.o.ballOn?lossSeconds:null,touches:sim.o.ballOn?contacts.length:null,misses:sim.o.ballOn?sim.contacts.filter(c=>c.t>=spec.t0&&c.missed).length:null,techniques:sim.o.ballOn?Object.fromEntries([...new Set(contacts.map(c=>c.tech))].map(k=>[k,contacts.filter(c=>c.tech===k).length])):null,contacts:sim.o.ballOn?sim.contacts.map(c=>({t:c.t,F:c.F,tech:c.tech,role:c.role,missed:!!c.missed})):null,hash:sim.hash};
++}
+diff --git a/sandbox/visual/agility99/movement.js b/sandbox/visual/agility99/movement.js
+new file mode 100644
+index 0000000..8d1d996
+--- /dev/null
++++ b/sandbox/visual/agility99/movement.js
+@@ -0,0 +1,61 @@
++// AGILITY-99-V1: provisional behavior envelopes, not attribute multipliers.
++// Existing acceleration gain and requested speed are supplied by the unchanged baseline.
++export const DEG=Math.PI/180,DT=1/240;
++export const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
++export const wrap=a=>{a=(a+Math.PI)%(2*Math.PI);return (a<0?a+2*Math.PI:a)-Math.PI;};
++export const ease=x=>{x=clamp(x,0,1);return x*x*(3-2*x);};
++const ANGLES=[0,15,30,45,60,90,120,150,165,180];
++// Duration describes the travel reorientation at 8 m/s. Retention describes the
++// available incoming speed at its completion. Retention is a ceiling, never a speed grant.
++export const PROFILES={
++ CURRENT:{id:'CURRENT',label:'Restored baseline',color:'#e5e9e6'},
++ 'A99-A':{id:'A99-A',label:'Composed elite',color:'#a5d9b1',time:[0,.09,.15,.23,.32,.48,.60,.66,.65,.64],retention:[1,.998,.985,.96,.89,.66,.43,.18,.055,0],stopTime:.57,faceTau:.047},
++ 'A99-B':{id:'A99-B',label:'Momentum first',color:'#edcc76',time:[0,.065,.115,.18,.255,.385,.49,.55,.535,.52],retention:[1,.999,.992,.975,.93,.77,.53,.24,.075,0],stopTime:.43,faceTau:.038},
++ 'A99-C':{id:'A99-C',label:'Aggressive ceiling',color:'#ff9b8d',time:[0,.04,.075,.12,.18,.275,.375,.445,.435,.42],retention:[1,1,.996,.985,.96,.84,.64,.30,.095,0],stopTime:.34,faceTau:.031}
++};
++// C1 interpolation: smooth transitions between investigation buckets, no hard angle gates.
++function sample(values,angle){let i=0;while(i<ANGLES.length-2&&angle>ANGLES[i+1])i++;const u=clamp((angle-ANGLES[i])/(ANGLES[i+1]-ANGLES[i]),0,1);return values[i]+(values[i+1]-values[i])*ease(u);}
++export function envelope(profile,angle,speed){
++ const p=typeof profile==='string'?PROFILES[profile]:profile,v=clamp(speed/8,0,1),reversal=ease((angle-150)/30);
++ // Compact low-speed corrections cost less momentum; a true reversal still loses all.
++ const lossScale=(.35+.65*v)*(1-reversal)+reversal;
++ return {duration:Math.max(.032,sample(p.time,angle)*(.58+.42*v)),retention:1-(1-sample(p.retention,angle))*lossScale};
++}
++function newMotion(st,h,t,p){
++ const theta=h===null?0:wrap(h-st.h),a=Math.abs(theta)/DEG,e=h===null?{duration:Math.max(.12,p.stopTime*(.4+.6*st.s/8)),retention:0}:envelope(p,a,st.s);
++ return {h0:st.h,target:h,s0:st.s,theta,angle:a,t0:t,duration:e.duration,retention:e.retention,rate0:st.turnRate||0,stop:h===null};
++}
++export function advance(state,drive,t,profile,params){
++ let {s,h,psi,w,m}=state;const oldH=h,target=drive.h;
++ if(!m||(m.target===null)!==(target===null)||(target!==null&&Math.abs(wrap(target-m.target))>1e-5))m=newMotion({s,h,turnRate:state.turnRate},target,t-DT,profile);
++ const u=clamp((t-m.t0)/m.duration,0,1),angle=m.angle;
++ // Increasing angular delay concentrates reorientation at lower speed for major cuts.
++ // A true 180° reaches zero incoming speed before it gains any opposite speed.
++ const reversal=ease((angle-120)/60),delay=.5*reversal;
++ let hWanted=h;
++ if(target!==null){
++  const z=clamp((u-delay)/(1-delay),0,1),slope=m.rate0*m.duration*(1-delay);
++  // Hermite continuation carries travel angular velocity through analog retargets.
++  // A new small joystick sample must not repeatedly restart the turn from rest.
++  hWanted=m.h0+m.theta*ease(z)+slope*z*(1-z)*(1-z);h=hWanted;
++ }
++ if(m.stop){s=Math.min(s,m.s0*(1-ease(u)));}
++ else {
++  const lossProgress=ease(u/(1-.28*reversal)),cap=m.s0*(1-(1-m.retention)*lossProgress);
++  if(m.s0>.3&&u<1){s=Math.min(s,cap);}
++  // No speed is restored by a changed request or a refreshed plan. Every positive
++  // speed gain is bounded by the same baseline acceleration function.
++  const acc=params.aAcc*clamp(1-s/11,.35,1),want=drive.speed;
++  const canGain=m.s0<=.3||u>=1;
++  if(s<want&&canGain)s=Math.min(want,s+acc*DT);
++  else if(s>want)s=Math.max(want,s-params.aBrake*DT);
++ }
++ // Carry facing owns no root offset. Preserve angular velocity across replans.
++ // Lead by at most 5 degrees while cutting, then critically damp to travel.
++ const travelRate=wrap(h-oldH)/DT;
++ const facingTarget=h+clamp(travelRate*.012,-5*DEG,5*DEG);
++ const tau=profile.faceTau,omega=1/tau;
++ const a=clamp(omega*omega*wrap(facingTarget-psi)+2*omega*(travelRate-w),-12000*DEG,12000*DEG);
++ w=clamp(w+a*DT,-1200*DEG,1200*DEG);psi+=w*DT;
++ return {s,h,psi,w,m,turnRate:travelRate};
++}
+diff --git a/sandbox/visual/agility99/sim.js b/sandbox/visual/agility99/sim.js
+new file mode 100644
+index 0000000..64332d8
+--- /dev/null
++++ b/sandbox/visual/agility99/sim.js
+@@ -0,0 +1,64 @@
++// Adapter beside the locked baseline. No ball, technique, contact, IK or selection edits.
++import {PlaySim,Curve,DT,DEG,wrap} from '../tc_baseline_88573ef0/pt_sim.js';
++import {PROFILES,advance} from './movement.js';
++import {bodyGaitFrom} from './body_gait.js';
++export {DT,DEG,wrap,PROFILES};
++export class AgilitySim extends PlaySim {
++ reset(o={}){super.reset(o);if(this.o.ballOn===false){this.ball.p[0]=-1000;this.ball.p[1]=-1000;this.record();}return this;}
++ stateAt(t,plan=this.planAt(t)){
++  const s=super.stateAt(t,plan);if(!plan.aw)return s;
++  const i=Math.max(0,Math.min(plan.n,Math.round((t-plan.t0)/DT)));s.w=plan.aw[i];s.h=plan.ah[i];s.turnRate=plan.ar[i];
++  let m=null;for(const x of plan.am){if(x.t<=t+1e-9)m=x.m;else break;}s.motion=m;return s;
++ }
++ step(req){
++  // BALL OFF is a movement probe: sample analog changes at up to 60 Hz, without
++  // the TC resolver. BALL ON uses original request thresholds/commitment untouched.
++  if(this.o.ballOn===false&&this.k%4===0&&req?.h!=null&&this.req?.h!=null&&Math.abs(wrap(req.h-this.plan.req.h))>.1*DEG)this.flags.replan='analog movement';
++  return super.step(req);
++ }
++ replan(reason){
++  if(this.o.ballOn!==false)return super.replan(reason);
++  const st=this.stateAt(this.t,this.plan),keep=this.committed(this.plan,this.t),q=this.req;
++  keep.contacts=[];
++  const plan=this.mkPlan({t0:this.t,st,stances:null,contacts:[],action:{id:1,kind:'CARRY',label:'BODY MOVEMENT'},req:q,prog:{kind:'carry'},chKeys:this.carryChannels(st,q,this.t)});
++  if(this.o.profile!=='CURRENT')for(const F of ['R','L']){
++   keep.stances[F]=keep.stances[F].map(s=>({...s}));
++   for(const stance of keep.stances[F])if(stance.t0<=this.t&&stance.t1>this.t){
++    for(let dt=.025;dt<=Math.min(.32,stance.t1-this.t);dt+=DT){
++     const x=this.stateAt(this.t+dt,plan),dx=stance.pos[0]-x.P[0],dy=stance.pos[1]-x.P[1],side=(-dx*Math.sin(x.psi)+dy*Math.cos(x.psi))*(F==='R'?1:-1);
++     if(Math.hypot(dx,dy)>.60||side<-.05){stance.t1=Math.min(stance.t1,Math.max(this.t+.025,stance.t0+.06,this.t+dt));break;}
++    }
++   }
++  }
++  plan.stances=(this.o.profile==='CURRENT'?this.gaitFrom:bodyGaitFrom).call(this,plan,keep,[],this.t+1.5);plan.reason=reason;this.adopt(plan);
++ }
++ mkPlan(o){
++  const profile=PROFILES[this.o?.profile||'CURRENT'];if(profile.id==='CURRENT')return super.mkPlan(o);
++  const n=Math.round(1.5/DT),P=new Float64Array(2*(n+1)),V=new Float64Array(2*(n+1)),psi=new Float64Array(n+1),aw=new Float64Array(n+1),ah=new Float64Array(n+1),ar=new Float64Array(n+1),am=[];
++  let pos=o.st.P.slice(),x={s:o.st.s,h:o.st.h,psi:o.st.psi,w:o.st.w||0,m:o.st.motion||null,turnRate:o.st.turnRate||0};let lastM;
++  for(let i=0;i<=n;i++){
++   const t=o.t0+i*DT;P[2*i]=pos[0];P[2*i+1]=pos[1];V[2*i]=x.s*Math.cos(x.h);V[2*i+1]=x.s*Math.sin(x.h);psi[i]=x.psi;aw[i]=x.w;ah[i]=x.h;ar[i]=x.turnRate;
++   if(x.m!==lastM){am.push({t,m:x.m});lastM=x.m;}if(i===n)break;
++   const d=this.progAt(o.prog,t+DT,x.s,x.h,o.req,pos);
++   if(d.keyed){
++    // Preserve the baseline's authored movement exactly whenever TC owns the path.
++    x.s=d.s;x.turnRate=wrap(d.h-x.h)/DT;x.h=d.h;x.m=null;
++    if(d.psi!=null){x.w=wrap(d.psi-x.psi)/DT;x.psi=d.psi;}
++    else{const tgt=x.s>1?x.h:o.req?.h??x.psi,err=wrap(tgt-x.psi),a=Math.max(-9000*DEG,Math.min(9000*DEG,360*err-38*x.w));x.w=Math.max(-this.P.yawRate,Math.min(this.P.yawRate,x.w+a*DT));x.psi+=x.w*DT;}
++   }else x=advance(x,d,t+DT,profile,this.P);
++   pos=[pos[0]+x.s*Math.cos(x.h)*DT,pos[1]+x.s*Math.sin(x.h)*DT];
++  }
++  const plan={t0:o.t0,k0:Math.round(o.t0/DT),n,P,V,psi,aw,ah,ar,am,stances:o.stances,contacts:o.contacts,action:o.action,req:o.req,prog:o.prog};plan.ch=this.channels(o,plan);
++  if(this.o.ballOn===false){
++   // Presentation-only lean/crouch channels read the actual trajectory. No root
++   // translation, foot proxy or simulation feedback. Original pose/IK is retained.
++   const keys={lean:[],side:[],crouch:[],arms:[]},cl=(v,a,b)=>Math.max(a,Math.min(b,v));
++   for(const dt of [.025,.06,.12,.20,.30,.45,.65,.9,1.2,1.5]){
++    const i=Math.min(n-1,Math.round(dt/DT)),vx=V[2*i],vy=V[2*i+1],s=Math.hypot(vx,vy),ax=(V[2*i+2]-vx)/DT,ay=(V[2*i+3]-vy)/DT,h=ah[i],brake=Math.max(0,-ax*Math.cos(h)-ay*Math.sin(h)),lat=-ax*Math.sin(h)+ay*Math.cos(h),t=o.t0+dt;
++    keys.lean.push([t,6+6*cl(s/6,0,1)-cl(brake*.5,0,12)]);keys.side.push([t,cl(lat*.55,-22,22)]);keys.crouch.push([t,.022+cl(brake*.006+Math.abs(lat)*.001,0,.065)]);keys.arms.push([t,.15+cl((brake+Math.abs(lat))/90,0,.35)]);
++   }
++   for(const [key,values] of Object.entries(keys))plan.ch[key]=new Curve([[o.t0,plan.ch[key].at(o.t0)],...values]);
++  }
++  return plan;
++ }
++}
+diff --git a/sandbox/visual/agility99/support.js b/sandbox/visual/agility99/support.js
+new file mode 100644
+index 0000000..653ddca
+--- /dev/null
++++ b/sandbox/visual/agility99/support.js
+@@ -0,0 +1,51 @@
++// Presentation-only persistent support timeline. Reads recorded C; never writes it.
++// Forecasts use only the authoritative plan available at this tick, plus recent
++// coherent curvature. A later recorded input is never consulted for prediction.
++import {DT,DEG,wrap} from './sim.js';
++export const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),smooth=x=>{x=clamp(x,0,1);return x*x*(3-2*x);};
++const F=['R','L'],sgn=x=>x==='R'?1:-1,other=x=>x==='R'?'L':'R',H=.088;
++const rot=(p,h)=>[p[0]*Math.cos(h)-p[1]*Math.sin(h),p[0]*Math.sin(h)+p[1]*Math.cos(h)];
++const local=(p,s,h)=>rot([p[0]-s[0],p[1]-s[1]],-h);
++const herm=(p,v,q,w,T,u)=>{const u2=u*u,u3=u2*u;return p.map((x,i)=>(2*u3-3*u2+1)*x+(u3-2*u2+u)*T*v[i]+(-2*u3+3*u2)*q[i]+(u3-u2)*T*w[i]);};
++export class SupportTimeline{
++ constructor(sim){this.sim=sim;this.frames=[];this.events=[];this.k=0;this.feet={};this.next='L';this.nextLand=0;this.phaseStart=0;this.phaseEnd=.25;this.revision=0;this.started=false;this.curveTime=0;this.rate=0;this.lean=0;this.crouch=.035;this.trunk=0;const s=sim.stateAt(0);this.phi=s.psi;
++ for(const X of F){const a=rot([0,sgn(X)*.17],this.phi);this.feet[X]={F:X,p:[s.P[0]+a[0],s.P[1]+a[1],H],v:[0,0,0],yaw:this.phi,planted:true,td:0,lift:Infinity,id:X+'0',slide:0};}this.prev=s;this.record(0,s,'STRAIGHT_RUN');}
++ forecast(t,dt,s,plan,curve){const x=this.sim.stateAt(t+dt,plan);if(!curve)return x;const w=this.rate,h=s.h,ss=s.s;let d=Math.abs(w)>.001?[(Math.sin(h+w*dt)-Math.sin(h))*ss/w,(-Math.cos(h+w*dt)+Math.cos(h))*ss/w]:[Math.cos(h)*ss*dt,Math.sin(h)*ss*dt];const blend=clamp(this.curveTime/.12,0,1);return {...x,P:x.P.map((v,i)=>v*(1-blend)+(s.P[i]+d[i])*blend),h:x.h+wrap(h+w*dt-x.h)*blend,psi:x.psi+wrap(h+w*dt-x.psi)*blend,s:ss*blend+x.s*(1-blend)};}
++ family(s,t){const m=s.motion,active=m&&t<m.t0+m.duration-.001,a=active?m.angle:0,brake=(this.prev.s-s.s)/DT;if(active&&a>135)return 'BRAKE_REPLACE';if(active&&a>40)return 'CUT_SUPPORT';if(this.curveTime>.07&&s.s>1.2)return 'CURVED_RUN';if(brake>7)return 'BRAKE_REPLACE';return 'STRAIGHT_RUN';}
++ landing(X,t,dt,s,plan,family){const curve=this.curveTime>.07&&(s.motion?.angle||0)<40,x=this.forecast(t,dt,s,plan,curve),out=sgn(X)*Math.sign(this.rate)<0,lead=Math.min(.36,x.s*.045),width=.17+(curve&&out?.025:family==='CUT_SUPPORT'?.035:0),a=rot([lead,sgn(X)*width],x.h);return {p:[x.P[0]+a[0],x.P[1]+a[1],H],yaw:x.h+sgn(X)*3*DEG,root:x.P.slice(),h:x.h};}
++ release(f,t,s,plan,family,period){f.planted=false;f.t0=t;f.land=Math.max(t+.13,this.nextLand);this.nextLand=f.land+period;f.lift=t;f.start=f.p.slice();f.startV=f.v.slice();f.startYaw=f.yaw;f.segT=t;f.duration=f.land-t;f.phase0=0;f.phaseT=t;f.releaseRel=local(f.p,s.P,this.phi);f.target=this.landing(f.F,t,f.land-t,s,plan,family);f.predicted=f.target.p.slice();f.frozen=false;f.extensions=0;f.revisions=0;f.family=family;f.slide=0;this.events.push({t,type:'lift',F:f.F,family,next:f.land,predicted:f.target.p.slice()});}
++ tick(){const t=++this.k*DT,plan=this.sim.planAt(Math.max(0,t-DT/2)),s=this.sim.stateAt(t,plan),raw=s.s>.4?wrap(s.h-this.prev.h)/DT:0;this.rate+=clamp(raw-this.rate,-7000*DEG*DT,7000*DEG*DT)*.35;
++ const a=s.motion?.angle||0;if(Math.abs(this.rate)>35*DEG&&a<40&&s.s>1)this.curveTime=Math.min(.3,this.curveTime+DT);else this.curveTime=Math.max(0,this.curveTime-DT*2);const family=this.family(s,t);
++ this.phi+=wrap(s.psi-this.phi)*(1-Math.exp(-DT/.025));const pe=wrap(s.psi-this.phi);if(Math.abs(pe)>12*DEG)this.phi=s.psi-Math.sign(pe)*12*DEG;
++ const lat=s.s*this.rate,brake=Math.max(0,(this.prev.s-s.s)/DT),wantLean=clamp(lat*.72,-26,26);this.lean+=(wantLean-this.lean)*(1-Math.exp(-DT/.065));const wantC=.035+clamp(Math.abs(lat)*.0016+brake*.003,0,.075);this.crouch+=(wantC-this.crouch)*(1-Math.exp(-DT/.045));this.trunk+=(clamp(-this.rate/DEG*.022,-12,12)-this.trunk)*(1-Math.exp(-DT/.05));
++ let period=this.sim.gait(Math.max(.1,s.s)).Ts;if(family==='CURVED_RUN')period=period*(1-clamp(Math.abs(this.rate)/(270*DEG),0,.95))+.17*clamp(Math.abs(this.rate)/(270*DEG),0,.95);if(family==='CUT_SUPPORT'||family==='BRAKE_REPLACE')period=Math.min(period,.185);period=clamp(period,.16,.34);
++ const stance=Math.min(period*1.05,Math.max(.09,.80/Math.max(s.s,1))),moving=s.s>.12||s.motion?.target!=null;
++ if(!this.started&&moving){this.started=true;this.nextLand=t+.17;this.feet.L.lift=t;this.feet.R.lift=t+.17;}
++ for(const X of F){const f=this.feet[X];if(f.planted){const r=local(f.p,s.P,this.phi),danger=Math.hypot(r[0],r[1]-sgn(X)*.15)>.44||r[1]*sgn(X)<.10;
++  if(this.started&&moving&&(t>=f.lift-1e-9||danger)){if(this.nextLand<t+.13)this.nextLand=t+.13;this.release(f,t,s,plan,danger?'REPLACEMENT_STEP':family,period);}
++  else{const target=this.phi+sgn(X)*3*DEG;f.yaw+=clamp(wrap(target-f.yaw),-650*DEG*DT,650*DEG*DT);f.v=[0,0,0];}
++ }
++ if(!f.planted){let rem=Math.max(DT,f.land-t),u=clamp(f.phase0+(1-f.phase0)*(t-f.phaseT)/Math.max(DT,f.land-f.phaseT),0,1);
++  if(this.k%4===0){const wanted=this.landing(X,t,rem,s,plan,family),diff=Math.hypot(wanted.p[0]-f.target.p[0],wanted.p[1]-f.target.p[1]);
++   if(rem<.065&&diff>.34&&f.extensions<2){f.phase0=u;f.phaseT=t;f.land+=.065;f.duration=f.land-f.t0;rem=f.land-t;f.extensions++;f.frozen=false;f.family='REPLACEMENT_STEP';this.events.push({t,type:'retime',F:X,delay:.065,reason:'late unreachable landing'});}
++   if(rem>.055){const maxShift=rem>.12?.25:.08,scale=Math.min(1,maxShift/(diff||1));f.target={...wanted,p:wanted.p.map((x,i)=>i===2?H:f.target.p[i]+(x-f.target.p[i])*scale)};if(diff>.025){f.revisions++;this.revision++;}f.start=f.p.slice();f.startV=f.v.slice();f.segT=t-DT;}
++   else f.frozen=true;
++  }
++  const span=Math.max(DT,f.land-f.segT),z=clamp((t-f.segT)/span,0,1),old=f.p.slice();let p=herm(f.start,f.startV,f.target.p,[0,0,0],span,z);
++  // Reachable, separate swing corridors belong to the support trajectory, before
++  // the leg solver. No planted target or authoritative root is pulled by IK.
++  const height=(.20+Math.min(.10,s.s*.012))*Math.sin(Math.PI*u)**2;p[2]=H+height;
++  const r=local(p,s.P,this.phi),maxF=.38+.25*Math.sin(Math.PI*u),maxL=.29;const settle=smooth((t-f.t0)/.09),extraF=Math.max(0,Math.abs(f.releaseRel[0])-maxF)*(1-settle),minL=.13+(Math.min(.13,sgn(X)*f.releaseRel[1])-.13)*(1-settle),outerL=maxL+Math.max(0,Math.abs(f.releaseRel[1])-maxL)*(1-settle);let rr=[clamp(r[0],-maxF-extraF,maxF+extraF),sgn(X)*clamp(sgn(X)*r[1],minL,outerL)];const pp=rot(rr,this.phi);p[0]=s.P[0]+pp[0];p[1]=s.P[1]+pp[1];
++  f.p=p;f.v=p.map((x,i)=>(x-old[i])/DT);
++  // Orient the recovering boot with the pelvis through mid-swing; exposing its
++  // final landing yaw too early sweeps the toe through the opposite calf. The
++  // landing rotation is admitted late, with any remainder taken as a plant pivot.
++  const yawLimit=(22+23*smooth((u-.65)/.35))*DEG,safeYaw=this.phi+clamp(wrap(f.target.yaw-this.phi),-yawLimit,yawLimit);
++  f.yaw+=clamp(wrap(safeYaw-f.yaw),-800*DEG*DT,800*DEG*DT);
++  if(t>=f.land-1e-9){f.p[2]=H;f.v=[0,0,0];f.planted=true;f.td=t;f.id=X+this.k;f.lift=t+stance;const actual=f.p.slice();this.events.push({t,type:'land',F:X,family:f.family,predicted:f.predicted,planned:f.target.p.slice(),actual,error:Math.hypot(actual[0]-f.target.p[0],actual[1]-f.target.p[1]),revisions:f.revisions});this.next=other(X);this.phaseStart=t;this.phaseEnd=t+period;const o=this.feet[other(X)];if(o.planted)o.lift=Math.min(o.lift,t+Math.max(.015,period-.18));}
++ }
++ }
++ const pending=F.map(X=>this.feet[X]).filter(f=>!f.planted).sort((a,b)=>a.land-b.land);if(pending.length)this.next=pending[0].F;this.record(t,s,family);this.prev=s;}
++ record(t,s,family){const feet={};for(const X of F){const f=this.feet[X],u=f.planted?0:clamp(f.phase0+(1-f.phase0)*(t-f.phaseT)/Math.max(DT,f.land-f.phaseT),0,1);feet[X]={ank:f.p.slice(),yaw:f.yaw,pitch:f.planted?0:(-18*Math.sin(2*Math.PI*u))*DEG,roll:0,toe:0,planted:f.planted,contact:false,stance:{id:f.id,t0:f.td,t1:f.lift,pos:f.p.slice()},ballPt:[f.p[0]+Math.cos(f.yaw)*.18,f.p[1]+Math.sin(f.yaw)*.18],family:f.family||family,phase:u,landing:f.target?.p.slice(),landingTime:f.land,frozen:!!f.frozen,kneeOut:sgn(X)*6*DEG};}this.frames.push({t,feet,psi:this.phi,side:this.lean,crouch:this.crouch,trunk:this.trunk,family,nextSupport:this.next,cycle:{u:clamp((t-this.phaseStart)/Math.max(.05,this.phaseEnd-this.phaseStart),0,1),sw:this.next},revision:this.revision,root:s.P.slice()});}
++ at(t){const k=Math.max(0,Math.round(t/DT));while(this.k<k)this.tick();return this.frames[k];}
++}
+diff --git a/sandbox/visual/agility99/viewer.js b/sandbox/visual/agility99/viewer.js
+new file mode 100644
+index 0000000..e71925f
+--- /dev/null
++++ b/sandbox/visual/agility99/viewer.js
+@@ -0,0 +1,56 @@
++import {AgilitySim,DT,DEG,PROFILES,scenario,run} from './cases.js';
++import {Body99 as PlayBody} from './body.js';
++import {DirectionBody} from './direction_body.js';
++const makeBody=(env,sim,mode)=>mode==='original'?new PlayBody(env,sim):new DirectionBody(env,sim);
++import {stickVector,stickMode,headingFrom} from '../tc_baseline_88573ef0/pt_input.js';
++import {persp,lookAt,groundProg,ballProg,A3,QA} from './draw.js';
++const $=s=>document.querySelector(s),canvas=$('#scene'),hud=$('#hud'),ctx=hud.getContext('2d'),gl=canvas.getContext('webgl2',{antialias:true,alpha:false,preserveDrawingBuffer:true}),ground=groundProg(gl),ball=ballProg(gl),R={gl};
++let env,ent,entries=[],spec=null,live=true,playing=false,at=0,last=null,acc=0,keys=new Set(),src='keys',stick={x:0,y:0,r:0,m:0},sprint=false,view='body',pid=null;
++const CAM_H=Math.atan2(4.6,3.5),wrap=a=>Math.atan2(Math.sin(a),Math.cos(a));
++function newLive(){entries=[{profile:$('#profile').value,sim:new AgilitySim(env,{profile:$('#profile').value,ballOn:$('#ball').value==='on'})}];entries[0].body=makeBody(env,entries[0].sim,$('#bodymode').value);acc=0;at=0;keys.clear();stick={x:0,y:0,r:0,m:0};$('#nub').style.transform='';last=null;}
++function setLive(on){live=on;$('#live').classList.toggle('active',on);$('#compare').classList.toggle('active',!on);$('#controls').style.display=on?'flex':'none';$('#compareOpts').style.display=on?'none':'flex';$('#compareOpts').style.padding='10px 22px';$('#replaybar').style.display=on?'none':'flex';$('#profile').disabled=false;$('#bodymode').disabled=!on;if(on)newLive();else load();}
++function input(){
++ const fast=sprint||keys.has('ShiftLeft')||keys.has('ShiftRight'),slow=keys.has('AltLeft')||keys.has('AltRight');
++ if(src==='stick')return {h:stick.m>0?headingFrom(CAM_H,stick.x,stick.y):null,mode:fast?'SPRINT':slow?'WALK':stick.m>0?stickMode(stick.r):$('#mode').value,keys:64|(fast?128:0)};
++ const x=+keys.has('KeyD')-+keys.has('KeyA'),y=+keys.has('KeyW')-+keys.has('KeyS');return {h:headingFrom(CAM_H,x,y),mode:fast?'SPRINT':slow?'WALK':$('#mode').value,keys:0};
++}
++function load(kind,angle=90,phase=0,sign=1,ballOn){
++ if(kind){$('#case').value=kind==='snap'?'snap'+angle:kind;$('#phase').value=phase===0?'0':String(phase).replace('0.','.');$('#direction').value=String(sign);if(ballOn!==undefined)$('#ball').value=ballOn?'on':'off';}
++ const c=$('#case').value;spec=scenario(c.startsWith('snap')?'snap':c,'SPRINT',c.startsWith('snap')?Number(c.slice(4)):90,+$('#phase').value,+$('#direction').value);
++ const profile=$('#profile').value,r=run(env,spec,profile,$('#ball').value==='on');entries=['original','new'].map(bodymode=>({profile,...r,bodymode,body:makeBody(env,r.sim,bodymode)}));at=spec.t0-.7;playing=false;$('#toast').textContent='Matched input · 1× playback · gold dot shows root';$('#playback').textContent='Play 1×';$('#scrub').max=Math.round((spec.duration+.7)*1000);renderAt(at);return entries.map(e=>({profile:e.profile,hash:e.sim.hash}));
++}
++function sphere(pos,q,radius,tint,vm,pr){gl.useProgram(ball.p);gl.uniformMatrix4fv(ball.u.view,false,vm);gl.uniformMatrix4fv(ball.u.proj,false,pr);gl.uniform3fv(ball.u.c,A3(pos));gl.uniform4fv(ball.u.q,QA(q));gl.uniform1f(ball.u.r,radius);gl.uniform3fv(ball.u.tint,tint);gl.bindVertexArray(ball.vao);gl.drawElements(gl.TRIANGLES,ball.n,gl.UNSIGNED_SHORT,0);gl.bindVertexArray(null);}
++function panel(e,index,t){
++ const width=live?1600:800,height=820,x=live?0:index*width,y=0,gy=820-y-height,sim=e.sim,s=sim.stateAt(t),b=sim.ballTrack(t),pose=e.body.pose(t),q=live?sim.req?.h:spec.fn(t)==null?null:spec.fn(t)*DEG;
++ const target=[s.P[0],.65,-s.P[1]],eye=view==='top'?[s.P[0],11,-s.P[1]]:[s.P[0]-3.5,3.3,-s.P[1]+4.6],vm=lookAt(eye,target,view==='top'?[1,0,0]:[0,1,0]),pr=persp(1/Math.tan((live?42:38)/2*DEG),width/height,.1,400);
++ gl.viewport(x,gy,width,height);gl.scissor(x,gy,width,height);gl.enable(gl.SCISSOR_TEST);gl.clearColor(.06,.08,.07,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.disable(gl.CULL_FACE);
++ const sh=new Float32Array(64);let ns=0;const push=(x,y,s,w)=>sh.set([x,y,s,w],ns++*4);push(s.P[0],s.P[1],.42,.4);for(const F of ['R','L']){const a=pose.feet[F].ank,h=Math.max(0,a[2]-.09);push(a[0],a[1],.15+h*.3,.5*Math.exp(-h*7));}if(sim.o.ballOn)push(b.p[0],b.p[1],.12,.65);
++ gl.useProgram(ground.p);gl.uniformMatrix4fv(ground.u.view,false,vm);gl.uniformMatrix4fv(ground.u.proj,false,pr);gl.uniform4fv(ground.u.sh,sh);gl.uniform1i(ground.u.nsh,ns);gl.bindVertexArray(ground.vao);gl.drawArrays(gl.TRIANGLE_STRIP,0,4);gl.bindVertexArray(null);
++ gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);window.ofCharDraw(R,ent,pose.skin,vm,pr);gl.disable(gl.CULL_FACE);
++ if(sim.o.ballOn)sphere(b.p,b.q,.11,[1,1,1],vm,pr);sphere([s.P[0],s.P[1],.025],[0,0,0,1],.045,[1,.79,.25],vm,pr);
++ if($('#guides').checked&&pose.support)for(const F of ['R','L']){const f=pose.feet[F];if(f.landing)sphere([f.landing[0],f.landing[1],.04],[0,0,0,1],.065,[.3,.85,1],vm,pr);sphere([f.ank[0],f.ank[1],.045],[0,0,0,1],.04,f.planted?[.3,1,.35]:[1,.4,.4],vm,pr);}
++ const gap=Math.hypot(pose.P[0]-s.P[0],pose.P[1]-s.P[1]),plan=sim.planAt(t),controlled=plan.prog.kind==='tech'||(plan.prog.hold&&t<plan.prog.hold.until);
++ ctx.fillStyle='#101e17ee';ctx.fillRect(x,y,width,live?92:72);ctx.fillRect(x,y+height-32,width,32);
++ ctx.fillStyle=PROFILES[e.profile].color;ctx.font='bold 22px system-ui';ctx.fillText(e.profile+' · '+(live?($('#bodymode').value==='original'?'ORIGINAL V1 BODY':'NEW SUPPORT BODY'):(e.bodymode==='original'?'ORIGINAL V1 BODY':'NEW SUPPORT BODY')),x+18,y+29);ctx.fillStyle='#c0d3c7';ctx.font='14px system-ui';ctx.fillText(sim.o.ballOn?'BALL ON · unchanged baseline Technical Control':'BALL OFF · authoritative movement only',x+18,y+53);
++ ctx.textAlign='right';ctx.fillStyle='#f2d184';ctx.fillText(live?'LIVE':`${t<spec.t0?'BEFORE':'AFTER'} INPUT ${(t-spec.t0).toFixed(2)} s`,x+width-16,y+27);ctx.fillStyle='#e7eee8';ctx.fillText(`${s.s.toFixed(2)} m/s · body/root ${(gap*100).toFixed(1)} cm`,x+width-16,y+52);ctx.textAlign='left';
++ ctx.fillStyle=controlled?'#efb18c':'#d4e0d6';ctx.fillText(`${sim.o.ballOn?plan.action.label:(pose.support?.family||'ORIGINAL BODY')} · ${q==null?'released':Math.round(wrap(q)/DEG)+'° input'} · ${Math.round(wrap(s.h)/DEG)}° travel${controlled?' · TC owns trajectory':''}`,x+18,y+height-10);
++ const cx=x+58,cy=y+116;ctx.strokeStyle='#adb9ad70';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,25,0,2*Math.PI);ctx.stroke();
++ const arrow=(a,col,l)=>{ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*l,cy+Math.sin(a)*l);ctx.stroke();};if(q!=null)arrow(q,'#f4d27b',28);arrow(s.h,'#83d8ed',22);
++ if($('#guides').checked&&pose.support){ctx.fillStyle='#102017dc';ctx.fillRect(x+100,y+80,width-118,61);ctx.fillStyle='#cbe4d3';ctx.font='13px system-ui';ctx.fillText(`${pose.support.family} · next ${pose.support.nextSupport} · revisions ${pose.support.revision}`,x+112,y+101);ctx.fillText(`Added facing lag ${(Math.abs(wrap(pose.psi-s.psi))/DEG).toFixed(1)}° · cyan = planned landing`,x+112,y+124);}
++ ctx.strokeStyle='#07110c';ctx.lineWidth=2;ctx.strokeRect(x,y,width,height);
++ if(live)$('#toast').textContent=controlled?'TECHNICAL-CONTROL BOTTLENECK · baseline trajectory':`${s.s.toFixed(2)} m/s · facing gap ${(Math.abs(wrap(s.psi-s.h))/DEG).toFixed(0)}°${sim.o.ballOn?' · ball '+Math.hypot(b.p[0]-s.P[0],b.p[1]-s.P[1]).toFixed(2)+' m':''}`;
++}
++function renderAt(t){at=live?t:Math.max(spec.t0-.7,Math.min(spec.end-.001,Math.round(t/DT)*DT));ctx.clearRect(0,0,1600,820);entries.forEach((e,i)=>panel(e,i,at));if(!live){$('#scrub').value=Math.round((at-spec.t0+.7)*1000);$('#clock').textContent=(at-spec.t0).toFixed(2)+' s';}return at;}
++function loop(now){
++ if(last!=null){const dt=Math.min(.08,(now-last)/1000);if(live){acc+=dt;while(acc>=DT){entries[0].sim.step(input());acc-=DT;}renderAt(entries[0].sim.t);}else if(playing){at+=dt;if(at>spec.end-.02)at=spec.t0-.7;renderAt(at);}}
++ last=now;requestAnimationFrame(loop);
++}
++function pointer(e){const r=$('#stick').getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/(r.width*.44),y=((r.top+r.height/2)-e.clientY)/(r.height*.44);stick=stickVector(x,y);src='stick';const scale=Math.min(1,1/(Math.hypot(x,y)||1));$('#nub').style.transform=`translate(${x*scale*61}px,${-y*scale*61}px)`;}
++async function boot(){
++ const [colliders,baked,character]=await Promise.all([fetch('dribble1/d1_colliders.json').then(r=>r.json()),fetch('tc_baseline_88573ef0/pt_baked.json').then(r=>r.json()),window.ofCharLoad('vinicius')]);ent=character;env={E:window.RUN1_V13,M4,skel:ent.skel,colliders,baked,body:window.RUN1_V13.r1Body(ent.skel)};newLive();
++ $('#live').onclick=()=>setLive(true);$('#compare').onclick=()=>setLive(false);$('#reset').onclick=()=>live?newLive():renderAt(spec.t0-.7);$('#bodymode').onchange=()=>{if(live)entries[0].body=makeBody(env,entries[0].sim,$('#bodymode').value);renderAt(at);};for(const id of ['profile','ball'])$('#'+id).onchange=()=>live?newLive():load();for(const id of ['case','phase','direction'])$('#'+id).onchange=()=>load();$('#view').onchange=e=>{view=e.target.value;renderAt(at);};$('#playback').onclick=()=>{playing=!playing;$('#playback').textContent=playing?'Pause':'Play 1×';};$('#scrub').oninput=e=>{playing=false;$('#playback').textContent='Play 1×';renderAt(spec.t0-.7+(+e.target.value)/1000);};$('#sprint').onclick=()=>{sprint=!sprint;$('#sprint').classList.toggle('active',sprint);};
++ $('#stick').onpointerdown=e=>{pid=e.pointerId;e.currentTarget.setPointerCapture(pid);pointer(e);};$('#stick').onpointermove=e=>{if(e.pointerId===pid)pointer(e);};const release=()=>{pid=null;stick=stickVector(0,0);$('#nub').style.transform='';};$('#stick').onpointerup=release;$('#stick').onpointercancel=release;
++ document.addEventListener('keydown',e=>{if(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','ShiftRight','AltLeft','AltRight','Space'].includes(e.code)){e.preventDefault();keys.add(e.code);src='keys';if(e.code==='Space'){if(live)newLive();else renderAt(spec.t0-.7);}}});document.addEventListener('keyup',e=>keys.delete(e.code));window.addEventListener('blur',()=>{keys.clear();release();});
++ $('#guides').onchange=()=>renderAt(at);$('#toast').textContent='Ready · drag the joystick';window.A99={ready:true,setLive,load,renderAt,entries:()=>entries,spec:()=>spec,input,liveStep:(req,n=1)=>{for(let i=0;i<n;i++)entries[0].sim.step(req);renderAt(entries[0].sim.t);},setBody:mode=>{$('#bodymode').value=mode;if(live)entries[0].body=makeBody(env,entries[0].sim,mode);},setProfile:p=>{$('#profile').value=p;newLive();},setBall:on=>{$('#ball').value=on?'on':'off';newLive();},pause:()=>{playing=false;},env};requestAnimationFrame(loop);
++}
++boot().catch(e=>{$('#toast').textContent=e.stack;console.error(e);});
