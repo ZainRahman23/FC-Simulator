@@ -4001,6 +4001,61 @@ Stopped for owner visual review.
 | DRIBBLING VOCAB-1 | In progress (overnight mission) |
 | `touchline-current` | No changes except this chronicle |
 
+## Thursday 22 October 2026 — The 21 Oct publication; DRIBBLING VOCAB-1 presented; CRUYFF-CHOP-1 (the hook simple, the Cruyff and the Ronaldo chop elite); ADV-4, the four advanced dribbling families (croqueta, V-turn, compact Matthews, credible stop-and-go) and the Lab's ADVANCED AUTO SOLUTIONS; the croqueta refinement begun
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `332c1b8` (the 21 Oct entry), pushed in the 22 Oct housekeeping.
+  - **`prototype/dribble-1`**, 15 commits this day, all pushed in the 23 Oct housekeeping:
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | DRIBBLING VOCAB-1 (work in progress → presented) | `426c5c5` … `3cef4c4` (13) | 06:16 – 08:13 |
+    | CRUYFF-CHOP-1 (stopped for owner review) | `d2a736e` | 16:08 |
+    | ADV-4 (stopped for owner review) | `b6092d3` | 17:29 |
+
+    The owner's croqueta instruction of 17:33 is `3d27eca`, committed in the 23 Oct housekeeping; the refinement itself is in progress.
+
+- **[Doc]:**
+  - `review_artifacts/dribbling_vocab1/`, `cruyff_chop1/`, `adv4/`: each milestone's report, handoff, status, catalogue (`VOCABULARY.md`), evidence and sources;
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the pages show a real player's model; they are local pages only.
+- **[Session]** Owner instructions (the time each was saved):
+
+  | Saved (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 15:24 | CRUYFF + RONALDO CHOP family cleanup: one focused change; hooks the simple solution, Cruyff and chop the elite ones; the abbreviated Cruyff merged | `cruyff_chop1/sources/` |
+  | ≈ 16:19 | TECHNICAL CONTROL — four high-value dribbling solutions (croqueta, V-pull / V-turn, Matthews, stop-and-go); "the Cruyff/Ronaldo Chop hierarchy is looking good" | `adv4/sources/` |
+  | ≈ 17:33 | The croqueta refinement: a connected ball + body lane transfer, the hips across with the ball; CURRENT → UPGRADED → BASIC REDIRECT in the Lab | `adv4/sources/` |
+
+- **Owner media:** one screen recording (16:20, 3.6 s), attached with the croqueta instruction. It is third-party broadcast football footage (croquetas by a Spain player), used as the real-football reference; not archived (third-party).
+
+**The 21 Oct housekeeping (06:00).** The chronicle `332c1b8` was committed and pushed; `prototype/dribble-1` up to `91d3b1d` was pushed and verified.
+
+**DRIBBLING VOCAB-1 presented** (≈ 08:30, `3cef4c4`, the overnight mission begun 21 Oct day). The 150–180° / braking support fixed on the sandbox's own player; a researched technical vocabulary (tiers, entries, MANUAL / AUTO+MANUAL classes) with its templates; manual intents and the analog feint; the Dribbling Lab (`vocab1_lab.html`: curated deterministic replays, mirrors, chain mode) and the joystick sandbox. Extreme reversals 126 → 45 normal-visible events in 140 runs; the posed torture 140 → 69. Not frozen.
+
+**CRUYFF-CHOP-1** (≈ 15:24 → 16:08, `d2a736e`). The hooks keep their locked templates as the accessible brake → hook → exit; the Cruyff and the Ronaldo chop are refined elite copies (quicker last steps, a moving drag, credible post-contact speeds, the Cruyff's contact below 3 m/s, the preparation phase for over-speed requests). One technique with state-dependent entries (the abbreviated Cruyff merged; the chop's no-hop entry at 3–6 m/s). At 120°, the Cruyff 0.90 / 1.19 / 1.28 → 0.60 / 0.94 / 1.05 s at walk / jog / run against the hook's 0.86 / 1.20 / 1.33; the chop at a sprint 1.14 → 1.05 s keeping 5.3 m/s. The Lab's COMPARE: A | B from the identical entry, side by side. Stopped for owner review.
+
+**ADV-4** (≈ 16:19 → 17:29, `b6092d3`). The four families, measured honestly without defenders:
+- **V-TURN:** one parameterized family (70–120°, ≥ 2 m/s: a moving sole pull, the same inside out, an exit touch); it beats the hook at 120° and the Cruyff from a sprint, never B4's ordinary choice (recommended MANUAL).
+- **MATTHEWS:** a compact same-foot version (inside cue → outside, a sidestep, no hop), 40 % quicker than the drag-push; never quicker than the outside redirect (recommended MANUAL).
+- **STOP-AND-GO:** the deaden braked at the rated A99-C stop's rate, its relaunch capped by the ball-carrying D38 curve, straight on; level with the A99-C stop, better than stop → settle → go (run 0.98 vs 1.14 s); the sprint key held: the hesitation (recommended MANUAL).
+- **CROQUETA:** unchanged geometry, level with a requested inside cut (recommended AUTO + MANUAL).
+- **The Lab:** six ADVANCED AUTO SOLUTIONS cards (PLAY / COMPARE / MIRROR / AUTO / TRY / 1× 0.5× 0.25×), each with a measured "why better than the basic solution in this replay".
+- **Evidence:** determinism 18 / 18 + 18 / 18; possession over 160 seeds 25 losses vs 33, 0 missed contacts; classified body torture 180 / 276 vs 211 / 311; CPU level. Five owner decisions recorded. Stopped for owner review.
+
+**The croqueta refinement** (begun ≈ 17:33, in progress into 23 Oct). The owner's diagnosis — "ball transfers laterally → body follows afterward", the hips centred and passive — was confirmed in the simulation's own trace: the body held its old line until the touch, then A99-C turned it after the ball had gone. The upgrade (an authoritative root that starts across with the touch, the pelvis translating before it rotates) is in progress; nothing of it is committed yet.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| DRIBBLING VOCAB-1 | Presented; not frozen |
+| CRUYFF-CHOP-1 | The hierarchy "looking good" (owner, 16:19); not frozen |
+| ADV-4 | Stopped for owner review; five decisions pending; not frozen |
+| The croqueta refinement | In progress |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -4331,6 +4386,12 @@ An index to the narrative above, not a substitute for it.
 | 20 Oct | TC-RESPONSIVE research + architecture; TC-RESPONSIVE-1 (rejected on playtest) | FC-Sim Git | `703d555`, `c59e3be` |
 | 20 Oct | TC-LAYERED-1 / TC-LAYERED-2: layers on the baseline; B4 + B5 approved for development | FC-Sim Git | `b60496d`, `70b83e3` |
 | 20 Oct | Astra's A99-C + persistent support V1.1 (applied verbatim); TC-UNIFIED-1 begun | FC-Sim Git | `c793713`, `db65b13` |
+| 21 Oct | TC-UNIFIED-1 presented; TC-CONTROLLED-1, the controlled ball | FC-Sim Git | `f14cdd8`, `33b81c5` |
+| 21 Oct | SPEED-99-V1 → V1.1 (Sprint Speed 99 = 38 km/h); the S99 mission (Acceleration 99 = D38) | FC-Sim Git | `3a3019c`, `aee4627` |
+| 21 Oct | BALL-ON PACE V1 (CARRY-B); PLAYER PHYSICAL RATINGS V1 (Agility scale B) | FC-Sim Git | `b8f511d`, `8099476` |
+| 22 Oct | DRIBBLING VOCAB-1 presented: the technical vocabulary, the Dribbling Lab | FC-Sim Git | `3cef4c4` |
+| 22 Oct | CRUYFF-CHOP-1: the hook simple, the Cruyff and the Ronaldo chop elite | FC-Sim Git | `d2a736e` |
+| 22 Oct | ADV-4: croqueta, V-turn, compact Matthews, credible stop-and-go; ADVANCED AUTO SOLUTIONS | FC-Sim Git | `b6092d3` |
 
 ## Appendix B — Repository provenance
 
