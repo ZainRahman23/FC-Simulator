@@ -1,0 +1,63 @@
+OLD · bf-exit — BODY FEINT · DEFENDER ON THE EXIT SIDE
+tackle contact at t = 1.067 s (tick 832), Δv 9.20 m/s · outcome POKED LOOSE · CARRIER RE-COLLECTS
+  attacker's first re-plan: 0 ticks after the contact, reason "opponent" → BODY FEINT V2
+  attacker's first plan with a touch IN REACH of the deflected ball: 223 ticks after the contact (re-plan "footfall", its touch carry turn in 0.804 s)
+  attacker's next touch: +2.400 s (braking pivot) — created 564 ticks after (re-plan "footfall")
+
+  tick   t−tC   ball (x, y)       |v|   att poss     def poss           att next touch         def next touch      events
+    828 -0.017  (40.03, 34.25)   3.23   CONTROLLED   — (ball off)       exit touch R +0.350    —                   
+    829 -0.013  (40.04, 34.26)   3.22   CONTROLLED   — (ball off)       exit touch R +0.346    —                   
+    830 -0.008  (40.05, 34.27)   3.20   CONTROLLED   — (ball off)       exit touch R +0.342    —                   ATT RE-PLAN "footfall" → BODY FEINT V2 · next touch +0.342 s
+    831 -0.004  (40.06, 34.28)   3.18   CONTROLLED   — (ball off)       exit touch R +0.338    —                   
+    832  0.000  (40.03, 34.29)   6.89   FREE         — (ball off)       exit touch R +0.333    —                   TACKLE CONTACT TOE Δv 9.20 · ATT RE-PLAN "opponent" → BODY FEINT V2 · next touch +0.333 s · ATT POSS → FREE (OPPONENT_TACKLE)
+    833  0.004  (40.00, 34.29)   6.87   FREE         — (ball off)       exit touch R +0.329    —                   
+    834  0.008  (39.97, 34.29)   6.86   FREE         — (ball off)       exit touch R +0.325    —                   
+    835  0.013  (39.94, 34.30)   6.84   FREE         — (ball off)       exit touch R +0.321    —                   
+    836  0.017  (39.92, 34.30)   6.83   FREE         — (ball off)       exit touch R +0.317    —                   
+    837  0.021  (39.89, 34.30)   6.81   FREE         — (ball off)       exit touch R +0.313    —                   
+    838  0.025  (39.86, 34.31)   6.80   FREE         — (ball off)       exit touch R +0.308    —                   
+    839  0.029  (39.83, 34.31)   6.79   FREE         — (ball off)       exit touch R +0.304    —                   
+    840  0.033  (39.80, 34.31)   6.77   FREE         — (ball off)       exit touch R +0.300    —                   
+    841  0.037  (39.78, 34.32)   6.76   FREE         — (ball off)       exit touch R +0.296    —                   
+    842  0.042  (39.75, 34.32)   6.74   FREE         — (ball off)       exit touch R +0.292    —                   
+    843  0.046  (39.72, 34.33)   6.73   FREE         — (ball off)       exit touch R +0.287    —                   
+    844  0.050  (39.69, 34.33)   6.71   FREE         — (ball off)       exit touch R +0.283    —                   
+    879  0.196  (38.76, 34.45)   6.20   FREE         — (ball off)       exit touch R +0.138    —                   ATT RE-PLAN "footfall" → BODY FEINT V2 · next touch +0.138 s
+    912  0.333  (37.95, 34.55)   5.70   FREE         — (ball off)       —                      —                   ATT RE-PLAN "missed contact" → CARRY · ATT CONTACT exit touch (MISSED)
+    927  0.396  (37.60, 34.59)   5.48   FREE         — (ball off)       —                      —                   ATT RE-PLAN "footfall" → CARRY
+   1000  0.700  (36.12, 34.78)   4.34   FREE         — (ball off)       —                      —                   ATT RE-PLAN "refresh" → CARRY
+   1004  0.717  (36.05, 34.79)   4.28   FREE         — (ball off)       —                      —                   ATT RE-PLAN "footfall" → CARRY
+   1012  0.750  (35.91, 34.81)   4.15   FREE         FREE               —                      —                   DEF RE-PLAN "loose ball: playable" → CARRY · DEFENDER BALL-ON
+   1013  0.754  (35.90, 34.81)   4.14   FREE         FREE               —                      —                   DEF RE-PLAN "request" → CARRY
+   1055  0.929  (35.24, 34.90)   3.47   FREE         FREE               carry turn R +0.804    —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.804 s
+   1061  0.954  (35.15, 34.91)   3.37   FREE         FREE               carry turn R +0.779    —                   DEF RE-PLAN "footfall" → CARRY
+   1106  1.142  (34.59, 34.98)   2.65   FREE         FREE               carry turn L +1.221    —                   ATT RE-PLAN "footfall" → CARRY · next touch +1.221 s
+   1117  1.188  (34.48, 34.99)   2.48   FREE         FREE               carry turn L +1.175    carry R +0.813      DEF RE-PLAN "footfall" → CARRY · next touch +0.813 s
+   1157  1.354  (34.12, 35.04)   1.85   FREE         FREE               braking pivot R +1.046 carry R +0.646      ATT RE-PLAN "footfall" → BRAKING PIVOT · next touch +1.046 s
+   1168  1.400  (34.04, 35.05)   1.69   FREE         FREE               braking pivot R +1.000 carry correction L +1.146 DEF RE-PLAN "footfall" → CARRY · next touch +1.146 s
+   1210  1.575  (33.80, 35.08)   1.09   FREE         FREE               braking pivot R +0.825 carry correction L +0.971 ATT RE-PLAN "footfall" → BRAKING PIVOT · next touch +0.825 s
+   1219  1.613  (33.76, 35.08)   0.97   FREE         FREE               braking pivot R +0.787 carry correction L +0.933 DEF RE-PLAN "footfall" → CARRY · next touch +0.933 s
+   1283  1.879  (33.60, 35.10)   0.31   FREE         FREE               braking pivot R +0.521 carry correction L +0.667 ATT RE-PLAN "refresh" → BRAKING PIVOT · next touch +0.521 s
+   1289  1.904  (33.60, 35.10)   0.27   FREE         FREE               braking pivot R +0.496 carry correction L +0.642 DEF RE-PLAN "footfall" → CARRY · next touch +0.642 s
+   1303  1.962  (33.58, 35.11)   0.19   FREE         FREE               braking pivot R +0.438 carry correction L +0.583 ATT RE-PLAN "footfall" → BRAKING PIVOT · next touch +0.438 s
+   1362  2.208  (33.56, 35.11)   0.03   FREE         FREE               braking pivot R +0.192 carry correction L +0.338 DEF RE-PLAN "refresh" → CARRY · next touch +0.338 s
+   1375  2.263  (33.56, 35.11)   0.02   FREE         FREE               braking pivot R +0.138 carry correction L +0.283 DEF RE-PLAN "footfall" → CARRY · next touch +0.283 s · ATT RE-PLAN "refresh" → BRAKING PIVOT · next touch +0.138 s
+   1396  2.350  (33.56, 35.11)   0.01   FREE         FREE               braking pivot R +0.050 carry correction L +0.196 ATT RE-PLAN "footfall" → BRAKING PIVOT · next touch +0.050 s
+   1408  2.400  (33.56, 35.12)   2.85   CONTROLLED   FREE               carry L +0.217         carry correction L +0.146 ATT RE-PLAN "contact" → CARRY · next touch +0.217 s · ATT CONTACT braking pivot · ATT POSS → CONTROLLED (COLLECTED)
+   1409  2.404  (33.57, 35.13)   2.83   CONTROLLED   — (ball off)       carry L +0.212         —                   DEF RE-PLAN "the carrier controls the ball" → BODY MOVEMENT · DEFENDER BALL-OFF
+   1426  2.475  (33.63, 35.31)   2.56   CONTROLLED   — (ball off)       carry L +0.142         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.142 s
+   1460  2.617  (33.75, 35.62)   3.75   CONTROLLED   — (ball off)       carry R +0.258         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.258 s · ATT CONTACT carry
+   1461  2.621  (33.76, 35.63)   3.73   CONTROLLED   — (ball off)       carry R +0.254         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1478  2.692  (33.87, 35.86)   3.46   CONTROLLED   — (ball off)       carry R +0.183         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.183 s
+   1522  2.875  (34.12, 36.38)   4.56   CONTROLLED   — (ball off)       carry R +0.721         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.721 s · ATT CONTACT carry
+   1534  2.925  (34.28, 36.54)   4.37   CONTROLLED   — (ball off)       carry R +0.671         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1540  2.950  (34.35, 36.61)   4.28   CONTROLLED   — (ball off)       carry R +0.646         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.646 s
+   1547  2.979  (34.44, 36.70)   4.17   CONTROLLED   — (ball off)       carry R +0.617         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1613  3.254  (35.15, 37.41)   3.11   CONTROLLED   — (ball off)       carry R +0.342         —                   ATT RE-PLAN "refresh" → CARRY · next touch +0.342 s
+   1619  3.279  (35.20, 37.46)   3.02   CONTROLLED   — (ball off)       carry R +0.317         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1627  3.313  (35.27, 37.53)   2.89   CONTROLLED   — (ball off)       carry R +0.283         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.283 s
+   1633  3.337  (35.32, 37.58)   2.79   CONTROLLED   — (ball off)       carry R +0.258         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1695  3.596  (35.75, 38.01)   4.56   CONTROLLED   — (ball off)       carry R +0.717         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT CONTACT carry
+   1705  3.637  (35.88, 38.14)   4.40   CONTROLLED   — (ball off)       carry R +0.675         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1713  3.671  (35.98, 38.24)   4.28   CONTROLLED   — (ball off)       carry R +0.642         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.642 s
+   1719  3.696  (36.06, 38.32)   4.18   CONTROLLED   — (ball off)       carry R +0.617         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT

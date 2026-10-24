@@ -1,0 +1,72 @@
+OLD · carry-jog-def — JOG CARRY · DEFENDER JOGGING IN (3.2 m/s)
+tackle contact at t = 0.658 s (tick 734), Δv 6.21 m/s · outcome POKED LOOSE · CARRIER RE-COLLECTS
+  attacker's first re-plan: 0 ticks after the contact, reason "opponent" → CARRY · SECURE (SECURE (pursuit 0.9 s))
+  attacker's first plan with a touch IN REACH of the deflected ball: 0 ticks after the contact (re-plan "opponent", its touch carry correction in 1.067 s)
+  attacker's next touch: +1.471 s (MATTHEWS · the inside cue (a nudge inward)) — created 310 ticks after (re-plan "footfall")
+
+  tick   t−tC   ball (x, y)       |v|   att poss     def poss           att next touch         def next touch      events
+    730 -0.017  (39.37, 34.13)   4.29   CONTROLLED   — (ball off)       carry R +0.650         —                   
+    731 -0.013  (39.38, 34.13)   4.28   CONTROLLED   — (ball off)       carry R +0.646         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.646 s
+    732 -0.008  (39.40, 34.13)   4.26   CONTROLLED   — (ball off)       carry R +0.642         —                   
+    733 -0.004  (39.42, 34.13)   4.25   CONTROLLED   — (ball off)       carry R +0.637         —                   
+    734  0.000  (39.44, 34.16)   7.15   FREE         — (ball off)       carry correction L +1.067 —                   TACKLE CONTACT TOE Δv 6.21 · ATT RE-PLAN "opponent" → CARRY · SECURE [SECURE (pursuit 0.9 s)] · next touch +1.067 s · ATT POSS → FREE (OPPONENT_TACKLE)
+    735  0.004  (39.45, 34.18)   7.13   FREE         — (ball off)       carry correction L +1.063 —                   
+    736  0.008  (39.47, 34.21)   7.12   FREE         — (ball off)       carry correction L +1.058 —                   
+    737  0.013  (39.48, 34.23)   7.10   FREE         — (ball off)       carry correction L +1.054 —                   
+    738  0.017  (39.50, 34.26)   7.09   FREE         — (ball off)       carry correction L +1.050 —                   
+    739  0.021  (39.51, 34.28)   7.08   FREE         — (ball off)       carry correction L +1.046 —                   
+    740  0.025  (39.52, 34.31)   7.06   FREE         — (ball off)       carry correction L +1.042 —                   
+    741  0.029  (39.54, 34.33)   7.05   FREE         — (ball off)       carry correction L +1.038 —                   
+    742  0.033  (39.55, 34.36)   7.03   FREE         — (ball off)       carry correction L +1.033 —                   
+    743  0.037  (39.57, 34.38)   7.02   FREE         — (ball off)       carry correction L +1.029 —                   
+    744  0.042  (39.58, 34.41)   7.00   FREE         — (ball off)       carry correction L +1.025 —                   
+    745  0.046  (39.60, 34.44)   6.99   FREE         — (ball off)       carry correction L +1.021 —                   
+    746  0.050  (39.61, 34.46)   6.97   FREE         — (ball off)       carry correction L +1.017 —                   
+    785  0.212  (40.16, 35.40)   6.40   FREE         — (ball off)       carry correction L +0.854 —                   ATT RE-PLAN "footfall" → CARRY · SECURE [kept the running plan] · next touch +0.854 s
+    806  0.300  (40.44, 35.87)   6.09   FREE         — (ball off)       carry correction L +0.767 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.767 s
+    807  0.304  (40.45, 35.89)   6.08   FREE         — (ball off)       carry correction L +0.762 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.762 s
+    808  0.308  (40.46, 35.91)   6.06   FREE         — (ball off)       carry correction L +0.758 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.758 s
+    809  0.313  (40.48, 35.93)   6.05   FREE         — (ball off)       carry correction L +0.754 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.754 s
+    810  0.317  (40.49, 35.96)   6.03   FREE         — (ball off)       carry correction L +0.750 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.750 s
+    811  0.321  (40.50, 35.98)   6.02   FREE         — (ball off)       carry correction L +0.746 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.746 s
+    812  0.325  (40.51, 36.00)   6.00   FREE         — (ball off)       carry correction L +0.742 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.742 s
+    813  0.329  (40.53, 36.02)   5.99   FREE         — (ball off)       carry correction L +0.738 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.738 s
+    814  0.333  (40.54, 36.04)   5.97   FREE         — (ball off)       carry correction L +0.733 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.733 s
+    815  0.338  (40.55, 36.06)   5.96   FREE         — (ball off)       carry correction L +0.729 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.729 s
+    816  0.342  (40.56, 36.09)   5.94   FREE         — (ball off)       carry correction L +0.725 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.725 s
+    817  0.346  (40.58, 36.11)   5.93   FREE         — (ball off)       carry correction L +0.721 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.721 s
+    818  0.350  (40.59, 36.13)   5.91   FREE         — (ball off)       carry correction L +0.717 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.717 s
+    819  0.354  (40.60, 36.15)   5.90   FREE         — (ball off)       carry correction L +0.713 —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the running plan] · next touch +0.713 s
+    820  0.358  (40.61, 36.17)   5.88   FREE         — (ball off)       MATTHEWS · the inside cue (a nudge inward) L +1.113 —                   ATT RE-PLAN "refresh" → MATTHEWS (compact) · next touch +1.113 s
+    837  0.429  (40.82, 36.52)   5.63   FREE         — (ball off)       MATTHEWS · the inside cue (a nudge inward) L +1.042 —                   ATT RE-PLAN "footfall" → MATTHEWS (compact) · next touch +1.042 s
+    906  0.717  (41.56, 37.78)   4.56   FREE         — (ball off)       MATTHEWS · the inside cue (a nudge inward) L +0.754 —                   ATT RE-PLAN "footfall" → MATTHEWS (compact) · next touch +0.754 s
+    933  0.829  (41.81, 38.21)   4.14   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.642 —                   DEF RE-PLAN "loose ball: playable" → CARRY · DEFENDER BALL-ON
+    934  0.833  (41.81, 38.22)   4.12   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.637 —                   DEF RE-PLAN "request" → CARRY
+    975  1.004  (42.14, 38.78)   3.47   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.467 —                   ATT RE-PLAN "footfall" → MATTHEWS (compact) · next touch +0.467 s
+    982  1.033  (42.19, 38.87)   3.36   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.438 —                   DEF RE-PLAN "footfall" → CARRY
+   1033  1.246  (42.51, 39.41)   2.54   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.225 —                   DEF RE-PLAN "footfall" → CARRY
+   1044  1.292  (42.56, 39.50)   2.37   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.179 —                   ATT RE-PLAN "footfall" → MATTHEWS (compact) · next touch +0.179 s
+   1080  1.442  (42.72, 39.77)   1.81   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.029 —                   ATT RE-PLAN "footfall" → MATTHEWS (compact) · next touch +0.029 s
+   1084  1.458  (42.74, 39.80)   1.75   FREE         FREE               MATTHEWS · the inside cue (a nudge inward) L +0.013 —                   DEF RE-PLAN "footfall" → CARRY
+   1087  1.471  (42.74, 39.81)   0.59   CONTROLLED   FREE               MATTHEWS · the outside of the same foot takes it out L +0.121 —                   ATT RE-PLAN "contact" → MATTHEWS (compact) · next touch +0.121 s · ATT CONTACT MATTHEWS · the inside cue (a nudge inward) · ATT POSS → CONTROLLED (COLLECTED)
+   1088  1.475  (42.74, 39.81)   0.58   CONTROLLED   — (ball off)       MATTHEWS · the outside of the same foot takes it out L +0.117 —                   DEF RE-PLAN "the carrier controls the ball" → BODY MOVEMENT · DEFENDER BALL-OFF
+   1116  1.592  (42.74, 39.86)   4.98   CONTROLLED   — (ball off)       carry R +0.321         —                   ATT RE-PLAN "contact" → CARRY · SECURE [SECURE (to the ball)] · next touch +0.321 s · ATT CONTACT MATTHEWS · the outside of the same foot takes it out
+   1135  1.671  (43.12, 39.86)   4.69   CONTROLLED   — (ball off)       carry R +0.242         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.242 s
+   1140  1.692  (43.22, 39.86)   4.61   CONTROLLED   — (ball off)       carry R +0.221         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1193  1.912  (44.14, 39.86)   4.26   CONTROLLED   — (ball off)       carry R +0.717         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT CONTACT carry
+   1211  1.988  (44.45, 39.88)   3.98   CONTROLLED   — (ball off)       carry R +0.642         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT · ATT RE-PLAN "footfall" → CARRY · next touch +0.642 s
+   1284  2.292  (45.48, 39.96)   2.81   CONTROLLED   — (ball off)       carry R +0.338         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT · ATT RE-PLAN "refresh" → CARRY · next touch +0.338 s
+   1297  2.346  (45.62, 39.97)   2.60   CONTROLLED   — (ball off)       carry R +0.283         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT · ATT RE-PLAN "footfall" → CARRY · next touch +0.283 s
+   1365  2.629  (46.22, 40.01)   4.56   CONTROLLED   — (ball off)       carry R +0.721         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.721 s · ATT CONTACT carry
+   1370  2.650  (46.31, 40.01)   4.48   CONTROLLED   — (ball off)       carry R +0.700         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1383  2.704  (46.55, 40.01)   4.28   CONTROLLED   — (ball off)       carry R +0.646         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT · ATT RE-PLAN "footfall" → CARRY · next touch +0.646 s
+   1456  3.008  (47.67, 40.01)   3.11   CONTROLLED   — (ball off)       carry R +0.342         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT · ATT RE-PLAN "refresh" → CARRY · next touch +0.342 s
+   1469  3.063  (47.83, 40.01)   2.90   CONTROLLED   — (ball off)       carry R +0.287         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT · ATT RE-PLAN "footfall" → CARRY · next touch +0.287 s
+   1538  3.350  (48.52, 40.01)   4.56   CONTROLLED   — (ball off)       carry R +0.717         —                   ATT RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT CONTACT carry
+   1542  3.367  (48.60, 40.01)   4.50   CONTROLLED   — (ball off)       carry R +0.700         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1555  3.421  (48.83, 40.01)   4.29   CONTROLLED   — (ball off)       carry R +0.646         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1556  3.425  (48.85, 40.01)   4.28   CONTROLLED   — (ball off)       carry R +0.642         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.642 s
+   1628  3.725  (49.96, 40.01)   3.13   CONTROLLED   — (ball off)       carry R +0.342         —                   DEF RE-PLAN "refresh" → BODY MOVEMENT
+   1629  3.729  (49.97, 40.01)   3.11   CONTROLLED   — (ball off)       carry R +0.338         —                   ATT RE-PLAN "refresh" → CARRY · next touch +0.338 s
+   1641  3.779  (50.12, 40.01)   2.92   CONTROLLED   — (ball off)       carry R +0.287         —                   DEF RE-PLAN "footfall" → BODY MOVEMENT
+   1642  3.783  (50.14, 40.01)   2.90   CONTROLLED   — (ball off)       carry R +0.283         —                   ATT RE-PLAN "footfall" → CARRY · next touch +0.283 s

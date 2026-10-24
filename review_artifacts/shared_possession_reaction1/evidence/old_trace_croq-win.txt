@@ -1,0 +1,59 @@
+OLD · croq-win — LA CROQUETA · CLOSE DEFENDER, TACKLE AS IT STARTS (from the move sweep)
+tackle contact at t = 0.571 s (tick 713), Δv 10.78 m/s · outcome CONTROLLED WIN
+  attacker's first re-plan: 0 ticks after the contact, reason "opponent" → LA CROQUETA
+  attacker's first plan with a touch IN REACH of the deflected ball: 278 ticks after the contact (re-plan "footfall", its touch carry turn in 1.238 s)
+  defender's next touch: +1.875 s (carry turn)
+
+  tick   t−tC   ball (x, y)       |v|   att poss     def poss           att next touch         def next touch      events
+    709 -0.017  (39.01, 34.13)   1.90   CONTROLLED   — (ball off)       LA CROQUETA · the ball-side inside establishes the ball and sweeps it across and back, the foot with it R +0.013 —                   
+    710 -0.013  (39.02, 34.13)   1.88   CONTROLLED   — (ball off)       LA CROQUETA · the ball-side inside establishes the ball and sweeps it across and back, the foot with it R +0.008 —                   
+    711 -0.008  (39.03, 34.13)   1.87   CONTROLLED   — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.188 —                   
+    712 -0.004  (39.02, 34.11)   5.13   CONTROLLED   — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.183 —                   ATT RE-PLAN "contact" → LA CROQUETA · next touch +0.183 s · ATT CONTACT LA CROQUETA · the ball-side inside establishes the ball and sweeps it across and back, the foot with it
+    713  0.000  (39.00, 34.13)   6.94   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.179 —                   TACKLE CONTACT TOE Δv 10.78 · ATT RE-PLAN "opponent" → LA CROQUETA · next touch +0.179 s · ATT POSS → FREE (OPPONENT_TACKLE)
+    714  0.004  (38.98, 34.15)   6.93   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.175 —                   
+    715  0.008  (38.96, 34.17)   6.91   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.171 —                   
+    716  0.013  (38.94, 34.19)   6.90   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.167 —                   
+    717  0.017  (38.92, 34.21)   6.88   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.163 —                   
+    718  0.021  (38.90, 34.23)   6.87   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.158 —                   
+    719  0.025  (38.88, 34.25)   6.85   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.154 —                   
+    720  0.029  (38.86, 34.27)   6.84   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.150 —                   
+    721  0.033  (38.84, 34.29)   6.82   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.146 —                   
+    722  0.037  (38.82, 34.31)   6.81   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.142 —                   
+    723  0.042  (38.80, 34.33)   6.80   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.138 —                   
+    724  0.046  (38.78, 34.35)   6.78   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.133 —                   
+    725  0.050  (38.76, 34.37)   6.77   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.129 —                   
+    736  0.096  (38.54, 34.59)   6.61   FREE         — (ball off)       LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left L +0.083 —                   ATT RE-PLAN "footfall" → LA CROQUETA · next touch +0.083 s
+    756  0.179  (38.16, 34.97)   6.31   FREE         — (ball off)       exit touch L +0.279    —                   ATT RE-PLAN "missed contact" → LA CROQUETA · next touch +0.279 s · ATT CONTACT LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left (MISSED)
+    763  0.208  (38.04, 35.10)   6.21   FREE         — (ball off)       exit touch L +0.250    —                   ATT RE-PLAN "footfall" → LA CROQUETA · next touch +0.250 s
+    801  0.367  (37.37, 35.76)   5.64   FREE         FREE               exit touch L +0.092    —                   DEF RE-PLAN "loose ball: playable" → CARRY · DEFENDER BALL-ON
+    802  0.371  (37.36, 35.78)   5.62   FREE         FREE               exit touch L +0.087    —                   DEF RE-PLAN "request" → CARRY
+    804  0.379  (37.32, 35.81)   5.59   FREE         FREE               exit touch L +0.079    —                   ATT RE-PLAN "footfall" → LA CROQUETA · next touch +0.079 s
+    823  0.458  (37.02, 36.11)   5.30   FREE         FREE               —                      —                   ATT RE-PLAN "missed contact" → CARRY · ATT CONTACT exit touch (MISSED)
+    837  0.517  (36.81, 36.33)   5.09   FREE         FREE               —                      —                   ATT RE-PLAN "footfall" → CARRY
+    850  0.571  (36.61, 36.52)   4.89   FREE         FREE               —                      —                   DEF RE-PLAN "footfall" → CARRY
+    888  0.729  (36.10, 37.03)   4.29   FREE         FREE               —                      —                   ATT RE-PLAN "footfall" → CARRY
+    903  0.792  (35.92, 37.22)   4.05   FREE         FREE               —                      —                   DEF RE-PLAN "footfall" → CARRY
+    942  0.954  (35.49, 37.64)   3.43   FREE         FREE               —                      —                   ATT RE-PLAN "footfall" → CARRY
+    955  1.008  (35.36, 37.77)   3.22   FREE         FREE               —                      carry correction L +0.588 DEF RE-PLAN "footfall" → CARRY · next touch +0.588 s
+    991  1.158  (35.05, 38.08)   2.65   FREE         FREE               carry turn R +1.238    carry correction L +0.438 ATT RE-PLAN "footfall" → CARRY · next touch +1.238 s
+   1006  1.221  (34.94, 38.19)   2.41   FREE         FREE               carry turn R +1.175    carry turn R +0.654 DEF RE-PLAN "footfall" → CARRY · next touch +0.654 s
+   1042  1.371  (34.71, 38.42)   1.85   FREE         FREE               —                      carry turn R +0.504 ATT RE-PLAN "footfall" → CARRY
+   1057  1.433  (34.64, 38.49)   1.62   FREE         FREE               —                      carry turn R +0.442 DEF RE-PLAN "footfall" → CARRY · next touch +0.442 s
+   1093  1.583  (34.49, 38.64)   1.11   FREE         FREE               OUTSIDE HOOK L +0.987  carry turn R +0.292 ATT RE-PLAN "footfall" → OUTSIDE HOOK · next touch +0.987 s
+   1111  1.658  (34.44, 38.69)   0.88   FREE         FREE               OUTSIDE HOOK L +0.912  carry turn R +0.217 DEF RE-PLAN "footfall" → CARRY · next touch +0.217 s
+   1144  1.796  (34.38, 38.76)   0.51   FREE         FREE               OUTSIDE HOOK L +0.775  carry turn R +0.079 ATT RE-PLAN "footfall" → OUTSIDE HOOK · next touch +0.775 s
+   1163  1.875  (34.34, 38.78)   4.22   FREE         CONTROLLED         OUTSIDE HOOK L +0.696  carry R +0.713      DEF RE-PLAN "contact" → CARRY · next touch +0.713 s · ATT RE-PLAN "opponent" → OUTSIDE HOOK · next touch +0.696 s · DEF CONTACT carry turn · DEF POSS → CONTROLLED (COLLECTED) · DEFENDER TOUCH
+   1181  1.950  (34.03, 38.75)   3.94   FREE         CONTROLLED         OUTSIDE HOOK L +0.621  carry R +0.637      DEF RE-PLAN "footfall" → CARRY · next touch +0.637 s
+   1201  2.033  (33.72, 38.73)   3.62   FREE         CONTROLLED         OUTSIDE HOOK L +0.537  carry R +0.554      ATT RE-PLAN "footfall" → OUTSIDE HOOK · next touch +0.537 s
+   1254  2.254  (33.02, 38.68)   2.77   FREE         CONTROLLED         OUTSIDE HOOK L +0.317  carry R +0.333      DEF RE-PLAN "refresh" → CARRY · next touch +0.333 s
+   1258  2.271  (32.97, 38.67)   2.71   FREE         CONTROLLED         carry R +1.113         carry R +0.317      ATT RE-PLAN "footfall" → CARRY · next touch +1.113 s
+   1266  2.304  (32.88, 38.66)   2.58   FREE         CONTROLLED         carry R +1.079         carry R +0.283      DEF RE-PLAN "footfall" → CARRY · next touch +0.283 s
+   1301  2.450  (32.55, 38.64)   2.03   FREE         CONTROLLED         braking touch R +0.504 carry R +0.138      ATT RE-PLAN "footfall" → BRAKING TOUCH · next touch +0.504 s
+   1334  2.587  (32.29, 38.62)   4.58   FREE         CONTROLLED         braking touch R +0.904 carry R +0.721      DEF RE-PLAN "contact" → CARRY · next touch +0.721 s · ATT RE-PLAN "opponent" → BRAKING TOUCH · next touch +0.904 s · DEF CONTACT carry · DEFENDER TOUCH
+   1352  2.663  (31.96, 38.61)   4.30   FREE         CONTROLLED         braking touch R +0.829 carry R +0.646      DEF RE-PLAN "footfall" → CARRY · next touch +0.646 s
+   1354  2.671  (31.93, 38.61)   4.27   FREE         CONTROLLED         braking touch R +0.813 carry R +0.637      ATT RE-PLAN "footfall" → BRAKING TOUCH · next touch +0.813 s
+   1424  2.962  (30.84, 38.59)   3.15   FREE         CONTROLLED         braking touch R +0.521 carry R +0.346      DEF RE-PLAN "refresh" → CARRY · next touch +0.346 s
+   1427  2.975  (30.81, 38.59)   3.11   FREE         CONTROLLED         braking touch R +0.508 carry R +0.333      ATT RE-PLAN "refresh" → BRAKING TOUCH · next touch +0.508 s
+   1438  3.021  (30.67, 38.59)   2.93   FREE         CONTROLLED         braking touch R +0.462 carry R +0.287      DEF RE-PLAN "footfall" → CARRY · next touch +0.287 s
+   1446  3.054  (30.57, 38.59)   2.80   FREE         CONTROLLED         braking touch R +0.429 carry R +0.254      ATT RE-PLAN "footfall" → BRAKING TOUCH · next touch +0.429 s
+   1507  3.308  (29.97, 38.58)   4.56   FREE         CONTROLLED         braking touch R +0.983 carry R +0.717      DEF RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT RE-PLAN "opponent" → BRAKING TOUCH · next touch +0.983 s · DEF CONTACT carry · DEFENDER TOUCH

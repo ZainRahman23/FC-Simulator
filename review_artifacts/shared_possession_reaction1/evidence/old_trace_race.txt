@@ -1,0 +1,72 @@
+OLD · race — JOG + CUT LEFT · SIDE-ON DEFENDER · THE RACE FOR THE POKED BALL
+tackle contact at t = 0.821 s (tick 773), Δv 11.30 m/s · outcome WON · CONTESTED
+  attacker's first re-plan: 0 ticks after the contact, reason "opponent" → CARRY
+  attacker's first plan with a touch IN REACH of the deflected ball: 246 ticks after the contact (re-plan "footfall", its touch DRAG-BACK in 1.033 s)
+  attacker's next touch: +2.058 s (DRAG-BACK) — created 471 ticks after (re-plan "opponent")
+  defender's next touch: +1.963 s (OUTSIDE CUT)
+
+  tick   t−tC   ball (x, y)       |v|   att poss     def poss           att next touch         def next touch      events
+    769 -0.017  (39.75, 33.34)   4.04   CONTROLLED   — (ball off)       —                      —                   
+    770 -0.013  (39.76, 33.33)   4.63   CONTROLLED   — (ball off)       carry correction R +0.287 —                   ATT RE-PLAN "contact" → CARRY · next touch +0.287 s · ATT CONTACT carry
+    771 -0.008  (39.78, 33.32)   4.62   CONTROLLED   — (ball off)       carry correction R +0.283 —                   
+    772 -0.004  (39.79, 33.31)   4.60   CONTROLLED   — (ball off)       carry correction R +0.279 —                   
+    773  0.000  (39.77, 33.32)   6.80   FREE         — (ball off)       —                      —                   TACKLE CONTACT TOE Δv 11.30 · ATT RE-PLAN "opponent" → CARRY · ATT POSS → FREE (OPPONENT_TACKLE)
+    774  0.004  (39.74, 33.32)   6.78   FREE         — (ball off)       —                      —                   
+    775  0.008  (39.71, 33.33)   6.77   FREE         — (ball off)       —                      —                   
+    776  0.013  (39.69, 33.34)   6.75   FREE         — (ball off)       —                      —                   
+    777  0.017  (39.66, 33.35)   6.74   FREE         — (ball off)       —                      —                   
+    778  0.021  (39.63, 33.36)   6.72   FREE         — (ball off)       —                      —                   
+    779  0.025  (39.61, 33.37)   6.71   FREE         — (ball off)       —                      —                   
+    780  0.029  (39.58, 33.38)   6.69   FREE         — (ball off)       —                      —                   
+    781  0.033  (39.55, 33.38)   6.68   FREE         — (ball off)       —                      —                   
+    782  0.037  (39.53, 33.39)   6.66   FREE         — (ball off)       —                      —                   
+    783  0.042  (39.50, 33.40)   6.65   FREE         — (ball off)       —                      —                   
+    784  0.046  (39.47, 33.41)   6.63   FREE         — (ball off)       —                      —                   
+    785  0.050  (39.45, 33.42)   6.62   FREE         — (ball off)       —                      —                   
+    788  0.063  (39.37, 33.44)   6.58   FREE         — (ball off)       —                      —                   ATT RE-PLAN "footfall" → CARRY
+    841  0.283  (38.07, 33.86)   5.79   FREE         — (ball off)       —                      —                   ATT RE-PLAN "footfall" → CARRY
+    851  0.325  (37.84, 33.93)   5.64   FREE         FREE               —                      —                   DEF RE-PLAN "loose ball: playable" → CARRY · DEFENDER BALL-ON
+    852  0.329  (37.82, 33.94)   5.62   FREE         FREE               —                      —                   DEF RE-PLAN "request" → CARRY
+    900  0.529  (36.82, 34.26)   4.89   FREE         FREE               —                      —                   DEF RE-PLAN "footfall" → CARRY
+    913  0.583  (36.58, 34.34)   4.68   FREE         FREE               —                      —                   ATT RE-PLAN "refresh" → CARRY
+    917  0.600  (36.50, 34.37)   4.62   FREE         FREE               —                      —                   ATT RE-PLAN "footfall" → CARRY
+    951  0.742  (35.92, 34.55)   4.09   FREE         FREE               —                      carry correction L +0.829 DEF RE-PLAN "footfall" → CARRY · next touch +0.829 s
+    967  0.808  (35.67, 34.63)   3.83   FREE         FREE               —                      carry correction L +0.762 ATT RE-PLAN "footfall" → CARRY
+   1003  0.958  (35.16, 34.80)   3.26   FREE         FREE               —                      carry turn R +1.262 DEF RE-PLAN "footfall" → CARRY · next touch +1.262 s
+   1019  1.025  (34.96, 34.86)   3.00   FREE         FREE               DRAG-BACK R +1.033     carry turn R +1.196 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +1.033 s
+   1054  1.171  (34.59, 34.98)   2.44   FREE         FREE               DRAG-BACK R +0.887     OUTSIDE CUT R +0.792 DEF RE-PLAN "footfall" → OUTSIDE CUT · next touch +0.792 s
+   1070  1.238  (34.44, 35.03)   2.19   FREE         FREE               DRAG-BACK R +0.821     OUTSIDE CUT R +0.725 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +0.821 s
+   1108  1.396  (34.16, 35.12)   1.61   FREE         FREE               DRAG-BACK R +0.662     OUTSIDE CUT R +0.567 DEF RE-PLAN "footfall" → OUTSIDE CUT · next touch +0.567 s
+   1133  1.500  (34.02, 35.17)   1.25   FREE         FREE               DRAG-BACK R +0.558     OUTSIDE CUT R +0.462 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +0.558 s
+   1180  1.696  (33.84, 35.22)   0.66   FREE         FREE               DRAG-BACK R +0.362     OUTSIDE CUT R +0.267 DEF RE-PLAN "refresh" → OUTSIDE CUT · next touch +0.267 s
+   1195  1.758  (33.81, 35.23)   0.50   FREE         FREE               DRAG-BACK R +0.300     OUTSIDE CUT R +0.204 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +0.300 s
+   1211  1.825  (33.78, 35.24)   0.36   FREE         FREE               DRAG-BACK R +0.233     OUTSIDE CUT R +0.138 DEF RE-PLAN "footfall" → OUTSIDE CUT · next touch +0.138 s
+   1234  1.921  (33.75, 35.25)   0.21   FREE         FREE               DRAG-BACK R +0.138     OUTSIDE CUT R +0.042 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +0.138 s
+   1244  1.962  (33.73, 35.23)   6.39   FREE         CONTROLLED         DRAG-BACK R +0.096     carry L +0.292      DEF RE-PLAN "contact" → CARRY · SECURE [SECURE (to the ball)] · next touch +0.292 s · ATT RE-PLAN "opponent" → DRAG-BACK · next touch +0.096 s · DEF CONTACT OUTSIDE CUT · DEF POSS → CONTROLLED (COLLECTED) · DEFENDER TOUCH
+   1261  2.033  (33.45, 34.89)   6.13   FREE         CONTROLLED         DRAG-BACK R +0.025     carry correction L +0.163 DEF RE-PLAN "footfall" → CARRY · next touch +0.163 s
+   1267  2.058  (33.37, 34.79)   1.85   CONTROLLED   CONTROLLED         push (2nd contact) L +0.242 carry correction L +0.138 ATT RE-PLAN "contact" → DRAG-BACK · next touch +0.242 s · ATT CONTACT DRAG-BACK · ATT POSS → CONTROLLED (COLLECTED)
+   1291  2.158  (33.45, 34.64)   1.50   CONTROLLED   CONTROLLED         push (2nd contact) L +0.142 carry correction L +0.037 ATT RE-PLAN "footfall" → DRAG-BACK · next touch +0.142 s
+   1300  2.196  (33.46, 34.59)   4.93   FREE         CONTROLLED         carry L +1.000         carry R +0.358      DEF RE-PLAN "contact" → CARRY · next touch +0.358 s · ATT RE-PLAN "opponent" → CARRY · SECURE [SECURE · RECOVERY (pursuit 0.8 s)] · next touch +1.000 s · DEF CONTACT carry correction · ATT POSS → FREE (OPPONENT_INTERCEPTION) · DEFENDER TOUCH
+   1318  2.271  (33.24, 34.31)   4.65   FREE         CONTROLLED         carry L +0.925         carry R +0.283      DEF RE-PLAN "footfall" → CARRY · next touch +0.283 s
+   1342  2.371  (32.96, 33.96)   4.27   FREE         CONTROLLED         carry L +0.825         carry R +0.183      ATT RE-PLAN "footfall" → CARRY · SECURE [kept the recovery] · next touch +0.825 s
+   1373  2.500  (32.64, 33.55)   3.78   FREE         CONTROLLED         carry L +0.696         carry R +0.054      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.696 s
+   1374  2.504  (32.63, 33.54)   3.76   FREE         CONTROLLED         carry L +0.692         carry R +0.050      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.692 s
+   1375  2.508  (32.62, 33.53)   3.75   FREE         CONTROLLED         carry L +0.688         carry R +0.046      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.688 s
+   1376  2.513  (32.61, 33.51)   3.73   FREE         CONTROLLED         carry L +0.683         carry R +0.042      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.683 s
+   1377  2.517  (32.60, 33.50)   3.72   FREE         CONTROLLED         carry L +0.679         carry R +0.037      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.679 s
+   1378  2.521  (32.59, 33.49)   3.70   FREE         CONTROLLED         carry L +0.675         carry R +0.033      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.675 s
+   1379  2.525  (32.58, 33.48)   3.68   FREE         CONTROLLED         carry L +0.671         carry R +0.029      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.671 s
+   1380  2.529  (32.57, 33.47)   3.67   FREE         CONTROLLED         carry L +0.667         carry R +0.025      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.667 s
+   1381  2.533  (32.56, 33.45)   3.65   FREE         CONTROLLED         carry L +0.662         carry R +0.021      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.662 s
+   1382  2.538  (32.55, 33.44)   3.64   FREE         CONTROLLED         carry L +0.658         carry R +0.017      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.658 s
+   1383  2.542  (32.54, 33.43)   3.62   FREE         CONTROLLED         carry L +0.654         carry R +0.013      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.654 s
+   1384  2.546  (32.53, 33.42)   3.60   FREE         CONTROLLED         carry L +0.650         carry R +0.008      ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.650 s
+   1385  2.550  (32.52, 33.41)   3.59   FREE         CONTROLLED         carry L +0.646         —                   ATT RE-PLAN "refresh" → CARRY · SECURE [kept the recovery] · next touch +0.646 s
+   1386  2.554  (32.51, 33.39)   4.56   FREE         CONTROLLED         —                      carry R +0.717      DEF RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT RE-PLAN "opponent" → CARRY · DEF CONTACT carry · DEFENDER TOUCH
+   1392  2.579  (32.45, 33.30)   4.46   FREE         CONTROLLED         —                      carry R +0.692      ATT RE-PLAN "footfall" → CARRY
+   1404  2.629  (32.32, 33.12)   4.27   FREE         CONTROLLED         —                      carry R +0.642      DEF RE-PLAN "footfall" → CARRY · next touch +0.642 s
+   1444  2.796  (31.95, 32.58)   3.64   FREE         CONTROLLED         urgent reach R +0.871  carry R +0.475      ATT RE-PLAN "footfall" → URGENT REACH · next touch +0.871 s
+   1476  2.929  (31.69, 32.21)   3.13   FREE         CONTROLLED         urgent reach R +0.738  carry R +0.342      DEF RE-PLAN "refresh" → CARRY · next touch +0.342 s
+   1490  2.987  (31.59, 32.07)   2.90   FREE         CONTROLLED         urgent reach R +0.679  carry R +0.283      DEF RE-PLAN "footfall" → CARRY · next touch +0.283 s
+   1498  3.021  (31.53, 31.99)   2.77   FREE         CONTROLLED         gather L +0.879        carry R +0.250      ATT RE-PLAN "footfall" → GATHER · next touch +0.879 s
+   1558  3.271  (31.20, 31.51)   4.56   FREE         CONTROLLED         OUTSIDE CUT R +0.896   carry R +0.717      DEF RE-PLAN "contact" → CARRY · next touch +0.717 s · ATT RE-PLAN "opponent" → OUTSIDE CUT · next touch +0.896 s · DEF CONTACT carry · DEFENDER TOUCH
