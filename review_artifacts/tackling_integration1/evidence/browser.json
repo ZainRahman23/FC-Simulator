@@ -1,0 +1,247 @@
+{
+ "checks": [
+  {
+   "name": "the Lab loads (TOUCHLINE — TACKLING LAB V1)",
+   "pass": true
+  },
+  {
+   "name": "every case simulates, poses and draws",
+   "pass": true,
+   "detail": "21/21"
+  },
+  {
+   "name": "the page's runs equal node's (outcome, commitment, contact times)",
+   "pass": true,
+   "detail": "21/21"
+  },
+  {
+   "name": "all 8 cameras draw (painted)",
+   "pass": true,
+   "detail": {
+    "gameplay": 99.9,
+    "front": 65.9,
+    "rear": 70.2,
+    "sideL": 62.9,
+    "sideR": 62.9,
+    "q3f": 80.8,
+    "q3r": 83.5,
+    "top": 99.8
+   }
+  },
+  {
+   "name": "the 8 cameras are 8 different views",
+   "pass": true
+  },
+  {
+   "name": "ball hidden: draws, and differs from the default view",
+   "pass": true,
+   "detail": {
+    "painted": 63
+   }
+  },
+  {
+   "name": "body only: draws, and differs from the default view",
+   "pass": true,
+   "detail": {
+    "painted": 63
+   }
+  },
+  {
+   "name": "skeleton: draws, and differs from the default view",
+   "pass": true,
+   "detail": {
+    "painted": 62
+   }
+  },
+  {
+   "name": "frame step (.) advances the playhead 4 ticks",
+   "pass": true,
+   "detail": {
+    "dt": 0.01667
+   }
+  },
+  {
+   "name": "frame step back (,)",
+   "pass": true
+  },
+  {
+   "name": "the contact switch re-simulates with PHASE C's contact",
+   "pass": true
+  },
+  {
+   "name": "TACKLE AT PLAYHEAD re-runs the case with the request at the playhead",
+   "pass": true,
+   "detail": {
+    "n": 1,
+    "t": 0.621,
+    "state": "COMMITTED",
+    "reason": null,
+    "tCommit": 0.638,
+    "why": {
+     "OUT OF REACH: 1.32 m at -48° (envelope 1.29 m)": 2,
+     "OUT OF REACH: 1.31 m at -49° (envelope 1.29 m)": 1,
+     "OUT OF REACH: 1.30 m at -49° (envelope 1.29 m)": 1
+    }
+   }
+  },
+  {
+   "name": "0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "narrow window (820 px): the stage still draws",
+   "pass": true
+  }
+ ],
+ "rows": [
+  {
+   "id": "carry-jog-l",
+   "painted": 99.9,
+   "frames": 1353,
+   "simMs": 202,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "carry-jog-r",
+   "painted": 99.9,
+   "frames": 1343,
+   "simMs": 161,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "carry-jog-side",
+   "painted": 99.9,
+   "frames": 1343,
+   "simMs": 123,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "carry-walk",
+   "painted": 100,
+   "frames": 1417,
+   "simMs": 136,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "carry-walk-def",
+   "painted": 99.9,
+   "frames": 1367,
+   "simMs": 138,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "carry-jog-def",
+   "painted": 100,
+   "frames": 1318,
+   "simMs": 214,
+   "outcome": "POKED LOOSE · CARRIER RE-COLLECTS"
+  },
+  {
+   "id": "race",
+   "painted": 99.9,
+   "frames": 1236,
+   "simMs": 253,
+   "outcome": "WON · CONTESTED"
+  },
+  {
+   "id": "steer",
+   "painted": 99.9,
+   "frames": 1356,
+   "simMs": 148,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "cut",
+   "painted": 99.9,
+   "frames": 1360,
+   "simMs": 185,
+   "outcome": "MISS"
+  },
+  {
+   "id": "bf-fake",
+   "painted": 100,
+   "frames": 1316,
+   "simMs": 145,
+   "outcome": "MISS"
+  },
+  {
+   "id": "bf-exit",
+   "painted": 99.9,
+   "frames": 1421,
+   "simMs": 175,
+   "outcome": "POKED LOOSE · CARRIER RE-COLLECTS"
+  },
+  {
+   "id": "bf-early",
+   "painted": 99.9,
+   "frames": 1195,
+   "simMs": 117,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "croq",
+   "painted": 99.9,
+   "frames": 1316,
+   "simMs": 143,
+   "outcome": "MISS"
+  },
+  {
+   "id": "croq-win",
+   "painted": 100,
+   "frames": 1210,
+   "simMs": 189,
+   "outcome": "CONTROLLED WIN"
+  },
+  {
+   "id": "croq-early",
+   "painted": 100,
+   "frames": 1256,
+   "simMs": 138,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "mirror",
+   "painted": 99.9,
+   "frames": 1353,
+   "simMs": 130,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "mirror-l",
+   "painted": 99.9,
+   "frames": 1343,
+   "simMs": 136,
+   "outcome": "ATTACKER RECOVERS"
+  },
+  {
+   "id": "late",
+   "painted": 99.9,
+   "frames": 961,
+   "simMs": 97,
+   "outcome": "DECLINED"
+  },
+  {
+   "id": "early",
+   "painted": 99.9,
+   "frames": 961,
+   "simMs": 94,
+   "outcome": "DECLINED"
+  },
+  {
+   "id": "run",
+   "painted": 99.9,
+   "frames": 961,
+   "simMs": 92,
+   "outcome": "DECLINED"
+  },
+  {
+   "id": "notackle",
+   "painted": 99.9,
+   "frames": 961,
+   "simMs": 91,
+   "outcome": "NO REQUEST"
+  }
+ ],
+ "errors": []
+}

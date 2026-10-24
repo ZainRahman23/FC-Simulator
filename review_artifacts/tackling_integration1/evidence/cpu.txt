@@ -1,0 +1,9 @@
+PERFORMANCE — 5 × 20 Lab cases (node v22.19.0, no drawing); per world tick (240 Hz)
+  tackle module IDLE (no request pending or acting):  median 0.1 µs · p95 0.2 µs · max 115.2 µs   (140745 ticks)
+  tackle module PENDING (the opportunity search):     median 9.5 µs · p95 23.0 µs · max 970.9 µs   (3120 ticks)
+  tackle module ACTIVE (commit → contact window end): median 1.0 µs · p95 4.5 µs · max 2560.7 µs   (14240 ticks; the commitment tick included)
+  the commitment (the action + its plans, once):      median 0.21 ms · max 2.40 ms   (80 commitments)
+  the defender's own tick (a 2nd canonical footballer, ball off): median 5.5 µs · p95 7.0 µs — not tackling: the cost of a second player
+  the attacker's tick IN THE WORLD: median 7.2 µs · p95 10.0 µs · ALONE (the canonical case): median 7.2 µs · p95 9.4 µs
+  idle tackle module per simulated second: 0.030 ms/s (the attacker alone: 1.7 ms/s)
+  MEANS per simulated second (re-plans included): tackle module 0.160 ms/s (idle 0.030) · the defender's own sim 2.27 ms/s · the attacker in the world 6.07 ms/s (tackles and their aftermath included) vs alone 3.05 ms/s; BEFORE any request (like for like): in the world 2.91 ms/s vs alone 2.96 ms/s

@@ -1,0 +1,24 @@
+{
+  "milestone": "TACKLING INTEGRATION V1 · STANDING TACKLE V1",
+  "status": "PROVISIONAL — built and tested, awaiting the owner's visual review; not frozen, not merged, not pushed",
+  "date": "2026-10-24",
+  "branch": "prototype/tackling-integration-v1",
+  "worktree": "~/Downloads/FC Simulator worktrees/tackling-integration-v1",
+  "base": { "ref": "milestone/feint-croqueta-vocab-v1", "tag": "checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24", "sha": "f775daac" },
+  "canonical_files_changed": 0,
+  "foundation": { "body": "Codex Phase C revision 2 (STANDING_POKE / STANDING_LUNGE), re-expressed as a canonical plan", "contact": "vocab2/c_sim.js opponentStep (unchanged)", "possession": "the canonical possession model (unchanged)" },
+  "lab": "http://127.0.0.1:8363/sandbox/visual/tackle1_lab.html (LOCAL ONLY — real players' models)",
+  "envelope": { "speeds": "standing, walk, jog (≤ 3.4 m/s); run / sprint declined", "sector_deg": 75, "reach_m": [1.28, 1.30], "feet": "both; the free foot on the ball's side (≤ 0.12 m across)", "support": "planted at commitment", "request_window_s": 0.35 },
+  "verification": {
+    "attacker_identity": "244 / 244 identical",
+    "milestone_regression": "ALL 10 SUITES IDENTICAL",
+    "browser": "14 / 14 checks; 21 / 21 cases; page ≡ node 21 / 21",
+    "torture": "60 trials × 2: stuck 0 · control not returned 0 · accepted while committed 0 · duplicate possession changes 0 · nondeterministic 0 · re-contacts < 0.1 s 1",
+    "lock_check": "PASS"
+  },
+  "outcomes_search_poke": { "committed": 209, "ATTACKER RECOVERS": "59.3 %", "MISS": "22.5 %", "POKED LOOSE · CARRIER RE-COLLECTS": "14.4 %", "WON · CONTESTED": "2.4 %", "OPPONENT RETAINS": "1.4 %", "CONTROLLED WIN": "0 % (1 in the Croqueta sweep; Lab case croq-win)" },
+  "performance": { "idle_module_per_tick_us": 0.1, "idle_module_ms_per_sim_s": 0.03, "pending_median_us": 9.5, "commitment_median_ms": 0.21, "attacker_before_any_request_ms_per_s": { "world": 2.91, "alone": 2.96 } },
+  "slide_tackle": "audited, not integrated (needs a ground-contact capability in the canonical body) — SLIDE_TACKLE_AUDIT.md",
+  "owner_decisions": ["POKE vs Phase C contact and the jab speed", "the carrier's reaction latency / opponent-aware possession", "player–player collision next", "miss recovery cost", "the slide tackle's three decisions"],
+  "commits": "see git log f775daac..HEAD"
+}

@@ -1,0 +1,97 @@
+{
+ "T": {
+  "trials": 60,
+  "requests": {
+   "COMMITTED": 45,
+   "DECLINED": 241,
+   "IGNORED": 121
+  },
+  "acts": 45,
+  "hits": 50,
+  "stuck": 0,
+  "noReturn": 0,
+  "dupHits": 1,
+  "dupPoss": 0,
+  "acceptedWhileCommitted": 0,
+  "nondet": 0,
+  "inSec": 39.322537998142984,
+  "outSec": 270.227462001857,
+  "attSec": 309.54999999999995,
+  "evIn": {
+   "PLANT SLIDE": 19,
+   "KNEE POP": 76,
+   "PELVIS SPIKE": 3,
+   "FOOT JUMP": 6
+  },
+  "evOut": {
+   "PELVIS SPIKE": 74,
+   "TRUNK SPIKE": 330,
+   "KNEE POP": 772,
+   "PLANT SLIDE": 367,
+   "FOOT JUMP": 251,
+   "LEGS CROSSED": 44
+  },
+  "evAtt": {
+   "KNEE POP": 3176,
+   "FOOT JUMP": 1958,
+   "PELVIS SPIKE": 11,
+   "TRUNK SPIKE": 353
+  },
+  "max": {
+   "footSpeed": 21.6011,
+   "plantDrift": 0.4253,
+   "kneeRate": 7555.9666,
+   "pelvisDev": 0.0387,
+   "trunkRate": 1361.3823,
+   "overlap": 0.299,
+   "overlapIn": 0.299
+  },
+  "outcomes": {
+   "ATTACKER RECOVERS": 30,
+   "POKED LOOSE · CARRIER RE-COLLECTS": 4,
+   "MISS": 7,
+   "OPPONENT RETAINS": 3,
+   "WON · CONTESTED": 1
+  },
+  "families": {
+   "STANDING_LUNGE": 39,
+   "STANDING_POKE": 4,
+   "POKE → LUNGE": 2
+  },
+  "feet": {
+   "L": 20,
+   "R": 25
+  },
+  "impulses": 50,
+  "episodes": 42,
+  "overlapIn": 1347,
+  "overlapMax": 0.299,
+  "worstSlide": {
+   "i": 57,
+   "j": 129,
+   "pat": "single",
+   "tq": [
+    0.1045
+   ],
+   "name": "CARRY·JOG CUT R · def [4.69,1.03] face 173 walking · req 0.376",
+   "t": 2.8958,
+   "kind": "PLANT SLIDE",
+   "v": 0.093,
+   "inTackle": true,
+   "foot": "L"
+  }
+ },
+ "bad": [
+  {
+   "i": 37,
+   "j": 73,
+   "pat": "single",
+   "tq": [
+    1.2521
+   ],
+   "kind": "RE-CONTACT WITHIN 0.1 s (a separate episode)",
+   "t": 4.033333333333333,
+   "gap": 0.0292
+  }
+ ]
+}

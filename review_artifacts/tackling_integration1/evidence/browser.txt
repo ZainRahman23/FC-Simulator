@@ -1,0 +1,17 @@
+PASS  the Lab loads (TOUCHLINE — TACKLING LAB V1)
+PASS  every case simulates, poses and draws  — 21/21
+   carry-jog-l: ATTACKER RECOVERS (1353 frames, 202 ms) · carry-jog-r: ATTACKER RECOVERS (1343 frames, 161 ms) · carry-jog-side: ATTACKER RECOVERS (1343 frames, 123 ms) · carry-walk: ATTACKER RECOVERS (1417 frames, 136 ms) · carry-walk-def: ATTACKER RECOVERS (1367 frames, 138 ms) · carry-jog-def: POKED LOOSE · CARRIER RE-COLLECTS (1318 frames, 214 ms) · race: WON · CONTESTED (1236 frames, 253 ms) · steer: ATTACKER RECOVERS (1356 frames, 148 ms) · cut: MISS (1360 frames, 185 ms) · bf-fake: MISS (1316 frames, 145 ms) · bf-exit: POKED LOOSE · CARRIER RE-COLLECTS (1421 frames, 175 ms) · bf-early: ATTACKER RECOVERS (1195 frames, 117 ms) · croq: MISS (1316 frames, 143 ms) · croq-win: CONTROLLED WIN (1210 frames, 189 ms) · croq-early: ATTACKER RECOVERS (1256 frames, 138 ms) · mirror: ATTACKER RECOVERS (1353 frames, 130 ms) · mirror-l: ATTACKER RECOVERS (1343 frames, 136 ms) · late: DECLINED (961 frames, 97 ms) · early: DECLINED (961 frames, 94 ms) · run: DECLINED (961 frames, 92 ms) · notackle: NO REQUEST (961 frames, 91 ms)
+PASS  the page's runs equal node's (outcome, commitment, contact times)  — 21/21
+PASS  all 8 cameras draw (painted)  — {"gameplay":99.9,"front":65.9,"rear":70.2,"sideL":62.9,"sideR":62.9,"q3f":80.8,"q3r":83.5,"top":99.8}
+PASS  the 8 cameras are 8 different views
+PASS  ball hidden: draws, and differs from the default view  — {"painted":63}
+PASS  body only: draws, and differs from the default view  — {"painted":63}
+PASS  skeleton: draws, and differs from the default view  — {"painted":62}
+PASS  frame step (.) advances the playhead 4 ticks  — {"dt":0.01667}
+PASS  frame step back (,)
+PASS  the contact switch re-simulates with PHASE C's contact
+PASS  TACKLE AT PLAYHEAD re-runs the case with the request at the playhead  — {"n":1,"t":0.621,"state":"COMMITTED","reason":null,"tCommit":0.638,"why":{"OUT OF REACH: 1.32 m at -48° (envelope 1.29 m)":2,"OUT OF REACH: 1.31 m at -49° (envelope 1.29 m)":1,"OUT OF REACH: 1.30 m at -49° (envelope 1.29 m)":1}}
+PASS  0 console / HTTP errors  — []
+PASS  narrow window (820 px): the stage still draws
+
+ALL 14 CHECKS PASS

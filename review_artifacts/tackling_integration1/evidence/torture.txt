@@ -1,0 +1,13 @@
+10 20 30 40 50 60 
+STANDING TACKLE V1 TORTURE — 60 trials (seed 3; patterns single / rapid / stride / invalid; 76 set-ups skipped — no request time commits), each run twice
+requests: {"COMMITTED":45,"DECLINED":241,"IGNORED":121} · committed actions 45 ({"STANDING_LUNGE":39,"STANDING_POKE":4,"POKE → LUNGE":2}; feet {"L":20,"R":25}) · ball contacts 50
+outcomes: {"ATTACKER RECOVERS":30,"POKED LOOSE · CARRIER RE-COLLECTS":4,"MISS":7,"OPPONENT RETAINS":3,"WON · CONTESTED":1}
+ball contact impulses 50 in 42 contact episodes (impulses on consecutive ticks = one sustained contact)
+worst plant slide: {"i":57,"j":129,"pat":"single","tq":[0.1045],"name":"CARRY·JOG CUT R · def [4.69,1.03] face 173 walking · req 0.376","t":2.8958,"kind":"PLANT SLIDE","v":0.093,"inTackle":true,"foot":"L"}
+STUCK COMMITMENT 0 · CONTROL NOT RETURNED 0 · ACCEPTED WHILE COMMITTED 0 · RE-CONTACTS < 0.1 s (separate episodes) 1 · DUPLICATE POSSESSION CHANGES 0 · NONDETERMINISTIC 0
+BODY inside the tackles (39.3 s): {"PLANT SLIDE":"19 (0.48/s)","KNEE POP":"76 (1.93/s)","PELVIS SPIKE":"3 (0.08/s)","FOOT JUMP":"6 (0.15/s)"}
+BODY the same footballer outside them (270.2 s): {"PELVIS SPIKE":"74 (0.27/s)","TRUNK SPIKE":"330 (1.22/s)","KNEE POP":"772 (2.86/s)","PLANT SLIDE":"367 (1.36/s)","FOOT JUMP":"251 (0.93/s)","LEGS CROSSED":"44 (0.16/s)"}
+REFERENCE — the canonical carrier's own body, same measures (309.5 s): {"KNEE POP":"3176 (10.26/s)","FOOT JUMP":"1958 (6.33/s)","PELVIS SPIKE":"11 (0.04/s)","TRUNK SPIKE":"353 (1.14/s)"}
+player overlap > 3 cm inside the tackles: 1347 ticks · deepest overlap 29.9 cm (no player collision exists)
+worst: {"footSpeed":21.6011,"plantDrift":0.4253,"kneeRate":7555.9666,"pelvisDev":0.0387,"trunkRate":1361.3823,"overlap":0.299,"overlapIn":0.299}
+FINDINGS [{"i":37,"j":73,"pat":"single","tq":[1.2521],"kind":"RE-CONTACT WITHIN 0.1 s (a separate episode)","t":4.033333333333333,"gap":0.0292}]

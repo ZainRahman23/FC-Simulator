@@ -1,0 +1,6441 @@
+[
+ {
+  "id": "carry-jog-l",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.621,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.638,
+     "why": {
+      "OUT OF REACH: 1.32 m at -48° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.31 m at -49° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.30 m at -49° (envelope 1.29 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.017,
+    "contactPlanned": 0.291,
+    "window": [
+     0.067,
+     0.81
+    ],
+    "recoveryStart": 0.411,
+    "controlReady": 1.01,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 1,
+    "angle": -49.5,
+    "range": 1.29,
+    "ballAtCommit": 2.12,
+    "recovery": 0.718,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.037,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.037,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.292,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.27,
+       0
+      ],
+      "vOut": [
+       -0.46,
+       4.03
+      ],
+      "dv": 5.5,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.25 s after the tackle",
+     "next": 0.25,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.913,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.167,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 1.000576797150364,
+  "tmin": 1.0333333333333297,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 63,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.5371,
+    "plantDrift": 0.041,
+    "kneeRate": 2684.1943,
+    "pelvisDev": 0.0306,
+    "trunkRate": 1180.3417,
+    "overlap": 0.0873,
+    "overlapIn": 0.0873
+   },
+   "list": [
+    {
+     "t": 3.375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0439,
+     "inTackle": true
+    },
+    {
+     "t": 3.3792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.057,
+     "inTackle": true
+    },
+    {
+     "t": 3.3833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0624,
+     "inTackle": true
+    },
+    {
+     "t": 3.3875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0637,
+     "inTackle": true
+    },
+    {
+     "t": 3.3917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0649,
+     "inTackle": true
+    },
+    {
+     "t": 3.3958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.066,
+     "inTackle": true
+    },
+    {
+     "t": 3.4,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0671,
+     "inTackle": true
+    },
+    {
+     "t": 3.4042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.068,
+     "inTackle": true
+    },
+    {
+     "t": 3.4083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0657,
+     "inTackle": true
+    },
+    {
+     "t": 3.4125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0629,
+     "inTackle": true
+    },
+    {
+     "t": 3.4167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0608,
+     "inTackle": true
+    },
+    {
+     "t": 3.4208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0593,
+     "inTackle": true
+    },
+    {
+     "t": 3.425,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0583,
+     "inTackle": true
+    },
+    {
+     "t": 3.4292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0581,
+     "inTackle": true
+    },
+    {
+     "t": 3.4333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0576,
+     "inTackle": true
+    },
+    {
+     "t": 3.4375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0573,
+     "inTackle": true
+    },
+    {
+     "t": 3.4417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0579,
+     "inTackle": true
+    },
+    {
+     "t": 3.4458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0598,
+     "inTackle": true
+    },
+    {
+     "t": 3.45,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0582,
+     "inTackle": true
+    },
+    {
+     "t": 3.4542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0609,
+     "inTackle": true
+    },
+    {
+     "t": 3.4583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.064,
+     "inTackle": true
+    },
+    {
+     "t": 3.4625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0672,
+     "inTackle": true
+    },
+    {
+     "t": 3.4667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.4708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0735,
+     "inTackle": true
+    },
+    {
+     "t": 3.475,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0766,
+     "inTackle": true
+    },
+    {
+     "t": 3.4792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0796,
+     "inTackle": true
+    },
+    {
+     "t": 3.4833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0811,
+     "inTackle": true
+    },
+    {
+     "t": 3.4875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0809,
+     "inTackle": true
+    },
+    {
+     "t": 3.4917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0805,
+     "inTackle": true
+    },
+    {
+     "t": 3.4958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0797,
+     "inTackle": true
+    },
+    {
+     "t": 3.5,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0787,
+     "inTackle": true
+    },
+    {
+     "t": 3.5042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0774,
+     "inTackle": true
+    },
+    {
+     "t": 3.5083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0759,
+     "inTackle": true
+    },
+    {
+     "t": 3.5125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0741,
+     "inTackle": true
+    },
+    {
+     "t": 3.5167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0725,
+     "inTackle": true
+    },
+    {
+     "t": 3.5208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0731,
+     "inTackle": true
+    },
+    {
+     "t": 3.525,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0767,
+     "inTackle": true
+    },
+    {
+     "t": 3.5292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0818,
+     "inTackle": true
+    },
+    {
+     "t": 3.5333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0873,
+     "inTackle": true
+    },
+    {
+     "t": 3.5375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0852,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "carry-jog-r",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.621,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.621,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.269,
+    "window": [
+     0.05,
+     0.775
+    ],
+    "recoveryStart": 0.387,
+    "controlReady": 0.97,
+    "family": "STANDING_LUNGE",
+    "foot": "R",
+    "support": "L",
+    "c": 0.96,
+    "angle": 43.9,
+    "range": 1.26,
+    "ballAtCommit": 2.14,
+    "recovery": 0.7,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.187
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.021,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.021,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.271,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.35,
+       0
+      ],
+      "vOut": [
+       -1.38,
+       -3.82
+      ],
+      "dv": 6.08,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.27 s after the tackle",
+     "next": 0.27,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.892,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.167,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 1.158774593863207,
+  "tmin": 0.9999999999999964,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.4688,
+    "plantDrift": 0.041,
+    "kneeRate": 2647.9919,
+    "pelvisDev": 0.0293,
+    "trunkRate": 1181.7804,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 3.9958,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0293,
+     "inTackle": false
+    },
+    {
+     "t": 4,
+     "kind": "TRUNK SPIKE",
+     "v": 4.3019,
+     "inTackle": false
+    },
+    {
+     "t": 4.0042,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9215,
+     "inTackle": false
+    },
+    {
+     "t": 4.0083,
+     "kind": "KNEE POP",
+     "v": 10.93,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.0083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9241,
+     "inTackle": false
+    },
+    {
+     "t": 4.0125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.306,
+     "inTackle": false
+    },
+    {
+     "t": 4.0167,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0669,
+     "inTackle": false
+    },
+    {
+     "t": 4.3458,
+     "kind": "KNEE POP",
+     "v": 7.1485,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.35,
+     "kind": "KNEE POP",
+     "v": 11.0333,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.3958,
+     "kind": "PLANT SLIDE",
+     "v": 0.0317,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.6333,
+     "kind": "KNEE POP",
+     "v": 7.8219,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.6917,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.9917,
+     "kind": "KNEE POP",
+     "v": 6.6332,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.05,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.35,
+     "kind": "KNEE POP",
+     "v": 6.8272,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.4083,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.7125,
+     "kind": "KNEE POP",
+     "v": 6.4279,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.7667,
+     "kind": "PLANT SLIDE",
+     "v": 0.0321,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.0708,
+     "kind": "KNEE POP",
+     "v": 7.1303,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.125,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.4292,
+     "kind": "KNEE POP",
+     "v": 7.8287,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.4833,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.7875,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.8458,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "R"
+    }
+   ]
+  }
+ },
+ {
+  "id": "carry-jog-side",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.6,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.6,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.274,
+    "window": [
+     0.05,
+     0.791
+    ],
+    "recoveryStart": 0.393,
+    "controlReady": 0.99,
+    "family": "STANDING_LUNGE",
+    "foot": "R",
+    "support": "L",
+    "c": 0.99,
+    "angle": 8.2,
+    "range": 1.27,
+    "ballAtCommit": 2.11,
+    "recovery": 0.715,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.275,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.42,
+       0
+      ],
+      "vOut": [
+       -0.33,
+       -4.13
+      ],
+      "dv": 5.57,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.09 s after the tackle",
+     "next": 0.09,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.875,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 0.967,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.6669526829537249,
+  "tmin": 1.2166666666666623,
+  "body": {
+   "ev": {
+    "in": {
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.5281,
+    "plantDrift": 0.041,
+    "kneeRate": 2837.5028,
+    "pelvisDev": 0.0301,
+    "trunkRate": 1177.0503,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 3.2958,
+     "kind": "KNEE POP",
+     "v": 7.1138,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.9958,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0301,
+     "inTackle": false
+    },
+    {
+     "t": 4,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2838,
+     "inTackle": false
+    },
+    {
+     "t": 4.0042,
+     "kind": "KNEE POP",
+     "v": 11.8229,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.0042,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9017,
+     "inTackle": false
+    },
+    {
+     "t": 4.0083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9044,
+     "inTackle": false
+    },
+    {
+     "t": 4.0125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2911,
+     "inTackle": false
+    },
+    {
+     "t": 4.0167,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0674,
+     "inTackle": false
+    },
+    {
+     "t": 4.3458,
+     "kind": "KNEE POP",
+     "v": 7.2976,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.35,
+     "kind": "KNEE POP",
+     "v": 10.3266,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.3958,
+     "kind": "PLANT SLIDE",
+     "v": 0.0304,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.6333,
+     "kind": "KNEE POP",
+     "v": 7.824,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.6917,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.9917,
+     "kind": "KNEE POP",
+     "v": 6.6331,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.05,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.35,
+     "kind": "KNEE POP",
+     "v": 6.8263,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.4083,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.7125,
+     "kind": "KNEE POP",
+     "v": 6.4275,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.7667,
+     "kind": "PLANT SLIDE",
+     "v": 0.0321,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.0708,
+     "kind": "KNEE POP",
+     "v": 7.1297,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.125,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.4292,
+     "kind": "KNEE POP",
+     "v": 7.8285,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.4833,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.7875,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.8458,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "R"
+    }
+   ]
+  }
+ },
+ {
+  "id": "carry-walk",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.75,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 1.071,
+     "why": {
+      "OUT OF REACH: 1.43 m at -41° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.43 m at -42° (envelope 1.29 m)": 6,
+      "OUT OF REACH: 1.42 m at -42° (envelope 1.29 m)": 9,
+      "OUT OF REACH: 1.41 m at -42° (envelope 1.29 m)": 10,
+      "OUT OF REACH: 1.41 m at -43° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.40 m at -43° (envelope 1.29 m)": 16,
+      "OUT OF REACH: 1.39 m at -43° (envelope 1.29 m)": 32,
+      "OUT OF REACH: 1.38 m at -43° (envelope 1.29 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.321,
+    "contactPlanned": 0.558,
+    "window": [
+     0.371,
+     0.979
+    ],
+    "recoveryStart": 0.659,
+    "controlReady": 1.149,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.71,
+    "angle": -63.4,
+    "range": 1.06,
+    "ballAtCommit": 1.41,
+    "recovery": 0.59,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.187
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.271,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.271,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.558,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       1.95,
+       0
+      ],
+      "vOut": [
+       -0.04,
+       3.68
+      ],
+      "dv": 4.19,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.14 s after the tackle",
+     "next": 0.14,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 1.308,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.446,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.6371198145827739,
+  "tmin": 1.9666666666666597,
+  "body": {
+   "ev": {
+    "in": {
+     "PLANT SLIDE": 1,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 11,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 9.1639,
+    "plantDrift": 0.0517,
+    "kneeRate": 2832.6096,
+    "pelvisDev": 0.0298,
+    "trunkRate": 1179.1664,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 3.6625,
+     "kind": "PLANT SLIDE",
+     "v": 0.0517,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 3.9333,
+     "kind": "KNEE POP",
+     "v": 10.3832,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 4.1042,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0298,
+     "inTackle": false
+    },
+    {
+     "t": 4.1083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2899,
+     "inTackle": false
+    },
+    {
+     "t": 4.1125,
+     "kind": "KNEE POP",
+     "v": 11.8025,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.1125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9074,
+     "inTackle": false
+    },
+    {
+     "t": 4.1167,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9132,
+     "inTackle": false
+    },
+    {
+     "t": 4.1208,
+     "kind": "TRUNK SPIKE",
+     "v": 4.3064,
+     "inTackle": false
+    },
+    {
+     "t": 4.125,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0802,
+     "inTackle": false
+    },
+    {
+     "t": 4.3333,
+     "kind": "KNEE POP",
+     "v": 6.0266,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.4542,
+     "kind": "KNEE POP",
+     "v": 6.9488,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.4583,
+     "kind": "KNEE POP",
+     "v": 10.5372,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.5042,
+     "kind": "PLANT SLIDE",
+     "v": 0.0337,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.7417,
+     "kind": "KNEE POP",
+     "v": 7.8189,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.8,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.1,
+     "kind": "KNEE POP",
+     "v": 6.6332,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.1583,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.4583,
+     "kind": "KNEE POP",
+     "v": 6.827,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.5167,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.8208,
+     "kind": "KNEE POP",
+     "v": 6.4276,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.875,
+     "kind": "PLANT SLIDE",
+     "v": 0.0321,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.1792,
+     "kind": "KNEE POP",
+     "v": 7.1296,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.2333,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.5375,
+     "kind": "KNEE POP",
+     "v": 7.8291,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.5917,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.8958,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.9542,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "L"
+    }
+   ]
+  }
+ },
+ {
+  "id": "carry-walk-def",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.45,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.658,
+     "why": {
+      "OUT OF REACH: 1.66 m at -37° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.65 m at -37° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.64 m at -38° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.63 m at -38° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.62 m at -38° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.61 m at -38° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.60 m at -39° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.59 m at -39° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.58 m at -39° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.57 m at -40° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.56 m at -40° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.55 m at -40° (envelope 1.29 m)": 1,
+      "NO SUPPORT: the L foot is in the air": 36
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.208,
+    "contactPlanned": 0.483,
+    "window": [
+     0.258,
+     1.04
+    ],
+    "recoveryStart": 0.603,
+    "controlReady": 1.24,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 1,
+    "angle": -50.8,
+    "range": 1.29,
+    "ballAtCommit": 1.71,
+    "recovery": 0.76,
+    "regain": {
+     "speedAtControl": 0.03,
+     "to2ms": 0.183
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 0.198,
+      "left": 0.227
+     },
+     "L": {
+      "planted": false,
+      "u": 0.46
+     }
+    },
+    "approach": 1.5,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.479,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       0.69,
+       0
+      ],
+      "vOut": [
+       -2.31,
+       1.99
+      ],
+      "dv": 3.6,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.14 s after the tackle",
+     "next": 0.14,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.929,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.067,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.4009636597846373,
+  "tmin": 1.4999999999999947,
+  "body": {
+   "ev": {
+    "in": {
+     "KNEE POP": 6,
+     "PELVIS SPIKE": 3,
+     "PLANT SLIDE": 1,
+     "PLAYER OVERLAP": 92
+    },
+    "out": {
+     "KNEE POP": 15,
+     "PELVIS SPIKE": 3,
+     "TRUNK SPIKE": 9,
+     "PLANT SLIDE": 9
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 8.2509,
+    "plantDrift": 0.1767,
+    "kneeRate": 3721.8465,
+    "pelvisDev": 0.035,
+    "trunkRate": 1176.4901,
+    "overlap": 0.1497,
+    "overlapIn": 0.1497
+   },
+   "list": [
+    {
+     "t": 1.7,
+     "kind": "KNEE POP",
+     "v": 12.8059,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.7,
+     "kind": "KNEE POP",
+     "v": 8.5354,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.7,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0227,
+     "inTackle": false
+    },
+    {
+     "t": 1.7042,
+     "kind": "TRUNK SPIKE",
+     "v": 4.283,
+     "inTackle": false
+    },
+    {
+     "t": 1.7083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9003,
+     "inTackle": false
+    },
+    {
+     "t": 1.7125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.902,
+     "inTackle": false
+    },
+    {
+     "t": 1.7167,
+     "kind": "TRUNK SPIKE",
+     "v": 4.286,
+     "inTackle": false
+    },
+    {
+     "t": 1.7208,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0531,
+     "inTackle": false
+    },
+    {
+     "t": 1.7333,
+     "kind": "KNEE POP",
+     "v": 15.5077,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.7333,
+     "kind": "KNEE POP",
+     "v": 15.5047,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.7333,
+     "kind": "PELVIS SPIKE",
+     "v": 0.035,
+     "inTackle": false
+    },
+    {
+     "t": 2.325,
+     "kind": "PLANT SLIDE",
+     "v": 0.0311,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 3.0375,
+     "kind": "KNEE POP",
+     "v": 6.774,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.0417,
+     "kind": "KNEE POP",
+     "v": 10.9107,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.0458,
+     "kind": "KNEE POP",
+     "v": 11.0491,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.0542,
+     "kind": "PELVIS SPIKE",
+     "v": 0.02,
+     "inTackle": true
+    },
+    {
+     "t": 3.0583,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0209,
+     "inTackle": true
+    },
+    {
+     "t": 3.0625,
+     "kind": "KNEE POP",
+     "v": 9.6389,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.0625,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0217,
+     "inTackle": true
+    },
+    {
+     "t": 3.0667,
+     "kind": "KNEE POP",
+     "v": 14.9076,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.0792,
+     "kind": "PLANT SLIDE",
+     "v": 0.0348,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.3375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0632,
+     "inTackle": true
+    },
+    {
+     "t": 3.3417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.35,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.3958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.4,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.4042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.4083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.4125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "carry-jog-def",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.221,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.417,
+     "why": {
+      "NO SUPPORT: the L foot is in the air": 47
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.196,
+    "contactPlanned": 0.47,
+    "window": [
+     0.246,
+     1.067
+    ],
+    "recoveryStart": 0.589,
+    "controlReady": 1.266,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.99,
+    "angle": -53.2,
+    "range": 1.29,
+    "ballAtCommit": 2.17,
+    "recovery": 0.829,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.196
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 0.202,
+      "left": 0.042
+     },
+     "L": {
+      "planted": false,
+      "u": 0.67
+     }
+    },
+    "approach": 3.2,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.438,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       4.25,
+       0
+      ],
+      "vOut": [
+       3.62,
+       6.18
+      ],
+      "dv": 6.21,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "POKED LOOSE · CARRIER RE-COLLECTS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 1.47 s after the tackle",
+     "next": 1.47,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [
+    {
+     "t": 1.487,
+     "kind": "DEFENDER BALL-ON",
+     "why": "the tackle touched the ball; control returned; the ball is loose"
+    },
+    {
+     "t": 2.133,
+     "kind": "DEFENDER BALL-OFF",
+     "why": "the carrier has the ball under control again"
+    }
+   ],
+   "possA": [
+    {
+     "t": 0.658,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 2.129,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.7328965595745042,
+  "tmin": 0.7499999999999973,
+  "body": {
+   "ev": {
+    "in": {
+     "LEGS CROSSED": 5,
+     "KNEE POP": 3,
+     "PLANT SLIDE": 1,
+     "PLAYER OVERLAP": 15
+    },
+    "out": {
+     "KNEE POP": 52,
+     "PELVIS SPIKE": 4,
+     "TRUNK SPIKE": 14,
+     "PLANT SLIDE": 9,
+     "FOOT JUMP": 25
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 17.8606,
+    "plantDrift": 0.6701,
+    "kneeRate": 4357.6683,
+    "pelvisDev": 0.0405,
+    "trunkRate": 1176.4006,
+    "overlap": 0.1114,
+    "overlapIn": 0.1114
+   },
+   "list": [
+    {
+     "t": 1.8,
+     "kind": "KNEE POP",
+     "v": 12.7635,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.8,
+     "kind": "KNEE POP",
+     "v": 8.4923,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.8,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0226,
+     "inTackle": false
+    },
+    {
+     "t": 1.8042,
+     "kind": "TRUNK SPIKE",
+     "v": 4.283,
+     "inTackle": false
+    },
+    {
+     "t": 1.8042,
+     "kind": "PLANT SLIDE",
+     "v": 0.0325,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.8083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9007,
+     "inTackle": false
+    },
+    {
+     "t": 1.8125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9017,
+     "inTackle": false
+    },
+    {
+     "t": 1.8167,
+     "kind": "TRUNK SPIKE",
+     "v": 4.286,
+     "inTackle": false
+    },
+    {
+     "t": 1.8208,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0531,
+     "inTackle": false
+    },
+    {
+     "t": 1.8333,
+     "kind": "KNEE POP",
+     "v": 11.1173,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.8333,
+     "kind": "KNEE POP",
+     "v": 10.9616,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.8333,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0231,
+     "inTackle": false
+    },
+    {
+     "t": 2.1375,
+     "kind": "KNEE POP",
+     "v": 9.3202,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.4375,
+     "kind": "KNEE POP",
+     "v": 7.8242,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.4958,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.8042,
+     "kind": "KNEE POP",
+     "v": 6.8739,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.8458,
+     "kind": "LEGS CROSSED",
+     "v": 0.0434,
+     "inTackle": true
+    },
+    {
+     "t": 2.85,
+     "kind": "LEGS CROSSED",
+     "v": 0.0456,
+     "inTackle": true
+    },
+    {
+     "t": 2.8542,
+     "kind": "LEGS CROSSED",
+     "v": 0.0462,
+     "inTackle": true
+    },
+    {
+     "t": 2.8583,
+     "kind": "LEGS CROSSED",
+     "v": 0.0453,
+     "inTackle": true
+    },
+    {
+     "t": 2.8625,
+     "kind": "LEGS CROSSED",
+     "v": 0.0425,
+     "inTackle": true
+    },
+    {
+     "t": 2.875,
+     "kind": "KNEE POP",
+     "v": 6.6312,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 2.9125,
+     "kind": "PLANT SLIDE",
+     "v": 0.0378,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 2.9292,
+     "kind": "KNEE POP",
+     "v": 6.7008,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.1208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0443,
+     "inTackle": true
+    },
+    {
+     "t": 3.125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0769,
+     "inTackle": true
+    },
+    {
+     "t": 3.1292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1037,
+     "inTackle": true
+    },
+    {
+     "t": 3.1333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1114,
+     "inTackle": true
+    },
+    {
+     "t": 3.1375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0925,
+     "inTackle": true
+    },
+    {
+     "t": 3.1417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.094,
+     "inTackle": true
+    },
+    {
+     "t": 3.1458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.096,
+     "inTackle": true
+    },
+    {
+     "t": 3.15,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0962,
+     "inTackle": true
+    },
+    {
+     "t": 3.1542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0947,
+     "inTackle": true
+    },
+    {
+     "t": 3.1583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0919,
+     "inTackle": true
+    },
+    {
+     "t": 3.1625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0869,
+     "inTackle": true
+    },
+    {
+     "t": 3.1667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.099,
+     "inTackle": true
+    },
+    {
+     "t": 3.1708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0748,
+     "inTackle": true
+    },
+    {
+     "t": 3.175,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0601,
+     "inTackle": true
+    },
+    {
+     "t": 3.1792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0405,
+     "inTackle": true
+    },
+    {
+     "t": 3.6917,
+     "kind": "KNEE POP",
+     "v": 10.3737,
+     "inTackle": true,
+     "foot": "R"
+    }
+   ]
+  }
+ },
+ {
+  "id": "race",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.604,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.663,
+     "why": {
+      "OUTSIDE THE FORWARD SECTOR: -81° (±75°)": 1,
+      "OUTSIDE THE FORWARD SECTOR: -80° (±75°)": 3,
+      "OUTSIDE THE FORWARD SECTOR: -79° (±75°)": 1,
+      "OUTSIDE THE FORWARD SECTOR: -78° (±75°)": 4,
+      "OUTSIDE THE FORWARD SECTOR: -77° (±75°)": 1,
+      "OUTSIDE THE FORWARD SECTOR: -76° (±75°)": 4
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.058,
+    "contactPlanned": 0.216,
+    "window": [
+     0.108,
+     0.348
+    ],
+    "recoveryStart": 0.348,
+    "controlReady": 0.539,
+    "family": "STANDING_POKE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.1,
+    "angle": -74.8,
+    "range": 0.58,
+    "ballAtCommit": 1.21,
+    "recovery": 0.323,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.196
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.063,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.063,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.217,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.81,
+       -2.58
+      ],
+      "vOut": [
+       -6.48,
+       2.08
+      ],
+      "dv": 11.3,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "WON · CONTESTED",
+     "why": "the defender's own touch 1.96 s after the tackle; his possession CONTROLLED at +1.96 s; the carrier touched it again within 1 s",
+     "next": 1.96,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [
+    {
+     "t": 1.146,
+     "kind": "DEFENDER BALL-ON",
+     "why": "the tackle touched the ball; control returned; the ball is loose"
+    },
+    {
+     "t": 2.783,
+     "kind": "DEFENDER TOUCH",
+     "surface": "OUTSIDE",
+     "foot": "R"
+    },
+    {
+     "t": 3.017,
+     "kind": "DEFENDER TOUCH",
+     "surface": "SOLE",
+     "foot": "L"
+    },
+    {
+     "t": 3.375,
+     "kind": "DEFENDER TOUCH",
+     "surface": "LACES",
+     "foot": "R"
+    },
+    {
+     "t": 4.092,
+     "kind": "DEFENDER TOUCH",
+     "surface": "LACES",
+     "foot": "R"
+    }
+   ],
+   "possA": [
+    {
+     "t": 0.821,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 2.879,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    },
+    {
+     "t": 3.017,
+     "to": "FREE",
+     "why": "OPPONENT_INTERCEPTION"
+    }
+   ],
+   "possD": [
+    {
+     "t": 2.783,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ]
+  },
+  "dmin": 0.04346133149986708,
+  "tmin": 1.2666666666666622,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 51
+    },
+    "out": {
+     "PLAYER OVERLAP": 318,
+     "PELVIS SPIKE": 2,
+     "TRUNK SPIKE": 9,
+     "KNEE POP": 63,
+     "PLANT SLIDE": 7,
+     "FOOT JUMP": 46,
+     "LEGS CROSSED": 28
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 21.2721,
+    "plantDrift": 0.0847,
+    "kneeRate": 3943.9826,
+    "pelvisDev": 0.0348,
+    "trunkRate": 1027.6323,
+    "overlap": 0.2836,
+    "overlapIn": 0.2265
+   },
+   "list": [
+    {
+     "t": 3.3333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0314,
+     "inTackle": true
+    },
+    {
+     "t": 3.3375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.043,
+     "inTackle": true
+    },
+    {
+     "t": 3.3417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0551,
+     "inTackle": true
+    },
+    {
+     "t": 3.3458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.065,
+     "inTackle": true
+    },
+    {
+     "t": 3.35,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0741,
+     "inTackle": true
+    },
+    {
+     "t": 3.3542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0804,
+     "inTackle": true
+    },
+    {
+     "t": 3.3583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0885,
+     "inTackle": true
+    },
+    {
+     "t": 3.3625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0965,
+     "inTackle": true
+    },
+    {
+     "t": 3.3667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1055,
+     "inTackle": true
+    },
+    {
+     "t": 3.3708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1143,
+     "inTackle": true
+    },
+    {
+     "t": 3.375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.123,
+     "inTackle": true
+    },
+    {
+     "t": 3.3792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1316,
+     "inTackle": true
+    },
+    {
+     "t": 3.3833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1402,
+     "inTackle": true
+    },
+    {
+     "t": 3.3875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1485,
+     "inTackle": true
+    },
+    {
+     "t": 3.3917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1432,
+     "inTackle": true
+    },
+    {
+     "t": 3.3958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1351,
+     "inTackle": true
+    },
+    {
+     "t": 3.4,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1364,
+     "inTackle": true
+    },
+    {
+     "t": 3.4042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1405,
+     "inTackle": true
+    },
+    {
+     "t": 3.4083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1431,
+     "inTackle": true
+    },
+    {
+     "t": 3.4125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1442,
+     "inTackle": true
+    },
+    {
+     "t": 3.4167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.144,
+     "inTackle": true
+    },
+    {
+     "t": 3.4208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1426,
+     "inTackle": true
+    },
+    {
+     "t": 3.425,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1404,
+     "inTackle": true
+    },
+    {
+     "t": 3.4292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1398,
+     "inTackle": true
+    },
+    {
+     "t": 3.4333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1452,
+     "inTackle": true
+    },
+    {
+     "t": 3.4375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1495,
+     "inTackle": true
+    },
+    {
+     "t": 3.4417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1533,
+     "inTackle": true
+    },
+    {
+     "t": 3.4458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1567,
+     "inTackle": true
+    },
+    {
+     "t": 3.45,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1601,
+     "inTackle": true
+    },
+    {
+     "t": 3.4542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1633,
+     "inTackle": true
+    },
+    {
+     "t": 3.4583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1663,
+     "inTackle": true
+    },
+    {
+     "t": 3.4625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1692,
+     "inTackle": true
+    },
+    {
+     "t": 3.4667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1719,
+     "inTackle": true
+    },
+    {
+     "t": 3.4708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1746,
+     "inTackle": true
+    },
+    {
+     "t": 3.475,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1772,
+     "inTackle": true
+    },
+    {
+     "t": 3.4792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1798,
+     "inTackle": true
+    },
+    {
+     "t": 3.4833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1822,
+     "inTackle": true
+    },
+    {
+     "t": 3.4875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1846,
+     "inTackle": true
+    },
+    {
+     "t": 3.4917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1869,
+     "inTackle": true
+    },
+    {
+     "t": 3.4958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1891,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "steer",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.621,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.733,
+     "why": {
+      "OUT OF REACH: 1.99 m at 28° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.98 m at 28° (envelope 1.28 m)": 3,
+      "OUT OF REACH: 1.97 m at 28° (envelope 1.28 m)": 4,
+      "OUT OF REACH: 1.96 m at 28° (envelope 1.28 m)": 4,
+      "OUT OF REACH: 1.95 m at 28° (envelope 1.28 m)": 5,
+      "OUT OF REACH: 1.94 m at 28° (envelope 1.28 m)": 5,
+      "OUT OF REACH: 1.93 m at 28° (envelope 1.28 m)": 3,
+      "OUT OF REACH: 1.93 m at 29° (envelope 1.28 m)": 2
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.112,
+    "contactPlanned": 0.368,
+    "window": [
+     0.162,
+     0.839
+    ],
+    "recoveryStart": 0.479,
+    "controlReady": 1.023,
+    "family": "STANDING_LUNGE",
+    "foot": "R",
+    "support": "L",
+    "c": 0.85,
+    "angle": 19.9,
+    "range": 1.17,
+    "ballAtCommit": 2.12,
+    "recovery": 0.656,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.133,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.133,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.367,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       2.8,
+       1.76
+      ],
+      "vOut": [
+       -4.47,
+       -0.07
+      ],
+      "dv": 7.5,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.10 s after the tackle",
+     "next": 0.1,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.988,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.092,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.3638490866256846,
+  "tmin": 1.2499999999999956,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 10,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 8.1866,
+    "plantDrift": 0.041,
+    "kneeRate": 2816.3266,
+    "pelvisDev": 0.0301,
+    "trunkRate": 1178.2601,
+    "overlap": 0.0986,
+    "overlapIn": 0.0986
+   },
+   "list": [
+    {
+     "t": 3.6125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.058,
+     "inTackle": true
+    },
+    {
+     "t": 3.6167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0887,
+     "inTackle": true
+    },
+    {
+     "t": 3.6208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0986,
+     "inTackle": true
+    },
+    {
+     "t": 3.625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0625,
+     "inTackle": true
+    },
+    {
+     "t": 3.65,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0329,
+     "inTackle": true
+    },
+    {
+     "t": 3.6542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0487,
+     "inTackle": true
+    },
+    {
+     "t": 3.6583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0584,
+     "inTackle": true
+    },
+    {
+     "t": 3.6625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0592,
+     "inTackle": true
+    },
+    {
+     "t": 3.6667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0508,
+     "inTackle": true
+    },
+    {
+     "t": 3.6708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0356,
+     "inTackle": true
+    },
+    {
+     "t": 3.8625,
+     "kind": "KNEE POP",
+     "v": 8.8816,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 4.05,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0301,
+     "inTackle": false
+    },
+    {
+     "t": 4.0542,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2884,
+     "inTackle": false
+    },
+    {
+     "t": 4.0583,
+     "kind": "KNEE POP",
+     "v": 11.7347,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.0583,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9068,
+     "inTackle": false
+    },
+    {
+     "t": 4.0625,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9094,
+     "inTackle": false
+    },
+    {
+     "t": 4.0667,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2945,
+     "inTackle": false
+    },
+    {
+     "t": 4.0708,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0678,
+     "inTackle": false
+    },
+    {
+     "t": 4.4,
+     "kind": "KNEE POP",
+     "v": 7.2991,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.4042,
+     "kind": "KNEE POP",
+     "v": 10.3238,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.45,
+     "kind": "PLANT SLIDE",
+     "v": 0.0304,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.6875,
+     "kind": "KNEE POP",
+     "v": 7.8242,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.7458,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.0458,
+     "kind": "KNEE POP",
+     "v": 6.6332,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.1042,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.4042,
+     "kind": "KNEE POP",
+     "v": 6.8272,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.4625,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.7667,
+     "kind": "KNEE POP",
+     "v": 6.4279,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.8208,
+     "kind": "PLANT SLIDE",
+     "v": 0.0322,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.125,
+     "kind": "KNEE POP",
+     "v": 7.1303,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.1792,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.4833,
+     "kind": "KNEE POP",
+     "v": 7.8287,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.5375,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.8417,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.9,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "R"
+    }
+   ]
+  }
+ },
+ {
+  "id": "cut",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.55,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.671,
+     "why": {
+      "OUT OF REACH: 1.96 m at 22° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.95 m at 22° (envelope 1.28 m)": 3,
+      "OUT OF REACH: 1.94 m at 22° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 1.44 m at -4° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.43 m at -4° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.43 m at -5° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.42 m at -5° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.41 m at -6° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.40 m at -6° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.39 m at -7° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 1.38 m at -7° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.37 m at -8° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.36 m at -8° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.35 m at -9° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 1.34 m at -10° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.33 m at -10° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.33 m at -11° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.32 m at -11° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.31 m at -12° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 1.30 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.29 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.29 m at -14° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 1.28 m at -14° (envelope 1.28 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.121,
+    "contactPlanned": 0.395,
+    "window": [
+     0.171,
+     0.913
+    ],
+    "recoveryStart": 0.515,
+    "controlReady": 1.112,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.99,
+    "angle": -14.8,
+    "range": 1.28,
+    "ballAtCommit": 1.93,
+    "recovery": 0.717,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.187
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.071,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.071,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 0,
+    "hits": [],
+    "outcome": {
+     "kind": "MISS",
+     "why": "the carrier touched the ball 2× after commitment (carry correction +0.25 s, carry +0.60 s) · closest boot–ball gap 5 cm at +0.28 s · the ball 7 cm from where it was predicted at the contact time"
+    }
+   },
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 1.053977649394959,
+  "tmin": 1.2166666666666623,
+  "body": {
+   "ev": {
+    "in": {
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 9.0725,
+    "plantDrift": 0.041,
+    "kneeRate": 2808.1501,
+    "pelvisDev": 0.0293,
+    "trunkRate": 1177.7076,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 3.8667,
+     "kind": "KNEE POP",
+     "v": 9.6265,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 4.0667,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0293,
+     "inTackle": false
+    },
+    {
+     "t": 4.0708,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2861,
+     "inTackle": false
+    },
+    {
+     "t": 4.075,
+     "kind": "KNEE POP",
+     "v": 11.7006,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.075,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9044,
+     "inTackle": false
+    },
+    {
+     "t": 4.0792,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9071,
+     "inTackle": false
+    },
+    {
+     "t": 4.0833,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2942,
+     "inTackle": false
+    },
+    {
+     "t": 4.0875,
+     "kind": "TRUNK SPIKE",
+     "v": 3.071,
+     "inTackle": false
+    },
+    {
+     "t": 4.4167,
+     "kind": "KNEE POP",
+     "v": 7.2922,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.4208,
+     "kind": "KNEE POP",
+     "v": 10.3538,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.4667,
+     "kind": "PLANT SLIDE",
+     "v": 0.0305,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.7042,
+     "kind": "KNEE POP",
+     "v": 7.8246,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.7625,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.0625,
+     "kind": "KNEE POP",
+     "v": 6.6332,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.1208,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.4208,
+     "kind": "KNEE POP",
+     "v": 6.8272,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.4792,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.7833,
+     "kind": "KNEE POP",
+     "v": 6.4279,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.8375,
+     "kind": "PLANT SLIDE",
+     "v": 0.0321,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.1417,
+     "kind": "KNEE POP",
+     "v": 7.1303,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.1958,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.5,
+     "kind": "KNEE POP",
+     "v": 7.8287,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.5542,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.8583,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.9167,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "L"
+    }
+   ]
+  }
+ },
+ {
+  "id": "bf-fake",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.2,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.383,
+     "why": {
+      "OUT OF REACH: 1.49 m at -49° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.48 m at -50° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.47 m at -50° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.46 m at -51° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.45 m at -51° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.44 m at -52° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.43 m at -52° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.42 m at -53° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.41 m at -53° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.40 m at -54° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.39 m at -54° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.38 m at -55° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.37 m at -56° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.36 m at -56° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.35 m at -57° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.34 m at -57° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.34 m at -58° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.33 m at -58° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.32 m at -59° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.31 m at -59° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.31 m at -60° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.30 m at -60° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.30 m at -60° (envelope 1.30 m)": 1,
+      "OUT OF REACH: 1.30 m at -61° (envelope 1.30 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.183,
+    "contactPlanned": 0.458,
+    "window": [
+     0.233,
+     0.977
+    ],
+    "recoveryStart": 0.578,
+    "controlReady": 1.177,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 1,
+    "angle": -60.9,
+    "range": 1.29,
+    "ballAtCommit": 1.64,
+    "recovery": 0.719,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 3.783,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 3.783,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 0,
+    "hits": [],
+    "outcome": {
+     "kind": "MISS",
+     "why": "the carrier touched the ball 2× after commitment (set touch +0.06 s, BODY FEINT · the free foot from behind, its outside takes it out the other way +0.64 s) · closest boot–ball gap 2 cm at +0.27 s · the ball 17 cm from where it was predicted at the contact time"
+    }
+   },
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.4223534901387823,
+  "tmin": 0.9666666666666632,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 73,
+     "PLANT SLIDE": 1,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 11,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.8192,
+    "plantDrift": 0.041,
+    "kneeRate": 2851.9311,
+    "pelvisDev": 0.0303,
+    "trunkRate": 1179.188,
+    "overlap": 0.2985,
+    "overlapIn": 0.2985
+   },
+   "list": [
+    {
+     "t": 3.1292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0368,
+     "inTackle": true
+    },
+    {
+     "t": 3.1333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0522,
+     "inTackle": true
+    },
+    {
+     "t": 3.1375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0671,
+     "inTackle": true
+    },
+    {
+     "t": 3.1417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0822,
+     "inTackle": true
+    },
+    {
+     "t": 3.1458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0975,
+     "inTackle": true
+    },
+    {
+     "t": 3.15,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.113,
+     "inTackle": true
+    },
+    {
+     "t": 3.1542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1285,
+     "inTackle": true
+    },
+    {
+     "t": 3.1583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1442,
+     "inTackle": true
+    },
+    {
+     "t": 3.1625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1598,
+     "inTackle": true
+    },
+    {
+     "t": 3.1667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1754,
+     "inTackle": true
+    },
+    {
+     "t": 3.1708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1912,
+     "inTackle": true
+    },
+    {
+     "t": 3.175,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2067,
+     "inTackle": true
+    },
+    {
+     "t": 3.1792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2223,
+     "inTackle": true
+    },
+    {
+     "t": 3.1833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.238,
+     "inTackle": true
+    },
+    {
+     "t": 3.1875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2514,
+     "inTackle": true
+    },
+    {
+     "t": 3.1917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2606,
+     "inTackle": true
+    },
+    {
+     "t": 3.1958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2631,
+     "inTackle": true
+    },
+    {
+     "t": 3.2,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2628,
+     "inTackle": true
+    },
+    {
+     "t": 3.2042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2642,
+     "inTackle": true
+    },
+    {
+     "t": 3.2083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2657,
+     "inTackle": true
+    },
+    {
+     "t": 3.2125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2672,
+     "inTackle": true
+    },
+    {
+     "t": 3.2167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2695,
+     "inTackle": true
+    },
+    {
+     "t": 3.2208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2745,
+     "inTackle": true
+    },
+    {
+     "t": 3.225,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2797,
+     "inTackle": true
+    },
+    {
+     "t": 3.2292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.285,
+     "inTackle": true
+    },
+    {
+     "t": 3.2333,
+     "kind": "PLANT SLIDE",
+     "v": 0.0319,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 3.2333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2903,
+     "inTackle": true
+    },
+    {
+     "t": 3.2375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2959,
+     "inTackle": true
+    },
+    {
+     "t": 3.2417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2985,
+     "inTackle": true
+    },
+    {
+     "t": 3.2458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2926,
+     "inTackle": true
+    },
+    {
+     "t": 3.25,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2866,
+     "inTackle": true
+    },
+    {
+     "t": 3.2542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2804,
+     "inTackle": true
+    },
+    {
+     "t": 3.2583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2741,
+     "inTackle": true
+    },
+    {
+     "t": 3.2625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2675,
+     "inTackle": true
+    },
+    {
+     "t": 3.2667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2609,
+     "inTackle": true
+    },
+    {
+     "t": 3.2708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2541,
+     "inTackle": true
+    },
+    {
+     "t": 3.275,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2471,
+     "inTackle": true
+    },
+    {
+     "t": 3.2792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2401,
+     "inTackle": true
+    },
+    {
+     "t": 3.2833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.233,
+     "inTackle": true
+    },
+    {
+     "t": 3.2875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2257,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "bf-exit",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.6,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.821,
+     "why": {
+      "OUT OF REACH: 1.50 m at 34° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.49 m at 34° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.48 m at 34° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.47 m at 34° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.46 m at 35° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.45 m at 35° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.44 m at 35° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.43 m at 35° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.42 m at 36° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.41 m at 36° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.40 m at 36° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.39 m at 36° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.39 m at 37° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.38 m at 37° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.37 m at 37° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.36 m at 37° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.35 m at 38° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.34 m at 38° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.33 m at 38° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.32 m at 38° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.32 m at 39° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.31 m at 39° (envelope 1.29 m)": 4,
+      "OUT OF REACH: 1.30 m at 39° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.29 m at 39° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.29 m at 40° (envelope 1.29 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.221,
+    "contactPlanned": 0.495,
+    "window": [
+     0.271,
+     1.014
+    ],
+    "recoveryStart": 0.615,
+    "controlReady": 1.214,
+    "family": "STANDING_LUNGE",
+    "foot": "R",
+    "support": "L",
+    "c": 1,
+    "angle": 39.7,
+    "range": 1.29,
+    "ballAtCommit": 1.57,
+    "recovery": 0.747,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.196
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.221,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.221,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.467,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       2.25,
+       2.25
+      ],
+      "vOut": [
+       -6.85,
+       0.87
+      ],
+      "dv": 9.2,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "POKED LOOSE · CARRIER RE-COLLECTS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 2.40 s after the tackle",
+     "next": 2.4,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [
+    {
+     "t": 1.817,
+     "kind": "DEFENDER BALL-ON",
+     "why": "the tackle touched the ball; control returned; the ball is loose"
+    },
+    {
+     "t": 3.471,
+     "kind": "DEFENDER BALL-OFF",
+     "why": "the carrier has the ball under control again"
+    }
+   ],
+   "possA": [
+    {
+     "t": 1.067,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 3.467,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.02527998894816843,
+  "tmin": 1.4499999999999948,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 73,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 9,
+     "KNEE POP": 39,
+     "FOOT JUMP": 16,
+     "PLANT SLIDE": 6
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 16.0129,
+    "plantDrift": 0.0536,
+    "kneeRate": 3363.7905,
+    "pelvisDev": 0.0304,
+    "trunkRate": 1028.7712,
+    "overlap": 0.2861,
+    "overlapIn": 0.2861
+   },
+   "list": [
+    {
+     "t": 3.6583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0352,
+     "inTackle": true
+    },
+    {
+     "t": 3.6625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0434,
+     "inTackle": true
+    },
+    {
+     "t": 3.6667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0494,
+     "inTackle": true
+    },
+    {
+     "t": 3.6708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.052,
+     "inTackle": true
+    },
+    {
+     "t": 3.675,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0541,
+     "inTackle": true
+    },
+    {
+     "t": 3.6792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0562,
+     "inTackle": true
+    },
+    {
+     "t": 3.6833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0582,
+     "inTackle": true
+    },
+    {
+     "t": 3.6875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0621,
+     "inTackle": true
+    },
+    {
+     "t": 3.6917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0755,
+     "inTackle": true
+    },
+    {
+     "t": 3.6958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0888,
+     "inTackle": true
+    },
+    {
+     "t": 3.7,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1022,
+     "inTackle": true
+    },
+    {
+     "t": 3.7042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1155,
+     "inTackle": true
+    },
+    {
+     "t": 3.7083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1287,
+     "inTackle": true
+    },
+    {
+     "t": 3.7125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1419,
+     "inTackle": true
+    },
+    {
+     "t": 3.7167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.155,
+     "inTackle": true
+    },
+    {
+     "t": 3.7208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.168,
+     "inTackle": true
+    },
+    {
+     "t": 3.725,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.181,
+     "inTackle": true
+    },
+    {
+     "t": 3.7292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1939,
+     "inTackle": true
+    },
+    {
+     "t": 3.7333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2066,
+     "inTackle": true
+    },
+    {
+     "t": 3.7375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2191,
+     "inTackle": true
+    },
+    {
+     "t": 3.7417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2312,
+     "inTackle": true
+    },
+    {
+     "t": 3.7458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2423,
+     "inTackle": true
+    },
+    {
+     "t": 3.75,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2524,
+     "inTackle": true
+    },
+    {
+     "t": 3.7542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2608,
+     "inTackle": true
+    },
+    {
+     "t": 3.7583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2661,
+     "inTackle": true
+    },
+    {
+     "t": 3.7625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2679,
+     "inTackle": true
+    },
+    {
+     "t": 3.7667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2695,
+     "inTackle": true
+    },
+    {
+     "t": 3.7708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2709,
+     "inTackle": true
+    },
+    {
+     "t": 3.775,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2722,
+     "inTackle": true
+    },
+    {
+     "t": 3.7792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2734,
+     "inTackle": true
+    },
+    {
+     "t": 3.7833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2745,
+     "inTackle": true
+    },
+    {
+     "t": 3.7875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2755,
+     "inTackle": true
+    },
+    {
+     "t": 3.7917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2764,
+     "inTackle": true
+    },
+    {
+     "t": 3.7958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2765,
+     "inTackle": true
+    },
+    {
+     "t": 3.8,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2765,
+     "inTackle": true
+    },
+    {
+     "t": 3.8042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2772,
+     "inTackle": true
+    },
+    {
+     "t": 3.8083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2788,
+     "inTackle": true
+    },
+    {
+     "t": 3.8125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2806,
+     "inTackle": true
+    },
+    {
+     "t": 3.8167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2825,
+     "inTackle": true
+    },
+    {
+     "t": 3.8208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2846,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "bf-early",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.1,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.1,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.224,
+    "window": [
+     0.05,
+     0.613
+    ],
+    "recoveryStart": 0.319,
+    "controlReady": 0.772,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.61,
+    "angle": -40,
+    "range": 0.98,
+    "ballAtCommit": 1.59,
+    "recovery": 0.551,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 3.5,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 3.5,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.221,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       2.79,
+       0
+      ],
+      "vOut": [
+       -2.89,
+       3.96
+      ],
+      "dv": 6.93,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.13 s after the tackle",
+     "next": 0.13,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.321,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 0.446,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.23924771695559077,
+  "tmin": 0.6666666666666643,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 45,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 9.262,
+    "plantDrift": 0.041,
+    "kneeRate": 2591.4568,
+    "pelvisDev": 0.0305,
+    "trunkRate": 1182.2387,
+    "overlap": 0.2055,
+    "overlapIn": 0.2055
+   },
+   "list": [
+    {
+     "t": 2.9417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0417,
+     "inTackle": true
+    },
+    {
+     "t": 2.9458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0547,
+     "inTackle": true
+    },
+    {
+     "t": 2.95,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0674,
+     "inTackle": true
+    },
+    {
+     "t": 2.9542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.08,
+     "inTackle": true
+    },
+    {
+     "t": 2.9583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0924,
+     "inTackle": true
+    },
+    {
+     "t": 2.9625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1045,
+     "inTackle": true
+    },
+    {
+     "t": 2.9667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1163,
+     "inTackle": true
+    },
+    {
+     "t": 2.9708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1277,
+     "inTackle": true
+    },
+    {
+     "t": 2.975,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1385,
+     "inTackle": true
+    },
+    {
+     "t": 2.9792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1488,
+     "inTackle": true
+    },
+    {
+     "t": 2.9833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1583,
+     "inTackle": true
+    },
+    {
+     "t": 2.9875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.167,
+     "inTackle": true
+    },
+    {
+     "t": 2.9917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1746,
+     "inTackle": true
+    },
+    {
+     "t": 2.9958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.181,
+     "inTackle": true
+    },
+    {
+     "t": 3,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1858,
+     "inTackle": true
+    },
+    {
+     "t": 3.0042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1893,
+     "inTackle": true
+    },
+    {
+     "t": 3.0083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1909,
+     "inTackle": true
+    },
+    {
+     "t": 3.0125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1902,
+     "inTackle": true
+    },
+    {
+     "t": 3.0167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1874,
+     "inTackle": true
+    },
+    {
+     "t": 3.0208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1825,
+     "inTackle": true
+    },
+    {
+     "t": 3.025,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1773,
+     "inTackle": true
+    },
+    {
+     "t": 3.0292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1722,
+     "inTackle": true
+    },
+    {
+     "t": 3.0333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1782,
+     "inTackle": true
+    },
+    {
+     "t": 3.0375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1896,
+     "inTackle": true
+    },
+    {
+     "t": 3.0417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1951,
+     "inTackle": true
+    },
+    {
+     "t": 3.0458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2035,
+     "inTackle": true
+    },
+    {
+     "t": 3.05,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2055,
+     "inTackle": true
+    },
+    {
+     "t": 3.0542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1986,
+     "inTackle": true
+    },
+    {
+     "t": 3.0583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1892,
+     "inTackle": true
+    },
+    {
+     "t": 3.0625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.179,
+     "inTackle": true
+    },
+    {
+     "t": 3.0667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.169,
+     "inTackle": true
+    },
+    {
+     "t": 3.0708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1592,
+     "inTackle": true
+    },
+    {
+     "t": 3.075,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1497,
+     "inTackle": true
+    },
+    {
+     "t": 3.0792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1404,
+     "inTackle": true
+    },
+    {
+     "t": 3.0833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1309,
+     "inTackle": true
+    },
+    {
+     "t": 3.0875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1214,
+     "inTackle": true
+    },
+    {
+     "t": 3.0917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1118,
+     "inTackle": true
+    },
+    {
+     "t": 3.0958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1023,
+     "inTackle": true
+    },
+    {
+     "t": 3.1,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0928,
+     "inTackle": true
+    },
+    {
+     "t": 3.1042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0834,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "croq",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.3,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.383,
+     "why": {
+      "OUT OF REACH: 1.37 m at -56° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.36 m at -56° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.35 m at -57° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.34 m at -57° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.34 m at -58° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.33 m at -58° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.32 m at -59° (envelope 1.29 m)": 3,
+      "OUT OF REACH: 1.31 m at -59° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.31 m at -60° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.30 m at -60° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.30 m at -60° (envelope 1.30 m)": 1,
+      "OUT OF REACH: 1.30 m at -61° (envelope 1.30 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.083,
+    "contactPlanned": 0.358,
+    "window": [
+     0.133,
+     0.877
+    ],
+    "recoveryStart": 0.478,
+    "controlReady": 1.077,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 1,
+    "angle": -60.9,
+    "range": 1.29,
+    "ballAtCommit": 1.64,
+    "recovery": 0.719,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 3.783,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 3.783,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 0,
+    "hits": [],
+    "outcome": {
+     "kind": "MISS",
+     "why": "the carrier touched the ball 3× after commitment (LA CROQUETA · the ball-side inside establishes the ball and sweeps it across and back, the foot with it +0.18 s, LA CROQUETA · the cushion: the already-open left inside takes the pace off the ball in the far left +0.37 s, exit touch +0.65 s) · closest boot–ball gap 15 cm at +0.24 s · the ball 51 cm from where it was predicted at the contact time"
+    }
+   },
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.5107773481523167,
+  "tmin": 0.93333333333333,
+  "body": {
+   "ev": {
+    "in": {
+     "PLANT SLIDE": 1,
+     "PLAYER OVERLAP": 31,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 11,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.8192,
+    "plantDrift": 0.041,
+    "kneeRate": 2851.9311,
+    "pelvisDev": 0.0303,
+    "trunkRate": 1179.188,
+    "overlap": 0.1352,
+    "overlapIn": 0.1352
+   },
+   "list": [
+    {
+     "t": 3.2333,
+     "kind": "PLANT SLIDE",
+     "v": 0.0319,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 3.275,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0431,
+     "inTackle": true
+    },
+    {
+     "t": 3.2792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0671,
+     "inTackle": true
+    },
+    {
+     "t": 3.2833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0901,
+     "inTackle": true
+    },
+    {
+     "t": 3.2875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1136,
+     "inTackle": true
+    },
+    {
+     "t": 3.2917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1352,
+     "inTackle": true
+    },
+    {
+     "t": 3.2958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1229,
+     "inTackle": true
+    },
+    {
+     "t": 3.3,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1021,
+     "inTackle": true
+    },
+    {
+     "t": 3.3042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0983,
+     "inTackle": true
+    },
+    {
+     "t": 3.3083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0932,
+     "inTackle": true
+    },
+    {
+     "t": 3.3125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0801,
+     "inTackle": true
+    },
+    {
+     "t": 3.3167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0657,
+     "inTackle": true
+    },
+    {
+     "t": 3.3208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0507,
+     "inTackle": true
+    },
+    {
+     "t": 3.325,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0458,
+     "inTackle": true
+    },
+    {
+     "t": 3.3292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0413,
+     "inTackle": true
+    },
+    {
+     "t": 3.3333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0368,
+     "inTackle": true
+    },
+    {
+     "t": 3.3375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0327,
+     "inTackle": true
+    },
+    {
+     "t": 3.3417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0373,
+     "inTackle": true
+    },
+    {
+     "t": 3.3458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0453,
+     "inTackle": true
+    },
+    {
+     "t": 3.35,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0511,
+     "inTackle": true
+    },
+    {
+     "t": 3.3542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0533,
+     "inTackle": true
+    },
+    {
+     "t": 3.3583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0577,
+     "inTackle": true
+    },
+    {
+     "t": 3.3625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.063,
+     "inTackle": true
+    },
+    {
+     "t": 3.3667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0666,
+     "inTackle": true
+    },
+    {
+     "t": 3.3708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0685,
+     "inTackle": true
+    },
+    {
+     "t": 3.375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0679,
+     "inTackle": true
+    },
+    {
+     "t": 3.3792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0648,
+     "inTackle": true
+    },
+    {
+     "t": 3.3833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0599,
+     "inTackle": true
+    },
+    {
+     "t": 3.3875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0538,
+     "inTackle": true
+    },
+    {
+     "t": 3.3917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.047,
+     "inTackle": true
+    },
+    {
+     "t": 3.3958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0398,
+     "inTackle": true
+    },
+    {
+     "t": 3.4,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0324,
+     "inTackle": true
+    },
+    {
+     "t": 3.5792,
+     "kind": "KNEE POP",
+     "v": 7.8399,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.7833,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0303,
+     "inTackle": false
+    },
+    {
+     "t": 3.7875,
+     "kind": "TRUNK SPIKE",
+     "v": 4.2898,
+     "inTackle": false
+    },
+    {
+     "t": 3.7917,
+     "kind": "KNEE POP",
+     "v": 11.8665,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 3.7917,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9071,
+     "inTackle": false
+    },
+    {
+     "t": 3.7958,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9133,
+     "inTackle": false
+    },
+    {
+     "t": 3.8,
+     "kind": "TRUNK SPIKE",
+     "v": 4.3055,
+     "inTackle": false
+    },
+    {
+     "t": 3.8042,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0773,
+     "inTackle": false
+    }
+   ]
+  }
+ },
+ {
+  "id": "croq-win",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.4,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.4,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.17,
+    "window": [
+     0.05,
+     0.42
+    ],
+    "recoveryStart": 0.238,
+    "controlReady": 0.536,
+    "family": "POKE → LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.19,
+    "angle": -74.2,
+    "range": 0.65,
+    "ballAtCommit": 0.83,
+    "recovery": 0.365,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.196
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 3.8,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 3.8,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.171,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       -0.85,
+       -5.06
+      ],
+      "vOut": [
+       -4.92,
+       4.92
+      ],
+      "dv": 10.78,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "CONTROLLED WIN",
+     "why": "the defender's own touch 1.88 s after the tackle; his possession CONTROLLED at +1.87 s",
+     "next": 1.88,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [
+    {
+     "t": 0.938,
+     "kind": "DEFENDER BALL-ON",
+     "why": "the tackle touched the ball; control returned; the ball is loose"
+    },
+    {
+     "t": 2.446,
+     "kind": "DEFENDER TOUCH",
+     "surface": "OUTSIDE",
+     "foot": "R"
+    },
+    {
+     "t": 3.158,
+     "kind": "DEFENDER TOUCH",
+     "surface": "LACES",
+     "foot": "R"
+    },
+    {
+     "t": 3.879,
+     "kind": "DEFENDER TOUCH",
+     "surface": "LACES",
+     "foot": "R"
+    }
+   ],
+   "possA": [
+    {
+     "t": 0.571,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    }
+   ],
+   "possD": [
+    {
+     "t": 2.446,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ]
+  },
+  "dmin": 0.33259332830845195,
+  "tmin": 0.7666666666666639,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 50,
+     "PLANT SLIDE": 1,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 7,
+     "KNEE POP": 67,
+     "FOOT JUMP": 51,
+     "PLANT SLIDE": 6,
+     "PLAYER OVERLAP": 28
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 18.6715,
+    "plantDrift": 0.1097,
+    "kneeRate": 3771.3378,
+    "pelvisDev": 0.0301,
+    "trunkRate": 1028.0436,
+    "overlap": 0.1497,
+    "overlapIn": 0.1497
+   },
+   "list": [
+    {
+     "t": 3.0208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0374,
+     "inTackle": true
+    },
+    {
+     "t": 3.025,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0499,
+     "inTackle": true
+    },
+    {
+     "t": 3.0292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.061,
+     "inTackle": true
+    },
+    {
+     "t": 3.0333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0789,
+     "inTackle": true
+    },
+    {
+     "t": 3.0375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0824,
+     "inTackle": true
+    },
+    {
+     "t": 3.0417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1027,
+     "inTackle": true
+    },
+    {
+     "t": 3.0458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0869,
+     "inTackle": true
+    },
+    {
+     "t": 3.05,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0868,
+     "inTackle": true
+    },
+    {
+     "t": 3.0542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0832,
+     "inTackle": true
+    },
+    {
+     "t": 3.0583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0761,
+     "inTackle": true
+    },
+    {
+     "t": 3.0625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0672,
+     "inTackle": true
+    },
+    {
+     "t": 3.0667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0556,
+     "inTackle": true
+    },
+    {
+     "t": 3.0708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0426,
+     "inTackle": true
+    },
+    {
+     "t": 3.0917,
+     "kind": "PLANT SLIDE",
+     "v": 0.1085,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 3.1458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0363,
+     "inTackle": true
+    },
+    {
+     "t": 3.15,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0435,
+     "inTackle": true
+    },
+    {
+     "t": 3.1542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0511,
+     "inTackle": true
+    },
+    {
+     "t": 3.1583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0588,
+     "inTackle": true
+    },
+    {
+     "t": 3.1625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0665,
+     "inTackle": true
+    },
+    {
+     "t": 3.1667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0743,
+     "inTackle": true
+    },
+    {
+     "t": 3.1708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0821,
+     "inTackle": true
+    },
+    {
+     "t": 3.175,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0899,
+     "inTackle": true
+    },
+    {
+     "t": 3.1792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0975,
+     "inTackle": true
+    },
+    {
+     "t": 3.1833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1051,
+     "inTackle": true
+    },
+    {
+     "t": 3.1875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1127,
+     "inTackle": true
+    },
+    {
+     "t": 3.1917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1202,
+     "inTackle": true
+    },
+    {
+     "t": 3.1958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1276,
+     "inTackle": true
+    },
+    {
+     "t": 3.2,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1349,
+     "inTackle": true
+    },
+    {
+     "t": 3.2042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.142,
+     "inTackle": true
+    },
+    {
+     "t": 3.2083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.14,
+     "inTackle": true
+    },
+    {
+     "t": 3.2125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1454,
+     "inTackle": true
+    },
+    {
+     "t": 3.2167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1497,
+     "inTackle": true
+    },
+    {
+     "t": 3.2208,
+     "kind": "KNEE POP",
+     "v": 6.2656,
+     "inTackle": true,
+     "foot": "R"
+    },
+    {
+     "t": 3.2208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1441,
+     "inTackle": true
+    },
+    {
+     "t": 3.225,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1393,
+     "inTackle": true
+    },
+    {
+     "t": 3.2292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.134,
+     "inTackle": true
+    },
+    {
+     "t": 3.2333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1263,
+     "inTackle": true
+    },
+    {
+     "t": 3.2375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1175,
+     "inTackle": true
+    },
+    {
+     "t": 3.2417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1092,
+     "inTackle": true
+    },
+    {
+     "t": 3.2458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1012,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "croq-early",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.2,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.2,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.259,
+    "window": [
+     0.05,
+     0.738
+    ],
+    "recoveryStart": 0.371,
+    "controlReady": 0.926,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.88,
+    "angle": -70.3,
+    "range": 1.2,
+    "ballAtCommit": 1.59,
+    "recovery": 0.667,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.188
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 3.6,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 3.6,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 2,
+    "hits": [
+     {
+      "t": 0.258,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       2.27,
+       0
+      ],
+      "vOut": [
+       1.01,
+       3.39
+      ],
+      "dv": 3.62,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     },
+     {
+      "t": 0.417,
+      "episode": 2,
+      "surface": "TOE",
+      "vIn": [
+       -0.82,
+       -4.9
+      ],
+      "vOut": [
+       1.67,
+       2.27
+      ],
+      "dv": 7.59,
+      "possBefore": "FREE",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.11 s after the tackle",
+     "next": 0.11,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [
+    {
+     "t": 1.129,
+     "kind": "DEFENDER BALL-ON",
+     "why": "the tackle touched the ball; control returned; the ball is loose"
+    },
+    {
+     "t": 1.154,
+     "kind": "DEFENDER BALL-OFF",
+     "why": "the carrier has the ball under control again"
+    }
+   ],
+   "possA": [
+    {
+     "t": 0.458,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 0.567,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    },
+    {
+     "t": 0.617,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.15,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.03838470255286238,
+  "tmin": 0.7666666666666639,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 81,
+     "PLANT SLIDE": 1,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 11,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 8.371,
+    "plantDrift": 0.0662,
+    "kneeRate": 2903.3828,
+    "pelvisDev": 0.0303,
+    "trunkRate": 1004.4484,
+    "overlap": 0.2884,
+    "overlapIn": 0.2884
+   },
+   "list": [
+    {
+     "t": 2.9875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0529,
+     "inTackle": true
+    },
+    {
+     "t": 2.9917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0784,
+     "inTackle": true
+    },
+    {
+     "t": 2.9958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0996,
+     "inTackle": true
+    },
+    {
+     "t": 3,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1205,
+     "inTackle": true
+    },
+    {
+     "t": 3.0042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1413,
+     "inTackle": true
+    },
+    {
+     "t": 3.0083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1602,
+     "inTackle": true
+    },
+    {
+     "t": 3.0125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1778,
+     "inTackle": true
+    },
+    {
+     "t": 3.0167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.1947,
+     "inTackle": true
+    },
+    {
+     "t": 3.0208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2072,
+     "inTackle": true
+    },
+    {
+     "t": 3.025,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2196,
+     "inTackle": true
+    },
+    {
+     "t": 3.0292,
+     "kind": "PLANT SLIDE",
+     "v": 0.0662,
+     "inTackle": true,
+     "foot": "L"
+    },
+    {
+     "t": 3.0292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2315,
+     "inTackle": true
+    },
+    {
+     "t": 3.0333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2422,
+     "inTackle": true
+    },
+    {
+     "t": 3.0375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2504,
+     "inTackle": true
+    },
+    {
+     "t": 3.0417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2549,
+     "inTackle": true
+    },
+    {
+     "t": 3.0458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2542,
+     "inTackle": true
+    },
+    {
+     "t": 3.05,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.249,
+     "inTackle": true
+    },
+    {
+     "t": 3.0542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2412,
+     "inTackle": true
+    },
+    {
+     "t": 3.0583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2342,
+     "inTackle": true
+    },
+    {
+     "t": 3.0625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2283,
+     "inTackle": true
+    },
+    {
+     "t": 3.0667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2235,
+     "inTackle": true
+    },
+    {
+     "t": 3.0708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2201,
+     "inTackle": true
+    },
+    {
+     "t": 3.075,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2179,
+     "inTackle": true
+    },
+    {
+     "t": 3.0792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2166,
+     "inTackle": true
+    },
+    {
+     "t": 3.0833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2163,
+     "inTackle": true
+    },
+    {
+     "t": 3.0875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2168,
+     "inTackle": true
+    },
+    {
+     "t": 3.0917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.218,
+     "inTackle": true
+    },
+    {
+     "t": 3.0958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2198,
+     "inTackle": true
+    },
+    {
+     "t": 3.1,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2221,
+     "inTackle": true
+    },
+    {
+     "t": 3.1042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2249,
+     "inTackle": true
+    },
+    {
+     "t": 3.1083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.228,
+     "inTackle": true
+    },
+    {
+     "t": 3.1125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2315,
+     "inTackle": true
+    },
+    {
+     "t": 3.1167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.237,
+     "inTackle": true
+    },
+    {
+     "t": 3.1208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2426,
+     "inTackle": true
+    },
+    {
+     "t": 3.125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2482,
+     "inTackle": true
+    },
+    {
+     "t": 3.1292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.254,
+     "inTackle": true
+    },
+    {
+     "t": 3.1333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2597,
+     "inTackle": true
+    },
+    {
+     "t": 3.1375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2656,
+     "inTackle": true
+    },
+    {
+     "t": 3.1417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2714,
+     "inTackle": true
+    },
+    {
+     "t": 3.1458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.2773,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "mirror",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.621,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.638,
+     "why": {
+      "OUT OF REACH: 1.32 m at 48° (envelope 1.29 m)": 2,
+      "OUT OF REACH: 1.31 m at 49° (envelope 1.29 m)": 1,
+      "OUT OF REACH: 1.30 m at 49° (envelope 1.29 m)": 1
+     }
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0.017,
+    "contactPlanned": 0.291,
+    "window": [
+     0.067,
+     0.81
+    ],
+    "recoveryStart": 0.411,
+    "controlReady": 1.01,
+    "family": "STANDING_LUNGE",
+    "foot": "R",
+    "support": "L",
+    "c": 1,
+    "angle": 49.5,
+    "range": 1.29,
+    "ballAtCommit": 2.12,
+    "recovery": 0.718,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.192
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.037,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.037,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.292,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.27,
+       0
+      ],
+      "vOut": [
+       -0.7,
+       -3.99
+      ],
+      "dv": 5.64,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.25 s after the tackle",
+     "next": 0.25,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.913,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.167,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 0.9961904827047621,
+  "tmin": 1.0333333333333297,
+  "body": {
+   "ev": {
+    "in": {
+     "PLAYER OVERLAP": 63,
+     "KNEE POP": 1
+    },
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.523,
+    "plantDrift": 0.041,
+    "kneeRate": 2684.1944,
+    "pelvisDev": 0.0306,
+    "trunkRate": 1180.3417,
+    "overlap": 0.0864,
+    "overlapIn": 0.0864
+   },
+   "list": [
+    {
+     "t": 3.3792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0411,
+     "inTackle": true
+    },
+    {
+     "t": 3.3833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0462,
+     "inTackle": true
+    },
+    {
+     "t": 3.3875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0579,
+     "inTackle": true
+    },
+    {
+     "t": 3.3917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0614,
+     "inTackle": true
+    },
+    {
+     "t": 3.3958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0631,
+     "inTackle": true
+    },
+    {
+     "t": 3.4,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.064,
+     "inTackle": true
+    },
+    {
+     "t": 3.4042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0643,
+     "inTackle": true
+    },
+    {
+     "t": 3.4083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0623,
+     "inTackle": true
+    },
+    {
+     "t": 3.4125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0603,
+     "inTackle": true
+    },
+    {
+     "t": 3.4167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0586,
+     "inTackle": true
+    },
+    {
+     "t": 3.4208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0573,
+     "inTackle": true
+    },
+    {
+     "t": 3.425,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0564,
+     "inTackle": true
+    },
+    {
+     "t": 3.4292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0563,
+     "inTackle": true
+    },
+    {
+     "t": 3.4333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0564,
+     "inTackle": true
+    },
+    {
+     "t": 3.4375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0563,
+     "inTackle": true
+    },
+    {
+     "t": 3.4417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0561,
+     "inTackle": true
+    },
+    {
+     "t": 3.4458,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0572,
+     "inTackle": true
+    },
+    {
+     "t": 3.45,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.057,
+     "inTackle": true
+    },
+    {
+     "t": 3.4542,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0581,
+     "inTackle": true
+    },
+    {
+     "t": 3.4583,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0597,
+     "inTackle": true
+    },
+    {
+     "t": 3.4625,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0616,
+     "inTackle": true
+    },
+    {
+     "t": 3.4667,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0636,
+     "inTackle": true
+    },
+    {
+     "t": 3.4708,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0658,
+     "inTackle": true
+    },
+    {
+     "t": 3.475,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0681,
+     "inTackle": true
+    },
+    {
+     "t": 3.4792,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0703,
+     "inTackle": true
+    },
+    {
+     "t": 3.4833,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0714,
+     "inTackle": true
+    },
+    {
+     "t": 3.4875,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0713,
+     "inTackle": true
+    },
+    {
+     "t": 3.4917,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.071,
+     "inTackle": true
+    },
+    {
+     "t": 3.4958,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0704,
+     "inTackle": true
+    },
+    {
+     "t": 3.5,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0695,
+     "inTackle": true
+    },
+    {
+     "t": 3.5042,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0684,
+     "inTackle": true
+    },
+    {
+     "t": 3.5083,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0672,
+     "inTackle": true
+    },
+    {
+     "t": 3.5125,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.066,
+     "inTackle": true
+    },
+    {
+     "t": 3.5167,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0659,
+     "inTackle": true
+    },
+    {
+     "t": 3.5208,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0691,
+     "inTackle": true
+    },
+    {
+     "t": 3.525,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.074,
+     "inTackle": true
+    },
+    {
+     "t": 3.5292,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0798,
+     "inTackle": true
+    },
+    {
+     "t": 3.5333,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0858,
+     "inTackle": true
+    },
+    {
+     "t": 3.5375,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0864,
+     "inTackle": true
+    },
+    {
+     "t": 3.5417,
+     "kind": "PLAYER OVERLAP",
+     "v": 0.0808,
+     "inTackle": true
+    }
+   ]
+  }
+ },
+ {
+  "id": "mirror-l",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.621,
+     "state": "COMMITTED",
+     "reason": null,
+     "tCommit": 0.621,
+     "why": {}
+    }
+   ],
+   "action": {
+    "request": 0,
+    "commit": 0,
+    "contactPlanned": 0.269,
+    "window": [
+     0.05,
+     0.775
+    ],
+    "recoveryStart": 0.387,
+    "controlReady": 0.97,
+    "family": "STANDING_LUNGE",
+    "foot": "L",
+    "support": "R",
+    "c": 0.96,
+    "angle": -43.9,
+    "range": 1.26,
+    "ballAtCommit": 2.14,
+    "recovery": 0.7,
+    "regain": {
+     "speedAtControl": 0,
+     "to2ms": 0.187
+    },
+    "stride": {
+     "R": {
+      "planted": true,
+      "since": 4.021,
+      "left": null
+     },
+     "L": {
+      "planted": true,
+      "since": 4.021,
+      "left": null
+     }
+    },
+    "approach": 0,
+    "episodes": 1,
+    "hits": [
+     {
+      "t": 0.271,
+      "episode": 1,
+      "surface": "TOE",
+      "vIn": [
+       3.35,
+       0
+      ],
+      "vOut": [
+       -1.16,
+       3.9
+      ],
+      "dv": 5.97,
+      "possBefore": "CONTROLLED",
+      "possAfter": "FREE"
+     }
+    ],
+    "outcome": {
+     "kind": "ATTACKER RECOVERS",
+     "why": "the ball left the carrier's control (OPPONENT_TACKLE); the carrier's next touch 0.26 s after the tackle",
+     "next": 0.26,
+     "exit": "OPPONENT_TACKLE"
+    }
+   },
+   "world": [],
+   "possA": [
+    {
+     "t": 0.892,
+     "to": "FREE",
+     "why": "OPPONENT_TACKLE"
+    },
+    {
+     "t": 1.15,
+     "to": "CONTROLLED",
+     "why": "COLLECTED"
+    }
+   ],
+   "possD": []
+  },
+  "dmin": 1.1550452370146749,
+  "tmin": 0.9999999999999964,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {
+     "PELVIS SPIKE": 1,
+     "TRUNK SPIKE": 5,
+     "KNEE POP": 10,
+     "PLANT SLIDE": 8
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 7.4688,
+    "plantDrift": 0.041,
+    "kneeRate": 2647.9909,
+    "pelvisDev": 0.0293,
+    "trunkRate": 1181.7804,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 3.9958,
+     "kind": "PELVIS SPIKE",
+     "v": 0.0293,
+     "inTackle": false
+    },
+    {
+     "t": 4,
+     "kind": "TRUNK SPIKE",
+     "v": 4.3019,
+     "inTackle": false
+    },
+    {
+     "t": 4.0042,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9215,
+     "inTackle": false
+    },
+    {
+     "t": 4.0083,
+     "kind": "KNEE POP",
+     "v": 10.93,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.0083,
+     "kind": "TRUNK SPIKE",
+     "v": 4.9241,
+     "inTackle": false
+    },
+    {
+     "t": 4.0125,
+     "kind": "TRUNK SPIKE",
+     "v": 4.306,
+     "inTackle": false
+    },
+    {
+     "t": 4.0167,
+     "kind": "TRUNK SPIKE",
+     "v": 3.0669,
+     "inTackle": false
+    },
+    {
+     "t": 4.3458,
+     "kind": "KNEE POP",
+     "v": 7.1488,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.35,
+     "kind": "KNEE POP",
+     "v": 11.0333,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.3958,
+     "kind": "PLANT SLIDE",
+     "v": 0.0317,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 4.6333,
+     "kind": "KNEE POP",
+     "v": 7.8219,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.6917,
+     "kind": "PLANT SLIDE",
+     "v": 0.035,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 4.9917,
+     "kind": "KNEE POP",
+     "v": 6.6332,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.05,
+     "kind": "PLANT SLIDE",
+     "v": 0.034,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.35,
+     "kind": "KNEE POP",
+     "v": 6.8272,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.4083,
+     "kind": "PLANT SLIDE",
+     "v": 0.0331,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 5.7125,
+     "kind": "KNEE POP",
+     "v": 6.4279,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 5.7667,
+     "kind": "PLANT SLIDE",
+     "v": 0.0321,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.0708,
+     "kind": "KNEE POP",
+     "v": 7.1303,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.125,
+     "kind": "PLANT SLIDE",
+     "v": 0.0312,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.4292,
+     "kind": "KNEE POP",
+     "v": 7.8287,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.4833,
+     "kind": "PLANT SLIDE",
+     "v": 0.0302,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 6.7875,
+     "kind": "KNEE POP",
+     "v": 7.0242,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 6.8458,
+     "kind": "PLANT SLIDE",
+     "v": 0.0367,
+     "inTackle": false,
+     "foot": "L"
+    }
+   ]
+  }
+ },
+ {
+  "id": "late",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 1.35,
+     "state": "DECLINED",
+     "reason": "OUTSIDE THE FORWARD SECTOR: -157° (±75°)",
+     "tCommit": null,
+     "why": {
+      "OUTSIDE THE FORWARD SECTOR: -146° (±75°)": 4,
+      "OUTSIDE THE FORWARD SECTOR: -147° (±75°)": 4,
+      "OUTSIDE THE FORWARD SECTOR: -148° (±75°)": 5,
+      "OUTSIDE THE FORWARD SECTOR: -149° (±75°)": 5,
+      "OUTSIDE THE FORWARD SECTOR: -150° (±75°)": 5,
+      "OUTSIDE THE FORWARD SECTOR: -151° (±75°)": 6,
+      "OUTSIDE THE FORWARD SECTOR: -152° (±75°)": 7,
+      "OUTSIDE THE FORWARD SECTOR: -153° (±75°)": 7,
+      "OUTSIDE THE FORWARD SECTOR: -154° (±75°)": 9,
+      "OUTSIDE THE FORWARD SECTOR: -155° (±75°)": 9,
+      "OUTSIDE THE FORWARD SECTOR: -156° (±75°)": 11,
+      "OUTSIDE THE FORWARD SECTOR: -157° (±75°)": 13
+     }
+    }
+   ],
+   "action": null,
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.8504181977774682,
+  "tmin": 1.3666666666666618,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {}
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 0,
+    "plantDrift": 0,
+    "kneeRate": 0,
+    "pelvisDev": 0,
+    "trunkRate": 0.0003,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": []
+  }
+ },
+ {
+  "id": "early",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.1,
+     "state": "DECLINED",
+     "reason": "OUT OF REACH: 4.15 m at -14° (envelope 1.28 m)",
+     "tCommit": null,
+     "why": {
+      "OUT OF REACH: 4.81 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.80 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.79 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.78 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.77 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.76 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.75 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.74 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.73 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.72 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.71 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.70 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.69 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.68 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.67 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.66 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.65 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.64 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.63 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.62 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.61 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.60 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.59 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.58 m at -12° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.57 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.56 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.55 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.54 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.53 m at -12° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.52 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.51 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.50 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.49 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.48 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.47 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.46 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.45 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.44 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.43 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.42 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.41 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.40 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.39 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.38 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.37 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.36 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.35 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.34 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.33 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.32 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.31 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.30 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.29 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.28 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.27 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.26 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.25 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.24 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.23 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.22 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.21 m at -13° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.20 m at -13° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.20 m at -14° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.19 m at -14° (envelope 1.28 m)": 1,
+      "OUT OF REACH: 4.18 m at -14° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.17 m at -14° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.16 m at -14° (envelope 1.28 m)": 2,
+      "OUT OF REACH: 4.15 m at -14° (envelope 1.28 m)": 1
+     }
+    }
+   ],
+   "action": null,
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.8500261433888138,
+  "tmin": 2.0333333333333266,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {}
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 0,
+    "plantDrift": 0,
+    "kneeRate": 0,
+    "pelvisDev": 0,
+    "trunkRate": 0.0003,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": []
+  }
+ },
+ {
+  "id": "run",
+  "R": {
+   "requests": [
+    {
+     "n": 1,
+     "t": 0.45,
+     "state": "DECLINED",
+     "reason": "SPEED: 5.3 m/s above the validated 3.4 (run / sprint tackles not validated)",
+     "tCommit": null,
+     "why": {
+      "SPEED: 5.3 m/s above the validated 3.4 (run / sprint tackles not validated)": 85
+     }
+    }
+   ],
+   "action": null,
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.901439869836709,
+  "tmin": 0.2666666666666657,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {
+     "FOOT JUMP": 1,
+     "KNEE POP": 41,
+     "PLANT SLIDE": 3
+    }
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 12.5798,
+    "plantDrift": 0.0398,
+    "kneeRate": 2579.119,
+    "pelvisDev": 0.0146,
+    "trunkRate": 168.8842,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": [
+    {
+     "t": 1.4042,
+     "kind": "FOOT JUMP",
+     "v": 0.0524,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.4042,
+     "kind": "KNEE POP",
+     "v": 7.9228,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.4083,
+     "kind": "KNEE POP",
+     "v": 8.2819,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.4125,
+     "kind": "KNEE POP",
+     "v": 8.4769,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.4167,
+     "kind": "KNEE POP",
+     "v": 7.9633,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.5417,
+     "kind": "KNEE POP",
+     "v": 8.6267,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.6458,
+     "kind": "KNEE POP",
+     "v": 6.0201,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.65,
+     "kind": "KNEE POP",
+     "v": 7.1296,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 1.6958,
+     "kind": "KNEE POP",
+     "v": 6.0424,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.7,
+     "kind": "KNEE POP",
+     "v": 6.0633,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.7042,
+     "kind": "KNEE POP",
+     "v": 6.1935,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.8583,
+     "kind": "KNEE POP",
+     "v": 7.4907,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.9625,
+     "kind": "KNEE POP",
+     "v": 6.2763,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 1.9667,
+     "kind": "KNEE POP",
+     "v": 6.8839,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.175,
+     "kind": "KNEE POP",
+     "v": 6.2576,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.2542,
+     "kind": "KNEE POP",
+     "v": 8.665,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.3,
+     "kind": "PLANT SLIDE",
+     "v": 0.0359,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.3083,
+     "kind": "KNEE POP",
+     "v": 6.1584,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.3125,
+     "kind": "KNEE POP",
+     "v": 6.4711,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.3917,
+     "kind": "KNEE POP",
+     "v": 8.0534,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.3958,
+     "kind": "KNEE POP",
+     "v": 7.5655,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.4,
+     "kind": "KNEE POP",
+     "v": 6.6206,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.4917,
+     "kind": "KNEE POP",
+     "v": 6.1044,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.5667,
+     "kind": "KNEE POP",
+     "v": 6.2192,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.5708,
+     "kind": "KNEE POP",
+     "v": 7.406,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.6167,
+     "kind": "PLANT SLIDE",
+     "v": 0.0378,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.625,
+     "kind": "KNEE POP",
+     "v": 6.1013,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.6292,
+     "kind": "KNEE POP",
+     "v": 6.4476,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.7083,
+     "kind": "KNEE POP",
+     "v": 8.2471,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.7125,
+     "kind": "KNEE POP",
+     "v": 7.3768,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.7167,
+     "kind": "KNEE POP",
+     "v": 6.5012,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.8042,
+     "kind": "KNEE POP",
+     "v": 6.209,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.8833,
+     "kind": "KNEE POP",
+     "v": 6.5787,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.8875,
+     "kind": "KNEE POP",
+     "v": 6.0764,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.9333,
+     "kind": "PLANT SLIDE",
+     "v": 0.0398,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 2.9417,
+     "kind": "KNEE POP",
+     "v": 6.1572,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 2.9458,
+     "kind": "KNEE POP",
+     "v": 6.2995,
+     "inTackle": false,
+     "foot": "L"
+    },
+    {
+     "t": 3.0208,
+     "kind": "KNEE POP",
+     "v": 8.0794,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 3.025,
+     "kind": "KNEE POP",
+     "v": 7.8451,
+     "inTackle": false,
+     "foot": "R"
+    },
+    {
+     "t": 3.0292,
+     "kind": "KNEE POP",
+     "v": 6.9632,
+     "inTackle": false,
+     "foot": "R"
+    }
+   ]
+  }
+ },
+ {
+  "id": "notackle",
+  "R": {
+   "requests": [],
+   "action": null,
+   "world": [],
+   "possA": [],
+   "possD": []
+  },
+  "dmin": 0.8504181977774682,
+  "tmin": 1.3666666666666618,
+  "body": {
+   "ev": {
+    "in": {},
+    "out": {}
+   },
+   "evAtt": {},
+   "max": {
+    "footSpeed": 0,
+    "plantDrift": 0,
+    "kneeRate": 0,
+    "pelvisDev": 0,
+    "trunkRate": 0.0003,
+    "overlap": 0,
+    "overlapIn": 0
+   },
+   "list": []
+  }
+ }
+]
