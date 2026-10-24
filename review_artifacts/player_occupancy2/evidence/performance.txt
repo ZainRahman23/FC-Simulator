@@ -1,0 +1,12 @@
+PERFORMANCE — 37 review cases × 3 repetitions, node v22.19.0 (one core)
+THE WORLD'S STEP (both players' simulation + the authority + occupancy):
+  OLD (Shared Possession + Reaction V1)                      mean    47.7 µs · p99   329.3 µs · max  15265.0 µs   (166917 ticks)
+  STAGE 2                                                    mean   117.9 µs · p99   776.4 µs · max  25454.8 µs   (166917 ticks)
+THE OCCUPANCY PASS:
+  IDLE (beyond the broad phase: the whole step)              mean    30.2 µs · p99   221.3 µs · max  12637.1 µs   (117249 ticks)
+  NEAR (posed, detected, nothing to resolve: the pass)       mean   173.2 µs · p99   527.6 µs · max  17766.5 µs   (37119 ticks)
+  ACTIVE (a correction applied: the pass)                    mean   233.3 µs · p99   599.9 µs · max   4354.8 µs   (12549 ticks)
+  of a near / active pass: posing both bodies live 130.9 µs mean · the soft wall's relative path 11.6 µs · shifting the plans 11.1 µs · footholds + swing paths 3.2 µs · the ball-access gates (window + at the contact's tick) 36.8 µs · the support fit 0.4 µs
+  the volumes of two posed bodies 1.1 µs · the BALL-ACCESS record (4 × legThrough) 8.9 µs per near tick
+PER SIMULATED SECOND (240 ticks) in these cases (30 % of ticks near): occupancy ≈ 13.5 ms, of it posing ≈ 9.4 ms (shared with rendering in a game) · step OLD 11.4 ms → OCC 28.3 ms
+PER FRAME (60 Hz = 4 ticks), the worst case (both players near every tick): 0.8 ms mean, 2.2 ms p99

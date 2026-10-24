@@ -1,0 +1,381 @@
+[
+ {
+  "id": "bf-into",
+  "name": "§16 Body Feint vs a standing defender",
+  "modes": {
+   "OLD": {
+    "torso": 0.2287,
+    "legs": 0.2342,
+    "over5": 107,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0,
+    "legs": 0.0351,
+    "over5": 0,
+    "sce": 0.11402,
+    "sceC": 0,
+    "unresolved": {},
+    "rootDev": 1.0888506608035136,
+    "firstDiff": -0.5079265912728017,
+    "denied": [],
+    "carried": null,
+    "notCommitted": true
+   },
+   "S2": {
+    "torso": 0,
+    "legs": 0.0246,
+    "over5": 0,
+    "sce": 0.12523,
+    "sceC": 0,
+    "unresolved": {},
+    "rootDev": 0.8335518793791832,
+    "firstDiff": -0.5079265912728017,
+    "denied": [],
+    "carried": null,
+    "notCommitted": true
+   }
+  }
+ },
+ {
+  "id": "bf-exit",
+  "name": "§16 Body Feint, defender on the exit side (tackling)",
+  "modes": {
+   "OLD": {
+    "torso": 0.2124,
+    "legs": 0.2175,
+    "over5": 126,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0,
+    "legs": 0.0705,
+    "over5": 2,
+    "sce": 0.00772,
+    "sceC": 0.0001,
+    "unresolved": {
+     "COMMITTED ACTION'S LIMB": 2
+    },
+    "rootDev": 1.3367111502407054,
+    "firstDiff": 0.26290674206053133,
+    "denied": [],
+    "carried": true,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0,
+    "legs": 0.061,
+    "over5": 4,
+    "sce": 0.02099,
+    "sceC": 0.00368,
+    "unresolved": {
+     "COMMITTED ACTION'S LIMB": 4
+    },
+    "rootDev": 1.3136835577302177,
+    "firstDiff": 0.2587400753938649,
+    "denied": [
+     "DEF boot"
+    ],
+    "carried": true,
+    "commitShift": 0
+   }
+  }
+ },
+ {
+  "id": "bf-fake",
+  "name": "§16 Body Feint past a recovering tackle (into the fake side)",
+  "modes": {
+   "OLD": {
+    "torso": 0.2292,
+    "legs": 0.2284,
+    "over5": 123,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0.0978,
+    "legs": 0.2299,
+    "over5": 153,
+    "sce": 0.19634,
+    "sceC": 0.18829,
+    "unresolved": {
+     "BOTH COMMITTED": 59,
+     "COMMITTED ACTION'S LIMB": 19,
+     "PLANTED SUPPORT (the stance budget)": 24,
+     "AUTHORED / BALL-ANCHORED LIMB PATH": 32,
+     "PLANTED LEGS": 6
+    },
+    "rootDev": 3.0785199299048847,
+    "firstDiff": -0.3412599246061352,
+    "denied": [
+     "ATT touch",
+     "DEF boot",
+     "ATT touch",
+     "ATT touch"
+    ],
+    "carried": true,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0.2294,
+    "legs": 0.2256,
+    "over5": 126,
+    "sce": 0.00206,
+    "sceC": 0.02,
+    "unresolved": {
+     "UNRESOLVED COMMITTED CONFLICT": 68,
+     "COMMITTED ACTION'S LIMB": 4
+    },
+    "rootDev": 1.575095245714634,
+    "firstDiff": -0.3412599246061352,
+    "denied": [
+     "DEF boot",
+     "ATT touch (move held)"
+    ],
+    "carried": true,
+    "commitShift": 0
+   }
+  }
+ },
+ {
+  "id": "in-bf",
+  "name": "§16 Body Feint into a committed tackle",
+  "modes": {
+   "OLD": {
+    "torso": 0.079,
+    "legs": 0.2261,
+    "over5": 174,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0.0212,
+    "legs": 0.0381,
+    "over5": 0,
+    "sce": 0.18167,
+    "sceC": 0,
+    "unresolved": {},
+    "rootDev": 1.7760081606230549,
+    "firstDiff": null,
+    "denied": []
+   },
+   "S2": {
+    "torso": 0,
+    "legs": 0.0317,
+    "over5": 0,
+    "sce": 0.12141,
+    "sceC": 0,
+    "unresolved": {},
+    "rootDev": 1.6037402395719476,
+    "firstDiff": null,
+    "denied": []
+   }
+  }
+ },
+ {
+  "id": "croq-close",
+  "name": "§17 Croqueta past a standing defender",
+  "modes": {
+   "OLD": {
+    "torso": 0,
+    "legs": 0.2216,
+    "over5": 73,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0,
+    "legs": 0.1036,
+    "over5": 6,
+    "sce": 0.08746,
+    "sceC": 0,
+    "unresolved": {
+     "AUTHORED / BALL-ANCHORED LIMB PATH": 6
+    },
+    "rootDev": 0.328688094101436,
+    "firstDiff": 0.11200549147622407,
+    "denied": [],
+    "carried": true,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0,
+    "legs": 0.0196,
+    "over5": 0,
+    "sce": 0.13343,
+    "sceC": 0,
+    "unresolved": {},
+    "rootDev": 0.34963599438341914,
+    "firstDiff": 0.11200549147622407,
+    "denied": [],
+    "carried": true,
+    "commitShift": 0
+   }
+  }
+ },
+ {
+  "id": "croq-early",
+  "name": "§17 Croqueta into a committed tackle (before the transfer)",
+  "modes": {
+   "OLD": {
+    "torso": 0.2274,
+    "legs": 0.2327,
+    "over5": 214,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0,
+    "legs": 0.142,
+    "over5": 17,
+    "sce": 0.18449,
+    "sceC": 0.05179,
+    "unresolved": {
+     "BOTH COMMITTED": 16,
+     "COMMITTED ACTION'S LIMB": 1
+    },
+    "rootDev": 1.2347840006637263,
+    "firstDiff": -0.0796611751904428,
+    "denied": [],
+    "carried": false,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0.1153,
+    "legs": 0.2269,
+    "over5": 95,
+    "sce": 0.12,
+    "sceC": 0.02094,
+    "unresolved": {
+     "UNRESOLVED COMMITTED CONFLICT": 49,
+     "FAST LIMB CONTACT": 2,
+     "COMMITTED ACTION'S LIMB": 34
+    },
+    "rootDev": 0.9368430178804691,
+    "firstDiff": 0.07450549147622398,
+    "denied": [
+     "DEF boot"
+    ],
+    "carried": false,
+    "commitShift": 0
+   }
+  }
+ },
+ {
+  "id": "in-croq",
+  "name": "§17 Croqueta already committed when the tackle meets the ball",
+  "modes": {
+   "OLD": {
+    "torso": 0.0556,
+    "legs": 0.2259,
+    "over5": 99,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0.0208,
+    "legs": 0.1864,
+    "over5": 39,
+    "sce": 0.1758,
+    "sceC": 0.18,
+    "unresolved": {
+     "BOTH COMMITTED": 26,
+     "AUTHORED / BALL-ANCHORED LIMB PATH": 13
+    },
+    "rootDev": 2.4464228126694403,
+    "firstDiff": 0.037005491476223895,
+    "denied": [
+     "DEF boot",
+     "DEF touch",
+     "DEF touch"
+    ],
+    "carried": true,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0.0341,
+    "legs": 0.2273,
+    "over5": 82,
+    "sce": 0.12,
+    "sceC": 0.0222,
+    "unresolved": {
+     "UNRESOLVED COMMITTED CONFLICT": 61,
+     "COMMITTED ACTION'S LIMB": 5,
+     "AUTHORED / BALL-ANCHORED LIMB PATH": 14,
+     "FAST LIMB CONTACT": 2
+    },
+    "rootDev": 1.3168086367686842,
+    "firstDiff": 0.037005491476223895,
+    "denied": [
+     "DEF boot",
+     "ATT touch (move held)",
+     "ATT touch (move held)"
+    ],
+    "carried": true,
+    "commitShift": 0
+   }
+  }
+ },
+ {
+  "id": "both-committed",
+  "name": "§6 / §17 both committed: the tackle into a Croqueta under way (= croq-win)",
+  "modes": {
+   "OLD": {
+    "torso": 0.0025,
+    "legs": 0.2268,
+    "over5": 78,
+    "sce": 0,
+    "sceC": 0,
+    "unresolved": {}
+   },
+   "S1": {
+    "torso": 0,
+    "legs": 0.1275,
+    "over5": 30,
+    "sce": 0.0129,
+    "sceC": 0.18,
+    "unresolved": {
+     "BOTH COMMITTED": 15,
+     "PLANTED SUPPORT (the stance budget)": 12,
+     "COMMITTED ACTION'S LIMB": 3
+    },
+    "rootDev": 2.559881313201314,
+    "firstDiff": 0.07033882480955755,
+    "denied": [
+     "ATT touch"
+    ],
+    "carried": true,
+    "commitShift": 0
+   },
+   "S2": {
+    "torso": 0,
+    "legs": 0.2271,
+    "over5": 82,
+    "sce": 0.0059,
+    "sceC": 0.02165,
+    "unresolved": {
+     "UNRESOLVED COMMITTED CONFLICT": 63,
+     "COMMITTED ACTION'S LIMB": 15,
+     "AUTHORED / BALL-ANCHORED LIMB PATH": 4
+    },
+    "rootDev": 0.2645425007722543,
+    "firstDiff": 0.06617215814289068,
+    "denied": [
+     "DEF boot",
+     "ATT touch (move held)"
+    ],
+    "carried": true,
+    "commitShift": 0
+   }
+  }
+ }
+]

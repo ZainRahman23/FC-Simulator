@@ -1,0 +1,1625 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — PLAYER OCCUPANCY STAGE 2 REVIEW)",
+   "pass": true,
+   "detail": "0.9 s to the first case"
+  },
+  {
+   "name": "every case simulates OLD, STAGE 1 and STAGE 2 and the three viewports draw",
+   "pass": true,
+   "detail": "37/37"
+  },
+  {
+   "name": "the page's numbers equal node's (deepest, ticks > 5 cm, outcome, through, blocked, support consistency error), three modes",
+   "pass": true,
+   "detail": "37/37"
+  },
+  {
+   "name": "view OLD | STAGE 1 | STAGE 2: every viewport draws",
+   "pass": true,
+   "detail": [
+    99,
+    99,
+    99
+   ]
+  },
+  {
+   "name": "view STAGE 1 | STAGE 2: every viewport draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view OLD: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view STAGE 1: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view STAGE 2: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "OLD, STAGE 1 and STAGE 2 draw different replays of the same inputs (head-on jog at OLD's deepest)",
+   "pass": true,
+   "detail": {
+    "OLD": 2751204982,
+    "S1": 1461424213,
+    "S2": 2649152210
+   }
+  },
+  {
+   "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
+   "pass": true,
+   "detail": {
+    "skin": 1172482376,
+    "skel": 3665383134,
+    "both": 1172482376
+   }
+  },
+  {
+   "name": "CAPSULES / CONTACT NORMALS / SUPPORT ANCHORS / ROOT CORRECTION / BALL ACCESS / FRAME DATA toggle (overlay ink falls as each goes off)",
+   "pass": true,
+   "detail": {
+    "all overlays": 38209,
+    "capsules off": 32517,
+    "normals off": 32263,
+    "anchors off": 32242,
+    "corrections off": 32182,
+    "ball access off": 29775,
+    "frame data off": 10243
+   }
+  },
+  {
+   "name": "SUPPORT ANCHORS and ROOT CORRECTION each draw something (Croqueta, tackle before the transfer, Stage 2 acting)",
+   "pass": true,
+   "detail": {
+    "anchors": 21,
+    "corrections": 60
+   }
+  },
+  {
+   "name": "DIAGNOSTICS off hides the panel",
+   "pass": true
+  },
+  {
+   "name": "the diagnostics show the three modes' records and every per-frame quantity (regions, depth, normal, tangent, root correction, support error, commitment, ball access)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "BALL ACCESS: a touch / boot BLOCKED under Stage 2 is shown",
+   "pass": true,
+   "detail": {
+    "id": "race",
+    "t": 3.0291666666666663,
+    "kind": "BALL ACCESS BLOCKED"
+   }
+  },
+  {
+   "name": "the eight cameras draw, each a different view",
+   "pass": true,
+   "detail": 8
+  },
+  {
+   "name": "frame step moves the playhead 4 ticks",
+   "pass": true,
+   "detail": 3.999999999999986
+  },
+  {
+   "name": "1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)",
+   "pass": true,
+   "detail": {
+    "1": 0.5860000000119205,
+    "0.5": 0.297449999994043,
+    "0.25": 0.14737500000297787
+   }
+  },
+  {
+   "name": "LOOP wraps the replay to its start",
+   "pass": true
+  },
+  {
+   "name": "0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "rows": [
+  {
+   "id": "static-walk",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22148478045543113,
+     "bestT": 1.483333333333333,
+     "over5": 135,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 203
+    },
+    "S1": {
+     "best": 0.032070300170355226,
+     "bestT": 2.1708333333333334,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.17778724297266785,
+     "ms": 259
+    },
+    "S2": {
+     "best": 0.026367395276592653,
+     "bestT": 1.7874999999999996,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12884851420225293,
+     "ms": 257
+    }
+   }
+  },
+  {
+   "id": "static-jog",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2281612624479284,
+     "bestT": 0.9958333333333336,
+     "over5": 57,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 132
+    },
+    "S1": {
+     "best": 0.058459080718980094,
+     "bestT": 0.9791666666666665,
+     "over5": 4,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.06412211674794005,
+     "ms": 173
+    },
+    "S2": {
+     "best": 0.054916935903217556,
+     "bestT": 0.9916666666666667,
+     "over5": 4,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.05178411604891898,
+     "ms": 173
+    }
+   }
+  },
+  {
+   "id": "headon-walk",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 78,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 154
+    },
+    "S1": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.14502388313925296,
+     "ms": 199
+    },
+    "S2": {
+     "best": 0.029428642537071115,
+     "bestT": 1.5666666666666664,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.13274067946202128,
+     "ms": 176
+    }
+   }
+  },
+  {
+   "id": "headon-jog",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2287064765718412,
+     "bestT": 1.0083333333333333,
+     "over5": 40,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 131
+    },
+    "S1": {
+     "best": 0.13539907458893652,
+     "bestT": 1.025,
+     "over5": 13,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.24600165222905998,
+     "ms": 174
+    },
+    "S2": {
+     "best": 0.1569159610273551,
+     "bestT": 1.025,
+     "over5": 26,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.16974633203637265,
+     "ms": 146
+    }
+   }
+  },
+  {
+   "id": "face",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22818302443670024,
+     "bestT": 1.2458333333333331,
+     "over5": 92,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 152
+    },
+    "S1": {
+     "best": 0.042287703951571914,
+     "bestT": 1.583333333333333,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.11819737899538454,
+     "ms": 177
+    },
+    "S2": {
+     "best": 0.14025945186478286,
+     "bestT": 1.7041666666666666,
+     "over5": 17,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.14335848980276045,
+     "ms": 209
+    }
+   }
+  },
+  {
+   "id": "side",
+   "painted": [
+    100,
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2349715533251744,
+     "bestT": 1.4416666666666669,
+     "over5": 787,
+     "out": null,
+     "through": 3,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 193
+    },
+    "S1": {
+     "best": 0.03457706912953122,
+     "bestT": 1.0625,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.1267013274391511,
+     "ms": 256
+    },
+    "S2": {
+     "best": 0.03685209140358682,
+     "bestT": 1.0708333333333333,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12089747985877423,
+     "ms": 260
+    }
+   }
+  },
+  {
+   "id": "cross",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23433634902370598,
+     "bestT": 1.3125,
+     "over5": 47,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 150
+    },
+    "S1": {
+     "best": 0.05491279616436144,
+     "bestT": 1.6750000000000003,
+     "over5": 5,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.16724910928347153,
+     "ms": 158
+    },
+    "S2": {
+     "best": 0.018685516406313052,
+     "bestT": 1.5833333333333335,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.1171608979007077,
+     "ms": 164
+    }
+   }
+  },
+  {
+   "id": "headon-one-away",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 81,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 162
+    },
+    "S1": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.14506486307499777,
+     "ms": 183
+    },
+    "S2": {
+     "best": 0.029428642537071115,
+     "bestT": 1.5666666666666664,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.13273427168434898,
+     "ms": 186
+    }
+   }
+  },
+  {
+   "id": "headon-both-away",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 80,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 213
+    },
+    "S1": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.1449946374773888,
+     "ms": 179
+    },
+    "S2": {
+     "best": 0.029428642537071115,
+     "bestT": 1.5666666666666664,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.13266973075899938,
+     "ms": 195
+    }
+   }
+  },
+  {
+   "id": "bf-into",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2341683869623497,
+     "bestT": 0.6916666666666669,
+     "over5": 64,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 131
+    },
+    "S1": {
+     "best": 0.035063482823889464,
+     "bestT": 0.7666666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.1140150631631417,
+     "ms": 149
+    },
+    "S2": {
+     "best": 0.024603481478498085,
+     "bestT": 0.6416666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12522697450209536,
+     "ms": 146
+    }
+   }
+  },
+  {
+   "id": "race",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23461959522430825,
+     "bestT": 0.9833333333333334,
+     "over5": 167,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 262
+    },
+    "S1": {
+     "best": 0.1293399599268198,
+     "bestT": 3.225,
+     "over5": 6,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.17929662126546356,
+     "ms": 338
+    },
+    "S2": {
+     "best": 0.01073183071056552,
+     "bestT": 1.0916666666666668,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.056433330496289145,
+     "ms": 306
+    }
+   }
+  },
+  {
+   "id": "croq-win",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22682452696451055,
+     "bestT": 0.8000000000000003,
+     "over5": 78,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 204
+    },
+    "S1": {
+     "best": 0.12749744405419128,
+     "bestT": 0.6083333333333334,
+     "over5": 30,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.18398803000895775,
+     "ms": 229
+    },
+    "S2": {
+     "best": 0.2270858878748837,
+     "bestT": 0.9083333333333332,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.13080561688439774,
+     "ms": 223
+    }
+   }
+  },
+  {
+   "id": "in-steer",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23304492979675379,
+     "bestT": 2.5416666666666665,
+     "over5": 231,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 406
+    },
+    "S1": {
+     "best": 0.16876093987472132,
+     "bestT": 2.35,
+     "over5": 17,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12251965893018565,
+     "ms": 216
+    },
+    "S2": {
+     "best": 0.0016339353355476899,
+     "bestT": 2.483333333333333,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.02296351214456707,
+     "ms": 248
+    }
+   }
+  },
+  {
+   "id": "carry-walk",
+   "painted": [
+    100,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22745896265701332,
+     "bestT": 1.5958333333333332,
+     "over5": 65,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 207
+    },
+    "S1": {
+     "best": 0.13252909809220265,
+     "bestT": 1.7833333333333332,
+     "over5": 26,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.18106064552699355,
+     "ms": 240
+    },
+    "S2": {
+     "best": 0.10764757609347647,
+     "bestT": 1.7833333333333332,
+     "over5": 34,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.12105063921802374,
+     "ms": 252
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22813719426368168,
+     "bestT": 1.2416666666666667,
+     "over5": 36,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 186
+    },
+    "S1": {
+     "best": 0.04139163998575032,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.1624134400361168,
+     "ms": 403
+    },
+    "S2": {
+     "best": 0.03678445777716652,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.13006985900882437,
+     "ms": 420
+    }
+   }
+  },
+  {
+   "id": "carry-jog-def",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.224324793065196,
+     "bestT": 0.8000000000000003,
+     "over5": 53,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 279
+    },
+    "S1": {
+     "best": 0.02134599474271051,
+     "bestT": 0.7875000000000001,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.04039191913713887,
+     "ms": 186
+    },
+    "S2": {
+     "best": 0.003438169893958981,
+     "bestT": 0.8000000000000003,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.09221581998290673,
+     "ms": 208
+    }
+   }
+  },
+  {
+   "id": "cut",
+   "painted": [
+    100,
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 163
+    },
+    "S1": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 173
+    },
+    "S2": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 193
+    }
+   }
+  },
+  {
+   "id": "croq",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.21523722850633753,
+     "bestT": 0.8916666666666666,
+     "over5": 28,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 161
+    },
+    "S1": {
+     "best": 0.026469424771358108,
+     "bestT": 0.8875000000000002,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.05742556137646792,
+     "ms": 170
+    },
+    "S2": {
+     "best": 0.010170637211674133,
+     "bestT": 0.9125000000000001,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.08994354304046004,
+     "ms": 194
+    }
+   }
+  },
+  {
+   "id": "in-bf",
+   "painted": [
+    100,
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2260818311046404,
+     "bestT": 1.4874999999999998,
+     "over5": 159,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 198
+    },
+    "S1": {
+     "best": 0.03807971588626033,
+     "bestT": 3.045833333333333,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.18166556029828682,
+     "ms": 252
+    },
+    "S2": {
+     "best": 0.03172978941019525,
+     "bestT": 1.4666666666666668,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12140970845708388,
+     "ms": 265
+    }
+   }
+  },
+  {
+   "id": "bf-exit",
+   "painted": [
+    99,
+    99,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.21750487717696593,
+     "bestT": 1.475,
+     "over5": 81,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 200
+    },
+    "S1": {
+     "best": 0.07049165363480048,
+     "bestT": 1.2333333333333334,
+     "over5": 2,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.007719692043082748,
+     "ms": 218
+    },
+    "S2": {
+     "best": 0.061028827927576856,
+     "bestT": 1.2416666666666667,
+     "over5": 4,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.020994262150425227,
+     "ms": 245
+    }
+   }
+  },
+  {
+   "id": "bf-fake",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.229179742308676,
+     "bestT": 0.8791666666666669,
+     "over5": 80,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 158
+    },
+    "S1": {
+     "best": 0.22995767961630498,
+     "bestT": 1.2583333333333333,
+     "over5": 140,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 4,
+     "sce": 0.19634584529890212,
+     "ms": 224
+    },
+    "S2": {
+     "best": 0.22944287643491917,
+     "bestT": 0.9708333333333332,
+     "over5": 72,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.020000000000003956,
+     "ms": 193
+    }
+   }
+  },
+  {
+   "id": "in-croq",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22588470077173284,
+     "bestT": 0.8000000000000003,
+     "over5": 90,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 172
+    },
+    "S1": {
+     "best": 0.18635733230602824,
+     "bestT": 2.225,
+     "over5": 39,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 3,
+     "sce": 0.1800000000000037,
+     "ms": 236
+    },
+    "S2": {
+     "best": 0.2272721723937213,
+     "bestT": 0.9041666666666668,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 3,
+     "sce": 0.12581598757460138,
+     "ms": 212
+    }
+   }
+  },
+  {
+   "id": "croq-early",
+   "painted": [
+    100,
+    99,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23271665364845445,
+     "bestT": 0.7583333333333333,
+     "over5": 116,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 180
+    },
+    "S1": {
+     "best": 0.14199857893693998,
+     "bestT": 0.6166666666666667,
+     "over5": 17,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.18449203764294342,
+     "ms": 189
+    },
+    "S2": {
+     "best": 0.22694234474283811,
+     "bestT": 0.7458333333333336,
+     "over5": 85,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.12000000000000681,
+     "ms": 220
+    }
+   }
+  },
+  {
+   "id": "croq-close",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22164111788968052,
+     "bestT": 0.8541666666666665,
+     "over5": 73,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 254
+    },
+    "S1": {
+     "best": 0.10361668471594518,
+     "bestT": 0.8500000000000001,
+     "over5": 6,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12186962865629293,
+     "ms": 138
+    },
+    "S2": {
+     "best": 0.01964545137928403,
+     "bestT": 0.8583333333333334,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.13342647864030477,
+     "ms": 138
+    }
+   }
+  },
+  {
+   "id": "both-committed",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22682452696451055,
+     "bestT": 0.8000000000000003,
+     "over5": 78,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 194
+    },
+    "S1": {
+     "best": 0.12749744405419128,
+     "bestT": 0.6083333333333334,
+     "over5": 30,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.18398803000895775,
+     "ms": 216
+    },
+    "S2": {
+     "best": 0.2270858878748837,
+     "bestT": 0.9083333333333332,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.13080561688439774,
+     "ms": 210
+    }
+   }
+  },
+  {
+   "id": "headon-jog-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2287064765718412,
+     "bestT": 1.0083333333333333,
+     "over5": 40,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 138
+    },
+    "S1": {
+     "best": 0.13539907458893652,
+     "bestT": 1.025,
+     "over5": 13,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.24600165222905998,
+     "ms": 159
+    },
+    "S2": {
+     "best": 0.1569159610273551,
+     "bestT": 1.025,
+     "over5": 26,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.16974633203637265,
+     "ms": 144
+    }
+   }
+  },
+  {
+   "id": "side-m",
+   "painted": [
+    100,
+    100,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2349715533251744,
+     "bestT": 1.4416666666666669,
+     "over5": 787,
+     "out": null,
+     "through": 3,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 161
+    },
+    "S1": {
+     "best": 0.035486042310529334,
+     "bestT": 1.0625,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.1265835369485043,
+     "ms": 235
+    },
+    "S2": {
+     "best": 0.03667912932910773,
+     "bestT": 1.0708333333333333,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12089597502557771,
+     "ms": 238
+    }
+   }
+  },
+  {
+   "id": "cross-m",
+   "painted": [
+    100,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23433634902370598,
+     "bestT": 1.3125,
+     "over5": 47,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 134
+    },
+    "S1": {
+     "best": 0.05491279616436144,
+     "bestT": 1.6750000000000003,
+     "over5": 5,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.16724910928347153,
+     "ms": 152
+    },
+    "S2": {
+     "best": 0.018685516406313052,
+     "bestT": 1.5833333333333335,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.11716089790072802,
+     "ms": 155
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22813719426368168,
+     "bestT": 1.2416666666666667,
+     "over5": 36,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 192
+    },
+    "S1": {
+     "best": 0.04139163998575032,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.1624134400361168,
+     "ms": 373
+    },
+    "S2": {
+     "best": 0.03678445777716652,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "sce": 0.13006985900882437,
+     "ms": 415
+    }
+   }
+  },
+  {
+   "id": "in-croq-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22588470077173284,
+     "bestT": 0.8000000000000003,
+     "over5": 90,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 175
+    },
+    "S1": {
+     "best": 0.22369254643909003,
+     "bestT": 2.4625,
+     "over5": 51,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "sce": 0.19482172982452434,
+     "ms": 217
+    },
+    "S2": {
+     "best": 0.22708381680023848,
+     "bestT": 0.9041666666666668,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 3,
+     "sce": 0.12580705483387983,
+     "ms": 208
+    }
+   }
+  },
+  {
+   "id": "overtake",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.10219420242869645,
+     "bestT": -0.9749999999999999,
+     "over5": 24,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 140
+    },
+    "S1": {
+     "best": 0.031505320170144305,
+     "bestT": -0.9666666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12243094830161054,
+     "ms": 155
+    },
+    "S2": {
+     "best": 0.006808224549865183,
+     "bestT": -0.9749999999999999,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.08351746566296152,
+     "ms": 152
+    }
+   }
+  },
+  {
+   "id": "turn-into",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.1465487729552336,
+     "bestT": 1.0375,
+     "over5": 23,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 144
+    },
+    "S1": {
+     "best": 0.091676299213439,
+     "bestT": 1.0208333333333335,
+     "over5": 6,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.09868162312659647,
+     "ms": 150
+    },
+    "S2": {
+     "best": 0.0507518507186637,
+     "bestT": 1.025,
+     "over5": 1,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.07486661849248585,
+     "ms": 159
+    }
+   }
+  },
+  {
+   "id": "glance",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.09449481050019756,
+     "bestT": 1.025,
+     "over5": 9,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 144
+    },
+    "S1": {
+     "best": 0.05405898962173025,
+     "bestT": 1.0166666666666666,
+     "over5": 1,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.05048829806737789,
+     "ms": 141
+    },
+    "S2": {
+     "best": 0.037729225091344604,
+     "bestT": 1.0166666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.04622239491416892,
+     "ms": 149
+    }
+   }
+  },
+  {
+   "id": "near-miss",
+   "painted": [
+    100,
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 139
+    },
+    "S1": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 141
+    },
+    "S2": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 147
+    }
+   }
+  },
+  {
+   "id": "overtake-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.10219420242869645,
+     "bestT": -0.9749999999999999,
+     "over5": 24,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 141
+    },
+    "S1": {
+     "best": 0.031505320170144305,
+     "bestT": -0.9666666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.12243094830161054,
+     "ms": 182
+    },
+    "S2": {
+     "best": 0.006808224549865183,
+     "bestT": -0.9749999999999999,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.08351746566296152,
+     "ms": 173
+    }
+   }
+  },
+  {
+   "id": "turn-into-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.1465487729552336,
+     "bestT": 1.0375,
+     "over5": 23,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 148
+    },
+    "S1": {
+     "best": 0.091676299213439,
+     "bestT": 1.0208333333333335,
+     "over5": 6,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.09868162312659647,
+     "ms": 152
+    },
+    "S2": {
+     "best": 0.0507518507186637,
+     "bestT": 1.025,
+     "over5": 1,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.07486661849248585,
+     "ms": 166
+    }
+   }
+  },
+  {
+   "id": "glance-m",
+   "painted": [
+    99,
+    99,
+    99
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.09449481050019756,
+     "bestT": 1.025,
+     "over5": 9,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0,
+     "ms": 150
+    },
+    "S1": {
+     "best": 0.05405898962173025,
+     "bestT": 1.0166666666666666,
+     "over5": 1,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.05048829806737789,
+     "ms": 148
+    },
+    "S2": {
+     "best": 0.037729225091344604,
+     "bestT": 1.0166666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "sce": 0.04622239491416892,
+     "ms": 147
+    }
+   }
+  }
+ ],
+ "errs": []
+}
