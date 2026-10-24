@@ -48,7 +48,7 @@ function travel(s0, tau) { const a = clamp(s0 / 0.40, 2.5, TK.brake), tS = s0 / 
 // ═══ THE LIFECYCLE ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 export class StandingTackle {
   // def: the defender (DefenderSim) · att: the attacker (the canonical ControlledSim whose ball is the authoritative ball)
-  constructor(def, att, o = {}) { this.def = def; this.att = att; this.o = o; this.pend = null; this.act = null; this.log = []; this.n = 0; this.pid = 0; this.probeN = 0; this.cpu = { idle: 0, eval: [], build: [] }; }
+  constructor(def, att, o = {}) { this.def = def; this.att = att; this.o = o; this.pend = null; this.act = null; this.acts = []; this.log = []; this.n = 0; this.pid = 0; this.probeN = 0; this.cpu = { idle: 0, eval: [], build: [] }; }
   // ── THE REQUEST (explicit: the Lab's button / a fixture's tick) — never from the left-stick recognizer ────────────────────────────────────────
   request(t, src = "button") { const rec = { n: ++this.n, tReq: t, src, state: "PENDING", until: t + TK.window, why: {}, last: null };
     if (this.act && t < this.act.tCtl - 1e-9) { rec.state = "DECLINED"; rec.reason = t < this.act.tRec ? "COMMITTED: the tackle in progress owns the body" : "RECOVERING: control not yet returned"; rec.tEnd = t; this.log.push(rec); return rec; }
@@ -198,9 +198,12 @@ export class StandingTackle {
     const M = { tc, landing, stepEnd, end, tR, drive, recDisp };
     this.act = { n: P.n, tReq: P.tReq, t0: A0, tB: A0 + TK.tB, stepB: () => mk(A0 + TK.tB, stB, "tackle: the tackle's own stances"), switched: false, tC: A0 + tc, tW0: A0 + 0.05, tW1: A0 + (poke ? tR : stepEnd), tRec: A0 + (poke ? tR : landing), tCtl: A0 + end, F, S, fam, c, ang, rng: o.rng, mx: o.mx, bp: o.bp, ankC, yawC, boot, M, rootAt,
       s0: o.s0, contact: mode, vJab, nAim, stride: this.strideOf(t0, o.feet), hits: [], probes: 0, released: false, outcome: null, entry: { P: o.st.P.slice(), psi: psi0, h: o.h0, s: o.s0 }, ball0: { p: o.B.p.slice(), v: o.B.v.slice() }, poss0: this.att.poss ? this.att.poss.state : null };
-    Object.assign(P, { state: "COMMITTED", tCommit: A0, F, fam, c, tEnd: A0 }); this.pend = null;
+    this.acts.push(this.act); Object.assign(P, { state: "COMMITTED", tCommit: A0, F, fam, c, tEnd: A0 }); this.pend = null;
   }
   rootAtTau(rootAt, tau) { return rootAt(tau); }
+  // the cost after control returns: the defender's speed then, and the time until he moves at 2 m/s again (null: not within the replay)
+  regain(A) { const D = this.def, end = D.t; if (!A.released || A.tCtl > end) return null; const v0 = D.stateAt(A.tCtl).s; let t2 = null; for (let t = A.tCtl; t <= end + 1e-9; t += DT) if (D.stateAt(t).s >= 2.0) { t2 = t; break; }
+    return { speedAtControl: +v0.toFixed(2), to2ms: t2 != null ? +(t2 - A.tCtl).toFixed(3) : null }; }
   // the stride at commitment: the support's time on the ground, the reaching foot's state (planted / in swing, how far through it)
   strideOf(t, feet) { const o = {}; for (const X of ["R", "L"]) { const f = feet[X]; o[X] = f.planted ? { planted: true, since: +(t - f.planted.t0).toFixed(3), left: f.planted.t1 === Infinity ? null : +(f.planted.t1 - t).toFixed(3) } : { planted: false, u: f.last && f.next ? +((t - f.last.t1) / max(1e-3, f.next.t0 - f.last.t1)).toFixed(2) : null }; } return o; }
   // ── THE CONTACT WINDOW: the authoritative boot as moving spheres for the canonical opponent law (one tick each, at t) ─────────────────────────
@@ -216,14 +219,17 @@ export class StandingTackle {
     for (let i = this.probeN; i < X.length; i++) { const r = X[i]; if (!String(r.id).startsWith(`tk${A.n}:`)) continue; const surf = r.id.split(":")[1] | 0, b = A.boot(r.t - A.t0);
       const rel = toLocal(r.at, [b.a[0], b.a[1]], b.y), rec = { t: r.t, tau: r.t - A.t0, surface: ["TOE", "INSIDE", "INSIDE", "OUTSIDE"][surf], at: r.at, vIn: r.vIn, vOut: r.vOut, foot: r.foot, dv: hyp(r.vOut[0] - r.vIn[0], r.vOut[1] - r.vIn[1]), rel,
         possBefore: A.hits.length ? A.hits[A.hits.length - 1].possAfter : A.poss0 };
+      // (a CONTACT EPISODE: impulses on consecutive ticks are one sustained contact — the boot pushing the ball along, two of its spheres in
+      // one tick; a new episode starts after the ball has been free for more than 2 ticks)
+      const pv = A.hits[A.hits.length - 1]; rec.episode = pv && rec.t - pv.t <= 2.5 * DT ? pv.episode : pv ? pv.episode + 1 : 1;
       rec.possAfter = this.att.poss ? this.att.poss.state : null; A.hits.push(rec); }
     this.probeN = X.length; }
   // ── THE OUTCOME (a label for the review — never fed back): from the contacts and the canonical possession record ──────────────────────────────
   // the race for the ball after the contact: the first player to TOUCH it (each through his own canonical possession model) decides — the
   // carrier at once (ATTACKER RECOVERS), the carrier later (POKED LOOSE · CARRIER RE-COLLECTS), the defender (CONTROLLED WIN when his possession
   // reaches CONTROLLED and the carrier does not touch the ball for 1 s; else WON · CONTESTED / DEFENDER TOUCH), nobody (LOOSE BALL)
-  classify(t) { const A = this.act, att = this.att, h = A.hits[0];
-    if (!h) return { kind: "MISS", why: this.missWhy() };
+  classify(t, A = this.act) { const att = this.att, h = A.hits[0];
+    if (!h) return { kind: "MISS", why: this.missWhy(A) };
     const exit = (att.poss.log || []).find((e) => e.from === "CONTROLLED" && e.to === "FREE" && e.t >= h.t - 1e-3 && e.t <= h.t + 1.05);
     const next = att.contacts.find((c) => !c.missed && c.t > h.t + 1e-6), dz = this.def.contacts.find((c) => !c.missed && c.t > h.t);
     if (!exit && att.poss.state === "CONTROLLED" && (!dz || (next && next.t < dz.t))) return { kind: "OPPONENT RETAINS", why: `a minor deflection (Δv ${h.dv.toFixed(1)} m/s): the carrier's control continued (the canonical rule: Δv < 2 m/s and his next touch within 0.6 s)`, next: next ? +(next.t - h.t).toFixed(2) : null };
@@ -233,15 +239,18 @@ export class StandingTackle {
     const B = att.ballTrack(t), Pa = att.stateAt(t).P, Pd = this.def.stateAt(t).P;
     return { kind: "LOOSE BALL", why: `nobody touched it in the ${(t - h.t).toFixed(1)} s after the tackle; the ball ${hyp(B.p[0] - Pd[0], B.p[1] - Pd[1]).toFixed(1)} m from the defender, ${hyp(B.p[0] - Pa[0], B.p[1] - Pa[1]).toFixed(1)} m from the carrier`, exit: exit ? exit.why : null }; }
   // (a miss explained: the boot's closest approach to the ball over the window, the attacker's touches meanwhile, where the ball was predicted)
-  missWhy() { const A = this.act, att = this.att; let best = null;
+  missWhy(A = this.act) { const att = this.att; let best = null;
     for (let t = A.tW0; t <= A.tW1 + 1e-9; t += DT) { const B = att.ballTrack(t).p, S = this.spheresAt(t); for (const s of S) { const d = hyp(B[0] - s.p[0], B[1] - s.p[1], max(BR, B[2]) - s.p[2]) - BR - TK.r; if (!best || d < best.gap) best = { gap: d, t, surf: s.surf }; } }
     const touches = att.contacts.filter((c) => !c.missed && c.t >= A.t0 - 1e-6 && c.t <= A.tW1 + 1e-6), Bc = att.ballTrack(A.tC).p, pe = hyp(Bc[0] - A.bp[0], Bc[1] - A.bp[1]);
     const parts = [`closest boot–ball gap ${(best.gap * 100).toFixed(0)} cm at +${(best.t - A.t0).toFixed(2)} s`, `the ball ${(pe * 100).toFixed(0)} cm from where it was predicted at the contact time`];
     if (touches.length) parts.unshift(`the carrier touched the ball ${touches.length}× after commitment (${touches.map((c) => `${c.role || c.src || "touch"} +${(c.t - A.t0).toFixed(2)} s`).join(", ")})`);
     return parts.join(" · "); }
-  finalize(t) { if (this.pend && this.pend.state === "PENDING") Object.assign(this.pend, { state: "DECLINED", tEnd: t, reason: this.pend.last || "the replay ended before an opportunity" }); if (this.act && !this.act.outcome) this.act.outcome = this.classify(t); }
+  // (each committed action judged on the time it had — until the next action's commitment, or the replay's end)
+  finalize(t) { if (this.pend && this.pend.state === "PENDING") Object.assign(this.pend, { state: "DECLINED", tEnd: t, reason: this.pend.last || "the replay ended before an opportunity" });
+    this.acts.forEach((A, i) => { if (!A.outcome) A.outcome = this.classify(i + 1 < this.acts.length ? this.acts[i + 1].t0 : t, A); }); }
   // ── the review record of the committed action (times relative to the request) ────────────────────────────────────────────────────────────────
   summary() { const A = this.act; if (!A) return null; const r = (x) => (x == null ? null : +(x - A.tReq).toFixed(3));
     return { request: 0, commit: r(A.t0), contactPlanned: r(A.tC), window: [r(A.tW0), r(A.tW1)], recoveryStart: r(A.tRec), controlReady: r(A.tCtl), family: A.fam, foot: A.F, support: A.S, c: +A.c.toFixed(2), angle: +(A.ang / DEG).toFixed(1), range: +A.rng.toFixed(2),
-      stride: A.stride, approach: +A.s0.toFixed(2), hits: A.hits.map((h) => ({ t: r(h.t), surface: h.surface, vIn: h.vIn.map((x) => +x.toFixed(2)), vOut: h.vOut.map((x) => +x.toFixed(2)), dv: +h.dv.toFixed(2), possBefore: h.possBefore, possAfter: h.possAfter })), outcome: A.outcome }; }
+      ballAtCommit: +hyp(A.ball0.p[0] - A.entry.P[0], A.ball0.p[1] - A.entry.P[1]).toFixed(2), recovery: +(A.tCtl - (A.hits.length ? A.hits[0].t : A.tC)).toFixed(3), regain: this.regain(A),
+      stride: A.stride, approach: +A.s0.toFixed(2), episodes: A.hits.length ? A.hits[A.hits.length - 1].episode : 0, hits: A.hits.map((h) => ({ t: r(h.t), episode: h.episode, surface: h.surface, vIn: h.vIn.map((x) => +x.toFixed(2)), vOut: h.vOut.map((x) => +x.toFixed(2)), dv: +h.dv.toFixed(2), possBefore: h.possBefore, possAfter: h.possAfter })), outcome: A.outcome }; }
 }

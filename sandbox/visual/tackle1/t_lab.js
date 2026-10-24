@@ -130,9 +130,10 @@ function writeDiag() { const C = L.cur, R = C.rep, S = R.action, f = (x, n = 3) 
   if (S) { const A = C.W.tk.act, r = (x) => (x == null ? "—" : `+${(+x).toFixed(3)} s`);
     lines.push("", `<b>THE ACTION</b>  ${S.family} · tackling foot <b>${S.foot}</b> · support ${S.support} · commitment c ${f(S.c, 2)}`, `challenge ${f(S.angle, 1)}° · ball ${f(S.range, 2)} m at contact (envelope ${f(A.mx, 2)} m) · approach ${f(S.approach, 2)} m/s`,
       `stride at commit: R ${A.stride.R.planted ? `planted ${A.stride.R.since}s` : `in swing u ${A.stride.R.u}`} · L ${A.stride.L.planted ? `planted ${A.stride.L.since}s` : `in swing u ${A.stride.L.u}`}`,
-      `contact: ${A.contact} · boot speed at contact ${f(A.vJab, 2)} m/s`, "", `<b>TIMES</b> (from the request)`, `  request        +0.000 s`, `  commit         ${r(S.commit)}`, `  contact plan   ${r(S.contactPlanned)}`,
-      `  contact window ${r(S.window[0])} … ${r(S.window[1])}`, `  recovery start ${r(S.recoveryStart)}`, `  control ready  ${r(S.controlReady)}`);
-    lines.push("", `<b>BALL CONTACT</b>`); if (!S.hits.length) lines.push(`  <span class="bad">none</span>`); for (const h of S.hits) lines.push(`  ${r(h.t)} ${h.surface} · ball ${hyp(...h.vIn).toFixed(2)} → ${hyp(...h.vOut).toFixed(2)} m/s (Δv ${f(h.dv, 2)}) · possession ${h.possBefore} → ${h.possAfter}`);
+      `contact: ${A.contact} · boot speed at contact ${f(A.vJab, 2)} m/s · ball ${f(S.ballAtCommit, 2)} m away at commitment`, "", `<b>TIMES</b> (from the request)`, `  request        +0.000 s`, `  commit         ${r(S.commit)}`, `  contact plan   ${r(S.contactPlanned)}`,
+      `  contact window ${r(S.window[0])} … ${r(S.window[1])}`, `  recovery start ${r(S.recoveryStart)}`, `  control ready  ${r(S.controlReady)}`,
+      `  recovery ${f(S.recovery, 3)} s from the ${S.hits.length ? "contact" : "planned contact"} to control ready${S.regain ? ` · ${f(S.regain.speedAtControl, 2)} m/s then; 2 m/s again after ${S.regain.to2ms != null ? f(S.regain.to2ms, 2) + " s" : "— (not within the replay)"}` : ""}`);
+    lines.push("", `<b>BALL CONTACT</b>`); if (!S.hits.length) lines.push(`  <span class="bad">none</span>`); if (S.hits.length) lines.push(`  ${S.hits.length} impulse(s) in ${S.episodes} contact episode(s)`); for (const h of S.hits) lines.push(`  ${r(h.t)} ${h.surface} · ball ${hyp(...h.vIn).toFixed(2)} → ${hyp(...h.vOut).toFixed(2)} m/s (Δv ${f(h.dv, 2)}) · possession ${h.possBefore} → ${h.possAfter}`);
     lines.push("", `<b>OUTCOME</b>  ${S.outcome ? S.outcome.kind : "—"}`, `  ${S.outcome ? S.outcome.why : ""}`); }
   if (R.possA.length) lines.push("", `<b>CARRIER'S POSSESSION</b> (the canonical model)`, ...R.possA.map((e) => `  +${f(e.t)} → ${e.to} (${e.why})`));
   if (R.possD.length) lines.push("", `<b>DEFENDER'S POSSESSION</b>`, ...R.possD.map((e) => `  +${f(e.t)} → ${e.to} (${e.why})`));
@@ -164,7 +165,7 @@ function bindUI() {
   $("selContact").onchange = (e) => { L.contact = e.target.value; buildList(); select(L.cur.tc.id); };
   $("bTry").onclick = () => { const C = L.cur, t = +(L.t - C.r.t0).toFixed(4); select(C.tc.id, { tackle: [t], paused: true }); L.t = Math.max(C.r.clip[0], L.cur.r.t0 + t - 0.3); };
   $("bNoTk").onclick = () => select(L.cur.tc.id, { tackle: [] });
-  $("tlc").onclick = (e) => { const C = L.cur, r = e.target.getBoundingClientRect(), u = clamp((e.clientX - r.left - 10) / (r.width - 20), 0, 1); L.t = C.r.clip[0] + u * (C.r.clip[1] - C.r.clip[0]); L.playing = false; };
+  $("tlc").onclick = (e) => { const C = L.cur, r = e.target.getBoundingClientRect(), u = clamp((e.clientX - r.left - 10) / (r.width - 20), 0, 1); L.t = Math.round((C.r.clip[0] + u * (C.r.clip[1] - C.r.clip[0])) / DT) * DT; L.playing = false; };
   window.addEventListener("keydown", (e) => { if (e.target.tagName === "SELECT") return; const k = e.key;
     if (k === " ") { e.preventDefault(); $("bPlay").onclick(); } else if (k === ",") step(e.shiftKey ? -1 : -4); else if (k === ".") step(e.shiftKey ? 1 : 4); else if (k === "t" || k === "T") $("bTry").onclick();
     else if (k === "b" || k === "B") $("bBall").onclick(); else if (k >= "1" && k <= "8") { const v = ["gameplay", "front", "rear", "sideL", "sideR", "q3f", "q3r", "top"][+k - 1]; L.cam = v; $("selCam").value = v; L.camS = null; } }); }
@@ -174,12 +175,12 @@ async function boot() { const q = new URLSearchParams(location.search); bindUI()
   L.ent = ent; const E = W.RUN1_V13; L.env = { E, M4, skel: ent.skel, colliders, baked, body: E.r1Body(ent.skel) };
   if (q.get("contact") === "PHASE_C") { L.contact = "PHASE_C"; $("selContact").value = "PHASE_C"; } if (q.get("cam")) { L.cam = q.get("cam"); $("selCam").value = L.cam; }
   for (const [k, id] of [["ball", "bBall"], ["body", "bBody"], ["skel", "bSkel"], ["diag", "bDiag"]]) if (q.get(k) != null) { L[k] = q.get(k) === "1"; $(id).classList.toggle("on", L[k]); }
-  buildList(); select(q.get("case") && L.cases.some((c) => c.id === q.get("case")) ? q.get("case") : L.cases[0].id, { paused: q.get("play") === "0" }); if (q.get("t") != null) { L.t = L.cur.r.t0 + +q.get("t"); L.playing = false; }
+  buildList(); select(q.get("case") && L.cases.some((c) => c.id === q.get("case")) ? q.get("case") : L.cases[0].id, { paused: q.get("play") === "0" }); if (q.get("t") != null) { L.t = Math.round((L.cur.r.t0 + +q.get("t")) / DT) * DT; L.playing = false; }
   $("loading").remove(); L.ready = true; L.external = q.get("external") === "1"; if (!L.external) requestAnimationFrame(frame); else frame(performance.now());
   // (the remaining cases' outcomes, one per idle moment)
   const rest = L.cases.filter((c) => !L.done.has(c.id + L.contact)); const next = () => { const c = rest.shift(); if (!c || L.external) return; select.lazy = true; const C = simulate(c); L.done.set(c.id + L.contact, C); const el = $("o_" + c.id); if (el) el.textContent = outcomeText(C); setTimeout(next, 30); }; setTimeout(next, 400); }
 // the automation surface (puppeteer: stills, checks)
-W.TL = { ready: () => L.ready, L, select: (id, o) => select(id, o || { paused: true }), seek: (t) => { L.t = L.cur.r.t0 + t; L.playing = false; frame(performance.now()); return L.t; }, cam: (c) => { L.cam = c; L.camS = null; $("selCam").value = c; frame(performance.now()); },
+W.TL = { ready: () => L.ready, L, select: (id, o) => select(id, o || { paused: true }), seek: (t) => { L.t = Math.round((L.cur.r.t0 + t) / DT) * DT; L.playing = false; frame(performance.now()); return L.t; }, cam: (c) => { L.cam = c; L.camS = null; $("selCam").value = c; frame(performance.now()); },
   set: (o) => { for (const k of ["ball", "body", "skel", "diag"]) if (o[k] != null) { L[k] = !!o[k]; } frame(performance.now()); }, report: () => (L.cur ? { id: L.cur.tc.id, rep: L.cur.rep, ms: L.cur.ms, frames: L.cur.F.length } : null),
   times: () => { const A = L.cur && L.cur.W.tk.act, t0 = L.cur.r.t0; return A ? { t0, req: A.tReq - t0, commit: A.t0 - t0, contact: A.tC - t0, hits: A.hits.map((h) => h.t - t0), rec: A.tRec - t0, ctl: A.tCtl - t0 } : { t0 }; } };
 boot().catch((e) => { const l = $("loading"); if (l) l.textContent = "TACKLING LAB failed: " + (e && e.stack || e); console.error(e); });

@@ -29,6 +29,7 @@ export const TCASES = [
   { id: "bf-exit", group: "BODY FEINT", name: "BODY FEINT · DEFENDER ON THE EXIT SIDE", c: find("BODY_FEINT_V2", "FAKE LEFT → RIGHT"), def: D(4.2, 1.0, 180), tackle: [0.60] },
   { id: "bf-early", group: "BODY FEINT", name: "BODY FEINT · TACKLE BEFORE THE FEINT", c: find("BODY_FEINT_V2", "FAKE LEFT → RIGHT"), def: D(2.4, -0.5, 180), tackle: [0.10] },
   { id: "croq", group: "LA CROQUETA", name: "LA CROQUETA · TACKLE AS THE TRANSFER STARTS", c: find("CROQUETA", "REF · JOG R → L"), def: D(3.0, -1.0, 180), tackle: [0.30] },
+  { id: "croq-win", group: "LA CROQUETA", name: "LA CROQUETA · CLOSE DEFENDER, TACKLE AS IT STARTS (from the move sweep)", c: find("CROQUETA", "REF · JOG R → L"), def: D(2.4, -0.5, 180), tackle: [0.40], note: "from tools/t_moves.mjs (set-up 2.4 / −0.5 @ 0.4): the tackle meets the ball as the Croqueta starts; then the race for the loose ball" },
   { id: "croq-early", group: "LA CROQUETA", name: "LA CROQUETA · TACKLE BEFORE THE TRANSFER", c: find("CROQUETA", "REF · JOG R → L"), def: D(2.4, -1.0, 180), tackle: [0.20] },
   // ── MIRROR (the left-footed twin carries; the defender's other foot) ──
   { id: "mirror", group: "MIRROR", name: "MIRROR · LEFT-FOOTED CARRIER · HIS RIGHT FOOT", c: carry("JOG", 0, { pref: "L" }), def: D(4.4, 0.85, 180), tackle: [0.62] },

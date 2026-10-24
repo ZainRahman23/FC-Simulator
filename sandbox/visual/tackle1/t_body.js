@@ -18,7 +18,7 @@ export function bodyAudit(env, W, t0, t1, o = {}) {
   const bA = new PlayBody(env, W.att), bD = new PlayBody(env, W.def), A = W.tk && W.tk.act, inT = (t) => !!(A && t >= A.t0 - 1e-9 && t <= A.tCtl + 1e-9);
   const ev = { in: {}, out: {} }, max = { footSpeed: 0, plantDrift: 0, kneeRate: 0, pelvisDev: 0, trunkRate: 0, overlap: 0, overlapIn: 0 }, list = [], pin = { R: null, L: null };
   const bump = (t, kind, v, extra) => { const b = inT(t) ? ev.in : ev.out; b[kind] = (b[kind] || 0) + 1; if (list.length < (o.keep || 40)) list.push(Object.assign({ t: +t.toFixed(4), kind, v: +v.toFixed(4), inTackle: inT(t) }, extra || {})); };
-  let prev = null;
+  let prev = null, prevA = null; const evA = {}, bumpA = (kind) => { evA[kind] = (evA[kind] || 0) + 1; };
   for (let k = Math.round(t0 / DT); k <= Math.round(t1 / DT); k++) { const t = k * DT, pd = bD.pose(t), pa = bA.pose(t), J = pd.J, st = W.def.stateAt(t), feet = W.tk ? W.tk.feetAtPlan(W.def.planAt(t), t) : null;
     if (prev) { const dtk = DT;
       for (const X of ["R", "L"]) { const d = hyp(...sub(J["foot_" + X].j, prev.J["foot_" + X].j)); max.footSpeed = Math.max(max.footSpeed, d / dtk); if (d > BODY_TH.footJump) bump(t, "FOOT JUMP", d, { foot: X });
@@ -32,5 +32,10 @@ export function bodyAudit(env, W, t0, t1, o = {}) {
     // the players' capsules: the deepest overlap this tick
     { let pen = 0; for (const [a, b, ra] of CAPS) for (const [c, d, rc] of CAPS) { const dd = segDist(J[a].j, J[b].j, pa.J[c].j, pa.J[d].j) - ra - rc; if (-dd > pen) pen = -dd; }
       max.overlap = Math.max(max.overlap, pen); if (inT(t)) max.overlapIn = Math.max(max.overlapIn, pen); if (pen > 0.03) bump(t, "PLAYER OVERLAP", pen); }
+    // (THE REFERENCE: the canonical carrier's own body, the same measures — what the current footballer shows in ordinary play)
+    if (o.att) { const JA = pa.J, sa = W.att.stateAt(t); if (prevA) { for (const X of ["R", "L"]) { if (hyp(...sub(JA["foot_" + X].j, prevA.J["foot_" + X].j)) > BODY_TH.footJump) bumpA("FOOT JUMP"); if (Math.abs(knee(JA, X) - knee(prevA.J, X)) > BODY_TH.kneeJump) bumpA("KNEE POP"); }
+        const dp = sub(JA.pelvis.j, prevA.J.pelvis.j), dr = [sa.P[0] - prevA.st.P[0], sa.P[1] - prevA.st.P[1], 0]; if (hyp(dp[0] - dr[0], dp[1] - dr[1], dp[2]) > BODY_TH.pelvisJump) bumpA("PELVIS SPIKE");
+        const tv = sub(JA.neck.j, JA.pelvis.j), tp = sub(prevA.J.neck.j, prevA.J.pelvis.j); if (Math.acos(Math.max(-1, Math.min(1, dot(tv, tp) / (hyp(...tv) * hyp(...tp))))) * D > BODY_TH.trunkJump) bumpA("TRUNK SPIKE"); }
+      prevA = { J: JA, st: sa }; }
     prev = { J, st }; }
-  return { ev, max: Object.fromEntries(Object.entries(max).map(([k, v]) => [k, +v.toFixed(4)])), list }; }
+  return { ev, evAtt: evA, max: Object.fromEntries(Object.entries(max).map(([k, v]) => [k, +v.toFixed(4)])), list }; }

@@ -72,6 +72,8 @@ export function runEncounter(W, enc, onTick = null) {
   if (c.noElite) for (const id of ["CRUYFF", "CHOP"]) A.P.techMin[id] = 101; if (c.noFam) A.o.noFam = new Set(c.noFam);
   const tReq = (enc.tackle || []).map((x) => Math.round(x / DT)), I = (c.intents || []).map((x) => ({ k: Math.round(x.t / DT), x })), n = Math.round((enc.dur || c.dur) / DT);
   for (let k = -nUp; k < n; k++) { const t = k * DT;
+    // (a case with a THREAT: the defender marker's point is the harness's threat from t = 0 — exactly as v_run.js runCaseOn sets it)
+    if (k === 0 && c.threat && c.def) { const st = A.stateAt(A.t), a = c.def[0], l = s * c.def[1]; A.setThreat({ P: [st.P[0] + a * Math.cos(st.h) - l * Math.sin(st.h), st.P[1] + a * Math.sin(st.h) + l * Math.cos(st.h)] }); }
     if (k >= 0) for (const q of I) if (q.k === k) { const it = intentOf(q.x.id); if (it) { const foot = q.x.foot ? (enc.mirror ? (q.x.foot === "R" ? "L" : "R") : q.x.foot) : null; A.requestSkill(Object.assign({}, it, { foot, sprint: !!q.x.sprint })); } }
     if (tReq.includes(k)) W.request("fixture");
     const ra = k < 0 ? R(k + nUp < 24 ? null : 0, c.mode) : (() => { const st = stickAt(c, t); return R(st.ang == null ? null : s * st.ang * DEG, st.mode); })();
