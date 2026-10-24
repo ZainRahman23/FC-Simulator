@@ -125,6 +125,13 @@ class PlayerState:
     box_support_actions: int = 0
 
 
+# Core Loop v2 E2 (ENGINE CHANGE): match-scoped attribute deltas
+# {attr: +x}, maintained by MatchEngine's modifier layers. A plain class
+# attribute (not a dataclass field): None by default, so legacy pickles,
+# asdict() output and every flags-off path are untouched.
+PlayerState.mods = None
+
+
 @dataclass(frozen=True)
 class TeamTactics:
     build_up_tempo: str = "BALANCED"
