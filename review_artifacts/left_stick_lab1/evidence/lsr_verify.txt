@@ -1,0 +1,19 @@
+~/Downloads/FC Simulator worktrees/left-stick-intent-v1/review_artifacts/left_stick_lab1/evidence/lsr_recorder_tests.json
+14 attempt(s) · schema TOUCHLINE_LEFT_STICK_RECORDING_V1 v1 · milestone f775daac · created 2026-10-24T00:04:50.951Z
+
+OK   RECORDER TEST · STRAIGHT HOLD                synthetic RESET        723 ticks   37 ms · hash IDENTICAL · state 0/16290 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 181/181 frames = pt_input.js
+OK   RECORDER TEST · SMOOTH 45° TURN              synthetic RESET        867 ticks   77 ms · hash IDENTICAL · state 0/19530 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 217/217 frames = pt_input.js
+OK   RECORDER TEST · SMOOTH 90° TURN              synthetic RESET        915 ticks   73 ms · hash IDENTICAL · state 0/20610 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 229/229 frames = pt_input.js
+OK   RECORDER TEST · RAPID 90° CHANGE             synthetic RESET        747 ticks   55 ms · hash IDENTICAL · state 0/16830 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 187/187 frames = pt_input.js
+OK   RECORDER TEST · 180° REVERSAL                synthetic RESET        771 ticks   54 ms · hash IDENTICAL · state 0/17370 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 193/193 frames = pt_input.js
+OK   RECORDER TEST · RIGHT → LEFT REVERSAL        synthetic RESET        771 ticks   38 ms · hash IDENTICAL · state 0/17370 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 193/193 frames = pt_input.js
+OK   RECORDER TEST · NEUTRAL → DIRECTION          synthetic RESET        723 ticks   17 ms · hash IDENTICAL · state 0/16290 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 120/120 frames = pt_input.js
+OK   RECORDER TEST · DIRECTION → NEUTRAL          synthetic RESET        843 ticks   21 ms · hash IDENTICAL · state 0/18990 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 124/124 frames = pt_input.js
+OK   RECORDER TEST · SMOOTH 90° TURN              synthetic RESET        915 ticks   58 ms · hash IDENTICAL · state 0/20610 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 229/229 frames = pt_input.js
+OK   RECORDER TEST · SMOOTH 90° TURN              synthetic RESET        915 ticks   39 ms · hash IDENTICAL · state 0/20610 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 229/229 frames = pt_input.js
+OK   RECORDER TEST · POINTER (CDP mouse)          mouse     RESET        831 ticks   47 ms · hash IDENTICAL · state 0/18720 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 171/171 frames = pt_input.js
+OK   RECORDER TEST · KEYBOARD (WASD)              keys      RESET        651 ticks   21 ms · hash IDENTICAL · state 0/14670 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 127/127 frames = pt_input.js
+OK   RECORDER TEST · CONTINUOUS                   mouse     CONTINUOUS  2243 ticks   75 ms · hash IDENTICAL · state 0/24570 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 261/261 frames = pt_input.js
+OK   RECORDER TEST · GAMEPAD (emulated)           gamepad   RESET        603 ticks   47 ms · hash IDENTICAL · state 0/13590 cells differ · timeline = · ticks = · derived 0 differ · events = · pipeline 128/128 frames = pt_input.js
+
+ALL 14 ATTEMPTS: node ≡ browser (hash, state track, timeline, request ticks), derived signals reproduced, delivered requests = the canonical pipeline

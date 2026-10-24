@@ -1,0 +1,48 @@
+PASS  the lab boots on the canonical sandbox (layered · EXPANDED · D38 · CONTROLLED · CARRY-B · ball on)  — {"analogFeint":false,"engine":"layered","vocab":"EXPANDED","pace":"D38","control":"CONTROLLED","carry":"B","ballOn":true}
+PASS  the old analog feint is OFF in the framed sandbox
+PASS  the framed page is the canonical sandbox in external mode
+PASS  recorder test straight_hold: recorded through the real footballer (source synthetic, 181 frames ≈ 60 Hz, 362 state rows, request delivered on 723 / 723 ticks)  — {"ev":{"dir_hold":1},"tl":{"liftoff":11,"contact":5,"poss":1,"replan":19,"touchdown":10}}
+PASS  recorder test smooth_45: recorded through the real footballer (source synthetic, 217 frames ≈ 60 Hz, 434 state rows, request delivered on 867 / 867 ticks)  — {"ev":{"dir_hold":2},"tl":{"liftoff":14,"contact":6,"poss":1,"replan":27,"touchdown":12,"action":2,"select":1}}
+PASS  recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)  — {"ev":{"dir_hold":2},"tl":{"liftoff":14,"contact":8,"poss":1,"replan":33,"touchdown":13}}
+PASS  recorder test rapid_90: recorded through the real footballer (source synthetic, 187 frames ≈ 60 Hz, 374 state rows, request delivered on 747 / 747 ticks)  — {"ev":{"dir_hold":2,"large_turn":1},"tl":{"liftoff":12,"contact":7,"poss":1,"replan":23,"touchdown":11,"action":4,"select":2}}
+PASS  recorder test reversal_180: recorded through the real footballer (source synthetic, 193 frames ≈ 60 Hz, 386 state rows, request delivered on 771 / 771 ticks)  — {"ev":{"dir_hold":2,"mag_release":1,"near_neutral":1,"reversal":1,"large_turn":1,"centre_cross":1,"mag_spike":1},"tl":{"liftoff":14,"contact":6,"poss":1,"replan":24,"touchdown":12,"action":2,"select":1}}
+PASS  recorder test right_left: recorded through the real footballer (source synthetic, 193 frames ≈ 60 Hz, 386 state rows, request delivered on 771 / 771 ticks)  — {"ev":{"dir_hold":2,"mag_release":1,"near_neutral":1,"reversal":1,"large_turn":1,"centre_cross":1,"mag_spike":1},"tl":{"liftoff":14,"contact":8,"poss":1,"replan":25,"touchdown":12,"action":2,"select":1}}
+PASS  recorder test neutral_dir: recorded through the real footballer (source synthetic, 181 frames ≈ 60 Hz, 362 state rows, request delivered on 479 / 723 ticks)  — {"ev":{"dz_exit":1,"mag_spike":1,"dir_hold":1},"tl":{"replan":19,"liftoff":8,"contact":4,"poss":1,"touchdown":7}}
+PASS  recorder test dir_neutral: recorded through the real footballer (source synthetic, 211 frames ≈ 60 Hz, 422 state rows, request delivered on 495 / 843 ticks)  — {"ev":{"dir_hold":1,"mag_release":1,"near_neutral":1,"dz_enter":1},"tl":{"liftoff":10,"contact":6,"poss":1,"replan":24,"touchdown":10}}
+PASS  recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)  — {"ev":{"dir_hold":2},"tl":{"liftoff":14,"contact":8,"poss":1,"replan":33,"touchdown":13}}
+PASS  recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)  — {"ev":{"dir_hold":2},"tl":{"liftoff":14,"contact":8,"poss":1,"replan":33,"touchdown":13}}
+PASS  straight hold: no angular travel, no reversal / crossing  — {"travel":0,"maxR":1,"d150":0,"peakOm":0,"crossings":0,"reversals":0,"startDir":0,"speedA":1.394,"supA":"L","stepPhaseA":null,"nextTDA":0.05000000000000002,"firstAction":null,"firstContact":{"F":"R","dt":0.42916999999999994,"role":"carry"},"anchor":{"kind":"d150","t":0.15,"i":9}}
+PASS  smooth 45°: angular travel 45°, no large-turn marker  — 45
+PASS  smooth 90°: angular travel 90°  — 90
+PASS  rapid 90°: one large-turn marker, |Δ150| ≈ 90°  — {"travel":90,"maxR":1,"d150":90,"peakOm":2699.5,"crossings":0,"reversals":0,"startDir":0,"speedA":5.3,"supA":"none","stepPhaseA":0.8394,"nextTDA":0.05492666666666657,"firstAction":{"label":"COMPACT OUTSIDE REDIRECT","dt":0.054166666666666696},"firstContact":{"F":"R","dt":0.4124966666666665,"role":"compact outside redirect"},"anchor":{"kind":"d150","t":1.5458333333333334,"i":93}}
+PASS  180° reversal: one centre crossing, one rapid reversal  — {"dir_hold":2,"mag_release":1,"near_neutral":1,"reversal":1,"large_turn":1,"centre_cross":1,"mag_spike":1}
+PASS  right → left: one centre crossing, one rapid reversal, start +90°  — {"dir_hold":2,"mag_release":1,"near_neutral":1,"reversal":1,"large_turn":1,"centre_cross":1,"mag_spike":1}
+PASS  neutral → direction: deadzone exit + magnitude spike, start +30°  — {"dz_exit":1,"mag_spike":1,"dir_hold":1}
+PASS  direction → neutral: deadzone entry + magnitude release, the request ends  — {"dir_hold":1,"mag_release":1,"near_neutral":1,"dz_enter":1}
+PASS  pointer: source mouse, raw down / move-or-coalesced / up logged, request delivered  — {"down":1,"coalesced":86,"up":1}
+PASS  pointer: the drag through the centre shows as a crossing  — {"dz_exit":2,"mag_spike":13,"dir_hold":2,"mag_release":4,"dz_enter":2,"near_neutral":2,"centre_cross":1,"reversal":1,"large_turn":1}
+PASS  pointer: raw event → the frame that applied it ≤ one frame  — {"n":88,"median":0.8,"max":16.6}
+PASS  an intent MARK is stored and becomes the anchor  — {"kind":"mark","t":1.2,"i":72}
+PASS  keyboard: source keys, key events logged, the request delivered (WASD through the sandbox's path)  — {"keydown":2,"keyup":2}
+PASS  CONTINUOUS: k0 = START − 1.5 s, pre-roll frames recorded  — {"k0":1151,"kStart":1511,"pre":91}
+PASS  REPLAY of a saved attempt still in the live session runs on it (no re-simulation)  — ["REPLAY","the live session (no re-simulation needed)"]
+PASS  gamepad: Menu starts / stops, A saves; source gamepad, raw axes logged, the request delivered  — {"gpRec":"REC","gpSaved":true,"src":"gamepad","raw":{"gamepad":63},"delivered":512}
+PASS  R pressed inside the sandbox's frame is taken by the lab (no session reset)  — {"tagBefore":14,"tagAfter":14}
+PASS  Enter (focus inside the sandbox's frame) starts and stops a recording  — {"recByEnter":"REC","afterEnter":"REVIEW"}
+PASS  Backspace discards
+PASS  the ATTEMPTS tab lists every saved attempt (14) and the per-label statistics  — {"rows":14,"labels":12}
+PASS  COMPARE: the three SMOOTH 90° attempts overlaid, statistics and entry state  — {"stats":16,"entry":3}
+PASS  every saved attempt re-simulated in the page (PT.load): hash + state track identical (14/14)  — []
+PASS  the dataset exported (14 attempts, 2012.2 KB, schema TOUCHLINE_LEFT_STICK_RECORDING_V1 v1)
+PASS  IMPORT into a fresh browser profile: 14 attempts (was 0)  — {"added":14,"skipped":0,"errs":[]}
+PASS  every imported attempt replays by re-simulation, identical (14/14)  — []
+PASS  the imported attempts' summaries = the recorded ones
+PASS  CPU — canonical page work 2.196 ms/frame (sim 1.337); lab diagnostics OFF: page work 1.898 + lab 0.072 ms/frame (p99 0.3); ON: + 0.768 (p99 2.2); recording: + 0.726  — {"canonical":{"work":{"avg":2.196,"p95":8.7,"p99":11.7,"n":1200},"sim":{"avg":1.337,"p95":7.8,"p99":10.8,"n":1200},"frame":{"avg":16.666,"p95":16.7,"p99":16.8,"n":1200}},"lab_OFF":{"work":{"avg":1.898,"p95":7.5,"p99":11,"n":1200},"sim":{"avg":1.123,"p95":6.8,"p99":10.2,"n":1200},"frame":{"avg":16.666,"p95":16.8,"p99":16.8,"n":1200},"labHost":{"avg":0.072,"p95":0.2,"p99":0.3,"n":1200},"labTick":{"avg":2.034,"p95":7.5,"p99":11.2,"n":1200}},"lab_ON":{"work":{"avg":1.663,"p95":6.6,"p99":9.3,"n":1200},"sim":{"avg":1.029,"p95":6,"p99":8.5,"n":1200},"frame":{"avg":16.666,"p95":16.7,"p99":16.8,"n":1200},"labHost":{"avg":0.768,"p95":1.6,"p99":2.2,"n":1200},"labTick":{"avg":1.785,"p95":6.8,"p99":9.5,"n":1200}},"stopMs":16,"lab_REC":{"work":{"avg":1.476,"p95":5.7,"p99":8.9,"n":662},"sim":{"avg":0.926,"p95":5.1,"p99":8.3,"n":662},"frame":{"avg":16.666,"p95":16.7,"p99":16.8,"n":662},"labHost":{"avg":0.726,"p95":1.4,"p99":2.1,"n":662},"labTick":{"avg":1.551,"p95":5.7,"p99":8.9,"n":662}}}
+PASS  no console / HTTP errors: lab_A  — []
+PASS  no console / HTTP errors: lab_B  — []
+PASS  no console / HTTP errors: sandbox_C  — []
+PASS  no console / HTTP errors: lab_C_OFF  — []
+PASS  no console / HTTP errors: lab_C_ON  — []
+PASS  no console / HTTP errors: lab_C_REC  — []
+
+46/46 checks pass

@@ -1,0 +1,1915 @@
+{
+ "A": {
+  "checks": {
+   "analogFeint": false,
+   "engine": "layered",
+   "vocab": "EXPANDED",
+   "pace": "D38",
+   "control": "CONTROLLED",
+   "carry": "B",
+   "ballOn": true
+  },
+  "synth": [
+   {
+    "id": "lsr-20261024-010349-rhp5",
+    "label": "RECORDER TEST · STRAIGHT HOLD",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 722,
+    "dur": 3.008,
+    "frames": 181,
+    "frameHz": 60,
+    "raw": 181,
+    "rawKinds": {
+     "synthetic": 181
+    },
+    "state": 362,
+    "timeline": {
+     "liftoff": 11,
+     "contact": 5,
+     "poss": 1,
+     "replan": 19,
+     "touchdown": 10
+    },
+    "stickEvents": {
+     "dir_hold": 1
+    },
+    "delivered": 723,
+    "ticks": 723,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 181,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 0,
+     "maxR": 1,
+     "d150": 0,
+     "peakOm": 0,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 1.394,
+     "supA": "L",
+     "stepPhaseA": null,
+     "nextTDA": 0.05000000000000002,
+     "firstAction": null,
+     "firstContact": {
+      "F": "R",
+      "dt": 0.42916999999999994,
+      "role": "carry"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 0.15,
+      "i": 9
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 107136,
+    "trace": "straight_hold"
+   },
+   {
+    "id": "lsr-20261024-010354-bcni",
+    "label": "RECORDER TEST · SMOOTH 45° TURN",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 866,
+    "dur": 3.608,
+    "frames": 217,
+    "frameHz": 60,
+    "raw": 217,
+    "rawKinds": {
+     "synthetic": 217
+    },
+    "state": 434,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 6,
+     "poss": 1,
+     "replan": 27,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    },
+    "stickEvents": {
+     "dir_hold": 2
+    },
+    "delivered": 867,
+    "ticks": 867,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 217,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 45,
+     "maxR": 1,
+     "d150": 17.205,
+     "peakOm": 117.7,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 4.403,
+     "supA": "none",
+     "stepPhaseA": 0.8937,
+     "nextTDA": 0.03774333333333324,
+     "firstAction": {
+      "label": "LATERAL TRANSFER",
+      "dt": 0.037503333333333444
+     },
+     "firstContact": {
+      "F": "L",
+      "dt": 0.1750033333333334,
+      "role": "croqueta · the inside plays it across"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.8791666666666667,
+      "i": 113
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 162362,
+    "trace": "smooth_45"
+   },
+   {
+    "id": "lsr-20261024-010358-5a70",
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 914,
+    "dur": 3.808,
+    "frames": 229,
+    "frameHz": 60,
+    "raw": 229,
+    "rawKinds": {
+     "synthetic": 229
+    },
+    "state": 458,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    },
+    "stickEvents": {
+     "dir_hold": 2
+    },
+    "delivered": 915,
+    "ticks": 915,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 229,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 90,
+     "maxR": 1,
+     "d150": 26.112,
+     "peakOm": 176.6,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 5.3,
+     "supA": "L",
+     "stepPhaseA": 0.2096,
+     "nextTDA": 0.2539433333333332,
+     "firstAction": null,
+     "firstContact": {
+      "F": "L",
+      "dt": 0.4500033333333333,
+      "role": "carry turn"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.9791666666666667,
+      "i": 119
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 171745,
+    "trace": "smooth_90"
+   },
+   {
+    "id": "lsr-20261024-010403-4ga8",
+    "label": "RECORDER TEST · RAPID 90° CHANGE",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 746,
+    "dur": 3.108,
+    "frames": 187,
+    "frameHz": 60,
+    "raw": 187,
+    "rawKinds": {
+     "synthetic": 187
+    },
+    "state": 374,
+    "timeline": {
+     "liftoff": 12,
+     "contact": 7,
+     "poss": 1,
+     "replan": 23,
+     "touchdown": 11,
+     "action": 4,
+     "select": 2
+    },
+    "stickEvents": {
+     "dir_hold": 2,
+     "large_turn": 1
+    },
+    "delivered": 747,
+    "ticks": 747,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 187,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 90,
+     "maxR": 1,
+     "d150": 90,
+     "peakOm": 2699.5,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 5.3,
+     "supA": "none",
+     "stepPhaseA": 0.8394,
+     "nextTDA": 0.05492666666666657,
+     "firstAction": {
+      "label": "COMPACT OUTSIDE REDIRECT",
+      "dt": 0.054166666666666696
+     },
+     "firstContact": {
+      "F": "R",
+      "dt": 0.4124966666666665,
+      "role": "compact outside redirect"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.5458333333333334,
+      "i": 93
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 140567,
+    "trace": "rapid_90"
+   },
+   {
+    "id": "lsr-20261024-010406-15ld",
+    "label": "RECORDER TEST · 180° REVERSAL",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 770,
+    "dur": 3.208,
+    "frames": 193,
+    "frameHz": 60,
+    "raw": 193,
+    "rawKinds": {
+     "synthetic": 193
+    },
+    "state": 386,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 6,
+     "poss": 1,
+     "replan": 24,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    },
+    "stickEvents": {
+     "dir_hold": 2,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "reversal": 1,
+     "large_turn": 1,
+     "centre_cross": 1,
+     "mag_spike": 1
+    },
+    "delivered": 771,
+    "ticks": 771,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 193,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 180,
+     "maxR": 1,
+     "d150": -180,
+     "peakOm": -10778.4,
+     "crossings": 1,
+     "reversals": 1,
+     "startDir": 0,
+     "speedA": 5.156,
+     "supA": "none",
+     "stepPhaseA": 0.8897,
+     "nextTDA": 0.0390299999999999,
+     "firstAction": {
+      "label": "BRAKING TOUCH",
+      "dt": 0
+     },
+     "firstContact": {
+      "F": "R",
+      "dt": 0.17083000000000004,
+      "role": "braking touch"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.5625,
+      "i": 94
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 145697,
+    "trace": "reversal_180"
+   },
+   {
+    "id": "lsr-20261024-010410-2uup",
+    "label": "RECORDER TEST · RIGHT → LEFT REVERSAL",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 770,
+    "dur": 3.208,
+    "frames": 193,
+    "frameHz": 60,
+    "raw": 193,
+    "rawKinds": {
+     "synthetic": 193
+    },
+    "state": 386,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 25,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    },
+    "stickEvents": {
+     "dir_hold": 2,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "reversal": 1,
+     "large_turn": 1,
+     "centre_cross": 1,
+     "mag_spike": 1
+    },
+    "delivered": 771,
+    "ticks": 771,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 193,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 180,
+     "maxR": 1,
+     "d150": -180,
+     "peakOm": -10778.4,
+     "crossings": 1,
+     "reversals": 1,
+     "startDir": 90,
+     "speedA": 5.323,
+     "supA": "none",
+     "stepPhaseA": 0.9028,
+     "nextTDA": 0.03489000000000009,
+     "firstAction": {
+      "label": "BRAKING TOUCH",
+      "dt": 0
+     },
+     "firstContact": {
+      "F": "L",
+      "dt": 0.1625000000000001,
+      "role": "braking touch"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.5625,
+      "i": 94
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 145275,
+    "trace": "right_left"
+   },
+   {
+    "id": "lsr-20261024-010415-s8tp",
+    "label": "RECORDER TEST · NEUTRAL → DIRECTION",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 722,
+    "dur": 3.008,
+    "frames": 181,
+    "frameHz": 60,
+    "raw": 181,
+    "rawKinds": {
+     "synthetic": 181
+    },
+    "state": 362,
+    "timeline": {
+     "replan": 19,
+     "liftoff": 8,
+     "contact": 4,
+     "poss": 1,
+     "touchdown": 7
+    },
+    "stickEvents": {
+     "dz_exit": 1,
+     "mag_spike": 1,
+     "dir_hold": 1
+    },
+    "delivered": 479,
+    "ticks": 723,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 181,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 0,
+     "maxR": 1,
+     "d150": 0,
+     "peakOm": 0,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 30,
+     "speedA": 1.393,
+     "supA": "R",
+     "stepPhaseA": null,
+     "nextTDA": 0.06667000000000001,
+     "firstAction": null,
+     "firstContact": {
+      "F": "R",
+      "dt": 0.22499999999999987,
+      "role": "carry"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.1625,
+      "i": 70
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 118770,
+    "trace": "neutral_dir"
+   },
+   {
+    "id": "lsr-20261024-010419-h01m",
+    "label": "RECORDER TEST · DIRECTION → NEUTRAL",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 842,
+    "dur": 3.508,
+    "frames": 211,
+    "frameHz": 60,
+    "raw": 211,
+    "rawKinds": {
+     "synthetic": 211
+    },
+    "state": 422,
+    "timeline": {
+     "liftoff": 10,
+     "contact": 6,
+     "poss": 1,
+     "replan": 24,
+     "touchdown": 10
+    },
+    "stickEvents": {
+     "dir_hold": 1,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "dz_enter": 1
+    },
+    "delivered": 495,
+    "ticks": 843,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 211,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 0,
+     "maxR": 1,
+     "d150": 0,
+     "peakOm": 0,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 1.393,
+     "supA": "R",
+     "stepPhaseA": null,
+     "nextTDA": 0.05000000000000002,
+     "firstAction": null,
+     "firstContact": {
+      "F": "R",
+      "dt": 0.20833,
+      "role": "carry"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 0.15,
+      "i": 9
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 147070,
+    "trace": "dir_neutral"
+   },
+   {
+    "id": "lsr-20261024-010423-3a6p",
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 914,
+    "dur": 3.808,
+    "frames": 229,
+    "frameHz": 60,
+    "raw": 229,
+    "rawKinds": {
+     "synthetic": 229
+    },
+    "state": 458,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    },
+    "stickEvents": {
+     "dir_hold": 2
+    },
+    "delivered": 915,
+    "ticks": 915,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 229,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 90,
+     "maxR": 1,
+     "d150": 26.112,
+     "peakOm": 176.6,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 5.3,
+     "supA": "L",
+     "stepPhaseA": 0.1569,
+     "nextTDA": 0.2705899999999999,
+     "firstAction": null,
+     "firstContact": {
+      "F": "L",
+      "dt": 0.46667000000000014,
+      "role": "carry turn"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.9625,
+      "i": 118
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 171571,
+    "trace": "smooth_90"
+   },
+   {
+    "id": "lsr-20261024-010428-no1e",
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "source": "synthetic",
+    "mode": "RESET",
+    "k0": 0,
+    "kStart": 0,
+    "k1": 914,
+    "dur": 3.808,
+    "frames": 229,
+    "frameHz": 60,
+    "raw": 229,
+    "rawKinds": {
+     "synthetic": 229
+    },
+    "state": 458,
+    "timeline": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    },
+    "stickEvents": {
+     "dir_hold": 2
+    },
+    "delivered": 915,
+    "ticks": 915,
+    "preRollFrames": 0,
+    "latencyMs": {
+     "n": 229,
+     "median": 0,
+     "max": 0
+    },
+    "summary": {
+     "travel": 90,
+     "maxR": 1,
+     "d150": 26.112,
+     "peakOm": 176.6,
+     "crossings": 0,
+     "reversals": 0,
+     "startDir": 0,
+     "speedA": 5.3,
+     "supA": "L",
+     "stepPhaseA": 0.2832,
+     "nextTDA": 0.1707833333333333,
+     "firstAction": null,
+     "firstContact": {
+      "F": "L",
+      "dt": 0.37083333333333335,
+      "role": "carry correction"
+     },
+     "anchor": {
+      "kind": "d150",
+      "t": 1.9791666666666667,
+      "i": 119
+     }
+    },
+    "flags": {
+     "explicitRequests": 0,
+     "autoVocab": 0
+    },
+    "bytes": 174083,
+    "trace": "smooth_90"
+   }
+  ],
+  "pointer": {
+   "id": "lsr-20261024-010432-9iqw",
+   "label": "RECORDER TEST · POINTER (CDP mouse)",
+   "source": "mouse",
+   "mode": "RESET",
+   "k0": 0,
+   "kStart": 0,
+   "k1": 830,
+   "dur": 3.458,
+   "frames": 208,
+   "frameHz": 60,
+   "raw": 88,
+   "rawKinds": {
+    "down": 1,
+    "coalesced": 86,
+    "up": 1
+   },
+   "state": 416,
+   "timeline": {
+    "replan": 41,
+    "liftoff": 13,
+    "contact": 9,
+    "poss": 1,
+    "touchdown": 13,
+    "action": 4,
+    "select": 2,
+    "control": 1
+   },
+   "stickEvents": {
+    "dz_exit": 2,
+    "mag_spike": 13,
+    "dir_hold": 2,
+    "mag_release": 4,
+    "dz_enter": 2,
+    "near_neutral": 2,
+    "centre_cross": 1,
+    "reversal": 1,
+    "large_turn": 1
+   },
+   "delivered": 683,
+   "ticks": 831,
+   "preRollFrames": 0,
+   "latencyMs": {
+    "n": 88,
+    "median": 0.8,
+    "max": 16.6
+   },
+   "summary": {
+    "travel": 289.16,
+    "maxR": 1,
+    "d150": -180.682,
+    "peakOm": 2692.2,
+    "crossings": 1,
+    "reversals": 1,
+    "startDir": 90,
+    "speedA": 5.3,
+    "supA": "R",
+    "stepPhaseA": 0.2113,
+    "nextTDA": 0.24923000000000006,
+    "firstAction": {
+     "label": "OUTSIDE CUT (L)",
+     "dt": 0.49583
+    },
+    "firstContact": {
+     "F": "R",
+     "dt": 0.49167000000000005,
+     "role": "carry correction"
+    },
+    "anchor": {
+     "kind": "mark",
+     "t": 1.2,
+     "i": 72
+    }
+   },
+   "flags": {
+    "explicitRequests": 0,
+    "autoVocab": 0
+   },
+   "bytes": 163527,
+   "mark": 1.2
+  },
+  "keys": {
+   "id": "lsr-20261024-010436-7vg2",
+   "label": "RECORDER TEST · KEYBOARD (WASD)",
+   "source": "keys",
+   "mode": "RESET",
+   "k0": 0,
+   "kStart": 0,
+   "k1": 650,
+   "dur": 2.708,
+   "frames": 163,
+   "frameHz": 60,
+   "raw": 4,
+   "rawKinds": {
+    "keydown": 2,
+    "keyup": 2
+   },
+   "state": 326,
+   "timeline": {
+    "replan": 19,
+    "liftoff": 10,
+    "poss": 1,
+    "contact": 6,
+    "touchdown": 9,
+    "action": 4,
+    "select": 2
+   },
+   "stickEvents": {
+    "dz_exit": 1,
+    "mag_spike": 1,
+    "dir_hold": 2,
+    "dz_enter": 1,
+    "near_neutral": 1,
+    "mag_release": 1
+   },
+   "delivered": 508,
+   "ticks": 651,
+   "preRollFrames": 0,
+   "latencyMs": {
+    "n": 4,
+    "median": 7,
+    "max": 16.4
+   },
+   "summary": {
+    "travel": 90,
+    "maxR": 1,
+    "d150": 45,
+    "peakOm": -2710.8,
+    "crossings": 0,
+    "reversals": 0,
+    "startDir": 0,
+    "speedA": 5.3,
+    "supA": "none",
+    "stepPhaseA": 0.5682,
+    "nextTDA": 0.17083666666666675,
+    "firstAction": {
+     "label": "LATERAL TRANSFER",
+     "dt": 0.5999966666666667
+    },
+    "firstContact": {
+     "F": "L",
+     "dt": 0.09583666666666679,
+     "role": "compact inside redirect"
+    },
+    "anchor": {
+     "kind": "d150",
+     "t": 1.5958333333333332,
+     "i": 96
+    }
+   },
+   "flags": {
+    "explicitRequests": 0,
+    "autoVocab": 0
+   },
+   "bytes": 100857
+  },
+  "cont": {
+   "id": "lsr-20261024-010443-2fmo",
+   "label": "RECORDER TEST · CONTINUOUS",
+   "source": "mouse",
+   "mode": "CONTINUOUS",
+   "k0": 1151,
+   "kStart": 1511,
+   "k1": 2242,
+   "dur": 4.546,
+   "frames": 273,
+   "frameHz": 60,
+   "raw": 95,
+   "rawKinds": {
+    "coalesced": 94,
+    "up": 1
+   },
+   "state": 546,
+   "timeline": {
+    "liftoff": 15,
+    "replan": 38,
+    "touchdown": 15,
+    "contact": 8
+   },
+   "stickEvents": {
+    "dir_hold": 2,
+    "dz_enter": 1,
+    "near_neutral": 1,
+    "mag_release": 1
+   },
+   "delivered": 1044,
+   "ticks": 1092,
+   "preRollFrames": 91,
+   "latencyMs": {
+    "n": 95,
+    "median": 14.1,
+    "max": 361.8
+   },
+   "summary": {
+    "travel": 139.79,
+    "maxR": 1,
+    "d150": 22.545,
+    "peakOm": 451.8,
+    "crossings": 0,
+    "reversals": 0,
+    "startDir": 0,
+    "speedA": 5.3,
+    "supA": "L",
+    "stepPhaseA": 0.0459,
+    "nextTDA": 0.30186666666666717,
+    "firstAction": null,
+    "firstContact": {
+     "F": "R",
+     "dt": 0.22499666666666762,
+     "role": "carry correction"
+    },
+    "anchor": {
+     "kind": "d150",
+     "t": 8.095833333333333,
+     "i": 198
+    }
+   },
+   "flags": {
+    "explicitRequests": 0,
+    "autoVocab": 0
+   },
+   "bytes": 209694
+  },
+  "replayLive": [
+   "REPLAY",
+   "the live session (no re-simulation needed)"
+  ],
+  "gamepad": {
+   "id": "lsr-20261024-010447-ms07",
+   "label": "RECORDER TEST · GAMEPAD (emulated)",
+   "source": "gamepad",
+   "mode": "RESET",
+   "k0": 0,
+   "kStart": 0,
+   "k1": 602,
+   "dur": 2.508,
+   "frames": 151,
+   "frameHz": 60,
+   "raw": 63,
+   "rawKinds": {
+    "gamepad": 63
+   },
+   "state": 302,
+   "timeline": {
+    "replan": 25,
+    "liftoff": 9,
+    "contact": 6,
+    "poss": 1,
+    "touchdown": 8
+   },
+   "stickEvents": {
+    "dz_exit": 1,
+    "mag_spike": 1,
+    "dir_hold": 2,
+    "dz_enter": 1,
+    "near_neutral": 1,
+    "mag_release": 1
+   },
+   "delivered": 512,
+   "ticks": 603,
+   "preRollFrames": 0,
+   "latencyMs": {
+    "n": 63,
+    "median": 6.7,
+    "max": 16.5
+   },
+   "summary": {
+    "travel": 90,
+    "maxR": 0.97,
+    "d150": 30,
+    "peakOm": 361.4,
+    "crossings": 0,
+    "reversals": 0,
+    "startDir": 0,
+    "speedA": 5.3,
+    "supA": "none",
+    "stepPhaseA": 0.7975,
+    "nextTDA": 0.06816666666666671,
+    "firstAction": null,
+    "firstContact": {
+     "F": "L",
+     "dt": 0.3041666666666667,
+     "role": "carry turn"
+    },
+    "anchor": {
+     "kind": "d150",
+     "t": 1.3958333333333333,
+     "i": 84
+    }
+   },
+   "flags": {
+    "explicitRequests": 0,
+    "autoVocab": 0
+   },
+   "bytes": 100856
+  },
+  "listRows": 14,
+  "statRows": 12,
+  "cmp": {
+   "stats": 16,
+   "entry": 3
+  },
+  "resim": [
+   {
+    "label": "RECORDER TEST · STRAIGHT HOLD",
+    "ok": true,
+    "det": "re-simulated 723 ticks in 18 ms · hash dda3485c vs recorded dda3485c → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · SMOOTH 45° TURN",
+    "ok": true,
+    "det": "re-simulated 867 ticks in 29 ms · hash bb356ed2 vs recorded bb356ed2 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "ok": true,
+    "det": "re-simulated 915 ticks in 34 ms · hash 6cef36ba vs recorded 6cef36ba → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · RAPID 90° CHANGE",
+    "ok": true,
+    "det": "re-simulated 747 ticks in 28 ms · hash 4e13e5e3 vs recorded 4e13e5e3 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · 180° REVERSAL",
+    "ok": true,
+    "det": "re-simulated 771 ticks in 26 ms · hash 8b1f73cc vs recorded 8b1f73cc → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · RIGHT → LEFT REVERSAL",
+    "ok": true,
+    "det": "re-simulated 771 ticks in 25 ms · hash 95774e9 vs recorded 95774e9 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · NEUTRAL → DIRECTION",
+    "ok": true,
+    "det": "re-simulated 723 ticks in 10 ms · hash 1abafef9 vs recorded 1abafef9 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · DIRECTION → NEUTRAL",
+    "ok": true,
+    "det": "re-simulated 843 ticks in 15 ms · hash d2348cf5 vs recorded d2348cf5 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "ok": true,
+    "det": "re-simulated 915 ticks in 30 ms · hash a42b1eee vs recorded a42b1eee → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · SMOOTH 90° TURN",
+    "ok": true,
+    "det": "re-simulated 915 ticks in 28 ms · hash 3406ed42 vs recorded 3406ed42 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · POINTER (CDP mouse)",
+    "ok": true,
+    "det": "re-simulated 831 ticks in 31 ms · hash bf718f29 vs recorded bf718f29 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · KEYBOARD (WASD)",
+    "ok": true,
+    "det": "re-simulated 651 ticks in 16 ms · hash 80ddbb vs recorded 80ddbb → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · CONTINUOUS",
+    "ok": true,
+    "det": "re-simulated 2243 ticks in 55 ms · hash c0e6c022 vs recorded c0e6c022 → IDENTICAL · state track identical"
+   },
+   {
+    "label": "RECORDER TEST · GAMEPAD (emulated)",
+    "ok": true,
+    "det": "re-simulated 603 ticks in 22 ms · hash ea1529e vs recorded ea1529e → IDENTICAL · state track identical"
+   }
+  ],
+  "datasetKB": 2012.2,
+  "attempts": 14,
+  "summaries": [
+   "{\"id\":\"lsr-20261024-010349-rhp5\",\"label\":\"RECORDER TEST · STRAIGHT HOLD\",\"source\":\"synthetic\",\"duration\":3.0083333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":0.15,\"i\":9},\"startDir\":0,\"startDirRelFacing\":0,\"maxR\":1,\"maxM\":1,\"travel\":0,\"d50\":{\"v\":0,\"t\":0.04583333333333333},\"d100\":{\"v\":0,\"t\":0.1},\"d150\":{\"v\":0,\"t\":0.15},\"peakOm\":{\"v\":0,\"t\":0.0125},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":1.394,\"modeA\":\"RUN\",\"turnA\":0,\"ballSideA\":\"R\",\"ballLatA\":0.102,\"ballFwdA\":0.361,\"sup0\":\"both\",\"supA\":\"L\",\"stepPhaseA\":null,\"nextTDA\":0.05000000000000002,\"nextTDFA\":\"R\",\"nextCA\":0.42916999999999994,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"R\",\"dt\":0.42916999999999994,\"role\":\"carry\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010354-bcni\",\"label\":\"RECORDER TEST · SMOOTH 45° TURN\",\"source\":\"synthetic\",\"duration\":3.6083333333333334,\"anchor\":{\"kind\":\"d150\",\"t\":1.8791666666666667,\"i\":113},\"startDir\":0,\"startDirRelFacing\":2.958,\"maxR\":1,\"maxM\":1,\"travel\":44.999,\"d50\":{\"v\":5.868,\"t\":1.8125},\"d100\":{\"v\":11.647,\"t\":1.8499999999999999},\"d150\":{\"v\":17.205,\"t\":1.8791666666666667},\"peakOm\":{\"v\":117.7,\"t\":1.8},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":4.403,\"modeA\":\"RUN\",\"turnA\":43.349,\"ballSideA\":\"R\",\"ballLatA\":0.074,\"ballFwdA\":0.518,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.8937,\"nextTDA\":0.03774333333333324,\"nextTDFA\":\"R\",\"nextCA\":0.22500333333333322,\"nextCFA\":\"L\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":{\"label\":\"LATERAL TRANSFER\",\"dt\":0.037503333333333444},\"firstContact\":{\"F\":\"L\",\"dt\":0.1750033333333334,\"role\":\"croqueta · the inside plays it across\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010358-5a70\",\"label\":\"RECORDER TEST · SMOOTH 90° TURN\",\"source\":\"synthetic\",\"duration\":3.808333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":1.9791666666666667,\"i\":119},\"startDir\":0,\"startDirRelFacing\":50.891,\"maxR\":1,\"maxM\":1,\"travel\":89.99600000000001,\"d50\":{\"v\":8.817,\"t\":1.9124999999999999},\"d100\":{\"v\":17.558,\"t\":1.9458333333333333},\"d150\":{\"v\":26.112,\"t\":1.9791666666666667},\"peakOm\":{\"v\":176.6,\"t\":1.8958333333333333},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":20.328,\"ballSideA\":\"L\",\"ballLatA\":-0.385,\"ballFwdA\":0.497,\"sup0\":\"both\",\"supA\":\"L\",\"stepPhaseA\":0.2096,\"nextTDA\":0.2539433333333332,\"nextTDFA\":\"R\",\"nextCA\":0.49583333333333335,\"nextCFA\":\"L\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"L\",\"dt\":0.4500033333333333,\"role\":\"carry turn\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010403-4ga8\",\"label\":\"RECORDER TEST · RAPID 90° CHANGE\",\"source\":\"synthetic\",\"duration\":3.1083333333333334,\"anchor\":{\"kind\":\"d150\",\"t\":1.5458333333333334,\"i\":93},\"startDir\":0,\"startDirRelFacing\":142.868,\"maxR\":1,\"maxM\":1,\"travel\":90,\"d50\":{\"v\":90,\"t\":1.5458333333333334},\"d100\":{\"v\":90,\"t\":1.5458333333333334},\"d150\":{\"v\":90,\"t\":1.5458333333333334},\"peakOm\":{\"v\":2699.5,\"t\":1.5291666666666666},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":1,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":73.528,\"ballSideA\":\"R\",\"ballLatA\":0.027,\"ballFwdA\":0.503,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.8394,\"nextTDA\":0.05492666666666657,\"nextTDFA\":\"R\",\"nextCA\":0.44166666666666665,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":{\"label\":\"COMPACT OUTSIDE REDIRECT\",\"dt\":0.054166666666666696},\"firstContact\":{\"F\":\"R\",\"dt\":0.4124966666666665,\"role\":\"compact outside redirect\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010406-15ld\",\"label\":\"RECORDER TEST · 180° REVERSAL\",\"source\":\"synthetic\",\"duration\":3.2083333333333335,\"anchor\":{\"kind\":\"d150\",\"t\":1.5625,\"i\":94},\"startDir\":0,\"startDirRelFacing\":-124.329,\"maxR\":1,\"maxM\":1,\"travel\":180,\"d50\":{\"v\":-180,\"t\":1.5625},\"d100\":{\"v\":-180,\"t\":1.5625},\"d150\":{\"v\":-180,\"t\":1.5625},\"peakOm\":{\"v\":-10778.4,\"t\":1.5625},\"crossings\":1,\"dzEntries\":0,\"reversals\":1,\"largeTurns\":1,\"speed0\":0,\"speedA\":5.156,\"modeA\":\"WALK\",\"turnA\":175.934,\"ballSideA\":\"R\",\"ballLatA\":0.08,\"ballFwdA\":0.649,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.8897,\"nextTDA\":0.0390299999999999,\"nextTDFA\":\"L\",\"nextCA\":0.17083000000000004,\"nextCFA\":\"R\",\"actA\":\"BRAKING TOUCH · R [GENERIC]\",\"committedA\":false,\"firstAction\":{\"label\":\"BRAKING TOUCH\",\"dt\":0},\"firstContact\":{\"F\":\"R\",\"dt\":0.17083000000000004,\"role\":\"braking touch\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010410-2uup\",\"label\":\"RECORDER TEST · RIGHT → LEFT REVERSAL\",\"source\":\"synthetic\",\"duration\":3.2083333333333335,\"anchor\":{\"kind\":\"d150\",\"t\":1.5625,\"i\":94},\"startDir\":90,\"startDirRelFacing\":148.396,\"maxR\":1,\"maxM\":1,\"travel\":180,\"d50\":{\"v\":-180,\"t\":1.5625},\"d100\":{\"v\":-180,\"t\":1.5625},\"d150\":{\"v\":-180,\"t\":1.5625},\"peakOm\":{\"v\":-10778.4,\"t\":1.5625},\"crossings\":1,\"dzEntries\":0,\"reversals\":1,\"largeTurns\":1,\"speed0\":0,\"speedA\":5.323,\"modeA\":\"WALK\",\"turnA\":174.28,\"ballSideA\":\"R\",\"ballLatA\":0.067,\"ballFwdA\":0.517,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.9028,\"nextTDA\":0.03489000000000009,\"nextTDFA\":\"R\",\"nextCA\":0.1625000000000001,\"nextCFA\":\"L\",\"actA\":\"BRAKING TOUCH · L [GENERIC]\",\"committedA\":false,\"firstAction\":{\"label\":\"BRAKING TOUCH\",\"dt\":0},\"firstContact\":{\"F\":\"L\",\"dt\":0.1625000000000001,\"role\":\"braking touch\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010415-s8tp\",\"label\":\"RECORDER TEST · NEUTRAL → DIRECTION\",\"source\":\"synthetic\",\"duration\":3.0083333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":1.1625,\"i\":70},\"startDir\":30,\"startDirRelFacing\":30,\"maxR\":1,\"maxM\":1,\"travel\":0,\"d50\":{\"v\":0,\"t\":1.0625},\"d100\":{\"v\":0,\"t\":1.1125},\"d150\":{\"v\":0,\"t\":1.1625},\"peakOm\":{\"v\":0,\"t\":1.0291666666666666},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":1.393,\"modeA\":\"RUN\",\"turnA\":0,\"ballSideA\":\"L\",\"ballLatA\":-0.079,\"ballFwdA\":0.296,\"sup0\":\"both\",\"supA\":\"R\",\"stepPhaseA\":null,\"nextTDA\":0.06667000000000001,\"nextTDFA\":\"L\",\"nextCA\":0.22499999999999987,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"R\",\"dt\":0.22499999999999987,\"role\":\"carry\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010419-h01m\",\"label\":\"RECORDER TEST · DIRECTION → NEUTRAL\",\"source\":\"synthetic\",\"duration\":3.5083333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":0.15,\"i\":9},\"startDir\":0,\"startDirRelFacing\":34.362,\"maxR\":1,\"maxM\":1,\"travel\":0,\"d50\":{\"v\":0,\"t\":0.05},\"d100\":{\"v\":0,\"t\":0.1},\"d150\":{\"v\":0,\"t\":0.15},\"peakOm\":{\"v\":0,\"t\":0.0125},\"crossings\":0,\"dzEntries\":1,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":1.393,\"modeA\":\"RUN\",\"turnA\":0,\"ballSideA\":\"L\",\"ballLatA\":-0.089,\"ballFwdA\":0.324,\"sup0\":\"both\",\"supA\":\"R\",\"stepPhaseA\":null,\"nextTDA\":0.05000000000000002,\"nextTDFA\":\"L\",\"nextCA\":0.20833,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"R\",\"dt\":0.20833,\"role\":\"carry\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010423-3a6p\",\"label\":\"RECORDER TEST · SMOOTH 90° TURN\",\"source\":\"synthetic\",\"duration\":3.808333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":1.9625,\"i\":118},\"startDir\":0,\"startDirRelFacing\":49.496,\"maxR\":1,\"maxM\":1,\"travel\":89.99899999999998,\"d50\":{\"v\":8.817,\"t\":1.9124999999999999},\"d100\":{\"v\":17.558,\"t\":1.9458333333333333},\"d150\":{\"v\":26.112,\"t\":1.9625},\"peakOm\":{\"v\":176.6,\"t\":1.8958333333333333},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":17.538,\"ballSideA\":\"L\",\"ballLatA\":-0.397,\"ballFwdA\":0.496,\"sup0\":\"both\",\"supA\":\"L\",\"stepPhaseA\":0.1569,\"nextTDA\":0.2705899999999999,\"nextTDFA\":\"R\",\"nextCA\":0.5125000000000002,\"nextCFA\":\"L\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"L\",\"dt\":0.46667000000000014,\"role\":\"carry turn\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010428-no1e\",\"label\":\"RECORDER TEST · SMOOTH 90° TURN\",\"source\":\"synthetic\",\"duration\":3.808333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":1.9791666666666667,\"i\":119},\"startDir\":0,\"startDirRelFacing\":141.69,\"maxR\":1,\"maxM\":1,\"travel\":89.99700000000001,\"d50\":{\"v\":8.817,\"t\":1.9124999999999999},\"d100\":{\"v\":17.558,\"t\":1.9458333333333333},\"d150\":{\"v\":26.112,\"t\":1.9791666666666667},\"peakOm\":{\"v\":176.6,\"t\":1.8958333333333333},\"crossings\":0,\"dzEntries\":0,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":25.1,\"ballSideA\":\"L\",\"ballLatA\":-0.309,\"ballFwdA\":0.527,\"sup0\":\"both\",\"supA\":\"L\",\"stepPhaseA\":0.2832,\"nextTDA\":0.1707833333333333,\"nextTDFA\":\"R\",\"nextCA\":0.4125033333333332,\"nextCFA\":\"L\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"L\",\"dt\":0.37083333333333335,\"role\":\"carry correction\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010432-9iqw\",\"label\":\"RECORDER TEST · POINTER (CDP mouse)\",\"source\":\"mouse\",\"duration\":3.4583333333333335,\"anchor\":{\"kind\":\"mark\",\"t\":1.2,\"i\":72},\"startDir\":90,\"startDirRelFacing\":90,\"maxR\":1,\"maxM\":1,\"travel\":289.16300000000047,\"d50\":{\"v\":-180,\"t\":1.9291666666666667},\"d100\":{\"v\":-180,\"t\":1.9291666666666667},\"d150\":{\"v\":-180.682,\"t\":2.0625},\"peakOm\":{\"v\":2692.2,\"t\":1.8291666666666666},\"crossings\":1,\"dzEntries\":2,\"reversals\":1,\"largeTurns\":1,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":-1.146,\"ballSideA\":\"R\",\"ballLatA\":0.434,\"ballFwdA\":0.481,\"sup0\":\"both\",\"supA\":\"R\",\"stepPhaseA\":0.2113,\"nextTDA\":0.24923000000000006,\"nextTDFA\":\"L\",\"nextCA\":0.49167000000000005,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":{\"label\":\"OUTSIDE CUT (L)\",\"dt\":0.49583},\"firstContact\":{\"F\":\"R\",\"dt\":0.49167000000000005,\"role\":\"carry correction\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010436-7vg2\",\"label\":\"RECORDER TEST · KEYBOARD (WASD)\",\"source\":\"keys\",\"duration\":2.7083333333333335,\"anchor\":{\"kind\":\"d150\",\"t\":1.5958333333333332,\"i\":96},\"startDir\":0,\"startDirRelFacing\":0,\"maxR\":1,\"maxM\":1,\"travel\":90,\"d50\":{\"v\":45,\"t\":1.5958333333333332},\"d100\":{\"v\":45,\"t\":1.5958333333333332},\"d150\":{\"v\":45,\"t\":1.5958333333333332},\"peakOm\":{\"v\":-2710.8,\"t\":2.1958333333333333},\"crossings\":0,\"dzEntries\":1,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":44.877,\"ballSideA\":\"R\",\"ballLatA\":0.129,\"ballFwdA\":0.643,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.5682,\"nextTDA\":0.17083666666666675,\"nextTDFA\":\"L\",\"nextCA\":0.09583666666666679,\"nextCFA\":\"L\",\"actA\":\"COMPACT INSIDE REDIRECT · L [GENERIC]\",\"committedA\":false,\"firstAction\":{\"label\":\"LATERAL TRANSFER\",\"dt\":0.5999966666666667},\"firstContact\":{\"F\":\"L\",\"dt\":0.09583666666666679,\"role\":\"compact inside redirect\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010443-2fmo\",\"label\":\"RECORDER TEST · CONTINUOUS\",\"source\":\"mouse\",\"duration\":4.545833333333333,\"anchor\":{\"kind\":\"d150\",\"t\":8.095833333333333,\"i\":198},\"startDir\":0,\"startDirRelFacing\":0.022,\"maxR\":1,\"maxM\":1,\"travel\":139.78599999999977,\"d50\":{\"v\":7.545,\"t\":7.595833333333333},\"d100\":{\"v\":15.045,\"t\":7.745833333333334},\"d150\":{\"v\":22.545,\"t\":8.095833333333333},\"peakOm\":{\"v\":451.8,\"t\":7.545833333333333},\"crossings\":0,\"dzEntries\":1,\"reversals\":0,\"largeTurns\":0,\"speed0\":5.3,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":33.084,\"ballSideA\":\"L\",\"ballLatA\":-0.278,\"ballFwdA\":0.534,\"sup0\":\"R\",\"supA\":\"L\",\"stepPhaseA\":0.0459,\"nextTDA\":0.30186666666666717,\"nextTDFA\":\"R\",\"nextCA\":0.22499666666666762,\"nextCFA\":\"R\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"R\",\"dt\":0.22499666666666762,\"role\":\"carry correction\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}",
+   "{\"id\":\"lsr-20261024-010447-ms07\",\"label\":\"RECORDER TEST · GAMEPAD (emulated)\",\"source\":\"gamepad\",\"duration\":2.5083333333333333,\"anchor\":{\"kind\":\"d150\",\"t\":1.3958333333333333,\"i\":84},\"startDir\":0,\"startDirRelFacing\":0,\"maxR\":0.97,\"maxM\":0.9674,\"travel\":90,\"d50\":{\"v\":12,\"t\":1.3},\"d100\":{\"v\":18.036,\"t\":1.5458333333333334},\"d150\":{\"v\":30,\"t\":1.3958333333333333},\"peakOm\":{\"v\":361.4,\"t\":1.3},\"crossings\":0,\"dzEntries\":1,\"reversals\":0,\"largeTurns\":0,\"speed0\":0,\"speedA\":5.3,\"modeA\":\"RUN\",\"turnA\":10.439,\"ballSideA\":\"L\",\"ballLatA\":-0.135,\"ballFwdA\":0.467,\"sup0\":\"both\",\"supA\":\"none\",\"stepPhaseA\":0.7975,\"nextTDA\":0.06816666666666671,\"nextTDFA\":\"R\",\"nextCA\":0.3083366666666667,\"nextCFA\":\"L\",\"actA\":\"CARRY\",\"committedA\":false,\"firstAction\":null,\"firstContact\":{\"F\":\"L\",\"dt\":0.3041666666666667,\"role\":\"carry turn\"},\"lostControl\":false,\"explicitRequests\":0,\"autoVocab\":0}"
+  ]
+ },
+ "B": {
+  "replays": [
+   {
+    "det": "re-simulated 723 ticks in 25 ms · hash dda3485c vs recorded dda3485c → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · STRAIGHT HOLD"
+   },
+   {
+    "det": "re-simulated 867 ticks in 57 ms · hash bb356ed2 vs recorded bb356ed2 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · SMOOTH 45° TURN"
+   },
+   {
+    "det": "re-simulated 915 ticks in 62 ms · hash 6cef36ba vs recorded 6cef36ba → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · SMOOTH 90° TURN"
+   },
+   {
+    "det": "re-simulated 747 ticks in 52 ms · hash 4e13e5e3 vs recorded 4e13e5e3 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · RAPID 90° CHANGE"
+   },
+   {
+    "det": "re-simulated 771 ticks in 37 ms · hash 8b1f73cc vs recorded 8b1f73cc → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · 180° REVERSAL"
+   },
+   {
+    "det": "re-simulated 771 ticks in 30 ms · hash 95774e9 vs recorded 95774e9 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · RIGHT → LEFT REVERSAL"
+   },
+   {
+    "det": "re-simulated 723 ticks in 26 ms · hash 1abafef9 vs recorded 1abafef9 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · NEUTRAL → DIRECTION"
+   },
+   {
+    "det": "re-simulated 843 ticks in 21 ms · hash d2348cf5 vs recorded d2348cf5 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · DIRECTION → NEUTRAL"
+   },
+   {
+    "det": "re-simulated 915 ticks in 37 ms · hash a42b1eee vs recorded a42b1eee → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · SMOOTH 90° TURN"
+   },
+   {
+    "det": "re-simulated 915 ticks in 31 ms · hash 3406ed42 vs recorded 3406ed42 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · SMOOTH 90° TURN"
+   },
+   {
+    "det": "re-simulated 831 ticks in 44 ms · hash bf718f29 vs recorded bf718f29 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · POINTER (CDP mouse)"
+   },
+   {
+    "det": "re-simulated 651 ticks in 16 ms · hash 80ddbb vs recorded 80ddbb → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · KEYBOARD (WASD)"
+   },
+   {
+    "det": "re-simulated 2243 ticks in 50 ms · hash c0e6c022 vs recorded c0e6c022 → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · CONTINUOUS"
+   },
+   {
+    "det": "re-simulated 603 ticks in 31 ms · hash ea1529e vs recorded ea1529e → IDENTICAL · state track identical",
+    "ok": true,
+    "label": "RECORDER TEST · GAMEPAD (emulated)"
+   }
+  ]
+ },
+ "C": {
+  "canonical": {
+   "work": {
+    "avg": 2.196,
+    "p95": 8.7,
+    "p99": 11.7,
+    "n": 1200
+   },
+   "sim": {
+    "avg": 1.337,
+    "p95": 7.8,
+    "p99": 10.8,
+    "n": 1200
+   },
+   "frame": {
+    "avg": 16.666,
+    "p95": 16.7,
+    "p99": 16.8,
+    "n": 1200
+   }
+  },
+  "lab_OFF": {
+   "work": {
+    "avg": 1.898,
+    "p95": 7.5,
+    "p99": 11,
+    "n": 1200
+   },
+   "sim": {
+    "avg": 1.123,
+    "p95": 6.8,
+    "p99": 10.2,
+    "n": 1200
+   },
+   "frame": {
+    "avg": 16.666,
+    "p95": 16.8,
+    "p99": 16.8,
+    "n": 1200
+   },
+   "labHost": {
+    "avg": 0.072,
+    "p95": 0.2,
+    "p99": 0.3,
+    "n": 1200
+   },
+   "labTick": {
+    "avg": 2.034,
+    "p95": 7.5,
+    "p99": 11.2,
+    "n": 1200
+   }
+  },
+  "lab_ON": {
+   "work": {
+    "avg": 1.663,
+    "p95": 6.6,
+    "p99": 9.3,
+    "n": 1200
+   },
+   "sim": {
+    "avg": 1.029,
+    "p95": 6,
+    "p99": 8.5,
+    "n": 1200
+   },
+   "frame": {
+    "avg": 16.666,
+    "p95": 16.7,
+    "p99": 16.8,
+    "n": 1200
+   },
+   "labHost": {
+    "avg": 0.768,
+    "p95": 1.6,
+    "p99": 2.2,
+    "n": 1200
+   },
+   "labTick": {
+    "avg": 1.785,
+    "p95": 6.8,
+    "p99": 9.5,
+    "n": 1200
+   }
+  },
+  "stopMs": 16,
+  "lab_REC": {
+   "work": {
+    "avg": 1.476,
+    "p95": 5.7,
+    "p99": 8.9,
+    "n": 662
+   },
+   "sim": {
+    "avg": 0.926,
+    "p95": 5.1,
+    "p99": 8.3,
+    "n": 662
+   },
+   "frame": {
+    "avg": 16.666,
+    "p95": 16.7,
+    "p99": 16.8,
+    "n": 662
+   },
+   "labHost": {
+    "avg": 0.726,
+    "p95": 1.4,
+    "p99": 2.1,
+    "n": 662
+   },
+   "labTick": {
+    "avg": 1.551,
+    "p95": 5.7,
+    "p99": 8.9,
+    "n": 662
+   }
+  }
+ },
+ "errors": {
+  "lab_A": [],
+  "lab_B": [],
+  "sandbox_C": [],
+  "lab_C_OFF": [],
+  "lab_C_ON": [],
+  "lab_C_REC": []
+ },
+ "checks": [
+  {
+   "name": "the lab boots on the canonical sandbox (layered · EXPANDED · D38 · CONTROLLED · CARRY-B · ball on)",
+   "pass": true,
+   "detail": {
+    "analogFeint": false,
+    "engine": "layered",
+    "vocab": "EXPANDED",
+    "pace": "D38",
+    "control": "CONTROLLED",
+    "carry": "B",
+    "ballOn": true
+   }
+  },
+  {
+   "name": "the old analog feint is OFF in the framed sandbox",
+   "pass": true
+  },
+  {
+   "name": "the framed page is the canonical sandbox in external mode",
+   "pass": true
+  },
+  {
+   "name": "recorder test straight_hold: recorded through the real footballer (source synthetic, 181 frames ≈ 60 Hz, 362 state rows, request delivered on 723 / 723 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 1
+    },
+    "tl": {
+     "liftoff": 11,
+     "contact": 5,
+     "poss": 1,
+     "replan": 19,
+     "touchdown": 10
+    }
+   }
+  },
+  {
+   "name": "recorder test smooth_45: recorded through the real footballer (source synthetic, 217 frames ≈ 60 Hz, 434 state rows, request delivered on 867 / 867 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 6,
+     "poss": 1,
+     "replan": 27,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    }
+   }
+  },
+  {
+   "name": "recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    }
+   }
+  },
+  {
+   "name": "recorder test rapid_90: recorded through the real footballer (source synthetic, 187 frames ≈ 60 Hz, 374 state rows, request delivered on 747 / 747 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2,
+     "large_turn": 1
+    },
+    "tl": {
+     "liftoff": 12,
+     "contact": 7,
+     "poss": 1,
+     "replan": 23,
+     "touchdown": 11,
+     "action": 4,
+     "select": 2
+    }
+   }
+  },
+  {
+   "name": "recorder test reversal_180: recorded through the real footballer (source synthetic, 193 frames ≈ 60 Hz, 386 state rows, request delivered on 771 / 771 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "reversal": 1,
+     "large_turn": 1,
+     "centre_cross": 1,
+     "mag_spike": 1
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 6,
+     "poss": 1,
+     "replan": 24,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    }
+   }
+  },
+  {
+   "name": "recorder test right_left: recorded through the real footballer (source synthetic, 193 frames ≈ 60 Hz, 386 state rows, request delivered on 771 / 771 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "reversal": 1,
+     "large_turn": 1,
+     "centre_cross": 1,
+     "mag_spike": 1
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 25,
+     "touchdown": 12,
+     "action": 2,
+     "select": 1
+    }
+   }
+  },
+  {
+   "name": "recorder test neutral_dir: recorded through the real footballer (source synthetic, 181 frames ≈ 60 Hz, 362 state rows, request delivered on 479 / 723 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dz_exit": 1,
+     "mag_spike": 1,
+     "dir_hold": 1
+    },
+    "tl": {
+     "replan": 19,
+     "liftoff": 8,
+     "contact": 4,
+     "poss": 1,
+     "touchdown": 7
+    }
+   }
+  },
+  {
+   "name": "recorder test dir_neutral: recorded through the real footballer (source synthetic, 211 frames ≈ 60 Hz, 422 state rows, request delivered on 495 / 843 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 1,
+     "mag_release": 1,
+     "near_neutral": 1,
+     "dz_enter": 1
+    },
+    "tl": {
+     "liftoff": 10,
+     "contact": 6,
+     "poss": 1,
+     "replan": 24,
+     "touchdown": 10
+    }
+   }
+  },
+  {
+   "name": "recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    }
+   }
+  },
+  {
+   "name": "recorder test smooth_90: recorded through the real footballer (source synthetic, 229 frames ≈ 60 Hz, 458 state rows, request delivered on 915 / 915 ticks)",
+   "pass": true,
+   "detail": {
+    "ev": {
+     "dir_hold": 2
+    },
+    "tl": {
+     "liftoff": 14,
+     "contact": 8,
+     "poss": 1,
+     "replan": 33,
+     "touchdown": 13
+    }
+   }
+  },
+  {
+   "name": "straight hold: no angular travel, no reversal / crossing",
+   "pass": true,
+   "detail": {
+    "travel": 0,
+    "maxR": 1,
+    "d150": 0,
+    "peakOm": 0,
+    "crossings": 0,
+    "reversals": 0,
+    "startDir": 0,
+    "speedA": 1.394,
+    "supA": "L",
+    "stepPhaseA": null,
+    "nextTDA": 0.05000000000000002,
+    "firstAction": null,
+    "firstContact": {
+     "F": "R",
+     "dt": 0.42916999999999994,
+     "role": "carry"
+    },
+    "anchor": {
+     "kind": "d150",
+     "t": 0.15,
+     "i": 9
+    }
+   }
+  },
+  {
+   "name": "smooth 45°: angular travel 45°, no large-turn marker",
+   "pass": true,
+   "detail": 45
+  },
+  {
+   "name": "smooth 90°: angular travel 90°",
+   "pass": true,
+   "detail": 90
+  },
+  {
+   "name": "rapid 90°: one large-turn marker, |Δ150| ≈ 90°",
+   "pass": true,
+   "detail": {
+    "travel": 90,
+    "maxR": 1,
+    "d150": 90,
+    "peakOm": 2699.5,
+    "crossings": 0,
+    "reversals": 0,
+    "startDir": 0,
+    "speedA": 5.3,
+    "supA": "none",
+    "stepPhaseA": 0.8394,
+    "nextTDA": 0.05492666666666657,
+    "firstAction": {
+     "label": "COMPACT OUTSIDE REDIRECT",
+     "dt": 0.054166666666666696
+    },
+    "firstContact": {
+     "F": "R",
+     "dt": 0.4124966666666665,
+     "role": "compact outside redirect"
+    },
+    "anchor": {
+     "kind": "d150",
+     "t": 1.5458333333333334,
+     "i": 93
+    }
+   }
+  },
+  {
+   "name": "180° reversal: one centre crossing, one rapid reversal",
+   "pass": true,
+   "detail": {
+    "dir_hold": 2,
+    "mag_release": 1,
+    "near_neutral": 1,
+    "reversal": 1,
+    "large_turn": 1,
+    "centre_cross": 1,
+    "mag_spike": 1
+   }
+  },
+  {
+   "name": "right → left: one centre crossing, one rapid reversal, start +90°",
+   "pass": true,
+   "detail": {
+    "dir_hold": 2,
+    "mag_release": 1,
+    "near_neutral": 1,
+    "reversal": 1,
+    "large_turn": 1,
+    "centre_cross": 1,
+    "mag_spike": 1
+   }
+  },
+  {
+   "name": "neutral → direction: deadzone exit + magnitude spike, start +30°",
+   "pass": true,
+   "detail": {
+    "dz_exit": 1,
+    "mag_spike": 1,
+    "dir_hold": 1
+   }
+  },
+  {
+   "name": "direction → neutral: deadzone entry + magnitude release, the request ends",
+   "pass": true,
+   "detail": {
+    "dir_hold": 1,
+    "mag_release": 1,
+    "near_neutral": 1,
+    "dz_enter": 1
+   }
+  },
+  {
+   "name": "pointer: source mouse, raw down / move-or-coalesced / up logged, request delivered",
+   "pass": true,
+   "detail": {
+    "down": 1,
+    "coalesced": 86,
+    "up": 1
+   }
+  },
+  {
+   "name": "pointer: the drag through the centre shows as a crossing",
+   "pass": true,
+   "detail": {
+    "dz_exit": 2,
+    "mag_spike": 13,
+    "dir_hold": 2,
+    "mag_release": 4,
+    "dz_enter": 2,
+    "near_neutral": 2,
+    "centre_cross": 1,
+    "reversal": 1,
+    "large_turn": 1
+   }
+  },
+  {
+   "name": "pointer: raw event → the frame that applied it ≤ one frame",
+   "pass": true,
+   "detail": {
+    "n": 88,
+    "median": 0.8,
+    "max": 16.6
+   }
+  },
+  {
+   "name": "an intent MARK is stored and becomes the anchor",
+   "pass": true,
+   "detail": {
+    "kind": "mark",
+    "t": 1.2,
+    "i": 72
+   }
+  },
+  {
+   "name": "keyboard: source keys, key events logged, the request delivered (WASD through the sandbox's path)",
+   "pass": true,
+   "detail": {
+    "keydown": 2,
+    "keyup": 2
+   }
+  },
+  {
+   "name": "CONTINUOUS: k0 = START − 1.5 s, pre-roll frames recorded",
+   "pass": true,
+   "detail": {
+    "k0": 1151,
+    "kStart": 1511,
+    "pre": 91
+   }
+  },
+  {
+   "name": "REPLAY of a saved attempt still in the live session runs on it (no re-simulation)",
+   "pass": true,
+   "detail": [
+    "REPLAY",
+    "the live session (no re-simulation needed)"
+   ]
+  },
+  {
+   "name": "gamepad: Menu starts / stops, A saves; source gamepad, raw axes logged, the request delivered",
+   "pass": true,
+   "detail": {
+    "gpRec": "REC",
+    "gpSaved": true,
+    "src": "gamepad",
+    "raw": {
+     "gamepad": 63
+    },
+    "delivered": 512
+   }
+  },
+  {
+   "name": "R pressed inside the sandbox's frame is taken by the lab (no session reset)",
+   "pass": true,
+   "detail": {
+    "tagBefore": 14,
+    "tagAfter": 14
+   }
+  },
+  {
+   "name": "Enter (focus inside the sandbox's frame) starts and stops a recording",
+   "pass": true,
+   "detail": {
+    "recByEnter": "REC",
+    "afterEnter": "REVIEW"
+   }
+  },
+  {
+   "name": "Backspace discards",
+   "pass": true
+  },
+  {
+   "name": "the ATTEMPTS tab lists every saved attempt (14) and the per-label statistics",
+   "pass": true,
+   "detail": {
+    "rows": 14,
+    "labels": 12
+   }
+  },
+  {
+   "name": "COMPARE: the three SMOOTH 90° attempts overlaid, statistics and entry state",
+   "pass": true,
+   "detail": {
+    "stats": 16,
+    "entry": 3
+   }
+  },
+  {
+   "name": "every saved attempt re-simulated in the page (PT.load): hash + state track identical (14/14)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "the dataset exported (14 attempts, 2012.2 KB, schema TOUCHLINE_LEFT_STICK_RECORDING_V1 v1)",
+   "pass": true
+  },
+  {
+   "name": "IMPORT into a fresh browser profile: 14 attempts (was 0)",
+   "pass": true,
+   "detail": {
+    "added": 14,
+    "skipped": 0,
+    "errs": []
+   }
+  },
+  {
+   "name": "every imported attempt replays by re-simulation, identical (14/14)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "the imported attempts' summaries = the recorded ones",
+   "pass": true
+  },
+  {
+   "name": "CPU — canonical page work 2.196 ms/frame (sim 1.337); lab diagnostics OFF: page work 1.898 + lab 0.072 ms/frame (p99 0.3); ON: + 0.768 (p99 2.2); recording: + 0.726",
+   "pass": true,
+   "detail": {
+    "canonical": {
+     "work": {
+      "avg": 2.196,
+      "p95": 8.7,
+      "p99": 11.7,
+      "n": 1200
+     },
+     "sim": {
+      "avg": 1.337,
+      "p95": 7.8,
+      "p99": 10.8,
+      "n": 1200
+     },
+     "frame": {
+      "avg": 16.666,
+      "p95": 16.7,
+      "p99": 16.8,
+      "n": 1200
+     }
+    },
+    "lab_OFF": {
+     "work": {
+      "avg": 1.898,
+      "p95": 7.5,
+      "p99": 11,
+      "n": 1200
+     },
+     "sim": {
+      "avg": 1.123,
+      "p95": 6.8,
+      "p99": 10.2,
+      "n": 1200
+     },
+     "frame": {
+      "avg": 16.666,
+      "p95": 16.8,
+      "p99": 16.8,
+      "n": 1200
+     },
+     "labHost": {
+      "avg": 0.072,
+      "p95": 0.2,
+      "p99": 0.3,
+      "n": 1200
+     },
+     "labTick": {
+      "avg": 2.034,
+      "p95": 7.5,
+      "p99": 11.2,
+      "n": 1200
+     }
+    },
+    "lab_ON": {
+     "work": {
+      "avg": 1.663,
+      "p95": 6.6,
+      "p99": 9.3,
+      "n": 1200
+     },
+     "sim": {
+      "avg": 1.029,
+      "p95": 6,
+      "p99": 8.5,
+      "n": 1200
+     },
+     "frame": {
+      "avg": 16.666,
+      "p95": 16.7,
+      "p99": 16.8,
+      "n": 1200
+     },
+     "labHost": {
+      "avg": 0.768,
+      "p95": 1.6,
+      "p99": 2.2,
+      "n": 1200
+     },
+     "labTick": {
+      "avg": 1.785,
+      "p95": 6.8,
+      "p99": 9.5,
+      "n": 1200
+     }
+    },
+    "stopMs": 16,
+    "lab_REC": {
+     "work": {
+      "avg": 1.476,
+      "p95": 5.7,
+      "p99": 8.9,
+      "n": 662
+     },
+     "sim": {
+      "avg": 0.926,
+      "p95": 5.1,
+      "p99": 8.3,
+      "n": 662
+     },
+     "frame": {
+      "avg": 16.666,
+      "p95": 16.7,
+      "p99": 16.8,
+      "n": 662
+     },
+     "labHost": {
+      "avg": 0.726,
+      "p95": 1.4,
+      "p99": 2.1,
+      "n": 662
+     },
+     "labTick": {
+      "avg": 1.551,
+      "p95": 5.7,
+      "p99": 8.9,
+      "n": 662
+     }
+    }
+   }
+  },
+  {
+   "name": "no console / HTTP errors: lab_A",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "no console / HTTP errors: lab_B",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "no console / HTTP errors: sandbox_C",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "no console / HTTP errors: lab_C_OFF",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "no console / HTTP errors: lab_C_ON",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "no console / HTTP errors: lab_C_REC",
+   "pass": true,
+   "detail": []
+  }
+ ]
+}

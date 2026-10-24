@@ -1,0 +1,262 @@
+14 attempt(s) from 1 file(s) · anchor: owner mark, else the largest 150 ms change
+
+#   label                              src       mode           dur  start dir  max |r|  ang. travel  max Δ50  max Δ100  max Δ150  peak ω  centre ×  v start  v @anchor  turn @A    ball  sup start  sup @A  step φ @A  → next TD  → next touch  → 1st action
+1   RECORDER TEST · STRAIGHT HOLD      syntheti  RESET         3.01          0     1.00            0        0         0         0       0         0     0.00       1.39        0       R       both       L          —      0.050         0.429             —
+2   RECORDER TEST · SMOOTH 45° TURN    syntheti  RESET         3.61          0     1.00           45        6        12        17     118         0     0.00       4.40       43       R       both    none       0.89      0.038         0.225          0.04
+3   RECORDER TEST · SMOOTH 90° TURN    syntheti  RESET         3.81          0     1.00           90        9        18        26     177         0     0.00       5.30       20       L       both       L       0.21      0.254         0.496             —
+4   RECORDER TEST · RAPID 90° CHANGE   syntheti  RESET         3.11          0     1.00           90       90        90        90    2700         0     0.00       5.30       74       R       both    none       0.84      0.055         0.442          0.05
+5   RECORDER TEST · 180° REVERSAL      syntheti  RESET         3.21          0     1.00          180     -180      -180      -180  -10778         1     0.00       5.16      176       R       both    none       0.89      0.039         0.171          0.00
+6   RECORDER TEST · RIGHT → LEFT REVE  syntheti  RESET         3.21         90     1.00          180     -180      -180      -180  -10778         1     0.00       5.32      174       R       both    none       0.90      0.035         0.163          0.00
+7   RECORDER TEST · NEUTRAL → DIRECTI  syntheti  RESET         3.01         30     1.00            0        0         0         0       0         0     0.00       1.39        0       L       both       R          —      0.067         0.225             —
+8   RECORDER TEST · DIRECTION → NEUTR  syntheti  RESET         3.51          0     1.00            0        0         0         0       0         0     0.00       1.39        0       L       both       R          —      0.050         0.208             —
+9   RECORDER TEST · SMOOTH 90° TURN    syntheti  RESET         3.81          0     1.00           90        9        18        26     177         0     0.00       5.30       18       L       both       L       0.16      0.271         0.513             —
+10  RECORDER TEST · SMOOTH 90° TURN    syntheti  RESET         3.81          0     1.00           90        9        18        26     177         0     0.00       5.30       25       L       both       L       0.28      0.171         0.413             —
+11  RECORDER TEST · POINTER (CDP mous  mouse     RESET         3.46         90     1.00          289     -180      -180      -181    2692         1     0.00       5.30       -1       R       both       R       0.21      0.249         0.492          0.50  [owner mark]
+12  RECORDER TEST · KEYBOARD (WASD)    keys      RESET         2.71          0     1.00           90       45        45        45   -2711         0     0.00       5.30       45       R       both    none       0.57      0.171         0.096          0.60
+13  RECORDER TEST · CONTINUOUS         mouse     CONTINUOUS    4.55          0     1.00          140        8        15        23     452         0     5.30       5.30       33       L          R       L       0.05      0.302         0.225             —
+14  RECORDER TEST · GAMEPAD (emulated  gamepad   RESET         2.51          0     0.97           90       12        18        30     361         0     0.00       5.30       10       L       both    none       0.80      0.068         0.308             —
+
+PER LABEL — median [min – max] (n); categorical: counts
+
+RECORDER TEST · STRAIGHT HOLD — 1 attempt(s)
+  dur (s)                  3.01 [3.01 – 3.01]  q25–q75 3.01–3.01  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)             0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ50 (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ100 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ150 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  peak ω (°/s)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          1.39 [1.39 – 1.39]  q25–q75 1.39–1.39  sd 0.00  (n 1)
+  turn @A (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         L 1
+  → next TD (s)           0.050 [0.050 – 0.050]  q25–q75 0.050–0.050  sd 0.000  (n 1)
+  → next touch (s)        0.429 [0.429 – 0.429]  q25–q75 0.429–0.429  sd 0.000  (n 1)
+
+RECORDER TEST · SMOOTH 45° TURN — 1 attempt(s)
+  dur (s)                  3.61 [3.61 – 3.61]  q25–q75 3.61–3.61  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)            45 [45 – 45]  q25–q75 45–45  sd 0  (n 1)
+  max Δ50 (°)                 6 [6 – 6]  q25–q75 6–6  sd 0  (n 1)
+  max Δ100 (°)               12 [12 – 12]  q25–q75 12–12  sd 0  (n 1)
+  max Δ150 (°)               17 [17 – 17]  q25–q75 17–17  sd 0  (n 1)
+  peak ω (°/s)              118 [118 – 118]  q25–q75 118–118  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          4.40 [4.40 – 4.40]  q25–q75 4.40–4.40  sd 0.00  (n 1)
+  turn @A (°)                43 [43 – 43]  q25–q75 43–43  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.89 [0.89 – 0.89]  q25–q75 0.89–0.89  sd 0.00  (n 1)
+  → next TD (s)           0.038 [0.038 – 0.038]  q25–q75 0.038–0.038  sd 0.000  (n 1)
+  → next touch (s)        0.225 [0.225 – 0.225]  q25–q75 0.225–0.225  sd 0.000  (n 1)
+  → 1st action (s)         0.04 [0.04 – 0.04]  q25–q75 0.04–0.04  sd 0.00  (n 1)
+
+RECORDER TEST · SMOOTH 90° TURN — 3 attempt(s)
+  dur (s)                  3.81 [3.81 – 3.81]  q25–q75 3.81–3.81  sd 0.00  (n 3)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 3)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 3)
+  ang. travel (°)            90 [90 – 90]  q25–q75 90–90  sd 0  (n 3)
+  max Δ50 (°)                 9 [9 – 9]  q25–q75 9–9  sd 0  (n 3)
+  max Δ100 (°)               18 [18 – 18]  q25–q75 18–18  sd 0  (n 3)
+  max Δ150 (°)               26 [26 – 26]  q25–q75 26–26  sd 0  (n 3)
+  peak ω (°/s)              177 [177 – 177]  q25–q75 177–177  sd 0  (n 3)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 3)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 3)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 3)
+  turn @A (°)                20 [18 – 25]  q25–q75 19–23  sd 4  (n 3)
+  ball           L 3
+  sup start      both 3
+  sup @A         L 3
+  step φ @A                0.21 [0.16 – 0.28]  q25–q75 0.18–0.25  sd 0.06  (n 3)
+  → next TD (s)           0.254 [0.171 – 0.271]  q25–q75 0.212–0.262  sd 0.053  (n 3)
+  → next touch (s)        0.496 [0.413 – 0.513]  q25–q75 0.454–0.504  sd 0.054  (n 3)
+
+RECORDER TEST · RAPID 90° CHANGE — 1 attempt(s)
+  dur (s)                  3.11 [3.11 – 3.11]  q25–q75 3.11–3.11  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)            90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max Δ50 (°)                90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max Δ100 (°)               90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max Δ150 (°)               90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  peak ω (°/s)             2700 [2700 – 2700]  q25–q75 2700–2700  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  turn @A (°)                74 [74 – 74]  q25–q75 74–74  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.84 [0.84 – 0.84]  q25–q75 0.84–0.84  sd 0.00  (n 1)
+  → next TD (s)           0.055 [0.055 – 0.055]  q25–q75 0.055–0.055  sd 0.000  (n 1)
+  → next touch (s)        0.442 [0.442 – 0.442]  q25–q75 0.442–0.442  sd 0.000  (n 1)
+  → 1st action (s)         0.05 [0.05 – 0.05]  q25–q75 0.05–0.05  sd 0.00  (n 1)
+
+RECORDER TEST · 180° REVERSAL — 1 attempt(s)
+  dur (s)                  3.21 [3.21 – 3.21]  q25–q75 3.21–3.21  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)           180 [180 – 180]  q25–q75 180–180  sd 0  (n 1)
+  max Δ50 (°)              -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ100 (°)             -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ150 (°)             -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  peak ω (°/s)           -10778 [-10778 – -10778]  q25–q75 -10778–-10778  sd 0  (n 1)
+  centre ×                    1 [1 – 1]  q25–q75 1–1  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.16 [5.16 – 5.16]  q25–q75 5.16–5.16  sd 0.00  (n 1)
+  turn @A (°)               176 [176 – 176]  q25–q75 176–176  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.89 [0.89 – 0.89]  q25–q75 0.89–0.89  sd 0.00  (n 1)
+  → next TD (s)           0.039 [0.039 – 0.039]  q25–q75 0.039–0.039  sd 0.000  (n 1)
+  → next touch (s)        0.171 [0.171 – 0.171]  q25–q75 0.171–0.171  sd 0.000  (n 1)
+  → 1st action (s)         0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+
+RECORDER TEST · RIGHT → LEFT REVERSAL — 1 attempt(s)
+  dur (s)                  3.21 [3.21 – 3.21]  q25–q75 3.21–3.21  sd 0.00  (n 1)
+  start dir (°)              90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)           180 [180 – 180]  q25–q75 180–180  sd 0  (n 1)
+  max Δ50 (°)              -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ100 (°)             -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ150 (°)             -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  peak ω (°/s)           -10778 [-10778 – -10778]  q25–q75 -10778–-10778  sd 0  (n 1)
+  centre ×                    1 [1 – 1]  q25–q75 1–1  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.32 [5.32 – 5.32]  q25–q75 5.32–5.32  sd 0.00  (n 1)
+  turn @A (°)               174 [174 – 174]  q25–q75 174–174  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.90 [0.90 – 0.90]  q25–q75 0.90–0.90  sd 0.00  (n 1)
+  → next TD (s)           0.035 [0.035 – 0.035]  q25–q75 0.035–0.035  sd 0.000  (n 1)
+  → next touch (s)        0.163 [0.163 – 0.163]  q25–q75 0.163–0.163  sd 0.000  (n 1)
+  → 1st action (s)         0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+
+RECORDER TEST · NEUTRAL → DIRECTION — 1 attempt(s)
+  dur (s)                  3.01 [3.01 – 3.01]  q25–q75 3.01–3.01  sd 0.00  (n 1)
+  start dir (°)              30 [30 – 30]  q25–q75 30–30  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)             0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ50 (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ100 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ150 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  peak ω (°/s)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          1.39 [1.39 – 1.39]  q25–q75 1.39–1.39  sd 0.00  (n 1)
+  turn @A (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  ball           L 1
+  sup start      both 1
+  sup @A         R 1
+  → next TD (s)           0.067 [0.067 – 0.067]  q25–q75 0.067–0.067  sd 0.000  (n 1)
+  → next touch (s)        0.225 [0.225 – 0.225]  q25–q75 0.225–0.225  sd 0.000  (n 1)
+
+RECORDER TEST · DIRECTION → NEUTRAL — 1 attempt(s)
+  dur (s)                  3.51 [3.51 – 3.51]  q25–q75 3.51–3.51  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)             0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ50 (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ100 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max Δ150 (°)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  peak ω (°/s)                0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          1.39 [1.39 – 1.39]  q25–q75 1.39–1.39  sd 0.00  (n 1)
+  turn @A (°)                 0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  ball           L 1
+  sup start      both 1
+  sup @A         R 1
+  → next TD (s)           0.050 [0.050 – 0.050]  q25–q75 0.050–0.050  sd 0.000  (n 1)
+  → next touch (s)        0.208 [0.208 – 0.208]  q25–q75 0.208–0.208  sd 0.000  (n 1)
+
+RECORDER TEST · POINTER (CDP mouse) — 1 attempt(s)
+  dur (s)                  3.46 [3.46 – 3.46]  q25–q75 3.46–3.46  sd 0.00  (n 1)
+  start dir (°)              90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)           289 [289 – 289]  q25–q75 289–289  sd 0  (n 1)
+  max Δ50 (°)              -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ100 (°)             -180 [-180 – -180]  q25–q75 -180–-180  sd 0  (n 1)
+  max Δ150 (°)             -181 [-181 – -181]  q25–q75 -181–-181  sd 0  (n 1)
+  peak ω (°/s)             2692 [2692 – 2692]  q25–q75 2692–2692  sd 0  (n 1)
+  centre ×                    1 [1 – 1]  q25–q75 1–1  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  turn @A (°)                -1 [-1 – -1]  q25–q75 -1–-1  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         R 1
+  step φ @A                0.21 [0.21 – 0.21]  q25–q75 0.21–0.21  sd 0.00  (n 1)
+  → next TD (s)           0.249 [0.249 – 0.249]  q25–q75 0.249–0.249  sd 0.000  (n 1)
+  → next touch (s)        0.492 [0.492 – 0.492]  q25–q75 0.492–0.492  sd 0.000  (n 1)
+  → 1st action (s)         0.50 [0.50 – 0.50]  q25–q75 0.50–0.50  sd 0.00  (n 1)
+
+RECORDER TEST · KEYBOARD (WASD) — 1 attempt(s)
+  dur (s)                  2.71 [2.71 – 2.71]  q25–q75 2.71–2.71  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)            90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max Δ50 (°)                45 [45 – 45]  q25–q75 45–45  sd 0  (n 1)
+  max Δ100 (°)               45 [45 – 45]  q25–q75 45–45  sd 0  (n 1)
+  max Δ150 (°)               45 [45 – 45]  q25–q75 45–45  sd 0  (n 1)
+  peak ω (°/s)            -2711 [-2711 – -2711]  q25–q75 -2711–-2711  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  turn @A (°)                45 [45 – 45]  q25–q75 45–45  sd 0  (n 1)
+  ball           R 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.57 [0.57 – 0.57]  q25–q75 0.57–0.57  sd 0.00  (n 1)
+  → next TD (s)           0.171 [0.171 – 0.171]  q25–q75 0.171–0.171  sd 0.000  (n 1)
+  → next touch (s)        0.096 [0.096 – 0.096]  q25–q75 0.096–0.096  sd 0.000  (n 1)
+  → 1st action (s)         0.60 [0.60 – 0.60]  q25–q75 0.60–0.60  sd 0.00  (n 1)
+
+RECORDER TEST · CONTINUOUS — 1 attempt(s)
+  dur (s)                  4.55 [4.55 – 4.55]  q25–q75 4.55–4.55  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  1.00 [1.00 – 1.00]  q25–q75 1.00–1.00  sd 0.00  (n 1)
+  ang. travel (°)           140 [140 – 140]  q25–q75 140–140  sd 0  (n 1)
+  max Δ50 (°)                 8 [8 – 8]  q25–q75 8–8  sd 0  (n 1)
+  max Δ100 (°)               15 [15 – 15]  q25–q75 15–15  sd 0  (n 1)
+  max Δ150 (°)               23 [23 – 23]  q25–q75 23–23  sd 0  (n 1)
+  peak ω (°/s)              452 [452 – 452]  q25–q75 452–452  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  turn @A (°)                33 [33 – 33]  q25–q75 33–33  sd 0  (n 1)
+  ball           L 1
+  sup start      R 1
+  sup @A         L 1
+  step φ @A                0.05 [0.05 – 0.05]  q25–q75 0.05–0.05  sd 0.00  (n 1)
+  → next TD (s)           0.302 [0.302 – 0.302]  q25–q75 0.302–0.302  sd 0.000  (n 1)
+  → next touch (s)        0.225 [0.225 – 0.225]  q25–q75 0.225–0.225  sd 0.000  (n 1)
+
+RECORDER TEST · GAMEPAD (emulated) — 1 attempt(s)
+  dur (s)                  2.51 [2.51 – 2.51]  q25–q75 2.51–2.51  sd 0.00  (n 1)
+  start dir (°)               0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  max |r|                  0.97 [0.97 – 0.97]  q25–q75 0.97–0.97  sd 0.00  (n 1)
+  ang. travel (°)            90 [90 – 90]  q25–q75 90–90  sd 0  (n 1)
+  max Δ50 (°)                12 [12 – 12]  q25–q75 12–12  sd 0  (n 1)
+  max Δ100 (°)               18 [18 – 18]  q25–q75 18–18  sd 0  (n 1)
+  max Δ150 (°)               30 [30 – 30]  q25–q75 30–30  sd 0  (n 1)
+  peak ω (°/s)              361 [361 – 361]  q25–q75 361–361  sd 0  (n 1)
+  centre ×                    0 [0 – 0]  q25–q75 0–0  sd 0  (n 1)
+  v start (m/s)            0.00 [0.00 – 0.00]  q25–q75 0.00–0.00  sd 0.00  (n 1)
+  v @anchor (m/s)          5.30 [5.30 – 5.30]  q25–q75 5.30–5.30  sd 0.00  (n 1)
+  turn @A (°)                10 [10 – 10]  q25–q75 10–10  sd 0  (n 1)
+  ball           L 1
+  sup start      both 1
+  sup @A         none 1
+  step φ @A                0.80 [0.80 – 0.80]  q25–q75 0.80–0.80  sd 0.00  (n 1)
+  → next TD (s)           0.068 [0.068 – 0.068]  q25–q75 0.068–0.068  sd 0.000  (n 1)
+  → next touch (s)        0.308 [0.308 – 0.308]  q25–q75 0.308–0.308  sd 0.000  (n 1)

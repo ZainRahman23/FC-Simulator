@@ -1,0 +1,23 @@
+{
+ "milestone": "TOUCHLINE — LEFT-STICK INPUT LAB V1 (LEFT-STICK CONTROL SYSTEM — STEP 1: OBSERVE INPUT)",
+ "date": "2026-10-24",
+ "instruction": "sources/2026-10-24_user_instruction_left_stick_input_recorder.md (owner, 24 Oct ≈ 02:05 EEST)",
+ "state": "built and verified; an INSTRUMENT only — NO INTENT RECOGNIZER EXISTS; nothing selects, triggers or buffers a technique; local commit, not pushed; stopped for the owner's recording / review",
+ "branch": "prototype/left-stick-intent-v1 (from the milestone f775daac80bb58f214f7ae011705162e4d4e9e95, verified on fc-simulator before the cut)",
+ "canonical_code_changed": "none — the branch adds sandbox/visual/lsi1/, sandbox/visual/lsi1_lab.html and review_artifacts/left_stick_lab1/ only",
+ "page": "http://127.0.0.1:8362/sandbox/visual/lsi1_lab.html (serve the worktree root: python3 -m http.server 8362 --bind 127.0.0.1) — LOCAL ONLY",
+ "architecture": "frames the UNMODIFIED vocab2_sandbox.html?external=1 and drives its frames through window.PT.tick; the stick enters through PT.stick (pt_input.js); the physical state is read from the simulation's own 12 s history at STOP (lsr_state.js)",
+ "inputs": ["diagnostic virtual stick (pointer: mouse / touch / pen, coalesced samples, never snapped)", "keyboard WASD (the sandbox's own path)", "gamepad (standard mapping; verified with an emulated gamepad)"],
+ "recording_schema": "TOUCHLINE_LEFT_STICK_RECORDING_V1 (lsr_schema.js; report §5) — raw events · frames · 240 Hz ticks · derived · stick events · 120 Hz state · timeline · session (exact re-simulation)",
+ "verification": {
+  "recorder_tests_signals": "129/129 checks (8 synthetic traces × 60 Hz / 120 Hz / jittered)",
+  "browser_end_to_end": "46/46 checks (evidence/lsr_browser.txt)",
+  "node_equals_browser": "14/14 attempts: hash, state track (0 cells differ), timeline, ticks, derived, events; delivered requests = pt_input.js",
+  "milestone_regression": "10/10 suites identical to the evidence committed at f775daac (Body Feint + Croqueta motions, Lab cards, chains, both envelopes, 122 cases, battery, determinism, possession torture)",
+  "baseline_lock": "bl_lock_check.sh PASS",
+  "cpu_lab_overhead_ms_per_frame": { "diagnostics_off": 0.072, "diagnostics_on": 0.77, "recording": 0.73, "inside_the_sim_tick": 0 }
+ },
+ "pipeline_findings": ["the stick reaches the simulation once per rendered frame (the 240 Hz ticks repeat it)", "magnitude reaches movement only as walk / jog / run zones (0.40 / 0.72)", "the sim re-plans on a heading change > 4° (> 10° while rotating steadily)", "angular velocity through the centre is a sampling artefact — read reversals with the crossing event and the Δ-windows"],
+ "next": "AFTER the owner records and reviews: analyse the collected attempts and design Intent Recognizer V1",
+ "not_done_by_instruction": ["gesture thresholds", "intent recognition", "input buffering", "automatic Body Feint / Croqueta selection", "any movement / gait / agility / Technical Control / carry / support / turning / Body Feint / Croqueta / cut change"]
+}

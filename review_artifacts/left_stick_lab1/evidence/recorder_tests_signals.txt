@@ -1,0 +1,29 @@
+RECORDER TESTS — derived signals on the eight synthetic traces (lsr_synth.js) · 24 runs
+
+trace          rate            n  travel°  peak ω°/s     Δ50    Δ100    Δ150    Δ250    Δ500  events (non-zero)   checks
+straight_hold  60 Hz         181        0          0       0       0       0       0       0  dir_hold 1                                                 3/3
+straight_hold  120 Hz        361        0          0       0       0       0       0       0  dir_hold 1                                                 3/3
+straight_hold  60 Hz ±4 ms   180        0          0       0       0       0       0       0  dir_hold 1                                                 3/3
+smooth_45      60 Hz         217       45      117.7    5.87   11.65    17.2   27.37   43.47  dir_hold 2                                                 9/9
+smooth_45      120 Hz        433       45      117.8    5.87   11.65   17.22   27.39   43.47  dir_hold 2                                                 9/9
+smooth_45      60 Hz ±4 ms   216       45      117.6    5.87   11.64   17.21   27.34   43.46  dir_hold 2                                                 9/9
+smooth_90      60 Hz         229       90      176.6    8.82   17.56   26.11    42.4   74.83  dir_hold 2                                                 9/9
+smooth_90      120 Hz        457       90      176.7    8.82   17.56   26.13   42.43   74.83  dir_hold 2                                                 9/9
+smooth_90      60 Hz ±4 ms   229       90      176.6    8.81   17.55   26.12   42.38   74.81  dir_hold 2                                                 9/9
+rapid_90       60 Hz         187       90       2700      90      90      90      90      90  large_turn 1, dir_hold 2                                   5/5
+rapid_90       120 Hz        373       90       2700      90      90      90      90      90  large_turn 1, dir_hold 2                                   5/5
+rapid_90       60 Hz ±4 ms   186       90     2700.4   84.95      90      90      90      90  large_turn 1, dir_hold 2                                   5/5
+reversal_180   60 Hz         193      180      10800     180     180     180     180     180  near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+reversal_180   120 Hz        385      180          0     180     180     180     180     180  dz_enter 1, dz_exit 1, near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+reversal_180   60 Hz ±4 ms   193      180          0     180     180     180     180     180  dz_enter 1, dz_exit 1, near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+right_left     60 Hz         193      180      10800     180     180     180     180     180  near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+right_left     120 Hz        385      180          0     180     180     180     180     180  dz_enter 1, dz_exit 1, near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+right_left     60 Hz ±4 ms   193      180          0     180     180     180     180     180  dz_enter 1, dz_exit 1, near_neutral 1, centre_cross 1, reversal 1, large_turn 1, mag_spike 1, mag_release 1, dir_hold 2 4/4
+neutral_dir    60 Hz         181        0          0       0       0       0       0       0  dz_exit 1, mag_spike 1, dir_hold 1                         5/5
+neutral_dir    120 Hz        361        0          0       0       0       0       0       0  dz_exit 1, mag_spike 1, dir_hold 1                         5/5
+neutral_dir    60 Hz ±4 ms   180        0          0       0       0       0       0       0  dz_exit 1, mag_spike 1, dir_hold 1                         5/5
+dir_neutral    60 Hz         211        0          0       0       0       0       0       0  dz_enter 1, near_neutral 1, mag_release 1, dir_hold 1      4/4
+dir_neutral    120 Hz        421        0          0       0       0       0       0       0  dz_enter 1, near_neutral 1, mag_release 1, dir_hold 1      4/4
+dir_neutral    60 Hz ±4 ms   210        0          0       0       0       0       0       0  dz_enter 1, near_neutral 1, mag_release 1, dir_hold 1      4/4
+
+ALL 129 CHECKS PASS

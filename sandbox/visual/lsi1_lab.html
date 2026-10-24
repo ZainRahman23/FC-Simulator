@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Left-Stick Input Lab V1</title>
+<link rel="icon" href="data:,">
+<!-- TOUCHLINE — LEFT-STICK INPUT LAB V1 (owner, 24 Oct 2026): an INSTRUMENT, not a control scheme. It frames the canonical joystick sandbox
+     (vocab2_sandbox.html — the DRIBBLING VOCABULARY milestone f775daac, unmodified) and records what the thumb did (raw pointer / gamepad / key
+     events, the stick the pipeline read each frame, the request delivered to movement each 240 Hz tick), the derived stick signals and the
+     diagnostic stick events, and the footballer's physical state read from the simulation's own record. NO INTENT RECOGNIZER EXISTS: nothing here
+     selects, triggers or buffers a technique; the intent labels are the owner's annotations and are never read by the simulation.
+     LOCAL ONLY (the character is a real player's model: never publish). -->
+<style>
+  :root { --bg: #0d1210; --surf: #141b18; --solid: #151d19; --ink: #e6efe9; --dim: #8fa49a; --mute: #5d6e66; --line: #2a3530; --acc: #ffd45e; --ok: #8dffa6; --bad: #e66767; --warn: #ffb36b; --blue: #3987e5; --side: 620px; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font: 12.5px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  button, select, input[type=text] { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 3px 8px; font: inherit; cursor: pointer; }
+  input[type=text] { cursor: text; width: 170px; }
+  button:disabled { opacity: 0.4; cursor: default; }
+  button.on { background: var(--acc); color: #1a1408; border-color: var(--acc); font-weight: 700; }
+  #top { position: absolute; left: 0; right: 0; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 6px 10px; background: var(--solid); border-bottom: 1px solid var(--line); }
+  #top h1 { margin: 0; font: 800 14px -apple-system, Helvetica, sans-serif; letter-spacing: 0.04em; }
+  #top h1 small { color: var(--dim); font-weight: 600; letter-spacing: 0; margin-left: 6px; }
+  .grp { display: inline-flex; gap: 4px; align-items: center; }
+  .lab { color: var(--dim); font-size: 11.5px; }
+  #state { font: 800 12px Menlo, Consolas, monospace; padding: 3px 9px; border-radius: 5px; background: #222c27; letter-spacing: 0.04em; }
+  #state.REC { background: var(--bad); color: #1a0d0d; } #state.REVIEW { background: var(--acc); color: #1a1408; } #state.REPLAY { background: var(--blue); color: #08121f; }
+  #bStart { font-weight: 800; min-width: 132px; } #bStart.rec { background: var(--bad); border-color: var(--bad); color: #1a0d0d; }
+  #bSave { font-weight: 800; } #bSave:not(:disabled) { background: var(--ok); color: #0d1a12; border-color: var(--ok); }
+  #src { font: 600 11px Menlo, monospace; color: #9ad7ff; }
+  #main { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: minmax(420px, 1fr) var(--side); }
+  #simWrap { position: relative; overflow: hidden; }
+  #sim { width: 100%; height: 100%; border: 0; display: block; background: #0d1210; }
+  #padBox { position: absolute; left: 12px; bottom: 12px; z-index: 6; user-select: none; -webkit-user-select: none; display: flex; align-items: flex-end; gap: 8px; }
+  #pad { touch-action: none; cursor: grab; display: block; }
+  #pad:active { cursor: grabbing; }
+  #padBtns { display: flex; flex-direction: column; gap: 6px; }
+  #padBtns button { touch-action: none; width: 84px; font-weight: 800; letter-spacing: 0.04em; background: rgba(34,44,39,0.85); }
+  #bSprint { height: 52px; } #bSprint.on { background: #ff8a3d; border-color: #ff8a3d; color: #1a1209; } #bWalk { height: 34px; } #bWalk.on { background: #9ad7ff; border-color: #9ad7ff; color: #0d1a22; }
+  #padInfo { font: 600 11px Menlo, monospace; color: #9ad7ff; text-shadow: 0 1px 2px #000; text-align: center; margin-top: 2px; }
+  #recBanner { position: absolute; left: 50%; top: 10px; transform: translateX(-50%); z-index: 6; display: none; font: 800 14px -apple-system, Helvetica, sans-serif; padding: 5px 14px; border-radius: 6px; background: var(--bad); color: #1a0d0d; letter-spacing: 0.06em; pointer-events: none; }
+  #side { overflow-y: auto; border-left: 1px solid var(--line); padding: 6px 10px 20px; background: #0f1513; }
+  #tabs { display: flex; gap: 4px; margin-bottom: 6px; position: sticky; top: -6px; background: #0f1513; padding: 4px 0; z-index: 2; }
+  #tabs button { font-weight: 700; } #tabs button.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .tab { display: none; } .tab.on { display: block; }
+  h3 { margin: 8px 0 4px; font: 700 11px -apple-system, Helvetica, sans-serif; letter-spacing: 0.08em; color: var(--dim); text-transform: uppercase; }
+  #rowA { display: grid; grid-template-columns: 290px 1fr; gap: 8px; }
+  #hist { width: 290px; height: 282px; display: block; }
+  #statePanel { font: 10px/1.36 Menlo, Consolas, monospace; white-space: pre; overflow: hidden; color: var(--ink); background: var(--surf); border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px; }
+  #statePanel .k { color: var(--dim); } #statePanel .hd { color: var(--acc); font-weight: 700; } #statePanel .w { color: var(--warn); }
+  #ts { width: 100%; height: 292px; display: block; margin-top: 6px; cursor: crosshair; }
+  #tl { width: 100%; height: 160px; display: block; margin-top: 4px; cursor: crosshair; }
+  #transport { display: none; flex-wrap: wrap; gap: 4px; align-items: center; margin: 4px 0; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--surf); }
+  #transport.on { display: flex; } #transport input[type=range] { flex: 1 1 140px; }
+  #timing { font: 10.5px/1.45 Menlo, monospace; margin: 2px 0 4px; white-space: pre-wrap; } #timing:empty { display: none; }
+  #timing .i { color: #d55181; font-weight: 700; } #timing .s { color: #199e70; font-weight: 700; } #timing .a { color: #c98500; font-weight: 700; }
+  #sumGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 8px; font: 10.5px Menlo, monospace; margin-top: 4px; }
+  #sumGrid div span { color: var(--dim); }
+  .tw { overflow-x: auto; max-width: 100%; }
+  table.t { border-collapse: collapse; width: 100%; font: 10.5px Menlo, Consolas, monospace; }
+  table.t th, table.t td { padding: 2px 4px; text-align: right; white-space: nowrap; border-bottom: 1px solid #1d2622; }
+  table.t th { color: var(--dim); font-weight: 500; background: #0f1513; }
+  table.t td.l, table.t th.l { text-align: left; }
+  table.t tr.cur td { background: rgba(255,212,94,0.10); }
+  table.t td button { padding: 0 5px; font-size: 10.5px; }
+  .flag { color: var(--warn); font-weight: 700; }
+  .note { color: var(--dim); font-size: 11px; margin: 4px 0; }
+  .warnBox { color: var(--warn); font-size: 11.5px; margin: 4px 0; }
+  #cmpRow { display: grid; grid-template-columns: 290px 1fr; gap: 8px; }
+  #cmpPaths { width: 290px; height: 290px; display: block; } #cmpTs { width: 100%; height: 290px; display: block; }
+  #toast { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 20; background: rgba(13,18,16,0.95); border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; font: 600 12px -apple-system, Helvetica, sans-serif; display: none; max-width: 70%; }
+  #help { font-size: 11px; color: var(--dim); line-height: 1.5; }
+  #help b { color: var(--ink); }
+  kbd { font: 600 10px Menlo, monospace; background: #222c27; border: 1px solid #34413a; border-radius: 3px; padding: 0 4px; color: var(--ink); }
+  @media (max-width: 1250px) { :root { --side: 48vw; } #rowA, #cmpRow { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="top">
+  <h1>TOUCHLINE — LEFT-STICK INPUT LAB V1<small>instrument only · no intent recognizer</small></h1>
+  <span id="state">BOOT</span>
+  <span class="grp"><span class="lab">I am trying to</span><select id="selLabel" title="the owner's intent for the next attempt — a HUMAN annotation, never read by the simulation"></select><input id="customLabel" type="text" placeholder="custom label (overrides)" title="free text: overrides the preset when not empty"></span>
+  <span class="grp"><button id="bStart" title="Enter (gamepad: Menu / Start)">● START RECORDING</button><button id="bSave" disabled title="Y (gamepad: A)">SAVE ATTEMPT</button><button id="bDiscard" disabled title="Backspace (gamepad: B)">DISCARD</button></span>
+  <span class="grp"><span class="lab">start</span><select id="selCapture" title="RESET: START resets the footballer standing on the spot with the ball (every attempt self-contained, from rest) · CONTINUOUS: START keeps the dribble going and the attempt includes the 1.5 s before START"><option value="RESET">RESET (kick-off)</option><option value="CONTINUOUS">CONTINUOUS (+1.5 s pre-roll)</option></select></span>
+  <span class="grp"><span class="lab">input</span><span id="src">—</span></span>
+  <span class="grp"><span class="lab">pad</span><select id="selPad" title="the virtual stick's thumb travel radius (CSS px); 84 = the sandbox's own stick"><option value="84">84 px (sandbox)</option><option value="110">110 px</option><option value="140">140 px</option></select></span>
+  <span class="grp"><label title="the live diagnostics overlay (history, plots, state); OFF = the lab only forwards input and keeps its short input ring — recording still works"><input id="cDiag" type="checkbox" checked> diagnostics</label></span>
+  <span class="grp"><select id="selSynth" title="RECORDER TESTS — a synthetic trace played through the same stick path into the real footballer (RESET start, labelled RECORDER TEST); not football gestures"><option value="">recorder test trace…</option></select><button id="bSynth">▶ record test</button></span>
+</div>
+<div id="main">
+  <div id="simWrap">
+    <iframe id="sim" title="the canonical joystick sandbox (vocab2_sandbox.html, unmodified)"></iframe>
+    <div id="recBanner">● RECORDING</div>
+    <div id="padBox"><div><canvas id="pad" title="the diagnostic virtual stick: press and drag — continuous direction and magnitude; release = neutral"></canvas><div id="padInfo">drag to move</div></div>
+      <div id="padBtns"><button id="bSprint" title="hold: sprint (= Shift; gamepad RT)">SPRINT</button><button id="bWalk" title="hold: walk (= Alt / Option; gamepad LT)">WALK</button></div></div>
+  </div>
+  <div id="side">
+    <div id="tabs"><button data-tab="live" class="on">LIVE / ATTEMPT</button><button data-tab="list">ATTEMPTS <span id="nAtt">0</span></button><button data-tab="cmp">COMPARE</button><button data-tab="help">HOW TO</button></div>
+    <div class="tab on" id="tab-live">
+      <div id="transport"><button id="rPlay">❚❚</button><button data-rr="1" class="on">1×</button><button data-rr="0.5">0.5×</button><button data-rr="0.25">0.25×</button><input id="rScrub" type="range" min="0" max="1000" value="0" style="max-width:150px"><span id="rT" style="font:11px Menlo,monospace">—</span><button id="bMark" title="G (gamepad: X): mark this instant as the moment you meant the gesture">MARK INTENT (G)</button><button id="bClearMark" title="remove the intent mark">×</button><button id="bVerify" title="re-simulate this attempt from its record (o0 + the per-tick requests + the events) and check the hash and the state track">verify ↻</button><button id="bLive" title="Esc">LIVE ▸</button></div>
+      <div id="attHead" class="note"></div>
+      <div id="timing"></div>
+      <div id="rowA"><canvas id="hist"></canvas><div id="statePanel"></div></div>
+      <canvas id="ts"></canvas>
+      <canvas id="tl"></canvas>
+      <div id="sumGrid"></div>
+    </div>
+    <div class="tab" id="tab-list">
+      <div class="grp" style="flex-wrap:wrap;gap:4px"><span class="lab">label</span><select id="selFilter"></select><button id="bExportShown">EXPORT shown</button><button id="bExportSel">EXPORT selected</button><button id="bExportAll">EXPORT all</button><button id="bImport">IMPORT…</button><input id="fImport" type="file" accept=".json,application/json" multiple style="display:none"><button id="bDelSel">delete selected</button></div>
+      <div class="note" id="listNote"></div>
+      <div class="tw"><table class="t" id="attTable"></table></div>
+      <h3>Per label — descriptive ranges (median [min – max]); diagnostics, not thresholds</h3>
+      <div class="tw"><table class="t" id="statTable"></table></div>
+    </div>
+    <div class="tab" id="tab-cmp">
+      <div class="grp" style="flex-wrap:wrap;gap:4px"><span class="lab">label</span><select id="cmpLabel"></select><span class="lab">align at</span><select id="cmpAnchor"></select><span class="lab">window</span><select id="cmpWin"><option value="0.5">±0.5 s</option><option value="0.75" selected>±0.75 s</option><option value="1.0">±1.0 s</option><option value="1.5">±1.5 s</option></select><span class="lab">highlight</span><select id="cmpHi"></select></div>
+      <div id="cmpRow"><canvas id="cmpPaths"></canvas><canvas id="cmpTs"></canvas></div>
+      <h3>Descriptive statistics (this label)</h3><div class="tw"><table class="t" id="cmpStats"></table></div>
+      <h3>Entry state at the anchor, per attempt</h3><div class="tw"><table class="t" id="cmpEntry"></table></div>
+    </div>
+    <div class="tab" id="tab-help"><div id="help"></div></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script type="module" src="lsi1/lsr_lab.js"></script>
+</body>
+</html>
