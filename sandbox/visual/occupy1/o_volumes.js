@@ -43,7 +43,7 @@ export function segClosest(p1, q1, p2, q2) { const d1 = sub(q1, p1), d2 = sub(q2
 export function detect(VA, VB, o = {}) { const out = []; const only = o.only || null;
   for (const a of VA) for (const b of VB) { if (only && !(only(a.id, b.id))) continue; const c = segClosest(a.a, a.b, b.a, b.b), gap = c.d - a.r - b.r; if (gap > (o.within != null ? o.within : 0)) continue;
     let n = c.d > 1e-9 ? norm(sub(c.pa, c.pb)) : [0, 0, 1]; const h = Math.hypot(n[0], n[1]), nh = h > 1e-6 ? [n[0] / h, n[1] / h] : null;
-    out.push({ A: a.id, B: b.id, gap, pen: -gap, n, nh, hFrac: h, at: mul(add(c.pa, c.pb), 0.5), uA: c.s, uB: c.t, both: RESOLVED.has(a.id) && RESOLVED.has(b.id) }); }
+    out.push({ A: a.id, B: b.id, gap, pen: -gap, n, nh, hFrac: h, at: mul(add(c.pa, c.pb), 0.5), uA: c.s, uB: c.t, rA: a.r, rB: b.r, both: RESOLVED.has(a.id) && RESOLVED.has(b.id) }); }
   return out.sort((x, y) => x.gap - y.gap); }
 // ═══ BALL ACCESS: a player's leg playing the ball must not be inside the opponent's body. The touching leg (its FOOT, SHIN, THIGH) against the
 // opponent's resolved volumes (PELVIS, WAIST, CHEST, THIGHS, SHINS) — the opponent's FEET excluded (boots meet at the ball: a clash, not an

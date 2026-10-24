@@ -2,7 +2,7 @@
 // MEDIUM 0.200 s — possess1/, unchanged), both bodies posed every tick, the occupancy volumes detected (o_volumes.js): the deepest penetration,
 // the regions, the players' distance and closing speed, the ball, the possession state; ball contacts made with a leg inside the opponent.
 //   node o_old.mjs [--json f]
-import { ENV } from "../../vocab2/tools/u_env.mjs";
+import { ENV } from "./o_env.mjs";
 import { OCASES } from "../o_cases.js";
 import { runMode } from "../../possess1/p_run.js";
 import { measureRun, summary } from "./o_measure.mjs";
