@@ -24,7 +24,7 @@
 //     classified UNRESOLVED (COMMITTED CONFLICT · PLANTED SUPPORT · FAST LIMB · …) — never a hidden reconciliation in the legs
 //   THE SOFT WALL (Stage 1's, unchanged in principle): the two planned paths relative to each other against a virtual disk, acting only when
 //     the free relative paths would touch; it removes only a player's own approach velocity (never gives one); a committed action takes no
-//     share; a Body Feint / Croqueta still ahead in a plan is placed as a whole, never reshaped
+//     share; a Body Feint / Croqueta still ahead in a plan is placed as a whole, never reshaped (its approach is slowed unless R.wallSparesMove)
 //   BALL ACCESS: a touch / the tackle's boot whose playing leg is > the hard limit inside the opponent's body NOW (both bodies posed at the
 //     contact's own tick — no one-tick lag) or in the 0.1 s before is BLOCKED. A blocked touch inside a committed Body Feint / Croqueta does not
 //     cancel the move: its self-caused re-plans (the missed contact, footfall, refresh, its later touches) are held until the move's release —
@@ -39,7 +39,7 @@ import { minNorm, effOf } from "../occupy1/o_world.js";
 const DT = 1 / 240, hyp = Math.hypot;
 export const RES2 = { coreTol: 0.02, hard: OCC.hard, legTol: 0.02, limbTol: 0.05, vFast: 2.5, skin: 0.08, alpha: 0.15, legAlpha: 0.15, recover: 0.006, rMax: 0.03, legCap: 0.015, llTol: 0.02, llCap: 0.015, llCapDeep: 0.02, limbCap: 0.015, limbMode: "leg", hMin: 0.35, effMin: 0.45, effLeg: 0.1, lowCap: 0.012,
   eps: 0.25, still: 0.15, commitPlant: 0.02, commitAir: 0.08, commitTotal: 0.12, lean: 0.12, reach: 0.985, drop: 0.02,
-  zone: 0.3, tau: 0.06, wallOpen: 0.5, wallH: 1.0, wallGate: 0, look: 0, ramp: 0, swingShift: true, carrySwing: true, access: 24, gateNow: true, holdReplans: true, footClear: 0.12, swingClear: true };
+  zone: 0.3, tau: 0.06, wallOpen: 0.5, wallH: 1.0, wallGate: 0, look: 0, ramp: 0, swingShift: true, carrySwing: true, wallSparesMove: false, access: 24, gateNow: true, holdReplans: true, footClear: 0.12, swingClear: true };
 // (coreTol / hard: the contact tolerance and the impossibility threshold (Stage 1's measurement, compared in the report); limbMode "leg": a FAST
 // limb pair resolved like a leg pair, at most limbCap a tick ("tolerate": to limbTol, then limbCap — compared); vFast: the ARTICULATED closing speed (the contact points' less the roots') above which a leg contact is a fast limb
 // contact; commitPlant / commitAir / commitTotal: a committed action's compliance over one plant / one flight (no foot down: placed as a whole,
@@ -66,9 +66,14 @@ export class OccupancyWorld2 extends SharedWorld {
         if (mv && this.R.holdReplans) { p._hold = { until: mv.tRelease, n: 0, label: mv.label }; this.occ.held++; } else p.flags.replan = "missed contact";
         this.occ.blocked++; this.occ.events.push({ k: this.k, t: this.k * DT, kind: "BALL ACCESS BLOCKED", who: p.pid, what: c.role || "touch", F: c.F, through: b, held: !!(mv && this.R.holdReplans) }); };
       p.replan = (why) => { const H = p._hold; if (H && p.t < H.until - 1e-9 && /^(footfall|refresh|missed contact|contact)$/.test(why)) { H.n++; return; } if (H && p.t >= H.until - 1e-9) p._hold = null; return rp(why); }; }
-    if (this.tk) { const pr = this.tk.probes.bind(this.tk); this.tk.probes = (t) => { const opp = this.att.opp, n = opp.length; pr(t); const A = this.tk.act; if (!A || opp.length === n) return;
-        const b = this.accessBlocked(this.def, A.F) || this.gateNow(this.def, A.F, t); if (!b) return; opp.splice(n); this.occ.blocked++; if (!A.occBlocked) A.occBlocked = []; A.occBlocked.push(Math.round(t / DT));
-        this.occ.events.push({ k: this.k, t, kind: "TACKLE BOOT BLOCKED", who: "DEF", what: A.fam, F: A.F, through: b }); }; } }
+    // (the tackle's boot: this tick's new probes — found by their tick, not by the list's length: the tackle drops the last tick's probes as it adds
+    // this tick's, so the count rarely changes and Stage 1's length test skipped the gate for most of the sweep — 3 / 8 boots reached the ball
+    // through the carrier in the move set. The probe is one tick of the sweep, resolved over [t, t + DT]: the gate reads both ends)
+    if (this.tk) { const pr = this.tk.probes.bind(this.tk); this.tk.probes = (t) => { pr(t); const A = this.tk.act, opp = this.att.opp, kk = Math.round(t / DT); if (!A) return; const fresh = opp.filter((o) => o.kind === "tackle" && o.tk === A.n && Math.abs(o.t0 - t) < 1e-9 && !o.hit); if (!fresh.length) return;
+        const b = this.accessBlocked(this.def, A.F) || this.gateNow(this.def, A.F, t) || this.gateNow(this.def, A.F, t + DT); if (!b) return; for (const o of fresh) opp.splice(opp.indexOf(o), 1); if (!A.occBlocked) A.occBlocked = []; A.occBlocked.push(kk);
+        // (consecutive blocked ticks of one sweep are one denial)
+        const E = this.occ.events, last = [...E].reverse().find((e) => e.kind === "TACKLE BOOT BLOCKED"); if (last && last.act === A.n && this.k - last.kEnd <= 1) { last.kEnd = this.k; last.ticks++; if (b.pen > last.through.pen) last.through = b; return; }
+        this.occ.blocked++; E.push({ k: this.k, kEnd: this.k, ticks: 1, act: A.n, t, kind: "TACKLE BOOT BLOCKED", who: "DEF", what: A.fam, F: A.F, through: b }); }; } }
   // the playing leg inside the opponent's body (> the hard limit) in the access window before this tick → the regions, else null
   accessBlocked(p, F) { const H = this.legHist[p.pid]; if (!H.length || !F) return null; const k = this.k; let worst = null;
     for (let i = H.length - 1; i >= 0 && H[i].k >= k - this.R.access; i--) { const x = H[i][F]; if (x && x.pen > this.R.hard && (!worst || x.pen > worst.pen)) worst = x; }
@@ -163,7 +168,7 @@ export class OccupancyWorld2 extends SharedWorld {
     // ── THE SOFT WALL (Stage 1's: relative paths, a virtual disk, gated on a predicted touch; a committed action takes no share) ──
     let wall = null; if (soft.length) { let nb = [0, 0], gmin = Infinity, rho = 0.23; for (const x of soft) { const n = x.nh || [-ua[0], -ua[1]], w = R.zone - x.gap; nb = [nb[0] + n[0] * w, nb[1] + n[1] * w]; if (x.gap < gmin) { gmin = x.gap; rho = x.rA + x.rB; } } const nm = hyp(nb[0], nb[1]);
       if (nm > 1e-9) { nb = [nb[0] / nm, nb[1] / nm]; const W0 = this.wallMem; if (W0 && k - W0.k <= 1) { gmin = Math.min(gmin, W0.g + R.wallOpen * DT); const a = 0.25, m2 = [W0.n[0] * (1 - a) + nb[0] * a, W0.n[1] * (1 - a) + nb[1] * a], mm = hyp(m2[0], m2[1]) || 1; nb = [m2[0] / mm, m2[1] / mm]; }
-        this.wallMem = { k, g: gmin, n: nb }; rec.gmin = +gmin.toFixed(4); const wA = cA || this.preCommit(A, t) ? 0 : fA, wD = cD || this.preCommit(D, t) ? 0 : fD; if (wA + wD > 0) wall = this.softWall(t, nb, Math.max(gmin, -R.coreTol), rho, wA, wD); } }
+        this.wallMem = { k, g: gmin, n: nb }; rec.gmin = +gmin.toFixed(4); const wA = cA || this.preCommit(A, t) || this.movePlanned(A, t) ? 0 : fA, wD = cD || this.preCommit(D, t) || this.movePlanned(D, t) ? 0 : fD; if (wA + wD > 0) wall = this.softWall(t, nb, Math.max(gmin, -R.coreTol), rho, wA, wD); } }
     // ── APPLICATION, and the ledgers (what each player's root actually moved by at the next tick: push + wall) ──
     for (const [p, d, w, key, ek] of [[A, rec.dA, wall && wall.A, "wA", "eA"], [D, rec.dD, wall && wall.D, "wD", "eD"]]) { if (!(d[0] || d[1] || w)) continue; if (R.ramp > 0 && (d[0] || d[1])) this.pend.get(p).push({ d: d.slice(), k0: k }); const o = this.shiftPlan(p, d, t, w, R.ramp); if (o.cut > 0 || d[0] || d[1]) rec.acted = true; rec[key] = +o.cut.toFixed(4); rec[ek] = o.e; }
     rec.sce = []; for (const [p, d, e, i] of [[A, rec.dA, rec.eA, 0], [D, rec.dD, rec.eD, 1]]) { const CL = this.commitLedger(p, t); if (CL) { CL.v[0] += e[0]; CL.v[1] += e[1]; if (this.plantedStances(p, t).length) CL.air = [0, 0]; else { CL.air[0] += e[0]; CL.air[1] += e[1]; } }
@@ -239,6 +244,11 @@ export class OccupancyWorld2 extends SharedWorld {
   // a planted stance that the present plan's Body Feint / Croqueta commits on (it is still ahead, its commitment before the stance ends)
   preCommitStance(p, q, t) { const a = this.techOf(p); return !!(a && t < a.tCommit - 1e-9 && q.t1 > a.tCommit - 1e-9); }
   preCommit(p, t) { return this.plantedStances(p, t).some(([, q]) => this.preCommitStance(p, q, t)); }
+  // a Body Feint / Croqueta in the live plan, not yet committed (R.wallSparesMove, an OWNER DECISION — off by default): the soft wall then leaves
+  // its approach alone. Off, the wall slows the approach before contact and the canonical planner may re-plan the move away (a Body Feint
+  // into a standing player is not played); on, it is played, then overlaps (review set: ordinary leg ticks > 5 cm 115 → 200, committed torso
+  // 64 → 118)
+  movePlanned(p, t) { const a = this.techOf(p); return !!(this.R.wallSparesMove && a && t < a.tCommit - 1e-9); }
   // a committed Body Feint / Croqueta at t (its action), else null
   moveCommitted(p, t) { const a = this.techOf(p); return a && t >= a.tCommit - 1e-9 && t < a.tRelease ? a : null; }
   committed(p, t) { if (p.tk && p.tk.owns(t)) return "TACKLE"; const a = p.plan.action; return a.tech && a.tCommit != null && t >= a.tCommit - 1e-9 && t < a.tRelease ? a.label : null; }
