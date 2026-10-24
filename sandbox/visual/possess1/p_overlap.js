@@ -1,0 +1,8 @@
+// ═══ possess1/p_overlap.js — THE TWO BODIES' INTERPENETRATION (no player–player collision exists: Milestone 3 — measured, never resolved) ═════
+// Tackling V1's capsules (t_body.js): trunk 0.15 m, thighs 0.075, shins 0.055, feet 0.045 — the deepest overlap of any pair, from the posed joints
+export const CAPS = [["pelvis", "chest", 0.15], ["chest", "neck", 0.15], ["thigh_R", "shin_R", 0.075], ["thigh_L", "shin_L", 0.075], ["shin_R", "foot_R", 0.055], ["shin_L", "foot_L", 0.055], ["foot_R", "toe_R", 0.045], ["foot_L", "toe_L", 0.045]];
+const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
+export function segDist(p1, q1, p2, q2) { const d1 = sub(q1, p1), d2 = sub(q2, p2), r = sub(p1, p2), a = dot(d1, d1), e = dot(d2, d2), f = dot(d2, r); let s, t;
+  if (a <= 1e-12 && e <= 1e-12) return Math.sqrt(dot(r, r)); if (a <= 1e-12) { s = 0; t = clamp(f / e, 0, 1); } else { const c = dot(d1, r); if (e <= 1e-12) { t = 0; s = clamp(-c / a, 0, 1); } else { const b = dot(d1, d2), den = a * e - b * b; s = den !== 0 ? clamp((b * f - c * e) / den, 0, 1) : 0; t = (b * s + f) / e; if (t < 0) { t = 0; s = clamp(-c / a, 0, 1); } else if (t > 1) { t = 1; s = clamp((b - c) / a, 0, 1); } } }
+  const c1 = [p1[0] + d1[0] * s, p1[1] + d1[1] * s, p1[2] + d1[2] * s], c2 = [p2[0] + d2[0] * t, p2[1] + d2[1] * t, p2[2] + d2[2] * t], d = sub(c1, c2); return Math.sqrt(dot(d, d)); }
+export function overlapOf(JA, JD) { let pen = 0; for (const [a, b, ra] of CAPS) for (const [c, d, rc] of CAPS) { const dd = segDist(JA[a].j, JA[b].j, JD[c].j, JD[d].j) - ra - rc; if (-dd > pen) pen = -dd; } return pen; }
