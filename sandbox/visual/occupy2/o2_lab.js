@@ -79,7 +79,8 @@ const DEF_TINT = [1.05, 0.42, 0.36], ATT_TINT = [1, 1, 1];
 // ═══ A CASE: OLD · STAGE 1 · STAGE 2 simulated; per tick the volumes' contacts, the support, the corrections (from the recorded live poses) ═══
 const MOVE = /BODY FEINT|CROQUETA/;
 // (the commitment and the support state at t from the plan LIVE at t — the same definitions for the three modes; o2_world.js supportState)
-function committedAt(p, t) { if (p.tk && (p.tk.acts || []).some((A) => t >= A.t0 - 1e-9 && t < A.tCtl - 1e-9)) return "STANDING TACKLE";   // (tk.owns alone has no lower bound)  const a = p.planAt(t).action; return a && a.tech && a.tCommit != null && t >= a.tCommit - 1e-9 && t < a.tRelease ? a.label : null; }
+// (a Standing Tackle owns the body from its commitment to its control end — tk.owns alone has no lower bound)
+function committedAt(p, t) { if (p.tk && (p.tk.acts || []).some((A) => t >= A.t0 - 1e-9 && t < A.tCtl - 1e-9)) return "STANDING TACKLE"; const a = p.planAt(t).action; return a && a.tech && a.tCommit != null && t >= a.tCommit - 1e-9 && t < a.tRelease ? a.label : null; }
 function plantedAt(p, t) { const P = p.planAt(t); return ["R", "L"].map((X) => [X, P.stances[X].find((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9)]).filter((x) => x[1]); }
 function supportAt(p, t) { const n = plantedAt(p, t).length, c = committedAt(p, t), s = p.stateAt(t); if (c && n) return "COMMITTED PLANT"; if (!n) return "AIRBORNE"; if (hyp(s.V[0], s.V[1]) >= RES2.still) return "FREE LOCOMOTION"; return n === 2 ? "DOUBLE SUPPORT" : "SINGLE SUPPORT"; }
 function simMode(tc, m) { const c0 = performance.now(), E = new Map();
