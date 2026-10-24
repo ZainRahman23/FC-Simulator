@@ -4056,6 +4056,109 @@ Stopped for owner visual review.
 | The croqueta refinement | In progress |
 | `touchline-current` | No changes except this chronicle |
 
+## Friday 23 October 2026 — The 22 Oct publication; the ADV-4 croqueta refinement; BODY FEINT V2; the TOUCHLINE GAMEPLAY DEV milestone and `integration/touchline-gameplay-1`; the Body Feint's video-guided and exit-foot passes; La Croqueta video-guided → HOP/SWEEP V2 → X-SWEEP V3 → LEG-WAVE V4; the DRIBBLING VOCABULARY INTEGRATION milestone, published; LEFT-STICK INPUT LAB V1 and OWNER INPUT ANALYSIS V1
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `61f5b1c` (the 22 Oct entry), pushed in the 23 Oct housekeeping.
+  - **`prototype/dribble-1`**, 22 commits this day (`c11579a` … `dac51cc`). The milestone `dea3abd` and everything before it were pushed ≈ 14:45; the rest ≈ 02:10 on 24 Oct with the vocabulary milestone. Both pushes were verified by ls-remote and a fresh fetch.
+
+    | Milestone | Commits | Time |
+    |---|---|---|
+    | ADV-4 · the croqueta refinement | `c11579a` | 06:46 |
+    | BODY FEINT V2 (instruction, build) | `273cf9a`, `0c65eac` | 06:46, 08:05 |
+    | TOUCHLINE GAMEPLAY DEV (instruction, Astra's package, the milestone) | `d298f16`, `7408175`, `dea3abd` | 14:21 – 14:23 |
+    | BODY FEINT V2 — VIDEO-GUIDED | `bbc87f4`, `7853a88` | 15:45 |
+    | BODY FEINT V2 — EXIT FOOT | `5d1a7ec`, `f8a0e37` | 16:27 |
+    | LA CROQUETA — VIDEO-GUIDED | `5c0330b`, `4a549b8` | 18:34 |
+    | LA CROQUETA — HOP/SWEEP V2 | `1b02a11`, `753d0cc` | 20:09 |
+    | LA CROQUETA — X-SWEEP V3 | `be20a97`, `f7645d1` | 21:00, 21:51 |
+    | LA CROQUETA — LEG-WAVE V4 (with the owner's screenshot) | `4d63f13`, `b489e4f` | 22:12, 23:08 |
+    | DRIBBLING VOCABULARY INTEGRATION (instruction, pre-integration manifest, integration) | `dd954b1`, `9140be5`, `f775daa` | 23:33, 23:38, 01:37 |
+    | The publication instruction | `dac51cc` | 02:00 |
+
+  - **New refs, pushed and verified:**
+    - tag `checkpoint/touchline-gameplay-dev-2026-10-23` → `dea3abd`, with branches `milestone/touchline-gameplay-dev` and `integration/touchline-gameplay-1` at the same commit (≈ 14:45);
+    - the local tags `tc-baseline-88573ef0` and `tc-baseline-88573ef0-locked`, pushed with them (`bl_lock_check.sh` needs them);
+    - tag `checkpoint/touchline-feint-croqueta-approved-2026-10-23` → `9140be5`, the pre-integration manifest;
+    - branch `milestone/feint-croqueta-vocab-v1` and tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` → `f775daa` (≈ 02:10).
+    - `main` untouched (`ff3a89f`).
+  - **`prototype/left-stick-intent-v1`** (new, cut from `f775daa`): `4d8ff0f` (03:14) and `6ccd9f9` (05:09), pushed in the 24 Oct housekeeping.
+- **[Local] Another workstream (Codex):** `prototype/shooting-body-v1`, a worktree in `~/.codex/worktrees/shooting-body-v1/`, branched from `dea3abd`. It has 14 commits, 15:48 → 02:02 (`f618cb6` … `53b9049`):
+  - canonical ground shooting plants and ten full-body reference strikes, with a ten-shot browser review and handoff;
+  - a video-guided finesse shot (a landmark review, a guided landing into locomotion);
+  - a reference-driven right-foot POWER shot (static anchors built from the pelvis outward, a frozen-anchor motion review through contact, the full continuation review).
+  - Not pushed; recorded here from its commit log only.
+- **[Doc]:**
+  - each milestone's report, handoff, status and evidence in `review_artifacts/body_feint_v2/`, `touchline_gameplay_dev/`, `body_feint_v2_vg/`, `body_feint_v2_ef/`, `croqueta_vg/`, `croqueta_hs/`, `croqueta_xs/`, `croqueta_lw/`, `vocab_integration1/`, `left_stick_lab1/` and `owner_input_analysis1/`;
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the pages show a real player's model; they are local pages only.
+- **[Session]** Owner instructions (the time each was received):
+
+  | Received (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 06:40 | BODY FEINT V2: after the croqueta work, an elite whole-body feint | `body_feint_v2/sources/` |
+  | ≈ 14:10 | Preserve and publish the current Touchline work; Body Feint V2 "an improvement", provisional | `touchline_gameplay_dev/sources/` |
+  | ≈ 14:30 | Body Feint V2, video-guided from a reference recording | `body_feint_v2_vg/sources/` |
+  | ≈ 15:50 | "Much better": keep the upper body; the exit foot joins the lie | `body_feint_v2_ef/sources/` |
+  | ≈ 16:45 | La Croqueta, video-guided from a reference recording | `croqueta_vg/sources/` |
+  | ≈ 19:20 | HOP/SWEEP V2: still lateral stepping; one hop / sweep, the legs change sides | `croqueta_hs/sources/` |
+  | ≈ 20:51 | X-SWEEP V3: one continuous elastic X-shaped sweep | `croqueta_xs/sources/` |
+  | ≈ 22:10 | LEG-WAVE V4: L1 is right, the left foot jumps forward; one leg wave | `croqueta_lw/sources/` |
+  | ≈ 23:31 | Integrate the Body Feint and La Croqueta into the dribbling vocabulary | `vocab_integration1/sources/` |
+  | ≈ 02:00 | Publish the vocabulary-integration milestone (publication only) | `vocab_integration1/sources/` |
+  | ≈ 02:05 | LEFT-STICK INPUT RECORDER / DIAGNOSTIC V1 | `left_stick_lab1/sources/` |
+  | ≈ 04:20 | OWNER INPUT ANALYSIS → INTENT RECOGNIZER V1 DESIGN, not implementation | `owner_input_analysis1/sources/` |
+
+- **Owner media.**
+  - **One screenshot** (22:07): the X-SWEEP V3 Lab at the moment the owner calls the right first loaded shape, L1. It was committed with the LEG-WAVE V4 instruction, and is archived unaltered in `chronicle_screens/2026-10-23_dribbling/` with a `MANIFEST.tsv` row.
+  - **Three reference recordings** used by this workstream (14:11 EA FC 26 game footage, 16:43 Messi, 19:06 Iniesta): third-party, not archived.
+  - **Four more Desktop recordings** (16:19, 19:43, 20:56, 02:54) are named in the shooting workstream's own study files as its references; not archived.
+  - **One recording** (19:42) is referenced nowhere; not examined, not archived.
+
+**The 22 Oct housekeeping (06:03).** The chronicle `61f5b1c` and the owner's croqueta instruction `3d27eca` were committed; `prototype/dribble-1` was pushed and verified.
+
+**The croqueta refinement** (`c11579a`, begun 22 Oct day). The authoritative root starts across 0.08 s before the touch, the pelvis translates before it rotates, and the other foot makes the receive. The Lab compares CURRENT | UPGRADED | BASIC.
+
+**BODY FEINT V2** (`0c65eac`). The feint was rebuilt from the support up: a real false step, a small centre-of-mass shift toward the fake, the shoulder, trunk, head and arms selling it, and the outside of the foot taking the ball away. Found on the way: `u_body.js` used ±9 s sentinels, so the gait's arm swing and pelvis motion froze after 9 s of simulated time in every build since `88573ef`; fixed in `feint2/` only. **Owner: "an improvement", provisional, not approved.**
+
+**The TOUCHLINE GAMEPLAY DEV milestone** (`dea3abd`, ≈ 14:45). A source of truth for a fresh session (`TOUCHLINE_GAMEPLAY_DEV.md`, `SOURCE_OF_TRUTH.md`, a manifest of the 57 loaded files, publication checks), with Astra's A99-C + support V1.1 package preserved. The owner chose option B: `integration/touchline-gameplay-1`, the deliberate assembly point for later canonical integrations (shooting, physical contact, tackling), each merged only after its own review.
+
+**The Body Feint, video-guided and exit foot** (`7853a88`, `f8a0e37`). The feint was rebuilt from a game-footage reference: a wide false step, the trunk and head dropping toward the fake, the exit arm thrown out, a big brake with the ball left on the exit side. The owner called it "much better"; the exit-foot pass then made the exit foot tuck toward the fake, release after the hips and collect the ball with its outside.
+
+**La Croqueta, four passes in one evening.**
+- **Video-guided** (`4a549b8`): the pelvis leads the touch across, the ball rolled under the moving body.
+- **HOP/SWEEP V2** (`753d0cc`), after the owner judged it still lateral stepping: one low hop / sweep in which the legs change sides.
+- **X-SWEEP V3** (`f7645d1`): one elastic X-shaped sweep, with two new body channels (side bend and pelvis roll) that leave every other move bit-identical. The owner approved its L1 shape but saw the left foot jump forward.
+- **LEG-WAVE V4** (`b489e4f`): V3 kept up to the first touch, then one wave through both legs; the left foot opens outward (forward speed 12.7 → 7.1 m/s) and the legs cross 8 ms apart. A limit found: the touching foot cannot plant inward of its hip in the 0.1 s it has without crossing the ball's path.
+
+**The DRIBBLING VOCABULARY INTEGRATION** (`f775daa`, published ≈ 02:10). The video-guided + exit-foot Body Feint and La Croqueta LEG-WAVE V4 entered the canonical vocabulary (`sandbox/visual/vocab2/`) as authoritative entries, their motions unchanged (0.000 mm against the review builds). The gates decline every entry the reviews did not validate:
+- the Body Feint at walk 45 – 55°, jog 35 – 60° and run 35 – 40°, from a settled carry, exiting to the carrying foot's side;
+- the Croqueta only from a settled jog (2.6 – 3.6 m/s) at 40 – 45°.
+
+The old analog feint was switched off. Provisionally approved, not frozen.
+
+**LEFT-STICK INPUT LAB V1** (`4d8ff0f`). An instrument that records the owner's left-stick input against the unmodified canonical footballer, for designing an intent recognizer later. It captures the raw stream, the derived stick, the physical state and an exact re-simulation; there is no recognizer. The recorder tests passed 129 / 129, and the milestone's suites were identical.
+
+**OWNER INPUT ANALYSIS V1** (`6ccd9f9`). The owner's 21 mouse recordings (not exported; read from a copy of the browser's storage) were analysed.
+- A Body Feint is a side contradiction: a clear first side, then across the running line within ≈ 0.17 – 0.25 s.
+- The croqueta attempts are the same shape, smaller, so the Croqueta is contextual rather than its own gesture.
+- Angular velocity does not separate cuts from feints.
+- Two limits: the screen edge clipped 14 of 20 gestures, and every attempt ran at 5.3 m/s, outside the Croqueta's jog envelope.
+
+Intent Recognizer V1 was designed and not implemented; the Lab gained a centred-pad option.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| Body Feint (video-guided + exit foot) and La Croqueta LEG-WAVE V4 | Integrated as authoritative vocabulary entries; provisionally approved; not frozen |
+| `milestone/feint-croqueta-vocab-v1` (`f775daa`) | Published; the current gameplay milestone |
+| `integration/touchline-gameplay-1` | Created at `dea3abd`; nothing merged into it |
+| Intent Recognizer V1 | Designed, not built; awaiting the owner's review and more recordings |
+| The shooting workstream | [Local] Codex branch, not pushed |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -4142,7 +4245,9 @@ Stopped for owner visual review.
   - `prototype/locomotion-v2-run1`: RUN-1, frozen on 10 Oct as **the Locomotion V2 straight-line baseline** (tag `locomotion-v2-straight-baseline-1` = `4a226b1`; LOW 3.0 / JOG 5.5 / FAST RUN 7.8 / ALL-OUT 9.5 m/s; state contract LV2-STATE-1), with its viewer `sandbox/visual/run1.html` and the archival videos in `review_artifacts/locomotion_v2_run1/video/`.
 - **Turning and physical dribbling** (16 – 17 Oct, pushed, not merged):
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
-  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page). On 20 Oct its joystick checkpoint became **BASELINE-88573ef0**, the locked foundation (`tc_baseline_88573ef0.html`); PLAYTEST-1.2 and TC-RESPONSIVE-1 were rejected on playtest; TC-LAYERED-1 / -2 (toggleable layers on the baseline; B4 generic effort turns and B5 short entries / exits approved for development) led into **TC-UNIFIED-1**, the overnight integration with Astra's A99-C and persistent support (in progress).
+  - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page). On 20 Oct its joystick checkpoint became **BASELINE-88573ef0**, the locked foundation (`tc_baseline_88573ef0.html`); PLAYTEST-1.2 and TC-RESPONSIVE-1 were rejected on playtest; TC-LAYERED-1 / -2 (toggleable layers on the baseline; B4 generic effort turns and B5 short entries / exits approved for development) led into **TC-UNIFIED-1**, the overnight integration with Astra's A99-C and persistent support; then (21 – 23 Oct) the controlled ball, the 99 pace and CARRY-B, DRIBBLING VOCAB-1, CRUYFF-CHOP-1, ADV-4 and the Body Feint and Croqueta passes. **The current gameplay milestone** is the DRIBBLING VOCABULARY INTEGRATION, `milestone/feint-croqueta-vocab-v1` = tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` = `f775daa` (`sandbox/visual/vocab2/`; provisionally approved, not frozen). The source of truth for a fresh session is the TOUCHLINE GAMEPLAY DEV milestone (`dea3abd`, `SOURCE_OF_TRUTH.md`); `integration/touchline-gameplay-1` (`dea3abd`) is the assembly point for later canonical integrations, with nothing merged into it yet.
+- **Input research** (23 Oct day, pushed 24 Oct): `prototype/left-stick-intent-v1` (`6ccd9f9`, cut from `f775daa`) — LEFT-STICK INPUT LAB V1 and OWNER INPUT ANALYSIS V1; Intent Recognizer V1 designed, not built.
+- **The shooting workstream** (23 Oct, [Local] Codex worktree `~/.codex/worktrees/shooting-body-v1/`): `prototype/shooting-body-v1` (`53b9049`, from `dea3abd`), not pushed, not integrated.
 - **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; Phase C revision 2 and STANDING-TACKLE-V1 (a functional real-carrier review against TECHNICAL-CONTROL-1.3's carrier) followed on 19 – 20 Oct; no commits, not a freeze.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
@@ -4392,6 +4497,14 @@ An index to the narrative above, not a substitute for it.
 | 22 Oct | DRIBBLING VOCAB-1 presented: the technical vocabulary, the Dribbling Lab | FC-Sim Git | `3cef4c4` |
 | 22 Oct | CRUYFF-CHOP-1: the hook simple, the Cruyff and the Ronaldo chop elite | FC-Sim Git | `d2a736e` |
 | 22 Oct | ADV-4: croqueta, V-turn, compact Matthews, credible stop-and-go; ADVANCED AUTO SOLUTIONS | FC-Sim Git | `b6092d3` |
+| 23 Oct | BODY FEINT V2: the feint rebuilt from the support up (provisional) | FC-Sim Git | `0c65eac` |
+| 23 Oct | **TOUCHLINE GAMEPLAY DEV milestone** (source of truth); `integration/touchline-gameplay-1` created | FC-Sim Git | `dea3abd`, tag `checkpoint/touchline-gameplay-dev-2026-10-23` |
+| 23 Oct | The Body Feint, video-guided and exit foot | FC-Sim Git | `7853a88`, `f8a0e37` |
+| 23 Oct | La Croqueta: video-guided → HOP/SWEEP V2 → X-SWEEP V3 → LEG-WAVE V4 | FC-Sim Git | `4a549b8`, `753d0cc`, `f7645d1`, `b489e4f` |
+| 23 Oct | Pre-integration manifest of the approved motions | FC-Sim Git | `9140be5`, tag `checkpoint/touchline-feint-croqueta-approved-2026-10-23` |
+| 23 Oct (24 Oct 01:37) | **DRIBBLING VOCABULARY INTEGRATION — the current gameplay milestone** | FC-Sim Git | `f775daa`, `milestone/feint-croqueta-vocab-v1`, tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` |
+| 23 Oct (24 Oct 03:14 – 05:09) | LEFT-STICK INPUT LAB V1; OWNER INPUT ANALYSIS V1 (Intent Recognizer V1 designed) | FC-Sim Git | `4d8ff0f`, `6ccd9f9` |
+| 23 Oct | Shooting body: ground plants, finesse, POWER (another workstream) | Local (Codex) | `prototype/shooting-body-v1` `53b9049` |
 
 ## Appendix B — Repository provenance
 
