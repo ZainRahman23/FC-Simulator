@@ -1,0 +1,228 @@
+in-turn — A NEW STICK INPUT INSIDE THE REACTION INTERVAL (70° left, 0.1 s after the contact)
+
+── OLD — CONTACT — ATTACKER RECOVERS: the carrier's model said CONTROLLED at +0.254 s
+   +0.000 s  ATT RE-PLAN "opponent" → CARRY
+   +0.000 s  DEF TACKLE (TOE) — the ball 3.3 → 4.1 m/s
+   +0.000 s  ATT's OWN POSSESSION MODEL → FREE (OPPONENT_TACKLE)
+   +0.092 s  ATT RE-PLAN "footfall" → COMPACT INSIDE REDIRECT
+   +0.100 s  ATT RE-PLAN "request" → CARRY
+   +0.254 s  ATT RE-PLAN "contact" → CARRY
+   +0.254 s  ATT TOUCH carry
+   +0.254 s  ATT's OWN POSSESSION MODEL → CONTROLLED (COLLECTED)
+   +0.329 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +0.483 s  ATT RE-PLAN "contact" → CARRY
+   +0.483 s  ATT TOUCH braking touch
+   +0.558 s  ATT RE-PLAN "footfall" → CARRY
+   +0.700 s  ATT RE-PLAN "contact" → CARRY
+   +0.700 s  ATT TOUCH carry correction
+   +0.721 s  DEF RE-PLAN "tackle: control return" → BODY MOVEMENT
+   +0.725 s  DEF RE-PLAN "request" → BODY MOVEMENT
+   +0.775 s  ATT RE-PLAN "footfall" → CARRY
+   +0.925 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.008 s  ATT RE-PLAN "footfall" → CARRY
+   +1.179 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.292 s  ATT RE-PLAN "contact" → CARRY
+   +1.292 s  ATT TOUCH carry
+   +1.367 s  ATT RE-PLAN "footfall" → CARRY
+   +1.479 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.538 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.667 s  ATT RE-PLAN "refresh" → CARRY
+   +1.725 s  ATT RE-PLAN "footfall" → CARRY
+   +1.837 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.900 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.008 s  ATT RE-PLAN "contact" → CARRY
+   +2.008 s  ATT TOUCH carry
+   +2.083 s  ATT RE-PLAN "footfall" → CARRY
+   +2.204 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +2.258 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.388 s  ATT RE-PLAN "refresh" → CARRY
+   +2.442 s  ATT RE-PLAN "footfall" → CARRY
+
+── NONE — CONTACT — ATTACKER RECOVERS: control broken at +0.000 s; the carrier established control at +0.254 s and kept it to the replay's end
+   +0.000 s  ATT RE-PLAN "opponent" → CARRY
+   +0.000 s  DEF TACKLE — the ball 3.3 → 4.1 m/s
+   +0.000 s  AUTHORITY CONTROLLED(ATT) → FREE — OPPONENT_TACKLE: the opponent's tackle (Δv 5.5 m/s)
+   +0.092 s  ATT RE-PLAN "footfall" → COMPACT INSIDE REDIRECT
+   +0.100 s  ATT RE-PLAN "request" → CARRY
+   +0.254 s  ATT RE-PLAN "contact" → CARRY
+   +0.254 s  ATT TOUCH · carry — the ball 3.1 → 4.9 m/s
+   +0.254 s  AUTHORITY FREE → CONTROLLED(ATT) — COLLECTED: carry
+   +0.329 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +0.483 s  ATT RE-PLAN "contact" → CARRY
+   +0.483 s  ATT TOUCH · braking touch — the ball 4.1 → 2.8 m/s
+   +0.558 s  ATT RE-PLAN "footfall" → CARRY
+   +0.700 s  ATT RE-PLAN "contact" → CARRY
+   +0.700 s  ATT TOUCH · carry correction — the ball 2.0 → 4.1 m/s
+   +0.721 s  DEF RE-PLAN "tackle: control return" → BODY MOVEMENT
+   +0.725 s  DEF RE-PLAN "request" → BODY MOVEMENT
+   +0.775 s  ATT RE-PLAN "footfall" → CARRY
+   +0.925 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.008 s  ATT RE-PLAN "footfall" → CARRY
+   +1.179 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.292 s  ATT RE-PLAN "contact" → CARRY
+   +1.292 s  ATT TOUCH · carry — the ball 1.9 → 4.6 m/s
+   +1.367 s  ATT RE-PLAN "footfall" → CARRY
+   +1.479 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.538 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.667 s  ATT RE-PLAN "refresh" → CARRY
+   +1.725 s  ATT RE-PLAN "footfall" → CARRY
+   +1.837 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.900 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.008 s  ATT RE-PLAN "contact" → CARRY
+   +2.008 s  ATT TOUCH · carry — the ball 1.8 → 4.6 m/s
+   +2.083 s  ATT RE-PLAN "footfall" → CARRY
+   +2.204 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +2.258 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.388 s  ATT RE-PLAN "refresh" → CARRY
+   +2.442 s  ATT RE-PLAN "footfall" → CARRY
+
+── SHORT — CONTACT — ATTACKER RECOVERS: control broken at +0.000 s; the carrier established control at +0.700 s and kept it to the replay's end
+   +0.000 s  DEF TACKLE — the ball 3.3 → 4.1 m/s
+   +0.000 s  AUTHORITY judged ATT's control after DEF's tackle: BROKEN — his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m)
+   +0.000 s  AUTHORITY CONTROLLED(ATT) → FREE — OPPONENT_TACKLE: DEF's tackle (his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m))
+   +0.037 s  ATT RE-PLAN "refresh" → CARRY (on his belief: the contact not yet perceived)
+   +0.092 s  ATT RE-PLAN "footfall" → CARRY (on his belief: the contact not yet perceived)
+   +0.100 s  ATT RE-PLAN "request" → COMPACT INSIDE REDIRECT (on his belief: the contact not yet perceived)
+   +0.125 s  ATT RE-PLAN "opponent" → CARRY
+   +0.125 s  ATT PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.125 s  ATT PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.125 s  DEF PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.125 s  DEF PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.325 s  ATT RE-PLAN "footfall" → DRAG-BACK
+   +0.537 s  ATT RE-PLAN "footfall" → DRAG-BACK
+   +0.700 s  ATT RE-PLAN "contact" → DRAG-BACK
+   +0.700 s  ATT TOUCH · set touch — the ball 1.4 → 1.4 m/s
+   +0.700 s  AUTHORITY FREE → CONTROLLED(ATT) — COLLECTED: set touch
+   +0.721 s  DEF RE-PLAN "tackle: control return" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +0.725 s  DEF RE-PLAN "request" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +0.775 s  ATT RE-PLAN "footfall" → DRAG-BACK
+   +0.825 s  DEF PERCEIVES ATT's touch (it happened at +0.700)
+   +0.825 s  DEF PERCEIVES the ball → CONTROLLED(ATT) (it happened at +0.700)
+   +0.925 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +0.938 s  ATT RE-PLAN "footfall" → DRAG-BACK
+   +1.075 s  ATT RE-PLAN "contact" → DRAG-BACK
+   +1.075 s  ATT TOUCH · DRAG-BACK — the ball 0.4 → 1.7 m/s
+   +1.175 s  ATT RE-PLAN "footfall" → DRAG-BACK
+   +1.179 s  DEF RE-PLAN "footfall" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +1.200 s  DEF PERCEIVES ATT's touch (it happened at +1.075)
+   +1.317 s  ATT RE-PLAN "contact" → CARRY
+   +1.317 s  ATT TOUCH · push (2nd contact) — the ball 0.9 → 4.6 m/s
+   +1.387 s  ATT RE-PLAN "footfall" → CARRY
+   +1.442 s  DEF PERCEIVES ATT's touch (it happened at +1.317)
+   +1.479 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.538 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.550 s  ATT RE-PLAN "contact" → CARRY
+   +1.550 s  ATT TOUCH · carry — the ball 3.7 → 4.4 m/s
+   +1.625 s  ATT RE-PLAN "footfall" → CARRY
+   +1.675 s  DEF PERCEIVES ATT's touch (it happened at +1.550)
+   +1.837 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.900 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.929 s  ATT RE-PLAN "refresh" → CARRY
+   +1.983 s  ATT RE-PLAN "footfall" → CARRY
+   +2.204 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +2.258 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.267 s  ATT RE-PLAN "contact" → CARRY
+   +2.267 s  ATT TOUCH · carry — the ball 1.7 → 4.6 m/s
+   +2.342 s  ATT RE-PLAN "footfall" → CARRY
+   +2.392 s  DEF PERCEIVES ATT's touch (it happened at +2.267)
+
+── MEDIUM — CONTACT — ATTACKER RECOVERS: control broken at +0.000 s; the carrier established control at +0.721 s and kept it to the replay's end
+   +0.000 s  DEF TACKLE — the ball 3.3 → 4.1 m/s
+   +0.000 s  AUTHORITY judged ATT's control after DEF's tackle: BROKEN — his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m)
+   +0.000 s  AUTHORITY CONTROLLED(ATT) → FREE — OPPONENT_TACKLE: DEF's tackle (his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m))
+   +0.037 s  ATT RE-PLAN "refresh" → CARRY (on his belief: the contact not yet perceived)
+   +0.092 s  ATT RE-PLAN "footfall" → CARRY (on his belief: the contact not yet perceived)
+   +0.100 s  ATT RE-PLAN "request" → COMPACT INSIDE REDIRECT (on his belief: the contact not yet perceived)
+   +0.200 s  ATT RE-PLAN "opponent" → CARRY
+   +0.200 s  ATT PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.200 s  ATT PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.200 s  DEF PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.200 s  DEF PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.325 s  ATT RE-PLAN "footfall" → CARRY
+   +0.542 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +0.721 s  DEF RE-PLAN "loose ball: playable" → CARRY
+   +0.721 s  ATT RE-PLAN "contact" → CARRY
+   +0.721 s  ATT TOUCH · braking touch — the ball 1.3 → 2.4 m/s
+   +0.721 s  AUTHORITY FREE → CONTROLLED(ATT) — COLLECTED: braking touch
+   +0.721 s  DEF BALL-ON — a FREE ball his contact touched
+   +0.725 s  DEF RE-PLAN "request" → CARRY (on his belief: the contact not yet perceived)
+   +0.796 s  ATT RE-PLAN "footfall" → CARRY
+   +0.921 s  DEF RE-PLAN "the opponent controls the ball" → BODY MOVEMENT
+   +0.921 s  DEF PERCEIVES ATT's touch (it happened at +0.721)
+   +0.921 s  DEF PERCEIVES the ball → CONTROLLED(ATT) (it happened at +0.721)
+   +0.921 s  DEF BALL-OFF — he knows ATT controls the ball
+   +0.925 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.008 s  ATT RE-PLAN "footfall" → CARRY
+   +1.137 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.208 s  ATT RE-PLAN "footfall" → CARRY
+   +1.379 s  ATT RE-PLAN "contact" → CARRY
+   +1.379 s  ATT TOUCH · carry — the ball 0.4 → 4.9 m/s
+   +1.404 s  DEF RE-PLAN "footfall" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +1.454 s  ATT RE-PLAN "footfall" → CARRY
+   +1.579 s  DEF PERCEIVES ATT's touch (it happened at +1.379)
+   +1.708 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +1.758 s  ATT RE-PLAN "refresh" → CARRY
+   +1.767 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.775 s  ATT RE-PLAN "footfall" → CARRY
+   +2.058 s  ATT RE-PLAN "contact" → CARRY
+   +2.058 s  ATT TOUCH · carry — the ball 2.3 → 4.5 m/s
+   +2.071 s  DEF RE-PLAN "refresh" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +2.125 s  DEF RE-PLAN "footfall" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +2.133 s  ATT RE-PLAN "footfall" → CARRY
+   +2.258 s  DEF PERCEIVES ATT's touch (it happened at +2.058)
+   +2.429 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +2.433 s  ATT RE-PLAN "refresh" → CARRY
+   +2.483 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +2.492 s  ATT RE-PLAN "footfall" → CARRY
+
+── LONG — CONTACT — ATTACKER RECOVERS: control broken at +0.000 s; the carrier established control at +1.250 s and kept it to the replay's end
+   +0.000 s  DEF TACKLE — the ball 3.3 → 4.1 m/s
+   +0.000 s  AUTHORITY judged ATT's control after DEF's tackle: BROKEN — his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m)
+   +0.000 s  AUTHORITY CONTROLLED(ATT) → FREE — OPPONENT_TACKLE: DEF's tackle (his next touch (+0.38 s) would sweep 167 cm from the real ball; Δv 5.5 m/s ≥ 2; no controlled continuation: the contact out of reach (1.55 m))
+   +0.037 s  ATT RE-PLAN "refresh" → CARRY (on his belief: the contact not yet perceived)
+   +0.092 s  ATT RE-PLAN "footfall" → CARRY (on his belief: the contact not yet perceived)
+   +0.100 s  ATT RE-PLAN "request" → COMPACT INSIDE REDIRECT (on his belief: the contact not yet perceived)
+   +0.250 s  ATT RE-PLAN "contact" → CARRY (on his belief: the contact not yet perceived)
+   +0.250 s  ATT TOUCH MADE BLIND (compact inside redirect): MISS: the boot swept 119 cm from the real ball
+   +0.250 s  ATT BLIND MISS — MISS: the boot swept 119 cm from the real ball
+   +0.300 s  ATT RE-PLAN "opponent" → CARRY
+   +0.300 s  ATT PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.300 s  ATT PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.300 s  DEF PERCEIVES DEF's tackle (it happened at +0.000)
+   +0.300 s  DEF PERCEIVES the ball → FREE (it happened at +0.000)
+   +0.600 s  ATT RE-PLAN "refresh" → CARRY
+   +0.633 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +0.721 s  DEF RE-PLAN "loose ball: playable" → CARRY
+   +0.721 s  DEF BALL-ON — a FREE ball his contact touched
+   +0.725 s  DEF RE-PLAN "request" → CARRY
+   +0.842 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +0.925 s  DEF RE-PLAN "footfall" → CARRY
+   +1.004 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +1.137 s  DEF RE-PLAN "footfall" → CARRY
+   +1.167 s  ATT RE-PLAN "footfall" → BRAKING TOUCH
+   +1.250 s  ATT RE-PLAN "contact" → CARRY
+   +1.250 s  ATT TOUCH · braking touch — the ball 0.1 → 1.6 m/s
+   +1.250 s  AUTHORITY FREE → CONTROLLED(ATT) — COLLECTED: braking touch
+   +1.325 s  ATT RE-PLAN "footfall" → CARRY
+   +1.350 s  DEF RE-PLAN "footfall" → CARRY (on his belief: the contact not yet perceived)
+   +1.538 s  ATT RE-PLAN "footfall" → CARRY
+   +1.550 s  DEF RE-PLAN "the opponent controls the ball" → BODY MOVEMENT
+   +1.550 s  DEF PERCEIVES ATT's touch (it happened at +1.250)
+   +1.550 s  DEF PERCEIVES the ball → CONTROLLED(ATT) (it happened at +1.250)
+   +1.550 s  DEF BALL-OFF — he knows ATT controls the ball
+   +1.567 s  DEF RE-PLAN "footfall" → BODY MOVEMENT
+   +1.662 s  ATT RE-PLAN "contact" → CARRY
+   +1.662 s  ATT TOUCH · carry — the ball 0.4 → 2.8 m/s
+   +1.738 s  ATT RE-PLAN "footfall" → CARRY
+   +1.783 s  DEF RE-PLAN "footfall" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +1.896 s  ATT RE-PLAN "contact" → CARRY
+   +1.896 s  ATT TOUCH · carry — the ball 1.9 → 4.6 m/s
+   +1.962 s  DEF PERCEIVES ATT's touch (it happened at +1.662)
+   +1.971 s  ATT RE-PLAN "footfall" → CARRY
+   +2.087 s  DEF RE-PLAN "refresh" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +2.142 s  DEF RE-PLAN "footfall" → BODY MOVEMENT (on his belief: the contact not yet perceived)
+   +2.196 s  DEF PERCEIVES ATT's touch (it happened at +1.896)
+   +2.275 s  ATT RE-PLAN "refresh" → CARRY
+   +2.329 s  ATT RE-PLAN "footfall" → CARRY
+   +2.446 s  DEF RE-PLAN "refresh" → BODY MOVEMENT
+   +2.500 s  DEF RE-PLAN "footfall" → BODY MOVEMENT

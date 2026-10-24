@@ -1,0 +1,28 @@
+{
+  "milestone": "TOUCHLINE — SHARED POSSESSION + REACTION V1",
+  "status": "ARCHITECTURE CANDIDATE — built and tested, awaiting the owner's review (possession transitions, reaction timing, interaction feel); not integrated, not frozen, not pushed",
+  "date": "2026-10-24",
+  "branch": "prototype/shared-possession-reaction-v1",
+  "cut_from": { "sha": "8c0149ba", "what": "Standing Tackle V1 (prototype/tackling-integration-v1), on f775daac milestone/feint-croqueta-vocab-v1" },
+  "worktree": "~/Downloads/FC Simulator worktrees/shared-possession-reaction-v1",
+  "canonical_files_changed": 0,
+  "diagnostic_fixture": "OLD = Standing Tackle V1's world (tackle1/, unchanged)",
+  "architecture": { "authority": "possess1/p_authority.js BallAuthority — CONTROLLED(id) / FREE (+ the reported label FREE · CONTESTED)", "perception": "possess1/p_react.js — re-planning from events a player did not make is delayed by the reaction interval; until then he plans on the snapshot belief ball", "player": "possess1/p_sim.js SharedSim (extends the canonical ControlledSim)", "world": "possess1/p_world.js SharedWorld" },
+  "reaction_candidates_s": { "SHORT": 0.125, "MEDIUM": 0.200, "LONG": 0.300, "recommended_provisional": "MEDIUM" },
+  "lab": "http://127.0.0.1:8364/sandbox/visual/possess1_lab.html (LOCAL ONLY — real players' models)",
+  "verification": {
+    "old_failure": "the carrier re-planned in the contact tick in 162 / 162 contacts; a reachable touch planned in that tick in 148; 24 recoveries from touches planned before the contact (the 1.05 m reach); dual truth in 5 runs / 444 ticks",
+    "single_player_regression_through_SharedSim": "ALL 10 SUITES IDENTICAL (1387 footballers built through SharedSim); p_solo_check 6 / 6 identical",
+    "identity_vs_OLD": "before the first contact 200 / 200; no-contact runs 1084 / 1084; tackle body 256 / 256 (root + every joint against the same ball)",
+    "pre_existing_input": "15 / 15 (identical to the no-contact counterfactual through the reaction interval; a new stick input re-planned in its own tick)",
+    "moves_live_body_through_interval": "Body Feint 52 / 52, Croqueta 27 / 27 (every candidate)",
+    "torture": "60 trials × 4 modes × 2 + counterfactual: dual ownership 0 · chatter 0 · possession without touch 0 · control granted blind 0 · stale / unaware owner 0 · FREE never resolved 0 · timer never resolved 0 · new information used early 0 / 114 · nondeterministic 0",
+    "browser": "13 / 13; page ≡ node 25 cases × 5 modes; 0 errors",
+    "lock_check": "PASS"
+  },
+  "outcomes_search_1500_runs": { "committed": 209, "MISS": [47, 47, 47, 47, 47], "ATTACKER RETAINS": [3, 3, 3, 3, 3], "ATTACKER RECOVERS": [153, 153, 148, 141, 127], "DEFENDER RECOVERS": [6, 6, 11, 18, 32], "BALL FREE": [0, 0, 0, 0, 0], "modes": ["OLD", "NONE", "SHORT", "MEDIUM", "LONG"] },
+  "performance": { "single_player_us_per_tick": { "ControlledSim": 100.6, "SharedSim": 105.0 }, "shared_layer_ms_per_sim_s": { "idle": 0.21, "reacting": 1.33, "free_contested": 0.37 }, "finding": "the canonical planner re-plans every tick while it keeps a recovery plan older than 0.3 s (≈ 4 ms each) — longer FREE chases under reaction expose it; not fixed (a canonical change)" },
+  "collision": "none (Milestone 3): deepest overlap 30 cm; ticks > 3 cm OLD 1253 → LONG 2030; balls played through overlapping bodies 4 – 9 per mode",
+  "owner_decisions": ["the reaction interval", "the ball-on rule (no ordinary-touch challenges on a controlled ball)", "integration path (SharedSim as the published player; the probe and Reaction V1)", "the canonical refresh inefficiency", "next: Player Occupancy V1, POKE calibration, the tackle's recovery cost"],
+  "commits": "see git log 8c0149ba..HEAD"
+}

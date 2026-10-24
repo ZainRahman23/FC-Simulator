@@ -1,0 +1,15 @@
+PASS  the page loads (TOUCHLINE — SHARED POSSESSION + REACTION V1 REVIEW)  — 0.8 s to the first case
+PASS  every case simulates all five modes and draws (OLD | MODE)  — 25/25
+PASS  the page's outcomes equal node's, every mode  — 25/25
+PASS  view SINGLE: every viewport draws  — [100]
+PASS  view OLD | MODE: every viewport draws  — [100,100]
+PASS  view ALL FIVE: every viewport draws  — [100,100,100,100,100]
+PASS  the five modes draw different replays of the same case (race, 1.2 s after the contact)  — {"OLD":1842095936,"NONE":1842095936,"SHORT":131868777,"MEDIUM":645908430,"LONG":1092527045}
+PASS  the toggles render (plain gameplay view, ball hidden, body only, skeleton, beliefs)  — {"plain (diagnostics off)":true,"ball hidden, diagnostics off":true,"body only":true,"skeleton":true,"beliefs + diagnostics":true}
+PASS  DIAGNOSTICS off hides the panel and the overlays
+PASS  the diagnostics show the authority, both players' knowledge, plans, next planned and actual touches, the record
+PASS  frame step moves the playhead 4 ticks  — 3.999999999999986
+PASS  TACKLE AT PLAYHEAD re-runs every mode with the request there  — {"OLD":"CONTACT — ATTACKER RECOVERS","NONE":"CONTACT — ATTACKER RECOVERS","SHORT":"CONTACT — ATTACKER RECOVERS","MEDIUM":"CONTACT — ATTACKER RECOVERS","LONG":"CONTACT — ATTACKER RECOVERS"}
+PASS  0 console / HTTP errors  — []
+
+13 / 13 checks pass

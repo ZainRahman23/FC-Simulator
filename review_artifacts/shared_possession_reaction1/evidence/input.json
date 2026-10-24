@@ -1,0 +1,293 @@
+[
+ {
+  "fam": "STEERING LEFT (stick 30° left from t = 0.30, held)",
+  "mode": "OLD",
+  "kE": 814,
+  "n": 0,
+  "dk": 1,
+  "act": "CARRY",
+  "req": -0.523599,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [],
+  "pass": true
+ },
+ {
+  "fam": "STEERING LEFT (stick 30° left from t = 0.30, held)",
+  "mode": "SHORT",
+  "kE": 814,
+  "n": 30,
+  "dk": 31,
+  "act": "CARRY",
+  "req": -0.523599,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "contact"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "STEERING LEFT (stick 30° left from t = 0.30, held)",
+  "mode": "MEDIUM",
+  "kE": 814,
+  "n": 48,
+  "dk": 49,
+  "act": "CARRY",
+  "req": -0.523599,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "contact",
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "STEERING LEFT (stick 30° left from t = 0.30, held)",
+  "mode": "LONG",
+  "kE": 814,
+  "n": 72,
+  "dk": 73,
+  "act": "CARRY",
+  "req": -0.523599,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "contact",
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "SHARP CUT 60° LEFT AT 0.55 (before the contact)",
+  "mode": "OLD",
+  "kE": 773,
+  "n": 0,
+  "dk": 1,
+  "act": "CARRY",
+  "req": -1.047198,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [],
+  "pass": true
+ },
+ {
+  "fam": "SHARP CUT 60° LEFT AT 0.55 (before the contact)",
+  "mode": "SHORT",
+  "kE": 773,
+  "n": 30,
+  "dk": 31,
+  "act": "CARRY",
+  "req": -1.047198,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "SHARP CUT 60° LEFT AT 0.55 (before the contact)",
+  "mode": "MEDIUM",
+  "kE": 773,
+  "n": 48,
+  "dk": 50,
+  "act": "CARRY",
+  "req": -1.047198,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "SHARP CUT 60° LEFT AT 0.55 (before the contact)",
+  "mode": "LONG",
+  "kE": 773,
+  "n": 72,
+  "dk": 73,
+  "act": "CARRY",
+  "req": -1.047198,
+  "actsDuring": [
+   "CARRY"
+  ],
+  "replansDuring": [
+   "footfall",
+   "contact"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "BODY FEINT (committed)",
+  "mode": "OLD",
+  "kE": 685,
+  "n": 0,
+  "dk": 1,
+  "act": "BODY FEINT V2",
+  "req": 0.785398,
+  "actsDuring": [
+   "BODY FEINT V2"
+  ],
+  "replansDuring": [],
+  "pass": true
+ },
+ {
+  "fam": "BODY FEINT (committed)",
+  "mode": "SHORT",
+  "kE": 685,
+  "n": 30,
+  "dk": 31,
+  "act": "BODY FEINT V2",
+  "req": 0.785398,
+  "actsDuring": [
+   "BODY FEINT V2"
+  ],
+  "replansDuring": [
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "BODY FEINT (committed)",
+  "mode": "MEDIUM",
+  "kE": 685,
+  "n": 48,
+  "dk": 49,
+  "act": "BODY FEINT V2",
+  "req": 0.785398,
+  "actsDuring": [
+   "BODY FEINT V2"
+  ],
+  "replansDuring": [
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "BODY FEINT (committed)",
+  "mode": "LONG",
+  "kE": 685,
+  "n": 72,
+  "dk": 73,
+  "act": "BODY FEINT V2",
+  "req": 0.785398,
+  "actsDuring": [
+   "BODY FEINT V2"
+  ],
+  "replansDuring": [
+   "footfall",
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "LA CROQUETA (committed)",
+  "mode": "OLD",
+  "kE": 691,
+  "n": 0,
+  "dk": 1,
+  "act": "LA CROQUETA",
+  "req": -0.698132,
+  "actsDuring": [
+   "LA CROQUETA"
+  ],
+  "replansDuring": [],
+  "pass": true
+ },
+ {
+  "fam": "LA CROQUETA (committed)",
+  "mode": "SHORT",
+  "kE": 691,
+  "n": 30,
+  "dk": 31,
+  "act": "LA CROQUETA",
+  "req": -0.698132,
+  "actsDuring": [
+   "LA CROQUETA"
+  ],
+  "replansDuring": [
+   "contact"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "LA CROQUETA (committed)",
+  "mode": "MEDIUM",
+  "kE": 691,
+  "n": 48,
+  "dk": 133,
+  "act": "LA CROQUETA",
+  "req": -0.698132,
+  "actsDuring": [
+   "LA CROQUETA"
+  ],
+  "replansDuring": [
+   "contact",
+   "footfall"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "LA CROQUETA (committed)",
+  "mode": "LONG",
+  "kE": 691,
+  "n": 72,
+  "dk": 73,
+  "act": "LA CROQUETA",
+  "req": -0.698132,
+  "actsDuring": [
+   "LA CROQUETA"
+  ],
+  "replansDuring": [
+   "contact",
+   "footfall",
+   "contact"
+  ],
+  "pass": true
+ },
+ {
+  "fam": "NO INPUT LAG",
+  "mode": "SHORT",
+  "kE": 795,
+  "kTurn": 810,
+  "replanAfterInput": 0,
+  "pathAfterInput": 16,
+  "soloPathAfterInput": 46,
+  "dk": 31,
+  "n": 30,
+  "pass": true
+ },
+ {
+  "fam": "NO INPUT LAG",
+  "mode": "MEDIUM",
+  "kE": 795,
+  "kTurn": 819,
+  "replanAfterInput": 0,
+  "pathAfterInput": 25,
+  "soloPathAfterInput": 37,
+  "dk": 49,
+  "n": 48,
+  "pass": true
+ },
+ {
+  "fam": "NO INPUT LAG",
+  "mode": "LONG",
+  "kE": 795,
+  "kTurn": 831,
+  "replanAfterInput": 0,
+  "pathAfterInput": 25,
+  "soloPathAfterInput": 25,
+  "dk": 73,
+  "n": 72,
+  "pass": true
+ }
+]

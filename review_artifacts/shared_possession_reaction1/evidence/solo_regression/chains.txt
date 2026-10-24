@@ -1,0 +1,43 @@
+✓ CARRY → BODY FEINT → CARRY                               BODY_FEINT PLAYED BFEINT_J
+    BODY FEINT V2 (R) @1.02 ctl +0.20
+    body 0 normal / 2 slow {"FLOAT·slow":2} · possession exits 0 · missed 0 · sep ≤ 0.66 m · deterministic yes
+✓ MIRROR · CARRY → BODY FEINT → CARRY                      BODY_FEINT PLAYED BFEINT_J
+    BODY FEINT V2 (L) @1.02 ctl +0.20
+    body 0 normal / 2 slow {"FLOAT·slow":2} · possession exits 0 · missed 0 · sep ≤ 0.66 m · deterministic yes
+✓ CARRY → CROQUETA → CARRY                                 CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (R) @0.57 ctl +0.24
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ MIRROR · CARRY → CROQUETA → CARRY                        CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (L) @0.57 ctl +0.24
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ BODY FEINT → ordinary cut                                BODY_FEINT PLAYED BFEINT_J
+    BODY FEINT V2 (R) @1.02 ctl +0.20 → LATERAL TRANSFER @1.26 · LATERAL TRANSFER (R) @1.39 ctl +0.06 · LATERAL TRANSFER (L) @1.62 ctl +0.06
+    body 0 normal / 1 slow {"FLOAT·slow":1} · possession exits 0 · missed 0 · sep ≤ 0.66 m · deterministic yes
+✓ MIRROR · BODY FEINT → ordinary cut                       BODY_FEINT PLAYED BFEINT_J
+    BODY FEINT V2 (L) @1.02 ctl +0.20 → LATERAL TRANSFER @1.26 · LATERAL TRANSFER (L) @1.39 ctl +0.06 · LATERAL TRANSFER (R) @1.62 ctl +0.06
+    body 0 normal / 1 slow {"FLOAT·slow":1} · possession exits 0 · missed 0 · sep ≤ 0.66 m · deterministic yes
+✓ BODY FEINT → CROQUETA                                    BODY_FEINT PLAYED BFEINT_J + CROQUETA PLAYED CROQ_LW
+    BODY FEINT V2 (R) @1.02 ctl +0.20 → LA CROQUETA @2.20 · LA CROQUETA (R) @2.82 ctl +0.24
+    body 0 normal / 2 slow {"FLOAT·slow":2} · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ MIRROR · BODY FEINT → CROQUETA                           BODY_FEINT PLAYED BFEINT_J + CROQUETA PLAYED CROQ_LW
+    BODY FEINT V2 (L) @1.02 ctl +0.20 → LA CROQUETA @2.20 · LA CROQUETA (L) @2.82 ctl +0.24
+    body 0 normal / 2 slow {"FLOAT·slow":2} · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ CROQUETA → ordinary cut                                  CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (R) @0.57 ctl +0.24 → MATTHEWS (compact) @1.20
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ MIRROR · CROQUETA → ordinary cut                         CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (L) @0.57 ctl +0.24 → MATTHEWS (compact) @1.20
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ CROQUETA → CRUYFF                                        CROQUETA PLAYED CROQ_LW + CRUYFF PLAYED CRUYFF
+    LA CROQUETA (R) @0.57 ctl +0.24 → CRUYFF TURN @1.50 · CRUYFF TURN (R) @1.88 ctl +0.09 → OUTSIDE CUT @2.26 · OUTSIDE CUT (R) @2.98 ctl +0.06
+    body 0 normal / 1 slow {"FLOAT·slow":1} · possession exits 0 · missed 0 · sep ≤ 0.7 m · deterministic yes
+✓ MIRROR · CROQUETA → CRUYFF                               CROQUETA PLAYED CROQ_LW + CRUYFF PLAYED CRUYFF
+    LA CROQUETA (L) @0.57 ctl +0.24 → CRUYFF TURN @1.50 · CRUYFF TURN (L) @1.88 ctl +0.09 → OUTSIDE CUT @2.26 · OUTSIDE CUT (L) @2.98 ctl +0.06
+    body 0 normal / 1 slow {"FLOAT·slow":1} · possession exits 0 · missed 0 · sep ≤ 0.7 m · deterministic yes
+✓ CROQUETA → carry (back to the first line)                CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (R) @0.57 ctl +0.24
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+✓ MIRROR · CROQUETA → carry (back to the first line)       CROQUETA PLAYED CROQ_LW
+    LA CROQUETA (L) @0.57 ctl +0.24
+    body 0 normal / 0 slow  · possession exits 0 · missed 0 · sep ≤ 0.68 m · deterministic yes
+■ 14 / 14 chains: every request PLAYED, 0 normal-visible, possession kept, deterministic

@@ -1,0 +1,9 @@
+SINGLE PLAYER (3 × 4 seeds × 15 s, alternated): the published ControlledSim 100.60 µs per tick · SharedSim alone 105.00 µs per tick → overhead 4.40 µs (4.4 %; run-to-run spread ±16.07 µs)
+
+TWO PLAYERS — 3 × 25 review cases × 4 shared modes: THE SHARED LAYER'S OWN WORK per world tick (perception, ball-on rule, authority tick, knowledge tracks, belief balls, the launch hook)
+  IDLE (the ball controlled, nothing pending)       median 0.50 µs · p95 0.79 µs · mean 0.89 µs   (296298 ticks) → 0.214 ms per simulated s
+  REACTING (an event waiting: the belief balls)      median 4.58 µs · p95 8.96 µs · mean 5.53 µs   (110538 ticks) → 1.328 ms per simulated s
+  FREE / CONTESTED (the claims evaluated)           median 0.88 µs · p95 3.21 µs · mean 1.53 µs   (67284 ticks) → 0.366 ms per simulated s
+  the launch hook (snapshot for the beliefs, events, judgment), per ball change: median 28.63 µs · max 715.17 µs (3156 launches)
+  THE WHOLE WORLD TICK (both footballers + everything), mean per simulated s: OLD 9.26 ms · NONE 8.62 ms · SHORT 16.37 ms · MEDIUM 15.21 ms · LONG 26.00 ms
+  (after the contact the modes play different football — re-plans, pursuits, two players chasing: the whole-tick means compare different replays; the shared layer's own work is the rows above)

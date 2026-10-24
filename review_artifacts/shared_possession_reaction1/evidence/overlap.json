@@ -1,0 +1,704 @@
+{
+ "T": {
+  "OLD": {
+   "runs": 25,
+   "deep": 0.2984587436130167,
+   "ticks3": 1253,
+   "ticksAfter3": 1149,
+   "through": [
+    "carry-jog-l: ATT touch at 1.167 s through 5 cm of overlap",
+    "race: DEF touch at 2.783 s through 13 cm of overlap",
+    "in-steer: DEF tackle at 1.242 s through 5 cm of overlap",
+    "in-steer: ATT touch at 1.483 s through 5 cm of overlap",
+    "in-croq: ATT touch at 0.750 s through 10 cm of overlap",
+    "in-turn: ATT touch at 1.167 s through 7 cm of overlap",
+    "bf-fake: ATT touch at 1.021 s through 6 cm of overlap",
+    "croq-early: DEF tackle at 0.617 s through 19 cm of overlap",
+    "mirror: ATT touch at 1.167 s through 5 cm of overlap"
+   ]
+  },
+  "NONE": {
+   "runs": 25,
+   "deep": 0.2984587436130167,
+   "ticks3": 1214,
+   "ticksAfter3": 1110,
+   "through": [
+    "carry-jog-l: ATT touch at 1.167 s through 5 cm of overlap",
+    "race: DEF touch at 2.783 s through 13 cm of overlap",
+    "in-steer: DEF tackle at 1.242 s through 5 cm of overlap",
+    "in-steer: ATT touch at 1.483 s through 5 cm of overlap",
+    "in-croq: ATT touch at 0.750 s through 10 cm of overlap",
+    "in-turn: ATT touch at 1.167 s through 7 cm of overlap",
+    "bf-fake: ATT touch at 1.021 s through 6 cm of overlap",
+    "croq-early: DEF tackle at 0.617 s through 19 cm of overlap",
+    "mirror: ATT touch at 1.167 s through 5 cm of overlap"
+   ]
+  },
+  "SHORT": {
+   "runs": 25,
+   "deep": 0.2984587436130167,
+   "ticks3": 1240,
+   "ticksAfter3": 1136,
+   "through": [
+    "race: ATT touch at 2.712 s through 4 cm of overlap",
+    "race: ATT touch at 2.929 s through 9 cm of overlap",
+    "in-croq: DEF touch at 1.879 s through 10 cm of overlap",
+    "bf-fake: ATT touch at 1.021 s through 6 cm of overlap"
+   ]
+  },
+  "MEDIUM": {
+   "runs": 25,
+   "deep": 0.29974335921095663,
+   "ticks3": 1389,
+   "ticksAfter3": 1285,
+   "through": [
+    "race: DEF touch at 2.783 s through 10 cm of overlap",
+    "in-steer: DEF touch at 2.496 s through 10 cm of overlap",
+    "steer: ATT touch at 2.896 s through 7 cm of overlap",
+    "bf-fake: ATT touch at 1.021 s through 6 cm of overlap"
+   ]
+  },
+  "LONG": {
+   "runs": 25,
+   "deep": 0.2999668633984405,
+   "ticks3": 2030,
+   "ticksAfter3": 1926,
+   "through": [
+    "carry-walk: DEF touch at 2.612 s through 14 cm of overlap",
+    "in-steer: DEF touch at 2.496 s through 18 cm of overlap",
+    "in-turn: ATT touch at 2.575 s through 16 cm of overlap",
+    "steer: ATT touch at 2.721 s through 24 cm of overlap",
+    "steer: DEF blind touch at 2.742 s through 20 cm of overlap",
+    "bf-fake: ATT touch at 1.021 s through 6 cm of overlap",
+    "croq-early: ATT touch at 1.883 s through 5 cm of overlap"
+   ]
+  }
+ },
+ "rows": [
+  {
+   "id": "carry-jog-l",
+   "mode": "OLD",
+   "deep": 8.7
+  },
+  {
+   "id": "carry-jog-l",
+   "mode": "NONE",
+   "deep": 8.7
+  },
+  {
+   "id": "carry-jog-l",
+   "mode": "SHORT",
+   "deep": 9.5
+  },
+  {
+   "id": "carry-jog-l",
+   "mode": "MEDIUM",
+   "deep": 14.8
+  },
+  {
+   "id": "carry-jog-l",
+   "mode": "LONG",
+   "deep": 14.8
+  },
+  {
+   "id": "race",
+   "mode": "OLD",
+   "deep": 28.4
+  },
+  {
+   "id": "race",
+   "mode": "NONE",
+   "deep": 28.4
+  },
+  {
+   "id": "race",
+   "mode": "SHORT",
+   "deep": 22
+  },
+  {
+   "id": "race",
+   "mode": "MEDIUM",
+   "deep": 22
+  },
+  {
+   "id": "race",
+   "mode": "LONG",
+   "deep": 22
+  },
+  {
+   "id": "croq-win",
+   "mode": "OLD",
+   "deep": 15
+  },
+  {
+   "id": "croq-win",
+   "mode": "NONE",
+   "deep": 15
+  },
+  {
+   "id": "croq-win",
+   "mode": "SHORT",
+   "deep": 14.9
+  },
+  {
+   "id": "croq-win",
+   "mode": "MEDIUM",
+   "deep": 14.7
+  },
+  {
+   "id": "croq-win",
+   "mode": "LONG",
+   "deep": 14.8
+  },
+  {
+   "id": "carry-walk",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "carry-walk",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "carry-walk",
+   "mode": "SHORT",
+   "deep": 26.6
+  },
+  {
+   "id": "carry-walk",
+   "mode": "MEDIUM",
+   "deep": 14.7
+  },
+  {
+   "id": "carry-walk",
+   "mode": "LONG",
+   "deep": 29.5
+  },
+  {
+   "id": "in-steer",
+   "mode": "OLD",
+   "deep": 20.9
+  },
+  {
+   "id": "in-steer",
+   "mode": "NONE",
+   "deep": 20.9
+  },
+  {
+   "id": "in-steer",
+   "mode": "SHORT",
+   "deep": 20.1
+  },
+  {
+   "id": "in-steer",
+   "mode": "MEDIUM",
+   "deep": 26
+  },
+  {
+   "id": "in-steer",
+   "mode": "LONG",
+   "deep": 27
+  },
+  {
+   "id": "in-bf",
+   "mode": "OLD",
+   "deep": 1.9
+  },
+  {
+   "id": "in-bf",
+   "mode": "NONE",
+   "deep": 1.9
+  },
+  {
+   "id": "in-bf",
+   "mode": "SHORT",
+   "deep": 14.9
+  },
+  {
+   "id": "in-bf",
+   "mode": "MEDIUM",
+   "deep": 14.5
+  },
+  {
+   "id": "in-bf",
+   "mode": "LONG",
+   "deep": 14.6
+  },
+  {
+   "id": "in-croq",
+   "mode": "OLD",
+   "deep": 14.8
+  },
+  {
+   "id": "in-croq",
+   "mode": "NONE",
+   "deep": 14.8
+  },
+  {
+   "id": "in-croq",
+   "mode": "SHORT",
+   "deep": 23.1
+  },
+  {
+   "id": "in-croq",
+   "mode": "MEDIUM",
+   "deep": 15
+  },
+  {
+   "id": "in-croq",
+   "mode": "LONG",
+   "deep": 15
+  },
+  {
+   "id": "in-turn",
+   "mode": "OLD",
+   "deep": 8.7
+  },
+  {
+   "id": "in-turn",
+   "mode": "NONE",
+   "deep": 8.7
+  },
+  {
+   "id": "in-turn",
+   "mode": "SHORT",
+   "deep": 11.9
+  },
+  {
+   "id": "in-turn",
+   "mode": "MEDIUM",
+   "deep": 14.5
+  },
+  {
+   "id": "in-turn",
+   "mode": "LONG",
+   "deep": 29.6
+  },
+  {
+   "id": "carry-jog-r",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "carry-jog-r",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "carry-jog-r",
+   "mode": "SHORT",
+   "deep": 4.6
+  },
+  {
+   "id": "carry-jog-r",
+   "mode": "MEDIUM",
+   "deep": 11.4
+  },
+  {
+   "id": "carry-jog-r",
+   "mode": "LONG",
+   "deep": 9.1
+  },
+  {
+   "id": "carry-jog-side",
+   "mode": "OLD",
+   "deep": 4.3
+  },
+  {
+   "id": "carry-jog-side",
+   "mode": "NONE",
+   "deep": 4.3
+  },
+  {
+   "id": "carry-jog-side",
+   "mode": "SHORT",
+   "deep": 8.3
+  },
+  {
+   "id": "carry-jog-side",
+   "mode": "MEDIUM",
+   "deep": 8.1
+  },
+  {
+   "id": "carry-jog-side",
+   "mode": "LONG",
+   "deep": 8.9
+  },
+  {
+   "id": "carry-walk-def",
+   "mode": "OLD",
+   "deep": 15
+  },
+  {
+   "id": "carry-walk-def",
+   "mode": "NONE",
+   "deep": 15
+  },
+  {
+   "id": "carry-walk-def",
+   "mode": "SHORT",
+   "deep": 15
+  },
+  {
+   "id": "carry-walk-def",
+   "mode": "MEDIUM",
+   "deep": 4.3
+  },
+  {
+   "id": "carry-walk-def",
+   "mode": "LONG",
+   "deep": 21.3
+  },
+  {
+   "id": "carry-jog-def",
+   "mode": "OLD",
+   "deep": 11.1
+  },
+  {
+   "id": "carry-jog-def",
+   "mode": "NONE",
+   "deep": 11.1
+  },
+  {
+   "id": "carry-jog-def",
+   "mode": "SHORT",
+   "deep": 14.2
+  },
+  {
+   "id": "carry-jog-def",
+   "mode": "MEDIUM",
+   "deep": 14.7
+  },
+  {
+   "id": "carry-jog-def",
+   "mode": "LONG",
+   "deep": 14.8
+  },
+  {
+   "id": "steer",
+   "mode": "OLD",
+   "deep": 9.9
+  },
+  {
+   "id": "steer",
+   "mode": "NONE",
+   "deep": 9.9
+  },
+  {
+   "id": "steer",
+   "mode": "SHORT",
+   "deep": 23.7
+  },
+  {
+   "id": "steer",
+   "mode": "MEDIUM",
+   "deep": 30
+  },
+  {
+   "id": "steer",
+   "mode": "LONG",
+   "deep": 30
+  },
+  {
+   "id": "cut",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "cut",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "cut",
+   "mode": "SHORT",
+   "deep": 0
+  },
+  {
+   "id": "cut",
+   "mode": "MEDIUM",
+   "deep": 0
+  },
+  {
+   "id": "cut",
+   "mode": "LONG",
+   "deep": 0
+  },
+  {
+   "id": "bf-fake",
+   "mode": "OLD",
+   "deep": 29.8
+  },
+  {
+   "id": "bf-fake",
+   "mode": "NONE",
+   "deep": 29.8
+  },
+  {
+   "id": "bf-fake",
+   "mode": "SHORT",
+   "deep": 29.8
+  },
+  {
+   "id": "bf-fake",
+   "mode": "MEDIUM",
+   "deep": 29.8
+  },
+  {
+   "id": "bf-fake",
+   "mode": "LONG",
+   "deep": 29.8
+  },
+  {
+   "id": "bf-exit",
+   "mode": "OLD",
+   "deep": 28.6
+  },
+  {
+   "id": "bf-exit",
+   "mode": "NONE",
+   "deep": 28.6
+  },
+  {
+   "id": "bf-exit",
+   "mode": "SHORT",
+   "deep": 28.6
+  },
+  {
+   "id": "bf-exit",
+   "mode": "MEDIUM",
+   "deep": 28.6
+  },
+  {
+   "id": "bf-exit",
+   "mode": "LONG",
+   "deep": 28.6
+  },
+  {
+   "id": "bf-early",
+   "mode": "OLD",
+   "deep": 20.5
+  },
+  {
+   "id": "bf-early",
+   "mode": "NONE",
+   "deep": 20.5
+  },
+  {
+   "id": "bf-early",
+   "mode": "SHORT",
+   "deep": 20.5
+  },
+  {
+   "id": "bf-early",
+   "mode": "MEDIUM",
+   "deep": 14.1
+  },
+  {
+   "id": "bf-early",
+   "mode": "LONG",
+   "deep": 20.8
+  },
+  {
+   "id": "croq",
+   "mode": "OLD",
+   "deep": 13.5
+  },
+  {
+   "id": "croq",
+   "mode": "NONE",
+   "deep": 13.5
+  },
+  {
+   "id": "croq",
+   "mode": "SHORT",
+   "deep": 13.5
+  },
+  {
+   "id": "croq",
+   "mode": "MEDIUM",
+   "deep": 13.5
+  },
+  {
+   "id": "croq",
+   "mode": "LONG",
+   "deep": 13.5
+  },
+  {
+   "id": "croq-early",
+   "mode": "OLD",
+   "deep": 28.8
+  },
+  {
+   "id": "croq-early",
+   "mode": "NONE",
+   "deep": 28.8
+  },
+  {
+   "id": "croq-early",
+   "mode": "SHORT",
+   "deep": 27.9
+  },
+  {
+   "id": "croq-early",
+   "mode": "MEDIUM",
+   "deep": 25.5
+  },
+  {
+   "id": "croq-early",
+   "mode": "LONG",
+   "deep": 25.5
+  },
+  {
+   "id": "mirror",
+   "mode": "OLD",
+   "deep": 8.6
+  },
+  {
+   "id": "mirror",
+   "mode": "NONE",
+   "deep": 8.6
+  },
+  {
+   "id": "mirror",
+   "mode": "SHORT",
+   "deep": 9.9
+  },
+  {
+   "id": "mirror",
+   "mode": "MEDIUM",
+   "deep": 15
+  },
+  {
+   "id": "mirror",
+   "mode": "LONG",
+   "deep": 14.8
+  },
+  {
+   "id": "mirror-l",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "mirror-l",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "mirror-l",
+   "mode": "SHORT",
+   "deep": 5.1
+  },
+  {
+   "id": "mirror-l",
+   "mode": "MEDIUM",
+   "deep": 11.2
+  },
+  {
+   "id": "mirror-l",
+   "mode": "LONG",
+   "deep": 9
+  },
+  {
+   "id": "late",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "late",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "late",
+   "mode": "SHORT",
+   "deep": 0
+  },
+  {
+   "id": "late",
+   "mode": "MEDIUM",
+   "deep": 0
+  },
+  {
+   "id": "late",
+   "mode": "LONG",
+   "deep": 0
+  },
+  {
+   "id": "early",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "early",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "early",
+   "mode": "SHORT",
+   "deep": 0
+  },
+  {
+   "id": "early",
+   "mode": "MEDIUM",
+   "deep": 0
+  },
+  {
+   "id": "early",
+   "mode": "LONG",
+   "deep": 0
+  },
+  {
+   "id": "run",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "run",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "run",
+   "mode": "SHORT",
+   "deep": 0
+  },
+  {
+   "id": "run",
+   "mode": "MEDIUM",
+   "deep": 0
+  },
+  {
+   "id": "run",
+   "mode": "LONG",
+   "deep": 0
+  },
+  {
+   "id": "notackle",
+   "mode": "OLD",
+   "deep": 0
+  },
+  {
+   "id": "notackle",
+   "mode": "NONE",
+   "deep": 0
+  },
+  {
+   "id": "notackle",
+   "mode": "SHORT",
+   "deep": 0
+  },
+  {
+   "id": "notackle",
+   "mode": "MEDIUM",
+   "deep": 0
+  },
+  {
+   "id": "notackle",
+   "mode": "LONG",
+   "deep": 0
+  }
+ ]
+}

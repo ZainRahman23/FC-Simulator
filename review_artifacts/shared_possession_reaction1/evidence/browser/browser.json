@@ -1,0 +1,624 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — SHARED POSSESSION + REACTION V1 REVIEW)",
+   "pass": true,
+   "detail": "0.8 s to the first case"
+  },
+  {
+   "name": "every case simulates all five modes and draws (OLD | MODE)",
+   "pass": true,
+   "detail": "25/25"
+  },
+  {
+   "name": "the page's outcomes equal node's, every mode",
+   "pass": true,
+   "detail": "25/25"
+  },
+  {
+   "name": "view SINGLE: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view OLD | MODE: every viewport draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view ALL FIVE: every viewport draws",
+   "pass": true,
+   "detail": [
+    100,
+    100,
+    100,
+    100,
+    100
+   ]
+  },
+  {
+   "name": "the five modes draw different replays of the same case (race, 1.2 s after the contact)",
+   "pass": true,
+   "detail": {
+    "OLD": 1842095936,
+    "NONE": 1842095936,
+    "SHORT": 131868777,
+    "MEDIUM": 645908430,
+    "LONG": 1092527045
+   }
+  },
+  {
+   "name": "the toggles render (plain gameplay view, ball hidden, body only, skeleton, beliefs)",
+   "pass": true,
+   "detail": {
+    "plain (diagnostics off)": true,
+    "ball hidden, diagnostics off": true,
+    "body only": true,
+    "skeleton": true,
+    "beliefs + diagnostics": true
+   }
+  },
+  {
+   "name": "DIAGNOSTICS off hides the panel and the overlays",
+   "pass": true
+  },
+  {
+   "name": "the diagnostics show the authority, both players' knowledge, plans, next planned and actual touches, the record",
+   "pass": true
+  },
+  {
+   "name": "frame step moves the playhead 4 ticks",
+   "pass": true,
+   "detail": 3.999999999999986
+  },
+  {
+   "name": "TACKLE AT PLAYHEAD re-runs every mode with the request there",
+   "pass": true,
+   "detail": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   }
+  },
+  {
+   "name": "0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "rows": [
+  {
+   "id": "carry-jog-l",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 70,
+    "NONE": 55,
+    "SHORT": 68,
+    "MEDIUM": 64,
+    "LONG": 89
+   }
+  },
+  {
+   "id": "race",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — DEFENDER RECOVERS",
+    "NONE": "CONTACT — DEFENDER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — DEFENDER RECOVERS",
+    "LONG": "CONTACT — DEFENDER RECOVERS"
+   },
+   "ms": {
+    "OLD": 169,
+    "NONE": 98,
+    "SHORT": 103,
+    "MEDIUM": 94,
+    "LONG": 91
+   }
+  },
+  {
+   "id": "croq-win",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — DEFENDER RECOVERS",
+    "NONE": "CONTACT — DEFENDER RECOVERS",
+    "SHORT": "CONTACT — DEFENDER RECOVERS",
+    "MEDIUM": "CONTACT — DEFENDER RECOVERS",
+    "LONG": "CONTACT — DEFENDER RECOVERS"
+   },
+   "ms": {
+    "OLD": 103,
+    "NONE": 78,
+    "SHORT": 73,
+    "MEDIUM": 76,
+    "LONG": 76
+   }
+  },
+  {
+   "id": "carry-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — DEFENDER RECOVERS"
+   },
+   "ms": {
+    "OLD": 44,
+    "NONE": 43,
+    "SHORT": 67,
+    "MEDIUM": 65,
+    "LONG": 70
+   }
+  },
+  {
+   "id": "in-steer",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — DEFENDER RECOVERS",
+    "LONG": "CONTACT — DEFENDER RECOVERS"
+   },
+   "ms": {
+    "OLD": 51,
+    "NONE": 52,
+    "SHORT": 196,
+    "MEDIUM": 280,
+    "LONG": 321
+   }
+  },
+  {
+   "id": "in-bf",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 116,
+    "NONE": 116,
+    "SHORT": 296,
+    "MEDIUM": 79,
+    "LONG": 447
+   }
+  },
+  {
+   "id": "in-croq",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — DEFENDER RECOVERS",
+    "MEDIUM": "CONTACT — DEFENDER RECOVERS",
+    "LONG": "CONTACT — DEFENDER RECOVERS"
+   },
+   "ms": {
+    "OLD": 44,
+    "NONE": 44,
+    "SHORT": 288,
+    "MEDIUM": 60,
+    "LONG": 378
+   }
+  },
+  {
+   "id": "in-turn",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 51,
+    "NONE": 52,
+    "SHORT": 55,
+    "MEDIUM": 54,
+    "LONG": 78
+   }
+  },
+  {
+   "id": "carry-jog-r",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 44,
+    "NONE": 44,
+    "SHORT": 52,
+    "MEDIUM": 55,
+    "LONG": 60
+   }
+  },
+  {
+   "id": "carry-jog-side",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 34,
+    "NONE": 37,
+    "SHORT": 57,
+    "MEDIUM": 47,
+    "LONG": 68
+   }
+  },
+  {
+   "id": "carry-walk-def",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 35,
+    "NONE": 35,
+    "SHORT": 37,
+    "MEDIUM": 57,
+    "LONG": 61
+   }
+  },
+  {
+   "id": "carry-jog-def",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 102,
+    "NONE": 103,
+    "SHORT": 101,
+    "MEDIUM": 151,
+    "LONG": 252
+   }
+  },
+  {
+   "id": "steer",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 49,
+    "NONE": 49,
+    "SHORT": 246,
+    "MEDIUM": 298,
+    "LONG": 358
+   }
+  },
+  {
+   "id": "cut",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "MISS",
+    "NONE": "MISS",
+    "SHORT": "MISS",
+    "MEDIUM": "MISS",
+    "LONG": "MISS"
+   },
+   "ms": {
+    "OLD": 39,
+    "NONE": 43,
+    "SHORT": 42,
+    "MEDIUM": 42,
+    "LONG": 44
+   }
+  },
+  {
+   "id": "bf-fake",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "MISS",
+    "NONE": "MISS",
+    "SHORT": "MISS",
+    "MEDIUM": "MISS",
+    "LONG": "MISS"
+   },
+   "ms": {
+    "OLD": 35,
+    "NONE": 37,
+    "SHORT": 41,
+    "MEDIUM": 39,
+    "LONG": 39
+   }
+  },
+  {
+   "id": "bf-exit",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 62,
+    "NONE": 63,
+    "SHORT": 64,
+    "MEDIUM": 66,
+    "LONG": 69
+   }
+  },
+  {
+   "id": "bf-early",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 32,
+    "NONE": 35,
+    "SHORT": 40,
+    "MEDIUM": 142,
+    "LONG": 293
+   }
+  },
+  {
+   "id": "croq",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "MISS",
+    "NONE": "MISS",
+    "SHORT": "MISS",
+    "MEDIUM": "MISS",
+    "LONG": "MISS"
+   },
+   "ms": {
+    "OLD": 34,
+    "NONE": 35,
+    "SHORT": 37,
+    "MEDIUM": 38,
+    "LONG": 38
+   }
+  },
+  {
+   "id": "croq-early",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 52,
+    "NONE": 53,
+    "SHORT": 48,
+    "MEDIUM": 59,
+    "LONG": 110
+   }
+  },
+  {
+   "id": "mirror",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 36,
+    "NONE": 37,
+    "SHORT": 53,
+    "MEDIUM": 55,
+    "LONG": 65
+   }
+  },
+  {
+   "id": "mirror-l",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": "CONTACT — ATTACKER RECOVERS",
+    "NONE": "CONTACT — ATTACKER RECOVERS",
+    "SHORT": "CONTACT — ATTACKER RECOVERS",
+    "MEDIUM": "CONTACT — ATTACKER RECOVERS",
+    "LONG": "CONTACT — ATTACKER RECOVERS"
+   },
+   "ms": {
+    "OLD": 44,
+    "NONE": 47,
+    "SHORT": 52,
+    "MEDIUM": 50,
+    "LONG": 90
+   }
+  },
+  {
+   "id": "late",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": null,
+    "NONE": null,
+    "SHORT": null,
+    "MEDIUM": null,
+    "LONG": null
+   },
+   "ms": {
+    "OLD": 27,
+    "NONE": 27,
+    "SHORT": 29,
+    "MEDIUM": 29,
+    "LONG": 30
+   }
+  },
+  {
+   "id": "early",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": null,
+    "NONE": null,
+    "SHORT": null,
+    "MEDIUM": null,
+    "LONG": null
+   },
+   "ms": {
+    "OLD": 28,
+    "NONE": 28,
+    "SHORT": 29,
+    "MEDIUM": 28,
+    "LONG": 30
+   }
+  },
+  {
+   "id": "run",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": null,
+    "NONE": null,
+    "SHORT": null,
+    "MEDIUM": null,
+    "LONG": null
+   },
+   "ms": {
+    "OLD": 25,
+    "NONE": 27,
+    "SHORT": 27,
+    "MEDIUM": 29,
+    "LONG": 29
+   }
+  },
+  {
+   "id": "notackle",
+   "painted": [
+    100,
+    100
+   ],
+   "outcomes": {
+    "OLD": null,
+    "NONE": null,
+    "SHORT": null,
+    "MEDIUM": null,
+    "LONG": null
+   },
+   "ms": {
+    "OLD": 26,
+    "NONE": 27,
+    "SHORT": 27,
+    "MEDIUM": 27,
+    "LONG": 30
+   }
+  }
+ ],
+ "errs": []
+}

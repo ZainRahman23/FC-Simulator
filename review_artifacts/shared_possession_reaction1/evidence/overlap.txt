@@ -1,0 +1,41 @@
+
+BODY OVERLAP (no player collision exists — measured, never resolved) — 25 review cases × 5 modes, every tick posed
+  OLD     deepest 29.8 cm · ticks deeper than 3 cm: 1253 (1149 after a tackle contact) · ball contacts made through overlapping bodies: 9
+  NONE    deepest 29.8 cm · ticks deeper than 3 cm: 1214 (1110 after a tackle contact) · ball contacts made through overlapping bodies: 9
+  SHORT   deepest 29.8 cm · ticks deeper than 3 cm: 1240 (1136 after a tackle contact) · ball contacts made through overlapping bodies: 4
+  MEDIUM  deepest 30.0 cm · ticks deeper than 3 cm: 1389 (1285 after a tackle contact) · ball contacts made through overlapping bodies: 4
+  LONG    deepest 30.0 cm · ticks deeper than 3 cm: 2030 (1926 after a tackle contact) · ball contacts made through overlapping bodies: 7
+    OLD: carry-jog-l: ATT touch at 1.167 s through 5 cm of overlap
+    OLD: race: DEF touch at 2.783 s through 13 cm of overlap
+    OLD: in-steer: DEF tackle at 1.242 s through 5 cm of overlap
+    OLD: in-steer: ATT touch at 1.483 s through 5 cm of overlap
+    OLD: in-croq: ATT touch at 0.750 s through 10 cm of overlap
+    OLD: in-turn: ATT touch at 1.167 s through 7 cm of overlap
+    OLD: bf-fake: ATT touch at 1.021 s through 6 cm of overlap
+    OLD: croq-early: DEF tackle at 0.617 s through 19 cm of overlap
+    OLD: mirror: ATT touch at 1.167 s through 5 cm of overlap
+    NONE: carry-jog-l: ATT touch at 1.167 s through 5 cm of overlap
+    NONE: race: DEF touch at 2.783 s through 13 cm of overlap
+    NONE: in-steer: DEF tackle at 1.242 s through 5 cm of overlap
+    NONE: in-steer: ATT touch at 1.483 s through 5 cm of overlap
+    NONE: in-croq: ATT touch at 0.750 s through 10 cm of overlap
+    NONE: in-turn: ATT touch at 1.167 s through 7 cm of overlap
+    NONE: bf-fake: ATT touch at 1.021 s through 6 cm of overlap
+    NONE: croq-early: DEF tackle at 0.617 s through 19 cm of overlap
+    NONE: mirror: ATT touch at 1.167 s through 5 cm of overlap
+    SHORT: race: ATT touch at 2.712 s through 4 cm of overlap
+    SHORT: race: ATT touch at 2.929 s through 9 cm of overlap
+    SHORT: in-croq: DEF touch at 1.879 s through 10 cm of overlap
+    SHORT: bf-fake: ATT touch at 1.021 s through 6 cm of overlap
+    MEDIUM: race: DEF touch at 2.783 s through 10 cm of overlap
+    MEDIUM: in-steer: DEF touch at 2.496 s through 10 cm of overlap
+    MEDIUM: steer: ATT touch at 2.896 s through 7 cm of overlap
+    MEDIUM: bf-fake: ATT touch at 1.021 s through 6 cm of overlap
+    LONG: carry-walk: DEF touch at 2.612 s through 14 cm of overlap
+    LONG: in-steer: DEF touch at 2.496 s through 18 cm of overlap
+    LONG: in-turn: ATT touch at 2.575 s through 16 cm of overlap
+    LONG: steer: ATT touch at 2.721 s through 24 cm of overlap
+    LONG: steer: DEF blind touch at 2.742 s through 20 cm of overlap
+    LONG: bf-fake: ATT touch at 1.021 s through 6 cm of overlap
+    LONG: croq-early: ATT touch at 1.883 s through 5 cm of overlap
+  deepest per case (MEDIUM): steer 30 cm · bf-fake 29.8 cm · bf-exit 28.6 cm · in-steer 26 cm · croq-early 25.5 cm · race 22 cm · in-croq 15 cm · mirror 15 cm

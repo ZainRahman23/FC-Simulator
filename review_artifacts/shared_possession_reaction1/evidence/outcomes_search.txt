@@ -1,0 +1,55 @@
+
+OUTCOMES — set "search" (1500 encounters: 100 set-ups × 15 request times, seed 7), Standing Tackle V1 POKE (untuned), committed tackles only
+                                           OLD         NONE        SHORT       MEDIUM         LONG
+  committed                                209          209          209          209          209
+  MISS                               47  22.5%    47  22.5%    47  22.5%    47  22.5%    47  22.5%
+  CONTACT — ATTACKER RETAINS          3   1.4%     3   1.4%     3   1.4%     3   1.4%     3   1.4%
+  CONTACT — ATTACKER RECOVERS       153  73.2%   153  73.2%   148  70.8%   141  67.5%   127  60.8%
+  CONTACT — DEFENDER RECOVERS         6   2.9%     6   2.9%    11   5.3%    18   8.6%    32  15.3%
+  CONTACT — BALL FREE                 0   0.0%     0   0.0%     0   0.0%     0   0.0%     0   0.0%
+  establishment after the contact (median / p90 s): NONE ATT 0.18 / 1.40 · DEF 1.98 / 1.98  |  SHORT ATT 0.79 / 1.60 · DEF 1.60 / 1.87  |  MEDIUM ATT 1.01 / 1.69 · DEF 1.81 / 1.98  |  LONG ATT 1.25 / 1.77 · DEF 1.65 / 2.24
+  DEFENDER RECOVERS kept to the replay's end: NONE 6/6 · SHORT 10/11 · MEDIUM 18/18 · LONG 32/32
+
+BY GROUP
+  CARRY · JOG CUT R
+    OLD     committed  53: MISS 12 · ATTACKER RETAINS 3 · ATTACKER RECOVERS 37 · DEFENDER RECOVERS 1
+    NONE    committed  53: MISS 12 · ATTACKER RETAINS 3 · ATTACKER RECOVERS 37 · DEFENDER RECOVERS 1
+    SHORT   committed  53: MISS 12 · ATTACKER RETAINS 3 · ATTACKER RECOVERS 34 · DEFENDER RECOVERS 4
+    MEDIUM  committed  53: MISS 12 · ATTACKER RETAINS 3 · ATTACKER RECOVERS 34 · DEFENDER RECOVERS 4
+    LONG    committed  53: MISS 12 · ATTACKER RETAINS 3 · ATTACKER RECOVERS 31 · DEFENDER RECOVERS 7
+  CARRY · JOG
+    OLD     committed  23: ATTACKER RECOVERS 23
+    NONE    committed  23: ATTACKER RECOVERS 23
+    SHORT   committed  23: ATTACKER RECOVERS 23
+    MEDIUM  committed  23: ATTACKER RECOVERS 23
+    LONG    committed  23: ATTACKER RECOVERS 19 · DEFENDER RECOVERS 4
+  CARRY · JOG CUT L
+    OLD     committed  41: MISS 14 · ATTACKER RECOVERS 22 · DEFENDER RECOVERS 5
+    NONE    committed  41: MISS 14 · ATTACKER RECOVERS 22 · DEFENDER RECOVERS 5
+    SHORT   committed  41: MISS 14 · ATTACKER RECOVERS 23 · DEFENDER RECOVERS 4
+    MEDIUM  committed  41: MISS 14 · ATTACKER RECOVERS 17 · DEFENDER RECOVERS 10
+    LONG    committed  41: MISS 14 · ATTACKER RECOVERS 14 · DEFENDER RECOVERS 13
+  CROQUETA
+    OLD     committed  26: MISS 10 · ATTACKER RECOVERS 16
+    NONE    committed  26: MISS 10 · ATTACKER RECOVERS 16
+    SHORT   committed  26: MISS 10 · ATTACKER RECOVERS 13 · DEFENDER RECOVERS 3
+    MEDIUM  committed  26: MISS 10 · ATTACKER RECOVERS 12 · DEFENDER RECOVERS 4
+    LONG    committed  26: MISS 10 · ATTACKER RECOVERS 12 · DEFENDER RECOVERS 4
+  CARRY · JOG LEFT-FOOTED
+    OLD     committed  29: MISS 7 · ATTACKER RECOVERS 22
+    NONE    committed  29: MISS 7 · ATTACKER RECOVERS 22
+    SHORT   committed  29: MISS 7 · ATTACKER RECOVERS 22
+    MEDIUM  committed  29: MISS 7 · ATTACKER RECOVERS 22
+    LONG    committed  29: MISS 7 · ATTACKER RECOVERS 22
+  BODY_FEINT_V2
+    OLD     committed  30: MISS 4 · ATTACKER RECOVERS 26
+    NONE    committed  30: MISS 4 · ATTACKER RECOVERS 26
+    SHORT   committed  30: MISS 4 · ATTACKER RECOVERS 26
+    MEDIUM  committed  30: MISS 4 · ATTACKER RECOVERS 26
+    LONG    committed  30: MISS 4 · ATTACKER RECOVERS 26
+  CARRY · WALK
+    OLD     committed   7: ATTACKER RECOVERS 7
+    NONE    committed   7: ATTACKER RECOVERS 7
+    SHORT   committed   7: ATTACKER RECOVERS 7
+    MEDIUM  committed   7: ATTACKER RECOVERS 7
+    LONG    committed   7: ATTACKER RECOVERS 3 · DEFENDER RECOVERS 4

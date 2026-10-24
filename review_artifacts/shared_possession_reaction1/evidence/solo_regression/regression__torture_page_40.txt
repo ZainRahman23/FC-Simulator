@@ -1,0 +1,12 @@
+■ CONTROLLED: 39.2 simulated min (40 seeds × 60 s) · OBSERVED LOSSES 8 (0.20/min) · missed contacts 0 · touches/s 2.72 · sep mean 0.41 m max 1.70 m · CPU 123.2 ms per simulated s, worst tick 24.2 ms
+   contacts by kind {"carry":3951,"CIR":331,"DRAGBACK":300,"CRUYFF":290,"LAT":220,"OUTHOOK":206,"COR":193,"BPV":153,"BRT":152,"CHOP":123,"ABG":102,"MATTHEWS_C":76,"HOOK":71,"OUTCUT":54,"KNK":44,"VTURN":27,"SPRINT_CARRY push":18,"URG":1} · recovery actions {"SECURE":158,"SECURE · RECOVERY":1}
+   contact gaps p10 0.21 · p50 0.25 · p90 0.65 · p99 1.39 · max 4.00 s · busy alternations (the other foot < 0.25 s after a touch) 2955 of 6272
+   losses by cause {"no contact made":8} · by input segment {"wander":3,"hold":3,"rotate":1,"snap":1}
+   seed 3 {"t":3.858,"sep":0.92,"seg":"wander","mode":"RUN","prev":"snap","action":"OUTSIDE HOOK","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.2,"sepUntil":0.91}
+   seed 9 {"t":51.138,"sep":0.8,"seg":"wander","mode":"JOG","prev":"wander","action":"CARRY","speed":0.8,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.25,"sepUntil":0.8}
+   seed 9 {"t":59.367,"sep":1.04,"seg":"hold","mode":"RUN","prev":"wander","action":"CARRY","speed":0.7,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.15,"sepUntil":1.04}
+   seed 22 {"t":22.279,"sep":0.6,"seg":"hold","mode":"RUN","prev":"rotate","action":"CARRY","speed":4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.07,"sepUntil":0.6}
+   seed 23 {"t":20.171,"sep":1.08,"seg":"rotate","mode":"RUN","prev":"rotate","action":"CARRY","speed":5.3,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.36,"sepUntil":1.07}
+   seed 30 {"t":19.6,"sep":1.01,"seg":"wander","mode":"RUN","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.43,"sepUntil":1.03}
+   seed 31 {"t":46.754,"sep":0.8,"seg":"snap","mode":"WALK","prev":"wander","action":"CARRY","speed":0.4,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.13,"sepUntil":0.8}
+   seed 38 {"t":11.333,"sep":0.8,"seg":"hold","mode":"SPRINT","prev":"rotate","action":"CARRY","speed":1,"why":"no contact made","poss":"CONTROLLED","nextTouch":0.15,"sepUntil":0.8}
