@@ -37,3 +37,13 @@ bash ../../../../review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh
 - No automatic Body Feint or Croqueta.
 - No thresholds, recognizer or buffering until the owner has recorded and reviewed.
 - Screenshots of the lab show a real player's model. Keep them out of Git and off the web.
+
+## Later (24 Oct, OWNER INPUT ANALYSIS V1)
+
+- **The owner's first session:** 21 real attempts, saved as `recordings/owner_2026-10-24_session1_21attempts.json`. They are analysed in `../owner_input_analysis1/`; start with its `HANDOFF.md`.
+- **One lab change: the pad placement.**
+  - **pad at left** is the default and is unchanged.
+  - **pad at centre** is set with `?pad=centre` or the top-bar selector.
+  - Each attempt records the placement as `input.padPos`.
+  - **Why it was added:** with the pad 12 px from the window's left edge, a mouse drag stops at the screen edge, 1.38 stick radii from the pad's centre. That happened in 14 of the owner's 20 gestures.
+- **The G mark** is set in REVIEW: scrub to the instant you meant the gesture, then press G or MARK.

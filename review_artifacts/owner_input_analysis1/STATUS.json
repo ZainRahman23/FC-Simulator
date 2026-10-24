@@ -1,0 +1,21 @@
+{
+ "milestone": "TOUCHLINE — OWNER INPUT ANALYSIS → INTENT RECOGNIZER V1 DESIGN",
+ "date": "2026-10-24",
+ "instruction": "sources/2026-10-24_user_instruction_owner_input_analysis.md (owner, 24 Oct ≈ 02:20 BST; two pasted parts, verbatim)",
+ "state": "analysis + design done; NOTHING IMPLEMENTED — no recognizer, no thresholds in code, no buffering, no automatic Body Feint / Croqueta; no gameplay file changed; local commit, not pushed; stopped for the owner's review",
+ "branch": "prototype/left-stick-intent-v1 (continues the recorder session 4d8ff0f9; milestone base f775daac)",
+ "dataset": "../left_stick_lab1/recordings/owner_2026-10-24_session1_21attempts.json — 21 real owner attempts (mouse, RESET, no G marks); 0 synthetic / test / automated; re-simulates 21/21 identically",
+ "counts": { "FEINT LEFT → EXIT RIGHT": 5, "FEINT RIGHT → EXIT LEFT": 2, "CROQUETA LEFT INTENT": 2, "CROQUETA RIGHT INTENT": 3, "GENTLE LEFT": 2, "GENTLE RIGHT": 2, "SHARP LEFT": 2, "SHARP RIGHT": 2, "STOP → GO": 1 },
+ "data_limits": ["mouse, not thumb: the pointer went up to 7.8 stick radii out — full tilt throughout, no magnitude information, 60 Hz samples", "the left screen edge (1.38 stick radii from the pad) pinned 14 of 20 gestures: every left-side angle is edge-set", "no G marks: onsets inferred", "one context: a straight run toward the coaches at 5.3 m/s, ball on the right foot, right-footed player"],
+ "findings": {
+  "body_feint": "a repeatable SHAPE in 7/7: full tilt to one side of the running line (48–143°), held 50–121 ms, then across the line to the other side 167–250 ms after the start, held; route across varied (centre 2, back 1, front 4) — the signature is the side contradiction and its timing",
+  "croqueta": "5/5 were the same contradiction, smaller (26–45°) and with a longer hold (67–250 ms); ranges meet the feint's; answer B (partially) — no croqueta-specific gesture: Croqueta as a contextual technique of the DECEPTION intent; never feasible in any owner attempt (run speed; right side = the left-footed twin's)",
+  "ordinary": "8/8 sharp / gentle turns one-sided; angular velocity does not separate cuts from feints (1545 vs 1568 °/s); the side contradiction does",
+  "physical_opportunity": "fake L → exit R (8 gestures): requested at the onset 8/8 play (first stance +179–592 ms); at the recognition point 6/8 as played, 8/8 held (first stance 221–641 ms after recognition); the mirror never (right-footed player); the owner's own exits 67–82° outside the run band 35–40°"
+ },
+ "design": "INTENT_RECOGNIZER_V1_DESIGN.md — vocabulary STEER (implicit) + DECEPTION L→R / R→L; recognition at the side contradiction (≈ 0.2 s); buffer ≤ one stride cycle via the existing explicit-request path; selector Body Feint / Croqueta (contextual) / ordinary; 5 owner decisions",
+ "lab_change": "LEFT-STICK INPUT LAB V1: pad placement — 'pad at left' (default, unchanged) / 'pad at centre' (?pad=centre), recorded as input.padPos; nothing else",
+ "page": "http://127.0.0.1:8362/sandbox/visual/lsi1_owner_analysis.html — TOUCHLINE — OWNER INPUT ANALYSIS V1 (LOCAL ONLY)",
+ "verification": ["owner_verify: 21/21 node ≡ browser", "oa_browser: the page + the lab's pad option", "lab_browser_after_pad_option: the lab's own end-to-end test", "milestone_regress: the milestone's 10 suites against its committed evidence", "bl_lock_check.sh"],
+ "next": "the owner reviews the analysis and the design (and decides §8); more recordings as listed in OWNER_INPUT_ANALYSIS.md §11 — only then Intent Recognizer V1"
+}

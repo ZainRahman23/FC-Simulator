@@ -48,7 +48,7 @@ const DB = { db: null,
   async all() { return this.db ? this.req(this.st("readonly").getAll()) : []; }, async put(a) { if (this.db) await this.req(this.st("readwrite").put(strip(a))); }, async del(id) { if (this.db) await this.req(this.st("readwrite").delete(id)); } };
 // ══ BOOT ═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 async function boot() {
-  buildUI(); layoutTop(); window.addEventListener("resize", layoutTop);
+  buildUI(); setPadPos(/^cent(re|er)$/.test(new URLSearchParams(location.search).get("pad") || "") ? "centre" : "left"); layoutTop(); window.addEventListener("resize", layoutTop);
   try { await DB.open(); L.attempts = (await DB.all()).sort((a, b) => (a.created < b.created ? -1 : 1)); } catch (e) { L.dbOk = false; console.warn("IndexedDB unavailable", e); toast("Browser storage unavailable — attempts live in memory only: EXPORT before closing.", 6000); }
   renderList(); setState("BOOT");
   const fr = $("sim"), q = new URLSearchParams(location.search), extra = ["char", "foot", "cam"].filter((k) => q.get(k)).map((k) => `&${k}=${encodeURIComponent(q.get(k))}`).join("");
@@ -170,7 +170,7 @@ function buildAttempt(R, S, k1, auto) {
   const st = sampleState(S, R.k0, k1, STATE_EVERY), ticks = sampleTicks(S, R.k0, k1), dur = (k1 - R.k0) * DT;
   const counts = {}; for (const f of frames) { const s = SRC[f.src]; counts[s] = (counts[s] || 0) + 1; } const dominant = Object.entries(counts).filter(([k]) => k !== "none").sort((a, b) => b[1] - a[1])[0];
   const att = { id: newId(), label: R.label, labelKind: PRESET_LABELS.includes(R.label) ? "preset" : "custom", created: R.wall, status: "unsaved",
-    input: { source: dominant ? dominant[0] : "none", sourceFrames: counts, gamepad: L.gp.id || null, padRadiusPx: L.padR, devicePixelRatio: window.devicePixelRatio || 1, deadzone: dz, zones: { walkTo: V.stick.cfg.walkTo, jogTo: V.stick.cfg.jogTo },
+    input: { source: dominant ? dominant[0] : "none", sourceFrames: counts, gamepad: L.gp.id || null, padRadiusPx: L.padR, padPos: L.padPos || "left", devicePixelRatio: window.devicePixelRatio || 1, deadzone: dz, zones: { walkTo: V.stick.cfg.walkTo, jogTo: V.stick.cfg.jogTo },
       frameHz: frames.length > 1 ? (frames.length - 1) / Math.max(1e-6, frames[frames.length - 1].tHost - frames[0].tHost) : null, tickHz: 240, stateHz: 240 / STATE_EVERY, simRate: V.rate, synthetic: R.synth, userAgent: navigator.userAgent },
     capture: { mode: R.mode, preRoll: R.mode === "CONTINUOUS" ? PRE_ROLL : 0, k0: R.k0, kStart: R.kStart, k1, t0: R.k0 * DT, tStart: R.kStart * DT, t1: k1 * DT, duration: dur, autoStopped: !!auto },
     markers: { levels: MARKERS, signalsVersion: LSR_SIGNALS_VERSION, stateVersion: LSR_STATE_VERSION }, owner: { mark: null, note: "" },
@@ -377,7 +377,7 @@ function buildUI() {
   $("selLabel").innerHTML = PRESET_LABELS.map((l) => `<option>${esc(l)}</option>`).join(""); $("selSynth").innerHTML = `<option value="">recorder test trace…</option>` + SYNTH.map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("");
   $("cmpAnchor").innerHTML = Object.entries(ANCHORS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
   $("bStart").onclick = (e) => { toggleRec(); e.target.blur(); }; $("bSave").onclick = (e) => { save(); e.target.blur(); }; $("bDiscard").onclick = (e) => { discard(); e.target.blur(); };
-  $("selCapture").onchange = (e) => { L.capture = e.target.value; e.target.blur(); }; $("selPad").onchange = (e) => { L.padR = +e.target.value; sizePad(); e.target.blur(); };
+  $("selCapture").onchange = (e) => { L.capture = e.target.value; e.target.blur(); }; $("selPad").onchange = (e) => { L.padR = +e.target.value; sizePad(); e.target.blur(); }; $("selPadPos").onchange = (e) => { setPadPos(e.target.value); e.target.blur(); };
   $("cDiag").onchange = (e) => { L.diag = e.target.checked; if (!L.diag) { for (const id of ["hist", "ts", "tl"]) PL.fit($(id)); $("statePanel").textContent = ""; $("timing").textContent = ""; $("sumGrid").textContent = ""; } else resetLive(); e.target.blur(); };
   $("bSynth").onclick = (e) => { const id = $("selSynth").value; if (!id) { toast("Choose a recorder test trace first."); return; } startSynth(id); e.target.blur(); };
   $("rPlay").onclick = () => togglePlay(); document.querySelectorAll("[data-rr]").forEach((b) => (b.onclick = () => { L.rRate = +b.dataset.rr; if (L.V && L.V.replay) L.V.replay.rate = L.rRate; document.querySelectorAll("[data-rr]").forEach((x) => x.classList.toggle("on", x === b)); }));
@@ -397,8 +397,12 @@ function buildUI() {
   bindPad(); helpText(); }
 function plotT(cv, e) { const b = cv.getBoundingClientRect(), x = e.clientX - b.left, Lm = PL.PLOT_L, Rm = PL.PLOT_R, u = (x - Lm) / Math.max(1, b.width - Lm - Rm);
   if (reviewing() && L.att) return L.att.capture.t0 + u * (L.att.capture.t1 - L.att.capture.t0); const tN = L.V ? L.V.sim.t : 0; return tN - LIVE_SPAN + u * LIVE_SPAN; }
+// (OWNER INPUT ANALYSIS V1: where the pad sits — LEFT, the original place, or CENTRE: with the mouse, the pad 12 px from the window's left edge pinned
+// every leftward drag at the screen edge; the raw stream is relative to the pad's centre either way, the placement is recorded with each attempt)
+function setPadPos(v) { L.padPos = v === "centre" ? "centre" : "left"; $("simWrap").classList.toggle("padCentre", L.padPos === "centre"); $("selPadPos").value = L.padPos; }
 function helpText() { $("help").innerHTML = `<p><b>NO INTENT RECOGNIZER EXISTS.</b> This lab records what your thumb does and what the canonical footballer (the DRIBBLING VOCABULARY milestone f775daac, unmodified) was doing. Nothing here selects or triggers a technique; the label is your note and the simulation never reads it.</p>
 <p><b>Workflow</b> — 1 choose what you are trying to do (or type a custom label) · 2 <kbd>Enter</kbd> / ● START · 3 dribble naturally and do the gesture · 4 <kbd>Enter</kbd> / ■ STOP · 5 the attempt replays (the stick moves through the circle with the footballer) · 6 inspect; <kbd>G</kbd> marks the instant you meant the gesture (optional) · 7 <kbd>Y</kbd> SAVE or <kbd>⌫</kbd> DISCARD · 8 repeat — 10–20 per label, naturally, not one perfect gesture.</p>
+<p><b>Mouse at the screen edge</b> — with the pad at LEFT a leftward drag stops at the screen's edge (1.4 stick radii from the pad's centre) and the direction then follows only the pointer's height: choose <b>pad at centre</b> (or open the lab with <code>?pad=centre</code>) when recording with a mouse. The <kbd>G</kbd> mark is set in REVIEW: scrub to the instant you meant the gesture, then <kbd>G</kbd> / MARK.</p>
 <p><b>Start</b> — RESET: START puts the footballer standing on the spot with the ball (every attempt from rest, self-contained, cheap to re-simulate). CONTINUOUS: START keeps the dribble going and the attempt includes the 1.5 s before START. An attempt stops by itself at ${MAX_DUR} s (the simulation keeps 12 s of history).</p>
 <p><b>Inputs</b> — the virtual stick (press and drag; release = neutral; never snapped), the keyboard (WASD, Shift sprint, Alt walk, 1–4 mode — the sandbox's own path), a gamepad (left stick; RT sprint, LT walk; Menu = START / STOP; in review A save, B discard, X mark, Y play). The input line in the top bar shows which one is driving.</p>
 <p><b>Replay</b> — <kbd>Space</kbd> / <kbd>L</kbd> play / pause · click a plot to jump · 1× / 0.5× / 0.25× · <kbd>Esc</kbd> back to LIVE from a saved attempt's replay. A saved attempt replays on the live session while it is still there, else it is re-simulated from its record and the hash is checked.</p>

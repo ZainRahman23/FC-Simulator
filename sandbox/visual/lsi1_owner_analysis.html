@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owner Input Analysis V1</title>
+<link rel="icon" href="data:,">
+<!-- TOUCHLINE — OWNER INPUT ANALYSIS V1 (owner, 24 Oct 2026): the owner's own left-stick recordings (LEFT-STICK INPUT LAB V1) analysed — what
+     the hand did, how the attempts group by shape, what the footballer was doing, and when the canonical Body Feint / Croqueta gates would have let
+     the body do it. OFFLINE ANALYSIS AND DESIGN EVIDENCE ONLY: no intent recognizer exists, nothing here runs live, triggers, selects or buffers a
+     technique, and no gameplay file is changed. Data: review_artifacts/owner_input_analysis1/data/owner_input_analysis.json (lsi1/tools/
+     lsr_owner_analysis.mjs + lsr_owner_probe.mjs). The report: review_artifacts/owner_input_analysis1/OWNER_INPUT_ANALYSIS.md. LOCAL ONLY. -->
+<style>
+  :root { --bg: #0d1210; --surf: #141b18; --solid: #151d19; --ink: #e6efe9; --dim: #8fa49a; --mute: #5d6e66; --line: #2a3530; --acc: #ffd45e; --ok: #8dffa6; --bad: #e66767; --warn: #ffb36b; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 13px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 14px 16px 60px; }
+  h1 { font: 800 19px -apple-system, Helvetica, sans-serif; letter-spacing: 0.04em; margin: 4px 0 2px; }
+  h2 { font: 800 13px -apple-system, Helvetica, sans-serif; letter-spacing: 0.06em; margin: 26px 0 8px; color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+  h3 { font: 700 12px -apple-system, Helvetica, sans-serif; letter-spacing: 0.04em; color: var(--dim); margin: 14px 0 6px; }
+  p, .card, h1 { overflow-wrap: anywhere; } p { margin: 6px 0; } .mut { color: var(--dim); } .ok { color: var(--ok); font-weight: 700; } .bad { color: var(--bad); font-weight: 700; }
+  code, kbd { font: 12px Menlo, Consolas, monospace; background: #1c2521; padding: 0 4px; border-radius: 3px; }
+  #status { color: var(--dim); font: 12px Menlo, monospace; }
+  .card { background: var(--surf); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+  .warn { border-color: #5a4a2a; } .warn b { color: var(--warn); }
+  .find { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px; }
+  .find .card h3 { margin-top: 0; color: var(--acc); }
+  table.t { border-collapse: collapse; width: 100%; font-size: 12px; } .tw { overflow-x: auto; }
+  table.t th, table.t td { border-bottom: 1px solid var(--line); padding: 3px 6px; text-align: left; vertical-align: top; white-space: nowrap; }
+  table.t th { color: var(--dim); font-weight: 600; } table.t td.num { text-align: right; font-variant-numeric: tabular-nums; } table.t td.out { color: var(--warn); }
+  table.t tr.tot td { border-top: 1px solid var(--dim); color: var(--ink); } table.t tr.sec td { color: var(--acc); font-weight: 700; padding-top: 10px; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; } .sw.ring { background: transparent; border: 2px solid var(--dim); border-radius: 6px; width: 7px; height: 7px; }
+  .lg { margin-right: 14px; color: var(--dim); font-size: 12px; display: inline-block; max-width: 100%; }
+  canvas { width: 100%; display: block; border-radius: 6px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } @media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+  #famTabs button, .ctl button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 4px 9px; font: inherit; cursor: pointer; margin: 0 4px 4px 0; }
+  #famTabs button.on, .ctl button.on { background: var(--acc); color: #1a1408; border-color: var(--acc); font-weight: 700; } #famTabs button.on .sw { outline: 1px solid #1a1408; }
+  .ctl { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 6px 0; color: var(--dim); font-size: 12px; }
+  ul.acts { margin: 4px 0; padding-left: 18px; font-size: 12px; } ul.acts li { margin: 2px 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>TOUCHLINE — OWNER INPUT ANALYSIS V1</h1>
+  <div id="status">loading…</div>
+  <p class="mut">The owner's own left-stick recordings from LEFT-STICK INPUT LAB V1, analysed offline. This is design evidence, not training data: no recognizer exists, nothing here runs live, and no gameplay file is changed. Every angle is <b>player-relative</b>, measured from the line the player was running (+ = his right).</p>
+
+  <div class="card warn">
+    <p><b>READ THE DATA WITH THESE LIMITS</b></p>
+    <p>1 · <b>Mouse, not thumb.</b> All 21 attempts were made with a mouse dragging the on-screen stick. The pointer travelled up to ~8 stick radii from the centre, so the stick sat at full tilt almost throughout: magnitude carried no information, and samples arrive once per frame (60 Hz).</p>
+    <p>2 · <b>The left screen edge.</b> <span id="edgeNote"></span>. Every leftward swing that went further than that stopped there, and the stick's direction then followed only the pointer's height. Left-side angles are set by the edge, not by the hand (14 of the 20 direction gestures). The lab now has <code>pad at centre</code> / <code>?pad=centre</code> for the next recordings.</p>
+    <p>3 · <b>No G marks.</b> Each gesture's start is <b>inferred</b>: the last frame still on the held running line before a change of 15° or more. All times are measured from that inferred onset.</p>
+    <p>4 · <b>One context.</b> Every direction gesture started from the same state: a straight run toward the coaches at 5.3 m/s (RUN), ball on the right foot, steady carry. The sandbox player is <b>right-footed</b>. There is no walk or jog evidence and no left-foot evidence.</p>
+  </div>
+
+  <h2>FINDINGS IN ONE SCREEN</h2>
+  <div class="find">
+    <div class="card"><h3>BODY FEINT · 7</h3><p>All 7 are a <b>contradiction</b>: a full-tilt swing to one side of the running line, a hold of 50–120 ms, then a swing across the line to the other side, held until release. The exit side is reached 167–250 ms after the start. The route between the sides varied: through the centre twice, around the back once, across the front four times. The signature is the side contradiction plus its timing, not a path or an angle.</p></div>
+    <div class="card"><h3>CROQUETA · 5</h3><p>All 5 are <b>also contradictions</b>: a smaller swing against the croqueta side (26–45°) with a longer hold (67–250 ms), then the croqueta side. That is the deception shape at lower amplitude, and the ranges meet the feint's (45° vs 48°). There is <b>no croqueta-specific gesture</b>. No attempt could have produced a canonical Croqueta: the player was at a run, and Croqueta V4 is validated from a jog (2.6–3.6 m/s); to the right it is the left-footed twin's move.</p></div>
+    <div class="card"><h3>ORDINARY TURNS · 8</h3><p>All 8 sharp and gentle turns are <b>one-sided</b>: none went 10° or more to the side opposite their exit. Angular velocity does <b>not</b> separate them from feints (sharp cuts reached 686–1545°/s; one feint peaked at 1568°/s). The side contradiction does. Not yet recorded: zig-zag, "changed my mind", 180° reversal, normal carry.</p></div>
+    <div class="card"><h3>WHEN THE BODY COULD DO IT</h3><p>For the shape this player can execute (fake left → exit right), the canonical Body Feint requested at the inferred onset plays 8 of 8 times. Its first stance comes +179–592 ms after onset, quantized by the stride (one step = 316 ms at a run). Requested at the recognition point (+167–362 ms), it plays 6 of 8 as played and 8 of 8 if steering is held through the first phase (counterfactual). The owner's own exit angles (67–82°) lie outside the run band (35–40°).</p></div>
+  </div>
+
+  <h2>OWNER DATASET</h2>
+  <div class="tw"><table class="t" id="dsTable"></table></div>
+
+  <h2>THE SHAPES — EVERY GESTURE</h2>
+  <div class="ctl" id="ovLegend"></div>
+  <div class="two"><canvas id="cvOv1" style="height:300px"></canvas><canvas id="cvOv2" style="height:300px"></canvas></div>
+  <p class="mut">Each point is one real attempt, mirrored so its exit is to the right; hover for details. The counter is the first phase's peak against the exit side; 0 means one-sided. Hollow points ran into the left screen edge, so their left-side angle is a floor set by the edge, not a measurement.</p>
+
+  <h2>PHYSICAL OPPORTUNITY — THE CANONICAL GATES, ASKED AT EVERY FRAME</h2>
+  <p class="mut">Each owner session is re-simulated exactly (o0 + the recorded input), the sandbox's own explicit request (the 7 / 8 / 9 / 0 keys) is issued at a chosen frame, and the canonical resolver's answer is read back. AS PLAYED = the owner's input as recorded, then the request. HELD = counterfactual: the movement input held on the running line from the onset, as if a recognizer had not steered the first phase. The recognition point is the first frame on the exit side (10° or more past the line), or the settle for one-sided changes. All times are ms from the inferred onset.</p>
+  <div class="tw"><table class="t" id="oppTable"></table></div>
+
+  <h2>BY INTENT</h2>
+  <div id="famTabs"></div>
+  <div class="ctl"><button id="bMirror">mirror exits to the right</button><span>align at <select id="anchorSel"><option value="onset">the inferred onset</option><option value="peak">the first-side peak (the reversal)</option><option value="side2">the exit side reached / settled</option></select></span></div>
+  <p id="famHead"></p>
+  <div id="famNeutral" class="card" style="display:none"></div>
+  <div id="famShapeBox">
+    <div class="two"><div><h3>OVERLAID STICK PATHS — player-relative, the running line up (● the first-side peak · × pointer pinned at the screen edge · dashed = mirrored)</h3><canvas id="cvPaths" style="height:420px"></canvas></div>
+      <div><h3>ALIGNED TIME SERIES — angle from the running line (mirrored: + = exit side)</h3><canvas id="cvAlign" style="height:300px"></canvas><h3>radius</h3><canvas id="cvAlignR" style="height:110px"></canvas></div></div>
+    <h3>COMMON RANGES AND OUTLIERS</h3><div class="tw" id="famRanges"></div>
+    <h3>THE FOOTBALLER AT THE INFERRED ONSET — the physical-state distribution</h3><div class="tw" id="famState"></div>
+    <h3>WHAT THE ORDINARY VOCABULARY DID (no recognizer exists): the plan's actions from the onset, ms</h3><div id="famVocab"></div>
+    <h3>THE CANONICAL GATES AT EACH REQUEST FRAME</h3><div class="ctl" id="probeLegend"></div><canvas id="cvProbe" style="height:200px"></canvas>
+  </div>
+
+  <h2>ONE ATTEMPT — OFFLINE OVERLAYS</h2>
+  <div class="ctl"><span>attempt <select id="detSel"></select></span><span class="mut">gesture interval · candidate start · candidate reversal · candidate recognition point · next physical opportunity — analysis overlays only; nothing here ran live</span></div>
+  <p id="detInfo"></p>
+  <canvas id="cvDetail" style="height:430px"></canvas>
+  <div class="tw" id="detProbes"></div>
+
+  <p class="mut" style="margin-top:28px">Report: <code>review_artifacts/owner_input_analysis1/OWNER_INPUT_ANALYSIS.md</code> · design: <code>INTENT_RECOGNIZER_V1_DESIGN.md</code> · tools: <code>sandbox/visual/lsi1/lsr_gesture.js</code>, <code>tools/lsr_owner_analysis.mjs</code>, <code>tools/lsr_owner_probe.mjs</code> · the lab: <a href="lsi1_lab.html" style="color:var(--acc)">lsi1_lab.html</a> (pad at centre: <a href="lsi1_lab.html?pad=centre" style="color:var(--acc)">?pad=centre</a>)</p>
+</main>
+<script type="module" src="lsi1/oa_page.js"></script>
+</body>
+</html>

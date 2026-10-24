@@ -32,6 +32,7 @@
   #simWrap { position: relative; overflow: hidden; }
   #sim { width: 100%; height: 100%; border: 0; display: block; background: #0d1210; }
   #padBox { position: absolute; left: 12px; bottom: 12px; z-index: 6; user-select: none; -webkit-user-select: none; display: flex; align-items: flex-end; gap: 8px; }
+  #simWrap.padCentre #padBox { left: 50%; transform: translateX(-50%); }   /* (OWNER INPUT ANALYSIS V1: the pad away from the screen edge — selPadPos / ?pad=centre) */
   #pad { touch-action: none; cursor: grab; display: block; }
   #pad:active { cursor: grabbing; }
   #padBtns { display: flex; flex-direction: column; gap: 6px; }
@@ -83,7 +84,7 @@
   <span class="grp"><button id="bStart" title="Enter (gamepad: Menu / Start)">● START RECORDING</button><button id="bSave" disabled title="Y (gamepad: A)">SAVE ATTEMPT</button><button id="bDiscard" disabled title="Backspace (gamepad: B)">DISCARD</button></span>
   <span class="grp"><span class="lab">start</span><select id="selCapture" title="RESET: START resets the footballer standing on the spot with the ball (every attempt self-contained, from rest) · CONTINUOUS: START keeps the dribble going and the attempt includes the 1.5 s before START"><option value="RESET">RESET (kick-off)</option><option value="CONTINUOUS">CONTINUOUS (+1.5 s pre-roll)</option></select></span>
   <span class="grp"><span class="lab">input</span><span id="src">—</span></span>
-  <span class="grp"><span class="lab">pad</span><select id="selPad" title="the virtual stick's thumb travel radius (CSS px); 84 = the sandbox's own stick"><option value="84">84 px (sandbox)</option><option value="110">110 px</option><option value="140">140 px</option></select></span>
+  <span class="grp"><span class="lab">pad</span><select id="selPad" title="the virtual stick's thumb travel radius (CSS px); 84 = the sandbox's own stick"><option value="84">84 px (sandbox)</option><option value="110">110 px</option><option value="140">140 px</option></select><select id="selPadPos" title="where the virtual stick sits: at LEFT (the original place, 12 px from the window's edge) or at CENTRE — room for the pointer on both sides (OWNER INPUT ANALYSIS V1: with the mouse, the stick at the left edge pinned every leftward drag at the screen edge 1.38 stick radii from its centre). Also ?pad=centre"><option value="left">at left</option><option value="centre">at centre</option></select></span>
   <span class="grp"><label title="the live diagnostics overlay (history, plots, state); OFF = the lab only forwards input and keeps its short input ring — recording still works"><input id="cDiag" type="checkbox" checked> diagnostics</label></span>
   <span class="grp"><select id="selSynth" title="RECORDER TESTS — a synthetic trace played through the same stick path into the real footballer (RESET start, labelled RECORDER TEST); not football gestures"><option value="">recorder test trace…</option></select><button id="bSynth">▶ record test</button></span>
 </div>

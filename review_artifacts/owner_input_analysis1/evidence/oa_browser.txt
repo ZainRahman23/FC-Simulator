@@ -1,0 +1,22 @@
+PASS  the analysis page loads its JSON  — 21 attempts in owner_2026-10-24_session1_21attempts.json · 21 real owner attempts · analysis 2026-10-24 01:58 UTC · gesture cuts v1
+PASS  the dataset table lists every label
+PASS  overview canvas cvOv1 drawn (% of pixels off the surface)  — 4.43
+PASS  overview canvas cvOv2 drawn (% of pixels off the surface)  — 6.57
+PASS  the opportunity table has rows
+PASS  family BODY FEINT: paths · series · radius · probes drawn (% of pixels off the surface)  — [4.06,9.2,10.24,28.27]
+PASS  family CROQUETA: paths · series · radius · probes drawn (% of pixels off the surface)  — [1.97,7.04,10.43,29.45]
+PASS  family SHARP TURN / CUT: paths · series · radius · probes drawn (% of pixels off the surface)  — [1.56,5.72,8.76,23.86]
+PASS  family GENTLE TURN: paths · series · radius · probes drawn (% of pixels off the surface)  — [1.41,5.25,11.67,23.72]
+PASS  family STOP → GO: the neutral description shown
+PASS  every attempt's detail view drawn  — 21/21
+PASS  analysis page: 0 console / HTTP errors  — []
+PASS  phone width: no horizontal page scroll  — [390,390]
+PASS  lab default: the pad where it was (12 px from the view's left edge)  — {"padX":12}
+PASS  lab default: padPos 'left' recorded with the attempt  — {"padPos":"left","minX":-1.369,"padR":84}
+PASS  lab default: 0 console / HTTP errors  — []
+PASS  lab ?pad=centre: the pad centred in the view  — {"padCentre":444,"viewCentre":490}
+PASS  lab ?pad=centre: a leftward drag passes the old edge (raw x < −1.38 radii)  — {"padPos":"centre","minX":-5.2738,"padR":84}
+PASS  lab ?pad=centre: padPos 'centre' recorded
+PASS  lab ?pad=centre: 0 console / HTTP errors  — []
+
+ALL 20 CHECKS PASS

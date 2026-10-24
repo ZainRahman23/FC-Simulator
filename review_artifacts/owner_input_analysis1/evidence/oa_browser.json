@@ -1,0 +1,141 @@
+{
+ "checks": [
+  {
+   "name": "the analysis page loads its JSON",
+   "pass": true,
+   "detail": "21 attempts in owner_2026-10-24_session1_21attempts.json · 21 real owner attempts · analysis 2026-10-24 01:58 UTC · gesture cuts v1"
+  },
+  {
+   "name": "the dataset table lists every label",
+   "pass": true
+  },
+  {
+   "name": "overview canvas cvOv1 drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": 4.43
+  },
+  {
+   "name": "overview canvas cvOv2 drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": 6.57
+  },
+  {
+   "name": "the opportunity table has rows",
+   "pass": true
+  },
+  {
+   "name": "family BODY FEINT: paths · series · radius · probes drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": [
+    4.06,
+    9.2,
+    10.24,
+    28.27
+   ]
+  },
+  {
+   "name": "family CROQUETA: paths · series · radius · probes drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": [
+    1.97,
+    7.04,
+    10.43,
+    29.45
+   ]
+  },
+  {
+   "name": "family SHARP TURN / CUT: paths · series · radius · probes drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": [
+    1.56,
+    5.72,
+    8.76,
+    23.86
+   ]
+  },
+  {
+   "name": "family GENTLE TURN: paths · series · radius · probes drawn (% of pixels off the surface)",
+   "pass": true,
+   "detail": [
+    1.41,
+    5.25,
+    11.67,
+    23.72
+   ]
+  },
+  {
+   "name": "family STOP → GO: the neutral description shown",
+   "pass": true
+  },
+  {
+   "name": "every attempt's detail view drawn",
+   "pass": true,
+   "detail": "21/21"
+  },
+  {
+   "name": "analysis page: 0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "phone width: no horizontal page scroll",
+   "pass": true,
+   "detail": [
+    390,
+    390
+   ]
+  },
+  {
+   "name": "lab default: the pad where it was (12 px from the view's left edge)",
+   "pass": true,
+   "detail": {
+    "padX": 12
+   }
+  },
+  {
+   "name": "lab default: padPos 'left' recorded with the attempt",
+   "pass": true,
+   "detail": {
+    "padPos": "left",
+    "minX": -1.369,
+    "padR": 84
+   }
+  },
+  {
+   "name": "lab default: 0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "lab ?pad=centre: the pad centred in the view",
+   "pass": true,
+   "detail": {
+    "padCentre": 444,
+    "viewCentre": 490
+   }
+  },
+  {
+   "name": "lab ?pad=centre: a leftward drag passes the old edge (raw x < −1.38 radii)",
+   "pass": true,
+   "detail": {
+    "padPos": "centre",
+    "minX": -5.2738,
+    "padR": 84
+   }
+  },
+  {
+   "name": "lab ?pad=centre: padPos 'centre' recorded",
+   "pass": true
+  },
+  {
+   "name": "lab ?pad=centre: 0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "errors": {
+  "analysis": [],
+  "lab_default": [],
+  "lab_centre": []
+ }
+}
