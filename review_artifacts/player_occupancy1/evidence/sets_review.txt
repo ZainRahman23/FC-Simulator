@@ -1,0 +1,18 @@
+
+SET "review" — 30 encounters, OLD vs OCCUPANCY V1 (the bodies as drawn)
+PENETRATION (cm; the ticks with a positive penetration in that group)
+  TRUNK  OLD  ticks    2202 · median  15.7 · p95  21.6 · p99  22.7 · max  23.9 · ticks > 5 cm 1804
+  TRUNK  OCC  ticks     115 · median   1.9 · p95   8.0 · p99   9.1 · max   9.8 · ticks > 5 cm 13
+  LEGS   OLD  ticks    4409 · median  13.2 · p95  23.0 · p99  23.4 · max  23.5 · ticks > 5 cm 3793
+  LEGS   OCC  ticks    2296 · median   2.2 · p95  13.5 · p99  20.9 · max  23.0 · ticks > 5 cm 404
+  FEET   OLD  ticks    2257 · median   5.7 · p95  13.4 · p99  14.0 · max  14.0 · ticks > 5 cm 1295
+  FEET   OCC  ticks    1520 · median   4.1 · p95  12.3 · p99  13.7 · max  14.0 · ticks > 5 cm 631
+  ARMS   OLD  ticks    4157 · median  10.0 · p95  17.3 · p99  18.1 · max  18.5 · ticks > 5 cm 3702
+  ARMS   OCC  ticks    3049 · median   6.9 · p95  12.2 · p99  13.3 · max  17.2 · ticks > 5 cm 1934
+THE APPROVED MOVES: 11 committed windows in OLD · entered identically under occupancy 11 · LOCAL POSE identical (every joint, ≤ 1e-9 m) 1 · WORLD ROOT identical 1
+  local pose differs: 10 (upper body max 82.69 cm, legs max 65.77 cm) — of them with occupancy acting on the carrier in the window 10, in a conflict 8, after occupancy acted before the commitment 0
+  world root differs: 10 (max 99.68 cm) · not entered identically: none
+TACKLE BODY: 16 committed tackles in OLD · committed identically under occupancy 16 · LOCAL POSE identical 7 · WORLD ROOT identical 8
+  LOCAL POSE DIFFERENCE: 9 tackles (upper body max 11.69 cm, legs max 23.98 cm) — with occupancy acting on the defender in the window 8, in a conflict 8, after occupancy acted before the commitment 0
+  WORLD ROOT DIFFERENCE: 8 tackles (max 30.89 cm) · not committed identically: 0
+THE BALL: identical for the whole run in 1 / 30 · differs in 29 — before occupancy's first action 0 · first cause: {"a ball contact made differently (…) after the bodies were kept apart":20,"a ball access blocked (…)":3,"the ball under a carrier whose path occupancy corrected":2,"a tackle boot blocked (…)":4}

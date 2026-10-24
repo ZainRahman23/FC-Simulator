@@ -1,0 +1,15 @@
+
+CONTINUITY — 30 review cases, OLD vs OCCUPANCY V1 (the bodies as drawn; Tackling V1's thresholds)
+                                               OLD att   OCC att   OLD def   OCC def
+  root snaps (acceleration > 100 m/s², 10 g)         1       662         0       446
+  the root's largest acceleration (m/s²)       148.265  2389.015    72.258  1921.262
+  pelvis jumps (> 2 cm / tick)                     873       923       952       757
+  foot jumps (> 5 cm / tick)                       924      1086       332       576
+  knee pops (> 6° / tick)                         1533      1553       703       822
+  PLANT SLIDES (> 3 cm in one stance)              307       308       189       186
+  largest planted-foot drift (m)                 0.432     0.840     0.670     0.670
+  legs crossed (ticks)                             401       261         0        74
+  occupancy's largest position correction per tick: 3.00 cm · largest soft-wall cut of a planned path: 1.14 m · correction reversals on consecutive ticks (ping-pong): 6
+  (no deadlock: the contact intervals of the stress cases — tools/o_deadlock.mjs, evidence/deadlock.txt)
+
+  per case (OCC): static-walk snaps 22 plant 2(OLD 1) maxΔ 3 cm pp 0 | static-jog snaps 21 plant 12(OLD 13) maxΔ 3 cm pp 0 | headon-walk snaps 24 plant 5(OLD 2) maxΔ 1.08 cm pp 0 | headon-jog snaps 53 plant 19(OLD 23) maxΔ 3 cm pp 0 | face snaps 30 plant 1(OLD 0) maxΔ 3 cm pp 0 | side snaps 36 plant 26(OLD 28) maxΔ 1.79 cm pp 0 | cross snaps 15 plant 19(OLD 21) maxΔ 1.04 cm pp 0 | headon-one-away snaps 24 plant 2(OLD 2) maxΔ 1.08 cm pp 0 | headon-both-away snaps 24 plant 2(OLD 3) maxΔ 1.08 cm pp 0 | bf-into snaps 17 plant 9(OLD 6) maxΔ 1.86 cm pp 0 | race snaps 85 plant 21(OLD 19) maxΔ 2.85 cm pp 1 | croq-win snaps 53 plant 24(OLD 21) maxΔ 3 cm pp 0 | in-steer snaps 41 plant 20(OLD 17) maxΔ 2.22 cm pp 0 | carry-walk snaps 8 plant 8(OLD 9) maxΔ 2.06 cm pp 0 | carry-jog-l snaps 19 plant 24(OLD 24) maxΔ 3 cm pp 0 | carry-jog-def snaps 6 plant 26(OLD 27) maxΔ 0.48 cm pp 0 | cut snaps 0 plant 23(OLD 23) maxΔ 0 cm pp 0 | croq snaps 14 plant 23(OLD 23) maxΔ 1.04 cm pp 0 | in-bf snaps 47 plant 11(OLD 11) maxΔ 2.63 cm pp 0 | bf-exit snaps 10 plant 19(OLD 19) maxΔ 3 cm pp 0 | bf-fake snaps 123 plant 21(OLD 21) maxΔ 3 cm pp 4 | in-croq snaps 96 plant 19(OLD 18) maxΔ 3 cm pp 1 | croq-early snaps 36 plant 19(OLD 21) maxΔ 3 cm pp 0 | croq-close snaps 18 plant 8(OLD 9) maxΔ 3 cm pp 0 | both-committed snaps 53 plant 24(OLD 21) maxΔ 3 cm pp 0 | headon-jog-m snaps 53 plant 19(OLD 23) maxΔ 3 cm pp 0 | side-m snaps 40 plant 26(OLD 28) maxΔ 2.62 cm pp 0 | cross-m snaps 15 plant 19(OLD 21) maxΔ 1.04 cm pp 0 | carry-jog-l-m snaps 19 plant 24(OLD 24) maxΔ 3 cm pp 0 | in-croq-m snaps 106 plant 19(OLD 18) maxΔ 3 cm pp 0

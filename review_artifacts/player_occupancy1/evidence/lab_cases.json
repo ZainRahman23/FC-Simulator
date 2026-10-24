@@ -1,0 +1,572 @@
+[
+ {
+  "id": "static-walk",
+  "runs": {
+   "OLD": {
+    "best": 0.22148,
+    "over5": 135,
+    "out": null,
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03207,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "static-jog",
+  "runs": {
+   "OLD": {
+    "best": 0.22816,
+    "over5": 57,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.05846,
+    "over5": 4,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "headon-walk",
+  "runs": {
+   "OLD": {
+    "best": 0.23913,
+    "over5": 78,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03359,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "headon-jog",
+  "runs": {
+   "OLD": {
+    "best": 0.22871,
+    "over5": 40,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.1354,
+    "over5": 13,
+    "out": null,
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "face",
+  "runs": {
+   "OLD": {
+    "best": 0.22818,
+    "over5": 92,
+    "out": null,
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.04229,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "side",
+  "runs": {
+   "OLD": {
+    "best": 0.23497,
+    "over5": 787,
+    "out": null,
+    "through": 3,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03458,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "cross",
+  "runs": {
+   "OLD": {
+    "best": 0.23434,
+    "over5": 47,
+    "out": null,
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.05491,
+    "over5": 5,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "headon-one-away",
+  "runs": {
+   "OLD": {
+    "best": 0.23913,
+    "over5": 81,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03359,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "headon-both-away",
+  "runs": {
+   "OLD": {
+    "best": 0.23913,
+    "over5": 80,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03359,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "bf-into",
+  "runs": {
+   "OLD": {
+    "best": 0.23417,
+    "over5": 64,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03506,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "race",
+  "runs": {
+   "OLD": {
+    "best": 0.23462,
+    "over5": 167,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.12934,
+    "over5": 6,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 2
+   }
+  }
+ },
+ {
+  "id": "croq-win",
+  "runs": {
+   "OLD": {
+    "best": 0.22682,
+    "over5": 78,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.1275,
+    "over5": 30,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "in-steer",
+  "runs": {
+   "OLD": {
+    "best": 0.23304,
+    "over5": 231,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.16876,
+    "over5": 17,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "carry-walk",
+  "runs": {
+   "OLD": {
+    "best": 0.22746,
+    "over5": 65,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.13253,
+    "over5": 26,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "carry-jog-l",
+  "runs": {
+   "OLD": {
+    "best": 0.22814,
+    "over5": 36,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.04139,
+    "over5": 0,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "carry-jog-def",
+  "runs": {
+   "OLD": {
+    "best": 0.22432,
+    "over5": 53,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.02135,
+    "over5": 0,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "cut",
+  "runs": {
+   "OLD": {
+    "best": 0,
+    "over5": 0,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0,
+    "over5": 0,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "croq",
+  "runs": {
+   "OLD": {
+    "best": 0.21524,
+    "over5": 28,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.02647,
+    "over5": 0,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "in-bf",
+  "runs": {
+   "OLD": {
+    "best": 0.22608,
+    "over5": 159,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03808,
+    "over5": 0,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "bf-exit",
+  "runs": {
+   "OLD": {
+    "best": 0.2175,
+    "over5": 81,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.07049,
+    "over5": 2,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "bf-fake",
+  "runs": {
+   "OLD": {
+    "best": 0.22918,
+    "over5": 80,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.22994,
+    "over5": 140,
+    "out": "MISS",
+    "through": 0,
+    "blocked": 4
+   }
+  }
+ },
+ {
+  "id": "in-croq",
+  "runs": {
+   "OLD": {
+    "best": 0.22588,
+    "over5": 90,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.18636,
+    "over5": 39,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 3
+   }
+  }
+ },
+ {
+  "id": "croq-early",
+  "runs": {
+   "OLD": {
+    "best": 0.23272,
+    "over5": 116,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.142,
+    "over5": 17,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "croq-close",
+  "runs": {
+   "OLD": {
+    "best": 0.22164,
+    "over5": 73,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.10362,
+    "over5": 6,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "both-committed",
+  "runs": {
+   "OLD": {
+    "best": 0.22682,
+    "over5": 78,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.1275,
+    "over5": 30,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "headon-jog-m",
+  "runs": {
+   "OLD": {
+    "best": 0.22871,
+    "over5": 40,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.1354,
+    "over5": 13,
+    "out": null,
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "side-m",
+  "runs": {
+   "OLD": {
+    "best": 0.23497,
+    "over5": 787,
+    "out": null,
+    "through": 3,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.03549,
+    "over5": 0,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "cross-m",
+  "runs": {
+   "OLD": {
+    "best": 0.23434,
+    "over5": 47,
+    "out": null,
+    "through": 1,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.05491,
+    "over5": 5,
+    "out": null,
+    "through": 0,
+    "blocked": 0
+   }
+  }
+ },
+ {
+  "id": "carry-jog-l-m",
+  "runs": {
+   "OLD": {
+    "best": 0.22814,
+    "over5": 36,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.04139,
+    "over5": 0,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ },
+ {
+  "id": "in-croq-m",
+  "runs": {
+   "OLD": {
+    "best": 0.22588,
+    "over5": 90,
+    "out": "CONTACT — DEFENDER RECOVERS",
+    "through": 0,
+    "blocked": 0
+   },
+   "OCC": {
+    "best": 0.22369,
+    "over5": 51,
+    "out": "CONTACT — ATTACKER RECOVERS",
+    "through": 0,
+    "blocked": 1
+   }
+  }
+ }
+]

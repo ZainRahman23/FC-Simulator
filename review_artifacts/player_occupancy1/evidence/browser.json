@@ -1,0 +1,926 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — PLAYER OCCUPANCY V1 REVIEW)",
+   "pass": true,
+   "detail": "0.6 s to the first case"
+  },
+  {
+   "name": "every case simulates OLD and OCCUPANCY V1 and both viewports draw",
+   "pass": true,
+   "detail": "30/30"
+  },
+  {
+   "name": "the page's numbers equal node's (deepest, ticks > 5 cm, outcome, through, blocked), both modes",
+   "pass": true,
+   "detail": "30/30"
+  },
+  {
+   "name": "view OLD | OCCUPANCY: every viewport draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view OLD: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view OCCUPANCY V1: every viewport draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "OLD and OCCUPANCY V1 draw different replays of the same inputs (head-on jog at OLD's deepest)",
+   "pass": true,
+   "detail": {
+    "hO": 3488458063,
+    "hC": 1117313850
+   }
+  },
+  {
+   "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
+   "pass": true,
+   "detail": {
+    "skin": 1103449049,
+    "skel": 4051323129,
+    "both": 1103449049
+   }
+  },
+  {
+   "name": "VOLUMES / CONTACT NORMALS / BALL ACCESS toggle (overlay ink falls as each goes off)",
+   "pass": true,
+   "detail": {
+    "all overlays": 9757,
+    "volumes off": 7674,
+    "normals off": 7462,
+    "ball access off": 7340
+   }
+  },
+  {
+   "name": "DIAGNOSTICS off hides the panel",
+   "pass": true
+  },
+  {
+   "name": "the diagnostics show both modes' records, the playhead's pairs and the occupancy's state",
+   "pass": true
+  },
+  {
+   "name": "BALL ACCESS: a touch / boot BLOCKED under occupancy is shown",
+   "pass": true,
+   "detail": {
+    "id": "race",
+    "t": 2.954166666666667,
+    "kind": "BALL ACCESS BLOCKED"
+   }
+  },
+  {
+   "name": "the eight cameras draw, each a different view",
+   "pass": true,
+   "detail": 8
+  },
+  {
+   "name": "frame step moves the playhead 4 ticks",
+   "pass": true,
+   "detail": 3.999999999999986
+  },
+  {
+   "name": "1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)",
+   "pass": true,
+   "detail": {
+    "1": 0.5869999999999984,
+    "0.5": 0.29990000002384454,
+    "0.25": 0.14862500000893997
+   }
+  },
+  {
+   "name": "LOOP wraps the replay to its start",
+   "pass": true
+  },
+  {
+   "name": "0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "rows": [
+  {
+   "id": "static-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22148478045543113,
+     "bestT": 1.483333333333333,
+     "over5": 135,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "ms": 197
+    },
+    "OCC": {
+     "best": 0.032070300170355226,
+     "bestT": 2.1708333333333334,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 247
+    }
+   }
+  },
+  {
+   "id": "static-jog",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2281612624479284,
+     "bestT": 0.9958333333333336,
+     "over5": 57,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 139
+    },
+    "OCC": {
+     "best": 0.058459080718980094,
+     "bestT": 0.9791666666666665,
+     "over5": 4,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 174
+    }
+   }
+  },
+  {
+   "id": "headon-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 78,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 144
+    },
+    "OCC": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 165
+    }
+   }
+  },
+  {
+   "id": "headon-jog",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2287064765718412,
+     "bestT": 1.0083333333333333,
+     "over5": 40,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 124
+    },
+    "OCC": {
+     "best": 0.13539907458893652,
+     "bestT": 1.025,
+     "over5": 13,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "ms": 183
+    }
+   }
+  },
+  {
+   "id": "face",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22818302443670024,
+     "bestT": 1.2458333333333331,
+     "over5": 92,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "ms": 139
+    },
+    "OCC": {
+     "best": 0.042287703951571914,
+     "bestT": 1.583333333333333,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 170
+    }
+   }
+  },
+  {
+   "id": "side",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2349715533251744,
+     "bestT": 1.4416666666666669,
+     "over5": 787,
+     "out": null,
+     "through": 3,
+     "blocked": 0,
+     "ms": 154
+    },
+    "OCC": {
+     "best": 0.03457706912953122,
+     "bestT": 1.0625,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 250
+    }
+   }
+  },
+  {
+   "id": "cross",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23433634902370598,
+     "bestT": 1.3125,
+     "over5": 47,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "ms": 133
+    },
+    "OCC": {
+     "best": 0.05491279616436144,
+     "bestT": 1.6750000000000003,
+     "over5": 5,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 143
+    }
+   }
+  },
+  {
+   "id": "headon-one-away",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 81,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 156
+    },
+    "OCC": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 173
+    }
+   }
+  },
+  {
+   "id": "headon-both-away",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2391263747461122,
+     "bestT": 1.4083333333333332,
+     "over5": 80,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 153
+    },
+    "OCC": {
+     "best": 0.033587243474516304,
+     "bestT": 1.3708333333333331,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 171
+    }
+   }
+  },
+  {
+   "id": "bf-into",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2341683869623497,
+     "bestT": 0.6916666666666669,
+     "over5": 64,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 124
+    },
+    "OCC": {
+     "best": 0.035063482823889464,
+     "bestT": 0.7666666666666666,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 138
+    }
+   }
+  },
+  {
+   "id": "race",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23461959522430825,
+     "bestT": 0.9833333333333334,
+     "over5": 167,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 1,
+     "blocked": 0,
+     "ms": 232
+    },
+    "OCC": {
+     "best": 0.1293399599268198,
+     "bestT": 3.225,
+     "over5": 6,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 2,
+     "ms": 307
+    }
+   }
+  },
+  {
+   "id": "croq-win",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22682452696451055,
+     "bestT": 0.8000000000000003,
+     "over5": 78,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 197
+    },
+    "OCC": {
+     "best": 0.12749744405419128,
+     "bestT": 0.6083333333333334,
+     "over5": 30,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 280
+    }
+   }
+  },
+  {
+   "id": "in-steer",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23304492979675379,
+     "bestT": 2.5416666666666665,
+     "over5": 231,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 1,
+     "blocked": 0,
+     "ms": 407
+    },
+    "OCC": {
+     "best": 0.16876093987472132,
+     "bestT": 2.35,
+     "over5": 17,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 215
+    }
+   }
+  },
+  {
+   "id": "carry-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22745896265701332,
+     "bestT": 1.5958333333333332,
+     "over5": 65,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 193
+    },
+    "OCC": {
+     "best": 0.13252909809220265,
+     "bestT": 1.7833333333333332,
+     "over5": 26,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 219
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22813719426368168,
+     "bestT": 1.2416666666666667,
+     "over5": 36,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 190
+    },
+    "OCC": {
+     "best": 0.04139163998575032,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 372
+    }
+   }
+  },
+  {
+   "id": "carry-jog-def",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.224324793065196,
+     "bestT": 0.8000000000000003,
+     "over5": 53,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 279
+    },
+    "OCC": {
+     "best": 0.02134599474271051,
+     "bestT": 0.7875000000000001,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 185
+    }
+   }
+  },
+  {
+   "id": "cut",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 158
+    },
+    "OCC": {
+     "best": -1,
+     "bestT": null,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 169
+    }
+   }
+  },
+  {
+   "id": "croq",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.21523722850633753,
+     "bestT": 0.8916666666666666,
+     "over5": 28,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 150
+    },
+    "OCC": {
+     "best": 0.026469424771358108,
+     "bestT": 0.8875000000000002,
+     "over5": 0,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 156
+    }
+   }
+  },
+  {
+   "id": "in-bf",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2260818311046404,
+     "bestT": 1.4874999999999998,
+     "over5": 159,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 184
+    },
+    "OCC": {
+     "best": 0.03807971588626033,
+     "bestT": 3.045833333333333,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 233
+    }
+   }
+  },
+  {
+   "id": "bf-exit",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.21750487717696593,
+     "bestT": 1.475,
+     "over5": 81,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 188
+    },
+    "OCC": {
+     "best": 0.07049165363480048,
+     "bestT": 1.2333333333333334,
+     "over5": 2,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 202
+    }
+   }
+  },
+  {
+   "id": "bf-fake",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.229179742308676,
+     "bestT": 0.8791666666666669,
+     "over5": 80,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 149
+    },
+    "OCC": {
+     "best": 0.22995767961630498,
+     "bestT": 1.2583333333333333,
+     "over5": 140,
+     "out": "MISS",
+     "through": 0,
+     "blocked": 4,
+     "ms": 213
+    }
+   }
+  },
+  {
+   "id": "in-croq",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22588470077173284,
+     "bestT": 0.8000000000000003,
+     "over5": 90,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 165
+    },
+    "OCC": {
+     "best": 0.18635733230602824,
+     "bestT": 2.225,
+     "over5": 39,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 3,
+     "ms": 223
+    }
+   }
+  },
+  {
+   "id": "croq-early",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23271665364845445,
+     "bestT": 0.7583333333333333,
+     "over5": 116,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 171
+    },
+    "OCC": {
+     "best": 0.14199857893693998,
+     "bestT": 0.6166666666666667,
+     "over5": 17,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 179
+    }
+   }
+  },
+  {
+   "id": "croq-close",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22164111788968052,
+     "bestT": 0.8541666666666665,
+     "over5": 73,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 113
+    },
+    "OCC": {
+     "best": 0.10361668471594518,
+     "bestT": 0.8500000000000001,
+     "over5": 6,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 122
+    }
+   }
+  },
+  {
+   "id": "both-committed",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22682452696451055,
+     "bestT": 0.8000000000000003,
+     "over5": 78,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 180
+    },
+    "OCC": {
+     "best": 0.12749744405419128,
+     "bestT": 0.6083333333333334,
+     "over5": 30,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 201
+    }
+   }
+  },
+  {
+   "id": "headon-jog-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2287064765718412,
+     "bestT": 1.0083333333333333,
+     "over5": 40,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 126
+    },
+    "OCC": {
+     "best": 0.13539907458893652,
+     "bestT": 1.025,
+     "over5": 13,
+     "out": null,
+     "through": 0,
+     "blocked": 1,
+     "ms": 144
+    }
+   }
+  },
+  {
+   "id": "side-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.2349715533251744,
+     "bestT": 1.4416666666666669,
+     "over5": 787,
+     "out": null,
+     "through": 3,
+     "blocked": 0,
+     "ms": 149
+    },
+    "OCC": {
+     "best": 0.035486042310529334,
+     "bestT": 1.0625,
+     "over5": 0,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 226
+    }
+   }
+  },
+  {
+   "id": "cross-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.23433634902370598,
+     "bestT": 1.3125,
+     "over5": 47,
+     "out": null,
+     "through": 1,
+     "blocked": 0,
+     "ms": 129
+    },
+    "OCC": {
+     "best": 0.05491279616436144,
+     "bestT": 1.6750000000000003,
+     "over5": 5,
+     "out": null,
+     "through": 0,
+     "blocked": 0,
+     "ms": 140
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22813719426368168,
+     "bestT": 1.2416666666666667,
+     "over5": 36,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 172
+    },
+    "OCC": {
+     "best": 0.04139163998575032,
+     "bestT": 1.2125,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 365
+    }
+   }
+  },
+  {
+   "id": "in-croq-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "OLD": {
+     "best": 0.22588470077173284,
+     "bestT": 0.8000000000000003,
+     "over5": 90,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "through": 0,
+     "blocked": 0,
+     "ms": 163
+    },
+    "OCC": {
+     "best": 0.22369254643909003,
+     "bestT": 2.4625,
+     "over5": 51,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "through": 0,
+     "blocked": 1,
+     "ms": 204
+    }
+   }
+  }
+ ],
+ "errs": []
+}

@@ -1,0 +1,71 @@
+
+SHARED POSSESSION TORTURE — 60 trials (seed 3; every second one the mirrored world of the one before) × 4 modes, each run twice + its counterfactual
+                                                           NONE    SHORT   MEDIUM     LONG
+  runs                                                       60       60       60       60
+  ball contacts (all players, all kinds)                    684      667      658      675
+  authority transitions                                     144      162      156      160
+  control established (granted claims)                      102      110      108      110
+  claims DENIED                                               0        2        2        5
+    of them: blind (an event not yet perceived)               0        2        2        5
+  DUAL OWNERSHIP                                              0        0        0        0
+  UNAWARE OWNER                                               0        0        0        0
+  STALE OWNER (3 m from the real ball)                        0        0        0        0
+  OWNERSHIP CHATTER (owner changed twice < 0.25 s)            0        0        0        0
+  A → B → A within 0.5 s                                      0        0        0        0
+  POSSESSION WITHOUT A TOUCH                                  0        0        0        0
+  CONTROL GRANTED BLIND                                       0        0        0        0
+  FREE at the replay's end                                    0        2        0        0
+    of them with a candidate playing for it                   0        2        0        0
+  REACTION TIMER NEVER RESOLVED                               0        0        0        0
+  NEW INFORMATION USED EARLY                                  0       26       30       30
+    (counterfactual checks made)                              0       38       38       38
+  near-simultaneous touches (2 players < 0.05 s)             10       10        8       12
+  most ownership establishments in one run                    3        4        3        3
+  NONDETERMINISTIC                                            0        0        0        0
+  FREE episodes resolved: median / p90 / max (s)        0.26/1.18/2.93  0.89/1.41/2.42  1.09/1.53/2.25  1.08/1.76/2.07
+  outcomes NONE: {"CONTACT — ATTACKER RECOVERS":34,"MISS":12,"CONTACT — ATTACKER RETAINS":4}
+  outcomes SHORT: {"CONTACT — ATTACKER RECOVERS":32,"MISS":14,"CONTACT — ATTACKER RETAINS":2,"CONTACT — DEFENDER RECOVERS":2}
+  outcomes MEDIUM: {"CONTACT — ATTACKER RECOVERS":34,"MISS":14,"CONTACT — DEFENDER RECOVERS":2}
+  outcomes LONG: {"CONTACT — ATTACKER RECOVERS":30,"MISS":13,"CONTACT — DEFENDER RECOVERS":6,"CONTACT — ATTACKER RETAINS":1}
+  AN EVENT PERCEIVED TWICE: none (p_react.js due() throws on one — it would abort the run)
+  skipped set-ups (no committing request found): 34
+  ✗ m3-7:rapid SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-7:rapid MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-7:rapid LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-7:rapid·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-7:rapid·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-7:rapid·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-9:stride MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-9:stride LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-9:stride·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-9:stride·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-13:rapid·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-22:rapid·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-28:rapid·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-30:single·M LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single LONG: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single·M SHORT: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single·M MEDIUM: the attacker differs from his counterfactual before perceiving the contact
+  ✗ m3-34:single·M LONG: the attacker differs from his counterfactual before perceiving the contact

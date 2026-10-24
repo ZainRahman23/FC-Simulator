@@ -1,0 +1,19 @@
+PASS  the page loads (TOUCHLINE — PLAYER OCCUPANCY V1 REVIEW)  — 0.6 s to the first case
+PASS  every case simulates OLD and OCCUPANCY V1 and both viewports draw  — 30/30
+PASS  the page's numbers equal node's (deepest, ticks > 5 cm, outcome, through, blocked), both modes  — 30/30
+PASS  view OLD | OCCUPANCY: every viewport draws  — [100,100]
+PASS  view OLD: every viewport draws  — [100]
+PASS  view OCCUPANCY V1: every viewport draws  — [100]
+PASS  OLD and OCCUPANCY V1 draw different replays of the same inputs (head-on jog at OLD's deepest)  — {"hO":3488458063,"hC":1117313850}
+PASS  SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)  — {"skin":1103449049,"skel":4051323129,"both":1103449049}
+PASS  VOLUMES / CONTACT NORMALS / BALL ACCESS toggle (overlay ink falls as each goes off)  — {"all overlays":9757,"volumes off":7674,"normals off":7462,"ball access off":7340}
+PASS  DIAGNOSTICS off hides the panel
+PASS  the diagnostics show both modes' records, the playhead's pairs and the occupancy's state
+PASS  BALL ACCESS: a touch / boot BLOCKED under occupancy is shown  — {"id":"race","t":2.954166666666667,"kind":"BALL ACCESS BLOCKED"}
+PASS  the eight cameras draw, each a different view  — 8
+PASS  frame step moves the playhead 4 ticks  — 3.999999999999986
+PASS  1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)  — {"1":0.5869999999999984,"0.5":0.29990000002384454,"0.25":0.14862500000893997}
+PASS  LOOP wraps the replay to its start
+PASS  0 console / HTTP errors  — []
+
+17 / 17 checks pass

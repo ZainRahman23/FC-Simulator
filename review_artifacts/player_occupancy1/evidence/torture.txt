@@ -1,0 +1,38 @@
+
+TORTURE — 16 runs × 40 s (seed 11), OLD vs OCCUPANCY V1 on the same seeded scripts (each OCCUPANCY run made twice) · 10.7 simulated minutes per mode
+                                                                 OLD   OCCUPANCY
+  ticks with the roots within the broad phase                  41942       58186
+  DEEP PENETRATION: ticks > 2 cm                                2981        1255
+    ticks > 5 cm (the hard limit)                               2491         431
+    ticks > 10 cm                                               1928         204
+    the deepest (cm)                                            23.5        23.0
+  JITTER: root 2nd difference > 1 cm per 1/60 s (frames)         600        1211
+    the largest (mm per 1/60 s²)                                19.2       153.3
+    correction reversals on consecutive ticks                      0           5
+  EXPLOSIVE: root acceleration > 100 m/s² (ticks)                  7         956
+    the largest per-tick correction (cm)                        0.00        3.00
+  STUCK: contact > 1.5 s, the carrier steering away                0           0
+    the longest such contact (s)                                0.58        0.35
+  ROOT DRIFT: corrections with nothing in the skin (ticks)         0           0
+  SUPPORT-FOOT SLIDING (planted > 3 cm, near ticks)              647         810
+  LEGS CROSSED (near ticks)                                      610         962
+  BALL CONTACTS (all)                                           1291        1308
+    of them tackle contacts                                       29          41
+    THROUGH A BODY (leg > 5 cm in the opponent)                   19           1
+    ambiguous (2 – 5 cm)                                           3           1
+  OWNERSHIP: dual                                                  0           0
+    unaware owner                                                  0           0
+    stale owner (3 m)                                              0           0
+    possession without a touch                                     0           0
+    control granted blind                                          0           0
+    chatter (< 0.25 s)                                             0           0
+    establishments                                                43          54
+  move requests (Body Feint / Croqueta)                          138         143
+    entered (the technique began)                                 64          59
+  NON-DETERMINISTIC OCCUPANCY RUNS (two runs, the same seed): 0 / 16
+  OCCUPANCY: ticks > 5 cm by region pair: THIGH_R↔THIGH_R 154 · SHIN_R↔SHIN_R 91 · SHIN_R↔THIGH_R 91 · THIGH_R↔THIGH_L 85 · SHIN_R↔THIGH_L 66 · THIGH_L↔THIGH_R 61 · SHIN_R↔SHIN_L 56 · SHIN_L↔THIGH_R 47
+  OCCUPANCY: unresolved ticks by reason: {"COMMITTED ACTION'S LIMB":162,"PLANTED SUPPORT (the stance budget)":110,"PLANTED LEGS":37,"AUTHORED / BALL-ANCHORED LIMB PATH":63,"BOTH COMMITTED":59} · conflicts 97 · touches / boots blocked 14 · leg conflicts 42
+  OLD: the move requests' outcomes (the carrier's own skill log): {"REJECTED":61,"PLAYED":64,"CANCELLED":2,"SUPERSEDED":5}
+  OCC: the move requests' outcomes (the carrier's own skill log): {"REJECTED":72,"PLAYED":59,"SUPERSEDED":3,"CANCELLED":1}
+  the defender's script (ticks per phase, OCCUPANCY): {"AWAY":23126,"CROSS":22906,"CHASE":43609,"RACE":16639,"SIDE":20538,"HEADON":26782}
+  per run (OCC): #0 deep 13.7 >5 55 snaps 120(OLD 32) tk 4 | #1 deep 13.9 >5 58 snaps 130(OLD 33) tk 5 | #2 deep 10.8 >5 16 snaps 57(OLD 22) tk 3 | #3 deep 15.0 >5 14 snaps 27(OLD 26) tk 1 | #4 deep 3.3 >5 0 snaps 44(OLD 28) tk 3 | #5 deep 5.7 >5 6 snaps 69(OLD 59) tk 1 | #6 deep 7.7 >5 7 snaps 81(OLD 51) tk 2 | #7 deep 4.5 >5 0 snaps 49(OLD 55) tk 2 | #8 deep 3.8 >5 0 snaps 93(OLD 43) tk 2 | #9 deep 11.3 >5 7 snaps 61(OLD 34) tk 3 | #10 deep 4.3 >5 0 snaps 52(OLD 30) tk 2 | #11 deep 23.0 >5 143 snaps 129(OLD 62) tk 3 | #12 deep 17.1 >5 58 snaps 89(OLD 37) tk 6 | #13 deep 4.3 >5 0 snaps 32(OLD 22) tk 1 | #14 deep 16.8 >5 25 snaps 63(OLD 31) tk 1 | #15 deep 12.2 >5 42 snaps 115(OLD 35) tk 2

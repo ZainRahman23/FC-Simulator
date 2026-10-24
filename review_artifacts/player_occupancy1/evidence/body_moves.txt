@@ -1,0 +1,20 @@
+
+THE APPROVED ACTIONS UNDER OCCUPANCY — set "moves", 352 encounters
+BODY FEINT / CROQUETA (live at their commitment): 309 committed in OLD · committed at the same tick under occupancy 308 · carried to their release: OLD 291, OCCUPANCY 289
+  NEVER CANCELLED BY OCCUPANCY (carried in OLD but not under occupancy): 7 · BODY_FEINT 3.6/0.5@0.8 (his decisions differ: BODY FEINT V2 3.5625 opponent vs CARRY 3.5625 fallback) · CROQUETA 2.4/-1@0.3 (his touch BLOCKED by the defender's body at +0.263 s → a re-plan) · CROQUETA 2.4/-1@0.4 (his touch BLOCKED by the defender's body at +0.263 s → a re-plan) · CROQUETA 2.4/-1@0.5 (his touch BLOCKED by the defender's body at +0.263 s → a re-plan)
+  ENTERED FROM THE SAME STATE (occupancy had not touched the carrier before): 262 · from a state occupancy had changed (an earlier contact): 46
+  compared from the commitment to the first decision that differs (or the release): 18826 ticks; ended early in 15 — 6 × his decisions differ · 9 × his touch BLOCKED by the defender's body → a re-plan
+  of those: occupancy never moved him in the span 194 — LOCAL POSE identical (every joint, ≤ 0.1 mm) 188 / 194
+            occupancy moved his root in the span (68; conflicts 68): TRUNK (pelvis, spine, chest) max 7.54 cm · HEAD / ARMS max 22.82 cm · LEGS max 51.62 cm (root correction within one planted stance ≤ 18.00 cm) · WORLD ROOT max 69.65 cm
+STANDING TACKLE: 181 committed in OLD · committed identically under occupancy 180 (not: CROQUETA 2.4/-0.5@0.7 committed at 3.100 (STANDING_POKE) vs 3.100 — the bodies were kept apart before) · owns the body as long 178 · the same phases 180
+  compared from the commitment to the first tick the ball or the carrier differs: 13592 ticks; ended early in 164 (164 × the carrier's root differs (occupancy kept him clear))
+  LOCAL POSE DIFFERENCE (every joint relative to the root): upper body identical (≤ 0.1 mm) in 175 / 180 (max 0.30 cm) · legs identical in 175 / 180 (max 1.62 cm; where they differ occupancy moved his root: 2 of 5)
+  WORLD ROOT DIFFERENCE: identical in 175 / 180 · max 1.62 cm · conflicts in 95
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@0.5 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@0.6 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@0.7 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@0.8 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@0.9 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: CROQUETA 2.4/0.5@1.0 LA CROQUETA up 0.00 cm, legs 0.13 cm
+  ✗ local pose differs with no occupancy action in the span: BODY_FEINT 3.6/-1@0.9 STANDING_LUNGE up 0.02 cm, legs 0.02 cm
+  ✗ local pose differs with no occupancy action in the span: BODY_FEINT 3.6/-0.5@1.0 POKE → LUNGE up 0.02 cm, legs 0.02 cm

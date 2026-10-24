@@ -1,0 +1,30 @@
+
+STANDING TACKLE V1 — set "search": 1500 runs, 209 committed tackles, OLD vs OCCUPANCY V1 (MEDIUM, POKE untuned, inputs identical)
+                                         OLD    OCCUPANCY V1
+  MISS                                    47              45
+  CONTACT — ATTACKER RETAINS               3               5
+  CONTACT — ATTACKER RECOVERS            141             150
+  CONTACT — DEFENDER RECOVERS             18               9
+  CONTACT — BALL FREE                      0               0
+
+THE OUTCOMES THAT CHANGED: 23
+  20 × the OLD race was won through a body
+      #9@0.6                 DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch R through THIGH_L 6 cm · OLD race BODY-PHASED (deepest 24 cm PELVIS↔PELVIS at +1.50 s)
+      #38@0.4                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.19 s)
+      #38@0.5                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.19 s)
+      #38@0.6                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.19 s)
+      #38@0.7                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔THIGH_L at +0.16 s)
+      #38@0.8                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +0.12 s)
+      #38@0.9                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +0.11 s)
+      #50@0.7                DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch L through SHIN_L 13 cm · OLD race BODY-PHASED (deepest 23 cm PELVIS↔THIGH_R at +0.28 s) · blocked: ATT exit touch
+  2 × a touch through the opponent's body blocked
+      #47@1.1                MISS              → ATTACKER RETAINS  OLD: ATT touch R through THIGH_L 7 cm · blocked: ATT carry
+      #70@1.0                MISS              → ATTACKER RETAINS   · blocked: ATT carry
+  1 × the tackle's boot reached the ball only through the attacker's body (blocked)
+      #79@0.6                DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch L through THIGH_R 6 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔THIGH_R at +0.16 s)
+
+THE LOOSE-BALL RACES IN OLD (control broken by the tackle, then re-established): 159
+  LEGITIMATE     16 — OCCUPANCY V1 keeps the outcome in 16, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 16
+  AMBIGUOUS       2 — OCCUPANCY V1 keeps the outcome in 2, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 2
+  BODY-PHASED   141 — OCCUPANCY V1 keeps the outcome in 120, changes it in 21: ATTACKER RECOVERS → ATTACKER RECOVERS 117 · DEFENDER RECOVERS → DEFENDER RECOVERS 3 · DEFENDER RECOVERS → ATTACKER RECOVERS 15 · ATTACKER RECOVERS → DEFENDER RECOVERS 6
+  OCCUPANCY V1's own races classified BODY-PHASED: 65 — #5@0.9 (18 cm SHIN_L↔THIGH_R at +0.18 s) · #5@1.0 (18 cm SHIN_L↔THIGH_R at +0.18 s) · #5@1.1 (18 cm SHIN_L↔THIGH_R at +0.18 s) · #5@1.2 (18 cm SHIN_L↔THIGH_R at +0.16 s) · #9@0.3 (10 cm SHIN_R↔SHIN_R at +1.61 s) · #9@0.4 (10 cm SHIN_R↔SHIN_R at +1.61 s)

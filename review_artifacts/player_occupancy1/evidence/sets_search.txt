@@ -1,0 +1,18 @@
+
+SET "search" — 209 encounters, OLD vs OCCUPANCY V1 (the bodies as drawn)
+PENETRATION (cm; the ticks with a positive penetration in that group)
+  TRUNK  OLD  ticks    4937 · median   8.7 · p95  20.5 · p99  22.6 · max  23.9 · ticks > 5 cm 3354
+  TRUNK  OCC  ticks     162 · median   1.8 · p95   6.0 · p99   8.5 · max  10.3 · ticks > 5 cm 10
+  LEGS   OLD  ticks   13575 · median  11.3 · p95  21.8 · p99  22.8 · max  23.5 · ticks > 5 cm 10508
+  LEGS   OCC  ticks    6533 · median   2.2 · p95  12.2 · p99  17.4 · max  23.0 · ticks > 5 cm 1324
+  FEET   OLD  ticks    8068 · median   6.3 · p95  13.2 · p99  13.9 · max  16.3 · ticks > 5 cm 4729
+  FEET   OCC  ticks    7068 · median   5.4 · p95  12.7 · p99  13.8 · max  18.0 · ticks > 5 cm 3737
+  ARMS   OLD  ticks   10832 · median   8.0 · p95  16.2 · p99  17.8 · max  18.5 · ticks > 5 cm 7739
+  ARMS   OCC  ticks    5235 · median   5.8 · p95  13.2 · p99  16.2 · max  18.4 · ticks > 5 cm 3023
+THE APPROVED MOVES: 56 committed windows in OLD · entered identically under occupancy 56 · LOCAL POSE identical (every joint, ≤ 1e-9 m) 36 · WORLD ROOT identical 36
+  local pose differs: 20 (upper body max 49.92 cm, legs max 119.91 cm) — of them with occupancy acting on the carrier in the window 20, in a conflict 10, after occupancy acted before the commitment 0
+  world root differs: 20 (max 104.91 cm) · not entered identically: none
+TACKLE BODY: 209 committed tackles in OLD · committed identically under occupancy 206 · LOCAL POSE identical 119 · WORLD ROOT identical 192
+  LOCAL POSE DIFFERENCE: 87 tackles (upper body max 25.37 cm, legs max 21.10 cm) — with occupancy acting on the defender in the window 11, in a conflict 10, after occupancy acted before the commitment 5
+  WORLD ROOT DIFFERENCE: 14 tackles (max 24.04 cm) · not committed identically: 3 · #47@0.8 (committed at 3.450 (STANDING_LUNGE) vs 3.458 (STANDING_LUNGE)) · #47@0.9 (committed at 3.450 (STANDING_LUNGE) vs 3.458 (STANDING_LUNGE)) · #47@1.0 (committed at 3.450 (STANDING_LUNGE) vs 3.458 (STANDING_LUNGE))
+THE BALL: identical for the whole run in 33 / 209 · differs in 176 — before occupancy's first action 0 · first cause: {"a ball contact made differently (…) after the bodies were kept apart":134,"the ball under a carrier whose path occupancy corrected":8,"a ball access blocked (…)":27,"a tackle boot blocked (…)":7}

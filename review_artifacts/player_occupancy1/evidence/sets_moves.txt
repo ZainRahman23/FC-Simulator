@@ -1,0 +1,18 @@
+
+SET "moves" — 352 encounters, OLD vs OCCUPANCY V1 (the bodies as drawn)
+PENETRATION (cm; the ticks with a positive penetration in that group)
+  TRUNK  OLD  ticks    5220 · median   8.9 · p95  21.6 · p99  23.2 · max  23.9 · ticks > 5 cm 3535
+  TRUNK  OCC  ticks     324 · median   1.8 · p95   8.0 · p99   9.1 · max   9.8 · ticks > 5 cm 41
+  LEGS   OLD  ticks   16707 · median  10.5 · p95  21.3 · p99  22.7 · max  23.5 · ticks > 5 cm 12763
+  LEGS   OCC  ticks   10787 · median   2.3 · p95  12.8 · p99  20.0 · max  23.0 · ticks > 5 cm 1927
+  FEET   OLD  ticks   10272 · median   5.8 · p95  13.1 · p99  13.8 · max  17.2 · ticks > 5 cm 5865
+  FEET   OCC  ticks    9373 · median   5.6 · p95  13.1 · p99  13.8 · max  14.0 · ticks > 5 cm 5048
+  ARMS   OLD  ticks   12287 · median   8.0 · p95  16.2 · p99  17.9 · max  18.5 · ticks > 5 cm 8784
+  ARMS   OCC  ticks    6837 · median   5.5 · p95  12.9 · p99  14.1 · max  18.3 · ticks > 5 cm 3688
+THE APPROVED MOVES: 352 committed windows in OLD · entered identically under occupancy 352 · LOCAL POSE identical (every joint, ≤ 1e-9 m) 185 · WORLD ROOT identical 191
+  local pose differs: 167 (upper body max 75.42 cm, legs max 146.83 cm) — of them with occupancy acting on the carrier in the window 105, in a conflict 96, after occupancy acted before the commitment 56
+  world root differs: 161 (max 373.82 cm) · not entered identically: none
+TACKLE BODY: 181 committed tackles in OLD · committed identically under occupancy 180 · LOCAL POSE identical 60 · WORLD ROOT identical 83
+  LOCAL POSE DIFFERENCE: 120 tackles (upper body max 27.21 cm, legs max 25.73 cm) — with occupancy acting on the defender in the window 95, in a conflict 95, after occupancy acted before the commitment 4
+  WORLD ROOT DIFFERENCE: 97 tackles (max 34.86 cm) · not committed identically: 1 · CROQUETA 2.4/-0.5@0.7 (committed at 3.100 (STANDING_POKE) vs 3.100 (STANDING_LUNGE))
+THE BALL: identical for the whole run in 151 / 352 · differs in 201 — before occupancy's first action 0 · first cause: {"a ball contact made differently (…) after the bodies were kept apart":135,"a ball access blocked (…)":36,"a tackle boot blocked (…)":6,"the ball under a carrier whose path occupancy corrected":24}

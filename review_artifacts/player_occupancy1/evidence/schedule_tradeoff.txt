@@ -1,0 +1,26 @@
+V1 (adopted) ticks>5cm  286 · 2nd-diff p99 35.7 mm max 116.3 · frames>1cm 370 · 855 µs/near tick
+    static-walk 3.2 · static-jog 5.8 · headon-walk 3.4 · headon-jog 13.5 · face 4.2 · side 3.5 · cross 5.5 · race 12.9 · carry-walk 13.3 · carry-jog-l 4.1 · in-bf 3.8 · bf-fake 23.0 · croq-win 12.7 · croq-close 10.4 · croq-early 14.2 · in-croq 18.6
+look-ahead 2 ticks ticks>5cm  226 · 2nd-diff p99 37.0 mm max 116.1 · frames>1cm 401 · 1060 µs/near tick
+    static-walk 2.4 · static-jog 5.8 · headon-walk 2.8 · headon-jog 12.7 · face 4.1 · side 3.5 · cross 5.7 · race 5.4 · carry-walk 13.0 · carry-jog-l 3.9 · in-bf 3.4 · bf-fake 19.1 · croq-win 14.7 · croq-close 10.3 · croq-early 13.9 · in-croq 9.0
+look-ahead 4 ticks ticks>5cm  241 · 2nd-diff p99 39.3 mm max 115.4 · frames>1cm 361 · 1074 µs/near tick
+    static-walk 2.3 · static-jog 5.6 · headon-walk 3.2 · headon-jog 12.9 · face 4.1 · side 3.5 · cross 5.4 · race 7.6 · carry-walk 13.1 · carry-jog-l 4.1 · in-bf 3.5 · bf-fake 19.0 · croq-win 12.7 · croq-close 10.3 · croq-early 14.2 · in-croq 17.4
+jerk limit 0.4 cm/tick² ticks>5cm  514 · 2nd-diff p99 50.3 mm max 98.3 · frames>1cm 523 · 742 µs/near tick
+    static-walk 3.7 · static-jog 8.4 · headon-walk 3.7 · headon-jog 15.2 · face 8.4 · side 4.9 · cross 5.7 · race 13.8 · carry-walk 13.3 · carry-jog-l 8.0 · in-bf 5.5 · bf-fake 23.0 · croq-win 17.9 · croq-close 14.0 · croq-early 18.8 · in-croq 21.5
+jerk limit 0.2 cm/tick² ticks>5cm  552 · 2nd-diff p99 32.0 mm max 112.2 · frames>1cm 529 · 476 µs/near tick
+    static-walk 4.5 · static-jog 9.5 · headon-walk 4.8 · headon-jog 16.0 · face 9.0 · side 4.8 · cross 10.8 · race 4.6 · carry-walk 13.2 · carry-jog-l 11.4 · in-bf 7.5 · bf-fake 22.9 · croq-win 22.9 · croq-close 12.8 · croq-early 22.6 · in-croq 20.7
+leg cap 1.5 cm/tick ticks>5cm  329 · 2nd-diff p99 37.9 mm max 113.2 · frames>1cm 394 · 392 µs/near tick
+    static-walk 3.5 · static-jog 5.8 · headon-walk 3.6 · headon-jog 14.0 · face 5.6 · side 4.6 · cross 5.6 · race 13.3 · carry-walk 13.1 · carry-jog-l 5.6 · in-bf 4.8 · bf-fake 22.9 · croq-win 13.5 · croq-close 11.1 · croq-early 15.0 · in-croq 18.2
+leg tier always, 0.6 cm/tick ticks>5cm  845 · 2nd-diff p99 19.6 mm max 125.9 · frames>1cm 297 · 439 µs/near tick
+    static-walk 4.1 · static-jog 8.4 · headon-walk 9.6 · headon-jog 15.0 · face 7.0 · side 6.3 · cross 10.7 · race 4.8 · carry-walk 14.8 · carry-jog-l 13.0 · in-bf 13.9 · bf-fake 22.9 · croq-win 22.8 · croq-close 14.8 · croq-early 22.9 · in-croq 23.0
+rMax 2 + leg 1 + jerk 0.2 ticks>5cm  627 · 2nd-diff p99 29.3 mm max 78.6 · frames>1cm 462 · 355 µs/near tick
+    static-walk 4.5 · static-jog 9.8 · headon-walk 6.1 · headon-jog 16.3 · face 7.6 · side 5.1 · cross 9.9 · race 4.7 · carry-walk 12.4 · carry-jog-l 12.1 · in-bf 8.9 · bf-fake 23.0 · croq-win 23.0 · croq-close 15.9 · croq-early 22.5 · in-croq 22.8
+no support budget ticks>5cm  121 · 2nd-diff p99 32.4 mm max 99.5 · frames>1cm 358 · 334 µs/near tick
+    static-walk 3.2 · static-jog 6.0 · headon-walk 3.4 · headon-jog 13.5 · face 4.2 · side 3.5 · cross 5.5 · race 12.9 · carry-walk 3.4 · carry-jog-l 4.1 · in-bf 3.5 · bf-fake 8.0 · croq-win 12.5 · croq-close 10.3 · croq-early 14.1 · in-croq 12.2
+support budget 12 cm ticks>5cm  338 · 2nd-diff p99 36.4 mm max 113.7 · frames>1cm 377 · 362 µs/near tick
+    static-walk 2.8 · static-jog 6.0 · headon-walk 4.1 · headon-jog 13.5 · face 4.2 · side 3.5 · cross 5.5 · race 12.9 · carry-walk 14.6 · carry-jog-l 6.1 · in-bf 3.5 · bf-fake 22.8 · croq-win 18.0 · croq-close 10.3 · croq-early 14.1 · in-croq 12.6
+support budget 25 cm ticks>5cm  179 · 2nd-diff p99 35.5 mm max 99.3 · frames>1cm 347 · 281 µs/near tick
+    static-walk 3.2 · static-jog 6.0 · headon-walk 3.4 · headon-jog 13.5 · face 4.2 · side 3.5 · cross 5.5 · race 12.9 · carry-walk 10.6 · carry-jog-l 4.1 · in-bf 3.5 · bf-fake 17.0 · croq-win 12.5 · croq-close 10.3 · croq-early 14.1 · in-croq 13.5
+soft wall ungated ticks>5cm  310 · 2nd-diff p99 36.5 mm max 112.2 · frames>1cm 356 · 288 µs/near tick
+    static-walk 3.2 · static-jog 6.0 · headon-walk 3.4 · headon-jog 8.4 · face 4.2 · side 3.5 · cross 5.0 · race 13.1 · carry-walk 13.3 · carry-jog-l 11.5 · in-bf 3.3 · bf-fake 23.0 · croq-win 12.5 · croq-close 11.4 · croq-early 14.1 · in-croq 7.3
+soft wall gate +3 cm ticks>5cm  313 · 2nd-diff p99 37.9 mm max 112.2 · frames>1cm 358 · 291 µs/near tick
+    static-walk 3.2 · static-jog 6.0 · headon-walk 3.4 · headon-jog 12.1 · face 4.2 · side 3.5 · cross 5.0 · race 13.1 · carry-walk 13.3 · carry-jog-l 11.5 · in-bf 3.3 · bf-fake 23.0 · croq-win 12.5 · croq-close 11.4 · croq-early 14.1 · in-croq 7.3

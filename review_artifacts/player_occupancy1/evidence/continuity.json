@@ -1,0 +1,1572 @@
+{
+ "S": {
+  "OLD": {
+   "ATT.snaps": 1,
+   "ATT.maxAcc": 148.264815834882,
+   "ATT.pelvis": 873,
+   "ATT.foot": 924,
+   "ATT.knee": 1533,
+   "ATT.plant": 307,
+   "ATT.plantMax": 0.43249720953594845,
+   "ATT.crossed": 401,
+   "DEF.snaps": 0,
+   "DEF.maxAcc": 72.25802979682385,
+   "DEF.pelvis": 952,
+   "DEF.foot": 332,
+   "DEF.knee": 703,
+   "DEF.plant": 189,
+   "DEF.plantMax": 0.6704861571543386,
+   "DEF.crossed": 0
+  },
+  "OCC": {
+   "ATT.snaps": 662,
+   "ATT.maxAcc": 2389.015374429979,
+   "ATT.pelvis": 923,
+   "ATT.foot": 1086,
+   "ATT.knee": 1553,
+   "ATT.plant": 308,
+   "ATT.plantMax": 0.8399783035078209,
+   "ATT.crossed": 261,
+   "DEF.snaps": 446,
+   "DEF.maxAcc": 1921.2624028840776,
+   "DEF.pelvis": 757,
+   "DEF.foot": 576,
+   "DEF.knee": 822,
+   "DEF.plant": 186,
+   "DEF.plantMax": 0.6704861571543386,
+   "DEF.crossed": 74
+  }
+ },
+ "rows": [
+  {
+   "id": "static-walk",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 2.0463630789890885e-10,
+     "pelvis": 0,
+     "foot": 6,
+     "knee": 0,
+     "plant": 1,
+     "plantMax": 0.030711604587590507,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 22,
+     "maxAcc": 1922.275002151171,
+     "pelvis": 2,
+     "foot": 8,
+     "knee": 10,
+     "plant": 2,
+     "plantMax": 0.18098743939820133,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 1.14,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "static-jog",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 7,
+     "knee": 38,
+     "plant": 13,
+     "plantMax": 0.05859359602113201,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 21,
+     "maxAcc": 1725.6275528056005,
+     "pelvis": 21,
+     "foot": 33,
+     "knee": 67,
+     "plant": 12,
+     "plantMax": 0.09408832056706293,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.29,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "headon-walk",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 2.0463630789890885e-10,
+     "pelvis": 0,
+     "foot": 6,
+     "knee": 0,
+     "plant": 1,
+     "plantMax": 0.030711604587590507,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111222272,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 5,
+     "plant": 1,
+     "plantMax": 0.031050386567729134,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 13,
+     "maxAcc": 633.3504007440976,
+     "pelvis": 0,
+     "foot": 10,
+     "knee": 7,
+     "plant": 3,
+     "plantMax": 0.04407531876182557,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 11,
+     "maxAcc": 514.8720715742904,
+     "pelvis": 3,
+     "foot": 1,
+     "knee": 8,
+     "plant": 2,
+     "plantMax": 0.1153273853655051,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.08,
+   "maxDv": 0.27,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "headon-jog",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 7,
+     "knee": 38,
+     "plant": 13,
+     "plantMax": 0.05859359602113201,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111222272,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 15,
+     "plant": 10,
+     "plantMax": 0.04098558248101135,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 23,
+     "maxAcc": 1459.252288088153,
+     "pelvis": 1,
+     "foot": 30,
+     "knee": 43,
+     "plant": 12,
+     "plantMax": 0.1140154389411927,
+     "crossed": 1
+    },
+    "DEF": {
+     "snaps": 30,
+     "maxAcc": 1736.4138874047399,
+     "pelvis": 5,
+     "foot": 19,
+     "knee": 19,
+     "plant": 7,
+     "plantMax": 0.06106248303455281,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.1,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "face",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 19.328469337725767,
+     "pelvis": 0,
+     "foot": 38,
+     "knee": 26,
+     "plant": 0,
+     "plantMax": 0.029956412497826383,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 30,
+     "maxAcc": 1740.8323461926523,
+     "pelvis": 10,
+     "foot": 12,
+     "knee": 17,
+     "plant": 1,
+     "plantMax": 0.2388137331445089,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.62,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "side",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 15.495820036300017,
+     "pelvis": 0,
+     "foot": 21,
+     "knee": 50,
+     "plant": 14,
+     "plantMax": 0.05858971661354817,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 15,
+     "plant": 14,
+     "plantMax": 0.041199748415203775,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 9,
+     "maxAcc": 304.66553954701226,
+     "pelvis": 0,
+     "foot": 26,
+     "knee": 44,
+     "plant": 14,
+     "plantMax": 0.05785597301602343,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 27,
+     "maxAcc": 867.2438312133378,
+     "pelvis": 0,
+     "foot": 10,
+     "knee": 20,
+     "plant": 12,
+     "plantMax": 0.22632308455300815,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.79,
+   "maxDv": 0.19,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "cross",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 7,
+     "knee": 38,
+     "plant": 13,
+     "plantMax": 0.05859359602113201,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111222272,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 13,
+     "plant": 8,
+     "plantMax": 0.04098558248101135,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 9,
+     "maxAcc": 556.5377117894931,
+     "pelvis": 0,
+     "foot": 6,
+     "knee": 32,
+     "plant": 11,
+     "plantMax": 0.05678859294239222,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 6,
+     "maxAcc": 355.8443055883328,
+     "pelvis": 2,
+     "foot": 7,
+     "knee": 17,
+     "plant": 8,
+     "plantMax": 0.576261100689598,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.04,
+   "maxDv": 0.15,
+   "pingpong": 0,
+   "contactAfterDiverge": 1.712
+  },
+  {
+   "id": "headon-one-away",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 22.380779517364964,
+     "pelvis": 0,
+     "foot": 21,
+     "knee": 11,
+     "plant": 1,
+     "plantMax": 0.031837784239676245,
+     "crossed": 37
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111222272,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 5,
+     "plant": 1,
+     "plantMax": 0.031050386567729134,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 13,
+     "maxAcc": 633.3504007440976,
+     "pelvis": 0,
+     "foot": 29,
+     "knee": 10,
+     "plant": 0,
+     "plantMax": 0.029956412497826383,
+     "crossed": 4
+    },
+    "DEF": {
+     "snaps": 11,
+     "maxAcc": 514.8720715742904,
+     "pelvis": 3,
+     "foot": 1,
+     "knee": 8,
+     "plant": 2,
+     "plantMax": 0.1154002969766177,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.08,
+   "maxDv": 0.27,
+   "pingpong": 0,
+   "contactAfterDiverge": 0.075
+  },
+  {
+   "id": "headon-both-away",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 22.380779517364964,
+     "pelvis": 0,
+     "foot": 21,
+     "knee": 11,
+     "plant": 1,
+     "plantMax": 0.031837784239676245,
+     "crossed": 37
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 19.66355399481015,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 7,
+     "plant": 2,
+     "plantMax": 0.04903079603757466,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 13,
+     "maxAcc": 633.3504007440976,
+     "pelvis": 0,
+     "foot": 29,
+     "knee": 11,
+     "plant": 0,
+     "plantMax": 0.029956412497826383,
+     "crossed": 4
+    },
+    "DEF": {
+     "snaps": 11,
+     "maxAcc": 514.8720715742904,
+     "pelvis": 3,
+     "foot": 2,
+     "knee": 8,
+     "plant": 2,
+     "plantMax": 0.15351647403017554,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.08,
+   "maxDv": 0.27,
+   "pingpong": 0,
+   "contactAfterDiverge": 0.012
+  },
+  {
+   "id": "bf-into",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 8.729864336004768,
+     "pelvis": 0,
+     "foot": 18,
+     "knee": 35,
+     "plant": 6,
+     "plantMax": 0.09799483997978592,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 17,
+     "maxAcc": 918.7195634047902,
+     "pelvis": 4,
+     "foot": 26,
+     "knee": 42,
+     "plant": 9,
+     "plantMax": 0.21470611146746396,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.86,
+   "maxDv": 0.48,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "race",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 61.26201814861816,
+     "pelvis": 241,
+     "foot": 118,
+     "knee": 127,
+     "plant": 12,
+     "plantMax": 0.128523480923826,
+     "crossed": 7
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 55.821465223816645,
+     "pelvis": 163,
+     "foot": 42,
+     "knee": 70,
+     "plant": 7,
+     "plantMax": 0.08465393625847674,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 38,
+     "maxAcc": 2389.015374429979,
+     "pelvis": 73,
+     "foot": 85,
+     "knee": 100,
+     "plant": 14,
+     "plantMax": 0.09722396158923687,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 47,
+     "maxAcc": 1598.8566278851063,
+     "pelvis": 87,
+     "foot": 65,
+     "knee": 59,
+     "plant": 7,
+     "plantMax": 0.3057538890447224,
+     "crossed": 5
+    }
+   },
+   "maxD": 2.85,
+   "maxDv": 0.61,
+   "pingpong": 1,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "croq-win",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 30.472413321627993,
+     "pelvis": 190,
+     "foot": 84,
+     "knee": 104,
+     "plant": 14,
+     "plantMax": 0.38971178075410107,
+     "crossed": 33
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 58.593445941457894,
+     "pelvis": 158,
+     "foot": 53,
+     "knee": 68,
+     "plant": 7,
+     "plantMax": 0.10973389384218576,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 43,
+     "maxAcc": 1717.1885351797532,
+     "pelvis": 212,
+     "foot": 60,
+     "knee": 95,
+     "plant": 12,
+     "plantMax": 0.3716347721546006,
+     "crossed": 46
+    },
+    "DEF": {
+     "snaps": 10,
+     "maxAcc": 1378.9088341805682,
+     "pelvis": 228,
+     "foot": 137,
+     "knee": 131,
+     "plant": 12,
+     "plantMax": 0.2846281411920466,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.38,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "in-steer",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 45.414680497741095,
+     "pelvis": 0,
+     "foot": 35,
+     "knee": 47,
+     "plant": 11,
+     "plantMax": 0.05678859294239222,
+     "crossed": 13
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 69.31276894677386,
+     "pelvis": 1,
+     "foot": 9,
+     "knee": 21,
+     "plant": 6,
+     "plantMax": 0.058510190893221625,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 23,
+     "maxAcc": 988.041317285671,
+     "pelvis": 2,
+     "foot": 50,
+     "knee": 61,
+     "plant": 14,
+     "plantMax": 0.47029967394826255,
+     "crossed": 40
+    },
+    "DEF": {
+     "snaps": 18,
+     "maxAcc": 1676.5938649841,
+     "pelvis": 4,
+     "foot": 3,
+     "knee": 18,
+     "plant": 6,
+     "plantMax": 0.04111957893988225,
+     "crossed": 0
+    }
+   },
+   "maxD": 2.22,
+   "maxDv": 0.66,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "carry-walk",
+   "OLD": {
+    "ATT": {
+     "snaps": 1,
+     "maxAcc": 148.264815834882,
+     "pelvis": 0,
+     "foot": 18,
+     "knee": 12,
+     "plant": 2,
+     "plantMax": 0.18469846880738008,
+     "crossed": 15
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 72.1652835732445,
+     "pelvis": 2,
+     "foot": 7,
+     "knee": 27,
+     "plant": 7,
+     "plantMax": 0.07737728849337804,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 7,
+     "maxAcc": 1050.580907970307,
+     "pelvis": 0,
+     "foot": 32,
+     "knee": 7,
+     "plant": 1,
+     "plantMax": 0.031090421377537734,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 1,
+     "maxAcc": 412.8062327999421,
+     "pelvis": 3,
+     "foot": 30,
+     "knee": 43,
+     "plant": 7,
+     "plantMax": 0.12160564562159915,
+     "crossed": 0
+    }
+   },
+   "maxD": 2.06,
+   "maxDv": 0.63,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "carry-jog-l",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 33.800052332395474,
+     "pelvis": 1,
+     "foot": 31,
+     "knee": 73,
+     "plant": 17,
+     "plantMax": 0.09677403836037977,
+     "crossed": 9
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 67.78602888702477,
+     "pelvis": 2,
+     "foot": 0,
+     "knee": 14,
+     "plant": 7,
+     "plantMax": 0.04358188051958826,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 17,
+     "maxAcc": 1729.0035301386915,
+     "pelvis": 10,
+     "foot": 23,
+     "knee": 64,
+     "plant": 17,
+     "plantMax": 0.23534466609827703,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 2,
+     "maxAcc": 374.5606145766136,
+     "pelvis": 2,
+     "foot": 2,
+     "knee": 17,
+     "plant": 7,
+     "plantMax": 0.04864678161306254,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.07,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "carry-jog-def",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 49.43163701691899,
+     "pelvis": 156,
+     "foot": 90,
+     "knee": 119,
+     "plant": 14,
+     "plantMax": 0.2624810439397802,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 72.25802979682385,
+     "pelvis": 171,
+     "foot": 38,
+     "knee": 79,
+     "plant": 13,
+     "plantMax": 0.6704861571543386,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 6,
+     "maxAcc": 383.6315215039234,
+     "pelvis": 176,
+     "foot": 104,
+     "knee": 107,
+     "plant": 17,
+     "plantMax": 0.8399783035078209,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 72.25802979682385,
+     "pelvis": 25,
+     "foot": 0,
+     "knee": 26,
+     "plant": 9,
+     "plantMax": 0.6704861571543386,
+     "crossed": 0
+    }
+   },
+   "maxD": 0.48,
+   "maxDv": 0.13,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "cut",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 36.84152658242031,
+     "pelvis": 0,
+     "foot": 27,
+     "knee": 61,
+     "plant": 15,
+     "plantMax": 0.05828359717445872,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 66.3115154111682,
+     "pelvis": 1,
+     "foot": 0,
+     "knee": 11,
+     "plant": 8,
+     "plantMax": 0.04098586811743027,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 36.84152658242031,
+     "pelvis": 0,
+     "foot": 27,
+     "knee": 61,
+     "plant": 15,
+     "plantMax": 0.05828359717445872,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 66.3115154111682,
+     "pelvis": 1,
+     "foot": 0,
+     "knee": 11,
+     "plant": 8,
+     "plantMax": 0.04098586811743027,
+     "crossed": 0
+    }
+   },
+   "maxD": 0,
+   "maxDv": 0,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "croq",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 28.48429330119381,
+     "pelvis": 0,
+     "foot": 42,
+     "knee": 64,
+     "plant": 14,
+     "plantMax": 0.15896413731995124,
+     "crossed": 5
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 68.07301637156881,
+     "pelvis": 1,
+     "foot": 0,
+     "knee": 12,
+     "plant": 9,
+     "plantMax": 0.04098586811743027,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 13,
+     "maxAcc": 600.7508791552277,
+     "pelvis": 0,
+     "foot": 29,
+     "knee": 56,
+     "plant": 14,
+     "plantMax": 0.08210819366770822,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 1,
+     "maxAcc": 160.24679196368774,
+     "pelvis": 1,
+     "foot": 0,
+     "knee": 12,
+     "plant": 9,
+     "plantMax": 0.04098558248101135,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.04,
+   "maxDv": 0.03,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "in-bf",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 28.476771577262085,
+     "pelvis": 0,
+     "foot": 27,
+     "knee": 45,
+     "plant": 9,
+     "plantMax": 0.07456171452748392,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 41.91497965502907,
+     "pelvis": 4,
+     "foot": 0,
+     "knee": 15,
+     "plant": 2,
+     "plantMax": 0.03694652935559502,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 13,
+     "maxAcc": 570.6968094093698,
+     "pelvis": 4,
+     "foot": 16,
+     "knee": 39,
+     "plant": 8,
+     "plantMax": 0.12151230621318228,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 34,
+     "maxAcc": 1162.9675558006059,
+     "pelvis": 6,
+     "foot": 10,
+     "knee": 16,
+     "plant": 3,
+     "plantMax": 0.4937459002227568,
+     "crossed": 0
+    }
+   },
+   "maxD": 2.63,
+   "maxDv": 0.49,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "bf-exit",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 33.45634839257346,
+     "pelvis": 88,
+     "foot": 48,
+     "knee": 103,
+     "plant": 13,
+     "plantMax": 0.14101615665467987,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 67.38033970705202,
+     "pelvis": 80,
+     "foot": 19,
+     "knee": 41,
+     "plant": 6,
+     "plantMax": 0.053623034331862655,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 7,
+     "maxAcc": 1439.9958574732466,
+     "pelvis": 131,
+     "foot": 96,
+     "knee": 106,
+     "plant": 13,
+     "plantMax": 0.20138428094868674,
+     "crossed": 25
+    },
+    "DEF": {
+     "snaps": 3,
+     "maxAcc": 136.17616967027595,
+     "pelvis": 80,
+     "foot": 16,
+     "knee": 43,
+     "plant": 6,
+     "plantMax": 0.11157813215900923,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.41,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "bf-fake",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 8.729864336004768,
+     "pelvis": 0,
+     "foot": 21,
+     "knee": 52,
+     "plant": 12,
+     "plantMax": 0.09799483997978592,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 68.07301637156881,
+     "pelvis": 1,
+     "foot": 0,
+     "knee": 12,
+     "plant": 9,
+     "plantMax": 0.04098586811743027,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 85,
+     "maxAcc": 2113.2066491480423,
+     "pelvis": 29,
+     "foot": 21,
+     "knee": 44,
+     "plant": 11,
+     "plantMax": 0.07115959275009023,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 38,
+     "maxAcc": 1610.7392162924193,
+     "pelvis": 10,
+     "foot": 31,
+     "knee": 40,
+     "plant": 10,
+     "plantMax": 0.2625879180425588,
+     "crossed": 41
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.21,
+   "pingpong": 4,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "in-croq",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 34.8499342627848,
+     "pelvis": 1,
+     "foot": 14,
+     "knee": 35,
+     "plant": 9,
+     "plantMax": 0.43249720953594845,
+     "crossed": 91
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 65.79166011888694,
+     "pelvis": 95,
+     "foot": 52,
+     "knee": 63,
+     "plant": 9,
+     "plantMax": 0.18586027744952477,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 43,
+     "maxAcc": 1596.5409929900102,
+     "pelvis": 4,
+     "foot": 72,
+     "knee": 71,
+     "plant": 11,
+     "plantMax": 0.19078750803169436,
+     "crossed": 38
+    },
+    "DEF": {
+     "snaps": 53,
+     "maxAcc": 1921.2624028840776,
+     "pelvis": 42,
+     "foot": 36,
+     "knee": 55,
+     "plant": 8,
+     "plantMax": 0.21230512907290225,
+     "crossed": 27
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.3,
+   "pingpong": 1,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "croq-early",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 33.043731555193645,
+     "pelvis": 4,
+     "foot": 14,
+     "knee": 57,
+     "plant": 13,
+     "plantMax": 0.1639133070198381,
+     "crossed": 16
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 69.24534290802355,
+     "pelvis": 4,
+     "foot": 0,
+     "knee": 22,
+     "plant": 8,
+     "plantMax": 0.07452735973026005,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 35,
+     "maxAcc": 1752.4689249116368,
+     "pelvis": 11,
+     "foot": 31,
+     "knee": 67,
+     "plant": 12,
+     "plantMax": 0.17172517163289988,
+     "crossed": 17
+    },
+    "DEF": {
+     "snaps": 1,
+     "maxAcc": 105.21532310869291,
+     "pelvis": 4,
+     "foot": 4,
+     "knee": 27,
+     "plant": 7,
+     "plantMax": 0.24648150024106374,
+     "crossed": 1
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.28,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "croq-close",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 28.48429330119381,
+     "pelvis": 0,
+     "foot": 39,
+     "knee": 49,
+     "plant": 9,
+     "plantMax": 0.15896413731995124,
+     "crossed": 5
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 7,
+     "maxAcc": 1808.032264969315,
+     "pelvis": 4,
+     "foot": 24,
+     "knee": 33,
+     "plant": 8,
+     "plantMax": 0.13901653056769528,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 11,
+     "maxAcc": 1127.3280929543726,
+     "pelvis": 3,
+     "foot": 0,
+     "knee": 0,
+     "plant": 0,
+     "plantMax": 0.0013698163048824334,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.56,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "both-committed",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 30.472413321627993,
+     "pelvis": 190,
+     "foot": 84,
+     "knee": 104,
+     "plant": 14,
+     "plantMax": 0.38971178075410107,
+     "crossed": 33
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 58.593445941457894,
+     "pelvis": 158,
+     "foot": 53,
+     "knee": 68,
+     "plant": 7,
+     "plantMax": 0.10973389384218576,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 43,
+     "maxAcc": 1717.1885351797532,
+     "pelvis": 212,
+     "foot": 60,
+     "knee": 95,
+     "plant": 12,
+     "plantMax": 0.3716347721546006,
+     "crossed": 46
+    },
+    "DEF": {
+     "snaps": 10,
+     "maxAcc": 1378.9088341805682,
+     "pelvis": 228,
+     "foot": 137,
+     "knee": 131,
+     "plant": 12,
+     "plantMax": 0.2846281411920466,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.38,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "headon-jog-m",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 7,
+     "knee": 38,
+     "plant": 13,
+     "plantMax": 0.05859359602113201,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111222272,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 15,
+     "plant": 10,
+     "plantMax": 0.04098558248101135,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 23,
+     "maxAcc": 1459.252288088153,
+     "pelvis": 1,
+     "foot": 30,
+     "knee": 43,
+     "plant": 12,
+     "plantMax": 0.1140154389411927,
+     "crossed": 1
+    },
+    "DEF": {
+     "snaps": 30,
+     "maxAcc": 1736.4138874047399,
+     "pelvis": 5,
+     "foot": 19,
+     "knee": 19,
+     "plant": 7,
+     "plantMax": 0.06106248303455281,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.1,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "side-m",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 15.495820036300017,
+     "pelvis": 0,
+     "foot": 21,
+     "knee": 50,
+     "plant": 14,
+     "plantMax": 0.05858971661354817,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 0,
+     "knee": 15,
+     "plant": 14,
+     "plantMax": 0.041199748415203775,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 10,
+     "maxAcc": 300.19022434636673,
+     "pelvis": 0,
+     "foot": 26,
+     "knee": 43,
+     "plant": 14,
+     "plantMax": 0.05786106581366912,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 30,
+     "maxAcc": 1511.4716172075346,
+     "pelvis": 1,
+     "foot": 11,
+     "knee": 20,
+     "plant": 12,
+     "plantMax": 0.23229145590938607,
+     "crossed": 0
+    }
+   },
+   "maxD": 2.62,
+   "maxDv": 0.19,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "cross-m",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 0,
+     "pelvis": 0,
+     "foot": 7,
+     "knee": 38,
+     "plant": 13,
+     "plantMax": 0.05859359602113201,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 11.111111111017635,
+     "pelvis": 2,
+     "foot": 1,
+     "knee": 13,
+     "plant": 8,
+     "plantMax": 0.04098558248101135,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 9,
+     "maxAcc": 556.5377117894931,
+     "pelvis": 0,
+     "foot": 6,
+     "knee": 32,
+     "plant": 11,
+     "plantMax": 0.05678859294239222,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 6,
+     "maxAcc": 355.8443055879373,
+     "pelvis": 2,
+     "foot": 7,
+     "knee": 17,
+     "plant": 8,
+     "plantMax": 0.576261100689598,
+     "crossed": 0
+    }
+   },
+   "maxD": 1.04,
+   "maxDv": 0.15,
+   "pingpong": 0,
+   "contactAfterDiverge": 1.712
+  },
+  {
+   "id": "carry-jog-l-m",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 33.800052332351704,
+     "pelvis": 1,
+     "foot": 31,
+     "knee": 73,
+     "plant": 17,
+     "plantMax": 0.09677571017874916,
+     "crossed": 9
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 67.78602888702477,
+     "pelvis": 2,
+     "foot": 0,
+     "knee": 14,
+     "plant": 7,
+     "plantMax": 0.04358188051958826,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 17,
+     "maxAcc": 1729.0035301386915,
+     "pelvis": 10,
+     "foot": 23,
+     "knee": 64,
+     "plant": 17,
+     "plantMax": 0.23534466609827703,
+     "crossed": 0
+    },
+    "DEF": {
+     "snaps": 2,
+     "maxAcc": 374.55570907387215,
+     "pelvis": 2,
+     "foot": 2,
+     "knee": 17,
+     "plant": 7,
+     "plantMax": 0.04864678161306254,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.07,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  },
+  {
+   "id": "in-croq-m",
+   "OLD": {
+    "ATT": {
+     "snaps": 0,
+     "maxAcc": 34.8499342627848,
+     "pelvis": 1,
+     "foot": 14,
+     "knee": 35,
+     "plant": 9,
+     "plantMax": 0.43249720953594845,
+     "crossed": 91
+    },
+    "DEF": {
+     "snaps": 0,
+     "maxAcc": 65.79166011888694,
+     "pelvis": 95,
+     "foot": 52,
+     "knee": 63,
+     "plant": 9,
+     "plantMax": 0.18586027744952477,
+     "crossed": 0
+    }
+   },
+   "OCC": {
+    "ATT": {
+     "snaps": 53,
+     "maxAcc": 1596.5409929900102,
+     "pelvis": 6,
+     "foot": 62,
+     "knee": 82,
+     "plant": 11,
+     "plantMax": 0.10925200085005367,
+     "crossed": 39
+    },
+    "DEF": {
+     "snaps": 53,
+     "maxAcc": 1599.1949622767925,
+     "pelvis": 7,
+     "foot": 26,
+     "knee": 40,
+     "plant": 8,
+     "plantMax": 0.11670142459979284,
+     "crossed": 0
+    }
+   },
+   "maxD": 3,
+   "maxDv": 0.89,
+   "pingpong": 0,
+   "contactAfterDiverge": null
+  }
+ ]
+}

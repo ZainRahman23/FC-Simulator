@@ -1,0 +1,38 @@
+{
+  "milestone": "TOUCHLINE — PLAYER OCCUPANCY V1 (Stage 1)",
+  "status": "PROTOTYPE — built and tested, awaiting the owner's review (bodies in contact, conflicts, feel); not integrated, not frozen, not pushed",
+  "date": "2026-10-24",
+  "branch": "prototype/player-occupancy-v1",
+  "cut_from": { "sha": "89ab31c6", "what": "Shared Possession + Reaction V1 (prototype/shared-possession-reaction-v1), on 8c0149ba Standing Tackle V1, on f775daac milestone/feint-croqueta-vocab-v1" },
+  "worktree": "~/Downloads/FC Simulator worktrees/player-occupancy-v1",
+  "canonical_files_changed": 0,
+  "comparison": "OLD = Shared Possession + Reaction V1 at MEDIUM 0.200 s (possess1/, unchanged), identical inputs",
+  "architecture": {
+    "volumes": "occupy1/o_volumes.js — 11 capsules per body from the posed joints: pelvis, waist, chest, thighs, shins resolved; feet, upper arms detected only; radii from the meshes (75th percentile); tolerance 2 cm, hard limit 5 cm",
+    "world": "occupy1/o_world.js OccupancyWorld (extends possess1 SharedWorld) — one pass per tick within 1.9 m: live poses, 121 pairs, one 2-D minimum-norm root correction, kinematic split (still / committed / conflict), relative-path soft wall gated on predicted touch, support budget 18 cm per planted stance, planned Body Feint / Croqueta placed never reshaped, ball-access gates on touches and the tackle's boot",
+    "node_env": "occupy1/tools/o_env.mjs — vocab2's env + the pages' colliders (the boot hull): page ≡ node"
+  },
+  "lab": "http://127.0.0.1:8365/sandbox/visual/occupy1_lab.html (LOCAL ONLY — real players' models)",
+  "results": {
+    "old_failure": "every meeting case 21.5–23.9 cm; 42 contacts through a body in the 209 committed tackles; 11 races won through a body (+5 ambiguous)",
+    "standing_tackle_209": { "OLD": { "MISS": 47, "RETAINS": 3, "ATT_RECOVERS": 141, "DEF_RECOVERS": 18, "FREE": 0 }, "V1": { "MISS": 45, "RETAINS": 5, "ATT_RECOVERS": 150, "DEF_RECOVERS": 9, "FREE": 0 }, "changed": 23, "why": "20 OLD races won through a body · 2 touches through the body blocked · 1 boot through the carrier blocked", "contacts_through_a_body": [42, 0] },
+    "races_established_through_a_body": { "search": [11, 0], "moves": [7, 0] },
+    "tackle_body": "committed identically 206/209; local pose identical (≤ 0.1 mm) 206/206 and world root identical 206/206 until the ball or carrier first differs; review 16/16",
+    "moves": "Body Feint / Croqueta committed at the same tick 308/309; local pose identical (≤ 0.1 mm) 188/194 untouched windows (6 ≤ 1.3 mm one foot); approved motions ≡ review builds (milestone regression SAME); 68 both-committed windows move the root (≤ 18 cm per stance) — the legs reconcile (≤ 52 cm) — reported; 3 Croquetas end when their own touch through the defender is blocked",
+    "penetration_cm": { "torso_pelvis_V1_max": [9.8, 10.3, 9.8], "torso_pelvis_V1_median": [1.9, 1.8, 1.8], "legs_V1_median": [2.2, 2.2, 2.3], "legs_V1_p95": [13.5, 12.2, 12.8], "legs_V1_max": [23.0, 23.0, 23.0], "OLD_max": 23.9, "sets": ["review 30", "search 209", "moves 352"] },
+    "no_force_field": "near misses 5–30 cm: 22/22 identical to OLD; > 30 cm 5/5; within 5 cm 4/6 (≤ 10.5 cm moved)",
+    "continuity": "plant slides OLD 307/189 → V1 308/186; root jolts OLD 40 → V1 323 frames > 1 cm per frame² (14 cases) — the cost, smoothing deepens penetration (schedule_tradeoff.txt); ping-pong 6",
+    "no_deadlock": "every stress case apart at the end; contact 0.03–0.17 s after the inputs diverge; 0 stuck in torture",
+    "single_player": "o_solo 105/105 identical every tick; milestone regression ALL 10 SUITES SAME",
+    "two_player": "possession torture with occupancy: dual 0 · unaware 0 · stale 0 · chatter 0 · without touch 0 · blind 0 · timer 0 · nondeterministic 0; decisions never differ before perception (o_early), roots differ only while bodies are kept apart",
+    "identity": "OLD ≡ Shared V1 330/330; V1 ≡ OLD until its first action 84/84; never acting 246/246",
+    "torture": "16 × 40 s: > 5 cm 2491 → 431 ticks; contacts through a body 19 → 1; ownership errors 0; stuck 0; root drift 0; nondeterministic 0/16; jolts 600 → 1211 frames",
+    "performance": "step 45.8 → 111.9 µs mean; near pass 151 µs (posing 125), active 215 µs; ≈ 14 ms per simulated second here; worst 0.7 ms per 60 Hz frame",
+    "browser": "17/17; page ≡ node 30/30 cases × 2 modes; 0 errors",
+    "lock_check": "PASS"
+  },
+  "unresolved": ["both committed (Body Feint into a tackle's recovery 23.0 cm; Croqueta into a committed tackle 12.7–22.4 cm)", "fast limb swings (head-on jog 13.5 cm)", "canonical pose jumps (in-steer 16.9 cm)", "carrier into a committed tackle (13.3 cm)", "root jolts from position pushes", "ball-access one-tick latency (1 contact in 10.7 torture minutes)"],
+  "owner_decisions": ["both-committed conflicts: root within support budgets (V1) or no root movement", "support budget 18 cm (none / 25 cm measured)", "depth vs smoothness of the corrections", "ball access vs commitment (a committed Croqueta's own touch through the defender)", "look-ahead 2 ticks (not adopted)"],
+  "not_done_as_instructed": ["Contact Response V1", "Slide Tackle", "POKE tuning", "Standing Tackle tuning", "freezing / publishing / integration"],
+  "commits": "see git log 89ab31c6..HEAD"
+}

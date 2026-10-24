@@ -1,0 +1,32 @@
+
+STANDING TACKLE V1 — set "moves": 352 runs, 181 committed tackles, OLD vs OCCUPANCY V1 (MEDIUM, POKE untuned, inputs identical)
+                                         OLD    OCCUPANCY V1
+  MISS                                    43              42
+  CONTACT — ATTACKER RETAINS               1               0
+  CONTACT — ATTACKER RECOVERS            116             122
+  CONTACT — DEFENDER RECOVERS             21              17
+  CONTACT — BALL FREE                      0               0
+
+THE OUTCOMES THAT CHANGED: 15
+  10 × the OLD race was won through a body
+      BODY_FEINT 2.4/0.5@0.4 DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 9 cm THIGH_R↔THIGH_R at +0.09 s)
+      BODY_FEINT 3.6/0.5@0.7 DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch R through SHIN_R 10 cm · OLD race BODY-PHASED (deepest 21 cm THIGH_L↔THIGH_R at +0.79 s) · blocked: DEF croqueta · the inside plays it across
+      BODY_FEINT 3.6/0.5@0.8 DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm PELVIS↔THIGH_R at +0.35 s)
+      BODY_FEINT 3.6/0.5@0.9 ATTACKER RECOVERS → DEFENDER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm PELVIS↔THIGH_R at +0.28 s)
+      BODY_FEINT 3.6/1@0.9   DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +0.18 s) · blocked: DEF OUTSIDE CUT, ATT carry correction
+      CROQUETA 2.4/-1@0.6    DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF tackle L through THIGH_L 19 cm · OLD race BODY-PHASED (deepest 23 cm PELVIS↔THIGH_L at +0.18 s)
+      CROQUETA 2.4/-0.5@0.5  DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch L through THIGH_L 13 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +1.26 s)
+      CROQUETA 2.4/-0.5@0.6  ATTACKER RECOVERS → DEFENDER RECOVERS OLD: DEF tackle R through THIGH_L 6 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_L at +-0.03 s)
+  3 × the tackle's boot reached the ball only through the attacker's body (blocked)
+      BODY_FEINT 3.6/0.5@1.0 ATTACKER RECOVERS → DEFENDER RECOVERS  · OLD race BODY-PHASED (deepest 24 cm PELVIS↔PELVIS at +0.29 s)
+      CROQUETA 2.4/-1@0.0    DEFENDER RECOVERS → ATTACKER RECOVERS OLD: ATT touch R through THIGH_L 9 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_L at +0.30 s) · blocked: ATT exit touch, DEF compact outside redirect
+      CROQUETA 2.4/-0.5@0.3  DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +0.32 s) · blocked: DEF carry correction, DEF compact outside redirect
+  2 × a touch through the opponent's body blocked
+      CROQUETA 3/-1@0.6      ATTACKER RETAINS  → DEFENDER RECOVERS OLD: DEF tackle L through THIGH_L 8 cm · blocked: ATT exit touch, ATT carry turn
+      CROQUETA 3/-0.5@0.6    MISS              → ATTACKER RECOVERS OLD: ATT touch L through THIGH_R 14 cm · blocked: ATT exit touch
+
+THE LOOSE-BALL RACES IN OLD (control broken by the tackle, then re-established): 137
+  LEGITIMATE      8 — OCCUPANCY V1 keeps the outcome in 8, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 8
+  AMBIGUOUS       2 — OCCUPANCY V1 keeps the outcome in 2, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 2
+  BODY-PHASED   127 — OCCUPANCY V1 keeps the outcome in 114, changes it in 13: ATTACKER RECOVERS → ATTACKER RECOVERS 102 · DEFENDER RECOVERS → ATTACKER RECOVERS 9 · DEFENDER RECOVERS → DEFENDER RECOVERS 12 · ATTACKER RECOVERS → DEFENDER RECOVERS 4
+  OCCUPANCY V1's own races classified BODY-PHASED: 56 — BODY_FEINT 2.4/-0.5@0.0 (6 cm SHIN_R↔SHIN_L at +0.15 s) · BODY_FEINT 2.4/-0.5@0.1 (8 cm SHIN_R↔SHIN_L at +0.13 s) · BODY_FEINT 2.4/-0.5@0.2 (5 cm THIGH_L↔THIGH_L at +0.24 s) · BODY_FEINT 3/-0.5@0.6 (7 cm SHIN_L↔SHIN_R at +1.05 s) · BODY_FEINT 3/0.5@0.5 (6 cm THIGH_L↔THIGH_R at +0.76 s) · BODY_FEINT 3.6/-1@0.4 (19 cm THIGH_L↔THIGH_L at +0.23 s)
