@@ -1,0 +1,1107 @@
+[
+ {
+  "id": "static-walk",
+  "name": "STATIC BLOCKER · the carrier WALKS into a standing player",
+  "S": {
+   "best": {
+    "pen": 0.22148478045543113,
+    "t": 1.483333333333333,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.025000000000503064,
+    "closing": -1.5,
+    "ball": [
+     35.839506058711144,
+     34.1
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.025000000000503064,
+     0
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22148478045543113,
+    "LEGS": 0.20839956416245858,
+    "FEET": 0.13992631894219704,
+    "ARMS": 0.10554733372909689
+   },
+   "nTol": 139,
+   "nHard": 128,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "static-jog",
+  "name": "STATIC BLOCKER · the carrier JOGS into a standing player",
+  "S": {
+   "best": {
+    "pen": 0.2281612624479284,
+    "t": 0.9958333333333336,
+    "A": "THIGH_L",
+    "B": "THIGH_R",
+    "dist": 0.013333333332838038,
+    "closing": 3.2,
+    "ball": [
+     40.632909695253,
+     34.13
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.013333333332838038,
+     0
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22017293881949695,
+    "LEGS": 0.2281612624479284,
+    "FEET": 0.10736490980891847,
+    "ARMS": 0.13533906815374142
+   },
+   "nTol": 61,
+   "nHard": 58,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "headon-walk",
+  "name": "HEAD-ON WALK · both walk at each other",
+  "S": {
+   "best": {
+    "pen": 0.2391263747461122,
+    "t": 1.4083333333333332,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.0266572237078715,
+    "closing": -2.9999999986609773,
+    "ball": [
+     35.73079769658547,
+     34.1
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.02665722369583534,
+     -8.010626331156345e-7
+    ]
+   },
+   "per": {
+    "TRUNK": 0.2391263747461122,
+    "LEGS": 0.22398675933377915,
+    "FEET": 0.1399826654760978,
+    "ARMS": 0.1269079613504557
+   },
+   "nTol": 99,
+   "nHard": 78,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "headon-jog",
+  "name": "HEAD-ON JOG · both jog at each other",
+  "S": {
+   "best": {
+    "pen": 0.2287064765718412,
+    "t": 1.0083333333333333,
+    "A": "THIGH_L",
+    "B": "THIGH_R",
+    "dist": 0.24577544579862085,
+    "closing": 6.39999999990574,
+    "ball": [
+     40.6694173421631,
+     34.13
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.24577544579523192,
+     -0.0000012906786537314474
+    ]
+   },
+   "per": {
+    "TRUNK": 0.225069530441117,
+    "LEGS": 0.2287064765718412,
+    "FEET": 0.08785224453206639,
+    "ARMS": 0.12943035665517844
+   },
+   "nTol": 42,
+   "nHard": 39,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "face",
+  "name": "STANDING FACE-TO-FACE · the carrier walks up and stops against him",
+  "S": {
+   "best": {
+    "pen": 0.22818302443670024,
+    "t": 1.2458333333333331,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.06319964230374349,
+    "closing": -1.2809581472172185,
+    "ball": [
+     35.42607210201274,
+     34.1
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.040531853331138734,
+     0.04849086153971882
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22818302443670024,
+    "LEGS": 0.2177118500781517,
+    "FEET": 0.13043958936355413,
+    "ARMS": 0.13372499344978536
+   },
+   "nTol": 117,
+   "nHard": 88,
+   "through": [
+    {
+     "k": 784,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.10166842835670958,
+     "A": "THIGH_R",
+     "B": "THIGH_L",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "side",
+  "name": "SIDE BY SIDE · jogging shoulder to shoulder (the carrier leaning 6° in)",
+  "S": {
+   "best": {
+    "pen": 0.2349715533251744,
+    "t": 1.4416666666666669,
+    "A": "PELVIS",
+    "B": "THIGH_L",
+    "dist": 0.1498213785978463,
+    "closing": 0.32342133717659655,
+    "ball": [
+     41.9385577974193,
+     34.66497905361452
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.0464881528009613,
+     0.1424264621975624
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22335582574580237,
+    "LEGS": 0.2349715533251744,
+    "FEET": 0.13975052205042632,
+    "ARMS": 0.18419010290277685
+   },
+   "nTol": 804,
+   "nHard": 792,
+   "through": [
+    {
+     "k": 713,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.0942999138855074,
+     "A": "THIGH_R",
+     "B": "THIGH_L",
+     "verdict": "THROUGH"
+    },
+    {
+     "k": 886,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.17504189645219026,
+     "A": "THIGH_R",
+     "B": "PELVIS",
+     "verdict": "THROUGH"
+    },
+    {
+     "k": 1058,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.18356297492561494,
+     "A": "THIGH_R",
+     "B": "THIGH_R",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "cross",
+  "name": "CROSSING PATHS · the defender jogs across the carrier's line",
+  "S": {
+   "best": {
+    "pen": 0.23370645494766307,
+    "t": 1.375,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.11707931917015661,
+    "closing": -4.397437779972783,
+    "ball": [
+     41.704973421529274,
+     34.13
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.09999913098729962,
+     -0.06089122087076504
+    ]
+   },
+   "per": {
+    "TRUNK": 0.23370645494766307,
+    "LEGS": 0.22931657396088423,
+    "FEET": 0.13999163870096054,
+    "ARMS": 0.11901198224631525
+   },
+   "nTol": 47,
+   "nHard": 44,
+   "through": [
+    {
+     "k": 886,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.17732192839953273,
+     "A": "THIGH_R",
+     "B": "THIGH_L",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "headon-one-away",
+  "name": "HEAD-ON WALK · then the carrier turns away (60° at 1.6 s)",
+  "S": {
+   "best": {
+    "pen": 0.2391263747461122,
+    "t": 1.4083333333333332,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.0266572237078715,
+    "closing": -2.9999999986609773,
+    "ball": [
+     35.73079769658547,
+     34.1
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.02665722369583534,
+     -8.010626331156345e-7
+    ]
+   },
+   "per": {
+    "TRUNK": 0.2391263747461122,
+    "LEGS": 0.22398675933377915,
+    "FEET": 0.1399826654760978,
+    "ARMS": 0.1269079613504557
+   },
+   "nTol": 96,
+   "nHard": 81,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "headon-both-away",
+  "name": "HEAD-ON WALK · then both turn away (60° each at 1.6 s)",
+  "S": {
+   "best": {
+    "pen": 0.2391263747461122,
+    "t": 1.4083333333333332,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.0266572237078715,
+    "closing": -2.9999999986609773,
+    "ball": [
+     35.73079769658547,
+     34.1
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.02665722369583534,
+     -8.010626331156345e-7
+    ]
+   },
+   "per": {
+    "TRUNK": 0.2391263747461122,
+    "LEGS": 0.22398675933377915,
+    "FEET": 0.1399826654760978,
+    "ARMS": 0.1269079613504557
+   },
+   "nTol": 95,
+   "nHard": 80,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "bf-into",
+  "name": "BODY FEINT INTO A STANDING PLAYER (the carrier committed)",
+  "S": {
+   "best": {
+    "pen": 0.23416835323525848,
+    "t": 0.6916666666666669,
+    "A": "THIGH_R",
+    "B": "PELVIS",
+    "dist": 0.15452474586864728,
+    "closing": 0.05314973351252558,
+    "ball": [
+     39.42829120593697,
+     34.15571050378943
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.013304993914978525,
+     0.15395088250053135
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22866761524800322,
+    "LEGS": 0.23416835323525848,
+    "FEET": 0.11543961808469155,
+    "ARMS": 0.17522218681128204
+   },
+   "nTol": 70,
+   "nHard": 64,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "race",
+  "name": "THE RACE: JOG + CUT LEFT (cut 0.27 s before the contact) · SIDE-ON DEFENDER",
+  "S": {
+   "best": {
+    "pen": 0.23461959522430825,
+    "t": 0.9833333333333334,
+    "A": "PELVIS",
+    "B": "THIGH_L",
+    "dist": 0.1813477735509378,
+    "closing": 2.272086011648552,
+    "ball": [
+     38.785974687508386,
+     33.631581068249375
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.18106084113258447,
+     -0.010197390854685295
+    ]
+   },
+   "per": {
+    "TRUNK": 0.21570503931765822,
+    "LEGS": 0.23461959522430825,
+    "FEET": 0.13974759998003056,
+    "ARMS": 0.179660560319956
+   },
+   "nTol": 191,
+   "nHard": 165,
+   "through": [
+    {
+     "k": 1244,
+     "by": "DEF",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.09190189474077165,
+     "A": "THIGH_R",
+     "B": "THIGH_R",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "croq-win",
+  "name": "LA CROQUETA · CLOSE DEFENDER, TACKLE AS IT STARTS (from the move sweep)",
+  "S": {
+   "best": {
+    "pen": 0.22682475868747837,
+    "t": 0.8000000000000003,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.3395451003969527,
+    "closing": -0.5470348335383074,
+    "ball": [
+     37.96293049926303,
+     35.16963686557451
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.2341276961068246,
+     0.24591685001090724
+    ]
+   },
+   "per": {
+    "TRUNK": 0.0025105631139244744,
+    "LEGS": 0.22682475868747837,
+    "FEET": 0.1379220908610881,
+    "ARMS": 0.18150944066075259
+   },
+   "nTol": 85,
+   "nHard": 80,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "in-steer",
+  "name": "STEERING LEFT (stick 30° left, held) WHEN THE TACKLE MEETS THE BALL",
+  "S": {
+   "best": {
+    "pen": 0.23323200704817973,
+    "t": 2.5416666666666665,
+    "A": "PELVIS",
+    "B": "THIGH_R",
+    "dist": 0.1817596688979856,
+    "closing": 2.295201676447425,
+    "ball": [
+     37.99677846342028,
+     33.849113303366885
+    ],
+    "auth": "CONTROLLED(DEF)",
+    "rel": [
+     0.1516522599334209,
+     0.10019066470979965
+    ]
+   },
+   "per": {
+    "TRUNK": 0.1861465122421888,
+    "LEGS": 0.23323200704817973,
+    "FEET": 0.13855494193643508,
+    "ARMS": 0.1416341159317967
+   },
+   "nTol": 254,
+   "nHard": 222,
+   "through": [
+    {
+     "k": 1175,
+     "by": "DEF",
+     "kind": "touch",
+     "F": "R",
+     "pen": 0.14965866192877864,
+     "A": "THIGH_R",
+     "B": "PELVIS",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "carry-walk",
+  "name": "WALK CARRY · SET DEFENDER",
+  "S": {
+   "best": {
+    "pen": 0.22745896265701332,
+    "t": 1.5958333333333332,
+    "A": "THIGH_L",
+    "B": "THIGH_L",
+    "dist": 0.6420633578696284,
+    "closing": 0.2237394969684663,
+    "ball": [
+     35.54504394466315,
+     34.99746774566716
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.41755418831625946,
+     -0.48774363690198186
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0.22745896265701332,
+    "FEET": 0.13753043499579143,
+    "ARMS": 0.13991324580627065
+   },
+   "nTol": 76,
+   "nHard": 65,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "carry-jog-l",
+  "name": "STANDING TACKLE · JOG CARRY (the clean contact)",
+  "S": {
+   "best": {
+    "pen": 0.22814323001771047,
+    "t": 1.2416666666666667,
+    "A": "THIGH_L",
+    "B": "THIGH_L",
+    "dist": 0.5432678715579348,
+    "closing": -1.8638760094298812,
+    "ball": [
+     40.246339695350095,
+     35.24798622420658
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.09676910502345493,
+     -0.5345799477908315
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0.22814323001771047,
+    "FEET": 0.13808535725684773,
+    "ARMS": 0.1319262037218545
+   },
+   "nTol": 51,
+   "nHard": 45,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "carry-jog-def",
+  "name": "JOG CARRY · DEFENDER JOGGING IN (3.2 m/s)",
+  "S": {
+   "best": {
+    "pen": 0.22727710700899675,
+    "t": 0.8208333333333333,
+    "A": "THIGH_L",
+    "B": "THIGH_L",
+    "dist": 0.4991865025099876,
+    "closing": 1.240277620898062,
+    "ball": [
+     39.98412473999005,
+     35.09395470918347
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.1441801540898311,
+     -0.4779113384873668
+    ]
+   },
+   "per": {
+    "TRUNK": 0.022942587160538708,
+    "LEGS": 0.22727710700899675,
+    "FEET": 0.049474294398339336,
+    "ARMS": 0.16785241944855656
+   },
+   "nTol": 58,
+   "nHard": 53,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "cut",
+  "name": "STANDING TACKLE MISS · THE SHARP CUT",
+  "S": {
+   "best": {
+    "pen": -1,
+    "t": 0.6750000000000003,
+    "dist": 2.395396356328956,
+    "closing": 2.5853385557861603,
+    "ball": [
+     39.33262773904343,
+     34.460675768901375
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     2.2823855542967877,
+     0.7270762583466635
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0,
+    "FEET": 0,
+    "ARMS": 0
+   },
+   "nTol": 0,
+   "nHard": 0,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "croq",
+  "name": "STANDING TACKLE MISS · LA CROQUETA",
+  "S": {
+   "best": {
+    "pen": 0.2152374521501409,
+    "t": 0.8916666666666666,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.5260965843794352,
+    "closing": 0.6738314773113159,
+    "ball": [
+     39.09043569558416,
+     33.08626670812768
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.4553757404118741,
+     0.26345882247525054
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0.2152374521501409,
+    "FEET": 0.11846310720784933,
+    "ARMS": 0.1366533886436172
+   },
+   "nTol": 41,
+   "nHard": 28,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "in-bf",
+  "name": "BODY FEINT ALREADY COMMITTED WHEN THE TACKLE MEETS THE BALL",
+  "S": {
+   "best": {
+    "pen": 0.2254788133490246,
+    "t": 1.4833333333333334,
+    "A": "THIGH_L",
+    "B": "THIGH_R",
+    "dist": 0.4289032813182457,
+    "closing": 0.2314753990553301,
+    "ball": [
+     35.771943695824035,
+     31.03401430898664
+    ],
+    "auth": "FREE · CONTESTED",
+    "rel": [
+     -0.08911448335756234,
+     0.419543363171762
+    ]
+   },
+   "per": {
+    "TRUNK": 0.07902494987714526,
+    "LEGS": 0.2254788133490246,
+    "FEET": 0.13878136871594904,
+    "ARMS": 0.17933672915877513
+   },
+   "nTol": 237,
+   "nHard": 159,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "bf-exit",
+  "name": "BODY FEINT · DEFENDER ON THE EXIT SIDE",
+  "S": {
+   "best": {
+    "pen": 0.2280942842266232,
+    "t": 1.4333333333333336,
+    "A": "THIGH_R",
+    "B": "THIGH_L",
+    "dist": 0.03463307906288336,
+    "closing": 3.3119324098221528,
+    "ball": [
+     37.78642929639419,
+     34.571369412932434
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.0163602732056205,
+     0.03052526209573614
+    ]
+   },
+   "per": {
+    "TRUNK": 0.2124572918646372,
+    "LEGS": 0.2280942842266232,
+    "FEET": 0.12713342432688818,
+    "ARMS": 0.1375481025502352
+   },
+   "nTol": 92,
+   "nHard": 80,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "bf-fake",
+  "name": "BODY FEINT · DEFENDER ON THE FAKE SIDE, TACKLING INTO THE FAKE",
+  "S": {
+   "best": {
+    "pen": 0.229179742308676,
+    "t": 0.8791666666666669,
+    "A": "CHEST",
+    "B": "CHEST",
+    "dist": 0.4614305854836624,
+    "closing": 0.9458983416745769,
+    "ball": [
+     39.77363410090823,
+     34.1693155830538
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.13104969539826783,
+     -0.44242983913363787
+    ]
+   },
+   "per": {
+    "TRUNK": 0.229179742308676,
+    "LEGS": 0.2284326129157587,
+    "FEET": 0.13608110783341903,
+    "ARMS": 0.11033681578574707
+   },
+   "nTol": 103,
+   "nHard": 80,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "in-croq",
+  "name": "LA CROQUETA ALREADY COMMITTED WHEN THE TACKLE MEETS THE BALL",
+  "S": {
+   "best": {
+    "pen": 0.22588465944557334,
+    "t": 0.8000000000000003,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.32626691278173403,
+    "closing": -0.9150569709099805,
+    "ball": [
+     38.5611693161881,
+     35.50232688728962
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.173639224431561,
+     0.27622367406674186
+    ]
+   },
+   "per": {
+    "TRUNK": 0.05562844845012947,
+    "LEGS": 0.22588465944557334,
+    "FEET": 0.1264410462296629,
+    "ARMS": 0.18488711165033506
+   },
+   "nTol": 88,
+   "nHard": 81,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "croq-early",
+  "name": "LA CROQUETA · TACKLE BEFORE THE TRANSFER",
+  "S": {
+   "best": {
+    "pen": 0.23271665364845445,
+    "t": 0.7583333333333333,
+    "A": "THIGH_R",
+    "B": "PELVIS",
+    "dist": 0.11730532493932873,
+    "closing": 1.4901176215420877,
+    "ball": [
+     39.058356139511076,
+     34.98022359931711
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.11679203972634156,
+     0.010961693102899517
+    ]
+   },
+   "per": {
+    "TRUNK": 0.2273501960681482,
+    "LEGS": 0.23271665364845445,
+    "FEET": 0.1394347135100864,
+    "ARMS": 0.13518659550278445
+   },
+   "nTol": 126,
+   "nHard": 119,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "croq-close",
+  "name": "LA CROQUETA PAST A STANDING PLAYER (no tackle: the move around his body)",
+  "S": {
+   "best": {
+    "pen": 0.2216413676109137,
+    "t": 0.8541666666666665,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.4677482836274153,
+    "closing": 0.4077997052172764,
+    "ball": [
+     39.04050208754448,
+     33.12816600567663
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.3996373383889207,
+     0.24306059862061602
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0.2216413676109137,
+    "FEET": 0.04294163096540511,
+    "ARMS": 0.1570945740351457
+   },
+   "nTol": 82,
+   "nHard": 73,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "both-committed",
+  "name": "BOTH COMMITTED · the tackle into a Croqueta under way",
+  "S": {
+   "best": {
+    "pen": 0.22682475868747837,
+    "t": 0.8000000000000003,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.3395451003969527,
+    "closing": -0.5470348335383074,
+    "ball": [
+     37.96293049926303,
+     35.16963686557451
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.2341276961068246,
+     0.24591685001090724
+    ]
+   },
+   "per": {
+    "TRUNK": 0.0025105631139244744,
+    "LEGS": 0.22682475868747837,
+    "FEET": 0.1379220908610881,
+    "ARMS": 0.18150944066075259
+   },
+   "nTol": 85,
+   "nHard": 80,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "headon-jog-m",
+  "name": "HEAD-ON JOG · both jog at each other · MIRRORED",
+  "S": {
+   "best": {
+    "pen": 0.2287064765718412,
+    "t": 1.0083333333333333,
+    "A": "THIGH_R",
+    "B": "THIGH_L",
+    "dist": 0.24577544579862085,
+    "closing": 6.39999999990574,
+    "ball": [
+     40.6694173421631,
+     33.87
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     0.24577544579523192,
+     0.0000012906786537314474
+    ]
+   },
+   "per": {
+    "TRUNK": 0.225069530441117,
+    "LEGS": 0.2287064765718412,
+    "FEET": 0.08785224453206639,
+    "ARMS": 0.12943035665517844
+   },
+   "nTol": 42,
+   "nHard": 39,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "side-m",
+  "name": "SIDE BY SIDE · jogging shoulder to shoulder (the carrier leaning 6° in) · MIRRORED",
+  "S": {
+   "best": {
+    "pen": 0.2349715533251744,
+    "t": 1.4416666666666669,
+    "A": "PELVIS",
+    "B": "THIGH_R",
+    "dist": 0.1498213785978463,
+    "closing": 0.32342133717659655,
+    "ball": [
+     41.9385577974193,
+     33.33502094638548
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.0464881528009613,
+     -0.1424264621975624
+    ]
+   },
+   "per": {
+    "TRUNK": 0.22335582574580237,
+    "LEGS": 0.2349715533251744,
+    "FEET": 0.13975052205042632,
+    "ARMS": 0.18419010290277685
+   },
+   "nTol": 804,
+   "nHard": 792,
+   "through": [
+    {
+     "k": 713,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "L",
+     "pen": 0.0942999138855074,
+     "A": "THIGH_L",
+     "B": "THIGH_R",
+     "verdict": "THROUGH"
+    },
+    {
+     "k": 886,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "L",
+     "pen": 0.17504189645219026,
+     "A": "THIGH_L",
+     "B": "PELVIS",
+     "verdict": "THROUGH"
+    },
+    {
+     "k": 1058,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "L",
+     "pen": 0.18356297492561494,
+     "A": "THIGH_L",
+     "B": "THIGH_L",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "cross-m",
+  "name": "CROSSING PATHS · the defender jogs across the carrier's line · MIRRORED",
+  "S": {
+   "best": {
+    "pen": 0.23370645494766307,
+    "t": 1.375,
+    "A": "PELVIS",
+    "B": "PELVIS",
+    "dist": 0.11707931917013444,
+    "closing": -4.397437779972451,
+    "ball": [
+     41.704973421529274,
+     33.87
+    ],
+    "auth": "CONTROLLED(ATT)",
+    "rel": [
+     -0.09999913098729962,
+     0.06089122087072241
+    ]
+   },
+   "per": {
+    "TRUNK": 0.23370645494766307,
+    "LEGS": 0.22931657396088423,
+    "FEET": 0.13999163870096054,
+    "ARMS": 0.11901198224631525
+   },
+   "nTol": 47,
+   "nHard": 44,
+   "through": [
+    {
+     "k": 886,
+     "by": "ATT",
+     "kind": "touch",
+     "F": "L",
+     "pen": 0.17732192839953273,
+     "A": "THIGH_L",
+     "B": "THIGH_R",
+     "verdict": "THROUGH"
+    }
+   ],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "carry-jog-l-m",
+  "name": "STANDING TACKLE · JOG CARRY (the clean contact) · MIRRORED",
+  "S": {
+   "best": {
+    "pen": 0.22814323001771047,
+    "t": 1.2416666666666667,
+    "A": "THIGH_R",
+    "B": "THIGH_R",
+    "dist": 0.5432678715579251,
+    "closing": -1.863876009429806,
+    "ball": [
+     40.24633969534993,
+     32.75201377579324
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.09676910502344072,
+     0.5345799477908244
+    ]
+   },
+   "per": {
+    "TRUNK": 0,
+    "LEGS": 0.22814323001771047,
+    "FEET": 0.13808535725684773,
+    "ARMS": 0.1319262037218545
+   },
+   "nTol": 51,
+   "nHard": 45,
+   "through": [],
+   "ambiguous": []
+  }
+ },
+ {
+  "id": "in-croq-m",
+  "name": "LA CROQUETA ALREADY COMMITTED WHEN THE TACKLE MEETS THE BALL · MIRRORED",
+  "S": {
+   "best": {
+    "pen": 0.22588465944557334,
+    "t": 0.8000000000000003,
+    "A": "THIGH_L",
+    "B": "THIGH_L",
+    "dist": 0.32626691278173403,
+    "closing": -0.9150569709099795,
+    "ball": [
+     38.56116931618829,
+     32.49767311271071
+    ],
+    "auth": "FREE",
+    "rel": [
+     0.173639224431561,
+     -0.27622367406674186
+    ]
+   },
+   "per": {
+    "TRUNK": 0.05562844845012947,
+    "LEGS": 0.22588465944557334,
+    "FEET": 0.1264410462296629,
+    "ARMS": 0.184887111650335
+   },
+   "nTol": 88,
+   "nHard": 81,
+   "through": [],
+   "ambiguous": []
+  }
+ }
+]
