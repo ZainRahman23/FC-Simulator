@@ -1,0 +1,524 @@
+[
+ {
+  "id": "static-walk",
+  "impact": 1,
+  "onset": 1.7792,
+  "preTicks": 954,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0417,
+   "J": 0.2227
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "static-jog",
+  "impact": 1,
+  "onset": 0.975,
+  "preTicks": 809,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0444,
+   "J": 0.1979
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-walk",
+  "impact": 1,
+  "onset": 1.3833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0362,
+   "J": 0.4729
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-jog",
+  "impact": 1,
+  "onset": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.9659,
+   "J": 3.6098
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "face",
+  "impact": 1,
+  "onset": 1.6958,
+  "preTicks": 934,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.1745,
+   "J": 0.4409
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "side",
+  "impact": 1,
+  "onset": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2124,
+   "J": 0.4252
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cross",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-one-away",
+  "impact": 1,
+  "onset": 1.3833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.1778,
+   "J": 0.6258
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-both-away",
+  "impact": 1,
+  "onset": 1.3833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.4415,
+   "J": 0.9829
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-into",
+  "impact": 1,
+  "onset": 0.5833,
+  "preTicks": 715,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.0946,
+   "J": 1.259
+  },
+  "identical": 1,
+  "s2dFirst": 0.425,
+  "s2dRoot": 1
+ },
+ {
+  "id": "race",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1571,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-win",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.9868,
+   "J": 3.8
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-steer",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1690,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-walk",
+  "impact": 1,
+  "onset": 1.65,
+  "preTicks": 923,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 11.6427,
+   "J": 1.5961
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-jog-l",
+  "impact": 1,
+  "onset": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0488,
+   "J": 0.2656
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-jog-def",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1653,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cut",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1695,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1627,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-bf",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.2882,
+   "J": 1.2548
+  },
+  "identical": 1,
+  "s2dFirst": 0.425,
+  "s2dRoot": 0.8398
+ },
+ {
+  "id": "bf-exit",
+  "impact": 1,
+  "onset": 1.2292,
+  "preTicks": 870,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1,
+   "J": 0.6814
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-fake",
+  "impact": 1,
+  "onset": 0.7625,
+  "preTicks": 758,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.3813,
+   "J": 2.9724
+  },
+  "identical": 1,
+  "s2dFirst": 0.592,
+  "s2dRoot": 0.9917
+ },
+ {
+  "id": "in-croq",
+  "impact": 1,
+  "onset": 0.5625,
+  "preTicks": 710,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1,
+   "J": 1.9212
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-early",
+  "impact": 1,
+  "onset": 0.5792,
+  "preTicks": 714,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.314,
+   "J": 2.1931
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-close",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1200,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "both-committed",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.9868,
+   "J": 3.8
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-jog-m",
+  "impact": 1,
+  "onset": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.9659,
+   "J": 3.6098
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "side-m",
+  "impact": 1,
+  "onset": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2055,
+   "J": 0.4405
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cross-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-jog-l-m",
+  "impact": 1,
+  "onset": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0488,
+   "J": 0.2656
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-croq-m",
+  "impact": 1,
+  "onset": 0.5625,
+  "preTicks": 710,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1,
+   "J": 1.9212
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "overtake",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "turn-into",
+  "impact": 1,
+  "onset": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2543,
+   "J": 0.2664
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "glance",
+  "impact": 1,
+  "onset": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0846,
+   "J": 0.2058
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "near-miss",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "overtake-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "turn-into-m",
+  "impact": 1,
+  "onset": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2543,
+   "J": 0.2664
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "glance-m",
+  "impact": 1,
+  "onset": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0846,
+   "J": 0.2058
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ }
+]

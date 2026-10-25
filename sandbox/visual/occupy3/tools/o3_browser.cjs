@@ -36,7 +36,9 @@ const checks = [], ok = (name, c, detail) => { checks.push({ name, pass: !!c, de
   await p.evaluate(() => IL.layout("2")); const bh = {}; for (const s of ["skin", "skel", "both"]) { await p.evaluate((s) => { IL.show(s); IL.seek(IL.L.t - IL.L.cur.t0); }, s); await sleep(20); bh[s] = await hashView(); await shot(`body_${s}`); }
   ok("SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)", bh.skin !== bh.skel, bh); await p.evaluate(() => IL.show("skin"));
   // overlays (the diagnostics panel stays on while compared: hiding it widens the canvas, and the ink with it)
-  await p.evaluate((t) => { IL.layout("S3"); IL.seek(t); }, R0.runs.S3.eps[0].t0 + 0.12); const all = { ball: 1, vol: 1, sup: 1, bal: 1, nrm: 1, imp: 1, stp: 1, trl: 1, ghost: 1, hud: 1, diag: 1 };
+  // (the frame: just after the first recovery step is planned — every overlay then has something to draw, the step's target included)
+  const tOv = await p.evaluate(() => { const C = IL.L.cur, e = C.runs.S3.W.imp.events.find((x) => x.kind === "RECOVERY STEP"); return e ? e.t - C.t0 + 0.05 : null; });
+  await p.evaluate((t) => { IL.layout("S3"); IL.seek(t); }, tOv != null ? tOv : R0.runs.S3.eps[0].t0 + 0.12); const all = { ball: 1, vol: 1, sup: 1, bal: 1, nrm: 1, imp: 1, stp: 1, trl: 1, ghost: 1, hud: 1, diag: 1 };
   await p.evaluate((o) => IL.set(o), all); await sleep(20); const inkAll = await overlayInk(); await shot("overlay_all"); const off = {};
   for (const k of ["vol", "sup", "bal", "nrm", "imp", "stp", "trl", "ghost", "hud"]) { await p.evaluate((o) => IL.set(o), Object.assign({}, all, { [k]: 0 })); await sleep(15); off[k] = inkAll - (await overlayInk()); }
   ok("each overlay draws something when on (CONTACT VOLUMES, SUPPORT, CENTRE OF MASS · BALANCE, CONTACT NORMAL, IMPACT VECTOR, RECOVERY STEP, TRAILS, STAGE 2 GHOST, FRAME DATA)", Object.values(off).every((v) => v > 0), off);

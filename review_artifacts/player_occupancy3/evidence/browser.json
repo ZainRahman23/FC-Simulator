@@ -1,0 +1,3199 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — PLAYER IMPACT + BALANCE V1 REVIEW)",
+   "pass": true,
+   "detail": "0.6 s to the first case"
+  },
+  {
+   "name": "every case simulates STAGE 2 and STAGE 3 and both viewports draw",
+   "pass": true,
+   "detail": "69/69"
+  },
+  {
+   "name": "the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps), both stages",
+   "pass": true,
+   "detail": "69/69"
+  },
+  {
+   "name": "view STAGE 2 | STAGE 3 draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view STAGE 2 draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view STAGE 3 draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "STAGE 2 and STAGE 3 draw different replays of the same inputs (the feint into the recovering tackle, 0.3 s after the impact)",
+   "pass": true,
+   "detail": {
+    "S2D": 3537947479,
+    "S3": 2739461819
+   }
+  },
+  {
+   "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
+   "pass": true,
+   "detail": {
+    "skin": 1860492194,
+    "skel": 1905426567,
+    "both": 1860492194
+   }
+  },
+  {
+   "name": "each overlay draws something when on (CONTACT VOLUMES, SUPPORT, CENTRE OF MASS · BALANCE, CONTACT NORMAL, IMPACT VECTOR, RECOVERY STEP, TRAILS, STAGE 2 GHOST, FRAME DATA)",
+   "pass": true,
+   "detail": {
+    "vol": 571,
+    "sup": 21,
+    "bal": 61,
+    "nrm": 19,
+    "imp": 127,
+    "stp": 815,
+    "trl": 224,
+    "ghost": 28,
+    "hud": 9470
+   }
+  },
+  {
+   "name": "DIAGNOSTICS off hides the panel",
+   "pass": true
+  },
+  {
+   "name": "BALL shown / hidden",
+   "pass": true
+  },
+  {
+   "name": "the diagnostics carry the live quantities (contact regions, relative velocity, impact / severity, support, balance, action, interruption, possession, penetration, the referee facts)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "name": "the eight cameras draw, each a different view",
+   "pass": true,
+   "detail": 8
+  },
+  {
+   "name": "frame step moves the playhead 4 ticks",
+   "pass": true,
+   "detail": 3.999999999999986
+  },
+  {
+   "name": "shift + frame step moves one tick",
+   "pass": true,
+   "detail": 0.9999999999999432
+  },
+  {
+   "name": "1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)",
+   "pass": true,
+   "detail": {
+    "1": 0.597499999904632,
+    "0.5": 0.2969500000000038,
+    "0.25": 0.14739999998211628
+   }
+  },
+  {
+   "name": "LOOP returns to the start",
+   "pass": true
+  },
+  {
+   "name": "REPLAY restarts the case",
+   "pass": true,
+   "detail": 0
+  },
+  {
+   "name": "0 console / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "rows": [
+  {
+   "id": "walk-shoulder",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.019833899447416953,
+     "trunk": -1,
+     "legs": 0.019833899447416953,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 257
+    },
+    "S3": {
+     "best": 0.019833899447416953,
+     "trunk": -1,
+     "legs": 0.019833899447416953,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 205
+    }
+   }
+  },
+  {
+   "id": "walk-shoulder-m",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.019833899447416953,
+     "trunk": -1,
+     "legs": 0.019833899447416953,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 180
+    },
+    "S3": {
+     "best": 0.019833899447416953,
+     "trunk": -1,
+     "legs": 0.019833899447416953,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 188
+    }
+   }
+  },
+  {
+   "id": "side",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.03685209140358682,
+     "trunk": -1,
+     "legs": 0.03685209140358682,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 259
+    },
+    "S3": {
+     "best": 0.045670587094761336,
+     "trunk": -1,
+     "legs": 0.045670587094761336,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.7458333333333336,
+       "why": "LIMB STRIKE 1.79 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 272
+    }
+   }
+  },
+  {
+   "id": "side-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.03667912932910773,
+     "trunk": -1,
+     "legs": 0.03667912932910773,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 252
+    },
+    "S3": {
+     "best": 0.04504746202040723,
+     "trunk": -1,
+     "legs": 0.04504746202040723,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.7458333333333336,
+       "why": "LIMB STRIKE 1.70 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 265
+    }
+   }
+  },
+  {
+   "id": "headon-jog",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.1569159610273551,
+     "trunk": -0.0001630312924585653,
+     "legs": 0.1569159610273551,
+     "over5": 26,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 152
+    },
+    "S3": {
+     "best": 0.15707430623263097,
+     "trunk": -0.0006768816481367845,
+     "legs": 0.15707430623263097,
+     "over5": 27,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0041666666666669,
+       "why": "LIMB STRIKE 2.23 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.119,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 211
+    }
+   }
+  },
+  {
+   "id": "headon-jog-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.1569159610273551,
+     "trunk": -0.0001630312924585653,
+     "legs": 0.1569159610273551,
+     "over5": 26,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 151
+    },
+    "S3": {
+     "best": 0.15707430623263097,
+     "trunk": -0.0006768816481367845,
+     "legs": 0.15707430623263097,
+     "over5": 27,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0041666666666669,
+       "why": "LIMB STRIKE 2.23 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.119,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 185
+    }
+   }
+  },
+  {
+   "id": "oblique",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.007082710475853016,
+     "trunk": -1,
+     "legs": 0.007082710475853016,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 140
+    },
+    "S3": {
+     "best": 0.007082710475853016,
+     "trunk": -1,
+     "legs": 0.007082710475853016,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 141
+    }
+   }
+  },
+  {
+   "id": "oblique-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.007082710475853016,
+     "trunk": -1,
+     "legs": 0.007082710475853016,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 146
+    },
+    "S3": {
+     "best": 0.007082710475853016,
+     "trunk": -1,
+     "legs": 0.007082710475853016,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 142
+    }
+   }
+  },
+  {
+   "id": "oblique-firm",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.14204060450841074,
+     "trunk": -0.01907730293141084,
+     "legs": 0.14204060450841074,
+     "over5": 13,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 151
+    },
+    "S3": {
+     "best": 0.14174227516208354,
+     "trunk": -0.01907730293141084,
+     "legs": 0.14174227516208354,
+     "over5": 12,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0208333333333335,
+       "why": "LIMB STRIKE 3.74 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 162
+    }
+   }
+  },
+  {
+   "id": "oblique-firm-m",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.14204060450841074,
+     "trunk": -0.01907730293141084,
+     "legs": 0.14204060450841074,
+     "over5": 13,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 151
+    },
+    "S3": {
+     "best": 0.14174227516208354,
+     "trunk": -0.01907730293141084,
+     "legs": 0.14174227516208354,
+     "over5": 12,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0208333333333335,
+       "why": "LIMB STRIKE 3.74 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 166
+    }
+   }
+  },
+  {
+   "id": "near-miss",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 136
+    },
+    "S3": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 139
+    }
+   }
+  },
+  {
+   "id": "near-miss-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 132
+    },
+    "S3": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 140
+    }
+   }
+  },
+  {
+   "id": "static-jog",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.054916935903217556,
+     "trunk": 0.008920020358379771,
+     "legs": 0.054916935903217556,
+     "over5": 4,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 178
+    },
+    "S3": {
+     "best": 0.056133222442031144,
+     "trunk": 0.008920020358379771,
+     "legs": 0.056133222442031144,
+     "over5": 4,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.9624999999999999,
+       "why": "LIMB STRIKE 1.67 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "LIGHT",
+         "sigma": 0.497,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 178
+    }
+   }
+  },
+  {
+   "id": "static-jog-m",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.09060291852550706,
+     "trunk": -0.0024098375320514565,
+     "legs": 0.09060291852550706,
+     "over5": 8,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 200
+    },
+    "S3": {
+     "best": 0.09069351996166064,
+     "trunk": -0.0024098375320514565,
+     "legs": 0.09069351996166064,
+     "over5": 8,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.9791666666666665,
+       "why": "LIMB STRIKE 2.30 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "LIGHT",
+         "sigma": 0.347,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 172
+    }
+   }
+  },
+  {
+   "id": "cross",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.018685516406313052,
+     "trunk": -1,
+     "legs": 0.018685516406313052,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 142
+    },
+    "S3": {
+     "best": 0.018685516406313052,
+     "trunk": -1,
+     "legs": 0.018685516406313052,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 143
+    }
+   }
+  },
+  {
+   "id": "cross-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.018685516406313052,
+     "trunk": -1,
+     "legs": 0.018685516406313052,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 140
+    },
+    "S3": {
+     "best": 0.018685516406313052,
+     "trunk": -1,
+     "legs": 0.018685516406313052,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 144
+    }
+   }
+  },
+  {
+   "id": "bf-past",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.031258839222373075,
+     "trunk": -1,
+     "legs": 0.031258839222373075,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 136
+    },
+    "S3": {
+     "best": 0.03129667168318148,
+     "trunk": -1,
+     "legs": 0.03129667168318148,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.1583333333333332,
+       "why": "LIMB STRIKE 4.93 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.155,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.517,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 153
+    }
+   }
+  },
+  {
+   "id": "bf-past-m",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.02337855767557062,
+     "trunk": -1,
+     "legs": 0.02337855767557062,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 130
+    },
+    "S3": {
+     "best": 0.02337855767557062,
+     "trunk": -1,
+     "legs": 0.02337855767557062,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.1583333333333332,
+       "why": "LIMB STRIKE 3.85 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.434,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 145
+    }
+   }
+  },
+  {
+   "id": "bf-shoulder",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.04096392611193653,
+     "trunk": -1,
+     "legs": 0.04096392611193653,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 131
+    },
+    "S3": {
+     "best": 0.036761927916099474,
+     "trunk": -1,
+     "legs": 0.036761927916099474,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.2041666666666666,
+       "why": "LIMB STRIKE 1.76 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.227,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.704,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 157
+    }
+   }
+  },
+  {
+   "id": "bf-shoulder-m",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.036101795544878496,
+     "trunk": -1,
+     "legs": 0.036101795544878496,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 130
+    },
+    "S3": {
+     "best": 0.020691858527686596,
+     "trunk": -1,
+     "legs": 0.020691858527686596,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.1875,
+       "why": "LIMB STRIKE 2.42 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.173,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 2
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.217,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 141
+    }
+   }
+  },
+  {
+   "id": "bf-step-in",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.02479829393523994,
+     "trunk": -1,
+     "legs": 0.02479829393523994,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 138
+    },
+    "S3": {
+     "best": 0.024345210981690873,
+     "trunk": -1,
+     "legs": 0.024345210981690873,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.225,
+       "why": "LIMB STRIKE 1.85 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 146
+    }
+   }
+  },
+  {
+   "id": "bf-step-in-m",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.024798240558403656,
+     "trunk": -1,
+     "legs": 0.024798240558403656,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 136
+    },
+    "S3": {
+     "best": 0.024351859966603717,
+     "trunk": -1,
+     "legs": 0.024351859966603717,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.225,
+       "why": "LIMB STRIKE 1.85 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 148
+    }
+   }
+  },
+  {
+   "id": "in-bf",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.07009233931565838,
+     "trunk": 0.000793255656030778,
+     "legs": 0.07009233931565838,
+     "over5": 5,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 296
+    },
+    "S3": {
+     "best": 0.056150403970021606,
+     "trunk": -1,
+     "legs": 0.056150403970021606,
+     "over5": 1,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5375000000000001,
+       "why": "LIMB STRIKE 1.27 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "UNAFFECTED",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "UNAFFECTED",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 301
+    }
+   }
+  },
+  {
+   "id": "in-bf-m",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.07013536063646306,
+     "trunk": 0.0008374329510861533,
+     "legs": 0.07013536063646306,
+     "over5": 5,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 276
+    },
+    "S3": {
+     "best": 0.05611512040188886,
+     "trunk": -1,
+     "legs": 0.05611512040188886,
+     "over5": 1,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5375000000000001,
+       "why": "LIMB STRIKE 1.27 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "UNAFFECTED",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "UNAFFECTED",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 272
+    }
+   }
+  },
+  {
+   "id": "bf-fake",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.22917033106445536,
+     "trunk": 0.22917033106445536,
+     "legs": 0.22616907682300258,
+     "over5": 82,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 200
+    },
+    "S3": {
+     "best": 0.17221993080495776,
+     "trunk": 0.03125163791748958,
+     "legs": 0.17221993080495776,
+     "over5": 31,
+     "out": "MISS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6750000000000003,
+       "why": "LIMB STRIKE 1.28 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 2.755,
+         "cls": "STAGGER CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 3
+        }
+       }
+      }
+     ],
+     "ms": 230
+    }
+   }
+  },
+  {
+   "id": "bf-fake-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.22917033106445536,
+     "trunk": 0.22917033106445536,
+     "legs": 0.22616907682300258,
+     "over5": 82,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 198
+    },
+    "S3": {
+     "best": 0.17222046912436126,
+     "trunk": 0.031253739460183255,
+     "legs": 0.17222046912436126,
+     "over5": 31,
+     "out": "MISS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6750000000000003,
+       "why": "LIMB STRIKE 1.28 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 2.755,
+         "cls": "STAGGER CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 3
+        }
+       }
+      }
+     ],
+     "ms": 205
+    }
+   }
+  },
+  {
+   "id": "croq-close",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.01964545137928403,
+     "trunk": -1,
+     "legs": 0.01964545137928403,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 136
+    },
+    "S3": {
+     "best": 0.01964545137928403,
+     "trunk": -1,
+     "legs": 0.01964545137928403,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 145
+    }
+   }
+  },
+  {
+   "id": "croq-close-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.0413405503226075,
+     "trunk": -1,
+     "legs": 0.0413405503226075,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 139
+    },
+    "S3": {
+     "best": 0.04118586603350882,
+     "trunk": -1,
+     "legs": 0.04118586603350882,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6499999999999999,
+       "why": "LIMB STRIKE 2.95 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.741,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 142
+    }
+   }
+  },
+  {
+   "id": "croq-hip",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.04676145390974075,
+     "trunk": -1,
+     "legs": 0.04676145390974075,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 150
+    },
+    "S3": {
+     "best": 0.07130565902745462,
+     "trunk": -1,
+     "legs": 0.07130565902745462,
+     "over5": 7,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6583333333333332,
+       "why": "LIMB STRIKE 4.68 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.339,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 182
+    }
+   }
+  },
+  {
+   "id": "croq-hip-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.04457836549897638,
+     "trunk": -1,
+     "legs": 0.04457836549897638,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 153
+    },
+    "S3": {
+     "best": 0.06722690431196993,
+     "trunk": -1,
+     "legs": 0.06722690431196993,
+     "over5": 7,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6583333333333332,
+       "why": "LIMB STRIKE 4.48 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.326,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 2.99,
+         "cls": "STAGGER CANDIDATE",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 4
+        }
+       }
+      }
+     ],
+     "ms": 196
+    }
+   }
+  },
+  {
+   "id": "croq-leg",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.043713025907633735,
+     "trunk": -1,
+     "legs": 0.043713025907633735,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 136
+    },
+    "S3": {
+     "best": 0.03830854020812302,
+     "trunk": -1,
+     "legs": 0.03830854020812302,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5874999999999999,
+       "why": "LIMB STRIKE 3.87 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.245,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 154
+    }
+   }
+  },
+  {
+   "id": "croq-leg-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.08305004731255844,
+     "trunk": -1,
+     "legs": 0.08305004731255844,
+     "over5": 25,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 137
+    },
+    "S3": {
+     "best": 0.03173125213075417,
+     "trunk": -1,
+     "legs": 0.03173125213075417,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5874999999999999,
+       "why": "LIMB STRIKE 3.47 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.159,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.198,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 163
+    }
+   }
+  },
+  {
+   "id": "croq-early",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.22694234474283811,
+     "trunk": 0.11533065630812962,
+     "legs": 0.22694234474283811,
+     "over5": 85,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 211
+    },
+    "S3": {
+     "best": 0.1366187416402061,
+     "trunk": -1,
+     "legs": 0.1366187416402061,
+     "over5": 22,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5750000000000002,
+       "why": "LIMB STRIKE 4.14 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.191,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.262,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 259
+    }
+   }
+  },
+  {
+   "id": "croq-early-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.22694234474283811,
+     "trunk": 0.11533065630812962,
+     "legs": 0.22694234474283811,
+     "over5": 85,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 211
+    },
+    "S3": {
+     "best": 0.1366187416402061,
+     "trunk": -1,
+     "legs": 0.1366187416402061,
+     "over5": 22,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5750000000000002,
+       "why": "LIMB STRIKE 4.14 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.191,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.262,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 2
+        }
+       }
+      }
+     ],
+     "ms": 250
+    }
+   }
+  },
+  {
+   "id": "croq-before",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.13992842569463532,
+     "trunk": -1,
+     "legs": 0.13992842569463532,
+     "over5": 37,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 150
+    },
+    "S3": {
+     "best": 0.136742950697468,
+     "trunk": -1,
+     "legs": 0.136742950697468,
+     "over5": 91,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.4583333333333335,
+       "why": "LIMB STRIKE 3.74 m/s (SHIN / SHIN)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.172,
+         "cls": "RECOVERY STEP",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT",
+         "steps": 2
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 226
+    }
+   }
+  },
+  {
+   "id": "croq-before-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.14919284374272762,
+     "trunk": -1,
+     "legs": 0.14919284374272762,
+     "over5": 38,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 153
+    },
+    "S3": {
+     "best": 0.1377374207651537,
+     "trunk": -1,
+     "legs": 0.1377374207651537,
+     "over5": 37,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.4624999999999999,
+       "why": "LIMB STRIKE 3.76 m/s (SHIN / SHIN)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.151,
+         "cls": "RECOVERY STEP",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.207,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 182
+    }
+   }
+  },
+  {
+   "id": "croq-between",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.12979361851558752,
+     "trunk": -1,
+     "legs": 0.12979361851558752,
+     "over5": 93,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 167
+    },
+    "S3": {
+     "best": 0.057354344275476005,
+     "trunk": -1,
+     "legs": 0.057354344275476005,
+     "over5": 3,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6000000000000001,
+       "why": "LIMB STRIKE 5.84 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.209,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 2
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 180
+    }
+   }
+  },
+  {
+   "id": "croq-between-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.14138436501762872,
+     "trunk": -1,
+     "legs": 0.14138436501762872,
+     "over5": 97,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 197
+    },
+    "S3": {
+     "best": 0.05718856654462098,
+     "trunk": -1,
+     "legs": 0.05718856654462098,
+     "over5": 3,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.6000000000000001,
+       "why": "LIMB STRIKE 5.88 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.211,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 2
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "STAGGER / FALL CANDIDATE",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 167
+    }
+   }
+  },
+  {
+   "id": "croq-after",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.020193408177648392,
+     "trunk": -1,
+     "legs": 0.020193408177648392,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 146
+    },
+    "S3": {
+     "best": 0.020193408177648392,
+     "trunk": -1,
+     "legs": 0.020193408177648392,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.8958333333333335,
+       "why": "LIMB STRIKE 3.77 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.694,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 165
+    }
+   }
+  },
+  {
+   "id": "croq-after-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.022995981069709764,
+     "trunk": -1,
+     "legs": 0.022995981069709764,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 148
+    },
+    "S3": {
+     "best": 0.023162524598020734,
+     "trunk": -1,
+     "legs": 0.023162524598020734,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.8958333333333335,
+       "why": "LIMB STRIKE 1.86 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.66,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 161
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.03678445777716652,
+     "trunk": -1,
+     "legs": 0.03678445777716652,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 423
+    },
+    "S3": {
+     "best": 0.030179345158231397,
+     "trunk": -1,
+     "legs": 0.030179345158231397,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.1208333333333336,
+       "why": "LIMB STRIKE 1.80 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.752,
+         "cls": "CORRECT",
+         "outcome": "PERTURBED BUT CONTINUES",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 442
+    }
+   }
+  },
+  {
+   "id": "carry-jog-l-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.03678445777716652,
+     "trunk": -1,
+     "legs": 0.03678445777716652,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 418
+    },
+    "S3": {
+     "best": 0.030179345158231397,
+     "trunk": -1,
+     "legs": 0.030179345158231397,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.1208333333333336,
+       "why": "LIMB STRIKE 1.80 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.752,
+         "cls": "CORRECT",
+         "outcome": "PERTURBED BUT CONTINUES",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 445
+    }
+   }
+  },
+  {
+   "id": "croq",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.010170637211674133,
+     "trunk": -1,
+     "legs": 0.010170637211674133,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 225
+    },
+    "S3": {
+     "best": 0.010170637211674133,
+     "trunk": -1,
+     "legs": 0.010170637211674133,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 204
+    }
+   }
+  },
+  {
+   "id": "croq-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.010170637211674133,
+     "trunk": -1,
+     "legs": 0.010170637211674133,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 199
+    },
+    "S3": {
+     "best": 0.010170637211674133,
+     "trunk": -1,
+     "legs": 0.010170637211674133,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 202
+    }
+   }
+  },
+  {
+   "id": "carry-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.10764757609347647,
+     "trunk": -1,
+     "legs": 0.10764757609347647,
+     "over5": 34,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 258
+    },
+    "S3": {
+     "best": 0.07310730448945038,
+     "trunk": -1,
+     "legs": 0.07310730448945038,
+     "over5": 24,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.4999999999999996,
+       "why": "LIMB STRIKE 2.45 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.129,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 279
+    }
+   }
+  },
+  {
+   "id": "carry-walk-m",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.10764757609347647,
+     "trunk": -1,
+     "legs": 0.10764757609347647,
+     "over5": 34,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 256
+    },
+    "S3": {
+     "best": 0.07310730448945038,
+     "trunk": -1,
+     "legs": 0.07310730448945038,
+     "over5": 24,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.4999999999999996,
+       "why": "LIMB STRIKE 2.45 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.129,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 280
+    }
+   }
+  },
+  {
+   "id": "cut",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 199
+    },
+    "S3": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 203
+    }
+   }
+  },
+  {
+   "id": "cut-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 201
+    },
+    "S3": {
+     "best": -1,
+     "trunk": -1,
+     "legs": -1,
+     "over5": 0,
+     "out": "MISS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 224
+    }
+   }
+  },
+  {
+   "id": "in-croq",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.2272721723937213,
+     "trunk": 0.03414971487302598,
+     "legs": 0.2272721723937213,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 249
+    },
+    "S3": {
+     "best": 0.22668685575438402,
+     "trunk": -0.00839303254169485,
+     "legs": 0.22668685575438402,
+     "over5": 64,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5458333333333334,
+       "why": "LIMB STRIKE 1.44 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.156,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 283
+    }
+   }
+  },
+  {
+   "id": "in-croq-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.22708381680023848,
+     "trunk": 0.03414971487302598,
+     "legs": 0.22708381680023848,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 226
+    },
+    "S3": {
+     "best": 0.22668685575438402,
+     "trunk": -0.00839303254169485,
+     "legs": 0.22668685575438402,
+     "over5": 64,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5458333333333334,
+       "why": "LIMB STRIKE 1.44 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.156,
+         "cls": "RECOVERY STEP",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 258
+    }
+   }
+  },
+  {
+   "id": "both-committed",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.2270858878748837,
+     "trunk": -0.01849726493974717,
+     "legs": 0.2270858878748837,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 218
+    },
+    "S3": {
+     "best": 0.22547826067643778,
+     "trunk": -0.007669192025319321,
+     "legs": 0.22547826067643778,
+     "over5": 57,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5791666666666666,
+       "why": "LIMB STRIKE 1.89 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 253
+    }
+   }
+  },
+  {
+   "id": "both-committed-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.2270858878748837,
+     "trunk": -0.01849726493974717,
+     "legs": 0.2270858878748837,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 215
+    },
+    "S3": {
+     "best": 0.22547826067643778,
+     "trunk": -0.007669192025319321,
+     "legs": 0.22547826067643778,
+     "over5": 57,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5791666666666666,
+       "why": "LIMB STRIKE 1.89 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 257
+    }
+   }
+  },
+  {
+   "id": "static-walk",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.026367395276592653,
+     "trunk": -1,
+     "legs": 0.026367395276592653,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 215
+    },
+    "S3": {
+     "best": 0.026348984573972112,
+     "trunk": -1,
+     "legs": 0.026348984573972112,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.3624999999999998,
+       "why": "LIMB STRIKE 1.47 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "LIGHT",
+         "sigma": 0.259,
+         "cls": "ABSORB",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 235
+    }
+   }
+  },
+  {
+   "id": "headon-walk",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.029428642537071115,
+     "trunk": -1,
+     "legs": 0.029428642537071115,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 173
+    },
+    "S3": {
+     "best": 0.02564749383373191,
+     "trunk": -1,
+     "legs": 0.02564749383373191,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.358333333333333,
+       "why": "LIMB STRIKE 1.78 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 190
+    }
+   }
+  },
+  {
+   "id": "face",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.14025945186478286,
+     "trunk": -1,
+     "legs": 0.14025945186478286,
+     "over5": 17,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 189
+    },
+    "S3": {
+     "best": 0.14042769522925674,
+     "trunk": -1,
+     "legs": 0.14042769522925674,
+     "over5": 16,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.6958333333333333,
+       "why": "LIMB STRIKE 2.88 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.139,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "STRONG",
+         "sigma": 1.131,
+         "cls": "RECOVERY STEP",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 1
+        }
+       }
+      }
+     ],
+     "ms": 207
+    }
+   }
+  },
+  {
+   "id": "headon-one-away",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.029428642537071115,
+     "trunk": -1,
+     "legs": 0.029428642537071115,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 187
+    },
+    "S3": {
+     "best": 0.0332785326319226,
+     "trunk": -1,
+     "legs": 0.0332785326319226,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.358333333333333,
+       "why": "LIMB STRIKE 1.78 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 195
+    }
+   }
+  },
+  {
+   "id": "headon-both-away",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.029428642537071115,
+     "trunk": -1,
+     "legs": 0.029428642537071115,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 196
+    },
+    "S3": {
+     "best": 0.02564749383373191,
+     "trunk": -1,
+     "legs": 0.02564749383373191,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.358333333333333,
+       "why": "LIMB STRIKE 1.78 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 194
+    }
+   }
+  },
+  {
+   "id": "bf-into",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.21857072342797224,
+     "trunk": 0.17375977760466016,
+     "legs": 0.21857072342797224,
+     "over5": 148,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 157
+    },
+    "S3": {
+     "best": 0.1825937920610799,
+     "trunk": -0.009252503438023169,
+     "legs": 0.1825937920610799,
+     "over5": 131,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5291666666666668,
+       "why": "LIMB STRIKE 1.13 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "STRONG",
+         "sigma": 1.13,
+         "cls": "RECOVERY STEP",
+         "outcome": "INTERRUPTED BEFORE TECHNICAL EVENT",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 2.96,
+         "cls": "STAGGER CANDIDATE",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 4
+        }
+       }
+      }
+     ],
+     "ms": 183
+    }
+   }
+  },
+  {
+   "id": "race",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.01073183071056552,
+     "trunk": -1,
+     "legs": 0.01073183071056552,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 284
+    },
+    "S3": {
+     "best": 0.01073183071056552,
+     "trunk": -1,
+     "legs": 0.01073183071056552,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 295
+    }
+   }
+  },
+  {
+   "id": "croq-win",
+   "painted": [
+    100,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.2270858878748837,
+     "trunk": -0.01849726493974717,
+     "legs": 0.2270858878748837,
+     "over5": 82,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 216
+    },
+    "S3": {
+     "best": 0.22547826067643778,
+     "trunk": -0.007669192025319321,
+     "legs": 0.22547826067643778,
+     "over5": 57,
+     "out": "CONTACT — DEFENDER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 0.5791666666666666,
+       "why": "LIMB STRIKE 1.89 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 1
+        },
+        "DEF": {
+         "sev": "SEVERE",
+         "sigma": 3,
+         "cls": "FALL CANDIDATE",
+         "outcome": "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 245
+    }
+   }
+  },
+  {
+   "id": "in-steer",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.0016339353355476899,
+     "trunk": -1,
+     "legs": 0.0016339353355476899,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 247
+    },
+    "S3": {
+     "best": 0.0016339353355476899,
+     "trunk": -1,
+     "legs": 0.0016339353355476899,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 246
+    }
+   }
+  },
+  {
+   "id": "carry-jog-def",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.003438169893958981,
+     "trunk": -1,
+     "legs": 0.003438169893958981,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 234
+    },
+    "S3": {
+     "best": 0.003438169893958981,
+     "trunk": -1,
+     "legs": 0.003438169893958981,
+     "over5": 0,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 224
+    }
+   }
+  },
+  {
+   "id": "bf-exit",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.061028827927576856,
+     "trunk": -1,
+     "legs": 0.061028827927576856,
+     "over5": 4,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 0,
+     "eps": [],
+     "ms": 255
+    },
+    "S3": {
+     "best": 0.05953092721187045,
+     "trunk": -1,
+     "legs": 0.05953092721187045,
+     "over5": 3,
+     "out": "CONTACT — ATTACKER RECOVERS",
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.2208333333333332,
+       "why": "LIMB STRIKE 3.70 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 0.864,
+         "cls": "CORRECT",
+         "outcome": "PERTURBED BUT CONTINUES",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 274
+    }
+   }
+  },
+  {
+   "id": "overtake",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.006808224549865183,
+     "trunk": -1,
+     "legs": 0.006808224549865183,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 157
+    },
+    "S3": {
+     "best": 0.006808224549865183,
+     "trunk": -1,
+     "legs": 0.006808224549865183,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 155
+    }
+   }
+  },
+  {
+   "id": "turn-into",
+   "painted": [
+    99,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.0507518507186637,
+     "trunk": -1,
+     "legs": 0.0507518507186637,
+     "over5": 1,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 162
+    },
+    "S3": {
+     "best": 0.05018600632537898,
+     "trunk": -1,
+     "legs": 0.05018600632537898,
+     "over5": 1,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0125000000000002,
+       "why": "LIMB STRIKE 2.81 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 171
+    }
+   }
+  },
+  {
+   "id": "glance",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.037729225091344604,
+     "trunk": -1,
+     "legs": 0.037729225091344604,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 153
+    },
+    "S3": {
+     "best": 0.03782972641917931,
+     "trunk": -1,
+     "legs": 0.03782972641917931,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0125000000000002,
+       "why": "LIMB STRIKE 3.13 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 165
+    }
+   }
+  },
+  {
+   "id": "overtake-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.006808224549865183,
+     "trunk": -1,
+     "legs": 0.006808224549865183,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 155
+    },
+    "S3": {
+     "best": 0.006808224549865183,
+     "trunk": -1,
+     "legs": 0.006808224549865183,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 169
+    }
+   }
+  },
+  {
+   "id": "turn-into-m",
+   "painted": [
+    99,
+    99
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.0507518507186637,
+     "trunk": -1,
+     "legs": 0.0507518507186637,
+     "over5": 1,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 699
+    },
+    "S3": {
+     "best": 0.05018600632537898,
+     "trunk": -1,
+     "legs": 0.05018600632537898,
+     "over5": 1,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0125000000000002,
+       "why": "LIMB STRIKE 2.81 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 181
+    }
+   }
+  },
+  {
+   "id": "glance-m",
+   "painted": [
+    100,
+    100
+   ],
+   "runs": {
+    "S2D": {
+     "best": 0.037729225091344604,
+     "trunk": -1,
+     "legs": 0.037729225091344604,
+     "over5": 0,
+     "out": null,
+     "impacts": 0,
+     "eps": [],
+     "ms": 155
+    },
+    "S3": {
+     "best": 0.03782972641917931,
+     "trunk": -1,
+     "legs": 0.03782972641917931,
+     "over5": 0,
+     "out": null,
+     "impacts": 1,
+     "eps": [
+      {
+       "t0": 1.0125000000000002,
+       "why": "LIMB STRIKE 3.13 m/s (THIGH / THIGH)",
+       "players": {
+        "ATT": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        },
+        "DEF": {
+         "sev": "MODERATE",
+         "sigma": 1,
+         "cls": "CORRECT",
+         "outcome": "— (ordinary locomotion)",
+         "steps": 0
+        }
+       }
+      }
+     ],
+     "ms": 165
+    }
+   }
+  }
+ ],
+ "errs": []
+}

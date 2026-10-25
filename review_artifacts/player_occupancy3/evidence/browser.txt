@@ -1,0 +1,21 @@
+PASS  the page loads (TOUCHLINE — PLAYER IMPACT + BALANCE V1 REVIEW)  — 0.6 s to the first case
+PASS  every case simulates STAGE 2 and STAGE 3 and both viewports draw  — 69/69
+PASS  the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps), both stages  — 69/69
+PASS  view STAGE 2 | STAGE 3 draws  — [100,100]
+PASS  view STAGE 2 draws  — [100]
+PASS  view STAGE 3 draws  — [100]
+PASS  STAGE 2 and STAGE 3 draw different replays of the same inputs (the feint into the recovering tackle, 0.3 s after the impact)  — {"S2D":3537947479,"S3":2739461819}
+PASS  SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)  — {"skin":1860492194,"skel":1905426567,"both":1860492194}
+PASS  each overlay draws something when on (CONTACT VOLUMES, SUPPORT, CENTRE OF MASS · BALANCE, CONTACT NORMAL, IMPACT VECTOR, RECOVERY STEP, TRAILS, STAGE 2 GHOST, FRAME DATA)  — {"vol":571,"sup":21,"bal":61,"nrm":19,"imp":127,"stp":815,"trl":224,"ghost":28,"hud":9470}
+PASS  DIAGNOSTICS off hides the panel
+PASS  BALL shown / hidden
+PASS  the diagnostics carry the live quantities (contact regions, relative velocity, impact / severity, support, balance, action, interruption, possession, penetration, the referee facts)  — []
+PASS  the eight cameras draw, each a different view  — 8
+PASS  frame step moves the playhead 4 ticks  — 3.999999999999986
+PASS  shift + frame step moves one tick  — 0.9999999999999432
+PASS  1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)  — {"1":0.597499999904632,"0.5":0.2969500000000038,"0.25":0.14739999998211628}
+PASS  LOOP returns to the start
+PASS  REPLAY restarts the case  — 0
+PASS  0 console / HTTP errors  — []
+
+19 / 19 checks pass

@@ -86,7 +86,7 @@ const A3 = (p, h) => [p[0], h != null ? h : (p[2] || 0), -p[1]], QA = (q) => [-q
 const DEF_TINT = [1.05, 0.42, 0.36], ATT_TINT = [1, 1, 1];
 // ═══ A CASE: STAGE 2 · STAGE 3 simulated; per tick (from the recorded live poses) the contacts, the support, the centre of mass and the capture point ═══
 function plantedAt(p, t) { const P = p.planAt(t); return ["R", "L"].filter((X) => P.stances[X].some((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9)); }
-function authAt(Wd, k) { let s = "FREE", o = null; for (const e of Wd.auth.log) { if (e.k > k) break; s = e.to.replace(/\(.*\)/, ""); o = e.owner; } return o ? `CONTROLLED (${o})` : s; }
+function authAt(Wd, k) { let s = "FREE", o = null; for (const e of Wd.auth.log) { if (e.k > k) break; if (!e.to) continue; /* (a note — a claim denied, no transition) */ s = e.to.replace(/\(.*\)/, ""); o = e.owner; } return o ? `CONTROLLED (${o})` : s; }
 function simMode(tc, m) { const c0 = performance.now(), r = runO3(L.env, tc, m, { record: true }), Wd = r.W, k0 = Math.round(r.clip[0] / DT), k1 = Math.round(r.clip[1] / DT), T = new Map(), MF = L.env.body.massFrac;
   let best = -1, bestK = null, trunk = -1, legs = -1; const pen = new Float32Array(k1 - k0 + 1).fill(-1), over = { tol: 0, hard: 0 }, com = { a: [], d: [] };
   for (let k = k0; k <= k1; k++) { const fr = Wd.frames.get(k); if (!fr) continue; const t = k * DT, near = hyp(fr.a.P[0] - fr.d.P[0], fr.a.P[1] - fr.d.P[1]) < OCC.broad + 0.6, va = volumesOf(fr.a.J), vd = volumesOf(fr.d.J), P = near ? detect(va, vd, { within: 0.03 }) : [];

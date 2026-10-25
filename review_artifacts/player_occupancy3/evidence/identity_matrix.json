@@ -1,0 +1,743 @@
+[
+ {
+  "id": "walk-shoulder",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "side",
+  "impact": 1,
+  "onset": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2124,
+   "J": 0.4252
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-jog",
+  "impact": 1,
+  "onset": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.9659,
+   "J": 3.6098
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "oblique",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "oblique-firm",
+  "impact": 1,
+  "onset": 1.0208,
+  "preTicks": 820,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.1464,
+   "J": 0.4229
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "near-miss",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "static-jog",
+  "impact": 1,
+  "onset": 0.975,
+  "preTicks": 809,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0444,
+   "J": 0.1979
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cross",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-past",
+  "impact": 1,
+  "onset": 1.1625,
+  "preTicks": 854,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.4737,
+   "J": 0.7094
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-shoulder",
+  "impact": 1,
+  "onset": 1.3167,
+  "preTicks": 891,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.7958,
+   "J": 0.7278
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-step-in",
+  "impact": 1,
+  "onset": 1.2667,
+  "preTicks": 879,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2136,
+   "J": 0.5286
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-bf",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.2882,
+   "J": 1.2548
+  },
+  "identical": 1,
+  "s2dFirst": 0.425,
+  "s2dRoot": 0.8398
+ },
+ {
+  "id": "bf-fake",
+  "impact": 1,
+  "onset": 0.7625,
+  "preTicks": 758,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.3813,
+   "J": 2.9724
+  },
+  "identical": 1,
+  "s2dFirst": 0.592,
+  "s2dRoot": 0.9917
+ },
+ {
+  "id": "croq-close",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1200,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-hip",
+  "impact": 1,
+  "onset": 0.6708,
+  "preTicks": 736,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.1759,
+   "J": 2.3565
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-leg",
+  "impact": 1,
+  "onset": 0.5958,
+  "preTicks": 718,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.731,
+   "J": 1.1139
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-early",
+  "impact": 1,
+  "onset": 0.5792,
+  "preTicks": 714,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.314,
+   "J": 2.1931
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-before",
+  "impact": 1,
+  "onset": 0.4833,
+  "preTicks": 691,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 5.2137,
+   "J": 4.7157
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-between",
+  "impact": 1,
+  "onset": 0.6042,
+  "preTicks": 720,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.4681,
+   "J": 3.8135
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-after",
+  "impact": 1,
+  "onset": 0.9,
+  "preTicks": 791,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.8227,
+   "J": 0.8293
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-jog-l",
+  "impact": 1,
+  "onset": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0488,
+   "J": 0.2656
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1627,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-walk",
+  "impact": 1,
+  "onset": 1.65,
+  "preTicks": 923,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 11.6427,
+   "J": 1.5961
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cut",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1695,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-croq",
+  "impact": 1,
+  "onset": 0.5625,
+  "preTicks": 710,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1,
+   "J": 1.9212
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "both-committed",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.9868,
+   "J": 3.8
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "walk-shoulder-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "side-m",
+  "impact": 1,
+  "onset": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2055,
+   "J": 0.4405
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "headon-jog-m",
+  "impact": 1,
+  "onset": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.9659,
+   "J": 3.6098
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "oblique-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "oblique-firm-m",
+  "impact": 1,
+  "onset": 1.0208,
+  "preTicks": 820,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.1464,
+   "J": 0.4229
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "near-miss-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "static-jog-m",
+  "impact": 1,
+  "onset": 0.9833,
+  "preTicks": 811,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.0091,
+   "J": 1.3192
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cross-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-past-m",
+  "impact": 1,
+  "onset": 1.1667,
+  "preTicks": 855,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.4179,
+   "J": 0.571
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-shoulder-m",
+  "impact": 1,
+  "onset": 1.3083,
+  "preTicks": 889,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.8033,
+   "J": 0.7156
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "bf-step-in-m",
+  "impact": 1,
+  "onset": 1.2667,
+  "preTicks": 879,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2137,
+   "J": 0.5285
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-bf-m",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.285,
+   "J": 1.2567
+  },
+  "identical": 1,
+  "s2dFirst": 0.425,
+  "s2dRoot": 0.8416
+ },
+ {
+  "id": "bf-fake-m",
+  "impact": 1,
+  "onset": 0.7625,
+  "preTicks": 758,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.3821,
+   "J": 3.0599
+  },
+  "identical": 1,
+  "s2dFirst": 0.592,
+  "s2dRoot": 0.9917
+ },
+ {
+  "id": "croq-close-m",
+  "impact": 1,
+  "onset": 0.8542,
+  "preTicks": 780,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.4743,
+   "J": 0.4782
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-hip-m",
+  "impact": 1,
+  "onset": 0.6708,
+  "preTicks": 736,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 2.9614,
+   "J": 3.2261
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-leg-m",
+  "impact": 1,
+  "onset": 0.5958,
+  "preTicks": 718,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.3598,
+   "J": 1.5762
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-early-m",
+  "impact": 1,
+  "onset": 0.5792,
+  "preTicks": 714,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.314,
+   "J": 2.1931
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-before-m",
+  "impact": 1,
+  "onset": 0.4833,
+  "preTicks": 691,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1.3886,
+   "J": 1.8039
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-between-m",
+  "impact": 1,
+  "onset": 0.6042,
+  "preTicks": 720,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.6849,
+   "J": 3.8964
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-after-m",
+  "impact": 1,
+  "onset": 1.5,
+  "preTicks": 935,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.2623,
+   "J": 0.6027
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-jog-l-m",
+  "impact": 1,
+  "onset": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 0.0488,
+   "J": 0.2656
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "croq-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1627,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "carry-walk-m",
+  "impact": 1,
+  "onset": 1.65,
+  "preTicks": 923,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 11.6427,
+   "J": 1.5961
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "cut-m",
+  "impact": 0,
+  "onset": null,
+  "preTicks": 1695,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": null,
+  "identical": true,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "in-croq-m",
+  "impact": 1,
+  "onset": 0.5625,
+  "preTicks": 710,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 1,
+   "J": 1.9212
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ },
+ {
+  "id": "both-committed-m",
+  "impact": 1,
+  "onset": 0.5875,
+  "preTicks": 716,
+  "preRoot": 0,
+  "preJ": 0,
+  "after": {
+   "root": 3.9831,
+   "J": 3.7979
+  },
+  "identical": 1,
+  "s2dFirst": null,
+  "s2dRoot": 0
+ }
+]

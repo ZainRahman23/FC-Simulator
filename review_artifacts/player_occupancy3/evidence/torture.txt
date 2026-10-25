@@ -1,0 +1,31 @@
+
+TORTURE — 16 seeds × 2 (the seed and its MIRROR) × 40 s (seed 11), STAGE 2 (as decided) vs STAGE 3 on the same scripts (each Stage 3 run twice) · 21.3 simulated minutes per stage
+                                                             STAGE 2   STAGE 3
+  ticks with the roots within the broad phase                 109803    103156
+  ticks with a pair > 5 cm                                       680       540
+  the deepest (cm)                                              22.7      22.4
+  pelvis jolts > 4 cm per frame² (near)                          166       151
+    the largest (cm)                                             9.5       9.6
+  NaN (roots, velocities, perturbations)                           0         0
+  STUCK: contact > 1.5 s, the carrier steering away                0         0
+    a player asking to move, < 0.1 m in a second (samples)       504       711
+      of them a defender held by his own Standing Tackle (> 5 s owning him)       458       684
+    canonical Standing Tackles owning the defender > 5 s          13        17
+  OWNERSHIP: dual                                                  0         0
+    unaware owner                                                  0         0
+    possession without a touch                                     0         0
+    control granted blind                                          0         0
+    CHATTER (< 0.25 s)                                             0         0
+    establishments                                               101       118
+  IMPACT EPISODES                                                  0        68
+    longer than 6 s (a collision loop)                             0         0
+    recovery steps                                                 0        81
+    RECOVERY-STEP OSCILLATION (runs)                               0         0
+    fall candidates                                                0        18
+    touches / boots denied (geometry)                              0        25
+  move requests                                                  277       289
+  NON-DETERMINISTIC STAGE 3 RUNS (two runs, the same seed): 0 / 32
+  STAGE 3 severity: MODERATE 71 · STRONG 40 · SEVERE 20 · LIGHT 4
+  STAGE 3 balance: CORRECT 73 · RECOVERY STEP 36 · FALL CANDIDATE 18 · STAGGER CANDIDATE 6 · ABSORB 2
+  STAGE 3 action: — (ordinary locomotion) 44 · UNAFFECTED 28 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED 21 · PERTURBED BUT CONTINUES 19 · STAGGER / FALL CANDIDATE 12 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE 6 · INTERRUPTED BEFORE TECHNICAL EVENT 5
+  per run (S3): #0 eps 1 steps 4 falls 0 deep 3.1 jolt 8.9→3.9 | #0m eps 1 steps 2 falls 0 deep 5.3 jolt 7.3→3.5 | #1 eps 2 steps 3 falls 0 deep 12.1 jolt 5.0→5.0 | #1m eps 2 steps 4 falls 0 deep 22.4 jolt 7.5→6.7 | #2 eps 3 steps 9 falls 2 deep 14.5 jolt 7.7→9.2 | #2m eps 2 steps 1 falls 0 deep 13.8 jolt 5.4→6.7 | #3 eps 1 steps 0 falls 0 deep 8.2 jolt 6.2→6.1 | #3m eps 1 steps 2 falls 0 deep 3.9 jolt 6.4→5.9 | #4 eps 2 steps 2 falls 0 deep 9.4 jolt 4.1→6.5 | #4m eps 2 steps 2 falls 0 deep 9.4 jolt 4.1→6.5 | #5 eps 1 steps 0 falls 0 deep 3.8 jolt 4.1→4.1 | #5m eps 1 steps 0 falls 0 deep 3.8 jolt 4.1→4.1 | #6 eps 1 steps 4 falls 0 deep 3.4 jolt 4.8→4.8 | #6m eps 3 steps 6 falls 1 deep 14.6 jolt 5.8→7.2 | #7 eps 2 steps 2 falls 0 deep 6.2 jolt 5.4→5.0 | #7m eps 1 steps 0 falls 0 deep 4.0 jolt 4.4→4.4 | #8 eps 1 steps 2 falls 2 deep 9.8 jolt 4.5→4.9 | #8m eps 5 steps 4 falls 1 deep 12.5 jolt 5.1→7.1 | #9 eps 2 steps 0 falls 0 deep 10.2 jolt 8.2→8.2 | #9m eps 2 steps 7 falls 1 deep 5.1 jolt 6.0→4.2 | #10 eps 0 steps 0 falls 0 deep 1.3 jolt 4.7→4.7 | #10m eps 2 steps 2 falls 1 deep 14.1 jolt 6.2→7.7 | #11 eps 5 steps 5 falls 1 deep 17.4 jolt 4.5→7.2 | #11m eps 2 steps 6 falls 2 deep 18.4 jolt 4.5→4.6 | #12 eps 2 steps 0 falls 0 deep 12.6 jolt 7.6→7.6 | #12m eps 3 steps 0 falls 0 deep 12.6 jolt 8.0→7.6 | #13 eps 5 steps 1 falls 2 deep 13.2 jolt 4.9→6.2 | #13m eps 4 steps 4 falls 1 deep 14.0 jolt 4.9→5.1 | #14 eps 4 steps 3 falls 1 deep 10.4 jolt 9.5→9.6 | #14m eps 2 steps 1 falls 1 deep 10.4 jolt 9.5→9.6 | #15 eps 2 steps 3 falls 1 deep 9.3 jolt 4.5→4.0 | #15m eps 1 steps 2 falls 1 deep 9.3 jolt 4.8→3.1

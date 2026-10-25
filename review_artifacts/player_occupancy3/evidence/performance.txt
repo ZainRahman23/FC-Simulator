@@ -1,0 +1,12 @@
+PERFORMANCE — 69 encounters (the review set + the matrix) × 3 repetitions, node v22.19.0 (one core)
+THE WORLD'S STEP (both players' simulation + the authority + Stage 2's occupancy + Stage 3's impact pass):
+  STAGE 2 (as decided)                                           mean    98.5 µs · p99   587.0 µs · max  17955.0 µs   (296055 ticks)
+  STAGE 3                                                        mean   121.0 µs · p99   721.9 µs · max  20291.5 µs   (293565 ticks)
+STAGE 3's IMPACT PASS:
+  IDLE (beyond the broad phase, nobody responding)               mean     0.6 µs · p99     1.3 µs · max    532.6 µs   (187560 ticks)
+  NEAR (within it, no meaningful contact: the contact check)     mean     9.4 µs · p99    22.3 µs · max    701.1 µs   (50724 ticks)
+  ACTIVE (an impact episode responding)                          mean    75.0 µs · p99   321.2 µs · max   2148.8 µs   (55281 ticks)
+  of an active pass: both players' response / balance / realisation 38.2 µs mean (of it the capture analysis 1.5 µs)
+THE WORST TESTED 60 Hz FRAME (four consecutive steps): STAGE 2 31.6 ms · STAGE 3 28.5 ms · p99 4.7 / 5.2 ms · mean 0.4 / 0.5 ms
+PER SIMULATED SECOND (240 ticks) in these encounters (17 % near, 19 % active): the impact pass ≈ 3.9 ms · the step STAGE 2 23.6 ms → STAGE 3 29.0 ms
+22 PLAYERS (an estimate from these costs): the impact pass runs per pair within the broad phase — a dense match moment has ≈ 4 – 8 such pairs, ≈ 1 – 3 of them in contact: ≈ 0.2 ms per tick, 0.8 ms per 60 Hz frame (+ the pair search, a grid: O(N))

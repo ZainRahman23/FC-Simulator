@@ -1,0 +1,31 @@
+{
+  "milestone": "TOUCHLINE — PLAYER OCCUPANCY STAGE 3: PHYSICAL IMPACT + BALANCE RESPONSE (V1)",
+  "status": "PROTOTYPE — built and measured, STOPPED for the owner's visual review; not integrated, not frozen, not merged, not published",
+  "date": "2026-10-25",
+  "branch": "prototype/player-occupancy-stage3",
+  "head": "see git log (this file is committed with the report; the evidence was produced on 14067be3, the Lab fix and the browser check after it)",
+  "cut_from": { "sha": "817e0f25", "what": "Player Occupancy Stage 2 (as decided: wallSparesMove) ← fb35347d Stage 1 ← 89ab31c6 Shared Possession + Reaction V1 ← 8c0149ba Standing Tackle V1 ← f775daac milestone/feint-croqueta-vocab-v1" },
+  "worktree": "~/Downloads/FC Simulator worktrees/player-occupancy-v1",
+  "canonical_files_changed": 0,
+  "comparison": "STAGE 2 = OccupancyWorld2 with S2D = { wallSparesMove: true } · STAGE 3 = ImpactWorld (occupy3/), identical inputs",
+  "lab": "http://127.0.0.1:8365/sandbox/visual/occupy3_lab.html (LOCAL ONLY — real players' models)",
+  "stage2_decisions_kept": ["committed planted feet exact", "committed-foot give not increased (the impact's shifts in Stage 2's 2 / 8 / 12 cm ledger)", "soft wall spares a planned / committed move's approach", "no look-ahead", "2 cm tolerance (also Stage 3's activation depth)", "12 cm ordinary lean (positional pushes)", "canonical planted-foot swing / flick untouched"],
+  "model": "contact beyond 2 cm + body closing > 0.30 m/s or limb strike > 1.0 m/s (articulated, capped) or Stage 2 unresolved ⇒ impact; velocity constraint (τ 0.03 s) with posed effective masses (equal 73 kg), limb strikes with the swinging leg's mass, friction-capped strut; LIP capture-point balance about the authored motion (slack from grounded footprints: braced / moving / committed / airborne); A ABSORB · B CORRECT · C RECOVERY STEP · D STAGGER · E FALL; realisation: committed — Stage 2's ledger, ordinary — the planted legs' reach, then the drawn pelvis, then overflow; recovery step from the LIP prediction (no crossing, leg reach, written into the canonical plan, cancelled when it no longer applies); posture oscillators layered on the authored pose; explicit action rules; referee facts recorded",
+  "results": {
+    "torso_max_cm": { "matrix": [22.9, 3.1], "review": [22.9, 3.1], "moves": [22.9, 4.9], "search": [15.8, 3.3] },
+    "legs_max_cm": { "matrix": [22.7, 22.7], "moves": [23.3, 22.9], "note": "leg-through-leg not reduced (Stage 3B)" },
+    "ticks_over_5cm": { "matrix": [1120, 636], "review": [761, 530], "moves": [4481, 3505], "search": [1740, 1677] },
+    "intervened": { "matrix": "39/52", "review": "26/37", "moves": "169/352", "search": "144/235" },
+    "matrix_severity": "LIGHT 2 · MODERATE 33 · STRONG 26 · SEVERE 17",
+    "matrix_balance": "CORRECT 35 · RECOVERY STEP 26 · STAGGER 3 · FALL CANDIDATE 14",
+    "committed_v_committed_moves": "76 episodes: carrier kept the move 35 (perturbed / unaffected), event completes → recovery 14, interrupted before 9; tackler event completes → recovery 43; outcomes changed 8",
+    "fall_candidates": { "matrix": 14, "moves": 40, "search": 54, "mostly": "TRIP (the stepping foot blocked inside the opponent's leg)" },
+    "ball_possession": "no ball change or authority transition from an impact over 676 encounters; authority checks 0; touches denied / actions ended / outcomes changed listed with causes",
+    "continuity": "no snap at impact; 8 of 39 step landings add a vertical pelvis dip (canonical hip fit at the landing)",
+    "performance": "impact pass idle 0.6 µs · near 9.4 µs · active 75 µs; step 98.5 → 121.0 µs mean; 60 Hz frame mean 0.4 → 0.5 ms, p99 4.7 → 5.2 ms",
+    "regression": "Stage 2 reproduced exactly; identity before the first impact 37/37 · 52/52 · 352/352 · 235/235; solo 105/105; passing 56/56 identical (touching within 2 cm 11/11); possession torture 0; early information 0; torture deterministic 32/32, NaN 0, stuck 0, loops 0, oscillation 0; browser 19/19 (page ≡ node 69/69); milestone 10 suites identical; lock check PASS"
+  },
+  "canonical_findings": ["Standing Tackle sometimes commits with its control return 19–24 s away (torture) — the defender stands owned", "the canonical body fits the hips to a new support in one frame at a landing"],
+  "owner_decisions": ["activation depth 2 cm (built) vs any touch", "ordinary momentum bounded by leg reach (built) vs 12 cm lean", "limb-strike strength (inelastic) at walking pace", "fall placeholder: fade + hand back (built) vs freeze", "after RECOVERY REPLACED the remaining authored touches are not played — keep or protect the receiving touch", "Stage 3B scope"],
+  "not_done_as_instructed": ["falls / stumbles / ground contact / get-up animations", "fouls / referee", "strength ratings", "balance / outcome tuning", "slide tackle", "integration / freezing / merging / publishing"]
+}

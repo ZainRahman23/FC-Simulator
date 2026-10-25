@@ -1,0 +1,191 @@
+
+§10 BALL / POSSESSION — set search (235 encounters), STAGE 3
+(1) THE SOURCE: o3_world.js writes to the authority or launches the ball: NEVER (no auth.set / claim / state / owner, no launch, no ball state written)
+(2) THE BALL: velocity changes > 0.25 m/s in a tick: 2662 · of them with no canonical contact within ± 2 ticks (ball on the ground): 0
+(3) THE AUTHORITY: 673 transitions, by their canonical cause:
+       275  CONTROLLED · COLLECTED: carry
+        55  CONTROLLED · COLLECTED: carry turn
+        48  FREE · CONTROLLER_FAILURE: a planned contact missed the ball
+        22  CONTROLLED · COLLECTED: set touch
+        19  CONTROLLED · COLLECTED: carry correction
+        15  CONTROLLED · COLLECTED: OUTSIDE HOOK
+        13  CONTROLLED · COLLECTED: compact outside redirect
+        12  CONTROLLED · COLLECTED: OUTSIDE CUT
+        12  CONTROLLED · COLLECTED: compact inside redirect
+        11  CONTROLLED · COLLECTED: braking pivot
+         6  CONTROLLED · COLLECTED: croqueta · the inside plays it across
+         5  CONTROLLED · COLLECTED: gather
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 3.5 m/s ≥ 2)
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 89 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 2.9 m/s ≥ 2)
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.04 s) would sweep 17 cm from the 
+         4  FREE · OPPONENT_INTERCEPTION: DEF's blind touch (his next touch (+0.35 s) would sweep 85 c
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 92 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 127 cm from the
+         4  CONTROLLED · COLLECTED: BODY FEINT · the free foot from behind, its outside takes it out t
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.69 s) would sweep 549 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 78 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 261 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.46 s) would sweep 271 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 24 cm from the 
+         3  CONTROLLED · COLLECTED: braking touch
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.32 s) would sweep 204 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.03 s) would sweep 28 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 117 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 44 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.44 s) would sweep 419 cm from the
+         3  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+1.15 s) would sweep 456 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.53 s) would sweep 199 cm from the
+         3  FREE · OPPONENT_INTERCEPTION: DEF's blind touch (his next touch (+0.33 s) would sweep 175 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.47 s) would sweep 263 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.44 s) would sweep 218 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 226 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 87 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.07 s) would sweep 30 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 158 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.10 s) would sweep 67 cm from the 
+         3  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+0.20 s) would sweep 92 c
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 107 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.12 s) would sweep 99 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.35 s) would sweep 167 cm from the
+         2  CONTROLLED · COLLECTED: RONALDO CHOP
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 49 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.20 s) would sweep 102 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.20 s) would sweep 104 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 67 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 29 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.70 s) would sweep 508 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 166 cm from the
+         1  FREE · OPPONENT_INTERCEPTION: DEF's blind touch (his next touch (+0.32 s) would sweep 173 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 9.9 m/s ≥ 2)
+         1  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+0.19 s) would sweep 106 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.24 s) would sweep 173 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 48 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.10 s) would sweep 46 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 4.9 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.26 s) would sweep 119 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.14 s) would sweep 87 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 3.4 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.22 s) would sweep 105 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 76 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.07 s) would sweep 32 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 5.0 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 114 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 138 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 69 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.26 s) would sweep 83 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 256 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.16 s) would sweep 88 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.50 s) would sweep 186 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 25 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.66 s) would sweep 585 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 60 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 22 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.69 s) would sweep 199 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.45 s) would sweep 233 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.42 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.42 s) would sweep 213 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.35 s) would sweep 186 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 135 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 238 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 148 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 97 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 5.8 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 66 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.03 s) would sweep 16 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 4.6 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 207 cm from the
+         1  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+0.26 s) would sweep 184 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 144 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 57 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 6.3 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.22 s) would sweep 94 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 64 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.06 s) would sweep 24 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.39 s) would sweep 185 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 137 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.21 s) would sweep 90 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.12 s) would sweep 45 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.33 s) would sweep 177 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.04 s) would sweep 33 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 2.0 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.33 s) would sweep 164 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 127 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 77 cm from the 
+    an impact named as a cause: 0 · the authority's own checks: dual 0 · unaware 0 · without a touch 0 · granted blind 0
+(4) WHAT THE PHYSICS DID (geometry, each with its reason):
+        53  TOUCH DENIED · the foot is the recovery step
+        50  DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+        17  DEF INTERRUPTED BEFORE TECHNICAL EVENT
+         3  ATT INTERRUPTED BEFORE TECHNICAL EVENT
+         1  ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+    tackle outcomes changed from Stage 2: 25
+      #9@0.6                     CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (the bodies' displacement (an impact))
+      #10@1.3                    CONTACT — ATTACKER RECOVERS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP)
+      #21@1.2                    CONTACT — ATTACKER RETAINS → MISS   (ATT RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #21@1.3                    CONTACT — ATTACKER RETAINS → MISS   (ATT RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #21@1.4                    CONTACT — ATTACKER RETAINS → MISS   (ATT RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #47@0.8                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #47@0.9                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #47@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #47@1.1                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED · DEF INTERRUPTED BEFORE TECHNICAL EVENT)
+      #47@1.2                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT)
+      #47@1.3                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #47@1.4                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #50@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.1                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.2                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.3                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.4                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #74@1.2                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #83@1.2                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #83@1.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #83@1.4                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #93@0.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #93@0.4                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #93@0.5                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #93@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+(5) THE REFEREE FACTS (objective only — no foul, no legality; per impact episode: the regions, the relative velocity, each player's last ball contact before the player contact, the tackle's ball contacts, the balance lost, the action disrupted): 155 episodes
+    with a tackle: 137 · its ball contact PRECEDED the player contact 111 · came only AFTER it 10 · no ball contact 16
+      #1@0.0                     #1 player contact +0.525 · SHIN / SHIN · closing -0.629 m/s · tackle ball +0.367 (before) · ATT last touch -0.146 · loss ATT MODERATE / DEF LIGHT · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #1@0.1                     #1 player contact +0.529 · SHIN / SHIN · closing -1.344 m/s · tackle ball +0.371 (before) · ATT last touch -0.146 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #1@0.3                     #1 player contact +1.971 · THIGH / THIGH · closing 0.408 m/s · tackle ball +0.521 (before) · ATT last touch +1.913 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF — (ordinary locomotion)
+      #4@0.3                     #1 player contact +0.938 · THIGH / THIGH · closing 2.486 m/s · tackle ball — (none) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #4@0.4                     #1 player contact +0.938 · THIGH / THIGH · closing 2.486 m/s · tackle ball — (none) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #4@0.5                     #1 player contact +0.938 · THIGH / THIGH · closing 2.486 m/s · tackle ball — (none) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #5@0.9                     #1 player contact +1.550 · THIGH / THIGH · closing 2.071 m/s · tackle ball +1.425 (before) · ATT last touch +1.400 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #5@1.0                     #1 player contact +1.550 · THIGH / THIGH · closing 2.071 m/s · tackle ball +1.425 (before) · ATT last touch +1.400 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #5@1.1                     #1 player contact +1.550 · THIGH / THIGH · closing 2.071 m/s · tackle ball +1.425 (before) · ATT last touch +1.400 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #5@1.2                     #1 player contact +1.554 · THIGH / THIGH · closing 1.913 m/s · tackle ball +1.450 (before) · ATT last touch +1.400 · loss ATT MODERATE / DEF STRONG · ATT UNAFFECTED / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #5@1.3                     #1 player contact +1.571 · THIGH / THIGH · closing 1.144 m/s · tackle ball — (none) · ATT last touch +1.400 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #5@1.4                     #1 player contact +1.592 · SHIN / THIGH · closing 0.012 m/s · tackle ball — (none) · ATT last touch +1.400 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #9@0.3                     #1 player contact +2.371 · THIGH / SHIN · closing 4.009 m/s · tackle ball +0.779 (before) · ATT last touch +2.262 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #9@0.4                     #1 player contact +2.371 · THIGH / SHIN · closing 4.009 m/s · tackle ball +0.779 (before) · ATT last touch +2.262 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #9@0.5                     #1 player contact +2.371 · THIGH / SHIN · closing 4.009 m/s · tackle ball +0.779 (before) · ATT last touch +2.262 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #9@0.6                     #1 player contact +1.850 · SHIN / THIGH · closing 0.457 m/s · tackle ball +0.796, +0.817 (before) · ATT last touch +0.808 · loss ATT MODERATE / DEF MODERATE · ATT UNAFFECTED / DEF — (ordinary locomotion)
+      #10@0.6                    #1 player contact +1.342 · THIGH / THIGH · closing 0.069 m/s · tackle ball +1.108 (before) · ATT last touch +0.925 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #10@0.7                    #1 player contact +1.342 · THIGH / THIGH · closing 0.069 m/s · tackle ball +1.108 (before) · ATT last touch +0.925 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #10@0.8                    #1 player contact +1.342 · THIGH / THIGH · closing 0.069 m/s · tackle ball +1.108 (before) · ATT last touch +0.925 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #10@0.9                    #1 player contact +1.342 · THIGH / THIGH · closing 0.069 m/s · tackle ball +1.108 (before) · ATT last touch +0.925 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #10@1.0                    #1 player contact +1.354 · THIGH / THIGH · closing 1.753 m/s · tackle ball +1.171 (before) · ATT last touch +0.925 · loss ATT SEVERE / DEF MODERATE · ATT STAGGER / FALL CANDIDATE / DEF PERTURBED BUT CONTINUES
+      #10@1.1                    #1 player contact +1.396 · THIGH / THIGH · closing 0.033 m/s · tackle ball +1.275, +1.288 (before) · ATT last touch +1.283 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      #10@1.2                    #1 player contact +1.400 · THIGH / THIGH · closing 1.57 m/s · tackle ball — (none) · ATT last touch +1.283 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #10@1.3                    #1 player contact +1.392 · THIGH / THIGH · closing 0.808 m/s · tackle ball — (none) · ATT last touch +1.283 · loss ATT SEVERE / DEF STRONG · ATT STAGGER / FALL CANDIDATE / DEF INTERRUPTED BEFORE TECHNICAL EVENT
+      #11@0.0                    #1 player contact +0.563 · SHIN / SHIN · closing 2.166 m/s · tackle ball +0.462 (before) · ATT last touch -0.146 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #11@0.1                    #1 player contact +0.563 · SHIN / SHIN · closing 2.166 m/s · tackle ball +0.462 (before) · ATT last touch -0.146 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #11@0.2                    #1 player contact +0.563 · SHIN / SHIN · closing 3.009 m/s · tackle ball +0.471 (before) · ATT last touch -0.146 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #15@1.3                    #1 player contact +1.479 · SHIN / SHIN · closing 1.77 m/s · tackle ball — (none) · ATT last touch +1.325 · loss ATT MODERATE / DEF LIGHT · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #15@1.4                    #1 player contact +1.696 · THIGH / THIGH · closing 0.327 m/s · tackle ball +1.613 (before) · ATT last touch +1.621 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #21@0.8                    #1 player contact +1.217 · THIGH / THIGH · closing 0.883 m/s · tackle ball +1.404 (only after) · ATT last touch +0.571 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #21@0.9                    #1 player contact +1.217 · THIGH / THIGH · closing 0.883 m/s · tackle ball +1.404 (only after) · ATT last touch +0.571 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #21@1.0                    #1 player contact +1.217 · THIGH / THIGH · closing 0.883 m/s · tackle ball +1.404 (only after) · ATT last touch +0.571 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #21@1.1                    #1 player contact +1.217 · THIGH / THIGH · closing 0.883 m/s · tackle ball +1.404 (only after) · ATT last touch +0.571 · loss ATT MODERATE / DEF STRONG · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #21@1.2                    #1 player contact +1.167 · THIGH / THIGH · closing -1.286 m/s · tackle ball — (none) · ATT last touch +0.571 · loss ATT SEVERE / DEF SEVERE · ATT STAGGER / FALL CANDIDATE / DEF INTERRUPTED BEFORE TECHNICAL EVENT
+      #21@1.3                    #1 player contact +1.167 · THIGH / THIGH · closing 0.024 m/s · tackle ball — (none) · ATT last touch +0.571 · loss ATT STRONG / DEF SEVERE · ATT — (ordinary locomotion) / DEF INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE
+      #25@0.5                    #1 player contact +1.417 · THIGH / THIGH · closing -0.303 m/s · tackle ball +1.042 (before) · ATT last touch +1.292 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #25@0.6                    #1 player contact +1.417 · THIGH / THIGH · closing -0.303 m/s · tackle ball +1.042 (before) · ATT last touch +1.292 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #25@0.7                    #1 player contact +1.417 · THIGH / THIGH · closing -0.303 m/s · tackle ball +1.042 (before) · ATT last touch +1.292 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      #25@0.8                    #1 player contact +1.225 · SHIN / SHIN · closing 0.24 m/s · tackle ball +1.067 (before) · ATT last touch +0.571 · loss ATT MODERATE / DEF LIGHT · ATT — (ordinary locomotion) / DEF UNAFFECTED
+      #25@0.9                    #1 player contact +1.267 · SHIN / SHIN · closing -0.272 m/s · tackle ball +1.142 (before) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT UNAFFECTED / DEF UNAFFECTED
