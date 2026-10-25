@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player Impact Review</title>
+<link rel="icon" href="data:,">
+<!-- TOUCHLINE — PLAYER IMPACT + BALANCE V1 REVIEW (owner, 25 Oct 2026): PLAYER OCCUPANCY STAGE 3 — physical impact + balance response.
+     STAGE 2 (as decided) | STAGE 3, synchronized, identical inputs. Overlays: contact volumes, support (footprints + polygon), centre of mass +
+     capture point (balance), contact normal, impact vector, recovery-step target, world trails, Stage 2 ghost; per view the frame data (contact
+     regions, relative velocity, impact / severity, support, balance, action, interruption, possession, penetration). A prototype: not
+     integrated, not frozen. LOCAL ONLY — real players' models. -->
+<style>
+  :root { --bg: #0d1210; --panel: rgba(16, 22, 19, 0.90); --solid: #151d19; --ink: #e6efe9; --dim: #8fa49a; --acc: #ffd45e; --line: #2a3530; --ok: #8dffa6; --bad: #ff8a80; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font: 12.5px/1.35 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #bar { position: absolute; left: 0; right: 0; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 5px 10px; align-items: center; padding: 6px 10px; background: var(--solid); border-bottom: 1px solid var(--line); }
+  #bar h1 { font: 700 13px/1 -apple-system, Helvetica, sans-serif; margin: 0 8px 0 0; letter-spacing: 0.04em; color: var(--acc); }
+  .grp { display: inline-flex; gap: 3px; align-items: center; } .lab { color: var(--dim); margin-right: 2px; }
+  button, select { background: #222c27; color: var(--ink); border: 1px solid #34413a; border-radius: 5px; padding: 3px 8px; font: inherit; cursor: pointer; }
+  button.on { background: var(--acc); color: #1a1a10; border-color: var(--acc); font-weight: 600; }
+  #stage { position: absolute; left: 290px; right: 0; bottom: 74px; }
+  #gl, #ov { position: absolute; left: 0; top: 0; display: block; }
+  #cases { position: absolute; left: 0; width: 290px; bottom: 0; overflow-y: auto; background: var(--solid); border-right: 1px solid var(--line); padding: 6px 8px 10px; box-sizing: border-box; }
+  #cases h3 { font: 600 11px -apple-system, Helvetica, sans-serif; color: var(--dim); text-transform: uppercase; letter-spacing: 0.06em; margin: 10px 0 4px; }
+  #cases .c { display: block; width: 100%; text-align: left; margin: 2px 0; padding: 5px 7px; line-height: 1.25; }
+  #cases .c .o { display: block; font: 10.5px Menlo, Consolas, monospace; color: var(--dim); margin-top: 3px; }
+  #cases .c.on .o { color: #3a3010; }
+  #diag { position: absolute; right: 0; width: 470px; bottom: 0; overflow-y: auto; z-index: 4; background: var(--solid); border-left: 1px solid var(--line); padding: 8px 10px; box-sizing: border-box; font: 11px/1.45 Menlo, Consolas, monospace; white-space: pre-wrap; }
+  body.diag #stage, body.diag #tl { right: 470px; }
+  #diag b { color: var(--acc); font-weight: 600; } #diag .k { color: var(--dim); } #diag .bad { color: var(--bad); } #diag .ok { color: var(--ok); } #diag .warn { color: #ffb36b; }
+  #prov { color: #ffb36b; font: 600 11px -apple-system, Helvetica, sans-serif; }
+  #tl { position: absolute; left: 290px; right: 0; bottom: 0; height: 74px; background: var(--solid); border-top: 1px solid var(--line); }
+  #tlc { width: 100%; height: 100%; display: block; cursor: pointer; }
+  .hidden { display: none !important; }
+  #loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; z-index: 9; background: var(--bg); }
+  @media (max-width: 900px) { #cases { width: 100%; height: 30%; bottom: auto; } #stage, #tl { left: 0; } body.diag #stage, body.diag #tl { right: 0; } #diag { width: 100%; top: auto !important; height: 34%; } }
+</style>
+</head>
+<body>
+<div id="bar">
+  <h1>TOUCHLINE — PLAYER IMPACT + BALANCE V1 REVIEW</h1>
+  <span id="prov">Stage 3 · prototype · not integrated · not frozen</span>
+  <span class="grp"><button id="bPlay">▶ PLAY</button><button id="bReplay">⟲ REPLAY</button><button id="bBack" title="frame step back (,) — shift: one tick">◀</button><button id="bFwd" title="frame step (.) — shift: one tick">▶|</button><button id="bLoop">LOOP</button></span>
+  <span class="grp"><span class="lab">rate</span><button data-rate="1" class="on">1×</button><button data-rate="0.5">0.5×</button><button data-rate="0.25">0.25×</button></span>
+  <span class="grp"><span class="lab">view</span><button data-layout="2" title="STAGE 2 | STAGE 3, synchronized (3)">STAGE 2 | STAGE 3</button><button data-layout="S2D" title="1">STAGE 2</button><button data-layout="S3" title="2">STAGE 3</button></span>
+  <span class="grp"><span class="lab">body</span><button data-show="skin" title="s cycles">SKIN</button><button data-show="skel">SKELETON</button><button data-show="both">SKIN + SKELETON</button></span>
+  <span class="grp"><span class="lab">camera</span><select id="selCam"><option value="gameplay">GAMEPLAY</option><option value="front">FRONT</option><option value="rear">REAR</option><option value="sideL">SIDE LEFT</option><option value="sideR">SIDE RIGHT</option><option value="q3f">3/4 FRONT</option><option value="q3r">3/4 REAR</option><option value="top">OVERHEAD</option></select></span>
+  <span class="grp"><button id="bBall" title="o">BALL</button><button id="bVol" title="v">CONTACT VOLUMES</button><button id="bSup" title="f">SUPPORT</button><button id="bBal" title="b">CENTRE OF MASS · BALANCE</button><button id="bNrm" title="n">CONTACT NORMAL</button><button id="bImp" title="i">IMPACT VECTOR</button><button id="bStp" title="r">RECOVERY STEP</button><button id="bTrl" title="t">TRAILS</button><button id="bGhost" title="g">STAGE 2 GHOST</button><button id="bHud" title="h">FRAME DATA</button><button id="bDiag" title="d">DIAGNOSTICS</button></span>
+</div>
+<div id="cases"></div>
+<div id="stage"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
+<div id="diag"></div>
+<div id="tl"><canvas id="tlc"></canvas></div>
+<div id="loading">simulating STAGE 2 and STAGE 3…</div>
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="run1/run1_gait_v13.js"></script>
+<script type="module" src="occupy3/o3_lab.js"></script>
+</body>
+</html>

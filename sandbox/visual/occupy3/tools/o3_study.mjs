@@ -19,13 +19,8 @@ import fs from "node:fs";
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, SET = arg("set", "review"), RES = Object.assign({}, RES2, S2D, arg("res") ? JSON.parse(arg("res")) : {}), DT = 1 / 240, hyp = Math.hypot;
 const r3 = (x) => (x == null ? null : Array.isArray(x) ? x.map((v) => +v.toFixed(3)) : +x.toFixed(3)), deg = (a) => +(a * 180 / Math.PI).toFixed(1), MF = ENV.body.massFrac;
 const MOVE = /BODY FEINT|CROQUETA/;
-// a player's action and where it is in it (the decisive event: a Body Feint's / Croqueta's decisive touch; a Standing Tackle's contact)
-export function actionState(W, p, t) { const tk = p.tk, A = tk && (tk.acts || []).find((x) => t >= x.t0 - 1e-9 && t < x.tCtl - 1e-9);
-  if (A) { const tau = t - A.t0, hit = A.hits.find((h) => h.t <= t + 1e-9); return { kind: "TACKLE", label: "STANDING TACKLE (" + A.fam + ")", committed: true, phase: tk.phaseAt(t), tau: r3(tau), progress: r3(tau / A.M.end), decisiveAt: r3(A.t0 + A.M.tc), beforeDecisive: tau < A.M.tc - 1e-9, decisiveDone: tau >= A.M.tc - 1e-9, ballTouched: !!hit }; }
-  const a = p.planAt(t).action; if (a && a.tech && a.tCommit != null && MOVE.test(a.label || "")) { const dc = p.contacts.find((c) => c.actionId === a.id && c.decisive && c.t <= t + 1e-9), before = t < a.tC - 1e-9;
-    const phase = t < a.tCommit - 1e-9 ? "PLANNED (not yet committed)" : t < a.tRelease - 1e-9 ? (before ? "COMMITTED · before the decisive touch" : "COMMITTED · after the decisive touch") : "EXIT (released)";
-    return { kind: a.label.startsWith("BODY") ? "BODY FEINT" : "CROQUETA", label: a.label, committed: t >= a.tCommit - 1e-9 && t < a.tRelease - 1e-9, planned: t < a.tCommit - 1e-9, phase, progress: r3((t - a.tCommit) / (a.tRelease - a.tCommit)), decisiveAt: r3(a.tC), beforeDecisive: before, decisiveDone: !!dc, decisiveMissed: !!(dc && dc.missed), ballTouched: !!p.contacts.find((c) => c.actionId === a.id && !c.missed && c.t <= t + 1e-9) }; }
-  return { kind: "ORDINARY", label: a ? a.label : "—", committed: false, phase: "—" }; }
+export { actionState } from "../o3_facts.js";
+import { actionState } from "../o3_facts.js";
 function snap(W, k, t, prev, pr) { const L = W.livePoses(), Ja = L.a.J, Jd = L.d.J, va = volumesOf(Ja), vd = volumesOf(Jd), x = pr.deep, rec = pr.rec, out = { k, t: r3(t), players: [] };
   for (const [i, p, J] of [[0, W.att, Ja], [1, W.def, Jd]]) { const st = p.stateAt(t), planted = ["R", "L"].filter((X) => p.plan.stances[X].some((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9)), S = supportOf(J, planted, MF), ch = p.planAt(t).ch;
     const cm0 = prev && prev.com[i], comV = cm0 ? [(S.com[0] - cm0[0]) / DT, (S.com[1] - cm0[1]) / DT] : null;

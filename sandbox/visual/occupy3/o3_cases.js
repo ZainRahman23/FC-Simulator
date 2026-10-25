@@ -15,7 +15,7 @@ const carry = (mode, o = {}) => Object.assign({ tech: "CARRY", variant: mode, mo
 const old = (id, group, name) => Object.assign({}, O2CASES.find((x) => x.id === id), { group, name, from: id });
 const ROWS = [
   // ── ORDINARY CONTACT ──
-  { id: "walk-shoulder", group: "ORDINARY CONTACT", name: "WALKING SHOULDER CONTACT · side by side, the carrier drifting 8° in", c: carry("WALK", { runup: 2.2, dur: 4.0, stick: [[0, 8, "WALK"]] }), def: D(-4.0, 0.60, 0, { stick: [[-2.2, 0, "WALK"]] }), tackle: [] },
+  { id: "walk-shoulder", group: "ORDINARY CONTACT", name: "WALKING SHOULDER CONTACT · side by side, the defender walking in at 30° (the soft wall keeps a slow drift apart)", c: carry("WALK", { runup: 2.2, dur: 4.0 }), def: D(1.0, 1.6, -30, { stick: [[0.0, 0, "WALK"]] }), tackle: [] },
   old("side", "ORDINARY CONTACT", "JOGGING SHOULDER CONTACT · side by side, the carrier leaning 6° in"),
   old("headon-jog", "ORDINARY CONTACT", "HEAD-ON APPROACH · both jog at each other"),
   { id: "oblique", group: "ORDINARY CONTACT", name: "OBLIQUE APPROACH · the defender jogs in at 45° across the carrier's line", c: carry("JOG", { dur: 3.5 }), def: D(5.5, 2.3, -135, { stick: [[0.0, 0, "JOG"]] }), tackle: [] },

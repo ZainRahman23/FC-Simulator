@@ -56,6 +56,10 @@ export const RES3 = {
   relax: 6.0,        // 1/s: an ordinary player's pelvis offset handed back to the root (its support permitting)
   oRelease: 0.008,   // m per tick: an overflow realised once a new support allows (Stage 2's per-tick scale)
   stepOut: 0.42, stepCross: 0.10, stepMax: 0.95,   // m: a recovery step's adjustment outward / across the stance foot; its distance from the stance foot
+  stepMin: 0.05,     // m: a landing adjusted less than this is the gait's own variation — the next landing captures it (CORRECT), not a recovery step
+  liftMaxSpeed: 1.2, // m/s: above this a body does not lift a planted foot to step — its gait's next landing (re-aimed) is the recovery step
+  reachLand: 0.75,   // m: a step's target never further than this from the body (the root) at its landing
+  minWidth: 0.08,    // m: a recovery step lands on its own side of the stance foot by at least this (no crossover steps)
   tUnload: 0.04, tSwing0: 0.17, tSwing1: 0.22,       // s: a planted foot unloads, then swings (0.17 + 0.22 × distance)
   lock: 0.13,        // s: a swing landing sooner than this is not re-aimed (the canonical blend is 0.12 s — a later edit would land unblended)
   // the posture oscillators: natural frequency (rad/s), damping ratio, limit (deg, or m for the crouch)
@@ -150,6 +154,14 @@ export class ImpactWorld extends OccupancyWorld2 {
       ep.J = add2(ep.J, Jt.A); }
     // (the strikes' impulses, spread over their 6 ticks)
     if (ep && ep.queue && ep.queue.length) { for (const q of ep.queue) { const jA = mul2(q.J, 1 / 6); Jt.A = add2(Jt.A, jA); Jt.D = add2(Jt.D, mul2(jA, -1)); lev.A.push({ c: q.c, J: jA }); lev.D.push({ c: q.c, J: mul2(jA, -1) }); q.n--; } ep.queue = ep.queue.filter((q) => q.n > 0); }
+    // ── A SWINGING LEG BLOCKED (the trip risk, instrumented — Stage 3B's): a player's leg in its swing held more than the hard limit (5 cm) inside the
+    // opponent's leg for 6 ticks (25 ms): the swing cannot pass — that foot cannot land where it must. Recorded with its state; a fall candidate
+    // when that foot is the one the balance needs to step with
+    if (ep && ep.active) { const bl = this.blocked || (this.blocked = new Map()); const seen = new Set();
+      for (const x of pairs) { if (x.pen <= OCC.hard) continue; for (const [p, leg, oth] of [[A, x.legA, x.B], [D, x.legB, x.A]]) { if (!leg || !/^(THIGH|SHIN)/.test(oth)) continue; if (this.plantedStances(p, t).some(([Y]) => Y === leg)) continue; const key = p.pid + leg; seen.add(key);
+          const n = (bl.get(key) || 0) + 1; bl.set(key, n); if (n === 6) { const s = this.ps.get(p); s.legBlocked = (s.legBlocked || []).concat([{ t, X: leg, by: oth, pen: +x.pen.toFixed(3) }]); this.event(p, "SWINGING LEG BLOCKED (trip risk)", `the ${leg === "R" ? "right" : "left"} leg ${(x.pen * 100).toFixed(1)} cm inside his ${oth} for 25 ms: the swing cannot pass`, { X: leg });
+            if (s.active && s.bal && /RECOVERY STEP|STAGGER|FALL/.test(s.bal.cls) && ((s.step && !s.step.landed && s.step.X === leg) || (s.bal.step && s.bal.step.X === leg)) && !s.fall) this.markFall(p, s, t, Object.assign({}, s.bal, { why: `TRIP: the stepping foot (${leg}) is blocked by the opponent's ${oth} — the recovery step it must make cannot pass` }), p.stateAt(t), bodies[p === A ? "A" : "D"] || this.bodyOf(p === A ? LP.a.J : LP.d.J, null), [0, 0], [0, 0]); } } }
+      for (const k of [...bl.keys()]) if (!seen.has(k)) bl.delete(k); }
     rec.pairs = pairs.slice(0, 4).map((x) => ({ A: x.A, B: x.B, pen: +x.pen.toFixed(4), body: x.body, vBody: +x.vBody.toFixed(2), vArt: x.vArt == null ? null : +x.vArt.toFixed(2), regions: regionOf(x.A, x.uA) + " / " + regionOf(x.B, x.uB) }));
     // ── EACH PLAYER: the response, the balance, the realisation, the step, the action ──
     rec.p = [];
@@ -181,7 +193,8 @@ export class ImpactWorld extends OccupancyWorld2 {
         s.osc.lean.v += sh * jf * h / B.Ith * DEG; s.osc.side.v += sh * jr * h / B.Ith * DEG; s.osc.trunk.v += sh * (jr * of - jf * or) / B.Ithy * DEG * 0.5; s.osc.yaw.v += (1 - sh) * (jr * of - jf * or) / B.Iy * DEG * 0.5; }
       s.osc.crouch.v += 0.04 * len2(du) / Math.max(0.05, DT * 8); out.J = Jb.map((v) => +v.toFixed(3)); out.ground = g.map((v) => +v.toFixed(3)); }
     // (2) THE SUPPORT: planted stances, the footprints' polygon, the authored centre of pressure, ω
-    const planted = this.plantedStances(p, t), feet = planted.map(([Xf]) => Xf), poly = feet.length ? hull(feet.flatMap((Xf) => footPoly(J3, Xf))) : null, com2 = [B.c[0] - s.P[0], B.c[1] - s.P[1]];
+    // (the support polygon: the planted feet whose ball is ON THE TURF as drawn — the canonical body lifts a planted foot early at times: it holds nothing)
+    const planted = this.plantedStances(p, t), feet = planted.map(([Xf]) => Xf).filter((Xf) => J3["toe_" + Xf].j[2] < 0.06), poly = feet.length ? hull(feet.flatMap((Xf) => footPoly(J3, Xf))) : null, com2 = [B.c[0] - s.P[0], B.c[1] - s.P[1]];
     let cop = null; if (feet.length === 1) { const a = J3["foot_" + feet[0]].j, tip = J3["toe_" + feet[0]].t; cop = [(a[0] + tip[0]) / 2, (a[1] + tip[1]) / 2]; } else if (feet.length === 2) { cop = polyMargin(poly, com2) > 0 ? com2 : poly.reduce((a, q) => [a[0] + q[0] / poly.length, a[1] + q[1] / poly.length], [0, 0]); }
     const moving = st.s > 0.3, kS = held ? X.slackCom : feet.length === 2 && !moving ? X.slackStand : X.slackMove, hipS = held ? X.hipCom : X.hipOrd;
     // the perturbation's centre-of-mass offset from the support's authored relation: the newest stance's ledger (root shifts since it landed, less a
@@ -190,13 +203,14 @@ export class ImpactWorld extends OccupancyWorld2 {
     const e = add2(add2(led, s.P), s.O), w = B.w, xi = add2(e, mul2(s.u, 1 / w)), xm = len2(xi), xh = unit2(xi, f);
     const slackDir = (u) => (cop && poly ? polyReach(poly, cop, u) * kS : 0) + hipS, d = slackDir(xh), demand = xm / Math.max(1e-3, d);
     // (3) THE BALANCE CONTROLLER: the centre of pressure inside the slack drives ξ back; outside, saturated, ξ diverges (the LIP about the authored motion)
-    const qWant = mul2(xi, 1 + X.kXi / w), qm = len2(qWant), q = qm > d ? mul2(xh, d) : qWant; if (planted.length) s.u = add2(s.u, mul2(sub2(e, q), w * w * DT));   // (airborne: no ground, no horizontal force)
+    const qWant = mul2(xi, 1 + X.kXi / w), qm = len2(qWant), q = qm > d ? mul2(xh, d) : qWant; if (feet.length) s.u = add2(s.u, mul2(sub2(e, q), w * w * DT));   // (no ball of a foot on the turf: no ground, no horizontal force)
     // (4) THE OUTCOME (A – E) and the recovery step
     const bal = this.capture(p, s, t, xi, d, w, held, planted, J3, st, f, r); s.bal = bal; s.cls = bal.cls;
     if (held && bal.cls === "CORRECT" && bal.demand > 1 && !s.outcome) s.outcome = { kind: "PERTURBED BUT CONTINUES", why: `ξ ${(xm * 100).toFixed(0)} cm: beyond the centre of pressure's ${(d * 100).toFixed(0)} cm, carried by the support chain (the pelvis over the authored feet)`, t };
     if (bal.cls === "RECOVERY STEP" || bal.cls === "STAGGER CANDIDATE" || bal.cls === "FALL CANDIDATE") {
-      if (held) this.decideAction(p, s, t, bal, cm, pre); else if ((!s.step || (s.step.landed && t - s.step.tLanded > 0.05)) && bal.step && bal.cls !== "FALL CANDIDATE") this.planStep(p, s, t, bal.step, bal.cls); }
-    s.fallN = bal.cls === "FALL CANDIDATE" ? (s.fallN || 0) + 1 : 0; if (s.fallN >= 3 && !s.fall) { if (bal.step && (!s.step || s.step.landed)) this.planStep(p, s, t, bal.step, bal.cls); this.markFall(p, s, t, bal, st, B, xi, e); }
+      // (a step only when its adjustment is a step: below RES3.stepMin the gait's own landing is the step — its limits left no room to adjust it)
+      if (held) this.decideAction(p, s, t, bal, cm, pre); else if ((!s.step || (s.step.landed && t - s.step.tLanded > 0.05)) && bal.step && bal.cls !== "FALL CANDIDATE" && len2(bal.step.adj) >= X.stepMin) this.planStep(p, s, t, bal.step, bal.cls); }
+    s.fallN = bal.cls === "FALL CANDIDATE" ? (s.fallN || 0) + 1 : 0; if (s.fallN >= 3 && !s.fall) { if (bal.step && (!s.step || s.step.landed) && len2(bal.step.adj) >= X.stepMin) this.planStep(p, s, t, bal.step, bal.cls); this.markFall(p, s, t, bal, st, B, xi, e); }
     // (5) THE REALISATION: the root as far as its support allows (Stage 2's own budgets), the drawn pelvis, the overflow
     const fade = s.fadeFrom != null ? clamp(1 - (t - s.fadeFrom) / X.fallFade, 0, 1) : 1; if (fade < 1) { s.u = mul2(s.u, fade); }
     let dRoot = [0, 0]; const want = mul2(s.u, DT), capP = held ? X.pelvisCom : X.pelvisOrd;
@@ -215,7 +229,9 @@ export class ImpactWorld extends OccupancyWorld2 {
     const arms = clamp(0.5 * clamp(demand - 0.3, 0, 1.4), 0, 0.6) * fade, armSide = clamp(-0.6 * xR * clamp(demand - 0.3, 0, 1), -0.5, 0.5) * fade;
     s.pose = { on: true, pelvis: s.P.slice(), yaw: s.osc.yaw.x / DEG, lean: s.osc.lean.x, side: s.osc.side.x, trunk: s.osc.trunk.x, crouch: Math.max(-0.01, s.osc.crouch.x), arms, armSide, headYaw: -0.6 * (s.osc.trunk.x + s.osc.yaw.x), headDrop: 4 * clamp(demand - 0.5, 0, 1) };
     // (7) THE PEAKS, the severity, regained?
-    const pk = s.peak, sig = this.sigmaOf(bal); s.sigma = sig; pk.sigma = Math.max(pk.sigma || 0, sig, s.fall ? 2 : 0); pk.demand = Math.max(pk.demand, demand); pk.xi = Math.max(pk.xi, xm); pk.u = Math.max(pk.u, len2(s.u)); pk.P = Math.max(pk.P, len2(s.P)); pk.O = Math.max(pk.O, len2(s.O)); pk.lean = Math.max(pk.lean, Math.abs(s.osc.lean.x), Math.abs(s.osc.side.x)); pk.yaw = Math.max(pk.yaw, Math.abs(s.osc.trunk.x), Math.abs(s.osc.yaw.x));
+    // (the episode's severity: the peak of σ held for three consecutive ticks — a capture analysis that predicts a stagger for one tick and is caught
+    // by the next landing is not a stagger)
+    const pk = s.peak, sig = this.sigmaOf(bal); s.sigma = sig; const H3 = s.sig3 || (s.sig3 = []); H3.push(Math.min(1, bal.held ? bal.demand * bal.d / bal.carry : bal.demand)); if (H3.length > 3) H3.shift(); pk.inplace = Math.max(pk.inplace || 0, H3.length === 3 ? Math.min(...H3) : 0); pk.sigma = Math.max(pk.sigma || 0, sig); pk.demand = Math.max(pk.demand, demand); pk.xi = Math.max(pk.xi, xm); pk.u = Math.max(pk.u, len2(s.u)); pk.P = Math.max(pk.P, len2(s.P)); pk.O = Math.max(pk.O, len2(s.O)); pk.lean = Math.max(pk.lean, Math.abs(s.osc.lean.x), Math.abs(s.osc.side.x)); pk.yaw = Math.max(pk.yaw, Math.abs(s.osc.trunk.x), Math.abs(s.osc.yaw.x));
     if (s.fadeFrom != null && t - s.fadeFrom > X.fallFade) { s.active = false; s.pose = null; s.handedBack = t; const ep0 = this.imp.ep; if (ep0) ep0.players[p.pid] = this.summary(p, s, t); this.event(p, "FALL CANDIDATE — PLACEHOLDER ENDS", "the perturbation faded out (a labelled diagnostic placeholder, not physics): Stage 2 drives the player again", {}); return Object.assign(out, { cls: "FALL CANDIDATE", fall: true }); }
     const ep = this.imp.ep, quiet = !ep || (this.k - ep.last) * DT > X.quiet, S5 = X.settle, calm = xm < S5.xi && len2(s.u) < S5.u && len2(s.P) < S5.P && len2(s.O) < 1e-3 && OSC_KEYS.every((kk) => Math.abs(s.osc[kk].x) < (kk === "crouch" ? 0.001 : S5.ang)) && !(s.step && !s.step.landed);
     if (calm && quiet && (!s.step || s.step.landed)) this.regain(p, s, t);
@@ -229,7 +245,13 @@ export class ImpactWorld extends OccupancyWorld2 {
   sigmaOf(bal) { if (!bal) return 0; const X = this.X; if (bal.cls === "ABSORB" || (bal.cls === "CORRECT" && bal.demand <= 1)) return Math.min(1, bal.demand); if (bal.cls === "CORRECT") return 1;
     if (bal.held) { const r = bal.demand * bal.d / bal.carry; return r <= 1 ? r : 1 + Math.min(0.99, r - 1); } if (bal.cls === "RECOVERY STEP") return bal.step ? 1 + Math.min(0.99, len2(bal.step.adj) / X.stepOut) : 1; return 2 + (bal.step ? bal.step.resid / X.stepOut : 1); }
   static band(sig) { return sig < 0.15 ? "BRUSH" : sig < 0.6 ? "LIGHT" : sig < 1.0001 ? "MODERATE" : sig < 2 ? "STRONG" : "SEVERE"; }
-  severity(s) { return ImpactWorld.band(s.peak.sigma || 0); }
+  // THE EPISODE'S SEVERITY is the REALISED one: in place — the peak in-place demand held three ticks (≤ 1); one recovery step — 1 + its adjustment / the
+  // step's reach; more than one (≥ 10 cm each) or a stagger prediction that came true — 2 + …; a fall candidate — ≥ 3. (The per-tick σ the Lab
+  // shows is the PREDICTED demand at that tick.)
+  realised(s) { const big = s.steps.filter((x) => len2(x.adj) >= 0.10), mx = s.steps.length ? Math.max(...s.steps.map((x) => len2(x.adj))) : 0;
+    if (s.fall) return 3; if (big.length > 1 || s.steps.some((x) => x.cls === "STAGGER CANDIDATE" && len2(x.adj) >= 0.10)) return 2 + Math.min(0.99, (s.steps.length - 1) * 0.25 + mx / this.X.stepOut * 0.5); if (s.steps.length) return 1 + Math.min(0.99, mx / this.X.stepOut);
+    return Math.min(1, s.peak.inplace || 0); }
+  severity(s) { return ImpactWorld.band(this.realised(s)); }
   // how much of a root shift d the support takes: a committed (or planned) action — Stage 2's capFit exactly (2 cm per plant, 12 per commitment: the
   // owner's decision, the impact's shifts counted in the same ledger); an ordinary player — the planted legs' REACH (Stage 2's own reach rule: the
   // drawn hip within the leg's length of each planted ankle). Stage 2's 12 cm lean allowance stays what it was — the bound on occupancy's positional
@@ -259,26 +281,37 @@ export class ImpactWorld extends OccupancyWorld2 {
     // landing — and a lifted foot's new stance — move with every root shift: the displacement the root realises is carried)
     const opts = [], slackNew = 0.065 * X.slackMove + X.hipOrd; let locked = 0;
     for (const Xf of ["R", "L"]) { const oth = Xf === "R" ? "L" : "R", Ls = p.plan.stances[Xf], cur = Ls.find((qq) => qq.t0 <= t + 1e-9 && qq.t1 > t + 1e-9), nx = Ls.find((qq) => qq.t0 > t + 1e-9 && qq.pos), othPl = planted.some(([Y]) => Y === oth);
-      let tLand, base, kind;
+      let tLand, base, kind, newer = false;
       if (!cur && nx) { tLand = nx.t0; if (tLand - t < X.lock) { locked++; continue; } base = nx.pos; kind = "swing re-aimed"; }
-      else if (!cur && !nx) { const a = J3["foot_" + Xf].j; base = add2([a[0], a[1]], mul2(s.u, X.tSwing0)); kind = "free foot placed"; tLand = null; }
-      else if (cur && othPl) { // (the weight is on the foot that landed last: of two planted feet only the older one lifts — steps alternate)
-        const oq = planted.find(([Y]) => Y === oth)[1]; if (cur.t0 > oq.t0 + 1e-9) continue;
-        const S = this.stanceLedger(p, Xf, cur); base = add2(cur.pos, add2(S.push, this.impOnly(S, held))); kind = "planted foot lifted"; tLand = null; }
+      else if (!cur && !nx) { if (st.s > X.liftMaxSpeed) continue; const a = J3["foot_" + Xf].j; base = add2([a[0], a[1]], mul2(s.u, X.tSwing0)); kind = "free foot placed"; tLand = null; }
+      else if (cur && othPl) { // (the weight is on the foot that landed last: of two planted feet only the older one lifts — steps alternate; and only
+        // a slow body lifts a planted foot to step (standing, walking): a moving one's gait brings its next landing within a stride — that one is re-aimed)
+        // (alternation is a preference: the foot that landed last carries the weight — it may still step outward when the other one cannot help (its
+        // step would cross), unloading first (later))
+        const oq = planted.find(([Y]) => Y === oth)[1]; if (st.s > X.liftMaxSpeed) continue; newer = cur.t0 > oq.t0 + 1e-9;
+        const S = this.stanceLedger(p, Xf, cur); base = add2(cur.pos, add2(S.push, this.impOnly(S, held))); kind = newer ? "loaded foot lifted (unloads first)" : "planted foot lifted"; tLand = null; }
       else continue;
-      let tl = tLand != null ? tLand : t + X.tUnload + X.tSwing0, need = null; const pv = kind === "planted foot lifted" ? pivot(oth) : null;
-      for (let it = 0; it < 2; it++) { const dz = add2(add2(s.P, s.O), mul2(pv ? lip(pv.eo, pv.qo, tl - t) : uAt(tl), 1 / w)); need = sub2(dz, mul2(unit2(dz, xh), Math.min(len2(dz), slackNew))); if (tLand == null) tl = t + X.tUnload + X.tSwing0 + X.tSwing1 * len2(need); }
-      // feasibility: the adjustment outward / across (relative to the facing), never crossing the other foot's line by more than stepCross
-      const sx = Xf === "R" ? 1 : -1, nR = dot2(need, r) * sx, nF = dot2(need, f), adj = [clamp(nR, -X.stepCross, X.stepOut), clamp(nF, -X.stepOut, X.stepOut)];
-      let pos = add2(base, add2(mul2(r, adj[0] * sx), mul2(f, adj[1])));
-      // (a lifted foot lands beside the one it leaves planted — never on it, never further than a step)
-      const oSt = pv ? pv.pq[1] : p.plan.stances[oth].find((qq) => qq.t0 <= tl + 1e-9 && qq.t1 > tl + 1e-9);   // (a lifted foot's partner is held planted until it lands)
-      if (oSt && oSt.pos) { const dd = sub2(pos, oSt.pos), m = len2(dd); if (m < 0.16) pos = add2(oSt.pos, mul2(unit2(dd, mul2(r, sx)), 0.16)); if (tLand == null && m > X.stepMax) pos = add2(oSt.pos, mul2(dd, X.stepMax / m)); }
+      const tU = X.tUnload * (newer ? 2 : 1); let tl = tLand != null ? tLand : t + tU + X.tSwing0, need = null; const pv = /foot lifted/.test(kind || "") ? pivot(oth) : null;
+      if (tLand == null) { const r0 = p.stateAt(t).P, r1 = p.stateAt(t + tU + X.tSwing0 + 0.05).P; base = add2(base, sub2(r1, r0)); }
+      for (let it = 0; it < 2; it++) { const dz = add2(add2(s.P, s.O), mul2(pv ? lip(pv.eo, pv.qo, tl - t) : uAt(tl), 1 / w)); need = sub2(dz, mul2(unit2(dz, xh), Math.min(len2(dz), slackNew))); if (tLand == null) tl = t + tU + X.tSwing0 + X.tSwing1 * len2(need); }
+      // THE PLACEMENT: the gait's own landing (base) + an ADJUSTMENT toward the capture point, at most RES3.stepOut — and every limit below only
+      // SHRINKS that adjustment (never moves the foot beyond the landing the gait meant): across the stance foot's line it may not go further than
+      // the landing itself already does (or the minimum stance width) — no crossover steps; away from the body at the landing no further than the
+      // leg reaches (or than the gait's own landing already is); a lifted foot never onto its partner
+      const sx = Xf === "R" ? 1 : -1, oSt = pv ? pv.pq[1] : p.plan.stances[oth].find((qq) => qq.t0 <= tl + 1e-9 && qq.t1 > tl + 1e-9) || (planted.find(([Y]) => Y === oth) || [])[1], os = oSt && oSt.pos ? oSt.pos : null, rL = p.stateAt(tl).P;
+      let adj = len2(need) > X.stepOut ? mul2(unit2(need), X.stepOut) : need.slice(); const at = (lam) => add2(base, mul2(adj, lam));
+      const ok = (q) => { if (os) { const latB = dot2(sub2(base, os), r) * sx, latQ = dot2(sub2(q, os), r) * sx; if (latQ < Math.min(latB, X.minWidth) - 1e-6) return false; if (len2(sub2(q, os)) < 0.16 && len2(sub2(base, os)) >= 0.16) return false; }
+        const dB = len2(sub2(base, rL)), dQ = len2(sub2(q, rL)); if (dQ > Math.max(X.reachLand, dB) + 1e-6) return false; return true; };
+      if (!ok(at(1))) { let lo = 0, hi = 1; for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; if (ok(at(m))) lo = m; else hi = m; } adj = mul2(adj, lo); }
+      const pos = add2(base, adj), nR = dot2(adj, r) * sx;
       const realAdj = sub2(pos, base), resid = len2(sub2(need, realAdj));
-      opts.push({ X: Xf, tLand: tl, tLift: tLand == null ? (kind === "free foot placed" ? t : t + X.tUnload) : null, base, pos, adj: realAdj, need, resid, kind, yaw: Math.atan2(f[1], f[0]) + sx * 0.12 * (nR > 0 ? 1 : 0) }); }
-    if (!opts.length) return locked ? { cls: "RECOVERY STEP", demand: xm / d, d, w, step: null, pending: true, why: "the swinging foot lands within the canonical blend (not re-aimed): it is the next support; the step after it catches the rest" } : { cls: "FALL CANDIDATE", demand: xm / d, d, w, why: "no foot can step: the only support is planted and the other foot is not available" };
-    opts.sort((a, b) => a.resid - b.resid || len2(a.adj) - len2(b.adj)); const best = opts[0];
-    if (best.resid <= 0.03) return len2(best.adj) < 0.04 ? { cls: "CORRECT", demand: xm / d, d, w, why: "the next landing captures it (its adjustment < 4 cm)" } : { cls: "RECOVERY STEP", demand: xm / d, d, w, step: best };
+      opts.push({ X: Xf, tLand: tl, tLift: tLand == null ? (kind === "free foot placed" ? t : t + tU) : null, base, pos, adj: realAdj, need, resid, kind, newer, useful: len2(realAdj) >= X.stepMin, yaw: Math.atan2(f[1], f[0]) + sx * 0.12 * (nR > 0 ? 1 : 0) }); }
+    // (no foot available NOW is not a fall: a moving body between its gait's events — both feet down, the next landing not planned yet, or landing
+    // within the canonical blend — steps as soon as its next landing exists; a fall candidate is a capture point no reachable step can catch)
+    if (!opts.length) return { cls: "RECOVERY STEP", demand: xm / d, d, w, step: null, pending: true, why: locked ? "the swinging foot lands within the canonical blend (not re-aimed): it is the next support; the step after it catches the rest" : "no foot can step this instant (both down at speed / the next landing not yet planned): the next landing will be re-aimed" };
+    // (the best: a step that can adjust at all, the least uncaught; between two close ones the foot not carrying the weight)
+    opts.sort((a, b) => (b.useful - a.useful) || (Math.abs(a.resid - b.resid) < 0.03 ? a.newer - b.newer : 0) || a.resid - b.resid || len2(a.adj) - len2(b.adj)); const best = opts[0];
+    if (best.resid <= 0.03) return len2(best.adj) < X.stepMin ? { cls: "CORRECT", demand: xm / d, d, w, why: `the next landing captures it (its adjustment < ${(X.stepMin * 100).toFixed(0)} cm)` } : { cls: "RECOVERY STEP", demand: xm / d, d, w, step: best };
     // more than one step: the other foot after this one lands (≈ 0.25 s later), its residual grown meanwhile
     const r2 = best.resid * Math.exp(w * 0.25); if (r2 <= X.stepOut + slackNew) return { cls: "STAGGER CANDIDATE", demand: xm / d, d, w, step: best, why: `one step leaves ${(best.resid * 100).toFixed(0)} cm uncaught (${best.X}); a second step needs ${(r2 * 100).toFixed(0)} cm` };
     return { cls: "FALL CANDIDATE", demand: xm / d, d, w, step: best, why: `the capture point runs away: one step leaves ${(best.resid * 100).toFixed(0)} cm, the next would need ${(r2 * 100).toFixed(0)} cm` }; }
@@ -289,6 +322,7 @@ export class ImpactWorld extends OccupancyWorld2 {
   // the trailing foot (the older of two planted) steps up beside the newer one, a stance width apart, along the body's motion — the weight already moved
   followStep(p, s, t, planted, f, r) { const X = this.X, [[Xa, qa], [Xb, qb]] = planted, old = qa.t0 <= qb.t0 ? [Xa, qa] : [Xb, qb], nw = old[0] === Xa ? [Xb, qb] : [Xa, qa], sx = old[0] === "R" ? 1 : -1;
     const tLift = t + X.tUnload, dur = X.tSwing0 + 0.1, ahead = mul2(s.u, dur + X.tUnload), pos = add2(add2(nw[1].pos, mul2(r, sx * 0.20)), ahead), base = old[1].pos.slice();
+    if (p.stateAt(t).s > X.liftMaxSpeed) return;   // (a moving body's gait brings that foot up itself)
     this.planStep(p, s, t, { X: old[0], tLift, tLand: tLift + dur, pos, base, adj: sub2(pos, base), yaw: Math.atan2(f[1], f[0]), kind: "following step (the trailing foot)" }, "RECOVERY STEP"); }
   // the step in the plan the body draws: the stepping foot's landing at the step's place and time; a lifted foot's stance ends at its lift; that
   // foot's touches during the step are the step's (cancelled)
@@ -328,9 +362,9 @@ export class ImpactWorld extends OccupancyWorld2 {
     s.fadeFrom = t; s.outcome = Object.assign({}, s.outcome, { kind: s.outcome && s.outcome.final ? s.outcome.kind + " → FALL CANDIDATE" : "STAGGER / FALL CANDIDATE", fall: true, t, final: true });
     this.event(p, "UNRESOLVED FALL CANDIDATE", s.fall.why, { state: s.fall }); }
   regain(p, s, t) { s.regained = t; s.active = false; s.pose = null; const ep = this.imp.ep; if (ep) ep.players[p.pid] = this.summary(p, s, t); this.event(p, "BALANCE REGAINED", `after ${(t - s.t0).toFixed(3)} s${s.steps.length ? ` (${s.steps.length} recovery step${s.steps.length > 1 ? "s" : ""})` : ""}`, {}); }
-  summary(p, s, t) { const pk = s.peak; return { pid: p.pid, t0: s.t0, tRegain: s.regained, regainAfter: s.regained != null ? +(s.regained - s.t0).toFixed(3) : null, demand: +pk.demand.toFixed(3), sigma: +(pk.sigma || 0).toFixed(3), sev: this.severity(s),
-    cls: s.fall ? "FALL CANDIDATE" : s.steps.some((x) => x.cls === "STAGGER CANDIDATE") || s.steps.length > 1 ? "STAGGER CANDIDATE" : s.steps.length ? "RECOVERY STEP" : (pk.sigma || 0) >= 0.35 ? "CORRECT" : "ABSORB", unresolved: s.regained == null, steps: s.steps.map((x) => ({ X: x.X, t: +x.t.toFixed(3), tLand: +x.tLand.toFixed(3), d: +len2(x.adj).toFixed(3), kind: x.kind, landed: x.landed })),
-    outcome: s.outcome ? s.outcome.kind : "—", why: s.outcome ? s.outcome.why : null, J: +len2(s.imp).toFixed(2), du: +(len2(s.imp) / this.mass).toFixed(3), peakU: +pk.u.toFixed(3), peakP: +pk.P.toFixed(3), peakO: +pk.O.toFixed(3), peakLean: +pk.lean.toFixed(1), peakYaw: +pk.yaw.toFixed(1), fall: s.fall }; }
+  summary(p, s, t) { const pk = s.peak; return { pid: p.pid, t0: s.t0, tRegain: s.regained, regainAfter: s.regained != null ? +(s.regained - s.t0).toFixed(3) : null, demand: +pk.demand.toFixed(3), sigma: +this.realised(s).toFixed(3), sigmaPredicted: +(pk.sigma || 0).toFixed(3), sev: this.severity(s),
+    cls: s.fall ? "FALL CANDIDATE" : s.steps.some((x) => x.cls === "STAGGER CANDIDATE") || s.steps.filter((x) => len2(x.adj) >= 0.10).length > 1 ? "STAGGER CANDIDATE" : s.steps.length ? "RECOVERY STEP" : (pk.sigma || 0) >= 0.35 ? "CORRECT" : "ABSORB", unresolved: s.regained == null, steps: s.steps.map((x) => ({ X: x.X, t: +x.t.toFixed(3), tLand: +x.tLand.toFixed(3), d: +len2(x.adj).toFixed(3), kind: x.kind, landed: x.landed })),
+    outcome: s.outcome ? s.outcome.kind : "—", why: s.outcome ? s.outcome.why : null, legBlocked: s.legBlocked || null, J: +len2(s.imp).toFixed(2), du: +(len2(s.imp) / this.mass).toFixed(3), peakU: +pk.u.toFixed(3), peakP: +pk.P.toFixed(3), peakO: +pk.O.toFixed(3), peakLean: +pk.lean.toFixed(1), peakYaw: +pk.yaw.toFixed(1), fall: s.fall }; }
   finish() { if (!this.impOn) return; const t = this.att.t; if (this.imp.ep) { const ep = this.imp.ep; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && s.ep === ep.n && !ep.players[p.pid]) ep.players[p.pid] = this.summary(p, s, t); } this.closeEpisode(t); } }
   closeEpisode(t) { const ep = this.imp.ep; if (!ep) return; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && !ep.players[p.pid] && s.ep === ep.n) ep.players[p.pid] = this.summary(p, s, t); }
     ep.t1 = t; ep.dur = +(t - ep.t0).toFixed(3); ep.pairs = [...ep.pairs]; ep.strikes = [...ep.strikes]; if (ep.active || this.imp.keepBrush) this.imp.episodes.push(ep); this.imp.ep = null; }
