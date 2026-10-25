@@ -60,7 +60,7 @@ export class LimbWorld extends ImpactWorld {
   newAcc() { return Object.fromEntries(SRC.map((k) => [k, [0, 0]])); }
   opp(p) { return p === this.att ? this.def : this.att; }
   l3event(p, kind, why, o = {}) { this.l3.events.push(Object.assign({ k: this.k, t: +(this.k * DT).toFixed(4), who: p ? p.pid : "—", kind, why }, o)); }
-  recordFrame() { super.recordFrame(); const L = this.livePoses(), F = this.frames.get(L.k); if (F) { if (L.a.legAuth) F.a.legAuth = L.a.legAuth; if (L.d.legAuth) F.d.legAuth = L.d.legAuth; } }
+  recordFrame() { super.recordFrame(); const L = this.livePoses(), F = this.frames.get(L.k); if (F) for (const [f, p] of [[F.a, L.a], [F.d, L.d]]) { f.psi = p.psi; if (p.legAuth) { f.legAuth = p.legAuth; f.limbQ = p.limbQ; } } }
   extImpulses(k) { return this.ext && this.ext.k === k ? this.ext : null; }
   // (Stage 3's onset facts for an episode a 3B contact opened without a resolved pair (a boot on a shin): the 3B contact as the pair)
   extPairs(k) { const r = this.l3.log.length && this.l3.log[this.l3.log.length - 1].k === k ? this.l3.log[this.l3.log.length - 1] : null, c = r && r.contacts[0];
@@ -110,13 +110,18 @@ export class LimbWorld extends ImpactWorld {
           leg.q = [0, 0, 0]; leg.qd = [0, 0, 0]; leg.P = LM.legPose(au, leg.q, fr); } } }
     // ── the contacts: a swinging limb in a pair beyond the tolerance (or held), the stable normal, both sides' physical velocities and masses ──
     const va = volumesOf(LP.a.J), vd = volumesOf(LP.d.J), pairs = dist <= OCC.broad ? detect(va, vd, { within: X.hyst - X.tol }) : [], C = [], seen = new Set();
-    const grp = (id) => { const m = /_([RL])$/.exec(id); return /^(THIGH|SHIN|FOOT)_/.test(id) ? "LEG_" + m[1] : /^UARM/.test(id) ? id : "TRUNK"; };
+    // (the held state is per LIMB and per OPPONENT: a limb that struck him is held against all of him until they are apart — its contact moving
+    // from his thigh to his hip is the same collision; two limbs: per limb pair)
+    const grp = (id, L) => { const m = /^(THIGH|SHIN|FOOT)_([RL])$/.exec(id); return m && !L[m[2]].planted ? "LEG_" + m[2] : "BODY"; };
     // (a held pair ends when a leg that was swinging when it struck has planted: its next swing may strike again)
     for (const [hk, h] of [...this.l3.held]) if (h.legs.some((l) => l.planted)) this.l3.held.delete(hk);
-    for (const x of pairs) { const key = x.A + "|" + x.B, hkey = grp(x.A) + "|" + grp(x.B), held = this.l3.held.get(hkey); if (x.pen <= X.tol && !(held && x.pen > X.tol - X.hyst)) continue;
+    for (const x of pairs) { const key = x.A + "|" + x.B, hkey = grp(x.A, LA) + "|" + grp(x.B, LD), held = this.l3.held.get(hkey); if (x.pen <= X.tol && !(held && x.pen > X.tol - X.hyst)) continue;
       const n2 = this.faceBlend(x.nh || unit2(sub2(sa.P, sd.P)), this.face), n = [n2[0], n2[1], 0];
       const sA = this.sideOf(A, LA, x.A, x.uA, x.at, n, LP.a.J, sa), sB = this.sideOf(D, LD, x.B, x.uB, x.at, LM.mul(n, -1), LP.d.J, sd); if (!sA || !sB || (sA.kind !== "LIMB" && sB.kind !== "LIMB")) continue;
-      if (sA.seg === "FOOT" && sB.seg === "FOOT") continue;   // (two boots meet at the ball: the tackle's contest, not a limb contact)
+      if (/^FOOT/.test(x.A) && /^FOOT/.test(x.B)) continue;   // (two boots meet at the ball: the tackle's contest, not a limb contact)
+      // (a LANDING leg (inside its landing window) is not resolved: it lands where its stance is — the contact recorded as an obstructed landing, its
+      // momentum not exchanged (Stage 3B.2 / 3B.3: where a foot can land, a stamp on a leg))
+      const landing = [sA, sB].find((s2) => s2.kind === "LIMB" && s2.leg.tLand - t < X.landForce); if (landing) { if (x.pen > X.tol) { ev(landing.leg, "LANDING OBSTRUCTED (3B.2 / 3B.3)", `${landing.leg.X} lands in ${((landing.leg.tLand - t) * 1000).toFixed(0)} ms where its stance is, through the opponent's ${landing === sA ? x.B : x.A} (${(x.pen * 100).toFixed(1)} cm)`); this.l3.obstructedLand = (this.l3.obstructedLand || 0) + 1; } continue; }
       seen.add(hkey); C.push({ key, hkey, n, pen: x.pen, A: sA, B: sB, x, held: !!held, uA: x.uA, uB: x.uB, region: regionOf(x.A, x.uA) + " / " + regionOf(x.B, x.uB) }); }
     // ── RECONCILE: each perturbed leg driven back to its authored path (faster before a landing / a touch; never into a held contact unless it must land) ──
     for (const [p, L] of PL) for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted || !(leg.q.some((v) => v) || leg.qd.some((v) => v))) continue;
@@ -131,11 +136,13 @@ export class LimbWorld extends ImpactWorld {
       const c = C.find((z) => z.key === ap.key); this.l3.apps.push({ k, key: ap.key, region: c.region, vn: ap.vn, lam: ap.lam, src: ap.src, wA: ap.wA, wB: ap.wB, routeA: ap.routeA, routeB: ap.routeB, n: ap.n, at: c.x.at, keB: ap.keBefore, keA: ap.keAfter, dvnA: ap.dvnA, dvnB: ap.dvnB, vnAfter: ap.vnAfter,
         vA: c.A.vBase, vB: c.B.vBase, artA: c.A.art || null, artB: c.B.art || null, kindA: c.A.kind, kindB: c.B.kind, held: c.held }); }
     // ── INTEGRATE, the range, the positional projection (positions only), the range again ──
-    for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted) continue; leg.q = LM.add(leg.q, LM.mul(leg.qd, DT)); LM.clampRange(leg, X); }
-    const posn = []; for (const c of C) { const over = c.pen - X.tol; if (!(over > 0)) continue; const sides = [[c.A, 1], [c.B, -1]].filter(([s]) => s.kind === "LIMB" && !s.leg.planted).map(([s, sg]) => ({ s, sg, r: LM.limbResp(s.leg, s.seg, s.x, LM.mul(c.n, sg), X) })).filter((z) => z.r.w > 1e-9);
+    for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf]; leg.q0 = leg.q.slice(); if (leg.planted) continue; leg.q = LM.add(leg.q, LM.mul(leg.qd, DT)); LM.clampRange(leg, X); }
+    // (inside its landing window a leg is not projected out of the opponent: it must land where its stance is — reported as an obstructed landing)
+    const posn = []; for (const c of C) { const over = c.pen - X.tol; if (!(over > 0)) continue; const sides = [[c.A, 1], [c.B, -1]].filter(([s]) => s.kind === "LIMB" && !s.leg.planted && !(s.leg.tLand - t < X.landForce)).map(([s, sg]) => ({ s, sg, r: LM.limbResp(s.leg, s.seg, s.x, LM.mul(c.n, sg), X) })).filter((z) => z.r.w > 1e-9);
       const W = sides.reduce((a, z) => a + z.r.w, 0), d = Math.min(over, X.posCap); if (!(W > 0)) { c.unresolved = over; continue; }
       for (const z of sides) { const dist = d * z.r.w / W; LM.project(z.s.leg, z.s.seg, z.s.x, LM.mul(c.n, z.sg), dist, X); posn.push({ key: c.key, who: z.s.leg.who, X: z.s.leg.X, dist }); } }
-    for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf]; if (!leg.planted) LM.clampRange(leg, X); }
+    for (const [, L, pose] of PL) { const J = pose.J, fr = { hipR: J.thigh_R.j, hipL: J.thigh_L.j, up: LM.sub(J.spine.t, J.pelvis.j) };
+      for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted) continue; LM.clampRange(leg, X); if (LM.keepAdmissible(leg, leg.q0, fr)) this.l3.kept = (this.l3.kept || 0) + 1; } }
     // ── the new state: the ankle's displacement the next pose will draw; the held pairs; the 3B.3 inputs ──
     for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf], P2 = LM.legPose(leg.auth, leg.q, leg.fr); leg.dAnk = LM.len(P2.d); leg.reach = hyp(P2.H[0] - P2.A[0], P2.H[1] - P2.A[1]); }
     for (const c of C) { const h0 = this.l3.held.get(c.hkey); this.l3.held.set(c.hkey, { k0: h0 ? h0.k0 : k, k, legs: h0 ? h0.legs : [c.A, c.B].filter((s) => s.kind === "LIMB").map((s) => s.leg) }); const dur = (k - (h0 ? h0.k0 : k)) * DT;

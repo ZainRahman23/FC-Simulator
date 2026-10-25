@@ -17,7 +17,7 @@ export function runO3(env, tc, mode, o = {}) { const enc = o.enc || buildEncount
   else if (mode === "S2D") W = new OccupancyWorld2(env, Object.assign(opts, { res: Object.assign({}, S2D, o.res || {}) }));
   else if (mode === "S3B") { if (!LimbWorld) throw new Error("o3_run: import occupy3b/l3_world.js first (it registers the Stage 3B world)"); W = new LimbWorld(env, Object.assign(opts, { res: Object.assign({}, S2D, o.res || {}), imp: o.imp, l3: o.l3 })); }
   else { if (!ImpactWorld) throw new Error("o3_run: import o3_world.js first (it registers the Stage 3 world)"); W = new ImpactWorld(env, Object.assign(opts, { res: Object.assign({}, S2D, o.res || {}), imp: o.imp })); }
-  if (o.before) o.before(W, enc); const r = runEncounter(W, enc, o.onTick || null); if (W.finish) W.finish(); W.omode = mode; return { W, enc, mode, t0: r.t0, clip: [Math.max(0, r.t0 - (tc.c.pre || 1.0)), W.t] }; }
+  if (o.before) o.before(W, enc); const r = runEncounter(W, enc, o.onTick || null); if (W.finish) W.finish(); W.omode = mode; const R = { W, enc, mode, t0: r.t0, clip: [Math.max(0, r.t0 - (tc.c.pre || 1.0)), W.t] }; runO3.last = R; return R; }   // (runO3.last: the tools read the run they just measured)
 export const outcomeO3 = (W) => outcomeShared(W);
 // a world without an encounter's runner (the torture, the solo check drive it themselves): "S2" · "S2D" · "S3"
 export function makeWorld3(env, opts, mode, o = {}) { if (mode === "S2") return new OccupancyWorld2(env, Object.assign({}, opts, { res: o.res }));
