@@ -4159,6 +4159,76 @@ Intent Recognizer V1 was designed and not implemented; the Lab gained a centred-
 | The shooting workstream | [Local] Codex branch, not pushed |
 | `touchline-current` | No changes except this chronicle |
 
+## Saturday 24 October 2026 — The 23 Oct publication; TACKLING INTEGRATION V1, the Standing Tackle on the canonical footballer; SHARED POSSESSION + REACTION V1, one ball authority; PLAYER OCCUPANCY V1 (Stage 1) and STAGE 2, bodies that occupy space
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `e6e34a8` (the 23 Oct entry), pushed in the 24 Oct housekeeping (06:16) with `prototype/left-stick-intent-v1` (`6ccd9f9`).
+  - **Four new branches, one chain, each cut from the one before.** All were pushed in the 25 Oct housekeeping and verified by ls-remote and a fresh fetch.
+
+    | Branch (cut from) | Milestone | Commits | Time |
+    |---|---|---|---|
+    | `prototype/tackling-integration-v1` (`f775daa`) | TACKLING INTEGRATION V1 · STANDING TACKLE V1 (instruction + audit, integration + Lab, verification, report) | `03d350e`, `26ce212`, `3464179`, `8c0149b` | 06:31 – 07:28 |
+    | `prototype/shared-possession-reaction-v1` (`8c0149b`) | SHARED POSSESSION + REACTION V1 (instruction + the old failure, architecture + Lab, report) | `1da6f05`, `26ec998`, `89ab31c` | 16:06 – 16:07 |
+    | `prototype/player-occupancy-v1` (`89ab31c`) | PLAYER OCCUPANCY V1, Stage 1 (instruction + volumes, the occupancy pass + Lab, report) | `dbc1446`, `1172317`, `fb35347` | 17:06 – 19:31 |
+    | `prototype/player-occupancy-stage2` (`fb35347`) | PLAYER OCCUPANCY STAGE 2 (instruction, code + Lab, the tackle-gate fix, a Lab fix, report) | `7a5ed6d`, `4f80067`, `6161098`, `8326ecf`, `817e0f2` | 21:06 – 23:15 |
+
+  - `main` untouched; no tag or milestone branch was created this day.
+- **[Local] Another workstream (Codex):** `~/.codex/worktrees/shooting-body-v1/` made no commit after `53b9049` (02:02). Its uncommitted files (27 untracked paths) are recorded here from their file times and titles only:
+  - POWER kinetic chain, new reference, landing reference and retiming (labs `power6` – `power9`), 02:21 – 04:58 — the end of the 23 Oct day, missing from that entry;
+  - NORMAL SHOT 1 – 5 (labs `normal1` – `normal5`: a 3D anchor review, the strike-window reconstruction, the support chain, the full spatial motion, real-time retiming), 16:47 – 22:17.
+- **[Doc]:**
+  - each milestone's report, handoff, status and evidence in `review_artifacts/tackling_integration1/`, `shared_possession_reaction1/`, `player_occupancy1/` and `player_occupancy2/`;
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the Labs show real players' models; they are local pages only (`127.0.0.1:8363` – `8365`).
+- **[Session]** Owner instructions (the time each was received):
+
+  | Received (EEST) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 06:17 | TACKLING INTEGRATION V1: the standing tackle on the canonical footballer; audit the slide tackle | `tackling_integration1/sources/` |
+  | ≈ 15:01 | SHARED POSSESSION + REACTION V1: one ball, one possession authority; react only to new information | `shared_possession_reaction1/sources/` |
+  | ≈ 16:39 | PLAYER OCCUPANCY V1: bodies must not pass through each other or win the ball through a body | `player_occupancy1/sources/` |
+  | ≈ 19:44 | PLAYER OCCUPANCY STAGE 2: committed-action contact resolution; no impact physics | `player_occupancy2/sources/` |
+
+- **Owner media.**
+  - **Two Desktop screenshots** (22:16, 22:23) show a manager-interface scouting map (a Europe wall, a scout assignment panel). No workstream in this repository uses them; recorded, not archived.
+  - **One recording** (16:34) is named in the shooting workstream's NORMAL SHOT study files as its reference; not archived.
+  - **Two recordings** (21:29, 21:30) are referenced nowhere; not examined, not archived.
+
+**The 24 Oct housekeeping (06:16).** The chronicle `e6e34a8` was committed and pushed with `prototype/left-stick-intent-v1`; both verified.
+
+**TACKLING INTEGRATION V1 · STANDING TACKLE V1** (`8c0149b`). The Codex Phase C revision 2 standing tackle (STANDING_POKE / LUNGE) became a canonical plan on the canonical vocabulary footballer. The defender is the same footballer with the ball off; the tackling boot is four spheres fed into the canonical opponent step, and possession comes from the canonical model. No canonical file changed: the attacker is identical to the canonical player in 244 / 244 runs and the milestone's 10 suites are identical.
+- Over 209 committed tackles: the attacker recovers 59 %, miss 22.5 %, poked loose 14 %, won (contested) 2.4 %. Every reason is on the attacker's side: the carrier re-plans in the contact tick, plays any ball within 1.05 m, the two possession models are single-player, and nothing stops two bodies overlapping.
+- Body pops found and fixed in the tackle's own motion: the gait-phase jump at the stance change, the swing-landing compression, the lift-off heels, the load.
+- The slide tackle was audited only (it needs a canonical body that meets the ground). **Provisional, not frozen.**
+
+**SHARED POSSESSION + REACTION V1** (`89ab31c`). First the old failure was instrumented: the carrier re-planned in the contact tick in 162 / 162 contacts. Then:
+- one possession authority, CONTROLLED (who) or FREE; a player's "collected" becomes a claim, granted only on a FREE ball he knows about;
+- reaction to new information only, from a belief taken before the event (SHORT 0.125 / MEDIUM 0.200 / LONG 0.300 s; MEDIUM recommended); a touch made on that belief meets the real ball only within 15.5 cm.
+
+Single-player play is identical in all 10 suites; DEFENDER RECOVERS went 6 → 11 / 18 / 32 of 209 (SHORT / MEDIUM / LONG); the possession torture found nothing. An architecture candidate, not integrated.
+
+**PLAYER OCCUPANCY V1, Stage 1** (`fb35347`). Eleven occupancy capsules measured from the real body, and one occupancy pass per tick between the two players. The bodies met 21.5 – 23.9 cm deep before; torso overlap fell to ≤ 10.3 cm, and contacts with the ball through the other body fell from 42 to 0 (23 tackle outcomes changed, all for body reasons). Single-player play identical (105 / 105). Left open and reported: two committed actions meeting, fast limb swings, root jolts.
+
+**PLAYER OCCUPANCY STAGE 2** (`817e0f2`, presented ≈ 23:20). The owner asked why a committed foot ended 52 cm from where the action put it. The diagnosis: Stage 1 moved a committed body as if it were a free root (69.7 cm in one Croqueta: 18 cm per planted stance plus ≈ 33 cm unbudgeted in the air). Stage 2 fits every correction to the player's support:
+- a support state per player; contacts classed by body region, fast limb swings flagged; correction only along the contact normal;
+- a committed action may move at most 2 cm per planted foot, 8 cm per airborne phase, 12 cm per move; an ordinary planted player leans up to 12 cm inside his planted leg's reach;
+- what neither player's support can absorb is left as visible overlap, classified (UNRESOLVED COMMITTED CONFLICT and others), never forced;
+- ball access is checked at the contact's own tick, and the tackling boot on every tick of its sweep (Stage 1 checked only a few — a bug, as was rebuilding an airborne foot's swing after each correction, up to 93 cm).
+
+Results: committed planted feet within 2.2 – 2.6 cm of the action (Stage 1: 18.8 – 19.8), ordinary torso overlap ≤ 1.3 – 3.9 cm, ball contacts through a body 0 in every set, single-player play 105 / 105 and the milestone's 10 suites identical. Two committed actions meeting chest to chest (up to 22.9 cm) were left classified for an impact stage. Five owner decisions were put in the report.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| Standing Tackle V1 (`prototype/tackling-integration-v1`) | Provisional; the diagnostic fixture of the later stages |
+| Shared Possession + Reaction V1 | Architecture candidate; not integrated |
+| Player Occupancy Stage 1 and Stage 2 | Prototypes, stopped for the owner's review; not integrated, not frozen |
+| `milestone/feint-croqueta-vocab-v1` (`f775daa`) | Unchanged; still the current gameplay milestone |
+| The shooting workstream | [Local] Codex worktree, uncommitted since `53b9049` |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -4247,7 +4317,8 @@ Intent Recognizer V1 was designed and not implemented; the Lab gained a centred-
   - `prototype/turn-1`: TURN-1 → TURN-1.2. **Frozen as the turning baseline**, tag `locomotion-turn12-baseline-1` = `2129ca0` (handoff `review_artifacts/turn1/turn12/TURN12_HANDOFF.md`).
   - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page). On 20 Oct its joystick checkpoint became **BASELINE-88573ef0**, the locked foundation (`tc_baseline_88573ef0.html`); PLAYTEST-1.2 and TC-RESPONSIVE-1 were rejected on playtest; TC-LAYERED-1 / -2 (toggleable layers on the baseline; B4 generic effort turns and B5 short entries / exits approved for development) led into **TC-UNIFIED-1**, the overnight integration with Astra's A99-C and persistent support; then (21 – 23 Oct) the controlled ball, the 99 pace and CARRY-B, DRIBBLING VOCAB-1, CRUYFF-CHOP-1, ADV-4 and the Body Feint and Croqueta passes. **The current gameplay milestone** is the DRIBBLING VOCABULARY INTEGRATION, `milestone/feint-croqueta-vocab-v1` = tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` = `f775daa` (`sandbox/visual/vocab2/`; provisionally approved, not frozen). The source of truth for a fresh session is the TOUCHLINE GAMEPLAY DEV milestone (`dea3abd`, `SOURCE_OF_TRUTH.md`); `integration/touchline-gameplay-1` (`dea3abd`) is the assembly point for later canonical integrations, with nothing merged into it yet.
 - **Input research** (23 Oct day, pushed 24 Oct): `prototype/left-stick-intent-v1` (`6ccd9f9`, cut from `f775daa`) — LEFT-STICK INPUT LAB V1 and OWNER INPUT ANALYSIS V1; Intent Recognizer V1 designed, not built.
-- **The shooting workstream** (23 Oct, [Local] Codex worktree `~/.codex/worktrees/shooting-body-v1/`): `prototype/shooting-body-v1` (`53b9049`, from `dea3abd`), not pushed, not integrated.
+- **Two-player football** (24 Oct, pushed 25 Oct), one chain of branches from `f775daa`: `prototype/tackling-integration-v1` (`8c0149b`, Standing Tackle V1, provisional) → `prototype/shared-possession-reaction-v1` (`89ab31c`, one possession authority + reaction, a candidate) → `prototype/player-occupancy-v1` (`fb35347`, Stage 1) → `prototype/player-occupancy-stage2` (`817e0f2`, Stage 2; the owner approved it on 25 Oct as the foundation of Stage 3). Not integrated, not frozen.
+- **The shooting workstream** (23 – 24 Oct, [Local] Codex worktree `~/.codex/worktrees/shooting-body-v1/`): `prototype/shooting-body-v1` (`53b9049`, from `dea3abd`), not pushed, not integrated; the POWER 6 – 9 and NORMAL SHOT 1 – 5 labs after it are uncommitted.
 - **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; Phase C revision 2 and STANDING-TACKLE-V1 (a functional real-carrier review against TECHNICAL-CONTROL-1.3's carrier) followed on 19 – 20 Oct; no commits, not a freeze.
 - **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
@@ -4505,6 +4576,11 @@ An index to the narrative above, not a substitute for it.
 | 23 Oct (24 Oct 01:37) | **DRIBBLING VOCABULARY INTEGRATION — the current gameplay milestone** | FC-Sim Git | `f775daa`, `milestone/feint-croqueta-vocab-v1`, tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` |
 | 23 Oct (24 Oct 03:14 – 05:09) | LEFT-STICK INPUT LAB V1; OWNER INPUT ANALYSIS V1 (Intent Recognizer V1 designed) | FC-Sim Git | `4d8ff0f`, `6ccd9f9` |
 | 23 Oct | Shooting body: ground plants, finesse, POWER (another workstream) | Local (Codex) | `prototype/shooting-body-v1` `53b9049` |
+| 24 Oct | TACKLING INTEGRATION V1: STANDING TACKLE V1 on the canonical footballer (provisional) | FC-Sim Git | `8c0149b` |
+| 24 Oct | SHARED POSSESSION + REACTION V1: one possession authority, reaction to new information (candidate) | FC-Sim Git | `89ab31c` |
+| 24 Oct | PLAYER OCCUPANCY V1, Stage 1: bodies no longer pass through each other | FC-Sim Git | `fb35347` |
+| 24 Oct | PLAYER OCCUPANCY STAGE 2: committed-action contact resolution | FC-Sim Git | `817e0f2` |
+| 24 Oct | Shooting body: POWER 6 – 9, NORMAL SHOT 1 – 5 (another workstream, uncommitted) | Local (Codex) | — |
 
 ## Appendix B — Repository provenance
 
