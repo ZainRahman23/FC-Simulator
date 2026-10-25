@@ -60,6 +60,9 @@ export const RES3 = {
   liftMaxSpeed: 1.2, // m/s: above this a body does not lift a planted foot to step — its gait's next landing (re-aimed) is the recovery step
   reachLand: 0.75,   // m: a step's target never further than this from the body (the root) at its landing
   minWidth: 0.08,    // m: a recovery step lands on its own side of the stance foot by at least this (no crossover steps)
+  releaseBlend: 0.35, // s: an action ended by the impact hands its posture over through the canonical blend window (bfLeave) this long
+  impactLean: false, // the comparison: Stage 2's 12 cm lean allowance applied to the impact's momentum as well (an ordinary body then stops 12 cm past its
+                     // planted foot whatever its momentum; off — the planted leg's reach bounds it)
   tUnload: 0.04, tSwing0: 0.17, tSwing1: 0.22,       // s: a planted foot unloads, then swings (0.17 + 0.22 × distance)
   lock: 0.13,        // s: a swing landing sooner than this is not re-aimed (the canonical blend is 0.12 s — a later edit would land unblended)
   // the posture oscillators: natural frequency (rad/s), damping ratio, limit (deg, or m for the crouch)
@@ -91,7 +94,8 @@ export class ImpactWorld extends OccupancyWorld2 {
     for (const p of this.players) { const ex = p.execute.bind(p); p.execute = (c) => { const s = this.ps.get(p), why = s.active ? this.touchBlocked(p, c) : null; if (!why) return ex(c);
       c.done = true; c.missed = true; c.blocked = { impact: why }; p.contacts.push(Object.assign(p.contactRec(c, p.ball.v, p.ball.v, null), { missed: true, impact: why })); p.flags.replan = p.flags.replan || "missed contact";
       this.event(p, "TOUCH DENIED", why, { role: c.role || "touch", F: c.F }); }; }
-    if (this.tk) { const pr = this.tk.probes.bind(this.tk); this.tk.probes = (t) => { pr(t); const A = this.tk.act, s = this.ps.get(this.def); if (!A || !s.active || !(s.P[0] || s.P[1])) return; const opp = this.att.opp, fresh = opp.filter((q) => q.kind === "tackle" && q.tk === A.n && Math.abs(q.t0 - t) < 1e-9 && !q.hit); if (!fresh.length) return;
+    if (this.tk) { const pr = this.tk.probes.bind(this.tk); this.tk.probes = (t) => { pr(t); const A = this.tk.act, s = this.ps.get(this.def); if (!A) return; const opp = this.att.opp, fresh = opp.filter((q) => q.kind === "tackle" && q.tk === A.n && Math.abs(q.t0 - t) < 1e-9 && !q.hit);
+      if (A.impactCut) { for (const q of fresh) opp.splice(opp.indexOf(q), 1); return; } if (!s.active || !(s.P[0] || s.P[1]) || !fresh.length) return;
       // (the boot follows the authored reach from the hips; displaced by the impact it must still be reachable from them)
       const why = this.bootBlocked(A, t); if (!why) return; for (const q of fresh) opp.splice(opp.indexOf(q), 1); if (!A.impBlocked) { A.impBlocked = t; this.event(this.def, "TACKLE BOOT DENIED", why, {}); } }; }
   }
@@ -183,7 +187,7 @@ export class ImpactWorld extends OccupancyWorld2 {
     const cap = this.X.mu * this.mass * G * DT; return bm > cap ? mul2(best, cap / bm) : best; }
   // ── one player's tick ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   player(p, s, st, B, J, levers, J3, t, rec2) { const X = this.X, m = this.mass, psi = st.psi, f = [Math.cos(psi), Math.sin(psi)], r = [-f[1], f[0]];   // (r: the player's RIGHT in pitch coordinates)
-    const out = { pid: p.pid }; const cm = this.committed(p, t), pre = !cm && this.preCommit(p, t), held = !!(cm || pre);
+    const out = { pid: p.pid }; const cm = this.committed(p, t), pre = !cm && this.preCommit(p, t), held = !!(cm || pre); if (held && !s.heldWhat) s.heldWhat = cm || "PLANNED MOVE";
     // (a recovery step landing: its adjustment beyond where the foot would have landed becomes its stance's own — the relation the perturbation is
     // measured from; weight acceptance follows (the canonical load), then the body settles)
     if (s.step && !s.step.landed && t >= s.step.tLand - 1e-9) { const S = s.step; S.landed = true; S.tLanded = t; S.adj = sub2(S.pos, S.base); s.landAdj.set(S.id, S.adj.slice()); this.event(p, "STEP LANDED", `${S.X} — ${(len2(S.adj) * 100).toFixed(0)} cm from where it would have landed; weight acceptance`, { X: S.X, pos: S.pos.map((v) => +v.toFixed(3)) }); }
@@ -258,7 +262,7 @@ export class ImpactWorld extends OccupancyWorld2 {
   // pushes; the impact's momentum carries the body as far as the planted leg physically reaches, and the recovery step catches it
   impFit(p, d, t, J, held) { if (held) return this.capFit(p, d, t, J); if (hyp(d[0], d[1]) < 1e-12) return { lam: 1 }; const P2 = this.plantedStances(p, t); if (!P2.length) return { lam: 1 };
     const newest = P2.reduce((a, b) => (b[1].t0 > a[1].t0 ? b : a))[1]; let lam = 1, why = null; const lim = (l, w) => { if (l < lam - 1e-12) { lam = l; why = w; } };
-    for (const [X, q] of P2) {
+    for (const [X, q] of P2) { if (this.X.impactLean && q.t0 >= newest.t0 - 1e-9) { const S = this.stanceLedger(p, X, q); lim(OccupancyWorld2.fitDisk(add2(S.push, S.imp || [0, 0]), d, this.R.lean), "LEAN BUDGET (12 cm, applied to the impact too)"); }
       const H = J["thigh_" + X].j, A = J["foot_" + X].j, v = Math.max(0, H[2] - A[2] - this.R.drop), Lr = this.R.reach * this.legLen, rmax = Math.sqrt(Math.max(0, Lr * Lr - v * v)), h = [H[0] - A[0], H[1] - A[1]];
       lim(OccupancyWorld2.fitDisk(h, d, Math.max(rmax, hyp(h[0], h[1]))), q.t0 >= newest.t0 - 1e-9 ? "LEG REACH" : "TRAILING LEG REACH"); }
     return { lam, why }; }
@@ -355,8 +359,14 @@ export class ImpactWorld extends OccupancyWorld2 {
   // the committed action ends now: its remaining touches are not played, its commitment released, the canonical planner re-plans from what is
   release(p, s, t, mv, tk, pre, kind, why) { const cut = (c) => { c.done = true; c.missed = true; c.blocked = { impact: kind }; };
     if (mv) { for (const c of p.plan.contacts) if (!c.done && c.t > t - 1e-9) cut(c); mv.tRelease = Math.min(mv.tRelease, t); p._hold = null; }
-    if (tk) { tk.tCtl = Math.min(tk.tCtl, t + DT); tk.tW1 = Math.min(tk.tW1, t); tk.impact = kind; }
+    // (a tackle ended: control returns next tick; its contact window closes now — never before it opened (the canonical miss report reads the window),
+    // and a tackle interrupted before its contact sends no boot at all)
+    if (tk) { tk.tCtl = Math.min(tk.tCtl, t + DT); tk.tW1 = Math.max(tk.tW0, Math.min(tk.tW1, t)); tk.impact = kind; if (/INTERRUPTED/.test(kind)) tk.impactCut = true; }
     if (pre) { const S = p.skill; if (S && !S.done) { S.done = true; S.result = "CANCELLED"; S.alt = "impact"; S.tEnd = t; if (p.log && p.log.skill) p.log.skill.push(Object.assign({}, S)); } for (const c of p.plan.contacts) if (!c.done && c.t > t - 1e-9 && c.src === "tech") cut(c); }
+    // (the posture taken over, not switched: the canonical window that blends every plan built within it from the posture the body had — the one
+    // control leaving a Body Feint opens (bfLeave) — opened here for RES3.releaseBlend: ended early, a Croqueta's deep posture otherwise rose to the
+    // carry's in ≈ 0.03 s, the pelvis 14 cm)
+    p.bfLeave = { t, until: t + this.X.releaseBlend };
     p.flags.replan = "impact: " + kind.toLowerCase(); s.outcome = { kind, why, t, final: true }; this.event(p, kind, why, {}); }
   markFall(p, s, t, bal, st, B, xi, e) { s.fall = { t, why: bal.why || "no reachable placement", xi: xi.map((v) => +v.toFixed(3)), e: e.map((v) => +v.toFixed(3)), u: s.u.map((v) => +v.toFixed(3)), V: st.V.map((v) => +v.toFixed(3)), com: B.c.map((v) => +v.toFixed(3)), support: this.supportState(p, t, st), osc: Object.fromEntries(OSC_KEYS.map((k) => [k, { x: +s.osc[k].x.toFixed(2), v: +s.osc[k].v.toFixed(2) }])), contact: this.imp.ep && this.imp.ep.onset ? this.imp.ep.onset.contact : null };
     s.fadeFrom = t; s.outcome = Object.assign({}, s.outcome, { kind: s.outcome && s.outcome.final ? s.outcome.kind + " → FALL CANDIDATE" : "STAGGER / FALL CANDIDATE", fall: true, t, final: true });
@@ -364,9 +374,15 @@ export class ImpactWorld extends OccupancyWorld2 {
   regain(p, s, t) { s.regained = t; s.active = false; s.pose = null; const ep = this.imp.ep; if (ep) ep.players[p.pid] = this.summary(p, s, t); this.event(p, "BALANCE REGAINED", `after ${(t - s.t0).toFixed(3)} s${s.steps.length ? ` (${s.steps.length} recovery step${s.steps.length > 1 ? "s" : ""})` : ""}`, {}); }
   summary(p, s, t) { const pk = s.peak; return { pid: p.pid, t0: s.t0, tRegain: s.regained, regainAfter: s.regained != null ? +(s.regained - s.t0).toFixed(3) : null, demand: +pk.demand.toFixed(3), sigma: +this.realised(s).toFixed(3), sigmaPredicted: +(pk.sigma || 0).toFixed(3), sev: this.severity(s),
     cls: s.fall ? "FALL CANDIDATE" : s.steps.some((x) => x.cls === "STAGGER CANDIDATE") || s.steps.filter((x) => len2(x.adj) >= 0.10).length > 1 ? "STAGGER CANDIDATE" : s.steps.length ? "RECOVERY STEP" : (pk.sigma || 0) >= 0.35 ? "CORRECT" : "ABSORB", unresolved: s.regained == null, steps: s.steps.map((x) => ({ X: x.X, t: +x.t.toFixed(3), tLand: +x.tLand.toFixed(3), d: +len2(x.adj).toFixed(3), kind: x.kind, landed: x.landed })),
-    outcome: s.outcome ? s.outcome.kind : "—", why: s.outcome ? s.outcome.why : null, legBlocked: s.legBlocked || null, J: +len2(s.imp).toFixed(2), du: +(len2(s.imp) / this.mass).toFixed(3), peakU: +pk.u.toFixed(3), peakP: +pk.P.toFixed(3), peakO: +pk.O.toFixed(3), peakLean: +pk.lean.toFixed(1), peakYaw: +pk.yaw.toFixed(1), fall: s.fall }; }
+    outcome: s.outcome ? s.outcome.kind : s.heldWhat ? "UNAFFECTED" : "— (ordinary locomotion)", action: s.heldWhat || null, why: s.outcome ? s.outcome.why : null, legBlocked: s.legBlocked || null, J: +len2(s.imp).toFixed(2), du: +(len2(s.imp) / this.mass).toFixed(3), peakU: +pk.u.toFixed(3), peakP: +pk.P.toFixed(3), peakO: +pk.O.toFixed(3), peakLean: +pk.lean.toFixed(1), peakYaw: +pk.yaw.toFixed(1), fall: s.fall }; }
   finish() { if (!this.impOn) return; const t = this.att.t; if (this.imp.ep) { const ep = this.imp.ep; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && s.ep === ep.n && !ep.players[p.pid]) ep.players[p.pid] = this.summary(p, s, t); } this.closeEpisode(t); } }
   closeEpisode(t) { const ep = this.imp.ep; if (!ep) return; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && !ep.players[p.pid] && s.ep === ep.n) ep.players[p.pid] = this.summary(p, s, t); }
+    // (THE REFEREE FACTS — objective only, for a future rules layer: no foul, no legality: who touched the ball last before the bodies met, when;
+    // the contact; the balance lost; the action disrupted)
+    if (ep.active && ep.onset) { const o = ep.onset, lastA = this.att.contacts.filter((c) => !c.missed && c.t <= ep.t0 + 1e-9).pop(), hits = this.tk && this.tk.act ? this.tk.act.hits.filter((h) => h.t <= ep.t0 + 1e-9) : [], lastD = hits.length ? hits[hits.length - 1] : null;
+      const lb = [lastA ? { by: "ATT", t: lastA.t } : null, lastD ? { by: "DEF", t: lastD.t } : null].filter(Boolean).sort((a, b) => b.t - a.t)[0] || null;
+      ep.referee = { playerContact: +ep.t0.toFixed(4), regions: o.contact.regions, onATT: o.contact.onATT, onDEF: o.contact.onDEF, closing: o.contact.closing, tangential: o.contact.tangential, lastBallContact: lb ? { by: lb.by, t: +lb.t.toFixed(4), before: +(ep.t0 - lb.t).toFixed(3) } : null, ballContactPrecededPlayerContact: !!lb, tackleCommitted: (o.committed || []).includes("TACKLE"),
+        balanceLoss: Object.fromEntries(["ATT", "DEF"].filter((k) => ep.players[k]).map((k) => [k, { sev: ep.players[k].sev, sigma: ep.players[k].sigma, cls: ep.players[k].cls, steps: ep.players[k].steps.length }])), actionDisruption: Object.fromEntries(["ATT", "DEF"].filter((k) => ep.players[k]).map((k) => [k, ep.players[k].outcome])) }; }
     ep.t1 = t; ep.dur = +(t - ep.t0).toFixed(3); ep.pairs = [...ep.pairs]; ep.strikes = [...ep.strikes]; if (ep.active || this.imp.keepBrush) this.imp.episodes.push(ep); this.imp.ep = null; }
   // (a pending recovery step's landing is a future stance: it moves with every root shift as the plan's future stances do — its target and the place
   // the foot would have landed both carried)
