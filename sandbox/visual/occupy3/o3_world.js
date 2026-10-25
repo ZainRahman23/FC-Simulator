@@ -314,9 +314,13 @@ export class ImpactWorld extends OccupancyWorld2 {
       // the landing itself already does (or the minimum stance width) — no crossover steps; away from the body at the landing no further than the
       // leg reaches (or than the gait's own landing already is); a lifted foot never onto its partner
       const sx = Xf === "R" ? 1 : -1, oSt = pv ? pv.pq[1] : p.plan.stances[oth].find((qq) => qq.t0 <= tl + 1e-9 && qq.t1 > tl + 1e-9) || (planted.find(([Y]) => Y === oth) || [])[1], os = oSt && oSt.pos ? oSt.pos : null, rL = p.stateAt(tl).P;
+      // (the stepping leg's reach at the landing — Stage 2's own rule: its hip, carried with the root, within 0.985 × the leg's length of the ankle with
+      // the pelvis lowered ≤ 2 cm; beyond it the canonical body lowers the hips at the landing in one frame — a weight-acceptance snap)
+      const Hj = J3["thigh_" + Xf].j, hip = add2(rL, [Hj[0] - st.P[0], Hj[1] - st.P[1]]), vH = Math.max(0, Hj[2] - 0.09 - this.R.drop), Lr = this.R.reach * this.legLen, rHip = Math.sqrt(Math.max(0, Lr * Lr - vH * vH));
       let adj = len2(need) > X.stepOut ? mul2(unit2(need), X.stepOut) : need.slice(); const at = (lam) => add2(base, mul2(adj, lam));
       const ok = (q) => { if (os) { const latB = dot2(sub2(base, os), r) * sx, latQ = dot2(sub2(q, os), r) * sx; if (latQ < Math.min(latB, X.minWidth) - 1e-6) return false; if (len2(sub2(q, os)) < 0.16 && len2(sub2(base, os)) >= 0.16) return false; }
-        const dB = len2(sub2(base, rL)), dQ = len2(sub2(q, rL)); if (dQ > Math.max(X.reachLand, dB) + 1e-6) return false; return true; };
+        const dB = len2(sub2(base, rL)), dQ = len2(sub2(q, rL)); if (dQ > Math.max(X.reachLand, dB) + 1e-6) return false;
+        const hB = len2(sub2(base, hip)), hQ = len2(sub2(q, hip)); if (hQ > Math.max(rHip, hB) + 1e-6) return false; return true; };
       if (!ok(at(1))) { let lo = 0, hi = 1; for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; if (ok(at(m))) lo = m; else hi = m; } adj = mul2(adj, lo); }
       const pos = add2(base, adj), nR = dot2(adj, r) * sx;
       const realAdj = sub2(pos, base), resid = len2(sub2(need, realAdj));

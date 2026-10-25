@@ -19,6 +19,7 @@ const ROWS = [
   old("side", "ORDINARY CONTACT", "JOGGING SHOULDER CONTACT · side by side, the carrier leaning 6° in"),
   old("headon-jog", "ORDINARY CONTACT", "HEAD-ON APPROACH · both jog at each other"),
   { id: "oblique", group: "ORDINARY CONTACT", name: "OBLIQUE APPROACH · the defender jogs in at 45° across the carrier's line", c: carry("JOG", { dur: 3.5 }), def: D(5.5, 2.3, -135, { stick: [[0.0, 0, "JOG"]] }), tackle: [] },
+  { id: "oblique-firm", group: "ORDINARY CONTACT", name: "OBLIQUE APPROACH · FIRM · the defender jogs in at 60° into the carrier's legs (beyond Stage 2's tolerance)", c: carry("JOG", { dur: 4.0 }), def: D(4.6, 2.4, -120, { stick: [[0.0, 0, "JOG"]] }), tackle: [] },
   old("near-miss", "ORDINARY CONTACT", "PASS-BY NEAR MISS · jogging past each other, almost touching"),
   old("static-jog", "ORDINARY CONTACT", "ONE STATIONARY / ONE MOVING · the carrier jogs into a standing player"),
   old("cross", "ORDINARY CONTACT", "BOTH MOVING · the defender jogs across the carrier's line"),
