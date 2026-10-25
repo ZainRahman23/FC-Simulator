@@ -228,7 +228,10 @@ export class ImpactWorld extends OccupancyWorld2 {
       // (an ordinary player's pelvis hands its offset back to the root; an overflow is realised once the support allows)
       if (!held) { const back = mul2(s.P, -Math.min(1, X.relax * DT)), f2 = this.impFit(p, add2(dRoot, mul2(back, -1)), t, J3, held); if (f2.lam >= 1 - 1e-9) { dRoot = add2(dRoot, mul2(back, -1)); s.P = add2(s.P, back); }
         if (len2(s.O) > 1e-9) { const o = mul2(unit2(s.O), Math.min(len2(s.O), X.oRelease)), f3 = this.impFit(p, add2(dRoot, o), t, J3, held); if (f3.lam >= 1 - 1e-9) { dRoot = add2(dRoot, o); s.O = sub2(s.O, o); } } }
-      let P2 = add2(s.P, rest); const pm = len2(P2); if (pm > capP) { const over = mul2(unit2(P2), pm - capP); P2 = sub2(P2, over); s.O = add2(s.O, over); } s.P = P2; }
+      let P2 = add2(s.P, rest); const pm = len2(P2); if (pm > capP) { const over = mul2(unit2(P2), pm - capP); P2 = sub2(P2, over); s.O = add2(s.O, over); }
+      // (a held player's drawn pelvis returns over its authored feet once the body is quiet — the root cannot take it; without this a committed
+      // player's last millimetres would hold the episode open for as long as the commitment lasts)
+      if (held && len2(s.u) < X.settle.u && xm < d) P2 = mul2(P2, 1 - Math.min(1, X.relax * DT)); s.P = P2; }
     if (fade < 1) { s.P = mul2(s.P, fade); s.O = mul2(s.O, fade); }
     if (len2(dRoot) > 1e-9) this.shiftRoot(p, dRoot, t);
     if (!held && len2(s.O) > 0.01 && (!s.step || (s.step.landed && t - s.step.tLanded > 0.05)) && planted.length === 2) this.followStep(p, s, t, planted, f, r);
@@ -295,12 +298,12 @@ export class ImpactWorld extends OccupancyWorld2 {
     for (const Xf of ["R", "L"]) { const oth = Xf === "R" ? "L" : "R", Ls = p.plan.stances[Xf], cur = Ls.find((qq) => qq.t0 <= t + 1e-9 && qq.t1 > t + 1e-9), nx = Ls.find((qq) => qq.t0 > t + 1e-9 && qq.pos), othPl = planted.some(([Y]) => Y === oth);
       let tLand, base, kind, newer = false;
       if (!cur && nx) { tLand = nx.t0; if (tLand - t < X.lock) { locked++; continue; } base = nx.pos; kind = "swing re-aimed"; }
-      else if (!cur && !nx) { if (st.s > X.liftMaxSpeed) continue; const a = J3["foot_" + Xf].j; base = add2([a[0], a[1]], mul2(s.u, X.tSwing0)); kind = "free foot placed"; tLand = null; }
+      else if (!cur && !nx) { if (!this.mayLift(p, s, t, st)) continue; const a = J3["foot_" + Xf].j; base = add2([a[0], a[1]], mul2(s.u, X.tSwing0)); kind = "free foot placed"; tLand = null; }
       else if (cur && othPl) { // (the weight is on the foot that landed last: of two planted feet only the older one lifts — steps alternate; and only
         // a slow body lifts a planted foot to step (standing, walking): a moving one's gait brings its next landing within a stride — that one is re-aimed)
         // (alternation is a preference: the foot that landed last carries the weight — it may still step outward when the other one cannot help (its
         // step would cross), unloading first (later))
-        const oq = planted.find(([Y]) => Y === oth)[1]; if (st.s > X.liftMaxSpeed) continue; newer = cur.t0 > oq.t0 + 1e-9;
+        const oq = planted.find(([Y]) => Y === oth)[1]; if (!this.mayLift(p, s, t, st)) continue; newer = cur.t0 > oq.t0 + 1e-9;
         const S = this.stanceLedger(p, Xf, cur); base = add2(cur.pos, add2(S.push, this.impOnly(S, held))); kind = newer ? "loaded foot lifted (unloads first)" : "planted foot lifted"; tLand = null; }
       else continue;
       const tU = X.tUnload * (newer ? 2 : 1); let tl = tLand != null ? tLand : t + tU + X.tSwing0, need = null; const pv = /foot lifted/.test(kind || "") ? pivot(oth) : null;
@@ -333,15 +336,20 @@ export class ImpactWorld extends OccupancyWorld2 {
     this.event(p, "RECOVERY STEP", `${o.X} ${o.kind} — lands at +${(o.tLand - t).toFixed(3)} s, ${(len2(o.adj) * 100).toFixed(0)} cm from where it would have landed${cls !== "RECOVERY STEP" ? " (" + cls + ")" : ""}`, { X: o.X, tLand: +o.tLand.toFixed(4), pos: o.pos.map((v) => +v.toFixed(3)) }); }
   // a pending step that no longer applies: the player is no longer Stage 3's (a fall candidate's placeholder handed him back), or a lifted-foot step
   // under a plan that now moves the body faster than RES3.liftKeep before its landing
+  // (the plan's own speed now and over the next 0.25 s, or until t1 — the canonical planner's intent for the body)
+  planSpeed(p, t, t1) { return Math.max(p.stateAt(t).s, p.stateAt(Math.max(t, Math.min(t1, t + 0.25))).s); }
+  // a planted (or free) foot may be lifted to step: a slow body, a plan that does not run within the step, not just after such a step was cancelled
+  mayLift(p, s, t, st) { return st.s <= this.X.liftMaxSpeed && this.planSpeed(p, t, t + 0.25) <= this.X.liftKeep && t >= (s.noLiftUntil || 0); }
   stepVoid(p, s, S) { if (!s.active) return "the player is handed back (Stage 3 no longer acts on him)";
-    if (S.tLift != null) { const t = p.t, v = Math.max(p.stateAt(t).s, p.stateAt(Math.max(t, Math.min(S.tLand, t + 0.25))).s); if (v > this.X.liftKeep) return `the canonical plan now moves the body at ${v.toFixed(1)} m/s — a lifted-foot step would leave its support behind; the gait's own next landing takes it`; }
+    if (S.tLift != null) { const t = p.t, v = this.planSpeed(p, t, S.tLand); if (v > this.X.liftKeep) return `the canonical plan now moves the body at ${v.toFixed(1)} m/s — a lifted-foot step would leave its support behind; the gait's own next landing takes it`; }
     return null; }
-  cancelStep(p, s, why) { const S = s.step; S.cancelled = why; S.tCancel = p.t; s.step = null; if (S.plan === p.plan) p.flags.replan = p.flags.replan || "impact: recovery step cancelled";   // (the edited plan replaced by the canonical one)
+  cancelStep(p, s, why) { const S = s.step; S.cancelled = why; S.tCancel = p.t; s.step = null; if (S.tLift != null) s.noLiftUntil = p.t + 0.3;   // (no lifted-foot step again at once: the gait's landing takes it)
+    if (S.plan === p.plan) p.flags.replan = p.flags.replan || "impact: recovery step cancelled";   // (the edited plan replaced by the canonical one)
     this.event(p, "RECOVERY STEP CANCELLED", `${S.X}: ${why}`, { X: S.X }); }
   // the trailing foot (the older of two planted) steps up beside the newer one, a stance width apart, along the body's motion — the weight already moved
   followStep(p, s, t, planted, f, r) { const X = this.X, [[Xa, qa], [Xb, qb]] = planted, old = qa.t0 <= qb.t0 ? [Xa, qa] : [Xb, qb], nw = old[0] === Xa ? [Xb, qb] : [Xa, qa], sx = old[0] === "R" ? 1 : -1;
     const tLift = t + X.tUnload, dur = X.tSwing0 + 0.1, ahead = mul2(s.u, dur + X.tUnload), pos = add2(add2(nw[1].pos, mul2(r, sx * 0.20)), ahead), base = old[1].pos.slice();
-    if (p.stateAt(t).s > X.liftMaxSpeed) return;   // (a moving body's gait brings that foot up itself)
+    if (!this.mayLift(p, s, t, p.stateAt(t))) return;   // (a moving body's gait brings that foot up itself)
     this.planStep(p, s, t, { X: old[0], tLift, tLand: tLift + dur, pos, base, adj: sub2(pos, base), yaw: Math.atan2(f[1], f[0]), kind: "following step (the trailing foot)" }, "RECOVERY STEP"); }
   // the step in the plan the body draws: the stepping foot's landing at the step's place and time; a lifted foot's stance ends at its lift; that
   // foot's touches during the step are the step's (cancelled)

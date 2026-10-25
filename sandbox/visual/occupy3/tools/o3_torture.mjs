@@ -46,6 +46,7 @@ function run(i, mode, mirror) { const R = rng(SEED * 7919 + i * 31), sg = mirror
       if (dCmd == null || Math.abs(wrap(dh - dCmd)) > 25 * DEG || t - dCmdT > 0.4 || dm !== dCmdM) { dCmd = Math.round(dh * 1e6) / 1e6; dCmdT = t; dCmdM = dm; } rd = { h: dCmd, mode: dm, keys: 0 };
       if (t >= tqNext && dist < 2.4 && !free && ph !== "AWAY") { W.request("fixture"); tqNext = t + 0.8 + 1.6 * R(); } }
     W.step(ra, rd);
+    if (TRACE && TRACE === `${i}${mirror ? "m" : ""}` && mode === "S3" && W.imp && k % 60 === 0) { const x = W.imp.log[W.imp.log.length - 1]; if (x && x.k === W.k) for (const [j, who] of [[0, "ATT"], [1, "DEF"]]) { const q = x.p && x.p[j]; if (q) console.log(`  trace ${(k * DT).toFixed(2)} ${who} ${q.state} [${q.committed}] tk ${W.tk && W.tk.act ? (W.tk.owns(W.t) ? "owns" : "-") + " t0 " + W.tk.act.t0.toFixed(2) + " tCtl " + (W.tk.act.tCtl != null ? W.tk.act.tCtl.toFixed(2) : "?") : "none"} pend ${W.tk && W.tk.pend ? "yes" : "no"} ${q.cls} e [${q.e}] u [${q.u}] ξ [${q.xi}] slack ${q.slack} P [${q.P}] O [${q.O}] osc ${JSON.stringify(q.osc)} feet ${q.feet} dist ${x.dist}`); } }
     const t1 = W.t, s1a = A.stateAt(t1), s1d = D.stateAt(t1); if (k % 48 === 0) sigs.push([s1a.P[0], s1a.P[1], s1d.P[0], s1d.P[1]].map((v) => v.toFixed(9)).join(","));
     if (!fin(s1a.P) || !fin(s1d.P) || !fin(s1a.V) || !fin(s1d.V)) M.nan++; if (W.ps) for (const p of W.players) { const s = W.ps.get(p); if (!fin(s.u) || !fin(s.P) || !fin(s.O)) M.nan++; }
     hist.a.push(s1a.P.slice()); hist.d.push(s1d.P.slice());
@@ -68,6 +69,7 @@ function run(i, mode, mirror) { const R = rng(SEED * 7919 + i * 31), sg = mirror
       for (let j = 4; j < S.length; j++) { if (S[j].t - S[j - 4].t > 1.5) continue; let rev = 0; for (let q = j - 2; q <= j; q++) if (d[q] && d[q - 1] && d[q][0] * d[q - 1][0] + d[q][1] * d[q - 1][1] < 0) rev++; if (rev >= 3) { M.osc++; break; } } } }
   M.fp = JSON.stringify([sigs, W.contactLog.map((c) => [c.k, c.by, c.kind]), Au.log.map((e) => [e.k, e.to || e.note]), W.imp ? W.imp.events.map((e) => [e.k, e.who, e.kind]) : null]); return M; }
 const S = { S2D: [], S3: [] }; let nondet = 0;
+const TRACE = arg("trace");   // (--trace 2m: Stage 3's balance state every 0.25 s in that run — a diagnosis)
 const ONLY = arg("only") ? arg("only").split(",") : null;   // (--only 8m,12: those runs only — a diagnosis)
 for (let i = 0; i < N; i++) for (const mirror of [false, true]) { if (ONLY && !ONLY.includes(`${i}${mirror ? "m" : ""}`)) continue; const o = run(i, "S2D", mirror), a = run(i, "S3", mirror), b = run(i, "S3", mirror); if (a.fp !== b.fp) nondet++; o.tag = a.tag = `#${i}${mirror ? "m" : ""}`; S.S2D.push(o); S.S3.push(a); process.stderr.write(`${i}${mirror ? "m" : ""} `); }
 const sum = (L, k) => L.reduce((s, x) => s + (x[k] || 0), 0), mx = (L, k) => Math.max(...L.map((x) => x[k] || 0)), own = (L, k) => L.reduce((s, x) => s + x.own[k], 0), merge = (L, k) => { const m = {}; for (const x of L) for (const [a, b] of Object.entries(x[k] || {})) m[a] = (m[a] || 0) + b; return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([a, b]) => `${a} ${b}`).join(" · ") || "—"; };
