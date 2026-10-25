@@ -148,7 +148,7 @@ export class LimbWorld extends ImpactWorld {
       const W = sides.reduce((a, z) => a + z.r.w, 0), d = Math.min(over, X.posCap); if (!(W > 0)) { c.unresolved = over; continue; }
       for (const z of sides) { const want = d * z.r.w / W, dist = LM.project(z.s.leg, z.s.seg, z.s.x, LM.mul(c.n, z.sg), want, X); posn.push({ key: c.key, who: z.s.leg.who, X: z.s.leg.X, dist, want }); } }
     for (const [, L, pose] of PL) { const J = pose.J, fr = { hipR: J.thigh_R.j, hipL: J.thigh_L.j, up: LM.sub(J.spine.t, J.pelvis.j) };
-      for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted) continue; LM.clampRange(leg, X); if (LM.keepAdmissible(leg, leg.q0, fr)) this.l3.kept = (this.l3.kept || 0) + 1; } }
+      for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted) continue; LM.clampRange(leg, X); if (LM.keepAdmissible(leg, leg.q0, fr)) this.l3.kept = (this.l3.kept || 0) + 1; if (LM.restoreAdmissible(leg, fr, X)) this.l3.restored = (this.l3.restored || 0) + 1; } }
     // ── the new state: the ankle's displacement the next pose will draw; the held pairs; the 3B.3 inputs ──
     for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf], P2 = LM.legPose(leg.auth, leg.q, leg.fr); leg.dAnk = LM.len(P2.d); leg.reach = hyp(P2.H[0] - P2.A[0], P2.H[1] - P2.A[1]); }
     for (const c of C) { const h0 = this.l3.held.get(c.hkey); this.l3.held.set(c.hkey, { k0: h0 ? h0.k0 : k, k, legs: h0 ? h0.legs : [c.A, c.B].filter((s) => s.kind === "LIMB").map((s) => s.leg) }); const dur = (k - (h0 ? h0.k0 : k)) * DT;

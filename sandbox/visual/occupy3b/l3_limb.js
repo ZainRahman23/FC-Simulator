@@ -163,3 +163,11 @@ export function keepAdmissible(leg, q0, frame) { const v0 = violation(leg, q0, f
   if (leg.q.every((v, i) => Math.abs(v) <= Math.abs(q0[i]) + 1e-12 && v * q0[i] >= -1e-15)) return false;
   let lo = 0, hi = 1; const at = (u) => q0.map((v, i) => v + (leg.q[i] - v) * u); for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; if (violation(leg, at(m), frame) <= v0 + 1e-9) lo = m; else hi = m; }
   leg.q = at(lo); leg.qd = mul(leg.qd, lo); return true; }
+// ── THE RESTORE: a perturbation the AUTHORED motion has carried out of the admissible set (the authored hip extending under a held flexion; the
+// authored foot lowering under a lifted one) — "not worse than last tick" would keep it there — is shrunk toward the authored pose (admissible by
+// definition) to the largest admissible fraction, no faster than the perturbation itself may move (qdMax per DOF: the yield's own speed — no
+// snap; the rest next tick) ──
+export function restoreAdmissible(leg, frame, X) { if (!(violation(leg, leg.q, frame) > 1e-9)) return false;
+  let lo = 0, hi = 1; for (let i = 0; i < 12; i++) { const m = (lo + hi) / 2; if (violation(leg, mul(leg.q, m), frame) <= 1e-9) lo = m; else hi = m; }
+  const step = Math.max(...leg.q.map((v) => Math.abs(v) * (1 - lo))), cap = X.qdMax / 240, u = step > cap ? cap / step : 1, sc = 1 - (1 - lo) * u;
+  leg.q = mul(leg.q, sc); leg.qd = mul(leg.qd, sc); return true; }

@@ -12,11 +12,13 @@ import { D } from "../tackle1/t_cases.js";
 const carry = (mode, o = {}) => Object.assign({ tech: "CARRY", variant: mode, mode, ang: 0, runup: 2.4, dur: 3.0, pre: 1.0, intents: [] }, o);
 const CQ = () => CASES.find((x) => x.tech === "CROQUETA" && x.variant === "REF · JOG R → L");
 const from = (L, id, group, name) => Object.assign({}, L.find((x) => x.id === id), { group, name, from: id });
-const V = { WALK: 1.4, JOG: 3.2, RUN: 5.6 };
+const V = { WALK: 1.4, JOG: 3.2, RUN: 5.3 };   // (the canonical top speeds, measured)
+const LAG = { JOG: 0.144, RUN: 0.245 };        // s: the canonical start's acceleration lag from rest (measured: distance behind a constant-speed line)
 // (the crossing sweep: the two lines meet 1.2 s after t = 0, 3.8 m ahead of the carrier; the defender placed back along his own line — heading
-// `face`° from the carrier's (0 = the same way, ± = toward the carrier's right / left), its speed his mode's — and `off` m to the side)
+// `face`° from the carrier's (0 = the same way, ± = toward the carrier's right / left), at his mode's speed — and `off` m to the side; he sets off
+// his acceleration lag early, so that he is on his line's schedule when the carrier arrives)
 const cross = (face, mode, off) => { const f = face * Math.PI / 180, tm = 1.2, M = [V.JOG * tm, off], v = V[mode]; const at = [M[0] - Math.cos(f) * v * tm, M[1] - Math.sin(f) * v * tm];
-  return { id: `x${Math.abs(face)}-${mode.toLowerCase()}${off ? "-off" : ""}`, group: "CROSSING SWEEP", name: `CROSSING · the defender ${mode === "RUN" ? "runs" : "jogs"} across the carrier's line at ${180 - Math.abs(face)}°${off ? ", his line 0.35 m aside" : ""}`, c: carry("JOG", { dur: 3.2 }), def: D(+at[0].toFixed(3), +at[1].toFixed(3), face, { stick: [[0.0, 0, mode]] }), tackle: [] }; };
+  return { id: `x${Math.abs(face)}-${mode.toLowerCase()}${off ? "-off" : ""}`, group: "CROSSING SWEEP", name: `CROSSING · the defender ${mode === "RUN" ? "runs" : "jogs"} across the carrier's line at ${180 - Math.abs(face)}°${off ? ", his line 0.35 m aside" : ""}`, c: carry("JOG", { dur: 3.2 }), def: D(+at[0].toFixed(3), +at[1].toFixed(3), face, { stick: [[-LAG[mode], 0, mode]] }), tackle: [] }; };
 const ROWS = [
   from(O2CASES, "overtake", "ORDINARY CONTACT", "OVERTAKING · a running player passes the jogging carrier shoulder to shoulder"),
   from(O2CASES, "glance", "ORDINARY CONTACT", "GLANCING HEAD-ON · jogging past each other shoulder to shoulder"),
