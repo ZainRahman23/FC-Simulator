@@ -1,0 +1,36 @@
+
+STANDING TACKLE V1 — set "search": 1500 runs, 209 committed tackles, OLD vs STAGE 2 (MEDIUM, POKE untuned, inputs identical)
+                                         OLD         STAGE 2
+  MISS                                    47              45
+  CONTACT — ATTACKER RETAINS               3               8
+  CONTACT — ATTACKER RECOVERS            141             148
+  CONTACT — DEFENDER RECOVERS             18               8
+  CONTACT — BALL FREE                      0               0
+
+THE OUTCOMES THAT CHANGED: 20
+  7 × the tackle's boot reached the ball only through the attacker's body (blocked)
+      #9@0.3                 DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔PELVIS at +0.23 s) · blocked: DEF OUTSIDE CUT
+      #9@0.4                 DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔PELVIS at +0.23 s) · blocked: DEF OUTSIDE CUT
+      #9@0.5                 DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔PELVIS at +0.23 s) · blocked: DEF OUTSIDE CUT
+      #50@0.7                DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch L through SHIN_L 13 cm · OLD race BODY-PHASED (deepest 23 cm PELVIS↔THIGH_R at +0.28 s) · blocked: ATT exit touch
+      #93@0.3                ATTACKER RECOVERS → DEFENDER RECOVERS  · OLD race BODY-PHASED (deepest 17 cm SHIN_L↔THIGH_R at +0.12 s)
+      #93@0.4                ATTACKER RECOVERS → DEFENDER RECOVERS  · OLD race BODY-PHASED (deepest 17 cm SHIN_L↔THIGH_R at +0.12 s)
+      #93@0.5                ATTACKER RECOVERS → DEFENDER RECOVERS  · OLD race BODY-PHASED (deepest 17 cm SHIN_L↔THIGH_R at +0.12 s)
+  11 × the OLD race was won through a body
+      #9@0.6                 DEFENDER RECOVERS → ATTACKER RECOVERS OLD: DEF touch R through THIGH_L 6 cm · OLD race BODY-PHASED (deepest 24 cm PELVIS↔PELVIS at +1.50 s) · blocked: DEF carry turn, ATT DRAG-BACK, DEF carry correction
+      #38@0.7                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔THIGH_L at +0.16 s) · blocked: DEF OUTSIDE CUT
+      #38@0.8                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔THIGH_R at +0.12 s)
+      #50@1.0                DEFENDER RECOVERS → ATTACKER RETAINS  OLD: ATT touch R through THIGH_L 22 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.05 s) · blocked: ATT carry
+      #50@1.1                DEFENDER RECOVERS → ATTACKER RETAINS  OLD: ATT touch R through THIGH_L 22 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.05 s) · blocked: ATT carry
+      #50@1.2                DEFENDER RECOVERS → ATTACKER RETAINS  OLD: ATT touch R through THIGH_L 22 cm · OLD race BODY-PHASED (deepest 23 cm THIGH_R↔PELVIS at +0.05 s) · blocked: ATT carry
+      #79@0.3                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔THIGH_R at +0.22 s)
+      #79@0.4                DEFENDER RECOVERS → ATTACKER RECOVERS  · OLD race BODY-PHASED (deepest 23 cm THIGH_L↔THIGH_R at +0.22 s)
+  2 × a touch through the opponent's body blocked
+      #47@1.1                MISS              → ATTACKER RETAINS  OLD: ATT touch R through THIGH_L 7 cm · blocked: ATT carry
+      #70@1.0                MISS              → ATTACKER RETAINS   · blocked: ATT carry
+
+THE LOOSE-BALL RACES IN OLD (control broken by the tackle, then re-established): 159
+  LEGITIMATE     16 — STAGE 2 keeps the outcome in 16, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 16
+  AMBIGUOUS       2 — STAGE 2 keeps the outcome in 2, changes it in 0: ATTACKER RECOVERS → ATTACKER RECOVERS 2
+  BODY-PHASED   141 — STAGE 2 keeps the outcome in 123, changes it in 18: ATTACKER RECOVERS → ATTACKER RECOVERS 119 · DEFENDER RECOVERS → ATTACKER RECOVERS 11 · DEFENDER RECOVERS → DEFENDER RECOVERS 4 · DEFENDER RECOVERS → ATTACKER RETAINS 3 · ATTACKER RECOVERS → DEFENDER RECOVERS 4
+  STAGE 2's own races classified BODY-PHASED: 59 — #5@0.9 (17 cm SHIN_L↔THIGH_R at +0.17 s) · #5@1.0 (17 cm SHIN_L↔THIGH_R at +0.17 s) · #5@1.1 (17 cm SHIN_L↔THIGH_R at +0.17 s) · #5@1.2 (17 cm SHIN_L↔THIGH_R at +0.15 s) · #9@0.6 (10 cm SHIN_L↔SHIN_R at +1.80 s) · #10@1.0 (14 cm THIGH_L↔THIGH_R at +0.24 s)

@@ -1,0 +1,52 @@
+STAGE 2 REPRODUCED EXACTLY — 25 Oct 2026, branch prototype/player-occupancy-stage3 (cut from 817e0f25), the Stage 2 tools unchanged, re-run into a scratch folder and compared with the evidence committed in 817e0f25 (review_artifacts/player_occupancy2/evidence/)
+
+IDENTICAL                      access_moves.txt
+IDENTICAL                      access_review.txt
+IDENTICAL                      access_search.txt
+IDENTICAL                      body_moves.txt
+IDENTICAL                      body_review.txt
+IDENTICAL                      body_search.txt
+DIFFERS (2 lines: wall-clock measurements) browser.txt
+IDENTICAL                      conflicts.txt
+IDENTICAL                      deadlock.txt
+IDENTICAL                      diag52.txt
+IDENTICAL                      identity.txt
+IDENTICAL BUT WALL-CLOCK TIMES milestone_regress.txt
+IDENTICAL                      nearmiss.txt
+DIFFERS (18 lines: wall-clock measurements) performance.txt
+IDENTICAL BUT WALL-CLOCK TIMES review_cases.txt
+IDENTICAL                      sets_moves.txt
+IDENTICAL                      sets_review.txt
+IDENTICAL                      sets_search.txt
+IDENTICAL                      solo.txt
+IDENTICAL                      tackle_moves.txt
+IDENTICAL                      tackle_search.txt
+IDENTICAL                      torture.txt
+IDENTICAL                      two_player_early_info.txt
+IDENTICAL                      two_player_possession.txt
+IDENTICAL                      variants/v0_base.txt
+IDENTICAL                      variants/v1_look.txt
+IDENTICAL                      variants/v2_tol.txt
+IDENTICAL                      variants/v3_lean_other.txt
+IDENTICAL                      variants/v5_moves.txt
+IDENTICAL                      variants/v6_look_search.txt
+IDENTICAL BUT WALL-CLOCK TIMES variants/v7_bf_into.txt
+IDENTICAL                      variants/v7_body_moves_wallspares.txt
+IDENTICAL                      access_moves.json
+IDENTICAL                      access_review.json
+IDENTICAL                      access_search.json
+IDENTICAL                      body_moves.json
+IDENTICAL                      body_review.json
+IDENTICAL                      body_search.json
+DIFFERS (wall-clock)           browser.json
+IDENTICAL                      conflicts.json
+IDENTICAL                      lab_cases.json
+IDENTICAL                      sets_moves.json
+IDENTICAL                      sets_review.json
+IDENTICAL                      sets_search.json
+IDENTICAL                      tackle_moves.json
+IDENTICAL                      tackle_search.json
+IDENTICAL                      torture.json
+IDENTICAL                      two_player_possession.json
+
+The two that differ beyond stripped timing fields measure wall-clock time by design: performance.txt (µs per step) and browser.txt / browser.json (the Lab's playhead after 0.6 s of wall clock at 1× / 0.5× / 0.25× — PASS both times; 20 / 20 checks PASS).

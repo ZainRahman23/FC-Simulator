@@ -1,0 +1,41 @@
+
+SET "search" — 209 encounters · OLD · S1 · S2 (the bodies as drawn)
+                                                                               OLD                      S1                      S2
+PENETRATION (cm: median / p95 / p99 / max · ticks > 5 cm)
+  TORSO / PELVIS                                                    8.7/20.5/22.6/23.9        1.8/6.0/8.5/10.3      1.9/11.0/13.1/13.1
+     ticks > 5 cm                                                                 3354                      10                      53
+  LEGS                                                             11.3/21.8/22.8/23.5      2.2/12.2/17.4/23.0      1.8/14.9/19.3/22.9
+     ticks > 5 cm                                                                10508                    1324                    1296
+  FEET                                                              6.3/13.2/13.9/16.3      5.4/12.7/13.8/18.0      5.5/12.8/13.9/18.2
+     ticks > 5 cm                                                                 4729                    3737                    3289
+  ARMS                                                              8.0/16.2/17.8/18.5      5.8/13.2/16.2/18.4      5.4/12.9/15.4/18.2
+     ticks > 5 cm                                                                 7739                    3023                    2964
+  class TORSO/PELVIS ↔ TORSO/PELVIS                                    20.5/23.9 ·3354            6.0/10.3 ·10           11.0/13.1 ·53
+  class TORSO ↔ LEG                                                    21.5/23.5 ·4607              4.5/5.4 ·3            8.5/13.2 ·65
+  class LEG ↔ LEG                                                     21.2/23.0 ·10290         12.2/23.0 ·1323         14.9/22.9 ·1292
+  class FOOT ↔ BODY                                                    13.2/16.3 ·4728         12.7/18.0 ·3735         12.8/18.2 ·3289
+  class ARM ↔ BODY                                                     16.2/18.5 ·7735         13.2/18.4 ·3020         12.9/18.2 ·2961
+  ORDINARY contact · torso/pelvis: p95 / max ·>5 cm                    20.8/23.5 ·1321             7.9/10.3 ·9              1.5/1.5 ·0
+  ORDINARY contact · legs: p95 / max ·>5 cm                            21.8/23.5 ·3040           7.4/17.4 ·265          10.5/22.9 ·319
+  COMMITTED action involved · torso/pelvis: p95 / max ·>5 cm           20.0/23.9 ·2033              3.0/6.2 ·1           11.1/13.1 ·53
+  COMMITTED action involved · legs: p95 / max ·>5 cm                   21.8/23.5 ·7460         13.6/23.0 ·1058          16.1/22.9 ·973
+CONTINUITY (per frame = 4 ticks)
+  occupancy's root displacement per frame p99 / max (cm)                       0.0/0.0               11.7/12.5                 6.6/9.3
+  root acceleration: frames > 1 / 2 / 4 cm per frame²                         1561/0/0           3435/1011/486            3501/867/263
+     the largest (cm per frame²) · p99                                       1.9 · 1.0              15.9 · 1.7              10.3 · 1.6
+  root jerk: frames > 1 cm per frame³ · the largest                          363 · 1.9             2483 · 23.5             2673 · 15.1
+  drawn pelvis acceleration: frames > 2 cm per frame² · largest              3955 · 9.0             5032 · 18.6             5039 · 13.6
+  the largest correction in a tick: executed / pushed (cm)                     0.0/0.0                 4.1/3.0                 3.1/3.0
+  correction reversals on consecutive ticks                                          0                      16                       8
+SUPPORT (per planted stance)
+  planted stances measured                                                        6941                    7000                    7028
+  SUPPORT CONSISTENCY ERROR, ordinary stances p99 / max (cm)                   0.0/0.0               18.3/22.7               12.6/17.6
+     … of which pushed (position corrections) max (cm)                             0.0                    18.0                    12.4
+  SUPPORT CONSISTENCY ERROR, COMMITTED part (n) p99 / max                (982) 0.0/0.0          (984) 6.6/19.0           (997) 2.0/2.6
+  planted foot drift, the largest (cm)                                            48.7                    65.5                    60.5
+  FORCED PLANT RELEASES (a planted foot drifting > 3 cm)                          4475                    4444                    4420
+  support-chain stretch: ticks > 1 cm · the largest (cm)                   11368 · 1.1             12389 · 1.1             12241 · 1.1
+  planted leg short of its plant (drawn; canonical in OLD): ticks > 2 cm                   32680                   33628                   33503
+     the largest (cm)                                                             75.7                    95.5                    99.9
+  S1 unresolved ticks: COMMITTED ACTION'S LIMB 551 · PLANTED SUPPORT (the stance budget) 453 · AUTHORED / BALL-ANCHORED LIMB PATH 219 · BOTH COMMITTED 100 · PLANTED LEGS 1
+  S2 unresolved ticks: FAST LIMB CONTACT 108 · COMMITTED ACTION'S LIMB 325 · UNRESOLVED COMMITTED CONFLICT 576 · AUTHORED / BALL-ANCHORED LIMB PATH 237 · PLANTED SUPPORT 45 · PLANTED LEGS 11

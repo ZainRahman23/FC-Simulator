@@ -1,0 +1,22 @@
+PASS  the page loads (TOUCHLINE — PLAYER OCCUPANCY STAGE 2 REVIEW)  — 0.9 s to the first case
+PASS  every case simulates OLD, STAGE 1 and STAGE 2 and the three viewports draw  — 37/37
+PASS  the page's numbers equal node's (deepest, ticks > 5 cm, outcome, through, blocked, support consistency error), three modes  — 37/37
+PASS  view OLD | STAGE 1 | STAGE 2: every viewport draws  — [99,99,99]
+PASS  view STAGE 1 | STAGE 2: every viewport draws  — [100,100]
+PASS  view OLD: every viewport draws  — [100]
+PASS  view STAGE 1: every viewport draws  — [100]
+PASS  view STAGE 2: every viewport draws  — [100]
+PASS  OLD, STAGE 1 and STAGE 2 draw different replays of the same inputs (head-on jog at OLD's deepest)  — {"OLD":2751204982,"S1":1461424213,"S2":2649152210}
+PASS  SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)  — {"skin":1172482376,"skel":3665383134,"both":1172482376}
+PASS  CAPSULES / CONTACT NORMALS / SUPPORT ANCHORS / ROOT CORRECTION / BALL ACCESS / FRAME DATA toggle (overlay ink falls as each goes off)  — {"all overlays":38209,"capsules off":32517,"normals off":32263,"anchors off":32242,"corrections off":32182,"ball access off":29775,"frame data off":10243}
+PASS  SUPPORT ANCHORS and ROOT CORRECTION each draw something (Croqueta, tackle before the transfer, Stage 2 acting)  — {"anchors":21,"corrections":60}
+PASS  DIAGNOSTICS off hides the panel
+PASS  the diagnostics show the three modes' records and every per-frame quantity (regions, depth, normal, tangent, root correction, support error, commitment, ball access)  — []
+PASS  BALL ACCESS: a touch / boot BLOCKED under Stage 2 is shown  — {"id":"race","t":3.0291666666666663,"kind":"BALL ACCESS BLOCKED"}
+PASS  the eight cameras draw, each a different view  — 8
+PASS  frame step moves the playhead 4 ticks  — 3.999999999999986
+PASS  1× / 0.5× / 0.25× play at their rates (the playhead after 0.6 s of wall clock)  — {"1":0.5921000000238408,"0.5":0.29395000000000415,"0.25":0.15007500001191776}
+PASS  LOOP wraps the replay to its start
+PASS  0 console / HTTP errors  — []
+
+20 / 20 checks pass

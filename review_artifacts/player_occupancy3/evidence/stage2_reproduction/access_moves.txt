@@ -1,0 +1,20 @@
+
+BALL ACCESS — set "moves", 352 encounters (the bodies as drawn; tolerance 2 cm, hard limit 5 cm)
+                                                                                     OLD          S1          S2
+  ball contacts made                                                                2984        2975        3000
+     CLEAR (the playing leg ≤ the tolerance in the opponent)                        2914        2949        2995
+     AMBIGUOUS (tolerance … hard limit)                                               10          23           5
+     THROUGH THE OPPONENT'S BODY (> the hard limit)                                   60           3           0
+     made with the leg through the body one tick before or after (LATENCY)             1           4           0
+  contacts DENIED (touches + tackle boots)                                             0         109         163
+     by the access window (the leg through the body in the 0.1 s before)               0         109         156
+     by the gate AT the contact's own tick (no one-tick lag)                           0           0           7
+     a committed move's touch denied: the move held to its release                     0           0          46
+  STANDING TACKLE boot-to-ball: AROUND the carrier's body                            117         181         181
+     AMBIGUOUS                                                                         4          13           5
+     THROUGH the carrier's body                                                       27           3           0
+     boot contacts denied                                                              0          31          90
+  OLD THROUGH: BODY_FEINT 2.4/0.5@0.0 ATT touch R THIGH_R→THIGH_R 16.3 cm · BODY_FEINT 3/0.5@0.5 ATT touch L THIGH_L→THIGH_L 6.7 cm · BODY_FEINT 3.6/-1@0.7 ATT blind touch R FOOT_R→SHIN_L 7.7 cm · BODY_FEINT 3.6/-0.5@0.8 DEF tackle L THIGH_L→THIGH_R 10.4 cm · BODY_FEINT 3.6/-0.5@0.8 ATT blind touch R THIGH_R→THIGH_L 15.1 cm · BODY_FEINT 3.6/0.5@0.0 ATT touch R THIGH_R→THIGH_L 21.4 cm
+  OLD LATENCY: CROQUETA 2.4/1@0.1 ATT touch R at 4.6 cm, neighbours 5.9/3.4 cm
+  S1 THROUGH: CROQUETA 2.4/-1@0.8 DEF tackle L SHIN_L→THIGH_R 5.2 cm · CROQUETA 2.4/-1@0.8 DEF tackle L SHIN_L→THIGH_R 5.2 cm · CROQUETA 2.4/-0.5@0.7 DEF tackle R THIGH_R→THIGH_L 7.8 cm
+  S1 LATENCY: CROQUETA 2.4/-1@0.8 DEF tackle L at 1.6 cm, neighbours 1.9/5.2 cm · CROQUETA 2.4/-1@0.8 DEF tackle L at 1.6 cm, neighbours 1.9/5.2 cm · CROQUETA 2.4/-1@0.8 DEF tackle L at 1.7 cm, neighbours 5.2/1.9 cm · CROQUETA 2.4/-1@0.8 DEF tackle L at 1.7 cm, neighbours 5.2/1.9 cm

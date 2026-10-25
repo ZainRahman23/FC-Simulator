@@ -1,0 +1,53 @@
+
+MOTION PRESERVATION — set "moves", 352 encounters (OLD = the untouched reference; every number is STAGE vs OLD)
+
+STAGE 1
+  BODY FEINT / CROQUETA: 309 committed in OLD · committed at the same tick 308 · the same release tick 308 · carried to their release: OLD 291, STAGE 1 289 · CANCELLED (carried in OLD, not here) 7
+    own touch BLOCKED by the defender's body inside the move: 27 moves (29 touches) · the move carried on through it: 24
+    entered from the same state 262 (an earlier contact had moved him: 46, root ≤ 109.75 cm)
+    EXACT-MATCH TICKS from the commitment: 16578 — local pose identical (≤ 0.1 mm) in 250 / 262 (largest 0.13 cm) · ended by: 68 × occupancy acted on him
+    AFTER PHYSICAL CONTACT (68 moves, 1708 ticks, to the release or the action ending): TRUNK max 7.54 cm · HEAD/ARMS max 21.18 cm · LEGS max 51.62 cm (p50 of the per-move max 13.04) · WORLD ROOT max 69.65 cm
+      LEGS beyond the body's own displacement (local leg difference − world root difference: what is not placement): max 20.10 cm · ticks > 2 cm 31 of 1708
+      local pose still identical after contact (≤ 0.1 mm, every joint): 2 / 68 · legs within 1 cm 9 · within 5 cm 24 · both-committed conflict ticks in 68 moves
+    INPUTS DIVERGED (not occupancy's accommodation — a different action outcome): 8 moves, 350 ticks · 8 × his plan differs (a re-plan) · legs max 89.52 cm
+    WORLD PLACEMENT first differs from OLD (ticks after the commitment): 45, 45, 21, 47, 7, 14, 29, 42, 45, 45, 45, 45, 27, 23, 42, 56, 65, 22, 22, 22, 22, 52, 53, 56, 20, 20, 20, 20, 42, 53, 58, 61, 64, 64, 64, 64, 47, 47, 47, 48, 53, 10, 18, 29, 29, 53, 13, 32, 32, 32, 34, 46, 71, 14, 14, 19, 25, 47, 56, 53, 6, 16, 7, 7, 7, 18 — the first occupancy action at: 21, 44, 44, 19, 46, 4, 12, 21, 40, 42, 42, 42, 42, 26, 12, 22, 41, 53, 64, 19, 19, 19, 19, 51, 52, 55, 18, 18, 18, 18, 40, 52, 57, 60, 63, 63, 63, 63, 46, 46, 46, 47, 52, 8, 16, 28, 28, 52, 12, 31, 31, 31, 33, 45, 70, 13, 13, 18, 24, 28, 53, 50, 5, 15, 6, 6, 6, 17
+  STANDING TACKLE: 181 committed in OLD · committed identically 180 · owns the body as long 178 · the same phases 180 · boot through the carrier blocked in 30
+    entered from the same state 176 (moved before the commitment: 4, root ≤ 8.26 cm — its boot and look are ball-anchored in the world, so its local pose differs by construction)
+    EXACT-MATCH TICKS (same entry): 13564 — local pose identical in 173 / 176 · ended by: 161 × the carrier's root differs (the tackle tracks him) · 3 × occupancy acted on him
+    AFTER (3 tackles, 28 ticks): TRUNK max 0.26 cm · HEAD/ARMS max 0.30 cm · LEGS max 1.62 cm · WORLD ROOT max 1.62 cm · LEGS beyond the root's displacement max 0.00 cm (ticks > 2 cm 0) · local pose identical 1 / 3
+    INPUTS DIVERGED (the ball or the carrier moved: the tackle's boot, look and arms track them): 160 tackles, 22511 ticks · legs max 25.36 cm · head/arms max 27.20 cm
+    ✗ cancelled: BODY_FEINT 3.6/0.5@0.8 BODY FEINT V2 (the action no longer live in one run)
+    ✗ cancelled: CROQUETA 2.4/-1@0.3 LA CROQUETA (the action no longer live in one run)
+    ✗ cancelled: CROQUETA 2.4/-1@0.4 LA CROQUETA (the action no longer live in one run)
+    ✗ cancelled: CROQUETA 2.4/-1@0.5 LA CROQUETA (the action no longer live in one run)
+    ✗ cancelled: CROQUETA 3/-0.5@0.0 LA CROQUETA (the action no longer live in one run)
+    ✗ cancelled: CROQUETA 3/-0.5@0.1 LA CROQUETA (the action no longer live in one run)
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/-0.5@0.3 LA CROQUETA up 0.00 legs 0.13
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/0.5@0.4 LA CROQUETA up 0.00 legs 0.13
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/0.5@0.5 LA CROQUETA up 0.00 legs 0.13
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/0.5@0.6 LA CROQUETA up 0.00 legs 0.13
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/0.5@0.7 LA CROQUETA up 0.00 legs 0.13
+    ✗ local pose differs before any occupancy action: CROQUETA 2.4/0.5@0.8 LA CROQUETA up 0.00 legs 0.13
+
+STAGE 2
+  BODY FEINT / CROQUETA: 309 committed in OLD · committed at the same tick 308 · the same release tick 308 · carried to their release: OLD 291, STAGE 2 297 · CANCELLED (carried in OLD, not here) 1
+    own touch BLOCKED by the defender's body inside the move: 41 moves (46 touches) · the move carried on through it: 41
+    entered from the same state 267 (an earlier contact had moved him: 41, root ≤ 62.31 cm)
+    EXACT-MATCH TICKS from the commitment: 16451 — local pose identical (≤ 0.1 mm) in 267 / 267 (largest 0.00 cm) · ended by: 79 × occupancy acted on him
+    AFTER PHYSICAL CONTACT (79 moves, 2019 ticks, to the release or the action ending): TRUNK max 1.51 cm · HEAD/ARMS max 29.95 cm · LEGS max 24.37 cm (p50 of the per-move max 2.70) · WORLD ROOT max 11.03 cm
+      LEGS beyond the body's own displacement (local leg difference − world root difference: what is not placement): max 22.37 cm · ticks > 2 cm 102 of 2019
+      local pose still identical after contact (≤ 0.1 mm, every joint): 0 / 79 · legs within 1 cm 2 · within 5 cm 47 · both-committed conflict ticks in 73 moves
+    INPUTS DIVERGED (not occupancy's accommodation — a different action outcome): 19 moves, 620 ticks · 19 × his plan differs (a re-plan) · legs max 90.94 cm
+    WORLD PLACEMENT first differs from OLD (ticks after the commitment): 22, 45, 45, 4, 20, 47, 5, 13, 22, 41, 43, 43, 43, 43, 27, 23, 23, 42, 54, 65, 20, 20, 20, 20, 52, 53, 56, 19, 19, 19, 19, 42, 53, 58, 61, 64, 64, 64, 64, 4, 5, 19, 47, 47, 47, 48, 53, 71, 71, 71, 10, 17, 29, 29, 37, 37, 37, 37, 13, 6, 32, 32, 32, 34, 46, 71, 14, 14, 19, 25, 29, 54, 51, 6, 16, 7, 7, 7, 18 — the first occupancy action at: 21, 44, 44, 3, 19, 46, 4, 12, 21, 40, 42, 42, 42, 42, 26, 12, 22, 41, 53, 64, 19, 19, 19, 19, 51, 52, 55, 18, 18, 18, 18, 40, 52, 57, 60, 63, 63, 63, 63, 3, 4, 18, 46, 46, 46, 47, 52, 70, 70, 70, 8, 16, 28, 28, 36, 36, 36, 36, 12, 5, 31, 31, 31, 33, 45, 70, 13, 13, 18, 24, 28, 53, 50, 5, 15, 6, 6, 6, 17
+  STANDING TACKLE: 181 committed in OLD · committed identically 180 · owns the body as long 178 · the same phases 180 · boot through the carrier blocked in 88
+    entered from the same state 176 (moved before the commitment: 4, root ≤ 8.26 cm — its boot and look are ball-anchored in the world, so its local pose differs by construction)
+    EXACT-MATCH TICKS (same entry): 13862 — local pose identical in 137 / 176 · ended by: 161 × the carrier's root differs (the tackle tracks him) · 3 × occupancy acted on him
+    AFTER (3 tackles, 28 ticks): TRUNK max 0.58 cm · HEAD/ARMS max 0.66 cm · LEGS max 3.74 cm · WORLD ROOT max 3.74 cm · LEGS beyond the root's displacement max 0.00 cm (ticks > 2 cm 0) · local pose identical 1 / 3
+    INPUTS DIVERGED (the ball or the carrier moved: the tackle's boot, look and arms track them): 160 tackles, 22213 ticks · legs max 18.42 cm · head/arms max 27.43 cm
+    ✗ cancelled: BODY_FEINT 3.6/0.5@0.8 BODY FEINT V2 (the action no longer live in one run)
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-1@0.7 STANDING_LUNGE up 0.02 legs 0.02
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-1@0.8 STANDING_LUNGE up 0.11 legs 0.11
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-1@0.9 STANDING_LUNGE up 0.24 legs 0.24
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-0.5@0.8 POKE → LUNGE up 0.12 legs 0.12
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-0.5@0.9 POKE → LUNGE up 0.06 legs 0.06
+    ✗ local pose differs before any occupancy action: BODY_FEINT 3.6/-0.5@1.0 POKE → LUNGE up 0.20 legs 0.20
