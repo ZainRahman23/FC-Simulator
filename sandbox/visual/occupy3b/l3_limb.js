@@ -41,6 +41,10 @@ export const RES3B = {
   iters: 4,           // Gauss–Seidel passes over the tick's contacts
   faceLo: 0.15, faceHi: 0.30,   // |sin Δψ|: the FACE RULE (near-parallel bodies: the stable side-on normal), blended out between these
   touchTol: 0.02,     // m: a touch (or the tackle's boot) whose foot the limb contact displaced further than this is denied (Stage 3's geometry rule)
+  // THE CALIBRATION (owner, 25 Oct): the collision-effective velocity — what a state of ours can actually LOSE — and the articulated mass
+  vsrc: "F",          // the formulation (l3_world.js limbV / bodyV): A 3B.1 · B local normal · C root + turn + limb about its hip · D the drawn surfaces · E the drawn frame + turn + limb · F the drawn frame + limb (RECOMMENDED)
+  artMass: true,      // the ARTICULATED effective mass: a yielding limb's inverse mass at the contact = its own (hip held) + its body's at the hip (RECOMMENDED; 3B.1 as first built: false)
+  tanScale: 1,        // (a diagnostic: the limb's source velocity off the contact normal scaled — the tangential test; never a mode)
 };
 const DEG = Math.PI / 180;
 export const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul = (a, k) => [a[0] * k, a[1] * k, a[2] * k];
@@ -102,7 +106,7 @@ export function solveContacts(C, X) { const out = { apps: [], body: [] };
     // limb's response — and with it the impulse — is exactly what the limb can give)
     let lockA = [false, false, false], lockB = [false, false, false], rA, rB, yA, yB, wA, wB, W;
     for (let pass = 0; pass < 4; pass++) { rA = c.A.kind === "LIMB" ? limbResp(c.A.leg, c.A.seg, c.A.x, n, X, lockA) : null; rB = c.B.kind === "LIMB" ? limbResp(c.B.leg, c.B.seg, c.B.x, mul(n, -1), X, lockB) : null;
-      yA = !!(rA && rA.w > c.A.wBody); yB = !!(rB && rB.w > c.B.wBody); wA = rA ? (yA ? rA.w : c.A.wBody) : c.A.w; wB = rB ? (yB ? rB.w : c.B.wBody) : c.B.w; W = wA + wB; if (!(W > 0)) break;
+      yA = !!(rA && rA.w > c.A.wBody); yB = !!(rB && rB.w > c.B.wBody); wA = rA ? (yA ? rA.w + (c.A.wHip || 0) : c.A.wBody) : c.A.w; wB = rB ? (yB ? rB.w + (c.B.wHip || 0) : c.B.wBody) : c.B.w; W = wA + wB; if (!(W > 0)) break;   // (wHip: formulation E — the body behind the hip moves too)
       const lam0 = (c.held || c.placeholder) && (yA || yB) ? -vn / ((yA ? rA.w : 0) + (yB ? rB.w : 0)) : -vn / W; let changed = false;
       for (const [s, r, y, lk] of [[c.A, rA, yA, lockA], [c.B, rB, yB, lockB]]) if (y) for (let i = 0; i < 3; i++) if (!lk[i] && Math.abs(s.leg.qd[i] + r.g[i] * lam0) > X.qdMax + 1e-9 && Math.abs(r.g[i]) > 1e-12) { lk[i] = true; changed = true; }
       if (!changed) break; }
@@ -120,7 +124,7 @@ export function solveContacts(C, X) { const out = { apps: [], body: [] };
     c.lam += lam;
     const app = { key: c.key, it, vn, wA, wB, lam, src: -vn / W, held: !!c.held, obstructed: (rA && !yA) || (rB && !yB), keBefore: 0.5 * vn * vn / W, n: n.slice(), routeA: rA ? (yA ? "LIMB YIELDS" : "LIMB AT RANGE") : "BODY", routeB: rB ? (yB ? "LIMB YIELDS" : "LIMB AT RANGE") : "BODY" };
     for (const [s, r, y, sign, key] of [[c.A, rA, yA, 1, "A"], [c.B, rB, yB, -1, "B"]]) { const J = mul(n, lam * sign); app["J" + key] = J;
-      if (y) { s.leg.qd = add(s.leg.qd, mul(r.g, lam)); capSpeed(s.leg, X); app["dvn" + key] = r.w * lam; out.body.push({ who: s.who, J, at: s.leg.P.H, src: "LIMB CONTACT — THROUGH THE HIP", key: c.key, seg: s.seg, X: s.leg.X }); }
+      if (y) { s.leg.qd = add(s.leg.qd, mul(r.g, lam)); capSpeed(s.leg, X); app["dvn" + key] = r.w * lam; if (s.wHip) { s.dv = add(s.dv || [0, 0, 0], mul(n, lam * sign * s.wHip)); app["dvh" + key] = s.wHip * lam; } out.body.push({ who: s.who, J, at: s.leg.P.H, src: "LIMB CONTACT — THROUGH THE HIP", key: c.key, seg: s.seg, X: s.leg.X }); }
       else { s.dv = add(s.dv || [0, 0, 0], mul(n, lam * sign * (r ? s.wBody : s.w))); app["dvn" + key] = (r ? s.wBody : s.w) * lam; out.body.push({ who: s.who, J, at: s.x, src: r ? "LIMB AT ITS RANGE — THE BODY TAKES IT" : "CONTACT (body side)", key: c.key, seg: s.seg, X: r ? s.leg.X : null, range: !!r }); } }
     const vn2 = dot(sub(vPt(c.A), vPt(c.B)), n); app.vnAfter = vn2; app.keAfter = vn2 < 0 ? 0.5 * vn2 * vn2 / W : 0; out.apps.push(app); }
   // (a held contact the solve only yielded leaves no application: its closing went into the limbs' yield, recorded on the contact)

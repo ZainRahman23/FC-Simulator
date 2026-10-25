@@ -85,18 +85,58 @@ export class LimbWorld extends ImpactWorld {
   vPhys(p, st) { const s = this.ps.get(p), u = s && s.active ? s.u : [0, 0]; return [st.V[0] + u[0], st.V[1] + u[1], 0]; }
   frameOf(p, st) { const s = this.ps.get(p), P = s && s.active ? s.P : [0, 0]; return [st.P[0] + P[0], st.P[1] + P[1], 0]; }
   // a side of a pair: the swinging leg's lower thigh / shin / boot is a LIMB; the trunk, the hips (the thigh's upper half), a planted leg are BODY
-  sideOf(p, L, id, u, x, n, J, st) { if (/^UARM/.test(id)) return null; const m = /^(THIGH|SHIN|FOOT)_([RL])$/.exec(id), vb = this.vPhys(p, st), body = () => ({ kind: "BODY", who: p.pid, x, w: 1 / this.effMass(p, this.bodyOf(J, h2(n)), x, h2(n)).m, vBase: vb, vBody: vb, id });
+  sideOf(p, L, id, u, x, n, J, st) { if (/^UARM/.test(id)) return null; const m = /^(THIGH|SHIN|FOOT)_([RL])$/.exec(id), vb = this.vPhys(p, st), body = () => { const bv = this.bodyV(p, id, u, vb); return { kind: "BODY", who: p.pid, x, w: 1 / this.effMass(p, this.bodyOf(J, h2(n)), x, h2(n)).m, vBase: bv, vBody: bv, id, vRoot: vb }; };
     if (!m) return body(); const leg = L[m[2]]; if (leg.planted || (m[1] === "THIGH" && u < 0.5)) return body();
-    const art = this.artOf(p, m[2], m[1], u); return { kind: "LIMB", who: p.pid, leg, seg: m[1], u, x, id, art, vBody: vb, vBase: LM.add(vb, art), wBody: 1 / this.effMass(p, this.bodyOf(J, h2(n)), x, h2(n)).m }; }
+    let vl = this.limbV(p, m[2], m[1], u, vb); const B = this.bodyOf(J, h2(n)), parts = this.partsOf(p, m[2], m[1], u);
+    // (THE TANGENTIAL TEST — a diagnostic, RES3B.tanScale ≠ 1: the limb's source velocity relative to its root, its part off the normal scaled; the
+    // normal part untouched — no impulse may change)
+    if (this.L3.tanScale !== 1) { const d = LM.sub(vl, vb), dn = LM.dot(d, n); vl = LM.add(vb, LM.add(LM.mul(n, dn), LM.mul(LM.sub(d, LM.mul(n, dn)), this.L3.tanScale))); }
+    return { kind: "LIMB", who: p.pid, leg, seg: m[1], u, x, id, art: LM.sub(vl, vb), parts, vRoot: vb, vBody: this.bodyV(p, "THIGH_" + m[2], 0, vb), vBase: vl, wBody: 1 / this.effMass(p, B, x, h2(n)).m, wHip: this.L3.artMass ? 1 / this.effMass(p, B, leg.P.H, h2(n)).m : 0 }; }
   // the AUTHORED articulated velocity of a leg point (over artTicks: its motion less its body frame's, capped at the segment's ceiling)
   artOf(p, X, seg, u, lag = 0) { const H = this.l3.hist, n = this.L3.artTicks, a = H[H.length - 1 - lag], b = H.length > n + lag ? H[H.length - 1 - n - lag] : null; if (!a || !b || a.k - b.k !== n) return [0, 0, 0];
     const i = p === this.att ? 0 : 1, pa = LM.pointOf(a.legs[i][X], seg, u), pb = LM.pointOf(b.legs[i][X], seg, u), fa = a.F[i], fb = b.F[i], T = n * DT;
     let v = [(pa[0] - pb[0] - (fa[0] - fb[0])) / T, (pa[1] - pb[1] - (fa[1] - fb[1])) / T, (pa[2] - pb[2]) / T]; const c = this.L3.artCap[seg], m = LM.len(v); if (m > c) v = LM.mul(v, c / m); return v; }
+  // ── THE VELOCITY DECOMPOSITION of a leg point's AUTHORED motion over n ticks, in the player's root frame (position = root + Stage 3's offset,
+  // orientation = the drawn facing ψ): FRAME (the root's translation) + TURN (the whole body rotated by the facing's change) + SWAY (the pelvis
+  // joint moving in the root frame) + PELVIS ROTATION (the hip moving about the pelvis joint in the root frame) + LIMB (the point moving about its
+  // own hip, in the root frame). The five sum exactly to the point's authored displacement; each as a velocity (m/s, world). Diagnostic, and the
+  // source of the calibrated formulations below ──
+  partsOf(p, X, seg, u, n = this.L3.artTicks) { const H = this.l3.hist, a = H[H.length - 1], b = H.length > n ? H[H.length - 1 - n] : null; if (!a || !b || a.k - b.k !== n) return null;
+    const i = p === this.att ? 0 : 1, T = n * DT, Rz = (v, th) => [v[0] * Math.cos(th) - v[1] * Math.sin(th), v[0] * Math.sin(th) + v[1] * Math.cos(th), v[2]], loc = (v, th) => Rz(v, -th);
+    const pa = LM.pointOf(a.legs[i][X], seg, u), pb = LM.pointOf(b.legs[i][X], seg, u), Ha = a.legs[i][X].H, Hb = b.legs[i][X].H, fa = a.F[i], fb = b.F[i], ca = a.pel[i], cb = b.pel[i], sa = a.psi[i], sb = b.psi[i];
+    const pelA = loc(LM.sub(ca, fa), sa), pelB = loc(LM.sub(cb, fb), sb), hA = loc(LM.sub(Ha, ca), sa), hB = loc(LM.sub(Hb, cb), sb), xA = loc(LM.sub(pa, Ha), sa), xB = loc(LM.sub(pb, Hb), sb), offB = LM.add(LM.add(pelB, hB), xB);
+    const v = (d) => LM.mul(d, 1 / T);
+    return { frame: v(LM.sub(fa, fb)), turn: v(LM.sub(Rz(offB, sa), Rz(offB, sb))), sway: v(Rz(LM.sub(pelA, pelB), sa)), prot: v(Rz(LM.sub(hA, hB), sa)), limb: v(Rz(LM.sub(xA, xB), sa)), total: v(LM.sub(pa, pb)) }; }
+  // ── THE COLLISION-EFFECTIVE VELOCITY of a contact point, by formulation (RES3B.vsrc; RES3B.artMass adds the articulated effective mass).
+  // vb = the root's physical velocity (canonical + Stage 3's u), the only body momentum the model carries. Returns the LIMB point's velocity:
+  //   A — 3B.1: vb + (the authored point's motion less its body FRAME's — root + Stage 3 offset, which includes Stage 2's positional pushes —
+  //       over artTicks), capped per segment
+  //   B — A's velocities on the LOCAL capsule normal (no face rule)
+  //   C — vb + the body's turn + the limb's own articulation about its hip (capped): no pelvis sway / rotation
+  //   D — the drawn surface's actual world velocity over artTicks (its part relative to vb capped)
+  //   E — the drawn body frame's motion + its turn + the limb's articulation about its hip (relative part capped): D without the pelvis's
+  //       authored sway / rotation, which no momentum state of ours carries
+  //   F — E without the turn: only what a state of ours can LOSE — the root's translation (Stage 3's u) and the limb's articulation about its
+  //       hip (3B's yield); the frame's positional pushes stay in, as the counterpart of the limb's lag behind its pushed hip (net: the fraction
+  //       of a push the limb followed — always separating) ──
+  limbV(p, X, seg, u, vb) { const v = this.L3.vsrc, c = this.L3.artCap[seg], cap = (d) => { const m = LM.len(d); return m > c ? LM.mul(d, c / m) : d; };
+    if (v === "A" || v === "B") return LM.add(vb, this.artOf(p, X, seg, u));
+    const P = this.partsOf(p, X, seg, u); if (!P) return vb;
+    if (v === "C") return LM.add(LM.add(vb, P.turn), cap(P.limb));
+    if (v === "D") return LM.add(vb, cap(LM.sub(P.total, vb)));
+    if (v === "F") return LM.add(vb, cap(LM.sub(LM.add(P.frame, P.limb), vb)));
+    return LM.add(vb, cap(LM.sub(LM.add(LM.add(P.frame, P.turn), P.limb), vb))); }
+  // (a BODY side's — trunk, hips, a planted leg — velocity at the contact point: the root's physical velocity (the body's only momentum carrier),
+  // but under D the drawn surface's actual world velocity)
+  bodyV(p, id, u, vb) { if (this.L3.vsrc !== "D") return vb; const m = /^(THIGH|SHIN|FOOT)_([RL])$/.exec(id);
+    if (m) { const P = this.partsOf(p, m[2], m[1], u); return P ? P.total : vb; }
+    const H = this.l3.hist, n = this.L3.artTicks, a = H[H.length - 1], b = H.length > n ? H[H.length - 1 - n] : null; if (!a || !b || a.k - b.k !== n) return vb; const i = p === this.att ? 0 : 1;
+    return LM.mul(LM.sub(a.pel[i], b.pel[i]), 1 / (n * DT)); }
   limbPass() { const X = this.L3, t = this.att.t, k = this.k, A = this.att, D = this.def, sa = A.stateAt(t), sd = D.stateAt(t), dist = hyp(sa.P[0] - sd.P[0], sa.P[1] - sd.P[1]), LA = this.legs.get(A), LD = this.legs.get(D);
     this.ext = null; this.tk3 = { ATT: this.newAcc(), DEF: this.newAcc() }; const T3 = this.tk3, active = [LA.R, LA.L, LD.R, LD.L].some((l) => l.q.some((v) => v) || l.qd.some((v) => v));
     if (dist > OCC.broad + 0.3 && !active) { this.l3.hist = []; this.face = null; this.l3.held.clear(); return; }
     const LP = this.livePoses(), PL = [[A, LA, LP.a, sa, 0], [D, LD, LP.d, sd, 1]], auth = PL.map(([, , pose]) => pose.legAuth || legsFromJ(pose.J));
-    const H = this.l3.hist; H.push({ k, legs: auth, F: PL.map(([p, , , st]) => this.frameOf(p, st)) }); while (H.length > X.artTicks + 2) H.shift();
+    const H = this.l3.hist; H.push({ k, legs: auth, F: PL.map(([p, , , st]) => this.frameOf(p, st)), pel: PL.map(([, , pose]) => pose.J.pelvis.j.slice()), psi: PL.map(([, , pose]) => pose.psi) }); while (H.length > X.artTicks + 2) H.shift();
     this.face = this.faceRule(LP);
     const ev = (leg, kind, why) => { const key = kind + leg.X; if (leg.ev[key] != null && k - leg.ev[key] < 24) { leg.ev[key] = k; return; } leg.ev[key] = k; this.l3event(leg.who === "ATT" ? A : D, kind, why, { X: leg.X }); };
     const EXT = { k, A: [], D: [], any: false, why: null }, give = (who, J, at, src) => { if (!(hyp(J[0], J[1]) > 1e-15)) return; (who === "ATT" ? EXT.A : EXT.D).push({ J: h2(J), at: at.slice(), src }); EXT.any = true; T3[who].EXT3B = add2(T3[who].EXT3B, h2(J)); };
@@ -116,7 +156,7 @@ export class LimbWorld extends ImpactWorld {
     // (a held pair ends when a leg that was swinging when it struck has planted: its next swing may strike again)
     for (const [hk, h] of [...this.l3.held]) if (h.legs.some((l) => l.planted)) this.l3.held.delete(hk);
     for (const x of pairs) { const key = x.A + "|" + x.B, hkey = grp(x.A, LA) + "|" + grp(x.B, LD), held = this.l3.held.get(hkey); if (x.pen <= X.tol && !(held && x.pen > X.tol - X.hyst)) continue;
-      const n2 = this.faceBlend(x.nh || unit2(sub2(sa.P, sd.P)), this.face), n = [n2[0], n2[1], 0];
+      const nl = x.nh || unit2(sub2(sa.P, sd.P)), n2 = X.vsrc === "B" ? nl : this.faceBlend(nl, this.face), n = [n2[0], n2[1], 0];
       const sA = this.sideOf(A, LA, x.A, x.uA, x.at, n, LP.a.J, sa), sB = this.sideOf(D, LD, x.B, x.uB, x.at, LM.mul(n, -1), LP.d.J, sd); if (!sA || !sB || (sA.kind !== "LIMB" && sB.kind !== "LIMB")) continue;
       if (/^FOOT/.test(x.A) && /^FOOT/.test(x.B)) continue;   // (two boots meet at the ball: the tackle's contest, not a limb contact)
       // (a LANDING leg (inside its landing window) is not resolved: it lands where its stance is — the contact recorded as an obstructed landing, its
@@ -140,7 +180,9 @@ export class LimbWorld extends ImpactWorld {
     for (const b of sol.body) if (b.range) { const leg = (b.who === "ATT" ? LA : LD)[b.X]; ev(leg, "LIMB AT ITS RANGE (obstructed)", `${b.X} ${b.seg} can yield no further (${leg.q.map((v) => (v / DEG).toFixed(0)).join(" / ")}°): its body takes the contact`); }
     for (const ap of sol.apps) { this.l3.check.n++; this.l3.check.bound = Math.max(this.l3.check.bound, ap.lam - ap.src); this.l3.check.energy = Math.max(this.l3.check.energy, ap.keAfter - ap.keBefore); this.l3.check.pair = Math.max(this.l3.check.pair, LM.len(LM.add(ap.JA, ap.JB)));
       const c = C.find((z) => z.key === ap.key); this.l3.apps.push({ k, key: ap.key, region: c.region, vn: ap.vn, lam: ap.lam, src: ap.src, wA: ap.wA, wB: ap.wB, routeA: ap.routeA, routeB: ap.routeB, n: ap.n, at: c.x.at, keB: ap.keBefore, keA: ap.keAfter, dvnA: ap.dvnA, dvnB: ap.dvnB, vnAfter: ap.vnAfter,
-        vA: c.A.vBase, vB: c.B.vBase, artA: c.A.art || null, artB: c.B.art || null, kindA: c.A.kind, kindB: c.B.kind, held: c.held }); }
+        vA: c.A.vBase, vB: c.B.vBase, artA: c.A.art || null, artB: c.B.art || null, kindA: c.A.kind, kindB: c.B.kind, held: c.held,
+        // (the accounting of the source term: each side's segment and parameter, its root (body) velocity, its velocity parts, the hip's share)
+        idA: c.A.id, idB: c.B.id, uA: c.uA, uB: c.uB, vBodyA: c.A.vBody, vBodyB: c.B.vBody, vRootA: c.A.vRoot, vRootB: c.B.vRoot, partsA: c.A.parts || null, partsB: c.B.parts || null, wHipA: c.A.wHip || 0, wHipB: c.B.wHip || 0, dvhA: ap.dvhA || 0, dvhB: ap.dvhB || 0, JA: ap.JA, JB: ap.JB }); }
     // ── INTEGRATE, the range, the positional projection (positions only), the range again ──
     for (const [, L] of PL) for (const Xf of SIDES) { const leg = L[Xf]; leg.q0 = leg.q.slice(); if (leg.planted) continue; leg.q = LM.add(leg.q, LM.mul(leg.qd, DT)); LM.clampRange(leg, X); }
     // (inside its landing window a leg is not projected out of the opponent: it must land where its stance is — reported as an obstructed landing)

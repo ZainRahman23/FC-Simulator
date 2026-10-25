@@ -10,19 +10,22 @@
 // why Stage 3B does not). LOCAL ONLY (real players' models).
 import { DT, DEG } from "../vocab2/c_sim.js";
 import { L3CASES, FLAGSHIP } from "./l3_cases.js";
-import { runO3, outcomeO3, O3_LABEL } from "../occupy3/o3_run.js";
+import { runO3, outcomeO3 } from "../occupy3/o3_run.js";
 import { ImpactWorld, RES3 } from "../occupy3/o3_world.js";
 import { LimbWorld } from "./l3_world.js";
+import { runRotated } from "./l3_rot.js";
+import { FORMS, FORM_LABEL, FORM_DESC, RECOMMENDED, labRows } from "./l3_forms.js";
 import { RES3B } from "./l3_limb.js";
 import { actionState } from "../occupy3/o3_facts.js";
 import { comOf, footPoly, hull } from "../occupy3/o3_geom.js";
 import { volumesOf, detect, OCC, GROUP, RESOLVED } from "../occupy1/o_volumes.js";
-const W = window, hyp = Math.hypot, clamp = (x, a, b) => (x < a ? a : x > b ? b : x), $ = (id) => document.getElementById(id), MODES = ["S3", "S3B"], MNAME = { S3: "OLD STAGE 3", S3B: "STAGE 3B" }, HAS3 = (m) => m === "S3" || m === "S3B";
-// (the case list: the owner's §10 matrix (occupy3b/l3_cases.js) by group, each row and its mirror; the flagship first)
-const ROWS = (() => { const out = [], base = L3CASES.filter((x) => !x.matrixMirror), fl = base.find((x) => x.id === FLAGSHIP); out.push(Object.assign({}, fl, { listGroup: "THE FLAGSHIP (the audit's failure)", name: "FLAGSHIP · " + fl.name }));
-  const groups = [...new Set(base.map((x) => x.group))]; for (const g of groups) for (const r of base.filter((x) => x.group === g)) { out.push(Object.assign({}, r, { listGroup: g })); const m = L3CASES.find((x) => x.matrixMirror === r.id); if (m) out.push(Object.assign({}, m, { listGroup: g, name: r.name + " · MIRRORED" })); }
-  return out; })();
-const L = { ready: false, cases: ROWS, done: new Map(), rows: new Map(), cur: null, mode: "S3B", layout: "2", t: 0, playing: false, rate: 1, loop: false, cam: "gameplay", show: "skin", vol: true, sup: true, bal: true, nrm: true, imp: true, stp: true, trl: true, ghost: false, ref: true, lc: true, lv: true, mom: true, hud: true, ball: true, diag: true, last: null };
+const W = window, hyp = Math.hypot, clamp = (x, a, b) => (x < a ? a : x > b ? b : x), $ = (id) => document.getElementById(id);
+// (THE TWO VIEWPORTS: each OLD STAGE 3 ("S3") or a Stage 3B formulation ("B:<form>", occupy3b/l3_forms.js) — by default OLD | the calibrated 3B.1)
+let MODES = ["S3", "B:" + RECOMMENDED];
+const is3B = (m) => m.startsWith("B:"), MNAME = (m) => (m === "S3" ? "OLD STAGE 3" : FORM_LABEL[m.slice(2)] || m), HAS3 = () => true, ckey = (id) => `${id}|${MODES.join(",")}`;
+// (the case list: the flagship; the calibration spectrum (brush → strike, mirrors, the world turned 37°); the rest of the §10 matrix by group)
+const ROWS = labRows();
+const L = { ready: false, cases: ROWS, done: new Map(), rows: new Map(), cur: null, mode: "S3B", layout: "2", t: 0, playing: false, rate: 1, loop: false, cam: "gameplay", show: "skin", vol: true, sup: true, bal: true, nrm: true, imp: true, stp: true, trl: true, ghost: false, ref: true, lc: true, lv: true, vp: true, mom: true, hud: true, ball: true, diag: true, last: null };
 const COL = { ATT: "#8fd3ff", DEF: "#ff9e7a", normal: "rgba(205,235,220,0.22)", normalLine: "rgba(225,245,235,0.55)", contact: "rgba(255,212,94,0.45)", contactLine: "#ffd45e", pen: "rgba(255,138,61,0.55)", penLine: "#ff8a3d", deep: "rgba(255,45,85,0.62)", deepLine: "#ff2d55", warn: "#ffb36b", ok: "#8dffa6",
   BRUSH: "#8fa49a", LIGHT: "#8dffa6", MODERATE: "#ffd45e", STRONG: "#ff8a3d", SEVERE: "#ff2d55" };
 const BALCOL = { ABSORB: "#8dffa6", CORRECT: "#ffd45e", "RECOVERY STEP": "#ff8a3d", "STAGGER CANDIDATE": "#ff5b8a", "FALL CANDIDATE": "#ff2d55" };
@@ -89,7 +92,7 @@ const DEF_TINT = [1.05, 0.42, 0.36], ATT_TINT = [1, 1, 1];
 // ═══ A CASE: STAGE 2 · STAGE 3 simulated; per tick (from the recorded live poses) the contacts, the support, the centre of mass and the capture point ═══
 function plantedAt(p, t) { const P = p.planAt(t); return ["R", "L"].filter((X) => P.stances[X].some((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9)); }
 function authAt(Wd, k) { let s = "FREE", o = null; for (const e of Wd.auth.log) { if (e.k > k) break; if (!e.to) continue; /* (a note — a claim denied, no transition) */ s = e.to.replace(/\(.*\)/, ""); o = e.owner; } return o ? `CONTROLLED (${o})` : s; }
-function simMode(tc, m) { const c0 = performance.now(), r = runO3(L.env, tc, m, { record: true }), Wd = r.W, k0 = Math.round(r.clip[0] / DT), k1 = Math.round(r.clip[1] / DT), T = new Map(), MF = L.env.body.massFrac;
+function simMode(tc, m) { const c0 = performance.now(), run = (mode, o) => (tc.rot ? runRotated(L.env, tc, mode, tc.rot, o) : runO3(L.env, tc, mode, o)), r = m === "S3" ? run("S3", { record: true }) : run("S3B", { record: true, l3: FORMS[m.slice(2)] }), Wd = r.W, k0 = Math.round(r.clip[0] / DT), k1 = Math.round(r.clip[1] / DT), T = new Map(), MF = L.env.body.massFrac;
   let best = -1, bestK = null, trunk = -1, legs = -1; const pen = new Float32Array(k1 - k0 + 1).fill(-1), over = { tol: 0, hard: 0 }, com = { a: [], d: [] };
   for (let k = k0; k <= k1; k++) { const fr = Wd.frames.get(k); if (!fr) continue; const t = k * DT, near = hyp(fr.a.P[0] - fr.d.P[0], fr.a.P[1] - fr.d.P[1]) < OCC.broad + 0.6, va = volumesOf(fr.a.J), vd = volumesOf(fr.d.J), P = near ? detect(va, vd, { within: 0.03 }) : [];
     let mres = -1; for (const p of P) { if (!p.both) continue; if (p.pen > mres) mres = p.pen; const tr = GROUP[p.A] === "TRUNK" && GROUP[p.B] === "TRUNK"; if (tr) trunk = Math.max(trunk, p.pen); else legs = Math.max(legs, p.pen); }
@@ -105,27 +108,27 @@ function simMode(tc, m) { const c0 = performance.now(), r = runO3(L.env, tc, m, 
       const x = T.get(k); if (x) x.pl[ck === "a" ? "ATT" : "DEF"].cp = { v, xi: [c[0] + v[0] / w, c[1] + v[1] / w] }; } }
   const imp = Wd.imp ? new Map(Wd.imp.log.map((x) => [x.k, x])) : null, eps = Wd.imp ? Wd.imp.episodes.slice() : [], l3 = Wd.l3 ? new Map(Wd.l3.log.map((x) => [x.k, x])) : null, l3apps = Wd.l3 ? Wd.l3.apps : [];
   return { m, r, W: Wd, out: outcomeO3(Wd), k0, k1, T, pen, best, bestK, trunk, legs, over, imp, eps, l3, l3apps, ms: performance.now() - c0 }; }
-function simulate(tc) { const runs = {}; for (const m of MODES) runs[m] = simMode(tc, m); return { tc, runs, t0: runs.S3.r.t0, clip: [Math.min(...MODES.map((m) => runs[m].r.clip[0])), Math.max(...MODES.map((m) => runs[m].r.clip[1]))] }; }
-const shown = () => (L.layout === "2" ? MODES : [L.layout]);
+function simulate(tc) { const runs = {}; for (const m of MODES) runs[m] = simMode(tc, m); return { tc, runs, key: ckey(tc.id), modes: MODES.slice(), t0: runs[MODES[0]].r.t0, clip: [Math.min(...MODES.map((m) => runs[m].r.clip[0])), Math.max(...MODES.map((m) => runs[m].r.clip[1]))] }; }
+const shown = () => (L.layout === "2" ? MODES : L.layout === "S3" ? [MODES[0]] : [MODES[1]]);
 function frameAt(R, t) { const k = clamp(Math.round(t / DT), R.k0, R.k1); let fr = R.W.frames.get(k), kk = k; while (!fr && kk > R.k0) fr = R.W.frames.get(--kk); return { k: kk, fr, x: R.T.get(kk), ball: R.W.trueTrack(kk * DT), o3: R.imp ? R.imp.get(kk) : null, l3: R.l3 ? R.l3.get(kk) : null }; }
 const sevOf = (R) => { let s = null; const rank = ["BRUSH", "LIGHT", "MODERATE", "STRONG", "SEVERE"]; for (const e of R.eps) for (const k of ["ATT", "DEF"]) { const q = e.players[k]; if (q && (!s || rank.indexOf(q.sev) > rank.indexOf(s))) s = q.sev; } return s; };
-const rowText = (C) => MODES.map((m) => { const R = C.runs[m]; return `${MNAME[m]} ${(Math.max(0, R.best) * 100).toFixed(1)}${HAS3(m) ? ` · ${R.eps.length ? R.eps.length + " impact" + (R.eps.length > 1 ? "s " : " ") + (sevOf(R) || "") : "no impact"}` : ""}${m === "S3B" && R.W.l3 ? ` · ${R.W.l3.contacts} strike${R.W.l3.contacts === 1 ? "" : "s"}` : ""}${R.out ? " · " + (SHORT[R.out.kind] || R.out.kind) : ""}`; }).join("  ");
+const rowText = (C) => C.modes.map((m) => { const R = C.runs[m]; return `${m === "S3" ? "OLD" : m.slice(2)} ${(Math.max(0, R.best) * 100).toFixed(1)}${HAS3(m) ? ` · ${R.eps.length ? R.eps.length + " impact" + (R.eps.length > 1 ? "s " : " ") + (sevOf(R) || "") : "no impact"}` : ""}${is3B(m) && R.W.l3 ? ` · Σ ${R.W.l3.apps.reduce((q, x) => q + x.lam, 0).toFixed(1)} N·s` : ""}${R.out ? " · " + (SHORT[R.out.kind] || R.out.kind) : ""}`; }).join("  ");
 // ── the case list ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function buildList() { const box = $("cases"); box.innerHTML = ""; let g = null;
   for (const tc of L.cases) { if (tc.listGroup !== g) { g = tc.listGroup; const h = document.createElement("h3"); h.textContent = g; box.appendChild(h); }
-    const b = document.createElement("button"); b.className = "c"; b.dataset.id = tc.id; b.innerHTML = `${tc.name}<span class="o" id="o_${tc.id}">${L.rows.has(tc.id) ? L.rows.get(tc.id) : "…"}</span>`; b.onclick = () => select(tc.id); box.appendChild(b); } }
+    const b = document.createElement("button"); b.className = "c"; b.dataset.id = tc.id; b.innerHTML = `${tc.name}<span class="o" id="o_${tc.id}">${L.rows.has(ckey(tc.id)) ? L.rows.get(ckey(tc.id)) : "…"}</span>`; b.onclick = () => select(tc.id); box.appendChild(b); } }
 function markList() { for (const b of document.querySelectorAll("#cases .c")) b.classList.toggle("on", L.cur && b.dataset.id === L.cur.tc.id); }
 // (the recorded runs are heavy — both stages' every frame: only the KEEP most recently viewed cases keep theirs; every case keeps its one-line
 // summary for the list. Re-selecting an evicted case simulates it again: deterministic, the same replay)
 const KEEP = 6;
-function keep(id, C) { L.done.delete(id); L.done.set(id, C); L.rows.set(id, rowText(C)); while (L.done.size > KEEP) { const old = L.done.keys().next().value; if (L.cur && L.cur.tc.id === old) { const c = L.done.get(old); L.done.delete(old); L.done.set(old, c); continue; } L.done.delete(old); } }
-function select(id, o = {}) { const tc = L.cases.find((x) => x.id === id); if (!tc) return; let C = L.done.get(id); if (!C) C = simulate(tc); L.cur = C; keep(id, C); const el = $("o_" + id); if (el) el.textContent = L.rows.get(id);
-  L.t = C.clip[0]; L.playing = !o.paused; markList(); writeDiag(); drawTimeline(); try { history.replaceState(null, "", `?case=${id}&layout=${L.layout}&cam=${L.cam}&show=${L.show}`); } catch (e) {} }
+function keep(id, C) { L.done.delete(id); L.done.set(id, C); L.rows.set(id, rowText(C)); while (L.done.size > KEEP) { const old = L.done.keys().next().value; if (L.cur && L.cur.key === old) { const c = L.done.get(old); L.done.delete(old); L.done.set(old, c); continue; } L.done.delete(old); } }
+function select(id, o = {}) { const tc = L.cases.find((x) => x.id === id); if (!tc) return; const key = ckey(id); let C = L.done.get(key); if (!C) C = simulate(tc); L.cur = C; keep(key, C); const el = $("o_" + id); if (el) el.textContent = L.rows.get(key);
+  L.t = C.clip[0]; L.playing = !o.paused; markList(); writeDiag(); drawTimeline(); try { history.replaceState(null, "", `?case=${id}&layout=${L.layout}&cam=${L.cam}&show=${L.show}&left=${encodeURIComponent(MODES[0])}&right=${encodeURIComponent(MODES[1])}`); } catch (e) {} }
 // ═══ THE VIEWS ════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
 function rects(w, h) { const n = shown().length; return Array.from({ length: n }, (_, i) => [i * w / n, 0, w / n, h]); }
 // (the cameras: framed on both players of that run (their midpoint over the last 0.4 s), oriented by the carrier's heading at t = 0 — the same for
 // both stages, so the two are seen from the same side)
-function camera(C, R, Fr, vw, vh) { const h0 = C.runs.S3.r.enc.att0.h, fw = [Math.cos(h0), Math.sin(h0)], rt = [-Math.sin(h0), Math.cos(h0)];
+function camera(C, R, Fr, vw, vh) { const h0 = C.runs[C.modes[0]].r.enc.att0.h, fw = [Math.cos(h0), Math.sin(h0)], rt = [-Math.sin(h0), Math.cos(h0)];
   let m = [0, 0], n = 0; for (let kk = Fr.k - 96; kk <= Fr.k; kk += 8) { const f = R.W.frames.get(clamp(kk, R.k0, R.k1)); if (!f) continue; m[0] += f.a.P[0] + f.d.P[0]; m[1] += f.a.P[1] + f.d.P[1]; n += 2; } m = n ? [m[0] / n, m[1] / n] : [Fr.fr.a.P[0], Fr.fr.a.P[1]];
   const sep = hyp(Fr.fr.a.P[0] - Fr.fr.d.P[0], Fr.fr.a.P[1] - Fr.fr.d.P[1]), D = clamp(3.0 + 0.9 * sep, 3.6, 9.5) * (vw / vh < 0.6 ? 1.5 : vw / vh < 0.9 ? 1.25 : 1), at = (a, l, h) => A3([m[0] + fw[0] * a + rt[0] * l, m[1] + fw[1] * a + rt[1] * l], h);
   let eye, tgt = A3(m, 0.75), up = [0, 1, 0], fov = 40;
@@ -150,11 +153,11 @@ function render() { const C = L.cur; if (!C) return; layoutDom(); const gl = L.g
     if (L.trl) trails(x, pr, dpr, R, Fr);
     if (L.sup && Fr.x) support(x, pr, dpr, Fr.x);
     if (L.show !== "skin") for (const [J, col] of [[F.a.J, COL.ATT], [F.d.J, COL.DEF]]) skel(x, pr, dpr, J, col, 2.5);
-    if (L.ghost && m === "S3B") { const G2 = frameAt(C.runs.S3, L.t); if (G2.fr) { x.globalAlpha = 0.55; skel(x, pr, dpr, G2.fr.a.J, "#d8d8d8", 1.6, [5, 4]); skel(x, pr, dpr, G2.fr.d.J, "#d8d8d8", 1.6, [5, 4]); x.globalAlpha = 1; } }
-    if (L.ref && m === "S3B") reference(x, pr, dpr, F, rx + rw);
+    if (L.ghost && m === C.modes[1] && C.modes[0] !== m) { const G2 = frameAt(C.runs[C.modes[0]], L.t); if (G2.fr) { x.globalAlpha = 0.55; skel(x, pr, dpr, G2.fr.a.J, "#d8d8d8", 1.6, [5, 4]); skel(x, pr, dpr, G2.fr.d.J, "#d8d8d8", 1.6, [5, 4]); x.globalAlpha = 1; } }
+    if (L.ref && is3B(m)) reference(x, pr, dpr, F, rx + rw);
     if (Fr.x) { if (L.vol) volumes(x, pr, c, dpr, Fr.x); if (L.nrm) normals(x, pr, dpr, Fr.x, F); if (L.bal) balance(x, pr, dpr, Fr); }
     if (HAS3(m)) { if (L.imp) impacts(x, pr, dpr, R, Fr); if (L.stp) steps(x, pr, dpr, R, Fr, rx + rw); }
-    if (m === "S3B") { if (L.lc) limbContacts(x, pr, dpr, Fr, rx + rw); if (L.lv) limbVel(x, pr, dpr, R, Fr); if (L.mom) momentum(x, pr, dpr, R, Fr, rx + rw); }
+    if (is3B(m)) { if (L.lc) limbContacts(x, pr, dpr, Fr, rx + rw); if (L.lv) limbVel(x, pr, dpr, R, Fr); if (L.vp) velParts(x, pr, dpr, R, Fr, rx + rw); if (L.mom) momentum(x, pr, dpr, R, Fr, rx + rw); }
     label(x, dpr, R, Fr, rx, ry, rw, rh, C); if (M.length > 1) { x.strokeStyle = "#2a3530"; x.lineWidth = 2 * dpr; x.strokeRect(rx + 1, ry + 1, rw - 2, rh - 2); } x.restore(); });
   gl.disable(gl.SCISSOR_TEST); }
 function skel(x, pr, dpr, J, col, wd, dash) { x.strokeStyle = col; x.lineWidth = wd * dpr; if (dash) x.setLineDash(dash.map((v) => v * dpr)); for (const kk of Object.keys(J)) { const a = pr(J[kk].j), b = pr(J[kk].t); if (a && b) { x.beginPath(); x.moveTo(...a); x.lineTo(...b); x.stroke(); } } x.setLineDash([]); }
@@ -204,12 +207,12 @@ function trails(x, pr, dpr, R, Fr) { for (const [ck, col] of [["a", COL.ATT], ["
 const cmf = (v) => (v * 100).toFixed(1);
 function frameLines(R, Fr, C) { const X = Fr.x, now = X ? X.mres : -1, col = (v) => (v > OCC.hard ? COL.deepLine : v > OCC.tol ? COL.penLine : v > -0.005 ? COL.contactLine : "#8dffa6"), o3 = Fr.o3;
   const top = X && X.P.filter((p) => p.both).sort((a, b) => b.pen - a.pen)[0];
-  const lines = [[`${MNAME[R.m]} · ${R.m === "S3" ? "impact + balance (limb strikes from the animated limb speed)" : "limb contact → impact + balance (only what the limb lost)"}`, "#ffd45e", 700], [`PENETRATION now ${now > 0 ? `${cmf(now)} cm` : now > -0.005 ? "touching" : "apart"}${top && now > -0.005 ? `  ·  ${CLS5(top.A, top.B)} (${top.A} ↔ ${top.B})` : ""} · run max ${cmf(Math.max(0, R.best))} cm (torso ${cmf(Math.max(0, R.trunk))} · legs ${cmf(Math.max(0, R.legs))})`, col(now), 600]];
+  const lines = [[`${MNAME(R.m)} · ${R.m === "S3" ? "impact + balance (limb strikes from the animated limb speed)" : "limb contact → impact + balance · " + FORM_DESC[R.m.slice(2)]}`, "#ffd45e", 700], [`PENETRATION now ${now > 0 ? `${cmf(now)} cm` : now > -0.005 ? "touching" : "apart"}${top && now > -0.005 ? `  ·  ${CLS5(top.A, top.B)} (${top.A} ↔ ${top.B})` : ""} · run max ${cmf(Math.max(0, R.best))} cm (torso ${cmf(Math.max(0, R.trunk))} · legs ${cmf(Math.max(0, R.legs))})`, col(now), 600]];
   if (!L.hud || !X) return lines;
   if (X.nrm && now > -0.03) lines.push([`RELATIVE VELOCITY closing ${X.nrm.vn.toFixed(2)} m/s on the normal · ${X.nrm.vt.toFixed(2)} m/s along the tangent`, "#e6efe9", 500]);
   if (o3 && o3.imp) lines.push([`IMPACT ${o3.imp.regions} · bodies closing ${o3.imp.close} m/s · effective masses ${o3.imp.mA} / ${o3.imp.mD} kg`, "#ff4fd8", 600]);
   if (o3 && o3.strike && o3.strike.length) lines.push([`LIMB STRIKE (OLD) ${o3.strike.map((s) => `${s.regions} ${s.art} m/s → ${s.j} N·s · the limb continues unchanged`).join(" · ")}`, "#ff4fd8", 600]);
-  if (R.m === "S3B") for (const s of limbLines(R, Fr)) lines.push(s);
+  if (is3B(R.m)) for (const s of limbLines(R, Fr)) lines.push(s);
   lines.push([`POSSESSION ${X.poss}`, "#b8c8bf", 500]);
   for (const [i, key] of [[0, "ATT"], [1, "DEF"]]) { const P = X.pl[key], q = o3 && o3.p ? o3.p[i] : null, a = P.act;
     lines.push([`${key === "ATT" ? "CARRIER " : "DEFENDER"}  ${a.kind === "ORDINARY" ? a.label : a.label + " · " + a.phase}${P.feet.length ? " · planted " + P.feet.join("") : " · airborne"}`, key === "ATT" ? COL.ATT : COL.DEF, 600]);
@@ -226,10 +229,10 @@ function label(x, dpr, R, Fr, rx, ry, rw, rh, C) { const raw = frameLines(R, Fr,
 // ═══ THE DIAGNOSTICS (both stages' records; Stage 3's episodes, events and the referee facts; the selected stage at the playhead) ════════════════
 function writeDiag() { const C = L.cur, el = $("diag"); el.classList.toggle("hidden", !L.diag); if (!L.diag || !C) return; const t = L.t, t0 = C.t0, rel = (v) => `${v - t0 >= 0 ? "+" : ""}${(v - t0).toFixed(3)}`, cm = cmf;
   const lines = [`<b>${C.tc.name}</b>`, `<span class="k">${C.tc.listGroup} · attacker ${C.tc.c.tech} · ${C.tc.c.variant} · tackle request ${(C.tc.tackle || []).join(", ") || "none"} · Reaction MEDIUM 0.200 s · equal bodies (the rig's ${L.env.skel.identity ? L.env.skel.identity.weightKg : 73} kg)</span>`, ""];
-  for (const m of MODES) { const R = C.runs[m];
-    lines.push(`<b>${O3_LABEL[m]}</b>  <span class="k">(simulated in ${R.ms.toFixed(0)} ms)</span>`, `  tackle outcome  ${R.out ? R.out.kind : "— (no tackle committed)"}`,
+  for (const m of C.modes) { const R = C.runs[m];
+    lines.push(`<b>${MNAME(m)}</b>  <span class="k">(simulated in ${R.ms.toFixed(0)} ms)</span>`, `  tackle outcome  ${R.out ? R.out.kind : "— (no tackle committed)"}`,
       `  deepest  ${R.best > OCC.hard ? '<span class="bad">' : R.best > OCC.tol ? '<span class="warn">' : '<span class="ok">'}${cm(Math.max(0, R.best))} cm</span> at ${R.bestK != null ? rel(R.bestK * DT) : "—"} · torso ${cm(Math.max(0, R.trunk))} · legs ${cm(Math.max(0, R.legs))} · ticks > 2 cm ${R.over.tol} · > 5 cm ${R.over.hard}`);
-    if (m === "S3B" && R.W.l3) { const L3 = R.W.l3, c = L3.check; lines.push(`  STAGE 3B: ${L3.contacts} strike${L3.contacts === 1 ? "" : "s"} · ${c.n} impulse applications · Σ ${L3.apps.reduce((a, x) => a + x.lam, 0).toFixed(1)} N·s · ledger: Stage 3 took exactly its impulses ${c.stage3.toExponential(1)} · pairing ${c.pair.toExponential(1)} · bound ${c.bound.toExponential(1)} · energy ${c.energy.toExponential(1)}`);
+    if (is3B(m) && R.W.l3) { const L3 = R.W.l3, c = L3.check; lines.push(`  STAGE 3B: ${L3.contacts} strike${L3.contacts === 1 ? "" : "s"} · ${c.n} impulse applications · Σ ${L3.apps.reduce((a, x) => a + x.lam, 0).toFixed(1)} N·s · ledger: Stage 3 took exactly its impulses ${c.stage3.toExponential(1)} · pairing ${c.pair.toExponential(1)} · bound ${c.bound.toExponential(1)} · energy ${c.energy.toExponential(1)}`);
       for (const e of L3.events.slice(0, 24)) lines.push(`    ${rel(e.t)} ${e.who} ${e.kind}: ${e.why}`); }
     if (HAS3(m)) { if (!R.eps.length) lines.push(`  <span class="ok">no meaningful contact</span>`);
       for (const e of R.eps) { const o = e.onset; lines.push(`  <b>IMPACT #${e.n}</b> ${rel(e.t0)} → ${e.t1 != null ? rel(e.t1) : "end"} · ${e.why}`, o ? `    onset: ${o.contact.regions} (${o.contact.pair}) · bodies closing ${o.contact.closing} m/s · tangential ${o.contact.tangential} m/s · on ATT ${o.contact.onATT} · on DEF ${o.contact.onDEF} · ${o.ball.state}${o.ball.owner ? "(" + o.ball.owner + ")" : ""}` : "");
@@ -237,7 +240,7 @@ function writeDiag() { const C = L.cur, el = $("diag"); el.classList.toggle("hid
           `       impulse ${q.J} N·s (Δv ${q.du} m/s) · peak u ${q.peakU} m/s · pelvis ${cm(q.peakP)} cm · trunk lean ${q.peakLean}° · rotation ${q.peakYaw}° · ${q.steps.length ? "steps " + q.steps.map((s) => `${s.X} ${cm(s.d)} cm ${rel(s.t)} → ${rel(s.tLand)}`).join(", ") : "no step"} · ${q.regainAfter != null ? "balance regained after " + q.regainAfter + " s" : q.fall ? "UNRESOLVED FALL CANDIDATE" : "not regained in the replay"}`); } } }
     lines.push(""); }
   if (C.tc.id === FLAGSHIP || C.tc.matrixMirror === FLAGSHIP) for (const s of accounting(C)) lines.push(s);
-  const R = C.runs[L.mode], Fr = frameAt(R, t), X = Fr.x; lines.push(`<b>AT THE PLAYHEAD</b>  t ${rel(t)} s · tick ${Fr.k} · ${MNAME[L.mode]} <span class="k">(1 / 2 select · 3 both)</span>`);
+  const pm = L.layout === "S3" ? C.modes[0] : C.modes[1], R = C.runs[pm], Fr = frameAt(R, t), X = Fr.x; lines.push(`<b>AT THE PLAYHEAD</b>  t ${rel(t)} s · tick ${Fr.k} · ${MNAME(pm)} <span class="k">(1 left / 2 right · 3 both)</span>`);
   if (X) { const P = X.P.filter((p) => p.pen > -0.01).sort((a, b) => b.pen - a.pen).slice(0, 6);
     lines.push(`  <b>CONTACT REGIONS · PENETRATION</b>`, P.length ? P.map((p) => `  ${CLS5(p.A, p.B).padEnd(28)} ${(p.A + " ↔ " + p.B).padEnd(18)} ${p.pen > 0 ? (p.pen > OCC.hard ? '<span class="bad">' : p.pen > OCC.tol ? '<span class="warn">' : "<span>") + cm(p.pen) + " cm in</span>" : "gap " + cm(-p.pen) + " cm"}`).join("\n") : "  no volumes within 1 cm");
     if (X.nrm) lines.push(`  <b>RELATIVE VELOCITY</b> closing ${X.nrm.vn.toFixed(2)} m/s on the normal [${X.nrm.n.map((v) => v.toFixed(2)).join(", ")}] · ${X.nrm.vt.toFixed(2)} m/s along the tangent`);
@@ -260,15 +263,15 @@ function writeDiag() { const C = L.cur, el = $("diag"); el.classList.toggle("hid
   el.innerHTML = lines.filter((s) => s !== "").join("\n"); }
 // ═══ THE TIMELINE: one lane per stage — the deepest penetration per tick (0 – 25 cm), contacts; Stage 3: impact episodes (their severity), recovery
 // steps (▲ planned, ● landed), action interruptions (◆), fall candidates (✕) ═══════════════════════════════════════════════════════════════════════
-function drawTimeline() { const C = L.cur; if (!C) return; const cv = $("tlc"), lh = 34; $("tl").style.height = (MODES.length * lh + 22) + "px"; $("stage").style.bottom = (MODES.length * lh + 22) + "px";
+function drawTimeline() { const C = L.cur; if (!C) return; const cv = $("tlc"), lh = 34; $("tl").style.height = (C.modes.length * lh + 22) + "px"; $("stage").style.bottom = (C.modes.length * lh + 22) + "px";
   const r = cv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
   const x = cv.getContext("2d"), [a, b] = C.clip, LW = 78 * dpr, X = (t) => LW + (t - a) / (b - a) * (cv.width - LW - 10 * dpr); x.fillStyle = "#151d19"; x.fillRect(0, 0, cv.width, cv.height);
-  MODES.forEach((m, i) => { const R = C.runs[m], y = (4 + i * lh) * dpr, hh = (lh - 8) * dpr; x.fillStyle = shown().includes(m) ? "#ffd45e" : "#8fa49a"; x.font = `600 ${10.5 * dpr}px -apple-system, Helvetica, sans-serif`; x.textBaseline = "middle"; x.fillText(MNAME[m], 6 * dpr, y + hh / 2);
+  C.modes.forEach((m, i) => { const R = C.runs[m], y = (4 + i * lh) * dpr, hh = (lh - 8) * dpr; x.fillStyle = shown().includes(m) ? "#ffd45e" : "#8fa49a"; x.font = `600 ${10.5 * dpr}px -apple-system, Helvetica, sans-serif`; x.textBaseline = "middle"; x.fillText(m === "S3" ? "OLD" : m.slice(2), 6 * dpr, y + hh / 2);
     x.fillStyle = "#1c2621"; x.fillRect(X(a), y, X(b) - X(a), hh); const yy = (v) => y + hh - clamp(v / 0.25, 0, 1) * hh;
     for (const [v, c] of [[OCC.tol, "rgba(255,212,94,0.35)"], [OCC.hard, "rgba(255,45,85,0.45)"]]) { x.fillStyle = c; x.fillRect(X(a), yy(v), X(b) - X(a), 1 * dpr); }
     for (let k = R.k0; k <= R.k1; k++) { const v = R.pen[k - R.k0]; if (v <= 0) continue; x.fillStyle = v > OCC.hard ? COL.deepLine : v > OCC.tol ? COL.penLine : COL.contactLine; x.fillRect(X(k * DT), yy(v), Math.max(1, X((k + 1) * DT) - X(k * DT)), y + hh - yy(v)); }
     for (const c of R.W.contactLog) { x.fillStyle = c.kind === "tackle" ? "#ffffff" : c.by === "ATT" ? COL.ATT : COL.DEF; x.fillRect(X(c.t) - 1 * dpr, y - 2 * dpr, 2 * dpr, 5 * dpr); }
-    if (m === "S3B" && R.W.l3) for (const a of R.W.l3.apps) { if (a.held) continue; const xx = X(a.k * DT); x.fillStyle = "#4fe3ff"; x.fillRect(xx - 1 * dpr, y + hh - clamp(a.lam / 40, 0.15, 1) * hh, 2 * dpr, clamp(a.lam / 40, 0.15, 1) * hh); }
+    if (is3B(m) && R.W.l3) for (const a of R.W.l3.apps) { if (a.held) continue; const xx = X(a.k * DT); x.fillStyle = "#4fe3ff"; x.fillRect(xx - 1 * dpr, y + hh - clamp(a.lam / 40, 0.15, 1) * hh, 2 * dpr, clamp(a.lam / 40, 0.15, 1) * hh); }
     if (HAS3(m)) { for (const e of R.eps) { const sv = ["ATT", "DEF"].map((k) => e.players[k] && e.players[k].sev).filter(Boolean), rank = ["BRUSH", "LIGHT", "MODERATE", "STRONG", "SEVERE"], top = sv.sort((p, q) => rank.indexOf(q) - rank.indexOf(p))[0] || "LIGHT"; x.fillStyle = COL[top]; x.globalAlpha = 0.85; x.fillRect(X(e.t0), y + hh - 3 * dpr, Math.max(2 * dpr, X(e.t1 != null ? e.t1 : b) - X(e.t0)), 3 * dpr); x.globalAlpha = 1; }
       for (const e of R.W.imp.events) { const xx = X(e.t), yc = y + 6 * dpr; x.fillStyle = e.who === "ATT" ? COL.ATT : e.who === "DEF" ? COL.DEF : "#ff4fd8";
         if (e.kind === "RECOVERY STEP") { x.beginPath(); x.moveTo(xx, yc - 4 * dpr); x.lineTo(xx + 4 * dpr, yc + 3 * dpr); x.lineTo(xx - 4 * dpr, yc + 3 * dpr); x.fill(); }
@@ -284,7 +287,7 @@ function frame(now) { const dt = L.last != null ? Math.min(0.05, (now - L.last) 
   if (C && L.playing) { L.t += dt * L.rate; if (L.t >= C.clip[1]) { if (L.loop) L.t = C.clip[0]; else { L.t = C.clip[1]; L.playing = false; } } }
   render(); drawTimeline(); if (now - diagT > 120 || !L.playing) { writeDiag(); diagT = now; } $("bPlay").textContent = L.playing ? "❚❚ PAUSE" : "▶ PLAY"; if (!L.external) requestAnimationFrame(frame); }
 function step(n) { const C = L.cur; L.playing = false; L.t = clamp(Math.round(L.t / DT + n) * DT, C.clip[0], C.clip[1]); }
-const TOG = [["vol", "bVol", "v"], ["sup", "bSup", "f"], ["bal", "bBal", "b"], ["nrm", "bNrm", "n"], ["imp", "bImp", "i"], ["stp", "bStp", "r"], ["trl", "bTrl", "t"], ["ghost", "bGhost", "g"], ["hud", "bHud", "h"], ["ball", "bBall", "o"], ["diag", "bDiag", "d"], ["ref", "bRef", "e"], ["lc", "bLc", "l"], ["lv", "bLv", "k"], ["mom", "bMom", "m"]];
+const TOG = [["vol", "bVol", "v"], ["sup", "bSup", "f"], ["bal", "bBal", "b"], ["nrm", "bNrm", "n"], ["imp", "bImp", "i"], ["stp", "bStp", "r"], ["trl", "bTrl", "t"], ["ghost", "bGhost", "g"], ["hud", "bHud", "h"], ["ball", "bBall", "o"], ["diag", "bDiag", "d"], ["ref", "bRef", "e"], ["lc", "bLc", "l"], ["lv", "bLv", "k"], ["vp", "bVp", "p"], ["mom", "bMom", "m"]];
 function bindUI() {
   $("bPlay").onclick = () => { if (!L.playing && L.t >= L.cur.clip[1] - 1e-9) L.t = L.cur.clip[0]; L.playing = !L.playing; };
   $("bReplay").onclick = () => { L.t = L.cur.clip[0]; L.playing = true; }; $("bBack").onclick = (e) => step(e && e.shiftKey ? -1 : -4); $("bFwd").onclick = (e) => step(e && e.shiftKey ? 1 : 4);
@@ -293,28 +296,32 @@ function bindUI() {
   for (const b of document.querySelectorAll("[data-layout]")) b.onclick = () => setLayout(b.dataset.layout);
   for (const b of document.querySelectorAll("[data-show]")) b.onclick = () => setShow(b.dataset.show);
   $("selCam").onchange = (e) => { L.cam = e.target.value; };
+  // (the two viewports' formulations: re-simulated from identical inputs)
+  for (const id of ["selL", "selR"]) $(id).onchange = () => setModes($("selL").value, $("selR").value);
   for (const [k, id] of TOG) $(id).onclick = () => { L[k] = !L[k]; $(id).classList.toggle("on", L[k]); if (k === "diag") writeDiag(); };
   $("tlc").onclick = (e) => { const C = L.cur, r = e.target.getBoundingClientRect(), LW = 78, u = clamp((e.clientX - r.left - LW) / (r.width - LW - 10), 0, 1); L.t = Math.round((C.clip[0] + u * (C.clip[1] - C.clip[0])) / DT) * DT; L.playing = false; };
   window.addEventListener("keydown", (e) => { if (e.target.tagName === "SELECT") return; const k = e.key;
     if (k === " ") { e.preventDefault(); $("bPlay").onclick(); } else if (k === ",") step(e.shiftKey ? -1 : -4); else if (k === ".") step(e.shiftKey ? 1 : 4);
     else if (k === "s" || k === "S") setShow({ skin: "skel", skel: "both", both: "skin" }[L.show]); else if (k === "1") setLayout("S3"); else if (k === "2") setLayout("S3B"); else if (k === "3") setLayout("2");
     else { const t2 = TOG.find((q) => q[2] === k.toLowerCase()); if (t2) $(t2[1]).onclick(); } }); window.addEventListener("resize", () => drawTimeline()); }
-function setLayout(v) { L.layout = v; if (MODES.includes(v)) L.mode = v; for (const b of document.querySelectorAll("[data-layout]")) b.classList.toggle("on", b.dataset.layout === v); writeDiag(); drawTimeline(); }
+function setLayout(v) { L.layout = v; for (const b of document.querySelectorAll("[data-layout]")) b.classList.toggle("on", b.dataset.layout === v); writeDiag(); drawTimeline(); }
+function setModes(a, b) { MODES = [a, b]; $("selL").value = a; $("selR").value = b; for (const tc of L.cases) { const el = $("o_" + tc.id); if (el) el.textContent = L.rows.has(ckey(tc.id)) ? L.rows.get(ckey(tc.id)) : "…"; } if (L.cur) select(L.cur.tc.id, { paused: !L.playing }); }
 function setShow(v) { L.show = v; for (const b of document.querySelectorAll("[data-show]")) b.classList.toggle("on", b.dataset.show === v); }
 async function boot() { const q = new URLSearchParams(location.search); bindUI(); const cv = $("gl"), gl = cv.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true, alpha: false }); if (!gl) { $("loading").textContent = "WebGL2 unavailable"; return; }
   L.gl = gl; L.R = { gl }; L.ground = groundProg(gl); L.ballP = ballProg(gl); L.charP = charProg(gl);
   const [colliders, baked, ent] = await Promise.all([fetch("dribble1/d1_colliders.json").then((r) => r.json()), fetch("tc_baseline_88573ef0/pt_baked.json").then((r) => r.json()), W.ofCharLoad("vinicius")]);
   L.ent = ent; const E = W.RUN1_V13; L.env = { E, M4, skel: ent.skel, colliders, baked, body: E.r1Body(ent.skel) };
+  { const ok = (v) => v === "S3" || (v && v.startsWith("B:") && FORMS[v.slice(2)]); if (ok(q.get("left"))) MODES[0] = q.get("left"); if (ok(q.get("right"))) MODES[1] = q.get("right"); $("selL").value = MODES[0]; $("selR").value = MODES[1]; }
   if (q.get("layout")) L.layout = q.get("layout"); if (q.get("cam")) { L.cam = q.get("cam"); $("selCam").value = L.cam; } if (q.get("show")) L.show = q.get("show"); if (q.get("mode")) L.mode = q.get("mode");
   for (const [k, id] of TOG) { if (q.get(k) != null) L[k] = q.get(k) === "1"; $(id).classList.toggle("on", L[k]); }
   setLayout(L.layout); setShow(L.show); buildList(); select(q.get("case") && L.cases.some((c) => c.id === q.get("case")) ? q.get("case") : L.cases[0].id, { paused: q.get("play") === "0" }); if (q.get("t") != null) { L.t = Math.round((L.cur.t0 + +q.get("t")) / DT) * DT; L.playing = false; }
   $("loading").remove(); L.ready = true; L.external = q.get("external") === "1"; if (!L.external) requestAnimationFrame(frame); else frame(performance.now());
-  const rest = L.cases.filter((c) => !L.rows.has(c.id)); const next = () => { const c = rest.shift(); if (!c || L.external) return; const C = simulate(c); L.rows.set(c.id, rowText(C)); const el = $("o_" + c.id); if (el) el.textContent = L.rows.get(c.id); setTimeout(next, 30); }; setTimeout(next, 600); }   // (the summaries only: the recordings are dropped)
+  const rest = L.cases.filter((c) => !L.rows.has(ckey(c.id))); const next = () => { const c = rest.shift(); if (!c || L.external) return; if (L.rows.has(ckey(c.id))) return setTimeout(next, 0); const C = simulate(c); L.rows.set(C.key, rowText(C)); const el = $("o_" + c.id); if (el && C.key === ckey(c.id)) el.textContent = L.rows.get(C.key); setTimeout(next, 30); }; setTimeout(next, 600); }   // (the summaries only: the recordings are dropped)
 // the automation surface (puppeteer: stills, checks)
 W.IL = { ready: () => L.ready, L, select: (id, o) => select(id, o || { paused: true }), layout: setLayout, show: setShow, seek: (t) => { L.t = Math.round((L.cur.t0 + t) / DT) * DT; L.playing = false; frame(performance.now()); return L.t; }, cam: (c) => { L.cam = c; $("selCam").value = c; frame(performance.now()); },
   set: (o) => { for (const [k] of TOG) if (o[k] != null) L[k] = !!o[k]; writeDiag(); frame(performance.now()); }, play: (r) => { L.rate = r || 1; L.playing = true; },
-  live: () => { if (L.external) { L.external = false; L.last = null; requestAnimationFrame(frame); } },
-  report: () => (L.cur ? { id: L.cur.tc.id, t0: L.cur.t0, runs: Object.fromEntries(MODES.map((m) => { const R = L.cur.runs[m]; return [m, { best: R.best, trunk: R.trunk, legs: R.legs, over5: R.over.hard, strikes: R.W.l3 ? R.W.l3.contacts : null, lamSum: R.W.l3 ? +R.W.l3.apps.reduce((a, x) => a + x.lam, 0).toFixed(6) : null, out: R.out ? R.out.kind : null, impacts: R.eps.length, eps: R.eps.map((e) => ({ t0: e.t0 - L.cur.t0, why: e.why, players: Object.fromEntries(["ATT", "DEF"].filter((k) => e.players[k]).map((k) => [k, { sev: e.players[k].sev, sigma: e.players[k].sigma, cls: e.players[k].cls, outcome: e.players[k].outcome, steps: e.players[k].steps.length }])) })), ms: Math.round(R.ms) }]; })) } : null) };
+  live: () => { if (L.external) { L.external = false; L.last = null; requestAnimationFrame(frame); } }, modes: (a, b) => { setModes(a, b); return MODES.slice(); },
+  report: () => (L.cur ? { id: L.cur.tc.id, t0: L.cur.t0, runs: Object.fromEntries(L.cur.modes.map((m) => { const R = L.cur.runs[m]; return [m === "B:" + RECOMMENDED ? "S3B" : m, { best: R.best, trunk: R.trunk, legs: R.legs, over5: R.over.hard, strikes: R.W.l3 ? R.W.l3.contacts : null, lamSum: R.W.l3 ? +R.W.l3.apps.reduce((a, x) => a + x.lam, 0).toFixed(6) : null, out: R.out ? R.out.kind : null, impacts: R.eps.length, eps: R.eps.map((e) => ({ t0: e.t0 - L.cur.t0, why: e.why, players: Object.fromEntries(["ATT", "DEF"].filter((k) => e.players[k]).map((k) => [k, { sev: e.players[k].sev, sigma: e.players[k].sigma, cls: e.players[k].cls, outcome: e.players[k].outcome, steps: e.players[k].steps.length }])) })), ms: Math.round(R.ms) }]; })) } : null) };
 boot().catch((e) => { const l = $("loading"); if (l) l.textContent = "REVIEW LAB failed: " + (e && e.stack || e); console.error(e); });
 void ImpactWorld; void LimbWorld;
 
@@ -339,21 +346,36 @@ function momentum(x, pr, dpr, R, Fr, xMax) { const r = Fr.l3; if (!r || !r.ext) 
 // (the frame data of Stage 3B: this tick's limb contacts and impulses, the perturbation per leg, Stage 2's correction this tick, the ledger so far)
 function limbLines(R, Fr) { const out = [], r = Fr.l3, W2 = R.W; if (r) { for (const c of r.contacts.slice(0, 3)) out.push([`LIMB CONTACT ${c.region} (${c.key}) ${(c.pen * 100).toFixed(1)} cm · ${c.held ? "HELD — yielding" : "STRIKE"} · normal [${c.n.join(", ")}]${c.lam ? ` · λ ${c.lam.toFixed(2)} N·s` : ""}${c.yielded ? ` · yielded ${c.yielded.toFixed(2)} m/s` : ""}`, c.held ? LIMBC.HELD : LIMBC.STRIKE, 600]);
     for (const a of r.apps.slice(0, 2)) out.push([`  closing ${(-a.vn).toFixed(2)} m/s · effective masses ${(1 / a.wA).toFixed(1)} / ${(1 / a.wB).toFixed(1)} kg (${a.routeA} / ${a.routeB}) → ${a.lam.toFixed(2)} N·s · energy ${a.keB.toFixed(2)} → ${a.keA.toFixed(3)} J`, "#e6efe9", 500]);
+    for (const s of partsLines(R, Fr)) out.push(s);
     const lg = r.legs.map((P, i) => ["R", "L"].filter((X) => P[X].q.some((v) => v)).map((X) => `${i ? "DEF" : "ATT"} ${X} ${P[X].q.join("/")}° (ankle ${(P[X].d * 100).toFixed(1)} cm)`)).flat(); if (lg.length) out.push([`LIMB PERTURBATION (ab/add · flex · swivel) ${lg.join(" · ")}`, "#9cf0ff", 500]); }
   const o = W2.occ && W2.occ.log.find((q) => q.k === Fr.k); if (o && (o.dA[0] || o.dA[1] || o.dD[0] || o.dD[1])) out.push([`STAGE 2 CORRECTION this tick ATT ${(hyp(...o.dA) * 1000).toFixed(1)} mm · DEF ${(hyp(...o.dD) * 1000).toFixed(1)} mm${o.unresolved ? " · " + o.unresolved : ""}`, "#b8c8bf", 500]);
   return out; }
+// (THE VELOCITY PARTS of this tick's first application, each side, ON THE NORMAL (+ = toward the other): the root's physical velocity, the frame
+// (root + Stage 3's offset, Stage 2's pushes included), the body's turn, the pelvis's sway and rotation (authored — no state carries them), the
+// limb about its hip, and the velocity the formulation used)
+const vOn = (v, n, sg) => (v ? sg * (v[0] * n[0] + v[1] * n[1]) : 0), f2 = (v) => (v >= 0 ? "+" : "") + v.toFixed(2);
+function partsLines(R, Fr) { const a = R.l3apps.find((q) => q.k === Fr.k); if (!a) return []; const out = [];
+  for (const [who, id, P, vr, vu, sg] of [["A", a.idA, a.partsA, a.vRootA, a.vA, -1], ["B", a.idB, a.partsB, a.vRootB, a.vB, 1]]) { const p = (k) => (P ? f2(vOn(P[k], a.n, sg)) : "—");
+    out.push([`  ${who === "A" ? "ATT" : "DEF"} ${id} on the normal: root ${f2(vOn(vr, a.n, sg))}${P ? ` · frame ${p("frame")} · turn ${p("turn")} · sway ${p("sway")} · pelvis rot ${p("prot")} · LIMB ${p("limb")}` : " (a body side)"} → used ${f2(vOn(vu, a.n, sg))} m/s`, "#c7f5ff", 500]); }
+  return out; }
+// (THE VELOCITY PARTS overlay: at each application's contact point, each side's root velocity (grey), the velocity used (orange) and its normal
+// component toward the other (cyan) — 0.1 m per m/s)
+function velParts(x, pr, dpr, R, Fr, xMax) { for (const a of R.l3apps) { if (a.k !== Fr.k) continue; const p0 = a.at, q0 = pr(p0); if (!q0) continue;
+    for (const [vr, vu, sg] of [[a.vRootA, a.vA, -1], [a.vRootB, a.vB, 1]]) { for (const [v, col, w] of [[vr, "#b8c8bf", 1.6], [vu, "#ffb36b", 2.2]]) { if (!v) continue; const q1 = pr([p0[0] + v[0] * 0.1, p0[1] + v[1] * 0.1, p0[2]]); if (q1) arrow(x, q0, q1, col, dpr, w); }
+      const vn = vOn(vu, a.n, sg); if (Math.abs(vn) > 1e-3) { const d = -sg * vn * 0.1, q2 = pr([p0[0] + a.n[0] * d, p0[1] + a.n[1] * d, p0[2]]); if (q2) arrow(x, q0, q2, "#4fe3ff", dpr, 3); } }
+    tag(x, dpr, q0, `closing ${(-a.vn).toFixed(2)} m/s → ${a.lam.toFixed(1)} N·s`, "#4fe3ff", xMax); break; } }
 // (THE ACCOUNTING PANEL, the flagship: OLD's limb strike — its source, its vector, its component along the carrier's heading, the lead the impact's
 // own root shifts made — against STAGE 3B's applications, their bound, energy, components and lead; the ledger)
 function accounting(C) { const out = ["", `<b>THE FLAGSHIP — THE ACCOUNTING</b> <span class="k">(the audit's failure: equal-speed side by side, a thigh brush, the bodies closing ≈ 0.20 m/s)</span>`], t0 = C.t0;
   const lead = (R, mean) => { const own = [0, 0]; for (const rr of R.W.imp.log) { const s = R.W.att.stateAt(rr.t), d = R.W.def.stateAt(rr.t), hx = Math.cos(s.psi) + (mean ? Math.cos(d.psi) : 0), hy = Math.sin(s.psi) + (mean ? Math.sin(d.psi) : 0), m = hyp(hx, hy) || 1, h = [hx / m, hy / m]; (rr.p || []).forEach((q, i) => { if (q && q.root) own[i] += q.root[0] * h[0] + q.root[1] * h[1]; }); } return own; };
   // (also along the pair's MEAN heading — the symmetric axis: the carrier leaning in is 6–7° off it, so a purely lateral push shows on his own heading)
   const leadM = (R) => { const o = lead(R, true); return `along the pair's MEAN heading (the symmetric axis): ATT ${(o[0] * 100).toFixed(1)} cm · DEF ${(o[1] * 100).toFixed(1)} cm → LEAD ${((o[0] - o[1]) * 100).toFixed(1)} cm`; };
-  { const R = C.runs.S3, o = lead(R); out.push(`<b>OLD STAGE 3</b>`); for (const rr of R.W.imp.log) for (const s of rr.strike || []) { const st = R.W.att.stateAt(rr.t), h = [Math.cos(st.psi), Math.sin(st.psi)], ep = R.W.imp.episodes[0], n = ep && ep.onset ? ep.onset.contact.normal : null;
+  for (const m of C.modes) if (m === "S3") { const R = C.runs.S3, o = lead(R); out.push(`<b>OLD STAGE 3</b>`); for (const rr of R.W.imp.log) for (const s of rr.strike || []) { const st = R.W.att.stateAt(rr.t), h = [Math.cos(st.psi), Math.sin(st.psi)], ep = R.W.imp.episodes[0], n = ep && ep.onset ? ep.onset.contact.normal : null;
       out.push(`  LIMB STRIKE ${s.regions} at ${(rr.t - t0).toFixed(3)} s: the limbs' ARTICULATED closing ${s.art} m/s × the limbs' reduced mass (${s.mA} / ${s.mD} kg) = <span class="bad">${s.j} N·s</span> — on the LOCAL capsule normal${n ? ` [${n.join(", ")}]` : ""}: along the carrier's heading <span class="bad">${n ? (s.j * (n[0] * h[0] + n[1] * h[1])).toFixed(2) : "?"} N·s</span>`,
         `  the limb that "supplied" it: its speed after the strike <span class="bad">unchanged</span> (the animation continues — momentum from nowhere)`); }
     out.push(`  the impact's own root shifts along the carrier's heading: ATT ${(o[0] * 100).toFixed(1)} cm · DEF ${(o[1] * 100).toFixed(1)} cm → <span class="bad">LEAD ${((o[0] - o[1]) * 100).toFixed(1)} cm</span>`, `  … <span class="bad">${leadM(R)}</span>`); }
-  { const R = C.runs.S3B, o = lead(R), c = R.W.l3.check; out.push(`<b>STAGE 3B</b>`); for (const a of R.W.l3.apps) { const st = R.W.att.stateAt(a.k * DT), h = [Math.cos(st.psi), Math.sin(st.psi)];
-      out.push(`  ${a.held ? "held" : "STRIKE"} ${a.region} at ${(a.k * DT - t0).toFixed(3)} s: the contact points closing ${(-a.vn).toFixed(2)} m/s on the STABLE normal [${a.n.slice(0, 2).map((v) => v.toFixed(3)).join(", ")}] · effective masses ${(1 / a.wA).toFixed(1)} / ${(1 / a.wB).toFixed(1)} kg → <span class="ok">${a.lam.toFixed(2)} N·s</span> (bound ${a.src.toFixed(2)}) · the limbs' normal speed removed ${a.dvnA != null ? a.dvnA.toFixed(2) : "—"} / ${a.dvnB != null ? a.dvnB.toFixed(2) : "—"} m/s · energy ${a.keB.toFixed(2)} → ${a.keA.toFixed(3)} J · along the heading <span class="ok">${(a.lam * (a.n[0] * h[0] + a.n[1] * h[1])).toFixed(3)} N·s</span>`); }
+  else { const R = C.runs[m], o = lead(R), c = R.W.l3.check; out.push(`<b>${MNAME(m)}</b> <span class="k">(${FORM_DESC[m.slice(2)]})</span>`); for (const a of R.W.l3.apps) { const st = R.W.att.stateAt(a.k * DT), h = [Math.cos(st.psi), Math.sin(st.psi)];
+      out.push(`  ${a.held ? "held" : "STRIKE"} ${a.region} at ${(a.k * DT - t0).toFixed(3)} s: the contact points closing ${(-a.vn).toFixed(2)} m/s on the STABLE normal [${a.n.slice(0, 2).map((v) => v.toFixed(3)).join(", ")}] · effective masses ${(1 / a.wA).toFixed(1)} / ${(1 / a.wB).toFixed(1)} kg → <span class="ok">${a.lam.toFixed(2)} N·s</span> (bound ${a.src.toFixed(2)}) · the limbs' normal speed removed ${a.dvnA != null ? a.dvnA.toFixed(2) : "—"} / ${a.dvnB != null ? a.dvnB.toFixed(2) : "—"} m/s · energy ${a.keB.toFixed(2)} → ${a.keA.toFixed(3)} J · along the heading <span class="ok">${(a.lam * (a.n[0] * h[0] + a.n[1] * h[1])).toFixed(3)} N·s</span>`); out.push(...[["ATT", a.idA, a.partsA, a.vRootA, a.vA, -1], ["DEF", a.idB, a.partsB, a.vRootB, a.vB, 1]].map(([k, id, P, vr, vu, sg]) => `      ${k} ${id} on the normal (toward the other): root ${f2(vOn(vr, a.n, sg))}${P ? ` · frame ${f2(vOn(P.frame, a.n, sg))} · turn ${f2(vOn(P.turn, a.n, sg))} · sway ${f2(vOn(P.sway, a.n, sg))} · pelvis rot ${f2(vOn(P.prot, a.n, sg))} · limb about its hip ${f2(vOn(P.limb, a.n, sg))}` : " (a body side)"} → used ${f2(vOn(vu, a.n, sg))} m/s`)); }
     out.push(`  the impact's own root shifts along the carrier's heading: ATT ${(o[0] * 100).toFixed(1)} cm · DEF ${(o[1] * 100).toFixed(1)} cm → <span class="ok">LEAD ${((o[0] - o[1]) * 100).toFixed(1)} cm</span> (the bodies' headings differ by a few degrees: the side-on normal's small component along each one)`, `  … <span class="ok">${leadM(R)}</span> · 3B's impulses along it: <span class="ok">${R.W.l3.apps.reduce((sum, a) => { const s1 = R.W.att.stateAt(a.k * DT), d1 = R.W.def.stateAt(a.k * DT), hx = Math.cos(s1.psi) + Math.cos(d1.psi), hy = Math.sin(s1.psi) + Math.sin(d1.psi), m = hyp(hx, hy) || 1; return sum + a.lam * (a.n[0] * hx + a.n[1] * hy) / m; }, 0).toFixed(4)} N·s</span>`,
       `  THE LEDGER: Stage 3 took exactly what it was given ${c.stage3.toExponential(1)} N·s · every impulse paired ${c.pair.toExponential(1)} · no impulse above its bound ${c.bound.toExponential(1)} · no energy gained ${c.energy.toExponential(1)} J · OLD limb strikes: ${R.W.imp.events.filter((e) => /LIMB STRIKE/.test(e.kind)).length}`); }
   out.push(""); return out; }
