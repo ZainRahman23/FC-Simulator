@@ -1,6 +1,6 @@
 // occupy3b/tools/l3_identity.mjs — §18 BEFORE CONTACT: STAGE 3B against STAGE 2 AS DECIDED (S2D), identical inputs, every tick — both roots, the
 // ball, the authority and both posed bodies (every joint): identical to the bit until the first GENUINE contact (Stage 3B's first contact
-// application or Stage 3's first impact, whichever first — the pose of that tick included), and identical throughout when there is none. Also
+// — an impulse, a yield or a positional correction — or Stage 3's first impact, whichever first — the pose of that tick included), and identical throughout when there is none. Also
 // STAGE 3B against OLD STAGE 3 before either's first contact (the hooks change nothing until then), and OLD STAGE 3 on this branch against
 // the committed Stage 3 evidence's first-impact tick (the verified base, reproduced).
 //   node l3_identity.mjs --set review|matrix|moves|search|l3 [--json f]

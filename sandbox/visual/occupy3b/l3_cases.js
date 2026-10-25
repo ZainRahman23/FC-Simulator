@@ -23,8 +23,13 @@ const ROWS = [
   from(O2CASES, "turn-into", "ORDINARY CONTACT", "TURNING INTO EACH OTHER · both turn toward the other at 0.5 s"),
   from(OCASES, "static-walk", "MOVING LEG · PLANTED LEG", "ONE STANDING · the carrier WALKS into a standing player"),
   from(OCASES, "headon-walk", "ORDINARY CONTACT", "HEAD-ON · both walk at each other"),
-  { id: "side-walk", group: "SIDE BY SIDE", name: "SIDE BY SIDE · walking shoulder to shoulder (the carrier leaning 6° in)", c: carry("WALK", { runup: 2.2, dur: 4.0, stick: [[0, 6, "WALK"]] }), def: D(-3.0, 0.62, 0, { stick: [[-1.6, 0, "WALK"]] }), tackle: [] },
-  { id: "side-run", group: "SIDE BY SIDE", name: "SIDE BY SIDE · running shoulder to shoulder (the carrier leaning 6° in)", c: carry("RUN", { dur: 3.0, stick: [[0, 6, "RUN"]] }), def: D(-9.0, 0.62, 0, { stick: [[-2.0, 0, "RUN"]] }), tackle: [] },
+  // (side by side at a WALK and a RUN: the defender placed more than 1.5 m from the carrier's path while he waits — nearer, the canonical defender
+  // reacts to the carrier before his stick starts — and setting off as the carrier draws level: level within 0.1 m, then the carrier leans in)
+  { id: "side-walk", group: "SIDE BY SIDE", name: "SIDE BY SIDE · walking level, 1.0 m apart, the carrier leaning 6° in", c: carry("WALK", { runup: 2.2, dur: 4.0, stick: [[0, 6, "WALK"]] }), def: D(-1.4, 1.0, 0, { stick: [[-1.05, 0, "WALK"]] }), tackle: [] },
+  { id: "side-run", group: "SIDE BY SIDE", name: "SIDE BY SIDE · running level, 1.1 m apart, the carrier leaning 6° in", c: carry("RUN", { dur: 3.0, stick: [[0, 6, "RUN"]] }), def: D(-9.0, 1.1, 0, { stick: [[-1.95, 0, "JOG"], [-1.65, 0, "RUN"]] }), tackle: [] },
+  // (the two rows first built as side by side, kept as what they are: the defender reacted to the carrier before setting off)
+  { id: "walk-behind", group: "ORDINARY CONTACT", name: "WALKING 0.7 m BEHIND · the defender sets off late and walks behind the carrier's shoulder", c: carry("WALK", { runup: 2.2, dur: 4.0, stick: [[0, 6, "WALK"]] }), def: D(-3.0, 0.62, 0, { stick: [[-1.6, 0, "WALK"]] }), tackle: [] },
+  { id: "run-past", group: "ORDINARY CONTACT", name: "RUNNING PAST A DEFENDER STILL TURNING · he sets off as the carrier arrives: a glancing crossing", c: carry("RUN", { dur: 3.0, stick: [[0, 6, "RUN"]] }), def: D(-9.0, 0.62, 0, { stick: [[-2.0, 0, "RUN"]] }), tackle: [] },
   { id: "croq-recover", group: "LA CROQUETA", name: "CROQUETA · A STANDING TACKLE RECOVERING ACROSS ITS EXIT (the defender tackled early on the exit side)", c: CQ(), def: D(2.6, -0.9, 180), tackle: [0.05] },
   { id: "croq-recover2", group: "LA CROQUETA", name: "CROQUETA · A STANDING TACKLE RECOVERING IN FRONT (tackled early, a little to the exit side)", c: CQ(), def: D(2.8, -0.5, 180), tackle: [0.0] },
   ...[-150, -120, -90, -60, -30].flatMap((face) => ["JOG", "RUN"].flatMap((mode) => [cross(face, mode, 0), cross(face, mode, 0.35)])),

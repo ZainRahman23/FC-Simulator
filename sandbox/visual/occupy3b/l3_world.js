@@ -130,6 +130,12 @@ export class LimbWorld extends ImpactWorld {
       if (force && mine.length) ev(leg, "LANDING OBSTRUCTED (3B.2 / 3B.3)", `${Xf} must land in ${(tl * 1000).toFixed(0)} ms where its stance is, and the opponent's leg is in the way: it lands through the contact`);
       LM.drive(leg, w, mine, X, force); }
     // ── THE CONTACT SOLVE ──
+    // (a player under Stage 3's FALL-CANDIDATE PLACEHOLDER — its labelled, non-physical fade writing his velocity back to the authored motion — has
+    // no physical momentum to exchange: the closing the fade re-creates every tick would otherwise become a new impulse every tick (animation-made
+    // momentum, pumped into the opponent). His limb contacts resolve positionally only — the yield and the projection, no impulse — reported (3B.4))
+    const fading = [A, D].filter((p) => { const s3 = this.ps.get(p); return s3 && s3.active && s3.fadeFrom != null; });
+    if (fading.length && C.length) { for (const c of C) c.placeholder = true; this.l3.placeholderTicks = (this.l3.placeholderTicks || 0) + 1;
+      for (const p of fading) { const s3 = this.ps.get(p), key = "ph" + p.pid; if (this.l3[key] !== s3.fadeFrom) { this.l3[key] = s3.fadeFrom; this.l3event(p, "CONTACT DURING A FALL PLACEHOLDER (3B.4)", "Stage 3's fall-candidate placeholder is fading this player back to the authored motion (not physics): his limb contacts are resolved positionally only — no impulse"); } } }
     const sol = LM.solveContacts(C, X); for (const b of sol.body) give(b.who, b.J, b.at, b.src);
     for (const b of sol.body) if (b.range) { const leg = (b.who === "ATT" ? LA : LD)[b.X]; ev(leg, "LIMB AT ITS RANGE (obstructed)", `${b.X} ${b.seg} can yield no further (${leg.q.map((v) => (v / DEG).toFixed(0)).join(" / ")}°): its body takes the contact`); }
     for (const ap of sol.apps) { this.l3.check.n++; this.l3.check.bound = Math.max(this.l3.check.bound, ap.lam - ap.src); this.l3.check.energy = Math.max(this.l3.check.energy, ap.keAfter - ap.keBefore); this.l3.check.pair = Math.max(this.l3.check.pair, LM.len(LM.add(ap.JA, ap.JB)));
@@ -140,7 +146,7 @@ export class LimbWorld extends ImpactWorld {
     // (inside its landing window a leg is not projected out of the opponent: it must land where its stance is — reported as an obstructed landing)
     const posn = []; for (const c of C) { const over = c.pen - X.tol; if (!(over > 0)) continue; const sides = [[c.A, 1], [c.B, -1]].filter(([s]) => s.kind === "LIMB" && !s.leg.planted && !(s.leg.tLand - t < X.landForce)).map(([s, sg]) => ({ s, sg, r: LM.limbResp(s.leg, s.seg, s.x, LM.mul(c.n, sg), X) })).filter((z) => z.r.w > 1e-9);
       const W = sides.reduce((a, z) => a + z.r.w, 0), d = Math.min(over, X.posCap); if (!(W > 0)) { c.unresolved = over; continue; }
-      for (const z of sides) { const dist = d * z.r.w / W; LM.project(z.s.leg, z.s.seg, z.s.x, LM.mul(c.n, z.sg), dist, X); posn.push({ key: c.key, who: z.s.leg.who, X: z.s.leg.X, dist }); } }
+      for (const z of sides) { const want = d * z.r.w / W, dist = LM.project(z.s.leg, z.s.seg, z.s.x, LM.mul(c.n, z.sg), want, X); posn.push({ key: c.key, who: z.s.leg.who, X: z.s.leg.X, dist, want }); } }
     for (const [, L, pose] of PL) { const J = pose.J, fr = { hipR: J.thigh_R.j, hipL: J.thigh_L.j, up: LM.sub(J.spine.t, J.pelvis.j) };
       for (const Xf of SIDES) { const leg = L[Xf]; if (leg.planted) continue; LM.clampRange(leg, X); if (LM.keepAdmissible(leg, leg.q0, fr)) this.l3.kept = (this.l3.kept || 0) + 1; } }
     // ── the new state: the ankle's displacement the next pose will draw; the held pairs; the 3B.3 inputs ──

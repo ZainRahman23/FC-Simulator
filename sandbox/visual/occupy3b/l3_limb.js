@@ -22,7 +22,7 @@
 // did not: no impulse — a swing does not press by animation); the reconcile never pushes into a held contact unless the landing must happen.
 // RECONCILE: q → 0 by a critically damped drive (ω_n), faster before a landing (the foot must land where its stance is — a planted foot never
 // moves) and before a ball touch (still yielding: a touch the limb cannot reach in time is denied, never forced).
-// POSITION: overlap beyond the tolerance is projected out of the limb (≤ posCap a tick, never the body, never a planted leg) — positional only,
+// POSITION: overlap beyond the tolerance is projected out of the limb (no drawn leg joint moving more than posCap a tick, never the body, never a planted leg) — positional only,
 // recorded apart from every impulse.
 export const RES3B = {
   tol: 0.02,          // m: the contact tolerance (Stage 1's measurement, Stage 2's, Stage 3's penMin): a limb responds beyond it
@@ -37,7 +37,7 @@ export const RES3B = {
   wn: 18,             // rad/s: the reconcile drive (critically damped: ≈ 0.25 s to settle)
   landWin: 0.25, landK: 5,   // a landing (or a touch) within landWin s: ω_n ≥ landK / τ — the foot arrives in time
   landForce: 0.06,    // s: inside this the swing must arrive (landing priority): the yield is lifted, an obstruction reported (Stage 3B.2 / 3B.3)
-  posCap: 0.010,      // m per tick at the contact point: the positional projection (≈ 2.4 m/s — no snap)
+  posCap: 0.010,      // m per tick: the positional projection, at the contact point and at every drawn joint of the leg (≈ 2.4 m/s — no snap)
   iters: 4,           // Gauss–Seidel passes over the tick's contacts
   faceLo: 0.15, faceHi: 0.30,   // |sin Δψ|: the FACE RULE (near-parallel bodies: the stable side-on normal), blended out between these
   touchTol: 0.02,     // m: a touch (or the tackle's boot) whose foot the limb contact displaced further than this is denied (Stage 3's geometry rule)
@@ -103,14 +103,17 @@ export function solveContacts(C, X) { const out = { apps: [], body: [] };
     let lockA = [false, false, false], lockB = [false, false, false], rA, rB, yA, yB, wA, wB, W;
     for (let pass = 0; pass < 4; pass++) { rA = c.A.kind === "LIMB" ? limbResp(c.A.leg, c.A.seg, c.A.x, n, X, lockA) : null; rB = c.B.kind === "LIMB" ? limbResp(c.B.leg, c.B.seg, c.B.x, mul(n, -1), X, lockB) : null;
       yA = !!(rA && rA.w > c.A.wBody); yB = !!(rB && rB.w > c.B.wBody); wA = rA ? (yA ? rA.w : c.A.wBody) : c.A.w; wB = rB ? (yB ? rB.w : c.B.wBody) : c.B.w; W = wA + wB; if (!(W > 0)) break;
-      const lam0 = c.held && (yA || yB) ? -vn / ((yA ? rA.w : 0) + (yB ? rB.w : 0)) : -vn / W; let changed = false;
+      const lam0 = (c.held || c.placeholder) && (yA || yB) ? -vn / ((yA ? rA.w : 0) + (yB ? rB.w : 0)) : -vn / W; let changed = false;
       for (const [s, r, y, lk] of [[c.A, rA, yA, lockA], [c.B, rB, yB, lockB]]) if (y) for (let i = 0; i < 3; i++) if (!lk[i] && Math.abs(s.leg.qd[i] + r.g[i] * lam0) > X.qdMax + 1e-9 && Math.abs(r.g[i]) > 1e-12) { lk[i] = true; changed = true; }
       if (!changed) break; }
     if (!(W > 0)) continue;
     // (a HELD contact on a limb that can still yield: all of its closing — its own authored motion, the bodies' approach — is yielded: the limb gives
     // way further, no impulse. A limb's motion sends momentum only when it STRIKES (a contact's first resolution); bodies pressing through a limb
     // reach each other only once it is at its range (then the body route, with the bodies' effective masses))
-    if (c.held && (yA || yB)) { const Wy = (yA ? rA.w : 0) + (yB ? rB.w : 0); for (const [s, r, y] of [[c.A, rA, yA], [c.B, rB, yB]]) if (y) { s.leg.qd = add(s.leg.qd, mul(r.g, -vn / Wy)); capSpeed(s.leg, X); } c.yielded = (c.yielded || 0) - vn; continue; }
+    if ((c.held || c.placeholder) && (yA || yB)) { const Wy = (yA ? rA.w : 0) + (yB ? rB.w : 0); for (const [s, r, y] of [[c.A, rA, yA], [c.B, rB, yB]]) if (y) { s.leg.qd = add(s.leg.qd, mul(r.g, -vn / Wy)); capSpeed(s.leg, X); } c.yielded = (c.yielded || 0) - vn; continue; }
+    // (a contact marked PLACEHOLDER (a player under Stage 3's non-physical fall placeholder): positional only — yielded where the limb can, never an
+    // impulse)
+    if (c.placeholder) continue;
     // (a limb AT ITS RANGE is obstructed: it is part of its body for this contact, so only the BODIES' approach passes through it (with the bodies'
     // effective masses) — its authored swing beyond its range is not momentum (an obstructed swing: Stage 3B.3's input, recorded)
     let lam = -vn / W; if ((rA && !yA) || (rB && !yB)) { const vnB = dot(sub(add(c.A.vBody, c.A.dv || [0, 0, 0]), add(c.B.vBody, c.B.dv || [0, 0, 0])), n); lam = Math.min(lam, Math.max(0, -vnB) / W); c.obstructed = (c.obstructed || 0) + (-vn - lam * W); if (!(lam > 0)) continue; }
@@ -136,8 +139,12 @@ export function drive(leg, w, held, X, force) { const DT = 1 / 240; let dq = [0,
 // ── THE RANGE after integration: a DOF beyond its range is held at it; its outward speed stops (the joint's end) ──
 export function clampRange(leg, X) { let hit = false; for (let i = 0; i < 3; i++) { const L = X.limRad[i]; if (Math.abs(leg.q[i]) > L) { leg.q[i] = Math.sign(leg.q[i]) * L; hit = true; if (Math.sign(leg.qd[i]) === Math.sign(leg.q[i])) leg.qd[i] = 0; } } return hit; }
 // ── THE POSITIONAL PROJECTION of a limb out of an overlap beyond the tolerance: Δ along the side's normal at the contact point, the kinetic-
-// energy-weighted least displacement of the free DOFs; positions only ──
-export function project(leg, seg, x, nSide, dist, X) { const r = limbResp(leg, seg, x, nSide, X); if (!(r.w > 1e-9) || !(dist > 0)) return 0; const dq = mul(r.g, dist / r.w); leg.q = add(leg.q, dq); return dist; }
+// energy-weighted least displacement of the free DOFs; positions only. Bounded so that NO drawn joint of the leg (knee, ankle, ball of the foot,
+// toe) moves more than posCap in the tick — a contact near the hip must not swing the foot (a short lever makes a large rotation); returns the
+// distance actually corrected at the contact point (the rest stays for the next ticks) ──
+export function project(leg, seg, x, nSide, dist, X) { const r = limbResp(leg, seg, x, nSide, X); if (!(r.w > 1e-9) || !(dist > 0)) return 0; const dq = mul(r.g, dist / r.w);
+  const P0 = legPose(leg.auth, leg.q, leg.fr), P1 = legPose(leg.auth, add(leg.q, dq), leg.fr), m = Math.max(...["K", "A", "B", "T"].map((k) => len(sub(P1[k], P0[k])))), s = m > X.posCap ? X.posCap / m : 1;
+  leg.q = add(leg.q, mul(dq, s)); return dist * s; }
 // ── THE TURF AND THE HIP's RANGE: a perturbed leg whose drawn ankle / ball / toe goes below the turf (lower than the authored one and below its
 // floor), or whose hip leaves the anatomical range (flexion −30 … 125°, abduction −30 … 45°) where the authored one did not, is brought back toward
 // its previous perturbation (bisection) — positional, the speed of that DOF stopped ──

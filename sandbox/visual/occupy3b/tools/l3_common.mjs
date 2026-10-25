@@ -19,8 +19,10 @@ const jDiff = (A, B) => { let m = 0; for (const nm in A) for (const f of ["j", "
 export function compare(TA, TB, kStop = Infinity) { let maxRoot = 0, maxJ = 0, first = null, n = 0; for (const [k, a] of TA) { if (k >= kStop) break; const b = TB.get(k); if (!b) continue; n++;
     const dr = Math.max(hyp(a.a[0] - b.a[0], a.a[1] - b.a[1]), hyp(a.d[0] - b.d[0], a.d[1] - b.d[1]), hyp(a.b[0] - b.b[0], a.b[1] - b.b[1], a.b[2] - b.b[2]), a.au === b.au ? 0 : 1), dj = Math.max(jDiff(a.J[0], b.J[0]), jDiff(a.J[1], b.J[1])); maxRoot = Math.max(maxRoot, dr); maxJ = Math.max(maxJ, dj); if (first == null && (dr > 0 || dj > 0)) first = k; }
   return { maxRoot, maxJ, first, n }; }
-// the first GENUINE contact of a run: Stage 3B's first contact application or Stage 3's first impact (whichever first) — Infinity when none
-export function firstContact(W) { const a = W.l3 && W.l3.apps.length ? W.l3.apps[0].k : Infinity, e = W.imp && W.imp.episodes.length ? Math.min(...W.imp.episodes.map((x) => x.kA)) : Infinity; return Math.min(a, e, W.imp && W.imp.ep && W.imp.ep.active ? W.imp.ep.kA : Infinity); }
+// the first GENUINE contact of a run: Stage 3B's first contact or Stage 3's first impact (whichever first) — Infinity when none
+// (the limb layer acting at all is a genuine contact: an impulse, a held contact's yield, or a positional correction of a limb beyond the tolerance —
+// its first listed contact)
+export function firstContact(W) { const c = W.l3 ? W.l3.log.find((x) => x.contacts && x.contacts.length) : null, a = Math.min(W.l3 && W.l3.apps.length ? W.l3.apps[0].k : Infinity, c ? c.k : Infinity), e = W.imp && W.imp.episodes.length ? Math.min(...W.imp.episodes.map((x) => x.kA)) : Infinity; return Math.min(a, e, W.imp && W.imp.ep && W.imp.ep.active ? W.imp.ep.kA : Infinity); }
 // ── THE LIMB MEASUREMENTS of one run (frames recorded) ──
 const TR = /^(PELVIS|WAIST|CHEST)$/, LEGRE = /^(THIGH|SHIN|FOOT)_/;
 export const CLASSES = ["torso", "thigh-thigh", "thigh-shin", "shin-shin", "foot-leg", "leg-trunk"];
