@@ -1,0 +1,20 @@
+
+§18 CONTINUITY — set review: the drawn pelvis, knees and feet at 60 Hz, ± 5 frames around each transition, against the same window in STAGE 2
+
+OLD STAGE 3
+transition                            n     pelvis acc cm/f² S2 → X   pelvis Δv m/s   pose snap cm      knee acc      foot acc     knee Δv m/s     foot Δv m/s  worst added pelvis jolt
+LIMB CONTACT (3B)                     0
+STAGE 2 → IMPACT                     52                 10.4 → 10.1     4.92 → 5.14      5.3 → 5.1     25.2→26.2     27.0→27.2     14.77→14.92     16.22→16.31  croq-win ATT @0.587s +2.2
+IMPACT → MAXIMUM PERTURBATION        52                 14.0 → 10.1     4.92 → 4.92      3.8 → 3.8     29.8→26.6     30.6→27.2     17.84→15.54     18.33→16.31  bf-fake DEF @1.046s +4.8
+MAXIMUM → RECOVERY STEP              17                  14.0 → 6.7     4.27 → 4.00      5.3 → 5.1     29.8→26.2     30.6→24.7     17.84→14.92     18.33→14.46  in-croq-m DEF @0.763s +3.7
+STEP → WEIGHT ACCEPTANCE             17                   7.3 → 7.7     3.13 → 2.41      3.8 → 2.7     15.2→27.7     18.0→34.8      9.09→16.61     10.80→19.45  croq-early DEF @0.942s +6.3
+WEIGHT ACCEPTANCE → LOCOMOTION       43                   4.5 → 4.2     0.96 → 1.21      1.7 → 2.0     19.9→15.2     29.0→28.9      11.63→9.04     17.29→17.32  carry-walk ATT @2.975s +1.0
+
+STAGE 3B
+transition                            n     pelvis acc cm/f² S2 → X   pelvis Δv m/s   pose snap cm      knee acc      foot acc     knee Δv m/s     foot Δv m/s  worst added pelvis jolt
+LIMB CONTACT (3B)                    72                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.9→27.4     29.2→28.1     12.83→15.42     17.49→16.47  in-croq DEF @0.558s +4.3
+STAGE 2 → IMPACT                     62                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.3→27.4     27.0→28.1     12.64→15.42     16.22→16.47  in-croq DEF @0.558s +4.3
+IMPACT → MAXIMUM PERTURBATION        62                  10.4 → 8.8     4.92 → 5.30      3.8 → 6.0     29.8→27.4     30.6→31.1     17.84→15.52     18.33→18.66  in-croq DEF @0.587s +4.3
+MAXIMUM → RECOVERY STEP              21                  14.0 → 8.8     4.92 → 5.30      5.3 → 3.8     20.1→27.4     27.0→28.1     11.90→15.42     16.22→16.47  in-croq DEF @0.592s +4.3
+STEP → WEIGHT ACCEPTANCE             19                   5.2 → 7.6     2.74 → 3.29      2.6 → 4.6     15.2→23.6     18.0→25.6      9.09→12.54     10.80→14.53  in-bf DEF @2.842s +4.7
+WEIGHT ACCEPTANCE → LOCOMOTION       43                   3.4 → 6.4     1.90 → 1.67      2.8 → 1.6     19.9→16.5     29.0→21.9      11.63→9.82     17.29→13.05  carry-jog-l ATT @2.275s +4.9

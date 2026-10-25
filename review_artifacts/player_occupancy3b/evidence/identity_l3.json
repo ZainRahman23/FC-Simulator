@@ -1,0 +1,1478 @@
+[
+ {
+  "id": "walk-shoulder",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "side",
+  "contact": 1.0292,
+  "oldImpact": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4875,
+   "J": 0.5588
+  }
+ },
+ {
+  "id": "headon-jog",
+  "contact": 1.0083,
+  "oldImpact": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 0.893
+  }
+ },
+ {
+  "id": "oblique",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "oblique-firm",
+  "contact": 1.0208,
+  "oldImpact": 1.0208,
+  "preTicks": 820,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4434,
+   "J": 0.8574
+  }
+ },
+ {
+  "id": "near-miss",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "static-jog",
+  "contact": 0.975,
+  "oldImpact": 0.975,
+  "preTicks": 809,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.3217,
+   "J": 1.5209
+  }
+ },
+ {
+  "id": "cross",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "bf-past",
+  "contact": 1.1625,
+  "oldImpact": 1.1625,
+  "preTicks": 854,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4534,
+   "J": 0.6905
+  }
+ },
+ {
+  "id": "bf-shoulder",
+  "contact": 1.4833,
+  "oldImpact": 1.3167,
+  "preTicks": 931,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.0408,
+   "J": 0.1705
+  }
+ },
+ {
+  "id": "bf-step-in",
+  "contact": null,
+  "oldImpact": 1.2667,
+  "preTicks": 1152,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "in-bf",
+  "contact": 0.6417,
+  "oldImpact": 0.5875,
+  "preTicks": 729,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.7763,
+   "J": 1.6231
+  }
+ },
+ {
+  "id": "bf-fake",
+  "contact": 0.7667,
+  "oldImpact": 0.7625,
+  "preTicks": 759,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.047,
+   "J": 2.4397
+  }
+ },
+ {
+  "id": "croq-close",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1200,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "croq-hip",
+  "contact": 0.8083,
+  "oldImpact": 0.6708,
+  "preTicks": 769,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.4665,
+   "J": 1.6544
+  }
+ },
+ {
+  "id": "croq-leg",
+  "contact": 0.5958,
+  "oldImpact": 0.5958,
+  "preTicks": 718,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.3392,
+   "J": 1.5298
+  }
+ },
+ {
+  "id": "croq-early",
+  "contact": 0.5792,
+  "oldImpact": 0.5792,
+  "preTicks": 714,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 5.5046,
+   "J": 5.2654
+  }
+ },
+ {
+  "id": "croq-before",
+  "contact": 0.475,
+  "oldImpact": 0.4833,
+  "preTicks": 689,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.3838,
+   "J": 2.807
+  }
+ },
+ {
+  "id": "croq-between",
+  "contact": 0.6042,
+  "oldImpact": 0.6042,
+  "preTicks": 720,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 3.5054,
+   "J": 3.9047
+  }
+ },
+ {
+  "id": "croq-after",
+  "contact": null,
+  "oldImpact": 0.9,
+  "preTicks": 1200,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "carry-jog-l",
+  "contact": 1.125,
+  "oldImpact": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 1.2267
+  }
+ },
+ {
+  "id": "croq",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1627,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "carry-walk",
+  "contact": 1.7,
+  "oldImpact": 1.65,
+  "preTicks": 935,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 9.5067,
+   "J": 2.9955
+  }
+ },
+ {
+  "id": "cut",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1695,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "in-croq",
+  "contact": 0.5583,
+  "oldImpact": 0.5625,
+  "preTicks": 709,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.6171,
+   "J": 2.2084
+  }
+ },
+ {
+  "id": "both-committed",
+  "contact": 0.5917,
+  "oldImpact": 0.5875,
+  "preTicks": 717,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 4.6876,
+   "J": 4.1212
+  }
+ },
+ {
+  "id": "walk-shoulder-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "side-m",
+  "contact": 1.0292,
+  "oldImpact": 1.0292,
+  "preTicks": 822,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.1122,
+   "J": 0.2663
+  }
+ },
+ {
+  "id": "headon-jog-m",
+  "contact": 1.0083,
+  "oldImpact": 1.0083,
+  "preTicks": 817,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 0.893
+  }
+ },
+ {
+  "id": "oblique-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "oblique-firm-m",
+  "contact": 1.0208,
+  "oldImpact": 1.0208,
+  "preTicks": 820,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4434,
+   "J": 0.8574
+  }
+ },
+ {
+  "id": "near-miss-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "static-jog-m",
+  "contact": 0.9833,
+  "oldImpact": 0.9833,
+  "preTicks": 811,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.1733,
+   "J": 0.4746
+  }
+ },
+ {
+  "id": "cross-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "bf-past-m",
+  "contact": 1.1667,
+  "oldImpact": 1.1667,
+  "preTicks": 855,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4534,
+   "J": 0.669
+  }
+ },
+ {
+  "id": "bf-shoulder-m",
+  "contact": 1.4833,
+  "oldImpact": 1.3083,
+  "preTicks": 931,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.01,
+   "J": 0.0113
+  }
+ },
+ {
+  "id": "bf-step-in-m",
+  "contact": null,
+  "oldImpact": 1.2667,
+  "preTicks": 1152,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "in-bf-m",
+  "contact": 0.6417,
+  "oldImpact": 0.5875,
+  "preTicks": 729,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.7227,
+   "J": 1.5753
+  }
+ },
+ {
+  "id": "bf-fake-m",
+  "contact": 0.7667,
+  "oldImpact": 0.7625,
+  "preTicks": 759,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.0478,
+   "J": 2.5473
+  }
+ },
+ {
+  "id": "croq-close-m",
+  "contact": 0.8542,
+  "oldImpact": 0.8542,
+  "preTicks": 780,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.4326,
+   "J": 1.3783
+  }
+ },
+ {
+  "id": "croq-hip-m",
+  "contact": 0.8083,
+  "oldImpact": 0.6708,
+  "preTicks": 769,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.5208,
+   "J": 1.5778
+  }
+ },
+ {
+  "id": "croq-leg-m",
+  "contact": 0.5958,
+  "oldImpact": 0.5958,
+  "preTicks": 718,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.738,
+   "J": 3.3544
+  }
+ },
+ {
+  "id": "croq-early-m",
+  "contact": 0.5792,
+  "oldImpact": 0.5792,
+  "preTicks": 714,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 5.5036,
+   "J": 5.265
+  }
+ },
+ {
+  "id": "croq-before-m",
+  "contact": 0.475,
+  "oldImpact": 0.4833,
+  "preTicks": 689,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2,
+   "J": 1.8144
+  }
+ },
+ {
+  "id": "croq-between-m",
+  "contact": 0.6042,
+  "oldImpact": 0.6042,
+  "preTicks": 720,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 3.662,
+   "J": 4.0241
+  }
+ },
+ {
+  "id": "croq-after-m",
+  "contact": null,
+  "oldImpact": 1.5,
+  "preTicks": 1200,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "carry-jog-l-m",
+  "contact": 1.125,
+  "oldImpact": 1.125,
+  "preTicks": 845,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 1.2267
+  }
+ },
+ {
+  "id": "croq-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1627,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "carry-walk-m",
+  "contact": 1.7,
+  "oldImpact": 1.65,
+  "preTicks": 935,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 9.5067,
+   "J": 2.9955
+  }
+ },
+ {
+  "id": "cut-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1695,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "in-croq-m",
+  "contact": 0.5583,
+  "oldImpact": 0.5625,
+  "preTicks": 709,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.6171,
+   "J": 2.2084
+  }
+ },
+ {
+  "id": "both-committed-m",
+  "contact": 0.5917,
+  "oldImpact": 0.5875,
+  "preTicks": 717,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 4.6842,
+   "J": 4.1196
+  }
+ },
+ {
+  "id": "overtake",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "glance",
+  "contact": 1.0125,
+  "oldImpact": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.0382,
+   "J": 0.1259
+  }
+ },
+ {
+  "id": "turn-into",
+  "contact": 1.0125,
+  "oldImpact": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4523,
+   "J": 0.4577
+  }
+ },
+ {
+  "id": "static-walk",
+  "contact": 1.7708,
+  "oldImpact": 1.7792,
+  "preTicks": 952,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4632,
+   "J": 0.7015
+  }
+ },
+ {
+  "id": "headon-walk",
+  "contact": 1.3833,
+  "oldImpact": 1.3833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.038,
+   "J": 0.2586
+  }
+ },
+ {
+  "id": "side-walk",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "side-run",
+  "contact": 1.4333,
+  "oldImpact": 1.4333,
+  "preTicks": 919,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2324,
+   "J": 0.3049
+  }
+ },
+ {
+  "id": "walk-behind",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "run-past",
+  "contact": -1.8375,
+  "oldImpact": -1.8375,
+  "preTicks": 134,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2092,
+   "J": 0.8929
+  }
+ },
+ {
+  "id": "croq-recover",
+  "contact": 0.5542,
+  "oldImpact": 0.5667,
+  "preTicks": 708,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 8.5137,
+   "J": 4.3105
+  }
+ },
+ {
+  "id": "croq-recover2",
+  "contact": 0.5167,
+  "oldImpact": 0.525,
+  "preTicks": 699,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 11.458,
+   "J": 3.651
+  }
+ },
+ {
+  "id": "x150-jog",
+  "contact": 1.1833,
+  "oldImpact": 1.1833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 1.6096
+  }
+ },
+ {
+  "id": "x150-jog-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x150-run",
+  "contact": 1.2125,
+  "oldImpact": 1.2292,
+  "preTicks": 866,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2394,
+   "J": 0.2481
+  }
+ },
+ {
+  "id": "x150-run-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x120-jog",
+  "contact": 1.1417,
+  "oldImpact": 1.1417,
+  "preTicks": 849,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.5188,
+   "J": 2.7513
+  }
+ },
+ {
+  "id": "x120-jog-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x120-run",
+  "contact": 1.2083,
+  "oldImpact": 1.225,
+  "preTicks": 865,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 3.9404,
+   "J": 3.8045
+  }
+ },
+ {
+  "id": "x120-run-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x90-jog",
+  "contact": 1.075,
+  "oldImpact": 1.075,
+  "preTicks": 833,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.8935,
+   "J": 2.5904
+  }
+ },
+ {
+  "id": "x90-jog-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x90-run",
+  "contact": 1.3167,
+  "oldImpact": 1.3167,
+  "preTicks": 891,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.3078,
+   "J": 0.3877
+  }
+ },
+ {
+  "id": "x90-run-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x60-jog",
+  "contact": 1.0458,
+  "oldImpact": 1.0458,
+  "preTicks": 826,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.1222,
+   "J": 2.0575
+  }
+ },
+ {
+  "id": "x60-jog-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x60-run",
+  "contact": 1.3208,
+  "oldImpact": 1.3208,
+  "preTicks": 892,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4752,
+   "J": 0.4839
+  }
+ },
+ {
+  "id": "x60-run-off",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x30-jog",
+  "contact": 1.0375,
+  "oldImpact": 1.0333,
+  "preTicks": 824,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.0131,
+   "J": 1.5422
+  }
+ },
+ {
+  "id": "x30-jog-off",
+  "contact": 1.4917,
+  "oldImpact": 1.4917,
+  "preTicks": 933,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2512,
+   "J": 0.2871
+  }
+ },
+ {
+  "id": "x30-run",
+  "contact": 1.35,
+  "oldImpact": 1.3542,
+  "preTicks": 899,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.9765,
+   "J": 1.5761
+  }
+ },
+ {
+  "id": "x30-run-off",
+  "contact": 1.1958,
+  "oldImpact": 1.1958,
+  "preTicks": 862,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.1836,
+   "J": 0.557
+  }
+ },
+ {
+  "id": "overtake-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1416,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "glance-m",
+  "contact": 1.0125,
+  "oldImpact": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.0382,
+   "J": 0.1259
+  }
+ },
+ {
+  "id": "turn-into-m",
+  "contact": 1.0125,
+  "oldImpact": 1.0125,
+  "preTicks": 818,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4523,
+   "J": 0.4577
+  }
+ },
+ {
+  "id": "static-walk-m",
+  "contact": 1.45,
+  "oldImpact": 1.7792,
+  "preTicks": 875,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.0695,
+   "J": 0.2323
+  }
+ },
+ {
+  "id": "headon-walk-m",
+  "contact": 1.3833,
+  "oldImpact": 1.3833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.038,
+   "J": 0.2586
+  }
+ },
+ {
+  "id": "side-walk-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "side-run-m",
+  "contact": 1.4333,
+  "oldImpact": 1.4333,
+  "preTicks": 919,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2324,
+   "J": 0.3049
+  }
+ },
+ {
+  "id": "walk-behind-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1488,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "run-past-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1296,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "croq-recover-m",
+  "contact": 0.5542,
+  "oldImpact": 0.5667,
+  "preTicks": 708,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 8.5096,
+   "J": 4.3151
+  }
+ },
+ {
+  "id": "croq-recover2-m",
+  "contact": 0.5167,
+  "oldImpact": 0.525,
+  "preTicks": 699,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 11.458,
+   "J": 3.651
+  }
+ },
+ {
+  "id": "x150-jog-m",
+  "contact": 1.1833,
+  "oldImpact": 1.1833,
+  "preTicks": 859,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1,
+   "J": 1.6096
+  }
+ },
+ {
+  "id": "x150-jog-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x150-run-m",
+  "contact": 1.2125,
+  "oldImpact": 1.2292,
+  "preTicks": 866,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2394,
+   "J": 0.2481
+  }
+ },
+ {
+  "id": "x150-run-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x120-jog-m",
+  "contact": 1.1417,
+  "oldImpact": 1.1417,
+  "preTicks": 849,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 2.5188,
+   "J": 2.7513
+  }
+ },
+ {
+  "id": "x120-jog-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x120-run-m",
+  "contact": 1.2083,
+  "oldImpact": 1.225,
+  "preTicks": 865,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 3.9404,
+   "J": 3.8046
+  }
+ },
+ {
+  "id": "x120-run-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x90-jog-m",
+  "contact": 1.075,
+  "oldImpact": 1.075,
+  "preTicks": 833,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.8935,
+   "J": 2.5904
+  }
+ },
+ {
+  "id": "x90-jog-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x90-run-m",
+  "contact": 1.3167,
+  "oldImpact": 1.3167,
+  "preTicks": 891,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.3078,
+   "J": 0.3877
+  }
+ },
+ {
+  "id": "x90-run-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x60-jog-m",
+  "contact": 1.0458,
+  "oldImpact": 1.0458,
+  "preTicks": 826,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.1222,
+   "J": 2.0575
+  }
+ },
+ {
+  "id": "x60-jog-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x60-run-m",
+  "contact": 1.3208,
+  "oldImpact": 1.3208,
+  "preTicks": 892,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.4752,
+   "J": 0.4839
+  }
+ },
+ {
+  "id": "x60-run-off-m",
+  "contact": null,
+  "oldImpact": null,
+  "preTicks": 1344,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": null
+ },
+ {
+  "id": "x30-jog-m",
+  "contact": 1.0375,
+  "oldImpact": 1.0333,
+  "preTicks": 824,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.6663,
+   "J": 1.7072
+  }
+ },
+ {
+  "id": "x30-jog-off-m",
+  "contact": 1.4917,
+  "oldImpact": 1.4917,
+  "preTicks": 933,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.2512,
+   "J": 0.2871
+  }
+ },
+ {
+  "id": "x30-run-m",
+  "contact": 1.35,
+  "oldImpact": 1.3542,
+  "preTicks": 899,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 1.8221,
+   "J": 2.1895
+  }
+ },
+ {
+  "id": "x30-run-off-m",
+  "contact": 1.1958,
+  "oldImpact": 1.1958,
+  "preTicks": 862,
+  "preRoot": 0,
+  "preJ": 0,
+  "identical": true,
+  "identicalOld": true,
+  "after": {
+   "root": 0.1836,
+   "J": 0.557
+  }
+ }
+]

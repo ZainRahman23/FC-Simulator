@@ -1,0 +1,22 @@
+THE FLAGSHIP — side: JOGGING SHOULDER CONTACT · side by side, the carrier leaning 6° in
+
+OLD STAGE 3 (limb strikes from the animated limb speed):
+  onset 0.746 s · LIMB STRIKE 1.79 m/s (THIGH / THIGH) · the bodies closing 0.203 m/s (root velocities on the local normal [0.448,-0.894])
+  STRIKE THIGH_R / THIGH_L at 1.029 s: articulated closing 1.79 m/s × reduced mass of the limbs (14.6 / 14.6 kg) = 13.08 N·s · its vector [5.86,-11.69] — along the carrier's heading 4.42 N·s, across -12.31 N·s · the striking limb's own speed after it: UNCHANGED (the animation continues; Stage 3 never moves a limb)
+  the impact's own root shifts along the carrier's heading: ATT 5.4 cm · DEF -8.7 cm → a LEAD of 14.1 cm (largest 14.1 cm)
+  … along the pair's MEAN heading (the symmetric axis): ATT 6.3 cm · DEF -10.3 cm → a LEAD of 16.6 cm (largest 16.6 cm)
+  ATT: MODERATE · CORRECT · Δv 0.185 m/s · no step
+  DEF: MODERATE · CORRECT · Δv 0.18 m/s · no step
+
+STAGE 3B (the limb contact: only what the limb actually lost):
+  STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.029 s: the contact points closing 2.37 m/s on the stable normal [0.053,-0.999] · effective masses 13.5 / 17.5 kg (LIMB YIELDS / LIMB YIELDS) → λ 18.05 N·s (bound 18.05) · the limbs' normal speed removed 1.34 / 1.03 m/s · energy 21.42 → 0.000 J · along the heading -1.208 N·s, across -18.01 N·s
+  STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.729 s: the contact points closing 4.59 m/s on the stable normal [0.052,-0.999] · effective masses 11.2 / 11.0 kg (LIMB YIELDS / LIMB YIELDS) → λ 25.45 N·s (bound 25.45) · the limbs' normal speed removed 2.28 / 2.31 m/s · energy 58.44 → 0.000 J · along the heading -1.514 N·s, across -25.41 N·s
+  Σ 2 applications: 43.51 N·s · along the carrier's heading -2.722 N·s (each player's equal and opposite: the bodies' headings differ by 7.0°) · across -43.42 N·s
+  … along the pair's MEAN heading: Σ of the applications -0.0000 N·s (the stable normal is perpendicular to it)
+  the impact's own root shifts along the carrier's heading: ATT -0.8 cm · DEF 3.7 cm → a LEAD of -4.5 cm (largest 4.5 cm)
+  … along the pair's MEAN heading (the symmetric axis): ATT 2.4 cm · DEF 0.4 cm → a LEAD of 2.0 cm (largest 2.6 cm)
+  THE LEDGER: Stage 3 took exactly what it was given (max 2.1e-15 N·s) · every impulse paired (max 0.0e+0) · no impulse above its closing's bound (max excess 0.0e+0) · no energy gained by a contact (max 0.0e+0 J) · OLD limb strikes left: 0
+  ATT: Σ 3B 2.27,-43.45 N·s · Stage 3 body contact 0.00,0.00 · ground (strut 1.08,-1.24, balance -3.34,44.55)
+  DEF: Σ 3B -2.27,43.45 N·s · Stage 3 body contact 0.00,0.00 · ground (strut 0.29,0.25, balance 1.96,-43.38)
+  ATT: STRONG · RECOVERY STEP · Δv 0.614 m/s · 1 step(s)
+  DEF: STRONG · RECOVERY STEP · Δv 0.599 m/s · 1 step(s)

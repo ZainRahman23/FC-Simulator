@@ -1,0 +1,20 @@
+
+§18 CONTINUITY — set l3: the drawn pelvis, knees and feet at 60 Hz, ± 5 frames around each transition, against the same window in STAGE 2
+
+OLD STAGE 3
+transition                            n     pelvis acc cm/f² S2 → X   pelvis Δv m/s   pose snap cm      knee acc      foot acc     knee Δv m/s     foot Δv m/s  worst added pelvis jolt
+LIMB CONTACT (3B)                     0
+STAGE 2 → IMPACT                    156                 10.4 → 10.1     4.92 → 5.14      5.3 → 5.1     21.3→26.2     32.0→33.3     12.64→14.92     19.13→19.84  croq-leg DEF @0.596s +3.0
+IMPACT → MAXIMUM PERTURBATION       156                 14.0 → 10.1     5.19 → 5.18      3.8 → 3.8     34.2→26.6     38.8→33.3     20.51→15.54     23.25→19.84  croq-recover2 DEF @0.692s +5.6
+MAXIMUM → RECOVERY STEP              55                  14.0 → 7.6     4.27 → 4.55      5.3 → 5.1     29.8→26.2     30.6→31.6     17.84→14.92     18.33→18.85  croq-recover2 DEF @0.642s +5.6
+STEP → WEIGHT ACCEPTANCE             53                   7.3 → 7.7     3.38 → 4.07      4.0 → 6.5     34.2→27.9     38.8→34.8     20.51→16.62     23.26→19.45  croq-early DEF @0.942s +6.3
+WEIGHT ACCEPTANCE → LOCOMOTION      104                   4.6 → 4.0     1.61 → 1.28      2.8 → 2.8     21.2→14.4     28.8→28.9       9.98→8.64     17.21→17.32  x150-jog DEF @2.204s +3.6
+
+STAGE 3B
+transition                            n     pelvis acc cm/f² S2 → X   pelvis Δv m/s   pose snap cm      knee acc      foot acc     knee Δv m/s     foot Δv m/s  worst added pelvis jolt
+LIMB CONTACT (3B)                   188                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.9→40.2     32.0→36.1     12.83→23.68     19.13→21.64  x90-jog ATT @2.304s +7.1
+STAGE 2 → IMPACT                    166                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.3→40.2     32.0→36.1     12.64→23.68     19.13→21.64  x90-jog ATT @2.304s +7.1
+IMPACT → MAXIMUM PERTURBATION       166                  10.4 → 8.8     4.92 → 5.30      4.0 → 6.0     29.8→35.0     32.0→32.4     17.84→19.19     19.13→18.66  croq-recover DEF @0.754s +7.9
+MAXIMUM → RECOVERY STEP              86                  14.0 → 8.8     5.19 → 5.30      5.3 → 5.4     30.5→40.2     32.0→36.1     18.28→23.68     19.13→21.64  croq-recover DEF @0.583s +5.9
+STEP → WEIGHT ACCEPTANCE             82                   6.8 → 8.5     3.55 → 4.80      4.1 → 8.0     23.9→24.1     38.8→28.4     13.54→12.54     23.26→17.04  croq-leg DEF @0.837s +5.1
+WEIGHT ACCEPTANCE → LOCOMOTION       69                   3.4 → 6.4     1.79 → 1.67      1.7 → 1.6     19.1→17.5     28.8→30.5      8.72→10.51     17.21→18.28  carry-jog-l ATT @2.275s +4.9

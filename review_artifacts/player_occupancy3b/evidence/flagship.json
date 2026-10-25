@@ -1,0 +1,333 @@
+{
+ "id": "side",
+ "name": "JOGGING SHOULDER CONTACT · side by side, the carrier leaning 6° in",
+ "OLD": {
+  "strikes": [
+   {
+    "t": 1.029,
+    "J": [
+     5.8565494612817055,
+     -11.69481253595953
+    ],
+    "at": [
+     39.993381441721766,
+     34.447098313503815,
+     0.576425197159657
+    ],
+    "fwd": 4.415175530863394,
+    "lat": -12.311540800214258,
+    "pair": "THIGH_R / THIGH_L",
+    "art": 1.79,
+    "mA": 14.6,
+    "mD": 14.6,
+    "j": 13.08
+   }
+  ],
+  "onset": {
+   "pair": "THIGH_R / THIGH_L",
+   "regions": "THIGH / THIGH",
+   "body": false,
+   "at": [
+    39.993,
+    34.447,
+    0.576
+   ],
+   "normal": [
+    0.448,
+    -0.894
+   ],
+   "pen": 0.0215,
+   "closing": 0.203,
+   "tangential": 0.099,
+   "limbClosing": 1.79,
+   "onATT": "SIDE (L)",
+   "onDEF": "SIDE (R)"
+  },
+  "players": {
+   "ATT": {
+    "pid": "ATT",
+    "t0": 3.4291666666666667,
+    "tRegain": 5.05,
+    "regainAfter": 1.621,
+    "demand": 6.929,
+    "sigma": 1,
+    "sigmaPredicted": 1,
+    "sev": "MODERATE",
+    "cls": "CORRECT",
+    "unresolved": false,
+    "cancelledSteps": 0,
+    "steps": [],
+    "outcome": "— (ordinary locomotion)",
+    "action": null,
+    "why": null,
+    "legBlocked": null,
+    "J": 13.48,
+    "du": 0.185,
+    "peakU": 0.253,
+    "peakP": 0,
+    "peakO": 0,
+    "peakLean": 5.9,
+    "peakYaw": 0,
+    "fall": null
+   },
+   "DEF": {
+    "pid": "DEF",
+    "t0": 3.4291666666666667,
+    "tRegain": 5.4625,
+    "regainAfter": 2.033,
+    "demand": 9.214,
+    "sigma": 1,
+    "sigmaPredicted": 2.089,
+    "sev": "MODERATE",
+    "cls": "CORRECT",
+    "unresolved": false,
+    "cancelledSteps": 0,
+    "steps": [],
+    "outcome": "— (ordinary locomotion)",
+    "action": null,
+    "why": null,
+    "legBlocked": null,
+    "J": 13.11,
+    "du": 0.18,
+    "peakU": 0.338,
+    "peakP": 0,
+    "peakO": 0,
+    "peakLean": 5.7,
+    "peakYaw": 1.9,
+    "fall": null
+   }
+  },
+  "lead": {
+   "att": 0.054227894753229824,
+   "def": -0.08700517662086683,
+   "lead": 0.14123307137409666,
+   "maxLead": 0.14146303452907089
+  },
+  "leadMean": {
+   "att": 0.06322767277780067,
+   "def": -0.10270333821263863,
+   "lead": 0.1659310109904393,
+   "maxLead": 0.16604615036317288
+  },
+  "t0": 2.4
+ },
+ "S3B": {
+  "apps": [
+   {
+    "t": 1.029,
+    "pair": "THIGH_R|THIGH_L",
+    "region": "THIGH / THIGH",
+    "held": false,
+    "closing": 2.373038529506651,
+    "wA": 0.07424577688563859,
+    "wB": 0.057192906663728636,
+    "mu": 7.608110283791824,
+    "lam": 18.05433884017378,
+    "bound": 18.05433884017378,
+    "dvA": 1.3404584133452615,
+    "dvB": 1.0325801161613897,
+    "keB": 21.421820846250405,
+    "keA": 7.326343707877572e-34,
+    "n": [
+     0.05298215878501381,
+     -0.9985954590576104
+    ],
+    "fwd": -1.2075062847196372,
+    "fwdMean": 0,
+    "lat": -18.013913498409227,
+    "route": "LIMB YIELDS / LIMB YIELDS",
+    "artA": [
+     2.174214728661923,
+     1.6080375115808465,
+     -0.5970460533076949
+    ],
+    "artB": [
+     1.8423668756184952,
+     -0.5599670020444592,
+     -0.33469127025270495
+    ]
+   },
+   {
+    "t": 1.729,
+    "pair": "THIGH_R|THIGH_L",
+    "region": "THIGH / THIGH",
+    "held": false,
+    "closing": 4.592043652119477,
+    "wA": 0.08958641532908214,
+    "wB": 0.0908269577716157,
+    "mu": 5.542826359340055,
+    "lam": 25.45290059820801,
+    "bound": 25.45290059820801,
+    "dvA": 2.280234124320906,
+    "dvB": 2.311809527798571,
+    "keB": 58.44041531001457,
+    "keA": 5.00603588360206e-31,
+    "n": [
+     0.05156846607465588,
+     -0.9986694614869862
+    ],
+    "fwd": -1.5143915775241297,
+    "fwdMean": -0.0000349027506647559,
+    "lat": -25.407809173798945,
+    "route": "LIMB YIELDS / LIMB YIELDS",
+    "artA": [
+     1.5126691241601884,
+     2.567500857839188,
+     0.3460801436191962
+    ],
+    "artB": [
+     2.083753318634737,
+     -2.0420981019325026,
+     -0.6984321364043842
+    ]
+   }
+  ],
+  "players": {
+   "ATT": {
+    "pid": "ATT",
+    "t0": 3.4291666666666667,
+    "tRegain": 6.254166666666666,
+    "regainAfter": 2.825,
+    "demand": 8.489,
+    "sigma": 1.176,
+    "sigmaPredicted": 2.18,
+    "sev": "STRONG",
+    "cls": "RECOVERY STEP",
+    "unresolved": false,
+    "cancelledSteps": 0,
+    "steps": [
+     {
+      "X": "L",
+      "t": 4.371,
+      "tLand": 4.841,
+      "d": 0.074,
+      "kind": "swing re-aimed",
+      "landed": true
+     }
+    ],
+    "outcome": "— (ordinary locomotion)",
+    "action": null,
+    "why": null,
+    "legBlocked": null,
+    "J": 44.81,
+    "du": 0.614,
+    "peakU": 0.461,
+    "peakP": 0,
+    "peakO": 0,
+    "peakLean": 6.2,
+    "peakYaw": 0.2,
+    "fall": null
+   },
+   "DEF": {
+    "pid": "DEF",
+    "t0": 3.4291666666666667,
+    "tRegain": null,
+    "regainAfter": null,
+    "demand": 7.375,
+    "sigma": 1.157,
+    "sigmaPredicted": 2.14,
+    "sev": "STRONG",
+    "cls": "RECOVERY STEP",
+    "unresolved": true,
+    "cancelledSteps": 0,
+    "steps": [
+     {
+      "X": "L",
+      "t": 4.129,
+      "tLand": 4.492,
+      "d": 0.066,
+      "kind": "swing re-aimed",
+      "landed": true
+     }
+    ],
+    "outcome": "— (ordinary locomotion)",
+    "action": null,
+    "why": null,
+    "legBlocked": null,
+    "J": 43.74,
+    "du": 0.599,
+    "peakU": 0.436,
+    "peakP": 0,
+    "peakO": 0,
+    "peakLean": 6.1,
+    "peakYaw": 0.2,
+    "fall": null
+   }
+  },
+  "lead": {
+   "att": -0.008248309222284896,
+   "def": 0.03660469261751706,
+   "lead": -0.044853001839801954,
+   "maxLead": 0.044853001839801954
+  },
+  "leadMean": {
+   "att": 0.02380093013291238,
+   "def": 0.004119358313133892,
+   "lead": 0.01968157181977849,
+   "maxLead": 0.02646432759524186
+  },
+  "check": {
+   "limb": 0,
+   "stage3": 2.057297206053126e-15,
+   "player": 0,
+   "pair": 0,
+   "bound": 0,
+   "energy": 0,
+   "n": 2
+  },
+  "acc": {
+   "ATT": {
+    "EXT3B": [
+     2.2691248881888075,
+     -43.448015315779166
+    ],
+    "S3_BODY": [
+     0,
+     0
+    ],
+    "STRUT": [
+     1.0843464090606827,
+     -1.2385315051538575
+    ],
+    "BALANCE": [
+     -3.341330978132823,
+     44.55030500962204
+    ],
+    "FADE": [
+     0,
+     0
+    ],
+    "SETTLE": [
+     -0.012140319116669355,
+     0.13624181131096158
+    ]
+   },
+   "DEF": {
+    "EXT3B": [
+     -2.2691248881888075,
+     43.448015315779166
+    ],
+    "S3_BODY": [
+     0,
+     0
+    ],
+    "STRUT": [
+     0.2925957827473389,
+     0.24671776856949987
+    ],
+    "BALANCE": [
+     1.9606598766352354,
+     -43.37547001912033
+    ],
+    "FADE": [
+     0,
+     0
+    ],
+    "SETTLE": [
+     0,
+     0
+    ]
+   }
+  }
+ }
+}

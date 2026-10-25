@@ -1,0 +1,212 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — STAGE 3B.1 LIMB CONTACT REVIEW)",
+   "pass": true,
+   "detail": "0.9 s to the first case"
+  },
+  {
+   "name": "every case simulates OLD STAGE 3 and STAGE 3B and both viewports draw",
+   "pass": true,
+   "detail": "114/114"
+  },
+  {
+   "name": "the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps, 3B strikes, Σ impulse), both stages",
+   "pass": true,
+   "detail": "114/114"
+  },
+  {
+   "name": "view OLD | 3B draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view OLD STAGE 3 draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view STAGE 3B draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "OLD STAGE 3 and STAGE 3B draw different replays of the flagship after its contact",
+   "pass": true,
+   "detail": {
+    "S3": 3463207495,
+    "S3B": 1418816700
+   }
+  },
+  {
+   "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
+   "pass": true,
+   "detail": {
+    "skin": 4165184296,
+    "skel": 3232852344,
+    "both": 4165184296
+   }
+  },
+  {
+   "name": "overlay ball toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2730
+   }
+  },
+  {
+   "name": "overlay vol toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 3726
+   }
+  },
+  {
+   "name": "overlay sup toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2883
+   }
+  },
+  {
+   "name": "overlay bal toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2910
+   }
+  },
+  {
+   "name": "overlay nrm toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2782
+   }
+  },
+  {
+   "name": "overlay imp toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2888
+   }
+  },
+  {
+   "name": "overlay stp toggles",
+   "pass": true,
+   "detail": {
+    "off": 2765,
+    "on": 3317
+   }
+  },
+  {
+   "name": "overlay trl toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2902
+   }
+  },
+  {
+   "name": "overlay ghost toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2958
+   }
+  },
+  {
+   "name": "overlay hud toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 14400
+   }
+  },
+  {
+   "name": "overlay ref toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 3170
+   }
+  },
+  {
+   "name": "overlay lc toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 3279
+   }
+  },
+  {
+   "name": "overlay lv toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 2755
+   }
+  },
+  {
+   "name": "overlay mom toggles",
+   "pass": true,
+   "detail": {
+    "off": 2730,
+    "on": 3526
+   }
+  },
+  {
+   "name": "the flagship's ACCOUNTING PANEL (OLD's strike, its forward component and lead; 3B's applications, their bound, energy and lead; the ledger)",
+   "pass": true,
+   "detail": [
+    "LEAD 14.1 cm",
+    "LEAD 16.6 cm",
+    "LEAD -4.5 cm",
+    "LEAD 2.0 cm"
+   ]
+  },
+  {
+   "name": "the eight cameras draw",
+   "pass": true,
+   "detail": "8/8"
+  },
+  {
+   "name": "1× / 0.5× / 0.25× play at their rates",
+   "pass": true,
+   "detail": [
+    1,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "name": "frame step (4 ticks; shift: 1 tick)",
+   "pass": true,
+   "detail": [
+    0.016666666666666607,
+    0.004166666666666874
+   ]
+  },
+  {
+   "name": "loop toggles",
+   "pass": true
+  },
+  {
+   "name": "0 console / page / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "errs": []
+}

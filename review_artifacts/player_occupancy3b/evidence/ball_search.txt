@@ -1,0 +1,201 @@
+
+§12 BALL / POSSESSION — set search (235 encounters), STAGE 3B
+(1) THE SOURCE (l3_world.js, l3_limb.js, l3_body.js, o3_world.js): writes to the authority / launches / ball state: NONE
+(2) THE BALL: velocity changes > 0.25 m/s in a tick: 2555 · of them with no canonical contact within ± 2 ticks (ball on the ground): 0
+(3) THE AUTHORITY: 623 transitions, by their canonical cause:
+       285  CONTROLLED · COLLECTED: carry
+        51  CONTROLLED · COLLECTED: carry turn
+        31  FREE · CONTROLLER_FAILURE: a planned contact missed the ball
+        14  CONTROLLED · COLLECTED: OUTSIDE CUT
+        14  CONTROLLED · COLLECTED: set touch
+        12  CONTROLLED · COLLECTED: OUTSIDE HOOK
+        11  CONTROLLED · COLLECTED: compact inside redirect
+         9  CONTROLLED · COLLECTED: carry correction
+         9  CONTROLLED · COLLECTED: braking pivot
+         6  CONTROLLED · COLLECTED: croqueta · the inside plays it across
+         6  CONTROLLED · COLLECTED: gather
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 3.5 m/s ≥ 2)
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 89 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 2.9 m/s ≥ 2)
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.04 s) would sweep 17 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 92 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 127 cm from the
+         4  CONTROLLED · COLLECTED: BODY FEINT · the free foot from behind, its outside takes it out t
+         4  CONTROLLED · COLLECTED: compact outside redirect
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.69 s) would sweep 549 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 78 cm from the 
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 261 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.46 s) would sweep 271 cm from the
+         4  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 24 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.32 s) would sweep 204 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.03 s) would sweep 28 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 117 cm from the
+         3  FREE · CONTROLLER_FAILURE: the ball 3 m away
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 44 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.44 s) would sweep 419 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.53 s) would sweep 199 cm from the
+         3  FREE · OPPONENT_INTERCEPTION: DEF's blind touch (his next touch (+0.33 s) would sweep 175 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.47 s) would sweep 263 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.44 s) would sweep 218 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 226 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 87 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.07 s) would sweep 30 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 158 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.10 s) would sweep 67 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 107 cm from the
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.12 s) would sweep 99 cm from the 
+         3  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.35 s) would sweep 167 cm from the
+         2  CONTROLLED · COLLECTED: braking touch
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 49 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.20 s) would sweep 102 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.20 s) would sweep 104 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 67 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 29 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.70 s) would sweep 508 cm from the
+         1  CONTROLLED · COLLECTED: RONALDO CHOP
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 166 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 9.9 m/s ≥ 2)
+         1  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+0.55 s) would sweep 165 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.24 s) would sweep 173 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 48 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.10 s) would sweep 46 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 4.9 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.26 s) would sweep 119 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.14 s) would sweep 87 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 3.4 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.22 s) would sweep 105 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 76 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.07 s) would sweep 32 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 5.0 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 114 cm from the
+         1  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+0.19 s) would sweep 109 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 138 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 69 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.26 s) would sweep 83 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 256 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.16 s) would sweep 88 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.50 s) would sweep 186 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 25 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.66 s) would sweep 585 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.13 s) would sweep 60 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.05 s) would sweep 22 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.69 s) would sweep 199 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.45 s) would sweep 233 cm from the
+         1  CONTROLLED · COLLECTED: V-TURN · the sole rolls it back
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.42 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.42 s) would sweep 213 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.35 s) would sweep 186 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.27 s) would sweep 135 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 238 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 148 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 97 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 66 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.03 s) would sweep 16 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 4.6 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.31 s) would sweep 207 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 144 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 57 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 6.3 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.22 s) would sweep 94 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.15 s) would sweep 64 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.06 s) would sweep 24 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.39 s) would sweep 185 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.30 s) would sweep 137 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.21 s) would sweep 90 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.12 s) would sweep 45 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.33 s) would sweep 177 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 86 cm from the 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.04 s) would sweep 33 cm from the 
+         1  FREE · OPPONENT_INTERCEPTION: ATT's blind touch (his next touch (+1.02 s) would sweep 237 
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (Δv 2.0 m/s ≥ 2)
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.33 s) would sweep 164 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.25 s) would sweep 127 cm from the
+         1  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.17 s) would sweep 77 cm from the 
+    a limb contact / an impact named as a cause: 0 · the authority's own checks: dual 0 · unaware 0 · without a touch 0 · granted blind 0
+(4) WHAT THE PHYSICS DID (geometry, each with its reason):
+       149  TOUCH DENIED · the foot is the recovery step
+        39  TOUCH DENIED (limb contact) · the right foot was displaced x cm by limb contact: it cannot reach the ball
+        18  TOUCH DENIED (limb contact) · the left foot was displaced x cm by limb contact: it cannot reach the ball
+         7  TACKLE BOOT DENIED (limb contact) · the tackling leg was displaced x cm by limb contact
+        73  DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+        13  DEF INTERRUPTED BEFORE TECHNICAL EVENT
+        12  ATT INTERRUPTED BEFORE TECHNICAL EVENT
+         1  ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+    tackle outcomes different from STAGE 2: 44
+      #9@0.6                     CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF RECOVERY STEP · DEF TOUCH DENIED · DEF TOUCH DENIED (limb contact))
+      #10@1.3                    CONTACT — ATTACKER RECOVERS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP)
+      #27@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #27@0.7                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED)
+      #27@1.0                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.1                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.2                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.3                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.4                    MISS → null   (ATT RECOVERY STEP)
+      #47@0.8                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #47@0.9                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #47@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #47@1.1                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED · DEF INTERRUPTED BEFORE TECHNICAL EVENT)
+      #47@1.2                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP CANCELLED)
+      #47@1.3                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP)
+      #47@1.4                    CONTACT — ATTACKER RETAINS → MISS   (DEF RECOVERY STEP · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@0.7                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #50@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.1                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.2                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #50@1.3                    CONTACT — ATTACKER RETAINS → MISS   (DEF INTERRUPTED BEFORE TECHNICAL EVENT · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #70@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #70@0.9                    CONTACT — ATTACKER RECOVERS → MISS   (DEF TACKLE BOOT DENIED (limb contact))
+      #70@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #70@1.1                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.2                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.3                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.4                    MISS → null   (the bodies' displacement (an impact))
+      #74@0.8                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@0.9                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@1.0                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@1.1                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #79@0.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.4                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.5                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #87@0.0                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.1                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.2                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+    tackle outcomes different from OLD STAGE 3: 35
+      #21@1.2                    MISS → CONTACT — ATTACKER RETAINS   (the bodies' displacement (an impact))
+      #21@1.3                    MISS → CONTACT — ATTACKER RETAINS   (the bodies' displacement (an impact))
+      #21@1.4                    MISS → CONTACT — ATTACKER RETAINS   (the bodies' displacement (an impact))
+      #27@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #27@0.7                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED)
+      #27@1.0                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.1                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.2                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.3                    MISS → null   (ATT RECOVERY STEP)
+      #27@1.4                    MISS → null   (ATT RECOVERY STEP)
+      #50@0.7                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #50@1.4                    MISS → CONTACT — ATTACKER RETAINS   (DEF RECOVERY STEP · ATT RECOVERY STEP · ATT RECOVERY STEP)
+      #70@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #70@0.9                    CONTACT — ATTACKER RECOVERS → MISS   (DEF TACKLE BOOT DENIED (limb contact))
+      #70@1.0                    CONTACT — ATTACKER RETAINS → MISS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP)
+      #70@1.1                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.2                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.3                    MISS → null   (the bodies' displacement (an impact))
+      #70@1.4                    MISS → null   (the bodies' displacement (an impact))
+      #74@0.8                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@0.9                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@1.0                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@1.1                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · ATT RECOVERY STEP)
+      #74@1.2                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · DEF RECOVERY STEP · DEF RECOVERY STEP CANCELLED)
+      #79@0.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.4                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.5                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #79@0.6                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT RECOVERY STEP · ATT TOUCH DENIED)
+      #83@1.2                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (the bodies' displacement (an impact))
+      #83@1.3                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (the bodies' displacement (an impact))
+      #83@1.4                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (the bodies' displacement (an impact))
+      #87@0.0                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.1                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.2                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)
+      #87@0.3                    CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED)

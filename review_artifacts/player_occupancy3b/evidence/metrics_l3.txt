@@ -1,0 +1,158 @@
+
+§18 THE MEASUREMENTS — set l3 (114 encounters), the bodies as drawn
+                                                        STAGE 2     OLD S3   STAGE 3B
+deepest torso (cm)                                         22.9        3.1        2.1
+deepest thigh-thigh (cm)                                   23.0       22.7       22.4
+deepest thigh-shin (cm)                                    17.9       17.9       16.4
+deepest shin-shin (cm)                                     14.0       13.9       14.0
+deepest foot-leg (cm)                                      14.0       13.9       13.9
+deepest leg-trunk (cm)                                     18.8        4.5        2.1
+deepest LEG penetration, any class (cm)                    23.0       22.7       22.4
+ticks with a leg pair > 5 cm                               2547       1540        672
+  ticks > 5 cm, torso                                       248          0          0
+  ticks > 5 cm, thigh-thigh                                1592        886        296
+  ticks > 5 cm, thigh-shin                                  802        552        223
+  ticks > 5 cm, shin-shin                                  1017        521        186
+  ticks > 5 cm, foot-leg                                   1019        627        406
+  ticks > 5 cm, leg-trunk                                   290          0          0
+planted ball-of-foot slide on the turf, largest (cm)       12.6       11.0       14.4
+pelvis jolts per frame > 1 / 2 / 4 cm               2555/899/1962490/833/1702682/833/163
+largest pelvis jolt (cm per frame²)                        15.0        8.6        8.8
+knee / foot jumps > 4 cm in a tick                        30984      31634      33657
+largest knee / foot jump in a tick (cm)                    34.2       31.5       29.0
+crossed-legs ticks (feet across > 5 cm)                     790       1031       1306
+turf penetration ticks                                    31904      31997      33646
+joint > 15 m/s (ticks × joints)                            4385       4283       4980
+knee folding > 2000 °/s                                    2339       2305       2352
+stuck seconds (asking, not moving)                          0.2        0.5          0
+
+THE LIMB LAYER's ANGLES (STAGE 3B, every perturbed leg against its authored self, every tick):
+  knee angle changed by the perturbation: largest 0.0010° (rigid hip rotations and the swivel keep the hip–ankle distance)
+  hip flexion / abduction changed: largest 24.1° / 22.2° · the perturbation's largest angles (ab/adduction · flexion · swivel): 12.0 · 20.0 · 20.0° · the ankle moved at most 33.5 cm
+  leg-ticks OUTSIDE the anatomical range (hip flexion −30 … 125°, abduction −30 … 45°, knee 0 … 150°): introduced by the perturbation 56 · already in the authored pose 29961
+
+STAGE 3B: 211 strikes in 71 / 114 encounters · 405 impulse applications · Σ impulse 4546.0 N·s · largest 62.2 N·s
+  routes (side A / side B): LIMB AT RANGE / BODY 133 · LIMB YIELDS / BODY 78 · BODY / LIMB AT RANGE 62 · LIMB YIELDS / LIMB YIELDS 46 · LIMB AT RANGE / LIMB YIELDS 36 · BODY / LIMB YIELDS 28 · LIMB AT RANGE / LIMB AT RANGE 22
+  yielded closing (held contacts, no impulse) Σ 2162.4 m/s · positional projection Σ 896.1 cm · contact-ticks left unresolved (both sides at their range / planted) 2
+  events: LANDING OBSTRUCTED 53 · LIMB AT ITS RANGE 47 · CONTACT DURING A FALL PLACEHOLDER 36 · TOUCH DENIED 20 · LIMB HELD 16 · BODY OUTRAN A HELD FOOT 14 · RECOVERY STEP LANDS IN THE OPPONENT 9 · LANDING SNAP 5
+  checks (max over the set): Stage 3 took exactly its impulses 2.8e-14 · pairing 0.0e+0 · bound (λ − its closing's) 0.0e+0 · energy (after − before) 0.0e+0 · OLD limb strikes left in S3B: 0
+
+OLD STAGE 3: intervened 78 / 114 · 78 episodes · 156 responses · severity MODERATE 89 · STRONG 36 · SEVERE 27 · LIGHT 4 · balance CORRECT 92 · RECOVERY STEP 36 · FALL CANDIDATE 24 · STAGGER CANDIDATE 3 · ABSORB 1 · recovery steps 84 · fall candidates 24 · regained 104
+
+STAGE 3B → STAGE 3: intervened 73 / 114 · 83 episodes · 166 responses · severity SEVERE 65 · MODERATE 54 · STRONG 39 · LIGHT 6 · BRUSH 2 · balance CORRECT 57 · FALL CANDIDATE 53 · RECOVERY STEP 37 · STAGGER CANDIDATE 14 · ABSORB 5 · recovery steps 148 · fall candidates 53 · regained 69
+
+PER ENCOUNTER: legs cm (STAGE 2 · OLD S3 · 3B) · torso · ticks > 5 cm · 3B strikes / Σ N·s / largest · Stage 3 responses (OLD → 3B)
+walk-shoulder          legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+side                   legs 3.7 · 4.6 · 2.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 43.5 / 25.5  ATT M,DEF M → ATT S,DEF S
+headon-jog             legs 15.7 · 15.7 · 8.5  torso 0.0 · 0.0 · 0.0  >5 36 · 27 · 13  3B 2 / 82.5 / 47.1  ATT M,DEF S → ATT S!,DEF S!
+oblique                legs 0.7 · 0.7 · 0.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+oblique-firm           legs 14.2 · 14.2 · 5.8  torso 0.0 · 0.0 · 0.0  >5 13 · 12 · 3  3B 3 / 101.6 / 41.6  ATT M,DEF S! → ATT S!,DEF S!
+near-miss              legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+static-jog             legs 5.5 · 5.6 · 3.6  torso 0.9 · 0.9 · 0.9  >5 4 · 4 · 0  3B 3 / 83.1 / 26.7  ATT M,DEF L → ATT S,DEF S
+cross                  legs 2.1 · 2.1 · 2.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+bf-past                legs 3.1 · 3.1 · 2.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 37.8 / 37.8  ATT S,DEF S → ATT S,DEF S
+bf-shoulder            legs 8.3 · 8.3 · 8.3  torso 0.0 · 0.0 · 0.0  >5 61 · 64 · 59  3B 1 / 0.0 / 0.0  ATT S,DEF M → ATT M,DEF L
+bf-step-in             legs 2.5 · 3.8 · 2.5  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —
+in-bf                  legs 7.0 · 13.6 · 6.4  torso 0.1 · 0.0 · 0.0  >5 5 · 14 · 2  3B 8 / 65.8 / 21.9  ATT M,DEF M → ATT B,DEF L,ATT M,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+bf-fake                legs 22.6 · 17.2 · 8.8  torso 22.9 · 3.1 · 2.1  >5 82 · 33 · 8  3B 4 / 72.9 / 19.9  ATT S!,DEF S → ATT S!,DEF S  tackle MISS · MISS · MISS
+croq-close             legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+croq-hip               legs 11.8 · 7.1 · 12.8  torso 0.0 · 0.0 · 0.0  >5 13 · 7 · 17  3B 7 / 66.1 / 20.8  ATT S,DEF S! → ATT S,DEF M
+croq-leg               legs 7.6 · 7.5 · 3.5  torso 0.0 · 0.0 · 0.0  >5 6 · 5 · 0  3B 2 / 50.1 / 39.2  ATT M,DEF S → ATT S,DEF S!
+croq-early             legs 22.7 · 13.7 · 10.6  torso 11.5 · 0.0 · 0.6  >5 92 · 29 · 9  3B 2 / 77.4 / 62.2  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq-before            legs 14.0 · 13.7 · 13.8  torso 0.0 · 0.0 · 0.0  >5 39 · 103 · 20  3B 5 / 117.0 / 30.8  ATT S,DEF S! → ATT S!,DEF S
+croq-between           legs 13.3 · 5.7 · 3.4  torso 0.0 · 0.0 · 0.0  >5 99 · 3 · 0  3B 1 / 55.4 / 55.4  ATT S,DEF S! → ATT S,DEF S!
+croq-after             legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —
+carry-jog-l            legs 5.4 · 4.9 · 4.7  torso 0.0 · 0.0 · 0.0  >5 4 · 0 · 0  3B 1 / 22.7 / 22.7  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq                   legs 1.0 · 1.0 · 1.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+carry-walk             legs 10.8 · 7.3 · 7.8  torso 0.0 · 0.0 · 0.0  >5 41 · 24 · 10  3B 2 / 18.1 / 9.5  ATT S,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+cut                    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+in-croq                legs 22.7 · 22.7 · 15.4  torso 3.4 · 0.0 · 0.0  >5 82 · 67 · 43  3B 2 / 133.6 / 34.9  ATT S!,DEF S → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+both-committed         legs 22.7 · 22.5 · 22.4  torso 0.0 · 0.0 · 0.0  >5 82 · 57 · 34  3B 2 / 66.8 / 30.8  ATT S!,DEF S! → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+walk-shoulder-m        legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+side-m                 legs 3.7 · 4.5 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 31.8 / 18.3  ATT M,DEF M → ATT M,DEF M,ATT M,DEF M
+headon-jog-m           legs 15.7 · 15.7 · 8.5  torso 0.0 · 0.0 · 0.0  >5 36 · 27 · 13  3B 2 / 82.5 / 47.1  ATT M,DEF S → ATT S!,DEF S!
+oblique-m              legs 0.7 · 0.7 · 0.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+oblique-firm-m         legs 14.2 · 14.2 · 5.8  torso 0.0 · 0.0 · 0.0  >5 13 · 12 · 3  3B 3 / 101.6 / 41.6  ATT M,DEF S! → ATT S!,DEF S!
+near-miss-m            legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+static-jog-m           legs 9.1 · 9.1 · 3.9  torso 0.0 · 0.0 · 0.0  >5 8 · 8 · 0  3B 1 / 19.2 / 19.2  ATT M,DEF L → ATT M,DEF L
+cross-m                legs 2.1 · 2.1 · 2.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+bf-past-m              legs 2.3 · 2.3 · 2.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 35.1 / 35.1  ATT M,DEF S → ATT S,DEF S
+bf-shoulder-m          legs 8.5 · 8.7 · 8.5  torso 0.0 · 0.0 · 0.0  >5 72 · 58 · 70  3B 0 / 0.0 / 0.0  ATT S,DEF S → —
+bf-step-in-m           legs 2.5 · 3.8 · 2.5  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —
+in-bf-m                legs 7.0 · 13.6 · 5.3  torso 0.1 · 0.0 · 0.0  >5 5 · 14 · 2  3B 9 / 74.7 / 21.9  ATT M,DEF M → ATT B,DEF L,ATT M,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+bf-fake-m              legs 22.6 · 17.2 · 8.8  torso 22.9 · 3.1 · 2.1  >5 82 · 33 · 8  3B 4 / 72.9 / 19.9  ATT S!,DEF S → ATT S!,DEF S  tackle MISS · MISS · MISS
+croq-close-m           legs 4.1 · 4.1 · 3.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 32.0 / 32.0  ATT M,DEF M → ATT S,DEF S
+croq-hip-m             legs 11.7 · 6.8 · 5.8  torso 0.0 · 0.0 · 0.0  >5 54 · 17 · 1  3B 5 / 38.1 / 10.1  ATT S,DEF S → ATT M,DEF S
+croq-leg-m             legs 8.3 · 8.1 · 2.9  torso 0.0 · 0.0 · 0.0  >5 33 · 7 · 0  3B 2 / 49.3 / 38.6  ATT S,DEF S → ATT S,DEF S
+croq-early-m           legs 22.7 · 13.7 · 10.6  torso 11.5 · 0.0 · 0.6  >5 92 · 29 · 9  3B 2 / 77.4 / 62.2  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq-before-m          legs 14.9 · 13.8 · 13.8  torso 0.0 · 0.0 · 0.0  >5 40 · 39 · 32  3B 4 / 85.7 / 28.8  ATT S,DEF S → ATT S!,DEF S
+croq-between-m         legs 14.1 · 6.7 · 3.5  torso 0.0 · 0.0 · 0.0  >5 98 · 21 · 0  3B 1 / 57.7 / 57.7  ATT S,DEF S! → ATT S,DEF S!
+croq-after-m           legs 2.3 · 2.3 · 2.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —
+carry-jog-l-m          legs 5.4 · 4.9 · 4.7  torso 0.0 · 0.0 · 0.0  >5 4 · 0 · 0  3B 1 / 22.7 / 22.7  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq-m                 legs 1.0 · 1.0 · 1.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+carry-walk-m           legs 10.8 · 7.3 · 7.8  torso 0.0 · 0.0 · 0.0  >5 41 · 24 · 10  3B 2 / 18.1 / 9.5  ATT S,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+cut-m                  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+in-croq-m              legs 22.7 · 22.7 · 15.4  torso 3.4 · 0.0 · 0.0  >5 82 · 67 · 43  3B 2 / 133.6 / 34.9  ATT S!,DEF S → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+both-committed-m       legs 22.7 · 22.5 · 22.4  torso 0.0 · 0.0 · 0.0  >5 82 · 57 · 34  3B 2 / 66.8 / 30.8  ATT S!,DEF S! → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+overtake               legs 1.3 · 1.3 · 1.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+glance                 legs 3.8 · 3.8 · 2.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 9.5 / 9.5  ATT M,DEF M → ATT M,DEF M
+turn-into              legs 5.1 · 5.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 1 · 1 · 0  3B 1 / 33.0 / 33.0  ATT M,DEF M → ATT S,DEF M
+static-walk            legs 2.6 · 2.6 · 2.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 13.3 / 6.5  ATT M,DEF L → ATT M,DEF L
+headon-walk            legs 2.9 · 2.6 · 3.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 10.7 / 10.7  ATT M,DEF M → ATT M,DEF M
+side-walk              legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+side-run               legs 2.2 · 2.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → ATT M,DEF M
+walk-behind            legs 1.2 · 1.2 · 1.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+run-past               legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 19.7 / 19.7  ATT M,DEF M → ATT M,DEF M
+croq-recover           legs 23.0 · 14.2 · 13.9  torso 15.3 · 1.9 · 0.0  >5 149 · 43 · 38  3B 5 / 95.8 / 29.8  ATT S!,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq-recover2          legs 22.9 · 21.9 · 13.0  torso 9.8 · 3.0 · 0.0  >5 187 · 70 · 7  3B 7 / 185.2 / 39.5  ATT S,DEF S! → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+x150-jog               legs 14.0 · 13.6 · 2.0  torso 0.0 · 0.0 · 0.0  >5 25 · 25 · 0  3B 1 / 30.8 / 30.8  ATT M,DEF M → ATT S,DEF S
+x150-jog-off           legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x150-run               legs 6.1 · 6.1 · 4.6  torso 0.0 · 0.0 · 0.0  >5 1 · 1 · 0  3B 1 / 20.3 / 20.3  ATT M,DEF M → ATT M,DEF M
+x150-run-off           legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x120-jog               legs 13.8 · 13.3 · 13.6  torso 0.0 · 0.0 · 0.0  >5 22 · 22 · 14  3B 7 / 144.3 / 52.6  ATT M,DEF M → ATT S!,DEF S!,ATT S,DEF S!
+x120-jog-off           legs 0.6 · 0.6 · 0.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x120-run               legs 10.0 · 10.0 · 9.5  torso 0.0 · 0.0 · 0.0  >5 14 · 13 · 6  3B 4 / 80.6 / 31.2  ATT M,DEF M → ATT S!,DEF S
+x120-run-off           legs 0.2 · 0.2 · 0.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x90-jog                legs 12.9 · 13.9 · 8.9  torso 0.0 · 0.0 · 0.0  >5 43 · 29 · 11  3B 13 / 242.0 / 45.2  ATT S!,DEF S → ATT S!,DEF S!,ATT S!,DEF S!
+x90-jog-off            legs 0.2 · 0.2 · 0.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x90-run                legs 3.2 · 3.2 · 2.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 26.5 / 26.5  ATT M,DEF M → ATT M,DEF M
+x90-run-off            legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x60-jog                legs 14.4 · 13.9 · 15.1  torso 0.0 · 0.0 · 0.0  >5 54 · 53 · 20  3B 1 / 19.6 / 19.6  ATT S,DEF S → ATT S!,DEF S
+x60-jog-off            legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x60-run                legs 9.7 · 9.9 · 2.7  torso 0.0 · 0.0 · 0.0  >5 15 · 15 · 0  3B 1 / 36.0 / 36.0  ATT M,DEF M → ATT S,DEF S
+x60-run-off            legs 0.4 · 0.4 · 0.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x30-jog                legs 17.9 · 17.9 · 14.3  torso 0.0 · 0.0 · 0.0  >5 35 · 40 · 18  3B 11 / 164.4 / 59.8  ATT S!,DEF S! → ATT S!,DEF S!,ATT S!,DEF S!,ATT M,DEF M
+x30-jog-off            legs 3.0 · 2.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 26.8 / 26.8  ATT M,DEF M → ATT M,DEF M
+x30-run                legs 13.9 · 13.9 · 2.1  torso 0.7 · 0.7 · 0.7  >5 26 · 26 · 0  3B 3 / 62.8 / 20.0  ATT M,DEF M → ATT S,DEF S
+x30-run-off            legs 2.1 · 2.1 · 2.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 22.3 / 22.3  ATT M,DEF M → ATT M,DEF M
+overtake-m             legs 1.3 · 1.3 · 1.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+glance-m               legs 3.8 · 3.8 · 2.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 9.5 / 9.5  ATT M,DEF M → ATT M,DEF M
+turn-into-m            legs 5.1 · 5.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 1 · 1 · 0  3B 1 / 33.0 / 33.0  ATT M,DEF M → ATT S,DEF M
+static-walk-m          legs 8.4 · 9.1 · 3.8  torso 0.0 · 0.0 · 0.0  >5 2 · 2 · 0  3B 4 / 22.7 / 7.3  ATT M,DEF L → ATT M,DEF L
+headon-walk-m          legs 2.9 · 2.6 · 3.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 10.7 / 10.7  ATT M,DEF M → ATT M,DEF M
+side-walk-m            legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+side-run-m             legs 2.2 · 2.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → ATT M,DEF M
+walk-behind-m          legs 1.2 · 1.2 · 1.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+run-past-m             legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+croq-recover-m         legs 23.0 · 14.2 · 13.9  torso 15.3 · 1.9 · 0.0  >5 149 · 43 · 38  3B 5 / 95.8 / 29.8  ATT S!,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+croq-recover2-m        legs 22.9 · 21.9 · 13.0  torso 9.8 · 3.0 · 0.0  >5 187 · 70 · 7  3B 7 / 185.2 / 39.5  ATT S,DEF S! → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+x150-jog-m             legs 14.0 · 13.6 · 2.0  torso 0.0 · 0.0 · 0.0  >5 25 · 25 · 0  3B 1 / 30.8 / 30.8  ATT M,DEF M → ATT S,DEF S
+x150-jog-off-m         legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x150-run-m             legs 6.1 · 6.1 · 4.6  torso 0.0 · 0.0 · 0.0  >5 1 · 1 · 0  3B 1 / 20.3 / 20.3  ATT M,DEF M → ATT M,DEF M
+x150-run-off-m         legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x120-jog-m             legs 13.8 · 13.3 · 13.6  torso 0.0 · 0.0 · 0.0  >5 22 · 22 · 14  3B 7 / 144.3 / 52.6  ATT M,DEF M → ATT S!,DEF S!,ATT S,DEF S!
+x120-jog-off-m         legs 0.6 · 0.6 · 0.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x120-run-m             legs 10.0 · 10.0 · 9.5  torso 0.0 · 0.0 · 0.0  >5 14 · 13 · 6  3B 4 / 80.6 / 31.2  ATT M,DEF M → ATT S!,DEF S
+x120-run-off-m         legs 0.2 · 0.2 · 0.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x90-jog-m              legs 12.9 · 13.9 · 8.9  torso 0.0 · 0.0 · 0.0  >5 43 · 29 · 11  3B 13 / 242.0 / 45.2  ATT S!,DEF S → ATT S!,DEF S!,ATT S!,DEF S!
+x90-jog-off-m          legs 0.2 · 0.2 · 0.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x90-run-m              legs 3.2 · 3.2 · 2.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 26.5 / 26.5  ATT M,DEF M → ATT M,DEF M
+x90-run-off-m          legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x60-jog-m              legs 14.4 · 13.9 · 15.1  torso 0.0 · 0.0 · 0.0  >5 54 · 53 · 20  3B 1 / 19.6 / 19.6  ATT S,DEF S → ATT S!,DEF S
+x60-jog-off-m          legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x60-run-m              legs 9.7 · 9.9 · 2.7  torso 0.0 · 0.0 · 0.0  >5 15 · 15 · 0  3B 1 / 36.0 / 36.0  ATT M,DEF M → ATT S,DEF S
+x60-run-off-m          legs 0.4 · 0.4 · 0.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+x30-jog-m              legs 17.9 · 17.9 · 14.3  torso 0.0 · 0.0 · 0.0  >5 35 · 40 · 19  3B 3 / 139.3 / 59.8  ATT S!,DEF S! → ATT S!,DEF S!,ATT S!,DEF S!
+x30-jog-off-m          legs 3.0 · 2.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 26.8 / 26.8  ATT M,DEF M → ATT M,DEF M
+x30-run-m              legs 13.9 · 13.9 · 2.1  torso 0.7 · 0.7 · 0.7  >5 26 · 26 · 0  3B 3 / 62.8 / 20.0  ATT M,DEF M → ATT S,DEF S
+x30-run-off-m          legs 2.1 · 2.1 · 2.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 22.3 / 22.3  ATT M,DEF M → ATT M,DEF M

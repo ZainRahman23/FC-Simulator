@@ -1,0 +1,396 @@
+
+§18 THE MEASUREMENTS — set moves (352 encounters), the bodies as drawn
+                                                        STAGE 2     OLD S3   STAGE 3B
+deepest torso (cm)                                         22.9        4.9        3.2
+deepest thigh-thigh (cm)                                   23.0       22.9       22.9
+deepest thigh-shin (cm)                                    18.5       18.3       17.5
+deepest shin-shin (cm)                                     14.0       14.0       14.0
+deepest foot-leg (cm)                                      14.0       14.0       13.9
+deepest leg-trunk (cm)                                     23.3        9.8        8.3
+deepest LEG penetration, any class (cm)                    23.3       22.9       22.9
+ticks with a leg pair > 5 cm                               5633       4546       1974
+  ticks > 5 cm, torso                                       529          0          0
+  ticks > 5 cm, thigh-thigh                                3913       2732        999
+  ticks > 5 cm, thigh-shin                                 2190       1478        521
+  ticks > 5 cm, shin-shin                                  1819       1475        522
+  ticks > 5 cm, foot-leg                                   2031       1951       1084
+  ticks > 5 cm, leg-trunk                                   535         15         28
+planted ball-of-foot slide on the turf, largest (cm)       24.2       24.7       24.2
+pelvis jolts per frame > 1 / 2 / 4 cm               6149/1769/3846816/1954/3846899/1837/300
+largest pelvis jolt (cm per frame²)                        12.1       12.1        9.4
+knee / foot jumps > 4 cm in a tick                        95235      99920     103021
+largest knee / foot jump in a tick (cm)                    32.8       39.9       39.9
+crossed-legs ticks (feet across > 5 cm)                    2070       3431       4166
+turf penetration ticks                                   116876     118010     120420
+joint > 15 m/s (ticks × joints)                           19582      21202      22538
+knee folding > 2000 °/s                                    8062       8486       8843
+stuck seconds (asking, not moving)                          0.7        0.8        0.8
+
+THE LIMB LAYER's ANGLES (STAGE 3B, every perturbed leg against its authored self, every tick):
+  knee angle changed by the perturbation: largest 0.0011° (rigid hip rotations and the swivel keep the hip–ankle distance)
+  hip flexion / abduction changed: largest 26.9° / 25.1° · the perturbation's largest angles (ab/adduction · flexion · swivel): 12.0 · 20.0 · 20.0° · the ankle moved at most 31.3 cm
+  leg-ticks OUTSIDE the anatomical range (hip flexion −30 … 125°, abduction −30 … 45°, knee 0 … 150°): introduced by the perturbation 40 · already in the authored pose 73799
+
+STAGE 3B: 457 strikes in 171 / 352 encounters · 753 impulse applications · Σ impulse 8524.2 N·s · largest 62.2 N·s
+  routes (side A / side B): LIMB AT RANGE / BODY 286 · LIMB YIELDS / BODY 200 · LIMB YIELDS / LIMB YIELDS 88 · BODY / LIMB AT RANGE 86 · BODY / LIMB YIELDS 81 · LIMB YIELDS / LIMB AT RANGE 7 · LIMB AT RANGE / LIMB YIELDS 4 · LIMB AT RANGE / LIMB AT RANGE 1
+  yielded closing (held contacts, no impulse) Σ 4201.8 m/s · positional projection Σ 1546.3 cm · contact-ticks left unresolved (both sides at their range / planted) 4
+  events: LANDING OBSTRUCTED 194 · LIMB AT ITS RANGE 76 · TOUCH DENIED 55 · BODY OUTRAN A HELD FOOT 38 · LANDING SNAP 33 · CONTACT DURING A FALL PLACEHOLDER 27 · LIMB HELD 27 · RECOVERY STEP LANDS IN THE OPPONENT 22 · TACKLE BOOT DENIED 9
+  checks (max over the set): Stage 3 took exactly its impulses 1.9e-14 · pairing 0.0e+0 · bound (λ − its closing's) 0.0e+0 · energy (after − before) 0.0e+0 · OLD limb strikes left in S3B: 0
+
+OLD STAGE 3: intervened 169 / 352 · 176 episodes · 352 responses · severity MODERATE 175 · STRONG 103 · SEVERE 51 · LIGHT 22 · BRUSH 1 · balance CORRECT 189 · RECOVERY STEP 101 · FALL CANDIDATE 40 · STAGGER CANDIDATE 13 · ABSORB 9 · recovery steps 208 · fall candidates 40 · regained 272
+
+STAGE 3B → STAGE 3: intervened 173 / 352 · 189 episodes · 378 responses · severity MODERATE 133 · STRONG 126 · SEVERE 81 · LIGHT 34 · BRUSH 4 · balance CORRECT 156 · RECOVERY STEP 121 · FALL CANDIDATE 52 · STAGGER CANDIDATE 34 · ABSORB 15 · recovery steps 352 · fall candidates 52 · regained 269
+
+PER ENCOUNTER: legs cm (STAGE 2 · OLD S3 · 3B) · torso · ticks > 5 cm · 3B strikes / Σ N·s / largest · Stage 3 responses (OLD → 3B)
+BODY_FEINT 2.4/-1@0.0  legs 8.3 · 8.3 · 8.3  torso 0.0 · 0.0 · 0.0  >5 30 · 30 · 27  3B 3 / 70.3 / 28.0  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 2.4/-1@0.1  legs 8.6 · 8.6 · 9.3  torso 0.0 · 0.0 · 0.0  >5 32 · 32 · 30  3B 1 / 27.6 / 27.6  ATT M,DEF L → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-1@0.2  legs 13.6 · 13.4 · 6.9  torso 0.0 · 0.0 · 0.0  >5 42 · 36 · 4  3B 4 / 58.1 / 30.4  ATT M,DEF M → ATT M,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-1@0.3  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.4  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.5  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.6  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.7  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.8  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@0.9  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-1@1.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/-0.5@0. legs 9.6 · 9.6 · 9.6  torso 0.0 · 0.0 · 0.0  >5 20 · 20 · 17  3B 2 / 67.1 / 30.3  ATT M,DEF L → ATT S!,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-0.5@0. legs 22.4 · 22.4 · 14.7  torso 0.0 · 0.0 · 0.0  >5 15 · 15 · 8  3B 8 / 137.7 / 39.7  ATT M,DEF M → ATT S!,DEF S!,ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-0.5@0. legs 12.9 · 12.9 · 12.9  torso 0.0 · 0.0 · 0.0  >5 25 · 49 · 20  3B 3 / 74.3 / 37.9  ATT S,DEF S → ATT S!,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-0.5@0. legs 10.5 · 10.5 · 10.5  torso 0.0 · 0.0 · 0.0  >5 20 · 20 · 17  3B 5 / 86.7 / 33.1  ATT M,DEF M → ATT S!,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/-0.5@0. legs 22.9 · 12.1 · 11.4  torso 1.2 · 0.0 · 1.4  >5 85 · 27 · 17  3B 2 / 51.9 / 25.2  ATT S,DEF M → ATT S!,DEF S!  tackle MISS · MISS · MISS
+BODY_FEINT 2.4/-0.5@0. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/-0.5@0. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/-0.5@0. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/-0.5@0. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/-0.5@0. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/-0.5@1. legs 17.1 · 7.8 · 13.0  torso 3.9 · 0.9 · 0.0  >5 83 · 65 · 10  3B 4 / 109.3 / 41.7  ATT M,DEF S! → ATT S!,DEF S!,ATT M,DEF M
+BODY_FEINT 2.4/0.5@0.0 legs 7.1 · 7.0 · 6.9  torso 0.0 · 0.0 · 0.0  >5 16 · 5 · 4  3B 2 / 20.4 / 18.1  ATT M,DEF M,ATT M,DEF M → ATT M,DEF M,ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/0.5@0.1 legs 6.4 · 6.4 · 6.4  torso 0.0 · 0.0 · 0.0  >5 4 · 4 · 4  3B 1 / 8.3 / 8.3  ATT M,DEF M,ATT M,DEF M → ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/0.5@0.2 legs 15.0 · 14.9 · 15.1  torso 0.0 · 0.0 · 0.0  >5 38 · 38 · 25  3B 1 / 22.7 / 22.7  ATT M,DEF M → ATT M,DEF L,ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/0.5@0.3 legs 7.0 · 13.6 · 6.4  torso 0.1 · 0.0 · 0.0  >5 5 · 14 · 2  3B 8 / 65.8 / 21.9  ATT M,DEF M → ATT B,DEF L,ATT M,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/0.5@0.4 legs 3.1 · 3.7 · 3.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/0.5@0.5 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/0.5@0.6 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/0.5@0.7 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/0.5@0.8 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/0.5@0.9 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/0.5@1.0 legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.0   legs 1.7 · 1.7 · 1.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/1@0.1   legs 3.3 · 3.3 · 3.3  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/1@0.2   legs 3.5 · 2.7 · 3.5  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT S,DEF S → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/1@0.3   legs 2.4 · 8.7 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 5 · 0  3B 0 / 0.0 / 0.0  ATT S!,DEF S → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 2.4/1@0.4   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.5   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.6   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.7   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.8   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@0.9   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 2.4/1@1.0   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.0    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.1    legs 22.6 · 17.2 · 8.8  torso 22.9 · 3.1 · 2.1  >5 82 · 33 · 8  3B 4 / 72.9 / 19.9  ATT S!,DEF S → ATT S!,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3/-1@0.2    legs 22.6 · 17.2 · 8.8  torso 22.9 · 3.1 · 2.1  >5 82 · 33 · 8  3B 4 / 72.9 / 19.9  ATT S!,DEF S → ATT S!,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3/-1@0.3    legs 22.6 · 17.2 · 8.8  torso 22.9 · 3.1 · 2.1  >5 82 · 33 · 8  3B 4 / 72.9 / 19.9  ATT S!,DEF S → ATT S!,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3/-1@0.4    legs 22.5 · 17.0 · 11.4  torso 22.8 · 2.7 · 2.2  >5 81 · 35 · 15  3B 1 / 10.8 / 10.0  ATT S,DEF S → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3/-1@0.5    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.6    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.7    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.8    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@0.9    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-1@1.0    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/-0.5@0.0  legs 5.6 · 5.6 · 5.6  torso 0.0 · 0.0 · 0.0  >5 25 · 25 · 25  3B 1 / 17.7 / 12.8  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.1  legs 5.6 · 5.6 · 5.6  torso 0.0 · 0.0 · 0.0  >5 25 · 25 · 25  3B 1 / 17.7 / 12.8  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.2  legs 5.8 · 5.7 · 5.8  torso 0.0 · 0.0 · 0.0  >5 5 · 6 · 2  3B 1 / 40.9 / 40.9  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.3  legs 7.6 · 7.0 · 5.4  torso 0.0 · 0.0 · 0.0  >5 10 · 10 · 4  3B 1 / 40.5 / 40.5  ATT M,DEF L → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.4  legs 9.5 · 8.5 · 3.7  torso 0.0 · 0.0 · 0.0  >5 22 · 22 · 0  3B 2 / 70.6 / 46.8  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.5  legs 18.0 · 14.1 · 6.5  torso 9.3 · 2.0 · 0.0  >5 68 · 33 · 2  3B 4 / 101.8 / 27.5  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/-0.5@0.6  legs 23.0 · 18.7 · 22.9  torso 16.6 · 4.1 · 2.6  >5 87 · 43 · 43  3B 6 / 141.5 / 21.1  ATT S,DEF S → ATT S,DEF S!  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3/-0.5@0.7  legs 4.5 · 5.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 22.3 / 22.3  ATT S,DEF S → ATT M,DEF M
+BODY_FEINT 3/-0.5@0.8  legs 4.5 · 5.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 22.3 / 22.3  ATT S,DEF S → ATT M,DEF M
+BODY_FEINT 3/-0.5@0.9  legs 4.5 · 5.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 22.3 / 22.3  ATT S,DEF S → ATT M,DEF M
+BODY_FEINT 3/-0.5@1.0  legs 4.5 · 5.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 22.3 / 22.3  ATT S,DEF S → ATT M,DEF M
+BODY_FEINT 3/0.5@0.0   legs 5.4 · 8.3 · 5.4  torso 0.0 · 0.0 · 0.6  >5 3 · 8 · 3  3B 1 / 23.8 / 22.9  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.1   legs 5.5 · 5.5 · 5.5  torso 0.0 · 0.0 · 0.0  >5 4 · 4 · 4  3B 2 / 24.8 / 21.5  ATT M,DEF M,ATT S,DEF S → ATT M,DEF M,ATT L,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.2   legs 14.0 · 11.7 · 10.3  torso 0.0 · 0.0 · 0.0  >5 23 · 31 · 9  3B 2 / 73.9 / 36.4  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.3   legs 4.0 · 4.0 · 4.5  torso 0.6 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 62.0 / 34.6  ATT M,DEF L → ATT M,DEF M,ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.4   legs 4.5 · 4.3 · 13.5  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 26  3B 8 / 114.5 / 47.8  ATT M,DEF M → ATT S!,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.5   legs 4.0 · 3.9 · 4.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 5 / 30.7 / 8.1  ATT M,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.6   legs 2.0 · 2.0 · 2.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3/0.5@0.7   legs 6.3 · 5.8 · 5.6  torso 0.0 · 0.0 · 0.0  >5 9 · 7 · 4  3B 6 / 52.9 / 20.2  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/0.5@0.8   legs 1.9 · 1.9 · 1.9  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/0.5@0.9   legs 1.9 · 1.9 · 1.9  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/0.5@1.0   legs 1.9 · 1.9 · 1.9  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/1@0.0     legs 1.7 · 1.7 · 1.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.1     legs 1.7 · 1.7 · 1.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.2     legs 1.7 · 1.7 · 1.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.3     legs 1.2 · 1.2 · 1.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.4     legs 5.5 · 5.5 · 5.5  torso 0.0 · 0.0 · 0.0  >5 3 · 3 · 3  3B 1 / 23.0 / 23.0  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.5     legs 0.2 · 0.2 · 0.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3/1@0.6     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/1@0.7     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/1@0.8     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/1@0.9     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3/1@1.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-1@0.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-1@0.1  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-1@0.2  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-1@0.3  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-1@0.4  legs 22.3 · 22.0 · 13.9  torso 0.0 · 0.0 · 0.0  >5 48 · 87 · 54  3B 6 / 70.9 / 54.0  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-1@0.5  legs 22.3 · 22.0 · 13.9  torso 0.0 · 0.0 · 0.0  >5 48 · 87 · 54  3B 6 / 70.9 / 54.0  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-1@0.6  legs 22.3 · 22.0 · 13.9  torso 0.0 · 0.0 · 0.0  >5 48 · 87 · 54  3B 6 / 70.9 / 54.0  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-1@0.7  legs 22.3 · 22.2 · 8.9  torso 0.0 · 0.0 · 0.0  >5 33 · 33 · 23  3B 4 / 103.0 / 52.3  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-1@0.8  legs 21.4 · 21.5 · 20.6  torso 0.0 · 0.0 · 0.0  >5 16 · 16 · 16  3B 1 / 9.2 / 9.2  ATT S,DEF S! → ATT M,DEF M  tackle MISS · MISS · MISS
+BODY_FEINT 3.6/-1@0.9  legs 14.5 · 14.4 · 7.2  torso 0.0 · 0.0 · 0.0  >5 17 · 17 · 2  3B 1 / 45.6 / 28.3  ATT M,DEF M → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3.6/-1@1.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-0.5@0. legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 3.6/-0.5@0. legs 5.2 · 14.0 · 2.3  torso 0.0 · 0.0 · 0.0  >5 1 · 26 · 0  3B 1 / 12.0 / 12.0  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 5.2 · 14.0 · 2.3  torso 0.0 · 0.0 · 0.0  >5 1 · 26 · 0  3B 1 / 12.0 / 12.0  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 5.2 · 14.0 · 2.3  torso 0.0 · 0.0 · 0.0  >5 1 · 26 · 0  3B 1 / 12.0 / 12.0  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 5.2 · 14.0 · 2.3  torso 0.0 · 0.0 · 0.0  >5 1 · 26 · 0  3B 1 / 12.0 / 12.0  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 22.8 · 20.6 · 12.2  torso 17.2 · 2.1 · 0.0  >5 74 · 73 · 19  3B 6 / 72.6 / 27.6  ATT S!,DEF S! → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 23.0 · 22.4 · 13.8  torso 10.2 · 2.8 · 0.0  >5 76 · 63 · 31  3B 4 / 58.8 / 18.5  ATT S!,DEF S! → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 23.0 · 21.8 · 20.8  torso 1.4 · 1.3 · 0.0  >5 72 · 105 · 67  3B 6 / 105.1 / 30.5  ATT S!,DEF S → ATT S,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/-0.5@0. legs 22.8 · 22.3 · 13.0  torso 0.0 · 0.0 · 0.0  >5 66 · 100 · 30  3B 8 / 154.4 / 50.3  ATT M,DEF M → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3.6/-0.5@0. legs 22.7 · 22.0 · 22.7  torso 0.0 · 0.0 · 0.0  >5 21 · 21 · 19  3B 1 / 24.0 / 13.9  ATT M,DEF M → ATT M,DEF M  tackle MISS · MISS · MISS
+BODY_FEINT 3.6/-0.5@1. legs 21.3 · 21.4 · 6.7  torso 0.0 · 0.0 · 0.0  >5 18 · 19 · 4  3B 1 / 53.9 / 25.7  ATT M,DEF S → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 3.6/0.5@0.0 legs 10.8 · 13.7 · 13.6  torso 0.0 · 0.0 · 0.0  >5 30 · 58 · 3  3B 6 / 70.9 / 41.7  ATT M,DEF S → ATT S,DEF S
+BODY_FEINT 3.6/0.5@0.1 legs 8.1 · 9.0 · 7.3  torso 0.0 · 0.0 · 0.0  >5 12 · 13 · 2  3B 1 / 13.4 / 13.4  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/0.5@0.2 legs 8.1 · 9.0 · 7.3  torso 0.0 · 0.0 · 0.0  >5 12 · 13 · 2  3B 1 / 13.4 / 13.4  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/0.5@0.3 legs 8.1 · 9.0 · 7.3  torso 0.0 · 0.0 · 0.0  >5 12 · 13 · 2  3B 1 / 13.4 / 13.4  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/0.5@0.4 legs 5.5 · 5.3 · 5.0  torso 0.0 · 0.0 · 0.0  >5 2 · 1 · 1  3B 1 / 9.4 / 9.4  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/0.5@0.5 legs 8.2 · 8.3 · 8.0  torso 0.0 · 0.0 · 0.0  >5 4 · 4 · 2  3B 2 / 36.2 / 20.6  ATT S!,DEF S! → ATT B,DEF B,ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/0.5@0.6 legs 14.5 · 13.3 · 13.4  torso 3.4 · 3.6 · 0.0  >5 63 · 60 · 37  3B 3 / 32.5 / 21.6  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/0.5@0.7 legs 12.6 · 11.9 · 12.7  torso 0.0 · 0.0 · 0.0  >5 40 · 24 · 43  3B 5 / 66.8 / 34.4  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/0.5@0.8 legs 12.5 · 9.1 · 7.8  torso 0.4 · 0.0 · 0.1  >5 46 · 23 · 17  3B 4 / 47.4 / 30.6  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/0.5@0.9 legs 19.3 · 19.7 · 4.0  torso 0.0 · 0.0 · 0.0  >5 37 · 38 · 0  3B 3 / 68.8 / 38.8  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/0.5@1.0 legs 19.5 · 19.7 · 3.1  torso 0.0 · 0.0 · 0.0  >5 84 · 57 · 0  3B 1 / 43.2 / 43.2  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/1@0.0   legs 6.7 · 6.7 · 6.7  torso 0.0 · 0.0 · 0.0  >5 3 · 3 · 3  3B 0 / 0.0 / 0.0  ATT M,DEF L → ATT M,DEF B
+BODY_FEINT 3.6/1@0.1   legs 2.8 · 5.6 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 17.3 / 17.3  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.2   legs 2.8 · 5.6 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 17.3 / 17.3  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.3   legs 2.8 · 5.6 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 17.3 / 17.3  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.4   legs 2.8 · 5.6 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 1 · 0  3B 1 / 17.3 / 17.3  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.5   legs 2.3 · 9.0 · 7.9  torso 0.0 · 0.0 · 0.0  >5 0 · 12 · 11  3B 1 / 10.2 / 10.2  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.6   legs 2.2 · 2.2 · 2.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.7   legs 3.7 · 3.7 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  ATT M,DEF M → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.8   legs 9.7 · 9.7 · 9.3  torso 0.0 · 0.0 · 0.0  >5 19 · 19 · 14  3B 4 / 62.9 / 29.0  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 3.6/1@0.9   legs 9.1 · 8.1 · 10.3  torso 0.0 · 0.0 · 0.0  >5 20 · 13 · 10  3B 4 / 74.0 / 35.4  ATT S!,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 3.6/1@1.0   legs 13.4 · 13.5 · 13.5  torso 0.0 · 0.0 · 0.0  >5 19 · 19 · 24  3B 5 / 66.7 / 21.9  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/-1@0.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.1  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.2  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.3  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.4  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.5  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.6  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.7  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.8  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@0.9  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-1@1.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-0.5@0. legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-0.5@0. legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-0.5@0. legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-0.5@0. legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+BODY_FEINT 4.2/-0.5@0. legs 19.3 · 17.9 · 6.2  torso 0.0 · 0.0 · 0.0  >5 72 · 74 · 4  3B 2 / 42.9 / 42.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/-0.5@0. legs 19.3 · 17.9 · 6.2  torso 0.0 · 0.0 · 0.0  >5 72 · 74 · 4  3B 2 / 42.9 / 42.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/-0.5@0. legs 19.3 · 17.9 · 6.2  torso 0.0 · 0.0 · 0.0  >5 72 · 74 · 4  3B 2 / 42.9 / 42.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/-0.5@0. legs 19.3 · 17.9 · 6.2  torso 0.0 · 0.0 · 0.0  >5 72 · 74 · 4  3B 2 / 42.9 / 42.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/-0.5@0. legs 15.9 · 15.3 · 13.5  torso 0.0 · 0.0 · 0.0  >5 38 · 52 · 26  3B 2 / 72.3 / 39.8  ATT S,DEF S → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 4.2/-0.5@0. legs 13.4 · 13.1 · 4.1  torso 0.0 · 0.0 · 0.0  >5 30 · 30 · 0  3B 1 / 42.2 / 21.9  ATT M,DEF S → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 4.2/-0.5@1. legs 6.1 · 6.1 · 4.4  torso 0.0 · 0.0 · 0.0  >5 2 · 2 · 0  3B 1 / 37.9 / 37.9  ATT B,DEF L → ATT S,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 4.2/0.5@0.0 legs 14.2 · 14.6 · 2.7  torso 0.0 · 0.0 · 0.0  >5 10 · 11 · 0  3B 2 / 58.0 / 45.6  ATT M,DEF S → ATT S,DEF S
+BODY_FEINT 4.2/0.5@0.1 legs 14.2 · 14.6 · 2.7  torso 0.0 · 0.0 · 0.0  >5 10 · 11 · 0  3B 2 / 58.0 / 45.6  ATT M,DEF S → ATT S,DEF S
+BODY_FEINT 4.2/0.5@0.2 legs 14.2 · 14.6 · 2.7  torso 0.0 · 0.0 · 0.0  >5 10 · 11 · 0  3B 2 / 58.0 / 45.6  ATT M,DEF S → ATT S,DEF S
+BODY_FEINT 4.2/0.5@0.3 legs 2.7 · 3.4 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 50.1 / 38.5  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.4 legs 2.7 · 3.4 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 50.1 / 38.5  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.5 legs 2.7 · 3.4 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 50.1 / 38.5  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.6 legs 2.7 · 3.4 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 2 / 50.1 / 38.5  ATT S,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.7 legs 4.1 · 3.5 · 4.8  torso 0.0 · 0.7 · 0.0  >5 0 · 0 · 0  3B 2 / 25.4 / 18.1  ATT M,DEF M → ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.8 legs 9.7 · 8.7 · 3.8  torso 0.0 · 0.0 · 0.0  >5 29 · 24 · 0  3B 1 / 33.5 / 33.5  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/0.5@0.9 legs 9.2 · 9.2 · 4.7  torso 0.0 · 0.0 · 0.0  >5 9 · 10 · 0  3B 7 / 73.8 / 20.3  ATT S!,DEF M → ATT S!,DEF S  tackle MISS · MISS · MISS
+BODY_FEINT 4.2/0.5@1.0 legs 5.2 · 5.1 · 5.2  torso 0.0 · 0.0 · 0.0  >5 45 · 37 · 45  3B 0 / 0.0 / 0.0  ATT M,DEF M → —  tackle MISS · MISS · MISS
+BODY_FEINT 4.2/1@0.0   legs 9.2 · 9.4 · 9.2  torso 0.0 · 0.0 · 0.0  >5 8 · 10 · 8  3B 1 / 10.1 / 10.1  ATT S,DEF S → ATT M,DEF L
+BODY_FEINT 4.2/1@0.1   legs 9.2 · 9.4 · 9.2  torso 0.0 · 0.0 · 0.0  >5 8 · 10 · 8  3B 1 / 10.1 / 10.1  ATT S,DEF S → ATT M,DEF L
+BODY_FEINT 4.2/1@0.2   legs 9.2 · 9.4 · 9.2  torso 0.0 · 0.0 · 0.0  >5 8 · 10 · 8  3B 1 / 10.1 / 10.1  ATT S,DEF S → ATT M,DEF L
+BODY_FEINT 4.2/1@0.3   legs 9.2 · 9.4 · 9.2  torso 0.0 · 0.0 · 0.0  >5 8 · 10 · 8  3B 1 / 10.1 / 10.1  ATT S,DEF S → ATT M,DEF L
+BODY_FEINT 4.2/1@0.4   legs 9.2 · 9.4 · 9.2  torso 0.0 · 0.0 · 0.0  >5 8 · 10 · 8  3B 1 / 10.1 / 10.1  ATT S,DEF S → ATT M,DEF L
+BODY_FEINT 4.2/1@0.5   legs 10.9 · 6.0 · 3.4  torso 0.0 · 0.0 · 0.0  >5 11 · 3 · 0  3B 2 / 37.5 / 34.7  ATT M,DEF M → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 4.2/1@0.6   legs 10.9 · 6.0 · 3.4  torso 0.0 · 0.0 · 0.0  >5 11 · 3 · 0  3B 2 / 37.5 / 34.7  ATT M,DEF M → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 4.2/1@0.7   legs 10.9 · 6.0 · 3.4  torso 0.0 · 0.0 · 0.0  >5 11 · 3 · 0  3B 2 / 37.5 / 34.7  ATT M,DEF M → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 4.2/1@0.8   legs 10.9 · 6.0 · 3.4  torso 0.0 · 0.0 · 0.0  >5 11 · 3 · 0  3B 2 / 37.5 / 34.7  ATT M,DEF M → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+BODY_FEINT 4.2/1@0.9   legs 11.4 · 11.2 · 10.1  torso 0.0 · 0.0 · 0.0  >5 15 · 12 · 7  3B 3 / 22.0 / 10.9  ATT S,DEF S → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+BODY_FEINT 4.2/1@1.0   legs 12.9 · 12.1 · 12.1  torso 0.0 · 0.0 · 0.0  >5 5 · 5 · 5  3B 1 / 6.3 / 6.3  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.0    legs 22.9 · 13.7 · 9.4  torso 20.9 · 4.4 · 1.7  >5 89 · 16 · 16  3B 4 / 69.6 / 24.7  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.1    legs 22.9 · 10.4 · 4.5  torso 19.7 · 4.4 · 0.5  >5 108 · 29 · 0  3B 4 / 92.9 / 28.2  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.2    legs 22.7 · 13.7 · 10.6  torso 11.5 · 0.0 · 0.6  >5 92 · 29 · 9  3B 2 / 77.4 / 62.2  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.3    legs 21.0 · 21.0 · 2.6  torso 0.0 · 0.0 · 0.0  >5 103 · 63 · 0  3B 1 / 43.1 / 43.1  ATT S!,DEF S!,ATT M,DEF M → ATT S,DEF S  tackle MISS · MISS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.4    legs 21.0 · 21.0 · 2.6  torso 0.0 · 0.0 · 0.0  >5 103 · 63 · 0  3B 1 / 43.1 / 43.1  ATT S!,DEF S!,ATT M,DEF M → ATT S,DEF S  tackle MISS · MISS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.5    legs 21.0 · 21.0 · 2.6  torso 0.0 · 0.0 · 0.0  >5 103 · 63 · 0  3B 1 / 43.1 / 43.1  ATT S!,DEF S!,ATT M,DEF M → ATT S,DEF S  tackle MISS · MISS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-1@0.6    legs 19.3 · 19.5 · 3.8  torso 0.0 · 0.0 · 0.0  >5 85 · 41 · 0  3B 1 / 29.2 / 29.2  ATT S,DEF S → ATT M,DEF S  tackle MISS · MISS · MISS
+CROQUETA 2.4/-1@0.7    legs 20.0 · 17.2 · 14.7  torso 0.0 · 0.0 · 0.0  >5 71 · 91 · 49  3B 5 / 69.2 / 42.2  ATT S,DEF S! → ATT S!,DEF S!  tackle CONTACT — ATTACKER RETAINS · CONTACT — ATTACKER RETAINS · CONTACT — ATTACKER RETAINS
+CROQUETA 2.4/-1@0.8    legs 16.5 · 2.9 · 15.8  torso 0.0 · 0.0 · 0.0  >5 21 · 0 · 26  3B 9 / 144.0 / 30.9  ATT S,DEF S → ATT S,DEF S!  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/-1@0.9    legs 18.5 · 10.6 · 4.3  torso 0.0 · 0.0 · 0.0  >5 47 · 5 · 0  3B 3 / 38.5 / 33.5  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · MISS
+CROQUETA 2.4/-1@1.0    legs 13.8 · 13.4 · 7.9  torso 0.0 · 0.0 · 0.0  >5 28 · 29 · 6  3B 4 / 51.5 / 33.5  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — ATTACKER RETAINS · CONTACT — ATTACKER RETAINS · MISS
+CROQUETA 2.4/-0.5@0.0  legs 7.4 · 7.4 · 10.1  torso 0.0 · 0.0 · 0.0  >5 3 · 3 · 8  3B 5 / 70.6 / 31.4  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-0.5@0.1  legs 23.3 · 18.3 · 5.1  torso 17.4 · 3.8 · 0.0  >5 116 · 55 · 1  3B 3 / 129.4 / 36.0  ATT S!,DEF S → ATT S!,DEF S!,ATT M,DEF M  tackle CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-0.5@0.2  legs 22.9 · 22.7 · 4.2  torso 9.9 · 3.0 · 0.0  >5 100 · 58 · 0  3B 3 / 111.8 / 36.9  ATT S!,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/-0.5@0.3  legs 22.7 · 22.7 · 15.4  torso 3.4 · 0.0 · 0.0  >5 82 · 67 · 43  3B 2 / 133.6 / 34.9  ATT S!,DEF S → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/-0.5@0.4  legs 22.7 · 22.5 · 22.4  torso 0.0 · 0.0 · 0.0  >5 82 · 57 · 34  3B 2 / 66.8 / 30.8  ATT S!,DEF S! → ATT S!,DEF S!  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/-0.5@0.5  legs 22.8 · 22.9 · 22.9  torso 6.3 · 0.0 · 0.6  >5 73 · 43 · 98  3B 1 / 28.2 / 28.2  ATT S!,DEF S! → ATT S!,DEF S  tackle MISS · MISS · MISS
+CROQUETA 2.4/-0.5@0.6  legs 22.7 · 22.8 · 22.9  torso 5.0 · 4.9 · 1.2  >5 86 · 81 · 64  3B 3 / 31.1 / 18.6  ATT S!,DEF S! → ATT S!,DEF S  tackle MISS · MISS · MISS
+CROQUETA 2.4/-0.5@0.7  legs 22.8 · 12.9 · 15.4  torso 4.6 · 0.0 · 0.0  >5 146 · 41 · 42  3B 6 / 104.1 / 17.7  ATT S,DEF S! → ATT S!,DEF S!  tackle MISS · MISS · MISS
+CROQUETA 2.4/-0.5@0.8  legs 11.8 · 19.0 · 10.7  torso 0.0 · 0.0 · 0.0  >5 97 · 51 · 39  3B 5 / 56.3 / 13.1  ATT S!,DEF S! → ATT S,DEF S
+CROQUETA 2.4/-0.5@0.9  legs 11.8 · 13.5 · 10.7  torso 0.0 · 0.0 · 0.0  >5 97 · 16 · 39  3B 5 / 56.3 / 13.1  ATT S,DEF S → ATT S,DEF S
+CROQUETA 2.4/-0.5@1.0  legs 11.8 · 13.5 · 10.7  torso 0.0 · 0.0 · 0.0  >5 97 · 16 · 39  3B 5 / 56.3 / 13.1  ATT S,DEF S → ATT S,DEF S
+CROQUETA 2.4/0.5@0.0   legs 14.2 · 14.2 · 5.8  torso 0.0 · 0.0 · 0.0  >5 28 · 30 · 1  3B 2 / 81.8 / 37.6  ATT M,DEF M → ATT M,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/0.5@0.1   legs 21.1 · 21.1 · 4.2  torso 0.0 · 0.0 · 0.0  >5 34 · 45 · 0  3B 4 / 89.6 / 34.7  ATT S,DEF S → ATT S!,DEF S!  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/0.5@0.2   legs 18.6 · 19.1 · 3.3  torso 0.0 · 0.0 · 0.0  >5 28 · 28 · 0  3B 4 / 88.4 / 30.1  ATT M,DEF M → ATT S!,DEF S!  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/0.5@0.3   legs 13.9 · 14.0 · 13.7  torso 0.0 · 0.0 · 0.0  >5 30 · 30 · 26  3B 2 / 22.3 / 14.3  ATT M,DEF L → ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/0.5@0.4   legs 10.5 · 10.5 · 4.4  torso 0.0 · 0.0 · 0.0  >5 13 · 14 · 0  3B 1 / 12.7 / 9.4  ATT M,DEF M → ATT L,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/0.5@0.5   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/0.5@0.6   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/0.5@0.7   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/0.5@0.8   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/0.5@0.9   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/0.5@1.0   legs 2.6 · 2.6 · 2.4  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 2.7 / 2.7  — → ATT L,DEF L
+CROQUETA 2.4/1@0.0     legs 15.4 · 15.3 · 6.4  torso 0.0 · 0.0 · 0.0  >5 29 · 30 · 3  3B 5 / 86.3 / 29.7  ATT M,DEF M → ATT S!,DEF S!,ATT L,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/1@0.1     legs 14.0 · 14.2 · 6.2  torso 0.0 · 0.0 · 1.1  >5 32 · 35 · 2  3B 6 / 86.9 / 30.1  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 2.4/1@0.2     legs 11.5 · 11.5 · 11.6  torso 0.0 · 0.0 · 0.0  >5 27 · 26 · 17  3B 2 / 58.3 / 19.9  ATT M,DEF L → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/1@0.3     legs 3.8 · 3.8 · 3.1  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 7.4 / 7.4  — → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 2.4/1@0.4     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@0.5     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@0.6     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@0.7     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@0.8     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@0.9     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 2.4/1@1.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/-1@0.0      legs 1.8 · 1.8 · 1.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/-1@0.1      legs 1.0 · 1.0 · 1.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.2      legs 1.0 · 1.0 · 1.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.3      legs 1.0 · 1.0 · 1.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.4      legs 1.2 · 1.2 · 1.2  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.5      legs 2.6 · 2.6 · 2.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 6.5 / 6.5  — → ATT L,DEF L  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.6      legs 13.5 · 9.3 · 9.3  torso 0.0 · 0.0 · 0.0  >5 15 · 12 · 8  3B 7 / 92.9 / 44.5  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 3/-1@0.7      legs 2.5 · 2.5 · 6.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 5  3B 1 / 43.8 / 43.8  ATT M,DEF L → ATT S,DEF S  tackle MISS · MISS · MISS
+CROQUETA 3/-1@0.8      legs 1.7 · 1.7 · 1.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-1@0.9      legs 4.8 · 6.3 · 3.0  torso 0.0 · 0.0 · 0.0  >5 0 · 4 · 0  3B 2 / 38.2 / 19.1  ATT S,DEF S → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-1@1.0      legs 9.8 · 9.9 · 2.2  torso 0.0 · 0.0 · 0.0  >5 11 · 12 · 0  3B 2 / 53.8 / 35.5  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.0    legs 16.7 · 13.9 · 3.1  torso 0.0 · 0.0 · 0.0  >5 47 · 33 · 0  3B 1 / 57.8 / 57.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.1    legs 16.7 · 13.9 · 3.1  torso 0.0 · 0.0 · 0.0  >5 47 · 33 · 0  3B 1 / 57.8 / 57.8  ATT S,DEF S → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.2    legs 14.5 · 15.5 · 10.6  torso 0.0 · 0.0 · 0.0  >5 42 · 43 · 8  3B 2 / 101.5 / 38.7  ATT M,DEF M → ATT S,DEF S  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.3    legs 11.2 · 11.2 · 11.2  torso 0.0 · 0.0 · 0.0  >5 32 · 32 · 8  3B 3 / 30.9 / 15.6  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS · CONTACT — DEFENDER RECOVERS
+CROQUETA 3/-0.5@0.4    legs 7.4 · 7.4 · 3.0  torso 0.0 · 0.0 · 0.0  >5 15 · 15 · 0  3B 1 / 15.3 / 15.3  ATT M,DEF M → ATT M,DEF M  tackle MISS · MISS · MISS
+CROQUETA 3/-0.5@0.5    legs 2.8 · 2.8 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/-0.5@0.6    legs 14.8 · 14.9 · 14.9  torso 0.0 · 0.0 · 0.0  >5 45 · 51 · 18  3B 2 / 154.5 / 38.9  ATT M,DEF S → ATT S!,DEF S!  tackle MISS · MISS · MISS
+CROQUETA 3/-0.5@0.7    legs 1.9 · 1.9 · 1.9  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.8    legs 0.9 · 0.9 · 0.9  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/-0.5@0.9    legs 12.1 · 11.7 · 11.3  torso 0.0 · 0.0 · 0.0  >5 17 · 17 · 17  3B 1 / 13.4 / 6.8  ATT M,DEF M → ATT M,DEF L  tackle MISS · MISS · MISS
+CROQUETA 3/-0.5@1.0    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/0.5@0.0     legs 15.5 · 14.9 · 12.0  torso 0.0 · 0.0 · 0.0  >5 28 · 26 · 4  3B 8 / 115.9 / 33.6  ATT M,DEF M,ATT M,DEF M → ATT S!,DEF S!  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/0.5@0.1     legs 16.8 · 16.8 · 2.5  torso 0.0 · 0.0 · 3.2  >5 24 · 24 · 0  3B 10 / 174.5 / 30.8  ATT M,DEF M → ATT S!,DEF S!,ATT S,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/0.5@0.2     legs 13.9 · 13.9 · 5.8  torso 0.0 · 0.0 · 0.0  >5 26 · 26 · 5  3B 10 / 86.7 / 24.6  ATT M,DEF M → ATT S!,DEF S  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/0.5@0.3     legs 13.6 · 13.6 · 12.8  torso 0.0 · 0.0 · 0.0  >5 22 · 22 · 18  3B 1 / 18.2 / 18.2  ATT M,DEF M → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/0.5@0.4     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/0.5@0.5     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/0.5@0.6     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/0.5@0.7     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/0.5@0.8     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/0.5@0.9     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/0.5@1.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/1@0.0       legs 10.4 · 10.4 · 10.3  torso 0.0 · 0.0 · 0.0  >5 21 · 21 · 17  3B 1 / 8.8 / 8.8  ATT L,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/1@0.1       legs 10.4 · 10.4 · 10.3  torso 0.0 · 0.0 · 0.0  >5 21 · 21 · 17  3B 1 / 8.8 / 8.8  ATT L,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/1@0.2       legs 10.4 · 10.4 · 10.3  torso 0.0 · 0.0 · 0.0  >5 21 · 21 · 17  3B 1 / 8.8 / 8.8  ATT L,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/1@0.3       legs 4.9 · 4.9 · 9.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 18  3B 1 / 15.4 / 15.4  — → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3/1@0.4       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/1@0.5       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3/1@0.6       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/1@0.7       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/1@0.8       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/1@0.9       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3/1@1.0       legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.0    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.1    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.2    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.3    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.4    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-1@0.5    legs 9.3 · 9.3 · 6.6  torso 0.0 · 0.0 · 0.0  >5 23 · 23 · 14  3B 2 / 15.3 / 14.7  ATT M,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-1@0.6    legs 9.3 · 9.3 · 6.6  torso 0.0 · 0.0 · 0.0  >5 23 · 23 · 14  3B 2 / 15.3 / 14.7  ATT M,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-1@0.7    legs 9.3 · 9.3 · 6.6  torso 0.0 · 0.0 · 0.0  >5 23 · 23 · 14  3B 2 / 15.3 / 14.7  ATT M,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-1@0.8    legs 14.0 · 14.0 · 13.6  torso 0.0 · 0.0 · 0.0  >5 30 · 30 · 29  3B 2 / 32.7 / 17.6  ATT M,DEF L → ATT S,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-1@0.9    legs 3.2 · 3.2 · 2.6  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 5.3 / 5.3  — → ATT M,DEF L  tackle MISS · MISS · MISS
+CROQUETA 3.6/-1@1.0    legs 13.9 · 13.9 · 2.6  torso 0.0 · 0.0 · 0.0  >5 11 · 11 · 0  3B 1 / 52.0 / 52.0  ATT S!,DEF M → ATT S!,DEF S  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@0.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-0.5@0.1  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/-0.5@0.2  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@0.3  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@0.4  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@0.5  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@0.6  legs 11.7 · 11.7 · 11.1  torso 0.0 · 0.0 · 0.0  >5 26 · 26 · 26  3B 1 / 5.7 / 5.7  ATT M,DEF L → ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-0.5@0.7  legs 11.7 · 11.7 · 11.1  torso 0.0 · 0.0 · 0.0  >5 26 · 26 · 26  3B 1 / 5.7 / 5.7  ATT M,DEF L → ATT M,DEF L  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-0.5@0.8  legs 12.8 · 12.8 · 11.9  torso 0.0 · 0.0 · 0.0  >5 27 · 27 · 22  3B 2 / 20.6 / 14.4  ATT M,DEF L → ATT M,DEF M  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 3.6/-0.5@0.9  legs 4.9 · 4.9 · 2.8  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 1 / 9.6 / 9.6  — → ATT M,DEF M  tackle MISS · MISS · MISS
+CROQUETA 3.6/-0.5@1.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.0   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/0.5@0.1   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.2   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.3   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.4   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.5   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle MISS · MISS · MISS
+CROQUETA 3.6/0.5@0.6   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/0.5@0.7   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/0.5@0.8   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/0.5@0.9   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/0.5@1.0   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.1     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.2     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.3     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.4     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.5     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.6     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.7     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.8     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@0.9     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 3.6/1@1.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.0    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.1    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.2    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.3    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.4    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.5    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.6    legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-1@0.7    legs 3.7 · 3.7 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 4.2/-1@0.8    legs 3.7 · 3.7 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 4.2/-1@0.9    legs 3.7 · 3.7 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 4.2/-1@1.0    legs 3.7 · 3.7 · 3.7  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —  tackle CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS · CONTACT — ATTACKER RECOVERS
+CROQUETA 4.2/-0.5@0.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.1  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.2  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.3  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.4  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.5  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.6  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.7  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.8  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@0.9  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/-0.5@1.0  legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.0   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.1   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.2   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.3   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.4   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.5   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.6   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.7   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.8   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@0.9   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/0.5@1.0   legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.1     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.2     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.3     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.4     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.5     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.6     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.7     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.8     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@0.9     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —
+CROQUETA 4.2/1@1.0     legs 0.0 · 0.0 · 0.0  torso 0.0 · 0.0 · 0.0  >5 0 · 0 · 0  3B 0 / 0.0 / 0.0  — → —

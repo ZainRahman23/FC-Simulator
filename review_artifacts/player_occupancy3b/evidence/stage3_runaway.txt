@@ -1,0 +1,21 @@
+A PRE-EXISTING STAGE 3 DIVERGENCE, EXPOSED BY THE STAGE 3B LEDGER (25 Oct 2026)
+
+What the ledger saw: in possess1's two-player tools run with Stage 3B (two/l3_two_hook.mjs), 2 of 1,870 (p_torture) / 1,570 (o2s_early) worlds
+exceed the ledger's 1e-9 N·s closure check (1.05e-9 / 1.00e-9 N·s). Not an accounting error: the per-tick sources are ~1.5e5 N·s there
+(floating point at that magnitude), because Stage 3's own state has diverged.
+
+The mechanism (Stage 3, occupy3/o3_world.js — unchanged by 3B): a COMMITTED defender (a canonical Standing Tackle owning him) whose capture
+point runs away is classified RECOVERY STEP; a committed player gets decideAction, not planStep (no recovery step); the class never becomes
+FALL CANDIDATE, so the fall placeholder's fade never starts; the LIP's divergent mode then grows his perturbation velocity u exponentially
+through the balance controller (the BALANCE source). Stage 3's realisation keeps the drawn root within its budgets — the divergence is hidden
+state. Trace (world #1435 of o2s_early under 3B, the DEF, every 0.1 s, |u| m/s, Stage 3 class):
+  5.525 3.04 RECOVERY STEP · 5.700 5.39 · 6.000 14.58 · 6.500 76.86 · 7.000 404.43 · 7.500 2124.86 · 8.000 11144.86 · 8.500 58337.63 ·
+  8.900 219018.28 (all RECOVERY STEP, step none, fade none)
+
+The same count with OLD STAGE 3 (ImpactWorld, no 3B) on the same 60 trials × 3 modes (o2s_early), and with STAGE 3B:
+  OLD STAGE 3: 1570 worlds · worlds with |u| > 20 m/s: 3 · the largest |u| 1347062.6 m/s (world #1447 DEF t 8.908)
+  STAGE 3B:    1570 worlds · worlds with |u| > 20 m/s: 6 · the largest |u| 2742733.9 m/s (world #1435 DEF t 9.667)
+
+So the defect is Stage 3's (present in OLD); Stage 3B triggers it in more worlds (more momentum reaches the bodies) and its ledger exposes it.
+Not fixed here (Stage 3's balance / action logic is not to be retuned in this pass). A rule is needed: a committed player whose capture point
+runs away is a fall candidate (or the commitment releases). Diagnostic shims: the scratchpad (not committed).

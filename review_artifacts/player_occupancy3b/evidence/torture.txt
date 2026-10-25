@@ -1,0 +1,37 @@
+
+TORTURE — 16 seeds × 2 (the seed and its MIRROR) × 40 s (seed 11), STAGE 2 (as decided) · OLD STAGE 3 · STAGE 3B on the same scripts (each Stage 3B run twice) · 21.3 simulated minutes per stage
+                                                             STAGE 2    OLD S3  STAGE 3B
+  ticks with the roots within the broad phase                 109803    103156    115114
+  ticks with a pair > 5 cm                                       680       540       167
+  the deepest (cm)                                              22.7      22.4      22.8
+  pelvis jolts > 4 cm per frame² (near)                          166       151       150
+    the largest (cm)                                             9.5       9.6       9.3
+  NaN (roots, velocities, perturbations)                           0         0         0
+  STUCK: contact > 1.5 s, the carrier steering away                0         0         0
+    a player asking to move, < 0.1 m in a second (samples)       504       711       552
+      of them a defender held by his own Standing Tackle (> 5 s owning him)       458       684       508
+    canonical Standing Tackles owning the defender > 5 s          13        17        12
+  OWNERSHIP: dual                                                  0         0         0
+    unaware owner                                                  0         0         0
+    possession without a touch                                     0         0         0
+    control granted blind                                          0         0         0
+    CHATTER (< 0.25 s)                                             0         0         0
+    establishments                                               101       118       113
+  IMPACT EPISODES                                                  0        68        76
+    longer than 6 s (a collision loop)                             0         0         0
+    recovery steps                                                 0        81       108
+    RECOVERY-STEP OSCILLATION (runs)                               0         0         0
+    fall candidates                                                0        18        24
+    touches / boots denied (geometry)                              0        25        58
+  move requests                                                  277       289       285
+    touches / boots denied by the limb layer                       0         0        19
+  NON-DETERMINISTIC STAGE 3B RUNS (two runs, the same seed): 0 / 32
+  S3 severity: MODERATE 71 · STRONG 40 · SEVERE 20 · LIGHT 4
+  S3 balance: CORRECT 73 · RECOVERY STEP 36 · FALL CANDIDATE 18 · STAGGER CANDIDATE 6 · ABSORB 2
+  S3 action: — (ordinary locomotion) 44 · UNAFFECTED 28 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED 21 · PERTURBED BUT CONTINUES 19 · STAGGER / FALL CANDIDATE 12 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE 6 · INTERRUPTED BEFORE TECHNICAL EVENT 5
+  S3B severity: MODERATE 68 · STRONG 40 · SEVERE 30 · LIGHT 10 · BRUSH 3
+  S3B balance: CORRECT 77 · RECOVERY STEP 36 · FALL CANDIDATE 24 · STAGGER CANDIDATE 10 · ABSORB 4
+  S3B action: — (ordinary locomotion) 57 · UNAFFECTED 32 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED 21 · STAGGER / FALL CANDIDATE 18 · PERTURBED BUT CONTINUES 15 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE 4 · INTERRUPTED BEFORE TECHNICAL EVENT 2 · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE 2
+  STAGE 3B: strikes 180 · applications 319 · checks (max): Stage 3 took its impulses 3.1e-14 · pairing 0.0e+0 · bound 0.0e+0 · energy 0.0e+0 · limb pass mean 107.7 µs, worst 677474 µs
+  STAGE 3B events: LANDING OBSTRUCTED 55 · LIMB AT ITS RANGE 27 · BODY OUTRAN A HELD FOOT 14 · CONTACT DURING A FALL PLACEHOLDER 14 · TOUCH DENIED 14 · RECOVERY STEP LANDS IN THE OPPONENT 8 · TACKLE BOOT DENIED 5 · LIMB HELD 5 · LANDING SNAP 5
+  per run (S3B): #0 eps 2 steps 3 falls 2 deep 3.1→3.1 jolt 3.9→6.1 | #0m eps 3 steps 8 falls 3 deep 5.3→5.3 jolt 3.5→5.4 | #1 eps 3 steps 2 falls 0 deep 12.1→3.6 jolt 5.0→5.8 | #1m eps 3 steps 5 falls 0 deep 22.4→4.6 jolt 6.7→6.7 | #2 eps 1 steps 3 falls 0 deep 14.5→8.2 jolt 9.2→4.4 | #2m eps 1 steps 6 falls 1 deep 13.8→5.2 jolt 6.7→8.2 | #3 eps 1 steps 5 falls 0 deep 8.2→8.3 jolt 6.1→5.9 | #3m eps 2 steps 0 falls 0 deep 3.9→5.3 jolt 5.9→6.1 | #4 eps 2 steps 4 falls 2 deep 9.4→5.4 jolt 6.5→6.1 | #4m eps 2 steps 2 falls 0 deep 9.4→5.8 jolt 6.5→4.7 | #5 eps 2 steps 9 falls 0 deep 3.8→3.8 jolt 4.1→4.3 | #5m eps 2 steps 11 falls 0 deep 3.8→3.8 jolt 4.1→4.3 | #6 eps 1 steps 1 falls 0 deep 3.4→4.2 jolt 4.8→4.8 | #6m eps 1 steps 0 falls 0 deep 14.6→2.7 jolt 7.2→4.4 | #7 eps 2 steps 5 falls 2 deep 6.2→14.9 jolt 5.0→6.0 | #7m eps 1 steps 0 falls 0 deep 4.0→3.8 jolt 4.4→4.4 | #8 eps 1 steps 0 falls 0 deep 9.8→1.6 jolt 4.9→4.1 | #8m eps 3 steps 3 falls 0 deep 12.5→3.1 jolt 7.1→5.7 | #9 eps 2 steps 3 falls 0 deep 10.2→8.4 jolt 8.2→8.2 | #9m eps 3 steps 1 falls 1 deep 5.1→13.8 jolt 4.2→6.7 | #10 eps 0 steps 0 falls 0 deep 1.3→1.3 jolt 4.7→4.7 | #10m eps 2 steps 2 falls 0 deep 14.1→2.6 jolt 7.7→6.2 | #11 eps 4 steps 8 falls 3 deep 17.4→12.7 jolt 7.2→5.4 | #11m eps 7 steps 11 falls 4 deep 18.4→9.1 jolt 4.6→7.3 | #12 eps 5 steps 0 falls 0 deep 12.6→22.8 jolt 7.6→8.2 | #12m eps 6 steps 0 falls 0 deep 12.6→13.6 jolt 7.6→9.3 | #13 eps 4 steps 3 falls 2 deep 13.2→5.3 jolt 6.2→6.9 | #13m eps 4 steps 5 falls 4 deep 14.0→6.4 jolt 5.1→9.3 | #14 eps 2 steps 3 falls 0 deep 10.4→6.8 jolt 9.6→8.0 | #14m eps 2 steps 3 falls 0 deep 10.4→7.5 jolt 9.6→8.0 | #15 eps 1 steps 1 falls 0 deep 9.3→5.9 jolt 4.0→6.2 | #15m eps 1 steps 1 falls 0 deep 9.3→5.9 jolt 3.1→6.2

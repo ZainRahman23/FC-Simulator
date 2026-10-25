@@ -1,0 +1,167 @@
+{
+  "milestone": "TOUCHLINE — PLAYER OCCUPANCY STAGE 3B.0 + 3B.1: LIMB CONTACT (accounting / invariants + swinging-limb contact)",
+  "status": "PROTOTYPE — built and measured, STOPPED for the owner's visual review; not integrated, not frozen, not merged, not pushed, not published; Stage 3B.2 NOT started (only after the owner's visual approval of 3B.1)",
+  "date": "2026-10-25",
+  "branch": "prototype/player-occupancy-stage3b1",
+  "cut_from": {
+    "sha": "88a964ba",
+    "what": "Player Occupancy Stage 3 (prototype/player-occupancy-stage3, kept intact as the comparison baseline)"
+  },
+  "worktree": "~/Downloads/FC Simulator worktrees/player-occupancy-3b",
+  "lab": "http://127.0.0.1:8366/sandbox/visual/occupy3b_lab.html (LOCAL ONLY — real players' models)",
+  "canonical_files_changed": 0,
+  "stage3_files_changed": [
+    "sandbox/visual/occupy3/o3_world.js (inert hooks: normalOf, extImpulses, extPairs, ledger exposure)",
+    "sandbox/visual/occupy3/o3_run.js (mode S3B, runO3.last)"
+  ],
+  "baseline": "Stage 3's own tools reproduced on the new branch before any change: 0 differing lines (evidence/stage3_reproduction); OLD Stage 3 on the final code ≡ committed Stage 3 evidence (evidence/old_recheck); milestone regression 10/10 suites identical",
+  "model": "canonical footballer → Stage 2 → STAGE 3B limb pass → Stage 3 (its animated-speed limb strikes OFF: limbMin = ∞) → BallAuthority. A swinging leg's lower thigh / shin / boot is a LIMB (planted legs, hips, trunk are BODY); the drawn leg = the authored leg ⊕ a perturbation (hip ab/add ±12°, flex ±20°, knee swivel ±20°; knee flexion never changed) with its own generalized inertia; velocity-level inelastic frictionless contact on Stage 1's volumes, λ = −v_n/(w_A+w_B) ≥ 0 (the bound), the limb yields (kinematic, no second momentum), its impulse passes through its hip to its body, equal and opposite to the opponent; a limb at its range passes only the bodies' approach; held contacts yield without impulse; reconcile critically damped (ω 18, faster before landing/touch), speed ≤ 12 rad/s (25 near landing); landing priority (≤ 0.06 s); positional projection ≤ 1 cm a tick at every leg joint; turf / hip-range guard + restore; touches / tackle boots displaced > 2 cm denied for geometry; face rule (|sin Δψ| < 0.15 → the stable side-on normal, blended out by 0.30); positional-only contacts while Stage 3's fall placeholder fades a player; the ledger per player per tick",
+  "results": {
+    "replacement": "OLD-style limb strikes left in Stage 3B: 0 in every run (exactly one momentum source per limb interaction)",
+    "flagship_side": {
+      "OLD": "13.08 N·s from the animated knee speed on a 27°-tilted local normal, +4.42 N·s forward on the carrier, lead 14.1 cm (16.6 cm on the pair's mean axis), the limb's speed unchanged",
+      "S3B": "18.05 + 25.45 N·s, each = its bound, on the stable normal [0.053,-0.999]; 0.0000 N·s along the pair's mean heading; lead 2.0 cm on the mean axis (−4.5 cm on the carrier's heading); energy → 0; ledger closed",
+      "caveat": "both players now STRONG / RECOVERY STEP (Δv 0.61 / 0.60 m/s): the canonical jog's 2.2–2.5 m/s lateral knee swing is counted as the limbs' momentum — owner decision 1"
+    },
+    "invariants_unit": "energy gain 0 · bound excess 0 · pairing 0 · rotation 0/6000 · mirror 0/2000 · determinism 0/2000 · FK drawing 0.0049 mm",
+    "ledger": "every run: Stage 3 took exactly its impulses (≤ 3.1e-14 N·s) · pairing 0 · bound 0 · energy 0",
+    "identity_before_contact": {
+      "review": "37/37",
+      "matrix": "52/52",
+      "l3": "114/114",
+      "moves": "352/352",
+      "search": "235/235",
+      "solo": "105/105",
+      "nearmiss": "56/64 nothing opened, identical; touching 11/11 untouched"
+    },
+    "ticks_leg_pair_over_5cm": {
+      "review": [
+        849,
+        597,
+        307
+      ],
+      "matrix": [
+        1401,
+        862,
+        443
+      ],
+      "l3": [
+        2547,
+        1540,
+        672
+      ],
+      "moves": [
+        5633,
+        4546,
+        1974
+      ],
+      "search": [
+        3193,
+        2995,
+        1478
+      ],
+      "torture": [
+        680,
+        540,
+        167
+      ],
+      "order": "Stage 2 · OLD · 3B"
+    },
+    "deepest_leg_cm": {
+      "matrix": [
+        22.7,
+        22.7,
+        22.4
+      ],
+      "moves": [
+        23.3,
+        22.9,
+        22.9
+      ],
+      "search": [
+        22.9,
+        23.0,
+        19.6
+      ],
+      "note": "both-committed: landing legs (3B.2)"
+    },
+    "anatomy": "knee flexion change ≤ 0.0011°; hip range pushed beyond by the perturbation: review 0 · matrix 8 · l3 56 · moves 40 · search 128 leg-ticks, worst 1.7° (one-tick lag)",
+    "fall_candidates": {
+      "matrix": [
+        14,
+        23
+      ],
+      "l3": [
+        24,
+        53
+      ],
+      "moves": [
+        40,
+        52
+      ],
+      "search": [
+        54,
+        55
+      ],
+      "note": "TRIP halves (11→6, 21→10, 30→17); capture point runs away rises"
+    },
+    "recovery_steps": {
+      "matrix": [
+        56,
+        64
+      ],
+      "moves": [
+        208,
+        352
+      ],
+      "search": [
+        119,
+        266
+      ]
+    },
+    "ball_possession": "the source writes nothing; 0 ball changes without a canonical contact (all sets); 0 authority transitions caused by physics; possess1 torture ownership checks 0, nondeterministic 0; touches denied for geometry with reasons; tackle outcomes vs OLD: review 1 · matrix 0 · l3 2 · moves 30/352 · search 35/235, each with its physical cause (one moves row without a listed cause)",
+    "early_information": "attacker decisions differ before perception 0 · 6 · 7 (SHORT · MEDIUM · LONG; OLD 0 · 0 · 0) — all 13 after Stage 3 / 3B physics acted on him in the window (l3_early.mjs); 4 (m3-49) weakly attributed; root differences only with occupancy acting",
+    "torture": "deterministic 0/32 differ · NaN 0 · stuck 0 · ownership 0 · chatter 0 · loops 0 · recovery-step oscillation 0 · ticks > 5 cm 680 · 540 · 167",
+    "performance": "step mean 119.9 (S2) · 145.8 (OLD) · 176.2 µs (3B); limb pass idle 13.9 · near 43.2 · active 74.2 µs; worst 60 Hz frame 72.1 · 51.7 · 66.6 ms (GC), p99 5.5 · 6.3 · 6.8 ms",
+    "browser": "28/28 checks; page ≡ node 114/114; 0 console / HTTP errors"
+  },
+  "faults_found_and_fixed_in_this_pass": [
+    "projection snap (42.6 cm foot jump) — bounded at every leg joint",
+    "momentum pump through Stage 3's fall placeholder (~600 N·s each way) — positional-only contacts",
+    "hip-range guard hole (10.3°) — restore toward the authored pose",
+    "mis-built side-by-side / crossing rows — rebuilt from measured canonical speeds / start lags",
+    "Lab cached every case's recordings (renderer stalled after ~110 cases) — LRU of 6"
+  ],
+  "remaining_failures": [
+    "flagship brush → recovery steps (authored lateral knee speed as momentum)",
+    "deepest leg 22.4 cm unchanged (landing legs)",
+    "boot↔boot and planted↔planted unresolved (croq-hip 12.8 cm, worse than OLD 7.1)",
+    "crossed legs up on matrix / search",
+    "more fall candidates and recovery steps",
+    "faster limb motion (+7 % jumps > 4 cm, +20 % joints > 15 m/s)",
+    "hip range ≤ 1.7° beyond in a few leg-ticks",
+    "planted-foot slide up where Stage 3 receives more momentum (search 21.5 cm)",
+    "tackle outcome changes (one without a listed cause)",
+    "world mirror rows are not exact mirrors (canonical motion asymmetric)",
+    "pre-existing Stage 3 committed-player capture-point runaway (OLD 3 · 3B 6 / 1,570 worlds)",
+    "perception window: 13 decision differences, all after physics (4 weakly attributed)"
+  ],
+  "owner_decisions": [
+    "how much authored limb speed is momentum (frontal-plane knee speed cap?)",
+    "the yield range ±12/20/20°",
+    "landing priority until 3B.2",
+    "positional-only contacts during the fall placeholder until 3B.4",
+    "boot↔boot / planted↔planted ownership",
+    "frictionless limb contacts"
+  ],
+  "recommendation": "strong enough as the mechanical foundation for 3B.2, after decision 1",
+  "not_done_as_instructed": [
+    "recovery-foot placement (3B.2)",
+    "trips / staggers (3B.3)",
+    "falls / ground / get-up (3B.4)",
+    "the shoulder duel",
+    "Astra's support timeline, gait, Strength, push-and-run, thin geometry, rigid leg-body blocking, flight ground force",
+    "integration / freezing / merging / pushing / publishing"
+  ],
+  "stage3_finding": "pre-existing Stage 3 divergence: a committed defender whose capture point runs away stays RECOVERY STEP (no step, no fall candidate, no fade) → u diverges exponentially (hidden; up to 1e6 m/s); OLD 3 / 3B 6 of 1,570 possession-tool worlds; exposed by the 3B ledger (2 worlds over the 1e-9 closure check); not fixed (Stage 3 logic) — evidence/stage3_runaway.txt"
+}

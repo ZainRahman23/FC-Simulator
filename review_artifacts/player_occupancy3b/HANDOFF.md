@@ -34,10 +34,13 @@
 | `l3_torture.mjs --json f` | Stage 3's torture, Stage 2 · OLD · 3B (3B twice) → `torture.*` |
 | `l3_perf.mjs --reps 3` | cost per tick / frame / second; the limb pass IDLE · NEAR · ACTIVE → `performance.txt` |
 | `node --import ./two/l3_two_hook.mjs ../../possess1/tools/p_torture.mjs` (and `../../occupy2/tools/s2/o2s_early.mjs`) | possess1's own two-player tools with Stage 3B on → `two_player_*.txt` |
+| `node --import ./two/l3_two_hook.mjs l3_early.mjs` | o2s_early with one more classification: a decision that differs after Stage 3 / 3B physics acted on the attacker in the perception window → `two_player_early_info_3b.txt` |
 | `l3_lab_cases.mjs --out f` + `l3_browser.cjs` | the Lab in Chrome ≡ node → `lab_cases.json`, `browser.*` (screenshots to the scratchpad only) |
 | `l3_smoke.mjs [ids] [--set …] [--events]` | a quick per-case look (diagnosis) |
 
 Also: `review_artifacts/tc_baseline_88573ef0/bl_lock_check.sh` (PASS) before every commit.
+
+**Known (not 3B's): Stage 3's committed-player runaway** (`evidence/stage3_runaway.txt`). A committed defender whose capture point runs away gets no step and no fall candidate, and his *u* diverges. Fix it in Stage 3 or 3B.3 when the owner decides.
 
 ## Next (only after the owner's visual approval of 3B.1)
 

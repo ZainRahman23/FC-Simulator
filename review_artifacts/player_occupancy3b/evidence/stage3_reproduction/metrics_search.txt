@@ -1,0 +1,737 @@
+...........................................................................................................................................................................................................................................
+§17 / §18 THE MEASUREMENTS — set search (235 encounters), STAGE 2 (as decided) · STAGE 3, the bodies as drawn
+                                                 STAGE 2     STAGE 3
+deepest torso penetration (cm)                      15.8         3.3
+deepest leg penetration (cm)                        22.9        23.0
+ticks with a pair > 5 cm                            1740        1677
+planted ball-of-foot slide on the turf, largest (cm)        15.0        14.8
+pelvis jolts per frame > 1 / 2 / 4 cm       7005/1898/4107272/2011/441
+largest pelvis jolt (cm per frame²)                 13.2        11.1
+knee / foot jumps > 4 cm in a tick                 78520       81651
+largest knee / foot jump in a tick (cm)             37.1        37.8
+crossed-legs ticks (feet across > 5 cm)             4165        4744
+  of them while Stage 3 acts on that player            0        2606
+turf penetration ticks                             84704       85677
+joint > 15 m/s (ticks × joints)                    18144       18590
+knee folding > 2000 °/s                             7287        7507
+stuck seconds (asking, not moving)                     0           1
+
+STAGE 3 INTERVENED in 144 / 235 encounters · 158 impact episodes · 316 player responses
+  severity  MODERATE 195 · SEVERE 63 · STRONG 45 · LIGHT 13
+  balance   CORRECT 208 · FALL CANDIDATE 54 · RECOVERY STEP 44 · STAGGER CANDIDATE 10
+  action    — (ordinary locomotion) 100 · UNAFFECTED 69 · PERTURBED BUT CONTINUES 44 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED 38 · STAGGER / FALL CANDIDATE 29 · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE 16 · INTERRUPTED BEFORE TECHNICAL EVENT 11 · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE 9
+  PING-PONG (the impulse along the normal reversing twice within 0.25 s): 0 episodes · slower side changes (the bodies passing, the contact on the other side): 27 in 14 episodes
+  SWINGING LEG BLOCKED (trip risk, instrumented): 122 · of them becoming fall candidates (the stepping foot blocked): 30
+  recovery steps 119 (landed 112) · adjustment median 7.4 cm · largest 42.0 cm
+  balance regained 241 / 316 · median 1.32 s · longest 3.14 s · fall candidates 54
+
+PER ENCOUNTER (Stage 3): torso / legs cm (Stage 2 → 3) · impacts · per player: severity σ · balance · action · Δv · root / pelvis cm · lean° · rotation° · steps · regained
+#0@0.3                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#0@0.4                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#0@0.5                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#0@0.6                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#0@0.7                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.7 · 0 impacts · tackle MISS → MISS
+#0@0.8                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle MISS → MISS
+#0@0.9                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle MISS → MISS
+#1@0.0                     torso 0.0 → 0.0 · legs 3.8 → 3.8 · foot 2.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.53 SHIN / SHIN closing -0.629 → 1.88 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.187 · root 5.8 · pelvis 0.0 · lean 4.8 · rot 0.8 · no step · regained 1.054 s
+       DEF LIGHT σ 0.56 · CORRECT · UNAFFECTED · Δv 0.187 · root 2.0 · pelvis 0.1 · lean 2.9 · rot 1.1 · no step · regained 0.65 s
+#1@0.1                     torso 0.0 → 0.0 · legs 3.7 → 3.7 · foot 11.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.53 SHIN / SHIN closing -1.344 → 1.095 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.161 · root 4.7 · pelvis 0.0 · lean 4.8 · rot 1.8 · no step · regained 1.004 s
+       DEF MODERATE σ 0.721 · CORRECT · UNAFFECTED · Δv 0.161 · root 2.0 · pelvis 0.0 · lean 3.5 · rot 1.3 · no step · regained 0.688 s
+#1@0.2                     torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 5.1 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#1@0.3                     torso 0.0 → 0.0 · legs 3.4 → 3.4 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.97 THIGH / THIGH closing 0.408 → -1.771 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.362 · root 25.0 · pelvis 0.0 · lean 6.4 · rot 1.2 · no step · regained 1.792 s
+       DEF MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.362 · root 31.4 · pelvis 0.0 · lean 5.6 · rot 0.2 · no step · regained 1.908 s
+#1@0.4                     torso 0.0 → 0.0 · legs 0.1 → 0.1 · foot 8.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#4@0.3                     torso 0.0 → 0.0 · legs 12.8 → 12.7 · foot 6.7 · 1 impact · tackle MISS → MISS
+    #1 0.94 THIGH / THIGH closing 2.486 → 2.455 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.263 · root 7.8 · pelvis 0.0 · lean 7.5 · rot 2.6 · no step · regained 1.071 s
+       DEF MODERATE σ 0.85 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.414 · root 2.3 · pelvis 4.3 · lean 4.2 · rot 0.9 · no step · regained 0.9 s
+#4@0.4                     torso 0.0 → 0.0 · legs 12.8 → 12.7 · foot 6.7 · 1 impact · tackle MISS → MISS
+    #1 0.94 THIGH / THIGH closing 2.486 → 2.455 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.263 · root 7.8 · pelvis 0.0 · lean 7.5 · rot 2.6 · no step · regained 1.071 s
+       DEF MODERATE σ 0.85 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.414 · root 2.3 · pelvis 4.3 · lean 4.2 · rot 0.9 · no step · regained 0.9 s
+#4@0.5                     torso 0.0 → 0.0 · legs 12.8 → 12.7 · foot 6.7 · 1 impact · tackle MISS → MISS
+    #1 0.94 THIGH / THIGH closing 2.486 → 2.455 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.263 · root 7.8 · pelvis 0.0 · lean 7.5 · rot 2.6 · no step · regained 1.071 s
+       DEF MODERATE σ 0.85 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.414 · root 2.3 · pelvis 4.3 · lean 4.2 · rot 0.9 · no step · regained 0.9 s
+#5@0.9                     torso 0.0 → 0.0 · legs 17.3 → 17.3 · foot 1.8 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.55 THIGH / THIGH closing 2.071 → 0.27 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.252 · root 14.0 · pelvis 0.0 · lean 7.1 · rot 3.5 · no step · regained 1.879 s
+       DEF STRONG σ 1.164 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.332 · root 28.1 · pelvis 4.0 · lean 6.1 · rot 2.2 · L 6.9 · regained 2.492 s
+#5@1.0                     torso 0.0 → 0.0 · legs 17.3 → 17.3 · foot 1.8 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.55 THIGH / THIGH closing 2.071 → 0.27 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.252 · root 14.0 · pelvis 0.0 · lean 7.1 · rot 3.5 · no step · regained 1.879 s
+       DEF STRONG σ 1.164 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.332 · root 28.1 · pelvis 4.0 · lean 6.1 · rot 2.2 · L 6.9 · regained 2.492 s
+#5@1.1                     torso 0.0 → 0.0 · legs 17.3 → 17.3 · foot 1.8 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.55 THIGH / THIGH closing 2.071 → 0.27 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.252 · root 14.0 · pelvis 0.0 · lean 7.1 · rot 3.5 · no step · regained 1.879 s
+       DEF STRONG σ 1.164 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.332 · root 28.1 · pelvis 4.0 · lean 6.1 · rot 2.2 · L 6.9 · regained 2.492 s
+#5@1.2                     torso 0.0 → 0.0 · legs 17.3 → 18.0 · foot 1.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.55 THIGH / THIGH closing 1.913 → 1.616 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.282 · root 14.3 · pelvis 0.0 · lean 7.7 · rot 3.8 · no step · regained 1.404 s
+       DEF STRONG σ 1.15 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.34 · root 18.4 · pelvis 3.5 · lean 5.9 · rot 2.7 · L 6.3 · regained 1.512 s
+#5@1.3                     torso 0.0 → 0.0 · legs 9.4 → 9.3 · foot 1.8 · 1 impact · tackle MISS → MISS
+    #1 1.57 THIGH / THIGH closing 1.144 → 3.136 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.188 · root 7.6 · pelvis 0.0 · lean 8.3 · rot 2 · no step · regained 1.192 s
+       DEF MODERATE σ 0.897 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.241 · root 5.6 · pelvis 2.1 · lean 5.6 · rot 1.5 · no step · regained 1.108 s
+#5@1.4                     torso 0.0 → 0.0 · legs 6.3 → 6.3 · foot 3.8 · 1 impact · tackle MISS → MISS
+    #1 1.59 SHIN / THIGH closing 0.012 → 0.045 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) DRIVE + REACH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.171 · root 6.1 · pelvis 0.0 · lean 4.8 · rot 3.5 · no step · regained 1.692 s
+       DEF MODERATE σ 0.626 · CORRECT · UNAFFECTED · Δv 0.207 · root 2.6 · pelvis 0.0 · lean 3.3 · rot 1.2 · no step · regained 0.7 s
+#9@0.3                     torso 0.0 → 0.0 · legs 12.0 → 12.1 · foot 8.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.37 THIGH / SHIN closing 4.01 → 4.417 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.13 · root 2.4 · pelvis 0.0 · lean 2.7 · rot 0.9 · no step · regained 0.962 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.13 · root 4.1 · pelvis 0.0 · lean 7.3 · rot 2.5 · no step · regained 0.933 s
+#9@0.4                     torso 0.0 → 0.0 · legs 12.0 → 12.1 · foot 8.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.37 THIGH / SHIN closing 4.01 → 4.417 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.13 · root 2.4 · pelvis 0.0 · lean 2.7 · rot 0.9 · no step · regained 0.962 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.13 · root 4.1 · pelvis 0.0 · lean 7.3 · rot 2.5 · no step · regained 0.933 s
+#9@0.5                     torso 0.0 → 0.0 · legs 12.0 → 12.1 · foot 8.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.37 THIGH / SHIN closing 4.01 → 4.417 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.13 · root 2.4 · pelvis 0.0 · lean 2.7 · rot 0.9 · no step · regained 0.962 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.13 · root 4.1 · pelvis 0.0 · lean 7.3 · rot 2.5 · no step · regained 0.933 s
+#9@0.6                     torso 0.0 → 0.0 · legs 9.7 → 9.6 · foot 8.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.85 SHIN / THIGH closing 0.453 → 1.06 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.289 · root 8.3 · pelvis 1.6 · lean 5.7 · rot 4.3 · no step · regained 1.796 s
+       DEF MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.289 · root 12.6 · pelvis 0.0 · lean 8.2 · rot 1.1 · no step · regained 2.013 s
+#9@0.7                     torso 0.0 → 0.0 · legs 1.0 → 1.0 · foot 8.0 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#10@0.6                    torso 0.0 → 0.0 · legs 4.1 → 4.1 · foot 4.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.34 THIGH / THIGH closing 0.069 → -1 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.333 · root 21.2 · pelvis 0.0 · lean 8.2 · rot 0.4 · no step · regained 1.525 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.333 · root 8.8 · pelvis 1.1 · lean 6 · rot 0.2 · no step · regained 1.263 s
+#10@0.7                    torso 0.0 → 0.0 · legs 4.1 → 4.1 · foot 4.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.34 THIGH / THIGH closing 0.069 → -1 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.333 · root 21.2 · pelvis 0.0 · lean 8.2 · rot 0.4 · no step · regained 1.525 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.333 · root 8.8 · pelvis 1.1 · lean 6 · rot 0.2 · no step · regained 1.263 s
+#10@0.8                    torso 0.0 → 0.0 · legs 4.1 → 4.1 · foot 4.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.34 THIGH / THIGH closing 0.069 → -1 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.333 · root 21.2 · pelvis 0.0 · lean 8.2 · rot 0.4 · no step · regained 1.525 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.333 · root 8.8 · pelvis 1.1 · lean 6 · rot 0.2 · no step · regained 1.263 s
+#10@0.9                    torso 0.0 → 0.0 · legs 4.1 → 4.1 · foot 4.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.34 THIGH / THIGH closing 0.069 → -1 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.333 · root 21.2 · pelvis 0.0 · lean 8.2 · rot 0.4 · no step · regained 1.525 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.333 · root 8.8 · pelvis 1.1 · lean 6 · rot 0.2 · no step · regained 1.263 s
+#10@1.0                    torso 0.0 → 0.0 · legs 13.7 → 13.6 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.35 THIGH / THIGH closing 1.753 → -1.883 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.285 · root 1.8 · pelvis 0.0 · lean 1.1 · rot 1.9 · no step · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.283 · root 10.0 · pelvis 3.5 · lean 5 · rot 0.8 · no step · regained 1.2 s
+#10@1.1                    torso 0.0 → 0.0 · legs 5.6 → 5.6 · foot 5.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.40 THIGH / THIGH closing 0.033 → -0.314 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.352 · root 27.8 · pelvis 0.0 · lean 6.2 · rot 6 · no step · regained 1.788 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.352 · root 13.0 · pelvis 2.4 · lean 5.8 · rot 0.9 · no step · regained 1.496 s
+#10@1.2                    torso 0.0 → 0.0 · legs 2.5 → 2.5 · foot 2.6 · 1 impact · tackle MISS → MISS
+    #1 1.40 THIGH / THIGH closing 1.57 → 2.614 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) CONTACT
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.321 · root 12.8 · pelvis 0.0 · lean 9.6 · rot 4.3 · no step · regained 1.183 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.331 · root 42.7 · pelvis 1.7 · lean 6.2 · rot 3.1 · no step · regained 2.458 s
+#10@1.3                    torso 0.0 → 0.0 · legs 22.7 → 15.1 · foot 5.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → MISS
+    #1 1.39 THIGH / THIGH closing 0.808 → 1.35 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) DRIVE + REACH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.416 · root 4.2 · pelvis 0.0 · lean 3.5 · rot 4.2 · no step · FALL CANDIDATE
+       DEF STRONG σ 1.258 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.679 · root 75.4 · pelvis 0.3 · lean 6.8 · rot 3.9 · L 7.5,R 7.7,R 10.8 · regained 2.638 s
+#11@0.0                    torso 0.0 → 0.0 · legs 9.7 → 9.7 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.56 SHIN / SHIN closing 2.166 → 1.893 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 0.601 · CORRECT · — (ordinary locomotion) · Δv 0.057 · root 1.0 · pelvis 0.0 · lean 2.4 · rot 1.1 · no step · regained 0.746 s
+       DEF MODERATE σ 0.74 · CORRECT · UNAFFECTED · Δv 0.064 · root 0.7 · pelvis 0.0 · lean 2.4 · rot 0.6 · no step · regained 0.692 s
+#11@0.1                    torso 0.0 → 0.0 · legs 9.7 → 9.7 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.56 SHIN / SHIN closing 2.166 → 1.893 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 0.601 · CORRECT · — (ordinary locomotion) · Δv 0.057 · root 1.0 · pelvis 0.0 · lean 2.4 · rot 1.1 · no step · regained 0.746 s
+       DEF MODERATE σ 0.74 · CORRECT · UNAFFECTED · Δv 0.064 · root 0.7 · pelvis 0.0 · lean 2.4 · rot 0.6 · no step · regained 0.692 s
+#11@0.2                    torso 0.0 → 0.0 · legs 8.6 → 8.6 · foot 3.8 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.56 SHIN / SHIN closing 3.009 → 2.076 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 0.699 · CORRECT · — (ordinary locomotion) · Δv 0.067 · root 1.3 · pelvis 0.0 · lean 2.8 · rot 1.2 · no step · regained 0.692 s
+       DEF MODERATE σ 0.79 · CORRECT · UNAFFECTED · Δv 0.076 · root 0.9 · pelvis 0.0 · lean 2.8 · rot 0.7 · no step · regained 0.7 s
+#11@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.9 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#11@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.1 · 0 impacts · tackle MISS → MISS
+#15@0.7                    torso 0.0 → 0.0 · legs 0.8 → 0.8 · foot 3.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@0.8                    torso 0.0 → 0.0 · legs 0.8 → 0.8 · foot 3.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@0.9                    torso 0.0 → 0.0 · legs 0.8 → 0.8 · foot 3.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@1.0                    torso 0.0 → 0.0 · legs 0.8 → 0.8 · foot 3.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@1.1                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.0 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@1.2                    torso 0.0 → 0.0 · legs 1.8 → 1.8 · foot 6.8 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#15@1.3                    torso 0.0 → 0.0 · legs 2.8 → 2.8 · foot 2.0 · 1 impact · tackle MISS → MISS
+    #1 1.48 SHIN / SHIN closing 1.77 → 1.575 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) DRIVE + REACH
+       ATT MODERATE σ 0.773 · CORRECT · — (ordinary locomotion) · Δv 0.112 · root 1.8 · pelvis 0.0 · lean 2.5 · rot 3.9 · no step · regained 0.75 s
+       DEF LIGHT σ 0.519 · CORRECT · UNAFFECTED · Δv 0.112 · root 1.2 · pelvis 0.0 · lean 3.1 · rot 0.3 · no step · regained 0.65 s
+#15@1.4                    torso 0.0 → 0.0 · legs 9.1 → 9.1 · foot 2.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.70 THIGH / THIGH closing 0.327 → 0.523 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.164 · root 25.8 · pelvis 0.0 · lean 5.9 · rot 2.8 · no step · regained 1.858 s
+       DEF MODERATE σ 0.78 · CORRECT · UNAFFECTED · Δv 0.163 · root 0.8 · pelvis 1.5 · lean 5.3 · rot 1.2 · no step · regained 0.738 s
+#21@0.8                    torso 0.0 → 0.0 · legs 2.4 → 3.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.22 THIGH / THIGH closing 0.883 → 1.218 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) LOAD
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.363 · root 21.7 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 2.088 s
+       DEF STRONG σ 1.182 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.428 · root 20.2 · pelvis 1.1 · lean 7.8 · rot 1.8 · L 7.6 · not regained
+#21@0.9                    torso 0.0 → 0.0 · legs 2.4 → 3.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.22 THIGH / THIGH closing 0.883 → 1.218 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) LOAD
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.363 · root 21.7 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 2.088 s
+       DEF STRONG σ 1.182 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.428 · root 20.2 · pelvis 1.1 · lean 7.8 · rot 1.8 · L 7.6 · not regained
+#21@1.0                    torso 0.0 → 0.0 · legs 2.4 → 3.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.22 THIGH / THIGH closing 0.883 → 1.218 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) LOAD
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.363 · root 21.7 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 2.088 s
+       DEF STRONG σ 1.182 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.428 · root 20.2 · pelvis 1.1 · lean 7.8 · rot 1.8 · L 7.6 · not regained
+#21@1.1                    torso 0.0 → 0.0 · legs 2.4 → 3.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.22 THIGH / THIGH closing 0.883 → 1.218 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) LOAD
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.363 · root 21.7 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 2.088 s
+       DEF STRONG σ 1.182 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.428 · root 20.2 · pelvis 1.1 · lean 7.8 · rot 1.8 · L 7.6 · not regained
+#21@1.2                    torso 0.0 → 0.0 · legs 7.9 → 7.9 · foot 7.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.17 THIGH / THIGH closing -1.286 → -3.019 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.149 · root 6.5 · pelvis 0.0 · lean 4.7 · rot 1.9 · R 7.4 · FALL CANDIDATE
+       DEF SEVERE σ 2.406 · STAGGER CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 1.098 · root 77.0 · pelvis 3.9 · lean 9.1 · rot 3.2 · L 13.1,L 10.3 · regained 2.138 s
+#21@1.3                    torso 0.0 → 0.0 · legs 7.2 → 7.4 · foot 6.9 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.17 THIGH / THIGH closing 0.024 → -1.746 m/s · ordinary | ordinary
+       ATT STRONG σ 1.609 · RECOVERY STEP · — (ordinary locomotion) · Δv 1.095 · root 94.4 · pelvis 0.0 · lean 13 · rot 3.2 · R 7.8,L 25.6,R 7.9 · regained 2.05 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 1.003 · root 3.8 · pelvis 2.7 · lean 3.1 · rot 1.3 · R 24.0 · FALL CANDIDATE
+#21@1.4                    torso 0.0 → 0.0 · legs 12.7 → 10.6 · foot 5.7 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.17 THIGH / THIGH closing -0.135 → -2.301 m/s · ordinary | ordinary
+       ATT SEVERE σ 2.444 · STAGGER CANDIDATE · — (ordinary locomotion) · Δv 1.05 · root 75.4 · pelvis 0.0 · lean 12.9 · rot 3.2 · R 13.0,L 16.3 · regained 1.658 s
+       DEF SEVERE σ 2.66 · STAGGER CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.94 · root 56.5 · pelvis 6.0 · lean 10.3 · rot 0.7 · L 34.5,R 21.3 · regained 1.867 s
+#23@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#23@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#23@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#23@0.8                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#23@0.9                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#23@1.0                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#25@0.5                    torso 0.0 → 0.0 · legs 2.9 → 2.8 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.42 THIGH / THIGH closing -0.303 → -2.144 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.35 · root 24.7 · pelvis 0.0 · lean 9.2 · rot 2.4 · no step · regained 1.533 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.35 · root 24.8 · pelvis 0.8 · lean 9.5 · rot 4.4 · no step · regained 1.667 s
+#25@0.6                    torso 0.0 → 0.0 · legs 2.9 → 2.8 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.42 THIGH / THIGH closing -0.303 → -2.144 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.35 · root 24.7 · pelvis 0.0 · lean 9.2 · rot 2.4 · no step · regained 1.533 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.35 · root 24.8 · pelvis 0.8 · lean 9.5 · rot 4.4 · no step · regained 1.667 s
+#25@0.7                    torso 0.0 → 0.0 · legs 2.9 → 2.8 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.42 THIGH / THIGH closing -0.303 → -2.144 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.35 · root 24.7 · pelvis 0.0 · lean 9.2 · rot 2.4 · no step · regained 1.533 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.35 · root 24.8 · pelvis 0.8 · lean 9.5 · rot 4.4 · no step · regained 1.667 s
+#25@0.8                    torso 0.0 → 0.0 · legs 4.6 → 4.6 · foot 1.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.23 SHIN / SHIN closing 0.24 → 1.318 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.19 · root 10.3 · pelvis 0.0 · lean 5.8 · rot 1.1 · no step · regained 1.317 s
+       DEF LIGHT σ 0.435 · CORRECT · UNAFFECTED · Δv 0.19 · root 2.0 · pelvis 0.1 · lean 2.4 · rot 0.9 · no step · regained 0.638 s
+#25@0.9                    torso 0.0 → 0.0 · legs 2.9 → 2.9 · foot 3.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.27 SHIN / SHIN closing -0.272 → -2.662 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.167 · root 3.7 · pelvis 0.0 · lean 4.5 · rot 1.4 · no step · regained 0.95 s
+       DEF MODERATE σ 0.628 · CORRECT · UNAFFECTED · Δv 0.167 · root 1.9 · pelvis 0.0 · lean 3.2 · rot 1.2 · no step · regained 0.671 s
+#25@1.0                    torso 0.0 → 0.0 · legs 22.2 → 22.5 · foot 5.4 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.32 THIGH / THIGH closing 2.668 → 0.03 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.292 · root 4.7 · pelvis 0.0 · lean 2.9 · rot 3.1 · R 5.3 · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.288 · root 13.5 · pelvis 4.8 · lean 7.9 · rot 3.3 · no step · regained 1.554 s
+#27@0.0                    torso 0.0 → 0.0 · legs 3.1 → 2.7 · foot 1.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.64 THIGH / THIGH closing 0.285 → 0.052 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.474 · root 19.9 · pelvis 0.0 · lean 8.5 · rot 0.9 · no step · regained 2.171 s
+       DEF LIGHT σ 0.567 · CORRECT · UNAFFECTED · Δv 0.268 · root 2.0 · pelvis 0.8 · lean 3.6 · rot 0.6 · no step · regained 0.704 s
+#27@0.1                    torso 0.0 → 0.0 · legs 3.1 → 2.7 · foot 1.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.64 THIGH / THIGH closing 0.285 → 0.052 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.474 · root 19.9 · pelvis 0.0 · lean 8.5 · rot 0.9 · no step · regained 2.171 s
+       DEF LIGHT σ 0.567 · CORRECT · UNAFFECTED · Δv 0.268 · root 2.0 · pelvis 0.8 · lean 3.6 · rot 0.6 · no step · regained 0.704 s
+#27@0.2                    torso 0.0 → 0.0 · legs 3.1 → 2.7 · foot 1.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.64 THIGH / THIGH closing 0.285 → 0.052 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.474 · root 19.9 · pelvis 0.0 · lean 8.5 · rot 0.9 · no step · regained 2.171 s
+       DEF LIGHT σ 0.567 · CORRECT · UNAFFECTED · Δv 0.268 · root 2.0 · pelvis 0.8 · lean 3.6 · rot 0.6 · no step · regained 0.704 s
+#27@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 13.8 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#27@0.4                    torso 0.0 → 0.0 · legs 13.3 → 13.2 · foot 1.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.67 THIGH / THIGH closing 0.235 → 2.092 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.278 · root 2.4 · pelvis 0.0 · lean 2 · rot 1.9 · no step · FALL CANDIDATE
+       DEF MODERATE σ 0.961 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.365 · root 2.8 · pelvis 4.3 · lean 5.3 · rot 0 · no step · regained 0.929 s
+#27@0.5                    torso 0.0 → 0.0 · legs 13.0 → 12.9 · foot 1.6 · 1 impact · tackle MISS → MISS
+    #1 0.69 THIGH / THIGH closing 1.623 → 0.957 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) DRIVE + REACH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.263 · root 10.7 · pelvis 0.0 · lean 9.5 · rot 4 · no step · regained 1.088 s
+       DEF MODERATE σ 0.737 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.297 · root 1.2 · pelvis 3.9 · lean 4.3 · rot 0.8 · no step · regained 0.896 s
+#27@0.6                    torso 0.0 → 0.0 · legs 17.6 → 17.3 · foot 3.4 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.80 SHIN / SHIN closing 0.625 → 3.006 m/s · ordinary | STANDING TACKLE (STANDING_POKE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.212 · root 13.6 · pelvis 0.0 · lean 8.7 · rot 6.1 · no step · regained 1.6 s
+       DEF LIGHT σ 0.588 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.186 · root 2.0 · pelvis 2.2 · lean 2.7 · rot 2.2 · no step · regained 0.767 s
+#27@0.7                    torso 0.0 → 0.0 · legs 12.0 → 13.1 · foot 3.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.80 SHIN / THIGH closing 0.484 → 0.966 m/s · ordinary | STANDING TACKLE (STANDING_POKE) LOAD
+       ATT STRONG σ 1.139 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.426 · root 16.1 · pelvis 0.0 · lean 7.3 · rot 8.7 · L 5.9 · regained 2.375 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.36 · root 23.0 · pelvis 3.2 · lean 7.5 · rot 2 · no step · regained 1.904 s
+#27@1.0                    torso 0.0 → 0.0 · legs 7.8 → 3.8 · foot 3.1 · 1 impact · tackle MISS → MISS
+    #1 0.80 SHIN / THIGH closing 0.287 → 2.512 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.251 · root 7.6 · pelvis 0.0 · lean 7.7 · rot 5.9 · no step · regained 0.933 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.212 · root 5.0 · pelvis 1.5 · lean 8.5 · rot 0.8 · no step · regained 1.396 s
+#27@1.1                    torso 0.0 → 0.0 · legs 7.8 → 3.8 · foot 3.1 · 1 impact · tackle MISS → MISS
+    #1 0.80 SHIN / THIGH closing 0.287 → 2.512 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.251 · root 7.6 · pelvis 0.0 · lean 7.7 · rot 5.9 · no step · regained 0.933 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.212 · root 5.0 · pelvis 1.5 · lean 8.5 · rot 0.8 · no step · regained 1.396 s
+#27@1.2                    torso 0.0 → 0.0 · legs 7.8 → 3.8 · foot 3.1 · 1 impact · tackle MISS → MISS
+    #1 0.80 SHIN / THIGH closing 0.287 → 2.512 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.251 · root 7.6 · pelvis 0.0 · lean 7.7 · rot 5.9 · no step · regained 0.933 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.212 · root 5.0 · pelvis 1.5 · lean 8.5 · rot 0.8 · no step · regained 1.396 s
+#27@1.3                    torso 0.0 → 0.0 · legs 7.8 → 3.8 · foot 3.1 · 1 impact · tackle MISS → MISS
+    #1 0.80 SHIN / THIGH closing 0.287 → 2.512 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.166 · root 7.6 · pelvis 0.0 · lean 7.7 · rot 5.9 · no step · regained 1.242 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.07 · root 4.9 · pelvis 1.3 · lean 7.4 · rot 0.8 · no step · regained 1.554 s
+#27@1.4                    torso 0.0 → 0.0 · legs 7.1 → 3.8 · foot 3.1 · 1 impact · tackle MISS → MISS
+    #1 0.80 SHIN / THIGH closing 0.287 → 2.512 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.273 · root 17.7 · pelvis 0.0 · lean 7.7 · rot 5.9 · no step · regained 2.483 s
+       DEF STRONG σ 1.132 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.29 · root 27.6 · pelvis 1.1 · lean 9.6 · rot 4 · L 5.6 · regained 2.804 s
+#35@0.1                    torso 2.4 → 1.5 · legs 21.5 → 20.9 · foot 8.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.82 THIGH / THIGH closing 1.998 → -0.77 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.27 · root 8.5 · pelvis 0.5 · lean 4.5 · rot 0.1 · no step · regained 1.575 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.237 · root 22.8 · pelvis 4.4 · lean 8.8 · rot 1.4 · no step · regained 1.862 s
+#35@0.2                    torso 2.4 → 1.5 · legs 21.5 → 20.9 · foot 8.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.82 THIGH / THIGH closing 1.998 → -0.77 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.27 · root 8.5 · pelvis 0.5 · lean 4.5 · rot 0.1 · no step · regained 1.575 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.237 · root 22.8 · pelvis 4.4 · lean 8.8 · rot 1.4 · no step · regained 1.862 s
+#35@0.3                    torso 2.4 → 1.5 · legs 21.5 → 20.9 · foot 8.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.82 THIGH / THIGH closing 1.998 → -0.77 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.27 · root 8.5 · pelvis 0.5 · lean 4.5 · rot 0.1 · no step · regained 1.575 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.237 · root 22.8 · pelvis 4.4 · lean 8.8 · rot 1.4 · no step · regained 1.862 s
+#35@0.4                    torso 2.4 → 1.5 · legs 21.5 → 20.9 · foot 8.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.82 THIGH / THIGH closing 1.998 → -0.77 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.27 · root 8.5 · pelvis 0.5 · lean 4.5 · rot 0.1 · no step · regained 1.575 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.237 · root 22.8 · pelvis 4.4 · lean 8.8 · rot 1.4 · no step · regained 1.862 s
+#35@0.5                    torso 15.8 → 2.3 · legs 22.7 → 22.2 · foot 9.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.84 THIGH / THIGH closing 1.928 → -0.857 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT STRONG σ 1.142 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.619 · root 36.7 · pelvis 0.9 · lean 5.8 · rot 1.1 · L 6.0 · regained 1.883 s
+       DEF STRONG σ 1.209 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.556 · root 84.3 · pelvis 1.1 · lean 8.7 · rot 2.4 · R 8.2,L 8.6,R 8.8 · regained 2.65 s
+#36@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.1 · 0 impacts · tackle MISS → MISS
+#36@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.1 · 0 impacts · tackle MISS → MISS
+#36@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.1 · 0 impacts · tackle MISS → MISS
+#36@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.1 · 0 impacts · tackle MISS → MISS
+#36@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.1 · 0 impacts · tackle MISS → MISS
+#38@0.4                    torso 0.0 → 0.0 · legs 7.6 → 9.0 · foot 9.8 · 1 impact · tackle CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.63 SHIN / THIGH closing -0.149 → -0.775 m/s · ordinary | ordinary
+       ATT STRONG σ 1.152 · RECOVERY STEP · UNAFFECTED · Δv 0.62 · root 35.9 · pelvis 0.0 · lean 10.5 · rot 2 · R 6.4 · regained 2.017 s
+       DEF STRONG σ 1.23 · RECOVERY STEP · PERTURBED BUT CONTINUES · Δv 0.721 · root 56.9 · pelvis 0.0 · lean 11.5 · rot 0.8 · R 5.0,L 9.7,R 5.1 · not regained
+#38@0.5                    torso 0.0 → 0.0 · legs 7.6 → 9.0 · foot 9.8 · 1 impact · tackle CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.63 SHIN / THIGH closing -0.149 → -0.775 m/s · ordinary | ordinary
+       ATT STRONG σ 1.152 · RECOVERY STEP · UNAFFECTED · Δv 0.62 · root 35.9 · pelvis 0.0 · lean 10.5 · rot 2 · R 6.4 · regained 2.017 s
+       DEF STRONG σ 1.23 · RECOVERY STEP · PERTURBED BUT CONTINUES · Δv 0.721 · root 56.9 · pelvis 0.0 · lean 11.5 · rot 0.8 · R 5.0,L 9.7,R 5.1 · not regained
+#38@0.6                    torso 0.0 → 0.0 · legs 7.6 → 9.0 · foot 9.8 · 1 impact · tackle CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.63 SHIN / THIGH closing -0.149 → -0.775 m/s · ordinary | ordinary
+       ATT STRONG σ 1.152 · RECOVERY STEP · UNAFFECTED · Δv 0.62 · root 35.9 · pelvis 0.0 · lean 10.5 · rot 2 · R 6.4 · regained 2.017 s
+       DEF STRONG σ 1.23 · RECOVERY STEP · PERTURBED BUT CONTINUES · Δv 0.721 · root 56.9 · pelvis 0.0 · lean 11.5 · rot 0.8 · R 5.0,L 9.7,R 5.1 · not regained
+#38@0.7                    torso 0.0 → 0.0 · legs 5.1 → 5.0 · foot 7.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.30 SHIN / SHIN closing 0.742 → 3.805 m/s · ordinary | ordinary
+       ATT LIGHT σ 0.553 · CORRECT · — (ordinary locomotion) · Δv 0.056 · root 0.9 · pelvis 0.0 · lean 1.8 · rot 0.4 · no step · regained 0.608 s
+       DEF MODERATE σ 0.976 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.094 · root 3.7 · pelvis 0.0 · lean 4.4 · rot 1.5 · no step · regained 1.258 s
+#38@0.8                    torso 0.0 → 0.0 · legs 2.8 → 2.8 · foot 2.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.02 THIGH / THIGH closing 0.505 → 1.814 m/s · ordinary | STANDING TACKLE (STANDING_POKE) CONTACT
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.291 · root 13.2 · pelvis 0.0 · lean 8.9 · rot 5.4 · no step · regained 1.317 s
+       DEF MODERATE σ 0.603 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.291 · root 4.1 · pelvis 2.1 · lean 4 · rot 2.1 · no step · regained 0.767 s
+#38@0.9                    torso 0.0 → 0.0 · legs 3.7 → 3.5 · foot 4.8 · 1 impact · tackle CONTACT — DEFENDER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.01 THIGH / THIGH closing 0.565 → 0.349 m/s · ordinary | STANDING TACKLE (STANDING_POKE) DRIVE + REACH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.537 · root 20.6 · pelvis 0.8 · lean 5.4 · rot 5.3 · no step · regained 3.142 s
+       DEF STRONG σ 1.124 · RECOVERY STEP · PERTURBED BUT CONTINUES · Δv 0.54 · root 25.8 · pelvis 2.5 · lean 7.7 · rot 2 · R 5.2 · regained 2.892 s
+#38@1.3                    torso 0.0 → 0.0 · legs 8.6 → 14.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.01 THIGH / THIGH closing 0.572 → 1.572 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.365 · root 15.6 · pelvis 0.0 · lean 7.4 · rot 5.1 · no step · regained 2.4 s
+       DEF MODERATE σ 0.752 · CORRECT · UNAFFECTED · Δv 0.366 · root 3.1 · pelvis 0.5 · lean 2.9 · rot 2.6 · no step · regained 1.821 s
+#38@1.4                    torso 0.0 → 0.0 · legs 8.6 → 14.1 · foot 5.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.01 THIGH / THIGH closing 0.572 → 1.572 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.365 · root 15.6 · pelvis 0.0 · lean 7.4 · rot 5.1 · no step · regained 2.4 s
+       DEF MODERATE σ 0.752 · CORRECT · UNAFFECTED · Δv 0.366 · root 3.1 · pelvis 0.5 · lean 2.9 · rot 2.6 · no step · regained 1.821 s
+#43@0.1                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 9.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#43@0.2                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 9.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#43@0.3                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 9.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#43@0.4                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 9.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#46@0.8                    torso 0.0 → 0.0 · legs 13.9 → 8.3 · foot 7.4 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.80 THIGH / THIGH closing 0.689 → -0.351 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.397 · root 26.3 · pelvis 0.0 · lean 6.6 · rot 4.1 · L 33.7,R 6.4 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.394 · root 15.4 · pelvis 0.0 · lean 6.5 · rot 8.4 · L 16.4 · FALL CANDIDATE
+#46@0.9                    torso 0.0 → 0.0 · legs 13.9 → 8.3 · foot 7.4 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.80 THIGH / THIGH closing 0.689 → -0.351 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.397 · root 26.3 · pelvis 0.0 · lean 6.6 · rot 4.1 · L 33.7,R 6.4 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.394 · root 15.4 · pelvis 0.0 · lean 6.5 · rot 8.4 · L 16.4 · FALL CANDIDATE
+#46@1.0                    torso 0.0 → 0.0 · legs 13.9 → 8.3 · foot 7.4 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.80 THIGH / THIGH closing 0.689 → -0.351 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.397 · root 26.3 · pelvis 0.0 · lean 6.6 · rot 4.1 · L 33.7,R 6.4 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.394 · root 15.4 · pelvis 0.0 · lean 6.5 · rot 8.4 · L 16.4 · FALL CANDIDATE
+#46@1.1                    torso 1.5 → 1.5 · legs 22.9 → 20.3 · foot 6.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 2.85 THIGH / SHIN closing -0.369 → -0.101 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.224 · root 11.8 · pelvis 0.0 · lean 4.5 · rot 6.3 · L 29.3 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.227 · root 9.6 · pelvis 0.0 · lean 5.8 · rot 7.4 · L 10.5 · FALL CANDIDATE
+#47@0.8                    torso 0.5 → 0.5 · legs 18.4 → 16.1 · foot 1.5 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → 2.061 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.447 · root 17.2 · pelvis 0.0 · lean 9.8 · rot 3.2 · no step · regained 1.321 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.455 · root 5.0 · pelvis 1.1 · lean 4.5 · rot 3.7 · no step · FALL CANDIDATE
+#47@0.9                    torso 0.5 → 0.5 · legs 18.4 → 16.1 · foot 1.5 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → 2.061 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.447 · root 17.2 · pelvis 0.0 · lean 9.8 · rot 3.2 · no step · regained 1.321 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.455 · root 5.0 · pelvis 1.1 · lean 4.5 · rot 3.7 · no step · FALL CANDIDATE
+#47@1.0                    torso 0.5 → 0.5 · legs 18.4 → 16.1 · foot 1.5 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → 2.061 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.447 · root 17.2 · pelvis 0.0 · lean 9.8 · rot 3.2 · no step · regained 1.321 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.455 · root 5.0 · pelvis 1.1 · lean 4.5 · rot 3.7 · no step · FALL CANDIDATE
+#47@1.1                    torso 0.5 → 0.5 · legs 18.1 → 18.0 · foot 5.0 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → -2.197 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.366 · root 10.7 · pelvis 0.0 · lean 8.4 · rot 2.3 · no step · regained 0.971 s
+       DEF STRONG σ 1.188 · STAGGER CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.372 · root 43.9 · pelvis 0.1 · lean 8 · rot 3.2 · L 5.3,R 7.9 · regained 2.05 s
+#47@1.2                    torso 0.5 → 0.5 · legs 18.2 → 18.1 · foot 2.8 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → -0.085 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.366 · root 9.5 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 1.188 s
+       DEF STRONG σ 1.147 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.372 · root 27.1 · pelvis 0.2 · lean 7.1 · rot 3.2 · L 6.2 · regained 1.713 s
+#47@1.3                    torso 0.5 → 0.5 · legs 18.2 → 18.1 · foot 1.7 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → -0.259 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.366 · root 9.5 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 1.221 s
+       DEF STRONG σ 1.329 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.372 · root 67.4 · pelvis 1.4 · lean 7.3 · rot 3.2 · L 6.2,L 13.8 · regained 2.879 s
+#47@1.4                    torso 0.5 → 0.5 · legs 18.2 → 18.1 · foot 1.7 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.00 CHEST / SHOULDER closing 0.296 → -0.259 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.366 · root 9.5 · pelvis 0.0 · lean 8.5 · rot 2.3 · no step · regained 1.221 s
+       DEF STRONG σ 1.329 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.372 · root 67.4 · pelvis 1.4 · lean 7.3 · rot 3.2 · L 6.2,L 13.8 · regained 2.879 s
+#50@0.3                    torso 0.0 → 0.0 · legs 1.4 → 1.4 · foot 2.6 · 0 impacts · tackle MISS → MISS
+#50@0.4                    torso 0.0 → 0.0 · legs 1.4 → 1.4 · foot 2.6 · 0 impacts · tackle MISS → MISS
+#50@0.5                    torso 0.0 → 0.0 · legs 1.4 → 1.4 · foot 2.6 · 0 impacts · tackle MISS → MISS
+#50@0.6                    torso 0.0 → 0.0 · legs 0.6 → 0.6 · foot 2.6 · 0 impacts · tackle MISS → MISS
+#50@0.7                    torso 0.0 → 0.0 · legs 15.2 → 14.9 · foot 3.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.00 THIGH / THIGH closing 0.833 → 0.697 m/s · LA CROQUETA EXIT (released) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.21 · root 9.8 · pelvis 0.0 · lean 5.8 · rot 1.5 · no step · regained 1.279 s
+       DEF MODERATE σ 0.867 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.289 · root 1.0 · pelvis 4.0 · lean 4 · rot 1.3 · no step · regained 0.854 s
+#50@1.0                    torso 0.0 → 0.0 · legs 10.1 → 12.4 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.20 SHIN / SHIN closing 0.245 → 1.126 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.6 · root 19.3 · pelvis 0.0 · lean 10.3 · rot 9 · no step · regained 2.179 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.63 · root 20.9 · pelvis 0.1 · lean 6.6 · rot 2.3 · R 11.3 · FALL CANDIDATE
+#50@1.1                    torso 0.0 → 0.0 · legs 10.1 → 12.4 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.20 SHIN / SHIN closing 0.245 → 1.126 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.6 · root 19.3 · pelvis 0.0 · lean 10.3 · rot 9 · no step · regained 2.179 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.63 · root 20.9 · pelvis 0.1 · lean 6.6 · rot 2.3 · R 11.3 · FALL CANDIDATE
+#50@1.2                    torso 0.0 → 0.0 · legs 10.1 → 12.4 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.20 SHIN / SHIN closing 0.245 → 1.126 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.6 · root 19.3 · pelvis 0.0 · lean 10.3 · rot 9 · no step · regained 2.179 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.63 · root 20.9 · pelvis 0.1 · lean 6.6 · rot 2.3 · R 11.3 · FALL CANDIDATE
+#50@1.3                    torso 0.0 → 0.0 · legs 10.1 → 12.4 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.20 SHIN / SHIN closing 0.245 → 1.126 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.6 · root 19.3 · pelvis 0.0 · lean 10.3 · rot 9 · no step · regained 2.179 s
+       DEF SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 0.63 · root 20.9 · pelvis 0.1 · lean 6.6 · rot 2.3 · R 11.3 · FALL CANDIDATE
+#50@1.4                    torso 0.0 → 0.0 · legs 9.4 → 9.6 · foot 4.7 · 1 impact · tackle CONTACT — ATTACKER RETAINS → MISS
+    #1 1.20 SHIN / SHIN closing 0.245 → -0.424 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.174 · root 4.0 · pelvis 0.0 · lean 5.8 · rot 2.2 · no step · regained 0.767 s
+       DEF STRONG σ 1.372 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.165 · root 32.6 · pelvis 1.9 · lean 5.9 · rot 0.7 · R 5.1,R 15.6 · regained 1.954 s
+#55@0.0                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#55@0.1                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#55@0.2                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#55@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#55@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 4.4 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#59@0.5                    torso 0.0 → 0.0 · legs 13.3 → 13.2 · foot 9.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.30 THIGH / THIGH closing 0.964 → -2.518 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.343 · root 3.1 · pelvis 0.0 · lean 1.6 · rot 2.2 · no step · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.33 · root 21.4 · pelvis 3.5 · lean 8.7 · rot 2 · no step · regained 1.517 s
+#59@0.6                    torso 0.0 → 0.0 · legs 13.3 → 13.2 · foot 9.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.30 THIGH / THIGH closing 0.964 → -2.518 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.343 · root 3.1 · pelvis 0.0 · lean 1.6 · rot 2.2 · no step · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.33 · root 21.4 · pelvis 3.5 · lean 8.7 · rot 2 · no step · regained 1.517 s
+#59@0.7                    torso 0.0 → 0.0 · legs 13.3 → 13.2 · foot 9.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.30 THIGH / THIGH closing 0.964 → -2.518 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.343 · root 3.1 · pelvis 0.0 · lean 1.6 · rot 2.2 · no step · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.33 · root 21.4 · pelvis 3.5 · lean 8.7 · rot 2 · no step · regained 1.517 s
+#59@0.8                    torso 0.0 → 0.0 · legs 13.3 → 13.2 · foot 9.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.30 THIGH / THIGH closing 0.964 → -2.518 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.343 · root 3.1 · pelvis 0.0 · lean 1.6 · rot 2.2 · no step · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.33 · root 21.4 · pelvis 3.5 · lean 8.7 · rot 2 · no step · regained 1.517 s
+#59@0.9                    torso 0.0 → 0.0 · legs 8.9 → 10.3 · foot 2.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.31 THIGH / THIGH closing 2.729 → -1.434 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.382 · root 2.3 · pelvis 0.0 · lean 1.7 · rot 1.9 · no step · FALL CANDIDATE
+       DEF STRONG σ 1.122 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.36 · root 26.1 · pelvis 0.6 · lean 7.3 · rot 3.8 · R 5.1 · regained 1.637 s
+#59@1.0                    torso 0.0 → 0.0 · legs 1.8 → 1.8 · foot 4.3 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#59@1.1                    torso 0.0 → 0.0 · legs 2.2 → 2.2 · foot 7.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.42 THIGH / THIGH closing -0.982 → -2.502 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.094 · root 6.5 · pelvis 0.0 · lean 3.3 · rot 0.4 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 1.13 · root 24.0 · pelvis 0.0 · lean 7.8 · rot 3.7 · R 17.1 · FALL CANDIDATE
+#61@0.3                    torso 0.0 → 0.0 · legs 2.7 → 2.7 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.02 THIGH / THIGH closing 0.343 → -2.871 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.295 · root 16.3 · pelvis 0.0 · lean 9.3 · rot 1.3 · no step · regained 1.579 s
+       DEF MODERATE σ 0.63 · CORRECT · UNAFFECTED · Δv 0.295 · root 2.2 · pelvis 1.3 · lean 2.7 · rot 0.4 · no step · regained 0.742 s
+#61@0.4                    torso 0.0 → 0.0 · legs 2.7 → 2.7 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.02 THIGH / THIGH closing 0.343 → -2.871 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.295 · root 16.3 · pelvis 0.0 · lean 9.3 · rot 1.3 · no step · regained 1.579 s
+       DEF MODERATE σ 0.63 · CORRECT · UNAFFECTED · Δv 0.295 · root 2.2 · pelvis 1.3 · lean 2.7 · rot 0.4 · no step · regained 0.742 s
+#61@0.5                    torso 0.0 → 0.0 · legs 2.7 → 2.7 · foot 6.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.02 THIGH / THIGH closing 0.343 → -2.871 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.295 · root 16.3 · pelvis 0.0 · lean 9.3 · rot 1.3 · no step · regained 1.579 s
+       DEF MODERATE σ 0.63 · CORRECT · UNAFFECTED · Δv 0.295 · root 2.2 · pelvis 1.3 · lean 2.7 · rot 0.4 · no step · regained 0.742 s
+#61@0.6                    torso 0.0 → 0.0 · legs 7.3 → 7.5 · foot 7.3 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.03 THIGH / THIGH closing 0.559 → -2.953 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.312 · root 29.5 · pelvis 2.6 · lean 9.5 · rot 2 · no step · regained 1.95 s
+       DEF MODERATE σ 0.876 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.312 · root 4.6 · pelvis 3.2 · lean 4.5 · rot 0.2 · no step · regained 1.017 s
+#62@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.9 · 0 impacts · tackle MISS → MISS
+#62@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.9 · 0 impacts · tackle MISS → MISS
+#62@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.9 · 0 impacts · tackle MISS → MISS
+#62@0.8                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.9 · 0 impacts · tackle MISS → MISS
+#62@0.9                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 3.1 · 0 impacts · tackle MISS → MISS
+#62@1.0                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#62@1.1                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#63@0.3                    torso 0.0 → 0.0 · legs 1.5 → 1.5 · foot 3.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#63@0.4                    torso 0.0 → 0.0 · legs 1.5 → 1.5 · foot 3.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#63@0.5                    torso 0.0 → 0.0 · legs 1.5 → 1.5 · foot 3.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#63@0.6                    torso 0.0 → 0.0 · legs 1.5 → 1.5 · foot 3.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#68@0.3                    torso 0.0 → 0.0 · legs 5.7 → 5.5 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.04 THIGH / THIGH closing 0.659 → -0.691 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.187 · root 6.0 · pelvis 0.0 · lean 3.4 · rot 2.6 · no step · regained 1.096 s
+       DEF MODERATE σ 0.636 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.187 · root 4.9 · pelvis 3.6 · lean 9.2 · rot 1.1 · no step · regained 1.004 s
+#68@0.4                    torso 0.0 → 0.0 · legs 5.7 → 5.5 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.04 THIGH / THIGH closing 0.659 → -0.691 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.187 · root 6.0 · pelvis 0.0 · lean 3.4 · rot 2.6 · no step · regained 1.096 s
+       DEF MODERATE σ 0.636 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.187 · root 4.9 · pelvis 3.6 · lean 9.2 · rot 1.1 · no step · regained 1.004 s
+#68@0.5                    torso 0.0 → 0.0 · legs 5.7 → 5.5 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.04 THIGH / THIGH closing 0.659 → -0.691 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.187 · root 6.0 · pelvis 0.0 · lean 3.4 · rot 2.6 · no step · regained 1.096 s
+       DEF MODERATE σ 0.636 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.187 · root 4.9 · pelvis 3.6 · lean 9.2 · rot 1.1 · no step · regained 1.004 s
+#68@0.6                    torso 0.0 → 0.0 · legs 9.9 → 9.8 · foot 1.9 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.04 THIGH / THIGH closing 1.088 → -0.458 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.359 · root 24.8 · pelvis 0.0 · lean 5.9 · rot 1.7 · no step · regained 1.875 s
+       DEF MODERATE σ 0.738 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.359 · root 7.0 · pelvis 3.4 · lean 9.9 · rot 1.8 · no step · regained 1.15 s
+#68@0.7                    torso 0.0 → 0.0 · legs 8.4 → 5.7 · foot 7.7 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.11 THIGH / THIGH closing -0.574 → -0.821 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.114 · root 3.7 · pelvis 0.0 · lean 2.2 · rot 1.4 · no step · regained 0.929 s
+       DEF MODERATE σ 0.678 · CORRECT · UNAFFECTED · Δv 0.114 · root 1.6 · pelvis 0.0 · lean 3.6 · rot 1.2 · no step · regained 0.667 s
+    #2 2.46 SHIN / SHIN closing -1.002 → -4.138 m/s · ordinary | ordinary
+       ATT STRONG σ 1.147 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.484 · root 42.0 · pelvis 0.0 · lean 7.9 · rot 1.7 · L 6.2 · regained 2.033 s
+       DEF STRONG σ 1.163 · RECOVERY STEP · UNAFFECTED · Δv 0.484 · root 34.0 · pelvis 0.0 · lean 7.1 · rot 6 · R 6.9 · regained 1.854 s
+#68@0.8                    torso 0.0 → 0.0 · legs 1.7 → 1.7 · foot 7.8 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#70@0.3                    torso 0.0 → 0.0 · legs 5.6 → 19.0 · foot 6.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.95 THIGH / THIGH closing 0.319 → -2.126 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.384 · root 54.4 · pelvis 2.0 · lean 8.6 · rot 3.2 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.378 · root 44.2 · pelvis 8.6 · lean 8.4 · rot 7.3 · R 5.7 · FALL CANDIDATE
+#70@0.4                    torso 0.0 → 0.0 · legs 5.6 → 19.0 · foot 6.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.95 THIGH / THIGH closing 0.319 → -2.126 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.384 · root 54.4 · pelvis 2.0 · lean 8.6 · rot 3.2 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.378 · root 44.2 · pelvis 8.6 · lean 8.4 · rot 7.3 · R 5.7 · FALL CANDIDATE
+#70@0.5                    torso 0.0 → 0.0 · legs 5.6 → 19.0 · foot 6.7 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.95 THIGH / THIGH closing 0.319 → -2.126 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.384 · root 54.4 · pelvis 2.0 · lean 8.6 · rot 3.2 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 2.378 · root 44.2 · pelvis 8.6 · lean 8.4 · rot 7.3 · R 5.7 · FALL CANDIDATE
+#70@0.6                    torso 0.0 → 0.0 · legs 8.4 → 12.2 · foot 8.6 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.97 THIGH / THIGH closing 0.55 → 0.572 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.685 · root 10.0 · pelvis 0.0 · lean 6.7 · rot 0.9 · R 7.3 · FALL CANDIDATE
+       DEF SEVERE σ 2.434 · STAGGER CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.685 · root 53.6 · pelvis 0.7 · lean 9.5 · rot 4.5 · R 15.4,R 12.9 · regained 1.658 s
+    #2 2.72 THIGH / THIGH closing 0.406 → 0.843 m/s · ordinary | ordinary
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.439 · root 2.7 · pelvis 0.0 · lean 1.8 · rot 0.4 · no step · FALL CANDIDATE
+       DEF STRONG σ 1.142 · RECOVERY STEP · UNAFFECTED · Δv 0.432 · root 33.3 · pelvis 0.0 · lean 5.9 · rot 0.7 · R 6.0 · not regained
+#70@0.7                    torso 0.0 → 0.0 · legs 5.7 → 5.6 · foot 3.1 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.00 SHIN / THIGH closing 0.966 → -1.172 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.174 · root 7.2 · pelvis 0.0 · lean 4.5 · rot 4.3 · no step · regained 1.154 s
+       DEF MODERATE σ 0.982 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.175 · root 5.8 · pelvis 3.7 · lean 8.4 · rot 1.7 · no step · regained 1.158 s
+#70@0.8                    torso 0.0 → 0.0 · legs 13.7 → 13.9 · foot 6.4 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.02 THIGH / THIGH closing -0.073 → -0.151 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.335 · root 8.6 · pelvis 0.0 · lean 6 · rot 2.8 · no step · regained 1.287 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.346 · root 12.1 · pelvis 2.7 · lean 5.7 · rot 2.4 · no step · regained 1.458 s
+    #2 2.79 THIGH / THIGH closing 0.609 → 1.57 m/s · ordinary | ordinary
+       ATT STRONG σ 1.355 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.811 · root 44.4 · pelvis 0.0 · lean 7.7 · rot 0.7 · L 14.9 · not regained
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 0.806 · root 1.9 · pelvis 3.7 · lean 3.6 · rot 6.1 · R 7.0 · FALL CANDIDATE
+#70@0.9                    torso 0.0 → 0.0 · legs 0.6 → 0.6 · foot 3.4 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#70@1.0                    torso 0.0 → 0.0 · legs 5.9 → 5.9 · foot 2.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.38 SHIN / SHIN closing 0.19 → -1.645 m/s · ordinary | STANDING TACKLE (STANDING_POKE) REGAIN STANCE
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.227 · root 15.4 · pelvis 0.0 · lean 6.7 · rot 2.9 · no step · regained 1.504 s
+       DEF MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.228 · root 4.3 · pelvis 0.0 · lean 5.3 · rot 1.3 · no step · regained 0.896 s
+#70@1.1                    torso 0.0 → 0.0 · legs 11.6 → 11.9 · foot 5.1 · 1 impact · tackle MISS → MISS
+    #1 1.22 SHIN / SHIN closing 1.433 → 1.086 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) DRIVE + REACH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.449 · root 7.9 · pelvis 0.0 · lean 6.7 · rot 1.4 · R 6.4 · FALL CANDIDATE
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.377 · root 20.9 · pelvis 1.7 · lean 8.8 · rot 4.2 · no step · regained 1.763 s
+#70@1.2                    torso 0.0 → 0.0 · legs 7.0 → 7.0 · foot 7.4 · 1 impact · tackle MISS → MISS
+    #1 1.23 SHIN / THIGH closing 1.062 → -3.224 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) SET
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.256 · root 13.8 · pelvis 0.0 · lean 7.8 · rot 2.5 · no step · regained 1.454 s
+       DEF STRONG σ 1.148 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.275 · root 27.0 · pelvis 5.8 · lean 9.3 · rot 1.7 · L 6.2 · regained 2.196 s
+#70@1.3                    torso 0.0 → 0.0 · legs 2.4 → 2.4 · foot 4.2 · 1 impact · tackle MISS → MISS
+    #1 1.43 THIGH / THIGH closing -0.523 → -1.041 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) DRIVE + REACH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.15 · root 11.4 · pelvis 0.0 · lean 5.8 · rot 0.5 · no step · regained 1.367 s
+       DEF LIGHT σ 0.346 · CORRECT · UNAFFECTED · Δv 0.14 · root 1.5 · pelvis 0.0 · lean 2 · rot 1.5 · no step · regained 0.75 s
+#70@1.4                    torso 1.0 → 1.0 · legs 0.0 → 0.0 · foot 5.9 · 0 impacts · tackle MISS → MISS
+#73@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 6.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#73@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 6.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#73@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 6.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#73@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#73@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.9 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#73@0.8                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.0 · 0 impacts · tackle MISS → MISS
+#73@0.9                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 8.2 · 0 impacts · tackle MISS → MISS
+#74@0.8                    torso 0.0 → 0.0 · legs 15.3 → 15.3 · foot 2.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.52 THIGH / THIGH closing 2.408 → -0.349 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.15 · root 6.5 · pelvis 0.0 · lean 4.8 · rot 1.9 · no step · regained 1.046 s
+       DEF MODERATE σ 0.976 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.15 · root 6.8 · pelvis 3.7 · lean 5.5 · rot 1.1 · no step · regained 1.246 s
+#74@0.9                    torso 0.0 → 0.0 · legs 15.3 → 15.3 · foot 2.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.52 THIGH / THIGH closing 2.408 → -0.349 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.15 · root 6.5 · pelvis 0.0 · lean 4.8 · rot 1.9 · no step · regained 1.046 s
+       DEF MODERATE σ 0.976 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.15 · root 6.8 · pelvis 3.7 · lean 5.5 · rot 1.1 · no step · regained 1.246 s
+#74@1.0                    torso 0.0 → 0.0 · legs 15.3 → 15.3 · foot 2.0 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.52 THIGH / THIGH closing 2.408 → -0.349 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.15 · root 6.5 · pelvis 0.0 · lean 4.8 · rot 1.9 · no step · regained 1.046 s
+       DEF MODERATE σ 0.976 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.15 · root 6.8 · pelvis 3.7 · lean 5.5 · rot 1.1 · no step · regained 1.246 s
+#74@1.1                    torso 0.0 → 0.0 · legs 21.0 → 21.0 · foot 1.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.52 THIGH / THIGH closing 2.314 → 2.651 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.204 · root 8.1 · pelvis 0.0 · lean 7 · rot 2.5 · no step · regained 0.983 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.204 · root 10.5 · pelvis 5.3 · lean 6.2 · rot 1.8 · no step · regained 1.35 s
+#74@1.2                    torso 0.0 → 0.0 · legs 18.5 → 15.6 · foot 3.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.54 THIGH / THIGH closing 2.072 → -0.033 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT STRONG σ 1.119 · RECOVERY STEP · UNAFFECTED · Δv 0.42 · root 30.1 · pelvis 0.0 · lean 8 · rot 5.1 · R 5.0 · regained 2.671 s
+       DEF STRONG σ 1.241 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.485 · root 60.4 · pelvis 0.4 · lean 7.4 · rot 3.5 · L 8.5,L 10.1 · regained 2.754 s
+#74@1.3                    torso 0.0 → 0.0 · legs 13.6 → 18.3 · foot 1.5 · 1 impact · tackle MISS → MISS
+    #1 1.56 THIGH / THIGH closing 1.605 → 2.629 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.178 · root 9.2 · pelvis 0.0 · lean 7 · rot 2.4 · no step · regained 1.688 s
+       DEF MODERATE σ 0.851 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.209 · root 3.9 · pelvis 1.8 · lean 5.7 · rot 1.8 · no step · regained 1.087 s
+#74@1.4                    torso 0.0 → 0.0 · legs 5.2 → 5.2 · foot 1.5 · 1 impact · tackle MISS → MISS
+    #1 1.58 THIGH / THIGH closing 2.251 → 3.151 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) DRIVE + REACH
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.184 · root 6.2 · pelvis 0.0 · lean 8 · rot 1.7 · no step · regained 0.996 s
+       DEF MODERATE σ 0.881 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.215 · root 4.5 · pelvis 0.6 · lean 4.5 · rot 1.3 · no step · regained 0.904 s
+#79@0.3                    torso 0.0 → 1.0 · legs 2.8 → 2.9 · foot 6.9 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.85 THIGH / THIGH closing 0.837 → -0.998 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.334 · root 16.2 · pelvis 0.0 · lean 6.2 · rot 5.1 · no step · regained 1.292 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.334 · root 14.5 · pelvis 3.3 · lean 5.9 · rot 3.2 · no step · regained 1.587 s
+    #2 2.67 THIGH / THIGH closing 0.321 → -0.033 m/s · ordinary | ordinary
+       ATT STRONG σ 1.143 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.585 · root 48.5 · pelvis 0.0 · lean 7 · rot 1.3 · L 6.0 · not regained
+       DEF MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.587 · root 26.6 · pelvis 0.0 · lean 9.4 · rot 2.1 · no step · not regained
+#79@0.4                    torso 0.0 → 1.0 · legs 2.8 → 2.9 · foot 6.9 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.85 THIGH / THIGH closing 0.837 → -0.998 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.334 · root 16.2 · pelvis 0.0 · lean 6.2 · rot 5.1 · no step · regained 1.292 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.334 · root 14.5 · pelvis 3.3 · lean 5.9 · rot 3.2 · no step · regained 1.587 s
+    #2 2.67 THIGH / THIGH closing 0.321 → -0.033 m/s · ordinary | ordinary
+       ATT STRONG σ 1.143 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.585 · root 48.5 · pelvis 0.0 · lean 7 · rot 1.3 · L 6.0 · not regained
+       DEF MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.587 · root 26.6 · pelvis 0.0 · lean 9.4 · rot 2.1 · no step · not regained
+#79@0.5                    torso 0.0 → 1.0 · legs 2.8 → 2.9 · foot 6.9 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.85 THIGH / THIGH closing 0.837 → -0.998 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.334 · root 16.2 · pelvis 0.0 · lean 6.2 · rot 5.1 · no step · regained 1.292 s
+       DEF MODERATE σ 1 · CORRECT · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.334 · root 14.5 · pelvis 3.3 · lean 5.9 · rot 3.2 · no step · regained 1.587 s
+    #2 2.67 THIGH / THIGH closing 0.321 → -0.033 m/s · ordinary | ordinary
+       ATT STRONG σ 1.143 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.585 · root 48.5 · pelvis 0.0 · lean 7 · rot 1.3 · L 6.0 · not regained
+       DEF MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.587 · root 26.6 · pelvis 0.0 · lean 9.4 · rot 2.1 · no step · not regained
+#79@0.6                    torso 0.0 → 0.0 · legs 2.7 → 5.2 · foot 7.5 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.87 THIGH / THIGH closing 0.978 → -0.777 m/s · ordinary | STANDING TACKLE (POKE → LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.341 · root 17.4 · pelvis 0.0 · lean 5.4 · rot 6 · no step · regained 1.383 s
+       DEF MODERATE σ 1 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.341 · root 14.6 · pelvis 2.9 · lean 5.4 · rot 4.1 · no step · regained 1.362 s
+    #2 2.59 THIGH / THIGH closing 2.296 → 4.25 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.278 · root 12.1 · pelvis 0.0 · lean 8.9 · rot 2.4 · no step · regained 1.15 s
+       DEF MODERATE σ 0.843 · CORRECT · UNAFFECTED · Δv 0.249 · root 4.6 · pelvis 0.0 · lean 6.3 · rot 1.5 · no step · regained 0.942 s
+#79@1.2                    torso 0.0 → 0.0 · legs 3.2 → 2.9 · foot 5.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.02 SHIN / THIGH closing 1.01 → 1.492 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.117 · root 3.7 · pelvis 0.0 · lean 5 · rot 2.8 · no step · regained 0.875 s
+       DEF STRONG σ 1.174 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.117 · root 32.2 · pelvis 6.6 · lean 8.7 · rot 1.2 · R 5.2,R 7.3 · regained 2.008 s
+#79@1.3                    torso 0.0 → 0.0 · legs 3.2 → 2.9 · foot 5.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.02 SHIN / THIGH closing 1.01 → 1.492 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.117 · root 3.7 · pelvis 0.0 · lean 5 · rot 2.8 · no step · regained 0.875 s
+       DEF STRONG σ 1.174 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.117 · root 32.2 · pelvis 6.6 · lean 8.7 · rot 1.2 · R 5.2,R 7.3 · regained 2.008 s
+#79@1.4                    torso 0.0 → 0.0 · legs 3.2 → 2.9 · foot 5.2 · 1 impact · tackle CONTACT — ATTACKER RETAINS → CONTACT — ATTACKER RETAINS
+    #1 1.02 SHIN / THIGH closing 1.01 → 1.492 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.117 · root 3.7 · pelvis 0.0 · lean 5 · rot 2.8 · no step · regained 0.875 s
+       DEF STRONG σ 1.174 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.117 · root 32.2 · pelvis 6.6 · lean 8.7 · rot 1.2 · R 5.2,R 7.3 · regained 2.008 s
+#81@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#81@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#81@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#81@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.8 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#81@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#81@0.8                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle MISS → MISS
+#81@0.9                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle MISS → MISS
+#83@1.2                    torso 0.0 → 0.0 · legs 2.1 → 6.9 · foot 10.1 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.91 THIGH / THIGH closing 0.264 → 0.252 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.533 · root 26.5 · pelvis 0.0 · lean 7.5 · rot 2.9 · L 6.9 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 0.508 · root 31.9 · pelvis 2.6 · lean 8.4 · rot 2.1 · L 6.6 · FALL CANDIDATE
+    #2 3.90 THIGH / THIGH closing 0.486 → -0.376 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.354 · root 13.0 · pelvis 0.0 · lean 6.3 · rot 5.7 · no step · not regained
+       DEF SEVERE σ 2.127 · STAGGER CANDIDATE · UNAFFECTED · Δv 0.355 · root 26.2 · pelvis 0.0 · lean 7 · rot 3.4 · R 10.6 · not regained
+#83@1.3                    torso 0.0 → 0.0 · legs 2.1 → 6.9 · foot 10.1 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.91 THIGH / THIGH closing 0.264 → 0.252 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.533 · root 26.5 · pelvis 0.0 · lean 7.5 · rot 2.9 · L 6.9 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 0.508 · root 31.9 · pelvis 2.6 · lean 8.4 · rot 2.1 · L 6.6 · FALL CANDIDATE
+    #2 3.90 THIGH / THIGH closing 0.486 → -0.376 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.354 · root 13.0 · pelvis 0.0 · lean 6.3 · rot 5.7 · no step · not regained
+       DEF SEVERE σ 2.127 · STAGGER CANDIDATE · UNAFFECTED · Δv 0.355 · root 26.2 · pelvis 0.0 · lean 7 · rot 3.4 · R 10.6 · not regained
+#83@1.4                    torso 0.0 → 0.0 · legs 2.1 → 6.9 · foot 10.1 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 1.91 THIGH / THIGH closing 0.264 → 0.252 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.533 · root 26.5 · pelvis 0.0 · lean 7.5 · rot 2.9 · L 6.9 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 0.508 · root 31.9 · pelvis 2.6 · lean 8.4 · rot 2.1 · L 6.6 · FALL CANDIDATE
+    #2 3.90 THIGH / THIGH closing 0.486 → -0.376 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.354 · root 13.0 · pelvis 0.0 · lean 6.3 · rot 5.7 · no step · not regained
+       DEF SEVERE σ 2.127 · STAGGER CANDIDATE · UNAFFECTED · Δv 0.355 · root 26.2 · pelvis 0.0 · lean 7 · rot 3.4 · R 10.6 · not regained
+#85@0.5                    torso 0.0 → 0.0 · legs 0.3 → 0.3 · foot 2.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#85@0.6                    torso 0.0 → 0.0 · legs 0.3 → 0.3 · foot 2.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#85@0.7                    torso 0.0 → 0.0 · legs 0.3 → 0.3 · foot 2.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#85@0.8                    torso 0.0 → 0.0 · legs 0.7 → 0.7 · foot 2.2 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#85@0.9                    torso 0.0 → 0.0 · legs 1.4 → 1.4 · foot 4.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#85@1.0                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.3 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#87@0.0                    torso 0.0 → 0.0 · legs 7.8 → 7.4 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.71 THIGH / THIGH closing 2.758 → -0.853 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.335 · root 7.0 · pelvis 1.0 · lean 5.5 · rot 0.8 · no step · regained 1.067 s
+       DEF MODERATE σ 0.898 · CORRECT · UNAFFECTED · Δv 0.358 · root 1.1 · pelvis 5.8 · lean 7.7 · rot 1.2 · no step · regained 0.967 s
+#87@0.1                    torso 0.0 → 0.0 · legs 7.8 → 7.4 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.71 THIGH / THIGH closing 2.758 → -0.853 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.335 · root 7.0 · pelvis 1.0 · lean 5.5 · rot 0.8 · no step · regained 1.067 s
+       DEF MODERATE σ 0.898 · CORRECT · UNAFFECTED · Δv 0.358 · root 1.1 · pelvis 5.8 · lean 7.7 · rot 1.2 · no step · regained 0.967 s
+#87@0.2                    torso 0.0 → 0.0 · legs 7.8 → 7.4 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.71 THIGH / THIGH closing 2.758 → -0.853 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.335 · root 7.0 · pelvis 1.0 · lean 5.5 · rot 0.8 · no step · regained 1.067 s
+       DEF MODERATE σ 0.898 · CORRECT · UNAFFECTED · Δv 0.358 · root 1.1 · pelvis 5.8 · lean 7.7 · rot 1.2 · no step · regained 0.967 s
+#87@0.3                    torso 0.0 → 0.0 · legs 7.8 → 7.4 · foot 3.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.71 THIGH / THIGH closing 2.758 → -0.853 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.335 · root 7.0 · pelvis 1.0 · lean 5.5 · rot 0.8 · no step · regained 1.067 s
+       DEF MODERATE σ 0.898 · CORRECT · UNAFFECTED · Δv 0.358 · root 1.1 · pelvis 5.8 · lean 7.7 · rot 1.2 · no step · regained 0.967 s
+#87@0.4                    torso 3.2 → 2.9 · legs 13.7 → 13.6 · foot 14.8 · 2 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.75 THIGH / THIGH closing 2.317 → -0.653 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 0.771 · root 6.2 · pelvis 0.2 · lean 1.7 · rot 1.7 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 0.728 · root 4.3 · pelvis 0.8 · lean 1.3 · rot 0.6 · R 6.6 · FALL CANDIDATE
+    #2 2.19 SHIN / SHIN closing -2.385 → -5.655 m/s · ordinary | ordinary
+       ATT MODERATE σ 0.69 · CORRECT · UNAFFECTED · Δv 0.138 · root 2.1 · pelvis 0.0 · lean 3.1 · rot 1.7 · no step · regained 0.813 s
+       DEF MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.138 · root 4.5 · pelvis 0.0 · lean 4.9 · rot 2.4 · no step · regained 1.017 s
+#87@0.5                    torso 2.8 → 2.4 · legs 14.9 → 14.8 · foot 8.5 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.84 THIGH / THIGH closing 1.275 → -1.091 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT STRONG σ 1.215 · RECOVERY STEP · PERTURBED BUT CONTINUES · Δv 0.571 · root 50.4 · pelvis 0.2 · lean 7.8 · rot 2 · L 9.0 · regained 2.025 s
+       DEF STRONG σ 1.126 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.472 · root 38.0 · pelvis 0.6 · lean 5.9 · rot 0.4 · R 5.3,L 5.0 · regained 2.087 s
+#87@0.6                    torso 13.1 → 2.8 · legs 22.9 → 23.0 · foot 9.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.86 THIGH / THIGH closing 1.825 → 0.358 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (POKE → LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE · Δv 1.311 · root 80.8 · pelvis 10.0 · lean 9 · rot 5.2 · R 42.0,R 29.1 · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 1.142 · root 9.2 · pelvis 1.1 · lean 2.3 · rot 3.7 · R 5.4 · FALL CANDIDATE
+#87@0.7                    torso 5.6 → 3.3 · legs 22.4 → 19.0 · foot 9.2 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 0.89 THIGH / THIGH closing 1.554 → -0.03 m/s · BODY FEINT V2 PLANNED (not yet committed) | STANDING TACKLE (POKE → LUNGE) CONTACT
+       ATT STRONG σ 1.141 · RECOVERY STEP · INTERRUPTED BEFORE TECHNICAL EVENT · Δv 0.534 · root 33.0 · pelvis 0.5 · lean 6.4 · rot 1.7 · R 5.9 · regained 1.954 s
+       DEF STRONG σ 1.147 · RECOVERY STEP · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.458 · root 16.6 · pelvis 2.3 · lean 6.1 · rot 2.2 · L 6.2 · regained 1.379 s
+#90@1.0                    torso 0.0 → 0.0 · legs 6.4 → 6.4 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.82 SHIN / SHIN closing 1.284 → -2.735 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.205 · root 12.2 · pelvis 0.0 · lean 8.9 · rot 4.1 · no step · regained 1.129 s
+       DEF LIGHT σ 0.553 · CORRECT · UNAFFECTED · Δv 0.202 · root 0.5 · pelvis 1.8 · lean 4.1 · rot 0.1 · no step · regained 0.729 s
+#90@1.1                    torso 0.0 → 0.0 · legs 6.4 → 6.4 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.82 SHIN / SHIN closing 1.284 → -2.735 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.205 · root 12.2 · pelvis 0.0 · lean 8.9 · rot 4.1 · no step · regained 1.129 s
+       DEF LIGHT σ 0.553 · CORRECT · UNAFFECTED · Δv 0.202 · root 0.5 · pelvis 1.8 · lean 4.1 · rot 0.1 · no step · regained 0.729 s
+#90@1.2                    torso 0.0 → 0.0 · legs 6.4 → 6.4 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.82 SHIN / SHIN closing 1.284 → -2.735 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.205 · root 12.2 · pelvis 0.0 · lean 8.9 · rot 4.1 · no step · regained 1.129 s
+       DEF LIGHT σ 0.553 · CORRECT · UNAFFECTED · Δv 0.202 · root 0.5 · pelvis 1.8 · lean 4.1 · rot 0.1 · no step · regained 0.729 s
+#90@1.3                    torso 0.0 → 0.0 · legs 6.4 → 6.4 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.82 SHIN / SHIN closing 1.284 → -2.735 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT MODERATE σ 1 · CORRECT · UNAFFECTED · Δv 0.205 · root 12.2 · pelvis 0.0 · lean 8.9 · rot 4.1 · no step · regained 1.129 s
+       DEF LIGHT σ 0.553 · CORRECT · UNAFFECTED · Δv 0.202 · root 0.5 · pelvis 1.8 · lean 4.1 · rot 0.1 · no step · regained 0.729 s
+#90@1.4                    torso 0.0 → 0.0 · legs 8.0 → 8.0 · foot 2.6 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+    #1 1.77 THIGH / THIGH closing -0.471 → -3.097 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) RECOVERY STEP
+       ATT STRONG σ 1.22 · RECOVERY STEP · — (ordinary locomotion) · Δv 0.382 · root 31.9 · pelvis 0.0 · lean 7.8 · rot 4.6 · L 9.3 · regained 1.488 s
+       DEF MODERATE σ 0.923 · CORRECT · PERTURBED BUT CONTINUES · Δv 0.374 · root 5.0 · pelvis 5.3 · lean 8.4 · rot 2 · no step · regained 0.979 s
+#93@0.3                    torso 0.0 → 0.0 · legs 7.7 → 6.4 · foot 7.7 · 2 impacts · tackle CONTACT — DEFENDER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 0.88 SHIN / SHIN closing -1.745 → -1.351 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.488 · root 18.5 · pelvis 0.0 · lean 6.8 · rot 6.8 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 1.391 · root 25.9 · pelvis 3.0 · lean 7.5 · rot 9.5 · R 34.3 · FALL CANDIDATE
+    #2 2.35 SHIN / SHIN closing -1.851 → 2.006 m/s · ordinary | ordinary
+       ATT MODERATE σ 0.9 · CORRECT · UNAFFECTED · Δv 0.089 · root 2.7 · pelvis 0.0 · lean 2.8 · rot 1.5 · no step · regained 1.142 s
+       DEF MODERATE σ 0.914 · CORRECT · UNAFFECTED · Δv 0.089 · root 1.3 · pelvis 0.0 · lean 2.4 · rot 1 · no step · regained 0.754 s
+#93@0.4                    torso 0.0 → 0.0 · legs 7.7 → 6.4 · foot 7.7 · 2 impacts · tackle CONTACT — DEFENDER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 0.88 SHIN / SHIN closing -1.745 → -1.351 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.488 · root 18.5 · pelvis 0.0 · lean 6.8 · rot 6.8 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 1.391 · root 25.9 · pelvis 3.0 · lean 7.5 · rot 9.5 · R 34.3 · FALL CANDIDATE
+    #2 2.35 SHIN / SHIN closing -1.851 → 2.006 m/s · ordinary | ordinary
+       ATT MODERATE σ 0.9 · CORRECT · UNAFFECTED · Δv 0.089 · root 2.7 · pelvis 0.0 · lean 2.8 · rot 1.5 · no step · regained 1.142 s
+       DEF MODERATE σ 0.914 · CORRECT · UNAFFECTED · Δv 0.089 · root 1.3 · pelvis 0.0 · lean 2.4 · rot 1 · no step · regained 0.754 s
+#93@0.5                    torso 0.0 → 0.0 · legs 7.7 → 6.4 · foot 7.7 · 2 impacts · tackle CONTACT — DEFENDER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 0.88 SHIN / SHIN closing -1.745 → -1.351 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 3 · FALL CANDIDATE · STAGGER / FALL CANDIDATE · Δv 1.488 · root 18.5 · pelvis 0.0 · lean 6.8 · rot 6.8 · no step · FALL CANDIDATE
+       DEF SEVERE σ 3 · FALL CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE · Δv 1.391 · root 25.9 · pelvis 3.0 · lean 7.5 · rot 9.5 · R 34.3 · FALL CANDIDATE
+    #2 2.35 SHIN / SHIN closing -1.851 → 2.006 m/s · ordinary | ordinary
+       ATT MODERATE σ 0.9 · CORRECT · UNAFFECTED · Δv 0.089 · root 2.7 · pelvis 0.0 · lean 2.8 · rot 1.5 · no step · regained 1.142 s
+       DEF MODERATE σ 0.914 · CORRECT · UNAFFECTED · Δv 0.089 · root 1.3 · pelvis 0.0 · lean 2.4 · rot 1 · no step · regained 0.754 s
+#93@0.6                    torso 0.0 → 0.0 · legs 3.9 → 3.8 · foot 7.9 · 1 impact · tackle CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 0.90 SHIN / SHIN closing -0.833 → -0.428 m/s · ordinary | STANDING TACKLE (STANDING_LUNGE) FOLLOW-THROUGH / CATCH
+       ATT SEVERE σ 2.456 · STAGGER CANDIDATE · — (ordinary locomotion) · Δv 0.875 · root 79.3 · pelvis 0.0 · lean 7.5 · rot 6.3 · L 17.3,R 13.0 · regained 2.688 s
+       DEF SEVERE σ 2.445 · STAGGER CANDIDATE · TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · Δv 0.89 · root 85.9 · pelvis 3.6 · lean 8 · rot 10.7 · L 15.4,R 16.4 · regained 2.771 s
+#93@0.7                    torso 0.0 → 0.0 · legs 10.4 → 10.3 · foot 5.7 · 1 impact · tackle CONTACT — DEFENDER RECOVERS → CONTACT — DEFENDER RECOVERS
+    #1 2.39 THIGH / THIGH closing -0.547 → -0.299 m/s · ordinary | ordinary
+       ATT MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.213 · root 4.2 · pelvis 0.0 · lean 3.2 · rot 1.7 · no step · regained 1.075 s
+       DEF MODERATE σ 1 · CORRECT · — (ordinary locomotion) · Δv 0.213 · root 8.4 · pelvis 0.0 · lean 7.1 · rot 1.4 · no step · regained 1.367 s
+#93@0.8                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.8 · 0 impacts · tackle MISS → MISS
+#93@0.9                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 2.2 · 0 impacts · tackle MISS → MISS
+#93@1.0                    torso 0.0 → 0.0 · legs 1.5 → 1.5 · foot 1.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.5                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.6                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.5 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.7                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 1.6 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.8                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 2.8 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#95@0.9                    torso 0.0 → 0.0 · legs 1.2 → 1.2 · foot 6.7 · 0 impacts · tackle CONTACT — ATTACKER RECOVERS → CONTACT — ATTACKER RECOVERS
+#99@0.1                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.4 · 0 impacts · tackle MISS → MISS
+#99@0.2                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.4 · 0 impacts · tackle MISS → MISS
+#99@0.3                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.4 · 0 impacts · tackle MISS → MISS
+#99@0.4                    torso 0.0 → 0.0 · legs 0.0 → 0.0 · foot 7.4 · 0 impacts · tackle MISS → MISS

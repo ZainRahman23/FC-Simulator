@@ -1,0 +1,44 @@
+....................................................
+§10 BALL / POSSESSION — set matrix (52 encounters), STAGE 3
+(1) THE SOURCE: o3_world.js writes to the authority or launches the ball: NEVER (no auth.set / claim / state / owner, no launch, no ball state written)
+(2) THE BALL: velocity changes > 0.25 m/s in a tick: 455 · of them with no canonical contact within ± 2 ticks (ball on the ground): 0
+(3) THE AUTHORITY: 87 transitions, by their canonical cause:
+        54  CONTROLLED · COLLECTED: carry
+         6  FREE · CONTROLLER_FAILURE: a planned contact missed the ball
+         4  CONTROLLED · COLLECTED: compact outside redirect
+         3  CONTROLLED · COLLECTED: carry turn
+         2  CONTROLLED · COLLECTED: carry correction
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.57 s) would sweep 380 cm from the
+         2  CONTROLLED · COLLECTED: INSIDE HOOK
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 37 cm from the 
+         2  CONTROLLED · COLLECTED: braking pivot
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.38 s) would sweep 167 cm from the
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.52 s) would sweep 150 cm from the
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 49 cm from the 
+         2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 182 cm from the
+         2  CONTROLLED · COLLECTED: OUTSIDE CUT
+    an impact named as a cause: 0 · the authority's own checks: dual 0 · unaware 0 · without a touch 0 · granted blind 0
+(4) WHAT THE PHYSICS DID (geometry, each with its reason):
+        30  TOUCH DENIED · the foot is the recovery step
+        12  ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+        10  DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+         6  ATT INTERRUPTED BEFORE TECHNICAL EVENT
+    tackle outcomes changed from Stage 2: 2
+      carry-walk                 CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED)
+      carry-walk-m               CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (ATT RECOVERY STEP · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED)
+(5) THE REFEREE FACTS (objective only — no foul, no legality; per impact episode: the regions, the relative velocity, each player's last ball contact before the player contact, the tackle's ball contacts, the balance lost, the action disrupted): 39 episodes
+    with a tackle: 14 · its ball contact PRECEDED the player contact 12 · came only AFTER it 0 · no ball contact 2
+      in-bf                      #1 player contact +0.538 · THIGH / THIGH · closing 1.726 m/s · tackle ball +0.454 (before) · ATT last touch +0.446 · loss ATT MODERATE / DEF MODERATE · ATT UNAFFECTED / DEF UNAFFECTED
+      bf-fake                    #1 player contact +0.675 · THIGH / THIGH · closing 1.673 m/s · tackle ball — (none) · ATT last touch +0.446 · loss ATT SEVERE / DEF SEVERE · ATT INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      croq-early                 #1 player contact +0.575 · THIGH / THIGH · closing 1.986 m/s · tackle ball +0.458 (before) · ATT last touch -0.146 · loss ATT STRONG / DEF STRONG · ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      carry-jog-l                #1 player contact +1.121 · THIGH / THIGH · closing 0.952 m/s · tackle ball +0.913 (before) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      carry-walk                 #1 player contact +1.500 · THIGH / THIGH · closing -0.165 m/s · tackle ball +1.308 (before) · ATT last touch +1.067 · loss ATT STRONG / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      in-croq                    #1 player contact +0.546 · THIGH / THIGH · closing 2.574 m/s · tackle ball +0.479 (before) · ATT last touch -0.146 · loss ATT SEVERE / DEF STRONG · ATT INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      both-committed             #1 player contact +0.579 · THIGH / THIGH · closing 2.117 m/s · tackle ball +0.571 (before) · ATT last touch +0.567 · loss ATT SEVERE / DEF SEVERE · ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE
+      in-bf-m                    #1 player contact +0.538 · THIGH / THIGH · closing 1.726 m/s · tackle ball +0.454 (before) · ATT last touch +0.446 · loss ATT MODERATE / DEF MODERATE · ATT UNAFFECTED / DEF UNAFFECTED
+      bf-fake-m                  #1 player contact +0.675 · THIGH / THIGH · closing 1.673 m/s · tackle ball — (none) · ATT last touch +0.446 · loss ATT SEVERE / DEF SEVERE · ATT INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      croq-early-m               #1 player contact +0.575 · THIGH / THIGH · closing 1.986 m/s · tackle ball +0.458 (before) · ATT last touch -0.146 · loss ATT STRONG / DEF STRONG · ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      carry-jog-l-m              #1 player contact +1.121 · THIGH / THIGH · closing 0.952 m/s · tackle ball +0.913 (before) · ATT last touch +0.571 · loss ATT MODERATE / DEF MODERATE · ATT — (ordinary locomotion) / DEF PERTURBED BUT CONTINUES
+      carry-walk-m               #1 player contact +1.500 · THIGH / THIGH · closing -0.165 m/s · tackle ball +1.308 (before) · ATT last touch +1.067 · loss ATT STRONG / DEF MODERATE · ATT — (ordinary locomotion) / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      in-croq-m                  #1 player contact +0.546 · THIGH / THIGH · closing 2.574 m/s · tackle ball +0.479 (before) · ATT last touch -0.146 · loss ATT SEVERE / DEF STRONG · ATT INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+      both-committed-m           #1 player contact +0.579 · THIGH / THIGH · closing 2.117 m/s · tackle ball +0.571 (before) · ATT last touch +0.567 · loss ATT SEVERE / DEF SEVERE · ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE / DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE
