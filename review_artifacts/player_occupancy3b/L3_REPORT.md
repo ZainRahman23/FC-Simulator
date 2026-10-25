@@ -1,5 +1,11 @@
 # TOUCHLINE — PLAYER OCCUPANCY STAGE 3B.0 + 3B.1: LIMB CONTACT
 
+> **SUPERSEDED IN ITS NUMBERS BY THE CALIBRATION — read `L3_CALIBRATION_REPORT.md` first.**
+> - This report describes Stage 3B.1 *as first built*: the collision-effective velocity formulation **A**.
+> - Its numbers are from the evidence as committed at `469a080f`; `git show 469a080f:review_artifacts/player_occupancy3b/evidence/…` recovers them.
+> - At the owner's request (25 Oct, ≈ 20:00) the limb momentum source term was calibrated. The default is now **F+M**, and `evidence/` holds the calibrated runs.
+> - The architecture, the ledger, the face rule, the limb model and the Lab described here are unchanged, but for the source velocity and the articulated mass.
+
 **Status: prototype, STOPPED for the owner's visual review.** It is local only: not pushed, merged, frozen or published. Stage 3B.2 has not been started.
 
 - **Branch:** `prototype/player-occupancy-stage3b1`, cut from `88a964ba` (Player Occupancy Stage 3). The Stage 3 branch is untouched and remains the comparison baseline.

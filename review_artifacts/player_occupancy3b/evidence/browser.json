@@ -8,12 +8,12 @@
   {
    "name": "every case simulates OLD STAGE 3 and STAGE 3B and both viewports draw",
    "pass": true,
-   "detail": "114/114"
+   "detail": "120/120"
   },
   {
    "name": "the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps, 3B strikes, Σ impulse), both stages",
    "pass": true,
-   "detail": "114/114"
+   "detail": "120/120"
   },
   {
    "name": "view OLD | 3B draws",
@@ -42,128 +42,136 @@
    "pass": true,
    "detail": {
     "S3": 3463207495,
-    "S3B": 1418816700
+    "S3B": 660710533
    }
   },
   {
    "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
    "pass": true,
    "detail": {
-    "skin": 4165184296,
-    "skel": 3232852344,
-    "both": 4165184296
+    "skin": 4162522206,
+    "skel": 1393325399,
+    "both": 4162522206
    }
   },
   {
    "name": "overlay ball toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2730
+    "off": 5100,
+    "on": 5100
    }
   },
   {
    "name": "overlay vol toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 3726
+    "off": 5099,
+    "on": 6095
    }
   },
   {
    "name": "overlay sup toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2883
+    "off": 5099,
+    "on": 5252
    }
   },
   {
    "name": "overlay bal toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2910
+    "off": 5099,
+    "on": 5241
    }
   },
   {
    "name": "overlay nrm toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2782
+    "off": 5099,
+    "on": 5151
    }
   },
   {
    "name": "overlay imp toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2888
+    "off": 5099,
+    "on": 5255
    }
   },
   {
    "name": "overlay stp toggles",
    "pass": true,
    "detail": {
-    "off": 2765,
-    "on": 3317
+    "off": 5099,
+    "on": 5654
    }
   },
   {
    "name": "overlay trl toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2902
+    "off": 5099,
+    "on": 5271
    }
   },
   {
    "name": "overlay ghost toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2958
+    "off": 5099,
+    "on": 5327
    }
   },
   {
    "name": "overlay hud toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 14400
+    "off": 5099,
+    "on": 22847
    }
   },
   {
    "name": "overlay ref toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 3170
+    "off": 5099,
+    "on": 5538
    }
   },
   {
    "name": "overlay lc toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 3279
+    "off": 5099,
+    "on": 5648
    }
   },
   {
    "name": "overlay lv toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 2755
+    "off": 5099,
+    "on": 5119
+   }
+  },
+  {
+   "name": "overlay vp toggles",
+   "pass": true,
+   "detail": {
+    "off": 5099,
+    "on": 5486
    }
   },
   {
    "name": "overlay mom toggles",
    "pass": true,
    "detail": {
-    "off": 2730,
-    "on": 3526
+    "off": 5099,
+    "on": 5844
    }
   },
   {
@@ -172,9 +180,24 @@
    "detail": [
     "LEAD 14.1 cm",
     "LEAD 16.6 cm",
-    "LEAD -4.5 cm",
-    "LEAD 2.0 cm"
+    "LEAD -0.5 cm",
+    "LEAD 0.5 cm"
    ]
+  },
+  {
+   "name": "the formulations side by side: the flagship 3B.1 as first built (A) | CALIBRATED (F+M)",
+   "pass": true,
+   "detail": "{\"A\":43.507239,\"FM\":10.521748}"
+  },
+  {
+   "name": "the accounting panel traces each application's velocity parts (root · frame · turn · sway · pelvis rotation · limb about its hip → used)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "every candidate formulation simulates in the Lab (B · C · D · E · F)",
+   "pass": true,
+   "detail": "5/5"
   },
   {
    "name": "the eight cameras draw",
@@ -185,7 +208,7 @@
    "name": "1× / 0.5× / 0.25× play at their rates",
    "pass": true,
    "detail": [
-    1,
+    0.98,
     0.5,
     0.25
    ]

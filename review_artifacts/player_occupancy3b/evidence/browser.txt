@@ -1,29 +1,33 @@
 PASS  the page loads (TOUCHLINE — STAGE 3B.1 LIMB CONTACT REVIEW)  — 0.9 s to the first case
-PASS  every case simulates OLD STAGE 3 and STAGE 3B and both viewports draw  — 114/114
-PASS  the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps, 3B strikes, Σ impulse), both stages  — 114/114
+PASS  every case simulates OLD STAGE 3 and STAGE 3B and both viewports draw  — 120/120
+PASS  the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps, 3B strikes, Σ impulse), both stages  — 120/120
 PASS  view OLD | 3B draws  — [100,100]
 PASS  view OLD STAGE 3 draws  — [100]
 PASS  view STAGE 3B draws  — [100]
-PASS  OLD STAGE 3 and STAGE 3B draw different replays of the flagship after its contact  — {"S3":3463207495,"S3B":1418816700}
-PASS  SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)  — {"skin":4165184296,"skel":3232852344,"both":4165184296}
-PASS  overlay ball toggles  — {"off":2730,"on":2730}
-PASS  overlay vol toggles  — {"off":2730,"on":3726}
-PASS  overlay sup toggles  — {"off":2730,"on":2883}
-PASS  overlay bal toggles  — {"off":2730,"on":2910}
-PASS  overlay nrm toggles  — {"off":2730,"on":2782}
-PASS  overlay imp toggles  — {"off":2730,"on":2888}
-PASS  overlay stp toggles  — {"off":2765,"on":3317}
-PASS  overlay trl toggles  — {"off":2730,"on":2902}
-PASS  overlay ghost toggles  — {"off":2730,"on":2958}
-PASS  overlay hud toggles  — {"off":2730,"on":14400}
-PASS  overlay ref toggles  — {"off":2730,"on":3170}
-PASS  overlay lc toggles  — {"off":2730,"on":3279}
-PASS  overlay lv toggles  — {"off":2730,"on":2755}
-PASS  overlay mom toggles  — {"off":2730,"on":3526}
-PASS  the flagship's ACCOUNTING PANEL (OLD's strike, its forward component and lead; 3B's applications, their bound, energy and lead; the ledger)  — ["LEAD 14.1 cm","LEAD 16.6 cm","LEAD -4.5 cm","LEAD 2.0 cm"]
+PASS  OLD STAGE 3 and STAGE 3B draw different replays of the flagship after its contact  — {"S3":3463207495,"S3B":660710533}
+PASS  SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)  — {"skin":4162522206,"skel":1393325399,"both":4162522206}
+PASS  overlay ball toggles  — {"off":5100,"on":5100}
+PASS  overlay vol toggles  — {"off":5099,"on":6095}
+PASS  overlay sup toggles  — {"off":5099,"on":5252}
+PASS  overlay bal toggles  — {"off":5099,"on":5241}
+PASS  overlay nrm toggles  — {"off":5099,"on":5151}
+PASS  overlay imp toggles  — {"off":5099,"on":5255}
+PASS  overlay stp toggles  — {"off":5099,"on":5654}
+PASS  overlay trl toggles  — {"off":5099,"on":5271}
+PASS  overlay ghost toggles  — {"off":5099,"on":5327}
+PASS  overlay hud toggles  — {"off":5099,"on":22847}
+PASS  overlay ref toggles  — {"off":5099,"on":5538}
+PASS  overlay lc toggles  — {"off":5099,"on":5648}
+PASS  overlay lv toggles  — {"off":5099,"on":5119}
+PASS  overlay vp toggles  — {"off":5099,"on":5486}
+PASS  overlay mom toggles  — {"off":5099,"on":5844}
+PASS  the flagship's ACCOUNTING PANEL (OLD's strike, its forward component and lead; 3B's applications, their bound, energy and lead; the ledger)  — ["LEAD 14.1 cm","LEAD 16.6 cm","LEAD -0.5 cm","LEAD 0.5 cm"]
+PASS  the formulations side by side: the flagship 3B.1 as first built (A) | CALIBRATED (F+M)  — {"A":43.507239,"FM":10.521748}
+PASS  the accounting panel traces each application's velocity parts (root · frame · turn · sway · pelvis rotation · limb about its hip → used)  — 
+PASS  every candidate formulation simulates in the Lab (B · C · D · E · F)  — 5/5
 PASS  the eight cameras draw  — 8/8
-PASS  1× / 0.5× / 0.25× play at their rates  — [1,0.5,0.25]
+PASS  1× / 0.5× / 0.25× play at their rates  — [0.98,0.5,0.25]
 PASS  frame step (4 ticks; shift: 1 tick)  — [0.016666666666666607,0.004166666666666874]
 PASS  loop toggles
 PASS  0 console / page / HTTP errors  — []
-28/28 checks pass
+32/32 checks pass

@@ -8,9 +8,13 @@ OLD STAGE 3 (limb strikes from the animated limb speed):
   ATT: MODERATE · CORRECT · Δv 0.185 m/s · no step
   DEF: MODERATE · CORRECT · Δv 0.18 m/s · no step
 
-STAGE 3B (the limb contact: only what the limb actually lost):
+STAGE 3B.1 AS FIRST BUILT (formulation A: the authored point's motion less its frame's, on the root's physical velocity; the limb's own effective mass):
   STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.029 s: the contact points closing 2.37 m/s on the stable normal [0.053,-0.999] · effective masses 13.5 / 17.5 kg (LIMB YIELDS / LIMB YIELDS) → λ 18.05 N·s (bound 18.05) · the limbs' normal speed removed 1.34 / 1.03 m/s · energy 21.42 → 0.000 J · along the heading -1.208 N·s, across -18.01 N·s
   STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.729 s: the contact points closing 4.59 m/s on the stable normal [0.052,-0.999] · effective masses 11.2 / 11.0 kg (LIMB YIELDS / LIMB YIELDS) → λ 25.45 N·s (bound 25.45) · the limbs' normal speed removed 2.28 / 2.31 m/s · energy 58.44 → 0.000 J · along the heading -1.514 N·s, across -25.41 N·s
+      1.029 ATT THIGH_R on the normal (toward the other): root +0.17 · frame -0.54 · turn -0.00 · sway -0.14 · pelvis rot -0.01 · limb about its hip +1.65 (the authored point's world motion +0.95) → used +1.66 m/s
+      1.029 DEF THIGH_L on the normal (toward the other): root +0.06 · frame -0.31 · turn -0.07 · sway -0.09 · pelvis rot -0.01 · limb about its hip +0.82 (the authored point's world motion +0.35) → used +0.72 m/s
+      1.729 ATT THIGH_R on the normal (toward the other): root +0.07 · frame -0.89 · turn +0.02 · sway -0.31 · pelvis rot -0.01 · limb about its hip +3.59 (the authored point's world motion +2.40) → used +2.55 m/s
+      1.729 DEF THIGH_L on the normal (toward the other): root -0.11 · frame -2.34 · turn +0.02 · sway +0.12 · pelvis rot -0.01 · limb about its hip +2.69 (the authored point's world motion +0.48) → used +2.04 m/s
   Σ 2 applications: 43.51 N·s · along the carrier's heading -2.722 N·s (each player's equal and opposite: the bodies' headings differ by 7.0°) · across -43.42 N·s
   … along the pair's MEAN heading: Σ of the applications -0.0000 N·s (the stable normal is perpendicular to it)
   the impact's own root shifts along the carrier's heading: ATT -0.8 cm · DEF 3.7 cm → a LEAD of -4.5 cm (largest 4.5 cm)
@@ -20,3 +24,26 @@ STAGE 3B (the limb contact: only what the limb actually lost):
   DEF: Σ 3B -2.27,43.45 N·s · Stage 3 body contact 0.00,0.00 · ground (strut 0.29,0.25, balance 1.96,-43.38)
   ATT: STRONG · RECOVERY STEP · Δv 0.614 m/s · 1 step(s)
   DEF: STRONG · RECOVERY STEP · Δv 0.599 m/s · 1 step(s)
+
+STAGE 3B.1 CALIBRATED (F+M: only what a state can lose — the drawn frame + the limb about its hip; the articulated effective mass):
+  STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.029 s: the contact points closing 1.62 m/s on the stable normal [0.053,-0.999] · effective masses 11.2 / 3.9 kg (LIMB YIELDS / LIMB YIELDS) → λ 4.71 N·s (bound 4.71) · the limbs' normal speed removed 0.35 / 1.13 m/s · energy 3.81 → 0.000 J · along the heading -0.315 N·s, across -4.70 N·s
+  STRIKE THIGH_R|THIGH_L (THIGH / THIGH) at 1.754 s: the contact points closing 1.47 m/s on the stable normal [0.049,-0.999] · effective masses 7.1 / 2.3 kg (LIMB YIELDS / LIMB YIELDS) → λ 2.55 N·s (bound 2.55) · the limbs' normal speed removed 0.32 / 1.07 m/s · energy 1.88 → 0.000 J · along the heading -0.163 N·s, across -2.55 N·s
+  STRIKE SHIN_R|THIGH_L (SHIN / THIGH) at 2.492 s: the contact points closing 0.63 m/s on the stable normal [0.051,-0.999] · effective masses 7.5 / 3.3 kg (LIMB YIELDS / LIMB YIELDS) → λ 1.44 N·s (bound 1.44) · the limbs' normal speed removed 0.17 / 0.42 m/s · energy 0.45 → 0.000 J · along the heading -0.078 N·s, across -1.44 N·s
+  STRIKE SHIN_R|THIGH_L (SHIN / THIGH) at 3.204 s: the contact points closing 0.97 m/s on the stable normal [0.048,-0.999] · effective masses 5.2 / 3.0 kg (LIMB YIELDS / LIMB YIELDS) → λ 1.82 N·s (bound 1.82) · the limbs' normal speed removed 0.32 / 0.59 m/s · energy 0.88 → 0.000 J · along the heading -0.103 N·s, across -1.82 N·s
+      1.029 ATT THIGH_R on the normal (toward the other): root +0.17 · frame -0.54 · turn -0.00 · sway -0.14 · pelvis rot -0.01 · limb about its hip +1.65 (the authored point's world motion +0.95) → used +1.11 m/s
+      1.029 DEF THIGH_L on the normal (toward the other): root +0.06 · frame -0.31 · turn -0.07 · sway -0.09 · pelvis rot -0.01 · limb about its hip +0.82 (the authored point's world motion +0.35) → used +0.51 m/s
+      1.754 ATT THIGH_R on the normal (toward the other): root +0.09 · frame -0.94 · turn +0.00 · sway -0.07 · pelvis rot -0.01 · limb about its hip +2.63 (the authored point's world motion +1.61) → used +1.40 m/s
+      1.754 DEF THIGH_L on the normal (toward the other): root -0.11 · frame -1.32 · turn -0.03 · sway +0.12 · pelvis rot -0.01 · limb about its hip +1.39 (the authored point's world motion +0.16) → used +0.07 m/s
+      2.492 ATT SHIN_R on the normal (toward the other): root +0.17 · frame -0.66 · turn -0.00 · sway -0.14 · pelvis rot -0.01 · limb about its hip +1.81 (the authored point's world motion +1.00) → used +1.15 m/s
+      2.492 DEF THIGH_L on the normal (toward the other): root -0.03 · frame -1.98 · turn +0.01 · sway +0.26 · pelvis rot -0.01 · limb about its hip +1.46 (the authored point's world motion -0.27) → used -0.52 m/s
+      3.204 ATT SHIN_R on the normal (toward the other): root +0.15 · frame -0.49 · turn -0.00 · sway -0.22 · pelvis rot -0.01 · limb about its hip +2.23 (the authored point's world motion +1.51) → used +1.74 m/s
+      3.204 DEF THIGH_L on the normal (toward the other): root -0.09 · frame -2.47 · turn +0.00 · sway +0.29 · pelvis rot -0.01 · limb about its hip +1.70 (the authored point's world motion -0.49) → used -0.77 m/s
+  Σ 4 applications: 10.52 N·s · along the carrier's heading -0.659 N·s (each player's equal and opposite: the bodies' headings differ by 7.0°) · across -10.50 N·s
+  … along the pair's MEAN heading: Σ of the applications 0.0012 N·s (the stable normal is perpendicular to it)
+  the impact's own root shifts along the carrier's heading: ATT -0.5 cm · DEF 0.0 cm → a LEAD of -0.5 cm (largest 1.1 cm)
+  … along the pair's MEAN heading (the symmetric axis): ATT -0.2 cm · DEF -0.7 cm → a LEAD of 0.5 cm (largest 0.5 cm)
+  THE LEDGER: Stage 3 took exactly what it was given (max 9.8e-16 N·s) · every impulse paired (max 0.0e+0) · no impulse above its closing's bound (max excess 0.0e+0) · no energy gained by a contact (max 0.0e+0 J) · OLD limb strikes left: 0
+  ATT: Σ 3B 0.54,-10.51 N·s · Stage 3 body contact 0.58,-11.14 · ground (strut 0.13,-0.32, balance -1.32,22.00)
+  DEF: Σ 3B -0.54,10.51 N·s · Stage 3 body contact -0.58,11.14 · ground (strut 0.12,0.12, balance -0.15,-18.72)
+  ATT: MODERATE · CORRECT · Δv 0.301 m/s · no step
+  DEF: MODERATE · CORRECT · Δv 0.065 m/s · no step

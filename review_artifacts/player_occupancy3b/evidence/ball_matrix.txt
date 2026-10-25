@@ -1,30 +1,33 @@
 
 §12 BALL / POSSESSION — set matrix (52 encounters), STAGE 3B
 (1) THE SOURCE (l3_world.js, l3_limb.js, l3_body.js, o3_world.js): writes to the authority / launches / ball state: NONE
-(2) THE BALL: velocity changes > 0.25 m/s in a tick: 456 · of them with no canonical contact within ± 2 ticks (ball on the ground): 0
-(3) THE AUTHORITY: 80 transitions, by their canonical cause:
-        52  CONTROLLED · COLLECTED: carry
-         4  CONTROLLED · COLLECTED: OUTSIDE HOOK
+(2) THE BALL: velocity changes > 0.25 m/s in a tick: 454 · of them with no canonical contact within ± 2 ticks (ball on the ground): 0
+(3) THE AUTHORITY: 87 transitions, by their canonical cause:
+        57  CONTROLLED · COLLECTED: carry
+         6  FREE · CONTROLLER_FAILURE: a planned contact missed the ball
+         4  CONTROLLED · COLLECTED: braking touch
          4  CONTROLLED · COLLECTED: OUTSIDE CUT
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.57 s) would sweep 380 cm from the
-         2  CONTROLLED · COLLECTED: braking touch
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.11 s) would sweep 37 cm from the 
-         2  FREE · OPPONENT_INTERCEPTION: DEF's blind touch (his next touch (+0.65 s) would sweep 244 
+         2  CONTROLLED · COLLECTED: braking pivot
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.38 s) would sweep 167 cm from the
-         2  CONTROLLED · COLLECTED: compact inside redirect
+         2  CONTROLLED · COLLECTED: carry turn
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.52 s) would sweep 150 cm from the
-         2  CONTROLLED · COLLECTED: set touch
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.09 s) would sweep 49 cm from the 
          2  FREE · OPPONENT_TACKLE: DEF's tackle (his next touch (+0.18 s) would sweep 182 cm from the
     a limb contact / an impact named as a cause: 0 · the authority's own checks: dual 0 · unaware 0 · without a touch 0 · granted blind 0
 (4) WHAT THE PHYSICS DID (geometry, each with its reason):
-        31  TOUCH DENIED · the foot is the recovery step
-         2  TOUCH DENIED (limb contact) · the right foot was displaced x cm by limb contact: it cannot reach the ball
-         2  TOUCH DENIED (limb contact) · the left foot was displaced x cm by limb contact: it cannot reach the ball
-        10  ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
-        10  DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+        12  TOUCH DENIED · the foot is the recovery step
+         6  TOUCH DENIED (limb contact) · the right foot was displaced x cm by limb contact: it cannot reach the ball
+         6  TOUCH DENIED (limb contact) · the left foot was displaced x cm by limb contact: it cannot reach the ball
+         8  ATT TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
+         8  DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED
          6  ATT INTERRUPTED BEFORE TECHNICAL EVENT
     tackle outcomes different from STAGE 2: 2
-      carry-walk                 CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (the bodies' displacement (an impact))
-      carry-walk-m               CONTACT — ATTACKER RECOVERS → CONTACT — DEFENDER RECOVERS   (the bodies' displacement (an impact))
-    tackle outcomes different from OLD STAGE 3: 0
+      in-croq                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (ATT INTERRUPTED BEFORE TECHNICAL EVENT · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED (limb contact))
+      in-croq-m                  CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (ATT INTERRUPTED BEFORE TECHNICAL EVENT · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED (limb contact))
+    tackle outcomes different from OLD STAGE 3: 4
+      carry-walk                 CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (DEF TOUCH DENIED (limb contact))
+      in-croq                    CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (ATT INTERRUPTED BEFORE TECHNICAL EVENT · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED (limb contact))
+      carry-walk-m               CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (DEF TOUCH DENIED (limb contact))
+      in-croq-m                  CONTACT — DEFENDER RECOVERS → CONTACT — ATTACKER RECOVERS   (ATT INTERRUPTED BEFORE TECHNICAL EVENT · DEF TECHNICAL EVENT COMPLETES, RECOVERY REPLACED · ATT TOUCH DENIED (limb contact))

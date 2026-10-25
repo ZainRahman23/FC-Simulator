@@ -7,10 +7,27 @@
 - **Lab:** `python3 -m http.server 8366 --bind 127.0.0.1` from the worktree root → http://127.0.0.1:8366/sandbox/visual/occupy3b_lab.html (LOCAL ONLY: real players' models).
 - **Report:** `L3_REPORT.md`. **Owner instruction (verbatim):** `sources/2026-10-25_user_instruction_stage3b0_3b1.md`. **Astra audit summary:** `sources/2026-10-25_astra_v2_audit_summary.md`.
 
+## The calibration (owner, 25 Oct ≈ 20:00)
+
+- **Report:** `L3_CALIBRATION_REPORT.md`. **Instruction (verbatim):** `sources/2026-10-25_user_instruction_stage3b1_calibration.md`.
+- **The default formulation is now F+M:** `RES3B.vsrc = "F"`, `RES3B.artMass = true`. It counts only what a state can lose (the root's translation, the limb's articulation about its hip), with the articulated effective mass.
+- **Every candidate stays selectable:** `l3: { vsrc: "A" | "B" | "C" | "D" | "E" | "F", artMass }`. "A" with `artMass: false` is 3B.1 as first built. `occupy3b/l3_forms.js` holds `FORMS`.
+- **The Lab** shows any two of OLD and the formulations side by side (the left / right selects), plus the VELOCITY PARTS overlay (`p`), the per-application decomposition in the frame data and the accounting panel, and the CALIBRATION SPECTRUM group (mirrors, the world turned 37°).
+- **Tools:**
+  - `l3_calib.mjs` (the spectrum × the formulations, the first contacts);
+  - `l3_rig.mjs` (the canonical rig: the push response, the authored speeds alone);
+  - `l3_tanworld.mjs` (the tangential test in the world);
+  - `l3_unit.mjs` (now both mass models and the tangential test);
+  - `l3_flagship.mjs` (OLD · A · calibrated, with the velocity parts);
+  - `occupy3b/l3_rot.js` (an encounter with the world turned).
+- **Evidence:** `evidence/` (the calibrated runs), `evidence/calibration/` (spectrum, rig, tangential). The pre-calibration evidence is at commit `469a080f`.
+
 ## Where things are
 
 | file | what |
 |---|---|
+| `sandbox/visual/occupy3b/l3_forms.js` | the calibration's formulations, the spectrum, the Lab's rows |
+| `sandbox/visual/occupy3b/l3_rot.js` | an encounter with the world turned (the rotation test) |
 | `sandbox/visual/occupy3b/l3_limb.js` | the pure limb mechanics, no world: the perturbation (hip ab/adduction, flexion, knee swivel), its inertia, the contact solve (bound, yield, range, held, placeholder), the reconcile drive, the projection (bounded at every leg joint), the turf / hip-range guard. `RES3B` holds every constant |
 | `sandbox/visual/occupy3b/l3_body.js` | `LimbBody`: the canonical forward kinematics with the perturbation applied (thigh / shin rotated about the hip, the foot translated with the ankle); records `legAuth`, `limbQ` |
 | `sandbox/visual/occupy3b/l3_world.js` | `LimbWorld` (extends Stage 3's `ImpactWorld`): Stage 2 → **the limb pass** → Stage 3's impact pass → **the ledger**. The face rule, which side is LIMB / BODY, held pairs, landing priority, touch / tackle-boot denial for geometry, the 3B.2 / 3B.3 / 3B.4 input events, the placeholder rule |

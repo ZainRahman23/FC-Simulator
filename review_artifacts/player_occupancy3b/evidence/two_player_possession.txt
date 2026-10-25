@@ -2,11 +2,11 @@
 SHARED POSSESSION TORTURE — 60 trials (seed 3; every second one the mirrored world of the one before) × 4 modes, each run twice + its counterfactual
                                                            NONE    SHORT   MEDIUM     LONG
   runs                                                       60       60       60       60
-  ball contacts (all players, all kinds)                    685      656      654      635
-  authority transitions                                     144      156      154      156
-  control established (granted claims)                      102      108      107      107
-  claims DENIED                                               0        3        5       10
-    of them: blind (an event not yet perceived)               0        3        5       10
+  ball contacts (all players, all kinds)                    678      655      664      645
+  authority transitions                                     144      160      160      140
+  control established (granted claims)                      102      110      110      100
+  claims DENIED                                               0        0        5       14
+    of them: blind (an event not yet perceived)               0        0        5       14
   DUAL OWNERSHIP                                              0        0        0        0
   UNAWARE OWNER                                               0        0        0        0
   STALE OWNER (3 m from the real ball)                        0        0        0        0
@@ -14,19 +14,19 @@ SHARED POSSESSION TORTURE — 60 trials (seed 3; every second one the mirrored w
   A → B → A within 0.5 s                                      0        0        0        0
   POSSESSION WITHOUT A TOUCH                                  0        0        0        0
   CONTROL GRANTED BLIND                                       0        0        0        0
-  FREE at the replay's end                                    0        0        0        2
-    of them with a candidate playing for it                   0        0        0        2
+  FREE at the replay's end                                    0        0        0        0
+    of them with a candidate playing for it                   0        0        0        0
   REACTION TIMER NEVER RESOLVED                               0        0        0        0
-  NEW INFORMATION USED EARLY                                  0       22       30       34
+  NEW INFORMATION USED EARLY                                  0       22       30       32
     (counterfactual checks made)                              0       38       38       38
-  near-simultaneous touches (2 players < 0.05 s)             10       10       14        9
-  most ownership establishments in one run                    3        4        3        3
+  near-simultaneous touches (2 players < 0.05 s)             10        8       12        8
+  most ownership establishments in one run                    3        3        3        2
   NONDETERMINISTIC                                            0        0        0        0
-  FREE episodes resolved: median / p90 / max (s)        0.25/1.50/2.64  0.98/1.65/2.42  0.94/2.40/2.82  1.12/1.76/2.88
+  FREE episodes resolved: median / p90 / max (s)        0.25/1.80/2.64  0.98/1.62/2.42  0.92/1.65/2.75  1.25/2.56/2.57
   outcomes NONE: {"CONTACT — ATTACKER RECOVERS":34,"MISS":12,"CONTACT — ATTACKER RETAINS":4}
-  outcomes SHORT: {"CONTACT — ATTACKER RECOVERS":31,"CONTACT — DEFENDER RECOVERS":4,"MISS":12,"CONTACT — ATTACKER RETAINS":3}
-  outcomes MEDIUM: {"CONTACT — ATTACKER RECOVERS":32,"CONTACT — ATTACKER RETAINS":4,"MISS":12,"CONTACT — DEFENDER RECOVERS":2}
-  outcomes LONG: {"CONTACT — ATTACKER RECOVERS":26,"MISS":16,"CONTACT — DEFENDER RECOVERS":6,"CONTACT — ATTACKER RETAINS":2}
+  outcomes SHORT: {"CONTACT — ATTACKER RECOVERS":32,"MISS":14,"CONTACT — ATTACKER RETAINS":2,"CONTACT — DEFENDER RECOVERS":2}
+  outcomes MEDIUM: {"CONTACT — ATTACKER RECOVERS":32,"CONTACT — DEFENDER RECOVERS":4,"MISS":14}
+  outcomes LONG: {"CONTACT — ATTACKER RECOVERS":26,"MISS":12,"CONTACT — DEFENDER RECOVERS":8,"CONTACT — ATTACKER RETAINS":4}
   AN EVENT PERCEIVED TWICE: none (p_react.js due() throws on one — it would abort the run)
   skipped set-ups (no committing request found): 34
   ✗ m3-7:rapid SHORT: the attacker differs from his counterfactual before perceiving the contact

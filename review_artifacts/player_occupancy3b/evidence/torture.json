@@ -2264,33 +2264,156 @@
  ],
  "S3B": [
   {
-   "near": 717,
-   "pen5": 0,
-   "deep": 0.030893607819944352,
+   "near": 2127,
+   "pen5": 7,
+   "deep": 0.05561467462839413,
    "stuck": 0,
-   "stall": 0,
+   "stall": 49,
    "nan": 0,
-   "jolt4": 2,
-   "joltMax": 0.06060784316851553,
-   "intents": 7,
-   "episodes": 2,
+   "jolt4": 4,
+   "joltMax": 0.07515717426443665,
+   "intents": 10,
+   "episodes": 3,
    "longEp": 0,
    "osc": 0,
    "sev": {
     "SEVERE": 2,
-    "MODERATE": 2
+    "MODERATE": 1,
+    "BRUSH": 1,
+    "STRONG": 2
    },
    "bal": {
     "FALL CANDIDATE": 2,
-    "CORRECT": 2
+    "CORRECT": 1,
+    "ABSORB": 1,
+    "RECOVERY STEP": 2
    },
    "act": {
     "STAGGER / FALL CANDIDATE": 2,
-    "UNAFFECTED": 1,
-    "PERTURBED BUT CONTINUES": 1
+    "UNAFFECTED": 3,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
    },
    "falls": 2,
-   "steps": 3,
+   "steps": 5,
+   "denied": 1,
+   "longTk": 1,
+   "stallTk": 49,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 9,
+    "apps": 15,
+    "stage3": 1.7874245903380366e-14,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 104.12307891115069,
+    "cpuMax": 182501.04199999987
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 2,
+    "LIMB AT ITS RANGE": 1,
+    "CONTACT DURING A FALL PLACEHOLDER": 1,
+    "BODY OUTRAN A HELD FOOT": 1,
+    "RECOVERY STEP LANDS IN THE OPPONENT": 1
+   },
+   "limbDenied": 0,
+   "tag": "#0"
+  },
+  {
+   "near": 4223,
+   "pen5": 63,
+   "deep": 0.13998517756592704,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 8,
+   "joltMax": 0.05544399285409789,
+   "intents": 9,
+   "episodes": 4,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "LIGHT": 1,
+    "BRUSH": 3,
+    "STRONG": 2,
+    "MODERATE": 2
+   },
+   "bal": {
+    "ABSORB": 4,
+    "RECOVERY STEP": 2,
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 1,
+    "UNAFFECTED": 5,
+    "INTERRUPTED BEFORE TECHNICAL EVENT": 1,
+    "PERTURBED BUT CONTINUES": 1
+   },
+   "falls": 0,
+   "steps": 2,
+   "denied": 2,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 7,
+   "l3": {
+    "strikes": 13,
+    "apps": 14,
+    "stage3": 3.722145839155691e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 114.11228016900154,
+    "cpuMax": 36145.58300000499
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 4,
+    "LIMB HELD": 3,
+    "LIMB AT ITS RANGE": 2,
+    "TOUCH DENIED": 3,
+    "BODY OUTRAN A HELD FOOT": 1
+   },
+   "limbDenied": 3,
+   "tag": "#0m"
+  },
+  {
+   "near": 2291,
+   "pen5": 4,
+   "deep": 0.0628779393309711,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 3,
+   "joltMax": 0.049690684687508896,
+   "intents": 10,
+   "episodes": 1,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 1,
+    "LIGHT": 1
+   },
+   "bal": {
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 1,
+    "UNAFFECTED": 1
+   },
+   "falls": 0,
+   "steps": 0,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -2302,176 +2425,57 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 7,
-    "apps": 9,
-    "stage3": 2.0097183471152322e-14,
+    "strikes": 0,
+    "apps": 0,
+    "stage3": 1.5731560566382464e-16,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 55.40595145441892,
-    "cpuMax": 22382.87499999933
+    "cpu": 83.80195273187371,
+    "cpuMax": 68307.0410000073
    },
    "l3ev": {
-    "LANDING OBSTRUCTED": 1,
-    "LIMB AT ITS RANGE": 1,
-    "BODY OUTRAN A HELD FOOT": 2,
-    "CONTACT DURING A FALL PLACEHOLDER": 1,
-    "TACKLE BOOT DENIED": 1
-   },
-   "limbDenied": 1,
-   "tag": "#0"
-  },
-  {
-   "near": 3554,
-   "pen5": 1,
-   "deep": 0.052852629186549066,
-   "stuck": 0,
-   "stall": 65,
-   "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.05439940338513015,
-   "intents": 13,
-   "episodes": 3,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "LIGHT": 1,
-    "BRUSH": 1,
-    "SEVERE": 4
-   },
-   "bal": {
-    "ABSORB": 2,
-    "FALL CANDIDATE": 3,
-    "STAGGER CANDIDATE": 1
-   },
-   "act": {
-    "— (ordinary locomotion)": 1,
-    "UNAFFECTED": 2,
-    "STAGGER / FALL CANDIDATE": 3
-   },
-   "falls": 3,
-   "steps": 8,
-   "denied": 10,
-   "longTk": 1,
-   "stallTk": 64,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 5,
-   "l3": {
-    "strikes": 9,
-    "apps": 20,
-    "stage3": 1.7852165294699933e-14,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 130.67305542451362,
-    "cpuMax": 82888.62500000687
-   },
-   "l3ev": {
-    "LANDING OBSTRUCTED": 2,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 2,
-    "LIMB AT ITS RANGE": 2,
-    "LIMB HELD": 1,
     "TOUCH DENIED": 1,
-    "CONTACT DURING A FALL PLACEHOLDER": 1
+    "LANDING OBSTRUCTED": 1,
+    "LANDING SNAP": 1
    },
    "limbDenied": 1,
-   "tag": "#0m"
-  },
-  {
-   "near": 3863,
-   "pen5": 0,
-   "deep": 0.03603169414027586,
-   "stuck": 0,
-   "stall": 41,
-   "nan": 0,
-   "jolt4": 7,
-   "joltMax": 0.058173971332262035,
-   "intents": 12,
-   "episodes": 3,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "STRONG": 2,
-    "MODERATE": 4
-   },
-   "bal": {
-    "RECOVERY STEP": 2,
-    "CORRECT": 4
-   },
-   "act": {
-    "PERTURBED BUT CONTINUES": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 4
-   },
-   "falls": 0,
-   "steps": 2,
-   "denied": 1,
-   "longTk": 1,
-   "stallTk": 41,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 5,
-   "l3": {
-    "strikes": 4,
-    "apps": 5,
-    "stage3": 3.552713678800501e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 116.46835947323706,
-    "cpuMax": 19693.499999993946
-   },
-   "l3ev": {
-    "TOUCH DENIED": 2,
-    "LANDING OBSTRUCTED": 3,
-    "LANDING SNAP": 1,
-    "TACKLE BOOT DENIED": 1
-   },
-   "limbDenied": 3,
    "tag": "#1"
   },
   {
-   "near": 7037,
-   "pen5": 0,
-   "deep": 0.04617660864801622,
+   "near": 2959,
+   "pen5": 1,
+   "deep": 0.0500444384252276,
    "stuck": 0,
-   "stall": 0,
+   "stall": 77,
    "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.06660309808410225,
+   "jolt4": 8,
+   "joltMax": 0.08399519679090507,
    "intents": 8,
    "episodes": 3,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 3,
-    "STRONG": 3
+    "MODERATE": 2,
+    "STRONG": 3,
+    "BRUSH": 1
    },
    "bal": {
     "CORRECT": 3,
-    "RECOVERY STEP": 3
+    "RECOVERY STEP": 2,
+    "STAGGER CANDIDATE": 1
    },
    "act": {
     "— (ordinary locomotion)": 3,
     "INTERRUPTED BEFORE TECHNICAL EVENT": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 1
+    "UNAFFECTED": 1,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
    },
    "falls": 0,
-   "steps": 5,
-   "denied": 1,
-   "longTk": 0,
+   "steps": 3,
+   "denied": 0,
+   "longTk": 1,
+   "stallTk": 77,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -2479,32 +2483,34 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 1,
+   "owners": 3,
    "l3": {
     "strikes": 6,
-    "apps": 7,
-    "stage3": 3.972054645195637e-15,
+    "apps": 8,
+    "stage3": 4.058986044477193e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 274.5952367333743,
-    "cpuMax": 104564.74999999045
+    "cpu": 118.68472405666317,
+    "cpuMax": 81767.16699999815
    },
    "l3ev": {
-    "LANDING OBSTRUCTED": 3
+    "LANDING OBSTRUCTED": 1,
+    "LIMB AT ITS RANGE": 1,
+    "TOUCH DENIED": 1
    },
-   "limbDenied": 0,
+   "limbDenied": 1,
    "tag": "#1m"
   },
   {
-   "near": 5291,
-   "pen5": 13,
-   "deep": 0.0822115940541637,
+   "near": 5322,
+   "pen5": 0,
+   "deep": 0.038235399162879796,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
-   "jolt4": 2,
-   "joltMax": 0.04361994952092399,
+   "jolt4": 3,
+   "joltMax": 0.04782248324995454,
    "intents": 4,
    "episodes": 1,
    "longEp": 0,
@@ -2516,11 +2522,10 @@
     "RECOVERY STEP": 2
    },
    "act": {
-    "PERTURBED BUT CONTINUES": 1,
-    "— (ordinary locomotion)": 1
+    "— (ordinary locomotion)": 2
    },
    "falls": 0,
-   "steps": 3,
+   "steps": 2,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -2532,51 +2537,55 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 6,
-    "apps": 15,
-    "stage3": 7.105427357601002e-15,
+    "strikes": 2,
+    "apps": 2,
+    "stage3": 2.225202001028479e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 230.2360691825078,
-    "cpuMax": 23223.999999987427
+    "cpu": 193.19808942597643,
+    "cpuMax": 30314.91700001061
    },
-   "l3ev": {
-    "LANDING OBSTRUCTED": 1,
-    "LIMB AT ITS RANGE": 1,
-    "BODY OUTRAN A HELD FOOT": 1
-   },
+   "l3ev": {},
    "limbDenied": 0,
    "tag": "#2"
   },
   {
-   "near": 2849,
-   "pen5": 1,
-   "deep": 0.05170349449341605,
+   "near": 5989,
+   "pen5": 33,
+   "deep": 0.13544587818102322,
    "stuck": 0,
-   "stall": 0,
+   "stall": 36,
    "nan": 0,
-   "jolt4": 11,
-   "joltMax": 0.08153005966421706,
-   "intents": 9,
-   "episodes": 1,
+   "jolt4": 10,
+   "joltMax": 0.05402207045383908,
+   "intents": 8,
+   "episodes": 8,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "SEVERE": 2
+    "SEVERE": 2,
+    "MODERATE": 7,
+    "STRONG": 2,
+    "LIGHT": 1,
+    "BRUSH": 4
    },
    "bal": {
-    "STAGGER CANDIDATE": 1,
-    "FALL CANDIDATE": 1
+    "STAGGER CANDIDATE": 2,
+    "CORRECT": 8,
+    "RECOVERY STEP": 2,
+    "ABSORB": 4
    },
    "act": {
-    "— (ordinary locomotion)": 1,
-    "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE": 1
+    "— (ordinary locomotion)": 8,
+    "INTERRUPTED BEFORE TECHNICAL EVENT": 1,
+    "UNAFFECTED": 7
    },
-   "falls": 1,
-   "steps": 6,
-   "denied": 6,
-   "longTk": 0,
+   "falls": 0,
+   "steps": 12,
+   "denied": 8,
+   "longTk": 1,
+   "stallTk": 35,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -2584,34 +2593,37 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 6,
+   "owners": 7,
    "l3": {
-    "strikes": 11,
-    "apps": 11,
-    "stage3": 3.084742237080508e-14,
+    "strikes": 16,
+    "apps": 20,
+    "stage3": 7.105427357601002e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 113.68590782237202,
-    "cpuMax": 100127.29200001922
+    "cpu": 143.0045466785109,
+    "cpuMax": 109319.66700000339
    },
    "l3ev": {
     "LIMB AT ITS RANGE": 2,
-    "LANDING OBSTRUCTED": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1
+    "RECOVERY STEP LANDS IN THE OPPONENT": 2,
+    "BODY OUTRAN A HELD FOOT": 2,
+    "LANDING OBSTRUCTED": 6,
+    "TOUCH DENIED": 2,
+    "LIMB HELD": 1
    },
-   "limbDenied": 0,
+   "limbDenied": 2,
    "tag": "#2m"
   },
   {
-   "near": 2398,
+   "near": 2370,
    "pen5": 4,
    "deep": 0.0829624898208963,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.05910396193534712,
+   "jolt4": 5,
+   "joltMax": 0.061507445884395044,
    "intents": 10,
    "episodes": 1,
    "longEp": 0,
@@ -2629,7 +2641,7 @@
     "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
    },
    "falls": 0,
-   "steps": 5,
+   "steps": 3,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -2643,12 +2655,12 @@
    "l3": {
     "strikes": 1,
     "apps": 2,
-    "stage3": 1.4210854715202004e-14,
+    "stage3": 7.944109290391274e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 79.96903567216737,
-    "cpuMax": 24655.25000001071
+    "cpu": 46.0786695165232,
+    "cpuMax": 6217.08299999591
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1
@@ -2657,28 +2669,28 @@
    "tag": "#3"
   },
   {
-   "near": 2535,
-   "pen5": 3,
-   "deep": 0.05327680474325233,
+   "near": 2537,
+   "pen5": 0,
+   "deep": 0.041143082105668013,
    "stuck": 0,
    "stall": 6,
    "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.06088574826629202,
+   "jolt4": 5,
+   "joltMax": 0.06128441007528431,
    "intents": 7,
-   "episodes": 2,
+   "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 2,
+    "MODERATE": 1,
     "LIGHT": 1
    },
    "bal": {
-    "CORRECT": 3
+    "CORRECT": 1,
+    "ABSORB": 1
    },
    "act": {
-    "UNAFFECTED": 2,
-    "PERTURBED BUT CONTINUES": 1
+    "UNAFFECTED": 2
    },
    "falls": 0,
    "steps": 0,
@@ -2694,14 +2706,14 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 2,
+    "strikes": 1,
     "apps": 2,
-    "stage3": 1.7763568394002505e-15,
+    "stage3": 5.145348911841339e-16,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 51.21472002742534,
-    "cpuMax": 11488.29199996544
+    "cpu": 48.036799036914466,
+    "cpuMax": 12127.875000005588
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1
@@ -2710,261 +2722,32 @@
    "tag": "#3m"
   },
   {
-   "near": 2743,
-   "pen5": 1,
-   "deep": 0.05365823119088714,
-   "stuck": 0,
-   "stall": 22,
-   "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.0612522935833216,
-   "intents": 9,
-   "episodes": 2,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "MODERATE": 2,
-    "SEVERE": 2
-   },
-   "bal": {
-    "CORRECT": 2,
-    "FALL CANDIDATE": 2
-   },
-   "act": {
-    "— (ordinary locomotion)": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "STAGGER / FALL CANDIDATE": 2
-   },
-   "falls": 2,
-   "steps": 4,
-   "denied": 9,
-   "longTk": 1,
-   "stallTk": 22,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 4,
-   "l3": {
-    "strikes": 3,
-    "apps": 6,
-    "stage3": 7.549516567451064e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 101.67439603009822,
-    "cpuMax": 59326.66700001573
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 2,
-    "CONTACT DURING A FALL PLACEHOLDER": 2,
-    "LIMB HELD": 2
-   },
-   "limbDenied": 0,
-   "tag": "#4"
-  },
-  {
-   "near": 3290,
-   "pen5": 3,
-   "deep": 0.05752135644262296,
+   "near": 2710,
+   "pen5": 0,
+   "deep": 0.0486657476315141,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.04652388145089223,
-   "intents": 8,
+   "jolt4": 2,
+   "joltMax": 0.041264495855322304,
+   "intents": 10,
    "episodes": 2,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 2,
-    "STRONG": 2
+    "MODERATE": 2
    },
    "bal": {
-    "CORRECT": 2,
-    "RECOVERY STEP": 2
-   },
-   "act": {
-    "— (ordinary locomotion)": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 1
-   },
-   "falls": 0,
-   "steps": 2,
-   "denied": 2,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 5,
-   "l3": {
-    "strikes": 3,
-    "apps": 5,
-    "stage3": 7.32410687763558e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 101.82090123807882,
-    "cpuMax": 54954.208000039216
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 1,
-    "TOUCH DENIED": 1,
-    "LANDING OBSTRUCTED": 2
-   },
-   "limbDenied": 1,
-   "tag": "#4m"
-  },
-  {
-   "near": 2108,
-   "pen5": 0,
-   "deep": 0.03756738692821682,
-   "stuck": 0,
-   "stall": 0,
-   "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.04338873361157703,
-   "intents": 11,
-   "episodes": 2,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "STRONG": 3,
-    "SEVERE": 1
-   },
-   "bal": {
-    "RECOVERY STEP": 3,
-    "STAGGER CANDIDATE": 1
-   },
-   "act": {
-    "— (ordinary locomotion)": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 2,
-    "PERTURBED BUT CONTINUES": 1
-   },
-   "falls": 0,
-   "steps": 9,
-   "denied": 4,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 3,
-   "l3": {
-    "strikes": 6,
-    "apps": 11,
-    "stage3": 5.841081590836474e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 102.4764240368965,
-    "cpuMax": 45451.04099996388
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 1,
-    "TOUCH DENIED": 1,
-    "LANDING OBSTRUCTED": 1
-   },
-   "limbDenied": 1,
-   "tag": "#5"
-  },
-  {
-   "near": 2110,
-   "pen5": 0,
-   "deep": 0.03756593188129734,
-   "stuck": 0,
-   "stall": 0,
-   "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.04338095471538657,
-   "intents": 11,
-   "episodes": 2,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "STRONG": 3,
-    "SEVERE": 1
-   },
-   "bal": {
-    "RECOVERY STEP": 3,
-    "STAGGER CANDIDATE": 1
-   },
-   "act": {
-    "— (ordinary locomotion)": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 2,
-    "PERTURBED BUT CONTINUES": 1
-   },
-   "falls": 0,
-   "steps": 11,
-   "denied": 4,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 3,
-   "l3": {
-    "strikes": 6,
-    "apps": 11,
-    "stage3": 7.944109290391274e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 70.77554933192508,
-    "cpuMax": 26269.16699996218
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 1,
-    "TOUCH DENIED": 1,
-    "LANDING OBSTRUCTED": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1
-   },
-   "limbDenied": 1,
-   "tag": "#5m"
-  },
-  {
-   "near": 2148,
-   "pen5": 0,
-   "deep": 0.04158433575423681,
-   "stuck": 0,
-   "stall": 55,
-   "nan": 0,
-   "jolt4": 3,
-   "joltMax": 0.048423161404447246,
-   "intents": 9,
-   "episodes": 1,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "LIGHT": 1,
-    "STRONG": 1
-   },
-   "bal": {
-    "CORRECT": 1,
-    "RECOVERY STEP": 1
+    "CORRECT": 2
    },
    "act": {
     "— (ordinary locomotion)": 1,
     "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
    },
    "falls": 0,
-   "steps": 1,
+   "steps": 0,
    "denied": 0,
-   "longTk": 1,
-   "stallTk": 55,
+   "longTk": 0,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -2974,37 +2757,192 @@
    },
    "owners": 4,
    "l3": {
-    "strikes": 3,
-    "apps": 3,
-    "stage3": 7.105427357601002e-15,
+    "strikes": 2,
+    "apps": 2,
+    "stage3": 3.972054645195637e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 105.98796206758489,
-    "cpuMax": 318031.95799997775
+    "cpu": 89.89017708329885,
+    "cpuMax": 56234.250000008615
    },
-   "l3ev": {
-    "LIMB HELD": 1,
-    "CONTACT DURING A FALL PLACEHOLDER": 1
-   },
+   "l3ev": {},
    "limbDenied": 0,
-   "tag": "#6"
+   "tag": "#4"
   },
   {
-   "near": 3673,
+   "near": 2710,
    "pen5": 0,
-   "deep": 0.027343485269853446,
+   "deep": 0.048667551116952396,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 2,
+   "joltMax": 0.041265521304048744,
+   "intents": 10,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 2
+   },
+   "bal": {
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 1,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 2,
+    "apps": 2,
+    "stage3": 3.66205343881779e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 87.0775664310021,
+    "cpuMax": 63684.87500000629
+   },
+   "l3ev": {},
+   "limbDenied": 0,
+   "tag": "#4m"
+  },
+  {
+   "near": 2062,
+   "pen5": 0,
+   "deep": 0.03756738692821682,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 1,
+   "joltMax": 0.04073803959020952,
+   "intents": 11,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "BRUSH": 2,
+    "LIGHT": 1,
+    "MODERATE": 1
+   },
+   "bal": {
+    "ABSORB": 2,
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "UNAFFECTED": 2
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 2,
+   "l3": {
+    "strikes": 2,
+    "apps": 2,
+    "stage3": 1.2560739669470201e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 51.76385632868754,
+    "cpuMax": 26201.124999963213
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 1
+   },
+   "limbDenied": 0,
+   "tag": "#5"
+  },
+  {
+   "near": 2062,
+   "pen5": 0,
+   "deep": 0.03756593188129734,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 1,
+   "joltMax": 0.04073123780001759,
+   "intents": 11,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "BRUSH": 2,
+    "LIGHT": 1,
+    "MODERATE": 1
+   },
+   "bal": {
+    "ABSORB": 2,
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "UNAFFECTED": 2
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 2,
+   "l3": {
+    "strikes": 2,
+    "apps": 2,
+    "stage3": 8.881784197001252e-16,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 50.732114190441564,
+    "cpuMax": 22758.499999996275
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 1
+   },
+   "limbDenied": 0,
+   "tag": "#5m"
+  },
+  {
+   "near": 5791,
+   "pen5": 0,
+   "deep": 0.03255931947984428,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
    "jolt4": 3,
-   "joltMax": 0.04372898806888763,
+   "joltMax": 0.048423161404447246,
    "intents": 10,
    "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 2
+    "MODERATE": 1,
+    "LIGHT": 1
    },
    "bal": {
     "CORRECT": 2
@@ -3026,53 +2964,106 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 2,
-    "apps": 2,
-    "stage3": 1.7763568394002505e-15,
+    "strikes": 1,
+    "apps": 1,
+    "stage3": 4.577566798522237e-16,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 96.06636536929453,
-    "cpuMax": 59721.29099996528
+    "cpu": 106.17817285799661,
+    "cpuMax": 51418.124999967404
    },
    "l3ev": {
-    "LANDING OBSTRUCTED": 2,
-    "TOUCH DENIED": 1
+    "LIMB HELD": 1
    },
-   "limbDenied": 1,
+   "limbDenied": 0,
+   "tag": "#6"
+  },
+  {
+   "near": 3763,
+   "pen5": 4,
+   "deep": 0.06215670547050317,
+   "stuck": 0,
+   "stall": 55,
+   "nan": 0,
+   "jolt4": 6,
+   "joltMax": 0.05491588856760938,
+   "intents": 12,
+   "episodes": 1,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 1,
+    "LIGHT": 1
+   },
+   "bal": {
+    "CORRECT": 1,
+    "ABSORB": 1
+   },
+   "act": {
+    "— (ordinary locomotion)": 1,
+    "UNAFFECTED": 1
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 1,
+   "stallTk": 55,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 5,
+    "apps": 8,
+    "stage3": 9.621071039760155e-16,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 94.07746324640752,
+    "cpuMax": 56658.58400001889
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 4,
+    "BODY OUTRAN A HELD FOOT": 1,
+    "TOUCH DENIED": 1,
+    "TACKLE BOOT DENIED": 1
+   },
+   "limbDenied": 2,
    "tag": "#6m"
   },
   {
-   "near": 2242,
-   "pen5": 34,
-   "deep": 0.14939583550973845,
+   "near": 2623,
+   "pen5": 31,
+   "deep": 0.1522677445521042,
    "stuck": 0,
    "stall": 45,
    "nan": 0,
-   "jolt4": 6,
-   "joltMax": 0.05974322050340798,
+   "jolt4": 5,
+   "joltMax": 0.0772775219156433,
    "intents": 8,
    "episodes": 2,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "SEVERE": 2,
-    "STRONG": 2
+    "MODERATE": 3,
+    "STRONG": 1
    },
    "bal": {
-    "FALL CANDIDATE": 2,
-    "RECOVERY STEP": 1,
-    "STAGGER CANDIDATE": 1
+    "CORRECT": 3,
+    "RECOVERY STEP": 1
    },
    "act": {
-    "STAGGER / FALL CANDIDATE": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE": 1,
-    "— (ordinary locomotion)": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
+    "— (ordinary locomotion)": 2,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 2
    },
-   "falls": 2,
-   "steps": 5,
-   "denied": 5,
+   "falls": 0,
+   "steps": 2,
+   "denied": 0,
    "longTk": 1,
    "stallTk": 44,
    "own": {
@@ -3084,19 +3075,18 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 8,
-    "apps": 18,
-    "stage3": 7.160723346098895e-15,
+    "strikes": 4,
+    "apps": 7,
+    "stage3": 5.0242958677880805e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 67.38846157606885,
-    "cpuMax": 7477.874999982305
+    "cpu": 45.87385917801147,
+    "cpuMax": 4332.082999986596
    },
    "l3ev": {
     "LIMB AT ITS RANGE": 2,
-    "LANDING OBSTRUCTED": 1,
-    "LANDING SNAP": 1
+    "LANDING OBSTRUCTED": 2
    },
    "limbDenied": 0,
    "tag": "#7"
@@ -3104,7 +3094,7 @@
   {
    "near": 1818,
    "pen5": 0,
-   "deep": 0.037604206136825705,
+   "deep": 0.03771149050491307,
    "stuck": 0,
    "stall": 60,
    "nan": 0,
@@ -3140,12 +3130,12 @@
    "l3": {
     "strikes": 1,
     "apps": 1,
-    "stage3": 9.930136612989092e-16,
+    "stage3": 5.0895734351719815e-16,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 45.88787136416264,
-    "cpuMax": 6232.541999954265
+    "cpu": 30.56997032219911,
+    "cpuMax": 3777.8749999706633
    },
    "l3ev": {
     "TACKLE BOOT DENIED": 1
@@ -3156,7 +3146,7 @@
   {
    "near": 5176,
    "pen5": 0,
-   "deep": 0.016020546311386427,
+   "deep": 0.016250141559895695,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
@@ -3190,12 +3180,12 @@
    "l3": {
     "strikes": 1,
     "apps": 1,
-    "stage3": 1.0675077274164938e-15,
+    "stage3": 1.9860273225978185e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 138.57052712279233,
-    "cpuMax": 102369.54200000037
+    "cpu": 99.84716804244827,
+    "cpuMax": 76538.50000002421
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1
@@ -3204,36 +3194,38 @@
    "tag": "#8"
   },
   {
-   "near": 5427,
-   "pen5": 0,
-   "deep": 0.030696993840786557,
+   "near": 6186,
+   "pen5": 10,
+   "deep": 0.11891451784873797,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
    "jolt4": 1,
-   "joltMax": 0.05704627176532574,
-   "intents": 11,
+   "joltMax": 0.10142181935288727,
+   "intents": 7,
    "episodes": 3,
    "longEp": 0,
    "osc": 0,
    "sev": {
     "LIGHT": 2,
-    "STRONG": 1,
     "SEVERE": 1,
+    "STRONG": 1,
     "MODERATE": 2
    },
    "bal": {
-    "CORRECT": 4,
-    "RECOVERY STEP": 1,
-    "STAGGER CANDIDATE": 1
+    "CORRECT": 3,
+    "ABSORB": 1,
+    "FALL CANDIDATE": 1,
+    "RECOVERY STEP": 1
    },
    "act": {
-    "— (ordinary locomotion)": 2,
-    "UNAFFECTED": 3,
-    "INTERRUPTED BEFORE TECHNICAL EVENT": 1
+    "— (ordinary locomotion)": 3,
+    "STAGGER / FALL CANDIDATE": 1,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
+    "UNAFFECTED": 1
    },
-   "falls": 0,
-   "steps": 3,
+   "falls": 1,
+   "steps": 2,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -3243,53 +3235,53 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 2,
+   "owners": 4,
    "l3": {
-    "strikes": 3,
-    "apps": 3,
-    "stage3": 4.344434768182728e-15,
+    "strikes": 5,
+    "apps": 9,
+    "stage3": 7.105427357601002e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 239.25962696485044,
-    "cpuMax": 126120.49999996088
+    "cpu": 99.34657979510744,
+    "cpuMax": 65159.99999997439
    },
    "l3ev": {
-    "LANDING OBSTRUCTED": 2
+    "LANDING OBSTRUCTED": 3,
+    "LIMB AT ITS RANGE": 1,
+    "CONTACT DURING A FALL PLACEHOLDER": 1,
+    "BODY OUTRAN A HELD FOOT": 2,
+    "LIMB HELD": 3,
+    "TOUCH DENIED": 1
    },
-   "limbDenied": 0,
+   "limbDenied": 1,
    "tag": "#8m"
   },
   {
-   "near": 3321,
-   "pen5": 3,
-   "deep": 0.08377892076348557,
+   "near": 2089,
+   "pen5": 0,
+   "deep": 0.042618650632824856,
    "stuck": 0,
    "stall": 10,
    "nan": 0,
-   "jolt4": 3,
+   "jolt4": 2,
    "joltMax": 0.08217373825566483,
    "intents": 10,
-   "episodes": 2,
+   "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "STRONG": 2,
-    "MODERATE": 1,
-    "LIGHT": 1
+    "MODERATE": 2
    },
    "bal": {
-    "STAGGER CANDIDATE": 1,
-    "RECOVERY STEP": 1,
     "CORRECT": 2
    },
    "act": {
-    "— (ordinary locomotion)": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 1
+    "— (ordinary locomotion)": 1,
+    "PERTURBED BUT CONTINUES": 1
    },
    "falls": 0,
-   "steps": 3,
+   "steps": 0,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -3301,14 +3293,14 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 5,
-    "apps": 17,
-    "stage3": 3.1762857901451648e-15,
+    "strikes": 3,
+    "apps": 4,
+    "stage3": 1.4043333874306805e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 90.70509149153982,
-    "cpuMax": 59541.749999974854
+    "cpu": 51.05860878520845,
+    "cpuMax": 51343.87499996228
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1,
@@ -3320,23 +3312,22 @@
    "tag": "#9"
   },
   {
-   "near": 3952,
-   "pen5": 9,
-   "deep": 0.13779814922782505,
+   "near": 4059,
+   "pen5": 5,
+   "deep": 0.13101027677775257,
    "stuck": 0,
    "stall": 10,
    "nan": 0,
-   "jolt4": 5,
-   "joltMax": 0.06720584500074349,
-   "intents": 10,
+   "jolt4": 4,
+   "joltMax": 0.04777297995564412,
+   "intents": 12,
    "episodes": 3,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 3,
+    "MODERATE": 4,
     "SEVERE": 1,
-    "STRONG": 1,
-    "LIGHT": 1
+    "STRONG": 1
    },
    "bal": {
     "CORRECT": 4,
@@ -3350,7 +3341,7 @@
     "UNAFFECTED": 1
    },
    "falls": 1,
-   "steps": 1,
+   "steps": 2,
    "denied": 0,
    "longTk": 0,
    "own": {
@@ -3360,23 +3351,24 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 3,
+   "owners": 2,
    "l3": {
     "strikes": 4,
     "apps": 5,
-    "stage3": 3.580361673049448e-15,
+    "stage3": 3.722145839155691e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 91.91969133282797,
-    "cpuMax": 83022.91699999478
+    "cpu": 84.19094005471122,
+    "cpuMax": 65612.37499996787
    },
    "l3ev": {
-    "LIMB AT ITS RANGE": 2,
-    "TACKLE BOOT DENIED": 1,
-    "LANDING OBSTRUCTED": 1
+    "LANDING OBSTRUCTED": 1,
+    "LIMB HELD": 1,
+    "LIMB AT ITS RANGE": 1,
+    "LANDING SNAP": 1
    },
-   "limbDenied": 1,
+   "limbDenied": 0,
    "tag": "#9m"
   },
   {
@@ -3415,43 +3407,43 @@
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 46.22484758236272,
-    "cpuMax": 44747.70899990108
+    "cpu": 32.76372140307383,
+    "cpuMax": 32021.624999993946
    },
    "l3ev": {},
    "limbDenied": 0,
    "tag": "#10"
   },
   {
-   "near": 5261,
+   "near": 1951,
    "pen5": 0,
-   "deep": 0.02566392426235456,
+   "deep": 0.03155037027758542,
    "stuck": 0,
-   "stall": 0,
+   "stall": 39,
    "nan": 0,
-   "jolt4": 2,
+   "jolt4": 3,
    "joltMax": 0.062408967354060034,
-   "intents": 8,
-   "episodes": 2,
+   "intents": 6,
+   "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "STRONG": 2,
-    "MODERATE": 2
+    "MODERATE": 1,
+    "LIGHT": 1
    },
    "bal": {
-    "RECOVERY STEP": 2,
-    "CORRECT": 2
+    "CORRECT": 1,
+    "ABSORB": 1
    },
    "act": {
     "— (ordinary locomotion)": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 2
+    "UNAFFECTED": 1
    },
    "falls": 0,
-   "steps": 2,
+   "steps": 0,
    "denied": 0,
-   "longTk": 0,
+   "longTk": 1,
+   "stallTk": 38,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -3461,14 +3453,14 @@
    },
    "owners": 3,
    "l3": {
-    "strikes": 3,
-    "apps": 3,
-    "stage3": 3.552713678800501e-15,
+    "strikes": 1,
+    "apps": 1,
+    "stage3": 8.881784197001252e-16,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 120.77368484665529,
-    "cpuMax": 69910.75000003912
+    "cpu": 31.36048123015603,
+    "cpuMax": 11872.124999994412
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1
@@ -3477,218 +3469,37 @@
    "tag": "#10m"
   },
   {
-   "near": 5079,
-   "pen5": 25,
-   "deep": 0.1270207792083354,
+   "near": 3159,
+   "pen5": 7,
+   "deep": 0.11862724420037986,
    "stuck": 0,
-   "stall": 0,
+   "stall": 69,
    "nan": 0,
-   "jolt4": 8,
-   "joltMax": 0.0536934178196976,
-   "intents": 10,
-   "episodes": 4,
+   "jolt4": 9,
+   "joltMax": 0.05763404307805813,
+   "intents": 11,
+   "episodes": 3,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "SEVERE": 3,
-    "STRONG": 3,
-    "MODERATE": 1,
-    "LIGHT": 1
-   },
-   "bal": {
-    "FALL CANDIDATE": 3,
-    "RECOVERY STEP": 3,
-    "CORRECT": 2
-   },
-   "act": {
-    "STAGGER / FALL CANDIDATE": 3,
-    "— (ordinary locomotion)": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 2,
-    "UNAFFECTED": 1
-   },
-   "falls": 3,
-   "steps": 8,
-   "denied": 1,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 5,
-   "l3": {
-    "strikes": 16,
-    "apps": 48,
-    "stage3": 9.832841130423611e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 107.04539327878065,
-    "cpuMax": 23494.500000029802
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 4,
-    "CONTACT DURING A FALL PLACEHOLDER": 3,
-    "BODY OUTRAN A HELD FOOT": 3,
-    "LANDING OBSTRUCTED": 4,
-    "LIMB HELD": 1,
-    "LANDING SNAP": 1,
-    "TOUCH DENIED": 1
-   },
-   "limbDenied": 1,
-   "tag": "#11"
-  },
-  {
-   "near": 5624,
-   "pen5": 15,
-   "deep": 0.0913558904943749,
-   "stuck": 0,
-   "stall": 1,
-   "nan": 0,
-   "jolt4": 13,
-   "joltMax": 0.07261040094782654,
-   "intents": 10,
-   "episodes": 7,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "SEVERE": 4,
-    "STRONG": 6,
+    "SEVERE": 2,
     "MODERATE": 4
    },
    "bal": {
-    "FALL CANDIDATE": 4,
-    "RECOVERY STEP": 6,
+    "FALL CANDIDATE": 2,
     "CORRECT": 4
    },
    "act": {
-    "STAGGER / FALL CANDIDATE": 3,
-    "— (ordinary locomotion)": 6,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 3,
-    "PERTURBED BUT CONTINUES": 1
-   },
-   "falls": 4,
-   "steps": 11,
-   "denied": 2,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 7,
-   "l3": {
-    "strikes": 23,
-    "apps": 41,
-    "stage3": 1.0695084443661335e-14,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 126.50610750750494,
-    "cpuMax": 41196.417000028305
-   },
-   "l3ev": {
-    "LIMB AT ITS RANGE": 3,
-    "CONTACT DURING A FALL PLACEHOLDER": 2,
-    "BODY OUTRAN A HELD FOOT": 4,
-    "LANDING OBSTRUCTED": 3,
-    "TOUCH DENIED": 1,
-    "TACKLE BOOT DENIED": 1
-   },
-   "limbDenied": 2,
-   "tag": "#11m"
-  },
-  {
-   "near": 5188,
-   "pen5": 22,
-   "deep": 0.22846587557034154,
-   "stuck": 0,
-   "stall": 0,
-   "nan": 0,
-   "jolt4": 5,
-   "joltMax": 0.08217342551911735,
-   "intents": 10,
-   "episodes": 5,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "MODERATE": 9,
-    "LIGHT": 1
-   },
-   "bal": {
-    "CORRECT": 10
-   },
-   "act": {
-    "— (ordinary locomotion)": 4,
-    "PERTURBED BUT CONTINUES": 5,
+    "STAGGER / FALL CANDIDATE": 2,
+    "— (ordinary locomotion)": 2,
+    "PERTURBED BUT CONTINUES": 1,
     "UNAFFECTED": 1
    },
-   "falls": 0,
-   "steps": 0,
-   "denied": 0,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 4,
-   "l3": {
-    "strikes": 7,
-    "apps": 8,
-    "stage3": 3.972054645195637e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 103.12725953219983,
-    "cpuMax": 62289.957999950275
-   },
-   "l3ev": {
-    "BODY OUTRAN A HELD FOOT": 1,
-    "LANDING OBSTRUCTED": 4,
-    "LIMB AT ITS RANGE": 1,
-    "TOUCH DENIED": 1,
-    "LANDING SNAP": 1
-   },
-   "limbDenied": 1,
-   "tag": "#12"
-  },
-  {
-   "near": 5234,
-   "pen5": 11,
-   "deep": 0.1355893615794143,
-   "stuck": 0,
-   "stall": 49,
-   "nan": 0,
-   "jolt4": 8,
-   "joltMax": 0.09294234551011804,
-   "intents": 10,
-   "episodes": 6,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "MODERATE": 12
-   },
-   "bal": {
-    "CORRECT": 12
-   },
-   "act": {
-    "— (ordinary locomotion)": 6,
-    "PERTURBED BUT CONTINUES": 3,
-    "UNAFFECTED": 3
-   },
-   "falls": 0,
-   "steps": 0,
+   "falls": 2,
+   "steps": 2,
    "denied": 0,
    "longTk": 1,
-   "stallTk": 49,
+   "stallTk": 69,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -3699,58 +3510,61 @@
    "owners": 5,
    "l3": {
     "strikes": 8,
-    "apps": 8,
-    "stage3": 3.781283367737843e-15,
+    "apps": 13,
+    "stage3": 1.2523886564118044e-14,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 94.43542541255897,
-    "cpuMax": 30591.12500003539
+    "cpu": 57.996388561059,
+    "cpuMax": 19611.333000008017
    },
    "l3ev": {
+    "LIMB AT ITS RANGE": 2,
+    "CONTACT DURING A FALL PLACEHOLDER": 2,
     "BODY OUTRAN A HELD FOOT": 1,
-    "LANDING OBSTRUCTED": 4,
-    "LIMB AT ITS RANGE": 1,
-    "TOUCH DENIED": 1,
-    "LANDING SNAP": 1
+    "LANDING OBSTRUCTED": 1,
+    "TOUCH DENIED": 2
    },
-   "limbDenied": 1,
-   "tag": "#12m"
+   "limbDenied": 2,
+   "tag": "#11"
   },
   {
-   "near": 2735,
-   "pen5": 2,
-   "deep": 0.053264561857431586,
+   "near": 5220,
+   "pen5": 31,
+   "deep": 0.14733451618283736,
    "stuck": 0,
-   "stall": 80,
+   "stall": 31,
    "nan": 0,
-   "jolt4": 7,
-   "joltMax": 0.0694882309530032,
+   "jolt4": 14,
+   "joltMax": 0.0817725019968221,
    "intents": 8,
    "episodes": 4,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "MODERATE": 5,
-    "BRUSH": 1,
-    "SEVERE": 2
+    "SEVERE": 4,
+    "MODERATE": 1,
+    "LIGHT": 1,
+    "STRONG": 2
    },
    "bal": {
-    "CORRECT": 5,
-    "ABSORB": 1,
-    "FALL CANDIDATE": 2
+    "FALL CANDIDATE": 2,
+    "CORRECT": 2,
+    "RECOVERY STEP": 2,
+    "STAGGER CANDIDATE": 2
    },
    "act": {
-    "— (ordinary locomotion)": 3,
-    "UNAFFECTED": 3,
-    "STAGGER / FALL CANDIDATE": 1,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE": 1
+    "STAGGER / FALL CANDIDATE": 2,
+    "— (ordinary locomotion)": 1,
+    "UNAFFECTED": 2,
+    "INTERRUPTED BEFORE TECHNICAL EVENT": 2,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
    },
    "falls": 2,
-   "steps": 3,
-   "denied": 0,
+   "steps": 10,
+   "denied": 2,
    "longTk": 1,
-   "stallTk": 70,
+   "stallTk": 31,
    "own": {
     "dual": 0,
     "unaware": 0,
@@ -3760,228 +3574,231 @@
    },
    "owners": 5,
    "l3": {
-    "strikes": 10,
-    "apps": 19,
-    "stage3": 8.881784197001252e-15,
+    "strikes": 12,
+    "apps": 23,
+    "stage3": 9.64041883925955e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 60.095187695404086,
-    "cpuMax": 65391.95799990557
+    "cpu": 92.53624852577708,
+    "cpuMax": 82727.24999999627
    },
    "l3ev": {
-    "LANDING OBSTRUCTED": 2,
-    "LIMB AT ITS RANGE": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1,
-    "CONTACT DURING A FALL PLACEHOLDER": 1
+    "LIMB AT ITS RANGE": 2,
+    "CONTACT DURING A FALL PLACEHOLDER": 2,
+    "BODY OUTRAN A HELD FOOT": 3,
+    "LANDING OBSTRUCTED": 3,
+    "TOUCH DENIED": 1
    },
-   "limbDenied": 0,
-   "tag": "#13"
+   "limbDenied": 1,
+   "tag": "#11m"
   },
   {
-   "near": 2769,
-   "pen5": 6,
-   "deep": 0.06420097193525827,
+   "near": 3703,
+   "pen5": 23,
+   "deep": 0.1350696361118623,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 13,
+   "joltMax": 0.07705324221018192,
+   "intents": 11,
+   "episodes": 3,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 2,
+    "STRONG": 2,
+    "SEVERE": 2
+   },
+   "bal": {
+    "CORRECT": 2,
+    "RECOVERY STEP": 2,
+    "FALL CANDIDATE": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "UNAFFECTED": 1,
+    "INTERRUPTED BEFORE TECHNICAL EVENT": 1,
+    "STAGGER / FALL CANDIDATE": 2
+   },
+   "falls": 2,
+   "steps": 5,
+   "denied": 6,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 5,
+   "l3": {
+    "strikes": 19,
+    "apps": 38,
+    "stage3": 1.3032713211584114e-14,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 65.5720397014004,
+    "cpuMax": 26517.290999996476
+   },
+   "l3ev": {
+    "BODY OUTRAN A HELD FOOT": 6,
+    "LANDING OBSTRUCTED": 2,
+    "TOUCH DENIED": 3,
+    "LIMB HELD": 1,
+    "LIMB AT ITS RANGE": 3,
+    "LANDING SNAP": 1,
+    "TACKLE BOOT DENIED": 1,
+    "CONTACT DURING A FALL PLACEHOLDER": 2,
+    "RECOVERY STEP LANDS IN THE OPPONENT": 1
+   },
+   "limbDenied": 4,
+   "tag": "#12"
+  },
+  {
+   "near": 3395,
+   "pen5": 15,
+   "deep": 0.13345433737209667,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 10,
+   "joltMax": 0.07705529109798732,
+   "intents": 10,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 2,
+    "STRONG": 1,
+    "SEVERE": 1
+   },
+   "bal": {
+    "CORRECT": 2,
+    "RECOVERY STEP": 1,
+    "FALL CANDIDATE": 1
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "UNAFFECTED": 1,
+    "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE": 1
+   },
+   "falls": 1,
+   "steps": 5,
+   "denied": 6,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 8,
+    "apps": 12,
+    "stage3": 1.637720085286689e-14,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 57.099090900055955,
+    "cpuMax": 28239.958000020124
+   },
+   "l3ev": {
+    "BODY OUTRAN A HELD FOOT": 2,
+    "LANDING OBSTRUCTED": 1,
+    "LIMB AT ITS RANGE": 1
+   },
+   "limbDenied": 0,
+   "tag": "#12m"
+  },
+  {
+   "near": 5168,
+   "pen5": 2,
+   "deep": 0.07319544329544186,
    "stuck": 0,
    "stall": 10,
    "nan": 0,
-   "jolt4": 10,
-   "joltMax": 0.09256359819969415,
-   "intents": 5,
-   "episodes": 4,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "MODERATE": 3,
-    "BRUSH": 1,
-    "SEVERE": 4
-   },
-   "bal": {
-    "CORRECT": 3,
-    "ABSORB": 1,
-    "FALL CANDIDATE": 4
-   },
-   "act": {
-    "— (ordinary locomotion)": 2,
-    "UNAFFECTED": 2,
-    "STAGGER / FALL CANDIDATE": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED → FALL CANDIDATE": 1,
-    "INTERRUPTED BEFORE TECHNICAL EVENT → FALL CANDIDATE": 1
-   },
-   "falls": 4,
-   "steps": 5,
-   "denied": 1,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 4,
-   "l3": {
-    "strikes": 10,
-    "apps": 21,
-    "stage3": 1.532107773982716e-14,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 125.10456761000962,
-    "cpuMax": 677474.1249999497
-   },
-   "l3ev": {
-    "LANDING OBSTRUCTED": 2,
-    "LIMB AT ITS RANGE": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1,
-    "CONTACT DURING A FALL PLACEHOLDER": 3,
-    "BODY OUTRAN A HELD FOOT": 1
-   },
-   "limbDenied": 0,
-   "tag": "#13m"
-  },
-  {
-   "near": 2848,
-   "pen5": 3,
-   "deep": 0.06765123644583255,
-   "stuck": 0,
-   "stall": 69,
-   "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.0804077136167286,
-   "intents": 10,
-   "episodes": 2,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "STRONG": 2,
-    "MODERATE": 1,
-    "LIGHT": 1
-   },
-   "bal": {
-    "STAGGER CANDIDATE": 1,
-    "RECOVERY STEP": 1,
-    "CORRECT": 2
-   },
-   "act": {
-    "— (ordinary locomotion)": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 1
-   },
-   "falls": 0,
-   "steps": 3,
-   "denied": 2,
-   "longTk": 1,
-   "stallTk": 69,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 4,
-   "l3": {
-    "strikes": 4,
-    "apps": 6,
-    "stage3": 4.04453596456279e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 48.12526189107874,
-    "cpuMax": 38183.91700007487
-   },
-   "l3ev": {
-    "LANDING OBSTRUCTED": 3,
-    "TOUCH DENIED": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1
-   },
-   "limbDenied": 1,
-   "tag": "#14"
-  },
-  {
-   "near": 3933,
-   "pen5": 3,
-   "deep": 0.07492355734759507,
-   "stuck": 0,
-   "stall": 0,
-   "nan": 0,
-   "jolt4": 11,
-   "joltMax": 0.0804077136167286,
-   "intents": 7,
-   "episodes": 2,
-   "longEp": 0,
-   "osc": 0,
-   "sev": {
-    "STRONG": 2,
-    "MODERATE": 2
-   },
-   "bal": {
-    "STAGGER CANDIDATE": 1,
-    "RECOVERY STEP": 1,
-    "CORRECT": 2
-   },
-   "act": {
-    "— (ordinary locomotion)": 2,
-    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
-    "UNAFFECTED": 1
-   },
-   "falls": 0,
-   "steps": 3,
-   "denied": 2,
-   "longTk": 0,
-   "own": {
-    "dual": 0,
-    "unaware": 0,
-    "noTouch": 0,
-    "blindClaim": 0,
-    "chatter": 0
-   },
-   "owners": 4,
-   "l3": {
-    "strikes": 4,
-    "apps": 7,
-    "stage3": 3.97990178705686e-15,
-    "pair": 0,
-    "bound": 0,
-    "energy": 0,
-    "cpu": 82.94791951686088,
-    "cpuMax": 48534.95800006203
-   },
-   "l3ev": {
-    "LANDING OBSTRUCTED": 5,
-    "TOUCH DENIED": 1,
-    "RECOVERY STEP LANDS IN THE OPPONENT": 1
-   },
-   "limbDenied": 1,
-   "tag": "#14m"
-  },
-  {
-   "near": 4343,
-   "pen5": 4,
-   "deep": 0.059287388248102535,
-   "stuck": 0,
-   "stall": 0,
-   "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.06246548357055542,
-   "intents": 10,
+   "jolt4": 5,
+   "joltMax": 0.08006184837024387,
+   "intents": 6,
    "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "STRONG": 1,
-    "MODERATE": 1
+    "STRONG": 2
    },
    "bal": {
-    "RECOVERY STEP": 1,
+    "RECOVERY STEP": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 1,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1
+   },
+   "falls": 0,
+   "steps": 5,
+   "denied": 3,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 9,
+    "apps": 22,
+    "stage3": 5.0709975958837106e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 85.34294889971036,
+    "cpuMax": 72010.9999999404
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 4,
+    "LIMB AT ITS RANGE": 1,
+    "TOUCH DENIED": 1,
+    "RECOVERY STEP LANDS IN THE OPPONENT": 2
+   },
+   "limbDenied": 1,
+   "tag": "#13"
+  },
+  {
+   "near": 5427,
+   "pen5": 32,
+   "deep": 0.1322537449358173,
+   "stuck": 0,
+   "stall": 10,
+   "nan": 0,
+   "jolt4": 12,
+   "joltMax": 0.08006859132375106,
+   "intents": 9,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "STRONG": 2,
+    "LIGHT": 2
+   },
+   "bal": {
+    "RECOVERY STEP": 2,
+    "ABSORB": 1,
     "CORRECT": 1
    },
    "act": {
-    "— (ordinary locomotion)": 2
+    "UNAFFECTED": 2,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
+    "PERTURBED BUT CONTINUES": 1
    },
    "falls": 0,
-   "steps": 1,
+   "steps": 6,
    "denied": 4,
    "longTk": 0,
    "own": {
@@ -3991,16 +3808,183 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 1,
+   "owners": 5,
    "l3": {
-    "strikes": 2,
-    "apps": 2,
-    "stage3": 2.0658801409477063e-15,
+    "strikes": 12,
+    "apps": 21,
+    "stage3": 4.949683791573068e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 83.47766440632734,
-    "cpuMax": 31528.083999990486
+    "cpu": 93.54369860499997,
+    "cpuMax": 62325.791999930516
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 8,
+    "LIMB AT ITS RANGE": 2,
+    "TOUCH DENIED": 1,
+    "RECOVERY STEP LANDS IN THE OPPONENT": 1
+   },
+   "limbDenied": 1,
+   "tag": "#13m"
+  },
+  {
+   "near": 1537,
+   "pen5": 17,
+   "deep": 0.13615703739324325,
+   "stuck": 0,
+   "stall": 77,
+   "nan": 0,
+   "jolt4": 5,
+   "joltMax": 0.0802859599123365,
+   "intents": 9,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 3,
+    "LIGHT": 1
+   },
+   "bal": {
+    "CORRECT": 3,
+    "ABSORB": 1
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
+    "UNAFFECTED": 1
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 1,
+   "stallTk": 77,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 2,
+    "apps": 3,
+    "stage3": 3.66205343881779e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 37.942471502283986,
+    "cpuMax": 74588.66600005422
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 4,
+    "TOUCH DENIED": 2,
+    "TACKLE BOOT DENIED": 1
+   },
+   "limbDenied": 3,
+   "tag": "#14"
+  },
+  {
+   "near": 1537,
+   "pen5": 17,
+   "deep": 0.13616351009865843,
+   "stuck": 0,
+   "stall": 77,
+   "nan": 0,
+   "jolt4": 5,
+   "joltMax": 0.0802859599123365,
+   "intents": 9,
+   "episodes": 2,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 3,
+    "LIGHT": 1
+   },
+   "bal": {
+    "CORRECT": 3,
+    "ABSORB": 1
+   },
+   "act": {
+    "— (ordinary locomotion)": 2,
+    "TECHNICAL EVENT COMPLETES, RECOVERY REPLACED": 1,
+    "UNAFFECTED": 1
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 1,
+   "stallTk": 77,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 4,
+   "l3": {
+    "strikes": 2,
+    "apps": 3,
+    "stage3": 2.0095975966311255e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 32.61758067986553,
+    "cpuMax": 49552.665999974124
+   },
+   "l3ev": {
+    "LANDING OBSTRUCTED": 4,
+    "TOUCH DENIED": 2,
+    "TACKLE BOOT DENIED": 1
+   },
+   "limbDenied": 3,
+   "tag": "#14m"
+  },
+  {
+   "near": 3083,
+   "pen5": 5,
+   "deep": 0.07430969293391476,
+   "stuck": 0,
+   "stall": 0,
+   "nan": 0,
+   "jolt4": 1,
+   "joltMax": 0.0502170439862776,
+   "intents": 8,
+   "episodes": 1,
+   "longEp": 0,
+   "osc": 0,
+   "sev": {
+    "MODERATE": 2
+   },
+   "bal": {
+    "CORRECT": 2
+   },
+   "act": {
+    "— (ordinary locomotion)": 2
+   },
+   "falls": 0,
+   "steps": 0,
+   "denied": 0,
+   "longTk": 0,
+   "own": {
+    "dual": 0,
+    "unaware": 0,
+    "noTouch": 0,
+    "blindClaim": 0,
+    "chatter": 0
+   },
+   "owners": 2,
+   "l3": {
+    "strikes": 2,
+    "apps": 4,
+    "stage3": 3.552713678800501e-15,
+    "pair": 0,
+    "bound": 0,
+    "energy": 0,
+    "cpu": 51.22210210269625,
+    "cpuMax": 30037.791999988258
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1
@@ -4009,32 +3993,30 @@
    "tag": "#15"
   },
   {
-   "near": 4343,
-   "pen5": 4,
-   "deep": 0.059281414138310284,
+   "near": 3084,
+   "pen5": 5,
+   "deep": 0.07429581666074844,
    "stuck": 0,
    "stall": 0,
    "nan": 0,
-   "jolt4": 4,
-   "joltMax": 0.06246723609877306,
-   "intents": 10,
+   "jolt4": 1,
+   "joltMax": 0.05020442423894839,
+   "intents": 8,
    "episodes": 1,
    "longEp": 0,
    "osc": 0,
    "sev": {
-    "STRONG": 1,
-    "MODERATE": 1
+    "MODERATE": 2
    },
    "bal": {
-    "RECOVERY STEP": 1,
-    "CORRECT": 1
+    "CORRECT": 2
    },
    "act": {
     "— (ordinary locomotion)": 2
    },
    "falls": 0,
-   "steps": 1,
-   "denied": 4,
+   "steps": 0,
+   "denied": 0,
    "longTk": 0,
    "own": {
     "dual": 0,
@@ -4043,16 +4025,16 @@
     "blindClaim": 0,
     "chatter": 0
    },
-   "owners": 1,
+   "owners": 2,
    "l3": {
     "strikes": 2,
-    "apps": 2,
-    "stage3": 7.105427357601002e-15,
+    "apps": 4,
+    "stage3": 3.552713678800501e-15,
     "pair": 0,
     "bound": 0,
     "energy": 0,
-    "cpu": 143.2078366746877,
-    "cpuMax": 114308.12499998137
+    "cpu": 49.74131082955132,
+    "cpuMax": 31694.41600004211
    },
    "l3ev": {
     "LANDING OBSTRUCTED": 1

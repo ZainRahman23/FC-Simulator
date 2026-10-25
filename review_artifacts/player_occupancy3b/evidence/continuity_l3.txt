@@ -12,9 +12,9 @@ WEIGHT ACCEPTANCE → LOCOMOTION      104                   4.6 → 4.0     1.61
 
 STAGE 3B
 transition                            n     pelvis acc cm/f² S2 → X   pelvis Δv m/s   pose snap cm      knee acc      foot acc     knee Δv m/s     foot Δv m/s  worst added pelvis jolt
-LIMB CONTACT (3B)                   188                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.9→40.2     32.0→36.1     12.83→23.68     19.13→21.64  x90-jog ATT @2.304s +7.1
-STAGE 2 → IMPACT                    166                  10.4 → 8.8     4.92 → 5.30      5.3 → 3.8     21.3→40.2     32.0→36.1     12.64→23.68     19.13→21.64  x90-jog ATT @2.304s +7.1
-IMPACT → MAXIMUM PERTURBATION       166                  10.4 → 8.8     4.92 → 5.30      4.0 → 6.0     29.8→35.0     32.0→32.4     17.84→19.19     19.13→18.66  croq-recover DEF @0.754s +7.9
-MAXIMUM → RECOVERY STEP              86                  14.0 → 8.8     5.19 → 5.30      5.3 → 5.4     30.5→40.2     32.0→36.1     18.28→23.68     19.13→21.64  croq-recover DEF @0.583s +5.9
-STEP → WEIGHT ACCEPTANCE             82                   6.8 → 8.5     3.55 → 4.80      4.1 → 8.0     23.9→24.1     38.8→28.4     13.54→12.54     23.26→17.04  croq-leg DEF @0.837s +5.1
-WEIGHT ACCEPTANCE → LOCOMOTION       69                   3.4 → 6.4     1.79 → 1.67      1.7 → 1.6     19.1→17.5     28.8→30.5      8.72→10.51     17.21→18.28  carry-jog-l ATT @2.275s +4.9
+LIMB CONTACT (3B)                   170                  10.4 → 9.1     4.92 → 5.46      5.3 → 3.9     21.9→37.7     32.0→33.2     12.83→22.20     19.13→19.91  croq-before-m ATT @0.475s +6.0
+STAGE 2 → IMPACT                    158                  10.4 → 9.1     4.92 → 5.46      5.3 → 3.9     21.9→37.7     32.0→33.2     12.83→22.20     19.13→19.91  croq-before-m ATT @0.475s +6.0
+IMPACT → MAXIMUM PERTURBATION       158                  10.4 → 9.1     5.35 → 5.46      4.1 → 4.1     21.9→34.9     38.7→29.2     12.83→19.16     23.19→17.49  croq-recover DEF @0.754s +6.7
+MAXIMUM → RECOVERY STEP              63                 14.0 → 12.1     5.35 → 7.29      5.3 → 5.3     30.5→37.7     32.0→33.2     18.28→22.20     19.13→19.91  both-committed DEF @0.821s +10.2
+STEP → WEIGHT ACCEPTANCE             59                   6.8 → 7.8     3.55 → 2.14      4.1 → 3.2     23.9→27.7     38.8→25.1     12.76→15.38     23.26→15.01  x150-jog-m ATT @1.725s +6.7
+WEIGHT ACCEPTANCE → LOCOMOTION      104                   4.4 → 6.5     1.58 → 1.26      1.5 → 1.9     13.8→22.4     17.7→19.9      8.26→12.24     10.65→11.92  croq-early ATT @1.646s +5.1

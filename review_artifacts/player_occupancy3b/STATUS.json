@@ -1,6 +1,6 @@
 {
-  "milestone": "TOUCHLINE — PLAYER OCCUPANCY STAGE 3B.0 + 3B.1: LIMB CONTACT (accounting / invariants + swinging-limb contact)",
-  "status": "PROTOTYPE — built and measured, STOPPED for the owner's visual review; not integrated, not frozen, not merged, not pushed, not published; Stage 3B.2 NOT started (only after the owner's visual approval of 3B.1)",
+  "milestone": "TOUCHLINE — PLAYER OCCUPANCY STAGE 3B.0 + 3B.1: LIMB CONTACT, CALIBRATED (the limb-momentum source term)",
+  "status": "CALIBRATED PROTOTYPE — STOPPED for the owner's visual review of the calibrated 3B.1; not integrated, not frozen, not merged, not pushed, not published; Stage 3B.2 NOT started; Stage 3 NOT modified",
   "date": "2026-10-25",
   "branch": "prototype/player-occupancy-stage3b1",
   "cut_from": {
@@ -147,14 +147,15 @@
     "perception window: 13 decision differences, all after physics (4 weakly attributed)"
   ],
   "owner_decisions": [
-    "how much authored limb speed is momentum (frontal-plane knee speed cap?)",
+    "visual review of the calibrated 3B.1 (F+M) in the Lab; accept F+M as the source term?",
+    "freeze calibrated 3B.1 as the 3B.2 foundation?",
     "the yield range ±12/20/20°",
     "landing priority until 3B.2",
     "positional-only contacts during the fall placeholder until 3B.4",
     "boot↔boot / planted↔planted ownership",
     "frictionless limb contacts"
   ],
-  "recommendation": "strong enough as the mechanical foundation for 3B.2, after decision 1",
+  "recommendation": "calibrated 3B.1 (F+M) is strong enough to freeze as the 3B.2 foundation, subject to the owner's visual review",
   "not_done_as_instructed": [
     "recovery-foot placement (3B.2)",
     "trips / staggers (3B.3)",
@@ -163,5 +164,321 @@
     "Astra's support timeline, gait, Strength, push-and-run, thin geometry, rigid leg-body blocking, flight ground force",
     "integration / freezing / merging / pushing / publishing"
   ],
-  "stage3_finding": "pre-existing Stage 3 divergence: a committed defender whose capture point runs away stays RECOVERY STEP (no step, no fall candidate, no fade) → u diverges exponentially (hidden; up to 1e6 m/s); OLD 3 / 3B 6 of 1,570 possession-tool worlds; exposed by the 3B ledger (2 worlds over the 1e-9 closure check); not fixed (Stage 3 logic) — evidence/stage3_runaway.txt"
+  "stage3_finding": "pre-existing Stage 3 divergence: a committed defender whose capture point runs away stays RECOVERY STEP (no step, no fall candidate, no fade) → u diverges exponentially (hidden; up to 1e6 m/s); OLD 3 / 3B 6 of 1,570 possession-tool worlds; exposed by the 3B ledger (2 worlds over the 1e-9 closure check); not fixed (Stage 3 logic) — evidence/stage3_runaway.txt",
+  "results_3b1_as_first_built_note": "the 'results' block below is 3B.1 as first built (formulation A, commit 469a080f); the calibrated numbers are in 'calibration'",
+  "calibration": {
+    "instruction": "sources/2026-10-25_user_instruction_stage3b1_calibration.md",
+    "report": "L3_CALIBRATION_REPORT.md",
+    "commits": {
+      "3b1_as_first_built": "469a080f",
+      "calibration_code": "3625f925"
+    },
+    "why_strong": "formulation A measured a limb point as root physical velocity + authored motion relative to its frame; the frame includes Stage 2's positional pushes (3-10 mm/tick apart before the 2nd contact) and the canonical legs lag a push (knee follows 54 % after 1 tick, ankle 26 %), so the lag was read as closing: DEF knee world +0.48 m/s counted +2.04; the larger closing hit the yield speed limit (12 rad/s) and stiffened the knee (17.5 kg vs 3.9 kg)",
+    "physically_justified": false,
+    "recommended_formulation": "F+M: frame (root + Stage 3 offset + pushes) + the limb's articulation about its hip; bodies at root physical velocity; articulated effective mass (limb's own + its body's at the hip, fed back into Gauss-Seidel). Principle: an impulse only from momentum a state can lose (root translation via Stage 3 u; limb articulation via 3B yield). Excluded: pelvis authored sway/transfer, Stage 3 posture response, facing rotation",
+    "rejected": {
+      "A": "pushes read as closing",
+      "B": "A on the local capsule normal: reinstates OLD's forward wedge, keeps A's artifact",
+      "C": "limb-about-hip still carries the lag; flagship 35.0 N·s",
+      "D": "drawn surfaces feed back Stage 3 posture + planted IK response; croq-early 77→245, both-committed 67→198",
+      "E": "counts facing rotation no state carries (+25-40 % in turning contacts)"
+    },
+    "flagship": {
+      "A_Nps": [
+        18.05,
+        25.45
+      ],
+      "FM_Nps": [
+        4.71,
+        2.55,
+        1.44,
+        1.82
+      ],
+      "FM_total_Nps": 10.52,
+      "stage3_body_contact_Nps": 11.14,
+      "classes": "both MODERATE / CORRECT, no step",
+      "dv_mps": [
+        0.301,
+        0.065
+      ],
+      "along_mean_heading_Nps": 0.0012,
+      "lead_cm": {
+        "OLD": 16.6,
+        "A": 2.0,
+        "FM": 0.5
+      }
+    },
+    "first_contact_A_to_FM_Nps": {
+      "side": [
+        18.1,
+        4.7
+      ],
+      "glance": [
+        9.5,
+        2.6
+      ],
+      "headon-walk": [
+        10.7,
+        0.7
+      ],
+      "x30-run": [
+        19.9,
+        0.1
+      ],
+      "headon-jog": [
+        47.1,
+        39.3
+      ],
+      "oblique-firm": [
+        41.6,
+        35.1
+      ],
+      "turn-into": [
+        33.1,
+        28.3
+      ],
+      "static-jog": [
+        34.2,
+        27.9
+      ],
+      "x90-jog": [
+        22.6,
+        18.4
+      ],
+      "x120-run": [
+        31.2,
+        26.7
+      ],
+      "croq-leg": [
+        39.2,
+        39.2
+      ],
+      "croq-between": [
+        55.4,
+        46.7
+      ],
+      "croq-early": [
+        62.2,
+        30.1
+      ],
+      "in-croq": [
+        34.9,
+        24.1
+      ],
+      "both-committed": [
+        36.0,
+        24.1
+      ],
+      "croq-recover": [
+        29.8,
+        20.4
+      ],
+      "croq-recover2": [
+        39.5,
+        34.2
+      ],
+      "bf-past": [
+        37.8,
+        28.1
+      ],
+      "x150-jog": [
+        30.8,
+        14.1
+      ]
+    },
+    "classes": {
+      "brush": "0.1-5 N·s, LIGHT/MODERATE CORRECT",
+      "strong_collision": "18-40 N·s, bodies' approach, STRONG/RECOVERY STEP",
+      "limb_strike": "24-47 N·s, limb's own articulation (caps 3/4.5/6 m/s), STRONG/SEVERE where committed or on one foot"
+    },
+    "invariants": {
+      "unit_configs": 2000,
+      "energy_bound_pairing": 0,
+      "rotation": "0/6000",
+      "mirror": "0/2000",
+      "determinism": "0/2000",
+      "tangential_unit": "0/2000",
+      "tangential_world": "32/32 identical",
+      "rotation_37deg_world": "<=0.02 N·s over 196 pairs",
+      "mirrors_within_0.1": "19/27 (static-jog, static-walk canonical asymmetry)"
+    },
+    "suites_S2_OLD_A_FM": {
+      "ticks_leg_pair_over_5cm": {
+        "review": [
+          849,
+          597,
+          307,
+          227
+        ],
+        "matrix": [
+          1401,
+          862,
+          443,
+          335
+        ],
+        "l3": [
+          2547,
+          1540,
+          672,
+          567
+        ],
+        "moves": [
+          5633,
+          4546,
+          1974,
+          2105
+        ],
+        "search": [
+          3193,
+          2995,
+          1478,
+          1845
+        ]
+      },
+      "fall_candidates_OLD_A_FM": {
+        "review": [
+          7,
+          13,
+          6
+        ],
+        "matrix": [
+          14,
+          23,
+          14
+        ],
+        "l3": [
+          24,
+          53,
+          26
+        ],
+        "moves": [
+          40,
+          52,
+          28
+        ],
+        "search": [
+          54,
+          55,
+          46
+        ]
+      },
+      "recovery_steps_OLD_A_FM": {
+        "review": [
+          23,
+          25,
+          14
+        ],
+        "matrix": [
+          56,
+          64,
+          37
+        ],
+        "l3": [
+          84,
+          148,
+          99
+        ],
+        "moves": [
+          208,
+          352,
+          232
+        ],
+        "search": [
+          119,
+          266,
+          151
+        ]
+      },
+      "crossed_legs": {
+        "review": [
+          379,
+          487,
+          343,
+          388
+        ],
+        "matrix": [
+          285,
+          436,
+          576,
+          498
+        ],
+        "l3": [
+          790,
+          1031,
+          1306,
+          1305
+        ],
+        "moves": [
+          2070,
+          3431,
+          4166,
+          4256
+        ],
+        "search": [
+          4165,
+          4744,
+          6083,
+          5128
+        ]
+      },
+      "deepest_leg_cm": 22.4,
+      "identity_before_contact": "all identical",
+      "ball_changes_without_canonical_contact": 0,
+      "physics_caused_transitions": 0
+    },
+    "torture_OLD_A_FM": {
+      "over_5cm": [
+        680,
+        540,
+        316
+      ],
+      "deepest_cm": [
+        22.7,
+        22.4,
+        15.2
+      ],
+      "fall_candidates_A_FM": [
+        18,
+        11
+      ],
+      "steps_A_FM": [
+        81,
+        66
+      ],
+      "nondeterministic": "0/32",
+      "nan_stuck_ownership_chatter": 0
+    },
+    "performance_us_S2_OLD_FM": {
+      "step_mean": [
+        106.8,
+        130.8,
+        154.0
+      ],
+      "step_p99": [
+        644,
+        764,
+        880
+      ],
+      "limb_pass_idle_near_active": [
+        12.0,
+        39.1,
+        70.4
+      ]
+    },
+    "old_recheck": "0 differing lines",
+    "milestone_regression": "ALL 10 SUITES IDENTICAL",
+    "browser": "32/32, page≡node 120/120, 0 errors",
+    "recommendation": "strong enough to freeze as the 3B.2 foundation, subject to the owner's visual review",
+    "deferred": [
+      "crossed legs",
+      "legs landing into each other (22.4 cm)",
+      "boot↔boot and planted↔planted",
+      "landing obstructions / steps into the opponent",
+      "planted-foot slide where Stage 3 moves a body (≤15.9 cm)",
+      "Stage 3 committed-defender runaway (Stage 3's)",
+      "hip range ≤2° beyond in a few leg-ticks",
+      "the yield speed limit 12 rad/s stiffening hard strikes",
+      "the canonical carry's 2-5 m/s knee whip after touches"
+    ]
+  }
 }
