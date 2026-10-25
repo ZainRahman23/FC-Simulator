@@ -123,28 +123,31 @@ export class ImpactWorld extends OccupancyWorld2 {
     const vPhys = (s, st) => [st.V[0] + s.u[0], st.V[1] + s.u[1]], vFrame = (s, st) => (s.prevRoot && s.prevRoot.k === k - 1 ? [(st.P[0] - s.prevRoot.P[0] + s.P[0] - s.prevP[0]) / DT, (st.P[1] - s.prevRoot.P[1] + s.P[1] - s.prevP[1]) / DT] : [st.V[0], st.V[1]]);
     const vA = vPhys(SA, sa), vD = vPhys(SD, sd), fA = vFrame(SA, sa), fD = vFrame(SD, sd), active = SA.active || SD.active;
     const done = () => { for (const [s, st] of [[SA, sa], [SD, sd]]) { s.prevRoot = { k, P: st.P.slice() }; s.prevP = s.P.slice(); } };
-    if (!active && dist > OCC.broad) { if (this.imp.ep) this.closeEpisode(t); this.prevV3 = null; return done(); }
+    if (!active && dist > OCC.broad && !(this.extImpulses && this.extImpulses(k))) { if (this.imp.ep) this.closeEpisode(t); this.prevV3 = null; return done(); }
     const LP = this.livePoses(), va = volumesOf(LP.a.J), vd = volumesOf(LP.d.J), H = this.volHist || (this.volHist = []); while (H.length && H[0].k < k - X.artTicks) H.shift();
     const PV = H.length && H[0].k === k - X.artTicks ? H[0] : null, nT = X.artTicks; H.push({ k, va, vd, rA: sa.P.slice(), rD: sd.P.slice(), pA: SA.P.slice(), pD: SD.P.slice() });
     const pairs = dist <= OCC.broad ? detect(va, vd, { within: 0 }).filter((x) => x.both) : [];
     // ── THE CONTACT: each touching pair, BODY or LIMB; the bodies' closing speed on its normal, and its limbs' articulated closing (the contact points'
     // motion in their bodies' frames, from last tick's capsules) ──
-    for (const x of pairs) { x.body = isBodyRegion(x.A, x.uA) && isBodyRegion(x.B, x.uB); x.n2 = x.nh || unit2(sub2(sa.P, sd.P)); x.vBody = dot2(sub2(vD, vA), x.n2);
+    for (const x of pairs) { x.body = isBodyRegion(x.A, x.uA) && isBodyRegion(x.B, x.uB); x.n2 = this.normalOf ? this.normalOf(x, sa, sd) : x.nh || unit2(sub2(sa.P, sd.P)); x.vBody = dot2(sub2(vD, vA), x.n2);
       x.vArt = null; if (PV) { const a0 = PV.va.find((v) => v.id === x.A), b0 = PV.vd.find((v) => v.id === x.B); if (a0 && b0) { const pa = capPt(va.find((v) => v.id === x.A), x.uA), pb = capPt(vd.find((v) => v.id === x.B), x.uB), qa = capPt(a0, x.uA), qb = capPt(b0, x.uB);
           // (the contact points' motion over nT ticks less their bodies' frames' (root + pelvis) over the same ticks; each side capped at its limb's ceiling)
           const T = nT * DT, gA = [(sa.P[0] - PV.rA[0] + SA.P[0] - PV.pA[0]) / T, (sa.P[1] - PV.rA[1] + SA.P[1] - PV.pA[1]) / T], gD = [(sd.P[0] - PV.rD[0] + SD.P[0] - PV.pD[0]) / T, (sd.P[1] - PV.rD[1] + SD.P[1] - PV.pD[1]) / T];
           const cap = (id, v) => { const c = X.artCap[id.replace(/_[RL]$/, "")]; if (!c) return v; const m = len2(v); return m > c ? mul2(v, c / m) : v; };
           const aA = cap(x.A, [(pa[0] - qa[0]) / T - gA[0], (pa[1] - qa[1]) / T - gA[1]]), aB = cap(x.B, [(pb[0] - qb[0]) / T - gD[0], (pb[1] - qb[1]) / T - gD[1]]); x.vArt = dot2(sub2(aB, aA), x.n2); } }
       x.legA = /^(THIGH|SHIN)_/.test(x.A) && !isBodyRegion(x.A, x.uA) ? x.A.slice(-1) : null; x.legB = /^(THIGH|SHIN)_/.test(x.B) && !isBodyRegion(x.B, x.uB) ? x.B.slice(-1) : null; }
-    const touching = pairs.length > 0, rec2 = this.occ.log.length && this.occ.log[this.occ.log.length - 1].k === k ? this.occ.log[this.occ.log.length - 1] : null;
+    // (STAGE 3B, when a subclass supplies it: the momentum the limb contacts actually delivered to each body this tick — then the only limb channel)
+    const EXT = this.extImpulses ? this.extImpulses(k) : null;
+    const touching = pairs.length > 0 || !!(EXT && EXT.any), rec2 = this.occ.log.length && this.occ.log[this.occ.log.length - 1].k === k ? this.occ.log[this.occ.log.length - 1] : null;
     let ep = this.imp.ep;
     if (touching && !ep) ep = this.imp.ep = { n: this.imp.episodes.length + 1, k0: k, t0: t, active: false, last: k, why: null, pairs: new Set(), strikes: new Set(), onset: null, peakPen: 0, J: [0, 0], players: {} };
-    if (ep && touching) { ep.last = k; for (const x of pairs) ep.pairs.add(x.A + "|" + x.B); ep.peakPen = Math.max(ep.peakPen, pairs[0].pen);
+    if (ep && touching) { ep.last = k; for (const x of pairs) ep.pairs.add(x.A + "|" + x.B); if (pairs.length) ep.peakPen = Math.max(ep.peakPen, pairs[0].pen);
       if (!ep.active) { // ── MEANINGFUL? ──
         const deep = X.penMin > 0 ? pairs.filter((x) => x.pen > X.penMin) : pairs, bodyC = deep.filter((x) => x.body), vb = bodyC.length ? Math.max(...bodyC.map((x) => x.vBody)) : -Infinity, limb = deep.filter((x) => !x.body && x.vArt != null && x.vArt > X.limbMin), unres = rec2 && rec2.unresolved;
-        const why = vb > X.uMin ? `BODY CONTACT closing ${vb.toFixed(2)} m/s` : limb.length ? `LIMB STRIKE ${limb[0].vArt.toFixed(2)} m/s (${regionOf(limb[0].A, limb[0].uA)} / ${regionOf(limb[0].B, limb[0].uB)})` : unres ? `STAGE 2 UNRESOLVED (${unres})` : null;
-        if (why) { ep.active = true; ep.why = why; ep.kA = k; ep.onset = this.onsetFacts(t, pairs, sa, sd, vA, vD, LP); for (const s of [SA, SD]) { if (!s.active) { Object.assign(s, newState(), { active: true, prevRoot: s.prevRoot, prevP: s.prevP, steps: [], ep: ep.n, t0: t }); } } this.event(null, "IMPACT", why, { ep: ep.n }); } } }
+        const why = vb > X.uMin ? `BODY CONTACT closing ${vb.toFixed(2)} m/s` : limb.length ? `LIMB STRIKE ${limb[0].vArt.toFixed(2)} m/s (${regionOf(limb[0].A, limb[0].uA)} / ${regionOf(limb[0].B, limb[0].uB)})` : unres ? `STAGE 2 UNRESOLVED (${unres})` : EXT && EXT.why ? EXT.why : null;
+        if (why) { ep.active = true; ep.why = why; ep.kA = k; ep.onset = pairs.length || !this.extPairs ? this.onsetFacts(t, pairs, sa, sd, vA, vD, LP) : this.onsetFacts(t, this.extPairs(k), sa, sd, vA, vD, LP); for (const s of [SA, SD]) { if (!s.active) { Object.assign(s, newState(), { active: true, prevRoot: s.prevRoot, prevP: s.prevP, steps: [], ep: ep.n, t0: t }); } } this.event(null, "IMPACT", why, { ep: ep.n }); } } }
     if (ep && !touching && (k - ep.last) * DT > X.quiet && !SA.active && !SD.active) this.closeEpisode(t);
+    if (EXT && ep && ep.active) for (const [s, key] of [[SA, "A"], [SD, "D"]]) if (!s.active && EXT[key].length) Object.assign(s, newState(), { active: true, prevRoot: s.prevRoot, prevP: s.prevP, steps: [], ep: ep.n, t0: t });
     if (!SA.active && !SD.active) return done();
     // ── THE IMPULSES of this tick (each player's, on his centre of mass and about his hips) ──
     const bodies = { A: this.bodyOf(LP.a.J, null), D: this.bodyOf(LP.d.J, null) }, Jt = { A: [0, 0], D: [0, 0] }, lev = { A: [], D: [] }, rec = { k, t, pairs: [], imp: null, strike: [] };
@@ -162,6 +165,10 @@ export class ImpactWorld extends OccupancyWorld2 {
           (ep.queue || (ep.queue = [])).push({ J: mul2(L.n2, j), c: L.at, n: 6 });
           rec.strike.push({ pair: L.A + " / " + L.B, regions: regionOf(L.A, L.uA) + " / " + regionOf(L.B, L.uB), art: +L.vArt.toFixed(2), mA: +mA.toFixed(1), mD: +mD.toFixed(1), j: +j.toFixed(2) }); this.event(null, "LIMB STRIKE", `${regionOf(L.A, L.uA)} / ${regionOf(L.B, L.uB)} at ${L.vArt.toFixed(2)} m/s (effective masses ${mA.toFixed(1)} / ${mD.toFixed(1)} kg): ${j.toFixed(1)} N·s`, { ep: ep.n }); } } }
       ep.J = add2(ep.J, Jt.A); }
+    // (STAGE 3B's impulses: at their points — the opponent's contact point, a limb's hip — exactly as given; and with Stage 3B, an impulse is
+    // never dropped: a player handed back while the other is still Stage 3's is his again when a contact impulse reaches him)
+    if (EXT && ep && ep.active) for (const key of ["A", "D"]) for (const e of EXT[key]) { Jt[key] = add2(Jt[key], e.J); lev[key].push({ c: e.at, J: e.J }); }
+    if (this.extImpulses && ep && ep.active) for (const [s, key] of [[SA, "A"], [SD, "D"]]) if (!s.active && len2(Jt[key]) > 0) Object.assign(s, newState(), { active: true, prevRoot: s.prevRoot, prevP: s.prevP, steps: [], ep: ep.n, t0: t });
     // (the strikes' impulses, spread over their 6 ticks)
     if (ep && ep.queue && ep.queue.length) { for (const q of ep.queue) { const jA = mul2(q.J, 1 / 6); Jt.A = add2(Jt.A, jA); Jt.D = add2(Jt.D, mul2(jA, -1)); lev.A.push({ c: q.c, J: jA }); lev.D.push({ c: q.c, J: mul2(jA, -1) }); q.n--; } ep.queue = ep.queue.filter((q) => q.n > 0); }
     // ── A SWINGING LEG BLOCKED (the trip risk, instrumented — Stage 3B's): a player's leg in its swing held more than the hard limit (5 cm) inside the
@@ -201,7 +208,7 @@ export class ImpactWorld extends OccupancyWorld2 {
     if (J[0] || J[1]) { const g = this.strut(p, t, J, B, J3), Jb = sub2(J, g), du = mul2(Jb, 1 / m); s.u = add2(s.u, du); s.imp = add2(s.imp, Jb); s.nImp++;
       for (const L of levers) { const jb = mul2(L.J, len2(J) > 1e-12 ? len2(Jb) / len2(J) : 0), h = L.c[2] - B.hip[2], o = [L.c[0] - B.hip[0], L.c[1] - B.hip[1]], jf = dot2(jb, f), jr = dot2(jb, r), of = dot2(o, f), or = dot2(o, r), sh = X.trunkShare;
         s.osc.lean.v += sh * jf * h / B.Ith * DEG; s.osc.side.v += sh * jr * h / B.Ith * DEG; s.osc.trunk.v += sh * (jr * of - jf * or) / B.Ithy * DEG * 0.5; s.osc.yaw.v += (1 - sh) * (jr * of - jf * or) / B.Iy * DEG * 0.5; }
-      s.osc.crouch.v += 0.04 * len2(du) / Math.max(0.05, DT * 8); out.J = Jb.map((v) => +v.toFixed(3)); out.ground = g.map((v) => +v.toFixed(3)); }
+      s.osc.crouch.v += 0.04 * len2(du) / Math.max(0.05, DT * 8); out.J = Jb.map((v) => +v.toFixed(3)); out.ground = g.map((v) => +v.toFixed(3)); out.Jx = Jb; out.gx = g; }
     // (2) THE SUPPORT: planted stances, the footprints' polygon, the authored centre of pressure, ω
     // (the support polygon: the planted feet whose ball is ON THE TURF as drawn — the canonical body lifts a planted foot early at times: it holds nothing)
     const planted = this.plantedStances(p, t), feet = planted.map(([Xf]) => Xf).filter((Xf) => J3["toe_" + Xf].j[2] < 0.06), poly = feet.length ? hull(feet.flatMap((Xf) => footPoly(J3, Xf))) : null, com2 = [B.c[0] - s.P[0], B.c[1] - s.P[1]];
@@ -213,7 +220,7 @@ export class ImpactWorld extends OccupancyWorld2 {
     const e = add2(add2(led, s.P), s.O), w = B.w, xi = add2(e, mul2(s.u, 1 / w)), xm = len2(xi), xh = unit2(xi, f);
     const slackDir = (u) => (cop && poly ? polyReach(poly, cop, u) * kS : 0) + hipS, d = slackDir(xh), demand = xm / Math.max(1e-3, d);
     // (3) THE BALANCE CONTROLLER: the centre of pressure inside the slack drives ξ back; outside, saturated, ξ diverges (the LIP about the authored motion)
-    const qWant = mul2(xi, 1 + X.kXi / w), qm = len2(qWant), q = qm > d ? mul2(xh, d) : qWant; if (feet.length) s.u = add2(s.u, mul2(sub2(e, q), w * w * DT));   // (no ball of a foot on the turf: no ground, no horizontal force)
+    const qWant = mul2(xi, 1 + X.kXi / w), qm = len2(qWant), q = qm > d ? mul2(xh, d) : qWant; if (feet.length) { const du = mul2(sub2(e, q), w * w * DT); s.u = add2(s.u, du); out.bal = du; }   // (no ball of a foot on the turf: no ground, no horizontal force)
     // (4) THE OUTCOME (A – E) and the recovery step
     const bal = this.capture(p, s, t, xi, d, w, held, planted, J3, st, f, r); s.bal = bal; s.cls = bal.cls;
     if (held && bal.cls === "CORRECT" && bal.demand > 1 && !s.outcome) s.outcome = { kind: "PERTURBED BUT CONTINUES", why: `ξ ${(xm * 100).toFixed(0)} cm: beyond the centre of pressure's ${(d * 100).toFixed(0)} cm, carried by the support chain (the pelvis over the authored feet)`, t };
@@ -222,7 +229,7 @@ export class ImpactWorld extends OccupancyWorld2 {
       if (held) this.decideAction(p, s, t, bal, cm, pre); else if ((!s.step || (s.step.landed && t - s.step.tLanded > 0.05)) && bal.step && bal.cls !== "FALL CANDIDATE" && len2(bal.step.adj) >= X.stepMin) this.planStep(p, s, t, bal.step, bal.cls); }
     s.fallN = bal.cls === "FALL CANDIDATE" ? (s.fallN || 0) + 1 : 0; if (s.fallN >= 3 && !s.fall) { if (bal.step && (!s.step || s.step.landed) && len2(bal.step.adj) >= X.stepMin) this.planStep(p, s, t, bal.step, bal.cls); this.markFall(p, s, t, bal, st, B, xi, e); }
     // (5) THE REALISATION: the root as far as its support allows (Stage 2's own budgets), the drawn pelvis, the overflow
-    const fade = s.fadeFrom != null ? clamp(1 - (t - s.fadeFrom) / X.fallFade, 0, 1) : 1; if (fade < 1) { s.u = mul2(s.u, fade); }
+    const fade = s.fadeFrom != null ? clamp(1 - (t - s.fadeFrom) / X.fallFade, 0, 1) : 1; if (fade < 1) { out.fade = mul2(s.u, fade - 1); s.u = mul2(s.u, fade); }
     let dRoot = [0, 0]; const want = mul2(s.u, DT), capP = held ? X.pelvisCom : X.pelvisOrd;
     { const fit = this.impFit(p, want, t, J3, held), lam = fit.lam; dRoot = mul2(want, lam); let rest = mul2(want, 1 - lam);
       // (an ordinary player's pelvis hands its offset back to the root; an overflow is realised once the support allows)
