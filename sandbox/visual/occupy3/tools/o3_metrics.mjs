@@ -57,8 +57,12 @@ export function measure(tc, mode, imp = IMP) { const live = new Map(); const R =
       const pp = { ATT: 0, DEF: 0 }, sides = { ATT: 0, DEF: 0 }; if (n) for (const [i, key] of [[0, "ATT"], [1, "DEF"]]) { let sgn = 0; const ft = []; for (let k = e.k0; k <= (e.t1 != null ? Math.round(e.t1 / DT) : k1); k++) { const x = log.get(k); if (!x || !x.p || !x.p[i] || !x.p[i].J) continue; const j = x.p[i].J[0] * n[0] + x.p[i].J[1] * n[1]; if (Math.abs(j) < 0.05) continue; const s = Math.sign(j); if (sgn && s !== sgn) ft.push(k * DT); sgn = s; }
         sides[key] = ft.length; for (let q = 1; q < ft.length; q++) if (ft[q] - ft[q - 1] < 0.25) pp[key]++; }
       const st = e.onset ? [actionState(W, W.att, e.t0), actionState(W, W.def, e.t0)] : [null, null];
+      // (each player's ROOT DISPLACEMENT BY THE IMPACT: the sum of the root shifts Stage 3 realised over the episode — net, and the largest reached — and
+      // his SUPPORT STATE at onset)
+      const phys = {}; for (const [i, key] of [[0, "ATT"], [1, "DEF"]]) { let sx = 0, sy = 0, mx = 0, sup = null; for (let k = e.k0; k <= (e.t1 != null ? Math.round(e.t1 / DT) : k1); k++) { const x = log.get(k); if (!x || !x.p || !x.p[i]) continue; if (sup == null && x.p[i].state) sup = x.p[i].state; if (x.p[i].root) { sx += x.p[i].root[0]; sy += x.p[i].root[1]; mx = Math.max(mx, Math.hypot(sx, sy)); } }
+        phys[key] = { rootNet: r3(Math.hypot(sx, sy)), rootMax: r3(mx), support: sup }; }
       o.eps.push({ n: e.n, t0: r3(e.t0 - R.t0), dur: e.dur, why: e.why, regions: e.onset && e.onset.contact.regions, closing: e.onset && e.onset.contact.closing, closeAfter, tangential: e.onset && e.onset.contact.tangential, onATT: e.onset && e.onset.contact.onATT, onDEF: e.onset && e.onset.contact.onDEF,
-        act: st.map((a) => a && (a.kind === "ORDINARY" ? "ordinary" : `${a.label} ${a.phase}`)), pingpong: pp, sides, players: e.players }); } }
+        act: st.map((a) => a && (a.kind === "ORDINARY" ? "ordinary" : `${a.label} ${a.phase}`)), pingpong: pp, sides, phys, players: e.players }); } }
   o.events = W.imp ? W.imp.events.map((e) => ({ t: r3(e.t - R.t0), who: e.who, kind: e.kind, why: e.why })) : []; o.t0 = R.t0; return o; }
 if (process.argv[1] && process.argv[1].endsWith("o3_metrics.mjs")) {
   const L = setOf(SET), rows = [];
@@ -85,6 +89,6 @@ if (process.argv[1] && process.argv[1].endsWith("o3_metrics.mjs")) {
   console.log(`\nPER ENCOUNTER (Stage 3): torso / legs cm (Stage 2 → 3) · impacts · per player: severity σ · balance · action · Δv · root / pelvis cm · lean° · rotation° · steps · regained`);
   for (const r of rows) { const a = r.S2D, b = r.S3; console.log(`${r.id.slice(0, 26).padEnd(27)}torso ${cm(a.torso)} → ${cm(b.torso)} · legs ${cm(a.legs)} → ${cm(b.legs)} · foot ${cm(b.footSlide)} · ${b.eps.length} impact${b.eps.length === 1 ? "" : "s"}${a.outKind || b.outKind ? ` · tackle ${a.outKind} → ${b.outKind}` : ""}`);
     for (const e of b.eps) { console.log(`    #${e.n} ${e.t0.toFixed(2)} ${e.regions} closing ${e.closing} → ${e.closeAfter} m/s · ${e.act.join(" | ")}`);
-      for (const k of ["ATT", "DEF"]) { const q = e.players[k]; if (q) console.log(`       ${k} ${q.sev} σ ${q.sigma} · ${q.cls} · ${q.outcome} · Δv ${q.du} · pelvis ${cm(q.peakP)} · lean ${q.peakLean} · rot ${q.peakYaw} · ${q.steps.length ? q.steps.map((s) => `${s.X} ${cm(s.d)}`).join(",") : "no step"} · ${q.regainAfter != null ? "regained " + q.regainAfter + " s" : q.fall ? "FALL CANDIDATE" : "not regained"}`); } } }
+      for (const k of ["ATT", "DEF"]) { const q = e.players[k]; if (q) console.log(`       ${k} ${q.sev} σ ${q.sigma} · ${q.cls} · ${q.outcome} · Δv ${q.du} · root ${e.phys && e.phys[k] ? cm(e.phys[k].rootMax) : "—"} · pelvis ${cm(q.peakP)} · lean ${q.peakLean} · rot ${q.peakYaw} · ${q.steps.length ? q.steps.map((s) => `${s.X} ${cm(s.d)}`).join(",") : "no step"} · ${q.regainAfter != null ? "regained " + q.regainAfter + " s" : q.fall ? "FALL CANDIDATE" : "not regained"}`); } } }
   if (arg("json")) fs.writeFileSync(arg("json"), JSON.stringify(rows.map((r) => ({ id: r.id, group: r.group, S2D: Object.assign({}, r.S2D, { events: undefined }), S3: r.S3 })), null, 0));
 }

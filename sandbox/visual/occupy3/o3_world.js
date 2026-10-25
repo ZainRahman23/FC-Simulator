@@ -3,8 +3,9 @@
 //   CONTACT → IMPACT → BALANCE RESPONSE → RECOVERY, for the class Stage 2 leaves unresolved — two physically incompatible motions meeting.
 // ── CONTACT (the bodies as drawn, Stage 2's capsules): each penetrating pair is a BODY contact (pelvis, waist, chest / shoulders, the upper half of a
 //    thigh — the hips) or a LIMB contact (a knee, a shin). An EPISODE begins at the first touching tick; it becomes an IMPACT only if the contact is
-//    MEANINGFUL: the bodies close faster than RES3.uMin at a body contact, a limb strikes faster than RES3.limbMin (its articulated speed), or
-//    Stage 2 cannot separate them (an unresolved tick). Otherwise nothing here acts: the run is Stage 2's, bit for bit.
+//    MEANINGFUL: deeper than Stage 2's 2 cm contact tolerance (RES3.penMin) and the bodies closing faster than RES3.uMin at a body contact, or a limb
+//    striking faster than RES3.limbMin (its articulated speed); or Stage 2 cannot separate them (an unresolved tick). Otherwise nothing here acts:
+//    the run is Stage 2's, bit for bit.
 // ── IMPACT (from the relative motion, never from who is who): a body contact is a velocity constraint on the two bodies' closing speed along the
 //    contact normal (the posed contact point; the bodies' velocities = their roots' motion + the drawn pelvis's), removed over RES3.tauC — a soft,
 //    inelastic human collision. Its effective mass is each body's at that point: the whole mass (the rig's own 73 kg, equal for both — no ratings)
@@ -43,6 +44,8 @@ const add2 = (a, b) => [a[0] + b[0], a[1] + b[1]], sub2 = (a, b) => [a[0] - b[0]
 const unit2 = (a, d = [1, 0]) => { const m = hyp(a[0], a[1]); return m > 1e-12 ? [a[0] / m, a[1] / m] : d; };
 export const RES3 = {
   uMin: 0.30,        // m/s: a body contact is an impact when the bodies close faster than this (slower: Stage 2's occupancy alone — a brush)
+  penMin: 0.02,      // m: a contact is meaningful only beyond Stage 2's 2 cm contact tolerance (the owner's decision: touching within it is contact
+                     // without consequence — two players brushing past are Stage 2's, bit for bit); the comparison: 0 (any touching pair)
   limbMin: 1.0,      // m/s: a limb contact is a strike when its articulated closing (beyond the bodies') exceeds this
   artTicks: 3,       // the articulated speed over 3 ticks (a re-plan's blend or a re-aimed swing moves a drawn leg a few mm in a tick: over one tick, metres per second)
   artCap: { THIGH: 3.0, SHIN: 4.5 },   // m/s: a knee / a shin's speed relative to its own body in football running — the physiological ceiling of a strike
@@ -58,6 +61,8 @@ export const RES3 = {
   stepOut: 0.42, stepCross: 0.10, stepMax: 0.95,   // m: a recovery step's adjustment outward / across the stance foot; its distance from the stance foot
   stepMin: 0.05,     // m: a landing adjusted less than this is the gait's own variation — the next landing captures it (CORRECT), not a recovery step
   liftMaxSpeed: 1.2, // m/s: above this a body does not lift a planted foot to step — its gait's next landing (re-aimed) is the recovery step
+  liftKeep: 1.5,     // m/s: a lifted-foot step already planned is cancelled if the canonical plan moves the body faster than this before it lands (the
+                     // planner chose to run: held stances would leave the support behind) — the gait's own next landing takes it
   reachLand: 0.75,   // m: a step's target never further than this from the body (the root) at its landing
   minWidth: 0.08,    // m: a recovery step lands on its own side of the stance foot by at least this (no crossover steps)
   releaseBlend: 0.35, // s: an action ended by the impact hands its posture over through the canonical blend window (bfLeave) this long
@@ -89,7 +94,8 @@ export class ImpactWorld extends OccupancyWorld2 {
     this.bodies = new Map(this.players.map((p) => [p, new ImpactBody(env, p, src)])); this.gateB = new Map(this.players.map((p) => [p, new ImpactBody(env, p, src)]));
     // (after each player's simulation step: a recovery step pending is applied to whatever plan the canonical planner just adopted — before any pose of
     // it, so the body's own 0.12 s blend carries the swing to its new landing)
-    for (const p of this.players) { const st = p.step.bind(p); p.step = (req) => { const r = st(req); const s = this.ps.get(p); if (s.step && !s.step.landed) this.applyStep(p, s.step); return r; }; }
+    // (a pending step that no longer applies is CANCELLED instead — stepVoid: the player handed back, or a lifted-foot step under a plan that now runs)
+    for (const p of this.players) { const st = p.step.bind(p); p.step = (req) => { const r = st(req); const s = this.ps.get(p); if (s.step && !s.step.landed) { const why = this.stepVoid(p, s, s.step); if (why) this.cancelStep(p, s, why); else this.applyStep(p, s.step); } return r; }; }
     // (a touch: denied if the perturbed body cannot reach it — the playing leg from the displaced hips — or the foot is the recovery step's)
     for (const p of this.players) { const ex = p.execute.bind(p); p.execute = (c) => { const s = this.ps.get(p), why = s.active ? this.touchBlocked(p, c) : null; if (!why) return ex(c);
       c.done = true; c.missed = true; c.blocked = { impact: why }; p.contacts.push(Object.assign(p.contactRec(c, p.ball.v, p.ball.v, null), { missed: true, impact: why })); p.flags.replan = p.flags.replan || "missed contact";
@@ -135,7 +141,7 @@ export class ImpactWorld extends OccupancyWorld2 {
     if (touching && !ep) ep = this.imp.ep = { n: this.imp.episodes.length + 1, k0: k, t0: t, active: false, last: k, why: null, pairs: new Set(), strikes: new Set(), onset: null, peakPen: 0, J: [0, 0], players: {} };
     if (ep && touching) { ep.last = k; for (const x of pairs) ep.pairs.add(x.A + "|" + x.B); ep.peakPen = Math.max(ep.peakPen, pairs[0].pen);
       if (!ep.active) { // ── MEANINGFUL? ──
-        const bodyC = pairs.filter((x) => x.body), vb = bodyC.length ? Math.max(...bodyC.map((x) => x.vBody)) : -Infinity, limb = pairs.filter((x) => !x.body && x.vArt != null && x.vArt > X.limbMin), unres = rec2 && rec2.unresolved;
+        const deep = X.penMin > 0 ? pairs.filter((x) => x.pen > X.penMin) : pairs, bodyC = deep.filter((x) => x.body), vb = bodyC.length ? Math.max(...bodyC.map((x) => x.vBody)) : -Infinity, limb = deep.filter((x) => !x.body && x.vArt != null && x.vArt > X.limbMin), unres = rec2 && rec2.unresolved;
         const why = vb > X.uMin ? `BODY CONTACT closing ${vb.toFixed(2)} m/s` : limb.length ? `LIMB STRIKE ${limb[0].vArt.toFixed(2)} m/s (${regionOf(limb[0].A, limb[0].uA)} / ${regionOf(limb[0].B, limb[0].uB)})` : unres ? `STAGE 2 UNRESOLVED (${unres})` : null;
         if (why) { ep.active = true; ep.why = why; ep.kA = k; ep.onset = this.onsetFacts(t, pairs, sa, sd, vA, vD, LP); for (const s of [SA, SD]) { if (!s.active) { Object.assign(s, newState(), { active: true, prevRoot: s.prevRoot, prevP: s.prevP, steps: [], ep: ep.n, t0: t }); } } this.event(null, "IMPACT", why, { ep: ep.n }); } } }
     if (ep && !touching && (k - ep.last) * DT > X.quiet && !SA.active && !SD.active) this.closeEpisode(t);
@@ -236,7 +242,9 @@ export class ImpactWorld extends OccupancyWorld2 {
     // (the episode's severity: the peak of σ held for three consecutive ticks — a capture analysis that predicts a stagger for one tick and is caught
     // by the next landing is not a stagger)
     const pk = s.peak, sig = this.sigmaOf(bal); s.sigma = sig; const H3 = s.sig3 || (s.sig3 = []); H3.push(Math.min(1, bal.held ? bal.demand * bal.d / bal.carry : bal.demand)); if (H3.length > 3) H3.shift(); pk.inplace = Math.max(pk.inplace || 0, H3.length === 3 ? Math.min(...H3) : 0); pk.sigma = Math.max(pk.sigma || 0, sig); pk.demand = Math.max(pk.demand, demand); pk.xi = Math.max(pk.xi, xm); pk.u = Math.max(pk.u, len2(s.u)); pk.P = Math.max(pk.P, len2(s.P)); pk.O = Math.max(pk.O, len2(s.O)); pk.lean = Math.max(pk.lean, Math.abs(s.osc.lean.x), Math.abs(s.osc.side.x)); pk.yaw = Math.max(pk.yaw, Math.abs(s.osc.trunk.x), Math.abs(s.osc.yaw.x));
-    if (s.fadeFrom != null && t - s.fadeFrom > X.fallFade) { s.active = false; s.pose = null; s.handedBack = t; const ep0 = this.imp.ep; if (ep0) ep0.players[p.pid] = this.summary(p, s, t); this.event(p, "FALL CANDIDATE — PLACEHOLDER ENDS", "the perturbation faded out (a labelled diagnostic placeholder, not physics): Stage 2 drives the player again", {}); return Object.assign(out, { cls: "FALL CANDIDATE", fall: true }); }
+    if (s.fadeFrom != null && t - s.fadeFrom > X.fallFade) { s.active = false; s.pose = null; s.handedBack = t; const ep0 = this.imp.ep; if (ep0) ep0.players[p.pid] = this.summary(p, s, t); this.event(p, "FALL CANDIDATE — PLACEHOLDER ENDS", "the perturbation faded out (a labelled diagnostic placeholder, not physics): Stage 2 drives the player again", {}); // (the record complete on this tick too — the Lab and the tools read every field)
+      return Object.assign(out, { state: this.supportState(p, t, st), committed: cm || (pre ? "PLANNED MOVE (its commit stance)" : null), feet, poly: null, cop: null, com: B.c.map((v) => +v.toFixed(3)), u: s.u.map((v) => +v.toFixed(3)), e: e.map((v) => +v.toFixed(3)), xi: xi.map((v) => +v.toFixed(3)),
+        slack: +d.toFixed(3), demand: +demand.toFixed(3), sigma: +sig.toFixed(3), cls: "FALL CANDIDATE", sev: ImpactWorld.band(sig), sevPeak: this.severity(s), P: [0, 0], O: [0, 0], root: [0, 0], step: null, osc: Object.fromEntries(OSC_KEYS.map((kk) => [kk, 0])), outcome: s.outcome, fall: true }); }
     const ep = this.imp.ep, quiet = !ep || (this.k - ep.last) * DT > X.quiet, S5 = X.settle, calm = xm < S5.xi && len2(s.u) < S5.u && len2(s.P) < S5.P && len2(s.O) < 1e-3 && OSC_KEYS.every((kk) => Math.abs(s.osc[kk].x) < (kk === "crouch" ? 0.001 : S5.ang)) && !(s.step && !s.step.landed);
     if (calm && quiet && (!s.step || s.step.landed)) this.regain(p, s, t);
     Object.assign(out, { state: this.supportState(p, t, st), committed: cm || (pre ? "PLANNED MOVE (its commit stance)" : null), feet, poly: poly ? poly.map((v) => [+v[0].toFixed(3), +v[1].toFixed(3)]) : null, cop: cop && cop.map((v) => +v.toFixed(3)), com: B.c.map((v) => +v.toFixed(3)),
@@ -252,8 +260,8 @@ export class ImpactWorld extends OccupancyWorld2 {
   // THE EPISODE'S SEVERITY is the REALISED one: in place — the peak in-place demand held three ticks (≤ 1); one recovery step — 1 + its adjustment / the
   // step's reach; more than one (≥ 10 cm each) or a stagger prediction that came true — 2 + …; a fall candidate — ≥ 3. (The per-tick σ the Lab
   // shows is the PREDICTED demand at that tick.)
-  realised(s) { const big = s.steps.filter((x) => len2(x.adj) >= 0.10), mx = s.steps.length ? Math.max(...s.steps.map((x) => len2(x.adj))) : 0;
-    if (s.fall) return 3; if (big.length > 1 || s.steps.some((x) => x.cls === "STAGGER CANDIDATE" && len2(x.adj) >= 0.10)) return 2 + Math.min(0.99, (s.steps.length - 1) * 0.25 + mx / this.X.stepOut * 0.5); if (s.steps.length) return 1 + Math.min(0.99, mx / this.X.stepOut);
+  realised(s) { const SS = s.steps.filter((x) => !x.cancelled), big = SS.filter((x) => len2(x.adj) >= 0.10), mx = SS.length ? Math.max(...SS.map((x) => len2(x.adj))) : 0;
+    if (s.fall) return 3; if (big.length > 1 || SS.some((x) => x.cls === "STAGGER CANDIDATE" && len2(x.adj) >= 0.10)) return 2 + Math.min(0.99, (SS.length - 1) * 0.25 + mx / this.X.stepOut * 0.5); if (SS.length) return 1 + Math.min(0.99, mx / this.X.stepOut);
     return Math.min(1, s.peak.inplace || 0); }
   severity(s) { return ImpactWorld.band(this.realised(s)); }
   // how much of a root shift d the support takes: a committed (or planned) action — Stage 2's capFit exactly (2 cm per plant, 12 per commitment: the
@@ -323,6 +331,13 @@ export class ImpactWorld extends OccupancyWorld2 {
   planStep(p, s, t, o, cls) { s.step = { X: o.X, tLift: o.tLift, tLand: o.tLand, pos: o.pos, base: o.base, adj: o.adj, yaw: o.yaw, kind: o.kind, cls, t, id: null, landed: false, plan: null };
     s.steps.push(s.step); p.flags.replan = p.flags.replan || "impact: recovery step";   // (a new plan version: the body blends to the new landing)
     this.event(p, "RECOVERY STEP", `${o.X} ${o.kind} — lands at +${(o.tLand - t).toFixed(3)} s, ${(len2(o.adj) * 100).toFixed(0)} cm from where it would have landed${cls !== "RECOVERY STEP" ? " (" + cls + ")" : ""}`, { X: o.X, tLand: +o.tLand.toFixed(4), pos: o.pos.map((v) => +v.toFixed(3)) }); }
+  // a pending step that no longer applies: the player is no longer Stage 3's (a fall candidate's placeholder handed him back), or a lifted-foot step
+  // under a plan that now moves the body faster than RES3.liftKeep before its landing
+  stepVoid(p, s, S) { if (!s.active) return "the player is handed back (Stage 3 no longer acts on him)";
+    if (S.tLift != null) { const t = p.t, v = Math.max(p.stateAt(t).s, p.stateAt(Math.max(t, Math.min(S.tLand, t + 0.25))).s); if (v > this.X.liftKeep) return `the canonical plan now moves the body at ${v.toFixed(1)} m/s — a lifted-foot step would leave its support behind; the gait's own next landing takes it`; }
+    return null; }
+  cancelStep(p, s, why) { const S = s.step; S.cancelled = why; S.tCancel = p.t; s.step = null; if (S.plan === p.plan) p.flags.replan = p.flags.replan || "impact: recovery step cancelled";   // (the edited plan replaced by the canonical one)
+    this.event(p, "RECOVERY STEP CANCELLED", `${S.X}: ${why}`, { X: S.X }); }
   // the trailing foot (the older of two planted) steps up beside the newer one, a stance width apart, along the body's motion — the weight already moved
   followStep(p, s, t, planted, f, r) { const X = this.X, [[Xa, qa], [Xb, qb]] = planted, old = qa.t0 <= qb.t0 ? [Xa, qa] : [Xb, qb], nw = old[0] === Xa ? [Xb, qb] : [Xa, qa], sx = old[0] === "R" ? 1 : -1;
     const tLift = t + X.tUnload, dur = X.tSwing0 + 0.1, ahead = mul2(s.u, dur + X.tUnload), pos = add2(add2(nw[1].pos, mul2(r, sx * 0.20)), ahead), base = old[1].pos.slice();
@@ -371,17 +386,27 @@ export class ImpactWorld extends OccupancyWorld2 {
   markFall(p, s, t, bal, st, B, xi, e) { s.fall = { t, why: bal.why || "no reachable placement", xi: xi.map((v) => +v.toFixed(3)), e: e.map((v) => +v.toFixed(3)), u: s.u.map((v) => +v.toFixed(3)), V: st.V.map((v) => +v.toFixed(3)), com: B.c.map((v) => +v.toFixed(3)), support: this.supportState(p, t, st), osc: Object.fromEntries(OSC_KEYS.map((k) => [k, { x: +s.osc[k].x.toFixed(2), v: +s.osc[k].v.toFixed(2) }])), contact: this.imp.ep && this.imp.ep.onset ? this.imp.ep.onset.contact : null };
     s.fadeFrom = t; s.outcome = Object.assign({}, s.outcome, { kind: s.outcome && s.outcome.final ? s.outcome.kind + " → FALL CANDIDATE" : "STAGGER / FALL CANDIDATE", fall: true, t, final: true });
     this.event(p, "UNRESOLVED FALL CANDIDATE", s.fall.why, { state: s.fall }); }
-  regain(p, s, t) { s.regained = t; s.active = false; s.pose = null; const ep = this.imp.ep; if (ep) ep.players[p.pid] = this.summary(p, s, t); this.event(p, "BALANCE REGAINED", `after ${(t - s.t0).toFixed(3)} s${s.steps.length ? ` (${s.steps.length} recovery step${s.steps.length > 1 ? "s" : ""})` : ""}`, {}); }
-  summary(p, s, t) { const pk = s.peak; return { pid: p.pid, t0: s.t0, tRegain: s.regained, regainAfter: s.regained != null ? +(s.regained - s.t0).toFixed(3) : null, demand: +pk.demand.toFixed(3), sigma: +this.realised(s).toFixed(3), sigmaPredicted: +(pk.sigma || 0).toFixed(3), sev: this.severity(s),
-    cls: s.fall ? "FALL CANDIDATE" : s.steps.some((x) => x.cls === "STAGGER CANDIDATE") || s.steps.filter((x) => len2(x.adj) >= 0.10).length > 1 ? "STAGGER CANDIDATE" : s.steps.length ? "RECOVERY STEP" : (pk.sigma || 0) >= 0.35 ? "CORRECT" : "ABSORB", unresolved: s.regained == null, steps: s.steps.map((x) => ({ X: x.X, t: +x.t.toFixed(3), tLand: +x.tLand.toFixed(3), d: +len2(x.adj).toFixed(3), kind: x.kind, landed: x.landed })),
+  regain(p, s, t) { // (a fall candidate's placeholder fading below the settle thresholds is not a regained balance: it ends the placeholder — the same hand-back)
+    if (s.fall) { s.active = false; s.pose = null; s.handedBack = t; const ep0 = this.imp.ep; if (ep0) ep0.players[p.pid] = this.summary(p, s, t); this.event(p, "FALL CANDIDATE — PLACEHOLDER ENDS", "the perturbation faded below the settle thresholds (a labelled diagnostic placeholder, not physics): Stage 2 drives the player again", {}); return; }
+    s.regained = t; s.active = false; s.pose = null; const ep = this.imp.ep; if (ep) ep.players[p.pid] = this.summary(p, s, t); this.event(p, "BALANCE REGAINED", `after ${(t - s.t0).toFixed(3)} s${s.steps.length ? ` (${s.steps.length} recovery step${s.steps.length > 1 ? "s" : ""})` : ""}`, {}); }
+  summary(p, s, t) { const pk = s.peak, SS = s.steps.filter((x) => !x.cancelled); return { pid: p.pid, t0: s.t0, tRegain: s.regained, regainAfter: s.regained != null ? +(s.regained - s.t0).toFixed(3) : null, demand: +pk.demand.toFixed(3), sigma: +this.realised(s).toFixed(3), sigmaPredicted: +(pk.sigma || 0).toFixed(3), sev: this.severity(s),
+    cls: s.fall ? "FALL CANDIDATE" : SS.some((x) => x.cls === "STAGGER CANDIDATE") || SS.filter((x) => len2(x.adj) >= 0.10).length > 1 ? "STAGGER CANDIDATE" : SS.length ? "RECOVERY STEP" : (pk.sigma || 0) >= 0.35 ? "CORRECT" : "ABSORB", unresolved: s.regained == null, cancelledSteps: s.steps.length - SS.length, steps: SS.map((x) => ({ X: x.X, t: +x.t.toFixed(3), tLand: +x.tLand.toFixed(3), d: +len2(x.adj).toFixed(3), kind: x.kind, landed: x.landed })),
     outcome: s.outcome ? s.outcome.kind : s.heldWhat ? "UNAFFECTED" : "— (ordinary locomotion)", action: s.heldWhat || null, why: s.outcome ? s.outcome.why : null, legBlocked: s.legBlocked || null, J: +len2(s.imp).toFixed(2), du: +(len2(s.imp) / this.mass).toFixed(3), peakU: +pk.u.toFixed(3), peakP: +pk.P.toFixed(3), peakO: +pk.O.toFixed(3), peakLean: +pk.lean.toFixed(1), peakYaw: +pk.yaw.toFixed(1), fall: s.fall }; }
   finish() { if (!this.impOn) return; const t = this.att.t; if (this.imp.ep) { const ep = this.imp.ep; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && s.ep === ep.n && !ep.players[p.pid]) ep.players[p.pid] = this.summary(p, s, t); } this.closeEpisode(t); } }
   closeEpisode(t) { const ep = this.imp.ep; if (!ep) return; for (const p of this.players) { const s = this.ps.get(p); if (ep.active && !ep.players[p.pid] && s.ep === ep.n) ep.players[p.pid] = this.summary(p, s, t); }
     // (THE REFEREE FACTS — objective only, for a future rules layer: no foul, no legality: who touched the ball last before the bodies met, when;
     // the contact; the balance lost; the action disrupted)
-    if (ep.active && ep.onset) { const o = ep.onset, lastA = this.att.contacts.filter((c) => !c.missed && c.t <= ep.t0 + 1e-9).pop(), hits = this.tk && this.tk.act ? this.tk.act.hits.filter((h) => h.t <= ep.t0 + 1e-9) : [], lastD = hits.length ? hits[hits.length - 1] : null;
-      const lb = [lastA ? { by: "ATT", t: lastA.t } : null, lastD ? { by: "DEF", t: lastD.t } : null].filter(Boolean).sort((a, b) => b.t - a.t)[0] || null;
-      ep.referee = { playerContact: +ep.t0.toFixed(4), regions: o.contact.regions, onATT: o.contact.onATT, onDEF: o.contact.onDEF, closing: o.contact.closing, tangential: o.contact.tangential, lastBallContact: lb ? { by: lb.by, t: +lb.t.toFixed(4), before: +(ep.t0 - lb.t).toFixed(3) } : null, ballContactPrecededPlayerContact: !!lb, tackleCommitted: (o.committed || []).includes("TACKLE"),
+    if (ep.active && ep.onset) { const o = ep.onset, tP = ep.t0, CL = this.contactLog || [], r4 = (v) => +v.toFixed(4);
+      // (the ball contacts the canonical laws made (the world's contact log): each player's last before the bodies met; the tackle's own ball contacts;
+      // the first ball contact after the bodies met, within the episode; the tackle's = the latest tackle's)
+      const lastBy = (pid) => CL.filter((c) => c.by === pid && c.t <= tP + 1e-9).pop() || null, TA = this.tk && this.tk.act, tkB = CL.filter((c) => c.kind === "tackle" && c.t <= t + 1e-9 && (!TA || c.t >= TA.t0 - 1e-9)), after = CL.find((c) => c.t > tP + 1e-9 && c.t <= t + 1e-9) || null;
+      const lA = lastBy(this.att.pid), lD = lastBy(this.def.pid), lb = [lA, lD].filter(Boolean).sort((a, b) => b.t - a.t)[0] || null, who = (c) => (c.by === this.att.pid ? "ATT" : "DEF");
+      const tackle = (o.committed || []).includes("TACKLE") || tkB.length > 0, tkBefore = tkB.filter((c) => c.t <= tP + 1e-9), tkAfter = tkB.filter((c) => c.t > tP + 1e-9);
+      ep.referee = { playerContact: r4(tP), impactOnset: r4(o.t), regions: o.contact.regions, onATT: o.contact.onATT, onDEF: o.contact.onDEF, closing: o.contact.closing, tangential: o.contact.tangential,
+        lastBallContactATT: lA ? { t: r4(lA.t), kind: lA.kind, before: +(tP - lA.t).toFixed(3) } : null, lastBallContactDEF: lD ? { t: r4(lD.t), kind: lD.kind, before: +(tP - lD.t).toFixed(3) } : null,
+        lastBallContact: lb ? { by: who(lb), kind: lb.kind, t: r4(lb.t), before: +(tP - lb.t).toFixed(3) } : null, ballContactPrecededPlayerContact: !!lb,
+        firstBallContactAfter: after ? { by: who(after), kind: after.kind, t: r4(after.t), after: +(after.t - tP).toFixed(3) } : null,
+        tackle: tackle ? { committedAtOnset: (o.committed || [])[1] === "TACKLE", ballContacts: tkB.map((c) => r4(c.t)), ballBeforePlayerContact: tkBefore.length > 0, ballOnlyAfterPlayerContact: !tkBefore.length && tkAfter.length > 0, noBallContact: !tkB.length } : null,
         balanceLoss: Object.fromEntries(["ATT", "DEF"].filter((k) => ep.players[k]).map((k) => [k, { sev: ep.players[k].sev, sigma: ep.players[k].sigma, cls: ep.players[k].cls, steps: ep.players[k].steps.length }])), actionDisruption: Object.fromEntries(["ATT", "DEF"].filter((k) => ep.players[k]).map((k) => [k, ep.players[k].outcome])) }; }
     ep.t1 = t; ep.dur = +(t - ep.t0).toFixed(3); ep.pairs = [...ep.pairs]; ep.strikes = [...ep.strikes]; if (ep.active || this.imp.keepBrush) this.imp.episodes.push(ep); this.imp.ep = null; }
   // (a pending recovery step's landing is a future stance: it moves with every root shift as the plan's future stances do — its target and the place
