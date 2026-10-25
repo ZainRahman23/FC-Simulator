@@ -128,7 +128,9 @@ DEFENSE_ROLE_MAP = {
 }
 
 # ── formations: frontend id → engine name, frontend slot → engine slot ───────
-FORMATION_NAME_MAP = {"433": "4-3-3", "4231": "4-2-3-1", "4141": "4-1-4-1"}
+FORMATION_NAME_MAP = {"433": "4-3-3", "4231": "4-2-3-1", "4141": "4-1-4-1",
+                      # Core Loop v2 E3 (ENGINE CHANGE): frontend slot ids == engine slot ids
+                      "442": "4-4-2", "343": "3-4-3", "532": "5-3-2"}
 SLOT_MAP = {
     "433":  {"GK": "GK", "LB": "LB", "LCB": "LCB", "RCB": "RCB", "RB": "RB",
              "LCM": "LCM", "CM": "CDM", "RCM": "RCM", "LW": "LW", "ST": "ST", "RW": "RW"},
@@ -148,7 +150,7 @@ def map_formation(frontend_id: str) -> str:
         return fid
     raise BridgeError(
         f"Formation '{frontend_id}' is not yet supported by FC Simulator v{ENGINE_VERSION}. "
-        f"Supported: 4-3-3, 4-2-3-1, 4-1-4-1.")
+        f"Supported: 4-3-3, 4-2-3-1, 4-1-4-1, 4-4-2, 3-4-3, 5-3-2.")
 
 
 def map_tactics(frontend: dict[str, Any]) -> TeamTactics:
@@ -265,14 +267,36 @@ def build_config(cfg: dict[str, Any] | None, coach_ai: dict[str, bool] | None) -
 
 
 # ── outbound serialization ───────────────────────────────────────────────────
+def ledger_penalty_xg(events, team_id: str) -> float:
+    """Penalty chances bypass native SHOT/player xG; reporting includes them."""
+    total = 0.0
+    for event in events:
+        e = event if isinstance(event, dict) else event.to_dict()
+        if e.get('event_type') == 'PENALTY' and e.get('team_id') == team_id:
+            try:
+                total += float((e.get('detail') or {}).get('p_goal') or .76)
+            except (TypeError,ValueError):
+                total += .76
+    return total
+
+
+def reported_team_stats(stats: dict[str, Any], events, team_id: str) -> dict[str, Any]:
+    out = dict(stats)
+    if not out.get('xg_includes_penalties'):
+        out['non_penalty_xg'] = float(out.get('xg',0))
+        out['xg'] = round(out['non_penalty_xg'] + ledger_penalty_xg(events,team_id),3)
+        out['xg_includes_penalties'] = True
+    return out
+
+
 def live_team_stats(engine, team_id: str) -> dict[str, Any]:
     ps = [s for s in engine.states.values() if s.team_id == team_id]
     pa = sum(s.passes_attempted for s in ps)
     pc = sum(s.passes_completed for s in ps)
-    return {
+    return reported_team_stats({
         "shots": sum(s.shots for s in ps),
         "shots_on_target": sum(s.shots_on_target for s in ps),
-        "xg": round(sum(s.xg for s in ps), 2),
+        "xg": round(sum(s.xg for s in ps), 3),
         "goals": sum(s.goals for s in ps),
         "passes_attempted": pa, "passes_completed": pc,
         "pass_completion": round(100.0 * pc / max(1, pa), 1),
@@ -282,7 +306,7 @@ def live_team_stats(engine, team_id: str) -> dict[str, Any]:
         "red_cards": sum(s.red_cards for s in ps),
         "tackles_won": sum(s.tackles_won for s in ps),
         "interceptions": sum(s.interceptions for s in ps),
-    }
+    }, engine.events, team_id)
 
 
 def management_state(engine) -> dict[str, Any]:
@@ -380,8 +404,8 @@ def full_time_payload(engine, result) -> dict[str, Any]:
         "score": {"home": result.home_score, "away": result.away_score},
         "possession": {"home": summary["possession"].get(result.home, 0.0),
                        "away": summary["possession"].get(result.away, 0.0)},
-        "team_stats": {"home": summary["team_stats"].get(result.home, {}),
-                       "away": summary["team_stats"].get(result.away, {})},
+        "team_stats": {"home": reported_team_stats(summary["team_stats"].get(result.home, {}), result.events, "HOME"),
+                       "away": reported_team_stats(summary["team_stats"].get(result.away, {}), result.events, "AWAY")},
         "player_stats": summary["players"],
         "match_dynamics": summary["match_dynamics"],
         "events": [e.to_dict() for e in result.events],
