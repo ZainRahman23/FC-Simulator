@@ -1,0 +1,17 @@
+
+§3 / §18 THE LIMB LAYER's INVARIANTS — the limb's own effective mass (hip held) — 2000 random configurations from 3332 recorded authored legs (the canonical body), 774 contact applications
+  ENERGY: the largest change of the pair's relative normal kinetic energy by an application 0.00e+0 J (≤ 0: no passive energy gain)
+  BOUND: the largest λ above its closing's bound 0.00e+0 N·s · PAIRING: the largest sum of an application's two impulses 0.00e+0 N·s
+  ROTATION (37° / 90° / 180°): configurations whose total λ, each player's impulse (rotated) or DOF responses differ by > 1e-9: 0 / 6000
+  MIRROR (y → −y, the legs' sides exchanged): configurations whose total λ, each player's impulse or the limb's point velocity (mirrored) differ by > 1e-9: 0 / 2000
+  DETERMINISM: configurations solved twice that differ at all: 0 / 2000
+  TANGENTIAL: configurations whose total λ or limb response changes when both sides gain a purely tangential velocity (≤ 5 m/s each axis): 0 / 2000 (largest change 5.7e-14)
+
+§3 / §18 THE LIMB LAYER's INVARIANTS — WITH THE ARTICULATED EFFECTIVE MASS (artMass: the limb's own + its body's at the hip) — 2000 random configurations from 3332 recorded authored legs (the canonical body), 773 contact applications
+  ENERGY: the largest change of the pair's relative normal kinetic energy by an application 0.00e+0 J (≤ 0: no passive energy gain)
+  BOUND: the largest λ above its closing's bound 0.00e+0 N·s · PAIRING: the largest sum of an application's two impulses 0.00e+0 N·s
+  ROTATION (37° / 90° / 180°): configurations whose total λ, each player's impulse (rotated) or DOF responses differ by > 1e-9: 0 / 6000
+  MIRROR (y → −y, the legs' sides exchanged): configurations whose total λ, each player's impulse or the limb's point velocity (mirrored) differ by > 1e-9: 0 / 2000
+  DETERMINISM: configurations solved twice that differ at all: 0 / 2000
+  TANGENTIAL: configurations whose total λ or limb response changes when both sides gain a purely tangential velocity (≤ 5 m/s each axis): 0 / 2000 (largest change 5.7e-14)
+  THE DRAWING: 615 perturbed legs drawn by the canonical forward kinematics (knee, ankle, ball of the foot, toe) against the limb layer's model: largest difference 0.0047 mm

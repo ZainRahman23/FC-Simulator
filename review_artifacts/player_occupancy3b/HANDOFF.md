@@ -1,6 +1,47 @@
+# HANDOFF — PLAYER OCCUPANCY STAGE 3B.2 (recovery-step and landing geometry)
+
+**Status:** prototype, STOPPED for the owner's visual review. Local only: not pushed, merged, frozen or published. **3B.3 (trips, multi-step stagger), falls, ground contact, get-up and the shoulder duel are not started.**
+
+**The 3B.1 contact / momentum formulation (calibrated F+M) is frozen** for this stage (the owner, 25/26 Oct): local tag `occupancy-3b1-calibrated-fm-1` → `731813f1`. It is unchanged, and every tracked file is identical to the tag. 3B.2 is new files only.
+
+- **Branch:** `prototype/player-occupancy-stage3b2`, cut from `731813f1` (3B.1 calibrated; its branch `prototype/player-occupancy-stage3b1` kept as is).
+- **Worktree:** `~/Downloads/FC Simulator worktrees/player-occupancy-3b2`.
+- **Lab:** `python3 -m http.server 8367 --bind 127.0.0.1` from the worktree root → http://127.0.0.1:8367/sandbox/visual/occupy3b2_lab.html (LOCAL ONLY: real players' models). It shows 3B.1 | 3B.2; OLD STAGE 3 and 3B.2 · FLAT RELEASE are selectable.
+- **Report:** `L32_REPORT.md`. **Owner instruction (verbatim):** `sources/2026-10-26_user_instruction_stage3b2.md`.
+- **Evidence:** `evidence3b2/` (the 3B.1 evidence in `evidence/` is unchanged).
+- **Verdict (L32_REPORT.md, answer 11): not yet the 3B.3 foundation.** The layer is right, but three of its own behaviours come first:
+  1. the in-flight retiming, which can keep a landing in the air while the bodies close (moves `BODY_FEINT 2.4/−0.5`, 22.7 cm);
+  2. the release pop;
+  3. 3B.1's reconcile drive.
+- **Proposed next step: 3B.2.1**, after the owner's decisions (report §9).
+
+## Where things are (3B.2)
+
+| file | what |
+|---|---|
+| `sandbox/visual/occupy3b2/b2_world.js` | `PlacementWorld` (a `LimbWorld` subclass): the prediction, the landing-feasibility model, the corridor and its route, recovery placement (both feet), NO_FEASIBLE_RECOVERY with its preserved state, the in-flight monitor, the guarded landings (reported), committed landings blocked → Stage 3's interruption, released plants, the pelvis within reach, boot ↔ boot, the plan fork. `RES3B2` holds every switch; the comparisons are off |
+| `sandbox/visual/occupy3b2/b2_geom.js` | the predicted landing leg (the knee by two-bone IK), its volumes (Stage 1's + the boot's sole), the corridor |
+| `sandbox/visual/occupy3b2/b2_run.js` | `runB2`: S2D · S3 · S3B (through Stage 3's runner) · S3B2; the rotated encounter |
+| `sandbox/visual/occupy3b2/b2_cases.js`, `b2_lab.js`, `../occupy3b2_lab.html` | the Lab (the 3B.1 Lab copied + 3B.2's overlays) |
+| `sandbox/visual/occupy3b2/tools/` | `b2_metrics` (four stages), `b2_land` (touchdowns; planted drift split DURING the stance / the LIFT-OFF jump), `b2_cross` (§6 classified), `b2_boots` (§5), `b2_identity` (§9), `b2_invar` (determinism, mirrors, rotation, the ledger), `b2_solo` (one footballer), `b2_swings` (in-air leg shortfall, feet skimming the turf; after a released plant vs the rest), `b2_perf`, `b2_lab_cases` + `b2_browser.cjs`, `b2_ablate` / `b2_percase*` (the comparisons), `b2_diag` / `b2_trace` / `b2_pairs` / `b2_feet` / `b2_why*` (diagnosis), `b2_measure` (Stage 3's measure(), runner swapped) |
+
+**The default is `e9d0524f`'s.** One known defect of it was found in the final evidence and is NOT fixed: a plant released mid-stance pops the drawn ball of the foot 5–8 cm in one tick (the canonical heel rise spans the last 55 % of a stance).
+- **The measured alternative** is `RES3B2.releaseFlat` (a released plant lifts flat), the Lab's **3B.2 · FLAT RELEASE**. It removes the pop (114 cases: lift-off jumps > 5 cm 17 → 2), but it is worse on balance: legs > 5 cm 290 → 313, fall candidates 16 → 18, erroneous crossings 942 → 968 (`croq-recover` ±m: a leg pushed 20 cm across for 17 ticks).
+- **Its evidence:** `evidence3b2/variant_flat_release/`.
+- **The decision is the owner's** (L32_REPORT.md §12).
+
+## Running the 3B.2 tools
+
+- They run from `sandbox/visual/occupy3b2/tools/` with `node <tool>.mjs --set review|matrix|l3|moves|search`.
+- `--cfg '<json>'` (or `globalThis.__b2opts`) sets `RES3B2` overrides for a comparison.
+- The browser check: `PUPPETEER_NODE_MODULES=<dir> PT_TMP=<dir> node b2_browser.cjs --out <dir> --shots <scratch> --node <evidence3b2/lab_cases.json>`.
+- **Stills stay in the scratchpad (real players' models).**
+
+---
+
 # HANDOFF — PLAYER OCCUPANCY STAGE 3B.0 + 3B.1 (limb contact)
 
-**Status:** prototype, STOPPED for the owner's visual review. Local only: not pushed, merged, frozen or published. **Stage 3B.2 is not started** (the owner's rule: only after he visually approves 3B.1).
+**Status:** prototype, STOPPED for the owner's visual review. Local only: not pushed, merged, frozen or published. **Stage 3B.2 is not started** (the owner's rule: only after they visually approve 3B.1).
 
 - **Branch:** `prototype/player-occupancy-stage3b1`, cut from `88a964ba` (Player Occupancy Stage 3, kept intact as the comparison baseline on `prototype/player-occupancy-stage3`).
 - **Worktree:** `~/Downloads/FC Simulator worktrees/player-occupancy-3b`.

@@ -1,0 +1,255 @@
+{
+ "checks": [
+  {
+   "name": "the page loads (TOUCHLINE — STAGE 3B.2 RECOVERY-STEP & LANDING GEOMETRY REVIEW)",
+   "pass": true,
+   "detail": "2.4 s to the first case"
+  },
+  {
+   "name": "every case simulates STAGE 3B.1 and STAGE 3B.2 and both viewports draw",
+   "pass": true,
+   "detail": "129/129"
+  },
+  {
+   "name": "the page's numbers equal node's (deepest, torso, legs, ticks > 5 cm, outcome, impacts, each player's severity / balance / action / steps, strikes, Σ impulse, 3B.2's decisions and NO_FEASIBLE results), both stages",
+   "pass": false,
+   "detail": "127/129 — differ: x120-jog, x120-jog-m"
+  },
+  {
+   "name": "view 3B.1 | 3B.2 draws",
+   "pass": true,
+   "detail": [
+    100,
+    100
+   ]
+  },
+  {
+   "name": "view LEFT (3B.1) draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "view RIGHT (3B.2) draws",
+   "pass": true,
+   "detail": [
+    100
+   ]
+  },
+  {
+   "name": "STAGE 3B.1 and STAGE 3B.2 draw different replays where 3B.2 acts",
+   "pass": true,
+   "detail": {
+    "S3": -1615700434,
+    "S3B": 512249459
+   }
+  },
+  {
+   "name": "SKIN / SKELETON / SKIN + SKELETON draw (skeleton-only differs from skin)",
+   "pass": true,
+   "detail": {
+    "skin": -1506843421,
+    "skel": -1889312538,
+    "both": -1506843421
+   }
+  },
+  {
+   "name": "overlay plc toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 13486
+   }
+  },
+  {
+   "name": "overlay fcv toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 13731
+   }
+  },
+  {
+   "name": "overlay anc toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11508
+   }
+  },
+  {
+   "name": "overlay ftr toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11656
+   }
+  },
+  {
+   "name": "overlay ball toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11456
+   }
+  },
+  {
+   "name": "overlay vol toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 12709
+   }
+  },
+  {
+   "name": "overlay sup toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11601
+   }
+  },
+  {
+   "name": "overlay bal toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11903
+   }
+  },
+  {
+   "name": "overlay nrm toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11738
+   }
+  },
+  {
+   "name": "overlay imp toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11791
+   }
+  },
+  {
+   "name": "overlay stp toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 12856
+   }
+  },
+  {
+   "name": "overlay trl toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11780
+   }
+  },
+  {
+   "name": "overlay hud toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 70047
+   }
+  },
+  {
+   "name": "overlay ref toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 12316
+   }
+  },
+  {
+   "name": "overlay lc toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 13056
+   }
+  },
+  {
+   "name": "overlay lv toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 11473
+   }
+  },
+  {
+   "name": "overlay vp toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 12078
+   }
+  },
+  {
+   "name": "overlay mom toggles",
+   "pass": true,
+   "detail": {
+    "off": 11456,
+    "on": 12183
+   }
+  },
+  {
+   "name": "the diagnostics panel carries 3B.2's record (decisions, NO_FEASIBLE, deviations, released plants, boots)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "OLD STAGE 3 selectable beside 3B.2",
+   "pass": true,
+   "detail": [
+    "S3",
+    "S3B2"
+   ]
+  },
+  {
+   "name": "3B.2 · FLAT RELEASE selectable beside 3B.2",
+   "pass": true,
+   "detail": [
+    "S3B2F",
+    "S3B2"
+   ]
+  },
+  {
+   "name": "the eight cameras draw",
+   "pass": true,
+   "detail": "8/8"
+  },
+  {
+   "name": "1× / 0.5× / 0.25× play at their rates",
+   "pass": true,
+   "detail": [
+    1,
+    0.5,
+    0.25
+   ]
+  },
+  {
+   "name": "frame step (4 ticks; shift: 1 tick)",
+   "pass": true,
+   "detail": [
+    0.016666666666666607,
+    0.004166666666666874
+   ]
+  },
+  {
+   "name": "loop toggles",
+   "pass": true
+  },
+  {
+   "name": "0 console / page / HTTP errors",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "errs": []
+}

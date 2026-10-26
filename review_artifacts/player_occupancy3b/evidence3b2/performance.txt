@@ -1,0 +1,11 @@
+
+PERFORMANCE — 69 encounters (the review set + the matrix) × 1 repetitions, node v22.19.0 (one core)
+  the world's step, STAGE 2 (as decided)                     mean   106.0 µs · p99    711.7 µs · max   18683.4 µs   (98685 ticks)
+  the world's step, 3B.1 (calibrated F+M)                    mean   152.0 µs · p99    969.1 µs · max   14644.0 µs   (98114 ticks)
+  the world's step, 3B.2                                     mean   250.8 µs · p99   2193.0 µs · max   19220.6 µs   (97390 ticks)
+  3B.2's placement pass, IDLE (nothing to place or guard)    mean     2.1 µs · p99     11.7 µs · max     907.0 µs   (79698 ticks)
+  3B.2's placement pass, ACTIVE (a landing evaluated)        mean   498.7 µs · p99   1928.2 µs · max   17306.6 µs   (17692 ticks)
+  landings evaluated per active tick: mean 1.8 · p99 3 · max 216  (each: the landing interval and the swing corridor against the prediction)
+  the worst tested 60 Hz frame, S2D: 29.7 ms · p99 4.9 ms
+  the worst tested 60 Hz frame, S3B: 36.0 ms · p99 5.9 ms
+  the worst tested 60 Hz frame, S3B2: 37.9 ms · p99 8.1 ms

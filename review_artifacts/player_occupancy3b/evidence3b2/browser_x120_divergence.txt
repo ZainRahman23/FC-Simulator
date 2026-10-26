@@ -1,0 +1,9 @@
+THE LAB IN CHROME vs NODE — the two cases that differ (x120-jog, x120-jog-m), traced (tools: scratch scripts, the same runB2 in both)
+  The first 3B.1 limb-contact application (tick 850, THIGH_R | THIGH_L): λ = 8.148238309529429 N·s in node 22.19 (V8 12.4) · 8.148238309512235 N·s in
+  Chrome 155 — a 1.7e-11 N·s difference from the two JavaScript engines' floating-point library functions, present in 3B.1 alike (whose outcomes it does not
+  change in any case).
+  3B.2, tick 1012 (the attacker's recovery step re-aimed in flight for a crossover): two candidate landings within a hair of each other — node chooses
+  "3 cm AHEAD-RIGHT" (41.625, 34.011), Chrome "3 cm RIGHT" (41.602, 34.015). From there the runs diverge: the first drawn difference is the attacker's pelvis
+  height at tick 1067 (0.47 mm); by the end the defender is a FALL CANDIDATE in node and CORRECT in Chrome.
+  Within one engine every run is deterministic (114 / 114 run twice, identical). Across engines the candidate ranking can amplify a last-bit difference
+  where two candidates nearly tie: a property to fix before any lock-step networking or cross-platform replay (a tie-break on a quantised key).

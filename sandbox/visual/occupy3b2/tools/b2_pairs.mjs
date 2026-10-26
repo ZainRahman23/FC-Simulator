@@ -4,7 +4,7 @@ import { ENV, setOf, arg } from "../../occupy3b/tools/l3_common.mjs";
 import { runB2 as runO3 } from "../b2_run.js";
 import { volumesOf, detect, GROUP } from "../../occupy1/o_volumes.js";
 const DT = 1 / 240, f3 = (v) => v.toFixed(3), ID = arg("id"), T0 = +arg("t0", 0), T1 = +arg("t1", 9), MODE = arg("mode", "S3B"), EVERY = +arg("every", 2);
-const tc = setOf("l3").find((x) => x.id === ID) || setOf("review").find((x) => x.id === ID) || setOf("moves").find((x) => x.id === ID); const rows = [];
+const tc = setOf("l3").find((x) => x.id === ID) || setOf("review").find((x) => x.id === ID) || setOf("moves").find((x) => x.id === ID) || setOf("moves").find((x) => x.id === ID); const rows = [];
 const legs = (p, t) => ["R", "L"].map((X) => { const L = p.plan.stances[X], now = L.find((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9), nx = L.find((q) => q.t0 > t + 1e-9); const rec = (q) => (q && /recovery/.test(q.kind || "") ? "ʳ" : "");
   return now ? `${X}:PL${rec(now)}` : nx ? `${X}:→${((nx.t0 - t) * 1000).toFixed(0)}ms${rec(nx)}` : `${X}:air`; }).join(" ");
 const R = runO3(ENV, tc, MODE, { record: true, onTick: (W) => { const t = W.att.t, LP = W.livePoses(); const P = detect(volumesOf(LP.a.J), volumesOf(LP.d.J), { within: 0 }).filter((x) => x.both && !(GROUP[x.A] === "TRUNK" && GROUP[x.B] === "TRUNK")).sort((a, b) => b.pen - a.pen);

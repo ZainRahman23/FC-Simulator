@@ -53,7 +53,12 @@ for (const tc of L) { if (tc.onlyCommitted) { const p = runO3(ENV, tc, "S2D", { 
         if (!s.planted || ball[2] > 0.05) { land2[ck][X] = null; continue; } if ((!land2[ck][X] || land2[ck][X].id !== s.id) && s.pos && hyp(an[0] - s.pos[0], an[1] - s.pos[1]) > 0.03) { land2[ck][X] = null; continue; }
         if (!land2[ck][X] || land2[ck][X].id !== s.id) { land2[ck][X] = { id: s.id, p: ball.slice(), tg: s.tgt ? s.tgt.slice() : an.slice(), k }; continue; } if (k - land2[ck][X].k <= 3) continue;
         const Lx = land2[ck][X], d = hyp(ball[0] - Lx.p[0], ball[1] - Lx.p[1]), dT = s.tgt ? hyp(s.tgt[0] - Lx.tg[0], s.tgt[1] - Lx.tg[1]) : 0, sh = s.tgt ? hyp(an[0] - s.tgt[0], an[1] - s.tgt[1]) : 0, key = ck + X + s.id + "@" + Lx.k, o = mx.get(key);
-        if (!o || d > o.d) mx.set(key, { id: tc.id, who: ck === "a" ? "ATT" : "DEF", X, d, dT, sh, short: s.short, t: +(k * DT - R.t0).toFixed(3), rec: s.rec, s3: q[ck].s3, cm: q[ck].cm }); } }
+        // (the split: DURING the stance — the tick 2 later still planted on it — and the LIFT-OFF, its last 2 planted ticks: the one-tick jump of the
+        // ball when the stance ends, which is how a stance cut short (a re-plan lifting it, a released plant) shows)
+        const q2 = live.get(k + 2), s2 = q2 && q2[ck].X[X], interior = !!(s2 && s2.planted && s2.id === s.id), Fp = W.frames.get(k - 1), bp = Fp ? Fp[ck].J["toe_" + X].j : ball, jump = interior ? 0 : hyp(ball[0] - bp[0], ball[1] - bp[1]);
+        const rowD = o || { id: tc.id, who: ck === "a" ? "ATT" : "DEF", X, d: 0, dT, sh, short: s.short, t: 0, rec: s.rec, s3: q[ck].s3, cm: q[ck].cm, dIn: 0, jump: 0 };
+        if (d > rowD.d) Object.assign(rowD, { d, dT, sh, short: s.short, t: +(k * DT - R.t0).toFixed(3), rec: s.rec, s3: q[ck].s3, cm: q[ck].cm });
+        if (interior) rowD.dIn = Math.max(rowD.dIn, d); rowD.jump = Math.max(rowD.jump, jump); mx.set(key, rowD); } }
     O.drift.push(...[...mx.values()].filter((x) => x.d > 0.005));
   }
   process.stderr.write("."); }
@@ -64,6 +69,8 @@ for (const m of MODES) { const O = out[m], TD = O.td, bad = (x) => x.pen > 0.02,
   console.log(`  worst landings (boot / shin):`); for (const x of TD.filter((x) => x.low > 0.02).sort((a, b) => b.low - a.low).slice(0, TOP)) console.log(`    ${cm(x.low).padStart(5)} cm  ${x.id.padEnd(22)} t ${x.t.toFixed(3)} ${x.who} ${x.X} ${x.rec ? "RECOVERY" : x.cm ? x.cm : "ordinary"}  ${x.lowA} into ${x.lowB}  (with thighs ${cm(x.pen)} · swing ${cm(Math.max(0, x.swing))} cm)`);
   const D = O.drift, imp = D.filter((x) => x.short > 0.005), mxOf = (S, f) => Math.max(0, ...S.map(f));
   console.log(`  PLANTED STANCES with drift > 0.5 cm: ${D.length} · largest drawn drift ${cm(mxOf(D, (x) => x.d))} cm · the feet timeline's own (target) largest ${cm(mxOf(D, (x) => x.dT))} cm · the LEG SHORT of its target (body outran the foot) largest ${cm(mxOf(D, (x) => x.sh))} cm in ${D.filter((x) => x.sh > 0.01).length} stances (${D.filter((x) => x.sh > 0.01 && x.s3).length} with Stage 3 acting)`);
+  const nIn = (c) => D.filter((x) => x.dIn > c).length, nJ = (c) => D.filter((x) => x.jump > c).length;
+  console.log(`  SPLIT: DURING the stance > 2 cm ${nIn(0.02)} · > 5 cm ${nIn(0.05)} (largest ${cm(mxOf(D, (x) => x.dIn))}) · a one-tick JUMP of the ball at the LIFT-OFF > 2 cm ${nJ(0.02)} · > 5 cm ${nJ(0.05)} (largest ${cm(mxOf(D, (x) => x.jump))}) · during the stance with Stage 3 acting > 2 cm ${D.filter((x) => x.dIn > 0.02 && x.s3).length}`);
   console.log(`  largest drifts (drawn · target · leg short):`); for (const x of D.sort((a, b) => b.d - a.d).slice(0, TOP)) console.log(`    ${cm(x.d).padStart(5)} · ${cm(x.dT).padStart(5)} · ${cm(x.sh).padStart(5)} cm  ${x.id.padEnd(22)} t ${x.t.toFixed(3)} ${x.who} ${x.X}${x.rec ? " RECOVERY" : ""}${x.s3 ? " S3" : ""}${x.cm ? " " + x.cm : ""}`);
   console.log(`  largest LEG SHORTFALLS:`); for (const x of D.filter((x) => x.sh > 0.01).sort((a, b) => b.sh - a.sh).slice(0, TOP)) console.log(`    ${cm(x.sh).padStart(5)} cm (drawn drift ${cm(x.d)})  ${x.id.padEnd(22)} t ${x.t.toFixed(3)} ${x.who} ${x.X}${x.rec ? " RECOVERY" : ""}${x.s3 ? " S3" : ""}${x.cm ? " " + x.cm : ""}`); }
 if (arg("json")) fs.writeFileSync(arg("json"), JSON.stringify(out));

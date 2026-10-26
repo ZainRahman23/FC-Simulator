@@ -23,7 +23,7 @@ import { RES3B2 } from "./b2_world.js";
 const W = window, hyp = Math.hypot, clamp = (x, a, b) => (x < a ? a : x > b ? b : x), $ = (id) => document.getElementById(id);
 // (THE TWO VIEWPORTS: each OLD STAGE 3 ("S3") or a Stage 3B formulation ("B:<form>", occupy3b/l3_forms.js) — by default OLD | the calibrated 3B.1)
 let MODES = ["B:" + RECOMMENDED, "S3B2"];
-const is3B = (m) => m.startsWith("B:") || m === "S3B2", MNAME = (m) => (m === "S3" ? "OLD STAGE 3" : m === "S3B2" ? "STAGE 3B.2 · PLACEMENT" : m === "B:" + RECOMMENDED ? "STAGE 3B.1 (CALIBRATED F+M)" : FORM_LABEL[m.slice(2)] || m), SH = (m) => (m === "S3" ? "OLD" : m === "S3B2" ? "3B.2" : m === "B:" + RECOMMENDED ? "3B.1" : m.slice(2)), DESC = (m) => (m === "S3B2" ? FORM_DESC[RECOMMENDED] + " · then 3B.2: feasible recovery placement and landing geometry" : FORM_DESC[m.slice(2)]), HAS3 = () => true, ckey = (id) => `${id}|${MODES.join(",")}`;
+const is3B = (m) => m.startsWith("B:") || m.startsWith("S3B2"), MNAME = (m) => (m === "S3" ? "OLD STAGE 3" : m === "S3B2" ? "STAGE 3B.2 · PLACEMENT" : m === "S3B2F" ? "3B.2 · FLAT RELEASE (comparison)" : m === "B:" + RECOMMENDED ? "STAGE 3B.1 (CALIBRATED F+M)" : FORM_LABEL[m.slice(2)] || m), SH = (m) => (m === "S3" ? "OLD" : m === "S3B2" ? "3B.2" : m === "B:" + RECOMMENDED ? "3B.1" : m.slice(2)), DESC = (m) => (m === "S3B2" ? FORM_DESC[RECOMMENDED] + " · then 3B.2: feasible recovery placement and landing geometry" : FORM_DESC[m.slice(2)]), HAS3 = () => true, ckey = (id) => `${id}|${MODES.join(",")}`;
 // (the case list: the flagship; the calibration spectrum (brush → strike, mirrors, the world turned 37°); the rest of the §10 matrix by group)
 const ROWS = B2ROWS;
 const L = { plc: true, fcv: true, anc: true, ftr: true, ready: false, cases: ROWS, done: new Map(), rows: new Map(), cur: null, mode: "S3B", layout: "2", t: 0, playing: false, rate: 1, loop: false, cam: "gameplay", show: "skin", vol: true, sup: true, bal: true, nrm: true, imp: true, stp: true, trl: true, ghost: false, ref: true, lc: true, lv: true, vp: true, mom: true, hud: true, ball: true, diag: true, last: null };
@@ -93,7 +93,7 @@ const DEF_TINT = [1.05, 0.42, 0.36], ATT_TINT = [1, 1, 1];
 // ═══ A CASE: STAGE 2 · STAGE 3 simulated; per tick (from the recorded live poses) the contacts, the support, the centre of mass and the capture point ═══
 function plantedAt(p, t) { const P = p.planAt(t); return ["R", "L"].filter((X) => P.stances[X].some((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9)); }
 function authAt(Wd, k) { let s = "FREE", o = null; for (const e of Wd.auth.log) { if (e.k > k) break; if (!e.to) continue; /* (a note — a claim denied, no transition) */ s = e.to.replace(/\(.*\)/, ""); o = e.owner; } return o ? `CONTROLLED (${o})` : s; }
-function simMode(tc, m) { const c0 = performance.now(), run = (mode, o) => (tc.rot ? runRotated(L.env, tc, mode, tc.rot, o) : runO3(L.env, tc, mode, o)), r = m === "S3" ? run("S3", { record: true }) : m === "S3B2" ? runB2(L.env, tc, "S3B2", { record: true, rot: tc.rot }) : run("S3B", { record: true, l3: FORMS[m.slice(2)] }), Wd = r.W, k0 = Math.round(r.clip[0] / DT), k1 = Math.round(r.clip[1] / DT), T = new Map(), MF = L.env.body.massFrac;
+function simMode(tc, m) { const c0 = performance.now(), run = (mode, o) => (tc.rot ? runRotated(L.env, tc, mode, tc.rot, o) : runO3(L.env, tc, mode, o)), r = m === "S3" ? run("S3", { record: true }) : m.startsWith("S3B2") ? runB2(L.env, tc, "S3B2", { record: true, rot: tc.rot, b2: m === "S3B2F" ? { releaseFlat: true } : undefined }) : run("S3B", { record: true, l3: FORMS[m.slice(2)] }), Wd = r.W, k0 = Math.round(r.clip[0] / DT), k1 = Math.round(r.clip[1] / DT), T = new Map(), MF = L.env.body.massFrac;
   let best = -1, bestK = null, trunk = -1, legs = -1; const pen = new Float32Array(k1 - k0 + 1).fill(-1), over = { tol: 0, hard: 0 }, com = { a: [], d: [] };
   for (let k = k0; k <= k1; k++) { const fr = Wd.frames.get(k); if (!fr) continue; const t = k * DT, near = hyp(fr.a.P[0] - fr.d.P[0], fr.a.P[1] - fr.d.P[1]) < OCC.broad + 0.6, va = volumesOf(fr.a.J), vd = volumesOf(fr.d.J), P = near ? detect(va, vd, { within: 0.03 }) : [];
     let mres = -1; for (const p of P) { if (!p.both) continue; if (p.pen > mres) mres = p.pen; const tr = GROUP[p.A] === "TRUNK" && GROUP[p.B] === "TRUNK"; if (tr) trunk = Math.max(trunk, p.pen); else legs = Math.max(legs, p.pen); }
@@ -159,7 +159,7 @@ function render() { const C = L.cur; if (!C) return; layoutDom(); const gl = L.g
     if (Fr.x) { if (L.vol) volumes(x, pr, c, dpr, Fr.x); if (L.nrm) normals(x, pr, dpr, Fr.x, F); if (L.bal) balance(x, pr, dpr, Fr); }
     if (HAS3(m)) { if (L.imp) impacts(x, pr, dpr, R, Fr); if (L.stp) steps(x, pr, dpr, R, Fr, rx + rw); }
     if (is3B(m)) { if (L.lc) limbContacts(x, pr, dpr, Fr, rx + rw); if (L.lv) limbVel(x, pr, dpr, R, Fr); if (L.vp) velParts(x, pr, dpr, R, Fr, rx + rw); if (L.mom) momentum(x, pr, dpr, R, Fr, rx + rw); }
-    if (L.ftr) footTrails(x, pr, dpr, R, Fr); if (L.anc) anchors(x, pr, dpr, R, Fr, rx + rw); if (m === "S3B2") b2Overlays(x, pr, dpr, R, Fr, rx + rw);
+    if (L.ftr) footTrails(x, pr, dpr, R, Fr); if (L.anc) anchors(x, pr, dpr, R, Fr, rx + rw); if (m.startsWith("S3B2")) b2Overlays(x, pr, dpr, R, Fr, rx + rw);
     label(x, dpr, R, Fr, rx, ry, rw, rh, C); if (M.length > 1) { x.strokeStyle = "#2a3530"; x.lineWidth = 2 * dpr; x.strokeRect(rx + 1, ry + 1, rw - 2, rh - 2); } x.restore(); });
   gl.disable(gl.SCISSOR_TEST); }
 function skel(x, pr, dpr, J, col, wd, dash) { x.strokeStyle = col; x.lineWidth = wd * dpr; if (dash) x.setLineDash(dash.map((v) => v * dpr)); for (const kk of Object.keys(J)) { const a = pr(J[kk].j), b = pr(J[kk].t); if (a && b) { x.beginPath(); x.moveTo(...a); x.lineTo(...b); x.stroke(); } } x.setLineDash([]); }
@@ -215,7 +215,7 @@ function frameLines(R, Fr, C) { const X = Fr.x, now = X ? X.mres : -1, col = (v)
   if (o3 && o3.imp) lines.push([`IMPACT ${o3.imp.regions} · bodies closing ${o3.imp.close} m/s · effective masses ${o3.imp.mA} / ${o3.imp.mD} kg`, "#ff4fd8", 600]);
   if (o3 && o3.strike && o3.strike.length) lines.push([`LIMB STRIKE (OLD) ${o3.strike.map((s) => `${s.regions} ${s.art} m/s → ${s.j} N·s · the limb continues unchanged`).join(" · ")}`, "#ff4fd8", 600]);
   if (is3B(R.m)) for (const s of limbLines(R, Fr)) lines.push(s);
-  if (R.m === "S3B2") for (const s of b2Lines(R, Fr)) lines.push(s);
+  if (R.m.startsWith("S3B2")) for (const s of b2Lines(R, Fr)) lines.push(s);
   lines.push([`POSSESSION ${X.poss}`, "#b8c8bf", 500]);
   for (const [i, key] of [[0, "ATT"], [1, "DEF"]]) { const P = X.pl[key], q = o3 && o3.p ? o3.p[i] : null, a = P.act;
     lines.push([`${key === "ATT" ? "CARRIER " : "DEFENDER"}  ${a.kind === "ORDINARY" ? a.label : a.label + " · " + a.phase}${P.feet.length ? " · planted " + P.feet.join("") : " · airborne"}`, key === "ATT" ? COL.ATT : COL.DEF, 600]);
@@ -275,7 +275,7 @@ function drawTimeline() { const C = L.cur; if (!C) return; const cv = $("tlc"), 
     for (const [v, c] of [[OCC.tol, "rgba(255,212,94,0.35)"], [OCC.hard, "rgba(255,45,85,0.45)"]]) { x.fillStyle = c; x.fillRect(X(a), yy(v), X(b) - X(a), 1 * dpr); }
     for (let k = R.k0; k <= R.k1; k++) { const v = R.pen[k - R.k0]; if (v <= 0) continue; x.fillStyle = v > OCC.hard ? COL.deepLine : v > OCC.tol ? COL.penLine : COL.contactLine; x.fillRect(X(k * DT), yy(v), Math.max(1, X((k + 1) * DT) - X(k * DT)), y + hh - yy(v)); }
     for (const c of R.W.contactLog) { x.fillStyle = c.kind === "tackle" ? "#ffffff" : c.by === "ATT" ? COL.ATT : COL.DEF; x.fillRect(X(c.t) - 1 * dpr, y - 2 * dpr, 2 * dpr, 5 * dpr); }
-    if (m === "S3B2" && R.W.b2) b2Timeline(x, R, X, y, hh, dpr);
+    if (m.startsWith("S3B2") && R.W.b2) b2Timeline(x, R, X, y, hh, dpr);
     if (is3B(m) && R.W.l3) for (const a of R.W.l3.apps) { if (a.held) continue; const xx = X(a.k * DT); x.fillStyle = "#4fe3ff"; x.fillRect(xx - 1 * dpr, y + hh - clamp(a.lam / 40, 0.15, 1) * hh, 2 * dpr, clamp(a.lam / 40, 0.15, 1) * hh); }
     if (HAS3(m)) { for (const e of R.eps) { const sv = ["ATT", "DEF"].map((k) => e.players[k] && e.players[k].sev).filter(Boolean), rank = ["BRUSH", "LIGHT", "MODERATE", "STRONG", "SEVERE"], top = sv.sort((p, q) => rank.indexOf(q) - rank.indexOf(p))[0] || "LIGHT"; x.fillStyle = COL[top]; x.globalAlpha = 0.85; x.fillRect(X(e.t0), y + hh - 3 * dpr, Math.max(2 * dpr, X(e.t1 != null ? e.t1 : b) - X(e.t0)), 3 * dpr); x.globalAlpha = 1; }
       for (const e of R.W.imp.events) { const xx = X(e.t), yc = y + 6 * dpr; x.fillStyle = e.who === "ATT" ? COL.ATT : e.who === "DEF" ? COL.DEF : "#ff4fd8";
@@ -316,7 +316,7 @@ async function boot() { const q = new URLSearchParams(location.search); bindUI()
   L.gl = gl; L.R = { gl }; L.ground = groundProg(gl); L.ballP = ballProg(gl); L.charP = charProg(gl);
   const [colliders, baked, ent] = await Promise.all([fetch("dribble1/d1_colliders.json").then((r) => r.json()), fetch("tc_baseline_88573ef0/pt_baked.json").then((r) => r.json()), W.ofCharLoad("vinicius")]);
   L.ent = ent; const E = W.RUN1_V13; L.env = { E, M4, skel: ent.skel, colliders, baked, body: E.r1Body(ent.skel) };
-  { const ok = (v) => v === "S3" || v === "S3B2" || (v && v.startsWith("B:") && FORMS[v.slice(2)]); if (ok(q.get("left"))) MODES[0] = q.get("left"); if (ok(q.get("right"))) MODES[1] = q.get("right"); $("selL").value = MODES[0]; $("selR").value = MODES[1]; }
+  { const ok = (v) => v === "S3" || v === "S3B2" || v === "S3B2F" || (v && v.startsWith("B:") && FORMS[v.slice(2)]); if (ok(q.get("left"))) MODES[0] = q.get("left"); if (ok(q.get("right"))) MODES[1] = q.get("right"); $("selL").value = MODES[0]; $("selR").value = MODES[1]; }
   if (q.get("layout")) L.layout = q.get("layout"); if (q.get("cam")) { L.cam = q.get("cam"); $("selCam").value = L.cam; } if (q.get("show")) L.show = q.get("show"); if (q.get("mode")) L.mode = q.get("mode");
   for (const [k, id] of TOG) { if (q.get(k) != null) L[k] = q.get(k) === "1"; $(id).classList.toggle("on", L[k]); }
   setLayout(L.layout); setShow(L.show); buildList(); select(q.get("case") && L.cases.some((c) => c.id === q.get("case")) ? q.get("case") : L.cases[0].id, { paused: q.get("play") === "0" }); if (q.get("t") != null) { L.t = Math.round((L.cur.t0 + +q.get("t")) / DT) * DT; L.playing = false; }
@@ -417,7 +417,7 @@ function b2Lines(R, Fr) { const out = []; for (const who of ["ATT", "DEF"]) { co
   const W2 = R.W; if (W2.b2) { const ev = W2.b2.events.filter((e) => Math.abs(e.t - Fr.k * DT) < 0.25 && /RELEASED|NO_FEASIBLE|INTERRUPTED|REPLACED/.test(e.kind)); for (const e of ev.slice(-2)) out.push([`3B.2 ${e.who} ${e.kind}: ${e.why}`, "#4fe3ff", 500]); }
   return out; }
 // (the diagnostics: the run's 3B.2 record — decisions by kind, every NO_FEASIBLE with its preserved state, the committed deviations, released plants, boots)
-function b2Diag(C) { const out = []; for (const m of C.modes) { if (m !== "S3B2") continue; const R = C.runs[m], D = R.W.b2, t0 = C.t0, rel = (v) => `${v - t0 >= 0 ? "+" : ""}${(v - t0).toFixed(3)}`; if (!D) continue;
+function b2Diag(C) { const out = []; for (const m of C.modes) { if (!m.startsWith("S3B2")) continue; const R = C.runs[m], D = R.W.b2, t0 = C.t0, rel = (v) => `${v - t0 >= 0 ? "+" : ""}${(v - t0).toFixed(3)}`; if (!D) continue;
     const kinds = {}; for (const d of D.decisions) { const k = d.kind + " → " + (d.result ? d.result.kind.replace(/ \(.*$/, "") : "?"); kinds[k] = (kinds[k] || 0) + 1; }
     const boot = {}; for (const z of D.boot) boot[z.kind] = (boot[z.kind] || 0) + 1;
     out.push(`<b>STAGE 3B.2 · PLACEMENT</b>  <span class="k">(${D.decisions.length} decisions · ${D.nEval} landings evaluated · ${D.cpu.reduce((a, b) => a + b, 0).toFixed(0)} ms)</span>`, `  ${Object.entries(kinds).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} ${v}`).join(" · ") || "no decision: nothing obstructed"}`,

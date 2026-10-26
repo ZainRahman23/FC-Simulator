@@ -66,6 +66,10 @@ export const RES3B2 = {
                                 // landing moved further is a different stride, not a placement)
   look: 0.40,             // s: landings this soon are guarded
   release: 0.03,          // s: a plant the hip will outrun within this is released now
+  releaseFlat: false,     // (a COMPARISON, off by default; the Lab's "3B.2 · FLAT RELEASE") a released plant lifts FLAT (its stance's heel rise off: liftK 0). The
+                          // canonical heel rise spans the last 55 % of a stance, so a stance cut short pops its heel (and the drawn ball of the foot) 5 – 8 cm in one
+                          // tick — the default's known defect. Measured, 114 cases: lift-off jumps > 5 cm 17 → 2, but legs > 5 cm 290 → 313, fall candidates
+                          // 16 → 18, erroneous crossings 942 → 968 (croq-recover ±m: a leg pushed across 20 cm for 17 ticks), turf +4 %: worse on balance
   twistMax: Infinity,     // deg: … or the body turned this far from the planted foot (a COMPARISON, off by default: measured, it did not remove the twist it was
                           // meant for and moved other cases — that twist is the presentation's own yaw relaxation in stance, reported)
   recovery: true, monitor: true, releasePlant: true, pelvisReach: true, boots: true,   // THE 3B.2 DEFAULT (measured: the configuration that improves on 3B.1)
@@ -461,7 +465,7 @@ export class PlacementWorld extends LimbWorld {
         const te = Math.min(q.t1, t + 0.08), he = this.hipAt(p, X, te), de = hyp(he[0] - tg[0], he[1] - tg[1], Math.max(0, he[2] - G.RIG.drop - tg[2])); if (de <= rH + 0.015) continue; }
       // (the other foot must be able to take the body: it is down, or lands within 0.12 s)
       const Y = X === "R" ? "L" : "R", oy = P.stances[Y], ok = oy.some((z) => z.t0 <= t + 0.12 + 1e-9 && z.t1 > t + 1e-9); if (!ok) { const key = "noRel" + X + q.id; if (!s[key]) { s[key] = 1; this.b2event(p, "PLANT OUTRUN, NO SUPPORT TO RELEASE TO (3B.3 input)", `${X}: the hip leaves the planted foot's reach in ${(B.release * 1000).toFixed(0)} ms and the other foot is not down`); } continue; }
-      const hasNext = Ls.some((z) => z.t0 > t + 1e-9 && z.pos), F = this.forkPlan(p), L2 = F.stances[X].slice(); L2[i] = Object.assign({}, q, { t1: t + 2 * DT, released: t, kind: (q.kind || "") + " · released (3B.2)" }); this.editStances(p, F, X, L2, [q.id]);
+      const hasNext = Ls.some((z) => z.t0 > t + 1e-9 && z.pos), F = this.forkPlan(p), L2 = F.stances[X].slice(); L2[i] = Object.assign({}, q, { t1: t + 2 * DT, released: t, kind: (q.kind || "") + " · released (3B.2)" }, B.releaseFlat ? { liftK: 0 } : {}); this.editStances(p, F, X, L2, [q.id]);
       if (!hasNext) p.flags.replan = p.flags.replan || "3B.2: plant released (its next landing)";
       this.b2.release.push({ k: this.k, t: r3(t), who: p.pid, X, id: q.id, pos: q.pos.map(r3), was: q.t1 === Infinity ? null : r3(q.t1), d: r3(d), rH: r3(rH), twist: +(tw / DEG).toFixed(0), why: twist ? "TWIST" : "REACH" });
       this.b2event(p, "PLANT RELEASED (3B.2)", twist ? `${X}: the body has turned ${(tw / DEG).toFixed(0)}° from the planted foot (beyond the leg's ${B.twistMax}°) before its stance ends (${q.t1 === Infinity ? "∞" : "+" + ((q.t1 - t) * 1000).toFixed(0) + " ms"}): it lifts off now, not screwed round` : `${X}: the hip would leave the planted foot's reach (${(d * 100).toFixed(0)} cm > ${(rH * 100).toFixed(0)} cm) before its stance ends (${q.t1 === Infinity ? "∞" : "+" + ((q.t1 - t) * 1000).toFixed(0) + " ms"}): it lifts off now, not dragged`); } }

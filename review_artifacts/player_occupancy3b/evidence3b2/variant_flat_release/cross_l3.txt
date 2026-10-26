@@ -1,0 +1,46 @@
+
+§6 CROSSED LEGS, CLASSIFIED — set l3 (114 cases): ticks (events) per class
+                                             S2D             S3B            S3B2
+✗ IMPOSSIBLE SELF-INTERSECTION          685 (40)       1129 (49)        906 (43)
+✗ RECOVERY ON THE WRONG SIDE               0 (0)           2 (2)          28 (3)
+✗ LIMB PUSHED ACROSS                       0 (0)           3 (1)          34 (2)
+  TRANSIENT PASSAGE                       37 (9)          18 (4)        108 (16)
+  AUTHORED CROSSOVER                      68 (6)         153 (8)         154 (8)
+  ALL                                   790 (55)       1305 (64)       1230 (72)
+  ERRONEOUS (✗)                         685 (40)       1134 (52)        968 (48)
+
+S2D: the longest erroneous events
+  croq-hip                 DEF t 1.267   86 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 17.8 cm, across 39.4 cm)
+  x30-jog                  ATT t 1.450   44 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 13.1 cm, across 28.6 cm)
+  x30-jog-m                ATT t 1.450   44 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 13.1 cm, across 28.6 cm)
+  static-walk              ATT t 2.729   40 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 4.2 cm, across 22.0 cm)
+  both-committed           ATT t 1.279   32 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 15.2 cm, across 56.6 cm)
+  both-committed-m         ATT t 1.279   32 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 15.2 cm, across 56.6 cm)
+  x150-run                 DEF t 1.237   31 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 4.7 cm, across 21.5 cm)
+  x150-run-m               DEF t 1.237   31 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 4.7 cm, across 21.5 cm)
+  x120-run                 DEF t 1.242   29 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 6.4 cm, across 10.0 cm)
+  x120-run-m               DEF t 1.242   29 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 6.4 cm, across 10.0 cm)
+
+S3B: the longest erroneous events
+  croq-hip                 DEF t 1.263   85 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 17.4 cm, across 36.4 cm)
+  croq-recover             DEF t 0.692   49 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 3.4 cm, across 76.1 cm)
+  croq-recover-m           DEF t 0.692   49 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 3.4 cm, across 76.1 cm)
+  in-croq                  ATT t 0.767   42 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 8.1 cm, across 43.4 cm)
+  in-croq-m                ATT t 0.767   42 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 8.1 cm, across 43.4 cm)
+  static-walk              ATT t 2.638   39 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 11.6 cm, across 31.0 cm)
+  x30-jog                  ATT t 1.450   37 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 13.2 cm, across 20.9 cm)
+  x30-jog-m                ATT t 1.450   37 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 13.2 cm, across 20.9 cm)
+  x120-jog                 ATT t 1.867   36 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 7.9 cm, across 20.8 cm)
+  x120-run                 DEF t 1.808   36 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 22.3 cm, across 60.7 cm)
+
+S3B2: the longest erroneous events
+  x30-jog                  ATT t 1.267   53 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 17.3 cm, across 35.9 cm)
+  x30-jog-m                ATT t 1.267   53 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 17.3 cm, across 35.9 cm)
+  croq-recover2            ATT t 0.733   45 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 16.3 cm, across 47.9 cm)
+  croq-recover2-m          ATT t 0.733   45 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 16.3 cm, across 47.9 cm)
+  static-walk              ATT t 2.638   39 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 11.6 cm, across 31.1 cm)
+  croq-early               ATT t 0.783   38 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 4.6 cm, across 32.0 cm)
+  both-committed           ATT t 2.462   38 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 11.8 cm, across 19.9 cm)
+  both-committed-m         ATT t 2.462   38 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 11.8 cm, across 19.9 cm)
+  croq-early-m             ATT t 0.779   37 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 6.6 cm, across 33.4 cm)
+  x120-run                 DEF t 1.808   36 ticks  IMPOSSIBLE SELF-INTERSECTION  (self 22.6 cm, across 61.3 cm)
