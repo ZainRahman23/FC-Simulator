@@ -1,6 +1,6 @@
 // occupy3b2/tools/b2_identity.mjs — §9 EXACT BEFORE PHYSICAL CONTACT: STAGE 3B.2 against STAGE 2 AS DECIDED (S2D), identical inputs, every tick — both
-// roots, the ball, the authority and both posed bodies (every joint): identical to the bit until the first GENUINE contact (3B.1's first contact, a boot
-// contact, Stage 3's first impact — whichever first; occupy3b/tools/l3_common.mjs firstContact, unchanged), identical throughout when there is none. And
+// roots, the ball, the authority and both posed bodies (every joint): identical to the bit until the first GENUINE contact (3B.1's first contact, Stage 3's
+// first impact — occupy3b/tools/l3_common.mjs firstContact, unchanged — or a boot touching a boot beyond 2 cm, whichever first), identical throughout when there is none. And
 // STAGE 3B.2 against STAGE 3B.1 (the frozen foundation) until 3B.2 FIRST ACTS (a landing it moved / re-aimed / retimed / routed, a class it changed — no
 // clear landing, NO_FEASIBLE —, a boot contact it resolved, a plant it released, a pelvis it held, an action it ended): identical to the bit before.
 //   node b2_identity.mjs --set review|matrix|l3|moves|search [--json f]
@@ -14,7 +14,9 @@ function firstAct(W) { const B = W.b2; if (!B) return Infinity; let k = Infinity
   for (const e of B.events) if (/INTERRUPTED|REPLACED|PROJECT/.test(e.kind)) k = Math.min(k, e.k); for (const z of B.boot) if (z.proj) k = Math.min(k, z.k); return k; }
 for (const tc of L) { if (tc.onlyCommitted) { const p = runB2(ENV, tc, "S2D", { record: false }); if (!p.W.tk.act) continue; }
   const l2 = live(), lb = live(), l2b = live(), R2 = runB2(ENV, tc, "S2D", { record: true, onTick: l2.onTick }), RB = runB2(ENV, tc, "S3B", { record: true, onTick: lb.onTick }), R2B = runB2(ENV, tc, "S3B2", { record: true, onTick: l2b.onTick });
-  const T2 = trace(R2, l2.L), TB = trace(RB, lb.L), T2B = trace(R2B, l2b.L), kC = Math.min(firstContact(R2B.W), firstContact(RB.W)), kA = firstAct(R2B.W);
+  // (a genuine contact includes a boot touching a boot beyond the tolerance — 3B.2's boot pass sees those; 3B.1 does not resolve them)
+  const kBoot = R2B.W.b2 && R2B.W.b2.boot.length ? Math.min(...R2B.W.b2.boot.map((z) => z.k)) : Infinity;
+  const T2 = trace(R2, l2.L), TB = trace(RB, lb.L), T2B = trace(R2B, l2b.L), kC = Math.min(firstContact(R2B.W), firstContact(RB.W), kBoot), kA = firstAct(R2B.W);
   const pre = compare(T2, T2B, kC), all = compare(T2, T2B), preB = compare(TB, T2B, kA), allB = compare(TB, T2B);
   const ok = pre.maxRoot === 0 && pre.maxJ === 0 && (kC < Infinity || (all.maxRoot === 0 && all.maxJ === 0)), okB = preB.maxRoot === 0 && preB.maxJ === 0 && (kA < Infinity || (allB.maxRoot === 0 && allB.maxJ === 0)); if (!ok) bad++; if (!okB) badB++;
   rows.push({ id: tc.id, contact: kC === Infinity ? null : +(kC * DT - R2B.t0).toFixed(4), act: kA === Infinity ? null : +(kA * DT - R2B.t0).toFixed(4), actBeforeContact: kA < kC, preTicks: pre.n, preRoot: pre.maxRoot, preJ: pre.maxJ, identical: ok, preBTicks: preB.n, identicalB: okB, diverged: allB.first == null ? null : +(allB.first * DT - R2B.t0).toFixed(4) }); process.stderr.write("."); }

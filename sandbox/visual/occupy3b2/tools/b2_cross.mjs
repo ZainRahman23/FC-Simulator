@@ -1,7 +1,8 @@
 // occupy3b2/tools/b2_cross.mjs — §6 CROSSED LEGS, CLASSIFIED (not a cosmetic rule: why each crossed tick happens). A crossed tick: a player's feet
 // across each other's line by > 5 cm in his pelvis frame (Stage 3's instrument). Each crossed EVENT (consecutive crossed ticks of one player) is:
 //   IMPOSSIBLE SELF-INTERSECTION — the player's own legs inside each other (thigh / shin / boot, > 2 cm; the thighs' upper halves excluded: the hips)
-//   RECOVERY ON THE WRONG SIDE — a recovery step's foot (Stage 3's, placed by 3B.1 / 3B.2) planted, or landing, across the support foot
+//   RECOVERY ON THE WRONG SIDE — both feet DOWN and crossed, one of them on a recovery step's stance (placed by 3B.2 / Stage 3): the recovery placed
+//     across, or the gait's next foot landed across the recovery foot (a swing passing a planted recovery foot is a passage, below)
 //   LIMB PUSHED ACROSS — the 3B.1 yield displaced one of its feet (> 2 cm) during the event
 //   TRANSIENT PASSAGE — one foot swinging past the other, ≤ 50 ms, no self-intersection
 //   AUTHORED CROSSOVER — the canonical plan's own stances (the gait's, a technique's) crossed: the motion as authored
@@ -21,14 +22,14 @@ for (const tc of L) { if (tc.onlyCommitted) { const p = runB2(ENV, tc, "S2D", { 
   for (const mode of MODES) { const live = new Map();
     const R = runB2(ENV, tc, mode, { record: true, onTick: (W) => { const t = W.att.t, row = {};
       for (const [key, p] of [["a", W.att], ["d", W.def]]) { const st = p.stateAt(t), legs = {};
-        for (const X of ["R", "L"]) { const Ls = p.plan.stances[X], now = Ls.find((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9), nx = Ls.find((q) => q.t0 > t + 1e-9); legs[X] = { planted: !!now, rec: /recovery step/.test(((now || nx) || {}).kind || ""), d: W.legs ? W.legs.get(p)[X].dAnk : 0 }; }
+        for (const X of ["R", "L"]) { const Ls = p.plan.stances[X], now = Ls.find((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9), nx = Ls.find((q) => q.t0 > t + 1e-9); legs[X] = { planted: !!now, rec: !!(now && /recovery step/.test(now.kind || "")), d: W.legs ? W.legs.get(p)[X].dAnk : 0 }; }
         row[key] = { psi: st.psi, legs, s3: !!(W.ps && W.ps.get(p).active) }; }
       live.set(W.k, row); } });
     const W = R.W, k0 = Math.round(R.clip[0] / DT), k1 = Math.round(R.clip[1] / DT), O = out[mode];
     for (const ck of ["a", "d"]) { let ev = null; const close = () => { if (!ev) return; const c = ev.self > 0.02 ? CLS[0] : ev.rec ? CLS[1] : ev.push ? CLS[2] : ev.n <= 12 && ev.swing ? CLS[3] : CLS[4]; O.ticks[c] += ev.n; O.events[c]++; O.list.push({ id: tc.id, who: ck === "a" ? "ATT" : "DEF", t: +(ev.t0 - R.t0).toFixed(3), n: ev.n, cls: c, self: ev.self, lat: ev.lat }); ev = null; };
       for (let k = k0; k <= k1; k++) { const F = W.frames.get(k), q = live.get(k); if (!F || !q) { close(); continue; } const J = F[ck].J, s = q[ck], r = [-Math.sin(s.psi), Math.cos(s.psi)], lat = (J.foot_R.j[0] - J.foot_L.j[0]) * r[0] + (J.foot_R.j[1] - J.foot_L.j[1]) * r[1];
         if (!(lat < -0.05)) { close(); continue; } if (!ev) ev = { t0: k * DT, n: 0, self: -Infinity, rec: false, push: false, swing: false, lat: 0 };
-        ev.n++; ev.self = Math.max(ev.self, selfPen(J)); ev.lat = Math.min(ev.lat, lat); ev.rec = ev.rec || s.legs.R.rec || s.legs.L.rec; ev.push = ev.push || s.legs.R.d > 0.02 || s.legs.L.d > 0.02; ev.swing = ev.swing || !s.legs.R.planted || !s.legs.L.planted; }
+        ev.n++; ev.self = Math.max(ev.self, selfPen(J)); ev.lat = Math.min(ev.lat, lat); ev.rec = ev.rec || ((s.legs.R.rec || s.legs.L.rec) && s.legs.R.planted && s.legs.L.planted); ev.push = ev.push || s.legs.R.d > 0.02 || s.legs.L.d > 0.02; ev.swing = ev.swing || !s.legs.R.planted || !s.legs.L.planted; }
       close(); } }
   process.stderr.write("."); }
 console.log(`\n§6 CROSSED LEGS, CLASSIFIED — set ${SET} (${L.length} cases): ticks (events) per class`);

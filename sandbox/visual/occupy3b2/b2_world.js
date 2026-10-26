@@ -41,6 +41,7 @@ import { PlayBody } from "../vocab2/u_body.js";
 import { OCC } from "../occupy1/o_volumes.js";
 import * as LM from "../occupy3b/l3_limb.js";
 import * as G from "./b2_geom.js";
+import { predict as predictBall, R as BALL_R } from "../tc_baseline_88573ef0/pt_ball.js";
 const DT = 1 / 240, hyp = Math.hypot, clamp = (x, a, b) => (x < a ? a : x > b ? b : x), SIDES = ["R", "L"], DEG = Math.PI / 180;
 const add2 = (a, b) => [a[0] + b[0], a[1] + b[1]], sub2 = (a, b) => [a[0] - b[0], a[1] - b[1]], mul2 = (a, k) => [a[0] * k, a[1] * k], dot2 = (a, b) => a[0] * b[0] + a[1] * b[1], len2 = (a) => hyp(a[0], a[1]);
 const unit2 = (a, d = [1, 0]) => { const m = hyp(a[0], a[1]); return m > 1e-12 ? [a[0] / m, a[1] / m] : d; }, wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a)), r3 = (v) => +v.toFixed(3);
@@ -50,11 +51,14 @@ export const RES3B2 = {
   sdt: 1 / 48,            // s: the forecast's samples (absolute times, cached per plan version)
   landWin: [-0.04, 0.12], // s: a landing must be clear over this interval about its touchdown (the last approach and the early stance)
   thighWin: 0.02,         // s: … the leg above the foot only to this after the touchdown (then it moves with the body: the bodies' approach is Stage 2 / 3's)
+  maxEval: 96, maxEvalRetime: 24,   // the search's bounds (candidates evaluated at the landing's time / per retiming)
   nfGrace: 0.08,          // s: no clear landing for this long before it is NO_FEASIBLE_RECOVERY (a leg caught at a strike's instant comes free in a few ticks)
   every: 3, everyKept: 12, hold: 8,   // ticks: a guarded landing re-checked every 3; one with no feasible alternative re-searched every 12; a re-aimed step held ≥ 8
   corrN: 7, lift: 0.10,   // the corridor's samples; the swing's lift arc (m)
   minWidth: RES3.minWidth, footSep: 0.16,                       // Stage 3's: on its own side by ≥ 8 cm, a foot apart (16 cm)
   shorten: [0.85, 0.7, 0.55, 0.4, 0.25, 0.1, 0], rings: [0.03, 0.06, 0.09, 0.12, 0.16, 0.20, 0.25, 0.30],   // the candidates: the adjustment shortened; rings (m) about the wanted landing
+                          // (16 directions to 9 cm, 8 beyond: 96 candidates)
+  routeFirst: 12,         // a blocked corridor is routed for the nearest candidates only (a route costs six more corridors)
   route: [0.06, 0.10, 0.14],                                     // m: a route's waypoint across the path
   retime: [0.03, -0.03, 0.06, -0.06],                            // s: a late retiming
   yawMax: 50,             // deg: the landing foot within this of the facing
@@ -77,7 +81,11 @@ export const RES3B2 = {
   ordObs: OCC.hard,       // m: an ORDINARY landing is moved clear only beyond this obstruction (its boot / lower shin into his boot / shin)
 };
 // the canonical body posed AHEAD on a plan (stateless feet: the plan's own, without the presentation timeline's offsets) — the prediction
-class ForecastBody extends PlayBody { footAt(X, t, depth = 0) { const f = this.footAtRaw(X, t, depth); return depth ? f : this.clearOfBall(f, X, t); } }
+// (a function of the PLAN alone — so a prediction may be kept while the plan is unchanged: the ball predicted from the plan's own start (not from this tick's
+// ball), no input lead (the acknowledgement layer reads the live stick) — the legs as the plan will draw them)
+class ForecastBody extends PlayBody { footAt(X, t, depth = 0) { const f = this.footAtRaw(X, t, depth); return depth ? f : this.clearOfBall(f, X, t); }
+  ballAt(t) { const S = this.sim, P = S.planAt(t), t0 = Math.min(P.t0, S.t), B = S.ballTrack(t0); if (t <= t0 + 1e-9) return B.p; const f = predictBall(B.p, B.v, t - t0); return [f.p[0], f.p[1], BALL_R]; }
+  leadAt() { return 0; } }
 export class PlacementWorld extends LimbWorld {
   // o.b2: RES3B2 overrides · o.b2 === false: 3B.2 off (then the world is the calibrated 3B.1, exactly)
   constructor(env, o = {}) { super(env, o); this.B2 = Object.assign({}, RES3B2, o.b2 || {}); this.b2On = this.limbOn && o.b2 !== false;
@@ -103,9 +111,12 @@ export class PlacementWorld extends LimbWorld {
   fcRec(q, tau) { return this.legsAt(q, tau).map((c) => ({ id: c.id, a: c.a.map(r3), b: c.b.map(r3), r: c.r })); }
   // the opponent's leg volumes at time tau: the live drawn body now; ahead, the canonical body posed on his present plan (cached per plan version)
   legsAt(q, tau) { const t = this.att.t; if (tau <= t + 0.5 * DT || this.B2.fcLive) { const LP = this.livePoses(), J = q === this.att ? LP.a.J : LP.d.J; return [...G.legCapsJ(J, "R"), ...G.legCapsJ(J, "L")]; }
-    // (the prediction is rebuilt every tick: Stage 2 edits a plan IN PLACE (its root's path, its footholds) — a cache kept across ticks served stale legs,
-    // and whichever evaluation came first decided what the later ones saw; the forecast body's own resolved swings dropped with it)
-    let C = this.b2.fc.get(q); if (!C || C.plan !== q.plan || C.k !== this.k) { this.b2.fc.set(q, (C = { plan: q.plan, k: this.k, m: new Map() })); this.fcB.get(q).cache.clear(); } const g = Math.round(tau / this.B2.sdt), hit = C.m.get(g); if (hit) return hit;
+    // (the prediction is rebuilt whenever the plan changed: Stage 2 edits a plan IN PLACE (its root's path, its footholds) — a cache kept by the plan object alone
+    // served stale legs, and whichever evaluation came first decided what the later ones saw; the forecast body's own resolved swings dropped with it)
+    // (kept while the plan is the same object AND unedited: every Stage 2 / Stage 3 / 3B.2 edit replaces its stance lists (a new object) and every root shift
+    // adds to the player's occShift — either invalidates it)
+    const cs = q.contacts.length + "/" + q.plan.contacts.reduce((a, c) => a + (c.done ? 1 : 0), 0);   // (and his ball contacts: an executed one replaces the planned one in his swing)
+    let C = this.b2.fc.get(q); if (!C || C.plan !== q.plan || C.st !== q.plan.stances || C.sh !== (q.occShift || 0) || C.cs !== cs || (this.B2.fcPerTick && C.k !== this.k)) { this.b2.fc.set(q, (C = { plan: q.plan, st: q.plan.stances, sh: q.occShift || 0, cs, k: this.k, m: new Map() })); this.fcB.get(q).cache.clear(); } const g = Math.round(tau / this.B2.sdt), hit = C.m.get(g); if (hit) return hit;
     const J = this.fcB.get(q).pose(g * this.B2.sdt).J, caps = [...G.legCapsJ(J, "R"), ...G.legCapsJ(J, "L")]; C.m.set(g, caps); if (C.m.size > 120) C.m.delete(C.m.keys().next().value); return caps; }
   // the deepest the capsules C(tau) go into the opponent's legs over the times T
   oppPen(q, T, capsAt, o = {}) { let best = { pen: -Infinity }; for (const tau of T) { const b = G.capsPen(capsAt(tau), this.legsAt(q, tau), o); if (b.pen > best.pen) best = Object.assign(b, { tau }); } return best; }
@@ -173,6 +184,7 @@ export class PlacementWorld extends LimbWorld {
           const su = this.supportAt(p, X, s.t); if (su) { const sp = G.capsPen(lg.caps.filter((c) => !c.boot && c.id !== "THIGH_" + X), su.leg.caps.filter((c) => !c.boot && c.id !== "THIGH_" + (X === "R" ? "L" : "R"))); self = Math.max(self, sp.pen); } } return { worst, self }; };
       let c = check([]); out.cpen = r3(c.worst.pen); out.path = pathOf([]).map((s) => s.p.map(r3));
       if (c.self > B.tol + 0.02) return fail(`THE SWING CROSSES ITS OWN SUPPORT LEG (${(c.self * 100).toFixed(1)} cm)`, { self: true });
+      if (c.worst.pen > B.tol && cand.idx != null && cand.idx >= B.routeFirst) return fail(`THE SWING PASSES THROUGH THE OPPONENT'S ${c.worst.B} (${(c.worst.pen * 100).toFixed(1)} cm) (not routed: far candidate)`, { opp: true, corridor: true });
       if (c.worst.pen > B.tol) { const s = c.worst.s, dir = unit2(sub2(A, st0.p)), m = [-dir[1], dir[0]], away = c.worst.n ? Math.sign(dot2(c.worst.n, m)) || 1 : 1; let routed = null;
         const m0 = this.sideOf2(p, X, s.p, s.t);
         for (const d of B.route) { for (const sg of [away, -away]) { const vp = [s.p[0] + m[0] * d * sg, s.p[1] + m[1] * d * sg]; if (this.sideOf2(p, X, vp, s.t) < Math.min(m0, 0.02) - 1e-6) continue;   // (never routed across its own midline)
@@ -188,13 +200,15 @@ export class PlacementWorld extends LimbWorld {
   // shorter, longer, wider, narrower, ahead, behind; nearest first)
   candidates(o, W) { const B = this.B2, f = this.fwdAt(o.p, o.tL), r = [-f[1], f[0]], a = sub2(W, o.base), C = [], seen = new Set(), push = (pos, tag) => { const key = Math.round(pos[0] * 200) + "," + Math.round(pos[1] * 200); if (seen.has(key)) return; seen.add(key); C.push({ pos, tag, d: len2(sub2(pos, W)) }); };
     push(W, "WANTED"); for (const s of B.shorten) push(add2(o.base, mul2(a, s)), "SHORTER " + Math.round((1 - s) * 100) + "%");
-    for (const rad of B.rings) for (let i = 0; i < 16; i++) { const th = i * Math.PI / 8, af = Math.cos(th) * rad, ar = Math.sin(th) * rad, pos = add2(W, add2(mul2(f, af), mul2(r, ar)));
-      push(pos, `${(rad * 100).toFixed(0)} cm ${Math.abs(af) > 0.005 ? (af > 0 ? "AHEAD" : "BEHIND") : ""}${Math.abs(af) > 0.005 && Math.abs(ar) > 0.005 ? "-" : ""}${Math.abs(ar) > 0.005 ? (ar > 0 ? "RIGHT" : "LEFT") : ""}`); }
+    for (const rad of B.rings) { const nd = rad < 0.12 ? 16 : 8; for (let i = 0; i < nd; i++) { const th = i * 2 * Math.PI / nd, af = Math.cos(th) * rad, ar = Math.sin(th) * rad, pos = add2(W, add2(mul2(f, af), mul2(r, ar)));
+      push(pos, `${(rad * 100).toFixed(0)} cm ${Math.abs(af) > 0.005 ? (af > 0 ? "AHEAD" : "BEHIND") : ""}${Math.abs(af) > 0.005 && Math.abs(ar) > 0.005 ? "-" : ""}${Math.abs(ar) > 0.005 ? (ar > 0 ? "RIGHT" : "LEFT") : ""}`); } }
     return C.sort((x, y) => x.d - y.d); }
   // the nearest feasible landing that does the job (residual ≤ jobTol), else the feasible one leaving the least; null if none
+  // (BOUNDED: nearest first, at most B.maxEval at the landing's own time and B.maxEvalRetime per retiming — the far candidates are the ones the "nearest
+  // feasible" rule would take last; measured: an unbounded search in flight reached 818 evaluations in one tick)
   place(o, W, jobTol = 0.03, maxDev = Infinity, retime = false) { const C = this.candidates(o, W), tried = []; let done = null, least = null;
     const T = retime ? [null, ...this.B2.retime.map((d) => o.tL + d)] : [null];
-    for (const tl of T) { for (const c of C) { if (c.d > maxDev + 1e-9) continue; if (tl != null && tl - this.att.t < this.X.lock) continue; const e = this.evalLanding(o, { pos: c.pos, tL: tl }); e.tag = c.tag + (tl != null ? ` · RETIMED ${tl > o.tL ? "+" : ""}${((tl - o.tL) * 1000).toFixed(0)} ms` : ""); e.dev = r3(len2(sub2(c.pos, W))); tried.push(e);
+    for (const tl of T) { let n = 0; const cap = tl == null ? this.B2.maxEval : this.B2.maxEvalRetime; for (const c of C) { if (c.d > maxDev + 1e-9) continue; if (++n > cap) break; if (tl != null && tl - this.att.t < this.X.lock) continue; const e = this.evalLanding(o, { pos: c.pos, tL: tl, idx: n - 1 }); e.tag = c.tag + (tl != null ? ` · RETIMED ${tl > o.tL ? "+" : ""}${((tl - o.tL) * 1000).toFixed(0)} ms` : ""); e.dev = r3(len2(sub2(c.pos, W))); tried.push(e);
         if (!e.ok) continue; if (e.resid <= jobTol) { done = e; break; } if (!least || e.resid < least.resid - 1e-6) least = e; }
       if (done) break; }
     return { best: done || least, done: !!done, tried }; }
@@ -326,7 +340,8 @@ export class PlacementWorld extends LimbWorld {
     const via = S.b2 && S.b2.via ? S.b2.via.map((v) => this.viaKey(p, v)) : null, q = Ls[i], L2 = Ls.slice(), ids = [q.id]; L2[i] = Object.assign({}, q, { pos: S.pos.slice(), t0: Math.max(t + DT, S.tLand), swingIn: via ? { via } : q.swingIn, b2via: via });
     if (i > 0 && L2[i - 1].t1 > L2[i].t0) { L2[i - 1] = Object.assign({}, L2[i - 1], { t1: L2[i].t0 }); ids.push(L2[i - 1].id); } S.id = q.id; this.editStances(p, F, S.X, L2, ids); S.plan = F; }
   // ── every other landing within reach of the opponent: the gait's (ordinary) and a committed action's ──
-  guardLandings(p, s, t) { const B = this.B2, held = !!(this.committed(p, t) || this.preCommit(p, t)), tq = this.techOf(p); if (held ? !(B.manageCommitted || B.reportCommitted) : !(B.manageOrdinary || B.guardSelf || B.reportOrdinary)) return; if (s.active && s.fadeFrom != null) return;
+  guardLandings(p, s, t) { const B = this.B2, held = !!(this.committed(p, t) || this.preCommit(p, t)), tq = this.techOf(p), comOn = B.manageCommitted || B.reportCommitted, ordOn = B.manageOrdinary || B.guardSelf || B.reportOrdinary;
+    if (!comOn && !ordOn) return; if (s.active && s.fadeFrom != null) return;
     const LP = this.livePoses(), J = p === this.att ? LP.a.J : LP.d.J;
     for (const X of SIDES) { if (s.active && s.step && !s.step.landed && s.step.X === X) continue; const L = p.plan.stances[X], cur = L.find((q) => q.t0 <= t + 1e-9 && q.t1 > t + 1e-9), nx = L.find((q) => q.t0 > t + 1e-9 && q.pos); if (!nx || nx.t0 - t > B.look || nx.t0 - t < 3 * DT) continue;
       if (/recovery step/.test(nx.kind || "")) continue; const dir = this.b2.dirs.get(p).find((d) => d.X === X && Math.abs(d.tL - nx.t0) < 0.08); if (dir && dir.checkedK === this.k) continue;
@@ -334,8 +349,10 @@ export class PlacementWorld extends LimbWorld {
       // that foot; never earlier — a landing still a stride away is not yet a decision)
       if (cur && cur.t1 > t + 0.05) continue;
       // (each landing re-checked every few ticks; one with no feasible alternative re-searched less often — its record kept once)
-      const gk = X + nx.id, G0 = (s.b2g || (s.b2g = new Map())).get(gk); if (G0 && this.k - G0.k < (G0.kept ? B.everyKept : B.every)) continue;
-      const own = held || (tq && nx.t0 >= tq.tCommit - 0.25 && nx.t0 < tq.tRelease), oth = X === "R" ? "L" : "R", os = (p.plan.stances[oth].find((q) => q.t0 <= nx.t0 + 1e-9 && q.t1 > nx.t0 + 1e-9) || {}).pos || null;
+      // (the committed and the ordinary checks keep separate schedules: one stance is an ordinary landing before a move commits and a committed one after —
+      // a shared schedule let ordinary reporting decide when the committed check ran)
+      const gk = (held || (tq && nx.t0 >= tq.tCommit - 0.25 && nx.t0 < tq.tRelease) ? "C" : "O") + X + nx.id, G0 = (s.b2g || (s.b2g = new Map())).get(gk); if (G0 && this.k - G0.k < (G0.kept ? B.everyKept : B.every)) continue;
+      const own = held || (tq && nx.t0 >= tq.tCommit - 0.25 && nx.t0 < tq.tRelease); if (own ? !comOn : !ordOn) continue; const oth = X === "R" ? "L" : "R", os = (p.plan.stances[oth].find((q) => q.t0 <= nx.t0 + 1e-9 && q.t1 > nx.t0 + 1e-9) || {}).pos || null;
       const start = cur ? { p: [cur.pos[0], cur.pos[1], G.RIG.ankleH], t: Math.max(t, cur.t1) } : { p: J["foot_" + X].j.slice(), t }, base = dir ? dir.orig : nx.pos.slice();
       const othL = p.plan.stances[oth], othLast = [...othL].reverse().find((q) => q.t0 <= nx.t0 + 1e-9), strictSelf = !own && (s.active || !!(othLast && /recovery step/.test(othLast.kind || "")));
       const o = { p, X, tL: nx.t0, base, pos: nx.pos, want: base, need: null, os, yaw: nx.yaw, start, job: own ? "COMMITTED" : "ORDINARY", strictSelf };
