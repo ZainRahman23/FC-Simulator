@@ -4229,6 +4229,78 @@ Results: committed planted feet within 2.2 – 2.6 cm of the action (Stage 1: 18
 | The shooting workstream | [Local] Codex worktree, uncommitted since `53b9049` |
 | `touchline-current` | No changes except this chronicle |
 
+## Sunday 25 October 2026 — The 24 Oct publication; PLAYER OCCUPANCY STAGE 3, impact and balance; the Astra duel audit; STAGE 3B.0 + 3B.1, a limb-contact layer, and its momentum calibration (F+M); STAGE 3B.2, recovery-step and landing geometry
+
+The clocks went back overnight (EEST → EET); every time below is EET (UTC + 2).
+
+**Evidence.**
+- **[FC-Sim Git]:**
+  - `touchline-current`: `7d6ed7c` (the 24 Oct entry), pushed in the 25 Oct housekeeping (07:08) with the four 24 Oct branches.
+  - **Three new branches, one chain, each cut from the one before.** All were pushed in the 26 Oct housekeeping.
+
+    | Branch (cut from) | Milestone | Commits | Time |
+    |---|---|---|---|
+    | `prototype/player-occupancy-stage3` (`817e0f2`) | PLAYER OCCUPANCY STAGE 3: physical impact + balance response (instruction, five work-in-progress commits, report) | `a8e4003` … `14067be`, `88a964b` | 07:10 – 10:01 |
+    | `prototype/player-occupancy-stage3b1` (`88a964b`) | STAGE 3B.0 + 3B.1, the limb-contact layer (instruction + the Astra audit summary, three work-in-progress commits, three fixes, report), then the 3B.1 momentum calibration (code, report) | `41e94b8` … `469a080`, `3625f92`, `731813f` | 15:28 – 21:31 |
+    | `prototype/player-occupancy-stage3b2` (`731813f`) | STAGE 3B.2, recovery-step and landing geometry (work in progress, the measured default, report) | `12a914c`, `e9d0524`, `c4e3517` | 02:26 – 04:49 (26 Oct) |
+
+  - A local tag `occupancy-3b1-calibrated-fm-1` marks `731813f`, the 3B.1 formulation the owner froze for 3B.2. It was not pushed.
+  - `main` untouched; no milestone branch was created this day.
+- **[Local] Another workstream (Codex):** `~/.codex/worktrees/chip-shot/` (branch `codex/chip-shot`, not pushed) committed `22e13e3` (07:25, the approved shot review kept as the CHIP baseline) and `7cb5317` (08:38, a provisional dual-reference CHIP reconstruction). Its uncommitted labs after that are recorded from their file times and titles only:
+  - CHIP2 – CHIP2.3: the spatial strike, the lower body, the striking chain, the follow-through, 15:10 – 19:03;
+  - CHIP2.4 – CHIP2.9: the receiving support, the head turn and recovery, the "source A" angled contact, return, landing and forward lean, 00:51 – 03:42 (26 Oct);
+  - FINESSE pitch integration and a reference comparison, from 05:21 (26 Oct).
+- **[Doc]:**
+  - each milestone's report, handoff, status and evidence in `review_artifacts/player_occupancy3/` (Stage 3) and `review_artifacts/player_occupancy3b/` (3B.0, 3B.1, its calibration and 3B.2);
+  - every owner instruction verbatim in that milestone's `sources/`;
+  - the Labs show real players' models; they are local pages only (`127.0.0.1:8365` – `8367`).
+- **[Session]** Owner instructions (the time each was received):
+
+  | Received (EET) | Instruction | Saved verbatim in |
+  |---|---|---|
+  | ≈ 07:10 | PLAYER OCCUPANCY STAGE 3: physical impact + balance response, on the approved Stage 2 | `player_occupancy3/sources/` |
+  | before ≈ 15:00 | A question: did Stage 3 reuse Astra's shoulder-to-shoulder work? (answered by the audit) | `player_occupancy3b/sources/` (the audit summary) |
+  | ≈ 15:25 | STAGE 3B.0 + 3B.1: approve the audit's conclusion; build the limb-contact layer only | `player_occupancy3b/sources/` |
+  | ≈ 20:00 | STAGE 3B.1 LIMB MOMENTUM CALIBRATION: how much of an authored limb's speed is collision momentum | `player_occupancy3b/sources/` |
+  | ≈ 00:45 (26 Oct) | STAGE 3B.2: F+M approved and frozen as the 3B.1 foundation; recovery-step and landing geometry | `player_occupancy3b/sources/` |
+
+- **Owner media.**
+  - **Six Desktop screenshots** (15:00, 18:01, 19:10; 02:17, 02:34, 02:38 on 26 Oct) show the manager interface: a season schedule, the Europe scouting wall, the recruitment player search, and a table of transfer-negotiation responses. No workstream in this repository uses them; recorded, not archived.
+  - **One recording** (00:34, 26 Oct) is referenced nowhere; not examined, not archived.
+
+**The 25 Oct housekeeping (07:08).** The chronicle `7d6ed7c` was committed and pushed with `prototype/tackling-integration-v1`, `prototype/shared-possession-reaction-v1`, `prototype/player-occupancy-v1` and `prototype/player-occupancy-stage2`; all verified.
+
+**PLAYER OCCUPANCY STAGE 3 · IMPACT + BALANCE** (`88a964b`, presented ≈ 10:00). On the approved Stage 2, a two-player contact beyond Stage 2's 2 cm tolerance now becomes an impact: physical velocities, a balance state from the linear inverted pendulum, a recovery step placed within the stepping leg's reach, a posture layer, and a fall / trip candidate *placeholder* that is reported, never executed.
+- Torso overlap 22.9 → 3.1 cm; leg overlap unchanged (22.7 cm), left for a limb layer.
+- Identical to Stage 2 before the first impact (676 / 676), one player alone 105 / 105, passing players with no impact 56 / 56; the ball and the possession never come from an impact; the torture runs deterministic, with no loop.
+- Bugs found by the evidence and fixed: a pending step forced onto later plans (a foot "planted" 2.9 m behind a running body), a plan / cancel loop, episodes held open by millimetres, fall placeholders counted as "regained".
+
+**The Astra duel audit (≈ 15:00).** The owner asked whether Stage 3 reused Astra's shoulder-to-shoulder work (`physical-duel-v2`, outside Git). It had not. Measured with a read-only harness:
+- Astra's leg capsules are about half the real thickness, its fall gate never fires, and a head-on contact deadlocks it.
+- What it does better is to never let animated motion power the roots (a stable body-face normal, source accounting, forward and energy invariants), plus its limb mechanisms.
+- Stage 3 had Astra's pre-fix failure in its limb channel: every matrix impact was triggered by a limb strike at the animated limb's speed (94 % of the impulse; a thigh brush pushed a jogger 14 cm forward).
+- Recommended: keep Stage 3 as the decision / balance / action layer and add a limb-contact layer built from Astra's principles in our body. The owner approved it.
+
+**STAGE 3B.0 + 3B.1 · LIMB CONTACT** (`469a080`, presented ≈ 19:40). A layer between Stage 2 and Stage 3 (`sandbox/visual/occupy3b/`): limb against limb, a momentum exchange through the limb's hip with only what the limb lost passed on, held contacts that yield, and an exact ledger. Stage 3 kept only inert hooks.
+
+**The 3B.1 calibration (`731813f`, presented ≈ 21:30).** The owner asked how much of an authored limb's speed counts as collision momentum: the flagship equal-speed brush was STRONG (18 + 25 N·s). The first formulation read Stage 2's positional pushes as closing speed. Six formulations were measured. The default became **F+M**: the limb's articulation about its hip, the bodies at their physical root velocity, and an articulated effective mass. The flagship became 10.5 N·s in total, both players MODERATE. All invariants 0; the milestone's 10 suites identical. The owner approved F+M (≈ 00:45) and froze it for 3B.2.
+
+**STAGE 3B.2 · RECOVERY-STEP AND LANDING GEOMETRY** (`c4e3517`, presented ≈ 05:05, 26 Oct). New code on the frozen F+M, for a player who stays recoverable after contact. A recovery landing is chosen from candidates, nearest first, rejecting any that is on the wrong side, out of reach, into the opponent's predicted legs, or whose swing passes through a leg. It never changes in the last 0.13 s. Planted feet anchored, boots in the contact solve.
+- Legs > 5 cm overlap fell on every set (e.g. 567 → 290 on the 114-case set); recovery landings into the opponent 5 → 3; committed landings into the opponent 6 → 0; fall candidates 26 → 16.
+- Identical before contact on every set; ledger exact, 0 J gained; deterministic; the milestone's 10 suites identical; the Lab 33 / 34 in Chrome.
+- Not reduced: the deepest overlap on the wide sweeps (≈ 23 cm). 3B.2 made two kinds of case worse: retiming a step in flight kept it airborne while the bodies closed, and a mid-stance release made the foot jump 5 – 8 cm in one tick. The verdict given was **not yet** a foundation for 3B.3, with seven owner decisions.
+
+**End-of-day state.**
+
+| Item | State |
+|---|---|
+| Player Occupancy Stage 3 (`88a964b`) | Prototype, stopped for the owner's review; the decision / balance layer of 3B |
+| Stage 3B.1 (`731813f`, F+M) | Approved and frozen as the foundation of 3B.2 (not a project freeze) |
+| Stage 3B.2 (`c4e3517`) | Prototype, stopped for the owner's review; "not yet" a 3B.3 foundation |
+| `milestone/feint-croqueta-vocab-v1` (`f775daa`) | Unchanged; still the current gameplay milestone |
+| The CHIP / FINESSE shooting labs | [Local] Codex worktree `codex/chip-shot`, two local commits, the rest uncommitted |
+| `touchline-current` | No changes except this chronicle |
+
 ## Current state of the Touchline project
 
 **The playable software** (`touchline-current`, `e2c98ec`, on FC-Simulator):
@@ -4318,6 +4390,7 @@ Results: committed planted feet within 2.2 – 2.6 cm of the action (Stage 1: 18
   - `prototype/dribble-1`: physics dribbling with a resolved touch and no tether, on TURN-1.2 and BALL-FEEL-1.3 — DRIBBLE-1 (`7fe57fd`) → DRIBBLE-1.4 (`33ce1ca`), then DRIBBLE-1.5, **frozen on 18 Oct as the DRIBBLE-V1 foundation**, tag `dribble-v1-foundation-1` = `4f20d28` (handoff `review_artifacts/dribble15/DRIBBLE15_HANDOFF.md`). The receive line on the same branch (18 – 19 Oct, presented for review, none frozen or integrated): RECEIVE-CONTROL-1 (an adapter, superseded), RECEIVE-CONTROL-1.1 (authored receive actions beside DRIBBLE-V1), RECEIVE-KILL-1 → 1.2 (kill / deaden and the Ball Control scale; alternative B is the candidate), RECEIVE-TURN-1 (bounded keyed execution variance around B; a stationary receive-and-turn library) and RECEIVE-TURN-1.1 (human body motion around it). RECEIVE-CONTROL-2 (QUEUE #1: RECEIVE-KILL and RECEIVE-TURN integrated into one receive pipeline), RECEIVE-MOVING-1 (QUEUE #2, receiving while moving) and RECEIVE-ELITE-1 (elite tight control) followed on 19 Oct. The technical-control line (19 – 20 Oct, presented, none frozen or integrated): TECHNICAL-CONTROL-1 (one layer from the receive into the dribble) → 1.1 (feet / ankle IK) → 1.2 (the carry model) → 1.3 (no phasing) → 1.4 (the fastest technique) → 1.5 (the technique reset: five authored elite references, the Ronaldo chop), and **TECHNICAL-CONTROL PLAYTEST-1**, the playable WASD dribbling sandbox (`sandbox/visual/tc_playtest1.html`, a local page). On 20 Oct its joystick checkpoint became **BASELINE-88573ef0**, the locked foundation (`tc_baseline_88573ef0.html`); PLAYTEST-1.2 and TC-RESPONSIVE-1 were rejected on playtest; TC-LAYERED-1 / -2 (toggleable layers on the baseline; B4 generic effort turns and B5 short entries / exits approved for development) led into **TC-UNIFIED-1**, the overnight integration with Astra's A99-C and persistent support; then (21 – 23 Oct) the controlled ball, the 99 pace and CARRY-B, DRIBBLING VOCAB-1, CRUYFF-CHOP-1, ADV-4 and the Body Feint and Croqueta passes. **The current gameplay milestone** is the DRIBBLING VOCABULARY INTEGRATION, `milestone/feint-croqueta-vocab-v1` = tag `checkpoint/touchline-feint-croqueta-vocab-v1-2026-10-24` = `f775daa` (`sandbox/visual/vocab2/`; provisionally approved, not frozen). The source of truth for a fresh session is the TOUCHLINE GAMEPLAY DEV milestone (`dea3abd`, `SOURCE_OF_TRUTH.md`); `integration/touchline-gameplay-1` (`dea3abd`) is the assembly point for later canonical integrations, with nothing merged into it yet.
 - **Input research** (23 Oct day, pushed 24 Oct): `prototype/left-stick-intent-v1` (`6ccd9f9`, cut from `f775daa`) — LEFT-STICK INPUT LAB V1 and OWNER INPUT ANALYSIS V1; Intent Recognizer V1 designed, not built.
 - **Two-player football** (24 Oct, pushed 25 Oct), one chain of branches from `f775daa`: `prototype/tackling-integration-v1` (`8c0149b`, Standing Tackle V1, provisional) → `prototype/shared-possession-reaction-v1` (`89ab31c`, one possession authority + reaction, a candidate) → `prototype/player-occupancy-v1` (`fb35347`, Stage 1) → `prototype/player-occupancy-stage2` (`817e0f2`, Stage 2; the owner approved it on 25 Oct as the foundation of Stage 3). Not integrated, not frozen.
+- **Player physical interaction** (25 Oct, pushed 26 Oct), continuing that chain: `prototype/player-occupancy-stage3` (`88a964b`, Stage 3: impact + balance) → `prototype/player-occupancy-stage3b1` (`731813f`, 3B.0 + 3B.1 limb contact, calibrated F+M; the owner froze F+M as the foundation of 3B.2) → `prototype/player-occupancy-stage3b2` (`c4e3517`, 3B.2 recovery-step and landing geometry; "not yet" a 3B.3 foundation). Not integrated, not frozen.
 - **The shooting workstream** (23 – 24 Oct, [Local] Codex worktree `~/.codex/worktrees/shooting-body-v1/`): `prototype/shooting-body-v1` (`53b9049`, from `dea3abd`), not pushed, not integrated; the POWER 6 – 9 and NORMAL SHOT 1 – 5 labs after it are uncommitted.
 - **The Codex ball lab** (16 – 17 Oct, [Local] clone in `~/Documents/Codex/2026-10-16/files-pasted-by-the-user-ball/`): BALL-PHYS-1 → BALL-FEEL-1 … 1.4, BALL-SHOT-1 / 1.1 / 1.2, GK-SHOT-MAP-1, CURVE-1 / 1.1, SHOT-CHARGE-1 … 1.3, SHOT-ACCURACY-1.0-VISUAL (outputs only). Owner-selection labs, not integrated; BALL-FEEL-1.3 is DRIBBLE's ball.
 - **Standing Tackle V1 — Phase C** (19 Oct, [Local] Codex workspace `~/Documents/Codex/2026-10-19/files-pasted-by-the-user-touchline/`): an isolated visual prototype with its review page and validation record; Phase C revision 2 and STANDING-TACKLE-V1 (a functional real-carrier review against TECHNICAL-CONTROL-1.3's carrier) followed on 19 – 20 Oct; no commits, not a freeze.
@@ -4581,6 +4654,11 @@ An index to the narrative above, not a substitute for it.
 | 24 Oct | PLAYER OCCUPANCY V1, Stage 1: bodies no longer pass through each other | FC-Sim Git | `fb35347` |
 | 24 Oct | PLAYER OCCUPANCY STAGE 2: committed-action contact resolution | FC-Sim Git | `817e0f2` |
 | 24 Oct | Shooting body: POWER 6 – 9, NORMAL SHOT 1 – 5 (another workstream, uncommitted) | Local (Codex) | — |
+| 25 Oct | PLAYER OCCUPANCY STAGE 3: physical impact + balance response | FC-Sim Git | `88a964b` |
+| 25 Oct | The Astra duel audit (Stage 3 against Astra's Physical Duel V2) | FC-Sim Git | `41e94b8` (summary + harness) |
+| 25 Oct | STAGE 3B.0 + 3B.1: the limb-contact layer; its calibration, F+M | FC-Sim Git | `469a080`, `731813f` |
+| 25 Oct (26 Oct 02:26 – 04:49) | STAGE 3B.2: recovery-step and landing geometry | FC-Sim Git | `c4e3517` |
+| 25 Oct | Shooting: CHIP reconstruction (committed), CHIP2 – 2.9 and FINESSE pitch labs (another workstream, uncommitted) | Local (Codex) | `codex/chip-shot` `7cb5317` |
 
 ## Appendix B — Repository provenance
 
