@@ -1,0 +1,10 @@
+// occupy3b2/tools/b2_smokeweb.cjs — a quick headless look at the 3B.2 Lab: loads, a few cases, the overlays, errors; stills to --shots (scratchpad)
+const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
+const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path"), os = require("os");
+const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; }, SHOTS = arg("shots"), BASE = arg("base", "http://127.0.0.1:8367/sandbox/visual/");
+(async () => { const prof = fs.mkdtempSync(path.join(process.env.PT_TMP || os.tmpdir(), "b2w-")), b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: prof, args: ["--use-angle=metal", "--enable-webgl", "--ignore-gpu-blocklist"] });
+  const p = await b.newPage(); await p.setViewport({ width: 1600, height: 950 }); const errs = []; p.on("pageerror", (e) => errs.push("pageerror: " + e.message)); p.on("console", (m) => { if (m.type() === "error") errs.push("console: " + m.text()); }); p.on("response", (r) => { if (r.status() >= 400) errs.push("http " + r.status() + " " + r.url()); });
+  const t0 = Date.now(); await p.goto(BASE + "occupy3b2_lab.html?external=1&play=0", { waitUntil: "load" }); await p.waitForFunction(() => window.IL && IL.ready(), { timeout: 300000 }); console.log("loaded", (Date.now() - t0) / 1000, "s");
+  for (const [id, t] of (arg("cases", "bf-into:0.72,x120-run:1.24,both-committed:0.62,side:1.05").split(",").map((s) => s.split(":")))) { await p.evaluate((id) => IL.select(id), id); await p.evaluate((t) => IL.seek(+t), t); await new Promise((r) => setTimeout(r, 200));
+    const b2 = await p.evaluate(() => IL.b2()); console.log(id, JSON.stringify(b2).slice(0, 300)); const el = await p.$("#stage"); await el.screenshot({ path: path.join(SHOTS, `b2_${id}.jpg`), type: "jpeg", quality: 75 }); }
+  console.log("errors", errs.length, errs.slice(0, 5)); await b.close(); })().catch((e) => { console.error(e); process.exit(1); });
